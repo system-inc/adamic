@@ -265,6 +265,7 @@
       "os.Getenv(\"ADAMIC_TEST_WASI\")",
       "os.Getenv(\"ADAMIC_WASI_ARTIFACT\")",
       "os.Getenv(\"ADAMIC_WASI_RUNTIME\")",
+      "os.Getenv(\"PATH\")",
       "os.Getenv(\"WASI_SYSROOT\")",
       "os.ReadFile(module)"
     ],
@@ -272,11 +273,11 @@
       "TestWASI"
     ],
     "message": "\"WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with Node 24 on PATH\"",
-    "class": "required-input",
-    "provides": "Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification.",
     "opt_in_off": [
       "ADAMIC_TEST_WASI"
-    ]
+    ],
+    "class": "required-input",
+    "provides": "Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification."
   },
   {
     "file": "internal/oracle/gcc_lane_test.go",
@@ -365,7 +366,7 @@
     "file": "internal/oracle/slabs_test.go",
     "test": "TestNativeSlabsAgreeWithNode",
     "id": "TestNativeSlabsAgreeWithNode:caf85ea1ec8cfd7fd6f51757b3af3de7ea0c64b6e4ef434e3796b9f3cc05b624",
-    "line": 18,
+    "line": 19,
     "condition": "runtime.GOOS == \"darwin\"",
     "reads": [
       "os.Getenv(\"ADAMIC_GATE_UNCACHED\")",
@@ -384,7 +385,7 @@
     "file": "internal/oracle/slabs_test.go",
     "test": "TestNativeSlabsAgreeWithNode",
     "id": "TestNativeSlabsAgreeWithNode:1743f5368e290c06ba6735cab080c81df3d75b4eadbff4df11f133275a5beced",
-    "line": 21,
+    "line": 22,
     "condition": "runtime.GOOS != \"linux\"",
     "reads": [
       "os.Getenv(\"ADAMIC_GATE_UNCACHED\")",
@@ -403,7 +404,7 @@
     "file": "internal/oracle/slabs_test.go",
     "test": "TestNativeMallocAgreesWithNode",
     "id": "TestNativeMallocAgreesWithNode:4be973d40ef3554399a7b55adc4838f67420bcdfeaba943cfec966c3f7a02827",
-    "line": 30,
+    "line": 31,
     "condition": "os.Getenv(\"ADAMIC_SLAB_MEASURE\") != \"1\"",
     "reads": [
       "os.Getenv(\"ADAMIC_GATE_UNCACHED\")",
@@ -416,11 +417,11 @@
       "TestNativeMallocAgreesWithNode"
     ],
     "message": "\"set ADAMIC_SLAB_MEASURE=1 for the timing control\"",
-    "class": "measurement",
-    "provides": "ADAMIC_SLAB_MEASURE=1 enables the existing malloc allocator timing control, separate from the slab correctness lane.",
     "opt_in_off": [
       "ADAMIC_SLAB_MEASURE"
-    ]
+    ],
+    "class": "measurement",
+    "provides": "ADAMIC_SLAB_MEASURE=1 enables the existing malloc allocator timing control, separate from the slab correctness lane."
   },
   {
     "file": "internal/oracle/stage3_hook_test.go",
@@ -532,7 +533,7 @@
     "file": "stage1/cohere/css/css_test.go",
     "test": "TestThePortParsesAsGoCohereDoes",
     "id": "TestThePortParsesAsGoCohereDoes:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc",
-    "line": 147,
+    "line": 148,
     "condition": "library == \"\"",
     "reads": [
       "os.Getenv(\"ADAMIC_CSS_FIXTURES\")",
@@ -547,17 +548,17 @@
       "TestThePortParsesAsGoCohereDoes"
     ],
     "message": "\"set ADAMIC_CSS_LIBRARY to the pinned npm scratch directory\"",
-    "class": "required-input",
-    "provides": "ADAMIC_CSS_LIBRARY: npm directory with postcss@8.5.16 and postcss-scss@4.0.9; see docs/gate-inputs.md.",
     "opt_in_off": [
       "ADAMIC_CSS_LIBRARY"
-    ]
+    ],
+    "class": "required-input",
+    "provides": "ADAMIC_CSS_LIBRARY: npm directory with postcss@8.5.16 and postcss-scss@4.0.9; see docs/gate-inputs.md."
   },
   {
     "file": "stage1/cohere/css/css_test.go",
     "test": "TestCSSThroughput",
     "id": "TestCSSThroughput:4f7695919100a8f192d2010d1445c8cf009fb0993b381a9fd014403ff103c479",
-    "line": 424,
+    "line": 405,
     "condition": "os.Getenv(\"ADAMIC_CSS_BENCH\") == \"\"",
     "reads": [
       "os.Getenv(\"ADAMIC_CSS_BENCH\")",
@@ -573,11 +574,11 @@
       "TestCSSThroughput"
     ],
     "message": "\"set ADAMIC_CSS_BENCH=1 for throughput\"",
-    "class": "measurement",
-    "provides": "Opt-in timing or profile artifact comparison; does not replace correctness verification.",
     "opt_in_off": [
       "ADAMIC_CSS_BENCH"
-    ]
+    ],
+    "class": "measurement",
+    "provides": "Opt-in timing or profile artifact comparison; does not replace correctness verification."
   },
   {
     "file": "stage1/cohere/css/memory_checks_test.go",
@@ -803,7 +804,7 @@
     "file": "stage1/cohere/gitignore/gitignore_test.go",
     "test": "TestThePortAnswersAsGoCohereAndGitDo",
     "id": "TestThePortAnswersAsGoCohereAndGitDo:68752ca2a247f74d2d7b51fe076036de06132b339bf05879e5e516bf32d3bb94",
-    "line": 158,
+    "line": 159,
     "condition": "mutant.needsLargest && !largest()",
     "reads": [
       "os.Getenv(\"ADAMIC_GITIGNORE_KEEP\")",
@@ -853,7 +854,7 @@
     "file": "stage1/cohere/graphql/graphql_test.go",
     "test": "TestThePortParsesAsGoCohereDoes",
     "id": "TestThePortParsesAsGoCohereDoes:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc",
-    "line": 112,
+    "line": 113,
     "condition": "library == \"\"",
     "reads": [
       "os.Getenv(\"ADAMIC_GRAPHQL_KEEP\")",
@@ -868,11 +869,11 @@
       "TestThePortParsesAsGoCohereDoes"
     ],
     "message": "\"set ADAMIC_GRAPHQL_LIBRARY to a directory where `npm install graphql@17.0.2` ran, to compare with the library itself\"",
-    "class": "required-input",
-    "provides": "ADAMIC_GRAPHQL_LIBRARY: npm directory with graphql@17.0.2; see docs/gate-inputs.md.",
     "opt_in_off": [
       "ADAMIC_GRAPHQL_LIBRARY"
-    ]
+    ],
+    "class": "required-input",
+    "provides": "ADAMIC_GRAPHQL_LIBRARY: npm directory with graphql@17.0.2; see docs/gate-inputs.md."
   },
   {
     "file": "stage1/cohere/graphql/testdata/cohere_side_test.go",
@@ -984,7 +985,7 @@
     "file": "stage1/cohere/json/port_test.go",
     "test": "TestPortMatchesGoCohere",
     "id": "TestPortMatchesGoCohere:ee535c3d3183e33fe838ac8ca2e7a2a832dbe40bcd69f212f57435d41212143d",
-    "line": 223,
+    "line": 204,
     "condition": "os.Getenv(\"ADAMIC_JSON_NODE_ONLY\") != \"\"",
     "reads": [
       "filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.IsDir() && entry.Name() == \".git\" {\n\t\treturn filepath.SkipDir\n\t}\n\tif entry.IsDir() || !strings.HasSuffix(entry.Name(), \".json\") {\n\t\treturn nil\n\t}\n\tencoded, err := os.ReadFile(path)\n\tif err != nil {\n\t\treturn err\n\t}\n\tif !utf8.Valid(encoded) {\n\t\treturn fmt.Errorf(\"non-UTF-8 corpus file %s: decoding needs its own oracle\", path)\n\t}\n\trelative, err := filepath.Rel(root, path)\n\tif err != nil {\n\t\treturn err\n\t}\n\trelative = filepath.ToSlash(relative)\n\tgroup := \"Adamic\"\n\tif strings.HasPrefix(relative, \"cohere/\") {\n\t\tgroup = \"cohere\"\n\t}\n\tif strings.HasPrefix(relative, \"cohere/TypeScript/\") {\n\t\tgroup = \"TypeScript\"\n\t}\n\tgroups[group]++\n\tcases = append(cases, textCase{relative, string(encoded)})\n\treturn nil\n})",
@@ -1005,7 +1006,7 @@
     "file": "stage1/cohere/json/port_test.go",
     "test": "TestAdditionalJSONBoundaries",
     "id": "TestAdditionalJSONBoundaries:ee535c3d3183e33fe838ac8ca2e7a2a832dbe40bcd69f212f57435d41212143d",
-    "line": 350,
+    "line": 331,
     "condition": "os.Getenv(\"ADAMIC_JSON_NODE_ONLY\") != \"\"",
     "reads": [
       "os.Getenv(\"ADAMIC_JSON_ARTIFACTS\")",
@@ -1049,65 +1050,83 @@
     "line": 74,
     "condition": "os.Getenv(\"ADAMIC_LINT_BENCH\") != \"1\"",
     "reads": [
+      "filepath.WalkDir(filepath.Join(repository, \"internal\"), func(path string, entry fs.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.Type()&os.ModeSymlink != 0 {\n\t\ttarget, err := os.Readlink(path)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tparts[path] = \"symlink:\" + target\n\t} else if !entry.IsDir() {\n\t\tparts[path] = \"file:\" + lintBytes(t, path)\n\t}\n\treturn nil\n})",
+      "os.Getenv(\"ADAMIC_GATE_UNCACHED\")",
       "os.Getenv(\"ADAMIC_LINT_BENCH\")",
+      "os.ReadFile(filepath.Join(directory, \"digest\"))",
+      "os.ReadFile(filepath.Join(root, \".selected-rule\"))",
       "os.ReadFile(harness)",
       "os.ReadFile(output.Name())",
-      "os.ReadFile(path)"
+      "os.ReadFile(path)",
+      "os.Stat(filepath.Join(directory, \".selected-rule\"))"
     ],
     "callers": [
       "TestJsxLintReleaseAndThroughput"
     ],
     "message": "\"set ADAMIC_LINT_BENCH=1 for JSX throughput\"",
-    "class": "measurement",
-    "provides": "ADAMIC_LINT_BENCH=1 enables five-round JSX throughput comparisons; ordinary JSX correctness is held separately by TestJsxLintTrees and the lint oracle.",
     "opt_in_off": [
       "ADAMIC_LINT_BENCH"
-    ]
+    ],
+    "class": "measurement",
+    "provides": "ADAMIC_LINT_BENCH=1 enables five-round JSX throughput comparisons; ordinary JSX correctness is held separately by TestJsxLintTrees and the lint oracle."
   },
   {
     "file": "stage1/cohere/lint/lint_test.go",
     "test": "TestCompilerAndStage1Agree",
     "id": "TestCompilerAndStage1Agree:1dbf140729f17ef866b29b574189ddf438e2a4dd6762d9bdcd8e5dae68bf6b7e",
-    "line": 485,
+    "line": 499,
     "condition": "source == \"\"",
     "reads": [
+      "filepath.WalkDir(filepath.Join(repository, \"internal\"), func(path string, entry fs.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.Type()&os.ModeSymlink != 0 {\n\t\ttarget, err := os.Readlink(path)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tparts[path] = \"symlink:\" + target\n\t} else if !entry.IsDir() {\n\t\tparts[path] = \"file:\" + lintBytes(t, path)\n\t}\n\treturn nil\n})",
       "filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif !entry.IsDir() && (strings.HasSuffix(path, \".ts\") || strings.HasSuffix(path, \".a\")) {\n\t\tabsolute, err := filepath.Abs(path)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\trows = append(rows, absolute)\n\t}\n\treturn nil\n})",
+      "os.Getenv(\"ADAMIC_GATE_UNCACHED\")",
+      "os.Getenv(\"ADAMIC_LINT_BENCH\")",
       "os.Getenv(\"ADAMIC_TYPESCRIPT_SOURCE\")",
-      "os.ReadFile(output.Name())"
+      "os.ReadFile(filepath.Join(directory, \"digest\"))",
+      "os.ReadFile(filepath.Join(root, \".selected-rule\"))",
+      "os.ReadFile(output.Name())",
+      "os.ReadFile(path)",
+      "os.Stat(filepath.Join(directory, \".selected-rule\"))"
     ],
     "callers": [
       "TestCompilerAndStage1Agree"
     ],
     "message": "\"set ADAMIC_TYPESCRIPT_SOURCE to pinned v6.0.3\"",
-    "class": "required-input",
-    "provides": "ADAMIC_TYPESCRIPT_SOURCE: TypeScript v6.0.3 source checkout at 050880ce59e30b356b686bd3144efe24f875ebc8, including src/compiler/*.ts; see docs/gate-inputs.md.",
     "opt_in_off": [
       "ADAMIC_TYPESCRIPT_SOURCE"
-    ]
+    ],
+    "class": "required-input",
+    "provides": "ADAMIC_TYPESCRIPT_SOURCE: TypeScript v6.0.3 source checkout at 050880ce59e30b356b686bd3144efe24f875ebc8, including src/compiler/*.ts; see docs/gate-inputs.md."
   },
   {
     "file": "stage1/cohere/lint/lint_test.go",
     "test": "TestThroughput",
     "id": "TestThroughput:0ac2731cc03aa88aa1db988e0910063d36067cbcb25e2a776be9408d8e4d1ebf",
-    "line": 652,
+    "line": 666,
     "condition": "os.Getenv(\"ADAMIC_LINT_BENCH\") != \"1\"",
     "reads": [
+      "filepath.WalkDir(filepath.Join(repository, \"internal\"), func(path string, entry fs.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.Type()&os.ModeSymlink != 0 {\n\t\ttarget, err := os.Readlink(path)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tparts[path] = \"symlink:\" + target\n\t} else if !entry.IsDir() {\n\t\tparts[path] = \"file:\" + lintBytes(t, path)\n\t}\n\treturn nil\n})",
       "filepath.WalkDir(filepath.Join(source, \"src/compiler\"), func(path string, entry fs.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif !entry.IsDir() && (strings.HasSuffix(path, \".ts\") || strings.HasSuffix(path, \".a\")) {\n\t\trows = append(rows, path)\n\t}\n\treturn nil\n})",
+      "os.Getenv(\"ADAMIC_GATE_UNCACHED\")",
       "os.Getenv(\"ADAMIC_LINT_BENCH\")",
       "os.Getenv(\"ADAMIC_TYPESCRIPT_SOURCE\")",
       "os.ReadFile(\"/proc/cpuinfo\")",
       "os.ReadFile(\"/proc/loadavg\")",
-      "os.ReadFile(output.Name())"
+      "os.ReadFile(filepath.Join(directory, \"digest\"))",
+      "os.ReadFile(filepath.Join(root, \".selected-rule\"))",
+      "os.ReadFile(output.Name())",
+      "os.ReadFile(path)",
+      "os.Stat(filepath.Join(directory, \".selected-rule\"))"
     ],
     "callers": [
       "TestThroughput"
     ],
     "message": "\"set ADAMIC_LINT_BENCH=1\"",
-    "class": "measurement",
-    "provides": "Opt-in timing or profile artifact comparison; does not replace correctness verification.",
     "opt_in_off": [
       "ADAMIC_LINT_BENCH"
-    ]
+    ],
+    "class": "measurement",
+    "provides": "Opt-in timing or profile artifact comparison; does not replace correctness verification."
   },
   {
     "file": "stage1/cohere/lint/profile_test.go",
@@ -1118,9 +1137,13 @@
     "reads": [
       "filepath.WalkDir(\".\", func(path string, entry fs.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.IsDir() && (path == \"gaps\" || strings.HasSuffix(path, \"testdata\")) {\n\t\treturn filepath.SkipDir\n\t}\n\tif !entry.IsDir() && (strings.HasSuffix(path, \".ts\") || strings.HasSuffix(path, \".a\") || strings.HasSuffix(path, \"rule.json\") || strings.HasSuffix(path, \"mutant.json\") || strings.HasSuffix(path, \"oracle.go\")) {\n\t\tfiles = append(files, path)\n\t}\n\treturn nil\n})",
       "filepath.WalkDir(filepath.Join(sourceRoot, \"src/compiler\"), func(path string, entry os.DirEntry, err error) error {\n\tif err == nil && !entry.IsDir() && strings.HasSuffix(path, \".ts\") {\n\t\tfiles = append(files, path)\n\t}\n\treturn err\n})",
+      "os.Getenv(\"ADAMIC_GATE_UNCACHED\")",
+      "os.Getenv(\"ADAMIC_LINT_BENCH\")",
       "os.Getenv(\"ADAMIC_LINT_PROFILE_DIR\")",
       "os.Getenv(\"ADAMIC_TYPESCRIPT_SOURCE\")",
       "os.ReadFile(file)",
+      "os.ReadFile(filepath.Join(directory, \"digest\"))",
+      "os.ReadFile(filepath.Join(root, \".selected-rule\"))",
       "os.ReadFile(filepath.Join(runtime, entry.Name()))",
       "os.ReadFile(goOracle(t))",
       "os.ReadFile(output.Name())",
@@ -1130,11 +1153,11 @@
       "TestProfileArtifacts"
     ],
     "message": "\"set ADAMIC_LINT_PROFILE_DIR to a scratch directory\"",
-    "class": "measurement",
-    "provides": "Opt-in timing or profile artifact comparison; does not replace correctness verification.",
     "opt_in_off": [
       "ADAMIC_LINT_PROFILE_DIR"
-    ]
+    ],
+    "class": "measurement",
+    "provides": "Opt-in timing or profile artifact comparison; does not replace correctness verification."
   },
   {
     "file": "stage1/cohere/lint/profile_test.go",
@@ -1143,9 +1166,14 @@
     "line": 162,
     "condition": "asked == \"\"",
     "reads": [
+      "filepath.WalkDir(filepath.Join(repository, \"internal\"), func(path string, entry fs.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.Type()&os.ModeSymlink != 0 {\n\t\ttarget, err := os.Readlink(path)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tparts[path] = \"symlink:\" + target\n\t} else if !entry.IsDir() {\n\t\tparts[path] = \"file:\" + lintBytes(t, path)\n\t}\n\treturn nil\n})",
       "filepath.WalkDir(root, func(path string, entry os.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif !entry.IsDir() && strings.HasSuffix(path, \".ts\") {\n\t\tabsolute, err := filepath.Abs(path)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\trows = append(rows, absolute)\n\t}\n\treturn nil\n})",
+      "os.Getenv(\"ADAMIC_GATE_UNCACHED\")",
+      "os.Getenv(\"ADAMIC_LINT_BENCH\")",
       "os.Getenv(\"ADAMIC_LINT_PROFILE_SNAPSHOTS\")",
       "os.Getenv(\"ADAMIC_TYPESCRIPT_SOURCE\")",
+      "os.ReadFile(filepath.Join(directory, \"digest\"))",
+      "os.ReadFile(filepath.Join(root, \".selected-rule\"))",
       "os.ReadFile(harness)",
       "os.ReadFile(output.Name())",
       "os.ReadFile(path)"
@@ -1154,11 +1182,11 @@
       "TestProfileSnapshotsAgree"
     ],
     "message": "\"set ADAMIC_LINT_PROFILE_SNAPSHOTS\"",
-    "class": "measurement",
-    "provides": "Opt-in timing or profile artifact comparison; does not replace correctness verification.",
     "opt_in_off": [
       "ADAMIC_LINT_PROFILE_SNAPSHOTS"
-    ]
+    ],
+    "class": "measurement",
+    "provides": "Opt-in timing or profile artifact comparison; does not replace correctness verification."
   },
   {
     "file": "stage1/cohere/lint/rule_check_test.go",
@@ -1190,7 +1218,7 @@
     "file": "stage1/cohere/mediaquery/mediaquery_test.go",
     "test": "TestThePortParsesAsGoCohereDoes",
     "id": "TestThePortParsesAsGoCohereDoes:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc",
-    "line": 94,
+    "line": 95,
     "condition": "library == \"\"",
     "reads": [
       "os.Getenv(\"ADAMIC_MEDIAQUERY_KEEP\")",
@@ -1207,11 +1235,11 @@
       "TestThePortParsesAsGoCohereDoes"
     ],
     "message": "\"set ADAMIC_MEDIA_QUERY_LIBRARY to a directory where `npm install postcss-media-query-parser@0.2.3` ran, to compare with the library itself\"",
-    "class": "required-input",
-    "provides": "ADAMIC_MEDIA_QUERY_LIBRARY: npm directory with postcss-media-query-parser@0.2.3; see docs/gate-inputs.md.",
     "opt_in_off": [
       "ADAMIC_MEDIA_QUERY_LIBRARY"
-    ]
+    ],
+    "class": "required-input",
+    "provides": "ADAMIC_MEDIA_QUERY_LIBRARY: npm directory with postcss-media-query-parser@0.2.3; see docs/gate-inputs.md."
   },
   {
     "file": "stage1/cohere/mediaquery/testdata/cohere_side_test.go",
@@ -1237,7 +1265,7 @@
     "file": "stage1/cohere/selector/selector_test.go",
     "test": "TestThePortParsesAsGoCohereDoes",
     "id": "TestThePortParsesAsGoCohereDoes:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc",
-    "line": 85,
+    "line": 86,
     "condition": "library == \"\"",
     "reads": [
       "os.Getenv(\"ADAMIC_SELECTOR_KEEP\")",
@@ -1252,17 +1280,17 @@
       "TestThePortParsesAsGoCohereDoes"
     ],
     "message": "\"set ADAMIC_SELECTOR_LIBRARY to a directory where `npm install postcss-selector-parser@2.2.3` ran, to compare with the library itself\"",
-    "class": "required-input",
-    "provides": "ADAMIC_SELECTOR_LIBRARY: npm directory with postcss-selector-parser@2.2.3; see docs/gate-inputs.md.",
     "opt_in_off": [
       "ADAMIC_SELECTOR_LIBRARY"
-    ]
+    ],
+    "class": "required-input",
+    "provides": "ADAMIC_SELECTOR_LIBRARY: npm directory with postcss-selector-parser@2.2.3; see docs/gate-inputs.md."
   },
   {
     "file": "stage1/cohere/selector/selector_test.go",
     "test": "TestSelectorThroughput",
     "id": "TestSelectorThroughput:bd045f17a47b90e4aa936cce7744f4c65a82b6b0a6aa7320868b549e63b7af2d",
-    "line": 407,
+    "line": 388,
     "condition": "os.Getenv(\"ADAMIC_SELECTOR_BENCH\") == \"\"",
     "reads": [
       "os.Getenv(\"ADAMIC_SELECTOR_BENCH\")",
@@ -1278,17 +1306,17 @@
       "TestSelectorThroughput"
     ],
     "message": "\"set ADAMIC_SELECTOR_BENCH=1 to time parser throughput\"",
-    "class": "measurement",
-    "provides": "Opt-in timing or profile artifact comparison; does not replace correctness verification.",
     "opt_in_off": [
       "ADAMIC_SELECTOR_BENCH"
-    ]
+    ],
+    "class": "measurement",
+    "provides": "Opt-in timing or profile artifact comparison; does not replace correctness verification."
   },
   {
     "file": "stage1/cohere/selector/selector_test.go",
     "test": "TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars",
     "id": "TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc",
-    "line": 460,
+    "line": 441,
     "condition": "library == \"\"",
     "reads": [
       "os.Getenv(\"ADAMIC_SELECTOR_LIBRARY\")"
@@ -1297,11 +1325,11 @@
       "TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars"
     ],
     "message": "\"set ADAMIC_SELECTOR_LIBRARY to prove upstream nontermination\"",
-    "class": "required-input",
-    "provides": "ADAMIC_SELECTOR_LIBRARY: npm directory with postcss-selector-parser@2.2.3; see docs/gate-inputs.md.",
     "opt_in_off": [
       "ADAMIC_SELECTOR_LIBRARY"
-    ]
+    ],
+    "class": "required-input",
+    "provides": "ADAMIC_SELECTOR_LIBRARY: npm directory with postcss-selector-parser@2.2.3; see docs/gate-inputs.md."
   },
   {
     "file": "stage1/cohere/selector/testdata/cohere_side_test.go",
@@ -1369,7 +1397,7 @@
     "file": "stage1/cohere/values/values_test.go",
     "test": "TestThePortParsesAsGoCohereDoes",
     "id": "TestThePortParsesAsGoCohereDoes:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc",
-    "line": 102,
+    "line": 103,
     "condition": "library == \"\"",
     "reads": [
       "os.Getenv(\"ADAMIC_VALUES_KEEP\")",
@@ -1384,11 +1412,11 @@
       "TestThePortParsesAsGoCohereDoes"
     ],
     "message": "\"set ADAMIC_VALUES_LIBRARY to a directory where `npm install postcss-values-parser@2.0.1` ran, to compare with the library itself\"",
-    "class": "required-input",
-    "provides": "ADAMIC_VALUES_LIBRARY: npm directory with postcss-values-parser@2.0.1; see docs/gate-inputs.md.",
     "opt_in_off": [
       "ADAMIC_VALUES_LIBRARY"
-    ]
+    ],
+    "class": "required-input",
+    "provides": "ADAMIC_VALUES_LIBRARY: npm directory with postcss-values-parser@2.0.1; see docs/gate-inputs.md."
   },
   {
     "file": "stage1/typescript/parser/parser_test.go",
