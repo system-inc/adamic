@@ -212,6 +212,10 @@
         signal worker line
 --- FAIL: TestRuntimeStaticsSignalAndExit/handler_buffer_mutant (15.13s)
 
+== github.com/system-inc/adamic/internal/native TestRuntimeStaticsSignalAndExit
+=== RUN   TestRuntimeStaticsSignalAndExit
+--- FAIL: TestRuntimeStaticsSignalAndExit (94.02s)
+
 == github.com/system-inc/adamic/stage1/cohere/lint (failed outside a test)
 FAIL	github.com/system-inc/adamic/stage1/cohere/lint	3600.136s
 
