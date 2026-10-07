@@ -64,7 +64,7 @@ and Go. The newline following the source affects only SourceFile/EOF ends.
 
 TypeScript 6.0.3's parser.ts:8207 parseHeritageClause always calls
 parseExpressionWithTypeArguments, which finishes a createExpressionWithTypeArguments
-node at :8227. This applies to interface extends and class implements as well
+node at :8223. This applies to interface extends and class implements as well
 as class extends.
 
 Pinned Go parser.go:1835 explicitly selects parseTypeHeritageClauseElement
@@ -76,7 +76,7 @@ extends. This conditional conversion establishes a deliberate representation
 change; a blind global kind rename would be wrong.
 
 Stage1 statements.ts:912 builds TypeReference for interface extends;
-classDeclaration at :505 uses this.type() for implements and the expression
+classDeclaration at :506 uses this.type() for implements and the expression
 path for extends. parser.ts:559 finishes that ordinary TypeReference.
 Thus stage1 follows Go's distinction on these valid inputs.
 
@@ -102,7 +102,7 @@ TypeScript parser.ts:7583 parseArrayBindingElement detects a comma and returns
 createOmittedExpression before parsing an ordinary binding element.
 Go parser.go:1659 explicitly leaves dotDotDotToken, name and initializer nil
 for a comma (comment: "These are all nil for a missing element"), then always
-finishes NewBindingElement at :1670. Stage1 parser.ts:812 likewise creates an
+finishes NewBindingElement at :1670. Stage1 parser.ts:813 likewise creates an
 empty BindingElement for the comma. This is deliberate in Go, not accidental
 loss of an identifier in stage1.
 
