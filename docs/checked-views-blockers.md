@@ -99,15 +99,27 @@ that a cast reaches all of them. It does not yet inventory implicit property
 reads in object spread/rest or destructuring assignment. Exact closed-world
 reaching-view counts and complete all-read coverage remain unfinished.
 
-The enumerator contains no flow solver. Lane 3 owns the shared
-`allocationFlowGraph.ReachingAllocations` query in `shape_flow.go`, based on
-`graph_flow.go`. Its latest published measurement, c1f4c5a7, supplies cast-side
-Unknown evidence, not read-side view propagation: 1,668 unsupported-flow casts,
-1,267 diagnosed-body/dependency casts, one host-metadata cast, zero certified
-free casts. Property/element loads, callbacks and generic substitutions remain
-Unknown. That evidence is not a per-read certificate and cannot exclude a
-helper read. A shared-graph read-query adapter is still required; no second
-whole-program flow was written here.
+The enumerator contains no flow solver. A scratch-only receiver adapter now
+reuses lane 3 c1f4c5a7's original source adapter and
+`allocationFlowGraph.ReachingAllocations` from `shape_flow.go`/`graph_flow.go`.
+The production loader and lowering output remain disabled in that overlay.
+On the pinned **unadapted, native-checker-rejected** program it records 6,037
+diagnostics, 412 allocation schemas and 69,621 receiver queries: 67,141 have
+unknown allocation frontiers and 2,480 have known allocation sets. These are
+not lane 3's adapted-program diagnostic counts.
+
+Exact UTF-16-to-UTF-8 span joining matches all 66,148 property/element inventory
+reads; the other 812 are destructuring bindings, which retain Unknown checks
+without a shared-graph query. Among matched receivers, 2,457 have known
+allocation sets and 40 overlap allocations reaching a cast. The graph does not
+prove the other receivers non-viewed: unknown cast operands, property loads,
+callbacks, generics and diagnosed producers can route known allocations through
+untracked paths. All 66,960 inventory receivers therefore retain checks. A known
+allocation is not a proof that an object never passes through a view. No second
+flow solver or erased guard was introduced. `read-flow-summary.json` preserves
+these counters and source hashes; `read-flow-result.json.gz` preserves the raw
+query/cast/diagnostic evidence. Known overlap is conservative may-flow evidence,
+not a claim that an actual execution has passed a view to that read.
 
 The table classifies only the field's immediate declared type, without expanding
 its descendant contract graph. Families overlap. These are **family demand**
@@ -187,11 +199,20 @@ A deferred descriptor alone cannot safely enable admission while the global
 field-name scan or unchecked helper reads remain. These shared files remain
 lane 1 territory and have not been changed by lane 4.
 
-The required viewed-value-to-helper runtime mutant has not yet been run against
-lazy admission. Existing eager compile refusal is conservative, but does not
-prove that future lazy helper reads check correctly. No exit-70/read-locality
-claim or completion date for lane 1 nullish/optional integration follows from
-this inventory. Per-cast only-lane-4/plus-other counts are **unmeasured** under
+The helper oracle now passes ordinary and viewed Box values to the same helper.
+Source Node prints `true` then `42` for its malformed boolean member; native and
+JavaScript print `true` and stop at `value.unsupported` with exit 70, expected
+boolean, found number. Removing only that helper read's `Property.View` marker
+runs valid release code: native prints `true`/`false` and JavaScript
+`true`/`42`, both exit 0. The pinned exit/message catches both mutants.
+A helper reading the unsupported `string | number` family still compile-refuses
+with the exact read location/type message. This proves current scalar helper
+checks and conservative unsupported-family refusal, not lazy union admission.
+The separate measurement mutant turning off an Unknown helper receiver's guard
+is caught by the independent inventory audit. No lazy mixed-union or lane 1 nullish/optional completion claim follows from
+this inventory. A defensible nullish/optional completion date requires lane 1
+to supply the lazy dispatch hooks and resolve the shared cast merge conflict;
+lane 4 cannot commit a date for another owner’s implementation. Per-cast only-lane-4/plus-other counts are **unmeasured** under
 the new rule, rather than inherited from the obsolete transitive census.
 
 Reproduce after sourcing the toolchain:
@@ -201,3 +222,23 @@ NODE_PATH=stage3/fixtures/assertions/api/node_modules node stage3/interface-down
 # gzip the generated sites/pairs JSON with deterministic mtime=0.
 python3 stage3/interface-downcasts/lane4/audit-read-demand.py /tmp/views-mixed-typescript stage3/interface-downcasts/lane4 > /tmp/read-demand-audit.log 2>&1
 ```
+
+Shared-graph reproduction uses an isolated worktree at c1f4c5a7, with its exact
+cohere/TypeScript submodule pins (worktrees, no copied code):
+
+```sh
+# Run this command from that lane 3 worktree.
+python3 /workspace/adamic/stage3/interface-downcasts/lane4/make-read-flow-overlay.py /tmp/views-read-flow-overlay > /tmp/read-flow-overlay.log 2>&1
+go build -buildvcs=false -overlay=/tmp/views-read-flow-overlay/overlay.json -o /tmp/views-read-flow-meter ./stage3/shape-conformance/latent/tool > /tmp/read-flow-build.log 2>&1
+# Run the remaining commands from lane 4.
+python3 stage3/interface-downcasts/lane4/map-read-flow-input.py /tmp/views-mixed-typescript stage3/interface-downcasts/blocking-families-sites.json /tmp/views-read-flow-casts.json > /tmp/read-flow-map.log 2>&1
+/tmp/views-read-flow-meter /tmp/views-mixed-typescript /tmp/views-read-flow-casts.json /tmp/views-read-flow-result.json > /tmp/read-flow-run.log 2>&1
+python3 stage3/interface-downcasts/lane4/export-read-flow.py /tmp/views-mixed-typescript /tmp/views-read-flow-result.json stage3/interface-downcasts/lane4 > /tmp/read-flow-export.log 2>&1
+python3 stage3/interface-downcasts/lane4/read-demand-mutants.py /tmp/views-mixed-typescript > /tmp/read-demand-mutants.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCheckedViewLane4' -count=1 -v -timeout 10m > /tmp/helper-oracle.log 2>&1
+```
+
+The scoped helper oracle passes in 3.142s and oracle vet passes. Tests/output go
+to committed logs. Production compiler files were not changed. The full gate
+was not rerun; the inherited TestSharedArrayContractAdapter disagreement from
+the earlier lane 4 report remains outside this measurement change.

@@ -315,3 +315,56 @@ source Node controls, both backend refusal pins and all three requested mutants.
 An untagged object union may overlap: accept a value satisfying any complete
 member; never commit to the first heap-kind match. Failed alternatives must not
 panic before all alternatives have been considered.
+
+### Lane 4 read-demand checkpoint and lazy-admission handoff, October 7
+
+The user superseded the transitive census with read demand. Lane 4's first
+checkpoint is ce2545e4, published before building further. The explicit read
+inventory and conservative Unknown table live in docs/checked-views-blockers.md.
+This addition does not transfer ownership of the common census/dispatch files.
+
+Additional lane 4 territory: lane4/read-demand.cjs, read-demand-*.json.gz,
+read-demand-summary.json, audit-read-demand.py, make-read-flow-overlay.py,
+map-read-flow-input.py, export-read-flow.py, read-flow artifacts and
+read-fixtures/*.a. The new oracle remains checked_views_mixed_unions_test.go.
+The scratch overlay extends lane 3's source adapter by receiver queries only;
+allocation numbering, argument/return joins and solving use its original
+assignAllocationSites/newAllocationFlowGraph/ReachingAllocations code. Neither
+cohere code nor the flow engine is copied into lane 4.
+
+Concrete lane 1 hooks needed for sound lazy contracts:
+
+1. Split view admission from descendant support. view() currently invokes
+   viewObjectFields and recursive viewContract before constructing the cast.
+   Reserve a target/tag descriptor without rejecting every descendant contract.
+   Keep an unsupported child as a deferred obligation with its declared family
+   and refusal reason, never as a successfully validated ViewUnknown value.
+2. At each read, consult the receiver's reaching-view status through lane 3's
+   shared graph. Known viewed and Unknown receivers retain a cheap tag test and
+   the field's declared contract check; a helper's interface parameter cannot
+   lose the check because its body lacks a lexical cast. Preserve this through
+   generics, callbacks, aliases and object/array-held values. Unmodeled producer
+   edges remain Unknown. Missing flow cannot certify a receiver ordinary.
+3. Remove the eager global scan keyed only by field name as an admission gate.
+   Make unsupported-member refusal a read-site result naming the receiver field,
+   declared family and reason. Compile refusal at that read is acceptable until
+   a runtime descriptor/probe is available; unread unsupported fields must not
+   reject a tag-valid cast. Read support must precede enabling lazy admission.
+4. Resolve a deferred member contract on demand; retain the selected child view
+   for transitive reads. No first-member selection, blanket object-tag proof,
+   null/undefined conflation or phantom-brand erasure is allowed. Native slot
+   probes still need lane 1's readiness and presence machinery, not a copy.
+
+Lane 4's helper oracle passes ordinary and viewed Box values to the same helper.
+The malformed boolean payload stops at value.unsupported with exit 70 in both
+backends. A mutant removing only that helper Property.View marker runs valid
+release code and is caught by the pinned refusal. The unsupported mixed-union
+helper remains a compile refusal. This proves the existing scalar helper guard,
+not completion of lazy mixed-union/nullish/optional admission.
+
+Lane 1 9b85eada was fetched; merging it into this lane conflicts in the shared
+cast.go and the plan. The merge was aborted without editing shared compiler
+files. Lane 2 remains merged at 0b141c26. Lane 3 c1f4c5a7 is used in an isolated
+measurement worktree rather than merged through those conflicts. The lane 1
+owner must reconcile cast dispatch before a landed/re-greened integration or a
+completion date for its nullish/optional families can be claimed by lane 4.

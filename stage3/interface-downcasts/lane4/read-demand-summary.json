@@ -3,7 +3,7 @@
   "source_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
   "diagnostics": 0,
   "measurement": "Conservative Unknown-fallback read demand, NOT proven reaching-view counts or missing-support counts",
-  "flow_dependency": "origin/codex/shape-conformance c1f4c5a70bd7d98fd543f4eb7ff96191be4a338b; shared ReachingAllocations is not exposed for read-site queries in its published census",
+  "flow_dependency": "Reuses lane 3 c1f4c5a70bd7d98fd543f4eb7ff96191be4a338b ReachingAllocations through make-read-flow-overlay.py; Unknown view propagation retains checks",
   "read_sites": 66960,
   "pairs": 12181,
   "known_view_reachable": null,
@@ -915,5 +915,13 @@
         "object plus primitive union"
       ]
     }
-  ]
+  ],
+  "shared_flow": {
+    "graph_queries": 69621,
+    "matched_inventory_receivers": 66148,
+    "unmapped_inventory_receivers": 812,
+    "matched_known_allocation_receivers": 2457,
+    "matched_overlapping_viewed_allocations": 40,
+    "proven_non_viewed_receivers": 0
+  }
 }
