@@ -4,12 +4,11 @@ import { Parser } from '../../typescript/parser/parser.ts';
 import { Scanner } from '../../typescript/scanner/scanner.ts';
 import { UnaryMinus, byteOffsets } from './unary_minus.ts';
 import { Rules } from './rules.ts';
-import { NoGlobalListenerTargetAssertion } from './no_global_listener_target_assertion.a';
-import { NoMockOnModuleNamespace } from './no_mock_on_module_namespace.a';
 import { NoLeakedNumberRender } from './no_leaked_number_render.a';
+import { ParseNode } from '../../typescript/parser/nodes.ts';
 
 const args = programArguments();
-const config = args[0] ?? panic('usage: wave_14_next.a tsconfig manifest [--count]');
+const config = args[0] ?? panic('usage: wave_14_render.a tsconfig manifest [--count]');
 const manifest = readTextFile(args[1] ?? panic('missing manifest'));
 if(manifest.kind === 'Error') {
     panic(manifest.message);
@@ -32,8 +31,30 @@ for(const path of paths) {
         linter.parents.push(-1);
     }
     linter.links(root, -1);
-    new NoGlobalListenerTargetAssertion(linter).run();
-    new NoMockOnModuleNamespace(linter).run();
+    if(args.includes('--synthetic-children') || args.includes('--synthetic-attribute')) {
+        // Isolated judgment probe: expression statements become child contexts.
+        // This does not claim that the shared parser supports real JSX source.
+        const size = parser.nodes.length;
+        for(let at = 0; at < size; at++) {
+            const node = parser.node(at);
+            if(node.kind !== 'ExpressionStatement') {
+                continue;
+            }
+            const expression = node.children[0] ?? -1;
+            const wrapper = parser.nodes.length;
+            parser.nodes.push(new ParseNode('JsxExpression', node.pos, node.end, [expression]));
+            parser.nodes.push(
+                new ParseNode(
+                    args.includes('--synthetic-attribute') ? 'JsxAttribute' : 'JsxElement',
+                    node.pos,
+                    node.end,
+                    [wrapper],
+                ),
+            );
+            linter.parents.push(wrapper + 1);
+            linter.parents.push(-1);
+        }
+    }
     new NoLeakedNumberRender(linter).run();
     for(const finding of linter.findings) {
         finding.sortKey = finding.written();

@@ -43,3 +43,18 @@ This is a partial continuation, not three completed ports. Implementation stops
 at this blocker, with no further rules claimed and no shared harness or generator
 edits. The six existing checker-dispatch lines were added before the correction.
 See ../WAVE_14_NEXT_REPORT.md for commands, artifacts and limits.
+
+## Leaked-render judgments completed
+
+On the next resume, the leaked-render rule's native judgments and JSX-context
+visitor were implemented in no_leaked_number_render.a and integrated into the
+owned wave_14_next.a driver. Twenty-two isolated controls supply only synthetic
+JSX parent contexts to both native and the unchanged production Go listener.
+They match on 18 complete findings and 7704 bytes, including empty fixes and
+suggestions; attributes and ordinary source stay silent. Sanitizers pass and
+an exit-0, empty-stderr judgment mutant differs at byte 51.
+Real JSX source remains blocked by the shared native parser, independently of
+.a module support in the shared lint harness. No shared parser, generator or
+harness file was changed. This is not a claim of end-to-end JSX parity.
+No additional rules are claimed while that original completion gate is blocked.
+See ../WAVE_14_RENDER_REPORT.md for the evidence and exact scope.
