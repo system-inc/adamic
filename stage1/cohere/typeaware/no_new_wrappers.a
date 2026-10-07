@@ -1,0 +1,20 @@
+import type { Rules } from './rules.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { globalBinding } from './wave_11_fourth_support.a';
+export class NoNewWrappers {
+    readonly rules: Rules;
+    constructor(rules: Rules) { this.rules = rules; }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            const node = this.rules.parser.node(index);
+            if((this.rules.parents[index] ?? -1) < 0 || node.kind !== 'NewExpression') { continue; }
+            const callee = this.rules.skip(node.children[0] ?? -1);
+            const target = this.rules.parser.node(callee);
+            if(target.kind !== 'Identifier' || !['String', 'Number', 'Boolean'].includes(target.text) || !globalBinding(this.rules, callee)) { continue; }
+            const name = target.text;
+            const message = 'This calls `new ' + name + '()`. Constructed, ' + name + ' returns an object rather than a primitive, so the result is always truthy, compares equal to nothing by `===`, and reports its `typeof` as "object". Drop the `new` and call ' + name + ' directly.';
+            this.rules.findings.push(new Diagnostic('no-new-wrappers', 'noNewWrappers', message,
+                this.rules.byte(this.rules.start(node)), this.rules.byte(node.end), ''));
+        }
+    }
+}

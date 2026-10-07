@@ -1,0 +1,24 @@
+import type { Rules } from './rules.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { globalBinding, accessObject, staticName } from './wave_11_fourth_support.a';
+export class NoNewFunc {
+    readonly rules: Rules;
+    constructor(rules: Rules) { this.rules = rules; }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            const node = this.rules.parser.node(index);
+            if((this.rules.parents[index] ?? -1) < 0 || !['NewExpression', 'CallExpression'].includes(node.kind)) { continue; }
+            const callee = this.rules.skip(node.children[0] ?? -1);
+            const target = this.rules.parser.node(callee);
+            let identifier = callee;
+            if(target.kind !== 'Identifier') {
+                if(!['apply', 'bind', 'call'].includes(staticName(this.rules, callee))) { continue; }
+                identifier = this.rules.skip(accessObject(this.rules, callee));
+            }
+            const receiver = this.rules.parser.node(identifier);
+            if(receiver.kind !== 'Identifier' || receiver.text !== 'Function' || !globalBinding(this.rules, identifier)) { continue; }
+            this.rules.findings.push(new Diagnostic('no-new-func', 'noFunctionConstructor', "This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter.",
+                this.rules.byte(this.rules.start(node)), this.rules.byte(node.end), ''));
+        }
+    }
+}
