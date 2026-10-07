@@ -1,0 +1,107 @@
+package lower
+
+import (
+	"bytes"
+	"os"
+	"os/exec"
+	"path/filepath"
+	"strings"
+	"testing"
+
+	"github.com/system-inc/adamic/internal/javascript"
+	"github.com/system-inc/adamic/internal/native"
+)
+
+// Node runs the original sources. Successful generated programs match it byte
+// for byte; checked failures have an independent complete exit-70 contract.
+func TestPredicateOverloadRuntime(t *testing.T) {
+	t.Parallel()
+	runner, err := filepath.Abs("../../oracle/node.mjs")
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, probe := range []struct {
+		name, nodeOut, checkedOut, message string
+		checked                            bool
+	}{
+		{"parser_every_result", "overload declarations loaded\n", "", "", false},
+		{"parser_some_result", "overload declarations loaded\n", "", "", false},
+		{"overload_some", "true:false\n", "", "", false},
+		{"overload_some_empty", "false\n", "", "overload 1 of some result: predicate array is false", true},
+		{"overload_callback", "true\n", "", "", false},
+		{"overload_erased", "true:false\n", "", "", false},
+		{"overload_checked", "called\ntrue\n", "called\n", "overload 1 of lie result: predicate value is false", true},
+		{"overload_false", "called\nfalse\n", "called\n", "overload 1 of lie result: predicate value is false", true},
+		{"overload_once", "argument\ncalled\ntrue\n", "argument\ncalled\n", "overload 1 of lie result: predicate value is false", true},
+		{"overload_every", "name\ntrue\n", "", "", false},
+		{"overload_array_alias", "called\ntrue\n", "called\n", "overload 1 of corrupt result: predicate array is false", true},
+		{"overload_assertion", "called\nreturned\n", "called\n", "overload 1 of lie result: predicate value is false", true},
+		{"overload_nominal", "called\ntrue\n", "called\n", "overload 1 of lie result: predicate value is false", true},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			path, err := filepath.Abs("testdata/predicates/" + probe.name + ".a")
+			if err != nil {
+				t.Fatal(err)
+			}
+			run := func(command *exec.Cmd, stdout, stderr string, code int) {
+				t.Helper()
+				var output, errors bytes.Buffer
+				command.Stdout = &output
+				command.Stderr = &errors
+				err := command.Run()
+				got := 0
+				if err != nil {
+					if exit, ok := err.(*exec.ExitError); ok {
+						got = exit.ExitCode()
+					} else {
+						t.Fatal(err)
+					}
+				}
+				if got != code || output.String() != stdout || errors.String() != stderr {
+					t.Fatalf("%s: exit %d, stdout %q, stderr %q; want exit %d, stdout %q, stderr %q", command.Path, got, output.String(), errors.String(), code, stdout, stderr)
+				}
+			}
+			run(exec.Command("node", "--disable-warning=ExperimentalWarning", runner, path), probe.nodeOut, "", 0)
+			source, err := os.ReadFile(path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			program, err := lowerSource(t, string(source))
+			if err != nil {
+				t.Fatal(err)
+			}
+			if probe.name == "overload_erased" {
+				for _, constant := range program.Strings {
+					if strings.Contains(constant, "overload 1 of isNumber result:") {
+						t.Fatal("body-proven predicate kept a result check")
+					}
+				}
+			}
+			stdout, stderr, code := probe.nodeOut, "", 0
+			if probe.checked {
+				stdout = probe.checkedOut
+				stderr = "adamic: panic: " + probe.message + "\n"
+				code = 70
+			}
+			binary := filepath.Join(t.TempDir(), "native")
+			if err = native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+				t.Fatal(err)
+			}
+			command := exec.Command(binary)
+			command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1")
+			run(command, stdout, stderr, code)
+			generated := filepath.Join(t.TempDir(), "generated.mjs")
+			if err = os.WriteFile(generated, []byte(javascript.JavaScript(program)), 0644); err != nil {
+				t.Fatal(err)
+			}
+			run(exec.Command("node", "--disable-warning=ExperimentalWarning", runner, generated), stdout, stderr, code)
+		})
+	}
+}
+
+func TestIndirectPredicateOverloadIsPending(t *testing.T) {
+	_, err := lowerSource(t, `function lie(value: number | string): value is number; function lie(value: number | string): boolean { return true; } const alias=lie; alias("text");`)
+	if err == nil || !strings.Contains(err.Error(), "indirect call of a checked predicate overload") {
+		t.Fatalf("want explicit indirect-call capability gap, got %v", err)
+	}
+}

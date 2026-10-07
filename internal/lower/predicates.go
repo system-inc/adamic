@@ -21,6 +21,7 @@ type predicateFlowProof struct {
 	function   *ast.Node
 	parameter  *ast.Node
 	declared   *checker.Type
+	admitted   *checker.Type
 	target     *checker.Type
 	assertion  bool
 	trueTypes  []*checker.Type
@@ -78,6 +79,11 @@ func (l *lowering) proveFlowPredicate(node *ast.Node) error {
 	if changed != nil {
 		return p.refused(changed, "the predicate parameter is assigned")
 	}
+	return p.proveBody(node)
+}
+
+func (p *predicateFlowProof) proveBody(node *ast.Node) error {
+	function := p.function
 	paths := []predicateFlowPath{{flow: &ast.FlowNode{Flags: ast.FlowFlagsStart}}}
 	var remaining []predicateFlowPath
 	var err error
@@ -97,14 +103,17 @@ func (l *lowering) proveFlowPredicate(node *ast.Node) error {
 			return err
 		}
 	}
-	if !p.assertion && len(p.trueTypes) > 0 && !checker.Checker_isTypeIdenticalTo(l.checker, l.checker.GetUnionType(p.trueTypes), p.target) {
-		return p.refused(p.lastReturn, "the body's true narrowing does not match "+l.checker.TypeToString(p.target))
+	if !p.assertion && len(p.trueTypes) > 0 && !checker.Checker_isTypeIdenticalTo(p.l.checker, p.l.checker.GetUnionType(p.trueTypes), p.target) {
+		return p.refused(p.lastReturn, "the body's true narrowing does not match "+p.l.checker.TypeToString(p.target))
 	}
 	return nil
 }
 
 func (p *predicateFlowProof) narrowed(path predicateFlowPath, initial *checker.Type) *checker.Type {
-	return predicateFlowType(p.l.checker, p.parameter.Name(), p.declared, initial, p.function, path.flow)
+	if p.admitted != nil && initial == p.declared {
+		initial = p.admitted
+	}
+	return p.l.concrete(predicateFlowType(p.l.checker, p.parameter.Name(), p.declared, initial, p.function, path.flow))
 }
 
 func predicateBranch(path predicateFlowPath, expression *ast.Node, truth bool) predicateFlowPath {
@@ -115,9 +124,15 @@ func predicateBranch(path predicateFlowPath, expression *ast.Node, truth bool) p
 	return predicateFlowPath{flow: &ast.FlowNode{Flags: flags, Node: expression, Antecedent: path.flow}, checked: true}
 }
 
+// Immutable scalar arguments carry their admitted value type into the body.
+// An object view does not certify its current tag without an actual test.
+func (p *predicateFlowProof) admittedValueProof() bool {
+	return p.admitted != nil && p.target.Flags()&(checker.TypeFlagsNumberLike|checker.TypeFlagsStringLike|checker.TypeFlagsBooleanLike|checker.TypeFlagsUndefined) != 0
+}
+
 func (p *predicateFlowProof) normalReturn(node *ast.Node, path predicateFlowPath) error {
 	narrowed := p.narrowed(path, p.declared)
-	if !path.checked || !checker.Checker_isTypeIdenticalTo(p.l.checker, narrowed, p.target) || p.l.nominalMismatch(narrowed, p.target, map[[2]*checker.Type]bool{}) != nil {
+	if (!path.checked && !p.admittedValueProof()) || !checker.Checker_isTypeIdenticalTo(p.l.checker, narrowed, p.target) || p.l.nominalMismatch(narrowed, p.target, map[[2]*checker.Type]bool{}) != nil {
 		return p.refused(node, "normal return has not narrowed "+p.parameter.Name().Text()+" to "+p.l.checker.TypeToString(p.target))
 	}
 	return nil
@@ -158,7 +173,7 @@ func (p *predicateFlowProof) returned(node, expression *ast.Node, paths []predic
 			// narrowing independently of the true-return comparison.
 			if truth {
 				narrowed := p.narrowed(branch, p.declared)
-				if !branch.checked || !p.l.checker.IsTypeAssignableTo(narrowed, p.target) || p.l.nominalMismatch(narrowed, p.target, map[[2]*checker.Type]bool{}) != nil {
+				if (!branch.checked && !p.admittedValueProof()) || !p.l.checker.IsTypeAssignableTo(narrowed, p.target) || p.l.nominalMismatch(narrowed, p.target, map[[2]*checker.Type]bool{}) != nil {
 					return p.refused(node, "true return narrows to "+p.l.checker.TypeToString(narrowed)+", not "+p.l.checker.TypeToString(p.target))
 				}
 				p.trueTypes = append(p.trueTypes, narrowed)
@@ -321,6 +336,9 @@ func predicateTrueType(c *checker.Checker) *checker.Type {
 // The flow verifier keeps main's literal and nominal proofs. Body summaries add
 // verified helpers and truthiness assertions; tag-only facts use checked views.
 func (l *lowering) predicateRefusal(node *ast.Node) error {
+	if node.Parent.Kind == ast.KindFunctionDeclaration && node.Parent.Body() == nil && l.censusImplementation(node.Parent) != nil {
+		return nil
+	}
 	if l.predicateParameter(node) != nil {
 		return nil
 	}
@@ -402,6 +420,12 @@ func (l *lowering) predicateArguments(node *ast.Node) error {
 	if signature == nil {
 		return nil
 	}
+	if overload := signature.Declaration(); overload != nil && overload.Kind == ast.KindFunctionDeclaration && overload.Body() == nil && overload.Type() != nil && overload.Type().Kind == ast.KindTypePredicate {
+		callee := ast.SkipParentheses(node.AsCallExpression().Expression)
+		if callee.Kind != ast.KindIdentifier || l.symbol(callee) != l.symbol(overload.Name()) {
+			return l.notYet(node, "an indirect call of a checked predicate overload")
+		}
+	}
 	for index, parameter := range signature.Parameters() {
 		if index >= len(node.AsCallExpression().Arguments.Nodes) {
 			continue
@@ -458,7 +482,14 @@ func (l *lowering) predicateArguments(node *ast.Node) error {
 		}
 		annotation := implementation.Type().AsTypePredicateNode()
 		wanted := contract.AsTypePredicateNode()
-		if annotation.Type == nil || wanted.Type == nil || !checker.Checker_isTypeIdenticalTo(l.checker, l.checker.GetTypeAtLocation(annotation.Type), l.checker.GetTypeAtLocation(wanted.Type)) {
+		calls := l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(parameter), checker.SignatureKindCall)
+		var target *checker.Type
+		if len(calls) == 1 {
+			if predicate := predicateOfSignature(l.checker, calls[0]); predicate != nil {
+				target = predicate.Type()
+			}
+		}
+		if annotation.Type == nil || wanted.Type == nil || target == nil || !checker.Checker_isTypeIdenticalTo(l.checker, l.checker.GetTypeAtLocation(annotation.Type), target) {
 			return failure()
 		}
 		if err := l.predicateRefusal(implementation.Type()); err != nil {
@@ -467,3 +498,9 @@ func (l *lowering) predicateArguments(node *ast.Node) error {
 	}
 	return nil
 }
+
+// The pinned checker resolves a predicate's target under overload type arguments.
+// This recovers the claim to validate; it never supplies a body-proof fact.
+//
+//go:linkname predicateOfSignature github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypePredicateOfSignature
+func predicateOfSignature(receiver *checker.Checker, signature *checker.Signature) *checker.TypePredicate
