@@ -1,3 +1,94 @@
+Refined the class exemption across whole-program transitive descendants and added six developer widening lies with pinned refusals and repaired oracles.
+Commits: b9715978334b534815a01fdea9eedbb3ae2136bb; prerequisite f1c9173eeeb073743c7233ad11f0d12c47363503; current main b6b1538.
+Validation: lower passes (32.125s), complete uncached oracle passes (154.607s), counts update passes (33.210s), vet/format/diff checks clean. Setup completed in 178s; nproc 5, cgroup quota 4 CPUs.
+Mutants: seven independent mutants fail their intended assertions, including direct subclasses only, caught by class_transitive compiling.
+Limits: Function programs skipped for codex/refusal-pass-rulings; compound generic matching is conservative; full repository gate and stage 3 census not rerun.
+
+## October 7 refinement
+
+The rule follows @system_adamic's October 7 ruling. When a nominal source lacks an optional target property, scan every class declaration and class expression in the loaded program's roots and imported modules, then follow nominal ancestry transitively. A descendant whose property type is not assignable to the target property type refuses the widening. The message identifies the descendant, property, and declaration location. A compatible descendant stays allowed even when the source view hides its property.
+
+This exemption relies on Adamic's closed world: the whole program is compiled together. If separate compilation ever arrives, the exemption must be revisited. The same assumption is written beside the production rule.
+
+Generic ancestry is matched against the source's invariant type arguments. Direct parameters and nested reference arguments are substituted before checking the descendant's property. The positive generic fixture has both `Derived<T> extends Base<T>` with `y: T` and an unrelated `Base<string>` descendant with `y: string`: a `Base<number>` view remains allowed and Node prints `number` then `2`. An unresolved compound generic argument is conservatively retained as a possible descendant. This can refuse a compatible compound instantiation whose proof would require more inference; no exhaustive generic inference is claimed.
+
+The new class fixtures are `class_derived`, `class_transitive`, `class_expression`, `class_generic`, and `class_generic_compound` in `internal/lower/testdata/optional_widening`. Each pins its entire diagnostic in a `.refused` file, normalizing only the repository's absolute path. Source Node prints `string` for each. The two accepted subclass fixtures are registered in the oracle and print `number` then `2` in source Node and both backends.
+
+The original counterexample is now refused with:
+
+```text
+testdata/optional_widening/class_derived.a:4:42: Adamic 0.1 refuses optional property y in { x: number; y?: number; } absent from class source Base, but subclass Derived declares y at testdata/optional_widening/class_derived.a:2:30 with an incompatible type; make the subclass property assignable to the target, or build a fresh object with known fields (adamic/no-optional-widening)
+```
+
+`TestOptionalWideningWholeProgram` also covers a descendant in an imported module while the value is constructed as the base class. An additional case exercises multiple checker roots directly; native `Lower` accepts one entry file, so that case is a refusal-pass check, not a claim that multiple-entry native lowering exists.
+
+## Developer observed programs
+
+Fetched `origin/devtools/refusal-lies` at `4fb0b5ed9ce8f0137be47cbe3f7c9b611b54e51e`. Copied the six `widening_*.a` programs and their `.expected` Node observations unchanged into the lower fixtures. Every program is refused, and each complete message is pinned separately. `TestOptionalWideningObservedNode` checks the independent Node observations, including exit 0 and empty stderr.
+
+| Original fixture | Observed Node stdout, lines separated by commas |
+|---|---|
+| widening_boolean_as_number | false, boolean, 2 |
+| widening_boolean_as_number_array | boolean, false, 2 |
+| widening_boolean_as_number_ops | false, true, 10, true, false |
+| widening_boolean_as_number_parameter | 2, 101, 3 |
+| widening_boolean_as_number_return | boolean, false, 2 |
+| widening_false_as_number | false, boolean, 1 |
+
+Their accepted neighbors retain the original producer and numeric consumer, replacing the widening relation with a fresh object containing only the known `x` field. The array neighbor maps each element to that fresh shape, with an explicit result type; the parameter neighbor rebuilds at the argument; the return neighbor rebuilds at the return. Each repaired source is independently run on Node and compared against generated JavaScript, release native, sanitized native, and the leak check. These are repairs, not claims that the original lying outputs can be soundly retained.
+
+Skipped `function_type_length.a` and its observation. All Function-typed programs belong to `codex/refusal-pass-rulings`, as requested.
+
+Eight new oracle count rows were generated. No existing row moved. The two subclass programs each record allocations 3, frees 3, retains 2, releases 7, peak 3, regions 0. The repaired developer programs' complete counts are in `internal/oracle/counts.md`.
+
+## Refinement mutants and verification
+
+[class-mutants.py](class-mutants.py) mutates the real rule independently and restores it in `finally`. Every test exits 1 through its intended assertion; none is killed by a build error, panic, or clang warning.
+
+| Mutant | What catches it |
+|---|---|
+| Direct subclasses only | class_transitive compiles; refusal assertion sees nil |
+| Skip class expressions | class_expression compiles; refusal assertion sees nil |
+| Skip imported modules | WholeProgram/true loses the Derived refusal |
+| Skip extra checker roots | WholeProgram/false loses the Derived refusal |
+| Skip generic substitution | generic_subclass is wrongly refused as Derived<T> |
+| Skip unresolved compound arguments | class_generic_compound compiles; refusal assertion sees nil |
+| Exempt structural sources | All six developer widening programs compile; refusal assertions see nil |
+
+Logs are under [evidence](evidence), with the `class-mutant-` prefix. The first whole-oracle attempt found a path error in the new observation test; paths now use the harness's absolute-path contract. The broad lower attempt also found the checker's `Types()` accessor requires a union/intersection guard, now fixed. Final restored results are recorded below; earlier failed attempts are not counted as green validation.
+
+```sh
+bash cloud/setup.sh > /tmp/optional-widening-2-setup.log 2>&1
+source /workspace/adamic-tools/env.sh
+python3 docs/optional-widening/class-mutants.py > /tmp/optional-widening-2-mutants.log 2>&1
+go test ./internal/lower -count=1 > /tmp/optional-widening-2-lower-final.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -count=1 -timeout 30m > /tmp/optional-widening-2-oracle.log 2>&1
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m -args -update-counts > /tmp/optional-widening-2-counts.log 2>&1
+gofmt -l cmd internal > /tmp/optional-widening-2-format.log
+go vet ./... > /tmp/optional-widening-2-vet.log 2>&1
+git diff --check
+```
+
+Observed final results: lower exit 0, `ok github.com/system-inc/adamic/internal/lower 32.125s`; complete uncached oracle exit 0, `ok github.com/system-inc/adamic/internal/oracle 154.607s`; counts update exit 0, `ok github.com/system-inc/adamic/internal/oracle 33.210s`. Vet and format logs are empty, and the final whitespace check is clean. The focused uncached optional-widening oracle also passed (2.251s), before the final conservative compound-generic guard; the complete final oracle above includes that guard and all new observations.
+
+The focused command was:
+
+```sh
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/optional_widening' -count=1 -timeout 30m > /tmp/optional-widening-2-oracle-focused.log 2>&1
+```
+
+[class-lower.log](evidence/class-lower.log), [class-oracle.log](evidence/class-oracle.log), [class-counts.log](evidence/class-counts.log), [class-setup.log](evidence/class-setup.log), and [class-mutants.log](evidence/class-mutants.log) preserve the final outputs.
+
+Setup timings: Go ready 0s, clang ready 1s, Node ready 1s, submodules ready 1s, build cache warm 178s, done 178s. `nproc` is 5 and cgroup `cpu.max` is `400000 100000`, four CPUs. Go 1.27.1, clang 20.1.8, Node 24.19.0. The environment file printed by setup is `/workspace/adamic-tools/env.sh`, sourced in test shells.
+
+Latest `git fetch origin && git merge origin/main` reports `Already up to date`. Only `codex/optional-widening-2` is pushed; no PR is opened. No forbidden central compiler or oracle file was edited, and no cohere code was copied.
+
+Not covered: complete generic inference for compound inherited arguments, every generic/class-expression combination, or separate compilation. The standalone stage 3 census has no loaded Adamic program, so its advisory inventory still excludes the descendant refinement. The prior census and developer random probes below were not repeated. Full repository corpus tests were not run in this refinement; the touched lower and oracle packages and vet are the reported gate.
+
+## Original refusal unit report, historical
+
+The following records the prerequisite unit's observations before this refinement. Its class hole is closed for the fixtures above; its unconditional exemption description is historical.
+
 Built an independent optional-property widening refusal with position fixtures, Node oracles, and a stage 3 inventory.
 Code commit: c9c3e7ced58f23cec6ad22f6205f125d303cec3a; based on current origin/main 39638d9.
 Validation: lower package and complete uncached oracle pass; 2,000 developer probes pass; 415 stage 3 sites found.
@@ -180,7 +271,7 @@ The full command `ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./... > /
 
 Not separately proven by fixtures: array-spread relation propagation, destructuring relations, overload signature views, generic function-value views, every union/intersection combination, or all non-compiler stage 3 projects. The implementation shares the existing relation-site recognition, whose extra cases are not an exhaustive new soundness proof.
 
-## Remaining class-exemption hole observed
+## Class-exemption hole observed before the October 7 refinement
 
 The ruling's class exception assumes a class's fields are truly absent. Current main now supports inheritance, so that premise can fail through a base view:
 
