@@ -69,3 +69,43 @@ Second continuation status: reporting portions are compiled and tested in
 `758b9c60`. The three React analyses remain unfinished and claimed, blocked by
 missing native React HIR and the shared parser's JSX support. No further rules
 are claimed. See [the precise blocker report](../wave_04_react/REPORT.md).
+
+## Parked React analyses
+
+Status: **parked**, as authorized by Ahra's React parking instruction.
+The partial native implementations and all available oracle evidence are pushed
+on `codex/typeaware-wave-04` through `5e6e0b59`, based on main `f8013f0b`.
+These claims count as finished for the landing-first cap, while remaining
+reserved here and explicitly incomplete as full source lint ports.
+
+- `react-hooks/preserve-manual-memoization`: blocked on native high-level IR,
+  single-assignment lowering and the reactive memoization pipeline.
+- `react-hooks/purity`: blocked on native high-level IR, phi values and closure
+  capture analysis.
+- `react-hooks/refs`: blocked on native high-level IR, single-assignment/phi
+  values, capture propagation and source-to-ref transfer analysis. Its lattice,
+  environment and finding-predicate kernels already match production Go.
+
+Shared prerequisites: cohere analysis module ports on `#dnv6f2c` and JSX support
+landing on `area/stage1-lint`. Numeric `listenerKinds` and `rule.json` `kinds`
+are present for all three. Full source execution remains explicitly refused;
+no full React corpus agreement or full-rule mutant is claimed. See
+[the current report](../wave_04_react/REPORT.md).
+
+## Third continuation claim
+
+After parking the three HIR-dependent React rules, fetched all origin heads:
+529 remote refs, 197 ranked checker-dependent rules, 154 rules named in remote
+claims and 25 baseline/main ports. Eighteen entries remain unclaimed. The first
+three by descending combined count and lexical ties are claimed here:
+
+- `react/jsx-fragments` (0)
+- `react/jsx-no-constructed-context-values` (0)
+- `react/jsx-no-undef` (0)
+
+These rules use AST and checker symbol/declaration questions, not React native
+HIR, single-assignment or capture analysis. The claim is pushed before new
+implementation. Code will stay in `wave_04_jsx/`, with separate rule directories,
+numeric `rule.json` listeners and node-local judgment entry points. Shared
+parser, driver, registration generator and harness remain outside this unit.
+Selection provenance is preserved in `wave-04-jsx-selection.json`.
