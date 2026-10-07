@@ -68,7 +68,9 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 			if ast.IsPartOfTypeNode(node) {
 				return false
 			}
-			finder.libraryIteratorMade(node)
+			if !finder.iteratorCollectionStaysEmpty(node, modules) {
+				finder.libraryIteratorMade(node)
+			}
 			switch {
 			case node.Kind == ast.KindObjectLiteralExpression:
 				// A literal is what a value may really be, and nothing is written through its own
@@ -118,6 +120,60 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 		}
 	}
 	return nil
+}
+
+// iteratorCollectionStaysEmpty proves a narrow acyclic case: a const bound to an empty library
+// collection, used only to make iterators. With no alias, insertion or reassignment anywhere in
+// the program, that collection can hold nothing, even when its declared element type can reach back.
+func (f *cycleFinder) iteratorCollectionStaysEmpty(node *ast.Node, modules []*ast.SourceFile) bool {
+	if node.Kind != ast.KindCallExpression {
+		return false
+	}
+	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
+	if callee.Kind != ast.KindPropertyAccessExpression {
+		return false
+	}
+	receiver := callee.AsPropertyAccessExpression().Expression
+	if !ast.IsIdentifier(receiver) || !f.l.isLibraryType(f.l.checker.GetTypeAtLocation(receiver), "Map", "Set") {
+		return false
+	}
+	symbol := f.l.checker.GetSymbolAtLocation(receiver)
+	if symbol == nil || len(symbol.Declarations) != 1 {
+		return false
+	}
+	declaration := symbol.Declarations[0]
+	if declaration.Kind != ast.KindVariableDeclaration || declaration.Parent == nil || declaration.Parent.Flags&ast.NodeFlagsConst == 0 || ast.GetCombinedModifierFlags(declaration)&ast.ModifierFlagsExport != 0 {
+		return false
+	}
+	initializer := declaration.AsVariableDeclaration().Initializer
+	if initializer == nil || initializer.Kind != ast.KindNewExpression {
+		return false
+	}
+	made := initializer.AsNewExpression()
+	if (made.Arguments != nil && len(made.Arguments.Nodes) != 0) || (!f.l.isLibraryGlobal(made.Expression, "Map") && !f.l.isLibraryGlobal(made.Expression, "Set")) {
+		return false
+	}
+	empty := true
+	for _, module := range modules {
+		var visit ast.Visitor
+		visit = func(use *ast.Node) bool {
+			if ast.IsIdentifier(use) && use != declaration.Name() && f.l.checker.GetSymbolAtLocation(use) == symbol {
+				access := use.Parent
+				if access == nil || access.Kind != ast.KindPropertyAccessExpression || access.AsPropertyAccessExpression().Expression != use {
+					empty = false
+					return false
+				}
+				name := access.Name().Text()
+				call := access.Parent
+				if (name != "keys" && name != "values" && name != "entries") || call == nil || call.Kind != ast.KindCallExpression || call.AsCallExpression().Expression != access || len(call.AsCallExpression().Arguments.Nodes) != 0 {
+					empty = false
+				}
+			}
+			return use.ForEachChild(visit)
+		}
+		module.AsNode().ForEachChild(visit)
+	}
+	return empty
 }
 
 // made notes the type of a value just made: an object type as a shape, and what anything else is
@@ -373,8 +429,17 @@ func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
 		}
 		proven := node.proven
 		flags := proven.Flags()
-		if f.weak(proven) || f.template(proven) {
+		if f.weak(proven) {
 			// A Weak holds nothing.
+			continue
+		}
+		// An iterator can flow into any interface it satisfies. Follow its hidden collection
+		// before skipping templates: Iterator's default return and next arguments are any,
+		// but they don't hide the collection held by a concrete iterator made here.
+		if flags&checker.TypeFlagsObject != 0 {
+			queue = append(queue, f.libraryIteratorCaptures(proven)...)
+		}
+		if f.template(proven) {
 			continue
 		}
 		if flags&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
@@ -390,8 +455,6 @@ func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
 			return true
 		}
 		switch {
-		case f.l.isLibraryType(proven, "MapIterator", "SetIterator"):
-			queue = append(queue, f.libraryIteratorCaptures(proven)...)
 		case f.isFunction(proven):
 			// Construct signatures can hide constructor objects behind an interface.
 			if len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 {
