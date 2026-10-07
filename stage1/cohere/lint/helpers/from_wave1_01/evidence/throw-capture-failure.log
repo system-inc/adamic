@@ -1,0 +1,12 @@
+=== RUN   TestThrowFrameMatchesGo
+    throw_frame_test.go:19: python3 [/workspace/adamic/stage1/cohere/lint/helpers/from_wave1_01/testdata/capture_throw.py /tmp/adamic-gate/TestThrowFrameMatchesGo2402277341/001]: exit status 1
+        Traceback (most recent call last):
+          File "/workspace/adamic/stage1/cohere/lint/helpers/from_wave1_01/testdata/capture_throw.py", line 48, in <module>
+            subprocess.run(['go','test','-overlay='+str(out/'overlay.json'),target,'-run','^'+test,'-count=1','-timeout=10m','-v'],cwd=cohere,env=env,stdout=log,stderr=subprocess.STDOUT,check=True)
+          File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 571, in run
+            raise CalledProcessError(retcode, process.args,
+        subprocess.CalledProcessError: Command '['go', 'test', '-overlay=/tmp/adamic-gate/TestThrowFrameMatchesGo2402277341/001/overlay.json', './internal/lint/rules/core', '-run', '^TestArrayCallbackThrow', '-count=1', '-timeout=10m', '-v']' returned non-zero exit status 1.
+--- FAIL: TestThrowFrameMatchesGo (0.23s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from_wave1_01	0.238s
+FAIL

@@ -1,0 +1,16 @@
+import { panic } from 'adamic';
+export class Frame {
+    readonly position: number;
+    readonly hasFinally: boolean;
+    constructor(position: number, hasFinally: boolean) {
+        this.position = position;
+        this.hasFinally = hasFinally;
+    }
+}
+export function throwFrame(frames: readonly Frame[]): number {
+    for(let index = frames.length - 1; index >= 0; index--) {
+        const frame = frames[index] ?? panic('missing CFG frame');
+        if(frame.position === 0 || (frame.hasFinally && frame.position === 1)) { return index; }
+    }
+    return -1;
+}

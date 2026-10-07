@@ -1,0 +1,16 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { Frame, throwFrame } from './throw_frame.a';
+const args = programArguments();
+const input = readTextFile(args[0] ?? panic('missing input'));
+if(input.kind === 'Error') { panic(input.message); }
+for(const line of input.text.split('\n')) {
+    if(line === '') { continue; }
+    const frames: Frame[] = [];
+    if(line !== '.') {
+        for(const item of line.split(',')) {
+            const fields = item.split(':');
+            frames.push(new Frame(Number(fields[0]), fields[1] === '1'));
+        }
+    }
+    console.log(`${throwFrame(frames)}`);
+}

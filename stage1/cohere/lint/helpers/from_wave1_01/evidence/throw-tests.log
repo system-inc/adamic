@@ -1,0 +1,15 @@
+=== RUN   TestThrowFrameMatchesGo
+    throw_frame_test.go:49: array-callback-return throwFrame: 74 actual Go calls, 206 bytes per backend
+    throw_frame_test.go:49: consistent-return throwFrame: 62 actual Go calls, 178 bytes per backend
+    throw_frame_test.go:49: no-unreachable-loop throwFrame: 5443 actual Go calls, 16217 bytes per backend
+    throw_frame_test.go:49: react-hooks_rules-of-hooks throwFrame: 722 actual Go calls, 2136 bytes per backend
+    throw_frame_test.go:49: controls throwFrame: 2067 actual Go calls, 4764 bytes per backend
+    throw_frame_test.go:84: outermost handler chosen compiles and runs; comparison alone catches side 0
+    throw_frame_test.go:84: outermost handler chosen compiles and runs; comparison alone catches side 1
+    throw_frame_test.go:84: outermost handler chosen compiles and runs; comparison alone catches side 2
+    throw_frame_test.go:84: catch finally condition reversed compiles and runs; comparison alone catches side 0
+    throw_frame_test.go:84: catch finally condition reversed compiles and runs; comparison alone catches side 1
+    throw_frame_test.go:84: catch finally condition reversed compiles and runs; comparison alone catches side 2
+--- PASS: TestThrowFrameMatchesGo (34.63s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from_wave1_01	34.630s
