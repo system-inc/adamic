@@ -262,3 +262,167 @@ read, even when several reads share a construction obligation.
 | checker.ts:15701:42 | TS2345 | Not an indexed read: arrayFrom(propSet.values()) propagates a possibly-undefined Symbol iterator payload into the for-of binding. |
 | checker.ts:15704:43 | TS2345 | Not an indexed read: arrayFrom(propSet.values()) propagates a possibly-undefined Symbol iterator payload into the for-of binding. |
 | checker.ts:15706:52 | TS2345 | Not an indexed read: arrayFrom(propSet.values()) propagates a possibly-undefined Symbol iterator payload into the for-of binding. |
+
+## Wave B
+
+Frozen ranks 201-400: 132 new required-read assertions, 7 reviewed read declines; 196 frozen findings removed, 4 declined. Net census reduction: 196. Related alias repairs can also remove findings across a wave boundary.
+
+| File | TS2345 | TS18048 | TS2532 | TS2322 | TS2538 | Total |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| checker.ts before | 309 | 191 | 94 | 38 | 0 | 632 |
+| checker.ts after | 211 | 143 | 53 | 29 | 0 | 436 |
+
+Default oracle: **106,367 passing, 0 failing, 0 pending**, all phase exits 0, **empty baseline diff**, 352.725s. `oracle-wave-b.json` and `baseline-wave-b.diff` retain this observation.
+
+Stock emitted JavaScript is byte-identical; site contract and CLI idempotence pass. CRLF preserved. The isolated mutant replaces `declaration.parameters[i]!` at checker.ts:16203 with `(declaration.parameters[i] ?? 0)`; the emitted-JavaScript verifier exits 1. No mutant is run in the real oracle tree. `proof-wave-b.json` records hashes and counts. Every remaining finding is recorded in `remaining-wave-b.json`; every frozen-wave disposition is recorded in `findings-wave-b.json`.
+
+Commands use the reproduction above with /tmp/checker-wave-b-final-after and /tmp/checker-wave-b-final-oracle. Output logs: /tmp/checker-wave-b-final-{adapt,census,verify,idempotence,oracle}.log and /tmp/checker-wave-b-mutant.log.
+
+| Site | Read | Class | Action | Invariant or reason |
+| --- | --- | --- | --- | --- |
+| checker.ts:16165:63 | `typeParameters[i]` | U-loop | assert | The bounded parameter traversal reads a populated type-parameter or parser parameter list at its current index. |
+| checker.ts:16203:31 | `declaration.parameters[i]` | U-loop | assert | The bounded parameter traversal reads a populated type-parameter or parser parameter list at its current index. |
+| checker.ts:16376:34 | `symbol.declarations[i - 1]` | U-position | assert | The overload-implementation check requires i > 0 and reads the populated previous declaration in the same bounded declaration traversal. |
+| checker.ts:16554:49 | `signature.parameters[signature.parameters.length - 1]` | U-endpoint | assert | signatureHasRestParameter identifies a signature with a populated required last rest parameter. |
+| checker.ts:16706:43 | `declaration.parameters[0]` | U-endpoint | assert | The single- or two-element shape guard precedes the fixed-position read in a populated type-argument, tuple-element, flag, or parameter list. |
+| checker.ts:16780:89 | `typeParameters[index]` | U-position | assert | The infer declaration is a member of the enclosing parser-built type-argument list; its index selects the matching populated type parameter. |
+| checker.ts:16878:33 | `types[i]` | U-loop | assert | Type-ID compression bounds each current or lookahead position by the populated type list length. |
+| checker.ts:16880:46 | `types[i + count]` | U-loop | assert | Type-ID compression bounds each current or lookahead position by the populated type list length. |
+| checker.ts:17032:80 | `typeArguments[0]` | U-endpoint | assert | The single- or two-element shape guard precedes the fixed-position read in a populated type-argument, tuple-element, flag, or parameter list. |
+| checker.ts:17032:129 | `typeArguments[0]` | U-endpoint | assert | The single- or two-element shape guard precedes the fixed-position read in a populated type-argument, tuple-element, flag, or parameter list. |
+| checker.ts:17262:114 | `(checkNode as TupleTypeNode).elements[0]` | U-endpoint | assert | The single- or two-element shape guard precedes the fixed-position read in a populated type-argument, tuple-element, flag, or parameter list. |
+| checker.ts:17262:156 | `(extendsNode as TupleTypeNode).elements[0]` | U-endpoint | assert | The single- or two-element shape guard precedes the fixed-position read in a populated type-argument, tuple-element, flag, or parameter list. |
+| checker.ts:17352:65 | `typeArgs[0]` | U-endpoint | assert | The single- or two-element shape guard precedes the fixed-position read in a populated type-argument, tuple-element, flag, or parameter list. |
+| checker.ts:17353:64 | `typeArgs[1]` | U-endpoint | assert | The single- or two-element shape guard precedes the fixed-position read in a populated type-argument, tuple-element, flag, or parameter list. |
+| checker.ts:17855:42 | `elementFlags[0]` | U-endpoint | assert | The single- or two-element shape guard precedes the fixed-position read in a populated type-argument, tuple-element, flag, or parameter list. |
+| checker.ts:17886:31 | `elementFlags[i]` | U-parallel | assert | Tuple construction aligns populated element types and flags; the bounded traversal and callbacks use their shared position. |
+| checker.ts:17943:69 | `target.elementFlags[i]` | U-parallel | assert | Tuple construction aligns populated element types and flags; the bounded traversal and callbacks use their shared position. |
+| checker.ts:17945:75 | `target.elementFlags[i]` | U-parallel | assert | Tuple construction aligns populated element types and flags; the bounded traversal and callbacks use their shared position. |
+| checker.ts:17962:26 | `elementTypes[i]` | U-parallel | assert | Tuple construction aligns populated element types and flags; the bounded traversal and callbacks use their shared position. |
+| checker.ts:17963:27 | `target.elementFlags[i]` | U-parallel | assert | Tuple construction aligns populated element types and flags; the bounded traversal and callbacks use their shared position. |
+| checker.ts:17984:63 | `type.target.elementFlags[n]` | U-parallel | assert | Tuple construction aligns populated element types and flags; the bounded traversal and callbacks use their shared position. |
+| checker.ts:17984:92 | `type.target.labeledElementDeclarations?.[n]` | U-parallel | decline | Absence is handled nearby: tuple labels are optional metadata and the original optional indexed read is passed through unchanged. |
+| checker.ts:17998:17 | `expandedFlags[i]` | U-parallel | assert | Expanded tuple flags are pushed with expanded types; required/rest bounds and the slice callback select populated flag positions. |
+| checker.ts:18002:142 | `expandedFlags[firstRestIndex + i]` | U-parallel | assert | Expanded tuple flags are pushed with expanded types; required/rest bounds and the slice callback select populated flag positions. |
+| checker.ts:18095:124 | `typeSet[len - 1]` | U-endpoint | assert | The positive type-set length guard precedes selection of its populated final ordered type. |
+| checker.ts:18143:28 | `types[i]` | U-loop | assert | Backward or bounded type traversal selects a populated constituent; removals preserve all positions needed by subsequent iterations. |
+| checker.ts:18205:23 | `types[i]` | U-loop | assert | Backward or bounded type traversal selects a populated constituent; removals preserve all positions needed by subsequent iterations. |
+| checker.ts:18225:27 | `types[i]` | U-loop | assert | Backward or bounded type traversal selects a populated constituent; removals preserve all positions needed by subsequent iterations. |
+| checker.ts:18244:31 | `(type as IntersectionType).types[0]` | U-position | assert | The constrained-type-variable marker identifies a populated two-part intersection; index and 1 - index select its two constituents. |
+| checker.ts:18256:35 | `(type as IntersectionType).types[0]` | U-position | assert | The constrained-type-variable marker identifies a populated two-part intersection; index and 1 - index select its two constituents. |
+| checker.ts:18258:48 | `(type as IntersectionType).types[1 - index]` | U-position | assert | The constrained-type-variable marker identifies a populated two-part intersection; index and 1 - index select its two constituents. |
+| checker.ts:18269:34 | `types[i]` | U-loop | assert | Backward or bounded type traversal selects a populated constituent; removals preserve all positions needed by subsequent iterations. |
+| checker.ts:18271:39 | `(type as IntersectionType).types[0]` | U-position | assert | The constrained-type-variable marker identifies a populated two-part intersection; index and 1 - index select its two constituents. |
+| checker.ts:18272:29 | `(type as IntersectionType).types[index]` | U-position | assert | The constrained-type-variable marker identifies a populated two-part intersection; index and 1 - index select its two constituents. |
+| checker.ts:18272:114 | `(type as IntersectionType).types[1 - index]` | U-position | assert | The constrained-type-variable marker identifies a populated two-part intersection; index and 1 - index select its two constituents. |
+| checker.ts:18318:20 | `types[0]` | U-endpoint | assert | The explicit singleton or length-two guard precedes each fixed or complementary position read in a populated type list. |
+| checker.ts:18321:47 | `types[0]` | U-endpoint | assert | The explicit singleton or length-two guard precedes each fixed or complementary position read in a populated type list. |
+| checker.ts:18321:83 | `types[1]` | U-endpoint | assert | The explicit singleton or length-two guard precedes each fixed or complementary position read in a populated type list. |
+| checker.ts:18323:27 | `types[0]` | U-endpoint | assert | The explicit singleton or length-two guard precedes each fixed or complementary position read in a populated type list. |
+| checker.ts:18323:41 | `types[1]` | U-endpoint | assert | The explicit singleton or length-two guard precedes each fixed or complementary position read in a populated type list. |
+| checker.ts:18324:24 | `types[index]` | U-endpoint | assert | The explicit singleton or length-two guard precedes each fixed or complementary position read in a populated type list. |
+| checker.ts:18324:50 | `types[1 - index]` | U-endpoint | assert | The explicit singleton or length-two guard precedes each fixed or complementary position read in a populated type list. |
+| checker.ts:18382:24 | `namedUnions[0]` | U-endpoint | assert | The explicit singleton or length-two guard precedes each fixed or complementary position read in a populated type list. |
+| checker.ts:18437:20 | `types[0]` | U-endpoint | assert | The explicit singleton or length-two guard precedes each fixed or complementary position read in a populated type list. |
+| checker.ts:18452:39 | `types[0]` | U-endpoint | assert | The explicit singleton or length-two guard precedes each fixed or complementary position read in a populated type list. |
+| checker.ts:18452:84 | `types[1]` | U-endpoint | assert | The explicit singleton or length-two guard precedes each fixed or complementary position read in a populated type list. |
+| checker.ts:18518:23 | `types[i]` | U-loop | assert | Backward or bounded type traversal selects a populated constituent; removals preserve all positions needed by subsequent iterations. |
+| checker.ts:18565:23 | `types[i]` | U-loop | assert | Backward or bounded type traversal selects a populated constituent; removals preserve all positions needed by subsequent iterations. |
+| checker.ts:18583:35 | `types[i]` | U-loop | assert | removeFromEach traverses populated types under its length bound and replaces each slot with a defined filtered type. |
+| checker.ts:18600:23 | `types[i]` | U-loop | assert | Backward or bounded type traversal selects a populated constituent; removals preserve all positions needed by subsequent iterations. |
+| checker.ts:18713:20 | `typeSet[0]` | U-position | assert | Positive singleton or length-two guards select populated intersection constituents and their complementary variable/primitive positions. |
+| checker.ts:18716:34 | `typeSet[0]` | U-position | assert | Positive singleton or length-two guards select populated intersection constituents and their complementary variable/primitive positions. |
+| checker.ts:18717:34 | `typeSet[typeVarIndex]` | U-position | assert | Positive singleton or length-two guards select populated intersection constituents and their complementary variable/primitive positions. |
+| checker.ts:18718:35 | `typeSet[1 - typeVarIndex]` | U-position | assert | Positive singleton or length-two guards select populated intersection constituents and their complementary variable/primitive positions. |
+| checker.ts:18758:78 | `(t as UnionType).types[0]` | U-endpoint | assert | Canonical union construction retains at least two populated constituents; nullable-order checks inspect its first two positions. |
+| checker.ts:18763:79 | `(t as UnionType).types[0]` | U-endpoint | assert | Canonical union construction retains at least two populated constituents; nullable-order checks inspect its first two positions. |
+| checker.ts:18763:131 | `(t as UnionType).types[1]` | U-endpoint | assert | Canonical union construction retains at least two populated constituents; nullable-order checks inspect its first two positions. |
+| checker.ts:18819:21 | `types[j]` | U-position | assert | Cross-product traversal bounds j by populated inputs; nonempty union factors supply the modulo-selected constituent. |
+| checker.ts:18822:39 | `sourceTypes[n % length]` | U-position | assert | Cross-product traversal bounds j by populated inputs; nonempty union factors supply the modulo-selected constituent. |
+| checker.ts:18851:41 | `types[1 - emptyIndex]` | U-position | assert | The empty-index lookup runs only for two populated types; a successful lookup selects the complementary type. |
+| checker.ts:19052:20 | `texts[0]` | U-parallel | assert | Template construction has a populated head text and one following text per populated interpolation type, including nested template spans. |
+| checker.ts:19065:63 | `newTypes[0]` | U-endpoint | assert | The singleton normalized-type guard precedes the populated first pattern-type read and return. |
+| checker.ts:19066:24 | `newTypes[0]` | U-endpoint | assert | The singleton normalized-type guard precedes the populated first pattern-type read and return. |
+| checker.ts:19078:27 | `types[i]` | U-parallel | assert | Template construction has a populated head text and one following text per populated interpolation type, including nested template spans. |
+| checker.ts:19081:29 | `texts[i + 1]` | U-parallel | assert | Template construction has a populated head text and one following text per populated interpolation type, including nested template spans. |
+| checker.ts:19084:29 | `(t as TemplateLiteralType).texts[0]` | U-parallel | assert | Template construction has a populated head text and one following text per populated interpolation type, including nested template spans. |
+| checker.ts:19086:29 | `texts[i + 1]` | U-parallel | assert | Template construction has a populated head text and one following text per populated interpolation type, including nested template spans. |
+| checker.ts:19091:28 | `texts[i + 1]` | U-parallel | assert | Template construction has a populated head text and one following text per populated interpolation type, including nested template spans. |
+| checker.ts:19149:25 | `texts[0]` | U-endpoint | decline | Absence is handled by the equality comparison at this exact read; the required charAt/slice/type reads in the selected branch are separate ledger entries. |
+| checker.ts:19149:52 | `texts[0]` | U-parallel | assert | Template heads are populated; an empty head in this mapping path belongs to a template with its required first interpolation type. |
+| checker.ts:19149:87 | `texts[0]` | U-parallel | assert | Template heads are populated; an empty head in this mapping path belongs to a template with its required first interpolation type. |
+| checker.ts:19149:126 | `texts[0]` | U-endpoint | decline | Absence is handled by the equality comparison at this exact read; the required charAt/slice/type reads in the selected branch are separate ledger entries. |
+| checker.ts:19149:174 | `types[0]` | U-parallel | assert | Template heads are populated; an empty head in this mapping path belongs to a template with its required first interpolation type. |
+| checker.ts:19151:25 | `texts[0]` | U-endpoint | decline | Absence is handled by the equality comparison at this exact read; the required charAt/slice/type reads in the selected branch are separate ledger entries. |
+| checker.ts:19151:52 | `texts[0]` | U-parallel | assert | Template heads are populated; an empty head in this mapping path belongs to a template with its required first interpolation type. |
+| checker.ts:19151:87 | `texts[0]` | U-parallel | assert | Template heads are populated; an empty head in this mapping path belongs to a template with its required first interpolation type. |
+| checker.ts:19151:126 | `texts[0]` | U-endpoint | decline | Absence is handled by the equality comparison at this exact read; the required charAt/slice/type reads in the selected branch are separate ledger entries. |
+| checker.ts:19151:174 | `types[0]` | U-parallel | assert | Template heads are populated; an empty head in this mapping path belongs to a template with its required first interpolation type. |
+| checker.ts:20194:34 | `types[types.length - 1]` | U-endpoint | assert | A canonical intersection has a nonempty populated constituent list before its last type is merged into a spread. |
+| checker.ts:20414:28 | `(node as TupleTypeNode).elements[0]` | U-endpoint | assert | The one-element tuple guard precedes reading the populated first parser type node. |
+| checker.ts:20543:30 | `items[i]` | U-loop | assert | instantiateList traverses populated caller input under its length bound, retaining each read at its original callback point. |
+| checker.ts:20549:50 | `items[i]` | U-loop | assert | instantiateList traverses populated caller input under its length bound, retaining each read at its original callback point. |
+| checker.ts:20573:59 | `sources[0]` | U-parallel | assert | Unary or array mappers align populated source and target positions; a missing target list retains its existing anyType branch. |
+| checker.ts:20573:81 | `targets[0]` | U-parallel | assert | Unary or array mappers align populated source and target positions; a missing target list retains its existing anyType branch. |
+| checker.ts:20585:42 | `targets[i]` | U-parallel | assert | Unary or array mappers align populated source and target positions; a missing target list retains its existing anyType branch. |
+| checker.ts:20742:13 | `type.symbol.declarations[0]` | U-endpoint | assert | The anonymous non-reference type originates from a declared symbol with a populated first declaration. |
+| checker.ts:20820:31 | `tp.symbol.declarations[0]` | U-endpoint | assert | The exactly-one-declaration guard precedes the first declaration and the nested reference traversal uses that same symbol contract. |
+| checker.ts:20841:47 | `tp.symbol.declarations[0]` | U-endpoint | assert | The exactly-one-declaration guard precedes the first declaration and the nested reference traversal uses that same symbol contract. |
+| checker.ts:20936:27 | `elementFlags[i]` | U-parallel | assert | Mapped tuple construction supplies a populated flag for each element type visited at the same position. |
+| checker.ts:21037:29 | `activeTypeMappersCaches[index == -1 ? index : activeTypeMappersCount - 1]` | U-position | assert | An existing active mapper has its populated cache; pushActiveMapper creates the new active cache before the fallback last-index read. |
+| checker.ts:21435:36 | `resultObj.errors[resultObj.errors.length - 1]` | U-endpoint | assert | The failed relation check appends a diagnostic before elaboration reads its populated last error entry. |
+| checker.ts:21486:25 | `resultObj.errors[resultObj.errors.length - 1]` | U-endpoint | assert | The failed relation check appends a diagnostic before elaboration reads its populated last error entry. |
+| checker.ts:21488:29 | `target.symbol.declarations[0]` | U-endpoint | assert | The positive declaration-length guard selects a populated first declaration for diagnostic provenance. |
+| checker.ts:21501:25 | `resultObj.errors[resultObj.errors.length - 1]` | U-endpoint | assert | The failed relation check appends a diagnostic before elaboration reads its populated last error entry. |
+| checker.ts:21582:46 | `resultObj.errors[resultObj.errors.length - 1]` | U-endpoint | assert | The failed relation check appends a diagnostic before elaboration reads its populated last error entry. |
+| checker.ts:21596:96 | `targetProp.declarations[0]` | U-endpoint | assert | The positive declaration-length guard selects a populated first declaration for diagnostic provenance. |
+| checker.ts:21596:126 | `target.symbol.declarations[0]` | U-endpoint | assert | The positive declaration-length guard selects a populated first declaration for diagnostic provenance. |
+| checker.ts:21689:27 | `node.children[i]` | U-loop | assert | The bounded JSX-child or array-element traversal reads populated parser nodes; omitted syntax is a defined OmittedExpression node. |
+| checker.ts:21777:35 | `validChildren[0]` | U-endpoint | assert | The single-valid-child elaboration branch requires the populated first filtered JSX child. |
+| checker.ts:21828:26 | `node.elements[i]` | U-loop | assert | The bounded JSX-child or array-element traversal reads populated parser nodes; omitted syntax is a defined OmittedExpression node. |
+| checker.ts:21914:50 | `s.parameters[0]` | U-endpoint | assert | The top-signature predicate checks exactly one parameter before selecting its populated rest parameter. |
+| checker.ts:21915:55 | `getTypeArguments(paramType)[0]` | U-endpoint | assert | A recognized array type has its populated required first element type argument. |
+| checker.ts:22140:115 | `types[0]` | U-endpoint | assert | The at-least-three union guard precedes nullable flags reads at its populated first two positions. |
+| checker.ts:22141:25 | `types[1]` | U-endpoint | assert | The at-least-three union guard precedes nullable flags reads at its populated first two positions. |
+| checker.ts:22149:51 | `(type as UnionType).types[0]` | U-endpoint | assert | A canonical union has populated nonempty constituents before its first type is selected for undefined classification. |
+| checker.ts:22153:58 | `(type as UnionType).types[0]` | U-endpoint | assert | A canonical union has populated nonempty constituents before its first type is selected for undefined classification. |
+| checker.ts:22550:69 | `args[0]` | U-position | assert | The selected diagnostic message code determines two or three populated positional substitution arguments reused in the rewritten message. |
+| checker.ts:22550:78 | `args[1]` | U-position | assert | The selected diagnostic message code determines two or three populated positional substitution arguments reused in the rewritten message. |
+| checker.ts:22566:148 | `args[0]` | U-position | assert | The selected diagnostic message code determines two or three populated positional substitution arguments reused in the rewritten message. |
+| checker.ts:22566:157 | `args[1]` | U-position | assert | The selected diagnostic message code determines two or three populated positional substitution arguments reused in the rewritten message. |
+| checker.ts:22570:159 | `args[0]` | U-position | assert | The selected diagnostic message code determines two or three populated positional substitution arguments reused in the rewritten message. |
+| checker.ts:22570:168 | `args[1]` | U-position | assert | The selected diagnostic message code determines two or three populated positional substitution arguments reused in the rewritten message. |
+| checker.ts:22570:177 | `args[2]` | U-position | assert | The selected diagnostic message code determines two or three populated positional substitution arguments reused in the rewritten message. |
+| checker.ts:22806:57 | `types[0]` | U-endpoint | assert | Length-two or length-three union guards precede reads of populated nullable and complementary constituent positions. |
+| checker.ts:22806:95 | `types[1]` | U-endpoint | decline | Absence is handled nearby by candidate && before normalization; this candidate-selection read is retained. |
+| checker.ts:22807:43 | `types[0]` | U-endpoint | assert | Length-two or length-three union guards precede reads of populated nullable and complementary constituent positions. |
+| checker.ts:22807:82 | `types[1]` | U-endpoint | assert | Length-two or length-three union guards precede reads of populated nullable and complementary constituent positions. |
+| checker.ts:22807:120 | `types[2]` | U-endpoint | decline | Absence is handled nearby by candidate && before normalization; this candidate-selection read is retained. |
+| checker.ts:22844:86 | `calls[0]` | U-endpoint | assert | Positive call or construct signature lengths guard their populated first signatures. |
+| checker.ts:22845:91 | `constructs[0]` | U-endpoint | assert | Positive call or construct signature lengths guard their populated first signatures. |
+| checker.ts:23204:45 | `sourceTypes[i]` | U-loop | assert | Related-type traversal bounds i by the populated source constituent list. |
+| checker.ts:23215:19 | `(source as UnionType).types[0]` | U-endpoint | assert | Both recognized canonical unions have populated first constituents for the undefined-order comparison. |
+| checker.ts:23215:82 | `(target as UnionType).types[0]` | U-endpoint | assert | Both recognized canonical unions have populated first constituents for the undefined-order comparison. |
+| checker.ts:23229:36 | `sourceTypes[i]` | U-loop | assert | Related-type traversal bounds i by the populated source constituent list. |
+| checker.ts:23236:61 | `(undefinedStrippedTarget as UnionType).types[i % (undefinedStrippedTarget as UnionType).types.length]` | U-position | assert | The target is a nonempty canonical union; the divisibility check maps a source index modulo its populated target length. |
+| checker.ts:23261:62 | `variances[i]` | U-parallel | assert | The loop is bounded by both populated argument lists; a present variance position is separately bounded before its required flag read. |
+| checker.ts:23265:31 | `sources[i]` | U-parallel | assert | The loop is bounded by both populated argument lists; a present variance position is separately bounded before its required flag read. |
+| checker.ts:23266:31 | `targets[i]` | U-parallel | assert | The loop is bounded by both populated argument lists; a present variance position is separately bounded before its required flag read. |
+| checker.ts:23459:41 | `maybeKeys[i]` | U-position | assert | The active maybe-relation stack populates every key from maybeStart through maybeCount before reset traverses those positions. |
+| checker.ts:23461:38 | `maybeKeys[i]` | U-position | assert | The active maybe-relation stack populates every key from maybeStart through maybeCount before reset traverses those positions. |
+| checker.ts:23595:57 | `sourceTypes[i]` | U-parallel | assert | Equal template text lists imply aligned populated source and target interpolation type lists, traversed at the shared index. |
+| checker.ts:23595:73 | `targetTypes[i]` | U-parallel | assert | Equal template text lists imply aligned populated source and target interpolation type lists, traversed at the shared index. |
+| checker.ts:23654:109 | `getTypeArguments(source)[0]` | U-endpoint | assert | The single-element generic tuple predicate supplies its populated sole type argument. |
+| checker.ts:23655:186 | `getTypeArguments(target)[0]` | U-endpoint | assert | The single-element generic tuple predicate supplies its populated sole type argument. |
+| checker.ts:24221:40 | `sourcePropertiesFiltered[i]` | U-parallel | assert | Filtered source properties are populated; cartesianProduct creates one populated combination entry per property, selected by the shared bounded index. |
+| checker.ts:24238:48 | `sourcePropertiesFiltered[i]` | U-parallel | assert | Filtered source properties are populated; cartesianProduct creates one populated combination entry per property, selected by the shared bounded index. |
+| checker.ts:24243:112 | `combination[i]` | U-parallel | assert | cartesianProductWorker appends one defined constituent per filtered source property; its callback indexes the populated combination at the shared bounded property position. |
+| checker.ts:24287:45 | `properties[i]` | U-loop | assert | excludeProperties traverses populated property input under its length bound; both repeated reads remain at their original points. |
+| checker.ts:24289:37 | `properties[i]` | U-loop | assert | excludeProperties traverses populated property input under its length bound; both repeated reads remain at their original points. |
+
+| Remaining reviewed site | Code | Reason |
+| --- | --- | --- |
+| checker.ts:16689:70 | TS2345 | Not an indexed read: arrayFrom exports Map iterator values with possibly-undefined payloads under the current loader typing. |
+| checker.ts:16693:62 | TS2322 | Not an indexed read: siblingSymbols inherits the Map iterator payload union from arrayFrom; its existing undefined-list handling is retained. |
+| checker.ts:18662:15 | TS2322 | Not an indexed read: arrayFrom(typeMembershipMap.values()) widens iterator payloads to Type | undefined. |
+| checker.ts:20618:50 | TS2345 | Not an indexed read: the TypeMapper Function object debugInfo optional-field assignment violates exactOptionalPropertyTypes. |
