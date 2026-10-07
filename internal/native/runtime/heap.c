@@ -341,9 +341,11 @@ void adamic_heap_free_children(void *value, void (*let_go)(void *)) {
 		adamic_weak_dropped(value);
 		break;
 	case adamic_kind_map_iterator: {
-		// The iteration is over: the map may compact again.
+		// Only an unfinished iterator still holds a place in the entries.
 		adamic_map_iterator *iterator = value;
-		iterator->map->iterating--;
+		if (!iterator->exhausted) {
+			iterator->map->iterating--;
+		}
 		let_go(iterator->map);
 		break;
 	}
