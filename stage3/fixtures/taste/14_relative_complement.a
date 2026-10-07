@@ -4,9 +4,10 @@ type Comparison = number;
 const Comparison = {LessThan: -1, EqualTo: 0, GreaterThan: 1};
 type Comparer<T> = (a: T, b: T) => Comparison;
 const Debug = {assertGreaterThanOrEqual: (a: number, b: number): void => {if (a < b) throw new Error("unsorted");}};
-function compare(a: number, b: number): Comparison {return a < b ? -1 : a > b ? 1 : 0;}
-export function relativeComplement<T>(arrayA: T[] | undefined, arrayB: T[] | undefined, comparer: Comparer<T>): T[] | undefined {
-    if (!arrayB || !arrayA || arrayB.length === 0 || arrayA.length === 0) return arrayB;
+function compare(a: T, b: T): Comparison {if (a === undefined || b === undefined) return 0; return a < b ? -1 : a > b ? 1 : 0;}
+type T = number | undefined;
+export function relativeComplement(arrayA: T[] | undefined, arrayB: T[] | undefined, comparer: Comparer<T>): T[] | undefined {
+    if (arrayB === undefined || arrayA === undefined || arrayB.length === 0 || arrayA.length === 0) return arrayB;
     const result: T[] = [];
     loopB:
     for (let offsetA = 0, offsetB = 0; offsetB < arrayB.length; offsetB++) {
