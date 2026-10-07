@@ -389,7 +389,12 @@ func TestProcessMutants(t *testing.T) {
 			if err := native.Build(mutant, binary, native.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
 			}
-			got := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
+			// LeakSanitizer is Linux's: macOS's AddressSanitizer aborts when asked for it.
+			var environment []string
+			if runtime.GOOS == "linux" {
+				environment = []string{"ASAN_OPTIONS=detect_leaks=1"}
+			}
+			got := executeWith(t, environment, binary)
 			if bytes.Contains(got.stderr, []byte("Sanitizer")) || bytes.Contains(got.stderr, []byte("runtime error:")) {
 				t.Fatalf("mutant failed outside comparison: %s", got.stderr)
 			}

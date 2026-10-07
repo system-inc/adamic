@@ -1,0 +1,7 @@
+// Lexical resolution precedes the component walk; links replace only linked components.
+import { realPath } from 'adamic';
+
+for (const path of ['walking/link-to-inner', 'walking/dangling', '', 'walking/dangling/..', 'walking/link-to-inner/../link-to-file']) {
+	const result = realPath(path);
+	console.log(result.kind === 'Ok' ? `Ok ${result.path}` : `Error ${result.message}`);
+}

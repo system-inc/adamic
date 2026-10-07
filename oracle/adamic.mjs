@@ -6,7 +6,7 @@
 // that throw, where natively a panic ends the program on the spot; so from the panic on, everything
 // the program writes is dropped and the exit is 70 whatever it does, which makes what it does after
 // unseen, as it is natively (docs/memory.md, "Exceptions").
-import { lstatSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
+import { lstatSync, readdirSync, readFileSync, realpathSync, statSync, writeFileSync } from 'node:fs';
 
 class AdamicPanic extends Error {}
 
@@ -178,4 +178,13 @@ export function fileStatus(path) {
 // program itself (node.mjs takes its own place out of argv first). A new array every call.
 export function programArguments() {
 	return process.argv.slice(2);
+}
+
+// Canonical path identity for directory visitation, following links as the host filesystem does.
+export function realPath(path) {
+	try {
+		return { kind: 'Ok', path: realpathSync(path) };
+	} catch (error) {
+		return { kind: 'Error', message: `cannot resolve path ${path}: ${failure(error.code, false)}` };
+	}
 }

@@ -31,7 +31,7 @@ func uniformFieldOffsets(program *ir.Program) map[string]int {
 	if len(program.Regexps) != 0 {
 		return map[string]int{}
 	}
-	// Runtime-produced layouts are not ObjectLiterals: map entries (0, 1), Error (name, message),
+	// Runtime-produced layouts are not ObjectLiterals: map entries (0, 1), Error (name, message, code),
 	// and input/directory results (kind, text/names/message/type, size, symbolicLink). Including
 	// them unconditionally is conservative when the program does not use that runtime API.
 	// TestRuntimeFieldLayoutsAreIncluded checks this list against the embedded C declarations.
@@ -40,10 +40,14 @@ func uniformFieldOffsets(program *ir.Program) map[string]int {
 		"names": 1, "type": 1, "size": 2, "symbolicLink": 3,
 	}
 	for _, names := range [][]string{
+		{"name", "message", "code"}, {"_fsFileTime"}, {"size", "mtimeMs", "mtime", "_fsFileMode", "atime"},
+		// The Node directory host and the existing realPath result are created in C.
+		{"kind", "path"}, {"name", "message", "code"}, {"name", "type"},
 		{"next"}, {"iterator", "part", "key", "value", "set"}, {"done", "value"},
 		{"__program", "lastIndex", "source", "flags", "global", "ignoreCase", "multiline", "unicode", "sticky", "hasIndices", "unicodeSets", "dotAll"},
 		{"index", "input", "groups", "indices"}, {"regex", "input", "done"},
 		{"nodeKind", "symbolName", "type"},
+		{"bytes", "finalized"},
 		// Process host layouts are part of the same whole-program proof.
 		{"name", "message", "code"}, {"heapUsed"},
 		{"name", "entryType", "startTime", "duration"}, {"setBlocking"},

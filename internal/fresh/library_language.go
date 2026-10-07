@@ -7,6 +7,8 @@ import "github.com/system-inc/adamic/internal/ir"
 // the current closure: operands escape, results are outside, and parameters are clobbered.
 func (a *analysis) libraryLanguage(expression ir.Expression) (value, bool) {
 	switch expression := expression.(type) {
+	case ir.NodeBufferCall:
+		return a.nodeBufferCall(expression), true
 	case ir.ProcessCall:
 		// Process state holds only a number. Environment results are copied immutable strings;
 		// evaluate operand effects, but no operation captures or writes a mutable heap slot.
