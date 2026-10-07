@@ -1,5 +1,5 @@
 Built: three registered TypeScript syntax-rule implementations with complete owned diagnostic validation; shared suggestion integration is blocked.
-Commits: claim 717e5418 pushed before implementation; one implementation commit per rule and evidence commit follow.
+Commits: claim 717e5418; optional-chain implementation/evidence 201bde4f; non-null assertion 83d16b57; this-alias bc6e6be6; final report commit follows.
 Commands: 100 Go configurations plus five owned witnesses and 224 whole sources match Go/Node/emitted JS/sanitized native; three mutants and throughput pass.
 Mutants: wrong optional-chain deletion range, missing dot replacement, and RHS parenthesis unwrapping caught only by Go comparison on all three execution paths; integration-guard mutant caught by explicit refusal check.
 Not covered: shared-driver suggestion integration and full repository gate; no additional rules claimed after Ahra's correction.
