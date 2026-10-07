@@ -1,0 +1,5 @@
+{
+  "name": "no-utils-folder-utils-segment-omitted",
+  "from": "path.includes('/utils/') || path.includes('\\\\utils\\\\')",
+  "to": "false"
+}

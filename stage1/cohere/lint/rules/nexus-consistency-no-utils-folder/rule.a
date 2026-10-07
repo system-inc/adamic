@@ -1,0 +1,26 @@
+// Port of batch4:nexus_consistency_no_utils_folder.ts and pinned Go cohere.
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { noUnderscoreUtilsMessage, noUtilsMessage } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) {
+        this.context = context;
+    }
+    visit(node: ParseNode, index: number): void {
+        const path = this.context.parser.path;
+        if(path.includes('/_utils/') || path.includes('\\_utils\\')) {
+            this.context.reportRange(node.pos, node.pos, 'nexus/consistency-no-utils-folder',
+                'noUnderscoreUtils', noUnderscoreUtilsMessage);
+        }
+        if(path.includes('/utils/') || path.includes('\\utils\\')) {
+            this.context.reportRange(node.pos, node.pos, 'nexus/consistency-no-utils-folder',
+                'noUtils', noUtilsMessage);
+        }
+    }
+}
+
+export function create(context: RuleContext): Rule {
+    return new Rule(context);
+}

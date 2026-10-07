@@ -1,0 +1,13 @@
+{
+  "name": "nexus/consistency-no-utils-folder",
+  "kinds": [
+    "SourceFile"
+  ],
+  "visit": "visit",
+  "node": true,
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNexusConsistencyNoUtilsFolder",
+  "upstreamPackage": "nexus",
+  "upstreamTest": "TestConsistencyNoUtilsFolder"
+}
