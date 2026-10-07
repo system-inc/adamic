@@ -483,6 +483,9 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/reuse_handover_throw.a", true, false},
 	// A throw from inside a ?:, && or ?? arm after the statement built strings (9984394).
 	{"internal/oracle/testdata/aside_throw.a", true, false},
+	// Spreading an Error, directly and through a view (integration's reading of 9984394): not yet.
+	{"internal/oracle/testdata/error_spread.a", false, false},
+	{"internal/oracle/testdata/error_spread_view.a", false, false},
 	// Assignments inside a try (integration 9): a parameter assigned there, a counter assigned there,
 	// and a counted loop inside one.
 	{"internal/oracle/testdata/try_assignments.a", true, false},
