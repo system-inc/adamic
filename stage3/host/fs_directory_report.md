@@ -1,3 +1,21 @@
+Built: runtime and lowering retained; local Node declarations and this unit's loader hook removed per the corrected integration brief.
+Commits: correction follows eef83ac, afe01f1 and f09e4c3; see branch history for the correction SHA.
+Checks: load and lower package tests pass after removal; host fixture checks now need the shared fs_file declaration hook.
+Mutants: the earlier 19 passing Node-comparison mutants are historical evidence, not a claim of validation with the pending pinned declarations.
+Uncovered: @types/node 25.3.3 integration and named-refusal fixture validation await the shared hook SHA and forwarded TypeScript fixture branch.
+
+## Corrected integration contract
+
+sys.ts uses static node:* imports from the TypeScript patch set. Later literal require calls will use the same import route. No require implementation is provided here. fs_file owns the shared loader for @types/node 25.3.3; this branch has no node_<unit>.d.ts copies or independent loader hook. Merge its hook commit when the user sends the SHA, then rerun the host fixtures and mutant gate against those declarations.
+
+Lowering follows resolved symbols in node/fs.d.ts and node/path.d.ts, including the fs/path ambient declarations re-exported by node:fs/node:path. It distinguishes Dirent predicates from Stats predicates and realpathSync.native from unrelated native names. Unimplemented fs/path calls reach a named NotYet fallback after builtin dispatch, allowing the other host units to implement their census members. Unsupported values and non-census overloads are refused rather than silently interpreted.
+
+Error fixtures now use the pinned declarations' NodeJS.ErrnoException structural view instead of globally adding code to Error. The refreshed census branch fetched during this correction was 429c1177f0130f785c19cf590d1860513b2ddbfc; stage3/api was absent at that tip. Host fixture compilation is intentionally blocked pending the shared hook, with its diagnostic captured in logs/fs_directory_correction-hook-blocked.log.
+
+The earlier report and logs below describe the pre-correction declaration setup. They remain useful runtime evidence, but their successful oracle and counts results must be rerun after the shared hook lands. New package evidence is in logs/fs_directory_correction-packages.log.
+
+---
+
 Built: catchable Node fs directory/realpath calls, POSIX path.resolve/dirname/join, and the System directory adapter.
 Commit: eef83ac19215884ab83872f96510d17a2c03d44a, based on 035999ea5a55bafd69f88e9445cf488fdbfc92c8.
 Checks: five dual-backend fixtures, permission probe, 19 mutants, touched packages, vet, formatting and counts passed.
