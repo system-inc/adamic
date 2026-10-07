@@ -1,0 +1,15 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { findTailwindPackageRoot } from '../tailwind_find_package_root.a';
+import { written } from '../../../../typescript/parser/nodes.ts';
+const file = readTextFile(programArguments()[0] ?? panic('missing cases'));
+if(file.kind === 'Error') { panic(file.message); }
+const json = new OptionsJson(file.text); const root = json.parse();
+if(root < 0) { panic(json.error); }
+for(const index of json.node(root).children) {
+    const start = json.node(json.field(index, 'start')).text;
+    const files = json.node(json.field(index, 'exists')).children.map(child => json.node(child).text);
+    const probes: string[] = [];
+    const found = findTailwindPackageRoot(start, path => { probes.push(path); return files.includes(path); });
+    console.log(`${written(found)}\t${probes.map(path => written(path)).join('|')}`);
+}

@@ -1,0 +1,15 @@
+{
+  "consumers": [
+    "better-tailwindcss/enforce-canonical-classes",
+    "better-tailwindcss/enforce-consistent-class-order",
+    "better-tailwindcss/enforce-consistent-variant-order",
+    "better-tailwindcss/enforce-shorthand-classes",
+    "better-tailwindcss/no-conflicting-classes",
+    "better-tailwindcss/no-unknown-classes"
+  ],
+  "capturedFixtures": 145,
+  "actualCalls": 249,
+  "uniqueCallArguments": 141,
+  "cases": 1456,
+  "inputSha256": "7d80e397c63a556138d89b0ea5de95776126edf45ae6e99700c988d4c6dec12d"
+}

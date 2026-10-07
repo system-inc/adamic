@@ -1,0 +1,4 @@
+package main
+import("encoding/json";"fmt";"os";"strings";"unicode/utf16"; rules "github.com/system-inc/cohere/internal/lint/rules/tailwind")
+func written(s string)string{var b strings.Builder;for _,c:=range utf16.Encode([]rune(s)){if c>=32&&c<=126&&c!=92{b.WriteRune(rune(c))}else{fmt.Fprintf(&b,"\\u%04x",c)}};return b.String()}
+func main(){b,e:=os.ReadFile(os.Args[1]);if e!=nil{panic(e)};var inputs []struct{Start string;Exists []string};if e=json.Unmarshal(b,&inputs);e!=nil{panic(e)};for _,s:=range inputs{n,p:=rules.AdamicPackageRoot(s.Start,s.Exists);for i:=range p{p[i]=written(p[i])};fmt.Printf("%s\t%s\n",written(n),strings.Join(p,"|"))}}

@@ -1,0 +1,13 @@
+Built tailwind.findTailwindPackageRoot in one .a helper with an explicit file-existence callback.
+Claim f19b806f was pushed before code; implementation commit contains this report.
+Actual Go matches source Node, emitted JavaScript and sanitized native on 1,456 cases, 831,879 bytes in the initial run; fresh fixture temp paths change output hashes on regeneration.
+Mutant stops after the first absolute directory: it compiles, executes with zero exit and empty stderr, and all three comparisons catch it.
+Uncovered: Windows filepath semantics, invalid UTF-8 Go strings, real filesystem adapter and full consumer findings; no final helper blockers removed.
+
+Six dependency entries removed for the same consumers as leadingInteger: better-tailwindcss/enforce-canonical-classes, enforce-consistent-class-order, enforce-consistent-variant-order, enforce-shorthand-classes, no-conflicting-classes and no-unknown-classes. The frozen readiness inventory is not edited. package_consumers.json records the 145 captured consumer fixtures and 249 observed calls. Actual starts include their temp paths, plus relative, empty, rooted, repeated-slash, dot/parent, backslash and Unicode controls. For each start the real Go function is exercised with no hit, each individual possible hit, all hits and unrelated paths. Both the return value and ordered callback probes are compared byte for byte, including duplicate probes caused by cleaning an initial path.
+
+Go helper logic is unchanged; the scratch wrapper observes call starts and delegates to the original function. Consumer tests genuinely run with tailwindcss 4.3.3 at /tmp/w05-helper-tailwind via test-path overlays. The helper follows the pinned Linux/POSIX filepath.Join and filepath.Dir semantics; a backslash is an ordinary filename character. Directories never count as files: this is the callback's contract, matching Go. File existence, permissions, symlinks and input recording are owned by the callback, not approximated in this helper.
+
+Reproduce after npm installation documented in LEADING_REPORT.md: source /workspace/adamic-tools/env.sh; go test ./stage1/cohere/lint/helpers -run '^TestWave05' -count=1 -v > /tmp/w05-helper-two-tests.log 2>&1. Alternatively python3 stage1/cohere/lint/helpers/wave05/package_validate.py > /tmp/w05-helper-package.log 2>&1. package_cases.json.gz retains the exact initial artifact inputs; package_evidence.json records output hashes and empty stderr checks. Validation creates only named scratch output and does not edit shared Go/rule/harness sources.
+
+FindEntryPoint's attempted claim e0b69a14 was withdrawn before code because wave1-11 already owned it. No duplicate implementation is delivered.

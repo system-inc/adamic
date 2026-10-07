@@ -29,3 +29,24 @@ func TestWave05LeadingInteger(t *testing.T) {
 	data, _ := os.ReadFile(logPath)
 	t.Log(string(data))
 }
+
+// Not parallel: captures into this unit's named package-root scratch directory.
+func TestWave05PackageRoot(t *testing.T) {
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Minute)
+	defer cancel()
+	logPath := filepath.Join(t.TempDir(), "package-root.log")
+	log, err := os.Create(logPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer log.Close()
+	cmd := exec.CommandContext(ctx, "python3", "wave05/package_validate.py")
+	cmd.Stdout = log
+	cmd.Stderr = log
+	if err = cmd.Run(); err != nil {
+		data, _ := os.ReadFile(logPath)
+		t.Fatalf("package-root comparison: %v\n%s", err, data)
+	}
+	data, _ := os.ReadFile(logPath)
+	t.Log(string(data))
+}

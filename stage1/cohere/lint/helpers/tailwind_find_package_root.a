@@ -1,0 +1,25 @@
+function clean(path: string): string {
+    const rooted = path.startsWith('/'); let parts: string[] = [];
+    for(const part of path.split('/')) {
+        if(part === '' || part === '.') { continue; }
+        if(part === '..') {
+            if(parts.length > 0 && parts[parts.length - 1] !== '..') { parts = parts.slice(0, -1); }
+            else if(!rooted) { parts.push(part); }
+        } else { parts.push(part); }
+    }
+    const result = (rooted ? '/' : '') + parts.join('/');
+    return result === '' ? '.' : result;
+}
+function directory(path: string): string {
+    const index = path.lastIndexOf('/'); return clean(index < 0 ? '' : path.slice(0, index + 1));
+}
+export function findTailwindPackageRoot(start: string, fileExists: (path: string) => boolean): string {
+    let current = start;
+    while(true) {
+        const candidate = clean((current === '' ? '' : current + '/') + 'node_modules/tailwindcss');
+        if(fileExists(candidate + '/index.css')) { return candidate; }
+        const parent = directory(current);
+        if(parent === current) { return ''; }
+        current = parent;
+    }
+}
