@@ -1,7 +1,8 @@
-"""Production oracle checks of the Globals decisions and explicit shared JSX gap."""
+"""Production oracle checks of Globals, including merged JSX support."""
 import pathlib,argparse,subprocess,json,shutil,hashlib,time
 parser=argparse.ArgumentParser()
 for name in ['artifacts','stage0','archive','asan-archive','compiler-root']:parser.add_argument('--'+name,required=True)
+parser.add_argument('--fixtures')
 args=parser.parse_args();source=pathlib.Path(__file__).resolve().parent;repo=source.parents[3];root=pathlib.Path(args.artifacts).resolve();root.mkdir(parents=True,exist_ok=True)
 def run(name,command,expected=0,cwd=repo):
  with open(root/(name+'.stdout'),'wb') as out,open(root/(name+'.stderr'),'wb') as err:
@@ -75,6 +76,21 @@ first=next((i for i,(a,b) in enumerate(zip(output,truth)) if a!=b),min(len(outpu
 # The .tsx suffix is an upstream lint input, not new Adamic implementation source.
 (root/'jsx.tsx').write_text('let g=0;function Component(){g=1;return <div/>;}\n');(root/'jsx.manifest').write_text(str(root/'jsx.tsx')+'\n')
 truth,_,_=run('jsx-go',[root/'oracle',root/'tsconfig.json',root/'jsx.manifest']);assert b'globalReassignment' in truth
-output,errors,_=run('jsx-native',[root/'native',root/'tsconfig.json',root/'jsx.manifest'],70);assert output==b'' and b'parser slice expected' in errors
-print('SHARED GAP: JSX production oracle reports; native parser refuses before findings:',errors.decode().strip(),flush=True)
-(root/'results.json').write_text(json.dumps(records,indent=2)+'\n');print('PASS for non-JSX Globals; full rule parity blocked by shared JSX parser',flush=True)
+for variant in ['native','native-asan']:
+ output,errors,_=run('jsx-'+variant,[root/variant,root/'tsconfig.json',root/'jsx.manifest']);assert output==truth and errors==b''
+print('JSX witness agrees with Go, normal and sanitized',flush=True)
+if args.fixtures:
+ compared=0;mutant_caught=0;findings=0
+ for folder in sorted((pathlib.Path(args.fixtures)/'cases').iterdir()):
+  metadata=json.loads((folder/'metadata.json').read_text())
+  if not metadata['Typed']:continue
+  truth,_,_=run(folder.name+'-go',[root/'oracle',folder/'tsconfig.json',folder/'roots.manifest'])
+  findings+=int(truth.splitlines()[-1].split()[-1])
+  for variant in ['native','native-asan']:
+   output,errors,_=run(folder.name+'-'+variant,[root/variant,folder/'tsconfig.json',folder/'roots.manifest']);assert output==truth and errors==b'',(metadata['Name'],variant)
+  output,errors,_=run(folder.name+'-mutant',[root/'globals-mutant',folder/'tsconfig.json',folder/'roots.manifest']);assert errors==b''
+  mutant_caught+=output!=truth;compared+=1
+ assert compared>0 and mutant_caught>0
+ records.append(dict(corpus='upstream',programs=compared,findings=findings,mutant_caught=mutant_caught))
+ print('upstream typed programs',compared,'findings',findings,'agree normal/sanitized; byte-only mutant caught',mutant_caught,flush=True)
+(root/'results.json').write_text(json.dumps(records,indent=2)+'\n');print('PASS Globals profile; full React HIR rules remain parked',flush=True)

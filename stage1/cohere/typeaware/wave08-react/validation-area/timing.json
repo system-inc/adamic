@@ -1,0 +1,90 @@
+{
+  "samples": [
+    {
+      "corpus": "compiler",
+      "variant": "oracle",
+      "round": 0,
+      "seconds": 0.4903140890019131
+    },
+    {
+      "corpus": "compiler",
+      "variant": "native",
+      "round": 0,
+      "seconds": 3.0727647819985577
+    },
+    {
+      "corpus": "compiler",
+      "variant": "native",
+      "round": 1,
+      "seconds": 3.6519629469985375
+    },
+    {
+      "corpus": "compiler",
+      "variant": "oracle",
+      "round": 1,
+      "seconds": 0.544418298999517
+    },
+    {
+      "corpus": "compiler",
+      "variant": "oracle",
+      "round": 2,
+      "seconds": 0.4441833780001616
+    },
+    {
+      "corpus": "compiler",
+      "variant": "native",
+      "round": 2,
+      "seconds": 3.159700738000538
+    },
+    {
+      "corpus": "repository",
+      "variant": "oracle",
+      "round": 0,
+      "seconds": 0.30669165200015414
+    },
+    {
+      "corpus": "repository",
+      "variant": "native",
+      "round": 0,
+      "seconds": 0.4673318229979486
+    },
+    {
+      "corpus": "repository",
+      "variant": "native",
+      "round": 1,
+      "seconds": 0.5106250690005254
+    },
+    {
+      "corpus": "repository",
+      "variant": "oracle",
+      "round": 1,
+      "seconds": 0.30889687599847093
+    },
+    {
+      "corpus": "repository",
+      "variant": "oracle",
+      "round": 2,
+      "seconds": 0.2744338849988708
+    },
+    {
+      "corpus": "repository",
+      "variant": "native",
+      "round": 2,
+      "seconds": 0.6697944689985889
+    }
+  ],
+  "medians": [
+    {
+      "corpus": "compiler",
+      "oracle": 0.4903140890019131,
+      "native": 3.159700738000538,
+      "ratio": 6.44423810956044
+    },
+    {
+      "corpus": "repository",
+      "oracle": 0.30669165200015414,
+      "native": 0.5106250690005254,
+      "ratio": 1.6649460970664725
+    }
+  ]
+}

@@ -101,3 +101,18 @@ rule. Numeric listeners, manifests, released handles and missing-metadata refusa
 are checked. The branch is rebased onto main c01907a70, and earlier six ports are
 re-green. Shared production factory/dispatcher integration is still owned by the
 harness worker; no shared source was edited. See ../wave08-core-next/REPORT.md.
+
+## Harness landing
+
+Rebased onto origin/area/stage1-lint at 7481e0324, including the merged harness
+and JSX parser. Globals is now COMPLETE in the owned native profile: all 111
+typed upstream programs (58 findings), controls and both frozen corpora match
+Go normally and under sanitizers. Its compiling byte-only mutant is caught in
+seven upstream programs. The checker-free upstream witness retains its original
+Go assertion. The old JSX refusal expectation is replaced by exact parity.
+
+Immutability and no-deriving-state-in-effects remain PARKED for native React
+HIR/SSA/capture support on #dnv6f2c. Shared production factory/dispatcher and
+checker-program integration remain pending; owned profiles do not claim shared
+registration certification. No additional rules are reserved: a fresh audit of
+592 origin refs finds every ranked rule ported or named in an existing claim.

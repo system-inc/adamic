@@ -1,0 +1,62 @@
+[
+  {
+    "corpus": "controls",
+    "variant": "native",
+    "bytes": 22825,
+    "sha256": "c6b2415a3db56be2ca12b4f28ebf714dfc4c073f4e69671b18cceceb15f4a098",
+    "findings": "findings 34",
+    "seconds": 0.15608983499987517,
+    "go_seconds": 0.4930951440001081
+  },
+  {
+    "corpus": "controls",
+    "variant": "native-asan",
+    "bytes": 22825,
+    "sha256": "c6b2415a3db56be2ca12b4f28ebf714dfc4c073f4e69671b18cceceb15f4a098",
+    "findings": "findings 34",
+    "seconds": 0.2196152090000396,
+    "go_seconds": 0.4930951440001081
+  },
+  {
+    "corpus": "compiler",
+    "variant": "native",
+    "bytes": 5780,
+    "sha256": "92b58928fccdea5b84d7e48155f3d14e140bb63e629d641286b9b48f566e83f2",
+    "findings": "findings 0",
+    "seconds": 7.257389094000246,
+    "go_seconds": 1.0138881989987567
+  },
+  {
+    "corpus": "compiler",
+    "variant": "native-asan",
+    "bytes": 5780,
+    "sha256": "92b58928fccdea5b84d7e48155f3d14e140bb63e629d641286b9b48f566e83f2",
+    "findings": "findings 0",
+    "seconds": 28.963502804999735,
+    "go_seconds": 1.0138881989987567
+  },
+  {
+    "corpus": "repository",
+    "variant": "native",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "findings": "findings 0",
+    "seconds": 0.9901863810009672,
+    "go_seconds": 0.45689113000116777
+  },
+  {
+    "corpus": "repository",
+    "variant": "native-asan",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "findings": "findings 0",
+    "seconds": 4.397642553998594,
+    "go_seconds": 0.45689113000116777
+  },
+  {
+    "corpus": "upstream",
+    "programs": 111,
+    "findings": 58,
+    "mutant_caught": 7
+  }
+]
