@@ -1,0 +1,11 @@
+{
+  "commit": "5f410bc4c7d3617ecee9347afa74dbe8db92082f",
+  "nproc": "5",
+  "cpu.max": "400000 100000",
+  "go": "go version go1.27.1 linux/amd64",
+  "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+  "node": "v24.19.0",
+  "native_flags": "-std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all",
+  "GOCACHE": "/home/agent/.cache/go-build",
+  "baseline": "original f4d98cab lint_test.go through Go overlay; all new cache/check test files excluded"
+}

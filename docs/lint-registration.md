@@ -145,11 +145,11 @@ Unsupported syntax still fails the comparison instead of earning certification.
 From the repository root, run:
 
 ```sh
-go run ./cmd/adamic-lint-check no-var
+go test ./stage1/cohere/lint -run '^TestRule$' -count=1 -timeout 30m -v -args -rule no-var
 ```
 
-Replace `no-var` with your directory slug. The command runs
-`go test ./stage1/cohere/lint -run '^TestRule$' -count=1 -timeout 30m -v -args -rule <slug>`.
+Replace `no-var` with your directory slug. The convenience wrapper
+`go run ./cmd/adamic-lint-check <slug>` invokes the same test command.
 Keep the anchors when invoking the test directly: `-run TestRule` also matches
 `TestRulesAgree`, which intentionally runs the full corpus.
 
