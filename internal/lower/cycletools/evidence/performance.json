@@ -1,0 +1,92 @@
+{
+  "rounds": [
+    {
+      "path": "stage1/cohere/markdownblocks/testdata/list_probe.ts",
+      "decision": "accepted",
+      "load_seconds": 0.186771678,
+      "lower_seconds": 15.447703941,
+      "version": "before",
+      "round": 1,
+      "check_lower_seconds": 15.634475619,
+      "find_cycles_cpu_seconds": 14.83,
+      "fresh_cpu_seconds": 8.88,
+      "reach_cpu_seconds": 5.91
+    },
+    {
+      "path": "stage1/cohere/markdownblocks/testdata/list_probe.ts",
+      "decision": "accepted",
+      "load_seconds": 0.120659318,
+      "lower_seconds": 16.767146046,
+      "version": "before",
+      "round": 2,
+      "check_lower_seconds": 16.887805364000002,
+      "find_cycles_cpu_seconds": 15.68,
+      "fresh_cpu_seconds": 9.32,
+      "reach_cpu_seconds": 6.33
+    },
+    {
+      "path": "stage1/cohere/markdownblocks/testdata/list_probe.ts",
+      "decision": "accepted",
+      "load_seconds": 0.114313837,
+      "lower_seconds": 14.233629701,
+      "version": "before",
+      "round": 3,
+      "check_lower_seconds": 14.347943537999999,
+      "find_cycles_cpu_seconds": 13.78,
+      "fresh_cpu_seconds": 8.4,
+      "reach_cpu_seconds": 5.35
+    },
+    {
+      "path": "stage1/cohere/markdownblocks/testdata/list_probe.ts",
+      "decision": "accepted",
+      "load_seconds": 0.13290134,
+      "lower_seconds": 10.065708215,
+      "version": "after",
+      "round": 1,
+      "check_lower_seconds": 10.198609555,
+      "find_cycles_cpu_seconds": 9.28,
+      "fresh_cpu_seconds": 9.23,
+      "reach_cpu_seconds": 0.01
+    },
+    {
+      "path": "stage1/cohere/markdownblocks/testdata/list_probe.ts",
+      "decision": "accepted",
+      "load_seconds": 0.193006363,
+      "lower_seconds": 15.626524373,
+      "version": "after",
+      "round": 2,
+      "check_lower_seconds": 15.819530736,
+      "find_cycles_cpu_seconds": 14.08,
+      "fresh_cpu_seconds": 14.04,
+      "reach_cpu_seconds": 0.01
+    },
+    {
+      "path": "stage1/cohere/markdownblocks/testdata/list_probe.ts",
+      "decision": "accepted",
+      "load_seconds": 0.105486011,
+      "lower_seconds": 9.205528372,
+      "version": "after",
+      "round": 3,
+      "check_lower_seconds": 9.311014383,
+      "find_cycles_cpu_seconds": 8.73,
+      "fresh_cpu_seconds": 8.69,
+      "reach_cpu_seconds": 0.01
+    }
+  ],
+  "medians": {
+    "before": {
+      "check_lower_seconds": 15.634475619,
+      "lower_seconds": 15.447703941,
+      "find_cycles_cpu_seconds": 14.83,
+      "reach_cpu_seconds": 5.91,
+      "fresh_cpu_seconds": 8.88
+    },
+    "after": {
+      "check_lower_seconds": 10.198609555,
+      "lower_seconds": 10.065708215,
+      "find_cycles_cpu_seconds": 9.28,
+      "reach_cpu_seconds": 0.01,
+      "fresh_cpu_seconds": 9.23
+    }
+  }
+}

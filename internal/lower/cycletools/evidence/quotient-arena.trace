@@ -1,0 +1,5 @@
+cycle reach: CollapseCopyNode[] -- slot contents --> CollapseCopyNode
+  CollapseCopyNode -- field children --> CollapseNodeList
+  CollapseNodeList -- assignable program shape --> { nil: true; length: number; capacity: number; values: never[]; }
+  { nil: true; length: number; capacity: number; values: never[]; } -- field values --> never[]
+  never[] -- related holder types --> CollapseCopyNode[]
