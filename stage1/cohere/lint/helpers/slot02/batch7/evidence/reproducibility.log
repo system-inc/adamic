@@ -1,0 +1,35 @@
+{
+  "symbols": [
+    "imports.CallExpressionSource",
+    "jsx.MatchIgnoringCase",
+    "jsx.HasAttributeNamed"
+  ],
+  "rules": [
+    "@next/next/google-font-display",
+    "@next/next/google-font-preconnect",
+    "@next/next/next-script-for-ga",
+    "@next/next/no-html-link-for-pages",
+    "@next/next/no-styled-jsx-in-document",
+    "@next/next/no-sync-scripts",
+    "nexus/boundary-no-internal-import",
+    "nexus/boundary-no-nexus-outside-import",
+    "nexus/boundary-no-project-import",
+    "nexus/import-no-forbidden-source",
+    "nexus/import-require-path-alias",
+    "react/jsx-key",
+    "react/no-unknown-property"
+  ],
+  "sources": 578,
+  "packages": [
+    "./internal/lint/rules/next",
+    "./internal/lint/rules/nexus",
+    "./internal/lint/rules/react"
+  ],
+  "capture_gate_exit": 0,
+  "cohere_commit": "715ba94f3608a6500086b1076ce5cb7e51b836db"
+}
+Unicode 17.0.0 noncanonical scalar mappings 1512
+stage1/cohere/lint/helpers/slot02/batch7/testdata/sources.jsonl.gz 689e4c22bd7ee0aad75221236bdae94c5e89a7e26b9272a9db419732901e79a3 byte-identical
+stage1/cohere/lint/helpers/slot02/batch7/testdata/coverage.json 7f2f29fd021144b5e56554eb93782ba5b986af9c8b402614b0236fb890562c98 byte-identical
+stage1/cohere/lint/helpers/slot02/batch7/testdata/folds.json 976ea014910efd3ee57f739deb634668a062c9f2fc3f1a973f197a09d8d83180 byte-identical
+stage1/cohere/lint/helpers/slot02/batch7/match_ignoring_case.a 32fd95fe4a11d34b1f53cfe7be4ed2999d66af0f5211de905779018d12159dfa byte-identical

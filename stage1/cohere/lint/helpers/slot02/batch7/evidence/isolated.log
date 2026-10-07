@@ -1,0 +1,42 @@
+=== RUN   TestSlot02Batch7
+    slot02_batch7_test.go:75: imports.CallExpressionSource: 5 consumers with actual runtime capture
+    slot02_batch7_test.go:75: jsx.MatchIgnoringCase: 4 consumers with actual runtime capture
+    slot02_batch7_test.go:75: jsx.HasAttributeNamed: 4 consumers with actual runtime capture
+    slot02_batch7_test.go:101: 578 captured inputs; 522 distinct parsed sources; 10571 nodes; 13880 Unicode/name pairs; 623 attribute targets; Unicode 17.0.0
+    slot02_batch7_test.go:130: Actual Go, Node source, emitted JavaScript and sanitized native agree
+=== RUN   TestSlot02Batch7/require_argument_count
+    slot02_batch7_test.go:181: compiled semantic mutant caught at line 24237: got "call:true:111,110,101,"; Go "call:false:"
+=== RUN   TestSlot02Batch7/deferred_imports
+    slot02_batch7_test.go:181: compiled semantic mutant caught at line 24291: got "call:false:"; Go "call:true:100,101,102,101,114,114,101,100,"
+=== RUN   TestSlot02Batch7/template_literal_source
+    slot02_batch7_test.go:181: compiled semantic mutant caught at line 24221: got "call:false:"; Go "call:true:116,101,109,112,108,97,116,101,"
+=== RUN   TestSlot02Batch7/empty_source_present
+    slot02_batch7_test.go:181: compiled semantic mutant caught at line 24217: got "call:false:"; Go "call:true:"
+=== RUN   TestSlot02Batch7/Kelvin_fold
+    slot02_batch7_test.go:181: compiled semantic mutant caught at line 161: got "fold:false"; Go "fold:true"
+=== RUN   TestSlot02Batch7/long_s_fold
+    slot02_batch7_test.go:181: compiled semantic mutant caught at line 187: got "fold:false"; Go "fold:true"
+=== RUN   TestSlot02Batch7/supplementary_rune_fold
+    slot02_batch7_test.go:181: compiled semantic mutant caught at line 9049: got "fold:false"; Go "fold:true"
+=== RUN   TestSlot02Batch7/unequal_string_length
+    slot02_batch7_test.go:181: compiled semantic mutant caught at line 4: got "fold:true"; Go "fold:false"
+=== RUN   TestSlot02Batch7/attribute_matcher_arguments
+    slot02_batch7_test.go:181: compiled semantic mutant caught at line 24861: got "attr:false:1::key|"; Go "attr:false:1:key:|"
+=== RUN   TestSlot02Batch7/attribute_order
+    slot02_batch7_test.go:181: compiled semantic mutant caught at line 27173: got "attr:false:2:key:|x:|"; Go "attr:false:2:x:|key:|"
+=== RUN   TestSlot02Batch7/unnamed_attributes
+    slot02_batch7_test.go:181: compiled semantic mutant caught at line 24861: got "attr:true:2:key:|:|"; Go "attr:false:1:key:|"
+--- PASS: TestSlot02Batch7 (88.82s)
+    --- PASS: TestSlot02Batch7/require_argument_count (5.66s)
+    --- PASS: TestSlot02Batch7/deferred_imports (6.66s)
+    --- PASS: TestSlot02Batch7/template_literal_source (5.52s)
+    --- PASS: TestSlot02Batch7/empty_source_present (6.22s)
+    --- PASS: TestSlot02Batch7/Kelvin_fold (7.13s)
+    --- PASS: TestSlot02Batch7/long_s_fold (6.74s)
+    --- PASS: TestSlot02Batch7/supplementary_rune_fold (8.34s)
+    --- PASS: TestSlot02Batch7/unequal_string_length (7.23s)
+    --- PASS: TestSlot02Batch7/attribute_matcher_arguments (11.33s)
+    --- PASS: TestSlot02Batch7/attribute_order (6.19s)
+    --- PASS: TestSlot02Batch7/unnamed_attributes (6.36s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers	88.831s

@@ -1,0 +1,31 @@
+18 branches; 17 complete claims files inspected
+origin/codex/lint-helpers 95100eb440b47f3f18e960c6f5b49cadf0dc1d9d
+origin/codex/lint-helpers-01 73adc26df456cc56af81a6213081500951b2711e
+origin/codex/lint-helpers-02 d82cca35925ad71d0713bdeff8ace0f83a7aaa09
+origin/codex/lint-helpers-02:stage1/cohere/lint/helpers/claims/02.md 19. github.com/system-inc/cohere/internal/lint/ecmascript/imports.CallExpressionSource
+origin/codex/lint-helpers-02:stage1/cohere/lint/helpers/claims/02.md 20. github.com/system-inc/cohere/internal/lint/ecmascript/jsx.MatchIgnoringCase
+origin/codex/lint-helpers-02:stage1/cohere/lint/helpers/claims/02.md 21. github.com/system-inc/cohere/internal/lint/ecmascript/jsx.HasAttributeNamed
+origin/codex/lint-helpers-02:stage1/cohere/lint/helpers/claims/02.md Seventh-batch publication race: the post-push wildcard refresh exposed slot 05's later CallExpressionSource and HasAttributeNamed claims. Slot 02 d9b239af40dcf9632c3d55b2bbfb4b3474454ecb was committed at 03:54:07 UTC; slot 05 f846de1f640356fda6f11d263dfe3cf4c8ec922f at 03:54:09 UTC, two seconds later. Under the established earliest-claim rule, slot 02 retains both helpers. MatchIgnoringCase has no competing claim. All three isolated Go/source Node/emitted JavaScript/sanitized native comparisons passed in 88.831s and all eleven compiling semantic mutants were caught. The complete helper gate is running with an additional full-scalar generated-table drift check. No additional claim is made.
+origin/codex/lint-helpers-03 760155cdfd6ee6381697a02f0d9a0870c105d45b
+origin/codex/lint-helpers-04 2b43ded4d5efb358b05e93d9a491f442a6110e8a
+origin/codex/lint-helpers-05 69bdfe7db07e3f8501db5d3db65e52a9ef465d96
+origin/codex/lint-helpers-05:stage1/cohere/lint/helpers/claims/05.md All twenty-three retained helpers are tested and pushed at 28f93fd, based on current origin/main e8ba3d5. Refetched all eighteen origin codex/lint-helpers* branches and inspected every claims file; comments remain reserved by the original HELPERS.md bundle. CallExpressionSource is the highest unclaimed concrete helper at five consumers; the other two tie the next available count at four each:
+origin/codex/lint-helpers-05:stage1/cohere/lint/helpers/claims/05.md 26. github.com/system-inc/cohere/internal/lint/ecmascript/imports.CallExpressionSource
+origin/codex/lint-helpers-05:stage1/cohere/lint/helpers/claims/05.md 27. github.com/system-inc/cohere/internal/lint/ecmascript/jsx.HasAttributeNamed
+origin/codex/lint-helpers-05:stage1/cohere/lint/helpers/claims/05.md Ninth-batch race resolution: withdraw CallExpressionSource and HasAttributeNamed to slot 02 d9b239a at 03:54:07 UTC, two seconds before our f846de1 at 03:54:09 UTC. Local four-way comparisons and compiling mutants passed, but no duplicate implementation is delivered or counted. Retain ImportedNameOf, with 4,109 actual Go queries and two compiling semantic mutants caught. Finish and push that retained claim before reserving two replacements.
+origin/codex/lint-helpers-from-codex-lint-wave1-03 3ffbf7a328b72208cfc91cab9866d192369fe760
+origin/codex/lint-helpers-from-codex-lint-wave1-14 ad7a2ddd1aab0f5ef25673b9f8f7de20cf7de74e
+origin/codex/lint-helpers-from-codex/lint-wave1-04 b272eab3c6e4395a7b68bd4811c63bd12541e73a
+origin/codex/lint-helpers-from-codex/lint-wave1-06 89d97f55f6469b30c6aeb81b7dfa20ba5707236a
+origin/codex/lint-helpers-from-codex/lint-wave1-09 fc431aca8db4c443cc6f45fe7c8e7ed5ba0730cb
+origin/codex/lint-helpers-from-codex/lint-wave1-10 84ff616e18fb6dd698abc9492cef3224ec432025
+origin/codex/lint-helpers-from-codex/lint-wave1-11 ea83843e7f203e66035f97bd3f1ce3eff9def54c
+origin/codex/lint-helpers-from-codex/lint-wave1-15 b28c05998fd28afb85da82464ac9e695d6139853
+origin/codex/lint-helpers-from-lint-wave1-05 5e3bbb2b7523fb03e1fc21228090ace8ddec6cdc
+origin/codex/lint-helpers-from-lint-wave1-08 1021f3f1584f892c5dd2fd5e9a7c574affe36bcf
+origin/codex/lint-helpers-from-lint-wave1-12 b32ed264df65f493965eecb7d4d7038b73543738
+origin/codex/lint-helpers-from-lint-wave1-13 7cbe5608d17c9b12e185b048857305450c3a247f
+d9b239af40dcf9632c3d55b2bbfb4b3474454ecb 2026-10-07T03:54:07Z 2026-10-07T03:54:07Z Claim import source and JSX matching helpers
+f846de1f640356fda6f11d263dfe3cf4c8ec922f 2026-10-07T03:54:09Z 2026-10-07T03:54:09Z Reserve three import and JSX helpers after landing check
+current origin/main e8ba3d5d81de4d3773c723914fccd4c76248b965
+current main ancestor: PASS; slot 05 explicitly withdrew both later overlaps

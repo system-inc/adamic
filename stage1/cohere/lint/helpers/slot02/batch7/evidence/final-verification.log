@@ -1,0 +1,14 @@
+Complete helper oracle PASS 477.730s
+64 compiling semantic mutants caught: 53 previous plus 11 new
+All scalar mappings and generated production table/version verified
+testdata/sources.jsonl.gz 689e4c22bd7ee0aad75221236bdae94c5e89a7e26b9272a9db419732901e79a3 PASS
+testdata/coverage.json 7f2f29fd021144b5e56554eb93782ba5b986af9c8b402614b0236fb890562c98 PASS
+testdata/folds.json 976ea014910efd3ee57f739deb634668a062c9f2fc3f1a973f197a09d8d83180 PASS
+match_ignoring_case.a 32fd95fe4a11d34b1f53cfe7be4ed2999d66af0f5211de905779018d12159dfa PASS
+13 prerequisite entries; one final blocker removed for nexus/import-no-forbidden-source
+vet exit zero, empty log
+Final expanded consumer-query Go/source Node/emitted JS/sanitized native oracle PASS 81.783s
+All eleven new compiling semantic mutants caught again
+Expanded helper vet exit zero, empty log
+Production helper sources unchanged after complete package PASS
+Expanded query commit 3956633c43de66ef8c7ee131801ade0c3c5a5e5d
