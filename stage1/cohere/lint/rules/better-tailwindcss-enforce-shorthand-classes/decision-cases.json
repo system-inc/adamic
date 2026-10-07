@@ -1,0 +1,6156 @@
+[
+  {
+    "kind": "shorthand",
+    "names": [
+      "w-4",
+      "h-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:w-4",
+      "hover:h-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-w-4",
+      "[&:is(a:b)]:-h-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!w-4",
+      "!h-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "w-4!",
+      "h-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!w-4",
+      "-!h-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "w-4",
+      "h-4",
+      "size-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "w-8",
+      "h-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "ml-4",
+      "mr-4",
+      "mt-4",
+      "mb-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:ml-4",
+      "hover:mr-4",
+      "hover:mt-4",
+      "hover:mb-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-ml-4",
+      "[&:is(a:b)]:-mr-4",
+      "[&:is(a:b)]:-mt-4",
+      "[&:is(a:b)]:-mb-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!ml-4",
+      "!mr-4",
+      "!mt-4",
+      "!mb-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "ml-4!",
+      "mr-4!",
+      "mt-4!",
+      "mb-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!ml-4",
+      "-!mr-4",
+      "-!mt-4",
+      "-!mb-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "ml-4",
+      "mr-4",
+      "mt-4",
+      "mb-4",
+      "m-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "ml-8",
+      "mr-4",
+      "mt-4",
+      "mb-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "mx-4",
+      "my-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:mx-4",
+      "hover:my-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-mx-4",
+      "[&:is(a:b)]:-my-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!mx-4",
+      "!my-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "mx-4!",
+      "my-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!mx-4",
+      "-!my-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "mx-4",
+      "my-4",
+      "m-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "mx-8",
+      "my-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "ms-4",
+      "me-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:ms-4",
+      "hover:me-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-ms-4",
+      "[&:is(a:b)]:-me-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!ms-4",
+      "!me-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "ms-4!",
+      "me-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!ms-4",
+      "-!me-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "ms-4",
+      "me-4",
+      "mx-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "ms-8",
+      "me-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "ml-4",
+      "mr-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:ml-4",
+      "hover:mr-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-ml-4",
+      "[&:is(a:b)]:-mr-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!ml-4",
+      "!mr-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "ml-4!",
+      "mr-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!ml-4",
+      "-!mr-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "ml-4",
+      "mr-4",
+      "mx-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "ml-8",
+      "mr-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "mt-4",
+      "mb-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:mt-4",
+      "hover:mb-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-mt-4",
+      "[&:is(a:b)]:-mb-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!mt-4",
+      "!mb-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "mt-4!",
+      "mb-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!mt-4",
+      "-!mb-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "mt-4",
+      "mb-4",
+      "my-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "mt-8",
+      "mb-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "pl-4",
+      "pr-4",
+      "pt-4",
+      "pb-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:pl-4",
+      "hover:pr-4",
+      "hover:pt-4",
+      "hover:pb-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-pl-4",
+      "[&:is(a:b)]:-pr-4",
+      "[&:is(a:b)]:-pt-4",
+      "[&:is(a:b)]:-pb-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!pl-4",
+      "!pr-4",
+      "!pt-4",
+      "!pb-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "pl-4!",
+      "pr-4!",
+      "pt-4!",
+      "pb-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!pl-4",
+      "-!pr-4",
+      "-!pt-4",
+      "-!pb-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "pl-4",
+      "pr-4",
+      "pt-4",
+      "pb-4",
+      "p-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "pl-8",
+      "pr-4",
+      "pt-4",
+      "pb-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "px-4",
+      "py-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:px-4",
+      "hover:py-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-px-4",
+      "[&:is(a:b)]:-py-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!px-4",
+      "!py-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "px-4!",
+      "py-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!px-4",
+      "-!py-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "px-4",
+      "py-4",
+      "p-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "px-8",
+      "py-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "ps-4",
+      "pe-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:ps-4",
+      "hover:pe-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-ps-4",
+      "[&:is(a:b)]:-pe-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!ps-4",
+      "!pe-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "ps-4!",
+      "pe-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!ps-4",
+      "-!pe-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "ps-4",
+      "pe-4",
+      "px-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "ps-8",
+      "pe-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "pl-4",
+      "pr-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:pl-4",
+      "hover:pr-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-pl-4",
+      "[&:is(a:b)]:-pr-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!pl-4",
+      "!pr-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "pl-4!",
+      "pr-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!pl-4",
+      "-!pr-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "pl-4",
+      "pr-4",
+      "px-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "pl-8",
+      "pr-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "pt-4",
+      "pb-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:pt-4",
+      "hover:pb-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-pt-4",
+      "[&:is(a:b)]:-pb-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!pt-4",
+      "!pb-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "pt-4!",
+      "pb-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!pt-4",
+      "-!pb-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "pt-4",
+      "pb-4",
+      "py-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "pt-8",
+      "pb-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "border-t-4",
+      "border-b-4",
+      "border-l-4",
+      "border-r-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:border-t-4",
+      "hover:border-b-4",
+      "hover:border-l-4",
+      "hover:border-r-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-border-t-4",
+      "[&:is(a:b)]:-border-b-4",
+      "[&:is(a:b)]:-border-l-4",
+      "[&:is(a:b)]:-border-r-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!border-t-4",
+      "!border-b-4",
+      "!border-l-4",
+      "!border-r-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "border-t-4!",
+      "border-b-4!",
+      "border-l-4!",
+      "border-r-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!border-t-4",
+      "-!border-b-4",
+      "-!border-l-4",
+      "-!border-r-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "border-t-4",
+      "border-b-4",
+      "border-l-4",
+      "border-r-4",
+      "border-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "border-t-8",
+      "border-b-4",
+      "border-l-4",
+      "border-r-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "border-x-4",
+      "border-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:border-x-4",
+      "hover:border-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-border-x-4",
+      "[&:is(a:b)]:-border-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!border-x-4",
+      "!border-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "border-x-4!",
+      "border-y-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!border-x-4",
+      "-!border-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "border-x-4",
+      "border-y-4",
+      "border-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "border-x-8",
+      "border-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "border-s-4",
+      "border-e-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:border-s-4",
+      "hover:border-e-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-border-s-4",
+      "[&:is(a:b)]:-border-e-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!border-s-4",
+      "!border-e-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "border-s-4!",
+      "border-e-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!border-s-4",
+      "-!border-e-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "border-s-4",
+      "border-e-4",
+      "border-x-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "border-s-8",
+      "border-e-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "border-l-4",
+      "border-r-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:border-l-4",
+      "hover:border-r-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-border-l-4",
+      "[&:is(a:b)]:-border-r-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!border-l-4",
+      "!border-r-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "border-l-4!",
+      "border-r-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!border-l-4",
+      "-!border-r-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "border-l-4",
+      "border-r-4",
+      "border-x-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "border-l-8",
+      "border-r-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "border-t-4",
+      "border-b-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:border-t-4",
+      "hover:border-b-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-border-t-4",
+      "[&:is(a:b)]:-border-b-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!border-t-4",
+      "!border-b-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "border-t-4!",
+      "border-b-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!border-t-4",
+      "-!border-b-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "border-t-4",
+      "border-b-4",
+      "border-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "border-t-8",
+      "border-b-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "border-spacing-x-4",
+      "border-spacing-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:border-spacing-x-4",
+      "hover:border-spacing-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-border-spacing-x-4",
+      "[&:is(a:b)]:-border-spacing-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!border-spacing-x-4",
+      "!border-spacing-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "border-spacing-x-4!",
+      "border-spacing-y-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!border-spacing-x-4",
+      "-!border-spacing-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "border-spacing-x-4",
+      "border-spacing-y-4",
+      "border-spacing-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "border-spacing-x-8",
+      "border-spacing-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "rounded-tl-4",
+      "rounded-tr-4",
+      "rounded-bl-4",
+      "rounded-br-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:rounded-tl-4",
+      "hover:rounded-tr-4",
+      "hover:rounded-bl-4",
+      "hover:rounded-br-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-rounded-tl-4",
+      "[&:is(a:b)]:-rounded-tr-4",
+      "[&:is(a:b)]:-rounded-bl-4",
+      "[&:is(a:b)]:-rounded-br-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!rounded-tl-4",
+      "!rounded-tr-4",
+      "!rounded-bl-4",
+      "!rounded-br-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "rounded-tl-4!",
+      "rounded-tr-4!",
+      "rounded-bl-4!",
+      "rounded-br-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!rounded-tl-4",
+      "-!rounded-tr-4",
+      "-!rounded-bl-4",
+      "-!rounded-br-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "rounded-tl-4",
+      "rounded-tr-4",
+      "rounded-bl-4",
+      "rounded-br-4",
+      "rounded-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "rounded-tl-8",
+      "rounded-tr-4",
+      "rounded-bl-4",
+      "rounded-br-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "rounded-t-4",
+      "rounded-b-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:rounded-t-4",
+      "hover:rounded-b-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-rounded-t-4",
+      "[&:is(a:b)]:-rounded-b-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!rounded-t-4",
+      "!rounded-b-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "rounded-t-4!",
+      "rounded-b-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!rounded-t-4",
+      "-!rounded-b-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "rounded-t-4",
+      "rounded-b-4",
+      "rounded-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "rounded-t-8",
+      "rounded-b-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "rounded-l-4",
+      "rounded-r-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:rounded-l-4",
+      "hover:rounded-r-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-rounded-l-4",
+      "[&:is(a:b)]:-rounded-r-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!rounded-l-4",
+      "!rounded-r-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "rounded-l-4!",
+      "rounded-r-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!rounded-l-4",
+      "-!rounded-r-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "rounded-l-4",
+      "rounded-r-4",
+      "rounded-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "rounded-l-8",
+      "rounded-r-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "rounded-tl-4",
+      "rounded-tr-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:rounded-tl-4",
+      "hover:rounded-tr-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-rounded-tl-4",
+      "[&:is(a:b)]:-rounded-tr-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!rounded-tl-4",
+      "!rounded-tr-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "rounded-tl-4!",
+      "rounded-tr-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!rounded-tl-4",
+      "-!rounded-tr-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "rounded-tl-4",
+      "rounded-tr-4",
+      "rounded-t-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "rounded-tl-8",
+      "rounded-tr-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "rounded-bl-4",
+      "rounded-br-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:rounded-bl-4",
+      "hover:rounded-br-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-rounded-bl-4",
+      "[&:is(a:b)]:-rounded-br-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!rounded-bl-4",
+      "!rounded-br-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "rounded-bl-4!",
+      "rounded-br-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!rounded-bl-4",
+      "-!rounded-br-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "rounded-bl-4",
+      "rounded-br-4",
+      "rounded-b-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "rounded-bl-8",
+      "rounded-br-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "rounded-tl-4",
+      "rounded-bl-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:rounded-tl-4",
+      "hover:rounded-bl-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-rounded-tl-4",
+      "[&:is(a:b)]:-rounded-bl-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!rounded-tl-4",
+      "!rounded-bl-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "rounded-tl-4!",
+      "rounded-bl-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!rounded-tl-4",
+      "-!rounded-bl-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "rounded-tl-4",
+      "rounded-bl-4",
+      "rounded-l-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "rounded-tl-8",
+      "rounded-bl-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "rounded-tr-4",
+      "rounded-br-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:rounded-tr-4",
+      "hover:rounded-br-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-rounded-tr-4",
+      "[&:is(a:b)]:-rounded-br-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!rounded-tr-4",
+      "!rounded-br-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "rounded-tr-4!",
+      "rounded-br-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!rounded-tr-4",
+      "-!rounded-br-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "rounded-tr-4",
+      "rounded-br-4",
+      "rounded-r-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "rounded-tr-8",
+      "rounded-br-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scroll-mt-4",
+      "scroll-mb-4",
+      "scroll-ml-4",
+      "scroll-mr-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:scroll-mt-4",
+      "hover:scroll-mb-4",
+      "hover:scroll-ml-4",
+      "hover:scroll-mr-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-scroll-mt-4",
+      "[&:is(a:b)]:-scroll-mb-4",
+      "[&:is(a:b)]:-scroll-ml-4",
+      "[&:is(a:b)]:-scroll-mr-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!scroll-mt-4",
+      "!scroll-mb-4",
+      "!scroll-ml-4",
+      "!scroll-mr-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scroll-mt-4!",
+      "scroll-mb-4!",
+      "scroll-ml-4!",
+      "scroll-mr-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!scroll-mt-4",
+      "-!scroll-mb-4",
+      "-!scroll-ml-4",
+      "-!scroll-mr-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scroll-mt-4",
+      "scroll-mb-4",
+      "scroll-ml-4",
+      "scroll-mr-4",
+      "scroll-m-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scroll-mt-8",
+      "scroll-mb-4",
+      "scroll-ml-4",
+      "scroll-mr-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scroll-mx-4",
+      "scroll-my-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:scroll-mx-4",
+      "hover:scroll-my-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-scroll-mx-4",
+      "[&:is(a:b)]:-scroll-my-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!scroll-mx-4",
+      "!scroll-my-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scroll-mx-4!",
+      "scroll-my-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!scroll-mx-4",
+      "-!scroll-my-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scroll-mx-4",
+      "scroll-my-4",
+      "scroll-m-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scroll-mx-8",
+      "scroll-my-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scroll-ms-4",
+      "scroll-me-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:scroll-ms-4",
+      "hover:scroll-me-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-scroll-ms-4",
+      "[&:is(a:b)]:-scroll-me-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!scroll-ms-4",
+      "!scroll-me-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scroll-ms-4!",
+      "scroll-me-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!scroll-ms-4",
+      "-!scroll-me-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scroll-ms-4",
+      "scroll-me-4",
+      "scroll-mx-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scroll-ms-8",
+      "scroll-me-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scroll-ml-4",
+      "scroll-mr-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:scroll-ml-4",
+      "hover:scroll-mr-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-scroll-ml-4",
+      "[&:is(a:b)]:-scroll-mr-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!scroll-ml-4",
+      "!scroll-mr-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scroll-ml-4!",
+      "scroll-mr-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!scroll-ml-4",
+      "-!scroll-mr-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scroll-ml-4",
+      "scroll-mr-4",
+      "scroll-mx-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scroll-ml-8",
+      "scroll-mr-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scroll-mt-4",
+      "scroll-mb-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:scroll-mt-4",
+      "hover:scroll-mb-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-scroll-mt-4",
+      "[&:is(a:b)]:-scroll-mb-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!scroll-mt-4",
+      "!scroll-mb-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scroll-mt-4!",
+      "scroll-mb-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!scroll-mt-4",
+      "-!scroll-mb-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scroll-mt-4",
+      "scroll-mb-4",
+      "scroll-my-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scroll-mt-8",
+      "scroll-mb-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scroll-pt-4",
+      "scroll-pb-4",
+      "scroll-pl-4",
+      "scroll-pr-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:scroll-pt-4",
+      "hover:scroll-pb-4",
+      "hover:scroll-pl-4",
+      "hover:scroll-pr-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-scroll-pt-4",
+      "[&:is(a:b)]:-scroll-pb-4",
+      "[&:is(a:b)]:-scroll-pl-4",
+      "[&:is(a:b)]:-scroll-pr-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!scroll-pt-4",
+      "!scroll-pb-4",
+      "!scroll-pl-4",
+      "!scroll-pr-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scroll-pt-4!",
+      "scroll-pb-4!",
+      "scroll-pl-4!",
+      "scroll-pr-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!scroll-pt-4",
+      "-!scroll-pb-4",
+      "-!scroll-pl-4",
+      "-!scroll-pr-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scroll-pt-4",
+      "scroll-pb-4",
+      "scroll-pl-4",
+      "scroll-pr-4",
+      "scroll-p-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scroll-pt-8",
+      "scroll-pb-4",
+      "scroll-pl-4",
+      "scroll-pr-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scroll-px-4",
+      "scroll-py-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:scroll-px-4",
+      "hover:scroll-py-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-scroll-px-4",
+      "[&:is(a:b)]:-scroll-py-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!scroll-px-4",
+      "!scroll-py-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scroll-px-4!",
+      "scroll-py-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!scroll-px-4",
+      "-!scroll-py-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scroll-px-4",
+      "scroll-py-4",
+      "scroll-p-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scroll-px-8",
+      "scroll-py-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scroll-pl-4",
+      "scroll-pr-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:scroll-pl-4",
+      "hover:scroll-pr-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-scroll-pl-4",
+      "[&:is(a:b)]:-scroll-pr-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!scroll-pl-4",
+      "!scroll-pr-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scroll-pl-4!",
+      "scroll-pr-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!scroll-pl-4",
+      "-!scroll-pr-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scroll-pl-4",
+      "scroll-pr-4",
+      "scroll-px-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scroll-pl-8",
+      "scroll-pr-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scroll-ps-4",
+      "scroll-pe-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:scroll-ps-4",
+      "hover:scroll-pe-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-scroll-ps-4",
+      "[&:is(a:b)]:-scroll-pe-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!scroll-ps-4",
+      "!scroll-pe-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scroll-ps-4!",
+      "scroll-pe-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!scroll-ps-4",
+      "-!scroll-pe-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scroll-ps-4",
+      "scroll-pe-4",
+      "scroll-px-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scroll-ps-8",
+      "scroll-pe-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scroll-pt-4",
+      "scroll-pb-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:scroll-pt-4",
+      "hover:scroll-pb-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-scroll-pt-4",
+      "[&:is(a:b)]:-scroll-pb-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!scroll-pt-4",
+      "!scroll-pb-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scroll-pt-4!",
+      "scroll-pb-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!scroll-pt-4",
+      "-!scroll-pb-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scroll-pt-4",
+      "scroll-pb-4",
+      "scroll-py-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scroll-pt-8",
+      "scroll-pb-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "top-4",
+      "right-4",
+      "bottom-4",
+      "left-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:top-4",
+      "hover:right-4",
+      "hover:bottom-4",
+      "hover:left-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-top-4",
+      "[&:is(a:b)]:-right-4",
+      "[&:is(a:b)]:-bottom-4",
+      "[&:is(a:b)]:-left-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!top-4",
+      "!right-4",
+      "!bottom-4",
+      "!left-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "top-4!",
+      "right-4!",
+      "bottom-4!",
+      "left-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!top-4",
+      "-!right-4",
+      "-!bottom-4",
+      "-!left-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "top-4",
+      "right-4",
+      "bottom-4",
+      "left-4",
+      "inset-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "top-8",
+      "right-4",
+      "bottom-4",
+      "left-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "inset-x-4",
+      "inset-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:inset-x-4",
+      "hover:inset-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-inset-x-4",
+      "[&:is(a:b)]:-inset-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!inset-x-4",
+      "!inset-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "inset-x-4!",
+      "inset-y-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!inset-x-4",
+      "-!inset-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "inset-x-4",
+      "inset-y-4",
+      "inset-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "inset-x-8",
+      "inset-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "divide-x-4",
+      "divide-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:divide-x-4",
+      "hover:divide-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-divide-x-4",
+      "[&:is(a:b)]:-divide-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!divide-x-4",
+      "!divide-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "divide-x-4!",
+      "divide-y-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!divide-x-4",
+      "-!divide-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "divide-x-4",
+      "divide-y-4",
+      "divide-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "divide-x-8",
+      "divide-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "space-x-4",
+      "space-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:space-x-4",
+      "hover:space-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-space-x-4",
+      "[&:is(a:b)]:-space-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!space-x-4",
+      "!space-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "space-x-4!",
+      "space-y-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!space-x-4",
+      "-!space-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "space-x-4",
+      "space-y-4",
+      "space-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "space-x-8",
+      "space-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "gap-x-4",
+      "gap-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:gap-x-4",
+      "hover:gap-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-gap-x-4",
+      "[&:is(a:b)]:-gap-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!gap-x-4",
+      "!gap-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "gap-x-4!",
+      "gap-y-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!gap-x-4",
+      "-!gap-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "gap-x-4",
+      "gap-y-4",
+      "gap-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "gap-x-8",
+      "gap-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "translate-x-4",
+      "translate-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:translate-x-4",
+      "hover:translate-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-translate-x-4",
+      "[&:is(a:b)]:-translate-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!translate-x-4",
+      "!translate-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "translate-x-4!",
+      "translate-y-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!translate-x-4",
+      "-!translate-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "translate-x-4",
+      "translate-y-4",
+      "translate-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "translate-x-8",
+      "translate-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "rotate-x-4",
+      "rotate-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:rotate-x-4",
+      "hover:rotate-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-rotate-x-4",
+      "[&:is(a:b)]:-rotate-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!rotate-x-4",
+      "!rotate-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "rotate-x-4!",
+      "rotate-y-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!rotate-x-4",
+      "-!rotate-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "rotate-x-4",
+      "rotate-y-4",
+      "rotate-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "rotate-x-8",
+      "rotate-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "skew-x-4",
+      "skew-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:skew-x-4",
+      "hover:skew-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-skew-x-4",
+      "[&:is(a:b)]:-skew-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!skew-x-4",
+      "!skew-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "skew-x-4!",
+      "skew-y-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!skew-x-4",
+      "-!skew-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "skew-x-4",
+      "skew-y-4",
+      "skew-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "skew-x-8",
+      "skew-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scale-x-4",
+      "scale-y-4",
+      "scale-z-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:scale-x-4",
+      "hover:scale-y-4",
+      "hover:scale-z-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-scale-x-4",
+      "[&:is(a:b)]:-scale-y-4",
+      "[&:is(a:b)]:-scale-z-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!scale-x-4",
+      "!scale-y-4",
+      "!scale-z-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scale-x-4!",
+      "scale-y-4!",
+      "scale-z-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!scale-x-4",
+      "-!scale-y-4",
+      "-!scale-z-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scale-x-4",
+      "scale-y-4",
+      "scale-z-4",
+      "scale-4",
+      "scale-3d"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scale-x-8",
+      "scale-y-4",
+      "scale-z-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scale-x-4",
+      "scale-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:scale-x-4",
+      "hover:scale-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-scale-x-4",
+      "[&:is(a:b)]:-scale-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!scale-x-4",
+      "!scale-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scale-x-4!",
+      "scale-y-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!scale-x-4",
+      "-!scale-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scale-x-4",
+      "scale-y-4",
+      "scale-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "scale-x-8",
+      "scale-y-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "content-4",
+      "justify-content-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:content-4",
+      "hover:justify-content-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-content-4",
+      "[&:is(a:b)]:-justify-content-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!content-4",
+      "!justify-content-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "content-4!",
+      "justify-content-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!content-4",
+      "-!justify-content-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "content-4",
+      "justify-content-4",
+      "place-content-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "content-8",
+      "justify-content-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "items-4",
+      "justify-items-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:items-4",
+      "hover:justify-items-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-items-4",
+      "[&:is(a:b)]:-justify-items-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!items-4",
+      "!justify-items-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "items-4!",
+      "justify-items-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!items-4",
+      "-!justify-items-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "items-4",
+      "justify-items-4",
+      "place-items-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "items-8",
+      "justify-items-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "self-4",
+      "justify-self-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:self-4",
+      "hover:justify-self-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-self-4",
+      "[&:is(a:b)]:-justify-self-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!self-4",
+      "!justify-self-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "self-4!",
+      "justify-self-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!self-4",
+      "-!justify-self-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "self-4",
+      "justify-self-4",
+      "place-self-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "self-8",
+      "justify-self-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "overflow-hidden",
+      "text-ellipsis",
+      "whitespace-nowrap"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:overflow-hidden",
+      "hover:text-ellipsis",
+      "hover:whitespace-nowrap"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "[&:is(a:b)]:-overflow-hidden",
+      "[&:is(a:b)]:-text-ellipsis",
+      "[&:is(a:b)]:-whitespace-nowrap"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!overflow-hidden",
+      "!text-ellipsis",
+      "!whitespace-nowrap"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "overflow-hidden!",
+      "text-ellipsis!",
+      "whitespace-nowrap!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!overflow-hidden",
+      "-!text-ellipsis",
+      "-!whitespace-nowrap"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "overflow-hidden",
+      "text-ellipsis",
+      "whitespace-nowrap",
+      "truncate"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "overflow-hidden",
+      "text-ellipsis",
+      "whitespace-nowrap"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": []
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "w-",
+      "h-"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "w-screen",
+      "h-screen"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "justify-x-2",
+      "[&_button]:items-2",
+      "[&_button]:justify-items-2",
+      "items-4",
+      "justify-items-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "w-2",
+      "w-4",
+      "h-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "!w-4",
+      "h-4!"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "-!w-4",
+      "!-h-4"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "hover:w-2",
+      "focus:h-2"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      ":w-2",
+      ":h-2"
+    ]
+  },
+  {
+    "kind": "shorthand",
+    "names": [
+      "w-2:",
+      "h-2:"
+    ]
+  },
+  {
+    "kind": "boundary",
+    "text": "",
+    "before": true
+  },
+  {
+    "kind": "boundary",
+    "text": "",
+    "before": false
+  },
+  {
+    "kind": "boundary",
+    "text": "px-",
+    "before": true
+  },
+  {
+    "kind": "boundary",
+    "text": "px-",
+    "before": false
+  },
+  {
+    "kind": "boundary",
+    "text": "-4",
+    "before": true
+  },
+  {
+    "kind": "boundary",
+    "text": "-4",
+    "before": false
+  },
+  {
+    "kind": "boundary",
+    "text": "flex px-",
+    "before": true
+  },
+  {
+    "kind": "boundary",
+    "text": "flex px-",
+    "before": false
+  },
+  {
+    "kind": "boundary",
+    "text": "-4 flex",
+    "before": true
+  },
+  {
+    "kind": "boundary",
+    "text": "-4 flex",
+    "before": false
+  },
+  {
+    "kind": "boundary",
+    "text": " flex ",
+    "before": true
+  },
+  {
+    "kind": "boundary",
+    "text": " flex ",
+    "before": false
+  },
+  {
+    "kind": "boundary",
+    "text": "\tpx-",
+    "before": true
+  },
+  {
+    "kind": "boundary",
+    "text": "\tpx-",
+    "before": false
+  },
+  {
+    "kind": "boundary",
+    "text": "px-\n",
+    "before": true
+  },
+  {
+    "kind": "boundary",
+    "text": "px-\n",
+    "before": false
+  },
+  {
+    "kind": "boundary",
+    "text": "\u000b",
+    "before": true
+  },
+  {
+    "kind": "boundary",
+    "text": "\u000b",
+    "before": false
+  },
+  {
+    "kind": "boundary",
+    "text": "px-",
+    "before": true
+  },
+  {
+    "kind": "boundary",
+    "text": "px-",
+    "before": false
+  },
+  {
+    "kind": "boundary",
+    "text": "px- ",
+    "before": true
+  },
+  {
+    "kind": "boundary",
+    "text": "px- ",
+    "before": false
+  },
+  {
+    "kind": "boundary",
+    "text": " ",
+    "before": true
+  },
+  {
+    "kind": "boundary",
+    "text": " ",
+    "before": false
+  },
+  {
+    "kind": "boundary",
+    "text": "é-",
+    "before": true
+  },
+  {
+    "kind": "boundary",
+    "text": "é-",
+    "before": false
+  },
+  {
+    "kind": "boundary",
+    "text": "💙-",
+    "before": true
+  },
+  {
+    "kind": "boundary",
+    "text": "💙-",
+    "before": false
+  },
+  {
+    "kind": "boundary",
+    "text": " x",
+    "before": true
+  },
+  {
+    "kind": "boundary",
+    "text": " x",
+    "before": false
+  },
+  {
+    "kind": "boundary",
+    "text": "x ",
+    "before": true
+  },
+  {
+    "kind": "boundary",
+    "text": "x ",
+    "before": false
+  },
+  {
+    "kind": "boundary",
+    "text": "a\u0000b",
+    "before": true
+  },
+  {
+    "kind": "boundary",
+    "text": "a\u0000b",
+    "before": false
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display",
+          "color"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "padding"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display",
+          "color"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "padding"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display",
+          "color"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "padding"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display",
+          "color"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "padding"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display",
+          "color"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "padding"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display",
+          "color"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "padding"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display",
+          "color"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "padding"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display",
+          "color"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "padding"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display",
+          "color"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "padding"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display",
+          "color"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "padding"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display",
+          "color"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "padding"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display",
+          "color"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "padding"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display",
+          "color"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "padding"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display",
+          "color"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "padding"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display",
+          "color"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "padding"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display",
+          "color"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "padding"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display",
+          "color"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "padding"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display",
+          "color"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "padding"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display",
+          "color"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "padding"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display",
+          "color"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "padding"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display",
+          "color"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "padding"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display",
+          "color"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "padding"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display",
+          "color"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "padding"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display",
+          "color"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "padding"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display",
+          "color"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "padding"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display",
+          "color"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "padding"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display",
+          "color"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "padding"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display",
+          "color"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "padding"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display",
+          "color"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "padding"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display",
+          "color"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "padding"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display",
+          "color"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "padding"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display",
+          "color"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "hover:",
+        "SelectorShape": "&::placeholder",
+        "Properties": [
+          "display"
+        ],
+        "Composes": true
+      },
+      {
+        "ClassName": "b",
+        "Variants": "hover:",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "padding"
+        ],
+        "Composes": true
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": []
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "c",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "display"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "z",
+          "a"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "a",
+          "z"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "a",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "x",
+          "x"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "x",
+          "x"
+        ],
+        "Composes": false
+      }
+    ]
+  },
+  {
+    "kind": "conflict",
+    "facts": [
+      {
+        "ClassName": "unicode-a",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "",
+          "𐀀",
+          "a"
+        ],
+        "Composes": false
+      },
+      {
+        "ClassName": "unicode-b",
+        "Variants": "",
+        "SelectorShape": ".CLASS",
+        "Properties": [
+          "a",
+          "𐀀",
+          ""
+        ],
+        "Composes": false
+      }
+    ]
+  }
+]

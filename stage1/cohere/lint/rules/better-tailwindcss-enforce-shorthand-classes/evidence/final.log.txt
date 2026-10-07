@@ -1,0 +1,20 @@
+=== RUN   TestTailwindDecisions
+    decision_test.go:112: all decision cases agree, 121355 identical bytes, Go/Node/emitted JS/sanitized native
+=== RUN   TestTailwindDecisions/better-tailwindcss-enforce-shorthand-classes
+    decision_test.go:146: compiling clean mutant killed only by comparison, side 0
+    decision_test.go:146: compiling clean mutant killed only by comparison, side 1
+    decision_test.go:146: compiling clean mutant killed only by comparison, side 2
+=== RUN   TestTailwindDecisions/better-tailwindcss-no-concatenated-classes
+    decision_test.go:146: compiling clean mutant killed only by comparison, side 0
+    decision_test.go:146: compiling clean mutant killed only by comparison, side 1
+    decision_test.go:146: compiling clean mutant killed only by comparison, side 2
+=== RUN   TestTailwindDecisions/better-tailwindcss-no-conflicting-classes
+    decision_test.go:146: compiling clean mutant killed only by comparison, side 0
+    decision_test.go:146: compiling clean mutant killed only by comparison, side 1
+    decision_test.go:146: compiling clean mutant killed only by comparison, side 2
+--- PASS: TestTailwindDecisions (18.60s)
+    --- PASS: TestTailwindDecisions/better-tailwindcss-enforce-shorthand-classes (4.41s)
+    --- PASS: TestTailwindDecisions/better-tailwindcss-no-concatenated-classes (4.21s)
+    --- PASS: TestTailwindDecisions/better-tailwindcss-no-conflicting-classes (3.53s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/rules/better-tailwindcss-enforce-shorthand-classes	18.606s

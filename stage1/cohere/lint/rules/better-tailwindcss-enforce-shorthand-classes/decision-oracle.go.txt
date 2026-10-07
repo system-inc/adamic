@@ -1,0 +1,3 @@
+package main
+import("encoding/json";"fmt";"os";tw "github.com/system-inc/cohere/internal/lint/rules/tailwind")
+func main(){b,e:=os.ReadFile(os.Args[1]);if e!=nil{panic(e)};var rows []json.RawMessage;if e=json.Unmarshal(b,&rows);e!=nil{panic(e)};for _,row:=range rows { for _,line:=range tw.Wave12Decision(row){fmt.Println(line)};fmt.Println("end")}}

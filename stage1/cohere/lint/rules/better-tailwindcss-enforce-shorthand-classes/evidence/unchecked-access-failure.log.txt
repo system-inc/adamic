@@ -1,0 +1,21 @@
+=== RUN   TestTailwindDecisions
+    decision_test.go:82: /workspace/adamic/stage1/cohere/lint/rules/better-tailwindcss-no-concatenated-classes/decision.a:10:40: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+          Type 'undefined' is not assignable to type 'string'.
+        /workspace/adamic/stage1/cohere/lint/rules/better-tailwindcss-no-concatenated-classes/decision.a:14:45: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+          Type 'undefined' is not assignable to type 'string'.
+        /workspace/adamic/stage1/cohere/lint/rules/better-tailwindcss-no-conflicting-classes/decision.a:25:13: error TS18048: 'subject' is possibly 'undefined'.
+        /workspace/adamic/stage1/cohere/lint/rules/better-tailwindcss-no-conflicting-classes/decision.a:30:28: error TS18048: 'other' is possibly 'undefined'.
+        /workspace/adamic/stage1/cohere/lint/rules/better-tailwindcss-no-conflicting-classes/decision.a:31:17: error TS18048: 'other' is possibly 'undefined'.
+        /workspace/adamic/stage1/cohere/lint/rules/better-tailwindcss-no-conflicting-classes/decision.a:31:36: error TS18048: 'subject' is possibly 'undefined'.
+        /workspace/adamic/stage1/cohere/lint/rules/better-tailwindcss-no-conflicting-classes/decision.a:31:56: error TS18048: 'other' is possibly 'undefined'.
+        /workspace/adamic/stage1/cohere/lint/rules/better-tailwindcss-no-conflicting-classes/decision.a:31:75: error TS18048: 'subject' is possibly 'undefined'.
+        /workspace/adamic/stage1/cohere/lint/rules/better-tailwindcss-no-conflicting-classes/decision.a:33:36: error TS18048: 'subject' is possibly 'undefined'.
+        /workspace/adamic/stage1/cohere/lint/rules/better-tailwindcss-no-conflicting-classes/decision.a:33:60: error TS18048: 'other' is possibly 'undefined'.
+        /workspace/adamic/stage1/cohere/lint/rules/better-tailwindcss-no-conflicting-classes/decision.a:34:105: error TS18048: 'other' is possibly 'undefined'.
+        /workspace/adamic/stage1/cohere/lint/rules/better-tailwindcss-no-conflicting-classes/decision.a:34:58: error TS18048: 'subject' is possibly 'undefined'.
+        /workspace/adamic/stage1/cohere/lint/rules/better-tailwindcss-no-conflicting-classes/decision.a:35:25: error TS18048: 'other' is possibly 'undefined'.
+        /workspace/adamic/stage1/cohere/lint/rules/better-tailwindcss-no-conflicting-classes/decision.a:40:34: error TS18048: 'subject' is possibly 'undefined'.
+--- FAIL: TestTailwindDecisions (6.23s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/rules/better-tailwindcss-enforce-shorthand-classes	6.239s
+FAIL

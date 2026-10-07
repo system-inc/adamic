@@ -1,0 +1,6 @@
+=== RUN   TestTailwindDecisions
+    decision_test.go:82: /workspace/adamic/stage1/cohere/lint/rules/better-tailwindcss-no-conflicting-classes/decision.a:40:9: Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]
+--- FAIL: TestTailwindDecisions (1.76s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/rules/better-tailwindcss-enforce-shorthand-classes	1.764s
+FAIL

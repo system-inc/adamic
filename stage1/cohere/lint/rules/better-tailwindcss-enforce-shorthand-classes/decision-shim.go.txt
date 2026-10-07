@@ -1,0 +1,14 @@
+package tailwind
+import("encoding/json";"strings";"github.com/microsoft/TypeScript/tsc/shim/core")
+var wave12Facts []classFacts
+func Wave12Decision(data []byte) []string {
+ var row struct {Kind string;Names []string;Text string;Before bool;Facts []classFacts};if e:=json.Unmarshal(data,&row);e!=nil{panic(e)}
+ lines:=[]string{}
+ switch row.Kind {
+ case "shorthand":for _,c:=range shorthandCollapses(row.Names){m:=messageShorthandClasses(strings.Join(c.longhands," "),strings.Join(c.shorthands," "));lines=append(lines,m.Id+" "+m.Description)}
+ case "boundary": var b TemplateBoundary;var ok bool;if row.Before {b,ok=boundaryBeforeHole(row.Text,core.NewTextRange(0,len(row.Text)))}else{b,ok=boundaryAfterHole(row.Text,core.NewTextRange(0,len(row.Text)))};if ok{m:=messageConcatenatedClass(b.Fragment);lines=append(lines,m.Id+" "+m.Description)}
+ case "conflict":wave12Facts=nil;seen:=map[string]bool{};for _,f:=range row.Facts{if !seen[f.ClassName]{seen[f.ClassName]=true;wave12Facts=append(wave12Facts,f)}};for _,c:=range conflictFindingsIn(nil,DesignSystemResult{}){m:=messageConflictingClasses(c.ClassName,c.Conflicting,c.Properties);lines=append(lines,m.Id+" "+m.Description)}
+ default:panic("unknown decision")
+ }
+ return lines
+}
