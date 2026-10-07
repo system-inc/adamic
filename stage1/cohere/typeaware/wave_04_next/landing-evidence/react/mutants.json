@@ -1,0 +1,44 @@
+[
+  {
+    "rule": "memo",
+    "change": "span",
+    "exit": 0,
+    "stderr_bytes": 0,
+    "caught_by": "reporting byte comparison"
+  },
+  {
+    "rule": "memo",
+    "change": "refusal",
+    "exit": 0,
+    "stderr_bytes": 0,
+    "caught_by": "expected NotYet panic assertion"
+  },
+  {
+    "rule": "purity",
+    "change": "span",
+    "exit": 0,
+    "stderr_bytes": 0,
+    "caught_by": "reporting byte comparison"
+  },
+  {
+    "rule": "purity",
+    "change": "refusal",
+    "exit": 0,
+    "stderr_bytes": 0,
+    "caught_by": "expected NotYet panic assertion"
+  },
+  {
+    "rule": "refs",
+    "change": "span",
+    "exit": 0,
+    "stderr_bytes": 0,
+    "caught_by": "reporting byte comparison"
+  },
+  {
+    "rule": "refs",
+    "change": "refusal",
+    "exit": 0,
+    "stderr_bytes": 0,
+    "caught_by": "expected NotYet panic assertion"
+  }
+]
