@@ -1,0 +1,23 @@
+// Caller supplies decoded static template segments; no AST or source-range claims.
+function seamSpace(c: string): boolean {
+    return c === ' ' || c === '\t' || c === '\n' || c === '\r' || c === '\v' || c === '\f';
+}
+function fieldSpace(c: string): boolean {
+    return seamSpace(c) || c === '\u0085' || c === '\u00a0' || c === '\u1680' ||
+        (c >= '\u2000' && c <= '\u200a') || c === '\u2028' || c === '\u2029' || c === '\u202f' || c === '\u205f' || c === '\u3000';
+}
+export function fragment(text: string, before: boolean): string | undefined {
+    if (text.length === 0 || seamSpace((before ? text[text.length - 1] : text[0]) ?? '')) return undefined;
+    const fields: string[] = [];
+    let start = -1;
+    for (let i = 0; i <= text.length; i++) {
+        if (i === text.length || fieldSpace(text[i] ?? '')) {
+            if (start >= 0) { fields.push(text.slice(start, i)); start = -1; }
+        } else if (start < 0) start = i;
+    }
+    if (fields.length === 0) return undefined;
+    return before ? fields[fields.length - 1] : fields[0];
+}
+export function message(value: string): string {
+    return 'The fragment "' + value + '" is joined to an interpolated value with no space between them, so the class name it forms never appears literally in the source. Tailwind finds classes by scanning text, so it will not generate this one and the style silently will not apply. Write the whole class names out and switch between them, rather than assembling one from pieces.';
+}
