@@ -1,0 +1,119 @@
+import { panic, readTextFile, tsgoInspect } from 'adamic';
+import { Parser } from '../../../typescript/parser/parser.ts';
+import { Scanner } from '../../../typescript/scanner/scanner.ts';
+import { byteOffsets } from '../unary_minus.ts';
+import { Diagnostic } from '../diagnostic.ts';
+import { numericKind } from './kinds.a';
+import { librarySource } from './libraries.a';
+import { Node } from './node.a';
+
+export class Document {
+    readonly program: number;
+    readonly path: string;
+    readonly scanner: Scanner;
+    readonly nodes: Node[];
+    readonly offsets: readonly number[];
+    readonly root: number;
+    readonly findings: Diagnostic[] = [];
+    readonly parents = new Map<number, number>();
+    readonly locations = new Map<string, number>();
+    constructor(
+        program: number,
+        path: string,
+        scanner: Scanner,
+        nodes: Node[],
+        offsets: readonly number[],
+        root: number,
+    ) {
+        this.program = program;
+        this.path = path;
+        this.scanner = scanner;
+        this.nodes = nodes;
+        this.offsets = offsets;
+        this.root = root;
+        this.link(root, -1);
+    }
+    node(index: number): Node {
+        return this.nodes[index] ?? panic('missing JSX rule node');
+    }
+    parent(node: Node): number {
+        return this.parents.get(node.index) ?? -1;
+    }
+    link(index: number, parent: number): void {
+        const node = this.node(index);
+        this.parents.set(index, parent);
+        this.locations.set(`${node.kind}:${this.byte(node.pos)}:${this.byte(node.end)}`, node.index);
+        for(const child of node.children) {
+            this.link(child, node.index);
+        }
+    }
+    byte(position: number): number {
+        return this.offsets[position] ?? panic('JSX position outside source');
+    }
+    start(node: Node): number {
+        this.scanner.pos = node.pos;
+        this.scanner.scan();
+        return this.scanner.start;
+    }
+    ask(node: Node, question: string): string {
+        return tsgoInspect(this.program, this.path, this.byte(node.pos), this.byte(node.end), node.wireKind, question);
+    }
+    report(node: Node, rule: string, id: string, message: string): void {
+        this.findings.push(
+            new Diagnostic(rule, id, message, this.byte(this.start(node)), this.byte(node.end), 'react/'),
+        );
+    }
+    opening(node: Node): Node {
+        return node.kind === 285 ? this.node(node.children[0] ?? panic('missing JSX opening')) : node;
+    }
+    tag(node: Node): Node {
+        const opening = this.opening(node);
+        return this.node(opening.children[0] ?? panic('missing JSX tag'));
+    }
+    args(node: Node): number[] {
+        return node.list > 0 ? node.children.slice(node.children.length - node.list) : [];
+    }
+    initializer(node: Node): number {
+        const last = node.children[node.children.length - 1] ?? -1;
+        const previous = node.children[node.children.length - 2] ?? -1;
+        if(last < 0 || previous < 0) {
+            return -1;
+        }
+        this.scanner.pos = this.node(previous).end;
+        return numericKind(this.scanner.scan()) === 63 ? last : -1;
+    }
+}
+export function parseDocument(program: number, path: string, text: string): Document {
+    const parser = new Parser(text, path);
+    const root = parser.file();
+    const scanner = new Scanner(text);
+    const offsets = byteOffsets(text);
+    const nodes: Node[] = [];
+    for(let index = 0; index < parser.nodes.length; index++) {
+        const parsed = parser.node(index);
+        nodes.push(
+            new Node(
+                index,
+                numericKind(parsed.kind),
+                parsed.kind,
+                parsed.pos,
+                parsed.end,
+                parsed.children,
+                parsed.text,
+                parsed.list,
+            ),
+        );
+    }
+    return new Document(program, path, scanner, nodes, offsets, root);
+}
+export function loadDocument(program: number, path: string): Document {
+    const bundled = librarySource(path);
+    if(bundled !== undefined) {
+        return parseDocument(program, path, bundled);
+    }
+    const input = readTextFile(path);
+    if(input.kind === 'Error') {
+        panic(input.message);
+    }
+    return parseDocument(program, path, input.text);
+}

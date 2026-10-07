@@ -1,0 +1,56 @@
+import type { Document } from '../../document.a';
+import type { Node } from '../../node.a';
+import type { Pragma } from '../../pragma.a';
+export const listenerKinds: readonly number[] = [285, 286, 289];
+export class Rule {
+    readonly document: Document;
+    readonly pragma: Pragma;
+    readonly element: boolean;
+    constructor(document: Document, pragma: Pragma, element: boolean) {
+        this.document = document;
+        this.pragma = pragma;
+        this.element = element;
+    }
+    visit(node: Node): void {
+        if(node.kind === 289) {
+            if(this.element) {
+                this.document.report(
+                    node,
+                    'jsx-fragments',
+                    'preferPragma',
+                    'Prefer React.Fragment over fragment shorthand. The named form is the one this file is configured to use, and it is the only spelling that can carry a `key`.',
+                );
+            }
+            return;
+        }
+        if(this.element) {
+            return;
+        }
+        const opening = this.document.opening(node);
+        const tag = this.document.tag(opening);
+        let fragment = false;
+        if(tag.kind === 79) {
+            fragment = this.pragma.binds(tag, true);
+        }
+        else if(tag.kind === 212) {
+            const object = this.document.node(tag.children[0] ?? -1);
+            const name = this.document.node(tag.children[1] ?? -1);
+            fragment = object.kind === 79 && object.text === 'React' && name.kind === 79 && name.text === 'Fragment';
+        }
+        if(!fragment) {
+            return;
+        }
+        for(const child of opening.children) {
+            const attributes = this.document.node(child);
+            if(attributes.kind === 293 && attributes.children.length > 0) {
+                return;
+            }
+        }
+        this.document.report(
+            node,
+            'jsx-fragments',
+            'preferFragment',
+            'Prefer fragment shorthand over React.Fragment. The shorthand `<>` says the same thing with less to read, and a named fragment that carries no props is only the long spelling of it.',
+        );
+    }
+}

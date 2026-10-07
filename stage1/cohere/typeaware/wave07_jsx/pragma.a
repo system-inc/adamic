@@ -1,0 +1,127 @@
+import { loadDocument } from './document.a';
+import type { Document } from './document.a';
+import { panic } from 'adamic';
+import type { Node } from './node.a';
+import type { Symbols } from './symbols.a';
+
+export class Pragma {
+    readonly document: Document;
+    readonly symbols: Symbols;
+    readonly related = new Map<string, Document>();
+    constructor(document: Document, symbols: Symbols) {
+        this.document = document;
+        this.symbols = symbols;
+    }
+    source(path: string): Document {
+        if(path === this.document.path) {
+            return this.document;
+        }
+        const previous = this.related.get(path);
+        if(previous !== undefined) {
+            return previous;
+        }
+        const document = loadDocument(this.document.program, path);
+        this.related.set(path, document);
+        return document;
+    }
+    require(document: Document, node: Node, fragment: boolean): boolean {
+        if(node.kind !== 214) {
+            return false;
+        }
+        const callee = document.node(node.children[0] ?? -1);
+        const args = document.args(node);
+        if(callee.kind !== 79 || callee.text !== 'require' || args.length === 0) {
+            return false;
+        }
+        const first = document.node(args[0] ?? -1);
+        return (first.kind === 10 || (fragment && first.kind === 14)) && first.text === 'react';
+    }
+    initializer(document: Document, index: number, fragment: boolean): boolean {
+        if(index < 0) {
+            return false;
+        }
+        const node = document.node(index);
+        if(node.kind === 79) {
+            return node.text === 'React';
+        }
+        if(node.kind === 212) {
+            const object = document.node(node.children[0] ?? -1);
+            const name = document.node(node.children[1] ?? -1);
+            if(fragment) {
+                return object.kind === 79 && object.text === 'React' && name.kind === 79 && name.text === 'Fragment';
+            }
+            return (object.kind === 79 && object.text === 'React') || this.require(document, object, false);
+        }
+        return this.require(document, node, fragment);
+    }
+    importModule(document: Document, node: Node): string {
+        const named = document.parent(node) < 0 ? undefined : document.node(document.parent(node));
+        if(named === undefined || named.kind !== 276) {
+            return '';
+        }
+        const clause = document.parent(named) < 0 ? undefined : document.node(document.parent(named));
+        if(clause === undefined || clause.kind !== 274) {
+            return '';
+        }
+        const declaration = document.parent(clause) < 0 ? undefined : document.node(document.parent(clause));
+        if(declaration === undefined || declaration.kind !== 273) {
+            return '';
+        }
+        for(const child of declaration.children) {
+            const module = document.node(child);
+            if(module.kind === 10 || module.kind === 14) {
+                return module.text;
+            }
+        }
+        return '';
+    }
+    declaration(document: Document, node: Node, fragment: boolean): boolean {
+        if(node.kind === 277) {
+            const imported = document.node(node.children[0] ?? -1);
+            return (
+                (!fragment || (imported.kind === 79 && imported.text === 'Fragment')) &&
+                this.importModule(document, node) === 'react'
+            );
+        }
+        if(node.kind === 209) {
+            if(document.parent(node) < 0) {
+                return false;
+            }
+            const pattern = document.node(document.parent(node));
+            if(pattern.kind !== 207 || document.parent(pattern) < 0) {
+                return false;
+            }
+            const variable = document.node(document.parent(pattern));
+            return variable.kind === 261 && this.initializer(document, document.initializer(variable), fragment);
+        }
+        return node.kind === 261 && this.initializer(document, document.initializer(node), fragment);
+    }
+    binds(node: Node, fragment: boolean): boolean {
+        for(const declaration of this.symbols.get(node).declarations) {
+            if(![277, 209, 261].includes(declaration.kind)) {
+                continue;
+            }
+            const document = this.source(declaration.path);
+            const index = document.locations.get(`${declaration.kind}:${declaration.start}:${declaration.end}`);
+            if(index === undefined) {
+                panic('checker declaration absent from native tree');
+            }
+            if(this.declaration(document, document.node(index), fragment)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    createElement(node: Node): boolean {
+        let callee = this.document.node(node.children[0] ?? -1);
+        while(callee.kind === 218) {
+            callee = this.document.node(callee.children[0] ?? -1);
+        }
+        if(callee.kind === 212) {
+            const object = this.document.node(callee.children[0] ?? -1);
+            const name = this.document.node(callee.children[1] ?? -1);
+            return name.kind === 79 && name.text === 'createElement' && object.kind === 79 && object.text === 'React';
+        }
+        return callee.kind === 79 && callee.text === 'createElement' && this.binds(callee, false);
+    }
+}

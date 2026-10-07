@@ -1,0 +1,6 @@
+import { listenerKinds as fragments } from './rules/jsx-fragments/rule.a';
+import { listenerKinds as undef } from './rules/jsx-no-undef/rule.a';
+import { listenerKinds as adjacent } from './rules/no-adjacent-inline-elements/rule.a';
+console.log(`react/jsx-fragments${fragments.map((kind) => `\t${kind}`).join('')}`);
+console.log(`react/jsx-no-undef${undef.map((kind) => `\t${kind}`).join('')}`);
+console.log(`react/no-adjacent-inline-elements${adjacent.map((kind) => `\t${kind}`).join('')}`);

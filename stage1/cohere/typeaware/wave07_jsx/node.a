@@ -1,0 +1,30 @@
+// A node normalized once at the parser boundary. Child and parent links are indexes.
+export class Node {
+    readonly index: number;
+    readonly kind: number;
+    readonly wireKind: string;
+    readonly pos: number;
+    readonly end: number;
+    readonly children: number[];
+    readonly text: string;
+    readonly list: number;
+    constructor(
+        index: number,
+        kind: number,
+        wireKind: string,
+        pos: number,
+        end: number,
+        children: number[],
+        text: string,
+        list: number,
+    ) {
+        this.index = index;
+        this.kind = kind;
+        this.wireKind = wireKind;
+        this.pos = pos;
+        this.end = end;
+        this.children = children;
+        this.text = text;
+        this.list = list;
+    }
+}

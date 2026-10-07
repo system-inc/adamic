@@ -1,0 +1,47 @@
+import { Frames, header } from '../frames.ts';
+import { numericKind } from './kinds.a';
+import type { Document } from './document.a';
+import type { Node } from './node.a';
+
+import { Declaration } from './declaration.a';
+export class SymbolInfo {
+    present = false;
+    readonly declarations: Declaration[] = [];
+    constructor(document: Document, node: Node) {
+        const frames = new Frames(document.ask(node, 'node-symbol-details'));
+        header(frames, 'node-symbol-details');
+        this.present = frames.yes();
+        if(this.present) {
+            frames.natural();
+            frames.natural();
+            frames.field();
+            const count = frames.natural();
+            for(let at = 0; at < count; at++) {
+                const path = frames.field();
+                const kind = numericKind(frames.field());
+                const start = frames.natural();
+                const end = frames.natural();
+                this.declarations.push(new Declaration(path, kind, start, end));
+                frames.yes();
+                frames.yes();
+                frames.field();
+                frames.field();
+                frames.natural();
+                frames.natural();
+                const tags = frames.natural();
+                for(let tag = 0; tag < tags; tag++) {
+                    frames.field();
+                    frames.field();
+                    frames.natural();
+                    frames.natural();
+                    frames.field();
+                }
+                const parameters = frames.natural();
+                for(let parameter = 0; parameter < parameters; parameter++) {
+                    frames.field();
+                }
+            }
+        }
+        frames.end();
+    }
+}

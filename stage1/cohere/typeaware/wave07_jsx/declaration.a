@@ -1,0 +1,12 @@
+export class Declaration {
+    readonly path: string;
+    readonly kind: number;
+    readonly start: number;
+    readonly end: number;
+    constructor(path: string, kind: number, start: number, end: number) {
+        this.path = path;
+        this.kind = kind;
+        this.start = start;
+        this.end = end;
+    }
+}

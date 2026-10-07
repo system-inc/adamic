@@ -1,0 +1,19 @@
+import type { Document } from './document.a';
+import type { Node } from './node.a';
+import { SymbolInfo } from './symbol.a';
+export class Symbols {
+    readonly document: Document;
+    readonly cache = new Map<number, SymbolInfo>();
+    constructor(document: Document) {
+        this.document = document;
+    }
+    get(node: Node): SymbolInfo {
+        const old = this.cache.get(node.index);
+        if(old !== undefined) {
+            return old;
+        }
+        const symbol = new SymbolInfo(this.document, node);
+        this.cache.set(node.index, symbol);
+        return symbol;
+    }
+}

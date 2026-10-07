@@ -169,3 +169,22 @@ is pushed before rule implementation. New modules use .a, numeric listener kinds
 in each rule.json and handlers taking the handed node. Shared parser, generator,
 harness and dispatcher files remain untouched. JSX parser integration is still
 pending; isolated published-parser validation may establish rule behavior first.
+
+## Fourth continuation implementation status
+
+All three owned handlers are implemented in wave07_jsx as .a modules with numeric
+rule.json listeners and handed-node dispatch. On rebased main c01907a7 the
+ordinary/sanitized positive controls, four option combinations, both frozen
+corpora, three message mutants, three dispatch mutants and released-handle
+checks pass. Both corpora also match with the unchanged main parser. Its
+positive JSX blocker is GreaterThanToken versus SlashToken at byte 97; shared
+JSX parser/driver integration is pending. The isolated published parser is
+a8a62d62ca49db7415e14c3887dd305022b17309. No shared files were changed.
+
+An owned, licensed library snapshot resolves virtual declaration-source paths
+without a shared bridge edit; all 114 sources pass an external-byte sanitizer
+probe and a valid data mutant. All prior nine ports were re-greened after the
+rebase, including their bridge/decoder guards, filtered Node oracles and vet.
+See ../wave07_jsx/REPORT.md and its evidence. The three earlier analysis-heavy
+React claims stay parked with the named IR/SSA/capture blocker. No more rules
+are claimed in this update.

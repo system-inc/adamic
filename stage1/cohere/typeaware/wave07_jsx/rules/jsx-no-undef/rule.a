@@ -1,0 +1,47 @@
+import type { Document } from '../../document.a';
+import type { Node } from '../../node.a';
+import type { Symbols } from '../../symbols.a';
+export const listenerKinds: readonly number[] = [286, 287];
+export class Rule {
+    readonly document: Document;
+    readonly symbols: Symbols;
+    readonly globals: boolean;
+    constructor(document: Document, symbols: Symbols, globals: boolean) {
+        this.document = document;
+        this.symbols = symbols;
+        this.globals = globals || document.path.endsWith('.cjs');
+    }
+    visit(node: Node): void {
+        let reference = this.document.tag(node);
+        if(reference.kind === 79) {
+            const first = reference.text.charCodeAt(0);
+            if(reference.text === '' || reference.text.includes('-') || (first >= 97 && first <= 122)) {
+                return;
+            }
+        }
+        else if(reference.kind === 212) {
+            while(reference.kind === 212) {
+                reference = this.document.node(reference.children[0] ?? -1);
+            }
+            if(reference.kind !== 79) {
+                return;
+            }
+        }
+        else {
+            return;
+        }
+        const symbol = this.symbols.get(reference);
+        if(
+            symbol.present &&
+            (this.globals || symbol.declarations.some((declaration) => declaration.path === this.document.path))
+        ) {
+            return;
+        }
+        this.document.report(
+            reference,
+            'jsx-no-undef',
+            'jsxIdentifierNotDefined',
+            'This JSX tag names a component that has no declaration in scope, so React receives `undefined` where a component was meant and throws at render rather than at build. Almost always a misspelling or a missing import. Import the component, or fix the spelling to match the binding you meant.',
+        );
+    }
+}

@@ -1,0 +1,18 @@
+import { panic, programArguments, tsgoProgram, tsgoRelease } from 'adamic';
+import { loadDocument } from './document.a';
+import { Frames, header } from '../frames.ts';
+const args = programArguments();
+const path = args[1] ?? panic('missing released probe source');
+const program = tsgoProgram(args[0] ?? panic('missing config'), [path]);
+const document = loadDocument(program, path);
+const node =
+    document.nodes.find((candidate) => candidate.kind === 79 && candidate.text === 'value') ??
+    panic('missing identifier');
+const frames = new Frames(document.ask(node, 'node-symbol-details'));
+header(frames, 'node-symbol-details');
+if(!frames.yes()) {
+    panic('live symbol absent');
+}
+console.log('live symbol succeeds');
+tsgoRelease(program);
+console.log(document.ask(node, 'node-symbol-details'));
