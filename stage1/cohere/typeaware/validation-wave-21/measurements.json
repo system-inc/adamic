@@ -1,0 +1,30 @@
+{
+  "compiler": {
+    "go": {
+      "process_ns": 310169981,
+      "bytes": 5087,
+      "sha256": "04ba1ff218e16121aa64bcb3ba27e1f25c1a7e541c789366a26294ef09eeb810",
+      "timing": "cohere: load_ns=246234815 rule_ns=3086175 run_ns=45055449\n"
+    },
+    "native": {
+      "process_ns": 1374862094,
+      "bytes": 5087,
+      "sha256": "04ba1ff218e16121aa64bcb3ba27e1f25c1a7e541c789366a26294ef09eeb810",
+      "timing": "tsgo: load_ns=226570498 query_ns=171385454 queries=1229 first_query_ns=3084924 run_ns=1134758603\n"
+    }
+  },
+  "repository": {
+    "go": {
+      "process_ns": 117203758,
+      "bytes": 18485,
+      "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+      "timing": "cohere: load_ns=66419605 rule_ns=0 run_ns=39527834\n"
+    },
+    "native": {
+      "process_ns": 192569760,
+      "bytes": 18485,
+      "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+      "timing": "tsgo: load_ns=66874728 query_ns=0 queries=0 first_query_ns=0 run_ns=120760635\n"
+    }
+  }
+}

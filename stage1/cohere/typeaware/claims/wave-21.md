@@ -14,3 +14,10 @@ the 26 rules already ported on the base:
 
 These rules are reserved for codex/typeaware-wave-21. No claim files or named
 ports were found on fetched origin branches before this claim.
+
+## Final status
+
+`@typescript-eslint/no-mixed-enums` is implemented and verified in 63746b1e.
+`@typescript-eslint/no-misused-promises` and `@typescript-eslint/no-misused-spread`
+are unimplemented. Their reservations are released for reassignment.
+This wave is incomplete; see ../WAVE_21_REPORT.md.

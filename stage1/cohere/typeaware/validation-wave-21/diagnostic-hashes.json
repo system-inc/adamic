@@ -1,0 +1,56 @@
+{
+  "controls": {
+    "go": {
+      "bytes": 4163,
+      "sha256": "12ce3c7d4261a61af6c69229646635c57054ea38832865c73218438181b06935"
+    },
+    "native": {
+      "bytes": 4163,
+      "sha256": "12ce3c7d4261a61af6c69229646635c57054ea38832865c73218438181b06935"
+    },
+    "asan-go": {
+      "bytes": 4163,
+      "sha256": "12ce3c7d4261a61af6c69229646635c57054ea38832865c73218438181b06935"
+    },
+    "asan-native": {
+      "bytes": 4163,
+      "sha256": "12ce3c7d4261a61af6c69229646635c57054ea38832865c73218438181b06935"
+    }
+  },
+  "compiler": {
+    "go": {
+      "bytes": 5087,
+      "sha256": "04ba1ff218e16121aa64bcb3ba27e1f25c1a7e541c789366a26294ef09eeb810"
+    },
+    "native": {
+      "bytes": 5087,
+      "sha256": "04ba1ff218e16121aa64bcb3ba27e1f25c1a7e541c789366a26294ef09eeb810"
+    },
+    "asan-go": {
+      "bytes": 5087,
+      "sha256": "04ba1ff218e16121aa64bcb3ba27e1f25c1a7e541c789366a26294ef09eeb810"
+    },
+    "asan-native": {
+      "bytes": 5087,
+      "sha256": "04ba1ff218e16121aa64bcb3ba27e1f25c1a7e541c789366a26294ef09eeb810"
+    }
+  },
+  "repository": {
+    "go": {
+      "bytes": 18485,
+      "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+    },
+    "native": {
+      "bytes": 18485,
+      "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+    },
+    "asan-go": {
+      "bytes": 18485,
+      "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+    },
+    "asan-native": {
+      "bytes": 18485,
+      "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+    }
+  }
+}
