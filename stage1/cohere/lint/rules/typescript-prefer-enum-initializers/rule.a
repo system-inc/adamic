@@ -1,5 +1,5 @@
 import type { RuleContext } from '../../context.ts';
-import { saveRepairs } from '../typescript-no-unnecessary-type-constraint/repairs.a';
+import { reportRepairs } from '../typescript-no-unnecessary-type-constraint/repairs.a';
 import type { Suggestion } from '../typescript-no-unnecessary-type-constraint/repairs.a';
 import { description } from './messages.a';
 export class Rule {
@@ -20,8 +20,7 @@ export class Rule {
                         edits: [{ start: start, end: end, text: text }] });
                 }
                 const rule = '@typescript-eslint/prefer-enum-initializers';
-                this.context.report(member, rule, 'defineInitializer', description(name), '', '', '');
-                saveRepairs(rule, start, { fixes: [], suggestions: suggestions });
+                reportRepairs(this.context, member, rule, 'defineInitializer', description(name), { fixes: [], suggestions: suggestions });
             }
             position++;
         }

@@ -1,3 +1,5 @@
+import type { RuleContext } from '../../context.ts';
+import { Suggestion as ReportSuggestion, SuggestionEdit } from '../../suggestions.a';
 import type { Finding } from '../../finding.ts';
 export interface Edit {
     readonly start: number;
@@ -22,4 +24,24 @@ export function saveRepairs(rule: string, start: number, repairs: Repairs): void
 }
 export function readRepairs(finding: Finding): Repairs | undefined {
     return details.get(finding.rule + ':' + String(finding.start));
+}
+
+// Use the integrated finding transport. Its single automatic edit limit remains
+// an explicit refusal for callers whose actual Go repair has multiple edits.
+export function reportRepairs(
+    context: RuleContext, index: number, rule: string, id: string, message: string, repairs: Repairs,
+): void {
+    const edits: SuggestionEdit[] = [];
+    for(const edit of repairs.fixes) {
+        edits.push(new SuggestionEdit(edit.start, edit.end, edit.text));
+    }
+    const suggestions: ReportSuggestion[] = [];
+    for(const suggestion of repairs.suggestions) {
+        const proposed: SuggestionEdit[] = [];
+        for(const edit of suggestion.edits) {
+            proposed.push(new SuggestionEdit(edit.start, edit.end, edit.text));
+        }
+        suggestions.push(new ReportSuggestion(suggestion.id, suggestion.message, proposed));
+    }
+    context.reportNode(index, rule, id, message, edits, suggestions);
 }

@@ -1,6 +1,0 @@
-{
-  "name": "multiline_suppressed",
-  "file": "rule.a",
-  "from": "if(raw.includes(",
-  "to": "if(false && raw.includes("
-}

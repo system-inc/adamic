@@ -1,9 +1,0 @@
-=== RUN   TestSixthFull
-    lint_test.go:324: cohere cases: 1130 unique source/rule/options combinations
-    wave08_sixth_test.go:34: assigned upstream selected=map[no-multi-str:21 no-nonoctal-decimal-escape:31 no-octal:31]; exclusions logged
-    wave08_sixth_test.go:54: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/cohere/lint/rules/typescript-no-unnecessary-type-constraint/main.a --manifest /tmp/adamic-gate/TestSixthFull3091593739/010/manifest.txt]: exit status 70
-        adamic: panic: parser slice expected GreaterThanToken, got Identifier at 13 in /tmp/adamic-gate/TestSixthFull3091593739/004/case-764.tsx
---- FAIL: TestSixthFull (43.61s)
-FAIL
-FAIL	github.com/system-inc/adamic/stage1/cohere/lint	43.656s
-FAIL

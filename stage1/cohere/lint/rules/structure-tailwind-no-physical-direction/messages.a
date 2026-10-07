@@ -1,5 +1,0 @@
-import { PolicyMessage } from '../../helpers/policy_message.ts';
-const messages = new PolicyMessage("{\"structure/tailwind-no-physical-direction\":{\"useLogicalClass\":{\"Text\":\"The class \\\"{{original}}\\\" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use \\\"{{replacement}}\\\", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.\",\"Options\":null}}}");
-export function description(original: string, replacement: string): string {
-    return messages.render('structure/tailwind-no-physical-direction', 'useLogicalClass', new Map<string, string>([['original', original], ['replacement', replacement]]), []);
-}

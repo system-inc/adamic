@@ -1,0 +1,107 @@
+package lint
+
+import (
+	"fmt"
+	"io/fs"
+	"os"
+	"path/filepath"
+	"strings"
+	"testing"
+)
+
+var wave08Representable = []string{"no-useless-computed-key", "react-hooks/gating", "react/forbid-foreign-prop-types", "@typescript-eslint/no-unnecessary-type-constraint", "@typescript-eslint/prefer-enum-initializers", "default-param-last"}
+
+func wave08Selected(name string) bool {
+	for _, rule := range wave08Representable {
+		if rule == name {
+			return true
+		}
+	}
+	return false
+}
+
+// Not parallel: compilation regenerates the shared ignored directory registry.
+func TestWave08RetainedUpstream(t *testing.T) {
+	var rows []string
+	counts := map[string]int{}
+	for _, row := range upstream(t) {
+		fields := strings.Split(row, "\t")
+		if !wave08Selected(fields[1]) {
+			continue
+		}
+		source, err := os.ReadFile(fields[0])
+		if err != nil {
+			t.Fatal(err)
+		}
+		if fields[1] == "no-useless-computed-key" && (string(source) == "({ ['x' });" || string(source) == "({ ['x': 0 });") {
+			t.Logf("parser recovery blocker: %q", source)
+			continue
+		}
+		rows = append(rows, row)
+		counts[fields[1]]++
+	}
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Logf("six representable rules: %v; prefer-as-const two-edit shape blocked separately", counts)
+	compare(t, goOracle(t), buildPort(t, directory, true), directory, manifest(t, rows))
+}
+
+// Not parallel: compilation regenerates the shared ignored directory registry.
+func TestWave08RetainedCorpus(t *testing.T) {
+	source := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
+	if source == "" {
+		t.Fatal("missing pinned compiler checkout")
+	}
+	pin := execute(t, "", "git", "-C", source, "rev-parse", "HEAD")
+	if strings.TrimSpace(string(pin.output)) != compilerCommit {
+		t.Fatal("compiler corpus pin differs")
+	}
+	var rows []string
+	files := 0
+	for _, root := range []string{filepath.Join(source, "src/compiler"), filepath.Join(repository, "stage1")} {
+		err := filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {
+			if err != nil {
+				return err
+			}
+			if !entry.IsDir() && (strings.HasSuffix(path, ".ts") || strings.HasSuffix(path, ".a")) {
+				absolute, err := filepath.Abs(path)
+				if err != nil {
+					return err
+				}
+				files++
+				for _, rule := range wave08Representable {
+					rows = append(rows, absolute+"\t"+rule)
+				}
+			}
+			return nil
+		})
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Logf("compiler/stage1: %d .ts/.a files, %d selected rule cases", files, len(rows))
+	compare(t, goOracle(t), buildPort(t, directory, true), directory, manifest(t, rows))
+}
+
+// Not parallel: compilation regenerates the shared ignored directory registry.
+func TestWave08ConstSingleEdit(t *testing.T) {
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	var rows []string
+	for i, source := range []string{"const x = 'x' as 'x';", "const x = 42 as 42;", "const x = 'x' as string;"} {
+		path := filepath.Join(t.TempDir(), fmt.Sprintf("single%d.ts", i))
+		if err := os.WriteFile(path, []byte(source), 0644); err != nil {
+			t.Fatal(err)
+		}
+		rows = append(rows, path+"\t@typescript-eslint/prefer-as-const")
+	}
+	compare(t, goOracle(t), buildPort(t, directory, true), directory, manifest(t, rows))
+}

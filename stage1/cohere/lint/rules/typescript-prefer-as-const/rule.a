@@ -1,5 +1,5 @@
 import type { RuleContext } from '../../context.ts';
-import { saveRepairs } from '../typescript-no-unnecessary-type-constraint/repairs.a';
+import { reportRepairs } from '../typescript-no-unnecessary-type-constraint/repairs.a';
 import type { Edit } from '../typescript-no-unnecessary-type-constraint/repairs.a';
 import { description } from './messages.a';
 export class Rule {
@@ -54,8 +54,7 @@ export class Rule {
             }
         }
         const rule = '@typescript-eslint/prefer-as-const';
-        this.context.report(type, rule, 'preferAsConst', description, '', '', '');
-        saveRepairs(rule, this.context.start(type), { fixes: fixes, suggestions: [] });
+        reportRepairs(this.context, type, rule, 'preferAsConst', description, { fixes: fixes, suggestions: [] });
     }
 }
 export function create(context: RuleContext): Rule { return new Rule(context); }

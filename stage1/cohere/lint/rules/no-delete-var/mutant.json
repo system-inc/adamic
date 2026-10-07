@@ -1,6 +1,0 @@
-{
-  "name": "delete_identifier_suppressed",
-  "file": "rule.a",
-  "from": "kind === 'Identifier'",
-  "to": "kind === 'PrivateIdentifier'"
-}

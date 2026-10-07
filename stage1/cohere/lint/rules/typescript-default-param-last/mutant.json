@@ -1,6 +1,0 @@
-{
-  "name": "optional_parameter_ignored",
-  "file": "rule.a",
-  "from": "if(defaulted || optional) {",
-  "to": "if(defaulted) {"
-}

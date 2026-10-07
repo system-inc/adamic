@@ -1,5 +1,5 @@
 import type { RuleContext } from '../../context.ts';
-import { saveRepairs } from './repairs.a';
+import { reportRepairs } from './repairs.a';
 import { description } from './messages.a';
 export class Rule {
     readonly context: RuleContext;
@@ -38,8 +38,7 @@ export class Rule {
             if(count === 1 && this.context.scanner.kind !== 'CommaToken') { replacement = ','; }
         }
         const rule = '@typescript-eslint/no-unnecessary-type-constraint';
-        this.context.report(name, rule, 'noUnnecessaryTypeConstraint', description, '', '', '');
-        saveRepairs(rule, this.context.start(name), { fixes: [], suggestions: [{
+        reportRepairs(this.context, name, rule, 'noUnnecessaryTypeConstraint', description, { fixes: [], suggestions: [{
             id: 'removeTheConstraint', message: 'Remove the constraint that does nothing.', edits: [{
                 start: this.context.node(name).end, end: this.context.node(constraint).end, text: replacement,
             }],
