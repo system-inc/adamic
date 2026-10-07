@@ -77,6 +77,9 @@ func (l *lowering) erasedMethodField(where *ast.Node, view *checker.Type, name s
 			field := l.checker.GetPropertyOfType(shape, name)
 			if field != nil && l.iterationShapeFits(shape, view) {
 				if literalMethod(field) {
+					if isCallee(where) { // Calls carry the runtime closure's receiver convention.
+						return candidate.ForEachChild(visit)
+					}
 					found = l.notYet(where, "a literal method through a view that erases its receiver")
 					return true
 				}

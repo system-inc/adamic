@@ -119,11 +119,7 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		if err != nil {
 			return err
 		}
-		if function.Closure && (declared.Initializer != nil || declared.QuestionToken != nil) {
-			// A function value is called with the arguments its caller has, and no more.
-			return l.notYet(parameter, "a function value with an optional parameter")
-		}
-		if function.Closure && slotless(l.result.Locals[local].Type) {
+		if function.Closure && censusCallableSlotless(l.result.Locals[local].Type) {
 			// Its arguments are each one adamic_value.
 			return l.notYet(parameter, "a function value taking "+l.checker.TypeToString(l.checker.GetTypeAtLocation(parameter.Name())))
 		}
@@ -140,9 +136,8 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		function.Parameters = append(function.Parameters, incoming)
 		defaults = append(defaults, defaulted{local: local, incoming: incoming, initializer: declared.Initializer})
 	}
-	if function.Closure && slotless(function.Returns) {
-		// A function value's arguments and result are each one adamic_value, and number | undefined
-		// needs two words.
+	if function.Closure && censusCallableSlotless(function.Returns) {
+		// A function value's arguments and result must each fit one adamic_value.
 		return l.notYet(declaration, "a function value returning "+typeName(function.Returns))
 	}
 	if declaration.Body() == nil && !ast.HasSyntacticModifier(declaration, ast.ModifierFlagsAbstract) {

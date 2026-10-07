@@ -80,6 +80,9 @@ type Function struct {
 	Closure     bool
 	Environment []int
 
+	// Receiver marks a literal method closure whose first parameter receives the calling object.
+	Receiver bool
+
 	// MayThrow is a function a throw can leave (docs/memory.md, "Exceptions"): its callers test for
 	// one after each call. Lowering works it out over the call graph once every function is lowered.
 	MayThrow bool

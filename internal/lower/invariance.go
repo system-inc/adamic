@@ -98,7 +98,7 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 		// the other's: each a view of its own.
 		fromParameters, toParameters := fromSignatures[0].Parameters(), toSignatures[0].Parameters()
 		for index := 0; index < len(fromParameters) && index < len(toParameters); index++ {
-			takes, given := l.checker.GetTypeOfSymbol(fromParameters[index]), l.checker.GetTypeOfSymbol(toParameters[index])
+			takes, given := l.censusCallableParameterType(fromParameters[index]), l.censusCallableParameterType(toParameters[index])
 			if !l.checker.IsTypeAssignableTo(given, takes) {
 				// tsc relates a method's parameters both ways (method bivariance), so a method taking
 				// a Dog can be seen as one taking any Animal, and handed a Cat.

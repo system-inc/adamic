@@ -202,3 +202,29 @@ func (l *lowering) censusOverloadResult(call *ast.CallExpression, value ir.Expre
 	}
 	return value, nil
 }
+
+// Callable slots use the same tagged boolean representation as fields.
+func censusCallableSlotless(of ir.Type) bool { return slotless(of) && of != ir.MaybeBoolean }
+
+// A default's body-local type excludes undefined, but its incoming argument can be undefined.
+func (l *lowering) censusCallableParameter(parameter *ast.Symbol) (ir.Type, bool) {
+	of, known := l.representation(l.checker.GetTypeOfSymbol(parameter))
+	for _, declaration := range parameter.Declarations {
+		if declaration.Kind == ast.KindParameter && declaration.AsParameterDeclaration().Initializer != nil {
+			of = ir.Maybe(of)
+		}
+	}
+	return of, known
+}
+
+// Signature symbols describe the body-local type of a defaulted parameter. The
+// callable contract also accepts undefined, which selects that parameter's default.
+func (l *lowering) censusCallableParameterType(parameter *ast.Symbol) *checker.Type {
+	of := l.checker.GetTypeOfSymbol(parameter)
+	for _, declaration := range parameter.Declarations {
+		if declaration.Kind == ast.KindParameter && declaration.AsParameterDeclaration().Initializer != nil {
+			return l.checker.GetUnionType([]*checker.Type{of, l.checker.GetUndefinedType()})
+		}
+	}
+	return of
+}

@@ -940,9 +940,8 @@ func (l *lowering) closure(node *ast.Node) (ir.Expression, error) {
 
 // functionValue lowers a module function read as a value rather than called: a function value whose
 // code forwards its arguments to the function, made once for each function read so, before the
-// program runs. It takes exactly
-// the parameters the function declares, so one with a parameter that may be left out isn't made yet:
-// a function value is called with the arguments its caller has, and no more.
+// program runs. Its closure receives omitted arguments as undefined before forwarding them;
+// the declared function retains its ordinary default-parameter prologue.
 func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, error) {
 	if symbol := l.symbol(node); symbol != nil {
 		for _, declaration := range symbol.Declarations {
@@ -957,12 +956,12 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 	symbol := l.symbol(node)
 	for _, parameter := range symbol.Declarations[0].Parameters() {
 		declared := parameter.AsParameterDeclaration()
-		if declared.Initializer != nil || declared.QuestionToken != nil || declared.DotDotDotToken != nil {
-			return nil, l.notYet(node, "a function with an optional or rest parameter, as a value")
+		if declared.DotDotDotToken != nil {
+			return nil, l.notYet(node, "a function with a rest parameter, as a value")
 		}
 	}
 	callee := l.result.Functions[target]
-	if slotless(callee.Returns) {
+	if censusCallableSlotless(callee.Returns) {
 		return nil, l.notYet(node, "a function value returning "+typeName(callee.Returns))
 	}
 	index := len(l.result.Functions)
@@ -970,7 +969,7 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 	arguments := []ir.Expression{}
 	for _, parameter := range callee.Parameters {
 		declared := l.result.Locals[parameter]
-		if slotless(declared.Type) {
+		if censusCallableSlotless(declared.Type) {
 			return nil, l.notYet(node, "a function value taking "+typeName(declared.Type))
 		}
 		local := len(l.result.Locals)
@@ -1048,18 +1047,18 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 	if signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression), checker.SignatureKindCall); len(signatures) == 1 {
 		for index, parameter := range signatures[0].Parameters() {
 			if index < len(arguments) {
-				if takes, isKnown := l.representation(l.checker.GetTypeOfSymbol(parameter)); isKnown {
+				if takes, isKnown := l.censusCallableParameter(parameter); isKnown {
 					arguments[index] = fit(arguments[index], takes)
 				}
 			}
 		}
 	}
 	for _, argument := range arguments {
-		if slotless(argument.Type()) {
+		if censusCallableSlotless(argument.Type()) {
 			return nil, l.notYet(node, "passing "+typeName(argument.Type())+" to a function value")
 		}
 	}
-	if slotless(returns) {
+	if censusCallableSlotless(returns) {
 		return nil, l.notYet(node, "a function value returning "+typeName(returns))
 	}
 	return ir.CallClosure{Closure: closure, Arguments: arguments, Returns: returns}, nil
