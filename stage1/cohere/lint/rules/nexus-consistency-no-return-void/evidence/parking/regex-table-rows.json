@@ -1,0 +1,32 @@
+{
+  "branch": "99c8554f646760fd246e3732b0c589b73f17de0a",
+  "rows": [
+    {
+      "rule": "consistency-no-return-void",
+      "file": "nexus/consistency_no_return_void.go",
+      "line": 100,
+      "call": "MustCompile",
+      "expression": "`^(function|class|let|async)\\b`",
+      "go_pattern": "^(function|class|let|async)\\b",
+      "feature": "plain",
+      "id": "nexus/consistency_no_return_void.go:100",
+      "js_pattern": "^(function|class|let|async)\\b",
+      "js_flags": "gu",
+      "status": "candidate, differential gate required"
+    },
+    {
+      "rule": "consistency-no-return-void",
+      "file": "nexus/consistency_no_return_void.go",
+      "line": 116,
+      "call": "MustCompile",
+      "expression": "`^return\\s+void\\s+` + regexp.QuoteMeta(operandText) + `\\s*;$`",
+      "go_pattern": null,
+      "feature": "dynamic",
+      "id": "nexus/consistency_no_return_void.go:116",
+      "js_constructor": "new RegExp(pattern, 'u')",
+      "js_pattern": null,
+      "js_flags": "u",
+      "status": "dynamic source expression, not a finite pattern; option source uses new RegExp(pattern, u) but Go-only syntax is a gap"
+    }
+  ]
+}

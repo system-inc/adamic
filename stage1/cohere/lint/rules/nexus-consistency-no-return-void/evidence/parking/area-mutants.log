@@ -1,0 +1,308 @@
+=== RUN   TestMutants
+=== RUN   TestMutants/default-case-last-semantic-mutant
+    lint_test.go:724: default-case-last-semantic-mutant caught on Node: case 140 line 2660: port "fixed\tswitch (value) { default: break; case 1: break; }\\u000a", Go "/tmp/adamic-gate/TestMutantsdefault-case-last-semantic-mutant3153287496/015/default-case-last-0.ts:1:18"
+        Go context:
+        case 138
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsdefault-case-last-semantic-mutant3153287496/015/default-case-last-0.ts:1:18
+          default-case-last  This `default` clause is not the last one in its `switch`. A reader scanning the clauses in order expects the fallback at the bottom, and a `default` sitting in the middle also falls through into whatever case follows it when its body has no `break`, which is a control flow almost nobody writes on purpose. Move it to the end.
+        
+        range 17 32 notLast 			17 32
+        fixed	switch (value) { default: break; case 1: break; }\u000a
+    lint_test.go:724: default-case-last-semantic-mutant caught on emitted JavaScript: case 140 line 2660: port "fixed\tswitch (value) { default: break; case 1: break; }\\u000a", Go "/tmp/adamic-gate/TestMutantsdefault-case-last-semantic-mutant3153287496/015/default-case-last-0.ts:1:18"
+        Go context:
+        case 138
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsdefault-case-last-semantic-mutant3153287496/015/default-case-last-0.ts:1:18
+          default-case-last  This `default` clause is not the last one in its `switch`. A reader scanning the clauses in order expects the fallback at the bottom, and a `default` sitting in the middle also falls through into whatever case follows it when its body has no `break`, which is a control flow almost nobody writes on purpose. Move it to the end.
+        
+        range 17 32 notLast 			17 32
+        fixed	switch (value) { default: break; case 1: break; }\u000a
+    lint_test.go:724: default-case-last-semantic-mutant caught on native: case 140 line 2660: port "fixed\tswitch (value) { default: break; case 1: break; }\\u000a", Go "/tmp/adamic-gate/TestMutantsdefault-case-last-semantic-mutant3153287496/015/default-case-last-0.ts:1:18"
+        Go context:
+        case 138
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsdefault-case-last-semantic-mutant3153287496/015/default-case-last-0.ts:1:18
+          default-case-last  This `default` clause is not the last one in its `switch`. A reader scanning the clauses in order expects the fallback at the bottom, and a `default` sitting in the middle also falls through into whatever case follows it when its body has no `break`, which is a control flow almost nobody writes on purpose. Move it to the end.
+        
+        range 17 32 notLast 			17 32
+        fixed	switch (value) { default: break; case 1: break; }\u000a
+=== RUN   TestMutants/for-direction-semantic-mutant
+    lint_test.go:724: for-direction-semantic-mutant caught on Node: case 140 line 2660: port "fixed\tfor(let i = 0; i < 10; i--) {}\\u000a", Go "/tmp/adamic-gate/TestMutantsfor-direction-semantic-mutant1403501122/015/for-direction-0.ts:1:1"
+        Go context:
+        case 138
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsfor-direction-semantic-mutant1403501122/015/for-direction-0.ts:1:1
+          for-direction  The update clause of this loop moves the counter away from the condition, so the condition can never become false and the loop runs forever. Nothing about this fails to compile and nothing throws: the program simply stops making progress, which is why it is usually found by a hung process rather than by reading the loop.
+        
+        range 0 30 incorrectDirection 			0 30
+        fixed	for(let i = 0; i < 10; i--) {}\u000a
+    lint_test.go:724: for-direction-semantic-mutant caught on emitted JavaScript: case 140 line 2660: port "fixed\tfor(let i = 0; i < 10; i--) {}\\u000a", Go "/tmp/adamic-gate/TestMutantsfor-direction-semantic-mutant1403501122/015/for-direction-0.ts:1:1"
+        Go context:
+        case 138
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsfor-direction-semantic-mutant1403501122/015/for-direction-0.ts:1:1
+          for-direction  The update clause of this loop moves the counter away from the condition, so the condition can never become false and the loop runs forever. Nothing about this fails to compile and nothing throws: the program simply stops making progress, which is why it is usually found by a hung process rather than by reading the loop.
+        
+        range 0 30 incorrectDirection 			0 30
+        fixed	for(let i = 0; i < 10; i--) {}\u000a
+    lint_test.go:724: for-direction-semantic-mutant caught on native: case 140 line 2660: port "fixed\tfor(let i = 0; i < 10; i--) {}\\u000a", Go "/tmp/adamic-gate/TestMutantsfor-direction-semantic-mutant1403501122/015/for-direction-0.ts:1:1"
+        Go context:
+        case 138
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsfor-direction-semantic-mutant1403501122/015/for-direction-0.ts:1:1
+          for-direction  The update clause of this loop moves the counter away from the condition, so the condition can never become false and the loop runs forever. Nothing about this fails to compile and nothing throws: the program simply stops making progress, which is why it is usually found by a hung process rather than by reading the loop.
+        
+        range 0 30 incorrectDirection 			0 30
+        fixed	for(let i = 0; i < 10; i--) {}\u000a
+=== RUN   TestMutants/guard-for-in-semantic-mutant
+    lint_test.go:724: guard-for-in-semantic-mutant caught on Node: case 30 line 546: port "/tmp/adamic-gate/TestMutantsguard-for-in-semantic-mutant4054642546/004/generated-3.ts:1:32", Go "/tmp/adamic-gate/TestMutantsguard-for-in-semantic-mutant4054642546/004/generated-3.ts:1:36"
+        Go context:
+        range 23 26 unexpectedUnaryOp 			23 26
+        /tmp/adamic-gate/TestMutantsguard-for-in-semantic-mutant4054642546/004/generated-3.ts:1:28
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 27 29 unexpectedBlock 			27 29
+        /tmp/adamic-gate/TestMutantsguard-for-in-semantic-mutant4054642546/004/generated-3.ts:1:36
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 35 40 unexpectedVar 			35 40
+        /tmp/adamic-gate/TestMutantsguard-for-in-semantic-mutant4054642546/004/generated-3.ts:1:36
+    lint_test.go:724: guard-for-in-semantic-mutant caught on emitted JavaScript: case 30 line 546: port "/tmp/adamic-gate/TestMutantsguard-for-in-semantic-mutant4054642546/004/generated-3.ts:1:32", Go "/tmp/adamic-gate/TestMutantsguard-for-in-semantic-mutant4054642546/004/generated-3.ts:1:36"
+        Go context:
+        range 23 26 unexpectedUnaryOp 			23 26
+        /tmp/adamic-gate/TestMutantsguard-for-in-semantic-mutant4054642546/004/generated-3.ts:1:28
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 27 29 unexpectedBlock 			27 29
+        /tmp/adamic-gate/TestMutantsguard-for-in-semantic-mutant4054642546/004/generated-3.ts:1:36
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 35 40 unexpectedVar 			35 40
+        /tmp/adamic-gate/TestMutantsguard-for-in-semantic-mutant4054642546/004/generated-3.ts:1:36
+    lint_test.go:724: guard-for-in-semantic-mutant caught on native: case 30 line 546: port "/tmp/adamic-gate/TestMutantsguard-for-in-semantic-mutant4054642546/004/generated-3.ts:1:32", Go "/tmp/adamic-gate/TestMutantsguard-for-in-semantic-mutant4054642546/004/generated-3.ts:1:36"
+        Go context:
+        range 23 26 unexpectedUnaryOp 			23 26
+        /tmp/adamic-gate/TestMutantsguard-for-in-semantic-mutant4054642546/004/generated-3.ts:1:28
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 27 29 unexpectedBlock 			27 29
+        /tmp/adamic-gate/TestMutantsguard-for-in-semantic-mutant4054642546/004/generated-3.ts:1:36
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 35 40 unexpectedVar 			35 40
+        /tmp/adamic-gate/TestMutantsguard-for-in-semantic-mutant4054642546/004/generated-3.ts:1:36
+=== RUN   TestMutants/delay-resolve-name-ignored
+    lint_test.go:724: delay-resolve-name-ignored caught on Node: case 140 line 2660: port "fixed\tasync function poll(milliseconds: number) {\\u000a    await new Promise((resolve) => setTimeout(resolve, milliseconds));\\u000a}\\u000a", Go "/tmp/adamic-gate/TestMutantsdelay-resolve-name-ignored3911163288/015/nexus-consistency-no-hand-rolled-delay-0.ts:2:11"
+        Go context:
+        case 138
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsdelay-resolve-name-ignored3911163288/015/nexus-consistency-no-hand-rolled-delay-0.ts:2:11
+          nexus/consistency-no-hand-rolled-delay  This `new Promise` around a `setTimeout` is a hand-rolled `delay`. Write `await delay(milliseconds);` with `import { delay } from '@nexus/source/coordination/Delay';`. The promise does nothing but resolve after a timer, which is exactly what `delay` does, and spelling it out at every call site makes the reader check each one for the variant it might be (a value passed to `resolve`, a timer kept for cancelling, a reject path) before they can read past it. One named wait says it is a plain wait.
+        
+        range 54 113 handRolledDelay 			54 113
+        fixed	async function poll(milliseconds: number) {\u000a    await new Promise((resolve) => setTimeout(resolve, milliseconds));\u000a}\u000a
+    lint_test.go:724: delay-resolve-name-ignored caught on emitted JavaScript: case 140 line 2660: port "fixed\tasync function poll(milliseconds: number) {\\u000a    await new Promise((resolve) => setTimeout(resolve, milliseconds));\\u000a}\\u000a", Go "/tmp/adamic-gate/TestMutantsdelay-resolve-name-ignored3911163288/015/nexus-consistency-no-hand-rolled-delay-0.ts:2:11"
+        Go context:
+        case 138
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsdelay-resolve-name-ignored3911163288/015/nexus-consistency-no-hand-rolled-delay-0.ts:2:11
+          nexus/consistency-no-hand-rolled-delay  This `new Promise` around a `setTimeout` is a hand-rolled `delay`. Write `await delay(milliseconds);` with `import { delay } from '@nexus/source/coordination/Delay';`. The promise does nothing but resolve after a timer, which is exactly what `delay` does, and spelling it out at every call site makes the reader check each one for the variant it might be (a value passed to `resolve`, a timer kept for cancelling, a reject path) before they can read past it. One named wait says it is a plain wait.
+        
+        range 54 113 handRolledDelay 			54 113
+        fixed	async function poll(milliseconds: number) {\u000a    await new Promise((resolve) => setTimeout(resolve, milliseconds));\u000a}\u000a
+    lint_test.go:724: delay-resolve-name-ignored caught on native: case 140 line 2660: port "fixed\tasync function poll(milliseconds: number) {\\u000a    await new Promise((resolve) => setTimeout(resolve, milliseconds));\\u000a}\\u000a", Go "/tmp/adamic-gate/TestMutantsdelay-resolve-name-ignored3911163288/015/nexus-consistency-no-hand-rolled-delay-0.ts:2:11"
+        Go context:
+        case 138
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsdelay-resolve-name-ignored3911163288/015/nexus-consistency-no-hand-rolled-delay-0.ts:2:11
+          nexus/consistency-no-hand-rolled-delay  This `new Promise` around a `setTimeout` is a hand-rolled `delay`. Write `await delay(milliseconds);` with `import { delay } from '@nexus/source/coordination/Delay';`. The promise does nothing but resolve after a timer, which is exactly what `delay` does, and spelling it out at every call site makes the reader check each one for the variant it might be (a value passed to `resolve`, a timer kept for cancelling, a reject path) before they can read past it. One named wait says it is a plain wait.
+        
+        range 54 113 handRolledDelay 			54 113
+        fixed	async function poll(milliseconds: number) {\u000a    await new Promise((resolve) => setTimeout(resolve, milliseconds));\u000a}\u000a
+=== RUN   TestMutants/return-void-braces-omitted
+    lint_test.go:724: return-void-braces-omitted caught on Node: case 140 line 2663: port "range 46 65 returnVoid fix\tstop(); return;\t\t46 65", Go "range 46 65 returnVoid fix\t{ stop(); return; }\t\t46 65"
+        Go context:
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsreturn-void-braces-omitted1935401428/015/nexus-consistency-no-return-void-0.ts:2:16
+          nexus/consistency-no-return-void  `return void <expression>;` folds two statements into one: it runs the expression, throws its value away, and exits. Write the expression as its own statement, then `return;`. The `void` operator is how this codebase marks a promise dropped on purpose, so spending it to squeeze a `console.log` into a return makes the reader stop and work out which of the two is meant, and it hides a second statement inside a line that looks like an exit.
+        
+        range 46 65 returnVoid fix	{ stop(); return; }		46 65
+        /tmp/adamic-gate/TestMutantsreturn-void-braces-omitted1935401428/015/nexus-consistency-no-return-void-0.ts:3:5
+          nexus/consistency-no-return-void  `return void <expression>;` folds two statements into one: it runs the expression, throws its value away, and exits. Write the expression as its own statement, then `return;`. The `void` operator is how this codebase marks a promise dropped on purpose, so spending it to squeeze a `console.log` into a return makes the reader stop and work out which of the two is meant, and it hides a second statement inside a line that looks like an exit.
+        
+        range 70 89 returnVoid fix	save();\u000a    return;		70 89
+    lint_test.go:724: return-void-braces-omitted caught on emitted JavaScript: case 140 line 2663: port "range 46 65 returnVoid fix\tstop(); return;\t\t46 65", Go "range 46 65 returnVoid fix\t{ stop(); return; }\t\t46 65"
+        Go context:
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsreturn-void-braces-omitted1935401428/015/nexus-consistency-no-return-void-0.ts:2:16
+          nexus/consistency-no-return-void  `return void <expression>;` folds two statements into one: it runs the expression, throws its value away, and exits. Write the expression as its own statement, then `return;`. The `void` operator is how this codebase marks a promise dropped on purpose, so spending it to squeeze a `console.log` into a return makes the reader stop and work out which of the two is meant, and it hides a second statement inside a line that looks like an exit.
+        
+        range 46 65 returnVoid fix	{ stop(); return; }		46 65
+        /tmp/adamic-gate/TestMutantsreturn-void-braces-omitted1935401428/015/nexus-consistency-no-return-void-0.ts:3:5
+          nexus/consistency-no-return-void  `return void <expression>;` folds two statements into one: it runs the expression, throws its value away, and exits. Write the expression as its own statement, then `return;`. The `void` operator is how this codebase marks a promise dropped on purpose, so spending it to squeeze a `console.log` into a return makes the reader stop and work out which of the two is meant, and it hides a second statement inside a line that looks like an exit.
+        
+        range 70 89 returnVoid fix	save();\u000a    return;		70 89
+    lint_test.go:724: return-void-braces-omitted caught on native: case 140 line 2663: port "range 46 65 returnVoid fix\tstop(); return;\t\t46 65", Go "range 46 65 returnVoid fix\t{ stop(); return; }\t\t46 65"
+        Go context:
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsreturn-void-braces-omitted1935401428/015/nexus-consistency-no-return-void-0.ts:2:16
+          nexus/consistency-no-return-void  `return void <expression>;` folds two statements into one: it runs the expression, throws its value away, and exits. Write the expression as its own statement, then `return;`. The `void` operator is how this codebase marks a promise dropped on purpose, so spending it to squeeze a `console.log` into a return makes the reader stop and work out which of the two is meant, and it hides a second statement inside a line that looks like an exit.
+        
+        range 46 65 returnVoid fix	{ stop(); return; }		46 65
+        /tmp/adamic-gate/TestMutantsreturn-void-braces-omitted1935401428/015/nexus-consistency-no-return-void-0.ts:3:5
+          nexus/consistency-no-return-void  `return void <expression>;` folds two statements into one: it runs the expression, throws its value away, and exits. Write the expression as its own statement, then `return;`. The `void` operator is how this codebase marks a promise dropped on purpose, so spending it to squeeze a `console.log` into a return makes the reader stop and work out which of the two is meant, and it hides a second statement inside a line that looks like an exit.
+        
+        range 70 89 returnVoid fix	save();\u000a    return;		70 89
+=== RUN   TestMutants/no-constructor-return-semantic-mutant
+    lint_test.go:724: no-constructor-return-semantic-mutant caught on Node: case 60 line 1174: port "/tmp/adamic-gate/TestMutantsno-constructor-return-semantic-mutant354838199/007/generated-6.ts:1:208", Go "/tmp/adamic-gate/TestMutantsno-constructor-return-semantic-mutant354838199/007/generated-6.ts:1:251"
+        Go context:
+        range 142 147 unexpectedSparseArray 			142 147
+        /tmp/adamic-gate/TestMutantsno-constructor-return-semantic-mutant354838199/007/generated-6.ts:1:160
+          require-yield  This generator function contains no `yield`, so calling it returns an iterator that finishes immediately with the function's return value and never produces anything. A caller writing `for(const item of generate())` gets zero iterations. Either the asterisk is left over from a refactor and the function should be a plain one, or a `yield` is missing.
+        
+        range 159 217 missingYield 			159 217
+        /tmp/adamic-gate/TestMutantsno-constructor-return-semantic-mutant354838199/007/generated-6.ts:1:251
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 250 258 unexpectedVar 			250 258
+        /tmp/adamic-gate/TestMutantsno-constructor-return-semantic-mutant354838199/007/generated-6.ts:1:251
+    lint_test.go:724: no-constructor-return-semantic-mutant caught on emitted JavaScript: case 60 line 1174: port "/tmp/adamic-gate/TestMutantsno-constructor-return-semantic-mutant354838199/007/generated-6.ts:1:208", Go "/tmp/adamic-gate/TestMutantsno-constructor-return-semantic-mutant354838199/007/generated-6.ts:1:251"
+        Go context:
+        range 142 147 unexpectedSparseArray 			142 147
+        /tmp/adamic-gate/TestMutantsno-constructor-return-semantic-mutant354838199/007/generated-6.ts:1:160
+          require-yield  This generator function contains no `yield`, so calling it returns an iterator that finishes immediately with the function's return value and never produces anything. A caller writing `for(const item of generate())` gets zero iterations. Either the asterisk is left over from a refactor and the function should be a plain one, or a `yield` is missing.
+        
+        range 159 217 missingYield 			159 217
+        /tmp/adamic-gate/TestMutantsno-constructor-return-semantic-mutant354838199/007/generated-6.ts:1:251
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 250 258 unexpectedVar 			250 258
+        /tmp/adamic-gate/TestMutantsno-constructor-return-semantic-mutant354838199/007/generated-6.ts:1:251
+    lint_test.go:724: no-constructor-return-semantic-mutant caught on native: case 60 line 1174: port "/tmp/adamic-gate/TestMutantsno-constructor-return-semantic-mutant354838199/007/generated-6.ts:1:208", Go "/tmp/adamic-gate/TestMutantsno-constructor-return-semantic-mutant354838199/007/generated-6.ts:1:251"
+        Go context:
+        range 142 147 unexpectedSparseArray 			142 147
+        /tmp/adamic-gate/TestMutantsno-constructor-return-semantic-mutant354838199/007/generated-6.ts:1:160
+          require-yield  This generator function contains no `yield`, so calling it returns an iterator that finishes immediately with the function's return value and never produces anything. A caller writing `for(const item of generate())` gets zero iterations. Either the asterisk is left over from a refactor and the function should be a plain one, or a `yield` is missing.
+        
+        range 159 217 missingYield 			159 217
+        /tmp/adamic-gate/TestMutantsno-constructor-return-semantic-mutant354838199/007/generated-6.ts:1:251
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 250 258 unexpectedVar 			250 258
+        /tmp/adamic-gate/TestMutantsno-constructor-return-semantic-mutant354838199/007/generated-6.ts:1:251
+=== RUN   TestMutants/no-delete-var-semantic-mutant
+    lint_test.go:724: no-delete-var-semantic-mutant caught on Node: case 140 line 2660: port "fixed\tfunction f(value: number) { delete (value); }\\u000a", Go "/tmp/adamic-gate/TestMutantsno-delete-var-semantic-mutant3784137759/015/no-delete-var-0.ts:1:29"
+        Go context:
+        case 138
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsno-delete-var-semantic-mutant3784137759/015/no-delete-var-0.ts:1:29
+          no-delete-var  `delete` removes a property from an object; it cannot remove a variable. Applied to a bare name this does nothing in strict mode and throws a SyntaxError where strict mode is enforced, which every module in this codebase is. So the line either has no effect or breaks the file, and neither is what it reads as doing. To drop a reference, assign undefined; to remove a property, delete the property.
+        
+        range 28 42 unexpectedDeleteVar 			28 42
+        fixed	function f(value: number) { delete (value); }\u000a
+    lint_test.go:724: no-delete-var-semantic-mutant caught on emitted JavaScript: case 140 line 2660: port "fixed\tfunction f(value: number) { delete (value); }\\u000a", Go "/tmp/adamic-gate/TestMutantsno-delete-var-semantic-mutant3784137759/015/no-delete-var-0.ts:1:29"
+        Go context:
+        case 138
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsno-delete-var-semantic-mutant3784137759/015/no-delete-var-0.ts:1:29
+          no-delete-var  `delete` removes a property from an object; it cannot remove a variable. Applied to a bare name this does nothing in strict mode and throws a SyntaxError where strict mode is enforced, which every module in this codebase is. So the line either has no effect or breaks the file, and neither is what it reads as doing. To drop a reference, assign undefined; to remove a property, delete the property.
+        
+        range 28 42 unexpectedDeleteVar 			28 42
+        fixed	function f(value: number) { delete (value); }\u000a
+    lint_test.go:724: no-delete-var-semantic-mutant caught on native: case 140 line 2660: port "fixed\tfunction f(value: number) { delete (value); }\\u000a", Go "/tmp/adamic-gate/TestMutantsno-delete-var-semantic-mutant3784137759/015/no-delete-var-0.ts:1:29"
+        Go context:
+        case 138
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsno-delete-var-semantic-mutant3784137759/015/no-delete-var-0.ts:1:29
+          no-delete-var  `delete` removes a property from an object; it cannot remove a variable. Applied to a bare name this does nothing in strict mode and throws a SyntaxError where strict mode is enforced, which every module in this codebase is. So the line either has no effect or breaks the file, and neither is what it reads as doing. To drop a reference, assign undefined; to remove a property, delete the property.
+        
+        range 28 42 unexpectedDeleteVar 			28 42
+        fixed	function f(value: number) { delete (value); }\u000a
+=== RUN   TestMutants/no-eq-null-semantic-mutant
+    lint_test.go:724: no-eq-null-semantic-mutant caught on Node: case 20 line 370: port "/tmp/adamic-gate/TestMutantsno-eq-null-semantic-mutant3641500376/003/generated-2.ts:1:71", Go "/tmp/adamic-gate/TestMutantsno-eq-null-semantic-mutant3641500376/003/generated-2.ts:1:67"
+        Go context:
+        range 18 20 unexpected suggestion	===	Use `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.	18 20
+        /tmp/adamic-gate/TestMutantsno-eq-null-semantic-mutant3641500376/003/generated-2.ts:1:37
+          eqeqeq  This compares with `!=`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `!==`, which compares without coercing.
+        
+        range 36 38 unexpected fix	!==		36 38
+        /tmp/adamic-gate/TestMutantsno-eq-null-semantic-mutant3641500376/003/generated-2.ts:1:67
+          no-eq-null  This compares against `null` with `==` or `!=`, which also matches `undefined`. That coercion is usually what the author wanted and is never what the code says, so a reader cannot tell a deliberate both-values check from a typo. Write `=== null` when only null is meant, or `== null` deliberately somewhere the convention says so.
+        
+        range 66 77 unexpected 			66 77
+        /tmp/adamic-gate/TestMutantsno-eq-null-semantic-mutant3641500376/003/generated-2.ts:1:71
+    lint_test.go:724: no-eq-null-semantic-mutant caught on emitted JavaScript: case 20 line 370: port "/tmp/adamic-gate/TestMutantsno-eq-null-semantic-mutant3641500376/003/generated-2.ts:1:71", Go "/tmp/adamic-gate/TestMutantsno-eq-null-semantic-mutant3641500376/003/generated-2.ts:1:67"
+        Go context:
+        range 18 20 unexpected suggestion	===	Use `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.	18 20
+        /tmp/adamic-gate/TestMutantsno-eq-null-semantic-mutant3641500376/003/generated-2.ts:1:37
+          eqeqeq  This compares with `!=`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `!==`, which compares without coercing.
+        
+        range 36 38 unexpected fix	!==		36 38
+        /tmp/adamic-gate/TestMutantsno-eq-null-semantic-mutant3641500376/003/generated-2.ts:1:67
+          no-eq-null  This compares against `null` with `==` or `!=`, which also matches `undefined`. That coercion is usually what the author wanted and is never what the code says, so a reader cannot tell a deliberate both-values check from a typo. Write `=== null` when only null is meant, or `== null` deliberately somewhere the convention says so.
+        
+        range 66 77 unexpected 			66 77
+        /tmp/adamic-gate/TestMutantsno-eq-null-semantic-mutant3641500376/003/generated-2.ts:1:71
+    lint_test.go:724: no-eq-null-semantic-mutant caught on native: case 20 line 370: port "/tmp/adamic-gate/TestMutantsno-eq-null-semantic-mutant3641500376/003/generated-2.ts:1:71", Go "/tmp/adamic-gate/TestMutantsno-eq-null-semantic-mutant3641500376/003/generated-2.ts:1:67"
+        Go context:
+        range 18 20 unexpected suggestion	===	Use `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.	18 20
+        /tmp/adamic-gate/TestMutantsno-eq-null-semantic-mutant3641500376/003/generated-2.ts:1:37
+          eqeqeq  This compares with `!=`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `!==`, which compares without coercing.
+        
+        range 36 38 unexpected fix	!==		36 38
+        /tmp/adamic-gate/TestMutantsno-eq-null-semantic-mutant3641500376/003/generated-2.ts:1:67
+          no-eq-null  This compares against `null` with `==` or `!=`, which also matches `undefined`. That coercion is usually what the author wanted and is never what the code says, so a reader cannot tell a deliberate both-values check from a typo. Write `=== null` when only null is meant, or `== null` deliberately somewhere the convention says so.
+        
+        range 66 77 unexpected 			66 77
+        /tmp/adamic-gate/TestMutantsno-eq-null-semantic-mutant3641500376/003/generated-2.ts:1:71
+--- PASS: TestMutants (151.17s)
+    --- PASS: TestMutants/default-case-last-semantic-mutant (18.54s)
+    --- PASS: TestMutants/for-direction-semantic-mutant (18.45s)
+    --- PASS: TestMutants/guard-for-in-semantic-mutant (19.26s)
+    --- PASS: TestMutants/delay-resolve-name-ignored (19.22s)
+    --- PASS: TestMutants/return-void-braces-omitted (17.90s)
+    --- PASS: TestMutants/no-constructor-return-semantic-mutant (18.52s)
+    --- PASS: TestMutants/no-delete-var-semantic-mutant (17.39s)
+    --- PASS: TestMutants/no-eq-null-semantic-mutant (19.36s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	151.178s

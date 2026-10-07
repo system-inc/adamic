@@ -95,3 +95,7 @@ Replayed owned commits onto c01907a7 while retaining main shared files. All 17 r
 ## Dedup withdrawals under harness 41eb6eab2
 
 The complete shared DEDUP_LEDGER.md supersedes the historical continuation selections above. Withdrawn and removed here: @next/next/no-assign-module-variable and @typescript-eslint/default-param-last to wave1-15; @typescript-eslint/no-unnecessary-type-constraint, @typescript-eslint/prefer-as-const and @typescript-eslint/prefer-enum-initializers to wave1-08; no-multi-str, no-nonoctal-decimal-escape and no-octal to wave1-15; structure/tailwind-no-physical-direction to wave1-05. Keep only the eight retained rules listed in rules/nexus-consistency-no-return-void/DEDUP_REPORT.md. No new rule or helper is claimed. Two retained Nexus exclusions remain beyond missing shared registration. The older seventeen-rule and eleven-exclusion assessments are historical.
+
+## Landed harness validation
+
+Rebased the eight retained ports onto area 7481e032 after checking its identical dedup ledger. The actual shared witness gate and semantic mutants pass, but full TestRulesAgree still refuses top-level await and a JSX fix control exposes fixed-source reparsing without JSX mode. See rules/nexus-consistency-no-return-void/AREA_REPORT.md. No new claim; this branch is not declared fully green or landing-ready.

@@ -85,3 +85,7 @@ Both owned branches rebased cleanly onto b8fb957aa839a9e8cb0b54279dd9864fa317bd3
 ## Dedup scope supersedes the historical counts above
 
 The 41eb6eab2 dedup ledger removes nine losing copies from this unit. Current scope is eight retained rules and two Nexus frontend/capture exclusions. DEDUP_REPORT.md records the winner mapping and fresh scoped oracle checks. The earlier seventeen-rule counts, eleven exclusions and rate table are historical, and the other workers' winning copies are not tested or altered here. The named harness is now 41eb6eab2, still absent from current main b8fb957a. No new claim follows the remaining landing cap.
+
+## Landed area supersedes the historical harness blocker
+
+Both owned branches now use area 7481e032 and main 39638d9e. AREA_REPORT.md records unmodified shared-harness witnesses, nine rule semantic mutants, regex provenance and current failures. Shared registration is available; top-level await remains refused and JSX fixed-source reparsing loses its script kind. The clean JSX callback itself now matches Go. No new helper claim follows these measured blockers.

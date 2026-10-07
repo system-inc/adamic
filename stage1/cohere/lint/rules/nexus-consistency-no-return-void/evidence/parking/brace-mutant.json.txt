@@ -1,0 +1,1 @@
+{"name":"return-void-braces-omitted","file":"rule.a","from":"else replacement = `{ ${operandText}; return; }`;","to":"else replacement = `${operandText}; return;`;"}

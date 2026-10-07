@@ -1,0 +1,2 @@
+const element = <Button onClick={() => void handleEnroll()} disabled={isEnrolling}>Enroll</Button>;
+function stopEarly() { return void 0; }
