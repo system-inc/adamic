@@ -1,3 +1,6 @@
+// Listener SyntaxKind values from pinned TypeScript src/compiler/types.ts.
+// Shared driver integration awaits numeric ParseNode kinds and supplied-node callbacks.
+export const listenerKinds: readonly number[] = [264, 265, 266, 267, 268, 263, 261, 209]; // ClassDeclaration, InterfaceDeclaration, TypeAliasDeclaration, EnumDeclaration, ModuleDeclaration, FunctionDeclaration, VariableDeclaration, BindingElement
 import { panic } from 'adamic';
 import { Bindings } from './bindings.ts';
 import { Wave12Symbols } from './wave_12_symbols.a';

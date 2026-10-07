@@ -62,3 +62,7 @@ export class PreferRegexLiterals {
 }
 const MESSAGE = 'This builds a regular expression by handing constant strings to the `RegExp` constructor, which does at runtime what a literal does at parse time. The constructor form costs a parse on every evaluation, hides syntax errors until the line is reached rather than surfacing them when the file is read, and doubles every backslash so the pattern stops looking like the pattern. Write the regular expression literal.';
 const PRECEDING = ['(', ';', '[', ',', '=', '+', '*', '-', '?', '~', '%', '**', '!', 'typeof', 'instanceof', '&&', '||', '??', 'return', '...', 'delete', 'void', 'in', '<', '>', '<=', '>=', '==', '===', '!=', '!==', '<<', '>>', '>>>', '&', '|', '^', ':', '{', '=>', '*=', '<<=', '>>=', '>>>=', '^=', '|=', '&=', '??=', '||=', '&&=', '**=', '+=', '-=', '/=', '%=', '/', 'do', 'break', 'continue', 'debugger', 'case', 'throw'];
+
+// Listener SyntaxKind values from pinned TypeScript src/compiler/types.ts.
+// Shared driver integration awaits numeric ParseNode kinds and supplied-node callbacks.
+export const listenerKinds: readonly number[] = [80]; // Identifier

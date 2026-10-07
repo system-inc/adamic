@@ -1,0 +1,202 @@
+{
+  "rounds": [
+    {
+      "corpus": "compiler",
+      "round": 0,
+      "implementation": "native",
+      "elapsed_seconds": 2.6396331440009817,
+      "phases": {
+        "load_ns": 294635498,
+        "query_ns": 145309480,
+        "queries": 79,
+        "first_query_ns": 119963,
+        "run_ns": 2133252997
+      },
+      "bytes": 5010,
+      "sha256": "2eb068b178382b431a1f7613833d7d9edcb5e408b8fd60d89a0b2f8c9d0678f6"
+    },
+    {
+      "corpus": "compiler",
+      "round": 0,
+      "implementation": "go",
+      "elapsed_seconds": 0.5856387059993722,
+      "phases": {
+        "load_ns": 501773587,
+        "rule_ns": 3939821,
+        "run_ns": 31094644
+      },
+      "bytes": 5010,
+      "sha256": "2eb068b178382b431a1f7613833d7d9edcb5e408b8fd60d89a0b2f8c9d0678f6"
+    },
+    {
+      "corpus": "compiler",
+      "round": 1,
+      "implementation": "go",
+      "elapsed_seconds": 0.3431371040005615,
+      "phases": {
+        "load_ns": 297090606,
+        "rule_ns": 4372579,
+        "run_ns": 33854098
+      },
+      "bytes": 5010,
+      "sha256": "2eb068b178382b431a1f7613833d7d9edcb5e408b8fd60d89a0b2f8c9d0678f6"
+    },
+    {
+      "corpus": "compiler",
+      "round": 1,
+      "implementation": "native",
+      "elapsed_seconds": 2.6372266199996375,
+      "phases": {
+        "load_ns": 291381522,
+        "query_ns": 152588659,
+        "queries": 79,
+        "first_query_ns": 21969,
+        "run_ns": 2118468193
+      },
+      "bytes": 5010,
+      "sha256": "2eb068b178382b431a1f7613833d7d9edcb5e408b8fd60d89a0b2f8c9d0678f6"
+    },
+    {
+      "corpus": "compiler",
+      "round": 2,
+      "implementation": "native",
+      "elapsed_seconds": 3.0667992609996872,
+      "phases": {
+        "load_ns": 380460095,
+        "query_ns": 181422303,
+        "queries": 79,
+        "first_query_ns": 27910,
+        "run_ns": 2543230299
+      },
+      "bytes": 5010,
+      "sha256": "2eb068b178382b431a1f7613833d7d9edcb5e408b8fd60d89a0b2f8c9d0678f6"
+    },
+    {
+      "corpus": "compiler",
+      "round": 2,
+      "implementation": "go",
+      "elapsed_seconds": 0.33667595900078595,
+      "phases": {
+        "load_ns": 287992216,
+        "rule_ns": 4722160,
+        "run_ns": 35453075
+      },
+      "bytes": 5010,
+      "sha256": "2eb068b178382b431a1f7613833d7d9edcb5e408b8fd60d89a0b2f8c9d0678f6"
+    },
+    {
+      "corpus": "repository",
+      "round": 0,
+      "implementation": "native",
+      "elapsed_seconds": 0.40973115999986476,
+      "phases": {
+        "load_ns": 97826198,
+        "query_ns": 11734150,
+        "queries": 287,
+        "first_query_ns": 65237,
+        "run_ns": 284891517
+      },
+      "bytes": 18485,
+      "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+    },
+    {
+      "corpus": "repository",
+      "round": 0,
+      "implementation": "go",
+      "elapsed_seconds": 0.09595442499994533,
+      "phases": {
+        "load_ns": 82294477,
+        "rule_ns": 783993,
+        "run_ns": 5814749
+      },
+      "bytes": 18485,
+      "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+    },
+    {
+      "corpus": "repository",
+      "round": 1,
+      "implementation": "go",
+      "elapsed_seconds": 0.10312486799921317,
+      "phases": {
+        "load_ns": 88973873,
+        "rule_ns": 864284,
+        "run_ns": 6441633
+      },
+      "bytes": 18485,
+      "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+    },
+    {
+      "corpus": "repository",
+      "round": 1,
+      "implementation": "native",
+      "elapsed_seconds": 0.40200928400008706,
+      "phases": {
+        "load_ns": 94778587,
+        "query_ns": 9930806,
+        "queries": 287,
+        "first_query_ns": 284270,
+        "run_ns": 282340139
+      },
+      "bytes": 18485,
+      "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+    },
+    {
+      "corpus": "repository",
+      "round": 2,
+      "implementation": "native",
+      "elapsed_seconds": 0.4029945530000987,
+      "phases": {
+        "load_ns": 87988947,
+        "query_ns": 13031381,
+        "queries": 287,
+        "first_query_ns": 60021,
+        "run_ns": 291138944
+      },
+      "bytes": 18485,
+      "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+    },
+    {
+      "corpus": "repository",
+      "round": 2,
+      "implementation": "go",
+      "elapsed_seconds": 0.1260918980005954,
+      "phases": {
+        "load_ns": 111771409,
+        "rule_ns": 969097,
+        "run_ns": 7286940
+      },
+      "bytes": 18485,
+      "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+    }
+  ],
+  "summary": [
+    {
+      "corpus": "compiler",
+      "implementation": "native",
+      "whole_process_median_seconds": 2.6396331440009817,
+      "load_median_seconds": 0.294635498,
+      "run_median_seconds": 2.133252997
+    },
+    {
+      "corpus": "compiler",
+      "implementation": "go",
+      "whole_process_median_seconds": 0.3431371040005615,
+      "load_median_seconds": 0.297090606,
+      "run_median_seconds": 0.033854098
+    },
+    {
+      "corpus": "repository",
+      "implementation": "native",
+      "whole_process_median_seconds": 0.4029945530000987,
+      "load_median_seconds": 0.094778587,
+      "run_median_seconds": 0.284891517
+    },
+    {
+      "corpus": "repository",
+      "implementation": "go",
+      "whole_process_median_seconds": 0.10312486799921317,
+      "load_median_seconds": 0.088973873,
+      "run_median_seconds": 0.006441633
+    }
+  ]
+}

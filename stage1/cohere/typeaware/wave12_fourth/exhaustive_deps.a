@@ -170,3 +170,7 @@ export class ExhaustiveDeps {
     }
     run(): void { for(let at = 0; at < this.bindings.rules.parser.nodes.length; at++) { if(this.syntax.kind(at) === 'CallExpression') { this.visit(at); } } }
 }
+
+// Listener SyntaxKind values from pinned TypeScript src/compiler/types.ts.
+// Shared driver integration awaits numeric ParseNode kinds and supplied-node callbacks.
+export const listenerKinds: readonly number[] = [214]; // CallExpression

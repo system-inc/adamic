@@ -16,3 +16,7 @@ export class PreferRestParams {
     }
 }
 const MESSAGE = 'This reads the implicit `arguments` object, which is array-like rather than an array and carries none of `Array.prototype`, so iterating or slicing it needs a conversion first. Declare a rest parameter (`...args`) and use that instead.';
+
+// Listener SyntaxKind values from pinned TypeScript src/compiler/types.ts.
+// Shared driver integration awaits numeric ParseNode kinds and supplied-node callbacks.
+export const listenerKinds: readonly number[] = [80]; // Identifier
