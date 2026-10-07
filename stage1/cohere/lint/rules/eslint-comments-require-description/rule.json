@@ -1,0 +1,13 @@
+{
+  "name": "@eslint-community/eslint-comments/require-description",
+  "kinds": [
+    "SourceFile"
+  ],
+  "visit": "visit",
+  "parent": true,
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleRequireDescription",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestRequireDescription"
+}

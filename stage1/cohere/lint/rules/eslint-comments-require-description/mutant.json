@@ -1,0 +1,6 @@
+{
+  "name": "invert eslint-comments-require-description guard",
+  "file": "rule.ts",
+  "from": "(pieces[1] ?? '').trim() !== ''",
+  "to": "(pieces[1] ?? '').trim() === ''"
+}
