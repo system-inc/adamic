@@ -9,6 +9,7 @@ import (
 )
 
 var libraryArrayMethods = map[string]bool{
+	"sort": true,
 	"join": true, "indexOf": true, "includes": true, "lastIndexOf": true,
 	"with": true, "flatMap": true, "copyWithin": true, "toSpliced": true, "flat": true,
 	"findLast": true, "findLastIndex": true, "toReversed": true, "toSorted": true,
@@ -29,6 +30,11 @@ func (l *lowering) libraryArrayMethod(node, receiver *ast.Node, name string) (ir
 	}
 	written := node.AsCallExpression().Arguments.Nodes
 	switch name {
+	case "sort":
+		if len(written) == 0 && element == ir.String {
+			return ir.ArraySort{Array: array, Element: element, Comparator: l.libraryArrayComparator(element), DefaultStrings: true}, true, nil
+		}
+		return l.arraySort(node, array, element)
 	case "join":
 		return l.libraryArrayJoin(node, receiver, array)
 	case "with":
