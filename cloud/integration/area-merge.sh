@@ -38,6 +38,14 @@ for argument in "$@"; do
 done
 
 directory=$(cd "$(dirname "$0")" && pwd)
+# The oracle compares against whatever node is first on PATH, and node versions differ in ways
+# fixtures see (24.14.1 truncates utimes to microseconds; 24.19.0 doesn't), so refuse anything but
+# the pinned version rather than judge a merge against the wrong Node.
+pinnedNode=${ADAMIC_NODE_VERSION:-v24.19.0}
+if [ "$(node -v 2>/dev/null)" != "$pinnedNode" ]; then
+	echo "refused: node on PATH is $(node -v 2>/dev/null || echo missing), not the pinned $pinnedNode; put the pinned node first on PATH" >&2
+	exit 2
+fi
 oracle=$(awk -F'\t' -v area="$area" '$1 == area { print $3 }' "$directory/areas.tsv")
 if [ -z "$oracle" ]; then
 	echo "refused: no area named $area in areas.tsv" >&2
