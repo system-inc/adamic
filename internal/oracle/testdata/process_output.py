@@ -18,7 +18,9 @@ with tempfile.TemporaryFile() as output, tempfile.TemporaryFile() as errors:
             fcntl.fcntl(writer, fcntl.F_SETPIPE_SZ, 4096)
         capacity = fcntl.fcntl(writer, fcntl.F_GETPIPE_SZ)
     environment = os.environ.copy()
-    environment["ASAN_OPTIONS"] = "detect_leaks=1"
+    # LeakSanitizer is Linux's: macOS's AddressSanitizer aborts when asked for it.
+    if sys.platform.startswith("linux"):
+        environment["ASAN_OPTIONS"] = "detect_leaks=1"
     environment.pop("FORCE_COLOR", None)
     child = subprocess.Popen(sys.argv[4:], stdout=writer if destination == "pipe" else output,
                              stderr=subprocess.STDOUT if shared == "true" else

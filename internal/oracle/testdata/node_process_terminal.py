@@ -44,6 +44,22 @@ else:
 environment = os.environ.copy()
 environment['ASAN_OPTIONS'] = 'detect_leaks=0'
 child = subprocess.Popen(sys.argv[2:], stdout=destination, stderr=subprocess.PIPE, env=environment)
+if kind == 'tty':
+    # Read the terminal while the child runs: macOS drops what a terminal holds once its
+    # last writer closes, where Linux keeps it readable until EIO.
+    destination.close()
+    pieces = []
+    def drain_terminal():
+        while True:
+            try:
+                piece = os.read(master, 4096)
+            except OSError:
+                break
+            if not piece:
+                break
+            pieces.append(piece)
+    reading = threading.Thread(target=drain_terminal)
+    reading.start()
 output, error = child.communicate(timeout=15)
 if kind == 'backpressure':
     destination.close()
@@ -52,16 +68,10 @@ if kind == 'backpressure':
         raise RuntimeError('pipe reader did not finish')
     output = b''.join(pieces)
 elif kind == 'tty':
-    destination.close()
-    output = b''
-    while True:
-        try:
-            piece = os.read(master, 4096)
-        except OSError:
-            break
-        if not piece:
-            break
-        output += piece
+    reading.join(timeout=15)
+    if reading.is_alive():
+        raise RuntimeError('terminal reader did not finish')
+    output = b''.join(pieces)
     os.close(master)
 elif kind == 'file':
     destination.seek(0)
