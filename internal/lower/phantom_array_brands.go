@@ -7,7 +7,9 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 )
 
-// An array brand adds only absent, undefined-valued fields. Inherited library members
+// An array brand adds only absent, undefined-valued fields. Required undefined
+// is phantom too (October 7 ruling); phantom_array_presence.go forbids observing
+// presence or writing the checker-only members. Inherited library members
 // still belong to the array; they are never phantom fields to be erased.
 func (l *lowering) phantomArrayParts(proven *checker.Type) (*checker.Type, []*ast.Symbol) {
 	proven = l.concrete(proven)
@@ -99,7 +101,7 @@ func (l *lowering) phantomArrayBase(proven *checker.Type) *checker.Type {
 		return nil
 	}
 	for _, field := range fields {
-		if arrayBrandMember(field.Name) || !phantomField(l.checker.GetTypeOfSymbol(field), field.Flags&ast.SymbolFlagsOptional != 0) {
+		if arrayBrandMember(field.Name) || !phantomField(l.checker.GetTypeOfSymbol(field), true) {
 			return nil
 		}
 	}
@@ -136,7 +138,7 @@ func (l *lowering) phantomArrayRefusal(node *ast.Node) error {
 	// Data-bearing array intersections are not phantom brands. Keep their existing
 	// lowering and relation diagnostics rather than erasing their real fields.
 	for _, field := range fields {
-		if !phantomField(l.checker.GetTypeOfSymbol(field), field.Flags&ast.SymbolFlagsOptional != 0) {
+		if !phantomField(l.checker.GetTypeOfSymbol(field), true) {
 			return nil
 		}
 	}

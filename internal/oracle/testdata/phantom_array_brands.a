@@ -14,7 +14,7 @@ console.log(String(readonly.marker));
 
 // Adapted from TypeScript 6.0.3 corePublic.ts:17-19 and core.ts:1039.
 // The original sorted body is unchanged; required undefined is changed to void
-// to stay within the approved brand rule while that language choice is pending.
+// as a void variant alongside the unchanged required-undefined parser probe.
 interface SortedReadonlyArray<T> extends ReadonlyArray<T> { " __sortedArrayBrand": void; }
 function sorted<T>(array: readonly T[]): SortedReadonlyArray<T> {
     return array.slice() as readonly T[] as SortedReadonlyArray<T>;

@@ -11,15 +11,21 @@ import (
 
 func TestPhantomArrayRefusals(t *testing.T) {
 	t.Parallel()
-	for _, name := range []string{"length", "sort", "__proto__", "constructor", "0"} {
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
-			_, err := lowerSource(t, "type Brand = number[] & { '"+name+"': void };")
-			want := "main.a:1:14: Adamic 0.1 refuses an array brand member " + name + " that exists on the array; use a member name the array does not have on its own properties or prototype chain"
-			if err == nil || !strings.HasSuffix(err.Error(), want) {
-				t.Fatalf("got %v, want %s", err, want)
-			}
-		})
+	for _, field := range []string{"void", "undefined", "optional"} {
+		for _, name := range []string{"length", "sort", "__proto__", "constructor", "0"} {
+			t.Run(field+"/"+name, func(t *testing.T) {
+				t.Parallel()
+				optional, of := "", field
+				if field == "optional" {
+					optional, of = "?", "undefined"
+				}
+				_, err := lowerSource(t, "type Brand = number[] & { '"+name+"'"+optional+": "+of+" };")
+				want := "main.a:1:14: Adamic 0.1 refuses an array brand member " + name + " that exists on the array; use a member name the array does not have on its own properties or prototype chain"
+				if err == nil || !strings.HasSuffix(err.Error(), want) {
+					t.Fatalf("got %v, want %s", err, want)
+				}
+			})
+		}
 	}
 }
 
@@ -106,5 +112,28 @@ func TestPhantomArrayWeakKeeping(t *testing.T) {
 	var notYet *NotYet
 	if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "weak") {
 		t.Fatalf("got %v, want refused physical change from strong elements to weak handles", err)
+	}
+}
+
+func TestPhantomArrayRequiredCastsAreErased(t *testing.T) {
+	t.Parallel()
+	branded := `interface Brand<T> extends ReadonlyArray<T> { marker: undefined; }
+function into<T>(values: readonly T[]): Brand<T> { return values as Brand<T>; }
+function out<T>(values: Brand<T>): readonly T[] { return values as readonly T[]; }
+console.log(out(into([3, 1])).join(','));`
+	plain := `type Brand<T> = readonly T[];
+function into<T>(values: readonly T[]): Brand<T> { return values; }
+function out<T>(values: Brand<T>): readonly T[] { return values; }
+console.log(out(into([3, 1])).join(','));`
+	got, err := lowerSource(t, branded)
+	if err != nil {
+		t.Fatal(err)
+	}
+	want, err := lowerSource(t, plain)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !reflect.DeepEqual(got, want) {
+		t.Fatal("required undefined array brands or casts changed the unbranded IR")
 	}
 }
