@@ -1,0 +1,13 @@
+=== RUN   TestWave30NumericListeners
+    wave_30_listeners_test.go:63: listener-mutant-consistency_no_iso_string_date_cut caught only by Go comparison at byte 37
+    wave_30_listeners_test.go:63: listener-mutant-correctness_no_callback_in_parse_try caught only by Go comparison at byte 86
+    wave_30_listeners_test.go:63: listener-mutant-correctness_no_collection_misuse caught only by Go comparison at byte 123
+    wave_30_listeners_test.go:63: listener-mutant-correctness_no_discarded_outcome caught only by Go comparison at byte 168
+    wave_30_listeners_test.go:63: listener-mutant-correctness_no_discarded_pure_result caught only by Go comparison at byte 209
+    wave_30_listeners_test.go:63: listener-mutant-correctness_no_uncleared_race_timeout caught only by Go comparison at byte 251
+    wave_30_listeners_test.go:63: listener-mutant-correctness_no_process_exit_after_output caught only by Go comparison at byte 296
+    wave_30_listeners_test.go:63: listener-mutant-correctness_require_blocking_standard_streams caught only by Go comparison at byte 346
+    wave_30_listeners_test.go:65: eight listener declarations agree with 348 Go bytes
+--- PASS: TestWave30NumericListeners (49.91s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	49.914s

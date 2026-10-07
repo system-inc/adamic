@@ -1,0 +1,213 @@
+=== RUN   TestWave30NextAgreementAndMutants
+    wave_30_next_test.go:105: controls: 33059 identical finding bytes; findings 74
+    wave_30_next_test.go:118: controls-asan: 33059 identical finding bytes; findings 74
+    wave_30_next_test.go:157: collection-boundary exits 0; independent Go bytes catch byte 430
+    wave_30_next_test.go:157: outcome-range exits 0; independent Go bytes catch byte 27672
+    wave_30_next_test.go:157: pure-range exits 0; independent Go bytes catch byte 1119
+    wave_30_next_test.go:166: repository: 18485 identical finding bytes; findings 0
+    wave_30_next_test.go:167: repository-asan: 18485 identical finding bytes; findings 0
+    wave_30_next_test.go:175: repository whole process native=386.010653ms Go=160.146426ms; tsgo: load_ns=70990018 query_ns=82443770 queries=4242 first_query_ns=183565 run_ns=308242230
+    wave_30_next_test.go:166: compiler: 5318 identical finding bytes; findings 0
+    wave_30_next_test.go:167: compiler-asan: 5318 identical finding bytes; findings 0
+    wave_30_next_test.go:175: compiler whole process native=2.77350705s Go=805.978943ms; tsgo: load_ns=259035592 query_ns=790179994 queries=15564 first_query_ns=5428886 run_ns=2480221946
+    wave_30_next_test.go:189: released type-declaration-ancestry handle refused with panic 70
+    wave_30_next_test.go:189: released type-leaf-facts handle refused with panic 70
+--- PASS: TestWave30NextAgreementAndMutants (73.22s)
+=== RUN   TestWave30ProcessGraphAgreement
+    wave_30_process_test.go:76: graph mutant exits 0; Go catches byte 988
+    wave_30_process_test.go:77: 11311 exact graph bytes agree
+--- PASS: TestWave30ProcessGraphAgreement (37.17s)
+=== RUN   TestWave30ProcessExitAgreement
+    wave_30_process_test.go:135: exit-controls: 25249 identical finding bytes; findings 39
+    wave_30_process_test.go:141: exit-controls-asan: 25249 identical finding bytes; findings 39
+    wave_30_process_test.go:147: exit mutant exits 0; Go catches byte 78
+    wave_30_process_test.go:277: repository: 18485 identical finding bytes; findings 0
+    wave_30_process_test.go:278: repository-asan: 18485 identical finding bytes; findings 0
+    wave_30_process_test.go:277: compiler: 5318 identical finding bytes; findings 0
+    wave_30_process_test.go:278: compiler-asan: 5318 identical finding bytes; findings 0
+    wave_30_process_test.go:290: released process-node-fields refused with panic 70
+    wave_30_process_test.go:290: released symbol-declaration-paths refused with panic 70
+    wave_30_process_test.go:290: released resolved-call-target refused with panic 70
+    wave_30_process_test.go:290: released program-module-resolution refused with panic 70
+    wave_30_process_test.go:290: released source-parse-context refused with panic 70
+--- PASS: TestWave30ProcessExitAgreement (53.21s)
+=== RUN   TestWave30BlockingStreamsAgreement
+    wave_30_process_test.go:214: blocking-000: 771 identical finding bytes; findings 1
+    wave_30_process_test.go:215: blocking-000-asan: 771 identical finding bytes; findings 1
+    wave_30_process_test.go:223: blocking mutant exits 0; Go catches byte 107
+    wave_30_process_test.go:214: blocking-001: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:215: blocking-001-asan: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:214: blocking-002: 745 identical finding bytes; findings 1
+    wave_30_process_test.go:215: blocking-002-asan: 745 identical finding bytes; findings 1
+    wave_30_process_test.go:214: blocking-003: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:215: blocking-003-asan: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:214: blocking-004: 731 identical finding bytes; findings 1
+    wave_30_process_test.go:215: blocking-004-asan: 731 identical finding bytes; findings 1
+    wave_30_process_test.go:214: blocking-005: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:215: blocking-005-asan: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:214: blocking-006: 745 identical finding bytes; findings 1
+    wave_30_process_test.go:215: blocking-006-asan: 745 identical finding bytes; findings 1
+    wave_30_process_test.go:214: blocking-007: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:215: blocking-007-asan: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:214: blocking-008: 745 identical finding bytes; findings 1
+    wave_30_process_test.go:215: blocking-008-asan: 745 identical finding bytes; findings 1
+    wave_30_process_test.go:214: blocking-009: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:215: blocking-009-asan: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:214: blocking-010: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:215: blocking-010-asan: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:214: blocking-011: 745 identical finding bytes; findings 1
+    wave_30_process_test.go:215: blocking-011-asan: 745 identical finding bytes; findings 1
+    wave_30_process_test.go:214: blocking-012: 745 identical finding bytes; findings 1
+    wave_30_process_test.go:215: blocking-012-asan: 745 identical finding bytes; findings 1
+    wave_30_process_test.go:214: blocking-013: 743 identical finding bytes; findings 1
+    wave_30_process_test.go:215: blocking-013-asan: 743 identical finding bytes; findings 1
+    wave_30_process_test.go:214: blocking-014: 743 identical finding bytes; findings 1
+    wave_30_process_test.go:215: blocking-014-asan: 743 identical finding bytes; findings 1
+    wave_30_process_test.go:214: blocking-015: 743 identical finding bytes; findings 1
+    wave_30_process_test.go:215: blocking-015-asan: 743 identical finding bytes; findings 1
+    wave_30_process_test.go:214: blocking-016: 745 identical finding bytes; findings 1
+    wave_30_process_test.go:215: blocking-016-asan: 745 identical finding bytes; findings 1
+    wave_30_process_test.go:214: blocking-017: 729 identical finding bytes; findings 1
+    wave_30_process_test.go:215: blocking-017-asan: 729 identical finding bytes; findings 1
+    wave_30_process_test.go:214: blocking-018: 745 identical finding bytes; findings 1
+    wave_30_process_test.go:215: blocking-018-asan: 745 identical finding bytes; findings 1
+    wave_30_process_test.go:214: blocking-019: 745 identical finding bytes; findings 1
+    wave_30_process_test.go:215: blocking-019-asan: 745 identical finding bytes; findings 1
+    wave_30_process_test.go:214: blocking-020: 744 identical finding bytes; findings 1
+    wave_30_process_test.go:215: blocking-020-asan: 744 identical finding bytes; findings 1
+    wave_30_process_test.go:214: blocking-021: 744 identical finding bytes; findings 1
+    wave_30_process_test.go:215: blocking-021-asan: 744 identical finding bytes; findings 1
+    wave_30_process_test.go:214: blocking-022: 743 identical finding bytes; findings 1
+    wave_30_process_test.go:215: blocking-022-asan: 743 identical finding bytes; findings 1
+    wave_30_process_test.go:214: blocking-023: 744 identical finding bytes; findings 1
+    wave_30_process_test.go:215: blocking-023-asan: 744 identical finding bytes; findings 1
+    wave_30_process_test.go:214: blocking-024: 743 identical finding bytes; findings 1
+    wave_30_process_test.go:215: blocking-024-asan: 743 identical finding bytes; findings 1
+    wave_30_process_test.go:214: blocking-025: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:215: blocking-025-asan: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:214: blocking-026: 743 identical finding bytes; findings 1
+    wave_30_process_test.go:215: blocking-026-asan: 743 identical finding bytes; findings 1
+    wave_30_process_test.go:214: blocking-027: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:215: blocking-027-asan: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:214: blocking-028: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:215: blocking-028-asan: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:214: blocking-029: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:215: blocking-029-asan: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:214: blocking-030: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:215: blocking-030-asan: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:214: blocking-031: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:215: blocking-031-asan: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:214: blocking-032: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:215: blocking-032-asan: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:214: blocking-033: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:215: blocking-033-asan: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:214: blocking-034: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:215: blocking-034-asan: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:214: blocking-035: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:215: blocking-035-asan: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:214: blocking-036: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:215: blocking-036-asan: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:214: blocking-037: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:215: blocking-037-asan: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:214: blocking-038: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:215: blocking-038-asan: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:214: blocking-039: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:215: blocking-039-asan: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:214: blocking-040: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:215: blocking-040-asan: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:214: blocking-041: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:215: blocking-041-asan: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:214: blocking-042: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:215: blocking-042-asan: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:214: blocking-043: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:215: blocking-043-asan: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:214: blocking-044: 745 identical finding bytes; findings 1
+    wave_30_process_test.go:215: blocking-044-asan: 745 identical finding bytes; findings 1
+    wave_30_process_test.go:214: blocking-045: 745 identical finding bytes; findings 1
+    wave_30_process_test.go:215: blocking-045-asan: 745 identical finding bytes; findings 1
+    wave_30_process_test.go:214: blocking-046: 745 identical finding bytes; findings 1
+    wave_30_process_test.go:215: blocking-046-asan: 745 identical finding bytes; findings 1
+    wave_30_process_test.go:214: blocking-047: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:215: blocking-047-asan: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:214: blocking-048: 743 identical finding bytes; findings 1
+    wave_30_process_test.go:215: blocking-048-asan: 743 identical finding bytes; findings 1
+    wave_30_process_test.go:214: blocking-049: 743 identical finding bytes; findings 1
+    wave_30_process_test.go:215: blocking-049-asan: 743 identical finding bytes; findings 1
+    wave_30_process_test.go:214: blocking-050: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:215: blocking-050-asan: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:214: blocking-051: 745 identical finding bytes; findings 1
+    wave_30_process_test.go:215: blocking-051-asan: 745 identical finding bytes; findings 1
+    wave_30_process_test.go:214: blocking-052: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:215: blocking-052-asan: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:214: blocking-053: 743 identical finding bytes; findings 1
+    wave_30_process_test.go:215: blocking-053-asan: 743 identical finding bytes; findings 1
+    wave_30_process_test.go:214: blocking-054: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:215: blocking-054-asan: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:214: blocking-055: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:215: blocking-055-asan: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:214: blocking-056: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:215: blocking-056-asan: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:214: blocking-057: 743 identical finding bytes; findings 1
+    wave_30_process_test.go:215: blocking-057-asan: 743 identical finding bytes; findings 1
+    wave_30_process_test.go:214: blocking-058: 743 identical finding bytes; findings 1
+    wave_30_process_test.go:215: blocking-058-asan: 743 identical finding bytes; findings 1
+    wave_30_process_test.go:214: blocking-059: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:215: blocking-059-asan: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:214: blocking-060: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:215: blocking-060-asan: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:214: blocking-061: 743 identical finding bytes; findings 1
+    wave_30_process_test.go:215: blocking-061-asan: 743 identical finding bytes; findings 1
+    wave_30_process_test.go:214: blocking-062: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:215: blocking-062-asan: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:214: blocking-063: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:215: blocking-063-asan: 118 identical finding bytes; findings 0
+    wave_30_process_test.go:277: repository: 18485 identical finding bytes; findings 0
+    wave_30_process_test.go:278: repository-asan: 18485 identical finding bytes; findings 0
+    wave_30_process_test.go:277: compiler: 5318 identical finding bytes; findings 0
+    wave_30_process_test.go:278: compiler-asan: 5318 identical finding bytes; findings 0
+    wave_30_process_test.go:238: 64 programs agree; 30 report
+--- PASS: TestWave30BlockingStreamsAgreement (66.89s)
+=== RUN   TestWave30ReactComponents
+    wave_30_react_components_test.go:111: refs: 279296 exact bytes agree, sanitizer and emitted JavaScript agree; mutant exits 0 with empty stderr, Go catches byte 86865
+    wave_30_react_components_test.go:111: purity: 6523 exact bytes agree, sanitizer and emitted JavaScript agree; mutant exits 0 with empty stderr, Go catches byte 1368
+    wave_30_react_components_test.go:111: memo: 900 exact bytes agree, sanitizer and emitted JavaScript agree; mutant exits 0 with empty stderr, Go catches byte 435
+--- PASS: TestWave30ReactComponents (6.47s)
+=== RUN   TestWave30ReactPrerequisites
+    wave_30_react_prerequisites_test.go:58: react-hooks/purity: Go reports; native parser refuses JSX, exit 70: adamic: panic: parser slice expected CloseBraceToken, got DotToken at 38 in /tmp/adamic-gate/TestWave30ReactPrerequisites2666700077/001/purity.tsx
+    wave_30_react_prerequisites_test.go:63: react-hooks/refs: Go accepts TSX and reports; native parser treats JSX as TypeAssertionExpression, emits no JSX node
+    wave_30_react_prerequisites_test.go:58: react-hooks/preserve-manual-memoization: Go reports; native parser refuses JSX, exit 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 118 in /tmp/adamic-gate/TestWave30ReactPrerequisites2666700077/001/preserve.tsx
+--- PASS: TestWave30ReactPrerequisites (5.98s)
+=== RUN   TestWave30AgreementAndMutants
+    wave_30_test.go:66: controls: 10782 identical finding bytes; findings 17
+    wave_30_test.go:74: controls-asan: 10782 identical finding bytes; findings 17
+    wave_30_test.go:112: iso-range exits 0; independent Go bytes catch byte 80
+    wave_30_test.go:112: callback-range exits 0; independent Go bytes catch byte 4166
+    wave_30_test.go:121: repository: 18485 identical finding bytes; findings 0
+    wave_30_test.go:122: repository-asan: 18485 identical finding bytes; findings 0
+    wave_30_test.go:130: repository whole process native=292.376913ms Go=139.697945ms; tsgo: load_ns=80399197 query_ns=8255746 queries=117 first_query_ns=456324 run_ns=204648823
+    wave_30_test.go:121: compiler: 5318 identical finding bytes; findings 0
+    wave_30_test.go:122: compiler-asan: 5318 identical finding bytes; findings 0
+    wave_30_test.go:130: compiler whole process native=1.757061783s Go=296.040668ms; tsgo: load_ns=238409747 query_ns=108851291 queries=71 first_query_ns=84257282 run_ns=1502005931
+    wave_30_test.go:142: released symbol-lineage handle refused with panic 70
+--- PASS: TestWave30AgreementAndMutants (58.35s)
+=== RUN   TestWave30ThirdAgreementAndMutants
+    wave_30_third_test.go:64: controls: 9933 identical finding bytes; findings 15
+    wave_30_third_test.go:76: node-controls: 9385 identical finding bytes; findings 14
+    wave_30_third_test.go:82: controls-asan: 9933 identical finding bytes; findings 15
+    wave_30_third_test.go:83: node-controls-asan: 9385 identical finding bytes; findings 14
+    wave_30_third_test.go:120: timer-range exits 0; independent Go bytes catch byte 89
+    wave_30_third_test.go:129: repository: 18485 identical finding bytes; findings 0
+    wave_30_third_test.go:130: repository-asan: 18485 identical finding bytes; findings 0
+    wave_30_third_test.go:138: repository whole process native=253.49558ms Go=114.903259ms; tsgo: load_ns=64688519 query_ns=0 queries=0 first_query_ns=0 run_ns=183571583
+    wave_30_third_test.go:129: compiler: 5318 identical finding bytes; findings 0
+    wave_30_third_test.go:130: compiler-asan: 5318 identical finding bytes; findings 0
+    wave_30_third_test.go:138: compiler whole process native=1.576853627s Go=279.774059ms; tsgo: load_ns=218735233 query_ns=0 queries=0 first_query_ns=0 run_ns=1342925341
+    wave_30_third_test.go:152: released symbol-lineage handle refused with panic 70
+    wave_30_third_test.go:152: released symbol-identities handle refused with panic 70
+    wave_30_third_test.go:152: released binding-declarations handle refused with panic 70
+--- PASS: TestWave30ThirdAgreementAndMutants (49.39s)
+=== RUN   TestWave30ProcessOutputStateAgreement
+    wave_30_third_test.go:203: 216 state transitions agree; catch-state mutant exits 0 and Go catches byte 5
+--- PASS: TestWave30ProcessOutputStateAgreement (5.68s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	356.358s
