@@ -1,0 +1,68 @@
+import { panic, readTextFile, programArguments } from 'adamic';
+import { Parser } from '../../../../typescript/parser/parser.ts';
+import { written } from '../../../../typescript/parser/nodes.ts';
+import { Scanner } from '../../../../typescript/scanner/scanner.ts';
+import { RuleContext } from '../../context.ts';
+import { Settings } from '../../settings.ts';
+import { Rule as ModuleRule } from '../next-no-assign-module-variable/rule.a';
+import { Rule as ParameterRule } from '../typescript-default-param-last/rule.a';
+import { Rule as DirectionRule } from './rule.a';
+
+function walk(context: RuleContext, index: number, moduleRule: ModuleRule, parameterRule: ParameterRule, directionRule: DirectionRule): void {
+    const kind = context.node(index).kind;
+    if(context.selected === '@next/next/no-assign-module-variable' && kind === 'VariableStatement') {
+        moduleRule.visit(index);
+    }
+    if(context.selected === '@typescript-eslint/default-param-last' && ['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction', 'MethodDeclaration', 'Constructor', 'GetAccessor', 'SetAccessor'].includes(kind)) {
+        parameterRule.visit(index);
+    }
+    if(context.selected === 'structure/tailwind-no-physical-direction' && ['StringLiteral', 'NoSubstitutionTemplateLiteral', 'TemplateExpression'].includes(kind)) {
+        directionRule.visit(index);
+    }
+    for(const child of context.node(index).children) {
+        walk(context, child, moduleRule, parameterRule, directionRule);
+    }
+}
+function byteOffset(source: string, end: number): number {
+    let bytes = 0;
+    for(let position = 0; position < end; position++) {
+        const code = source.codePointAt(position) ?? 0;
+        bytes += code < 128 ? 1 : code < 2048 ? 2 : code < 65536 ? 3 : 4;
+        if(code > 65535) { position++; }
+    }
+    return bytes;
+}
+function run(path: string, selected: string, count: boolean): number {
+    const source = readTextFile(path);
+    if(source.kind === 'Error') { panic(source.message); }
+    const parser = new Parser(source.text, path);
+    const root = parser.file();
+    const parents: number[] = [];
+    for(const node of parser.nodes) { parents.push(-1); }
+    const context = new RuleContext(source.text, parser, new Scanner(source.text), selected, '', '', false, parents, new Settings());
+    walk(context, root, new ModuleRule(context), new ParameterRule(context), new DirectionRule(context));
+    context.findings.sort((left, right) => left.start - right.start);
+    if(count) { return context.findings.length; }
+    for(const finding of context.findings) {
+        // These rules supply no fixes. Refuse a future repair rather than lose it.
+        if(finding.repair !== '' || finding.replacement !== '' || finding.suggestion !== '') {
+            panic('standalone no-repair rule changed its finding shape');
+        }
+        console.log(`finding ${byteOffset(source.text, finding.start)} ${byteOffset(source.text, finding.end)} ${finding.id}\t${written(finding.message)}`);
+    }
+    console.log(`fixed\t${written(source.text)}`);
+    return context.findings.length;
+}
+const args = programArguments();
+const manifest = readTextFile(args[0] ?? panic('missing manifest'));
+if(manifest.kind === 'Error') { panic(manifest.message); }
+let cases = 0;
+let findings = 0;
+for(const row of manifest.text.split('\n')) {
+    if(row === '') { continue; }
+    const fields = row.split('\t');
+    if(!args.includes('--count')) { console.log(`case ${cases}`); }
+    findings += run(fields[0] ?? '', fields[1] ?? '', args.includes('--count'));
+    cases++;
+}
+if(args.includes('--count')) { console.log(`${findings}`); }

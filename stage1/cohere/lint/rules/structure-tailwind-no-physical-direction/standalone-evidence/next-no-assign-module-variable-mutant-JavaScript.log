@@ -1,0 +1,30 @@
+case 0
+fixed	const module = {};\u000a
+case 1
+fixed	const moduleName = 'x';\u000aexport const Name = moduleName;\u000a
+case 2
+fixed	const myModule = {};\u000aexport const Thing = myModule;\u000a
+case 3
+fixed	const { module: renamed } = imported;\u000aexport const Value = renamed;\u000a
+case 4
+fixed	export const Message = 'module';\u000a
+case 5
+fixed	export const Settings = { module: true };\u000a
+case 6
+fixed	export function run() {\u000a    let module = {};\u000a}\u000a
+case 7
+fixed	export function run(module: unknown) {\u000a    return module;\u000a}\u000a
+case 8
+fixed	import module from 'node:module';\u000aexport const Loaded = module;\u000a
+case 9
+fixed	let a = 1, module = {};\u000a
+case 10
+fixed	let module = {};\u000a
+case 11
+fixed	let module;\u000a
+case 12
+fixed	var module = {};\u000a
+case 13
+fixed	// \ud83d\udc8e\u000alet module, moduleName; for (let module of values) {} const {module} = object; let other, module = {};
+case 14
+fixed	let a = 1, module = {};\u000a

@@ -1,0 +1,21 @@
+One upstream JSX case excluded and independently probed below.
+Captured original asserted tests: {"@next/next/no-assign-module-variable": 13, "@typescript-eslint/default-param-last": 115, "structure/tailwind-no-physical-direction": 53}
+Go JSX finding reproduced; source Node, emitted JavaScript and sanitized native explicitly refuse it.
+fixtures: Go/Node/emitted JavaScript/sanitized native identical, 51192 bytes
+Corpus: 347 files, 1041 file/rule pairs
+corpus: Go/Node/emitted JavaScript/sanitized native identical, 39659578 bytes
+next-no-assign-module-variable mutant caught on Node: successful compile and exit, differing output only
+next-no-assign-module-variable mutant caught on JavaScript: successful compile and exit, differing output only
+next-no-assign-module-variable mutant caught on native: successful compile and exit, differing output only
+typescript-default-param-last mutant caught on Node: successful compile and exit, differing output only
+typescript-default-param-last mutant caught on JavaScript: successful compile and exit, differing output only
+typescript-default-param-last mutant caught on native: successful compile and exit, differing output only
+structure-tailwind-no-physical-direction mutant caught on Node: successful compile and exit, differing output only
+structure-tailwind-no-physical-direction mutant caught on JavaScript: successful compile and exit, differing output only
+structure-tailwind-no-physical-direction mutant caught on native: successful compile and exit, differing output only
+Literal interpolation mutant caught on Node: successful compile and exit, differing output only
+Literal interpolation mutant caught on JavaScript: successful compile and exit, differing output only
+Literal interpolation mutant caught on native: successful compile and exit, differing output only
+@next/next/no-assign-module-variable: 78 files, 1000 findings, best of 3 Go 5569.67 findings/s (0.179544s), native 982.41 findings/s (1.017910s), Node 1311.24 findings/s (0.762636s)
+@typescript-eslint/default-param-last: 78 files, 1024 findings, best of 3 Go 5506.11 findings/s (0.185975s), native 913.06 findings/s (1.121503s), Node 1408.69 findings/s (0.726919s)
+structure/tailwind-no-physical-direction: 78 files, 2000 findings, best of 3 Go 10724.18 findings/s (0.186494s), native 1861.04 findings/s (1.074667s), Node 2747.00 findings/s (0.728066s)
