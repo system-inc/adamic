@@ -1,3 +1,41 @@
+# Host method descriptor rerun: process.nextTick truthiness green
+
+Merged host-method-presence 51761b0 (including method-presence-test 722a1c5a)
+into unpushed scratch 290f216b, yielding 16d0caa7. Compiler rebuild succeeds.
+The unchanged native-process-next-tick-read.a now compiles. Native and Node both
+print `true\n`, exit 0, empty stderr; stdout/stderr comparisons each exit 0.
+A one-byte change to actual native stdout is caught by cmp exit 1. The probe
+binary is 441,056 bytes. Node loader types still pass with process: Process and
+pinned @types/node 25.3.3. The prior ambient-host runtime descriptor stop clears.
+
+Focused method-presence lower tests pass in 0.229s. The uncached
+TestNodeProcessMethodPresence oracle passes in 14.489s: its three fixtures compare
+sanitized native and emitted JavaScript with source Node, verify SSA, and run
+native/JavaScript descriptor-absent mutants. For each fixture, replacing the
+native descriptor anchor with false or the JavaScript !!process.nextTick anchor
+with false runs cleanly (exit 0, empty stderr) and is caught only by differing
+stdout. Six descriptor mutants are caught, plus the requested output-byte mutant.
+Exact commands and output are retained in evidence/front22/report.json and logs.
+No full gate, counts gate, complete oracle or WASI run is claimed.
+
+Conflicts span loader/SDK API compatibility, cast and expression dispatch,
+refusal observation guards, native compiler selection and string indexing.
+Current SDK-compatible loader roots (including require typing), deferred checked
+views, phantom/reconciled interface views, records, namespace readiness and
+existing Node dispatch were retained. Incoming host descriptor support was
+integrated without bypassing the general ambient-host refusal for unsupported
+methods. Current empty-allocation/literal string index and compiler selection
+paths were kept. Exact ancestry/resolutions and scratch-only patch are retained;
+compiler integration was never pushed. No probe source adaptation was made.
+
+The full parser rerun remains held for the namespace fix or front-3. The last
+observed first slice stop remains core.ts:11:52; no fresh all-eleven-probe count,
+split rerun or native parser reference comparison is asserted. The extended
+81-file and 10,406-case native acceptance targets remain unverified. Reproduce
+this probe with evidence/front22/run-probe.py.
+
+---
+
 # Method truthiness probe: red at ambient-host runtime descriptor
 
 Merged method-presence-test 722a1c5a into unpushed scratch c7e63804, yielding
