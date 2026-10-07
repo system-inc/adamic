@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"reflect"
 	"slices"
-	"strings"
 
 	"github.com/system-inc/adamic/internal/ir"
 )
@@ -448,11 +447,6 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 			}
 		case reflect.Struct:
 			switch value.Type() {
-			case reflect.TypeOf(ir.RegExpCall{}):
-				method := value.Interface().(ir.RegExpCall).Method
-				throws = throws || method == "matchAll" || method == "replaceAll" || strings.HasSuffix(method, "Callback")
-			case reflect.TypeOf(ir.RegExpNew{}):
-				throws = throws || value.Interface().(ir.RegExpNew).Invalid
 			case callType:
 				if program.CallMayThrow(value.Interface().(ir.Call)) {
 					throws = true

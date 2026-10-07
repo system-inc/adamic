@@ -5,8 +5,6 @@ type RegExpProgram struct{ Pattern, Flags, Declarations string }
 type RegExpNew struct {
 	Index, Source, Flags int
 	Arguments            []Expression
-	Invalid              bool
-	Failure              int
 }
 
 func (RegExpNew) Type() Type { return Object }

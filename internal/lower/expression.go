@@ -383,9 +383,6 @@ func (l *lowering) weakTarget(proven *checker.Type) *checker.Type {
 // value lowers a value, as expression does, but leaves a Weak as it's kept.
 func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 	node = ast.SkipParentheses(node)
-	if value, known, err := l.errorBuiltin(node); known {
-		return value, err
-	}
 	if observed, known := l.libraryArrayObservation(node); known {
 		return observed, nil
 	}
@@ -478,14 +475,6 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 		}
 		if binary.OperatorToken.Kind == ast.KindPlusToken {
 			left, right = l.spelled(binary.Left, left), l.spelled(binary.Right, right)
-			// The default intrinsic RegExp coercion has no user callbacks;
-			// unsupported exec/prototype/property overrides are refused elsewhere.
-			if left.Type() == ir.String {
-				right = l.regexStringValue(binary.Right, right)
-			}
-			if right.Type() == ir.String {
-				left = l.regexStringValue(binary.Left, left)
-			}
 		}
 		return l.combine(node, binary.OperatorToken.Kind, left, right)
 	case ast.KindTaggedTemplateExpression:
