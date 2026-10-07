@@ -135,7 +135,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				found = err
 				return true
 			}
-			checkedCast = len(proof.allowed) > 0 || len(proof.classes) > 0
+			checkedCast = proof.lowering != castLoweringNone || len(proof.allowed) > 0 || len(proof.classes) > 0
 		}
 		var assertion *ast.Node
 		if node.Kind == ast.KindPropertyDeclaration {

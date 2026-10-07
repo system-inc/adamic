@@ -155,8 +155,13 @@ func (l *lowering) viewArrayCast(node *ast.Node, value ir.Expression, source, ta
 	if value.Type() != ir.Array || !l.checker.IsArrayType(source) || !l.checker.IsArrayType(target) {
 		return nil, nil
 	}
-	if err := l.widened(source, target, map[[2]*checker.Type]bool{}); err != nil {
-		return nil, l.notYet(node, "a writable array view requiring source contract certification")
+	// Readonly scalar elements introduce no writable slot; their type is checked
+	// lazily when read, including an unknown[] bridge into a readonly result.
+	readonlyScalar := l.isLibraryType(target, "ReadonlyArray") && interfaceScalar(l.concrete(l.checker.GetElementTypeOfArrayType(target)))
+	if !readonlyScalar {
+		if err := l.widened(source, target, map[[2]*checker.Type]bool{}); err != nil {
+			return nil, l.notYet(node, "a writable array view requiring source contract certification")
+		}
 	}
 	return l.view(node, value, target)
 }

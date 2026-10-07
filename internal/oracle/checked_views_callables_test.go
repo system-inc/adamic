@@ -63,3 +63,14 @@ func TestCheckedViewGenericArrayCast(t *testing.T) {
 		}
 	}
 }
+
+func TestCheckedViewSameMap(t *testing.T) {
+	program, path := interfaceFixture(t, "lane2/same-map")
+	want := onNode(t, path)
+	actual, _ := nativelyUncached(t, program)
+	for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+		if difference := disagreement(want, got); difference != "" {
+			t.Fatalf("%s; got %#v", difference, got)
+		}
+	}
+}

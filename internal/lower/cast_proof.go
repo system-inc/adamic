@@ -11,9 +11,11 @@ import (
 // The proof contains checker types only, so refusals precede representation lowering of unknown
 // operands. Concrete generic instantiations are proved again when they are lowered.
 type castProof struct {
-	field   string
-	allowed []*checker.Type
-	classes []*checker.Type
+	lowering      castLoweringKind
+	deferredError error
+	field         string
+	allowed       []*checker.Type
+	classes       []*checker.Type
 }
 
 const castRepair = "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
@@ -109,6 +111,9 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 	if source.Flags()&checker.TypeFlagsAny != 0 || target.Flags()&checker.TypeFlagsAny != 0 {
 		return castProof{}, refused
 	}
+	if kind := l.deferredCastCandidate(node, source, target, true); kind != castLoweringNone {
+		return castProof{lowering: kind, deferredError: refused}, nil
+	}
 	members, targets := castMembers(source), castMembers(target)
 	allClasses := true
 	for _, member := range append(append([]*checker.Type{}, members...), targets...) {
@@ -167,6 +172,9 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 			}
 		}
 		return castProof{classes: targets}, nil
+	}
+	if kind := l.deferredCastCandidate(node, source, target, false); kind != castLoweringNone {
+		return castProof{lowering: kind, deferredError: refused}, nil
 	}
 	if source.Flags()&checker.TypeFlagsUnion == 0 {
 		return castProof{}, refused

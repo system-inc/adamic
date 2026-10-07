@@ -25,6 +25,15 @@ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
+	if proof.lowering != castLoweringNone {
+		source := l.concrete(l.checker.GetTypeAtLocation(as.Expression))
+		target := l.concrete(l.checker.GetTypeAtLocation(node))
+		checked, err := l.lowerDeferredCast(proof.lowering, node, value, source, target)
+		if checked != nil || err != nil {
+			return checked, err
+		}
+		return nil, proof.deferredError
+	}
 	if len(proof.allowed) == 0 && len(proof.classes) == 0 {
 		return value, nil
 	}
@@ -47,6 +56,10 @@ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 		cast.Allowed = append(cast.Allowed, allowed)
 		cast.FieldType = fieldType
 	}
+	if _, err := l.view(node, value, target); err != nil {
+		return nil, err
+	}
+	cast.CheckedFields = true
 	return cast, nil
 }
 
