@@ -21,7 +21,7 @@ func (l *lowering) nestedDeclarations(nodes []*ast.Node) ([]ir.Statement, error)
 		if node.Parent == nil || node.Parent.Kind != ast.KindBlock || !ast.IsFunctionLike(node.Parent.Parent) {
 			return nil, l.notYet(node, "a block-scoped nested function declaration")
 		}
-		if node.Name() == nil || len(node.TypeParameters()) > 0 {
+		if node.Name() == nil {
 			return nil, l.notYet(node, "a generic or unnamed nested function declaration")
 		}
 		for _, parameter := range node.Parameters() {
@@ -52,10 +52,20 @@ func (l *lowering) nestedDeclarations(nodes []*ast.Node) ([]ir.Statement, error)
 		}
 	}
 	functions := []int{}
+	bodies := []*ast.Node{}
 	for _, node := range declarations {
 		local, err := l.declareLocal(node.Name())
 		if err != nil {
 			return nil, err
+		}
+		if len(node.TypeParameters()) > 0 {
+			if l.generics == nil {
+				l.generics = map[*ast.Symbol]*ast.Node{}
+			}
+			l.generics[l.symbol(node.Name())] = node
+			// Negative marks a generic declaration with direct-call instantiations only.
+			l.result.Locals[local].NestedFunction = -1
+			continue
 		}
 		index := len(l.result.Functions)
 		l.result.Locals[local].NestedFunction = index + 1
@@ -65,12 +75,13 @@ func (l *lowering) nestedDeclarations(nodes []*ast.Node) ([]ir.Statement, error)
 			l.instance.templates = append(l.instance.templates, template{closure: index, proven: l.checker.GetTypeAtLocation(node.Name()), isClosure: true})
 		}
 		functions = append(functions, index)
+		bodies = append(bodies, node)
 		if err := l.signature(index, node, -1); err != nil {
 			return nil, err
 		}
 		prologue = append(prologue, ir.Declare{Local: local, Value: ir.MakeClosure{Function: index}})
 	}
-	for position, node := range declarations {
+	for position, node := range bodies {
 		index := functions[position]
 		// Ordinary declarations own their this. Dynamic receivers are not implemented.
 		var invalid *ast.Node
@@ -134,6 +145,9 @@ func (l *lowering) nestedReference(node *ast.Node) (ir.Expression, bool, error) 
 	local, ok := l.locals[l.symbol(node)]
 	if !ok || l.result.Locals[local].NestedFunction == 0 {
 		return nil, false, nil
+	}
+	if l.result.Locals[local].NestedFunction < 0 {
+		return nil, true, l.notYet(node, "a generic function as a value")
 	}
 	if l.result.Locals[local].Function != l.functionIndex {
 		return nil, true, l.notYet(node, "a first-class nested function reference from another nested function")

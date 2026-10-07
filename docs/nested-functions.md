@@ -66,7 +66,7 @@ Every invocation of the enclosing function creates new cells. Three lexical
 levels forward the same ancestor cells through the intermediate closure.
 
 Initially accept declarations directly in a function body. Block-scoped
-function declarations, generic nested declarations, dynamic this, first-class sibling references inside another sibling, and
+function declarations, first-class generic nested values, dynamic this, first-class sibling references inside another sibling, and
 calls to a declaration in a different ancestor group remain loud NotYet cases.
 Optional/default/rest parameters retain existing closure ABI gaps. Plain
 destructured parameters retain the existing lowering support. Rebinding is rejected
@@ -211,7 +211,7 @@ tested as an accepted, leak-free alternative. These remaining gaps have named
 refusal probes in internal/lower/nested_functions_test.go:
 
 * A declaration inside an if block.
-* A generic inner<T> declaration.
+* Storing a generic inner<T> declaration as a value. Direct generic calls are supported.
 * inner(value?: number), inner(value = 1), or inner(...values: number[]).
 * Returning sibling a from b, or storing inner as a value inside inner itself.
 * A third-level function calling a declaration from its grandparent's sibling group.
@@ -306,3 +306,116 @@ The complete post-change stage1 gate remains uncovered. No escape proof, stack o
 region placement, count elision, whole tsc native compilation, or performance
 claim is included. The census's syntax counter is unchanged; seven-file structural
 clearance is the limited supplementary measurement, not successful compiler runs.
+
+
+## Real TypeScript fixtures follow-up
+
+The fixture branch 7bf6f57 was merged with two parents in c08c41c before these
+fixes. The eleven original sources and their historical status records remain
+unchanged. Counts against Node progressed as follows:
+
+| Fix | Original fixtures matching Node |
+| --- | --- |
+| Baseline b15216d | 3/11 |
+| Own captured frame parameters, including read-only initialization | 6/11 |
+| Return a local assignment with one RHS evaluation and write-through | 6/11; parser then exposes the conservative cycle refusal |
+| Represent undefined-only values | 6/11; cleanup then exposes generic nested calls |
+| Instantiate generic nested direct calls in their lexical frame | 7/11 |
+| Prove closed literal inputs cannot reach the frame | 8/11 |
+
+Passing originals are 02, 03, 04, 05, 06, 07, 10 and 11. Oracle registration
+holds each original to Node, the JavaScript IR backend, sanitized native C,
+release native C, and LeakSanitizer. Three additional executable regressions
+cover generated-string parameter ownership and escape, generic captures across
+frame invocations and number/string/undefined instantiations, and assignment
+results with a side-effecting RHS. Ownership applies to any EnvironmentCell
+parameter, while existing anonymous closure borrowing remains unchanged.
+
+Generic direct calls instantiate with the lexical owner's locals, capture stack,
+and outer substitutions. The instantiation cache includes the owner index.
+Generic declarations have no first-class value representation; such references
+remain NotYet. Undefined-only results use the existing null reference ABI.
+Returned assignments save the RHS before writing the target and return that
+saved value. Property, element and destructuring assignment returns remain loud
+NotYet cases.
+
+The parser's scanner parameter has a cycle-compatible callback type, but every
+actual caller supplies an object literal containing only scalars or capture-free
+closures. The closed-input exception checks every IR body and main, rejects
+parameter reassignment, owner closure escape, virtual/opaque calls, nonliteral
+arguments, and any expression or statement outside its explicit whitelist.
+Object/element stores are outside that whitelist. This proves that this input
+graph cannot acquire a reference back into the frame. It does not relax the
+cycle rule for arbitrary fresh objects, mutable inputs, or escaping callbacks.
+An IR field-store mutation must invalidate the proof. Weak remains the general
+way to break a captured closure cycle.
+
+The three unchanged originals retain typed Refused diagnostics:
+
+* 01 scanner frame: first a non-null assertion. It also uses var, truthiness,
+  comma expressions, optional/default signatures, and generic helpers returned
+  as values. Supporting all 24 helpers requires resolving those separate limits.
+* 08 symbol recursion: object truthiness as a condition. An explicit undefined
+  comparison is required by Adamic's current language policy.
+* 09 constituent recursion: first a non-null assertion, also truthiness and a
+  sibling reference through a reducer arrow. Explicit null checks/conditions
+  plus anonymous callback forwarding of a sibling's environment are needed.
+
+No permanent language policy is changed to accept these originals. There is no
+claim of 11/11 or of compiling the complete scanner. AllocateEnvironment, its
+single frame layout, and the native allocation implementation are unchanged.
+Runtime's environment-placement work can still see one site and make one
+placement decision. No escape proof or placement optimization is added here.
+
+
+### Language decisions paused on original sources
+
+The exact programs are the checked-in, unchanged
+[01_scanner_frame.a](../stage3/fixtures/nested-functions/01_scanner_frame.a),
+[08_checker_symbol_recursion.a](../stage3/fixtures/nested-functions/08_checker_symbol_recursion.a),
+and [09_checker_constituent_recursion.a](../stage3/fixtures/nested-functions/09_checker_constituent_recursion.a).
+The first diagnostic-producing expressions, verbatim, are:
+
+```text
+01: return s.codePointAt(i)!;
+08: return symbol.parent ? `${getSymbolPath(symbol.parent)}.${symbol.escapedName}` : symbol.escapedName as string;
+09: type.flags & TypeFlags.Union && (type as UnionType).origin ? getConstituentCount((type as UnionType).origin!) :
+```
+
+The choices are to keep Adamic's prohibition on non-null assertions and require
+proven null checks (01 and 09), or change that language policy; and to require
+boolean conditions (08 and 09), or specify/support TypeScript truthiness.
+01 additionally needs a decision on var and definite-assignment assertions.
+This unit stops on those decisions, as requested, without altering the originals
+or counting normalized substitutes as successes. Signature and callback-forwarding
+work can be designed separately, but cannot make these exact sources acceptable
+under the existing language policy.
+
+### Follow-up proof results
+
+All logs below are saved files. Compiler overlays leave production sources intact.
+
+| Mutant | Catch |
+| --- | --- |
+| Mark an EnvironmentCell parameter borrowed | TestNestedCapturedParametersAreOwned rejects the borrowed slot |
+| Omit the write in a returned assignment | Node comparison of nested_assignment_return.a differs |
+| Evaluate assignment RHS twice | Node comparison of the same fixture differs |
+| Allow a field store in the closed-input proof | TestClosedFrameInputRejectsMutation fails on the IR store probe |
+| Lose declared storage for an undefined-narrowed field | maybe_number_slots.a exposes an incompatible native call ABI |
+| Treat an undefined-narrowed Weak read as present | weak_parent.a panics where Node continues |
+
+Logs are /tmp/adamic-real-mutant-{borrowed-parameter,dropped-return-write,
+double-return-evaluation,closed-input-mutation,undefined-field-storage,
+undefined-weak-presence}.log. The first field-store mutant attempt failed to
+compile because it was also inserted in the expression switch. That invalid
+attempt is not proof; the corrected, statement-only overlay compiles and fails
+on the intended mutable-graph assertion.
+
+The earlier broad Node run caught the field storage and Weak regressions; both
+were repaired and their focused rerun passes, including all 17 synthetic nested
+fixtures (2.403s, /tmp/adamic-real-regression-repair.log). Source audit reports
+41 unchanged upstream helper bodies (/tmp/adamic-real-source-audit.log).
+The count update adds eleven rows and changes no existing rows (12.361s,
+/tmp/adamic-real-counts-final.log). The final complete package gate and vet/format
+logs are /tmp/adamic-real-final-{gate,vet,format}.log. No complete stage1 gate,
+whole tsc compilation, placement proof, or 11/11 claim is made.
