@@ -1,0 +1,6 @@
+=== RUN   TestWave03CheckerQuestions
+    wave_03_facts_test.go:49: binding facts differ: ["1" "node-binding" "2" "2" "0"]
+--- FAIL: TestWave03CheckerQuestions (0.21s)
+FAIL
+FAIL	github.com/system-inc/adamic/bridge/tsgo/checker	0.306s
+FAIL

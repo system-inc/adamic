@@ -1,0 +1,6 @@
+=== RUN   TestWave03CheckerQuestions
+    wave_03_facts_test.go:68: signature counts differ ["1" "signature-kinds" "2" "2" "1" "16" "1" "32"]
+--- FAIL: TestWave03CheckerQuestions (0.10s)
+FAIL
+FAIL	github.com/system-inc/adamic/bridge/tsgo/checker	0.125s
+FAIL

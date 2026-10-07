@@ -1,0 +1,21 @@
+=== RUN   TestWave03AgreementAndMutants
+    wave_03_test.go:99: controls: 9790 identical finding bytes; findings 46
+    wave_03_test.go:109: loose-this: 923 identical finding bytes; findings 4
+    wave_03_test.go:115: controls-asan: 9790 identical finding bytes; findings 46
+    wave_03_test.go:126: unsafe-call: exit 0, byte oracle catches byte 1524
+    wave_03_test.go:126: imports: exit 0, byte oracle catches byte 1614
+    wave_03_test.go:126: template: exit 0, byte oracle catches byte 5086
+    wave_03_test.go:141: metadata guard mutant exits 0, caught by required panic 70
+    wave_03_test.go:152: repository: 34996 identical finding bytes; findings 86
+    wave_03_test.go:153: repository-asan: 34996 identical finding bytes; findings 86
+    wave_03_test.go:161: repository timing: native 763.368062ms Go 460.611944ms; native tsgo: load_ns=155745436 query_ns=242580827 queries=26405 first_query_ns=18173 run_ns=597911797
+         Go cohere: load_ns=171049152 rule_ns=124057872 run_ns=261983384
+    wave_03_test.go:152: compiler: 376067 identical finding bytes; findings 178
+    wave_03_test.go:153: compiler-asan: 376067 identical finding bytes; findings 178
+    wave_03_test.go:161: compiler timing: native 5.777461592s Go 1.93845787s; native tsgo: load_ns=781942250 query_ns=2097717467 queries=185745 first_query_ns=22332 run_ns=4932240005
+         Go cohere: load_ns=596996928 rule_ns=1087205492 run_ns=1266589682
+    wave_03_test.go:173: released handle: panic 70, invalid or released checker handle
+    wave_03_test.go:178: released registry mutant exits 0 and is caught by required panic 70
+--- PASS: TestWave03AgreementAndMutants (219.93s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	219.940s

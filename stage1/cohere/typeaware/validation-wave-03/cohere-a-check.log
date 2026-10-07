@@ -1,0 +1,8 @@
+/workspace/adamic/stage1/cohere/typeaware/consistent_type_imports.a:3:47 error TS2307 Cannot find module './node_binding.a' or its corresponding type declarations.
+/workspace/adamic/stage1/cohere/typeaware/consistent_type_imports.a:4:36 error TS2307 Cannot find module './import_runtime_options.a' or its corresponding type declarations.
+/workspace/adamic/stage1/cohere/typeaware/no_unsafe_call.a:6:32 error TS2307 Cannot find module './signature_kinds.a' or its corresponding type declarations.
+/workspace/adamic/stage1/cohere/typeaware/no_unsafe_call.a:65:66 error TS7006 Parameter 'flags' implicitly has an 'any' type.
+/workspace/adamic/stage1/cohere/typeaware/wave_03_suite.a:7:30 error TS2307 Cannot find module './no_unsafe_call.a' or its corresponding type declarations.
+/workspace/adamic/stage1/cohere/typeaware/wave_03_suite.a:8:39 error TS2307 Cannot find module './consistent_type_imports.a' or its corresponding type declarations.
+/workspace/adamic/stage1/cohere/typeaware/wave_03_suite.a:9:49 error TS2307 Cannot find module './no_unnecessary_template_expression.a' or its corresponding type declarations.
+✗ ☠️ 0.3s • 7 type errors (7 checked) • Adamic readiness not measured: types bailed • ⚠ only 7 of 8 files • ⚠ 👑 lint did not run • ⚠ 1 rule skipped every file
