@@ -62,3 +62,19 @@ descending combined volume ranking with lexical ties. Earlier eligible entries,
 including no-global-assign, no-implicit-globals and no-import-assign, are now
 claimed on other origin branches and were skipped. No conflicting claim was
 found for these three. This update is pushed before implementation.
+
+## Fourth continuation
+
+Reserved after the previous twelve ports, tests and evidence were pushed at b651321e:
+
+- no-throw-literal (0 compiler, 0 repository)
+- no-useless-backreference (0 compiler, 0 repository)
+- prefer-arrow-callback (0 compiler, 0 repository)
+
+Selection checked 347 fetched origin refs, 126 claimed ranked rules across
+33 distinct Markdown claim blobs, and the same 26 production ports on main and
+codex/tsgo-c-library. These are the first three of 46 remaining entries in the
+descending combined ranking with lexical ties. Earlier candidates, including
+no-obj-calls, no-object-constructor and no-promise-executor-return, are claimed
+on other origin branches and were skipped. No conflicting claim was found for
+these three. This update is pushed before implementation.
