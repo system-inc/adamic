@@ -1,0 +1,66 @@
+// A Set callback keeps the element after delete, including a callback with only one parameter.
+function key(index: number): string { return `key${index}`; }
+
+function probe(mode: number): void {
+	const collection = new Set<string>();
+	for (let index = 0; index < 8; index += 1) {
+		collection.add(key(index));
+	}
+	const kept: string[] = [];
+	try {
+		collection.forEach((item, current, owner) => {
+			if (mode === 0) { owner.delete(current); }
+			if (mode === 1 && current === "key0") { owner.delete(key(1)); }
+			if (mode === 2) { owner.clear(); }
+			if (mode === 3 && current === "key0") {
+				owner.delete(current);
+				owner.add(key(8));
+			}
+			if (mode === 4) {
+				owner.delete(current);
+				kept.push(item);
+				kept.push(current);
+				throw new Error(`deleted ${current} ${item}`);
+			}
+			kept.push(item);
+			kept.push(current);
+			console.log(`${mode}: ${item} ${current} ${item === current} ${owner.size}`);
+		});
+	} catch (error) {
+		console.log(error instanceof Error ? error.message : "unexpected");
+	}
+	console.log(`kept ${mode}: ${kept.join(",")} remaining ${collection.size}`);
+	const after: string[] = [];
+	collection.forEach((item) => { after.push(item); });
+	console.log(`after ${mode}: ${after.join(",")}`);
+}
+
+function oneParameter(): void {
+	const collection = new Set<string>();
+	for (let index = 0; index < 4; index += 1) {
+		collection.add(key(index));
+	}
+	const kept: string[] = [];
+	collection.forEach((current) => {
+		collection.delete(current);
+		console.log(`one ${current} ${collection.size}`);
+		kept.push(current);
+	});
+	console.log(`one kept ${kept.join(",")} ${collection.size}`);
+}
+
+function captured(): void {
+	const collection = new Set<string>();
+	collection.add(key(0));
+	collection.add(key(1));
+	const readers: (() => string)[] = [];
+	collection.forEach((current) => {
+		collection.delete(current);
+		readers.push(() => current);
+	});
+	console.log(`captured ${readers.map((read) => read()).join(" ")} ${collection.size}`);
+}
+
+for (let mode = 0; mode < 5; mode += 1) { probe(mode); }
+oneParameter();
+captured();

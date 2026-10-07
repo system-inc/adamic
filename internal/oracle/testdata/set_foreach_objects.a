@@ -1,0 +1,69 @@
+// A Set of objects passes each element twice. The callback keeps it after delete.
+interface Box {
+	readonly label: string;
+}
+
+function box(label: string): Box {
+	return { label: `${label}` };
+}
+
+function labels(items: readonly Box[]): string {
+	return items.map((item) => item.label).join(",");
+}
+
+function probe(mode: number): void {
+	const keys: Box[] = [];
+	const collection = new Set<Box>();
+	for (let index = 0; index < 8; index += 1) {
+		const made = box(`k${index}`);
+		keys.push(made);
+		collection.add(made);
+	}
+	const first = keys[0] ?? box("missing-key");
+	const second = keys[1] ?? box("missing-later");
+	const kept: Box[] = [];
+	try {
+		collection.forEach((item, current, owner) => {
+			if (mode === 0) { owner.delete(current); }
+			if (mode === 1 && current === first) { owner.delete(second); }
+			if (mode === 2) { owner.clear(); }
+			if (mode === 3 && current === first) {
+				owner.delete(current);
+				owner.add(box("k8"));
+			}
+			if (mode === 4) {
+				owner.delete(current);
+				kept.push(item);
+				kept.push(current);
+				throw new Error(`deleted ${current.label} ${item.label}`);
+			}
+			kept.push(item);
+			kept.push(current);
+			console.log(`${mode}: ${item.label} ${current.label} ${item === current} ${owner.size}`);
+		});
+	} catch (error) {
+		console.log(error instanceof Error ? error.message : "unexpected");
+	}
+	console.log(`kept ${mode}: ${labels(kept)} remaining ${collection.size}`);
+	const after: string[] = [];
+	collection.forEach((item) => { after.push(item.label); });
+	console.log(`after ${mode}: ${after.join(",")}`);
+}
+
+function oneParameter(): void {
+	const collection = new Set<Box>();
+	const first = box("a");
+	const second = box("b");
+	collection.add(first);
+	collection.add(second);
+	const kept: Box[] = [];
+	collection.forEach((current) => {
+		collection.delete(current);
+		console.log(`one ${current.label} ${collection.size}`);
+		kept.push(current);
+	});
+	console.log(`one kept ${labels(kept)} ${collection.size}`);
+}
+
+for (let mode = 0; mode < 5; mode += 1) { probe(mode); }
+oneParameter();
