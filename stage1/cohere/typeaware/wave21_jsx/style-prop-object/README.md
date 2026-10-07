@@ -96,3 +96,16 @@ its own log. Evidence, canonical streams and hashes are in validation. The
 full repository gate, native JSX source pipeline, live binding adaptation,
 production registration and repair application are not covered. Reservations
 remain retained; this core's source integration is blocked, not released.
+
+## Current-main c799 landing
+
+The branch was rebased again onto `c7991b900` after its lowering proofs and record
+runtime changes landed. The complete style suite, now including its source
+prerequisite, rebuilt and passed in **152.127 s**. Both production corpora, all
+82 controls in three modes, original/emitted Node, sanitizers, the byte-only
+rule mutant, retained-registry mutant and parser-skip prerequisite mutant pass.
+The source integration gaps remain. Fresh output is in
+`../validation/landing-c799/style.log`; these timings include CPU contention
+with the other owned suites and are observations rather than a performance
+regression claim. Checker PASS 0.187 s, filtered Node PASS 6.683 s, focused
+lowering PASS 1.693 s, focused record/Node/mutant checks PASS 44.223 s, vet clean.

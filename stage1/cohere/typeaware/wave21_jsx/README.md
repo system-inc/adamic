@@ -191,3 +191,24 @@ The prerequisite test without its artifact variable skipped initially; the
 explicit artifact-backed command then reran it successfully. The seven previous
 wave-21 suites were rebuilt again; their complete result is in
 `validation/landing-3963/owned.log`. The core/source coverage limits remain.
+
+## Final c799 current-main gate
+
+After the final available style-prop-object allocation, main advanced again to
+`c7991b900`, changing lowering proofs and the native record runtime. The branch
+was rebased again and every owned suite rebuilt: prior seven suites PASS
+857.985 s, JSX suite PASS 1130.782 s, style suite PASS 152.127 s. All
+rule mutants, sanitizer modes and real released-handle checks pass. The main's
+focused lowering/record checks, checker, filtered Node and vet also pass.
+Source/emitted Node repeats all 22 JSX default batches with the new compiler.
+
+Current observations for the JSX 66-batch execution sums: native prepared input
+0.145689 s, full Go 1.863496 s, raw Go preparation
+1.924718 s. These remain different input pipelines. Detailed current
+logs, execution hashes and every reported mutant are in validation/landing-c799.
+The added style core and its exact source-integration gap are documented in
+style-prop-object/README.md. The final 632-ref audit has no unclaimed unported
+rule left, including released reservations now claimed elsewhere. No more
+reservations were taken. Native JSX/live checker adaptation and the complete
+repository test gate remain uncovered; this is landing-ready partial source
+work with explicitly identified shared dependencies.

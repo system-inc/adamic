@@ -1,0 +1,16 @@
+{
+  "main": "c7991b900362796aefd111474e65eb5398e91953",
+  "owned_seconds": 857.985,
+  "jsx_seconds": 1130.782,
+  "style_seconds": 152.127,
+  "checker_seconds": 0.187,
+  "node_seconds": 6.683,
+  "focused_lower_seconds": 1.693,
+  "focused_records_seconds": 44.223,
+  "jsx_prepared_native_seconds": 0.145689,
+  "jsx_go_seconds": 1.863496,
+  "jsx_raw_preparation_seconds": 1.924718,
+  "source_pipeline": "four prepared-AST cores blocked on shared JSX/node/checker integration; three earlier React HIR cores parked",
+  "remaining_unclaimed_rules": 0,
+  "last_origin_refs": 632
+}

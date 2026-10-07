@@ -237,3 +237,11 @@ registration are not connected. This is a partial source port with its complete
 prepared-AST core pushed; the reservation is retained, not released. See the
 owned README and validation logs for exact times and coverage. No further rule
 is available in the audited ranking, and no further claim is taken.
+
+Final landing gate: rebased onto main c7991b900 after its lowering/record changes.
+All seven earlier suites, all three JSX cores and the style core rebuild and
+pass independent Go bytes, option profiles, native mutants, sanitizers and
+released-handle checks. Shared JSX and source/checker adaptation gaps remain
+explicit. The final 632-origin-ref audit found no unclaimed unported rule,
+including explicit releases with active continuation claims. No further claim
+is taken. Current gate evidence is wave21_jsx/validation/landing-c799/.
