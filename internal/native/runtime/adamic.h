@@ -632,6 +632,9 @@ adamic_heap *adamic_box_number(double number);
 // adamic_union_equal is === on two unions: the same member, equal as that member is compared.
 bool adamic_union_equal(const adamic_heap *left, const adamic_heap *right);
 
+// ToBoolean on a boxed union; objects are truthy even when empty.
+bool adamic_census_to_boolean(const adamic_heap *value);
+
 // adamic_union_to_string is String(value) for a union of numbers, booleans, strings and undefined, a
 // string the caller owns.
 adamic_string *adamic_union_to_string(adamic_heap *value);

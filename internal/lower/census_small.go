@@ -128,6 +128,7 @@ func (l *lowering) censusImplementation(declaration *ast.Node) *ast.Node {
 
 // Use the same nominal, invariant and strictly contravariant relation as class overrides.
 func (l *lowering) censusRelated(from, to *checker.Type) bool {
+	from, to = l.concrete(from), l.concrete(to)
 	return l.classAssignable(from, to) && l.widened(from, to, map[[2]*checker.Type]bool{}) == nil
 }
 
@@ -145,34 +146,98 @@ func (l *lowering) censusOverloads(implementation *ast.Node) error {
 			continue
 		}
 		ordinal++
-		label := fmt.Sprintf("overload %d of %s", ordinal, implementation.Name().Text())
-		if len(implementation.TypeParameters()) != 0 || len(overload.TypeParameters()) != 0 {
-			return l.notYet(overload, label+" with generic parameters")
-		}
-		declared, served := overload.Parameters(), implementation.Parameters()
-		if len(declared) != len(served) {
-			return l.notYet(overload, label+" with a different parameter count")
-		}
-		for index, parameter := range declared {
-			actual := served[index]
-			if !ast.IsIdentifier(parameter.Name()) || !ast.IsIdentifier(actual.Name()) ||
-				parameter.AsParameterDeclaration().DotDotDotToken != nil || actual.AsParameterDeclaration().DotDotDotToken != nil ||
-				parameter.AsParameterDeclaration().Initializer != nil || actual.AsParameterDeclaration().Initializer != nil {
-				return l.notYet(parameter, label+" with rest, destructuring or defaults")
-			}
-			given := l.checker.GetTypeAtLocation(parameter.Name())
-			takes := l.checker.GetTypeAtLocation(actual.Name())
-			if !l.censusRelated(given, takes) {
-				return &Refused{Where: l.program.Where(parameter), What: label + " parameter " + parameter.Name().Text() + " cannot be served by implementation parameter " + actual.Name().Text(), Fix: "make the implementation accept every value admitted by this overload, without mutable widening or bivariance"}
-			}
-		}
-		promised := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(overload))
-		produced := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(implementation))
-		if !l.censusRelated(produced, promised) {
-			return &Refused{Where: l.program.Where(overload), What: label + " result " + l.checker.TypeToString(promised) + " cannot be served by implementation result " + l.checker.TypeToString(produced), Fix: "make the implementation result covariant with every overload result"}
+		if err := l.censusOverload(implementation, overload, ordinal); err != nil {
+			return err
 		}
 	}
 	return nil
+}
+
+// Compare generic signatures under the same rigid type parameters, never under one
+// lucky runtime instantiation. Mapping the implementation's binders is alpha-renaming.
+func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal int) error {
+	label := fmt.Sprintf("overload %d of %s", ordinal, implementation.Name().Text())
+	declaredTypes, servedTypes := overload.TypeParameters(), implementation.TypeParameters()
+	if len(servedTypes) > len(declaredTypes) {
+		return l.notYet(overload, label+" with additional implementation type parameters")
+	}
+	outerMapper := l.typeMapper
+	defer func() { l.typeMapper = outerMapper }()
+	if len(servedTypes) > 0 {
+		sources, targets := []*checker.Type{}, []*checker.Type{}
+		for index, parameter := range servedTypes {
+			sources = append(sources, l.checker.GetTypeAtLocation(parameter.Name()))
+			targets = append(targets, l.checker.GetTypeAtLocation(declaredTypes[index].Name()))
+		}
+		l.typeMapper = newTypeMapper(sources, targets)
+		for index, parameter := range servedTypes {
+			if constraint := l.checker.GetBaseConstraintOfType(sources[index]); constraint != nil && !l.censusRelated(targets[index], constraint) {
+				return &Refused{Where: l.program.Where(declaredTypes[index]), What: label + " type parameter " + declaredTypes[index].Name().Text() + " cannot satisfy implementation parameter " + parameter.Name().Text(), Fix: "make implementation constraints accept every type admitted by the overload"}
+			}
+		}
+	}
+	declared, served := overload.Parameters(), implementation.Parameters()
+	for index := 0; index <= max(len(declared), len(served)); index++ {
+		given, parameter, givenRest, err := l.censusOverloadParameter(declared, index)
+		if err != nil {
+			return l.notYet(overload, label+" with a non-array rest parameter")
+		}
+		takes, actual, takesRest, err := l.censusOverloadParameter(served, index)
+		if err != nil {
+			return l.notYet(overload, label+" with a non-array implementation rest parameter")
+		}
+		if actual == nil {
+			continue
+		} // JavaScript evaluates and ignores extra arguments.
+		if parameter == nil && takesRest {
+			continue
+		} // Missing rest items make an empty array.
+		if parameter == nil {
+			given = l.checker.GetUndefinedType()
+			parameter = actual
+		}
+		if givenRest && !takesRest {
+			given = l.checker.GetUnionType([]*checker.Type{given, l.checker.GetUndefinedType()})
+		}
+		if !l.censusRelated(given, takes) {
+			name := func(node *ast.Node) string {
+				if ast.IsIdentifier(node.Name()) {
+					return node.Name().Text()
+				}
+				return fmt.Sprintf("%d", index+1)
+			}
+			return &Refused{Where: l.program.Where(parameter), What: label + " parameter " + name(parameter) + " cannot be served by implementation parameter " + name(actual), Fix: "make the implementation accept every value admitted by this overload, without mutable widening or bivariance"}
+		}
+	}
+	promised := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(overload))
+	produced := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(implementation))
+	if !l.censusRelated(produced, promised) {
+		return &Refused{Where: l.program.Where(overload), What: label + " result " + l.checker.TypeToString(promised) + " cannot be served by implementation result " + l.checker.TypeToString(produced), Fix: "make the implementation result covariant with every overload result"}
+	}
+	return nil
+}
+
+func (l *lowering) censusOverloadParameter(parameters []*ast.Node, index int) (*checker.Type, *ast.Node, bool, error) {
+	if len(parameters) == 0 {
+		return nil, nil, false, nil
+	}
+	parameter := parameters[min(index, len(parameters)-1)]
+	rest := parameter.AsParameterDeclaration().DotDotDotToken != nil
+	if index >= len(parameters) && !rest {
+		return nil, nil, false, nil
+	}
+	proven := l.checker.GetTypeAtLocation(parameter)
+	if ast.IsIdentifier(parameter.Name()) {
+		proven = l.censusCallableParameterType(l.symbol(parameter.Name()))
+	}
+	proven = l.concrete(proven)
+	if rest {
+		if !l.checker.IsArrayType(proven) {
+			return nil, parameter, true, l.notYet(parameter, "an overload rest other than an array")
+		}
+		proven = l.checker.GetElementTypeOfArrayType(proven)
+	}
+	return proven, parameter, rest, nil
 }
 
 // Calls use the resolved overload's result representation, even when the
@@ -262,4 +327,13 @@ func (l *lowering) censusBooleanLogical(node *ast.Node, operator ast.Kind, left,
 		left, right = censusBooleanCondition(left), censusBooleanCondition(right)
 	}
 	return ir.Binary{Operator: lowered, Left: left, Right: right}, true
+}
+
+// ToBoolean never calls user conversion methods. Every represented value can be tested.
+// NumberCall already carries a single evaluated argument through both backends and analyses.
+func censusCondition(value ir.Expression) ir.Expression {
+	if value.Type() == ir.Boolean {
+		return value
+	}
+	return ir.NumberCall{Function: "toBoolean", Arguments: []ir.Expression{value}}
 }

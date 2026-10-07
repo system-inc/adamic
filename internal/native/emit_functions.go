@@ -161,6 +161,10 @@ func (e *emitter) arguments(call ir.Call) []string {
 	handed := []string{}
 	defer func() { e.handedOver(handed) }()
 	for index, argument := range call.Arguments {
+		if index >= len(parameters) {
+			e.value(argument) // Extra arguments still run, before the call.
+			continue
+		}
 		if e.reuse.callConsumes(e.program, call, index) {
 			value := e.handOver(argument)
 			handed = append(handed, value)

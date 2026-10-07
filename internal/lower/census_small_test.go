@@ -15,6 +15,13 @@ interface DogHandler { handle(dog: Dog): void; }
 function serve(handler: DogHandler): string;
 function serve(handler: Handler): string { handler.handle({ name: 'cat' }); return 'written'; }
 `, "overload 1 of serve parameter handler"},
+		{"generic parameter constraints", `interface Animal { readonly name: string; }
+interface Dog extends Animal { readonly bark: string; }
+interface Handler { handle(animal: Animal): void; }
+interface DogHandler { handle(dog: Dog): void; }
+function serve<T extends DogHandler>(handler: T): string;
+function serve<U extends Handler>(handler: U): string { handler.handle({ name: 'cat' }); return 'written'; }
+`, "overload 1 of serve type parameter T"},
 		{"mutable parameters", `interface Animal { readonly name: string; }
 interface Dog extends Animal { readonly bark: string; }
 function serve(dogs: Dog[]): string;

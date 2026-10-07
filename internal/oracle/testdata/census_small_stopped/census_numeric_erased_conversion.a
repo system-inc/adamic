@@ -1,0 +1,3 @@
+// Node prints 7: a structural view does not erase a conversion method.
+const value: {} = { valueOf(): number { return 7; } };
+console.log(String(+value));

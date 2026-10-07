@@ -690,6 +690,9 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.ObjectCall:
 		return "Object." + expression.Method + "(" + e.values(expression.Arguments) + ")"
 	case ir.NumberCall:
+		if expression.Function == "toBoolean" {
+			return "Boolean(" + e.values(expression.Arguments) + ")"
+		}
 		if expression.Function == "prototypeHasOwnProperty" {
 			return "Number.prototype.hasOwnProperty(" + e.values(expression.Arguments) + ")"
 		}
