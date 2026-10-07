@@ -8,6 +8,9 @@ import (
 
 // ValidateOptions refuses unsupported combinations before invoking clang.
 func ValidateOptions(options Options) error {
+	if options.Request && options.Target != "wasm32-wasi" {
+		return fmt.Errorf("native: request exports require wasm32-wasi")
+	}
 	if options.Target == "" {
 		return nil
 	}
@@ -47,4 +50,20 @@ func archiverName(compiler string) string {
 		return candidate
 	}
 	return "ar"
+}
+
+// WASILinkFlags selects commands unless the driver emitted a request handler.
+func WASILinkFlags(options Options) []string {
+	flags := []string{"-Wl,-z,stack-size=131072"}
+	if !options.Request {
+		return append(flags, "-mexec-model=command")
+	}
+	flags = append(flags, "-mexec-model=reactor", "-Wl,--export-memory")
+	for _, name := range []string{"adamic_request", "adamic_response_bytes", "adamic_response_length", "malloc", "free", "adamic_release"} {
+		flags = append(flags, "-Wl,--export="+name)
+	}
+	if options.Count {
+		flags = append(flags, "-Wl,--export=adamic_live", "-Wl,--export=adamic_regions")
+	}
+	return flags
 }

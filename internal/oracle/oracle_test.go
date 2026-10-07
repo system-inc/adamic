@@ -50,6 +50,7 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/library_object_same.a", true, false},
 	{"internal/oracle/testdata/library_object_own.a", true, false},
 	{"dedication/dedication.a", true, false},
+	{"cmd/adamic/testdata/wasi/request.a", true, false},
 	// October 6 coverage: deeper dispatch, field order, ownership and subclass holders.
 	{"internal/oracle/testdata/class_oct6_deep.a", true, false},
 	{"internal/oracle/testdata/class_oct6_parameters.a", true, false},

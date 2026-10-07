@@ -22,7 +22,7 @@ func TestWASITargetFlags(t *testing.T) {
 
 func TestWASIRefusesUnsupportedOptions(t *testing.T) {
 	t.Setenv("WASI_SYSROOT", t.TempDir())
-	for _, options := range []Options{{Target: "unknown"}, {Target: "wasm32-wasi", Sanitize: true}, {Target: "wasm32-wasi", cpu: "native"}} {
+	for _, options := range []Options{{Request: true}, {Target: "unknown"}, {Target: "wasm32-wasi", Sanitize: true}, {Target: "wasm32-wasi", cpu: "native"}} {
 		if err := ValidateOptions(options); err == nil {
 			t.Fatalf("accepted %+v", options)
 		}

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -43,7 +44,15 @@ func build(path, output string, arguments []string) int {
 		fmt.Fprintln(os.Stderr, "adamic: --tsgo is not supported for wasm32-wasi")
 		return 1
 	}
-	program, code := compileLibrary(path, archive != "")
+	var program *ir.Program
+	var code int
+	handler := -1
+	if options.Target == "wasm32-wasi" {
+		program, handler, code = compileWASI(path)
+		options.Request = handler >= 0
+	} else {
+		program, code = compileLibrary(path, archive != "")
+	}
 	if program == nil {
 		return code
 	}
@@ -60,7 +69,15 @@ func build(path, output string, arguments []string) int {
 			err = native.BuildTSGo(source, output, archive, options)
 		}
 	} else {
-		err = native.Build(native.C(program), output, options)
+		var source string
+		if options.Target == "wasm32-wasi" {
+			source, err = native.WASI(program, handler)
+		} else {
+			source = native.C(program)
+		}
+		if err == nil {
+			err = native.Build(source, output, options)
+		}
 	}
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "adamic: %v\n", err)
