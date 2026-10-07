@@ -1,0 +1,58 @@
+{'Ir': 7279052184, 'Bc': 1206880604, 'Bcm': 49754508, 'Bi': 18832502, 'Bim': 3393515}
+{'function': 'adamic_release', 'costs': [1316682569, 210827672, 7257796, 4936640, 2952279]}
+{'function': 'adamic_object_free_children', 'costs': [158854761, 43487758, 7223852, 1913100, 571]}
+{'function': 'adamic_retain', 'costs': [354990651, 88150682, 6956389, 0, 0]}
+{'function': 'adamic_string_equal', 'costs': [339705054, 54018827, 4453911, 1949012, 2]}
+{'function': 'adamic_function_33_Scanner_scan', 'costs': [502679473, 114514904, 4114750, 0, 0]}
+{'function': 'adamic_allocate', 'costs': [135951493, 14394734, 1230393, 3030, 5]}
+{'function': 'adamic_function_28_Scanner_identifier', 'costs': [130417794, 19220670, 1221216, 0, 0]}
+{'function': 'find', 'costs': [103261636, 15710554, 1163017, 0, 0]}
+{'function': 'adamic_function_130_ParseNode_new', 'costs': [200057859, 38233278, 1119488, 0, 0]}
+{'function': 'adamic_function_22_Scanner_code', 'costs': [710089948, 81492288, 1081396, 0, 0]}
+{'function': 'adamic_function_34_Scanner_punctuation', 'costs': [34958843, 12538373, 1080355, 0, 0]}
+{'function': 'adamic_function_2_isIdentifierPart', 'costs': [144076088, 34806635, 954900, 0, 0]}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x7297e', 'line': 252, 'costs': [40139810, 40139810, 20116, 0, 0], 'taken': 3529}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x72986', 'line': 252, 'costs': [40136281, 40136281, 5803072, 0, 0], 'taken': 16386567}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x7298e', 'line': 252, 'costs': [23749714, 23749714, 1025973, 0, 0], 'taken': 960535}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x7299b', 'line': 321, 'costs': [39179275, 39179275, 76767, 0, 0], 'taken': 0}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x729b2', 'line': 326, 'costs': [40139810, 40139810, 260, 0, 0], 'taken': 39179275}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x729d3', 'line': 212, 'costs': [3782, 0, 0, 1891, 956], 'taken': 0}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x729e2', 'line': 326, 'costs': [3377171, 3377171, 210860, 0, 0], 'taken': 960535}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x72a08', 'line': 259, 'costs': [3377171, 3377171, 3, 0, 0], 'taken': 0}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x72a15', 'line': 259, 'costs': [3377171, 0, 0, 3377171, 2714419], 'taken': 0}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x72a26', 'line': 252, 'costs': [693374, 693374, 1132, 0, 0], 'taken': 692333}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x72a32', 'line': 252, 'costs': [1041, 1041, 988, 0, 0], 'taken': 0}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x72a3e', 'line': 252, 'costs': [1041, 1041, 846, 0, 0], 'taken': 1041}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x72aab', 'line': 293, 'costs': [34750, 34750, 0, 0, 0], 'taken': 154}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x72ad7', 'line': 293, 'costs': [34596, 34596, 566, 0, 0], 'taken': 34596}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x72ae5', 'line': 252, 'costs': [34596, 34596, 1, 0, 0], 'taken': 0}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x72aed', 'line': 252, 'costs': [34596, 34596, 34, 0, 0], 'taken': 0}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x72af5', 'line': 252, 'costs': [34596, 34596, 1120, 0, 0], 'taken': 33480}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x72afa', 'line': 236, 'costs': [1116, 1116, 2, 0, 0], 'taken': 1116}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x72b69', 'line': 272, 'costs': [1557564, 1557564, 22218, 0, 0], 'taken': 1537542}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x72b76', 'line': 273, 'costs': [20022, 20022, 954, 0, 0], 'taken': 1105}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x72ba4', 'line': 286, 'costs': [1116, 1116, 10, 0, 0], 'taken': 0}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x72bb1', 'line': 252, 'costs': [1116, 1116, 0, 0, 0], 'taken': 0}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x72bbd', 'line': 252, 'costs': [1116, 1116, 0, 0, 0], 'taken': 0}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x72bc9', 'line': 252, 'costs': [1116, 1116, 4, 0, 0], 'taken': 1116}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x72c56', 'line': 273, 'costs': [929269, 929269, 18880, 0, 0], 'taken': 18917}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x72c63', 'line': 252, 'costs': [929269, 929269, 12, 0, 0], 'taken': 0}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x72c6b', 'line': 252, 'costs': [929269, 929269, 8406, 0, 0], 'taken': 20033}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x72c73', 'line': 252, 'costs': [909236, 909236, 4296, 0, 0], 'taken': 12122}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x72c78', 'line': 236, 'costs': [897114, 897114, 175, 0, 0], 'taken': 897101}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x72c99', 'line': 238, 'costs': [26, 0, 0, 13, 3], 'taken': 0}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x72ca1', 'line': 239, 'costs': [13, 13, 7, 0, 0], 'taken': 13}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x72cb3', 'line': 252, 'costs': [1557564, 1557564, 793, 0, 0], 'taken': 1557564}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x72d1c', 'line': 278, 'costs': [3115128, 0, 0, 1557564, 236901], 'taken': 0}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x72d3e', 'line': 211, 'costs': [3377171, 3377171, 21171, 0, 0], 'taken': 1891}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x72d6f', 'line': 174, 'costs': [3375280, 3375280, 29884, 0, 0], 'taken': 3309870}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x72d8a', 'line': 87, 'costs': [65410, 65410, 731, 0, 0], 'taken': 654}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x72da1', 'line': 177, 'costs': [3375280, 3375280, 6469, 0, 0], 'taken': 3370760}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x72dbc', 'line': 177, 'costs': [4520, 4520, 426, 0, 0], 'taken': 1411}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x72dc8', 'line': 95, 'costs': [3109, 3109, 747, 0, 0], 'taken': 2316}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x72dd1', 'line': 100, 'costs': [793, 793, 58, 0, 0], 'taken': 87}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x72dff', 'line': 100, 'costs': [2316, 2316, 4, 0, 0], 'taken': 2316}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x72e2e', 'line': 236, 'costs': [960535, 960535, 23, 0, 0], 'taken': 960534}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x72e4f', 'line': 238, 'costs': [2, 0, 0, 1, 0], 'taken': 0}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x72e57', 'line': 239, 'costs': [1, 1, 0, 0, 0], 'taken': 0}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/old-runtime/heap.c', 'address': '0x72e80', 'line': 321, 'costs': [960535, 960535, 788, 0, 0], 'taken': 960535}

@@ -1,0 +1,692 @@
+{
+  "cpu": 3,
+  "samples": {
+    "old": [
+      {
+        "wall": 0.8951791139988927,
+        "user": 0.8539749999999999,
+        "system": 0.040367,
+        "command": [
+          "/workspace/scratch/parse-branches/old",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.78 1.32 0.76 1/181 90980",
+        "load_after": "0.80 1.32 0.76 1/181 90981"
+      },
+      {
+        "wall": 0.8904034520001005,
+        "user": 0.85361,
+        "system": 0.035914,
+        "command": [
+          "/workspace/scratch/parse-branches/old",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.80 1.32 0.76 1/181 90987",
+        "load_after": "0.80 1.32 0.76 1/181 90988"
+      },
+      {
+        "wall": 0.8826320360003592,
+        "user": 0.8499059999999999,
+        "system": 0.031848,
+        "command": [
+          "/workspace/scratch/parse-branches/old",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.81 1.31 0.76 1/182 90999",
+        "load_after": "0.81 1.31 0.76 1/182 91000"
+      },
+      {
+        "wall": 0.9705749099994136,
+        "user": 0.9223119999999999,
+        "system": 0.047231999999999996,
+        "command": [
+          "/workspace/scratch/parse-branches/old",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.83 1.31 0.76 1/182 91003",
+        "load_after": "0.83 1.31 0.76 1/182 91004"
+      },
+      {
+        "wall": 0.8798556920010014,
+        "user": 0.8506739999999999,
+        "system": 0.028201999999999998,
+        "command": [
+          "/workspace/scratch/parse-branches/old",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.83 1.31 0.76 1/182 91011",
+        "load_after": "0.84 1.30 0.76 1/182 91012"
+      },
+      {
+        "wall": 0.9136668449991703,
+        "user": 0.8764449999999999,
+        "system": 0.032386,
+        "command": [
+          "/workspace/scratch/parse-branches/old",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.86 1.30 0.77 1/181 91021",
+        "load_after": "0.86 1.30 0.77 1/181 91022"
+      },
+      {
+        "wall": 0.8729033380004694,
+        "user": 0.82445,
+        "system": 0.047746,
+        "command": [
+          "/workspace/scratch/parse-branches/old",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.86 1.30 0.77 1/182 91037",
+        "load_after": "0.87 1.29 0.77 1/182 91038"
+      },
+      {
+        "wall": 1.0040882190005505,
+        "user": 0.9689129999999999,
+        "system": 0.034357,
+        "command": [
+          "/workspace/scratch/parse-branches/old",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.87 1.29 0.77 1/180 91039",
+        "load_after": "0.87 1.29 0.77 1/180 91040"
+      },
+      {
+        "wall": 0.9127466390000336,
+        "user": 0.8803799999999999,
+        "system": 0.031671,
+        "command": [
+          "/workspace/scratch/parse-branches/old",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.88 1.29 0.77 1/180 91049",
+        "load_after": "0.88 1.29 0.77 1/180 91050"
+      },
+      {
+        "wall": 0.8678140709998843,
+        "user": 0.818442,
+        "system": 0.048537,
+        "command": [
+          "/workspace/scratch/parse-branches/old",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.89 1.28 0.77 1/180 91055",
+        "load_after": "0.89 1.28 0.77 1/180 91056"
+      }
+    ],
+    "current": [
+      {
+        "wall": 0.8698334220007382,
+        "user": 0.840028,
+        "system": 0.028047,
+        "command": [
+          "/workspace/scratch/parse-branches/current",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.80 1.32 0.76 1/181 90981",
+        "load_after": "0.80 1.32 0.76 1/181 90982"
+      },
+      {
+        "wall": 0.8599603130005562,
+        "user": 0.8268099999999999,
+        "system": 0.032304,
+        "command": [
+          "/workspace/scratch/parse-branches/current",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.81 1.31 0.76 1/182 90993",
+        "load_after": "0.81 1.31 0.76 1/182 90994"
+      },
+      {
+        "wall": 0.845850583000356,
+        "user": 0.817074,
+        "system": 0.027906999999999998,
+        "command": [
+          "/workspace/scratch/parse-branches/current",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.81 1.31 0.76 1/182 91000",
+        "load_after": "0.83 1.31 0.76 1/182 91001"
+      },
+      {
+        "wall": 0.9445460930000991,
+        "user": 0.894697,
+        "system": 0.049006999999999995,
+        "command": [
+          "/workspace/scratch/parse-branches/current",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.83 1.31 0.76 1/182 91002",
+        "load_after": "0.83 1.31 0.76 1/182 91003"
+      },
+      {
+        "wall": 0.8566624269988097,
+        "user": 0.7999569999999999,
+        "system": 0.055605999999999996,
+        "command": [
+          "/workspace/scratch/parse-branches/current",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.84 1.30 0.76 1/182 91012",
+        "load_after": "0.84 1.30 0.76 1/181 91013"
+      },
+      {
+        "wall": 0.8521403089998785,
+        "user": 0.7945949999999999,
+        "system": 0.056748,
+        "command": [
+          "/workspace/scratch/parse-branches/current",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.84 1.30 0.76 1/181 91020",
+        "load_after": "0.86 1.30 0.77 1/181 91021"
+      },
+      {
+        "wall": 0.9139814210011536,
+        "user": 0.87568,
+        "system": 0.03723,
+        "command": [
+          "/workspace/scratch/parse-branches/current",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.86 1.30 0.77 1/181 91022",
+        "load_after": "0.86 1.30 0.77 2/183 91026"
+      },
+      {
+        "wall": 0.8685211709998839,
+        "user": 0.83178,
+        "system": 0.035989,
+        "command": [
+          "/workspace/scratch/parse-branches/current",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.87 1.29 0.77 1/182 91038",
+        "load_after": "0.87 1.29 0.77 1/180 91039"
+      },
+      {
+        "wall": 0.8605912769999122,
+        "user": 0.820132,
+        "system": 0.039736,
+        "command": [
+          "/workspace/scratch/parse-branches/current",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.88 1.29 0.77 1/180 91050",
+        "load_after": "0.88 1.29 0.77 1/180 91051"
+      },
+      {
+        "wall": 0.8456005640000512,
+        "user": 0.7982859999999999,
+        "system": 0.046622,
+        "command": [
+          "/workspace/scratch/parse-branches/current",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.88 1.29 0.77 1/180 91054",
+        "load_after": "0.89 1.28 0.77 1/180 91055"
+      }
+    ],
+    "hint": [
+      {
+        "wall": 0.8822056730004988,
+        "user": 0.85768,
+        "system": 0.023665,
+        "command": [
+          "/workspace/scratch/parse-branches/hint",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.80 1.32 0.76 1/181 90982",
+        "load_after": "0.80 1.32 0.76 1/181 90983"
+      },
+      {
+        "wall": 0.8647393219998776,
+        "user": 0.839533,
+        "system": 0.023996,
+        "command": [
+          "/workspace/scratch/parse-branches/hint",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.81 1.31 0.76 1/181 90992",
+        "load_after": "0.81 1.31 0.76 1/182 90993"
+      },
+      {
+        "wall": 0.8731910189999326,
+        "user": 0.8328949999999999,
+        "system": 0.039427,
+        "command": [
+          "/workspace/scratch/parse-branches/hint",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.81 1.31 0.76 1/182 90994",
+        "load_after": "0.81 1.31 0.76 1/182 90995"
+      },
+      {
+        "wall": 0.8957546459987498,
+        "user": 0.862266,
+        "system": 0.032659,
+        "command": [
+          "/workspace/scratch/parse-branches/hint",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.83 1.31 0.76 1/182 91001",
+        "load_after": "0.83 1.31 0.76 1/182 91002"
+      },
+      {
+        "wall": 0.8618527689995972,
+        "user": 0.82034,
+        "system": 0.040503,
+        "command": [
+          "/workspace/scratch/parse-branches/hint",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.84 1.30 0.76 1/181 91013",
+        "load_after": "0.84 1.30 0.76 1/181 91014"
+      },
+      {
+        "wall": 0.8547305319989391,
+        "user": 0.8214739999999999,
+        "system": 0.032311,
+        "command": [
+          "/workspace/scratch/parse-branches/hint",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.84 1.30 0.76 1/181 91019",
+        "load_after": "0.84 1.30 0.76 1/181 91020"
+      },
+      {
+        "wall": 0.8994607089989586,
+        "user": 0.8662909999999999,
+        "system": 0.031817,
+        "command": [
+          "/workspace/scratch/parse-branches/hint",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.86 1.30 0.77 2/183 91026",
+        "load_after": "0.86 1.30 0.77 1/182 91033"
+      },
+      {
+        "wall": 0.8978654200000165,
+        "user": 0.8687509999999999,
+        "system": 0.028442,
+        "command": [
+          "/workspace/scratch/parse-branches/hint",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.87 1.29 0.77 1/180 91044",
+        "load_after": "0.87 1.29 0.77 1/180 91045"
+      },
+      {
+        "wall": 0.8634265910004615,
+        "user": 0.826531,
+        "system": 0.036156,
+        "command": [
+          "/workspace/scratch/parse-branches/hint",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.88 1.29 0.77 1/180 91051",
+        "load_after": "0.88 1.29 0.77 1/180 91052"
+      },
+      {
+        "wall": 0.842016752998461,
+        "user": 0.80124,
+        "system": 0.04017,
+        "command": [
+          "/workspace/scratch/parse-branches/hint",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.88 1.29 0.77 1/180 91053",
+        "load_after": "0.88 1.29 0.77 1/180 91054"
+      }
+    ],
+    "ordered": [
+      {
+        "wall": 0.8617925110011129,
+        "user": 0.8169259999999999,
+        "system": 0.044116999999999996,
+        "command": [
+          "/workspace/scratch/parse-branches/ordered",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.80 1.32 0.76 1/181 90983",
+        "load_after": "0.80 1.32 0.76 1/181 90984"
+      },
+      {
+        "wall": 0.8753515110001899,
+        "user": 0.8304039999999999,
+        "system": 0.044114,
+        "command": [
+          "/workspace/scratch/parse-branches/ordered",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.80 1.32 0.76 1/181 90991",
+        "load_after": "0.81 1.31 0.76 1/181 90992"
+      },
+      {
+        "wall": 0.8580160639994574,
+        "user": 0.817164,
+        "system": 0.039982,
+        "command": [
+          "/workspace/scratch/parse-branches/ordered",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.81 1.31 0.76 1/182 90995",
+        "load_after": "0.81 1.31 0.76 1/182 90996"
+      },
+      {
+        "wall": 0.8778564399999595,
+        "user": 0.843011,
+        "system": 0.033914,
+        "command": [
+          "/workspace/scratch/parse-branches/ordered",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.83 1.31 0.76 1/182 91007",
+        "load_after": "0.83 1.31 0.76 1/182 91008"
+      },
+      {
+        "wall": 0.8660470959985105,
+        "user": 0.832869,
+        "system": 0.032354,
+        "command": [
+          "/workspace/scratch/parse-branches/ordered",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.84 1.30 0.76 1/181 91014",
+        "load_after": "0.84 1.30 0.76 1/181 91015"
+      },
+      {
+        "wall": 0.8597076879996166,
+        "user": 0.84675,
+        "system": 0.012190999999999999,
+        "command": [
+          "/workspace/scratch/parse-branches/ordered",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.84 1.30 0.76 1/181 91018",
+        "load_after": "0.84 1.30 0.76 1/181 91019"
+      },
+      {
+        "wall": 0.8722110710004927,
+        "user": 0.840355,
+        "system": 0.031150999999999998,
+        "command": [
+          "/workspace/scratch/parse-branches/ordered",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.86 1.30 0.77 1/182 91033",
+        "load_after": "0.86 1.30 0.77 1/182 91034"
+      },
+      {
+        "wall": 0.9392897950001498,
+        "user": 0.9101279999999999,
+        "system": 0.028343,
+        "command": [
+          "/workspace/scratch/parse-branches/ordered",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.87 1.29 0.77 1/180 91043",
+        "load_after": "0.87 1.29 0.77 1/180 91044"
+      },
+      {
+        "wall": 0.8865973699994356,
+        "user": 0.8533689999999999,
+        "system": 0.032527,
+        "command": [
+          "/workspace/scratch/parse-branches/ordered",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.87 1.29 0.77 1/180 91045",
+        "load_after": "0.88 1.29 0.77 1/180 91046"
+      },
+      {
+        "wall": 0.8600968789996841,
+        "user": 0.818785,
+        "system": 0.04056,
+        "command": [
+          "/workspace/scratch/parse-branches/ordered",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.88 1.29 0.77 1/180 91052",
+        "load_after": "0.88 1.29 0.77 1/180 91053"
+      }
+    ],
+    "Go": [
+      {
+        "wall": 0.18300839299990912,
+        "user": 0.13786299999999999,
+        "system": 0.043762999999999996,
+        "command": [
+          "/workspace/scratch/parse-speed/go-parse",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.80 1.32 0.76 1/181 90984",
+        "load_after": "0.80 1.32 0.76 1/181 90987"
+      },
+      {
+        "wall": 0.18238247299996146,
+        "user": 0.15295899999999998,
+        "system": 0.028307,
+        "command": [
+          "/workspace/scratch/parse-speed/go-parse",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.80 1.32 0.76 1/181 90988",
+        "load_after": "0.80 1.32 0.76 1/181 90991"
+      },
+      {
+        "wall": 0.1829992120001407,
+        "user": 0.149243,
+        "system": 0.032178,
+        "command": [
+          "/workspace/scratch/parse-speed/go-parse",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.81 1.31 0.76 1/182 90996",
+        "load_after": "0.81 1.31 0.76 1/182 90999"
+      },
+      {
+        "wall": 0.18922898700111546,
+        "user": 0.17521199999999998,
+        "system": 0.012086,
+        "command": [
+          "/workspace/scratch/parse-speed/go-parse",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.83 1.31 0.76 1/182 91004",
+        "load_after": "0.83 1.31 0.76 1/182 91007"
+      },
+      {
+        "wall": 0.18213171299976239,
+        "user": 0.149081,
+        "system": 0.031585,
+        "command": [
+          "/workspace/scratch/parse-speed/go-parse",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.83 1.31 0.76 1/182 91008",
+        "load_after": "0.83 1.31 0.76 1/182 91011"
+      },
+      {
+        "wall": 0.1818163669995556,
+        "user": 0.15597,
+        "system": 0.024347,
+        "command": [
+          "/workspace/scratch/parse-speed/go-parse",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.84 1.30 0.76 1/181 91015",
+        "load_after": "0.84 1.30 0.76 1/181 91018"
+      },
+      {
+        "wall": 0.1803580410014547,
+        "user": 0.142961,
+        "system": 0.036212,
+        "command": [
+          "/workspace/scratch/parse-speed/go-parse",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.86 1.30 0.77 1/182 91034",
+        "load_after": "0.86 1.30 0.77 1/182 91037"
+      },
+      {
+        "wall": 0.1916029330004676,
+        "user": 0.171242,
+        "system": 0.019799,
+        "command": [
+          "/workspace/scratch/parse-speed/go-parse",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.87 1.29 0.77 1/180 91040",
+        "load_after": "0.87 1.29 0.77 1/180 91043"
+      },
+      {
+        "wall": 0.1899541290003981,
+        "user": 0.176281,
+        "system": 0.012306,
+        "command": [
+          "/workspace/scratch/parse-speed/go-parse",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.88 1.29 0.77 1/180 91046",
+        "load_after": "0.88 1.29 0.77 1/180 91049"
+      },
+      {
+        "wall": 0.18453571099962573,
+        "user": 0.150285,
+        "system": 0.032234,
+        "command": [
+          "/workspace/scratch/parse-speed/go-parse",
+          "--manifest",
+          "/workspace/scratch/parse-speed/compiler.txt",
+          "--count"
+        ],
+        "load_before": "0.89 1.28 0.77 1/180 91056",
+        "load_after": "0.89 1.28 0.77 1/180 91059"
+      }
+    ]
+  },
+  "best": {
+    "old": {
+      "user": 0.818442,
+      "wall": 0.8678140709998843,
+      "system": 0.028201999999999998
+    },
+    "current": {
+      "user": 0.7945949999999999,
+      "wall": 0.8456005640000512,
+      "system": 0.027906999999999998
+    },
+    "hint": {
+      "user": 0.80124,
+      "wall": 0.842016752998461,
+      "system": 0.023665
+    },
+    "ordered": {
+      "user": 0.8169259999999999,
+      "wall": 0.8580160639994574,
+      "system": 0.012190999999999999
+    },
+    "Go": {
+      "user": 0.13786299999999999,
+      "wall": 0.1803580410014547,
+      "system": 0.012086
+    }
+  }
+}

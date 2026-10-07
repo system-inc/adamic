@@ -1,0 +1,16 @@
+{'Ir': 6460129551, 'Bc': 1128522055, 'Bcm': 52715595, 'Bi': 18832502, 'Bim': 3402789}
+{'function': 'adamic_retain', 'costs': [354990651, 88150682, 7782750, 0, 0]}
+{'function': 'adamic_object_free_children', 'costs': [158854761, 43487758, 7646034, 1913100, 571]}
+{'function': 'adamic_release', 'costs': [314959020, 104025805, 6578060, 0, 0]}
+{'function': 'adamic_string_equal', 'costs': [339705054, 54018827, 4586331, 1949012, 2]}
+{'function': 'destroy_last_reference', 'costs': [182800912, 28443317, 1479178, 4936640, 2952646]}
+{'function': 'adamic_function_33_Scanner_scan', 'costs': [502679473, 114514904, 4118363, 0, 0]}
+{'function': 'find', 'costs': [103261636, 15710554, 1755953, 0, 0]}
+{'function': 'adamic_function_34_Scanner_punctuation', 'costs': [34958843, 12538373, 1640431, 0, 0]}
+{'function': 'adamic_allocate', 'costs': [135951493, 14394734, 1302967, 3030, 5]}
+{'function': 'adamic_function_130_ParseNode_new', 'costs': [200057859, 38233278, 1120478, 0, 0]}
+{'function': 'adamic_function_22_Scanner_code', 'costs': [710089948, 81492288, 1072201, 0, 0]}
+{'function': 'adamic_function_2_isIdentifierPart', 'costs': [144076088, 34806635, 955754, 0, 0]}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/current-runtime/heap.c', 'address': '0x72973', 'line': 337, 'costs': [40139810, 40139810, 452825, 0, 0], 'taken': 3529}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/current-runtime/heap.c', 'address': '0x7297b', 'line': 337, 'costs': [40136281, 40136281, 5122564, 0, 0], 'taken': 16386567}
+{'function': 'adamic_release', 'source': '/workspace/scratch/parse-branches/current-runtime/heap.c', 'address': '0x72983', 'line': 337, 'costs': [23749714, 23749714, 1002671, 0, 0], 'taken': 960535}

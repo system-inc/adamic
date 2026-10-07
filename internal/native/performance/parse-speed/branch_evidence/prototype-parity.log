@@ -1,0 +1,5 @@
+=== RUN   TestReleaseBranchPrototypeParity
+    release_branch_prototype_test.go:9: ordered sanitized native: 77 compiler files, 44766682 identical whole-tree bytes
+--- PASS: TestReleaseBranchPrototypeParity (10.48s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/typescript/parser	10.494s

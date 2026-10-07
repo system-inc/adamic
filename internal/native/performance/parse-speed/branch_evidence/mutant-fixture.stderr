@@ -1,0 +1,11 @@
+last release left 1 values
+adamic: counts: allocations 1 frees 0 retains 1 releases 4 peak 1 regions 0
+
+=================================================================
+==91227==ERROR: LeakSanitizer: detected memory leaks
+
+Direct leak of 78 byte(s) in 1 object(s) allocated from:
+    #0 0x557e5a5d0244 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+    #1 0x557e5a6260c1 in adamic_allocate /workspace/scratch/parse-branches/mutant-runtime/heap.c:196:10
+
+SUMMARY: AddressSanitizer: 78 byte(s) leaked in 1 allocation(s).

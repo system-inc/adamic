@@ -1,0 +1,13 @@
+{'Ir': 1669967613, 'Bc': 272736079, 'Bcm': 10470999, 'Bi': 5128203, 'Bim': 3295828}
+{'function': 'github.com/microsoft/TypeScript/tsc/internal/scanner.(*Scanner).Scan', 'costs': [100244663, 21886110, 827503, 1585310, 1563670]}
+{'function': 'runtime.wbBufFlush1', 'costs': [163265340, 25232930, 1937246, 0, 0]}
+{'function': 'github.com/microsoft/TypeScript/tsc/internal/scanner.(*Scanner).scanIdentifier', 'costs': [89353122, 23552219, 1500657, 0, 0]}
+{'function': 'github.com/microsoft/TypeScript/tsc/internal/ast.newNode', 'costs': [28184834, 2524421, 95906, 841473, 655254]}
+{'function': 'github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild', 'costs': [18215458, 2557284, 226362, 605958, 359634]}
+{'function': 'github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).nextToken', 'costs': [13120608, 1610968, 323072, 0, 0]}
+{'function': 'runtime.scanObject', 'costs': [36512382, 5491855, 314302, 0, 0]}
+{'function': 'github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseMemberExpressionRest', 'costs': [28874143, 6983148, 295010, 0, 0]}
+{'function': 'runtime.scanblock', 'costs': [17902416, 4049742, 281645, 0, 0]}
+{'function': 'runtime.tryDeferToSpanScan', 'costs': [147089371, 20978308, 209918, 0, 0]}
+{'function': 'github.com/microsoft/TypeScript/tsc/internal/core.ComputeECMALineStarts', 'costs': [204685512, 46807759, 209289, 0, 0]}
+{'function': "github.com/microsoft/TypeScript/tsc/internal/scanner.(*Scanner).Scan'2", 'costs': [8144061, 1771093, 76716, 135205, 117257]}
