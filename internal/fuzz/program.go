@@ -13,12 +13,14 @@ import "strings"
 type Type string
 
 const (
-	Number      Type = "number"
-	String      Type = "string"
-	Boolean     Type = "boolean"
-	NumberArray Type = "number[]"
-	StringArray Type = "string[]"
-	NumberMap   Type = "Map<string, number>"
+	Number       Type = "number"
+	String       Type = "string"
+	Boolean      Type = "boolean"
+	NumberArray  Type = "number[]"
+	StringArray  Type = "string[]"
+	NumberMap    Type = "Map<string, number>"
+	NumberKeyMap Type = "Map<number, number>"
+	NumberSet    Type = "Set<number>"
 	// Other is any type the shrinker never substitutes: a closure, a class instance, a holder object.
 	Other Type = ""
 )
@@ -54,8 +56,15 @@ type Block struct {
 }
 
 // Program is a whole generated program: the order of its statements is the order it runs in.
+// Refusal names an expected failure of shareability, purity or task ownership.
+// Part 1 matches a substring; moves match the complete message and RefusalFix.
 type Program struct {
-	Block Block
+	Block   Block
+	Refusal string
+	// RefusalFix makes a move refusal exact; ordinary parallel refusals remain substrings.
+	RefusalFix string
+	// Feature records a focused family for reproducing a shrunk finding.
+	Feature string
 }
 
 // text makes an expression of literal text alone.
@@ -166,7 +175,7 @@ func (e *Expression) String() string {
 
 // Clone copies a program deeply, so the shrinker can change a candidate without touching the original.
 func (p *Program) Clone() *Program {
-	return &Program{Block: *p.Block.clone()}
+	return &Program{Block: *p.Block.clone(), Refusal: p.Refusal, RefusalFix: p.RefusalFix, Feature: p.Feature}
 }
 
 func (b *Block) clone() *Block {

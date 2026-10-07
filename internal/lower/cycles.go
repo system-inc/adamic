@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -61,6 +62,16 @@ type cycleFinder struct {
 // findCycles refuses the first cycle-capable slot that isn't declared Weak and has a write that isn't
 // proven not to close a cycle (fresh.go), or returns nil.
 func (l *lowering) findCycles(modules []*ast.SourceFile) error {
+	// Generated frame/Promise/reaction layouts are IR identities, never checker declarations.
+	// Only their runtime-owned protocol edges are exempt. Source types, including a class
+	// called adamic_async_frame, continue through slotsOf with no name-based escape hatch.
+	if l.result.Async != nil {
+		for _, generated := range l.result.Async.Generated {
+			if !fresh.RuntimeBreaksCycles(generated) {
+				return fmt.Errorf("lower: unaudited generated cycle identity")
+			}
+		}
+	}
 	finder := &cycleFinder{l: l, where: map[*checker.Type]*ast.Node{}}
 	for _, module := range modules {
 		var visit ast.Visitor
@@ -227,11 +238,11 @@ func (f *cycleFinder) template(proven *checker.Type) bool {
 	return false
 }
 
-// fields is an object type's fields, its methods left out: a method is code, and holds nothing.
+// fields includes literal methods, which own closures. Class prototype methods hold no instance data.
 func (f *cycleFinder) fields(proven *checker.Type) []*ast.Symbol {
 	fields := []*ast.Symbol{}
 	for _, property := range f.l.checker.GetPropertiesOfType(proven) {
-		if property.Flags&ast.SymbolFlagsMethod == 0 {
+		if (property.Flags&ast.SymbolFlagsMethod == 0 || literalMethod(property)) && !accessorSymbol(property) && !(f.l.isStaticType(proven) && property.Name == "prototype") {
 			fields = append(fields, property)
 		}
 	}
@@ -243,7 +254,7 @@ func (f *cycleFinder) fields(proven *checker.Type) []*ast.Symbol {
 // as a field of the instance type and isn't one a program can set; seen as an object, that prototype
 // read as a mutable field reaching back, and every class made with new was refused.
 func (f *cycleFinder) isFunction(proven *checker.Type) bool {
-	return len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) > 0 || len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0
+	return len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) > 0 || (len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 && (!f.l.isStaticType(proven) || len(f.l.staticGlobals) == 0))
 }
 
 // weak reports whether a slot's type is a Weak<Target>, which holds nothing.
@@ -393,6 +404,15 @@ func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
 		case f.l.isLibraryType(proven, "MapIterator", "SetIterator"):
 			queue = append(queue, f.libraryIteratorCaptures(proven)...)
 		case f.isFunction(proven):
+			// Construct signatures can hide constructor objects behind an interface.
+			if len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 {
+				for symbol := range f.l.statics {
+					actual := f.l.checker.GetTypeOfSymbol(symbol)
+					if f.l.checker.IsTypeAssignableTo(actual, proven) {
+						queue = append(queue, cycleNode{proven: actual})
+					}
+				}
+			}
 			// What a function value holds is what it captured: the cells of every function value the
 			// program makes that can be seen as this type.
 			for _, closure := range f.l.closureRecords {
@@ -408,6 +428,18 @@ func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
 				queue = append(queue, cycleNode{proven: argument})
 			}
 		default:
+			if f.l.isStaticType(proven) {
+				if parent := f.l.staticBase(f.l.staticClass(proven, nil)); parent != nil {
+					queue = append(queue, cycleNode{proven: f.l.checker.GetTypeOfSymbol(f.l.symbol(parent.Name()))})
+				}
+			}
+			for _, accessor := range f.l.accessorCaptures {
+				if f.l.checker.IsTypeAssignableTo(accessor.holder, proven) {
+					for _, local := range f.l.result.Functions[accessor.function].Environment {
+						queue = append(queue, cycleNode{cell: local + 1})
+					}
+				}
+			}
 			for _, field := range f.fields(proven) {
 				queue = append(queue, cycleNode{proven: f.l.checker.GetTypeOfSymbol(field)})
 			}
@@ -446,4 +478,13 @@ func (f *cycleFinder) related(one *checker.Type, other *checker.Type) bool {
 		return false
 	}
 	return f.l.checker.IsTypeAssignableTo(one, other) || f.l.checker.IsTypeAssignableTo(other, one)
+}
+
+func literalMethod(property *ast.Symbol) bool {
+	for _, declaration := range property.Declarations {
+		if declaration.Kind == ast.KindMethodDeclaration && declaration.Parent.Kind == ast.KindObjectLiteralExpression {
+			return true
+		}
+	}
+	return false
 }

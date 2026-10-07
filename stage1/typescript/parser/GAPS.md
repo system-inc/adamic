@@ -51,12 +51,19 @@ The first shared cursor interface exposed `kind`, `next`, `mark` and `rewind`
 as methods. Node called them normally, but native exited 70 with
 `compiler bug: a field the checker proved is there is missing`. Changing the
 interface method syntax to strict function properties does not fix dispatch.
-`gaps/4_class_interface_method.ts` reduces this to a class method accessed
-through an interface. Integration 13 closed this gap by preserving the method
-table on constructed class instances. `TestClassMethodInterfaceAgreesWithNode`
-now requires native to print Node's `1` under sanitizers with no stderr.
-The earlier port used the concrete Scanner class with scanner-only save/restore
-helpers; that interface remains in the port.
+`gaps/4_class_interface_method.ts` reduces this to a class method exposed as
+an interface's readonly function property. The test entered integration 14 in
+`6e21425` from the parser branch; `1789dfc` changed it to require native agreement
+after integration 13 preserved constructed class method tables.
+
+The newer user-iterator rule `b5fbec4`, merged into integration 15 by `9804f60`,
+keeps method calls whose prototype dispatch is represented, but explicitly
+rejects function-property views that erase the class method's origin. This
+fixture remains such a gap: Node prints `1`, while Adamic returns `lower.NotYet`
+with `What: "a class method through a view that erases its prototype origin"`.
+`TestClassMethodInterfaceGap` requires both observations and fails when the gap
+closes. The compiler is unchanged. The parser keeps its concrete Scanner and
+scanner-only save/restore helpers.
 
 ## Canonical answer protocol
 

@@ -1,0 +1,64 @@
+// A Set of closures passes each function twice. The callback calls it after delete.
+function make(label: string): () => string {
+	const text = `${label}`;
+	return () => text;
+}
+
+function calls(items: readonly (() => string)[]): string {
+	return items.map((item) => item()).join(",");
+}
+
+function probe(mode: number): void {
+	const keys: (() => string)[] = [];
+	const collection = new Set<() => string>();
+	for (let index = 0; index < 8; index += 1) {
+		const made = make(`k${index}`);
+		keys.push(made);
+		collection.add(made);
+	}
+	const first = keys[0] ?? make("missing-key");
+	const second = keys[1] ?? make("missing-later");
+	const kept: (() => string)[] = [];
+	try {
+		collection.forEach((item, current, owner) => {
+			if (mode === 0) { owner.delete(current); }
+			if (mode === 1 && current === first) { owner.delete(second); }
+			if (mode === 2) { owner.clear(); }
+			if (mode === 3 && current === first) {
+				owner.delete(current);
+				owner.add(make("k8"));
+			}
+			if (mode === 4) {
+				owner.delete(current);
+				kept.push(item);
+				kept.push(current);
+				throw new Error(`deleted ${current()} ${item()}`);
+			}
+			kept.push(item);
+			kept.push(current);
+			console.log(`${mode}: ${item()} ${current()} ${item === current} ${owner.size}`);
+		});
+	} catch (error) {
+		console.log(error instanceof Error ? error.message : "unexpected");
+	}
+	console.log(`kept ${mode}: ${calls(kept)} remaining ${collection.size}`);
+	const after: string[] = [];
+	collection.forEach((item) => { after.push(item()); });
+	console.log(`after ${mode}: ${after.join(",")}`);
+}
+
+function oneParameter(): void {
+	const collection = new Set<() => string>();
+	collection.add(make("a"));
+	collection.add(make("b"));
+	const kept: (() => string)[] = [];
+	collection.forEach((current) => {
+		collection.delete(current);
+		console.log(`one ${current()} ${collection.size}`);
+		kept.push(current);
+	});
+	console.log(`one kept ${calls(kept)} ${collection.size}`);
+}
+
+for (let mode = 0; mode < 5; mode += 1) { probe(mode); }
+oneParameter();

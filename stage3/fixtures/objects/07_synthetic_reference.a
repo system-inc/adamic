@@ -1,0 +1,13 @@
+// From TypeScript 6.0.3, src/compiler/transformers/declarations.ts:549
+// Census reason: post-creation properties
+interface FileReference { fileName: string; pos: number; end: number; }
+        function copyFileReferenceAsSynthetic(ref: FileReference): FileReference {
+            const newRef: FileReference = { ...ref };
+            newRef.pos = -1;
+            newRef.end = -1;
+            return newRef;
+        }
+
+const ref = {fileName: "node", pos: 20, end: 24};
+const synthetic = copyFileReferenceAsSynthetic(ref);
+console.log(`${synthetic.fileName}:${synthetic.pos}:${synthetic.end}:${ref.pos}:${ref.end}`);

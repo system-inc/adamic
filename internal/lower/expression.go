@@ -20,6 +20,7 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 }
 
 func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
+	proven = l.concrete(proven)
 	flags := proven.Flags()
 	if flags&checker.TypeFlagsTypeParameter != 0 {
 		// Inside a generic class, a type parameter is what this instantiation made it.
@@ -145,6 +146,9 @@ func (l *lowering) includesNull(proven *checker.Type) bool {
 // expression lowers a value. What's kept weakly (a Weak<Target> variable, field, element or map value)
 // is read here as its target, so no value of a Weak type goes further; keeping one is fit's WeakOf.
 func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
+	if err := l.libraryIteratorUnsupportedUse(node); err != nil {
+		return nil, err
+	}
 	if err := l.regexUnsupportedUse(node); err != nil {
 		return nil, err
 	}
@@ -381,6 +385,9 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 		if value, known, err := l.libraryGlobalValue(node); known {
 			return value, err
 		}
+		if value, handled := l.staticClassRead(node); handled {
+			return value, nil
+		}
 		local, isLocal := l.local(node)
 		if !isLocal && node.Text() == "undefined" {
 			return ir.Undefined{}, nil
@@ -409,7 +416,7 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 		}
 		if declared := l.result.Locals[local].Type; declared.IsMaybe() {
 			// Where the checker has narrowed it to what it holds, it's read as that.
-			if narrowed, _ := l.representation(l.checker.GetTypeAtLocation(node)); narrowed == declared.Present() && !comparedWithUndefined(node) {
+			if narrowed, _ := l.representation(l.checker.GetTypeAtLocation(node)); narrowed == declared.Present() && !l.acceptsUndefined(node) {
 				read = ir.Unwrap{Value: read}
 			}
 		}
@@ -417,6 +424,9 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 	case ast.KindPrefixUnaryExpression:
 		return l.prefix(node)
 	case ast.KindTypeOfExpression:
+		if value, known := l.asyncTypeOf(node); known {
+			return value, nil
+		}
 		if l.isLibraryGlobal(node.AsTypeOfExpression().Expression, "Number") {
 			return ir.StringConstant{Index: l.constant("function")}, nil
 		}
@@ -700,7 +710,7 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 // spelled is a string as + and a template write it: one that may be missing (a null reference) is
 // written "undefined", as JavaScript writes it.
 func (l *lowering) spelled(node *ast.Node, value ir.Expression) ir.Expression {
-	if value.Type() != ir.String || !l.includesUndefined(l.checker.GetTypeAtLocation(node)) {
+	if value.Type() != ir.String || !(l.includesUndefined(l.checker.GetTypeAtLocation(node)) || l.narrowedAway(ast.SkipParentheses(node))) {
 		return value
 	}
 	return ir.Coalesce{Value: value, Fallback: ir.StringConstant{Index: l.constant("undefined")}, Of: ir.String}
@@ -758,6 +768,15 @@ func (l *lowering) conditional(node *ast.Node) (ir.Expression, error) {
 	whenNot, err := l.expression(conditional.WhenFalse)
 	if err != nil {
 		return nil, err
+	}
+	if whenTrue.Type() != whenNot.Type() && l.acceptsUndefined(node) {
+		// A stale narrowing in either branch may still hold undefined. Keep that representation
+		// when the whole conditional is observed or written into a slot that accepts it.
+		if pair := whenTrue.Type(); pair.IsMaybe() && whenNot.Type() == pair.Present() {
+			whenNot = fit(whenNot, pair)
+		} else if pair := whenNot.Type(); pair.IsMaybe() && whenTrue.Type() == pair.Present() {
+			whenTrue = fit(whenTrue, pair)
+		}
 	}
 	if whenTrue.Type() != whenNot.Type() {
 		// flag ? 1 : undefined is number | undefined, and flag ? 1 : 'one' a union: each branch made
@@ -923,6 +942,9 @@ func (l *lowering) closure(node *ast.Node) (ir.Expression, error) {
 // the parameters the function declares, so one with a parameter that may be left out isn't made yet:
 // a function value is called with the arguments its caller has, and no more.
 func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, error) {
+	if l.result.Async != nil {
+		return nil, l.notYet(node, "async function "+node.Text()+" as a value; only direct typeof observations and awaited calls are lowered")
+	}
 	if held, isMade := l.forwarders[target]; isMade {
 		return ir.Read{Local: held, Of: ir.Closure}, nil
 	}

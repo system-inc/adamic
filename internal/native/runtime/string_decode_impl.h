@@ -52,9 +52,9 @@ double adamic_string_char_code(const adamic_string *string, double position) {
 	if (length == string->length) {
 		return (double)(unsigned char)string->bytes[(size_t)position];
 	}
-	const uint16_t *bmp = adamic_string_bmp_view(string);
-	if (bmp != NULL) {
-		return (double)bmp[(size_t)position];
+	const uint16_t *view = adamic_string_unit_view(string);
+	if (view != NULL) {
+		return (double)view[(size_t)position];
 	}
 	bool low;
 	size_t offset = adamic_string_locate(string, (size_t)position, &low);

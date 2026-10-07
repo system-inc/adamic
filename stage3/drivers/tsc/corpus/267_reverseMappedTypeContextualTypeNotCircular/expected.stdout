@@ -1,0 +1,2 @@
+reverseMappedTypeContextualTypeNotCircular.ts(10,3): error TS2322: Type '(state: any, props: any) => {}' is not assignable to type 'Selector<unknown, {}>'.
+  Target signature provides too few arguments. Expected 2 or more, but got 1.

@@ -232,3 +232,21 @@ func TestTheProgramsInTheSpecLoad(t *testing.T) {
 		}
 	}
 }
+
+func TestOverlayPrecedesDiskForAdamicAliases(t *testing.T) {
+	t.Parallel()
+	for _, extension := range []string{".ts", ".a"} {
+		t.Run(extension, func(t *testing.T) {
+			t.Parallel()
+			paths := writeProgram(t, [2]string{"main" + extension, "const value: number = 'disk';"})
+			replacement := "const value: number = 42;"
+			if _, err := LoadOverlay(paths, map[string]string{paths[0]: replacement}); err != nil {
+				t.Fatalf("overlay not checked: %v", err)
+			}
+			diagnostics := checkErrors(t, paths)
+			if len(diagnostics) != 1 || !strings.Contains(diagnostics[0], "TS2322") {
+				t.Fatalf("disk source changed: %v", diagnostics)
+			}
+		})
+	}
+}

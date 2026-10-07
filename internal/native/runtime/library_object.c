@@ -94,6 +94,8 @@ static adamic_string *key_string(const char *name) {
 }
 
 adamic_array *adamic_object_keys(const adamic_object *object) {
+ // Class descriptors hide private storage and track static own-property presence.
+ if (object->class != NULL) return adamic_class_object_keys(object);
  size_t *indices = ordered(object);
  adamic_array *keys = adamic_array_new(object->shape->count, true);
  for (size_t at = 0; at < object->shape->count; at++) {

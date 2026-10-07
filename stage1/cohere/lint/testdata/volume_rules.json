@@ -1,0 +1,22 @@
+[
+ ["one-var", "core/one_var", "OneVar", 6731, 1420],
+ ["nexus/consistency-no-ambiguous-identifier", "nexus/consistency_no_ambiguous_identifier", "ConsistencyNoAmbiguousIdentifier", 5469, 303],
+ ["nexus/consistency-no-abbreviated-identifier", "nexus/consistency_no_abbreviated_identifier", "ConsistencyNoAbbreviatedIdentifier", 4827, 52],
+ ["@typescript-eslint/method-signature-style", "typescript/method_signature_style", "MethodSignatureStyle", 1508, 2],
+ ["nexus/consistency-require-type-suffix", "nexus/consistency_require_type_suffix", "ConsistencyRequireTypeSuffix", 1170, 180],
+ ["@typescript-eslint/no-non-null-assertion", "typescript/no_non_null_assertion", "NoNonNullAssertion", 1123, 1],
+ ["@typescript-eslint/prefer-literal-enum-member", "typescript/prefer_literal_enum_member", "PreferLiteralEnumMember", 1043, 0],
+ ["base/consistency-no-console", "base/consistency_no_console", "ConsistencyNoConsole", 1, 1041],
+ ["no-plusplus", "core/no_plusplus", "NoPlusplus", 680, 323],
+ ["@typescript-eslint/no-wrapper-object-types", "typescript/no_wrapper_object_types", "NoWrapperObjectTypes", 744, 0],
+ ["@typescript-eslint/prefer-enum-initializers", "typescript/prefer_enum_initializers", "PreferEnumInitializers", 680, 0],
+ ["adamic/no-type-predicate", "adamic/no_type_predicate", "NoTypePredicate", 651, 1],
+ ["nexus/consistency-no-long-line-comment", "nexus/consistency_no_long_line_comment", "ConsistencyNoLongLineComment", 540, 99],
+ ["nexus/consistency-no-multiline-arrow-function", "nexus/consistency_no_multiline_arrow_function", "ConsistencyNoMultilineArrowFunction", 540, 72],
+ ["prefer-destructuring", "core/prefer_destructuring", "PreferDestructuring", 515, 61],
+ ["nexus/consistency-no-single-line-jsdoc", "nexus/consistency_no_single_line_jsdoc", "ConsistencyNoSingleLineJsDoc", 555, 0],
+ ["no-negated-condition", "core/no_negated_condition", "NoNegatedCondition", 414, 17],
+ ["no-return-assign", "core/no_return_assign", "NoReturnAssign", 276, 0],
+ ["nexus/consistency-no-shouting", "nexus/consistency_no_shouting", "ConsistencyNoShouting", 118, 53],
+ ["nexus/consistency-no-enum", "nexus/consistency_no_enum", "ConsistencyNoEnum", 164, 0]
+]

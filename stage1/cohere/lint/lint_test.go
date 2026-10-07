@@ -22,7 +22,7 @@ import (
 const repository = "../../.."
 const compilerCommit = "050880ce59e30b356b686bd3144efe24f875ebc8"
 
-var portFiles = []string{"finding.ts", "lint.ts", "main.ts"}
+var portFiles = []string{"finding.ts", "messages.ts", "settings.ts", "comments.ts", "unicode.ts", "lint.ts", "main.ts", "volume.ts", "volume_messages.ts"}
 
 type execution struct {
 	output   []byte
@@ -163,6 +163,14 @@ func generated(t *testing.T) []string {
 		"var a; for(var x=0;x<3;x++){}; for(var y in z){}; for(var q of z){}; declare var b; declare global{ var c; namespace N{var d;} } namespace M{var e;}",
 		"switch(x){case f( a /* c */ ):break;case f(a):break;case a?.b:break;case a.b:break;case (a):break;case a:break;case /[/*]/:break;case /[/*]/:break;case -1:break;case +1:break;case 1.0:break;case 1:break;}",
 		"const é = '😀';\r\n é == null;\n debugger;\r\n if(é){} // outside\n",
+		"outer: while(x){continue outer; break outer; await f(); async function nested(){await g();}} with(x){y();} new C(); void new D(); const holes=[,,x]; ([,a]=b); function* missing(){function* inner(){yield 1;} return 1;} function* good(){yield 1;} f(); var late;",
+		"async function f(){for(let i=await init();await test();await update()){await body();} for await(const x of xs){await ignored();} for(const x of xs){await body();}} function g(){'use strict'; var top; f(); var late;} class C{static{f();var late;}}",
+		"const placeholder='${x}${y}'; const empty='${}'; const regex=/=foo/g; const escaped=/\\=foo/; a|0; a|(0); 0|a; a>>>=b; ~a; for(a,b,c; a,b; a++,b++); for(let r=/;/; a,b; a++,b++); const arrow = a => (b,c); const deliberate = a => ((b,c));",
+		"const nested=(a?true:false)?false:true; const bool=a == b ? false : true; const same=f()?true:true; const coerced=(a + b)?true:false; const assertion=(a as any)?false:true; const fallback=a?a:b??c; const nonnull=a!?true:false;",
+		"// TODO: fix this xxx\nconst url='http://todo'; const fake=/[/*]TODO/; const template=`// TODO ${f() /* FIXME */} /* XXX */`; /* eslint no-warning-comments: error todo */\n// TODOé and fixme\n/** TODO decorated */ const arr=[1, // FIXME trailing comma\n]; import data from 'data' with {/* TODO attributes */}; type Empty=import('data', {with:{/* TODO import type */}});",
+		"\ufeff\ufeff // TODO two marks\nconst x=1;",
+		"// ſomething\n// K\n// ſa\n// Σ σ ς\n// TODO éééééééééééééééééééé é\n// TODO \\ quoted \"text\"\n// ABC TODO\n// K ſ TODO\n// -/ TODO\n",
+		"async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}",
 	}
 	var rows []string
 	for i, source := range sources {
@@ -170,7 +178,7 @@ func generated(t *testing.T) []string {
 		if err := os.WriteFile(path, []byte(source), 0644); err != nil {
 			t.Fatal(err)
 		}
-		for _, options := range []string{"all\tAlways\tAlways\tfalse", "all\tSmart\t\ttrue", "all\tAlways\tNever\tfalse", "all\tAlways\tIgnore\ttrue"} {
+		for _, options := range []string{"all\tAlways\tAlways\tfalse", "all\tSmart\t\ttrue", "all\tAlways\tNever\tfalse", "all\tAlways\tIgnore\ttrue", "all\tAlways\tAlways\tfalse\t{\"allowLoop\":true,\"allowSwitch\":true,\"int32Hint\":true,\"allow\":[\"~\"],\"allowInParentheses\":false,\"defaultAssignment\":false,\"terms\":[\"todo\",\"fixme\",\"xxx\"],\"location\":\"anywhere\",\"decoration\":[\"*\"]}", "all\tAlways\tAlways\tfalse\t{\"Require\":\"always\",\"terms\":[]}", "no-warning-comments\t\t\tfalse\t{\"terms\":[\"s\",\"k\",\"σ\",\"todo\"],\"location\":\"anywhere\"}", "no-warning-comments\t\t\tfalse\t{\"decoration\":[\"a\",\"-\",\"z\"]}", "no-warning-comments\t\t\tfalse\t{\"decoration\":[\"z\",\"-\",\"a\"]}", "no-warning-comments\t\t\tfalse\t{\"decoration\":[\"-\",\"/\"]}"} {
 			rows = append(rows, path+"\t"+options)
 		}
 	}
@@ -205,17 +213,16 @@ func upstream(t *testing.T) []string {
 	}
 	capture := filepath.Join(directory, "capture")
 	t.Setenv("COHERE_DOCS_CAPTURE", capture)
-	execute(t, root, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/core", "-run", "Test(NoDebugger|NoEmpty|Eqeqeq|NoVar|NoDuplicateCase)", "-count=1", "-timeout=10m")
+	execute(t, root, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/core", "-run", "Test(NoDebugger|NoEmpty|Eqeqeq|NoVar|NoDuplicateCase|NoContinue|NoWith|NoNew|NoSparseArrays|RequireYield|NoAwaitInLoop|VarsOnTop|NoTemplateCurlyInString|NoDivRegex|NoBitwise|NoLabels|NoSequences|UnicodeBom|NoUnneededTernary|NoWarningComments|NoPlusplus|NoNegatedCondition|NoReturnAssign)", "-count=1", "-timeout=10m")
+	execute(t, root, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/base", "./internal/lint/rules/nexus", "./internal/lint/rules/adamic", "-run", "Test(ConsistencyNoConsole|ConsistencyRequireTypeSuffix|ConsistencyNoEnum|NoTypePredicate)", "-count=1", "-timeout=10m")
+	execute(t, root, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/typescript", "-run", "Test(MethodSignatureStyle|NoWrapperObjectTypes|PreferLiteralEnumMember)", "-count=1", "-timeout=10m")
 	files, err := filepath.Glob(filepath.Join(capture, "*.jsonl"))
 	if err != nil {
 		t.Fatal(err)
 	}
 	type record struct {
 		Rule, Source, Outcome, FixedSource string
-		Options                            struct {
-			Mode, Null      string
-			AllowEmptyCatch bool
-		}
+		Options                            json.RawMessage
 	}
 	unique := map[string]record{}
 	for _, path := range files {
@@ -231,7 +238,7 @@ func upstream(t *testing.T) []string {
 			if err := json.Unmarshal(line, &row); err != nil {
 				t.Fatal(err)
 			}
-			if !strings.Contains("|no-debugger|no-empty|eqeqeq|no-var|no-duplicate-case|", "|"+row.Rule+"|") {
+			if !strings.Contains("|no-debugger|no-empty|eqeqeq|no-var|no-duplicate-case|no-continue|no-with|no-new|no-sparse-arrays|require-yield|no-await-in-loop|vars-on-top|no-template-curly-in-string|no-div-regex|no-bitwise|no-labels|no-sequences|unicode-bom|no-unneeded-ternary|no-warning-comments|no-plusplus|base/consistency-no-console|nexus/consistency-require-type-suffix|adamic/no-type-predicate|@typescript-eslint/method-signature-style|@typescript-eslint/no-wrapper-object-types|@typescript-eslint/prefer-literal-enum-member|nexus/consistency-no-enum|no-negated-condition|no-return-assign|", "|"+row.Rule+"|") {
 				continue
 			}
 			key := fmt.Sprintf("%s\t%+v\t%s", row.Rule, row.Options, row.Source)
@@ -250,7 +257,28 @@ func upstream(t *testing.T) []string {
 		if err := os.WriteFile(path, []byte(row.Source), 0644); err != nil {
 			t.Fatal(err)
 		}
-		rows = append(rows, fmt.Sprintf("%s\t%s\t%s\t%s\t%t", path, row.Rule, row.Options.Mode, row.Options.Null, row.Options.AllowEmptyCatch))
+		var legacy struct {
+			Mode, Null      string
+			AllowEmptyCatch bool
+		}
+		if len(row.Options) > 0 && row.Options[0] == '{' {
+			if err := json.Unmarshal(row.Options, &legacy); err != nil {
+				t.Fatal(err)
+			}
+		}
+		mode := ""
+		if row.Rule == "@typescript-eslint/method-signature-style" {
+			switch row.Source {
+			case "type T = { m: => void };":
+				mode = "recovery"
+			case "interface I", "interface I { m(a: string): void;", "interface I { m<(a: string): void; }", "interface I { m<T(a: T): T; }":
+				mode = "unsupported-recovery"
+			}
+		}
+		if row.Rule == "no-div-regex" && (row.Source == "var a = /;" || row.Source == "var a = /" || row.Source == "var a = [/];" || row.Source == "if (/) {}" || row.Source == "var a = /=") {
+			mode = "recovery"
+		}
+		rows = append(rows, fmt.Sprintf("%s\t%s\t%s\t%s\t%t\t%s\t%s", path, row.Rule, legacy.Mode, legacy.Null, legacy.AllowEmptyCatch, string(row.Options), mode))
 	}
 	if len(rows) < 150 {
 		t.Fatalf("capture unexpectedly small: %d cases", len(rows))
@@ -272,6 +300,8 @@ func compare(t *testing.T, oracle, binary, directory, path string) []byte {
 	t.Logf("Go, Node, native identical: %d bytes", len(want.output))
 	return want.output
 }
+
+// Not parallel: upstream capture uses t.Setenv and a process-wide fixture capture destination.
 func TestRulesAgree(t *testing.T) {
 	directory, err := filepath.Abs(".")
 	if err != nil {
@@ -279,9 +309,19 @@ func TestRulesAgree(t *testing.T) {
 	}
 	oracle := goOracle(t)
 	binary := buildPort(t, directory, true)
-	rows := append(generated(t), upstream(t)...)
+	rows := append(generated(t), volumeGenerated(t)...)
+	for _, row := range upstream(t) {
+		if strings.HasSuffix(row, "\tunsupported-recovery") {
+			t.Logf("EXPLICIT LIMIT: parser recovery is not ported for %s", row)
+			checkRecoveryRefusal(t, oracle, binary, directory, row)
+		} else {
+			rows = append(rows, row)
+		}
+	}
 	compare(t, oracle, binary, directory, manifest(t, rows))
 }
+
+// Not parallel: the large sanitized corpus runs before timing samples.
 func TestCompilerAndStage1Agree(t *testing.T) {
 	source := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
 	if source == "" {
@@ -317,7 +357,11 @@ func TestCompilerAndStage1Agree(t *testing.T) {
 	t.Logf("compiler and stage1: %d files", len(rows))
 	compare(t, goOracle(t), buildPort(t, directory, true), directory, manifest(t, rows))
 }
-func mutant(t *testing.T, from, to string) string {
+func mutant(t *testing.T, from, to string, targets ...string) string {
+	target := "lint.ts"
+	if len(targets) > 0 {
+		target = targets[0]
+	}
 	directory := t.TempDir()
 	for _, file := range portFiles {
 		data, err := os.ReadFile(file)
@@ -325,7 +369,7 @@ func mutant(t *testing.T, from, to string) string {
 			t.Fatal(err)
 		}
 		source := string(data)
-		if file == "lint.ts" {
+		if file == target {
 			if strings.Count(source, from) != 1 {
 				t.Fatalf("mutant anchor count for %q", from)
 			}
@@ -342,6 +386,8 @@ func mutant(t *testing.T, from, to string) string {
 	}
 	return directory
 }
+
+// Not parallel: sanitized rebuilds run in sequence to bound memory and precede timing.
 func TestMutants(t *testing.T) {
 	path := manifest(t, generated(t))
 	oracle := goOracle(t)
@@ -350,6 +396,20 @@ func TestMutants(t *testing.T) {
 		{"suggestion applied as fix", "hasTypeOf || sameType ? 'fix' : 'suggestion'", "hasTypeOf || sameType ? 'fix' : 'fix'"},
 		{"empty function body reported", "if(!functionBody && !(this.allowCatch", "if((functionBody || !functionBody) && !(this.allowCatch"},
 		{"duplicate case suppressed", "if(seen.has(signature))", "if(!seen.has(signature))"},
+		{"control statement omitted", "node.kind === 'ContinueStatement' && this.enabled('no-continue')", "node.kind === 'BreakStatement' && this.enabled('no-continue')"},
+		{"destructuring hole reported", "!this.assignmentTarget(index) &&", ""},
+		{"nested generator owns outer yield", "].includes(this.node(child).kind)", "].includes('no boundary')"},
+		{"await crosses function boundary", "this.functionLike(parent) ||", " "},
+		{"option ignored", "this.settings.read('int32hint', 'false') === 'true'", "this.settings.read('int32hint', 'false') === 'false'"},
+		{"regex fix eats extra byte", "finding.editEnd = start + 2;", "finding.editEnd = start + 3;"},
+		{"boolean inverse changed", "? '!='", "? '!=='"},
+		{"comment self directive exemption removed", "if(selfDirective(value))", "if(selfDirective(value) && value === '')"},
+		{"bom removes two marks", "finding.editEnd = 1;", "finding.editEnd = this.source.startsWith('\\ufeff\\ufeff') ? 2 : 1;"},
+		{"label option widened", "this.settings.read('allowloop', 'false') === 'true'", "this.settings.read('allowloop', 'false') !== 'true'"},
+		{"directive prefix ignored", "let prefix = !staticBlock;", "let prefix = false;"},
+		{"comma chain reports inner", "!this.comma(parent)", "this.comma(parent)"},
+		{"empty placeholder reported", "node.text.indexOf('}', body) > body", "node.text.indexOf('}', body) >= body"},
+		{"overlap winner misreported", "${winner} overlaps another fix", "${this.selected} overlaps another fix"},
 	} {
 		t.Run(change.name, func(t *testing.T) {
 			directory := mutant(t, change.from, change.to)
@@ -366,6 +426,56 @@ func TestMutants(t *testing.T) {
 	}
 }
 
+func TestDecorationOptionMutant(t *testing.T) {
+	t.Parallel()
+	path := manifest(t, generated(t))
+	want := execute(t, "", goOracle(t), "--manifest", path).output
+	directory := mutant(t, "foldedRange(character, first, last)", "foldedRange(character, first, first)", "comments.ts")
+	binary := buildPort(t, directory, true)
+	for _, side := range []struct {
+		name string
+		run  execution
+	}{
+		{"Node", node(t, directory, path, false)},
+		{"native", execute(t, "", binary, "--manifest", path)},
+	} {
+		if bytes.Equal(side.run.output, want) {
+			t.Fatalf("decoration range mutant survived on %s", side.name)
+		}
+		t.Logf("decoration range collapsed to one character caught on %s: %s", side.name, difference(side.run.output, want))
+	}
+}
+
+func TestCountGuardMutant(t *testing.T) {
+	t.Parallel()
+	source := filepath.Join(t.TempDir(), "count.ts")
+	if err := os.WriteFile(source, []byte("var a; debugger;"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	path := manifest(t, []string{source})
+	oracle := goOracle(t)
+	answer := execute(t, "", oracle, "--manifest", path).output
+	count := execute(t, "", oracle, "--manifest", path, "--count").output
+	directory := mutant(t, "if(countOnly) {\n        return linter.findings.length;", "if(countOnly) {\n        return linter.findings.length + 1;", "main.ts")
+	binary := buildPort(t, directory, true)
+	for _, side := range []struct {
+		name            string
+		ordinary, count execution
+	}{
+		{"Node", node(t, directory, path, false), node(t, directory, path, true)},
+		{"native", execute(t, "", binary, "--manifest", path), execute(t, "", binary, "--manifest", path, "--count")},
+	} {
+		if !bytes.Equal(side.ordinary.output, answer) {
+			t.Fatalf("%s mutant was caught outside the count check", side.name)
+		}
+		if bytes.Equal(side.count.output, count) {
+			t.Fatalf("%s count mutant survived", side.name)
+		}
+		t.Logf("count check alone caught %s: mutant=%q Go=%q; ordinary output remains identical", side.name, side.count.output, count)
+	}
+}
+
+// Not parallel: interleaved timing samples must not compete with tests in this package.
 func TestThroughput(t *testing.T) {
 	if os.Getenv("ADAMIC_LINT_BENCH") != "1" {
 		t.Skip("set ADAMIC_LINT_BENCH=1")

@@ -1,0 +1,4482 @@
+{
+  "upstream_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "eligible": 3480,
+  "cases": [
+    {
+      "id": "001_varianceCantBeStrictWhileStructureIsnt",
+      "source": "tests/cases/compiler/varianceCantBeStrictWhileStructureIsnt.ts",
+      "source_sha256": "06f9f4b934e9cd273b2bca3c9429ebd7127463e4a48fbd5285e282eccc0ad26a",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "control",
+      "codes": [],
+      "options": {
+        "target": "es2015",
+        "strict": false,
+        "strictFunctionTypes": false
+      }
+    },
+    {
+      "id": "002_conditionalEqualityTestingNullability",
+      "source": "tests/cases/compiler/conditionalEqualityTestingNullability.ts",
+      "source_sha256": "54d687a5197cf70605a7bd47ea6ad77cbc811d65c11ca07e8628be594b1bbf54",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "types",
+      "codes": [],
+      "options": {
+        "target": "es2015",
+        "strict": true
+      }
+    },
+    {
+      "id": "003_commentOnClassAccessor1",
+      "source": "tests/cases/compiler/commentOnClassAccessor1.ts",
+      "source_sha256": "c42ece39034197bbef99ce24e3a4a466c7b5b217d7ff32013e574921264202d0",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "classes",
+      "codes": [],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "004_metadataOfUnion",
+      "source": "tests/cases/compiler/metadataOfUnion.ts",
+      "source_sha256": "0fee831b934be2ae83c61d33ed115a2d24fe50dd18d49219a474baf3967cbea9",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "unions",
+      "codes": [],
+      "options": {
+        "target": "es2015",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "strictPropertyInitialization": false
+      }
+    },
+    {
+      "id": "005_ambientEnumElementInitializer3",
+      "source": "tests/cases/compiler/ambientEnumElementInitializer3.ts",
+      "source_sha256": "a65d37676a2420bb66b640c384da80b7953e3a728f200f1661764989475f0b3c",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "enums",
+      "codes": [],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "006_arrayDestructuringInSwitch1",
+      "source": "tests/cases/compiler/arrayDestructuringInSwitch1.ts",
+      "source_sha256": "da206e27b2e18f3de6548162ec25282a23cb6c605664f32ea2a28f2cd651682f",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "arrays",
+      "codes": [],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "007_nestedBlockScopedBindings15",
+      "source": "tests/cases/compiler/nestedBlockScopedBindings15.ts",
+      "source_sha256": "de1c0801ac987829d97bee287c9e3fd603b82ac2f93a2894b2230349cd59abc0",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "other",
+      "codes": [],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "008_library_StringSlice",
+      "source": "tests/cases/compiler/library_StringSlice.ts",
+      "source_sha256": "48aeb47b38e8da514ba70a2040feb5c7f9399cdf788ec759d4ba7670060d96da",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "literals",
+      "codes": [],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "009_es6ModuleWithModuleGenTargetCommonjs",
+      "source": "tests/cases/compiler/es6ModuleWithModuleGenTargetCommonjs.ts",
+      "source_sha256": "dbfd01387b68f979bf4e5f6d56b56a360cd2c763500f1965114091069583613a",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "modules",
+      "codes": [],
+      "options": {
+        "target": "ES6",
+        "module": "commonjs"
+      }
+    },
+    {
+      "id": "010_nestedTypeVariableInfersLiteral",
+      "source": "tests/cases/compiler/nestedTypeVariableInfersLiteral.ts",
+      "source_sha256": "641cc70471575d91f08fd9d2bccb959bdf0fad78a1c016f4d16b8ca205e48140",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "generics",
+      "codes": [],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "011_namespaces2",
+      "source": "tests/cases/compiler/namespaces2.ts",
+      "source_sha256": "a20a594c9e45a6374a238b21950f944576674f4b7b4d50b0374e08236f10f0d6",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "namespaces",
+      "codes": [],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "012_expandoFunctionExpressionsWithDynamicNames2",
+      "source": "tests/cases/compiler/expandoFunctionExpressionsWithDynamicNames2.ts",
+      "source_sha256": "cb35f6a9347a5f26d694af1b1641bba23520fea76188f12c9b1e27a9147ce35d",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "functions",
+      "codes": [],
+      "options": {
+        "target": "es2015",
+        "strict": true,
+        "lib": [
+          "esnext"
+        ]
+      }
+    },
+    {
+      "id": "013_parseEntityNameWithReservedWord",
+      "source": "tests/cases/compiler/parseEntityNameWithReservedWord.ts",
+      "source_sha256": "4f088c110e2917fe385fed8fcfa4eefb8e47ede39038e5b7a6ffba1c9a0aedea",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "syntax",
+      "codes": [],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "014_keyofObjectWithGlobalSymbolIncluded",
+      "source": "tests/cases/compiler/keyofObjectWithGlobalSymbolIncluded.ts",
+      "source_sha256": "5e5cc5dae47afdd9391e0a0f5e3de6b4995b19ee93b540cf136a023e8cf76186",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "objects",
+      "codes": [],
+      "options": {
+        "target": "es6",
+        "strict": true
+      }
+    },
+    {
+      "id": "015_decoratorReferences",
+      "source": "tests/cases/compiler/decoratorReferences.ts",
+      "source_sha256": "16a5449ca5bc21b4b771ee70d1ac5beb68d3b1d30a0eb47ffa25b89b82fec747",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "decorators",
+      "codes": [],
+      "options": {
+        "target": "es2015",
+        "strict": false,
+        "experimentalDecorators": true
+      }
+    },
+    {
+      "id": "016_yieldStarContextualType",
+      "source": "tests/cases/compiler/yieldStarContextualType.ts",
+      "source_sha256": "ecdc6b192ccd959e99de9368e8862be45f0ef5e200ebadd1e62002fa4c4bc88f",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "async",
+      "codes": [],
+      "options": {
+        "target": "esnext"
+      }
+    },
+    {
+      "id": "017_binopAssignmentShouldHaveType",
+      "source": "tests/cases/compiler/binopAssignmentShouldHaveType.ts",
+      "source_sha256": "ca8a6c19b08f947f95d51ebf09ad80ab950a34905e67ff69f30a7ea08eb93fe6",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "operators",
+      "codes": [],
+      "options": {
+        "target": "es2015",
+        "strict": false,
+        "lib": [
+          "es5"
+        ]
+      }
+    },
+    {
+      "id": "018_typeofUsedBeforeBlockScoped",
+      "source": "tests/cases/compiler/typeofUsedBeforeBlockScoped.ts",
+      "source_sha256": "436a498e25cf11858192de354091a2ea021ce6059595878aa7c9cc229373191e",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "types",
+      "codes": [],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "019_superHasMethodsFromMergedInterface",
+      "source": "tests/cases/compiler/superHasMethodsFromMergedInterface.ts",
+      "source_sha256": "f72c831d65d2bc37b984599139cee656d276b5af6e98ae557dd1d2a22a899f46",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "classes",
+      "codes": [],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "020_intersectionApparentTypeCaching",
+      "source": "tests/cases/compiler/intersectionApparentTypeCaching.ts",
+      "source_sha256": "990cb9c98a013db4ad442224cf4cff721dfa8ac0a46295878ac294f549946c6f",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "unions",
+      "codes": [],
+      "options": {
+        "target": "es2015",
+        "strict": true
+      }
+    },
+    {
+      "id": "021_commentOnArrayElement12",
+      "source": "tests/cases/compiler/commentOnArrayElement12.ts",
+      "source_sha256": "a99dda41d85e96f5a6b899e0baafc61c966f0d2b2a6600536f37fe26a5a94ed7",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "arrays",
+      "codes": [],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "022_nestedBlockScopedBindings4",
+      "source": "tests/cases/compiler/nestedBlockScopedBindings4.ts",
+      "source_sha256": "9218915e8aa01a6011091a33db1724512e5ace6e6c1de619620477037044f4e0",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "other",
+      "codes": [],
+      "options": {
+        "target": "es2015",
+        "strict": false
+      }
+    },
+    {
+      "id": "023_capturedLetConstInLoop10_ES6",
+      "source": "tests/cases/compiler/capturedLetConstInLoop10_ES6.ts",
+      "source_sha256": "b0bcb3612f010ed6507c00b63bb537f51e663828e27f72ca5a609155c22efa7e",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "control",
+      "codes": [],
+      "options": {
+        "strict": false,
+        "target": "ES6"
+      }
+    },
+    {
+      "id": "024_genericTypeParameterEquivalence2",
+      "source": "tests/cases/compiler/genericTypeParameterEquivalence2.ts",
+      "source_sha256": "697a4474186c2bb9f62f01f80a0d6dbe80c0a52d8ea04acfe1d049b759893f04",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "generics",
+      "codes": [],
+      "options": {
+        "target": "es2015",
+        "strict": false
+      }
+    },
+    {
+      "id": "025_exportArrayBindingPattern",
+      "source": "tests/cases/compiler/exportArrayBindingPattern.ts",
+      "source_sha256": "02b51fb8b375165d961083284b04aa8dadb5fbfd83aacccedd4e36ae5181c6e7",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "modules",
+      "codes": [],
+      "options": {
+        "target": "es2015",
+        "module": "commonjs"
+      }
+    },
+    {
+      "id": "026_functionAssignmentError",
+      "source": "tests/cases/compiler/functionAssignmentError.ts",
+      "source_sha256": "dd8cba4abde2b316cbd233feb4cc4dc4007b1150d64f9851c02eca613b274972",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "functions",
+      "codes": [],
+      "options": {
+        "target": "es2015",
+        "strict": false
+      }
+    },
+    {
+      "id": "027_multiExtendsSplitInterfaces1",
+      "source": "tests/cases/compiler/multiExtendsSplitInterfaces1.ts",
+      "source_sha256": "c55eaa2192208434e12d5a9ef5a66c48accbdfcc9e0385bdfb1e734529bde641",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "objects",
+      "codes": [],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "028_stringMatchAll",
+      "source": "tests/cases/compiler/stringMatchAll.ts",
+      "source_sha256": "3ddf5aaabecafd70d2fa0037d8a2723a449fead86d781b02bf9daba25aa99f28",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "literals",
+      "codes": [],
+      "options": {
+        "target": "es2020"
+      }
+    },
+    {
+      "id": "029_enumLiteralUnionNotWidened",
+      "source": "tests/cases/compiler/enumLiteralUnionNotWidened.ts",
+      "source_sha256": "e8339192516b2f680c2ced10b72df734584decdb7842e3778fa05bc275b8055c",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "enums",
+      "codes": [],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "030_asyncYieldStarContextualType",
+      "source": "tests/cases/compiler/asyncYieldStarContextualType.ts",
+      "source_sha256": "5502327cb6523269e56e64a1ce6b5ed2b5d58ca4f76044eda2b518b428e07355",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "async",
+      "codes": [],
+      "options": {
+        "target": "esnext"
+      }
+    },
+    {
+      "id": "031_commentInNamespaceDeclarationWithIdentifierPathName",
+      "source": "tests/cases/compiler/commentInNamespaceDeclarationWithIdentifierPathName.ts",
+      "source_sha256": "1bdcc9c6ff82a90f830c55441fd77b711331eb31c0d7570d870edb035f0d2f81",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "namespaces",
+      "codes": [],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "032_templateLiteralsAndDecoratorMetadata",
+      "source": "tests/cases/compiler/templateLiteralsAndDecoratorMetadata.ts",
+      "source_sha256": "178d1d82aca6452c3f07e3a6f0f085bbf19229d31c6dc063d29dd5c98ac59616",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "decorators",
+      "codes": [],
+      "options": {
+        "target": "es2015",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true
+      }
+    },
+    {
+      "id": "033_assignmentCompatability6",
+      "source": "tests/cases/compiler/assignmentCompatability6.ts",
+      "source_sha256": "c990b7354b0bf1fd5cfa2c8fd77bfe2f287439e660fb6c06cd0329d6706c3215",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "operators",
+      "codes": [],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "034_parseReplacementCharacter",
+      "source": "tests/cases/compiler/parseReplacementCharacter.ts",
+      "source_sha256": "dc87ffc4e0a725e62fe1f304aa37cc689998d1c7de97672fc9489fa42f179c10",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "syntax",
+      "codes": [],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "035_classOrder1",
+      "source": "tests/cases/compiler/classOrder1.ts",
+      "source_sha256": "f7a30e7d25b2733dcaf1e4cd5777b9b7039bd5a99606d9f8b37949904a4e65a9",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "classes",
+      "codes": [],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "036_conditionalExpressions2",
+      "source": "tests/cases/compiler/conditionalExpressions2.ts",
+      "source_sha256": "691d37f10d4510d75fdf1f3eede1c3045d0840b8602b9580ec3c035a20ed7b81",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "types",
+      "codes": [],
+      "options": {
+        "target": "es2015",
+        "strict": false,
+        "allowUnreachableCode": true
+      }
+    },
+    {
+      "id": "037_singletonLabeledTuple",
+      "source": "tests/cases/compiler/singletonLabeledTuple.ts",
+      "source_sha256": "910d52ff191bc20707722157ccbcd4743bff1c09ff58d3c222748cc6f826b225",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "arrays",
+      "codes": [],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "038_breakInIterationOrSwitchStatement1",
+      "source": "tests/cases/compiler/breakInIterationOrSwitchStatement1.ts",
+      "source_sha256": "46f6acc734ade584db98561d5d0486172424f2b4449dcd65cf7948d6f43bb5a2",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "control",
+      "codes": [],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "039_narrowByClauseExpressionInSwitchTrue2",
+      "source": "tests/cases/compiler/narrowByClauseExpressionInSwitchTrue2.ts",
+      "source_sha256": "41594d75d38c30c3d993626fa8a052b88b27e5a12b1706a2503c96b0887148f5",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "unions",
+      "codes": [],
+      "options": {
+        "target": "es2015",
+        "strict": true
+      }
+    },
+    {
+      "id": "040_emitOneLineVariableDeclarationRemoveCommentsFalse",
+      "source": "tests/cases/compiler/emitOneLineVariableDeclarationRemoveCommentsFalse.ts",
+      "source_sha256": "b94e91fa595dc036d83cd9249c74ecadc467261387dc135bb19d41ca15c67e1e",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "other",
+      "codes": [],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "041_nongenericConditionalNotPartiallyComputed",
+      "source": "tests/cases/compiler/nongenericConditionalNotPartiallyComputed.ts",
+      "source_sha256": "777958fa19745aa57de81a6cc555b8202e0c93794ea8338e4bef3174799bfac9",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "generics",
+      "codes": [],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "042_exportDefaultForNonInstantiatedModule",
+      "source": "tests/cases/compiler/exportDefaultForNonInstantiatedModule.ts",
+      "source_sha256": "ac85c79ed2cdb242d277694a43ee912bb8fbc4e084f1a42d78b67bce0f251a61",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "modules",
+      "codes": [],
+      "options": {
+        "target": "ES6"
+      }
+    },
+    {
+      "id": "043_collisionThisExpressionAndLocalVarInProperty",
+      "source": "tests/cases/compiler/collisionThisExpressionAndLocalVarInProperty.ts",
+      "source_sha256": "3cfd3902d3c9a66bd97d547a5dd917c95530c646841ba1d344e46d8d62d24770",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "objects",
+      "codes": [],
+      "options": {
+        "target": "es2015",
+        "strict": false
+      }
+    },
+    {
+      "id": "044_functionWithDefaultParameterWithNoStatements10",
+      "source": "tests/cases/compiler/functionWithDefaultParameterWithNoStatements10.ts",
+      "source_sha256": "cecb57e0894d15d010d3d12e6a5d8474c153213faec16c88803118cdb40082de",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "functions",
+      "codes": [],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "045_discriminantUsingEvaluatableTemplateExpression",
+      "source": "tests/cases/compiler/discriminantUsingEvaluatableTemplateExpression.ts",
+      "source_sha256": "5c763261ee6fe2baf09c327eb7af43518ba3a6c2418b5eea7d8addaad64c725b",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "literals",
+      "codes": [],
+      "options": {
+        "target": "es2015",
+        "strict": true
+      }
+    },
+    {
+      "id": "046_assignmentCompatForEnums",
+      "source": "tests/cases/compiler/assignmentCompatForEnums.ts",
+      "source_sha256": "a227c2417f73a8a842b82182e18f41321984b6e1f573cce60d529a9f27e387ca",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "enums",
+      "codes": [],
+      "options": {
+        "target": "es2015",
+        "strict": false
+      }
+    },
+    {
+      "id": "047_promiseWithResolvers",
+      "source": "tests/cases/compiler/promiseWithResolvers.ts",
+      "source_sha256": "52f4184aab11fdeca4ba7819c62518b4d9fdb570bfba0f2d66e00477ccf99e15",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "async",
+      "codes": [],
+      "options": {
+        "target": "esnext"
+      }
+    },
+    {
+      "id": "048_uniqueSymbolAssignmentOnGlobalAugmentationSuceeds",
+      "source": "tests/cases/compiler/uniqueSymbolAssignmentOnGlobalAugmentationSuceeds.ts",
+      "source_sha256": "5101fda3e2c791a93425ad183c44d9c60525e755aa718c603bd4497d132f1ff3",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "operators",
+      "codes": [],
+      "options": {
+        "strict": true,
+        "target": "es6"
+      }
+    },
+    {
+      "id": "049_decoratorMetadataNoStrictNull",
+      "source": "tests/cases/compiler/decoratorMetadataNoStrictNull.ts",
+      "source_sha256": "8534da2959d2bef962dbb968bc675d62a78151ff4aeb92a4542ad9dee01e4b8e",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "decorators",
+      "codes": [],
+      "options": {
+        "target": "es2015",
+        "strict": false,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true
+      }
+    },
+    {
+      "id": "050_unusedInterfaceinNamespace4",
+      "source": "tests/cases/compiler/unusedInterfaceinNamespace4.ts",
+      "source_sha256": "e6e8f6948bdd525431879a9784b60cd6bf1e02dd1177ef698d67001816d32ae1",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "namespaces",
+      "codes": [],
+      "options": {
+        "target": "es2015",
+        "noUnusedLocals": true,
+        "noUnusedParameters": true
+      }
+    },
+    {
+      "id": "051_extendedUnicodeEscapeSequenceIdentifiers",
+      "source": "tests/cases/compiler/extendedUnicodeEscapeSequenceIdentifiers.ts",
+      "source_sha256": "e3571eb57a28340374b1165087fedf6b11c9de529baf8a6c181fdfb3167de2cd",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "syntax",
+      "codes": [],
+      "options": {
+        "target": "es6"
+      }
+    },
+    {
+      "id": "052_commentOnClassAccessor2",
+      "source": "tests/cases/compiler/commentOnClassAccessor2.ts",
+      "source_sha256": "c53dd06722bfe90074da65e5b55679c6e36bf9d21c6e522f0ed9abefbf1a726c",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "classes",
+      "codes": [],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "053_contextualTypeBasedOnIntersectionWithAnyInTheMix5",
+      "source": "tests/cases/compiler/contextualTypeBasedOnIntersectionWithAnyInTheMix5.ts",
+      "source_sha256": "bd73caf136504b11935e992d4655b11918a25a267d3d82d6d85887012a5b6102",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "unions",
+      "codes": [],
+      "options": {
+        "target": "es2015",
+        "strict": true
+      }
+    },
+    {
+      "id": "054_contextualTyping19",
+      "source": "tests/cases/compiler/contextualTyping19.ts",
+      "source_sha256": "16ea005bcb65f8ff4bf5707bd9142b9517746da9b728be996331833543f9bd2a",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "other",
+      "codes": [],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "055_modularizeLibrary_UsingES5LibES6ArrayLibES6WellknownSymbolLib",
+      "source": "tests/cases/compiler/modularizeLibrary_UsingES5LibES6ArrayLibES6WellknownSymbolLib.ts",
+      "source_sha256": "adf90670c43a45dcf2191d876d61956755f50c432511cd53441ca37c61255e20",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "arrays",
+      "codes": [],
+      "options": {
+        "target": "es2015",
+        "strict": false,
+        "lib": [
+          "es5",
+          "es2015.core",
+          "es2015.symbol.wellknown"
+        ]
+      }
+    },
+    {
+      "id": "056_genericCallInferenceInConditionalTypes1",
+      "source": "tests/cases/compiler/genericCallInferenceInConditionalTypes1.ts",
+      "source_sha256": "ee767fc1f801ff3603581412e4dcc0ebdc58e247ca46374c36ede21b8432c307",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "generics",
+      "codes": [],
+      "options": {
+        "target": "es2015",
+        "strict": true
+      }
+    },
+    {
+      "id": "057_localImportNameVsGlobalName",
+      "source": "tests/cases/compiler/localImportNameVsGlobalName.ts",
+      "source_sha256": "62c9ffd778119db2a9eaffabb6267399830a5ed7e142274e5c6e838d8c4768a7",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "modules",
+      "codes": [],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "058_contextualTypingOfConditionalExpression",
+      "source": "tests/cases/compiler/contextualTypingOfConditionalExpression.ts",
+      "source_sha256": "8d956cb753fc3d4277a715720492962a42059d77780f87a78510d65aa419a708",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "types",
+      "codes": [],
+      "options": {
+        "target": "es2015",
+        "strict": false
+      }
+    },
+    {
+      "id": "059_functionOverloads31",
+      "source": "tests/cases/compiler/functionOverloads31.ts",
+      "source_sha256": "bfafdbde0b41ce4102fc851ad9b7fcf852c02a74955af8fbbe7a37a9eeeae476",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "functions",
+      "codes": [],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "060_numberAsInLHS",
+      "source": "tests/cases/compiler/numberAsInLHS.ts",
+      "source_sha256": "131d539f29be6883e91539d55d7e39ef78fe935c8c17ee3762b90fcf53a8f468",
+      "baseline": null,
+      "baseline_sha256": null,
+      "feature": "literals",
+      "codes": [],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "061_constEnumErrors",
+      "source": "tests/cases/compiler/constEnumErrors.ts",
+      "source_sha256": "0023fc841b30e8cdacf23b514da1896f327071932222b913ae1e8ec883ae477d",
+      "baseline": "tests/baselines/reference/constEnumErrors.errors.txt",
+      "baseline_sha256": "07907243c6c99df9be19ca114e00f64052af2b2fe82d23418be4ab5bb1f3bc71",
+      "feature": "enums",
+      "codes": [
+        2339,
+        2474,
+        2475,
+        2476,
+        2477,
+        2478,
+        2567,
+        2651
+      ],
+      "options": {
+        "target": "es2015",
+        "lib": [
+          "es5"
+        ]
+      }
+    },
+    {
+      "id": "062_interfaceDeclaration1",
+      "source": "tests/cases/compiler/interfaceDeclaration1.ts",
+      "source_sha256": "27e840a9c2a161761f71b5b10ba1fa8a3156e0a18778446c8abdfea1e6296367",
+      "baseline": "tests/baselines/reference/interfaceDeclaration1.errors.txt",
+      "baseline_sha256": "d4e5404f5ecd679cca2635958a605daa23e071681afc74ce1f94391b1f9def62",
+      "feature": "objects",
+      "codes": [
+        2300,
+        2310,
+        2320,
+        2420,
+        2454,
+        2717
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "063_didYouMeanSuggestionErrors",
+      "source": "tests/cases/compiler/didYouMeanSuggestionErrors.ts",
+      "source_sha256": "debf234d8a76c4449b61aaab513112435721dfa5966d793261a22dda049a7274",
+      "baseline": "tests/baselines/reference/didYouMeanSuggestionErrors.errors.txt",
+      "baseline_sha256": "6f6387e3244b7ef73b1b5565b7ee9c5d0770fa6dfd75bc8c6350d9c1ad5ea76d",
+      "feature": "other",
+      "codes": [
+        2583,
+        2584,
+        2585,
+        2591,
+        2592,
+        2593
+      ],
+      "options": {
+        "target": "es2015",
+        "lib": [
+          "es5"
+        ]
+      }
+    },
+    {
+      "id": "064_recursiveFunctionTypes",
+      "source": "tests/cases/compiler/recursiveFunctionTypes.ts",
+      "source_sha256": "2e6005a5a1b5980454fa7e427830345df9ffec23fa7739088354fb2a5966fcae",
+      "baseline": "tests/baselines/reference/recursiveFunctionTypes.errors.txt",
+      "baseline_sha256": "8fd4461c456dd54a60e35beba33eb1ef47f2b689dc71f1e27eeb30904be30bfb",
+      "feature": "functions",
+      "codes": [
+        2322,
+        2345,
+        2355,
+        2394,
+        2554,
+        2769
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "065_callOverloads2",
+      "source": "tests/cases/compiler/callOverloads2.ts",
+      "source_sha256": "20b190e03812c7f7b01a2ad094f3e8638109925585f97bf3b5b824b3eb84297c",
+      "baseline": "tests/baselines/reference/callOverloads2.errors.txt",
+      "baseline_sha256": "c6bb4606bc0e6878196047903510fa83a2f6c768eb58964ba9d89c85050df7c3",
+      "feature": "functions",
+      "codes": [
+        2389,
+        2391,
+        2393,
+        2813,
+        2814
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": false
+      }
+    },
+    {
+      "id": "066_decoratorUsedBeforeDeclaration",
+      "source": "tests/cases/compiler/decoratorUsedBeforeDeclaration.ts",
+      "source_sha256": "7feee2144664e61553a2b25403f5e9d6fdb8caa9a6e4db458ed7b0626fbc6240",
+      "baseline": "tests/baselines/reference/decoratorUsedBeforeDeclaration.errors.txt",
+      "baseline_sha256": "d97e909c9f3d7bc13cd576f8ad309a24a1d49ec4da6328154e4446fc73500edf",
+      "feature": "decorators",
+      "codes": [
+        2448,
+        2450,
+        2454,
+        2729,
+        7006
+      ],
+      "options": {
+        "target": "es2015",
+        "experimentalDecorators": true
+      }
+    },
+    {
+      "id": "067_undefinedTypeAssignment4",
+      "source": "tests/cases/compiler/undefinedTypeAssignment4.ts",
+      "source_sha256": "7abc04bd8c97fa4996f6359ff7c6a1041f03e51d580308b6fce548139980dc4a",
+      "baseline": "tests/baselines/reference/undefinedTypeAssignment4.errors.txt",
+      "baseline_sha256": "eec36736d018c61bbb4f2b67b73ff88d550260cc15d4feb1b2ad55c4c4919566",
+      "feature": "operators",
+      "codes": [
+        2397,
+        2414,
+        2427,
+        2564
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "068_emitCapturingThisInTupleDestructuring1",
+      "source": "tests/cases/compiler/emitCapturingThisInTupleDestructuring1.ts",
+      "source_sha256": "e7d97f34120a286963f52616773e568fbb1f3a738b351366961a3331eef3b61e",
+      "baseline": "tests/baselines/reference/emitCapturingThisInTupleDestructuring1.errors.txt",
+      "baseline_sha256": "cb9a10655be33af75765dab180060a3ee8e8d3b9d27843883e6d79c7ae3828d5",
+      "feature": "arrays",
+      "codes": [
+        2493,
+        7010,
+        7017,
+        7041
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "069_computedPropertiesInDestructuring1",
+      "source": "tests/cases/compiler/computedPropertiesInDestructuring1.ts",
+      "source_sha256": "6504a90678937c29fb9752463924f6aa383a3cb1192e8d42609a7819187cdf01",
+      "baseline": "tests/baselines/reference/computedPropertiesInDestructuring1.errors.txt",
+      "baseline_sha256": "28c5a45de80db6cf95e6f56d0b32ddb387e290e87c9f6850fd68a807f68a6c31",
+      "feature": "other",
+      "codes": [
+        2339,
+        2349,
+        2365,
+        2537,
+        2538
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "070_assignmentToReferenceTypes",
+      "source": "tests/cases/compiler/assignmentToReferenceTypes.ts",
+      "source_sha256": "4dd57b9c8cc804ee464de3bf1dfb5639d697e3cc8a7f7f61c08acda6a6b78e54",
+      "baseline": "tests/baselines/reference/assignmentToReferenceTypes.errors.txt",
+      "baseline_sha256": "bc67186619c9522a5596fcb6b7d47632c0c5dd412297d45d8af8ea0954750863",
+      "feature": "operators",
+      "codes": [
+        2628,
+        2629,
+        2630,
+        2708
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": false
+      }
+    },
+    {
+      "id": "071_overloadModifiersMustAgree",
+      "source": "tests/cases/compiler/overloadModifiersMustAgree.ts",
+      "source_sha256": "636d00f90906b4582fd96fb756bc95880d70beaf6a04eace7936c7e615fa9c1f",
+      "baseline": "tests/baselines/reference/overloadModifiersMustAgree.errors.txt",
+      "baseline_sha256": "4ef57a403a8fc3ad224e4e4edd989543737eea90b3e557f6f7691666839a0c95",
+      "feature": "functions",
+      "codes": [
+        2383,
+        2384,
+        2385,
+        2386
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": false,
+        "module": "commonjs"
+      }
+    },
+    {
+      "id": "072_noImplicitAnyForIn",
+      "source": "tests/cases/compiler/noImplicitAnyForIn.ts",
+      "source_sha256": "e2a32c8bc70aa2db0cbd3e674aa6e0023d7bcc821185b3ddc1e7980388a035c5",
+      "baseline": "tests/baselines/reference/noImplicitAnyForIn.errors.txt",
+      "baseline_sha256": "6c91483e748c694a264bae8acc791cff0dd4c6c3da564719a078af4c712d4a74",
+      "feature": "control",
+      "codes": [
+        2405,
+        2872,
+        7053
+      ],
+      "options": {
+        "target": "es2015",
+        "noImplicitAny": true
+      }
+    },
+    {
+      "id": "073_superNewCall1",
+      "source": "tests/cases/compiler/superNewCall1.ts",
+      "source_sha256": "c2192cb339cc35dc4a83d550066deef476e603ac4ec3585c40de92b0b7c8aa69",
+      "baseline": "tests/baselines/reference/superNewCall1.errors.txt",
+      "baseline_sha256": "c8203056463d1063729958e131d2fea37b4122d6ca9e8273bf7b0d37c84c9df7",
+      "feature": "classes",
+      "codes": [
+        2351,
+        2377,
+        17011
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": false
+      }
+    },
+    {
+      "id": "074_parseInvalidNullableTypes",
+      "source": "tests/cases/compiler/parseInvalidNullableTypes.ts",
+      "source_sha256": "d8928c4e1ac58f4adfea3c1839e17dbaef5bb59d54c355ddece78ef15d9a018e",
+      "baseline": "tests/baselines/reference/parseInvalidNullableTypes.errors.txt",
+      "baseline_sha256": "52a1240822d64895155130845772c07dc616e598f47899f88f4ea65206d853ac",
+      "feature": "syntax",
+      "codes": [
+        2322,
+        2677,
+        17019,
+        17020
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": true
+      }
+    },
+    {
+      "id": "075_recursiveConditionalCrash4",
+      "source": "tests/cases/compiler/recursiveConditionalCrash4.ts",
+      "source_sha256": "85718105dbf2c4db3415908c79828deb724db58e44d4b4475d172f2a401a950f",
+      "baseline": "tests/baselines/reference/recursiveConditionalCrash4.errors.txt",
+      "baseline_sha256": "cd439e73a95240b5d7fe68f462c1c4f920e3ae6d13f5a8ef9f223ffbd4fd2577",
+      "feature": "types",
+      "codes": [
+        2304,
+        2503,
+        2589
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": true
+      }
+    },
+    {
+      "id": "076_interfacedeclWithIndexerErrors",
+      "source": "tests/cases/compiler/interfacedeclWithIndexerErrors.ts",
+      "source_sha256": "efcc36508a89750929886439ba07065831b6e75c8c82176de7191717335ac853",
+      "baseline": "tests/baselines/reference/interfacedeclWithIndexerErrors.errors.txt",
+      "baseline_sha256": "acf639fd556bef1af581b6a989eefd5ec6c77cf6ca91319c060be5a9f6b12015",
+      "feature": "objects",
+      "codes": [
+        2411,
+        2693,
+        2840
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": false
+      }
+    },
+    {
+      "id": "077_objectLitIndexerContextualType",
+      "source": "tests/cases/compiler/objectLitIndexerContextualType.ts",
+      "source_sha256": "f119a73af247f95aace7d1ae5371d375d94b3f8923cc9d4a6d3bc97057b32247",
+      "baseline": "tests/baselines/reference/objectLitIndexerContextualType.errors.txt",
+      "baseline_sha256": "6271ad11fa21ed1f64b6bf6694e6839c3abe64b30e6e3e0122b6b0d6b6c88a13",
+      "feature": "objects",
+      "codes": [
+        2353,
+        2362,
+        2363
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": false
+      }
+    },
+    {
+      "id": "078_weakType",
+      "source": "tests/cases/compiler/weakType.ts",
+      "source_sha256": "bd4d7446988ad87050fe8b98823c61bfa9ad8a9c17f6f02b89ce4bb12159cdb4",
+      "baseline": "tests/baselines/reference/weakType.errors.txt",
+      "baseline_sha256": "729594e6a1028dcfa254bc3bd0982e0f515f0718ae9e7e052eab47cd91e55639",
+      "feature": "other",
+      "codes": [
+        2322,
+        2352,
+        2559,
+        2560
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "079_nullableFunctionError",
+      "source": "tests/cases/compiler/nullableFunctionError.ts",
+      "source_sha256": "58f3a529e1d68572cee8dbb2b6371a99aa48f45c57de853683baf4bac980ca60",
+      "baseline": "tests/baselines/reference/nullableFunctionError.errors.txt",
+      "baseline_sha256": "477562e7077b4f8b273cec9c06e977735a3ba58f73059dd781f28a927ec697d9",
+      "feature": "functions",
+      "codes": [
+        2721,
+        2722,
+        2723
+      ],
+      "options": {
+        "target": "es2015",
+        "strictNullChecks": true
+      }
+    },
+    {
+      "id": "080_builtinIterator",
+      "source": "tests/cases/compiler/builtinIterator.ts",
+      "source_sha256": "935473bf42ef2aee93fcfc2902d3a2b0d2f39e6e7e9ee21ab1ca6c202177544c",
+      "baseline": "tests/baselines/reference/builtinIterator.errors.txt",
+      "baseline_sha256": "6e8c08d81a4d27ab6c68e10f333094ab1a31a8dc0a3eccdca22da564390165f6",
+      "feature": "other",
+      "codes": [
+        2322,
+        2345,
+        2416,
+        2511,
+        2515
+      ],
+      "options": {
+        "target": "esnext",
+        "strict": true
+      }
+    },
+    {
+      "id": "081_errorForUsingPropertyOfTypeAsType03",
+      "source": "tests/cases/compiler/errorForUsingPropertyOfTypeAsType03.ts",
+      "source_sha256": "650c745ae1cef01b60da6448c34780bda9e2975fe2bd97ea20f9eb2322586c6b",
+      "baseline": "tests/baselines/reference/errorForUsingPropertyOfTypeAsType03.errors.txt",
+      "baseline_sha256": "422e191645c0c2855b6439bf4cf5ac996af9c79173997b318e56390f563dc004",
+      "feature": "objects",
+      "codes": [
+        2339,
+        2702,
+        2713,
+        2749
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "082_unusedDestructuring",
+      "source": "tests/cases/compiler/unusedDestructuring.ts",
+      "source_sha256": "c739541d7c38a83bf7dd8f8bff013c0f15e0a57687ff2ad5a63ce3e7bda86d39",
+      "baseline": "tests/baselines/reference/unusedDestructuring.errors.txt",
+      "baseline_sha256": "894e395772613c46ec6142410cc7e78937d84cbddc8a3a94b664940da295777f",
+      "feature": "other",
+      "codes": [
+        6133,
+        6198,
+        6199
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": false,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true
+      }
+    },
+    {
+      "id": "083_indirectSelfReferenceGeneric",
+      "source": "tests/cases/compiler/indirectSelfReferenceGeneric.ts",
+      "source_sha256": "2032bba1496d6c8c8a6a3874d9f9a92dff7bf4be5916dc69f9e1c23abb3211d7",
+      "baseline": "tests/baselines/reference/indirectSelfReferenceGeneric.errors.txt",
+      "baseline_sha256": "3084ceaddae0b697e3eb7ddcd34187feb2972f93870ff3540a82309f5ec1d562",
+      "feature": "generics",
+      "codes": [
+        2449,
+        2506
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "084_thisInModule",
+      "source": "tests/cases/compiler/thisInModule.ts",
+      "source_sha256": "7c747af75d1a6d81733ab3cb781a3b6d1e00785b5abf7887722a8f361153975f",
+      "baseline": "tests/baselines/reference/thisInModule.errors.txt",
+      "baseline_sha256": "d14cb3a34f6eea9489958aaf13d9bd60a6023c5a5b7f1cd13667d84b7b8b4708",
+      "feature": "modules",
+      "codes": [
+        2331,
+        2683
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "085_narrowSwitchOptionalChainContainmentEvolvingArrayNoCrash1",
+      "source": "tests/cases/compiler/narrowSwitchOptionalChainContainmentEvolvingArrayNoCrash1.ts",
+      "source_sha256": "c79204c0d1fe4d6f565e84b8d054186ef0248a869ef6d1c3b6f7668eabead604",
+      "baseline": "tests/baselines/reference/narrowSwitchOptionalChainContainmentEvolvingArrayNoCrash1.errors.txt",
+      "baseline_sha256": "f44e7758430e22d8f885ee88d9873be8cf92a851413b685bf0286feda4310810",
+      "feature": "unions",
+      "codes": [
+        7005,
+        7034
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": true
+      }
+    },
+    {
+      "id": "086_noImplicitSymbolToString",
+      "source": "tests/cases/compiler/noImplicitSymbolToString.ts",
+      "source_sha256": "b209d4e106e2b79b46ae44a0f94e76d8d8577e897a25d80bec74bfe371b905c5",
+      "baseline": "tests/baselines/reference/noImplicitSymbolToString.errors.txt",
+      "baseline_sha256": "b3ed50ec32e56ca52a37b751cf0d73999f59a3c2270b0aad264f60dd3bcb694b",
+      "feature": "literals",
+      "codes": [
+        2469,
+        2731
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "087_strictModeInConstructor",
+      "source": "tests/cases/compiler/strictModeInConstructor.ts",
+      "source_sha256": "8c9bffe9c490c8ce3f1090e0520d82f1b926da37d610cef9ac9250fd68a6745e",
+      "baseline": "tests/baselines/reference/strictModeInConstructor.errors.txt",
+      "baseline_sha256": "808b81937a669da176156d9f8694dc036f24343c27d9876b634f9c866f30263c",
+      "feature": "classes",
+      "codes": [
+        2376,
+        17009
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "088_baseConstraintOfDecorator",
+      "source": "tests/cases/compiler/baseConstraintOfDecorator.ts",
+      "source_sha256": "a2e595cd42ee228ec7a9281d1b97ec2af35cd421b600065d3c75f661edaf187b",
+      "baseline": "tests/baselines/reference/baseConstraintOfDecorator.errors.txt",
+      "baseline_sha256": "1d378e8a50879720df9b145523202e8bfdb50201b06f99a1ea93d0c6973f82f9",
+      "feature": "decorators",
+      "codes": [
+        2322,
+        2507,
+        2545
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": false
+      }
+    },
+    {
+      "id": "089_moduleVisibilityTest3",
+      "source": "tests/cases/compiler/moduleVisibilityTest3.ts",
+      "source_sha256": "2370ca2b50f1d6228ef01bf876f8c91af8faee0dc2e67cdeadcb1bfdd6115f80",
+      "baseline": "tests/baselines/reference/moduleVisibilityTest3.errors.txt",
+      "baseline_sha256": "10cc541cfa9ed9212c28cc5e7dc4b8475c5753d0e38d3627389db09bf7eebd81",
+      "feature": "modules",
+      "codes": [
+        2709,
+        2724
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "090_constraintWithIndexedAccess",
+      "source": "tests/cases/compiler/constraintWithIndexedAccess.ts",
+      "source_sha256": "1d6f7868ff4ac59f8cf18fd670f8e1b205e941a9443232a45c148b5e4a7a5e5e",
+      "baseline": "tests/baselines/reference/constraintWithIndexedAccess.errors.txt",
+      "baseline_sha256": "0b083d54a857328c2e7b951bac1a73385bec625612b6ab62b15967d3baec42ff",
+      "feature": "generics",
+      "codes": [
+        2344,
+        2536
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "091_excessivelyLargeTupleSpread",
+      "source": "tests/cases/compiler/excessivelyLargeTupleSpread.ts",
+      "source_sha256": "69d815b2423930f593952a9dbcdcf70c1e72882b53a9e9f083883d1a58edd386",
+      "baseline": "tests/baselines/reference/excessivelyLargeTupleSpread.errors.txt",
+      "baseline_sha256": "5d66986c8be9576cfc1666bcd5b8ee10539c3d45c3fb6b181a70f5de651124c3",
+      "feature": "arrays",
+      "codes": [
+        2799,
+        2800
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "092_omittedExpressionForOfLoop",
+      "source": "tests/cases/compiler/omittedExpressionForOfLoop.ts",
+      "source_sha256": "1de292f022a4a1618462602894ef7f273200be0880c49a5ff970e24702a298c6",
+      "baseline": "tests/baselines/reference/omittedExpressionForOfLoop.errors.txt",
+      "baseline_sha256": "70040a1f1b5b8a32750ff000afbbca727733e4d267052cf02edf75539aa1f387",
+      "feature": "control",
+      "codes": [
+        2304,
+        2488,
+        18050
+      ],
+      "options": {
+        "strict": true,
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "093_typeOfEnumAndVarRedeclarations",
+      "source": "tests/cases/compiler/typeOfEnumAndVarRedeclarations.ts",
+      "source_sha256": "5d89e8cb05cb7867b347acacb8e94b650df2489cb3c42747a7a5e8d404a12bd8",
+      "baseline": "tests/baselines/reference/typeOfEnumAndVarRedeclarations.errors.txt",
+      "baseline_sha256": "33cf91cc034292ad0d548f0de518ff5cdab8e8d352d7704817484f2729c87bf9",
+      "feature": "enums",
+      "codes": [
+        2374,
+        2403
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "094_assignmentToParenthesizedExpression1",
+      "source": "tests/cases/compiler/assignmentToParenthesizedExpression1.ts",
+      "source_sha256": "3396892af776a4c414b774ba86c6a89b4eb8e522325bc98446b494b43a25f17c",
+      "baseline": "tests/baselines/reference/assignmentToParenthesizedExpression1.errors.txt",
+      "baseline_sha256": "eeece8e84366ec62d01f30e517e4355ecbf1cd3d7129b714089b044abb8186b0",
+      "feature": "operators",
+      "codes": [
+        2364,
+        2695
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "095_interfaceExtendsClassWithPrivate1",
+      "source": "tests/cases/compiler/interfaceExtendsClassWithPrivate1.ts",
+      "source_sha256": "0768435444201e1b0157ea30e23b83729514341f3e4a094ae021077e337d6d6d",
+      "baseline": "tests/baselines/reference/interfaceExtendsClassWithPrivate1.errors.txt",
+      "baseline_sha256": "3f63a22483af7cbec20fed9314d1f319c0faa0ef1c273857213480afea35dc96",
+      "feature": "classes",
+      "codes": [
+        2739,
+        2741
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "096_importDeclRefereingExternalModuleWithNoResolve",
+      "source": "tests/cases/compiler/importDeclRefereingExternalModuleWithNoResolve.ts",
+      "source_sha256": "57586ef59062e7b48197f731d3853864981f1e99eb9eddf22c9f4b7826573186",
+      "baseline": "tests/baselines/reference/importDeclRefereingExternalModuleWithNoResolve.errors.txt",
+      "baseline_sha256": "2d6aaf4736eb585e94e8eee0f5f1f43c5c87d751a94e48b21a9cc9efeae91644",
+      "feature": "modules",
+      "codes": [
+        2307,
+        2664
+      ],
+      "options": {
+        "target": "es2015",
+        "module": "commonjs",
+        "noResolve": true
+      }
+    },
+    {
+      "id": "097_mappedTypeGenericWithKnownKeys",
+      "source": "tests/cases/compiler/mappedTypeGenericWithKnownKeys.ts",
+      "source_sha256": "92448aff73776a94da549fce6c1e5350c3480bb627aa379321653101394c9b68",
+      "baseline": "tests/baselines/reference/mappedTypeGenericWithKnownKeys.errors.txt",
+      "baseline_sha256": "e626dbe207b8252b6262a2981431b22d5c7f40a7667ec02e50b186dc6875ed93",
+      "feature": "generics",
+      "codes": [
+        2551,
+        2862
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": true
+      }
+    },
+    {
+      "id": "098_moduleAugmentationGlobal7_1",
+      "source": "tests/cases/compiler/moduleAugmentationGlobal7_1.ts",
+      "source_sha256": "ec55cf0b0ee51f099ac036958373b79a81185591a2c785cc5dc72c9858239eb8",
+      "baseline": "tests/baselines/reference/moduleAugmentationGlobal7_1.errors.txt",
+      "baseline_sha256": "bee51de768e5c56ca254834ee7b98cbb73f3f4a264f833d4a7865d73e559e001",
+      "feature": "modules",
+      "codes": [
+        2669,
+        2670
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": false
+      }
+    },
+    {
+      "id": "099_untypedFunctionCallsWithTypeParameters1",
+      "source": "tests/cases/compiler/untypedFunctionCallsWithTypeParameters1.ts",
+      "source_sha256": "769b7bf5b391cf18979ffbffb5d43696b3d0f47525ea08db04bdc38f48975679",
+      "baseline": "tests/baselines/reference/untypedFunctionCallsWithTypeParameters1.errors.txt",
+      "baseline_sha256": "a0f8a9d0a8ac5758f1f3b0c76fbb874926b1f1cdf600c207d026d74a7820a516",
+      "feature": "generics",
+      "codes": [
+        2347,
+        2349,
+        2420,
+        2558
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": false
+      }
+    },
+    {
+      "id": "100_scopeCheckExtendedClassInsidePublicMethod2",
+      "source": "tests/cases/compiler/scopeCheckExtendedClassInsidePublicMethod2.ts",
+      "source_sha256": "3fee7819c3440f5cbb728600e629dd04f5e186c48c23890a6f0f1c5f0a4b7ad0",
+      "baseline": "tests/baselines/reference/scopeCheckExtendedClassInsidePublicMethod2.errors.txt",
+      "baseline_sha256": "dcfd4bae2a7975c8553dae1df2b28bce1de53d460637f7910aeda5731b599708",
+      "feature": "classes",
+      "codes": [
+        2662,
+        2663
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": false
+      }
+    },
+    {
+      "id": "101_noUncheckedIndexedAccessCompoundAssignments",
+      "source": "tests/cases/compiler/noUncheckedIndexedAccessCompoundAssignments.ts",
+      "source_sha256": "6b2e8b6c8dc5388e5dde41f00adf406a2fe41de3a44a0f1758219fb71c8ef795",
+      "baseline": "tests/baselines/reference/noUncheckedIndexedAccessCompoundAssignments.errors.txt",
+      "baseline_sha256": "a7c0f16b78ced140d675e0fde3e71d256595f03f1b4647f6fb959ca4eea5b416",
+      "feature": "operators",
+      "codes": [
+        2532,
+        18048
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": true,
+        "noUncheckedIndexedAccess": true
+      }
+    },
+    {
+      "id": "102_implicitAnyDeclareTypePropertyWithoutType",
+      "source": "tests/cases/compiler/implicitAnyDeclareTypePropertyWithoutType.ts",
+      "source_sha256": "9f4fca02e4c792010a9cca200b7404eb9a5600bdbf6c631cdabb3e4c24b513af",
+      "baseline": "tests/baselines/reference/implicitAnyDeclareTypePropertyWithoutType.errors.txt",
+      "baseline_sha256": "882156dc329069b319fe56a0c355870cccab1d44d376c233f93bb636efb5ffb6",
+      "feature": "objects",
+      "codes": [
+        7006,
+        7008,
+        7013
+      ],
+      "options": {
+        "target": "es2015",
+        "noImplicitAny": true
+      }
+    },
+    {
+      "id": "103_circularReferenceInReturnType2",
+      "source": "tests/cases/compiler/circularReferenceInReturnType2.ts",
+      "source_sha256": "36d805194f1862d96d35bd157f5755f18b94d3c7de83fe547baf9769cc4b95c6",
+      "baseline": "tests/baselines/reference/circularReferenceInReturnType2.errors.txt",
+      "baseline_sha256": "910aeec2b8770d4887c9a7dfe447e15c9a38fc60b5e96fbf97927fb4082f17e2",
+      "feature": "functions",
+      "codes": [
+        7022,
+        7023
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": true
+      }
+    },
+    {
+      "id": "104_mixedStaticAndInstanceClassMembers",
+      "source": "tests/cases/compiler/mixedStaticAndInstanceClassMembers.ts",
+      "source_sha256": "e2dc31f8ae905c102a3b14a5d8b5cba4b862fb8f3abf795334f11894702cb783",
+      "baseline": "tests/baselines/reference/mixedStaticAndInstanceClassMembers.errors.txt",
+      "baseline_sha256": "7029b68716eac970a8dd2a2652fcfd65b08060fd371b53a7306c23543b09bee2",
+      "feature": "classes",
+      "codes": [
+        2387,
+        2388
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "105_exportDefaultTypeClassAndValue",
+      "source": "tests/cases/compiler/exportDefaultTypeClassAndValue.ts",
+      "source_sha256": "64009a028f946fe4322ed75947933cb586f0b3caf716606a5ec975269697d08b",
+      "baseline": "tests/baselines/reference/exportDefaultTypeClassAndValue.errors.txt",
+      "baseline_sha256": "f39990d747150fefacf50adf74d33ad2dba19cb640ea54b0c87b96f4d5e32360",
+      "feature": "modules",
+      "codes": [
+        2323,
+        2528
+      ],
+      "options": {
+        "module": "commonjs",
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "106_interfaceMergeWithNonGenericTypeArguments",
+      "source": "tests/cases/compiler/interfaceMergeWithNonGenericTypeArguments.ts",
+      "source_sha256": "c44f6c6d699086ced40f54df868968b30dea8b47400b48c2eb548aa8374e027e",
+      "baseline": "tests/baselines/reference/interfaceMergeWithNonGenericTypeArguments.errors.txt",
+      "baseline_sha256": "706281917f719e6267ec16184f3c24247cadce196f4b1448ba057e530c28aaf6",
+      "feature": "generics",
+      "codes": [
+        2315,
+        2346
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "107_objectFreeze",
+      "source": "tests/cases/compiler/objectFreeze.ts",
+      "source_sha256": "52010940f39ab92cdd5834fcb77d14f0ea590879ad27066197f980d65fd86fd8",
+      "baseline": "tests/baselines/reference/objectFreeze.errors.txt",
+      "baseline_sha256": "bcf6ce21ad8e5a4090a3f77a5b5ec0183ef5eaebd678f25eb0678f86d77d173f",
+      "feature": "objects",
+      "codes": [
+        2322,
+        2540,
+        2542
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "108_redeclareParameterInCatchBlock",
+      "source": "tests/cases/compiler/redeclareParameterInCatchBlock.ts",
+      "source_sha256": "318425110bf339ee4391af78ec74e18982376994cbea67ebf28042bfe398cc57",
+      "baseline": "tests/baselines/reference/redeclareParameterInCatchBlock.errors.txt",
+      "baseline_sha256": "53d569d13395b08bc22aebb3172cf846b23ea2d9e6742b745acaea3ea3ffe513",
+      "feature": "functions",
+      "codes": [
+        2451,
+        2492
+      ],
+      "options": {
+        "strict": false,
+        "target": "es6"
+      }
+    },
+    {
+      "id": "109_classExtendsNull2",
+      "source": "tests/cases/compiler/classExtendsNull2.ts",
+      "source_sha256": "f7b3c7d00af48418d935e3f51f892ac6e368255148ebb2f3ac6a00a142e7add0",
+      "baseline": "tests/baselines/reference/classExtendsNull2.errors.txt",
+      "baseline_sha256": "180e3de47ff16222f5b6bb10b451cbbec0ef03786957e3813608f0a17dbfcf82",
+      "feature": "classes",
+      "codes": [
+        2417,
+        17005
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": true
+      }
+    },
+    {
+      "id": "110_importDeclWithExportModifierAndExportAssignment",
+      "source": "tests/cases/compiler/importDeclWithExportModifierAndExportAssignment.ts",
+      "source_sha256": "42555dc105362bb3c398a5a46b3b94947359216a376fd337b756fcb0c17248ff",
+      "baseline": "tests/baselines/reference/importDeclWithExportModifierAndExportAssignment.errors.txt",
+      "baseline_sha256": "cf9bdb37ed147c7b53c1e7e0d9a6a57a035af085f12174da22b09ff4224617ed",
+      "feature": "modules",
+      "codes": [
+        2309,
+        2694,
+        2708
+      ],
+      "options": {
+        "target": "es2015",
+        "module": "commonjs"
+      }
+    },
+    {
+      "id": "111_circularlyReferentialInterfaceAccessNoCrash",
+      "source": "tests/cases/compiler/circularlyReferentialInterfaceAccessNoCrash.ts",
+      "source_sha256": "82d1f32750b0a0211de8d55ec92c2fbb557e191d199d8ca7639ffcd0471221c6",
+      "baseline": "tests/baselines/reference/circularlyReferentialInterfaceAccessNoCrash.errors.txt",
+      "baseline_sha256": "d22c59c7b4edb89b813949d21399fea9ac230498d7f877107a28b5c37324a1c4",
+      "feature": "objects",
+      "codes": [
+        4109,
+        4110
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "112_noImplicitAnyParametersInInterface",
+      "source": "tests/cases/compiler/noImplicitAnyParametersInInterface.ts",
+      "source_sha256": "5e9b6556ec56ad5c9d3fed34864c3c71d11f74e137a680195d98d174bc22a6f9",
+      "baseline": "tests/baselines/reference/noImplicitAnyParametersInInterface.errors.txt",
+      "baseline_sha256": "8729a8474c70b06ecef5749f3e7474e9429d660402f25b698d4efb15fbb83e2f",
+      "feature": "functions",
+      "codes": [
+        7006,
+        7019,
+        7020
+      ],
+      "options": {
+        "target": "es2015",
+        "noImplicitAny": true
+      }
+    },
+    {
+      "id": "113_duplicateSymbolsExportMatching",
+      "source": "tests/cases/compiler/duplicateSymbolsExportMatching.ts",
+      "source_sha256": "eeab7816dc2535ade117e692be04b8b863a719e19006e36ce3e3a80b6fd669fe",
+      "baseline": "tests/baselines/reference/duplicateSymbolsExportMatching.errors.txt",
+      "baseline_sha256": "08012bfa81aa705353185dc2985f48c5a663c235b448b2f9a7e11ff626bfab7d",
+      "feature": "modules",
+      "codes": [
+        2395,
+        2434
+      ],
+      "options": {
+        "target": "es2015",
+        "module": "commonjs"
+      }
+    },
+    {
+      "id": "114_truthinessPromiseCoercion",
+      "source": "tests/cases/compiler/truthinessPromiseCoercion.ts",
+      "source_sha256": "ba6bcefc95fd857897d12f9c32bfbf36264f753aa1c65ecd7cf42d2490147155",
+      "baseline": "tests/baselines/reference/truthinessPromiseCoercion.errors.txt",
+      "baseline_sha256": "9075bfef1057fc6359d3ded7367ab4a211b9de1fd74b96cebe4fb5fe0f117a9c",
+      "feature": "async",
+      "codes": [
+        2801
+      ],
+      "options": {
+        "strictNullChecks": true,
+        "target": "esnext"
+      }
+    },
+    {
+      "id": "115_unusedClassesinNamespace4",
+      "source": "tests/cases/compiler/unusedClassesinNamespace4.ts",
+      "source_sha256": "5f6791697df65a76445d5a8be37708675ffc10e5274d8760f8928ec5d1b9f80c",
+      "baseline": "tests/baselines/reference/unusedClassesinNamespace4.errors.txt",
+      "baseline_sha256": "66dc06f373ec76e1e5d943b30a12dc7a23d36f87fbdffab71ee51ca65d52a1fb",
+      "feature": "namespaces",
+      "codes": [
+        6196
+      ],
+      "options": {
+        "target": "es2015",
+        "noUnusedLocals": true,
+        "noUnusedParameters": true
+      }
+    },
+    {
+      "id": "116_recursivelyExpandingUnionNoStackoverflow",
+      "source": "tests/cases/compiler/recursivelyExpandingUnionNoStackoverflow.ts",
+      "source_sha256": "b91f3bcf0493ee5ae156969ce0c9680bcccd46f85087cc76f602cd82a072aa55",
+      "baseline": "tests/baselines/reference/recursivelyExpandingUnionNoStackoverflow.errors.txt",
+      "baseline_sha256": "0f6f6ad7ebf5260862cf8b39f3805769993b4584a67749bc56671ae599e52eb1",
+      "feature": "unions",
+      "codes": [
+        2589,
+        2615
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "117_typeUsedAsTypeLiteralIndex",
+      "source": "tests/cases/compiler/typeUsedAsTypeLiteralIndex.ts",
+      "source_sha256": "0252b988e39877abfbe1b4eccfd6b37fcfa98ec9f0f7426a9eb86772218b8103",
+      "baseline": "tests/baselines/reference/typeUsedAsTypeLiteralIndex.errors.txt",
+      "baseline_sha256": "81379c476425212f64392a4088f419d8abec2990a27a499e6913cf8dfe86f878",
+      "feature": "literals",
+      "codes": [
+        2690,
+        2693
+      ],
+      "options": {
+        "target": "esnext"
+      }
+    },
+    {
+      "id": "118_anyMappedTypesError",
+      "source": "tests/cases/compiler/anyMappedTypesError.ts",
+      "source_sha256": "8779090836df82016940404135adc7a4ff4c7454aca15316ec26b9020faf72a6",
+      "baseline": "tests/baselines/reference/anyMappedTypesError.errors.txt",
+      "baseline_sha256": "7f7d86f97e66a536d26716e639f1163f495f959d2b0ccbaa2a11200ac92c1462",
+      "feature": "types",
+      "codes": [
+        7039
+      ],
+      "options": {
+        "target": "es2015",
+        "noImplicitAny": true
+      }
+    },
+    {
+      "id": "119_yieldExpressionInFlowLoop",
+      "source": "tests/cases/compiler/yieldExpressionInFlowLoop.ts",
+      "source_sha256": "bb078423be2507906d12b3f367312e797cd8ccbd6355c8b3dd695316765ceb51",
+      "baseline": "tests/baselines/reference/yieldExpressionInFlowLoop.errors.txt",
+      "baseline_sha256": "e9d771df1782d8341b1e49a8146d2091d0c881cc8c7fd5a9319ecc92236ad7df",
+      "feature": "async",
+      "codes": [
+        7057
+      ],
+      "options": {
+        "noImplicitAny": true,
+        "target": "es6"
+      }
+    },
+    {
+      "id": "120_excessPropertyCheckWithSpread",
+      "source": "tests/cases/compiler/excessPropertyCheckWithSpread.ts",
+      "source_sha256": "5714d568e987fd47d6f6f5642fe5a941f5bf974d128302a3c86aa58c97525c5f",
+      "baseline": "tests/baselines/reference/excessPropertyCheckWithSpread.errors.txt",
+      "baseline_sha256": "b79f20b41f491c000fc440dee903cc7bb9bfa5aaa27125ca62a7a622a17a79df",
+      "feature": "arrays",
+      "codes": [
+        2842
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": false
+      }
+    },
+    {
+      "id": "121_switchCasesExpressionTypeMismatch",
+      "source": "tests/cases/compiler/switchCasesExpressionTypeMismatch.ts",
+      "source_sha256": "01f9b762ac68c65a5f87ad62c28606da8879d0b3c5629722d4d61562404c2160",
+      "baseline": "tests/baselines/reference/switchCasesExpressionTypeMismatch.errors.txt",
+      "baseline_sha256": "14d9c0b1ab9d49aa0e4ac896ee09edfcd14b0fbf3b141d87ba2583460eabcebd",
+      "feature": "control",
+      "codes": [
+        2678
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "122_literalsInComputedProperties1",
+      "source": "tests/cases/compiler/literalsInComputedProperties1.ts",
+      "source_sha256": "54c9b04745046155c55ce1c766de667a37ad625f1a5e63db00b9a577a796061a",
+      "baseline": "tests/baselines/reference/literalsInComputedProperties1.errors.txt",
+      "baseline_sha256": "3865cb5711c333508621c57355df69bd96991741bae0304e0352dc9ad98faf7d",
+      "feature": "literals",
+      "codes": [
+        2452
+      ],
+      "options": {
+        "target": "es2015",
+        "noImplicitAny": true
+      }
+    },
+    {
+      "id": "123_narrowByEquality",
+      "source": "tests/cases/compiler/narrowByEquality.ts",
+      "source_sha256": "a381cd0e0e12ddc2e463d1c38aad797691138d998fc8475ff1f50b8463fe0d38",
+      "baseline": "tests/baselines/reference/narrowByEquality.errors.txt",
+      "baseline_sha256": "2214dcaa8cf218286656610cf6966928f0549fec3dd4a85689eff25b5b48bac6",
+      "feature": "unions",
+      "codes": [
+        2322,
+        2839
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": true
+      }
+    },
+    {
+      "id": "124_this_inside-enum-should-not-be-allowed",
+      "source": "tests/cases/compiler/this_inside-enum-should-not-be-allowed.ts",
+      "source_sha256": "091cf5759ad57858b272cbf04ec7cd244045d461c881877980f2ffe163ffc2df",
+      "baseline": "tests/baselines/reference/this_inside-enum-should-not-be-allowed.errors.txt",
+      "baseline_sha256": "fa6d649805bd340a84972335f25a598271358e3641ac962130daf8c4cc093d4e",
+      "feature": "enums",
+      "codes": [
+        2332,
+        2683
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "125_noMappedGetSet",
+      "source": "tests/cases/compiler/noMappedGetSet.ts",
+      "source_sha256": "dba9d259160aad84c8bc40d664918ec0c92830349403d755ffc0fbb18acd6959",
+      "baseline": "tests/baselines/reference/noMappedGetSet.errors.txt",
+      "baseline_sha256": "ce36e00e4c097638ab6acd7ab06c1560344b915ccc40750f62499b8e0b82d287",
+      "feature": "types",
+      "codes": [
+        2304,
+        2464
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "126_restInvalidArgumentType",
+      "source": "tests/cases/compiler/restInvalidArgumentType.ts",
+      "source_sha256": "9b5df0414c11228411846e7aec422ae971a50b7ceb96545ef832d4538921ddae",
+      "baseline": "tests/baselines/reference/restInvalidArgumentType.errors.txt",
+      "baseline_sha256": "72662549d754285c060a98c16531b2dc66e37fc99c9195aa618214ec1b62204c",
+      "feature": "arrays",
+      "codes": [
+        2454,
+        2700
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "127_forInStatement4",
+      "source": "tests/cases/compiler/forInStatement4.ts",
+      "source_sha256": "f1f6a82fe0478b2b8442e61aa3fec7da851a76674166f3cace87994de3cd0eb9",
+      "baseline": "tests/baselines/reference/forInStatement4.errors.txt",
+      "baseline_sha256": "6c714e6cd9ea513d167f5106cf4f6f5cdca984d6f14c0ade20f5d10d7c67327d",
+      "feature": "control",
+      "codes": [
+        2404
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": false
+      }
+    },
+    {
+      "id": "128_noImplicitAnyUnionNormalizedObjectLiteral1",
+      "source": "tests/cases/compiler/noImplicitAnyUnionNormalizedObjectLiteral1.ts",
+      "source_sha256": "bd6696cbd7c8c6c5815c95340d8cb5c16051be155c53fba29e530152ddc58f87",
+      "baseline": "tests/baselines/reference/noImplicitAnyUnionNormalizedObjectLiteral1.errors.txt",
+      "baseline_sha256": "61b03c29933b4fdefa68892088013438a171d8aa848e63285900e18cecab9f2c",
+      "feature": "unions",
+      "codes": [
+        7018
+      ],
+      "options": {
+        "target": "es2015",
+        "strictNullChecks": false,
+        "noImplicitAny": true
+      }
+    },
+    {
+      "id": "129_enumWithPrimitiveName",
+      "source": "tests/cases/compiler/enumWithPrimitiveName.ts",
+      "source_sha256": "ffb203a9a36214e9198c9a61809e845ee3277980886f8550e62f02ec5c2c1e9a",
+      "baseline": "tests/baselines/reference/enumWithPrimitiveName.errors.txt",
+      "baseline_sha256": "1aaff08f388e25b203b0d3feef0630565736bdd0491bdd0c311f55f5066a9fe0",
+      "feature": "enums",
+      "codes": [
+        2431
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "130_inheritedStringIndexersFromDifferentBaseTypes2",
+      "source": "tests/cases/compiler/inheritedStringIndexersFromDifferentBaseTypes2.ts",
+      "source_sha256": "bf29c60ab9d4aed5bc8642c300b559a17ffa3c7612ced050fe9d876a0c95fa5b",
+      "baseline": "tests/baselines/reference/inheritedStringIndexersFromDifferentBaseTypes2.errors.txt",
+      "baseline_sha256": "b5876bb524a990a2951796a8f6090b50acb5b49c2b2ebf9029c207cd68a3d553",
+      "feature": "literals",
+      "codes": [
+        2413
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": false
+      }
+    },
+    {
+      "id": "131_errorsForCallAndAssignmentAreSimilar",
+      "source": "tests/cases/compiler/errorsForCallAndAssignmentAreSimilar.ts",
+      "source_sha256": "840909e67077f7731090882e39191d1474c5d535239b62d481f0934e8f04a9ce",
+      "baseline": "tests/baselines/reference/errorsForCallAndAssignmentAreSimilar.errors.txt",
+      "baseline_sha256": "38ff4d179fd45828c7bd99728601f63bbdb0e89cf6503b57753d77d6bf7dffe8",
+      "feature": "operators",
+      "codes": [
+        2820
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "132_missingCommaInTemplateStringsArray",
+      "source": "tests/cases/compiler/missingCommaInTemplateStringsArray.ts",
+      "source_sha256": "db91c9852006d0d6a46f7cbc9343d89be44628c3f0827507e49ac018ad6c5923",
+      "baseline": "tests/baselines/reference/missingCommaInTemplateStringsArray.errors.txt",
+      "baseline_sha256": "157d538ff9505ec33c3576d988b7663be79460a6b32629f0977ca6ba85a14d09",
+      "feature": "arrays",
+      "codes": [
+        2796
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "133_forInStatement2",
+      "source": "tests/cases/compiler/forInStatement2.ts",
+      "source_sha256": "802d3d2d3ae33c52c392096c63acfa3f55143268c36e96e689e14e98fccb5fc8",
+      "baseline": "tests/baselines/reference/forInStatement2.errors.txt",
+      "baseline_sha256": "ea570c6df2e6d508d9cf7487a81793c4c7cb25452584eb3618f807f48eda3f9b",
+      "feature": "control",
+      "codes": [
+        2407
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": false
+      }
+    },
+    {
+      "id": "134_augmentedTypesEnum",
+      "source": "tests/cases/compiler/augmentedTypesEnum.ts",
+      "source_sha256": "1a3f063e5f7ebe5c63ac0914f9bf9afc0b1dd3a100c4db068ee0c17054ec84c6",
+      "baseline": "tests/baselines/reference/augmentedTypesEnum.errors.txt",
+      "baseline_sha256": "d039a8c22054ab8890835e8ae52c33f4c087369c9b16fc83ae41aa2f4a657697",
+      "feature": "enums",
+      "codes": [
+        2300,
+        2432,
+        2567
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "135_narrowingTruthyObject",
+      "source": "tests/cases/compiler/narrowingTruthyObject.ts",
+      "source_sha256": "dc42575cc2d6c818da7c8b9085666d734ead9a4cf44eceb71d2a9da53bfac6d8",
+      "baseline": "tests/baselines/reference/narrowingTruthyObject.errors.txt",
+      "baseline_sha256": "e9d69ec3a50001ca55bcc8ef7c7b1bb2a45c77a79b4422aea91363525eef123d",
+      "feature": "unions",
+      "codes": [
+        18047
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": true
+      }
+    },
+    {
+      "id": "136_nestedFreshLiteral",
+      "source": "tests/cases/compiler/nestedFreshLiteral.ts",
+      "source_sha256": "6b14e6d6e095edc389a84872a119935640a1cf90fa963e504b16c4a4bfb3134f",
+      "baseline": "tests/baselines/reference/nestedFreshLiteral.errors.txt",
+      "baseline_sha256": "0e4756bea338845828b786828fd688b3138c1f74036c664f425917f86be6d0f6",
+      "feature": "literals",
+      "codes": [
+        2561
+      ],
+      "options": {
+        "target": "es2015",
+        "strictNullChecks": true
+      }
+    },
+    {
+      "id": "137_duplicateErrorNameNotFound",
+      "source": "tests/cases/compiler/duplicateErrorNameNotFound.ts",
+      "source_sha256": "62d186378e7ab7ab10d162fe9c27c75e23e62a48e19ebbd62226dbfb5b270d0f",
+      "baseline": "tests/baselines/reference/duplicateErrorNameNotFound.errors.txt",
+      "baseline_sha256": "026a0909ae0dfc7fcec15d66991b8b91d7e2922beaf2b5a8d9e09708a6b397c6",
+      "feature": "other",
+      "codes": [
+        2552
+      ],
+      "options": {
+        "module": "commonjs",
+        "target": "es2015",
+        "strict": true
+      }
+    },
+    {
+      "id": "138_voidAsOperator",
+      "source": "tests/cases/compiler/voidAsOperator.ts",
+      "source_sha256": "c92add9a4880291095ea6931e2c53714661b54321c17111cd7e06159bc3fdb6b",
+      "baseline": "tests/baselines/reference/voidAsOperator.errors.txt",
+      "baseline_sha256": "30d42e13fc49fd39e3bb1dffefc4025815ff2a64269bc7c1ee3b7f8a79422ff8",
+      "feature": "operators",
+      "codes": [
+        2873
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "139_typeParametersInStaticAccessors",
+      "source": "tests/cases/compiler/typeParametersInStaticAccessors.ts",
+      "source_sha256": "d73aa48f356a01f26de87b773a461c69e619ba7699805220dccc6c90e9651908",
+      "baseline": "tests/baselines/reference/typeParametersInStaticAccessors.errors.txt",
+      "baseline_sha256": "7fa8347a62b4c4ca2bf2971994ccec9168bbd110a1d6307d99275843db00cf32",
+      "feature": "generics",
+      "codes": [
+        2302,
+        2322
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "140_arrayAssignmentTest5",
+      "source": "tests/cases/compiler/arrayAssignmentTest5.ts",
+      "source_sha256": "3ddc99ac1461df61b26572ce47b65baba2dfd7e779007ffa399dc488f52930b7",
+      "baseline": "tests/baselines/reference/arrayAssignmentTest5.errors.txt",
+      "baseline_sha256": "ac6b89b55dd80f53dc4868a0c6e024a72c066b48ef0ad5ec38f21f90e023bc7a",
+      "feature": "arrays",
+      "codes": [
+        2322,
+        2366
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "141_forInStrictNullChecksNoError",
+      "source": "tests/cases/compiler/forInStrictNullChecksNoError.ts",
+      "source_sha256": "c01228a5bb0a8aeb7532d797695fb2e4aaa83afea5f3dacc2b617d956dd60d84",
+      "baseline": "tests/baselines/reference/forInStrictNullChecksNoError.errors.txt",
+      "baseline_sha256": "d3d2a96c4873451cb7254a423e3cedcbeafec6e54225a64cbf9842663a7ebd45",
+      "feature": "control",
+      "codes": [
+        18049
+      ],
+      "options": {
+        "target": "es2015",
+        "strictNullChecks": true
+      }
+    },
+    {
+      "id": "142_spreadUnionPropOverride",
+      "source": "tests/cases/compiler/spreadUnionPropOverride.ts",
+      "source_sha256": "8d0cf2dc6d33b26d63e9efae172d5e6e6dd2e3bfd685f658bf4942e9b55cb7ad",
+      "baseline": "tests/baselines/reference/spreadUnionPropOverride.errors.txt",
+      "baseline_sha256": "0b423558da33caa358c5e1bc813f19ed150e9afbbf49a48602b26c5d89f4fcfd",
+      "feature": "unions",
+      "codes": [
+        2783
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": true
+      }
+    },
+    {
+      "id": "143_enumPropertyAccessBeforeInitalisation",
+      "source": "tests/cases/compiler/enumPropertyAccessBeforeInitalisation.ts",
+      "source_sha256": "aeb53f1d27c5fdeb37f52e138fa03961b5edf9b8cd8e393a5a3fbae5fa186f11",
+      "baseline": "tests/baselines/reference/enumPropertyAccessBeforeInitalisation.errors.txt",
+      "baseline_sha256": "1788dc3d4ff38f1eb062d788039f90a7ea7b87f81815ccd27bc6c2626acb7e20",
+      "feature": "enums",
+      "codes": [
+        2565
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "144_inheritedStringIndexersFromDifferentBaseTypes",
+      "source": "tests/cases/compiler/inheritedStringIndexersFromDifferentBaseTypes.ts",
+      "source_sha256": "20f6adc5df3639986e7bdc60e1dbfe9116e6713e54f8451044c4e8ad73e5d139",
+      "baseline": "tests/baselines/reference/inheritedStringIndexersFromDifferentBaseTypes.errors.txt",
+      "baseline_sha256": "0d33c35d9fe6b7738adb916e6a48752532432c5b45aca897d65edec68d3e7f95",
+      "feature": "literals",
+      "codes": [
+        2430
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "145_ClassDeclaration10",
+      "source": "tests/cases/compiler/ClassDeclaration10.ts",
+      "source_sha256": "9b21451d07676da6d5443be8c3dd83ff8abbf3985c853e587a1b53eb6087a8c3",
+      "baseline": "tests/baselines/reference/ClassDeclaration10.errors.txt",
+      "baseline_sha256": "d881faaaf615d1a4bf9469980d9b580939dc0e1ae345bc3037a513792cd84d56",
+      "feature": "classes",
+      "codes": [
+        2390,
+        2391
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": false
+      }
+    },
+    {
+      "id": "146_noImplicitAnyIndexing",
+      "source": "tests/cases/compiler/noImplicitAnyIndexing.ts",
+      "source_sha256": "907a10e799a6c4f61e62ad021ab4ec5b688abd3a249565c16fbaa6732ec231d5",
+      "baseline": "tests/baselines/reference/noImplicitAnyIndexing.errors.txt",
+      "baseline_sha256": "7cbeeb376d60e921142b3f88fa7830dbdf05844d39ddb87ec09509d77b05b63a",
+      "feature": "other",
+      "codes": [
+        2339,
+        7015,
+        7053
+      ],
+      "options": {
+        "target": "es2015",
+        "noImplicitAny": true
+      }
+    },
+    {
+      "id": "147_genericMappedTypeAsClause",
+      "source": "tests/cases/compiler/genericMappedTypeAsClause.ts",
+      "source_sha256": "bfe97d4bf852b2e1e7d52ec23ef53e157c86a252bf253fdcd6169079a5a5ecd9",
+      "baseline": "tests/baselines/reference/genericMappedTypeAsClause.errors.txt",
+      "baseline_sha256": "bdc2895b98ee252c778002d7856740bf7d0dfe6401cae29791f20c4d4139cf21",
+      "feature": "generics",
+      "codes": [
+        2312,
+        2322,
+        2353
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": true
+      }
+    },
+    {
+      "id": "148_nonArrayRestArgs",
+      "source": "tests/cases/compiler/nonArrayRestArgs.ts",
+      "source_sha256": "0ba22df02e00aa56090f6100e07e207589b2d69634cc3393ee4fc7541ba1e8d3",
+      "baseline": "tests/baselines/reference/nonArrayRestArgs.errors.txt",
+      "baseline_sha256": "7e0975ea37d746d6591bd7b092943331fef1302fbf03ef857c1cb0d58a157e3e",
+      "feature": "arrays",
+      "codes": [
+        2370
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": false
+      }
+    },
+    {
+      "id": "149_undefinedTypeAssignment1",
+      "source": "tests/cases/compiler/undefinedTypeAssignment1.ts",
+      "source_sha256": "30485ef94bfe796dd683bed204f342e9a27058bf2eb534be1ccb0d3e105a4b16",
+      "baseline": "tests/baselines/reference/undefinedTypeAssignment1.errors.txt",
+      "baseline_sha256": "ec5296e842189cf983d024d5d5ce7ae8a67a4e4b581e751fe11fc8fb84a611bc",
+      "feature": "operators",
+      "codes": [
+        2457
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "150_useUnknownInCatchVariables01",
+      "source": "tests/cases/compiler/useUnknownInCatchVariables01.ts",
+      "source_sha256": "64b87c49ce531ea3e8eec25d954e29cd4f987506357cf569031f763a567804c9",
+      "baseline": "tests/baselines/reference/useUnknownInCatchVariables01.errors.txt",
+      "baseline_sha256": "a5a857b534956cc3a0bfc6bf1ecddd4f7519a68b0b62c07f31166a17ca11efec",
+      "feature": "control",
+      "codes": [
+        18046
+      ],
+      "options": {
+        "target": "es2015",
+        "useUnknownInCatchVariables": true
+      }
+    },
+    {
+      "id": "151_normalizedIntersectionTooComplex",
+      "source": "tests/cases/compiler/normalizedIntersectionTooComplex.ts",
+      "source_sha256": "fa1e7c0a14b429d35fbde35176c11573f1a4af21036b1562d90260af5ee3d573",
+      "baseline": "tests/baselines/reference/normalizedIntersectionTooComplex.errors.txt",
+      "baseline_sha256": "5ffdf809897a54151e8c96925f10ad64e7617fe2013def09656772599b2fc99c",
+      "feature": "unions",
+      "codes": [
+        2590,
+        7006
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": true
+      }
+    },
+    {
+      "id": "152_errorOnEnumReferenceInCondition",
+      "source": "tests/cases/compiler/errorOnEnumReferenceInCondition.ts",
+      "source_sha256": "1c3d036be213ab3fc19b034fa4c2dbb97fd7209d22a7a951b2ef1b26209b8985",
+      "baseline": "tests/baselines/reference/errorOnEnumReferenceInCondition.errors.txt",
+      "baseline_sha256": "6bd997df0ddd688024e5edeab7c4234643ca145204929b1c7c1ad01fe8f3ddab",
+      "feature": "enums",
+      "codes": [
+        2845
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": true
+      }
+    },
+    {
+      "id": "153_returnTypeTypeArguments",
+      "source": "tests/cases/compiler/returnTypeTypeArguments.ts",
+      "source_sha256": "cbb5b0b3ab7aff1bc3372d11605fe915e85cfaa4d26337b2e77d4bed709991d7",
+      "baseline": "tests/baselines/reference/returnTypeTypeArguments.errors.txt",
+      "baseline_sha256": "272ea8296531f9d32db373dcf921f0637c396afe26d18a047295aff8bbec9b80",
+      "feature": "functions",
+      "codes": [
+        2314,
+        2564
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "154_emitThisInSuperMethodCall",
+      "source": "tests/cases/compiler/emitThisInSuperMethodCall.ts",
+      "source_sha256": "cd4963e42aa60240c50c17a15a46bee29e0450307a971de5da3109df8e1e0238",
+      "baseline": "tests/baselines/reference/emitThisInSuperMethodCall.errors.txt",
+      "baseline_sha256": "d0dfd32bb2fef3d068ea6c9f6bdce25baaee3a505edc808f80de53a07a243aad",
+      "feature": "classes",
+      "codes": [
+        2660
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "155_varianceReferences",
+      "source": "tests/cases/compiler/varianceReferences.ts",
+      "source_sha256": "90bffe77500a4908162a78782dddfcf3f01aa56d94c89a914921ac5a0844023a",
+      "baseline": "tests/baselines/reference/varianceReferences.errors.txt",
+      "baseline_sha256": "0d5cd3ceb9578151d62b4d41ba970ee819a2740285b25e5eabb85bef7a53ba93",
+      "feature": "other",
+      "codes": [
+        2322,
+        2637
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": true
+      }
+    },
+    {
+      "id": "156_misspelledNewMetaProperty",
+      "source": "tests/cases/compiler/misspelledNewMetaProperty.ts",
+      "source_sha256": "fc5c07a707b2660921bb305c958242b71d82c824a3cd1b6ee795fbc47cb23597",
+      "baseline": "tests/baselines/reference/misspelledNewMetaProperty.errors.txt",
+      "baseline_sha256": "90ceda62ea54d4b76b86441abd00a9d52c1d18df94672a44c45bfc53a1f4d37e",
+      "feature": "objects",
+      "codes": [
+        17012
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "157_varNameConflictsWithImportInDifferentPartOfModule",
+      "source": "tests/cases/compiler/varNameConflictsWithImportInDifferentPartOfModule.ts",
+      "source_sha256": "dedafa88ba7ac50a9a993e0c852049b9a50cccd554e0868a4ba27df54061e1b5",
+      "baseline": "tests/baselines/reference/varNameConflictsWithImportInDifferentPartOfModule.errors.txt",
+      "baseline_sha256": "85e463a38db068c37659fe0c2ff99a3f19afabc832124cabaeb99d66165aac0f",
+      "feature": "modules",
+      "codes": [
+        2440
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "158_incorrectRecursiveMappedTypeConstraint",
+      "source": "tests/cases/compiler/incorrectRecursiveMappedTypeConstraint.ts",
+      "source_sha256": "0b737dc77759de906c998b603a5ee5b9e2fecedf9dee4ef8773ce3423bbd39f9",
+      "baseline": "tests/baselines/reference/incorrectRecursiveMappedTypeConstraint.errors.txt",
+      "baseline_sha256": "18b6dc26bacd21fc03c41fa2378b9aa0dd3c31a899245a394bb8c96bd0ad6aba",
+      "feature": "generics",
+      "codes": [
+        2313,
+        2365
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "159_objectBindingPattern_restElementWithPropertyName",
+      "source": "tests/cases/compiler/objectBindingPattern_restElementWithPropertyName.ts",
+      "source_sha256": "22b258d8c56e99a845c3a55a01f3139ac9fdfc4caf49450418d0236b94d83786",
+      "baseline": "tests/baselines/reference/objectBindingPattern_restElementWithPropertyName.errors.txt",
+      "baseline_sha256": "3fdde5c0280a5e1a2ebdce7d11d2fbd041b3e34768ce54d3374acf62fc2def5d",
+      "feature": "arrays",
+      "codes": [
+        2566
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "160_incompatibleAssignmentOfIdenticallyNamedTypes",
+      "source": "tests/cases/compiler/incompatibleAssignmentOfIdenticallyNamedTypes.ts",
+      "source_sha256": "a6ad9913fe6a1862f48a181e66377f9b9fe9206578e28644d33c8109496cfe0d",
+      "baseline": "tests/baselines/reference/incompatibleAssignmentOfIdenticallyNamedTypes.errors.txt",
+      "baseline_sha256": "2b6c511152519143943a6fda42ee068ee303eeb32eb872f45cea537e52926277",
+      "feature": "operators",
+      "codes": [
+        2564,
+        2719
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "161_didYouMeanElaborationsForExpressionsWhichCouldBeCalled",
+      "source": "tests/cases/compiler/didYouMeanElaborationsForExpressionsWhichCouldBeCalled.ts",
+      "source_sha256": "78b19d08894f9318ceb868584f305008209d0e01d6a42094744d326b71b045ae",
+      "baseline": "tests/baselines/reference/didYouMeanElaborationsForExpressionsWhichCouldBeCalled.errors.txt",
+      "baseline_sha256": "4b1b9f3c05d30edfae11d5d3df152b8a682c217105872a65099e1ae48e356c64",
+      "feature": "control",
+      "codes": [
+        2322,
+        2345,
+        2740,
+        2741
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "162_instanceofWithPrimitiveUnion",
+      "source": "tests/cases/compiler/instanceofWithPrimitiveUnion.ts",
+      "source_sha256": "f361f035ee9db85a0c314a63939e9393e25c0b62991d8669e7348348c527b220",
+      "baseline": "tests/baselines/reference/instanceofWithPrimitiveUnion.errors.txt",
+      "baseline_sha256": "801598d5dc44ce4bf788e87e0ae92ec3b367f03e4ae4bd6aaeeada3aabe5e72a",
+      "feature": "unions",
+      "codes": [
+        2358
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "163_ArrowFunctionExpression1",
+      "source": "tests/cases/compiler/ArrowFunctionExpression1.ts",
+      "source_sha256": "a40622958e95eb6231c3a61459f2ca5316091ae83c5814a0166f40e4f411119b",
+      "baseline": "tests/baselines/reference/ArrowFunctionExpression1.errors.txt",
+      "baseline_sha256": "a58b9c069750b9b78499fa8e7dadb7e3f4db73a351743c3f7a582c6e6173385a",
+      "feature": "functions",
+      "codes": [
+        2369
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "164_staticOffOfInstance1",
+      "source": "tests/cases/compiler/staticOffOfInstance1.ts",
+      "source_sha256": "0d5aa4d99edd3b6f13cc3610067f354030a2fd7d08baa9df96c1ff54bab517c6",
+      "baseline": "tests/baselines/reference/staticOffOfInstance1.errors.txt",
+      "baseline_sha256": "e2e0ce2d490631af65d56b366facd98ef6a7e4b35bea818793a841b8a4850e49",
+      "feature": "other",
+      "codes": [
+        2576
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "165_defaultValueInConstructorOverload1",
+      "source": "tests/cases/compiler/defaultValueInConstructorOverload1.ts",
+      "source_sha256": "014e4da6abb00c690eb9e1acd330fee719903e6cfec6d7c96668fd6348522f96",
+      "baseline": "tests/baselines/reference/defaultValueInConstructorOverload1.errors.txt",
+      "baseline_sha256": "283d8bb6518fafb1286402cb4f8792950c59b7e10da2cacd941e01f6abf4d86c",
+      "feature": "classes",
+      "codes": [
+        2371
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "166_inheritanceMemberFuncOverridingProperty",
+      "source": "tests/cases/compiler/inheritanceMemberFuncOverridingProperty.ts",
+      "source_sha256": "736155bcdfcf132bb66f2a94936fa458763b91482ecac8e709ffa1d49853145e",
+      "baseline": "tests/baselines/reference/inheritanceMemberFuncOverridingProperty.errors.txt",
+      "baseline_sha256": "111fb2077ac87d56ff941a70163b13d3d35566e2fef244fd19501a72169ae775",
+      "feature": "objects",
+      "codes": [
+        2425
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": false
+      }
+    },
+    {
+      "id": "167_compareTypeParameterConstrainedByLiteralToLiteral",
+      "source": "tests/cases/compiler/compareTypeParameterConstrainedByLiteralToLiteral.ts",
+      "source_sha256": "290b8ca5d69ded6ca2f6c6f5e4caed8eb067f392ee1f35d7d6a255b1d78e4371",
+      "baseline": "tests/baselines/reference/compareTypeParameterConstrainedByLiteralToLiteral.errors.txt",
+      "baseline_sha256": "88fffd01bc5af58a8ee652021ce564762666ec4a98718dc97ea2f524aa8da0ca",
+      "feature": "generics",
+      "codes": [
+        2367
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "168_importedModuleAddToGlobal",
+      "source": "tests/cases/compiler/importedModuleAddToGlobal.ts",
+      "source_sha256": "1a15071bbf007393671734645bcf87bcd5e1ce21e980cfcc9beb7c6ae1e3683e",
+      "baseline": "tests/baselines/reference/importedModuleAddToGlobal.errors.txt",
+      "baseline_sha256": "b978e425762c969c5e15b50e0d139c985786af0baa6b2e6a3367c24fb715fdf9",
+      "feature": "modules",
+      "codes": [
+        2833
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "169_spreadInvalidArgumentType",
+      "source": "tests/cases/compiler/spreadInvalidArgumentType.ts",
+      "source_sha256": "cf14c4e8dd2a1865049aa5ddf5bc0f4db8b29a938de935a347c6ecef975f01e4",
+      "baseline": "tests/baselines/reference/spreadInvalidArgumentType.errors.txt",
+      "baseline_sha256": "b9d2f9d61b5fc95204f2ac83e42f3cd72906cc09d679e919ac06c8a9843e3341",
+      "feature": "arrays",
+      "codes": [
+        2698
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "170_decrementAndIncrementOperators",
+      "source": "tests/cases/compiler/decrementAndIncrementOperators.ts",
+      "source_sha256": "c24aef96f7cdd637667722d7d44b035daa82759afc4f2e91ddb9c2bb669d08d5",
+      "baseline": "tests/baselines/reference/decrementAndIncrementOperators.errors.txt",
+      "baseline_sha256": "a6a7fc5dc6fe2808ebd12274662bf9e996ec51f03cb016862908a0adfb78f906",
+      "feature": "operators",
+      "codes": [
+        2357
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": false
+      }
+    },
+    {
+      "id": "171_extendPrivateConstructorClass",
+      "source": "tests/cases/compiler/extendPrivateConstructorClass.ts",
+      "source_sha256": "236d656d90761a2725baaa359bfbe64ad8a0d8ae6aa1dc366dff9d51ed5a52ab",
+      "baseline": "tests/baselines/reference/extendPrivateConstructorClass.errors.txt",
+      "baseline_sha256": "4d61becc6dde8c47b3d11a545654aef8b3950150ea65951bfc48d31fe658c545",
+      "feature": "classes",
+      "codes": [
+        2675
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "172_constDeclarationShadowedByVarDeclaration",
+      "source": "tests/cases/compiler/constDeclarationShadowedByVarDeclaration.ts",
+      "source_sha256": "bc4fda67bad748a79caa834a5367450eab28e0ffdaef54b67a3275dac15c4959",
+      "baseline": "tests/baselines/reference/constDeclarationShadowedByVarDeclaration.errors.txt",
+      "baseline_sha256": "c399f628de681bf6318c2c09bd9edd68d255742fde9c97b4a14881fc18793cea",
+      "feature": "other",
+      "codes": [
+        2481
+      ],
+      "options": {
+        "target": "ES6"
+      }
+    },
+    {
+      "id": "173_selfReferencesInFunctionParameters",
+      "source": "tests/cases/compiler/selfReferencesInFunctionParameters.ts",
+      "source_sha256": "aac189c6a93659461e4e94d1bea276a1f658427a3820c0cdf241499ec4838278",
+      "baseline": "tests/baselines/reference/selfReferencesInFunctionParameters.errors.txt",
+      "baseline_sha256": "f262193aa9de98238c2f68f35c2c5a2bed97706d13b23e8b1ee0faeee8d9d12e",
+      "feature": "functions",
+      "codes": [
+        2372
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": false
+      }
+    },
+    {
+      "id": "174_baseExpressionTypeParameters",
+      "source": "tests/cases/compiler/baseExpressionTypeParameters.ts",
+      "source_sha256": "586f0cadd7d6a03d192ab12876a6b735ce26288d9914ca87201f9d90adab757b",
+      "baseline": "tests/baselines/reference/baseExpressionTypeParameters.errors.txt",
+      "baseline_sha256": "ac87a58c76327cdeafb67faba5f04059ff55c3384f5760ad66dcb538dc72f8c9",
+      "feature": "generics",
+      "codes": [
+        2562
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "175_propertyOrdering",
+      "source": "tests/cases/compiler/propertyOrdering.ts",
+      "source_sha256": "aa5e2359575339d031dc1be114fdeaac3951431dbcbf8e5c831ac568fc138f2e",
+      "baseline": "tests/baselines/reference/propertyOrdering.errors.txt",
+      "baseline_sha256": "6fb0cc308fad90853fe53432981d80368c6e7dff6d1cd426d1a6bdc265cc6561",
+      "feature": "objects",
+      "codes": [
+        2301,
+        2339,
+        2551
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "176_exportSpecifierReferencingOuterDeclaration1",
+      "source": "tests/cases/compiler/exportSpecifierReferencingOuterDeclaration1.ts",
+      "source_sha256": "d1f0c245eb8120fc48621572e037f0ba58e0e642e90587a52089f722854b4157",
+      "baseline": "tests/baselines/reference/exportSpecifierReferencingOuterDeclaration1.errors.txt",
+      "baseline_sha256": "e324bf3256e22510b55989cf95f0698e374a65ad73ae37f6e2ff6ba77eefbab8",
+      "feature": "modules",
+      "codes": [
+        2661
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "177_readonlyTupleAndArrayElaboration",
+      "source": "tests/cases/compiler/readonlyTupleAndArrayElaboration.ts",
+      "source_sha256": "15b8f7352976bc8923e37e4d49ea6425c0b89a07d8a09d025c61801cd9e5ca82",
+      "baseline": "tests/baselines/reference/readonlyTupleAndArrayElaboration.errors.txt",
+      "baseline_sha256": "162797baf60f9a2a04182ee1ab6b2fa99d793aa28cfb2a7f3423e2495c79dfa4",
+      "feature": "arrays",
+      "codes": [
+        2322,
+        2345,
+        4104
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "178_bitwiseCompoundAssignmentOperators",
+      "source": "tests/cases/compiler/bitwiseCompoundAssignmentOperators.ts",
+      "source_sha256": "280ed7dbdaac13b50684c18f4102452b483a465a38fe599358ba833f66b90fcb",
+      "baseline": "tests/baselines/reference/bitwiseCompoundAssignmentOperators.errors.txt",
+      "baseline_sha256": "48a95060e3b3e160aa1efaa9a0dc100b65cfcdb6fe75edb1b9d888ecea7e8c63",
+      "feature": "operators",
+      "codes": [
+        2362,
+        2363,
+        2447
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "179_callOnClass",
+      "source": "tests/cases/compiler/callOnClass.ts",
+      "source_sha256": "0f8b86c8f8445823bfa50a5e276349f5a31c4a1e34bc5397b8ead85650ac5b37",
+      "baseline": "tests/baselines/reference/callOnClass.errors.txt",
+      "baseline_sha256": "35b9ac855c6bf4a9a7a232ae0c40659397e762056c816fd70138e0a876d7caf2",
+      "feature": "classes",
+      "codes": [
+        2348
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "180_keywordExpressionInternalComments",
+      "source": "tests/cases/compiler/keywordExpressionInternalComments.ts",
+      "source_sha256": "26a9ab0aa99f7e79a2bdb06dcb431ac7433c787c59a8a3ba82856d800874363b",
+      "baseline": "tests/baselines/reference/keywordExpressionInternalComments.errors.txt",
+      "baseline_sha256": "765bf71b48b487c1958e300ccc7d9036c6cc7ebc85bb0da6edef72b079046b3c",
+      "feature": "other",
+      "codes": [
+        2790
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "181_noImplicitAnyDestructuringParameterDeclaration",
+      "source": "tests/cases/compiler/noImplicitAnyDestructuringParameterDeclaration.ts",
+      "source_sha256": "a2c3a48397d7609b024cd0673df64f12d97d0c8e5ebc255daa000fb6427c0936",
+      "baseline": "tests/baselines/reference/noImplicitAnyDestructuringParameterDeclaration.errors.txt",
+      "baseline_sha256": "4bcc0c740a91fe1057b48cf178ef1e1d9c6d0800378f117fb0a27dded6982371",
+      "feature": "functions",
+      "codes": [
+        7006,
+        7008,
+        7031
+      ],
+      "options": {
+        "target": "es2015",
+        "noImplicitAny": true
+      }
+    },
+    {
+      "id": "182_propertyAccessibility1",
+      "source": "tests/cases/compiler/propertyAccessibility1.ts",
+      "source_sha256": "7ad2fe93aa229e3a36b2f46c693658bac84c6823b83813ef013480955454ec99",
+      "baseline": "tests/baselines/reference/propertyAccessibility1.errors.txt",
+      "baseline_sha256": "2976b2f54c4049cb65473e1dc3fbbe76e5babb9972c2860b11d8322f36b37f1b",
+      "feature": "objects",
+      "codes": [
+        2341
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": false
+      }
+    },
+    {
+      "id": "183_internalImportInstantiatedModuleNotReferencingInstance",
+      "source": "tests/cases/compiler/internalImportInstantiatedModuleNotReferencingInstance.ts",
+      "source_sha256": "773bc001d4d46642944d5665a5dc95abe0cc318cb75b1c45f5d6091f16075ee9",
+      "baseline": "tests/baselines/reference/internalImportInstantiatedModuleNotReferencingInstance.errors.txt",
+      "baseline_sha256": "0d41a2b23df88d4a26dee6cb074625712db49226e0f09f6de792a4b75d204526",
+      "feature": "modules",
+      "codes": [
+        2437
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "184_bindingPatternCannotBeOnlyInferenceSource",
+      "source": "tests/cases/compiler/bindingPatternCannotBeOnlyInferenceSource.ts",
+      "source_sha256": "bd4494b42605f8308c55c13a9394d6ca602c1f2ac6edff635403c518c0ca9e82",
+      "baseline": "tests/baselines/reference/bindingPatternCannotBeOnlyInferenceSource.errors.txt",
+      "baseline_sha256": "1f4ccdc83ab7a569f6ae034752d360c95abc489aa8fe8fef03e32bf6589bf0c1",
+      "feature": "generics",
+      "codes": [
+        2339,
+        2488,
+        2571
+      ],
+      "options": {
+        "target": "es2015",
+        "strictNullChecks": true
+      }
+    },
+    {
+      "id": "185_restParamsWithNonRestParams",
+      "source": "tests/cases/compiler/restParamsWithNonRestParams.ts",
+      "source_sha256": "bf07cdfbb3b68305b3b17e8a161fb394053518f85abddc523a1b6b3ca2616ca5",
+      "baseline": "tests/baselines/reference/restParamsWithNonRestParams.errors.txt",
+      "baseline_sha256": "0afc004268ce1c47d7b6baa549f1f24881ed7e2e2362112345805279f8a6158f",
+      "feature": "arrays",
+      "codes": [
+        2555
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "186_superInConstructorParam1",
+      "source": "tests/cases/compiler/superInConstructorParam1.ts",
+      "source_sha256": "96d81e60bb53e62b7a9c5796a1ead55d51a9e2ce1ef67fe36723b514eb22790c",
+      "baseline": "tests/baselines/reference/superInConstructorParam1.errors.txt",
+      "baseline_sha256": "bb121cc9b73ef7d3774ddddad785f6f1b1dceb74e4439f7d52a86598f7333e2b",
+      "feature": "classes",
+      "codes": [
+        2336,
+        2377,
+        17011
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "187_deleteReadonlyInStrictNullChecks",
+      "source": "tests/cases/compiler/deleteReadonlyInStrictNullChecks.ts",
+      "source_sha256": "ffcbbe8413e261440ff14cae11f0df3306d6eab558280c5a38086255f9fc9550",
+      "baseline": "tests/baselines/reference/deleteReadonlyInStrictNullChecks.errors.txt",
+      "baseline_sha256": "18c86a64c1b09150d1b979010064caca0d2ec28147e2012c8a57349629024692",
+      "feature": "other",
+      "codes": [
+        2704
+      ],
+      "options": {
+        "target": "es2015",
+        "strictNullChecks": true
+      }
+    },
+    {
+      "id": "188_uncalledFunctionChecksInConditional",
+      "source": "tests/cases/compiler/uncalledFunctionChecksInConditional.ts",
+      "source_sha256": "b47023fd5c8d763249c7cbc538598348be8c13d74119f9c1d5b08a8565bcd3f7",
+      "baseline": "tests/baselines/reference/uncalledFunctionChecksInConditional.errors.txt",
+      "baseline_sha256": "f06cd26779ed0371f599ad54521a0d6c0c94640ffceb5dc410035e9e0b8c13b1",
+      "feature": "functions",
+      "codes": [
+        2774
+      ],
+      "options": {
+        "target": "es2015",
+        "strictNullChecks": true
+      }
+    },
+    {
+      "id": "189_circularModuleImports",
+      "source": "tests/cases/compiler/circularModuleImports.ts",
+      "source_sha256": "c1498de2e38a533e5a4735e94aa3ead0c2cb1f887566b868b5fec63a426ad6de",
+      "baseline": "tests/baselines/reference/circularModuleImports.errors.txt",
+      "baseline_sha256": "69a05ba995390c776654c9e0a1e1a34981c04b43da98434a94fecc5962701505",
+      "feature": "modules",
+      "codes": [
+        2303
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "190_interfaceMayNotBeExtendedWitACall",
+      "source": "tests/cases/compiler/interfaceMayNotBeExtendedWitACall.ts",
+      "source_sha256": "20479d741c7f8f9663f018ed302f45de05f5bc75724e4c3b3dce1a9ddf0ccdd8",
+      "baseline": "tests/baselines/reference/interfaceMayNotBeExtendedWitACall.errors.txt",
+      "baseline_sha256": "911842f3f18cde924cac6a32b76bc595ddf897770f19599196b7cd745d50a2fa",
+      "feature": "objects",
+      "codes": [
+        2499
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "191_extendedInterfacesWithDuplicateTypeParameters",
+      "source": "tests/cases/compiler/extendedInterfacesWithDuplicateTypeParameters.ts",
+      "source_sha256": "44c8296df9906efd96e1244260c99445beb63d8adac499b1a02d105470ca4972",
+      "baseline": "tests/baselines/reference/extendedInterfacesWithDuplicateTypeParameters.errors.txt",
+      "baseline_sha256": "ab0b7fc45b3c9573d6da545e2749b0b533f6039c121a3c50b63c8bda09c4e07b",
+      "feature": "generics",
+      "codes": [
+        2300,
+        2428
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "192_constructorOverloads1",
+      "source": "tests/cases/compiler/constructorOverloads1.ts",
+      "source_sha256": "afce06f17920d08b413cebbcefd2da8a4120caf2ac0f3764af667150ad1cc199",
+      "baseline": "tests/baselines/reference/constructorOverloads1.errors.txt",
+      "baseline_sha256": "907b4ba80a4feab79e0e57971018f97672baf6c3e7278ca5fc23a5f531177d8e",
+      "feature": "classes",
+      "codes": [
+        2392,
+        2769
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "193_capturedParametersInInitializers1",
+      "source": "tests/cases/compiler/capturedParametersInInitializers1.ts",
+      "source_sha256": "34ca39fe629bf006f5fd21a85cceb91139428a938c0b896ee39b5068c02d94ac",
+      "baseline": "tests/baselines/reference/capturedParametersInInitializers1.errors.txt",
+      "baseline_sha256": "a09aa99a00c15f9f86a5c05c8e0c0ed01859aeb3c96a3d815e94b62e9d338a43",
+      "feature": "functions",
+      "codes": [
+        2373
+      ],
+      "options": {
+        "strict": false,
+        "target": "es6"
+      }
+    },
+    {
+      "id": "194_reachabilityChecks1",
+      "source": "tests/cases/compiler/reachabilityChecks1.ts",
+      "source_sha256": "12af04f1298ed4ae43a371bb72924a9ec0facb3dab9d748879367a7c719a3414",
+      "baseline": "tests/baselines/reference/reachabilityChecks1.errors.txt",
+      "baseline_sha256": "bff140e6c056a6bd56afdac5898f4428cf8217e9ed3483abe483fbc11e99bdde",
+      "feature": "other",
+      "codes": [
+        7027
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": false,
+        "allowUnreachableCode": false,
+        "preserveConstEnums": true
+      }
+    },
+    {
+      "id": "195_inheritanceMemberAccessorOverridingProperty",
+      "source": "tests/cases/compiler/inheritanceMemberAccessorOverridingProperty.ts",
+      "source_sha256": "3bde8eef57b64604e2d0e3f92dad9a930d79bdd8c9caa1f0274315a2756f1085",
+      "baseline": "tests/baselines/reference/inheritanceMemberAccessorOverridingProperty.errors.txt",
+      "baseline_sha256": "684e9ac1f13af63b1c42b3cda217c7a870ef413d2f78bc4fafb2373a402b5461",
+      "feature": "objects",
+      "codes": [
+        2611
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": false
+      }
+    },
+    {
+      "id": "196_typeArgumentDefaultUsesConstraintOnCircularDefault",
+      "source": "tests/cases/compiler/typeArgumentDefaultUsesConstraintOnCircularDefault.ts",
+      "source_sha256": "59d28c5ea564b299e1f806a9139d4808b16a7dbd0d836940393f942262eebe63",
+      "baseline": "tests/baselines/reference/typeArgumentDefaultUsesConstraintOnCircularDefault.errors.txt",
+      "baseline_sha256": "120467e347d2d66c91e5619621419127b6246d9ab2277962650722107358ef83",
+      "feature": "generics",
+      "codes": [
+        2353,
+        2744
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "197_classExtendsInterfaceInModule",
+      "source": "tests/cases/compiler/classExtendsInterfaceInModule.ts",
+      "source_sha256": "6682765fea731d944cbbd159d2690ff8d27be8906f52c061288a2e6064acb866",
+      "baseline": "tests/baselines/reference/classExtendsInterfaceInModule.errors.txt",
+      "baseline_sha256": "5e05aabd1144ef9b10ae4d9bf23cd28db3af67f11ee0b6db7244019a5037d700",
+      "feature": "modules",
+      "codes": [
+        2689
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "198_shadowPrivateMembers",
+      "source": "tests/cases/compiler/shadowPrivateMembers.ts",
+      "source_sha256": "c2d504d68749f743b8c68d93c7a07074c83d9dc4a072f9c10e432872a980246f",
+      "baseline": "tests/baselines/reference/shadowPrivateMembers.errors.txt",
+      "baseline_sha256": "769ef23db6b5b31069dbbe10722d2d4e2fb95e4fac23ded8a643819355d42b36",
+      "feature": "classes",
+      "codes": [
+        2415
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "199_getterMissingReturnError",
+      "source": "tests/cases/compiler/getterMissingReturnError.ts",
+      "source_sha256": "13d2b571745ed5d0f087c7e3dfa45427aad5b84c1ebbd6989a30aa490dfc37c8",
+      "baseline": "tests/baselines/reference/getterMissingReturnError.errors.txt",
+      "baseline_sha256": "2bd92f367e4eedd85a18736a1b2851dcb45cbb1826d6a18576fe807315296029",
+      "feature": "functions",
+      "codes": [
+        2378
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "200_instantiationExpressionErrorNoCrash",
+      "source": "tests/cases/compiler/instantiationExpressionErrorNoCrash.ts",
+      "source_sha256": "c483c4c2cb6019219724b4ecfbe9fc2b0d031dd70562b0618833e28b323f9dbc",
+      "baseline": "tests/baselines/reference/instantiationExpressionErrorNoCrash.errors.txt",
+      "baseline_sha256": "d9dcb517669571a1e89845b6dc72bdf3bd2a5769542f98d7fb14860312d14876",
+      "feature": "other",
+      "codes": [
+        2344,
+        2635
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "201_thisPredicateInObjectLiteral",
+      "source": "tests/cases/compiler/thisPredicateInObjectLiteral.ts",
+      "source_sha256": "69554671a4ed3bad88e88064f2e51bf9a423bc0910da9601b7a2a097c9fb1118",
+      "baseline": "tests/baselines/reference/thisPredicateInObjectLiteral.errors.txt",
+      "baseline_sha256": "35201e906203d260fa2fff63b8f15a3f6a01d74b215897f2f5a53b8158c77a6f",
+      "feature": "objects",
+      "codes": [
+        2526
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": true
+      }
+    },
+    {
+      "id": "202_reservedNameOnInterfaceImport",
+      "source": "tests/cases/compiler/reservedNameOnInterfaceImport.ts",
+      "source_sha256": "e71b02a678a32e7b585e52af323863a129b613fcd8c507294e75ca6871277f7c",
+      "baseline": "tests/baselines/reference/reservedNameOnInterfaceImport.errors.txt",
+      "baseline_sha256": "a67c7063a6e7b5222e2e258296ae8e4f28a7cd39760880cbcbf526575cd69f6b",
+      "feature": "modules",
+      "codes": [
+        2438
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "203_incrementOnTypeParameter",
+      "source": "tests/cases/compiler/incrementOnTypeParameter.ts",
+      "source_sha256": "684242750b2ddcd6653c4e307822b1520ba51649b52590d6b0817c735816eed3",
+      "baseline": "tests/baselines/reference/incrementOnTypeParameter.errors.txt",
+      "baseline_sha256": "ae648999a0454f77f6a41daa52b920f967d29de8314cb8c42b572edb2b829716",
+      "feature": "generics",
+      "codes": [
+        2356
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "204_classExpressionExtendingAbstractClass",
+      "source": "tests/cases/compiler/classExpressionExtendingAbstractClass.ts",
+      "source_sha256": "aacfd8995210d49fc97b57dfe24f8988bd3c8bec3f62716ef15603e5876c012a",
+      "baseline": "tests/baselines/reference/classExpressionExtendingAbstractClass.errors.txt",
+      "baseline_sha256": "89929074362e1c5a9960ff8814058fc3bb437dd669b6a6721353ec684bec9d68",
+      "feature": "classes",
+      "codes": [
+        2653
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "205_noImplicitReturnsInAsync2",
+      "source": "tests/cases/compiler/noImplicitReturnsInAsync2.ts",
+      "source_sha256": "fdde48981c2971f71b6e69744f403a04a2968e90931acc0da90415d95ce3e2dc",
+      "baseline": "tests/baselines/reference/noImplicitReturnsInAsync2.errors.txt",
+      "baseline_sha256": "d59cd6f72373998790fac5701b0a64bc5f33701d249c1ad15734b02d058313f5",
+      "feature": "functions",
+      "codes": [
+        7030
+      ],
+      "options": {
+        "strict": false,
+        "target": "es6",
+        "noImplicitReturns": true
+      }
+    },
+    {
+      "id": "206_recursiveResolveTypeMembers",
+      "source": "tests/cases/compiler/recursiveResolveTypeMembers.ts",
+      "source_sha256": "4610a7d6eede845709f158a42f219aecbad68cade74fd014e0382087121b5261",
+      "baseline": "tests/baselines/reference/recursiveResolveTypeMembers.errors.txt",
+      "baseline_sha256": "cab0df77c0153686e67a7757ca2459a9d6508a2224edb270b7925735f9a9e248",
+      "feature": "other",
+      "codes": [
+        2304,
+        2577
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "207_uniqueSymbolAllowsIndexInObjectWithIndexSignature",
+      "source": "tests/cases/compiler/uniqueSymbolAllowsIndexInObjectWithIndexSignature.ts",
+      "source_sha256": "73b04ae4d70db92ba0f7c021702ce55282377285280a0552f80a7170ef96d45d",
+      "baseline": "tests/baselines/reference/uniqueSymbolAllowsIndexInObjectWithIndexSignature.errors.txt",
+      "baseline_sha256": "1d9322e18e4cde6e0abe05583e5d2c9f533ba5ec8f6675ad88fcc64eab610a8b",
+      "feature": "objects",
+      "codes": [
+        2418
+      ],
+      "options": {
+        "target": "es2015",
+        "lib": [
+          "es6"
+        ]
+      }
+    },
+    {
+      "id": "208_importAliasInModuleAugmentation",
+      "source": "tests/cases/compiler/importAliasInModuleAugmentation.ts",
+      "source_sha256": "8aabbf239a1b517a6ed30d3c2a48639477659a2b8f2d5db2225f106283ba94a4",
+      "baseline": "tests/baselines/reference/importAliasInModuleAugmentation.errors.txt",
+      "baseline_sha256": "cbd779c048a3341eaa931e534d12900d692bf308154ef3f32526181bdd3a4f8f",
+      "feature": "modules",
+      "codes": [
+        2591,
+        2667
+      ],
+      "options": {
+        "module": "commonjs",
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "209_genericSpecializations2",
+      "source": "tests/cases/compiler/genericSpecializations2.ts",
+      "source_sha256": "37792a18a122de9b2b3eddfda384e02b7de60befe4c590db4c937748c9faadd2",
+      "baseline": "tests/baselines/reference/genericSpecializations2.errors.txt",
+      "baseline_sha256": "b6328793434f7e761e2bff5c653927dd872ed995fc8a3dd527d37195d35a4291",
+      "feature": "generics",
+      "codes": [
+        2322,
+        2368,
+        2416
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "210_illegalSuperCallsInConstructor",
+      "source": "tests/cases/compiler/illegalSuperCallsInConstructor.ts",
+      "source_sha256": "f95b7192f10d970893c60dadcdfef5a6c0fe1f8e52ce0fbf4b092a69725d5d8c",
+      "baseline": "tests/baselines/reference/illegalSuperCallsInConstructor.errors.txt",
+      "baseline_sha256": "68ac6b515486d33c0de4c5d666f1c60c765dca62d2e1fd713e1f4ce9186979d3",
+      "feature": "classes",
+      "codes": [
+        2337,
+        2377,
+        2564
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "211_functionParameterArityMismatch",
+      "source": "tests/cases/compiler/functionParameterArityMismatch.ts",
+      "source_sha256": "1d2503bbf467b8662de87983d51b8d0f207d223e57b3d39576bae8d8874cd661",
+      "baseline": "tests/baselines/reference/functionParameterArityMismatch.errors.txt",
+      "baseline_sha256": "d15c162a9250b3d90052ed619c31ace7fa4d780bb146ce7e6b5efda2361bd435",
+      "feature": "functions",
+      "codes": [
+        2554,
+        2575
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": false
+      }
+    },
+    {
+      "id": "212_duplicateIdentifierDifferentModifiers",
+      "source": "tests/cases/compiler/duplicateIdentifierDifferentModifiers.ts",
+      "source_sha256": "dcb433752cede519b88a764765de42c533d8fc0f490b58e76f19282213139cb4",
+      "baseline": "tests/baselines/reference/duplicateIdentifierDifferentModifiers.errors.txt",
+      "baseline_sha256": "fc3616ba9c1bfb93b2cd8ce0142751f3c2f40f15e6887b24dd8ed8ca248a7da0",
+      "feature": "other",
+      "codes": [
+        2687
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": false
+      }
+    },
+    {
+      "id": "213_inheritanceMemberPropertyOverridingAccessor",
+      "source": "tests/cases/compiler/inheritanceMemberPropertyOverridingAccessor.ts",
+      "source_sha256": "7472a725c705b4d9580a9598120853ce8fab2b837b279973a970b824d0212ec8",
+      "baseline": "tests/baselines/reference/inheritanceMemberPropertyOverridingAccessor.errors.txt",
+      "baseline_sha256": "57d98eb853fe2de37ee4682a2fcd76b5afbf11fcf8cc3d13d79a2252534fd9ac",
+      "feature": "objects",
+      "codes": [
+        2610
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": false
+      }
+    },
+    {
+      "id": "214_ambientExternalModuleWithRelativeModuleName",
+      "source": "tests/cases/compiler/ambientExternalModuleWithRelativeModuleName.ts",
+      "source_sha256": "3ee1c9a8425d395a2c216e5ffe56d3728bb97da1ac3fd1fd0148b3df53cc9791",
+      "baseline": "tests/baselines/reference/ambientExternalModuleWithRelativeModuleName.errors.txt",
+      "baseline_sha256": "0eef704bfca9025a4cac63d6aa7f171d66d52f746ad2f065a78cb29adf3967f6",
+      "feature": "modules",
+      "codes": [
+        2436
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "215_classImplementsPrimitive",
+      "source": "tests/cases/compiler/classImplementsPrimitive.ts",
+      "source_sha256": "e5e26939cf4aba5c8fd10b95a4ddbe460e3517e080ec62364cdcef9532297ab0",
+      "baseline": "tests/baselines/reference/classImplementsPrimitive.errors.txt",
+      "baseline_sha256": "0d5a673f20370609bb7b5cf4530b770f9d51b07d38278a2351a7299e93f64de7",
+      "feature": "classes",
+      "codes": [
+        2864
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "216_functionTypeArgumentArityErrors",
+      "source": "tests/cases/compiler/functionTypeArgumentArityErrors.ts",
+      "source_sha256": "35b39251cef26a257025da785ab16f81c3ef2ab0c6bc2aff718d1c42c949567e",
+      "baseline": "tests/baselines/reference/functionTypeArgumentArityErrors.errors.txt",
+      "baseline_sha256": "8a016ad20292133bf23de9ce66db4cddfe53d007cc502712446069cebde44ad5",
+      "feature": "functions",
+      "codes": [
+        2558,
+        2743
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": false
+      }
+    },
+    {
+      "id": "217_fallFromLastCase2",
+      "source": "tests/cases/compiler/fallFromLastCase2.ts",
+      "source_sha256": "5825cf36de4592f69c7290fd139366459ecac02fd1a731a9c4d5f84a96f0344a",
+      "baseline": "tests/baselines/reference/fallFromLastCase2.errors.txt",
+      "baseline_sha256": "4a790c539dbdcfd366b21a387c57a1b726fb965284606ac73812999178dc299e",
+      "feature": "other",
+      "codes": [
+        7029
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": false,
+        "noFallthroughCasesInSwitch": true
+      }
+    },
+    {
+      "id": "218_shorthandPropertyUndefined",
+      "source": "tests/cases/compiler/shorthandPropertyUndefined.ts",
+      "source_sha256": "2bd89fc3b61406183241cdc8516fb5efc320e7301778239e97b9819b940e1233",
+      "baseline": "tests/baselines/reference/shorthandPropertyUndefined.errors.txt",
+      "baseline_sha256": "c0e6319efd1922ef7961edc17a8eef431c0b1c857ce76a3d92992ccf15be26bc",
+      "feature": "objects",
+      "codes": [
+        18004
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "219_classImplementsClass4",
+      "source": "tests/cases/compiler/classImplementsClass4.ts",
+      "source_sha256": "99598711d700b5a421dc247858f0ce403f98248ab951bb6899048910d857fef7",
+      "baseline": "tests/baselines/reference/classImplementsClass4.errors.txt",
+      "baseline_sha256": "c125a4164a6c9b1ac025ec23744fa678e735db8b8ae4951f87233bde4935dd16",
+      "feature": "classes",
+      "codes": [
+        2720,
+        2741
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "220_bigIntWithTargetLessThanES2016",
+      "source": "tests/cases/compiler/bigIntWithTargetLessThanES2016.ts",
+      "source_sha256": "5a9e5e578d8f492150efb85a4a9a2e8b0bbd2401595fc33bdc4812b3b8a9362c",
+      "baseline": "tests/baselines/reference/bigIntWithTargetLessThanES2016.errors.txt",
+      "baseline_sha256": "b5bd3dfc4b046c2f06a5192cbbee64c442dfb82ff157275622a3eebcd2794622",
+      "feature": "other",
+      "codes": [
+        2791
+      ],
+      "options": {
+        "target": "es2015",
+        "lib": [
+          "esnext"
+        ]
+      }
+    },
+    {
+      "id": "221_unusedParameterProperty2",
+      "source": "tests/cases/compiler/unusedParameterProperty2.ts",
+      "source_sha256": "0d843aae39edc40df9793985e5a1f9c7d64c3e0aa9c98a2a45a062b32f449ee5",
+      "baseline": "tests/baselines/reference/unusedParameterProperty2.errors.txt",
+      "baseline_sha256": "60e6e07aeca388ddb3b298f36124a2aa82a6bca9c2a2a5f75c2788a53a8c7395",
+      "feature": "functions",
+      "codes": [
+        6133,
+        6138
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": false,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true
+      }
+    },
+    {
+      "id": "222_staticPrototypeProperty",
+      "source": "tests/cases/compiler/staticPrototypeProperty.ts",
+      "source_sha256": "b8b66d68eb67602e188fe93094770058b38c9b72c23ba810ad5e3bab09859713",
+      "baseline": "tests/baselines/reference/staticPrototypeProperty.errors.txt",
+      "baseline_sha256": "76cce12b02edf5990000a6204e623c66a12e4bf478a73e92422c66802aff14f2",
+      "feature": "objects",
+      "codes": [
+        2300,
+        2699
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "223_instanceofOnInstantiationExpression",
+      "source": "tests/cases/compiler/instanceofOnInstantiationExpression.ts",
+      "source_sha256": "558ca20b7b1284c1fb358c1bc8f91aedf4f602240592efce8d560d6c12bcc86c",
+      "baseline": "tests/baselines/reference/instanceofOnInstantiationExpression.errors.txt",
+      "baseline_sha256": "85a414ff245f8115dd6196155e71817b2e48068d7289b74fb91984e37eab2f0b",
+      "feature": "other",
+      "codes": [
+        2848
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "224_newFunctionImplicitAny",
+      "source": "tests/cases/compiler/newFunctionImplicitAny.ts",
+      "source_sha256": "42506443ab141fb76ffa9f0fcef157a69e1506ee65dbd94d094b83e9b1b916ee",
+      "baseline": "tests/baselines/reference/newFunctionImplicitAny.errors.txt",
+      "baseline_sha256": "985eefb1ee536cb2186c7d02d0ff8af63a0d87864976e77de0dee63de9581bba",
+      "feature": "functions",
+      "codes": [
+        7009
+      ],
+      "options": {
+        "target": "es2015",
+        "noImplicitAny": true
+      }
+    },
+    {
+      "id": "225_returnInConstructor1",
+      "source": "tests/cases/compiler/returnInConstructor1.ts",
+      "source_sha256": "b38cc1e74a3512e0772b2f102ebcee879265667a399c14e5fad886cefd015c2a",
+      "baseline": "tests/baselines/reference/returnInConstructor1.errors.txt",
+      "baseline_sha256": "73437234922b5d2bec2d18af4ef4b246b659d3103a858126f07a779efa9fc328",
+      "feature": "classes",
+      "codes": [
+        2322,
+        2409,
+        2564
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "226_assigningFromObjectToAnythingElse",
+      "source": "tests/cases/compiler/assigningFromObjectToAnythingElse.ts",
+      "source_sha256": "c46e789cc4938bad8a228ae8637069d132ab0b65f03abf6c105a8e96f0b4fe3f",
+      "baseline": "tests/baselines/reference/assigningFromObjectToAnythingElse.errors.txt",
+      "baseline_sha256": "d902297f27890f67ae8c807457ad9110a2e19773efa510b864ec6b0a4d3a7999",
+      "feature": "objects",
+      "codes": [
+        2558,
+        2696
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "227_classFieldSuperNotAccessible",
+      "source": "tests/cases/compiler/classFieldSuperNotAccessible.ts",
+      "source_sha256": "63c95e4fc1770629ad90b2297af44b49d33f4f886cda9a0133de0ba7632b9442",
+      "baseline": "tests/baselines/reference/classFieldSuperNotAccessible.errors.txt",
+      "baseline_sha256": "69c38cf478d9ab3d2018f55718b922ca4d9eef70f36ff122a626e51b4708a355",
+      "feature": "classes",
+      "codes": [
+        2855
+      ],
+      "options": {
+        "target": "esnext"
+      }
+    },
+    {
+      "id": "228_inKeywordAndUnknown",
+      "source": "tests/cases/compiler/inKeywordAndUnknown.ts",
+      "source_sha256": "684c7d7d3d0d9c5b86a4ecea4c7a2d9c1ea0185ee1f7e48364c0634f9a3344be",
+      "baseline": "tests/baselines/reference/inKeywordAndUnknown.errors.txt",
+      "baseline_sha256": "dd847f82864b76d76f6b5d584479b5af64d0c6bf8bac29224b1f0b9a603a0022",
+      "feature": "other",
+      "codes": [
+        2638
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": true
+      }
+    },
+    {
+      "id": "229_awaitCallExpressionInSyncFunction",
+      "source": "tests/cases/compiler/awaitCallExpressionInSyncFunction.ts",
+      "source_sha256": "dd4c5333ae5cc34c35b1fd9bca35f8b8e1439de7a5ee76f4c1c2f8971469255d",
+      "baseline": "tests/baselines/reference/awaitCallExpressionInSyncFunction.errors.txt",
+      "baseline_sha256": "8560daab4a9754d75151b0c032c875f09e4bcdf7064fc332136f89be42af8cdb",
+      "feature": "functions",
+      "codes": [
+        2311
+      ],
+      "options": {
+        "target": "esnext"
+      }
+    },
+    {
+      "id": "230_parameterPropertyInConstructor3",
+      "source": "tests/cases/compiler/parameterPropertyInConstructor3.ts",
+      "source_sha256": "97d47401f9378d1f1501e5a34e934eddf09756733eabc7756677c2fa621638b0",
+      "baseline": "tests/baselines/reference/parameterPropertyInConstructor3.errors.txt",
+      "baseline_sha256": "202a314e362ed0ed0390f873591716ad6ab2ba3fb715cfed7657e6964eb56390",
+      "feature": "classes",
+      "codes": [
+        2398
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "231_circularReferenceInReturnType",
+      "source": "tests/cases/compiler/circularReferenceInReturnType.ts",
+      "source_sha256": "503d49415a653e8b2cad383441afb38f87bfbcdbafc6451500dcfabb1cb04e70",
+      "baseline": "tests/baselines/reference/circularReferenceInReturnType.errors.txt",
+      "baseline_sha256": "a1cc6dbc7744359bd52455ba7fd41389916b19a616e75cf3cf6c6e9de68bd56e",
+      "feature": "functions",
+      "codes": [
+        7022,
+        7024
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": true
+      }
+    },
+    {
+      "id": "232_neverNullishThroughParentheses",
+      "source": "tests/cases/compiler/neverNullishThroughParentheses.ts",
+      "source_sha256": "c3d0360b7fc802da03486500681fe3d6c34527c3c9e5f0666b72c29775c858f1",
+      "baseline": "tests/baselines/reference/neverNullishThroughParentheses.errors.txt",
+      "baseline_sha256": "2fef29bbe589d819009d920d0941db79d22e160ffb631b2d290e5d32c5a33b4e",
+      "feature": "other",
+      "codes": [
+        2869
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": true
+      }
+    },
+    {
+      "id": "233_noImplicitAnyNamelessParameter",
+      "source": "tests/cases/compiler/noImplicitAnyNamelessParameter.ts",
+      "source_sha256": "7758c58871fa552ac1120799aed09673baa69913f0239fb688951e3101915581",
+      "baseline": "tests/baselines/reference/noImplicitAnyNamelessParameter.errors.txt",
+      "baseline_sha256": "33ddf2371d6f240b9fe99401d1b0f12846480ed1211bc3148e1f3c90d68268ee",
+      "feature": "functions",
+      "codes": [
+        7051
+      ],
+      "options": {
+        "target": "es2015",
+        "noImplicitAny": true
+      }
+    },
+    {
+      "id": "234_superCallFromClassThatHasNoBaseType1",
+      "source": "tests/cases/compiler/superCallFromClassThatHasNoBaseType1.ts",
+      "source_sha256": "e9b97ad5b9898d84817b0365b193148ea5482ff511452dab6bebd839941cd34b",
+      "baseline": "tests/baselines/reference/superCallFromClassThatHasNoBaseType1.errors.txt",
+      "baseline_sha256": "2ede1e0e3098880c47fc017e4702ffe689cf7e573ec80996976346c181acac05",
+      "feature": "classes",
+      "codes": [
+        2335
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": false
+      }
+    },
+    {
+      "id": "235_reachabilityChecks3",
+      "source": "tests/cases/compiler/reachabilityChecks3.ts",
+      "source_sha256": "3336275633cbdd3dc0a893524b3ae88447fa587acc139bdac2b6ffe2f6e12b53",
+      "baseline": "tests/baselines/reference/reachabilityChecks3.errors.txt",
+      "baseline_sha256": "285f270adb40c06c50bb255bdadf211bda8cd250477ddeee435d44ddb07006f4",
+      "feature": "other",
+      "codes": [
+        7028
+      ],
+      "options": {
+        "target": "es2015",
+        "allowUnusedLabels": false
+      }
+    },
+    {
+      "id": "236_returnValueInSetter",
+      "source": "tests/cases/compiler/returnValueInSetter.ts",
+      "source_sha256": "af5e8243e93fdf82c014043521aedb179c5ee5d9210d2469ce049734151167f8",
+      "baseline": "tests/baselines/reference/returnValueInSetter.errors.txt",
+      "baseline_sha256": "ca673c6d1cb16e9f170427fff84072c2fd58a3ea22da751d351bc6c206f3540f",
+      "feature": "functions",
+      "codes": [
+        2408
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": false
+      }
+    },
+    {
+      "id": "237_gettersAndSettersAccessibility",
+      "source": "tests/cases/compiler/gettersAndSettersAccessibility.ts",
+      "source_sha256": "06fc705bf8de2156f3c5b9d35cbd9cf0defa6c208ec528fd600a29e75af90464",
+      "baseline": "tests/baselines/reference/gettersAndSettersAccessibility.errors.txt",
+      "baseline_sha256": "4f7593e00dbd026a705ca8e38f3d1132d1a0be7df839e91e4f33748c1e1e48a0",
+      "feature": "other",
+      "codes": [
+        2808
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "238_typeParameterAsBaseClass",
+      "source": "tests/cases/compiler/typeParameterAsBaseClass.ts",
+      "source_sha256": "fb3bb48ba73b2c58dbb4ab7c8ecc3cf23ac6eedc060ab9adc9cf0332ba2a1ed6",
+      "baseline": "tests/baselines/reference/typeParameterAsBaseClass.errors.txt",
+      "baseline_sha256": "05897aeec0c8e944281b234a5240ff9da90f1db06810064cbc2ceb14d7841903",
+      "feature": "classes",
+      "codes": [
+        2304,
+        2422
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "239_expressionWithJSDocTypeArguments",
+      "source": "tests/cases/compiler/expressionWithJSDocTypeArguments.ts",
+      "source_sha256": "804f660ade28d348aa1f416b967e13f1a51a252742da2c8b8ea45202ef6ad40a",
+      "baseline": "tests/baselines/reference/expressionWithJSDocTypeArguments.errors.txt",
+      "baseline_sha256": "60d8169d21047ea60fed2005c74067c59a6c06ec7b8a6cd784f77d09c098c6bb",
+      "feature": "other",
+      "codes": [
+        8020,
+        17019,
+        17020
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": true
+      }
+    },
+    {
+      "id": "240_indexedAccessPrivateMemberOfGenericConstraint",
+      "source": "tests/cases/compiler/indexedAccessPrivateMemberOfGenericConstraint.ts",
+      "source_sha256": "a15fce2aa4ebe6bf32fa51821bebe8d9a03e5b83f848eb82db30aba2c337328b",
+      "baseline": "tests/baselines/reference/indexedAccessPrivateMemberOfGenericConstraint.errors.txt",
+      "baseline_sha256": "b757cb538d86bb65a51441606081fd5b972e3675a9237adcce883392fd969d2f",
+      "feature": "classes",
+      "codes": [
+        2564,
+        4105
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "241_implicitAnyGetAndSetAccessorWithAnyReturnType",
+      "source": "tests/cases/compiler/implicitAnyGetAndSetAccessorWithAnyReturnType.ts",
+      "source_sha256": "4b935a1790b14e4ffe1dd97c74daa6185b13749ad7fbf196e4ca6c9a65b2b35a",
+      "baseline": "tests/baselines/reference/implicitAnyGetAndSetAccessorWithAnyReturnType.errors.txt",
+      "baseline_sha256": "d059039a5d27ea37b6bc83793a59d23cf4d6967f0030de06f12638db409355c8",
+      "feature": "functions",
+      "codes": [
+        7006,
+        7032
+      ],
+      "options": {
+        "target": "es2015",
+        "noImplicitAny": true
+      }
+    },
+    {
+      "id": "242_constDeclarations-access2",
+      "source": "tests/cases/compiler/constDeclarations-access2.ts",
+      "source_sha256": "2c6695c60461d9040cb8b89641717cb26264536a56e62d4cdcef03f851a15dd5",
+      "baseline": "tests/baselines/reference/constDeclarations-access2.errors.txt",
+      "baseline_sha256": "373528a11db1c43f49c0a39ad3a52242ae6ac6317c93731f78a795b790becf38",
+      "feature": "other",
+      "codes": [
+        2588
+      ],
+      "options": {
+        "strict": false,
+        "target": "ES6"
+      }
+    },
+    {
+      "id": "243_classExtendsNull3",
+      "source": "tests/cases/compiler/classExtendsNull3.ts",
+      "source_sha256": "f761937683fe2ac0a69a1680397191c1cb926a6b1efa840b94cbe6a43c75435a",
+      "baseline": "tests/baselines/reference/classExtendsNull3.errors.txt",
+      "baseline_sha256": "bde4f92dfefce59776cdfd62dff367075fad11620d3683d7dbca470622dcade8",
+      "feature": "classes",
+      "codes": [
+        2531
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": true
+      }
+    },
+    {
+      "id": "244_modularizeLibrary_ErrorFromUsingES6FeaturesWithOnlyES5Lib",
+      "source": "tests/cases/compiler/modularizeLibrary_ErrorFromUsingES6FeaturesWithOnlyES5Lib.ts",
+      "source_sha256": "a68390c3a42dca85229e4068439f3b901b3830d4c40d089ee053092ee8424b2a",
+      "baseline": "tests/baselines/reference/modularizeLibrary_ErrorFromUsingES6FeaturesWithOnlyES5Lib.errors.txt",
+      "baseline_sha256": "c128aa43022733491d478f31e3578815d3a59ca64cf087302e4f655b73b8fe76",
+      "feature": "other",
+      "codes": [
+        2304,
+        2339,
+        2550,
+        2583,
+        2585
+      ],
+      "options": {
+        "lib": [
+          "es5"
+        ],
+        "target": "es6"
+      }
+    },
+    {
+      "id": "245_inheritanceMemberFuncOverridingAccessor",
+      "source": "tests/cases/compiler/inheritanceMemberFuncOverridingAccessor.ts",
+      "source_sha256": "658b07c27c8b0fe69dded08c790da37f6d5abafe1c9c134a7aeed10b1add3e1d",
+      "baseline": "tests/baselines/reference/inheritanceMemberFuncOverridingAccessor.errors.txt",
+      "baseline_sha256": "5c69c8f0c98729ee894049978fb2e2474a6352f083c220a0cfb5b4e75991052f",
+      "feature": "other",
+      "codes": [
+        2416,
+        2426
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": false
+      }
+    },
+    {
+      "id": "246_noCrashOnMixin",
+      "source": "tests/cases/compiler/noCrashOnMixin.ts",
+      "source_sha256": "a528c1f80ddf484c248a23a197b42490cbb3135320798967027cf0be6c44c27e",
+      "baseline": "tests/baselines/reference/noCrashOnMixin.errors.txt",
+      "baseline_sha256": "aeb0f2d422224e6911feeb02b9043b5e591cff2a8eab243f2cf71341bf8586d0",
+      "feature": "other",
+      "codes": [
+        2674
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "247_missingDomElements",
+      "source": "tests/cases/compiler/missingDomElements.ts",
+      "source_sha256": "fa4f7639e7349fe140e78658610bd0fbdb705657577201488be3bafced026d16",
+      "baseline": "tests/baselines/reference/missingDomElements.errors.txt",
+      "baseline_sha256": "3af03f253a998b54a082cc265c9bcca37fb294cb332a8975b30d6df05783c161",
+      "feature": "other",
+      "codes": [
+        2339,
+        2812
+      ],
+      "options": {
+        "target": "es2015",
+        "lib": [
+          "esnext"
+        ]
+      }
+    },
+    {
+      "id": "248_relationComplexityError",
+      "source": "tests/cases/compiler/relationComplexityError.ts",
+      "source_sha256": "a174300e3b45d62f84e72f7381d4c03875d70764c90e66e8ddf59549134d2f45",
+      "baseline": "tests/baselines/reference/relationComplexityError.errors.txt",
+      "baseline_sha256": "9ff08da047d528c9ee79c56782a4963ebd45982c8c0a4595ad7867650f79db7a",
+      "feature": "other",
+      "codes": [
+        2859
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": true
+      }
+    },
+    {
+      "id": "249_mergedClassNamespaceRecordCast",
+      "source": "tests/cases/compiler/mergedClassNamespaceRecordCast.ts",
+      "source_sha256": "fc49de049fd0a3044ffec79f6d6cc9daae8879ddc281521a719a519b375cccb4",
+      "baseline": "tests/baselines/reference/mergedClassNamespaceRecordCast.errors.txt",
+      "baseline_sha256": "263e7a16dec586eb46451b95ece06b8c044b0566f8824190b96d8fc71525d02d",
+      "feature": "namespaces",
+      "codes": [
+        2339,
+        2352
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "250_parseInvalidNonNullableTypes",
+      "source": "tests/cases/compiler/parseInvalidNonNullableTypes.ts",
+      "source_sha256": "6fed8da86bcd6672630c3faf242c02eade933f27ec53b75a031ad93eabb9700f",
+      "baseline": "tests/baselines/reference/parseInvalidNonNullableTypes.errors.txt",
+      "baseline_sha256": "682bf62ac16424615d8f20da2fbff2f231337735e90dc0c916b8f1f4a7eb6e3f",
+      "feature": "syntax",
+      "codes": [
+        2355,
+        17019,
+        17020
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": true
+      }
+    },
+    {
+      "id": "251_decoratorMetadataGenericTypeVariable",
+      "source": "tests/cases/compiler/decoratorMetadataGenericTypeVariable.ts",
+      "source_sha256": "c602356cfff5e9847db59a60021e8707f1856388966b5254681b9eb155cbdb92",
+      "baseline": "tests/baselines/reference/decoratorMetadataGenericTypeVariable.errors.txt",
+      "baseline_sha256": "c1b806afc584bd40824f3c4abf12b8a9055fa7e534e5269289799d25064725c5",
+      "feature": "decorators",
+      "codes": [
+        2304,
+        2564
+      ],
+      "options": {
+        "target": "es2015",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true
+      }
+    },
+    {
+      "id": "252_unusedFunctionsinNamespaces3",
+      "source": "tests/cases/compiler/unusedFunctionsinNamespaces3.ts",
+      "source_sha256": "990c898fd2fb9b4b212542559b07250d914279476d0b468223f7dfb8f08eb74f",
+      "baseline": "tests/baselines/reference/unusedFunctionsinNamespaces3.errors.txt",
+      "baseline_sha256": "31181f3dc88a388a258390e0f7ae87d2ad8a85f7de03729bdb8e527e0b38e6a6",
+      "feature": "namespaces",
+      "codes": [
+        6133
+      ],
+      "options": {
+        "target": "es2015",
+        "noUnusedLocals": true,
+        "noUnusedParameters": true
+      }
+    },
+    {
+      "id": "253_correctOrderOfPromiseMethod",
+      "source": "tests/cases/compiler/correctOrderOfPromiseMethod.ts",
+      "source_sha256": "942df77b929bcf70556aa9758e1e4e28f6481879d42c12057e0311af1702b854",
+      "baseline": "tests/baselines/reference/correctOrderOfPromiseMethod.errors.txt",
+      "baseline_sha256": "db022ccd41b88b9c608cbd25bb9b2ba52bcefe7cbf26c5baa92eb6d0160ecbc9",
+      "feature": "async",
+      "codes": [
+        2352
+      ],
+      "options": {
+        "target": "es2015",
+        "skipLibCheck": true,
+        "lib": [
+          "dom",
+          "es7"
+        ]
+      }
+    },
+    {
+      "id": "254_parseTypes",
+      "source": "tests/cases/compiler/parseTypes.ts",
+      "source_sha256": "02c51e5785fb328ab05b2ace448cd6ecd035c69f6db528504ff7eba0d7e780f8",
+      "baseline": "tests/baselines/reference/parseTypes.errors.txt",
+      "baseline_sha256": "b2650c6bbb089980ffd658163fe90cf077059f69aaca77321068335961843938",
+      "feature": "syntax",
+      "codes": [
+        2322,
+        2352
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "255_keyRemappingKeyofResult",
+      "source": "tests/cases/compiler/keyRemappingKeyofResult.ts",
+      "source_sha256": "c3a15568d7d6fa869dc7080491ac36d8f25576752163e595de02716d908acd98",
+      "baseline": "tests/baselines/reference/keyRemappingKeyofResult.errors.txt",
+      "baseline_sha256": "b1a651755578fd6a334c363b7de54daa55e41757c4a5241c3522ed3b56f6997a",
+      "feature": "types",
+      "codes": [
+        2322
+      ],
+      "options": {
+        "target": "es6"
+      }
+    },
+    {
+      "id": "256_namespaceDisambiguationInUnion",
+      "source": "tests/cases/compiler/namespaceDisambiguationInUnion.ts",
+      "source_sha256": "c69c67381b6bcdd9de0474aa8b1e02d0dc1d399909d352bb92376657a24f7f8d",
+      "baseline": "tests/baselines/reference/namespaceDisambiguationInUnion.errors.txt",
+      "baseline_sha256": "1f06ff7e9f362c856ae97bd90caef9beb0e3017f9f65d7a231c67e34a96e183a",
+      "feature": "namespaces",
+      "codes": [
+        2322
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "257_generatorES6_5",
+      "source": "tests/cases/compiler/generatorES6_5.ts",
+      "source_sha256": "0886e2b826a7840de5d83adf8d497212e8d326c5a39207d0ba7a7b4849dfdc35",
+      "baseline": "tests/baselines/reference/generatorES6_5.errors.txt",
+      "baseline_sha256": "a7a28482a7eed6858447b10cd30d22428414949487d3ad09e14e9d2b733e0883",
+      "feature": "async",
+      "codes": [
+        2304
+      ],
+      "options": {
+        "target": "es6"
+      }
+    },
+    {
+      "id": "258_decoratorMetadataGenericTypeVariableInScope",
+      "source": "tests/cases/compiler/decoratorMetadataGenericTypeVariableInScope.ts",
+      "source_sha256": "e4b622aa30a14d395b1f1df0f6a58ff1bbef0fcc7df802421404f0eedba9e971",
+      "baseline": "tests/baselines/reference/decoratorMetadataGenericTypeVariableInScope.errors.txt",
+      "baseline_sha256": "8ffe15d0d24a50068b04b6344e18900a5b59c82b69c9587fbcfd293295ec3783",
+      "feature": "decorators",
+      "codes": [
+        2304,
+        2564
+      ],
+      "options": {
+        "module": "commonjs",
+        "target": "es2015",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true
+      }
+    },
+    {
+      "id": "259_conditionalAnyCheckTypePicksBothBranches",
+      "source": "tests/cases/compiler/conditionalAnyCheckTypePicksBothBranches.ts",
+      "source_sha256": "2fe16542cf229e24e03062c98b3ca1d6686b30a3a17e361f92b6b4e3a5e9b060",
+      "baseline": "tests/baselines/reference/conditionalAnyCheckTypePicksBothBranches.errors.txt",
+      "baseline_sha256": "9d9a00145af29d967b413efd3f3fa70c4a53904017dead9d3068e4289d83fa94",
+      "feature": "types",
+      "codes": [
+        2322
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "260_unusedFunctionsinNamespaces6",
+      "source": "tests/cases/compiler/unusedFunctionsinNamespaces6.ts",
+      "source_sha256": "3523f6b9abeb5a42043f0b54742ad4475c87894571969c4fa9bb0131e316e840",
+      "baseline": "tests/baselines/reference/unusedFunctionsinNamespaces6.errors.txt",
+      "baseline_sha256": "37daacdd38fad39d05ac26c2e4d84ac4b0bc7ea457251095b1d450d47c0fdb1a",
+      "feature": "namespaces",
+      "codes": [
+        6133
+      ],
+      "options": {
+        "target": "es2015",
+        "noUnusedLocals": true,
+        "noUnusedParameters": true
+      }
+    },
+    {
+      "id": "261_promiseIdentity2",
+      "source": "tests/cases/compiler/promiseIdentity2.ts",
+      "source_sha256": "c1c63a12fdca26c99260e5f451dbd84cfe98eeb056ccf3c9e9b5a44037bd6c7d",
+      "baseline": "tests/baselines/reference/promiseIdentity2.errors.txt",
+      "baseline_sha256": "40eecd544651a64d0934e8f63a3edd255834447e23727f4ac6be42f55913cbf1",
+      "feature": "async",
+      "codes": [
+        2403
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "262_decoratorMetadataConditionalType",
+      "source": "tests/cases/compiler/decoratorMetadataConditionalType.ts",
+      "source_sha256": "bb2b70b0607687f28f22f9f5857f1f0bb18050b3f12bdd06639ae0ac7c7795f3",
+      "baseline": "tests/baselines/reference/decoratorMetadataConditionalType.errors.txt",
+      "baseline_sha256": "9530cd4675024acb81813948acdebb18ed2195d9aa2eeeb4d3c3250995c2b12a",
+      "feature": "decorators",
+      "codes": [
+        2564
+      ],
+      "options": {
+        "target": "es2015",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true
+      }
+    },
+    {
+      "id": "263_keyofIsLiteralContexualType",
+      "source": "tests/cases/compiler/keyofIsLiteralContexualType.ts",
+      "source_sha256": "caf3b4c447bba1dc190384bbfc81ad7590b90ffa214126f6a4772bcc5fe03888",
+      "baseline": "tests/baselines/reference/keyofIsLiteralContexualType.errors.txt",
+      "baseline_sha256": "3ba2ec3fb51d9eae512fe867dc46c0aad2644d7411d9fecbf0f4662e41aa151b",
+      "feature": "types",
+      "codes": [
+        2322,
+        2339
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "264_unusedVariablesinNamespaces3",
+      "source": "tests/cases/compiler/unusedVariablesinNamespaces3.ts",
+      "source_sha256": "418f49ddd5fe7dcafc94d9cc171e8a39d71909232636bc6b8393688d7b5fc7af",
+      "baseline": "tests/baselines/reference/unusedVariablesinNamespaces3.errors.txt",
+      "baseline_sha256": "8f579f0175b72f914db0e0f214388a95ccfb62231d4436806b0ffcd3f1aac102",
+      "feature": "namespaces",
+      "codes": [
+        6133
+      ],
+      "options": {
+        "target": "es2015",
+        "noUnusedLocals": true,
+        "noUnusedParameters": true
+      }
+    },
+    {
+      "id": "265_promiseIdentity",
+      "source": "tests/cases/compiler/promiseIdentity.ts",
+      "source_sha256": "7a730e9a67103577fda357e47a7455f8c46f87eba01b14c7f7dda6b9d1f8cba3",
+      "baseline": "tests/baselines/reference/promiseIdentity.errors.txt",
+      "baseline_sha256": "494e4d727ff333da8dfe9bf840bca8fc041988770840257e3f67f4fdbd713a97",
+      "feature": "async",
+      "codes": [
+        2403
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "266_decoratorMetadataGenericTypeVariableDefault",
+      "source": "tests/cases/compiler/decoratorMetadataGenericTypeVariableDefault.ts",
+      "source_sha256": "65018e798f301b08319ee1a2e3e29d673abcdcd680fde4605560922b5cc79023",
+      "baseline": "tests/baselines/reference/decoratorMetadataGenericTypeVariableDefault.errors.txt",
+      "baseline_sha256": "c2f9256aa570bc46b96a190c0a9a5920bd12dd6f1c1150783d70723f0b8d0c4c",
+      "feature": "decorators",
+      "codes": [
+        2304,
+        2564
+      ],
+      "options": {
+        "target": "es2015",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true
+      }
+    },
+    {
+      "id": "267_reverseMappedTypeContextualTypeNotCircular",
+      "source": "tests/cases/compiler/reverseMappedTypeContextualTypeNotCircular.ts",
+      "source_sha256": "bfe449f5af06029cef4a60b65b3dc95cdca740063c56dbf14f56e2a84b82ee29",
+      "baseline": "tests/baselines/reference/reverseMappedTypeContextualTypeNotCircular.errors.txt",
+      "baseline_sha256": "c26a8715ac6bfa06015fda73624e0a8a455153f050bcccf2b21b3a2ad76ff852",
+      "feature": "types",
+      "codes": [
+        2322
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "268_incorrectNumberOfTypeArgumentsDuringErrorReporting",
+      "source": "tests/cases/compiler/incorrectNumberOfTypeArgumentsDuringErrorReporting.ts",
+      "source_sha256": "82ae4abe69af9d20e8b1e74b3bd65989adcdd77f491a6204e9a7883382baa615",
+      "baseline": "tests/baselines/reference/incorrectNumberOfTypeArgumentsDuringErrorReporting.errors.txt",
+      "baseline_sha256": "8ed27a7443f97d23d8c86f32724e8256353474450f1bbdb23e0e55991381281d",
+      "feature": "literals",
+      "codes": [
+        2559
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "269_unusedFunctionsinNamespaces5",
+      "source": "tests/cases/compiler/unusedFunctionsinNamespaces5.ts",
+      "source_sha256": "e1979cf9ece133fd2e8538d9b242aa3f6e7936c078492feda8aa2d3a79656da9",
+      "baseline": "tests/baselines/reference/unusedFunctionsinNamespaces5.errors.txt",
+      "baseline_sha256": "b0ab4d185ab03c08ac539247b79056c7de8bef9e628f3b167e3f3dc34d993805",
+      "feature": "namespaces",
+      "codes": [
+        6133
+      ],
+      "options": {
+        "target": "es2015",
+        "noUnusedLocals": true,
+        "noUnusedParameters": true
+      }
+    },
+    {
+      "id": "270_promiseChaining1",
+      "source": "tests/cases/compiler/promiseChaining1.ts",
+      "source_sha256": "edfd6bcf105a307e5c4a30e5355f6cc510d4339fbe8b03c15f8d9cfe1564c867",
+      "baseline": "tests/baselines/reference/promiseChaining1.errors.txt",
+      "baseline_sha256": "08c44e89df7de3e812adfc83732d283bba77be4b9afc36e6150a2a3787d83a8e",
+      "feature": "async",
+      "codes": [
+        2322
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "271_enumUsedBeforeDeclaration",
+      "source": "tests/cases/compiler/enumUsedBeforeDeclaration.ts",
+      "source_sha256": "ffd56f3746a5f099bd9ed2b4e2049fe6fd5a82de576a3e3b5a359ceab417cff8",
+      "baseline": "tests/baselines/reference/enumUsedBeforeDeclaration.errors.txt",
+      "baseline_sha256": "89b6ddb21d8b5223ee4d983f0c5acb967f4199bf0e8f32bca0ebb6631b8d6239",
+      "feature": "enums",
+      "codes": [
+        2450
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "272_conditionalExpressionNewLine3",
+      "source": "tests/cases/compiler/conditionalExpressionNewLine3.ts",
+      "source_sha256": "1b586b63ed6837c870c4ebbe40c72ae054c490158341c2843fc420441ceeecb5",
+      "baseline": "tests/baselines/reference/conditionalExpressionNewLine3.errors.txt",
+      "baseline_sha256": "3c6999205f5fe350ee04da5b37f2a1df53dda0b4fd9f8f5a1d6b454de6669fb4",
+      "feature": "types",
+      "codes": [
+        2304
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "273_stringMappingAssignability",
+      "source": "tests/cases/compiler/stringMappingAssignability.ts",
+      "source_sha256": "0fdc37e6328f42dcd041172429f2114e3dcd1e369079a1f79c3a1a36bb97b128",
+      "baseline": "tests/baselines/reference/stringMappingAssignability.errors.txt",
+      "baseline_sha256": "2d87d97b3e8478ceeb0f3355973e3000c332b9ee795c642f603888878cf0f468",
+      "feature": "literals",
+      "codes": [
+        2322
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": true
+      }
+    },
+    {
+      "id": "274_ipromise3",
+      "source": "tests/cases/compiler/ipromise3.ts",
+      "source_sha256": "304e8431e2c3949da441f319dbfb3879a5bc8dbc677e66e88a8d1c1d6f97bf52",
+      "baseline": "tests/baselines/reference/ipromise3.errors.txt",
+      "baseline_sha256": "3c9d875d1269f1333ca6a040aa2a5b36ec54c5d937a03c521cea8aa9f180ed23",
+      "feature": "async",
+      "codes": [
+        2454
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "275_unusedInterfaceinNamespace1",
+      "source": "tests/cases/compiler/unusedInterfaceinNamespace1.ts",
+      "source_sha256": "2998352bebc5e4ecf38e4bffdf9db8987aaaca2dea03103871b6b1ec2a44723f",
+      "baseline": "tests/baselines/reference/unusedInterfaceinNamespace1.errors.txt",
+      "baseline_sha256": "b469cb2f2c732959286d21fdcc73b88e0ced3c11d2d0f99f54b98ff1e712f293",
+      "feature": "namespaces",
+      "codes": [
+        6196
+      ],
+      "options": {
+        "target": "es2015",
+        "noUnusedLocals": true,
+        "noUnusedParameters": true
+      }
+    },
+    {
+      "id": "276_intersectionsAndOptionalProperties",
+      "source": "tests/cases/compiler/intersectionsAndOptionalProperties.ts",
+      "source_sha256": "f6fc01fbc5669df055f42cbff39a8cdce79478af6220b9b92aaf4119b0c1f674",
+      "baseline": "tests/baselines/reference/intersectionsAndOptionalProperties.errors.txt",
+      "baseline_sha256": "7d3054b1347e6c5a9589e1ab7754ee1f24de013500f739fc011aab1720839520",
+      "feature": "unions",
+      "codes": [
+        2322
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": true
+      }
+    },
+    {
+      "id": "277_useBeforeDeclaration_destructuring",
+      "source": "tests/cases/compiler/useBeforeDeclaration_destructuring.ts",
+      "source_sha256": "87f11c9d5a5f9d4fca17a5b09da8f259c622ebc53a0ec8653925e5e01db2d60d",
+      "baseline": "tests/baselines/reference/useBeforeDeclaration_destructuring.errors.txt",
+      "baseline_sha256": "a11c25f6033516b2305e3feec555944be1072ac9021be57a5e8450e44d52bf51",
+      "feature": "control",
+      "codes": [
+        2448,
+        2454
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "278_typeOfOperator1",
+      "source": "tests/cases/compiler/typeOfOperator1.ts",
+      "source_sha256": "cd1827469608b44d9b6e3031cf629767b6f2692c9d5f6ced44715f6ce7828346",
+      "baseline": "tests/baselines/reference/typeOfOperator1.errors.txt",
+      "baseline_sha256": "53a0d9b527cec09946fed3f009e175971ffd6c286823b56fe7a3327995921371",
+      "feature": "types",
+      "codes": [
+        2322
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "279_enumAssignmentCompat",
+      "source": "tests/cases/compiler/enumAssignmentCompat.ts",
+      "source_sha256": "ab83d1ab92a53e1868acd684276290e7ceab20aed70b14ce8b39449bbaaf4813",
+      "baseline": "tests/baselines/reference/enumAssignmentCompat.errors.txt",
+      "baseline_sha256": "b145c71ed4b9a4e015bfd0fa69acd2001641f345279bc9ef49c641b6ba9d2ead",
+      "feature": "enums",
+      "codes": [
+        2322
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "280_unusedClassesinNamespace2",
+      "source": "tests/cases/compiler/unusedClassesinNamespace2.ts",
+      "source_sha256": "45a57a5ced40041e5358432a0a5c860ed216f9fcb6c0a58ed08fb45a80e47d0a",
+      "baseline": "tests/baselines/reference/unusedClassesinNamespace2.errors.txt",
+      "baseline_sha256": "f385ed34e0bb6b221ba690bf739b734ae78bef60dacfcba135e0556cbeed4c35",
+      "feature": "namespaces",
+      "codes": [
+        6196
+      ],
+      "options": {
+        "target": "es2015",
+        "noUnusedLocals": true,
+        "noUnusedParameters": true
+      }
+    },
+    {
+      "id": "281_doubleUnderStringLiteralAssignability",
+      "source": "tests/cases/compiler/doubleUnderStringLiteralAssignability.ts",
+      "source_sha256": "aeb042c9efcb87ea3b818a46ad746fc1d5195679bf0bf8ecdaa6c6cae85f196d",
+      "baseline": "tests/baselines/reference/doubleUnderStringLiteralAssignability.errors.txt",
+      "baseline_sha256": "990d9a8feecbb874dac2c2d8e6a169aa84e9e1a5c3cf57523a6846e3f75b8e0c",
+      "feature": "literals",
+      "codes": [
+        2322
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "282_ipromise4",
+      "source": "tests/cases/compiler/ipromise4.ts",
+      "source_sha256": "2eb7f4168ab4b2016f1cb259490c18b3a968801edb4a8d94631a30b8bdd275fd",
+      "baseline": "tests/baselines/reference/ipromise4.errors.txt",
+      "baseline_sha256": "737c997148efa4147c97e4273d3b30aa4ff1c2c5b1faabe3028e6470a4922ebb",
+      "feature": "async",
+      "codes": [
+        2322
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "283_errorsWithInvokablesInUnions01",
+      "source": "tests/cases/compiler/errorsWithInvokablesInUnions01.ts",
+      "source_sha256": "bc3fea8956525a86ca6f6526135fd69c7aaac930f147885be42bac207b606d07",
+      "baseline": "tests/baselines/reference/errorsWithInvokablesInUnions01.errors.txt",
+      "baseline_sha256": "c872c559cadc55a97f409e61dbb6ba0152237d9f87eba8b0d32d5b3501979147",
+      "feature": "unions",
+      "codes": [
+        2322
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "284_exhaustiveSwitchCheckCircularity",
+      "source": "tests/cases/compiler/exhaustiveSwitchCheckCircularity.ts",
+      "source_sha256": "7fdc44ef2d3e283cf9cf51d7bac4484478870d3cf68c9962fb805771ebbbbd22",
+      "baseline": "tests/baselines/reference/exhaustiveSwitchCheckCircularity.errors.txt",
+      "baseline_sha256": "254b8a5880b64309fb6dc67c9c7d7c8033661291b2d7d2713a80d825ef3ef6c8",
+      "feature": "control",
+      "codes": [
+        2345
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": true
+      }
+    },
+    {
+      "id": "285_numberAssignableToEnumInsideUnion",
+      "source": "tests/cases/compiler/numberAssignableToEnumInsideUnion.ts",
+      "source_sha256": "cdf8b4aa60d080595aab7e412973600e39a030ef9abe04e955f58b543494baf0",
+      "baseline": "tests/baselines/reference/numberAssignableToEnumInsideUnion.errors.txt",
+      "baseline_sha256": "cb259bda35733aab5418516a86ea6ce74ced5afd4db3da20425f307b9abd0a34",
+      "feature": "enums",
+      "codes": [
+        2454
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "286_conditionalExpressionNewLine9",
+      "source": "tests/cases/compiler/conditionalExpressionNewLine9.ts",
+      "source_sha256": "c0cff4cca57f19f145dc947233e40dc6530216e7800199dd47252ebe8727e483",
+      "baseline": "tests/baselines/reference/conditionalExpressionNewLine9.errors.txt",
+      "baseline_sha256": "1734b759cd9952a4b4c5ed72f45d33f42f3d91dc569b00f10c2fde68cdea7d7f",
+      "feature": "types",
+      "codes": [
+        2304
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "287_unusedFunctionsinNamespaces2",
+      "source": "tests/cases/compiler/unusedFunctionsinNamespaces2.ts",
+      "source_sha256": "a567e6b3c1b5490231cc9a9f32b228d7684b1bf0ee4d8c4e21befd7febaff7ba",
+      "baseline": "tests/baselines/reference/unusedFunctionsinNamespaces2.errors.txt",
+      "baseline_sha256": "ac79ffe447c9af3bfd2e8304582d2c4c7770f1d87cfdbe4702c5837eeb64fd25",
+      "feature": "namespaces",
+      "codes": [
+        6133
+      ],
+      "options": {
+        "target": "es2015",
+        "noUnusedLocals": true,
+        "noUnusedParameters": true
+      }
+    },
+    {
+      "id": "288_numberOnLeftSideOfInExpression",
+      "source": "tests/cases/compiler/numberOnLeftSideOfInExpression.ts",
+      "source_sha256": "fb0d7e9b52286994d2526a1145b99b35f9deba34dbcb4b0f5cff0383c97720c0",
+      "baseline": "tests/baselines/reference/numberOnLeftSideOfInExpression.errors.txt",
+      "baseline_sha256": "4e9993f3c4c1ab0925572c26cd26e051c08a850a3ad793f0b5dc4a3e2a9e0829",
+      "feature": "literals",
+      "codes": [
+        2454
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "289_awaitedTypeStrictNull",
+      "source": "tests/cases/compiler/awaitedTypeStrictNull.ts",
+      "source_sha256": "3b2eb37a509e88e2f760d7b25ac40c8111530f4f64a9a3657f624f478a7a6e61",
+      "baseline": "tests/baselines/reference/awaitedTypeStrictNull.errors.txt",
+      "baseline_sha256": "43ac814302c14c69fefeada7fe83fe650e0ba12c613874d0ec19a03d16fa0e4f",
+      "feature": "async",
+      "codes": [
+        2589,
+        7010
+      ],
+      "options": {
+        "target": "esnext",
+        "strictNullChecks": true
+      }
+    },
+    {
+      "id": "290_contextuallyTypingOrOperator",
+      "source": "tests/cases/compiler/contextuallyTypingOrOperator.ts",
+      "source_sha256": "b0c5aa194e7ddba97892ca6782e3247bd28259eecc13e287c018bb8992ecffec",
+      "baseline": "tests/baselines/reference/contextuallyTypingOrOperator.errors.txt",
+      "baseline_sha256": "66b31222e193fbe810fa1e8b932a71990270ed3f3dc27ec650b93a6af39a87d7",
+      "feature": "operators",
+      "codes": [
+        2872
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": false
+      }
+    },
+    {
+      "id": "291_nonexistentPropertyOnUnion",
+      "source": "tests/cases/compiler/nonexistentPropertyOnUnion.ts",
+      "source_sha256": "a4fe1da727ae7c5b6d097b82d31b9989d7e5274be96db64daa8d697ddfef4aab",
+      "baseline": "tests/baselines/reference/nonexistentPropertyOnUnion.errors.txt",
+      "baseline_sha256": "8c565f52ef3d5be2d2296efca5fcad3195da12f7c5117d0b2ff25dccbeea7d51",
+      "feature": "unions",
+      "codes": [
+        2339
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "292_scopingInCatchBlocks",
+      "source": "tests/cases/compiler/scopingInCatchBlocks.ts",
+      "source_sha256": "79e3834483d1ad320e8106aa83405294c9332b4fbaa74100e564deea35465783",
+      "baseline": "tests/baselines/reference/scopingInCatchBlocks.errors.txt",
+      "baseline_sha256": "dbd6349cc0da2bab35b3b5f812af0f7703ff3903dcabbcdb590a89e9b7e34495",
+      "feature": "control",
+      "codes": [
+        2304
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "293_augmentedTypesEnum2",
+      "source": "tests/cases/compiler/augmentedTypesEnum2.ts",
+      "source_sha256": "2984522096f854b27b9b0c51ab891e62f341009aea6d1f7326948a94e400a1de",
+      "baseline": "tests/baselines/reference/augmentedTypesEnum2.errors.txt",
+      "baseline_sha256": "ec5323c48807251f206c5e38c2b1306ca1e859801137012744d1524e35dfac3e",
+      "feature": "enums",
+      "codes": [
+        2567
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "294_mappedTypeWithCombinedTypeMappers",
+      "source": "tests/cases/compiler/mappedTypeWithCombinedTypeMappers.ts",
+      "source_sha256": "09a82d5b0228267e82dff8753d3c573b5917f5849f001ed745c9f76805a6c6b1",
+      "baseline": "tests/baselines/reference/mappedTypeWithCombinedTypeMappers.errors.txt",
+      "baseline_sha256": "c43bee7fcfe28fbc5c2e67267be8b7b6d777ddfb06d87b5b65cf25f86f90a8f9",
+      "feature": "types",
+      "codes": [
+        2322
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "295_unusedFunctionsinNamespaces4",
+      "source": "tests/cases/compiler/unusedFunctionsinNamespaces4.ts",
+      "source_sha256": "df92bbb792c9c0b5159fda6061972b0c5e56829455200a2fdd1c6fc7e13a784c",
+      "baseline": "tests/baselines/reference/unusedFunctionsinNamespaces4.errors.txt",
+      "baseline_sha256": "c98b44778f4a55601edf65446934902a9160fae4154c9ae661608f7d1b378db0",
+      "feature": "namespaces",
+      "codes": [
+        6133
+      ],
+      "options": {
+        "target": "es2015",
+        "noUnusedLocals": true,
+        "noUnusedParameters": true
+      }
+    },
+    {
+      "id": "296_numberToString",
+      "source": "tests/cases/compiler/numberToString.ts",
+      "source_sha256": "3ca615968a332136b1f06e1f03880976b8af663f3a3542728d38d8e711e32ce7",
+      "baseline": "tests/baselines/reference/numberToString.errors.txt",
+      "baseline_sha256": "5beced6d1310b48c1ec76293d2304edfd426a21a14adb070441f9f6d3d0f5330",
+      "feature": "literals",
+      "codes": [
+        2322,
+        2345
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "297_promiseIdentityWithAny",
+      "source": "tests/cases/compiler/promiseIdentityWithAny.ts",
+      "source_sha256": "ae8ddb9583403a67b59664eacb056224a27b76b183da462ed159a2bf4f3f95c8",
+      "baseline": "tests/baselines/reference/promiseIdentityWithAny.errors.txt",
+      "baseline_sha256": "a4a0a0f67ed157053b19ed011b31fda480c177b723ca71606ac36d2393a6cbab",
+      "feature": "async",
+      "codes": [
+        2403
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    },
+    {
+      "id": "298_destructuringAssignmentWithDefault2",
+      "source": "tests/cases/compiler/destructuringAssignmentWithDefault2.ts",
+      "source_sha256": "a7c608088b4c8e93500c31275060c0e341300114e1a6b09f99c831b051272fb5",
+      "baseline": "tests/baselines/reference/destructuringAssignmentWithDefault2.errors.txt",
+      "baseline_sha256": "79f34b812d0950386beddf5a4ca6b61d76d20feba4093ab2776ddfc80371ec59",
+      "feature": "operators",
+      "codes": [
+        2322
+      ],
+      "options": {
+        "target": "es2015",
+        "lib": [
+          "es2015"
+        ],
+        "strictNullChecks": true
+      }
+    },
+    {
+      "id": "299_contextualTypingOfArrayLiterals1",
+      "source": "tests/cases/compiler/contextualTypingOfArrayLiterals1.ts",
+      "source_sha256": "682c00f8487280e01faedafbafaf50d90f157f29d70168878c724d21278d1474",
+      "baseline": "tests/baselines/reference/contextualTypingOfArrayLiterals1.errors.txt",
+      "baseline_sha256": "ad574c26d2940042d2226a2efd8c7f7ffda602fc9f80751c79ad2b56139c422b",
+      "feature": "arrays",
+      "codes": [
+        2322
+      ],
+      "options": {
+        "target": "es2015",
+        "strict": false
+      }
+    },
+    {
+      "id": "300_errorMessageOnIntersectionsWithDiscriminants01",
+      "source": "tests/cases/compiler/errorMessageOnIntersectionsWithDiscriminants01.ts",
+      "source_sha256": "6088f013a503585fb844c4ad82ad58817f17aabb3ec30271773c10936165c841",
+      "baseline": "tests/baselines/reference/errorMessageOnIntersectionsWithDiscriminants01.errors.txt",
+      "baseline_sha256": "8e936e4f83e1a7492d5f45decc2ea70908da02dc5355d24222bc95aa1611c509",
+      "feature": "unions",
+      "codes": [
+        2322
+      ],
+      "options": {
+        "target": "es2015"
+      }
+    }
+  ]
+}

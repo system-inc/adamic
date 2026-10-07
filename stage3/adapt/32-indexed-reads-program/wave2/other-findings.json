@@ -1,0 +1,234 @@
+[
+  {
+    "file": "binder.ts",
+    "line": 1109,
+    "column": 17,
+    "code": 2412,
+    "diagnostic": "src/compiler/binder.ts:1109:17: error TS2412: Type 'undefined' is not assignable to type 'FlowNode' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "binder.ts",
+    "line": 1229,
+    "column": 13,
+    "code": 7029,
+    "diagnostic": "src/compiler/binder.ts:1229:13: error TS7029: Fallthrough case in switch.",
+    "reason": "Existing intentional switch fallthrough rejected by noFallthroughCasesInSwitch; not an indexed read."
+  },
+  {
+    "file": "binder.ts",
+    "line": 1252,
+    "column": 13,
+    "code": 7029,
+    "diagnostic": "src/compiler/binder.ts:1252:13: error TS7029: Fallthrough case in switch.",
+    "reason": "Existing intentional switch fallthrough rejected by noFallthroughCasesInSwitch; not an indexed read."
+  },
+  {
+    "file": "binder.ts",
+    "line": 1966,
+    "column": 18,
+    "code": 7030,
+    "diagnostic": "src/compiler/binder.ts:1966:18: error TS7030: Not all code paths return a value.",
+    "reason": "Existing callback return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "binder.ts",
+    "line": 1982,
+    "column": 18,
+    "code": 7030,
+    "diagnostic": "src/compiler/binder.ts:1982:18: error TS7030: Not all code paths return a value.",
+    "reason": "Existing callback return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "binder.ts",
+    "line": 2017,
+    "column": 18,
+    "code": 7030,
+    "diagnostic": "src/compiler/binder.ts:2017:18: error TS7030: Not all code paths return a value.",
+    "reason": "Existing callback return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "binder.ts",
+    "line": 2264,
+    "column": 122,
+    "code": 7030,
+    "diagnostic": "src/compiler/binder.ts:2264:122: error TS7030: Not all code paths return a value.",
+    "reason": "Existing callback return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "binder.ts",
+    "line": 2372,
+    "column": 17,
+    "code": 2412,
+    "diagnostic": "src/compiler/binder.ts:2372:17: error TS2412: Type 'PatternAmbientModule[] | undefined' is not assignable to type 'PatternAmbientModule[]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'PatternAmbientModule[]'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "binder.ts",
+    "line": 2442,
+    "column": 13,
+    "code": 7029,
+    "diagnostic": "src/compiler/binder.ts:2442:13: error TS7029: Fallthrough case in switch.",
+    "reason": "Existing intentional switch fallthrough rejected by noFallthroughCasesInSwitch; not an indexed read."
+  },
+  {
+    "file": "binder.ts",
+    "line": 2849,
+    "column": 13,
+    "code": 7029,
+    "diagnostic": "src/compiler/binder.ts:2849:13: error TS7029: Fallthrough case in switch.",
+    "reason": "Existing intentional switch fallthrough rejected by noFallthroughCasesInSwitch; not an indexed read."
+  },
+  {
+    "file": "binder.ts",
+    "line": 3064,
+    "column": 13,
+    "code": 7029,
+    "diagnostic": "src/compiler/binder.ts:3064:13: error TS7029: Fallthrough case in switch.",
+    "reason": "Existing intentional switch fallthrough rejected by noFallthroughCasesInSwitch; not an indexed read."
+  },
+  {
+    "file": "binder.ts",
+    "line": 3072,
+    "column": 13,
+    "code": 7029,
+    "diagnostic": "src/compiler/binder.ts:3072:13: error TS7029: Fallthrough case in switch.",
+    "reason": "Existing intentional switch fallthrough rejected by noFallthroughCasesInSwitch; not an indexed read."
+  },
+  {
+    "file": "binder.ts",
+    "line": 315,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/binder.ts:315:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Enum syntax rejected by erasableSyntaxOnly; not a required indexed read."
+  },
+  {
+    "file": "binder.ts",
+    "line": 3840,
+    "column": 9,
+    "code": 7029,
+    "diagnostic": "src/compiler/binder.ts:3840:9: error TS7029: Fallthrough case in switch.",
+    "reason": "Existing intentional switch fallthrough rejected by noFallthroughCasesInSwitch; not an indexed read."
+  },
+  {
+    "file": "binder.ts",
+    "line": 3905,
+    "column": 64,
+    "code": 7030,
+    "diagnostic": "src/compiler/binder.ts:3905:64: error TS7030: Not all code paths return a value.",
+    "reason": "Existing callback return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "binder.ts",
+    "line": 465,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/binder.ts:465:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Enum syntax rejected by erasableSyntaxOnly; not a required indexed read."
+  },
+  {
+    "file": "binder.ts",
+    "line": 881,
+    "column": 13,
+    "code": 2412,
+    "diagnostic": "src/compiler/binder.ts:881:13: error TS2412: Type 'Symbol | undefined' is not assignable to type 'Symbol' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'Symbol'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "binder.ts",
+    "line": 993,
+    "column": 17,
+    "code": 2412,
+    "diagnostic": "src/compiler/binder.ts:993:17: error TS2412: Type 'undefined' is not assignable to type 'SymbolTable' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "programDiagnostics.ts",
+    "line": 292,
+    "column": 64,
+    "code": 2412,
+    "diagnostic": "src/compiler/programDiagnostics.ts:292:64: error TS2412: Type 'DiagnosticMessageChain[] | undefined' is not assignable to type 'DiagnosticMessageChain[]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'DiagnosticMessageChain[]'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "tracing.ts",
+    "line": 122,
+    "column": 13,
+    "code": 2412,
+    "diagnostic": "src/compiler/tracing.ts:122:13: error TS2412: Type 'undefined' is not assignable to type 'string' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "tracing.ts",
+    "line": 132,
+    "column": 23,
+    "code": 1294,
+    "diagnostic": "src/compiler/tracing.ts:132:23: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Enum syntax rejected by erasableSyntaxOnly; not a required indexed read."
+  },
+  {
+    "file": "tracing.ts",
+    "line": 158,
+    "column": 25,
+    "code": 2379,
+    "diagnostic": "src/compiler/tracing.ts:158:25: error TS2379: Argument of type '{ phase: Phase; name: string; args: Args | undefined; time: number; separateBeginAndEnd: boolean; }' is not assignable to parameter of type '{ phase: Phase; name: string; args?: Args; time: number; separateBeginAndEnd: boolean; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'args' are incompatible.\n    Type 'Args | undefined' is not assignable to type 'Args'.\n      Type 'undefined' is not assignable to type 'Args'.",
+    "reason": "Exact optional-property argument contract; not a required indexed read."
+  },
+  {
+    "file": "tracing.ts",
+    "line": 37,
+    "column": 18,
+    "code": 1294,
+    "diagnostic": "src/compiler/tracing.ts:37:18: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Enum syntax rejected by erasableSyntaxOnly; not a required indexed read."
+  },
+  {
+    "file": "tracing.ts",
+    "line": 40,
+    "column": 27,
+    "code": 2591,
+    "diagnostic": "src/compiler/tracing.ts:40:27: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node global typings are unavailable under the prepared checker environment; not an indexed read."
+  },
+  {
+    "file": "tracing.ts",
+    "line": 63,
+    "column": 22,
+    "code": 2591,
+    "diagnostic": "src/compiler/tracing.ts:63:22: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node global typings are unavailable under the prepared checker environment; not an indexed read."
+  },
+  {
+    "file": "tracing.ts",
+    "line": 66,
+    "column": 81,
+    "code": 18046,
+    "diagnostic": "src/compiler/tracing.ts:66:81: error TS18046: 'e' is of type 'unknown'.",
+    "reason": "Catch value remains unknown; not an indexed read."
+  },
+  {
+    "file": "tracing.ts",
+    "line": 82,
+    "column": 50,
+    "code": 2591,
+    "diagnostic": "src/compiler/tracing.ts:82:50: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node global typings are unavailable under the prepared checker environment; not an indexed read."
+  },
+  {
+    "file": "tracing.ts",
+    "line": 83,
+    "column": 39,
+    "code": 2591,
+    "diagnostic": "src/compiler/tracing.ts:83:39: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node global typings are unavailable under the prepared checker environment; not an indexed read."
+  },
+  {
+    "file": "tracing.ts",
+    "line": 88,
+    "column": 21,
+    "code": 2379,
+    "diagnostic": "src/compiler/tracing.ts:88:21: error TS2379: Argument of type '{ configFilePath: string | undefined; tracePath: string; typesPath: string; }' is not assignable to parameter of type 'TraceRecord' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'configFilePath' are incompatible.\n    Type 'string | undefined' is not assignable to type 'string'.\n      Type 'undefined' is not assignable to type 'string'.",
+    "reason": "Exact optional-property argument contract; not a required indexed read."
+  }
+]

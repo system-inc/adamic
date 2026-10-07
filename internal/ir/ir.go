@@ -10,6 +10,8 @@ import "fmt"
 
 // Program is one compiled Adamic program.
 type Program struct {
+	Async *AsyncProgram
+
 	// Source is the entry file's base name, as written, for the header of what the backends emit.
 	Source string
 
@@ -43,13 +45,24 @@ type Program struct {
 // Class is a class instantiation. Base is zero for a root; Methods has the base slots as a prefix.
 type Class struct {
 	// Definition is the erased source identity, shared by distinct native layouts.
-	Definition  int
-	Name        string
-	Base        int
-	Constructor int
-	Fields      []Field
-	OwnStart    int
-	Methods     []int
+	Definition   int
+	Name         string
+	Base         int
+	Constructor  int
+	Fields       []Field
+	OwnStart     int
+	Methods      []int
+	Accessors    []Accessor
+	Literal      bool
+	PublicFields []Field
+	Static       bool
+	StaticParent int   // one-based hidden parent slot, zero for a root
+	StaticFlags  []int // one-based presence slot for each data slot, zero for internal storage
+}
+
+type Accessor struct {
+	Name           string
+	Getter, Setter int
 }
 
 // Function is a function declaration.
@@ -168,6 +181,10 @@ type Local struct {
 	// (docs/memory.md, "Borrowed parameters"). Nothing ever assigns a borrowed parameter.
 	Borrowed bool
 
+	// ConstantClosure is the function index plus one for a const initialized directly
+	// with a closure literal. Zero means no such proof.
+	ConstantClosure int
+
 	// Counter is a for loop's counter proven to hold only whole numbers no larger than 2^53, each a
 	// double exactly, so the native backend keeps it in an integer and reads it as the same double
 	// (internal/lower/counters.go). Only the loop's update ever writes it, by a whole constant step.
@@ -201,13 +218,21 @@ type (
 		Returns   Type
 
 		// Virtual is a one-based method slot. Function supplies its static signature.
-		Virtual int
+		Virtual  int
+		Accessor string
+		Setter   bool
+	}
+
+	HasAccessor struct {
+		Object Expression
+		Name   string
 	}
 
 	// InstanceOf tests nominal identity along a class ancestry chain.
 	InstanceOf struct {
 		Value Expression
 		Class int
+		Exact bool
 	}
 
 	// Unary is -, +, ! and ~ on its operand.
@@ -254,6 +279,7 @@ type (
 		Class                int
 		Spread               Expression
 		Fields               []Field
+		NoReuse              bool
 		SpreadMaybeUndefined bool
 		Empty                []Field
 
@@ -275,6 +301,8 @@ type (
 		Name     string
 		Of       Type
 		Optional bool
+		// Absent is an optional own field: a shape without it reads as undefined.
+		Absent bool
 		// Class is, when the field is one of a class's, that class's constructor plus one, and 0
 		// otherwise: the constructor's object has the class's layout, so the field's place in it is
 		// known, for an object that has that layout.
@@ -398,8 +426,8 @@ type (
 	// TypeOf is typeof Value: "number", "string", "boolean", "undefined", "object" or "function".
 	TypeOf struct{ Value Expression }
 
-	// MakeError is new Error(Message): an object with fields name ("Error") and message.
-	MakeError struct{ Message Expression }
+	// MakeError is an Error with Message and an optional Name (nil means "Error").
+	MakeError struct{ Message, Name Expression }
 
 	// WeakOf is Value, a reference, kept weakly: the handle to it, made if it has none yet, or
 	// undefined when Value is.
@@ -701,6 +729,9 @@ type (
 	// ParallelMap is structured fork-join; the callback takes item then index.
 	// Its proof belongs to lowering and its native scheduling belongs to the runtime.
 	ParallelMap struct {
+		// Moved is set by lowering only after proving exclusive, disjoint item
+		// graphs and consuming the source binding. Native skips item/result sharing.
+		Moved       bool
 		Items, Work Expression
 		// Shared includes immutable reference globals read by the task's call graph.
 		// They are marking roots, not extra evaluations in the sequential witness.
@@ -740,8 +771,9 @@ type (
 
 // Field is one field of an object literal.
 type Field struct {
-	Name  string
-	Value Expression
+	Name    string
+	Value   Expression
+	Private bool
 }
 
 // Method is one of a class's methods: its name, and the function that is it, whose first parameter
@@ -751,7 +783,8 @@ type Method struct {
 	Function int
 }
 
-func (InstanceOf) Type() Type { return Boolean }
+func (InstanceOf) Type() Type  { return Boolean }
+func (HasAccessor) Type() Type { return Boolean }
 
 func (NumberConstant) Type() Type  { return Number }
 func (BooleanConstant) Type() Type { return Boolean }
@@ -1009,7 +1042,8 @@ type (
 		Class int
 		// Site is which write of the program this is, for the cycle finder (lowering keeps the type of
 		// what it writes into), or 0 when nothing recorded one.
-		Site int
+		Site   int
+		Define bool // class field initialization defines an own data property
 	}
 
 	// Return leaves the function, with Value unless it returns void.
@@ -1115,23 +1149,6 @@ func (Break) statement()       {}
 func (Continue) statement()    {}
 func (Throw) statement()       {}
 func (Try) statement()         {}
-
-// CallTargets names every implementation a virtual call may reach, or its direct callee.
-func (p *Program) CallTargets(call Call) []int {
-	if call.Virtual != 0 {
-		return p.MethodTargets[call.Function]
-	}
-	return []int{call.Function}
-}
-
-func (p *Program) CallMayThrow(call Call) bool {
-	for _, target := range p.CallTargets(call) {
-		if p.Functions[target].MayThrow {
-			return true
-		}
-	}
-	return false
-}
 
 func (p *Program) HasInheritance() bool {
 	for _, class := range p.Classes {

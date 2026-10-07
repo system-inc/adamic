@@ -22,9 +22,29 @@ static const bool b_references[] = {true, false};
 static const adamic_shape b_shape = {2, b_names, b_references, NULL};
 static adamic_object *objects[2];
 static adamic_slot_cache field_cache, method_cache;
+static pthread_mutex_t gate = PTHREAD_MUTEX_INITIALIZER;
+static pthread_cond_t ready = PTHREAD_COND_INITIALIZER;
+static unsigned arrived;
+
+// All readers enter the field-only phase together, before method-cache atomics
+// can order later field accesses. The gate adds no ordering within that phase.
+static void readers_ready(void) {
+ if (pthread_mutex_lock(&gate) != 0) { abort(); }
+ arrived++;
+ if (pthread_cond_broadcast(&ready) != 0) { abort(); }
+ while (arrived != 4) { if (pthread_cond_wait(&ready, &gate) != 0) { abort(); } }
+ if (pthread_mutex_unlock(&gate) != 0) { abort(); }
+}
 
 static void *read_fields(void *given) {
  size_t worker = (size_t)given;
+ readers_ready();
+ // Exercise the field cache before method-cache atomics can accidentally order
+ // field accesses. TSan may model relaxed atomics more strongly than C does.
+ for (size_t i = 0; i < 10000; i++) {
+  size_t kind = (i + worker) % 2;
+  if (adamic_object_field(objects[kind], "value", &field_cache)->number != (kind == 0 ? 10 : 20)) { abort(); }
+ }
  for (size_t i = 0; i < 100000; i++) {
   size_t kind = (i + worker) % 2;
   adamic_object *object = objects[kind];

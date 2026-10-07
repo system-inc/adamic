@@ -28,6 +28,18 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 		return 0, l.notYet(call, "a call to a generic function whose signature the checker didn't resolve")
 	}
 	concreteTypes := map[*checker.Type]*checker.Type{}
+	// Class-generic calls supply this callee's resolved mapper. Ordinary recursive
+	// calls must infer their own arguments: the outer mapper can still describe the
+	// same declaration's previous instantiation, as nest<T>([item], depth - 1) does.
+	if l.genericUsesClasses(declaration, map[*ast.Node]bool{}) {
+		for _, parameter := range declaration.TypeParameters() {
+			declaredType := l.checker.GetTypeAtLocation(parameter.Name())
+			concrete := l.concrete(declaredType)
+			if concrete != declaredType && concrete.Flags()&checker.TypeFlagsTypeParameter == 0 {
+				concreteTypes[declaredType] = concrete
+			}
+		}
+	}
 	declared, given := target.Parameters(), resolved.Parameters()
 	for index := range declared {
 		if index < len(given) {

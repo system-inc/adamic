@@ -1,12 +1,8 @@
 package parser
 
 import (
-	"bytes"
 	"context"
 	"errors"
-	"github.com/system-inc/adamic/internal/native"
-	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -87,7 +83,7 @@ func TestTypeImportCycleGap(t *testing.T) {
 	}
 }
 
-func TestClassMethodInterfaceAgreesWithNode(t *testing.T) {
+func TestClassMethodInterfaceGap(t *testing.T) {
 	path, err := filepath.Abs("gaps/4_class_interface_method.ts")
 	if err != nil {
 		t.Fatal(err)
@@ -104,34 +100,12 @@ func TestClassMethodInterfaceAgreesWithNode(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		t.Fatal(err)
+	_, err = lower.Lower(context.Background(), program)
+	var notYet *lower.NotYet
+	if !errors.As(err, &notYet) || notYet.What != "a class method through a view that erases its prototype origin" {
+		t.Fatalf("GAPS.md records an erased class-method origin NotYet, got %v", err)
 	}
-	binary := filepath.Join(t.TempDir(), "method-gap")
-	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
-	}
-	output, err := os.CreateTemp(t.TempDir(), "stdout-")
-	if err != nil {
-		t.Fatal(err)
-	}
-	defer output.Close()
-	var stderr bytes.Buffer
-	command := exec.Command(binary)
-	command.Stdout = output
-	command.Stderr = &stderr
-	err = command.Run()
-	if err != nil || stderr.Len() != 0 {
-		t.Fatalf("structural method dispatch: %v, stderr %q", err, stderr.String())
-	}
-	actual, err := os.ReadFile(output.Name())
-	if err != nil {
-		t.Fatal(err)
-	}
-	if !bytes.Equal(actual, result.output) {
-		t.Fatalf("structural method dispatch: native %q; Node %q", actual, result.output)
-	}
+	t.Logf("Node prints 1; Adamic reports: %v", notYet)
 }
 
 func TestOptionalFunctionValueGap(t *testing.T) {

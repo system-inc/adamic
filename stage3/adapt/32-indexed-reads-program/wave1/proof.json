@@ -1,0 +1,70 @@
+{
+  "files": {
+    "semver.ts": {
+      "before_sha256": "1b5cbc707e9a7e1dd413b3dd69e2e5cb2c816a6675ce6ae6f3a3cc2d6fc0eabe",
+      "after_sha256": "51ebf538cd61c45359579fcb750558107f0564d8b1f54c69fa452a9bd2d56b6c",
+      "before_CRLF": 451,
+      "after_CRLF": 451
+    },
+    "programDiagnostics.ts": {
+      "before_sha256": "29d7760b4e759479ac33b09d154bf04622fb1b2e2e39853a6dfaa268fbc28a23",
+      "after_sha256": "39125d24533eb706e3bef5db772555d87c8cef5530ce2f44e2eeca92e9cbaa17",
+      "before_CRLF": 427,
+      "after_CRLF": 427
+    },
+    "tracing.ts": {
+      "before_sha256": "af328bd216975e2cacaa9acbe4e875c12a868d3adb0f605f6d5c2afd0be06bb1",
+      "after_sha256": "1070aae1faacce30848e14689304f9fc221eef1c476981aa6b716a85f0229ddc",
+      "before_CRLF": 375,
+      "after_CRLF": 375
+    },
+    "symbolWalker.ts": {
+      "before_sha256": "e9c78f8c78e5f78e893c9dd371a91c8bfdd8c98d2951c4b6174aa37d41475216",
+      "after_sha256": "e9c78f8c78e5f78e893c9dd371a91c8bfdd8c98d2951c4b6174aa37d41475216",
+      "before_CRLF": 216,
+      "after_CRLF": 216
+    },
+    "performance.ts": {
+      "before_sha256": "039c61441f42f71a5635372b188cec7c173d6a10adccd9ef44e7d8d2dc72b2e3",
+      "after_sha256": "039c61441f42f71a5635372b188cec7c173d6a10adccd9ef44e7d8d2dc72b2e3",
+      "before_CRLF": 210,
+      "after_CRLF": 210
+    }
+  },
+  "verification": "PASS semver.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS programDiagnostics.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS tracing.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS symbolWalker.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS performance.ts: stock emitted JavaScript bytes, site contract, idempotence\n",
+  "idempotence": [
+    {
+      "file": "semver.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 1
+    },
+    {
+      "file": "programDiagnostics.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 1
+    },
+    {
+      "file": "tracing.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 1
+    },
+    {
+      "file": "symbolWalker.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 4
+    },
+    {
+      "file": "performance.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 0
+    }
+  ],
+  "census_before": 41,
+  "census_after": 10,
+  "setup": "go version go1.27.1 linux/amd64\nsetup: go ready (1s)\nclang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)\nsetup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (1s)\nv24.19.0\nsetup: node ready (1s)\nsetup: submodules ready (1s)\nsetup: build cache warm (298s)\nsetup: done in 298s on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB\n"
+}

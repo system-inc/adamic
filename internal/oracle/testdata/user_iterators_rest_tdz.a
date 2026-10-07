@@ -1,0 +1,12 @@
+const source = {
+    [Symbol.iterator]() {
+        return {
+            next(): { value: number; done: boolean } {
+                console.log(`${rest.length}`);
+                return { value: 1, done: true };
+            },
+        };
+    },
+};
+const [...rest] = source;
+console.log(`${rest.length}`);

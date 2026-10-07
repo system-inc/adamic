@@ -65,7 +65,11 @@ func scalingSnapshot(t *testing.T, harness, file string, rewrite func(string) st
 	if err := os.WriteFile(path, source, 0600); err != nil {
 		t.Fatal(err)
 	}
-	binary := filepath.Join(directory, "harness")
+	name := "harness"
+	if options.ThreadSanitize {
+		name += "-tsan"
+	}
+	binary := filepath.Join(directory, name)
 	arguments := append(Flags(options), "-I", filepath.Dir(library), path, "-o", binary)
 	arguments = append(arguments, RuntimeLinkFlags(library)...)
 	arguments = append(arguments, "-lm")
@@ -111,7 +115,7 @@ func TestParallelScalingGuardMutants(t *testing.T) {
 			t.Skip("LeakSanitizer proof is Linux-only; Darwin positive control runs under leaks")
 		}
 		binary := scalingSnapshot(t, "cache_race.c", "string_index.c", func(source string) string {
-			return strings.Replace(cacheBuilderGate(source), "free(candidate->bmp);\n\tfree(candidate);", "/* mutant: leak the losing copy */", 1)
+			return strings.Replace(cacheBuilderGate(source), "free(candidate->view);\n\tfree(candidate);", "/* mutant: leak the losing copy */", 1)
 		}, Options{Sanitize: true})
 		command := exec.Command(binary)
 		command.Env = parallelEnvironment("4", true)

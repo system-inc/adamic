@@ -138,6 +138,9 @@ func traced(t *testing.T, path string) run {
 		t.Fatal(err)
 	}
 	program := lowered(t, path)
+	if program.Async != nil {
+		t.Skip("suspension-state tracing is NotYet; these programs use no synchronous lifetime proofs and have a separate async Node oracle")
+	}
 	result := run{graphs: map[int]*Function{}}
 	points := map[*ir.Statement]map[int]point{}
 	// variables is, per function, the JavaScript that reads each of its tracked variables that can
@@ -392,6 +395,7 @@ func TestLivenessHoldsOnEveryPath(t *testing.T) {
 				count := 0
 				for _, sequence := range frames(run) {
 					graph := run.graphs[sequence.function]
+					throwers := throwingInstructions(graph)
 					// Backward: readNext says whether the next thing to touch a variable is a read.
 					readNext := map[DeclarationId]bool{}
 					for position := len(sequence.points) - 1; position >= 0; position-- {
@@ -403,8 +407,10 @@ func TestLivenessHoldsOnEveryPath(t *testing.T) {
 							}
 						}
 						instruction := graph.Instructions[id]
-						for _, define := range instruction.Defines {
-							readNext[graph.Identifiers[define.Identifier].Declaration] = false
+						if !threw(graph, throwers, sequence.points, position) {
+							for _, define := range instruction.Defines {
+								readNext[graph.Identifiers[define.Identifier].Declaration] = false
+							}
 						}
 						for _, use := range instruction.Uses {
 							readNext[graph.Identifiers[use.Identifier].Declaration] = true
@@ -421,6 +427,46 @@ func TestLivenessHoldsOnEveryPath(t *testing.T) {
 		t.Errorf("nothing was checked")
 	}
 	t.Logf("%d variable-and-point pairs checked", checked)
+}
+
+// throwingInstructions is, for each instruction that ends a block by maybe throwing, its terminal.
+func throwingInstructions(graph *Function) map[InstructionId]*MayThrow {
+	throwers := map[InstructionId]*MayThrow{}
+	for _, block := range graph.Blocks {
+		if throws, ok := block.Terminal.(*MayThrow); ok && len(block.Instructions) > 0 {
+			throwers[block.Instructions[len(block.Instructions)-1]] = throws
+		}
+	}
+	return throwers
+}
+
+// threw reports whether the point at position, when it can throw, may have on this run: the point
+// after it is one its handler leads to, or one its next doesn't, or there is none (the call left by
+// a throw). A throw never gives the instruction's variables their values. When both ways lead to the
+// same point, either may have happened, and liveness must hold for the throw too.
+func threw(graph *Function, throwers map[InstructionId]*MayThrow, points []InstructionId, position int) bool {
+	throws, ok := throwers[points[position]]
+	if !ok {
+		return false
+	}
+	if position+1 == len(points) {
+		return true
+	}
+	next := points[position+1]
+	return leadsTo(graph, throws.Handler, next) || !leadsTo(graph, throws.Next, next)
+}
+
+// leadsTo reports whether control entering a block runs next first: the block's own first
+// instruction, or, through blocks that run nothing, the first of a block after it.
+func leadsTo(graph *Function, id BlockId, next InstructionId) bool {
+	block, ok := graph.Block(id)
+	if !ok {
+		return false
+	}
+	if len(block.Instructions) > 0 {
+		return block.Instructions[0] == next
+	}
+	return reaches(graph, block, func(candidate *BasicBlock) bool { return candidate.Instructions[0] == next })
 }
 
 // sequence is one call's points, in the order they ran.

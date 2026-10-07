@@ -11,6 +11,9 @@ import (
 // programArguments() from 'adamic', the door out, writeTextFile(path, text), and what a walk of the
 // file system needs, readDirectory(path) and fileStatus(path). isInput is false for any other call.
 func (l *lowering) input(node *ast.Node) (ir.Expression, bool, error) {
+	if value, found, err := l.tsgo(node); found {
+		return value, true, err
+	}
 	callee := node.AsCallExpression().Expression
 	arguments := node.AsCallExpression().Arguments.Nodes
 	switch {
@@ -30,6 +33,11 @@ func (l *lowering) input(node *ast.Node) (ir.Expression, bool, error) {
 		}
 		return ir.ReadTextFile{Path: path}, true, nil
 	case l.isPreludeFunction(callee, "writeTextFile"):
+		for _, argument := range arguments {
+			if argument.Kind == ast.KindSpreadElement {
+				return nil, true, l.notYet(argument, describe(argument))
+			}
+		}
 		if len(arguments) != 2 {
 			return nil, true, errors.New("lower: " + l.program.Where(node) + ": writeTextFile takes a path and a text, and the checker let another count through")
 		}
