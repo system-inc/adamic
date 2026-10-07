@@ -7,8 +7,8 @@ const message = 'This calls the `Object` constructor with no argument, which bui
 const use = 'Replace with an object literal.';
 const after = 'Replace with an object literal, adding the preceding semicolon that the parenthesis would otherwise swallow.';
 export class NoObjectConstructor {
-    // Pinned parser SyntaxKind values for the incoming shared driver.
-    readonly listenerKinds: number[] = [214, 215];
+    // Parser ast.Kind names for the incoming shared driver.
+    readonly listenerKinds: string[] = ['CallExpression', 'NewExpression'];
  readonly c: OutputContext;
  constructor(c: OutputContext) { this.c=c; }
  inner(position: number): number {

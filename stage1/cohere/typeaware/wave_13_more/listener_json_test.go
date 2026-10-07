@@ -13,8 +13,8 @@ import (
 )
 
 type listenerDescriptor struct {
-	Name  string `json:"name"`
-	Kinds []int  `json:"kinds"`
+	Name  string   `json:"name"`
+	Kinds []string `json:"kinds"`
 }
 
 var listenerPublicNames = map[string]string{
@@ -29,7 +29,7 @@ var listenerPublicNames = map[string]string{
 	"wave_13_more/no_promise_executor_return.a":        "no-promise-executor-return",
 }
 
-func checkListenerJSON(data []byte, name string, wanted []int) error {
+func checkListenerJSON(data []byte, name string, wanted []string) error {
 	var descriptor listenerDescriptor
 	decoder := json.NewDecoder(bytes.NewReader(data))
 	decoder.DisallowUnknownFields()
@@ -67,11 +67,20 @@ func TestWave13ListenerJSON(t *testing.T) {
 				t.Fatal(err)
 			}
 			t.Logf("rule.json kinds %v agree with production Go", wanted)
+			numeric, err := json.Marshal(map[string]any{"name": name, "kinds": []int{214}})
+			if err != nil {
+				t.Fatal(err)
+			}
+			if err := checkListenerJSON(numeric, name, wanted); err == nil {
+				t.Fatal("numeric-kind descriptor mutant survived")
+			} else {
+				t.Logf("numeric-kind descriptor mutant caught: %v", err)
+			}
 			var descriptor listenerDescriptor
 			if err := json.Unmarshal(data, &descriptor); err != nil {
 				t.Fatal(err)
 			}
-			descriptor.Kinds[0]++
+			descriptor.Kinds[0] = "Identifier"
 			mutant, err := json.Marshal(descriptor)
 			if err != nil {
 				t.Fatal(err)
@@ -79,7 +88,7 @@ func TestWave13ListenerJSON(t *testing.T) {
 			if err := checkListenerJSON(mutant, name, wanted); err == nil {
 				t.Fatal("wrong-kind descriptor mutant survived")
 			} else {
-				t.Logf("descriptor numeric mutant caught: %v", err)
+				t.Logf("descriptor named-kind mutant caught: %v", err)
 			}
 		})
 	}

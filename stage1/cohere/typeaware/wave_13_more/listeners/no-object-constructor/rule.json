@@ -1,7 +1,7 @@
 {
   "name": "no-object-constructor",
   "kinds": [
-    214,
-    215
+    "CallExpression",
+    "NewExpression"
   ]
 }

@@ -17,15 +17,15 @@ import (
 )
 
 // The independent production listener table decides which kinds a rule needs.
-// Numeric constants come from the pinned parser, never a second handwritten enum.
-var parserKinds = map[string]int{
-	"KindSourceFile":          int(ast.KindSourceFile),
-	"KindCallExpression":      int(ast.KindCallExpression),
-	"KindNewExpression":       int(ast.KindNewExpression),
-	"KindVariableDeclaration": int(ast.KindVariableDeclaration),
-	"KindThrowStatement":      int(ast.KindThrowStatement),
-	"KindArrowFunction":       int(ast.KindArrowFunction),
-	"KindReturnStatement":     int(ast.KindReturnStatement),
+// Each listener name is checked against the pinned parser constants.
+var parserKinds = map[string]ast.Kind{
+	"KindSourceFile":          ast.KindSourceFile,
+	"KindCallExpression":      ast.KindCallExpression,
+	"KindNewExpression":       ast.KindNewExpression,
+	"KindVariableDeclaration": ast.KindVariableDeclaration,
+	"KindThrowStatement":      ast.KindThrowStatement,
+	"KindArrowFunction":       ast.KindArrowFunction,
+	"KindReturnStatement":     ast.KindReturnStatement,
 }
 
 type listenerCase struct{ native, production string }
@@ -42,15 +42,15 @@ var listenerCases = []listenerCase{
 	{"wave_13_more/no_promise_executor_return.a", "core/no_promise_executor_return.go"},
 }
 
-var listenerDeclaration = regexp.MustCompile(`readonly listenerKinds: number\[\] = \[([0-9, ]+)\];`)
+var listenerDeclaration = regexp.MustCompile(`readonly listenerKinds: string\[\] = \[([A-Za-z', ]+)\];`)
 
-func productionListenerKinds(t *testing.T, path string) []int {
+func productionListenerKinds(t *testing.T, path string) []string {
 	t.Helper()
 	file, err := parser.ParseFile(token.NewFileSet(), path, nil, 0)
 	if err != nil {
 		t.Fatal(err)
 	}
-	var kinds []int
+	var kinds []string
 	goast.Inspect(file, func(node goast.Node) bool {
 		literal, ok := node.(*goast.CompositeLit)
 		if !ok {
@@ -73,11 +73,11 @@ func productionListenerKinds(t *testing.T, path string) []int {
 			if !ok {
 				t.Fatalf("unexpected listener key in %s", path)
 			}
-			kind, ok := parserKinds[key.Sel.Name]
-			if !ok {
+			kind, known := parserKinds[key.Sel.Name]
+			if !known {
 				t.Fatalf("unsupported pinned parser kind %s", key.Sel.Name)
 			}
-			kinds = append(kinds, kind)
+			kinds = append(kinds, strings.TrimPrefix(kind.String(), "Kind"))
 		}
 		return false
 	})
@@ -88,14 +88,14 @@ func productionListenerKinds(t *testing.T, path string) []int {
 	return kinds
 }
 
-func checkListenerKinds(source string, wanted []int) error {
+func checkListenerKinds(source string, wanted []string) error {
 	matches := listenerDeclaration.FindAllStringSubmatch(source, -1)
 	if len(matches) != 1 {
-		return fmt.Errorf("expected one numeric listener declaration, got %d", len(matches))
+		return fmt.Errorf("expected one named listener declaration, got %d", len(matches))
 	}
-	var got []int
+	var got []string
 	for _, part := range strings.Split(matches[0][1], ",") {
-		kind, err := strconv.Atoi(strings.TrimSpace(part))
+		kind, err := strconv.Unquote(`"` + strings.Trim(strings.TrimSpace(part), "'") + `"`)
 		if err != nil {
 			return err
 		}
@@ -119,7 +119,7 @@ func TestWave13ListenerKinds(t *testing.T) {
 			if err := checkListenerKinds(string(source), wanted); err != nil {
 				t.Fatal(err)
 			}
-			t.Logf("numeric parser listeners %v agree with production Go", wanted)
+			t.Logf("named parser listeners %v agree with production Go", wanted)
 		})
 	}
 }
@@ -138,19 +138,15 @@ func TestWave13ListenerKindMutants(t *testing.T) {
 			}
 			match := listenerDeclaration.FindStringSubmatch(text)
 			first := strings.TrimSpace(strings.Split(match[1], ",")[0])
-			value, err := strconv.Atoi(first)
-			if err != nil {
-				t.Fatal(err)
-			}
-			changed := strings.Replace(match[0], "["+first, "["+strconv.Itoa(value+1), 1)
+			changed := strings.Replace(match[0], "["+first, "['Identifier'", 1)
 			mutant := strings.Replace(text, match[0], changed, 1)
 			if mutant == text {
 				t.Fatal("mutant did not change the real declaration")
 			}
 			if err := checkListenerKinds(mutant, wanted); err == nil {
-				t.Fatal("wrong numeric listener survived")
+				t.Fatal("wrong named listener survived")
 			} else {
-				t.Logf("numeric-listener mutant caught: %v", err)
+				t.Logf("named-listener mutant caught: %v", err)
 			}
 		})
 	}

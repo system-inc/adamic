@@ -9,8 +9,8 @@ class Constant {
  constructor(text: string, string: boolean, known: boolean) { this.text=text; this.string=string; this.known=known; }
 }
 export class NoObjCalls {
-    // Pinned parser SyntaxKind values for the incoming shared driver.
-    readonly listenerKinds: number[] = [307];
+    // Parser ast.Kind names for the incoming shared driver.
+    readonly listenerKinds: string[] = ['SourceFile'];
  readonly c: OutputContext; readonly writes: Reassign;
  readonly references=new Map<string, number[]>(); readonly symbols=new Map<number, PlatformSymbol>();
  readonly following: string[]=[]; readonly empty: number[]=[];

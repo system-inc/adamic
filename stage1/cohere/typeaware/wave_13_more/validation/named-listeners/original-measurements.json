@@ -1,0 +1,112 @@
+{
+  "rounds": [
+    {
+      "corpus": "compiler",
+      "round": 1,
+      "native": {
+        "seconds": 8.646399542001745,
+        "sha256": "334cbb81535b85256bf2b394576cda3f60775bd586c26929f31782f849b0482d",
+        "bytes": 7087,
+        "timing": "tsgo: load_ns=582551183 query_ns=1230385363 queries=54960 first_query_ns=93948 run_ns=8011918903\n"
+      },
+      "go": {
+        "seconds": 2.2950712960009696,
+        "sha256": "334cbb81535b85256bf2b394576cda3f60775bd586c26929f31782f849b0482d",
+        "bytes": 7087,
+        "timing": "cohere: load_ns=429617123 rule_ns=1810246529 run_ns=1845864653\n"
+      }
+    },
+    {
+      "corpus": "compiler",
+      "round": 2,
+      "go": {
+        "seconds": 1.9472047529998235,
+        "sha256": "334cbb81535b85256bf2b394576cda3f60775bd586c26929f31782f849b0482d",
+        "bytes": 7087,
+        "timing": "cohere: load_ns=339037549 rule_ns=1557220702 run_ns=1591577010\n"
+      },
+      "native": {
+        "seconds": 6.424767712000175,
+        "sha256": "334cbb81535b85256bf2b394576cda3f60775bd586c26929f31782f849b0482d",
+        "bytes": 7087,
+        "timing": "tsgo: load_ns=359235844 query_ns=836760002 queries=54960 first_query_ns=81209 run_ns=6039814598\n"
+      }
+    },
+    {
+      "corpus": "compiler",
+      "round": 3,
+      "native": {
+        "seconds": 6.047791725999559,
+        "sha256": "334cbb81535b85256bf2b394576cda3f60775bd586c26929f31782f849b0482d",
+        "bytes": 7087,
+        "timing": "tsgo: load_ns=329203477 query_ns=780532571 queries=54960 first_query_ns=83332 run_ns=5690579359\n"
+      },
+      "go": {
+        "seconds": 2.0781885370015516,
+        "sha256": "334cbb81535b85256bf2b394576cda3f60775bd586c26929f31782f849b0482d",
+        "bytes": 7087,
+        "timing": "cohere: load_ns=328616805 rule_ns=1688779674 run_ns=1730294908\n"
+      }
+    },
+    {
+      "corpus": "repository",
+      "round": 1,
+      "native": {
+        "seconds": 0.399691583999811,
+        "sha256": "01f4d00a360e901cb87c8fd43da9141dfdc6c1474764464f3d610b84493e79cb",
+        "bytes": 19144,
+        "timing": "tsgo: load_ns=117360945 query_ns=9751124 queries=49 first_query_ns=448003 run_ns=275002938\n"
+      },
+      "go": {
+        "seconds": 0.11244162699949811,
+        "sha256": "01f4d00a360e901cb87c8fd43da9141dfdc6c1474764464f3d610b84493e79cb",
+        "bytes": 19144,
+        "timing": "cohere: load_ns=94984622 rule_ns=819651 run_ns=7182553\n"
+      }
+    },
+    {
+      "corpus": "repository",
+      "round": 2,
+      "go": {
+        "seconds": 0.12410189500224078,
+        "sha256": "01f4d00a360e901cb87c8fd43da9141dfdc6c1474764464f3d610b84493e79cb",
+        "bytes": 19144,
+        "timing": "cohere: load_ns=106755102 rule_ns=1072163 run_ns=7455278\n"
+      },
+      "native": {
+        "seconds": 0.40059893899888266,
+        "sha256": "01f4d00a360e901cb87c8fd43da9141dfdc6c1474764464f3d610b84493e79cb",
+        "bytes": 19144,
+        "timing": "tsgo: load_ns=93172094 query_ns=10933422 queries=49 first_query_ns=589808 run_ns=300082870\n"
+      }
+    },
+    {
+      "corpus": "repository",
+      "round": 3,
+      "native": {
+        "seconds": 0.4169125780026661,
+        "sha256": "01f4d00a360e901cb87c8fd43da9141dfdc6c1474764464f3d610b84493e79cb",
+        "bytes": 19144,
+        "timing": "tsgo: load_ns=110546687 query_ns=11698814 queries=49 first_query_ns=472600 run_ns=296042342\n"
+      },
+      "go": {
+        "seconds": 0.1309548579993134,
+        "sha256": "01f4d00a360e901cb87c8fd43da9141dfdc6c1474764464f3d610b84493e79cb",
+        "bytes": 19144,
+        "timing": "cohere: load_ns=107386509 rule_ns=1124117 run_ns=10826049\n"
+      }
+    }
+  ],
+  "summary": {
+    "compiler": {
+      "native_median_seconds": 6.424767712000175,
+      "go_median_seconds": 2.0781885370015516,
+      "ratio": 3.0915230247925183
+    },
+    "repository": {
+      "native_median_seconds": 0.40059893899888266,
+      "go_median_seconds": 0.12410189500224078,
+      "ratio": 3.2279840609335535
+    }
+  }
+}

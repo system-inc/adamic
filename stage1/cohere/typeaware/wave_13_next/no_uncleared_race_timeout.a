@@ -2,8 +2,8 @@ import { Frames, header } from '../frames.ts';
 import { Diagnostic } from '../diagnostic.ts';
 import type { OutputContext } from './output_context.a';
 export class NoUnclearedRaceTimeout {
-    // Pinned parser SyntaxKind values for the incoming shared driver.
-    readonly listenerKinds: number[] = [214];
+    // Parser ast.Kind names for the incoming shared driver.
+    readonly listenerKinds: string[] = ['CallExpression'];
     readonly context: OutputContext;
     constructor(context: OutputContext) { this.context = context; }
     promise(index: number): number {
