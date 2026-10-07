@@ -11,3 +11,28 @@ function units(text: string): string {
 const marks = `a${'̅'.repeat(7)}̣`;
 console.log(units(marks.normalize('NFD')));
 console.log(units(marks.normalize('NFC')));
+
+// One less, equal to, and one more than the stream's initial 64-point buffer and its next
+// growth. Test both leading marks and marks after a starter, then another scrambled run.
+for (const length of [63, 64, 65, 127, 128, 129]) {
+ const run = `${'̅'.repeat(length - 1)}̣`;
+ const text = `${run}A${run}B${run}`;
+ for (const form of ['NFC', 'NFD', 'NFKC', 'NFKD']) {
+  console.log(`${length} ${form} ${units(text.normalize(form))}`);
+ }
+}
+// A noncomposing mark of the same class blocks the ring; a precomposed starter also needs
+// decomposition before a lower-class mark can be ordered. These must not pass quick check.
+for (const text of [`A${'̅'}̊`, `Å${'̣'}`, `ᄀ${'ᅡ'}ᆨ`, `ো${'া'}`]) {
+ for (const form of ['NFC', 'NFD', 'NFKC', 'NFKD']) {
+  console.log(`${form} ${units(text.normalize(form))}`);
+ }
+}
+
+// The final repeated copy must remain decomposed until these trailing marks are ordered.
+for (const pattern of ['éạ́', 'Åá', '각', '̈́A', 'ﷺ']) {
+ const text = `${pattern.repeat(16)}̣̕`;
+ for (const form of ['NFC', 'NFD', 'NFKC', 'NFKD']) {
+  console.log(`${form} ${units(text.normalize(form))}`);
+ }
+}
