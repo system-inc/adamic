@@ -33,6 +33,11 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
 		if err != nil {
 			return nil, err
 		}
+		if l.uninitializedDeclaration(declaration) {
+			l.result.Locals[local].Uninitialized = true
+			statements = append(statements, ir.Declare{Local: local, Uninitialized: true})
+			continue
+		}
 		var value ir.Expression
 		if initializer := declaration.AsVariableDeclaration().Initializer; initializer != nil {
 			if l.initializing == nil {

@@ -1,32 +1,46 @@
 package lower
 
 import (
-	"errors"
-	"strings"
+	"github.com/system-inc/adamic/internal/ir"
 	"testing"
 )
 
-func TestDefiniteAssignmentIsRefused(t *testing.T) {
+func TestDefiniteAssignmentUsesReadiness(t *testing.T) {
 	t.Parallel()
-	for _, probe := range []struct{ name, source, location string }{
-		{"definite-field.a", "class Box { n!: number; }\nconsole.log(`${new Box().n + 1}`);\n", "main.a:1:14:"},
-		{"definite-local.a", "let n!: number;\nconsole.log(`${n + 1}`);\n", "main.a:1:6:"},
-		{"definite-field-assigned.a", "class Box { n!: number; constructor() { this.n = 2; } }\nconsole.log(`${new Box().n + 1}`);\n", "main.a:1:14:"},
-		{"definite-local-assigned.a", "let n!: number;\nn = 2;\nconsole.log(`${n + 1}`);\n", "main.a:1:6:"},
+	for _, probe := range []struct {
+		source  string
+		checked int
+	}{
+		{"class Box { n!: number; }\nconsole.log(`${new Box().n + 1}`);\n", 1},
+		{"let n!: number;\nconsole.log(`${n + 1}`);\n", 1},
+		{"class Box { n!: number; constructor() { this.n = 2; } }\nconsole.log(`${new Box().n + 1}`);\n", 1},
+		{"let n!: number;\nn = 2;\nconsole.log(`${n + 1}`);\n", 0},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			_, err := lowerSource(t, probe.source)
-			var refused *Refused
-			if !errors.As(err, &refused) {
-				t.Fatalf("got %v, want definite assignment refusal", err)
-			}
-			for _, text := range []string{probe.location, "definite assignment assertion", "initialize", "constructor", "T | undefined"} {
-				if !strings.Contains(refused.Error(), text) {
-					t.Errorf("got %v, want %q", err, text)
+		program, err := lowerSource(t, probe.source)
+		if err != nil {
+			t.Fatal(err)
+		}
+		checked := 0
+		visit := func(node any) bool {
+			switch read := node.(type) {
+			case ir.Read:
+				if read.Readiness != "" {
+					checked++
+				}
+			case ir.Property:
+				if read.Readiness != "" {
+					checked++
 				}
 			}
-		})
+			return true
+		}
+		walk(program.Main, visit)
+		for _, function := range program.Functions {
+			walk(function.Body, visit)
+		}
+		if checked != probe.checked {
+			t.Fatalf("%d checked reads, want %d", checked, probe.checked)
+		}
 	}
 }
 

@@ -162,8 +162,10 @@ func (t Type) IsReference() bool {
 
 // Local is a variable: its name as written, for reading the output, and its type.
 type Local struct {
-	Name string
-	Type Type
+	// Uninitialized uses the temporal-dead-zone readiness state until the first assignment.
+	Uninitialized bool
+	Name          string
+	Type          Type
 
 	// Global is a variable declared at the module's top level, which functions can read and write.
 	Global bool
@@ -200,9 +202,10 @@ type (
 	// Checked is a read of a global from inside a function, which may run before the global's
 	// declaration has: JavaScript throws there (the temporal dead zone), and so does Adamic, out loud.
 	Read struct {
-		Local   int
-		Of      Type
-		Checked bool
+		Local     int
+		Of        Type
+		Checked   bool
+		Readiness string
 	}
 
 	// Call calls a function. Returns is its result type, 0 for void.
@@ -269,6 +272,7 @@ type (
 	// {}: the object made is Empty, each of the source type's fields the literal doesn't give, as
 	// undefined (what JavaScript reads from a field that isn't there), with Fields written into it.
 	ObjectLiteral struct {
+		SpreadReadiness string
 		// Class is the nominal class ID, or zero for a plain object.
 		Class                int
 		Spread               Expression
@@ -990,8 +994,9 @@ type (
 
 	// Declare introduces a local with its first value.
 	Declare struct {
-		Local int
-		Value Expression
+		Uninitialized bool
+		Local         int
+		Value         Expression
 	}
 
 	// Assign gives a local a new value, releasing the old one if it's a string. Checked is as for
@@ -1020,9 +1025,10 @@ type (
 
 	// SetProperty is object.name = value: the field takes the value, and lets go of what it held.
 	SetProperty struct {
-		Object Expression
-		Name   string
-		Value  Expression
+		Uninitialized bool
+		Object        Expression
+		Name          string
+		Value         Expression
 		// Class is as Property's.
 		Class int
 		// Site is which write of the program this is, for the cycle finder (lowering keeps the type of
