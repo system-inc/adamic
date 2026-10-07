@@ -286,6 +286,8 @@ adamic_string *adamic_json_encode(adamic_value value, const adamic_decode_schema
 	if (builder.length != 0) {
 		memcpy((char *)result->bytes, builder.bytes, builder.length);
 	}
+	// The units-plus-one cache also selects the ASCII fast path when units equal bytes.
+	result->units = builder.units + 1;
 	free(builder.bytes);
 	return result;
 }

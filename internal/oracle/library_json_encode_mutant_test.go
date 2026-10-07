@@ -87,3 +87,44 @@ func TestJSONEncodePlainStringifyMutant(t *testing.T) {
 	}
 	t.Log("plain JSON.stringify backend: pinned declared-fields assertion failed, exit 70")
 }
+
+func TestJSONEncodeNativeStringMetadata(t *testing.T) {
+	runtime, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/json_encode.c"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	path := filepath.Join(t.TempDir(), "metadata.a")
+	if err := os.WriteFile(path, []byte("import {encodeJson} from 'adamic'; console.log(encodeJson<string>('x🌍é\\ud800')); console.log(encodeJson<string>('abc'));"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	const wrapper = `static adamic_string *checked_encode(adamic_value value, const adamic_decode_schema *schema) {
+ adamic_string *result=metadata_target(value,schema);
+ if (!((result->length==15 && result->units==13) || (result->length==5 && result->units==6))) {
+  adamic_panic("encode metadata differs",sizeof "encode metadata differs"-1);
+ }
+ return result;
+}
+`
+	for _, mutant := range []bool{false, true} {
+		source := string(runtime)
+		if mutant {
+			source = strings.Replace(source, "result->units = builder.units + 1;", "result->units = 0;", 1)
+			if source == string(runtime) {
+				t.Fatal("metadata mutation target missing")
+			}
+		}
+		code := strings.ReplaceAll(source, "adamic_json_encode(", "metadata_target(") + "\n" + wrapper + strings.ReplaceAll(native.C(program), "adamic_json_encode(", "checked_encode(")
+		got := runDecodeMutant(t, code, buildDecodeMutant(t, code))
+		if mutant {
+			if got.exitCode != 70 || !strings.Contains(string(got.stderr), "encode metadata differs") {
+				t.Fatalf("metadata mutant survived: %d %s", got.exitCode, got.stderr)
+			}
+		} else if diff := disagreement(onNode(t, path), got); diff != "" {
+			t.Fatalf("metadata baseline: %s %s", diff, got.stderr)
+		}
+	}
+}
