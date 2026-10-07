@@ -1,0 +1,10 @@
+=== RUN   TestNexusUpstream
+    wave12_nexus_test.go:86: shared parser recovery gap, original filename=/repo/source/other/Thing.ts source="// Dependencies\n// a second comment\nimport { Detail } from '../widget/internal/Detail';\\n"
+    wave12_nexus_test.go:86: shared parser recovery gap, original filename=/repo/libraries/base/source/Thing.ts source="// Dependencies\n// a second comment\nimport { helper } from '@project/source/Helper';\\n"
+    wave12_nexus_test.go:105: cohere cases: 43 unique source/rule/options combinations
+    wave12_nexus_test.go:116: node [--disable-warning=ExperimentalWarning /workspace/scratch/wave12-harness/oracle/node.mjs /workspace/scratch/wave12-harness/stage1/cohere/lint/main.ts --manifest /tmp/adamic-gate/TestNexusUpstream1211096510/006/manifest.txt]: exit status 70
+        adamic: panic: parser slice expected semicolon at 21 in /tmp/adamic-gate/TestNexusUpstream1211096510/001/case-014/repository/libraries/nexus/code-quality/Thing.ts
+--- FAIL: TestNexusUpstream (39.26s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	39.278s
+FAIL

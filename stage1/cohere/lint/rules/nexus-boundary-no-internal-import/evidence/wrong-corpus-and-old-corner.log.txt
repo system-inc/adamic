@@ -1,0 +1,292 @@
+=== RUN   TestNexusUpstream
+    wave12_nexus_test.go:85: captured case-000 nexus/boundary-no-internal-import /repo/libraries/structure/source/Thing.ts "import { Detail } from '@structure/source/widget/internal/Detail';\n"
+    wave12_nexus_test.go:85: captured case-001 nexus/boundary-no-internal-import /repo/libraries/structure/source/Thing.ts "import { format } from '@structure/source/internationalization/Format';\n"
+    wave12_nexus_test.go:85: captured case-002 nexus/boundary-no-internal-import /repo/source/other/Thing.ts "// Dependencies\n// a second comment\nimport { Detail } from '../widget/internal/Detail';\\n"
+    wave12_nexus_test.go:87: shared parser recovery gap, original filename=/repo/source/other/Thing.ts source="// Dependencies\n// a second comment\nimport { Detail } from '../widget/internal/Detail';\\n"
+    wave12_nexus_test.go:85: captured case-003 nexus/boundary-no-internal-import /repo/source/other/Thing.ts "const detail = import('../widget/internal/Detail');\n"
+    wave12_nexus_test.go:85: captured case-004 nexus/boundary-no-internal-import /repo/source/other/Thing.ts "const detail = import(somePath);\n"
+    wave12_nexus_test.go:85: captured case-005 nexus/boundary-no-internal-import /repo/source/other/Thing.ts "const detail = require('../widget/internal/Detail');\n"
+    wave12_nexus_test.go:85: captured case-006 nexus/boundary-no-internal-import /repo/source/other/Thing.ts "import { Detail } from '../widget/internal/Detail';\n"
+    wave12_nexus_test.go:85: captured case-007 nexus/boundary-no-internal-import /repo/source/other/Thing.ts "import { Thing } from '../widget/Thing';\n"
+    wave12_nexus_test.go:85: captured case-008 nexus/boundary-no-internal-import /repo/source/other/Thing.ts "import { format } from '../internationalization/Format';\n"
+    wave12_nexus_test.go:85: captured case-009 nexus/boundary-no-internal-import /repo/source/widget/Thing.ts "import { Detail } from './internal/Detail';\n"
+    wave12_nexus_test.go:85: captured case-010 nexus/boundary-no-internal-import /repo/source/widget/internal/Thing.ts "import { Detail } from './Detail';\n"
+    wave12_nexus_test.go:85: captured case-011 nexus/boundary-no-internal-import /repo/source/widget/internal/Thing.ts "import { Detail } from './deep/internal/Detail';\n"
+    wave12_nexus_test.go:85: captured case-012 nexus/boundary-no-internal-import /repo/source/widget/nested/Thing.ts "import { Detail } from '../internal/Detail';\n"
+    wave12_nexus_test.go:85: captured case-013 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus-template/source/Thing.ts "import { Thing } from '@project/ProjectSettings';\n"
+    wave12_nexus_test.go:85: captured case-014 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "const loaded = await import('@structure/source/Thing');"
+    wave12_nexus_test.go:87: shared parser recovery gap, original filename=/repository/libraries/nexus/code-quality/Thing.ts source="const loaded = await import('@structure/source/Thing');"
+    wave12_nexus_test.go:85: captured case-015 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "const loaded = require('@structure/source/Thing');"
+    wave12_nexus_test.go:85: captured case-016 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "const thing = require('@base/source/Thing');\n"
+    wave12_nexus_test.go:85: captured case-017 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "declare const loader: { require(name: string): unknown };\nconst thing = loader.require('@base/source/Thing');\n"
+    wave12_nexus_test.go:85: captured case-018 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "export async function load() {\n    return await import('@structure/source/Thing');\n}\n"
+    wave12_nexus_test.go:85: captured case-019 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "export async function load(name: string) {\n    return await import(name);\n}\n"
+    wave12_nexus_test.go:85: captured case-020 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import '@base';\n"
+    wave12_nexus_test.go:85: captured case-021 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import * as NodePath from 'node:path';\n"
+    wave12_nexus_test.go:85: captured case-022 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import Thing from '@project/ProjectSettings';\n"
+    wave12_nexus_test.go:85: captured case-023 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import {\n  Thing,\n  Other,\n} from '@structure/source/Thing';"
+    wave12_nexus_test.go:85: captured case-024 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import { Thing } from '../Thing';\n"
+    wave12_nexus_test.go:85: captured case-025 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import { Thing } from './Thing';\n"
+    wave12_nexus_test.go:85: captured case-026 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import { Thing } from '@basement/Thing';\n"
+    wave12_nexus_test.go:85: captured case-027 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import { Thing } from '@nexus/code-quality/Thing';\n"
+    wave12_nexus_test.go:85: captured case-028 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import { Thing } from '@projections/Thing';\n"
+    wave12_nexus_test.go:85: captured case-029 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import { Thing } from '@structure/source/Thing';"
+    wave12_nexus_test.go:85: captured case-030 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import { Thing } from '@structure/source/Thing';\n"
+    wave12_nexus_test.go:85: captured case-031 nexus/boundary-no-nexus-outside-import /repository/libraries/structure/source/Thing.ts "import { Thing } from '@project/ProjectSettings';\n"
+    wave12_nexus_test.go:85: captured case-032 nexus/boundary-no-nexus-outside-import /repository/source/Thing.ts "export async function load() {\n    return await import('@structure/source/Thing');\n}\n"
+    wave12_nexus_test.go:85: captured case-033 nexus/boundary-no-project-import /repo/application/source/Thing.ts "import { helper } from '@project/source/Helper';\n"
+    wave12_nexus_test.go:85: captured case-034 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { helper } from '@project/source/Helper';\n"
+    wave12_nexus_test.go:85: captured case-035 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { helper } from '@project/source/Helper';\n"
+    wave12_nexus_test.go:85: captured case-036 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "// Dependencies\n// a second comment\nimport { helper } from '@project/source/Helper';\\n"
+    wave12_nexus_test.go:87: shared parser recovery gap, original filename=/repo/libraries/base/source/Thing.ts source="// Dependencies\n// a second comment\nimport { helper } from '@project/source/Helper';\\n"
+    wave12_nexus_test.go:85: captured case-037 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "const helper = import('@project/source/Helper');\n"
+    wave12_nexus_test.go:85: captured case-038 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "const helper = require('@project/source/Helper');\n"
+    wave12_nexus_test.go:85: captured case-039 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { Thing } from './Thing';\n"
+    wave12_nexus_test.go:85: captured case-040 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { Thing } from '@projector/Thing';\n"
+    wave12_nexus_test.go:85: captured case-041 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { Thing } from '@structure/source/Thing';\n"
+    wave12_nexus_test.go:85: captured case-042 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { helper } from '@project/source/Helper';\n"
+    wave12_nexus_test.go:85: captured case-043 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { secret } from '@project/ProjectSettingsSecret';\n"
+    wave12_nexus_test.go:85: captured case-044 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { settings } from '@project/ProjectSettings';\n"
+    wave12_nexus_test.go:106: cohere cases: 42 unique source/rule/options combinations
+    wave12_nexus_test.go:117: Go, Node, emitted JavaScript, native identical: 10480 bytes
+--- PASS: TestNexusUpstream (26.75s)
+=== RUN   TestNexusCorpus
+    wave12_nexus_test.go:143: lstat /workspace/scratch/wave12-harness/cohere/TypeScript/src/compiler: no such file or directory
+--- FAIL: TestNexusCorpus (0.00s)
+=== RUN   TestNexusMutants
+    wave12_nexus_test.go:85: captured case-000 nexus/boundary-no-internal-import /repo/libraries/structure/source/Thing.ts "import { Detail } from '@structure/source/widget/internal/Detail';\n"
+    wave12_nexus_test.go:85: captured case-001 nexus/boundary-no-internal-import /repo/libraries/structure/source/Thing.ts "import { format } from '@structure/source/internationalization/Format';\n"
+    wave12_nexus_test.go:85: captured case-002 nexus/boundary-no-internal-import /repo/source/other/Thing.ts "// Dependencies\n// a second comment\nimport { Detail } from '../widget/internal/Detail';\\n"
+    wave12_nexus_test.go:87: shared parser recovery gap, original filename=/repo/source/other/Thing.ts source="// Dependencies\n// a second comment\nimport { Detail } from '../widget/internal/Detail';\\n"
+    wave12_nexus_test.go:85: captured case-003 nexus/boundary-no-internal-import /repo/source/other/Thing.ts "const detail = import('../widget/internal/Detail');\n"
+    wave12_nexus_test.go:85: captured case-004 nexus/boundary-no-internal-import /repo/source/other/Thing.ts "const detail = import(somePath);\n"
+    wave12_nexus_test.go:85: captured case-005 nexus/boundary-no-internal-import /repo/source/other/Thing.ts "const detail = require('../widget/internal/Detail');\n"
+    wave12_nexus_test.go:85: captured case-006 nexus/boundary-no-internal-import /repo/source/other/Thing.ts "import { Detail } from '../widget/internal/Detail';\n"
+    wave12_nexus_test.go:85: captured case-007 nexus/boundary-no-internal-import /repo/source/other/Thing.ts "import { Thing } from '../widget/Thing';\n"
+    wave12_nexus_test.go:85: captured case-008 nexus/boundary-no-internal-import /repo/source/other/Thing.ts "import { format } from '../internationalization/Format';\n"
+    wave12_nexus_test.go:85: captured case-009 nexus/boundary-no-internal-import /repo/source/widget/Thing.ts "import { Detail } from './internal/Detail';\n"
+    wave12_nexus_test.go:85: captured case-010 nexus/boundary-no-internal-import /repo/source/widget/internal/Thing.ts "import { Detail } from './Detail';\n"
+    wave12_nexus_test.go:85: captured case-011 nexus/boundary-no-internal-import /repo/source/widget/internal/Thing.ts "import { Detail } from './deep/internal/Detail';\n"
+    wave12_nexus_test.go:85: captured case-012 nexus/boundary-no-internal-import /repo/source/widget/nested/Thing.ts "import { Detail } from '../internal/Detail';\n"
+    wave12_nexus_test.go:85: captured case-013 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus-template/source/Thing.ts "import { Thing } from '@project/ProjectSettings';\n"
+    wave12_nexus_test.go:85: captured case-014 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "const loaded = await import('@structure/source/Thing');"
+    wave12_nexus_test.go:87: shared parser recovery gap, original filename=/repository/libraries/nexus/code-quality/Thing.ts source="const loaded = await import('@structure/source/Thing');"
+    wave12_nexus_test.go:85: captured case-015 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "const loaded = require('@structure/source/Thing');"
+    wave12_nexus_test.go:85: captured case-016 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "const thing = require('@base/source/Thing');\n"
+    wave12_nexus_test.go:85: captured case-017 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "declare const loader: { require(name: string): unknown };\nconst thing = loader.require('@base/source/Thing');\n"
+    wave12_nexus_test.go:85: captured case-018 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "export async function load() {\n    return await import('@structure/source/Thing');\n}\n"
+    wave12_nexus_test.go:85: captured case-019 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "export async function load(name: string) {\n    return await import(name);\n}\n"
+    wave12_nexus_test.go:85: captured case-020 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import '@base';\n"
+    wave12_nexus_test.go:85: captured case-021 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import * as NodePath from 'node:path';\n"
+    wave12_nexus_test.go:85: captured case-022 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import Thing from '@project/ProjectSettings';\n"
+    wave12_nexus_test.go:85: captured case-023 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import {\n  Thing,\n  Other,\n} from '@structure/source/Thing';"
+    wave12_nexus_test.go:85: captured case-024 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import { Thing } from '../Thing';\n"
+    wave12_nexus_test.go:85: captured case-025 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import { Thing } from './Thing';\n"
+    wave12_nexus_test.go:85: captured case-026 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import { Thing } from '@basement/Thing';\n"
+    wave12_nexus_test.go:85: captured case-027 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import { Thing } from '@nexus/code-quality/Thing';\n"
+    wave12_nexus_test.go:85: captured case-028 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import { Thing } from '@projections/Thing';\n"
+    wave12_nexus_test.go:85: captured case-029 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import { Thing } from '@structure/source/Thing';"
+    wave12_nexus_test.go:85: captured case-030 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import { Thing } from '@structure/source/Thing';\n"
+    wave12_nexus_test.go:85: captured case-031 nexus/boundary-no-nexus-outside-import /repository/libraries/structure/source/Thing.ts "import { Thing } from '@project/ProjectSettings';\n"
+    wave12_nexus_test.go:85: captured case-032 nexus/boundary-no-nexus-outside-import /repository/source/Thing.ts "export async function load() {\n    return await import('@structure/source/Thing');\n}\n"
+    wave12_nexus_test.go:85: captured case-033 nexus/boundary-no-project-import /repo/application/source/Thing.ts "import { helper } from '@project/source/Helper';\n"
+    wave12_nexus_test.go:85: captured case-034 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { helper } from '@project/source/Helper';\n"
+    wave12_nexus_test.go:85: captured case-035 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { helper } from '@project/source/Helper';\n"
+    wave12_nexus_test.go:85: captured case-036 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "// Dependencies\n// a second comment\nimport { helper } from '@project/source/Helper';\\n"
+    wave12_nexus_test.go:87: shared parser recovery gap, original filename=/repo/libraries/base/source/Thing.ts source="// Dependencies\n// a second comment\nimport { helper } from '@project/source/Helper';\\n"
+    wave12_nexus_test.go:85: captured case-037 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "const helper = import('@project/source/Helper');\n"
+    wave12_nexus_test.go:85: captured case-038 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "const helper = require('@project/source/Helper');\n"
+    wave12_nexus_test.go:85: captured case-039 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { Thing } from './Thing';\n"
+    wave12_nexus_test.go:85: captured case-040 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { Thing } from '@projector/Thing';\n"
+    wave12_nexus_test.go:85: captured case-041 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { Thing } from '@structure/source/Thing';\n"
+    wave12_nexus_test.go:85: captured case-042 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { helper } from '@project/source/Helper';\n"
+    wave12_nexus_test.go:85: captured case-043 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { secret } from '@project/ProjectSettingsSecret';\n"
+    wave12_nexus_test.go:85: captured case-044 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { settings } from '@project/ProjectSettings';\n"
+    wave12_nexus_test.go:106: cohere cases: 42 unique source/rule/options combinations
+=== RUN   TestNexusMutants/nexus-boundary-no-internal-import
+    wave12_nexus_test.go:186: last_internal_owner compiling, successful-exit mutant caught only by output on source Node: case 10 line 38: port "fixed\timport { Detail } from './deep/internal/Detail';\\u000a", Go "/tmp/adamic-gate/TestNexusMutants2611326960/001/case-011/repo/source/widget/internal/Thing.ts:1:24"
+        Go context:
+        case 8
+        fixed	import { Detail } from './internal/Detail';\u000a
+        case 9
+        fixed	import { Detail } from './Detail';\u000a
+        case 10
+        /tmp/adamic-gate/TestNexusMutants2611326960/001/case-011/repo/source/widget/internal/Thing.ts:1:24
+          nexus/boundary-no-internal-import  Only files inside the folder that owns this 'internal' directory may import from it. An internal folder is the one place a module may keep something it is free to change without warning, and that freedom lasts exactly as long as nobody outside reaches in.
+        
+        range 23 47 outsideInternal 			23 47
+        fixed	import { Detail } from './deep/internal/Detail';\u000a
+    wave12_nexus_test.go:186: last_internal_owner compiling, successful-exit mutant caught only by output on emitted JavaScript: case 10 line 38: port "fixed\timport { Detail } from './deep/internal/Detail';\\u000a", Go "/tmp/adamic-gate/TestNexusMutants2611326960/001/case-011/repo/source/widget/internal/Thing.ts:1:24"
+        Go context:
+        case 8
+        fixed	import { Detail } from './internal/Detail';\u000a
+        case 9
+        fixed	import { Detail } from './Detail';\u000a
+        case 10
+        /tmp/adamic-gate/TestNexusMutants2611326960/001/case-011/repo/source/widget/internal/Thing.ts:1:24
+          nexus/boundary-no-internal-import  Only files inside the folder that owns this 'internal' directory may import from it. An internal folder is the one place a module may keep something it is free to change without warning, and that freedom lasts exactly as long as nobody outside reaches in.
+        
+        range 23 47 outsideInternal 			23 47
+        fixed	import { Detail } from './deep/internal/Detail';\u000a
+    wave12_nexus_test.go:186: last_internal_owner compiling, successful-exit mutant caught only by output on sanitized native: case 10 line 38: port "fixed\timport { Detail } from './deep/internal/Detail';\\u000a", Go "/tmp/adamic-gate/TestNexusMutants2611326960/001/case-011/repo/source/widget/internal/Thing.ts:1:24"
+        Go context:
+        case 8
+        fixed	import { Detail } from './internal/Detail';\u000a
+        case 9
+        fixed	import { Detail } from './Detail';\u000a
+        case 10
+        /tmp/adamic-gate/TestNexusMutants2611326960/001/case-011/repo/source/widget/internal/Thing.ts:1:24
+          nexus/boundary-no-internal-import  Only files inside the folder that owns this 'internal' directory may import from it. An internal folder is the one place a module may keep something it is free to change without warning, and that freedom lasts exactly as long as nobody outside reaches in.
+        
+        range 23 47 outsideInternal 			23 47
+        fixed	import { Detail } from './deep/internal/Detail';\u000a
+=== RUN   TestNexusMutants/nexus-boundary-no-nexus-outside-import
+    wave12_nexus_test.go:186: alias_prefix_boundary compiling, successful-exit mutant caught only by output on source Node: case 24 line 94: port "/tmp/adamic-gate/TestNexusMutants2611326960/001/case-026/repository/libraries/nexus/code-quality/Thing.ts:1:23", Go "fixed\timport { Thing } from '@basement/Thing';\\u000a"
+        Go context:
+        case 22
+        fixed	import { Thing } from '../Thing';\u000a
+        case 23
+        fixed	import { Thing } from './Thing';\u000a
+        case 24
+        fixed	import { Thing } from '@basement/Thing';\u000a
+        case 25
+        fixed	import { Thing } from '@nexus/code-quality/Thing';\u000a
+        case 26
+        fixed	import { Thing } from '@projections/Thing';\u000a
+    wave12_nexus_test.go:186: alias_prefix_boundary compiling, successful-exit mutant caught only by output on emitted JavaScript: case 24 line 94: port "/tmp/adamic-gate/TestNexusMutants2611326960/001/case-026/repository/libraries/nexus/code-quality/Thing.ts:1:23", Go "fixed\timport { Thing } from '@basement/Thing';\\u000a"
+        Go context:
+        case 22
+        fixed	import { Thing } from '../Thing';\u000a
+        case 23
+        fixed	import { Thing } from './Thing';\u000a
+        case 24
+        fixed	import { Thing } from '@basement/Thing';\u000a
+        case 25
+        fixed	import { Thing } from '@nexus/code-quality/Thing';\u000a
+        case 26
+        fixed	import { Thing } from '@projections/Thing';\u000a
+    wave12_nexus_test.go:186: alias_prefix_boundary compiling, successful-exit mutant caught only by output on sanitized native: case 24 line 94: port "/tmp/adamic-gate/TestNexusMutants2611326960/001/case-026/repository/libraries/nexus/code-quality/Thing.ts:1:23", Go "fixed\timport { Thing } from '@basement/Thing';\\u000a"
+        Go context:
+        case 22
+        fixed	import { Thing } from '../Thing';\u000a
+        case 23
+        fixed	import { Thing } from './Thing';\u000a
+        case 24
+        fixed	import { Thing } from '@basement/Thing';\u000a
+        case 25
+        fixed	import { Thing } from '@nexus/code-quality/Thing';\u000a
+        case 26
+        fixed	import { Thing } from '@projections/Thing';\u000a
+=== RUN   TestNexusMutants/nexus-boundary-no-project-import
+    wave12_nexus_test.go:186: whitelist_widened compiling, successful-exit mutant caught only by output on source Node: case 40 line 146: port "fixed\timport { secret } from '@project/ProjectSettingsSecret';\\u000a", Go "/tmp/adamic-gate/TestNexusMutants2611326960/001/case-043/repo/libraries/base/source/Thing.ts:1:24"
+        Go context:
+          nexus/boundary-no-project-import  A framework library must not import from '@project', except the specifiers named in this rule's allowed option. A library reaching into arbitrary project code inverts the dependency: the framework starts depending on the thing that depends on it.
+        
+        range 23 47 forbiddenProjectImport 			23 47
+        fixed	import { helper } from '@project/source/Helper';\u000a
+        case 40
+        /tmp/adamic-gate/TestNexusMutants2611326960/001/case-043/repo/libraries/base/source/Thing.ts:1:24
+          nexus/boundary-no-project-import  A framework library must not import from '@project', except the specifiers named in this rule's allowed option. A library reaching into arbitrary project code inverts the dependency: the framework starts depending on the thing that depends on it.
+        
+        range 23 55 forbiddenProjectImport 			23 55
+        fixed	import { secret } from '@project/ProjectSettingsSecret';\u000a
+    wave12_nexus_test.go:186: whitelist_widened compiling, successful-exit mutant caught only by output on emitted JavaScript: case 40 line 146: port "fixed\timport { secret } from '@project/ProjectSettingsSecret';\\u000a", Go "/tmp/adamic-gate/TestNexusMutants2611326960/001/case-043/repo/libraries/base/source/Thing.ts:1:24"
+        Go context:
+          nexus/boundary-no-project-import  A framework library must not import from '@project', except the specifiers named in this rule's allowed option. A library reaching into arbitrary project code inverts the dependency: the framework starts depending on the thing that depends on it.
+        
+        range 23 47 forbiddenProjectImport 			23 47
+        fixed	import { helper } from '@project/source/Helper';\u000a
+        case 40
+        /tmp/adamic-gate/TestNexusMutants2611326960/001/case-043/repo/libraries/base/source/Thing.ts:1:24
+          nexus/boundary-no-project-import  A framework library must not import from '@project', except the specifiers named in this rule's allowed option. A library reaching into arbitrary project code inverts the dependency: the framework starts depending on the thing that depends on it.
+        
+        range 23 55 forbiddenProjectImport 			23 55
+        fixed	import { secret } from '@project/ProjectSettingsSecret';\u000a
+    wave12_nexus_test.go:186: whitelist_widened compiling, successful-exit mutant caught only by output on sanitized native: case 40 line 146: port "fixed\timport { secret } from '@project/ProjectSettingsSecret';\\u000a", Go "/tmp/adamic-gate/TestNexusMutants2611326960/001/case-043/repo/libraries/base/source/Thing.ts:1:24"
+        Go context:
+          nexus/boundary-no-project-import  A framework library must not import from '@project', except the specifiers named in this rule's allowed option. A library reaching into arbitrary project code inverts the dependency: the framework starts depending on the thing that depends on it.
+        
+        range 23 47 forbiddenProjectImport 			23 47
+        fixed	import { helper } from '@project/source/Helper';\u000a
+        case 40
+        /tmp/adamic-gate/TestNexusMutants2611326960/001/case-043/repo/libraries/base/source/Thing.ts:1:24
+          nexus/boundary-no-project-import  A framework library must not import from '@project', except the specifiers named in this rule's allowed option. A library reaching into arbitrary project code inverts the dependency: the framework starts depending on the thing that depends on it.
+        
+        range 23 55 forbiddenProjectImport 			23 55
+        fixed	import { secret } from '@project/ProjectSettingsSecret';\u000a
+--- PASS: TestNexusMutants (66.38s)
+    --- PASS: TestNexusMutants/nexus-boundary-no-internal-import (19.18s)
+    --- PASS: TestNexusMutants/nexus-boundary-no-nexus-outside-import (20.88s)
+    --- PASS: TestNexusMutants/nexus-boundary-no-project-import (19.93s)
+=== RUN   TestNexusCorners
+    wave12_nexus_test.go:234: corner cases: 60
+    wave12_nexus_test.go:235: /tmp/adamic-gate/TestNexusCorners973542598/002/oracle [--manifest /tmp/adamic-gate/TestNexusCorners973542598/005/manifest.txt]: exit status 2
+        panic: invalid corpus /tmp/adamic-gate/TestNexusCorners973542598/001/libraries/nexus/Thing.ts: [Import assertions have been replaced by import attributes. Use 'with' instead of 'assert'.]; source="const é = 1; import '@base'; import '@project/data' with { type: 'json' }; import '@structure/data' assert { type: 'json' }; import('@structure/x', {}); require('@base', 'extra'); require?.('@project'); (require)('@base'); loader.require('@base'); require<string>('@project/x'); import(`@base`); import('x' + '@base'); import { X } from '@basement/x'; import { D } from '../widget/internal/deep/internal/D';\n"
+        
+        goroutine 1 [running]:
+        main.collect({0x15bc29d04a00, 0x47}, {0x15bc29e2a820, 0x199}, {0x15bc29c50540, 0x7, 0xc})
+        	/workspace/scratch/wave12-harness/cohere/adamic_lint_oracle.go:152 +0x202a
+        main.run({0x15bc29d04a00?, 0x15bc29f626c0?}, 0x0, 0x15bc29f626c0)
+        	/workspace/scratch/wave12-harness/cohere/adamic_lint_oracle.go:64 +0x12f
+        main.main()
+        	/workspace/scratch/wave12-harness/cohere/adamic_lint_oracle.go:313 +0x2f7
+--- FAIL: TestNexusCorners (23.24s)
+=== RUN   TestNexusThroughput
+    wave12_nexus_test.go:285: nexus/boundary-no-internal-import round 1 Go 0.029093s count=1000
+    wave12_nexus_test.go:285: nexus/boundary-no-internal-import round 1 native 0.016083s count=1000
+    wave12_nexus_test.go:285: nexus/boundary-no-internal-import round 1 Node 0.376932s count=1000
+    wave12_nexus_test.go:285: nexus/boundary-no-internal-import round 2 Go 0.016955s count=1000
+    wave12_nexus_test.go:285: nexus/boundary-no-internal-import round 2 native 0.012642s count=1000
+    wave12_nexus_test.go:285: nexus/boundary-no-internal-import round 2 Node 0.399145s count=1000
+    wave12_nexus_test.go:285: nexus/boundary-no-internal-import round 3 Go 0.021964s count=1000
+    wave12_nexus_test.go:285: nexus/boundary-no-internal-import round 3 native 0.017772s count=1000
+    wave12_nexus_test.go:285: nexus/boundary-no-internal-import round 3 Node 0.329300s count=1000
+    wave12_nexus_test.go:285: nexus/boundary-no-internal-import round 4 Go 0.027779s count=1000
+    wave12_nexus_test.go:285: nexus/boundary-no-internal-import round 4 native 0.059470s count=1000
+    wave12_nexus_test.go:285: nexus/boundary-no-internal-import round 4 Node 0.423242s count=1000
+    wave12_nexus_test.go:285: nexus/boundary-no-internal-import round 5 Go 0.014199s count=1000
+    wave12_nexus_test.go:285: nexus/boundary-no-internal-import round 5 native 0.011070s count=1000
+    wave12_nexus_test.go:285: nexus/boundary-no-internal-import round 5 Node 0.372846s count=1000
+    wave12_nexus_test.go:293: nexus/boundary-no-internal-import native best of 5 90338.15 findings/s 0.011070s (1 files 1000 findings)
+    wave12_nexus_test.go:293: nexus/boundary-no-internal-import Node best of 5 3036.74 findings/s 0.329300s (1 files 1000 findings)
+    wave12_nexus_test.go:293: nexus/boundary-no-internal-import Go best of 5 70425.66 findings/s 0.014199s (1 files 1000 findings)
+    wave12_nexus_test.go:285: nexus/boundary-no-nexus-outside-import round 1 Go 0.055299s count=1000
+    wave12_nexus_test.go:285: nexus/boundary-no-nexus-outside-import round 1 native 0.042484s count=1000
+    wave12_nexus_test.go:285: nexus/boundary-no-nexus-outside-import round 1 Node 0.250325s count=1000
+    wave12_nexus_test.go:285: nexus/boundary-no-nexus-outside-import round 2 Go 0.019382s count=1000
+    wave12_nexus_test.go:285: nexus/boundary-no-nexus-outside-import round 2 native 0.011137s count=1000
+    wave12_nexus_test.go:285: nexus/boundary-no-nexus-outside-import round 2 Node 0.323370s count=1000
+    wave12_nexus_test.go:285: nexus/boundary-no-nexus-outside-import round 3 Go 0.010448s count=1000
+    wave12_nexus_test.go:285: nexus/boundary-no-nexus-outside-import round 3 native 0.009837s count=1000
+    wave12_nexus_test.go:285: nexus/boundary-no-nexus-outside-import round 3 Node 0.255571s count=1000
+    wave12_nexus_test.go:285: nexus/boundary-no-nexus-outside-import round 4 Go 0.017241s count=1000
+    wave12_nexus_test.go:285: nexus/boundary-no-nexus-outside-import round 4 native 0.012864s count=1000
+    wave12_nexus_test.go:285: nexus/boundary-no-nexus-outside-import round 4 Node 0.251543s count=1000
+    wave12_nexus_test.go:285: nexus/boundary-no-nexus-outside-import round 5 Go 0.030961s count=1000
+    wave12_nexus_test.go:285: nexus/boundary-no-nexus-outside-import round 5 native 0.011317s count=1000
+    wave12_nexus_test.go:285: nexus/boundary-no-nexus-outside-import round 5 Node 0.481364s count=1000
+    wave12_nexus_test.go:293: nexus/boundary-no-nexus-outside-import native best of 5 101654.42 findings/s 0.009837s (1 files 1000 findings)
+    wave12_nexus_test.go:293: nexus/boundary-no-nexus-outside-import Node best of 5 3994.81 findings/s 0.250325s (1 files 1000 findings)
+    wave12_nexus_test.go:293: nexus/boundary-no-nexus-outside-import Go best of 5 95711.64 findings/s 0.010448s (1 files 1000 findings)
+    wave12_nexus_test.go:285: nexus/boundary-no-project-import round 1 Go 0.033445s count=1000
+    wave12_nexus_test.go:285: nexus/boundary-no-project-import round 1 native 0.011734s count=1000
+    wave12_nexus_test.go:285: nexus/boundary-no-project-import round 1 Node 0.190498s count=1000
+    wave12_nexus_test.go:285: nexus/boundary-no-project-import round 2 Go 0.013364s count=1000
+    wave12_nexus_test.go:285: nexus/boundary-no-project-import round 2 native 0.013805s count=1000
+    wave12_nexus_test.go:285: nexus/boundary-no-project-import round 2 Node 0.201414s count=1000
+    wave12_nexus_test.go:285: nexus/boundary-no-project-import round 3 Go 0.017175s count=1000
+    wave12_nexus_test.go:285: nexus/boundary-no-project-import round 3 native 0.013631s count=1000
+    wave12_nexus_test.go:285: nexus/boundary-no-project-import round 3 Node 0.292335s count=1000
+    wave12_nexus_test.go:285: nexus/boundary-no-project-import round 4 Go 0.012649s count=1000
+    wave12_nexus_test.go:285: nexus/boundary-no-project-import round 4 native 0.009485s count=1000
+    wave12_nexus_test.go:285: nexus/boundary-no-project-import round 4 Node 0.202295s count=1000
+    wave12_nexus_test.go:285: nexus/boundary-no-project-import round 5 Go 0.012007s count=1000
+    wave12_nexus_test.go:285: nexus/boundary-no-project-import round 5 native 0.033608s count=1000
+    wave12_nexus_test.go:285: nexus/boundary-no-project-import round 5 Node 0.184023s count=1000
+    wave12_nexus_test.go:293: nexus/boundary-no-project-import native best of 5 105424.80 findings/s 0.009485s (1 files 1000 findings)
+    wave12_nexus_test.go:293: nexus/boundary-no-project-import Node best of 5 5434.09 findings/s 0.184023s (1 files 1000 findings)
+    wave12_nexus_test.go:293: nexus/boundary-no-project-import Go best of 5 83287.44 findings/s 0.012007s (1 files 1000 findings)
+--- PASS: TestNexusThroughput (16.06s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	132.451s
+FAIL

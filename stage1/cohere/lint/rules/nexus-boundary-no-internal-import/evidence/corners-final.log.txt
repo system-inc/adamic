@@ -1,0 +1,6 @@
+=== RUN   TestNexusCorners
+    wave12_nexus_test.go:234: corner cases: 81
+    wave12_nexus_test.go:235: Go, Node, emitted JavaScript, native identical: 80249 bytes
+--- PASS: TestNexusCorners (29.72s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	29.738s

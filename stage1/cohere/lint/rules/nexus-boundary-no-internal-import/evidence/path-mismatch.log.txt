@@ -1,0 +1,6 @@
+=== RUN   TestResolvedImportPaths
+    paths_test.go:85: path resolver differs on side 0
+--- FAIL: TestResolvedImportPaths (1.66s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/rules/nexus-boundary-no-internal-import	1.672s
+FAIL
