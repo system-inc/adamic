@@ -1,0 +1,10 @@
+import { renamed, a, live, add, Crate, before } from './bridge.a';
+import { count } from './m.a';
+console.log('module main');
+console.log(`${a}/${renamed}/${before}/${live}/${count}`);
+add();
+console.log(`${live}/${count}/${new Crate().value}`);
+add();
+console.log(`${live}/${count}`);
+const own = 'own';
+export { own as result };

@@ -74,13 +74,14 @@ type attempt struct {
 }
 
 type jump struct {
+	name                string
 	breakTo, continueTo BlockId
 }
 
 // tracked reports whether a local is a value the graph follows: one only its own function writes.
 func (b *builder) tracked(local int) bool {
 	declared := b.program.Locals[local]
-	return !declared.Global && !declared.Captured
+	return !declared.Global && !declared.Captured && !declared.ExpressionAssigned
 }
 
 // place is a tracked local's place: its one identifier, minted the first time it's met.
@@ -189,6 +190,12 @@ func (b *builder) statement(at *ir.Statement) {
 	case ir.Panic:
 		b.emit(at, 0, statement.Message, b.uses(statement.Message), nil)
 		b.terminate(&Unreachable{})
+	case ir.Labeled:
+		after := b.function.NewBlock()
+		b.jumps = append(b.jumps, jump{name: statement.Name, breakTo: after.Id, continueTo: InvalidBlock})
+		b.statements(statement.Body)
+		b.enter(after)
+		b.jumps = b.jumps[:len(b.jumps)-1]
 	case ir.Block:
 		b.statements(statement.Body)
 	case ir.If:
@@ -209,10 +216,22 @@ func (b *builder) statement(at *ir.Statement) {
 		b.switchStatement(at, statement)
 	case ir.Break:
 		depth := len(b.jumps) - 1
+		if statement.Label != "" {
+			for depth >= 0 && b.jumps[depth].name != statement.Label {
+				depth--
+			}
+		} else {
+			for depth >= 0 && b.jumps[depth].name != "" {
+				depth--
+			}
+		}
+		if depth < 0 {
+			panic("flow: unknown break target")
+		}
 		b.terminate(&Goto{Block: b.route(b.jumps[depth].breakTo, b.leaving(depth))})
 	case ir.Continue:
 		for index := len(b.jumps) - 1; index >= 0; index-- {
-			if b.jumps[index].continueTo != InvalidBlock {
+			if b.jumps[index].continueTo != InvalidBlock && ((statement.Label == "" && b.jumps[index].name == "") || b.jumps[index].name == statement.Label) {
 				b.terminate(&Goto{Block: b.route(b.jumps[index].continueTo, b.leaving(index))})
 				return
 			}
@@ -239,6 +258,7 @@ func (b *builder) loop(at *ir.Statement, statement ir.Loop) {
 	} else {
 		b.enter(test)
 	}
+	b.linkLabels(statement.Labels, update.Id)
 	b.jumps = append(b.jumps, jump{breakTo: after.Id, continueTo: update.Id})
 	b.current = body
 	b.statements(statement.Body)
@@ -272,6 +292,7 @@ func (b *builder) forOf(at *ir.Statement, statement ir.ForOf) {
 		defines = b.defines(statement.Local)
 	}
 	b.emit(at, 1, nil, nil, defines)
+	b.linkLabels(statement.Labels, head.Id)
 	b.jumps = append(b.jumps, jump{breakTo: after.Id, continueTo: head.Id})
 	b.statements(statement.Body)
 	b.jumps = b.jumps[:len(b.jumps)-1]
@@ -485,3 +506,14 @@ var (
 	arraySortType   = reflect.TypeOf(ir.ArraySort{})
 	mapForEachType  = reflect.TypeOf(ir.MapForEach{})
 )
+
+func (b *builder) linkLabels(names []string, target BlockId) {
+	for _, name := range names {
+		for index := len(b.jumps) - 1; index >= 0; index-- {
+			if b.jumps[index].name == name {
+				b.jumps[index].continueTo = target
+				break
+			}
+		}
+	}
+}

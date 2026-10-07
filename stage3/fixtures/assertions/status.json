@@ -204,7 +204,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "stage3/fixtures/assertions/13_flag_downcast.a:11:12: Adamic 0.1 refuses a number as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      "what": "stage3/fixtures/assertions/13_flag_downcast.a:11:52: Adamic 0.1 refuses a cast the runtime can't check; narrow it instead (===, typeof, a discriminant), or cast a discriminated union to its members (adamic/no-unchecked-cast)"
     }
   },
   {
@@ -268,7 +268,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/assertions/17_brand_upcast.a:11:13: stage 0 can't lower a PrefixUnaryExpression on a number yet"
+      "what": "stage3/fixtures/assertions/17_brand_upcast.a:11:60: stage 0 can't lower a value of type __String yet"
     }
   },
   {
@@ -299,8 +299,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/assertions/19_identifier_kind.a:14:13: stage 0 can't lower a case that isn't a constant yet"
+      "outcome": "Refused",
+      "what": "stage3/fixtures/assertions/19_identifier_kind.a:15:24: Adamic 0.1 refuses a cast the runtime can't check; narrow it instead (===, typeof, a discriminant), or cast a discriminated union to its members (adamic/no-unchecked-cast)"
     }
   },
   {
@@ -316,7 +316,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "stage3/fixtures/assertions/20_type_flag_mask.a:11:12: Adamic 0.1 refuses a number as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      "what": "stage3/fixtures/assertions/20_type_flag_mask.a:11:54: Adamic 0.1 refuses a cast the runtime can't check; narrow it instead (===, typeof, a discriminant), or cast a discriminated union to its members (adamic/no-unchecked-cast)"
     }
   }
 ]

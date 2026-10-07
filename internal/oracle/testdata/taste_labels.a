@@ -1,0 +1,42 @@
+let total = 0;
+outer: for (let i = 0; i < 3; i += 1) {
+ for (let j = 0; j < 3; j += 1) {
+  try {
+   const held = `held${i}${j}`;
+   console.log(held);
+   if (j === 1) { continue outer; }
+   total += 1;
+  } finally { console.log(`continue finally ${i}${j}`); }
+ }
+}
+console.log(`total ${total}`);
+exit: {
+ const held = `block${total}`;
+ for (const value of [1, 2]) {
+  try {
+   try { console.log(`${held} ${value}`); break exit; }
+   finally { console.log('inner break finally'); }
+  } finally { console.log('outer break finally'); }
+ }
+ console.log('unreachable');
+}
+console.log('after block');
+first: second: for (const value of ['a', 'b', 'c']) {
+ for (let i = 0; i < 2; i += 1) {
+  if (i === 1) { continue first; }
+  console.log(value);
+ }
+}
+let count = 0;
+again: do {
+ count += 1;
+ for (const value of [0, 1]) { if (value === 1) { continue again; } console.log(`do ${count}`); }
+} while (count < 2);
+stop: while (true) {
+ switch (total) { case 3: break stop; default: total += 1; break; }
+}
+console.log(`stopped ${total}`);
+replacement: for (let i = 0; i < 3; i += 1) {
+ try { break replacement; } finally { if (i < 2) { console.log(`override ${i}`); continue replacement; } }
+}
+console.log('done');

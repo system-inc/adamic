@@ -176,7 +176,7 @@ func (plan *reusePlan) reusable(program *ir.Program, function int, comparators m
 // by it.
 func (plan *reusePlan) owned(program *ir.Program, function int, comparators map[int]bool, instruction *flow.Instruction, live map[flow.DeclarationId]bool, source int, valueType ir.Type) bool {
 	local := program.Locals[source]
-	if local.Global || local.Captured || local.Type != valueType {
+	if local.Global || local.Captured || local.ExpressionAssigned || local.Type != valueType {
 		return false
 	}
 	if local.Function != function {
@@ -252,7 +252,7 @@ func (plan *reusePlan) readOnlyInside(instruction *flow.Instruction, source int)
 // parameter: nothing reads the variable's current value after.
 func (plan *reusePlan) movable(program *ir.Program, instruction *flow.Instruction, live map[flow.DeclarationId]bool, read ir.Read) bool {
 	local := program.Locals[read.Local]
-	if local.Captured || read.Checked || readsOf(evaluated(instruction), read.Local) != 1 {
+	if local.Captured || local.ExpressionAssigned || read.Checked || readsOf(evaluated(instruction), read.Local) != 1 {
 		return false
 	}
 	if plan.lending[read.Local] {

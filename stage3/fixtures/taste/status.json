@@ -11,8 +11,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/taste/01_diagnostic_code.a:5:12: stage 0 can't lower a BinaryExpression with a number | undefined and a number yet"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -28,7 +28,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/taste/02_diagnostic_message.a:6:12: stage 0 can't lower a field of type string | DiagnosticMessageChain | undefined yet"
+      "what": "stage3/fixtures/taste/02_diagnostic_message.a:9:68: stage 0 can't lower String conversion of an object, array, map or function (ToPrimitive is not lowered) yet"
     }
   },
   {
@@ -43,8 +43,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/taste/03_diagnostic_file.a:5:12: Adamic 0.1 refuses a value as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -59,8 +59,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/taste/04_jsx_runtime.a:6:12: Adamic 0.1 refuses a string as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -75,8 +75,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/taste/05_this_type.a:7:15: stage 0 can't lower a BinaryExpression with a number and a boolean yet"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -107,8 +107,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/taste/07_compact.a:11:27: stage 0 can't lower a PrefixUnaryExpression on a number | undefined yet"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -139,8 +139,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/taste/09_literal_cache.a:10:122: Adamic 0.1 refuses the comma operator; write each expression as its own statement"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -155,8 +155,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/taste/10_global_import_meta.a:11:45: Adamic 0.1 refuses ||=; write the if"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -172,7 +172,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/taste/11_build_info_pending.a:7:12: stage 0 can't lower a narrowed boolean | undefined field; copy the field into a local and narrow that local instead yet"
+      "what": "stage3/fixtures/taste/11_build_info_pending.a:7:12: stage 0 can't lower writing a possibly absent optional own field yet"
     }
   },
   {
@@ -187,8 +187,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/taste/12_symbol_links.a:10:13: Adamic 0.1 refuses a number as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -203,8 +203,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/taste/13_void_callback.a:5:62: Adamic 0.1 refuses the void operator; evaluate the expression as a statement"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -219,8 +219,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/taste/14_relative_complement.a:12:5: Adamic 0.1 refuses a label; move the loop into a function and return from it"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -235,8 +235,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/taste/15_barrel.a:3:1: Adamic 0.1 refuses an ExportDeclaration; export where you declare: export function, export const (one name for one thing)"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -252,8 +252,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/taste/16_scan_exclamation.a:14:44: Adamic 0.1 refuses the comma operator; write each expression as its own statement"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -268,8 +268,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/taste/17_binder_flow.a:36:24: Adamic 0.1 refuses ||=; write the if"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -284,8 +284,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/taste/support/performance.a:4:1: Adamic 0.1 refuses an ExportDeclaration; export where you declare: export function, export const (one name for one thing)"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -300,8 +300,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/taste/19_deprecated_flags.a:7:17: stage 0 can't lower a PrefixUnaryExpression on a number yet"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -317,8 +317,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/taste/20_jsdoc_terminate.a:15:1: Adamic 0.1 refuses a label; move the loop into a function and return from it"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -335,8 +335,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/taste/21_truthy_loops.a:14:12: Adamic 0.1 refuses a value as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -352,8 +352,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/taste/22_assignment_once.a:20:22: Adamic 0.1 refuses &&=; write the if"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -369,8 +369,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/taste/23_labels_finally.a:6:5: Adamic 0.1 refuses a label; move the loop into a function and return from it"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -394,8 +394,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/taste/24_proportional_conditions.a:34:16: Adamic 0.1 refuses a string as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      "outcome": "Compiles",
+      "what": ""
     }
   }
 ]
