@@ -1,0 +1,10 @@
+[
+  {
+    "Rule": "no-fallthrough",
+    "File": "/repository/source/Fallthrough.tsx",
+    "Source": "c.map(c => { switch (true) {\n        case c.f === 'qux' && xCount > 1: { return <td key=\"foo\">Foo</td>; }\n        case c.f === 'barbaz' && isFoo: { return <td key=\"bar\">Foobar</td>; }\n        case c.f === 'baz': { return arrayOfRecords.map(r => <td key={r.id}>{r.id}</td>); }\n        default: { return <td>Bar</td>; }\n      } });",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  }
+]

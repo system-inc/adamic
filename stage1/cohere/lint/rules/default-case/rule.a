@@ -1,0 +1,43 @@
+import type { RuleContext } from '../../context.ts';
+import type { Comment } from '../../helpers/comments/comment.ts';
+import { all } from '../../helpers/comments/all.ts';
+import { utf8Length } from 'adamic';
+import { goTrim } from '../typescript-ban-tslint-comment/rule.a';
+import { Pattern } from './pattern.a';
+import { messages } from './messages.a';
+export class Rule {
+    readonly context: RuleContext; readonly pattern: Pattern;
+    private ready = false; private comments: Comment[] = [];
+    constructor(context: RuleContext) {
+        this.context = context;
+        const pattern = context.settings.read('commentpattern', '');
+        const custom = new Pattern(pattern, false);
+        this.pattern = pattern === '' || !custom.valid ? new Pattern('^no default$', true) : custom;
+    }
+    fileComments(index: number): Comment[] {
+        if(!this.ready) {
+            let root = index; while((this.context.parents[root] ?? -1) >= 0) { root = this.context.parents[root] ?? -1; }
+            this.comments = all(this.context.parser, root); this.ready = true;
+        }
+        return this.comments;
+    }
+    visit(index: number): void {
+        const context = this.context; const block = context.node(index).children[1] ?? -1;
+        if(block < 0) { return; }
+        const clauses = context.node(block).children;
+        if(clauses.length === 0 || clauses.some(child => context.node(child).kind === 'DefaultClause')) { return; }
+        const last = clauses[clauses.length - 1] ?? -1;
+        const from = utf8Length(context.source.slice(0, context.node(last).end));
+        const to = utf8Length(context.source.slice(0, context.node(block).end));
+        let text = ''; let found = false;
+        for(const comment of this.fileComments(index)) {
+            if(comment.start < from || comment.end > to) { continue; }
+            text = comment.text.slice(2);
+            if(comment.isBlock && text.endsWith('*/')) { text = text.slice(0, text.length - 2); }
+            found = true;
+        }
+        if(found && this.pattern.match(goTrim(text))) { return; }
+        context.report(index, 'default-case', 'missingDefaultCase', messages[0] ?? '', '', '', '');
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

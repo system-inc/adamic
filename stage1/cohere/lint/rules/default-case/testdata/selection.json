@@ -1,0 +1,826 @@
+{
+  "main": "ef3d907ecdc4c771b016f7d9c52372def057a340",
+  "branches": 348,
+  "selected": [
+    "default-case",
+    "no-extra-label",
+    "no-fallthrough"
+  ],
+  "remaining": [
+    "default-case",
+    "no-extra-label",
+    "no-fallthrough",
+    "no-inline-comments",
+    "no-irregular-whitespace",
+    "no-unused-labels",
+    "no-useless-rename",
+    "operator-assignment",
+    "react/jsx-curly-brace-presence"
+  ],
+  "evidence": [
+    {
+      "name": "@typescript-eslint/consistent-type-assertions",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-01",
+          "stage1/cohere/lint/claims/wave1-01.md"
+        ]
+      ]
+    },
+    {
+      "name": "@typescript-eslint/consistent-type-definitions",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-01",
+          "stage1/cohere/lint/claims/wave1-01.md"
+        ]
+      ]
+    },
+    {
+      "name": "@typescript-eslint/init-declarations",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-01",
+          "stage1/cohere/lint/claims/wave1-01.md"
+        ]
+      ]
+    },
+    {
+      "name": "@typescript-eslint/no-explicit-any",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-02",
+          "stage1/cohere/lint/claims/wave1-02-report.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-02",
+          "stage1/cohere/lint/claims/wave1-02.md"
+        ]
+      ]
+    },
+    {
+      "name": "@typescript-eslint/no-inferrable-types",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-02",
+          "stage1/cohere/lint/claims/wave1-02-report.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-02",
+          "stage1/cohere/lint/claims/wave1-02.md"
+        ]
+      ]
+    },
+    {
+      "name": "@typescript-eslint/no-restricted-types",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-02",
+          "stage1/cohere/lint/claims/wave1-02-report.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-02",
+          "stage1/cohere/lint/claims/wave1-02.md"
+        ]
+      ]
+    },
+    {
+      "name": "@typescript-eslint/no-unused-expressions",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-03",
+          "stage1/cohere/lint/claims/wave1-03-evidence/REPORT.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-03",
+          "stage1/cohere/lint/claims/wave1-03.md"
+        ]
+      ]
+    },
+    {
+      "name": "@typescript-eslint/unified-signatures",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-03",
+          "stage1/cohere/lint/claims/wave1-03-evidence/REPORT.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-03",
+          "stage1/cohere/lint/claims/wave1-03.md"
+        ]
+      ]
+    },
+    {
+      "name": "class-methods-use-this",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-03",
+          "stage1/cohere/lint/claims/wave1-03-evidence/REPORT.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-03",
+          "stage1/cohere/lint/claims/wave1-03.md"
+        ]
+      ]
+    },
+    {
+      "name": "consistent-this",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-04",
+          "stage1/cohere/lint/claims/wave1-04-report.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-04",
+          "stage1/cohere/lint/claims/wave1-04.md"
+        ]
+      ]
+    },
+    {
+      "name": "func-name-matching",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-04",
+          "stage1/cohere/lint/claims/wave1-04-report.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-04",
+          "stage1/cohere/lint/claims/wave1-04.md"
+        ]
+      ]
+    },
+    {
+      "name": "max-classes-per-file",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-04",
+          "stage1/cohere/lint/claims/wave1-04-report.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-04",
+          "stage1/cohere/lint/claims/wave1-04.md"
+        ]
+      ]
+    },
+    {
+      "name": "max-depth",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-05",
+          "stage1/cohere/lint/claims/wave1-05.md"
+        ]
+      ]
+    },
+    {
+      "name": "max-nested-callbacks",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-05",
+          "stage1/cohere/lint/claims/wave1-05.md"
+        ]
+      ]
+    },
+    {
+      "name": "no-cond-assign",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-05",
+          "stage1/cohere/lint/claims/wave1-05-evidence/REPORT.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-05",
+          "stage1/cohere/lint/claims/wave1-05.md"
+        ]
+      ]
+    },
+    {
+      "name": "no-inner-declarations",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-06",
+          "stage1/cohere/lint/claims/wave1-06-evidence/REPORT.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-06",
+          "stage1/cohere/lint/claims/wave1-06.md"
+        ]
+      ]
+    },
+    {
+      "name": "no-restricted-properties",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-06",
+          "stage1/cohere/lint/claims/wave1-06-evidence/REPORT.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-06",
+          "stage1/cohere/lint/claims/wave1-06.md"
+        ]
+      ]
+    },
+    {
+      "name": "no-self-assign",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-06",
+          "stage1/cohere/lint/claims/wave1-06-evidence/REPORT.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-06",
+          "stage1/cohere/lint/claims/wave1-06.md"
+        ]
+      ]
+    },
+    {
+      "name": "no-underscore-dangle",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-07",
+          "stage1/cohere/lint/claims/wave1-07-completion-report.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-07",
+          "stage1/cohere/lint/claims/wave1-07-report.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-07",
+          "stage1/cohere/lint/claims/wave1-07.md"
+        ]
+      ]
+    },
+    {
+      "name": "no-unsafe-negation",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-07",
+          "stage1/cohere/lint/claims/wave1-07-completion-report.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-07",
+          "stage1/cohere/lint/claims/wave1-07-report.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-07",
+          "stage1/cohere/lint/claims/wave1-07.md"
+        ]
+      ]
+    },
+    {
+      "name": "no-unsafe-optional-chaining",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-07",
+          "stage1/cohere/lint/claims/wave1-07-completion-report.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-07",
+          "stage1/cohere/lint/claims/wave1-07-report.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-07",
+          "stage1/cohere/lint/claims/wave1-07.md"
+        ]
+      ]
+    },
+    {
+      "name": "no-useless-computed-key",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-08",
+          "stage1/cohere/lint/claims/wave1-08-report.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-08",
+          "stage1/cohere/lint/claims/wave1-08.md"
+        ]
+      ]
+    },
+    {
+      "name": "react-hooks/gating",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-08",
+          "stage1/cohere/lint/claims/wave1-08-report.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-08",
+          "stage1/cohere/lint/claims/wave1-08.md"
+        ]
+      ]
+    },
+    {
+      "name": "react/forbid-foreign-prop-types",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-08",
+          "stage1/cohere/lint/claims/wave1-08-report.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-08",
+          "stage1/cohere/lint/claims/wave1-08.md"
+        ]
+      ]
+    },
+    {
+      "name": "react/jsx-no-useless-fragment",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-09",
+          "stage1/cohere/lint/claims/wave1-09-report.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-09",
+          "stage1/cohere/lint/claims/wave1-09.md"
+        ]
+      ]
+    },
+    {
+      "name": "react/no-invalid-html-attribute",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-09",
+          "stage1/cohere/lint/claims/wave1-09-report.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-09",
+          "stage1/cohere/lint/claims/wave1-09.md"
+        ]
+      ]
+    },
+    {
+      "name": "react/no-unescaped-entities",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-09",
+          "stage1/cohere/lint/claims/wave1-09-report.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-09",
+          "stage1/cohere/lint/claims/wave1-09.md"
+        ]
+      ]
+    },
+    {
+      "name": "react/no-unsafe",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-10",
+          "stage1/cohere/lint/claims/wave1-10-report.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-10",
+          "stage1/cohere/lint/claims/wave1-10.md"
+        ]
+      ]
+    },
+    {
+      "name": "react/self-closing-comp",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-10",
+          "stage1/cohere/lint/claims/wave1-10-report.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-10",
+          "stage1/cohere/lint/claims/wave1-10.md"
+        ]
+      ]
+    },
+    {
+      "name": "sort-vars",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-10",
+          "stage1/cohere/lint/claims/wave1-10-report.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-10",
+          "stage1/cohere/lint/claims/wave1-10.md"
+        ]
+      ]
+    },
+    {
+      "name": "adamic/no-definite-assignment",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-11",
+          "stage1/cohere/lint/claims/wave1-11-REPORT.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-11",
+          "stage1/cohere/lint/claims/wave1-11.md"
+        ]
+      ]
+    },
+    {
+      "name": "base/boundary-no-global-container",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-11",
+          "stage1/cohere/lint/claims/wave1-11-REPORT.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-11",
+          "stage1/cohere/lint/claims/wave1-11.md"
+        ]
+      ]
+    },
+    {
+      "name": "base/consistency-no-hand-built-declared-error",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-11",
+          "stage1/cohere/lint/claims/wave1-11-REPORT.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-11",
+          "stage1/cohere/lint/claims/wave1-11.md"
+        ]
+      ]
+    },
+    {
+      "name": "base/consistency-require-pagination-argument-name",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-12",
+          "stage1/cohere/lint/claims/wave1-12.md"
+        ]
+      ]
+    },
+    {
+      "name": "base/correctness-require-orm-column-declare",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-12",
+          "stage1/cohere/lint/claims/wave1-12.md"
+        ]
+      ]
+    },
+    {
+      "name": "nexus/consistency-no-boolean-outcome",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-12",
+          "stage1/cohere/lint/claims/wave1-12.md"
+        ]
+      ]
+    },
+    {
+      "name": "nexus/consistency-no-for-in",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-13",
+          "stage1/cohere/lint/claims/wave1-13.md"
+        ]
+      ]
+    },
+    {
+      "name": "nexus/consistency-no-hand-rolled-delay",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-13",
+          "stage1/cohere/lint/claims/wave1-13.md"
+        ]
+      ]
+    },
+    {
+      "name": "nexus/consistency-no-return-void",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-13",
+          "stage1/cohere/lint/claims/wave1-13.md"
+        ]
+      ]
+    },
+    {
+      "name": "nexus/consistency-no-stuttering-name",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-14",
+          "stage1/cohere/lint/claims/wave1-14.md"
+        ]
+      ]
+    },
+    {
+      "name": "nexus/consistency-no-utils-folder",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-14",
+          "stage1/cohere/lint/claims/wave1-14.md"
+        ]
+      ]
+    },
+    {
+      "name": "nexus/import-require-module-alias",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-14",
+          "stage1/cohere/lint/claims/wave1-14.md"
+        ]
+      ]
+    },
+    {
+      "name": "nexus/import-require-node-namespace",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-15",
+          "stage1/cohere/lint/claims/wave1-15-report.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-15",
+          "stage1/cohere/lint/claims/wave1-15.md"
+        ]
+      ]
+    },
+    {
+      "name": "structure/network-no-invalidate-cache-literal-key",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-15",
+          "stage1/cohere/lint/claims/wave1-15-report.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-15",
+          "stage1/cohere/lint/claims/wave1-15.md"
+        ]
+      ]
+    },
+    {
+      "name": "structure/network-no-string-literal-query",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-15",
+          "stage1/cohere/lint/claims/wave1-15-report.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-15",
+          "stage1/cohere/lint/claims/wave1-15.md"
+        ]
+      ]
+    },
+    {
+      "name": "structure/tailwind-no-physical-direction",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-01",
+          "stage1/cohere/lint/claims/wave1-01.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-02",
+          "stage1/cohere/lint/claims/wave1-02-continuation-report.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-02",
+          "stage1/cohere/lint/claims/wave1-02.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-03",
+          "stage1/cohere/lint/claims/wave1-03.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-04",
+          "stage1/cohere/lint/claims/wave1-04-continuation-report.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-04",
+          "stage1/cohere/lint/claims/wave1-04.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-05",
+          "stage1/cohere/lint/claims/wave1-05-evidence/REPORT.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-05",
+          "stage1/cohere/lint/claims/wave1-05.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-06",
+          "stage1/cohere/lint/claims/wave1-06-next-evidence/REPORT.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-06",
+          "stage1/cohere/lint/claims/wave1-06.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-07",
+          "stage1/cohere/lint/claims/wave1-07.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-08",
+          "stage1/cohere/lint/claims/wave1-08-next-report.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-08",
+          "stage1/cohere/lint/claims/wave1-08.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-09",
+          "stage1/cohere/lint/claims/wave1-09-next-report.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-09",
+          "stage1/cohere/lint/claims/wave1-09.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-10",
+          "stage1/cohere/lint/claims/wave1-10-next-report.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-10",
+          "stage1/cohere/lint/claims/wave1-10.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-11",
+          "stage1/cohere/lint/claims/wave1-11.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-13",
+          "stage1/cohere/lint/claims/wave1-13.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-15",
+          "stage1/cohere/lint/claims/wave1-15-next-report.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-15",
+          "stage1/cohere/lint/claims/wave1-15.md"
+        ]
+      ]
+    },
+    {
+      "name": "@typescript-eslint/ban-tslint-comment",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-10",
+          "stage1/cohere/lint/claims/wave1-10-next-report.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-10",
+          "stage1/cohere/lint/claims/wave1-10.md"
+        ]
+      ]
+    },
+    {
+      "name": "@typescript-eslint/no-invalid-this",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-10",
+          "stage1/cohere/lint/claims/wave1-10-next-report.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-10",
+          "stage1/cohere/lint/claims/wave1-10.md"
+        ]
+      ]
+    },
+    {
+      "name": "@typescript-eslint/prefer-function-type",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-05",
+          "stage1/cohere/lint/claims/wave1-05.md"
+        ]
+      ]
+    },
+    {
+      "name": "arrow-body-style",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-02",
+          "stage1/cohere/lint/claims/wave1-02.md"
+        ],
+        [
+          "refs/remotes/origin/codex/lint-wave1-10",
+          "stage1/cohere/lint/claims/wave1-10.md"
+        ]
+      ]
+    },
+    {
+      "name": "default-case",
+      "main": false,
+      "claims": []
+    },
+    {
+      "name": "max-lines",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-10",
+          "stage1/cohere/lint/claims/wave1-10.md"
+        ]
+      ]
+    },
+    {
+      "name": "no-extra-bind",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-10",
+          "stage1/cohere/lint/claims/wave1-10.md"
+        ]
+      ]
+    },
+    {
+      "name": "no-extra-label",
+      "main": false,
+      "claims": []
+    },
+    {
+      "name": "no-fallthrough",
+      "main": false,
+      "claims": []
+    },
+    {
+      "name": "no-inline-comments",
+      "main": false,
+      "claims": []
+    },
+    {
+      "name": "no-invalid-this",
+      "main": false,
+      "claims": [
+        [
+          "refs/remotes/origin/codex/lint-wave1-10",
+          "stage1/cohere/lint/claims/wave1-10-next-report.md"
+        ]
+      ]
+    },
+    {
+      "name": "no-irregular-whitespace",
+      "main": false,
+      "claims": []
+    },
+    {
+      "name": "no-unused-labels",
+      "main": false,
+      "claims": []
+    },
+    {
+      "name": "no-useless-rename",
+      "main": false,
+      "claims": []
+    },
+    {
+      "name": "operator-assignment",
+      "main": false,
+      "claims": []
+    },
+    {
+      "name": "react/jsx-curly-brace-presence",
+      "main": false,
+      "claims": []
+    }
+  ],
+  "excludedInventoryMentions": "JSON selection inventories recording claims: [] are evidence, not reservations"
+}

@@ -1,0 +1,3 @@
+import { Pattern } from '../pattern.a';
+const pattern = new Pattern('a|b', false);
+console.log(`unsupported pattern accepted: ${pattern.match('a')}`);

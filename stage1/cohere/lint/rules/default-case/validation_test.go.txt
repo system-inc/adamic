@@ -1,0 +1,284 @@
+// Not parallel: upstream capture and scratch registry generation share their ledger.
+package lint
+
+import (
+	"bytes"
+	"context"
+	"encoding/json"
+	"fmt"
+	"github.com/system-inc/adamic/internal/javascript"
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native"
+	"io/fs"
+	"os"
+	"os/exec"
+	"path/filepath"
+	"sort"
+	"strings"
+	"testing"
+	"time"
+)
+
+var fourthNames = []string{"default-case", "no-extra-label", "no-fallthrough"}
+
+func TestFourthWitnesses(t *testing.T) {
+	var rows []string
+	for _, name := range fourthNames {
+		for _, path := range ownedWitnesses(t, ".", name) {
+			rows = append(rows, path+"\t"+name)
+		}
+	}
+	compare(t, goOracle(t), buildPort(t, ".", true), ".", manifest(t, rows))
+}
+func TestFourthUpstream(t *testing.T) {
+	upstream(t)
+	data, err := os.ReadFile("/tmp/lint-wave1-10-next/captured.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	var records map[string]struct {
+		Rule, File, Source string
+		Options            json.RawMessage
+	}
+	if err = json.Unmarshal(data, &records); err != nil {
+		t.Fatal(err)
+	}
+	var keys []string
+	for key := range records {
+		keys = append(keys, key)
+	}
+	sort.Strings(keys)
+	var exclusions []string
+	var rows []string
+	counts := map[string]int{}
+	for at, key := range keys {
+
+		row := records[key]
+		if row.Rule != "default-case" && row.Rule != "no-extra-label" && row.Rule != "no-fallthrough" {
+			continue
+		}
+		if strings.Contains(row.Source, "return <td") {
+			exclusions = append(exclusions, key)
+			continue
+		}
+		ext := filepath.Ext(row.File)
+		if ext == "" {
+			ext = ".ts"
+		}
+		path := filepath.Join(t.TempDir(), fmt.Sprintf("next-%d%s", at, ext))
+		os.WriteFile(path, []byte(row.Source), 0644)
+		option := string(row.Options)
+		if option == "" {
+			option = "null"
+		}
+		rows = append(rows, path+"\t"+row.Rule+"\t\t\tfalse\t"+option)
+		counts[row.Rule]++
+	}
+	os.WriteFile("/tmp/wave10-fourth-exclusions.json", []byte(strings.Join(exclusions, "\n")), 0644)
+	t.Logf("fourth upstream counts: %v; JSX exclusions=%d", counts, len(exclusions))
+	compare(t, goOracle(t), buildPort(t, ".", true), ".", manifest(t, rows))
+}
+func TestFourthCorpus(t *testing.T) {
+	var rows []string
+	for _, base := range []string{filepath.Join(os.Getenv("ADAMIC_TYPESCRIPT_SOURCE"), "src/compiler"), filepath.Join(repository, "stage1")} {
+		err := filepath.WalkDir(base, func(path string, e fs.DirEntry, err error) error {
+			if err != nil {
+				return err
+			}
+			if !e.IsDir() && (strings.HasSuffix(path, ".ts") || strings.HasSuffix(path, ".a")) {
+				path, _ = filepath.Abs(path)
+				for _, name := range fourthNames {
+					rows = append(rows, path+"\t"+name)
+				}
+			}
+			return nil
+		})
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
+	t.Logf("fourth corpus %d files / %d cases; full diagnostic and fix comparison", len(rows)/3, len(rows))
+	compare(t, goOracle(t), buildPort(t, ".", true), ".", manifest(t, rows))
+}
+func TestFourthMutants(t *testing.T) {
+	oracle := goOracle(t)
+	for _, name := range fourthNames {
+		t.Run(name, func(t *testing.T) {
+			var change struct{ Name, File, From, To string }
+			data, _ := os.ReadFile(filepath.Join("rules", name, "mutant.json"))
+			if err := json.Unmarshal(data, &change); err != nil {
+				t.Fatal(err)
+			}
+			var rows []string
+			for _, path := range ownedWitnesses(t, ".", name) {
+				rows = append(rows, path+"\t"+name)
+			}
+			path := manifest(t, rows)
+			want := compare(t, oracle, buildPort(t, ".", true), ".", path)
+			directory := mutant(t, change.From, change.To, filepath.Join("rules", name, change.File))
+			for _, side := range []struct {
+				name string
+				run  execution
+			}{{"Node", node(t, directory, path, false)}, {"emitted JavaScript", emitted(t, directory, path)}, {"native", execute(t, "", buildPort(t, directory, true), "--manifest", path)}} {
+				if bytes.Equal(side.run.output, want) {
+					t.Fatalf("%s survived %s", change.Name, side.name)
+				}
+				t.Logf("%s compiled and caught only by output comparison on %s: %s", change.Name, side.name, difference(side.run.output, want))
+			}
+		})
+	}
+}
+
+func TestFourthThroughput(t *testing.T) {
+	var paths []string
+	filepath.WalkDir(filepath.Join(os.Getenv("ADAMIC_TYPESCRIPT_SOURCE"), "src/compiler"), func(path string, e fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		if !e.IsDir() && strings.HasSuffix(path, ".ts") {
+			paths = append(paths, path)
+		}
+		return nil
+	})
+	oracle := goOracle(t)
+	binary := buildPort(t, ".", false)
+	for _, rule := range []struct{ name, source string }{
+		{"default-case", "switch(a) { case 0: break; }\n"},
+		{"no-extra-label", "A: while (a) { break A; }\n"},
+		{"no-fallthrough", "switch(a) { case 0: a(); case 1: b(); }\n"},
+	} {
+		fixture := filepath.Join(t.TempDir(), "positive.ts")
+		os.WriteFile(fixture, []byte(strings.Repeat(rule.source, 1000)), 0644)
+		var rows []string
+		for _, path := range append(append([]string{}, paths...), fixture) {
+			rows = append(rows, path+"\t"+rule.name)
+		}
+		manifest := manifest(t, rows)
+		var want string
+		best := map[string]time.Duration{}
+		for round := 0; round < 5; round++ {
+			for _, name := range []string{"Go", "Node", "native"} {
+				var run execution
+				switch name {
+				case "Go":
+					run = execute(t, "", oracle, "--manifest", manifest, "--count")
+				case "Node":
+					run = node(t, ".", manifest, true)
+				case "native":
+					run = execute(t, "", binary, "--manifest", manifest, "--count")
+				}
+				output := string(run.output)
+				if want == "" {
+					want = output
+				}
+				if output != want {
+					t.Fatalf("%s count %s != %s", name, output, want)
+				}
+				if best[name] == 0 || run.duration < best[name] {
+					best[name] = run.duration
+				}
+				t.Logf("%s %s round%d count=%s duration=%s", rule.name, name, round, strings.TrimSpace(output), run.duration)
+			}
+		}
+		var count int
+		fmt.Sscan(want, &count)
+		for _, name := range []string{"native", "Node", "Go"} {
+			t.Logf("%s %s %.2f findings/s (%d, %d files, best of five)", rule.name, name, float64(count)/best[name].Seconds(), count, len(rows))
+		}
+	}
+}
+
+func TestFourthShapes(t *testing.T) {
+	var rows []string
+	cases := []struct{ name, source, options string }{
+		{"no-fallthrough", "switch(a) {case 0:a(); /* fallſ through */ case 1:b();}", `{"commentPattern":"falls through"}`},
+		{"no-fallthrough", "switch(a) {case 0:a(); /* İ */ case 1:b();}", `{"commentPattern":"i"}`},
+		{"no-fallthrough", "switch(a) {case 0:a(); /* breaK */ case 1:b();}", `{"commentPattern":"break"}`},
+
+		{"default-case", "switch(a) {case 0:break; /* no default */ /* unrelated */}", ""},
+		{"default-case", "switch(a) {case 0:break; /* NO DEFAULT */}", ""},
+		{"default-case", "switch(a) {case 0:break; /* no default here */}", ""},
+		{"default-case", "switch(a) {case 0:break; /* whatever */}", `{"commentPattern":"("}`},
+		{"default-case", "switch(a) {case 0:break; /* NO DEFAULT */}", `{"commentPattern":"no default"}`},
+		{"default-case", "switch(a) {case 0:break; /* no default */} // no default", `{"commentPattern":"^no default$"}`},
+		{"no-extra-label", "const é = '😀'; A: while(a) { break A; continue /**/ A; }", ""},
+		{"no-extra-label", "A: while(a) { switch(b) {case 0:continue A;} }", ""},
+		{"no-extra-label", "A: while(a) { function f() { A: {break A;} } break A; }", ""},
+		{"no-extra-label", "A: while(a) {break A/* retained */;} // retained", ""},
+		{"no-fallthrough", "const é = '😀'; switch(a) { case 0: break; /* falls through */ case 1: b(); }", `{"reportUnusedFallthroughComment":true}`},
+		{"no-fallthrough", "switch(a) {case 0: try {throw 0;} catch(e) {} finally {break;} case 1: b();}", ""},
+		{"no-fallthrough", "switch(a) {case 0: do { if(x) return 1; else throw 0; } while(a); case 1: b();}", ""},
+		{"no-fallthrough", "switch(a) {case 0: a(); /* falling through */ case 1: b();}", ""},
+		{"no-fallthrough", "switch(a) {case 0: a(); /* NO BREAK */ case 1: b();}", `{"commentPattern":"no break"}`},
+		{"no-fallthrough", "switch(a) {case 0: a(); /* whatever */ case 1: b();}", `{"commentPattern":"("}`},
+	}
+	for at, c := range cases {
+		path := filepath.Join(t.TempDir(), fmt.Sprintf("shape-%d.ts", at))
+		os.WriteFile(path, []byte(c.source), 0644)
+		rows = append(rows, path+"\t"+c.name+"\t\t\tfalse\t"+c.options)
+	}
+	compare(t, goOracle(t), buildPort(t, ".", true), ".", manifest(t, rows))
+}
+
+func TestFourthPatternRefusal(t *testing.T) {
+	const message = "adamic: panic: NotYet: Go commentPattern outside the literal and captured character-class subset\n"
+	var answer []byte
+	for _, variant := range []string{"baseline", "mutant"} {
+		source, _ := filepath.Abs("rules/default-case/testdata/pattern-refusal.a")
+		if variant == "mutant" {
+			directory := mutant(t, "panic('NotYet: Go commentPattern outside the literal and captured character-class subset')", "console.log('unsupported pattern accepted')", "rules/default-case/pattern.a")
+			path := filepath.Join(directory, "rules/default-case/testdata/pattern-refusal.a")
+			os.MkdirAll(filepath.Dir(path), 0755)
+			data, _ := os.ReadFile(source)
+			os.WriteFile(path, data, 0644)
+			source = path
+		}
+		program, err := load.Load([]string{source})
+		if err != nil {
+			t.Fatal(err)
+		}
+		lowered, err := lower.Lower(context.Background(), program)
+		if err != nil {
+			t.Fatal(err)
+		}
+		binary := filepath.Join(t.TempDir(), "pattern-refusal")
+		if err = native.Build(native.C(lowered), binary, native.Options{Sanitize: true}); err != nil {
+			t.Fatal(err)
+		}
+		js := filepath.Join(t.TempDir(), "pattern-refusal.mjs")
+		os.WriteFile(js, []byte(javascript.JavaScript(lowered)), 0644)
+		runner, _ := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+		for _, row := range []struct {
+			name string
+			args []string
+		}{{"Node", []string{"node", "--disable-warning=ExperimentalWarning", runner, source}}, {"emitted JavaScript", []string{"node", "--disable-warning=ExperimentalWarning", runner, js}}, {"native", []string{binary}}} {
+			command := exec.Command(row.args[0], row.args[1:]...)
+			out, err := os.CreateTemp(t.TempDir(), "stdout-")
+			if err != nil {
+				t.Fatal(err)
+			}
+			errFile, _ := os.CreateTemp(t.TempDir(), "stderr-")
+			command.Stdout = out
+			command.Stderr = errFile
+			err = command.Run()
+			out.Close()
+			errFile.Close()
+			stdout, _ := os.ReadFile(out.Name())
+			stderr, _ := os.ReadFile(errFile.Name())
+			if variant == "baseline" {
+				e, ok := err.(*exec.ExitError)
+				if !ok || e.ExitCode() != 70 || len(stdout) != 0 || string(stderr) != message {
+					t.Fatalf("%s refusal: err=%v stdout=%q stderr=%q", row.name, err, stdout, stderr)
+				}
+				answer = stderr
+				t.Logf("%s explicit unsupported-regex refusal matches", row.name)
+			} else {
+				if err != nil || len(stderr) != 0 || bytes.Equal(stdout, answer) {
+					t.Fatalf("mutant failed before comparison %s err=%v stderr=%q", row.name, err, stderr)
+				}
+				t.Logf("unsupported_pattern_accepted compiled and finished on %s; refusal output comparison catches it: %q", row.name, stdout)
+			}
+		}
+	}
+}

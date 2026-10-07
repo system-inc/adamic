@@ -1,0 +1,164 @@
+=== RUN   TestFourthWitnesses
+    owned_fourth_test.go:32: Go, Node, emitted JavaScript, native identical: 1459 bytes
+--- PASS: TestFourthWitnesses (19.94s)
+=== RUN   TestFourthUpstream
+    lint_test.go:327: cohere cases: 1001 unique source/rule/options combinations
+    owned_fourth_test.go:79: fourth upstream counts: map[default-case:27 no-extra-label:38 no-fallthrough:94]; JSX exclusions=1
+    owned_fourth_test.go:80: Go, Node, emitted JavaScript, native identical: 34918 bytes
+--- PASS: TestFourthUpstream (25.71s)
+=== RUN   TestFourthCorpus
+    owned_fourth_test.go:101: fourth corpus 238 files / 714 cases; full diagnostic and fix comparison
+    owned_fourth_test.go:102: Go, Node, emitted JavaScript, native identical: 38193081 bytes
+--- PASS: TestFourthCorpus (95.17s)
+=== RUN   TestFourthMutants
+=== RUN   TestFourthMutants/default-case
+    owned_fourth_test.go:118: Go, Node, emitted JavaScript, native identical: 721 bytes
+    owned_fourth_test.go:127: default_case_missing_disabled compiled and caught only by output comparison on Node: case 0 line 2: port "fixed\tswitch (a) { case 1: break; }\\u000a", Go "/tmp/adamic-gate/TestFourthMutantsdefault-case1622632662/001/default-case-0.ts:1:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestFourthMutantsdefault-case1622632662/001/default-case-0.ts:1:1
+          default-case  This `switch` has no `default` case, so a value matching none of its cases falls through silently and the statement does nothing. That is occasionally what the author meant and is far more often an unhandled case that was added to the type later and never added here. The two readings are indistinguishable from the code, which is the problem: a reader cannot tell a deliberate omission from a forgotten branch. Add a `default`, even one that throws, or write a `// no default` comment after the last case to say the omission is intended.
+        
+        range 0 29 missingDefaultCase 		
+        fixed	switch (a) { case 1: break; }\u000a
+    owned_fourth_test.go:127: default_case_missing_disabled compiled and caught only by output comparison on emitted JavaScript: case 0 line 2: port "fixed\tswitch (a) { case 1: break; }\\u000a", Go "/tmp/adamic-gate/TestFourthMutantsdefault-case1622632662/001/default-case-0.ts:1:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestFourthMutantsdefault-case1622632662/001/default-case-0.ts:1:1
+          default-case  This `switch` has no `default` case, so a value matching none of its cases falls through silently and the statement does nothing. That is occasionally what the author meant and is far more often an unhandled case that was added to the type later and never added here. The two readings are indistinguishable from the code, which is the problem: a reader cannot tell a deliberate omission from a forgotten branch. Add a `default`, even one that throws, or write a `// no default` comment after the last case to say the omission is intended.
+        
+        range 0 29 missingDefaultCase 		
+        fixed	switch (a) { case 1: break; }\u000a
+    owned_fourth_test.go:127: default_case_missing_disabled compiled and caught only by output comparison on native: case 0 line 2: port "fixed\tswitch (a) { case 1: break; }\\u000a", Go "/tmp/adamic-gate/TestFourthMutantsdefault-case1622632662/001/default-case-0.ts:1:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestFourthMutantsdefault-case1622632662/001/default-case-0.ts:1:1
+          default-case  This `switch` has no `default` case, so a value matching none of its cases falls through silently and the statement does nothing. That is occasionally what the author meant and is far more often an unhandled case that was added to the type later and never added here. The two readings are indistinguishable from the code, which is the problem: a reader cannot tell a deliberate omission from a forgotten branch. Add a `default`, even one that throws, or write a `// no default` comment after the last case to say the omission is intended.
+        
+        range 0 29 missingDefaultCase 		
+        fixed	switch (a) { case 1: break; }\u000a
+=== RUN   TestFourthMutants/no-extra-label
+    owned_fourth_test.go:118: Go, Node, emitted JavaScript, native identical: 413 bytes
+    owned_fourth_test.go:127: redundant_label_reporting_disabled compiled and caught only by output comparison on Node: case 0 line 2: port "fixed\tA: while (a) { break A; }\\u000a", Go "/tmp/adamic-gate/TestFourthMutantsno-extra-label3865922796/001/no-extra-label-0.ts:1:22"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestFourthMutantsno-extra-label3865922796/001/no-extra-label-0.ts:1:22
+          no-extra-label  This label is unnecessary. The nearest enclosing breakable statement is already the one this jump targets, so naming it changes nothing and only invites the reader to go looking for the outer statement it appears to reach.
+        
+        range 21 22 unexpected fix		
+        edit 20 22
+    owned_fourth_test.go:127: redundant_label_reporting_disabled compiled and caught only by output comparison on emitted JavaScript: case 0 line 2: port "fixed\tA: while (a) { break A; }\\u000a", Go "/tmp/adamic-gate/TestFourthMutantsno-extra-label3865922796/001/no-extra-label-0.ts:1:22"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestFourthMutantsno-extra-label3865922796/001/no-extra-label-0.ts:1:22
+          no-extra-label  This label is unnecessary. The nearest enclosing breakable statement is already the one this jump targets, so naming it changes nothing and only invites the reader to go looking for the outer statement it appears to reach.
+        
+        range 21 22 unexpected fix		
+        edit 20 22
+    owned_fourth_test.go:127: redundant_label_reporting_disabled compiled and caught only by output comparison on native: case 0 line 2: port "fixed\tA: while (a) { break A; }\\u000a", Go "/tmp/adamic-gate/TestFourthMutantsno-extra-label3865922796/001/no-extra-label-0.ts:1:22"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestFourthMutantsno-extra-label3865922796/001/no-extra-label-0.ts:1:22
+          no-extra-label  This label is unnecessary. The nearest enclosing breakable statement is already the one this jump targets, so naming it changes nothing and only invites the reader to go looking for the outer statement it appears to reach.
+        
+        range 21 22 unexpected fix		
+        edit 20 22
+=== RUN   TestFourthMutants/no-fallthrough
+    owned_fourth_test.go:118: Go, Node, emitted JavaScript, native identical: 359 bytes
+    owned_fourth_test.go:127: fallthrough_findings_disabled compiled and caught only by output comparison on Node: case 0 line 2: port "fixed\tswitch(a) { case 0: a(); case 1: b(); }\\u000a", Go "/tmp/adamic-gate/TestFourthMutantsno-fallthrough2994755227/001/no-fallthrough-0.ts:1:26"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestFourthMutantsno-fallthrough2994755227/001/no-fallthrough-0.ts:1:26
+          no-fallthrough  Control runs from the previous case into this one, which is almost always a missing break. Add a break, or say the fallthrough is deliberate with a `falls through` comment.
+        
+        range 25 37 case 		
+        fixed	switch(a) { case 0: a(); case 1: b(); }\u000a
+    owned_fourth_test.go:127: fallthrough_findings_disabled compiled and caught only by output comparison on emitted JavaScript: case 0 line 2: port "fixed\tswitch(a) { case 0: a(); case 1: b(); }\\u000a", Go "/tmp/adamic-gate/TestFourthMutantsno-fallthrough2994755227/001/no-fallthrough-0.ts:1:26"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestFourthMutantsno-fallthrough2994755227/001/no-fallthrough-0.ts:1:26
+          no-fallthrough  Control runs from the previous case into this one, which is almost always a missing break. Add a break, or say the fallthrough is deliberate with a `falls through` comment.
+        
+        range 25 37 case 		
+        fixed	switch(a) { case 0: a(); case 1: b(); }\u000a
+    owned_fourth_test.go:127: fallthrough_findings_disabled compiled and caught only by output comparison on native: case 0 line 2: port "fixed\tswitch(a) { case 0: a(); case 1: b(); }\\u000a", Go "/tmp/adamic-gate/TestFourthMutantsno-fallthrough2994755227/001/no-fallthrough-0.ts:1:26"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestFourthMutantsno-fallthrough2994755227/001/no-fallthrough-0.ts:1:26
+          no-fallthrough  Control runs from the previous case into this one, which is almost always a missing break. Add a break, or say the fallthrough is deliberate with a `falls through` comment.
+        
+        range 25 37 case 		
+        fixed	switch(a) { case 0: a(); case 1: b(); }\u000a
+--- PASS: TestFourthMutants (109.26s)
+    --- PASS: TestFourthMutants/default-case (34.45s)
+    --- PASS: TestFourthMutants/no-extra-label (36.06s)
+    --- PASS: TestFourthMutants/no-fallthrough (36.40s)
+=== RUN   TestFourthThroughput
+    owned_fourth_test.go:181: default-case Go round0 count=1286 duration=248.921291ms
+    owned_fourth_test.go:181: default-case Node round0 count=1286 duration=1.751926437s
+    owned_fourth_test.go:181: default-case native round0 count=1286 duration=1.993465113s
+    owned_fourth_test.go:181: default-case Go round1 count=1286 duration=253.854753ms
+    owned_fourth_test.go:181: default-case Node round1 count=1286 duration=1.760090277s
+    owned_fourth_test.go:181: default-case native round1 count=1286 duration=1.973624724s
+    owned_fourth_test.go:181: default-case Go round2 count=1286 duration=260.589871ms
+    owned_fourth_test.go:181: default-case Node round2 count=1286 duration=1.844585482s
+    owned_fourth_test.go:181: default-case native round2 count=1286 duration=1.990277493s
+    owned_fourth_test.go:181: default-case Go round3 count=1286 duration=228.510855ms
+    owned_fourth_test.go:181: default-case Node round3 count=1286 duration=1.746897349s
+    owned_fourth_test.go:181: default-case native round3 count=1286 duration=1.964250628s
+    owned_fourth_test.go:181: default-case Go round4 count=1286 duration=245.132746ms
+    owned_fourth_test.go:181: default-case Node round4 count=1286 duration=1.649275145s
+    owned_fourth_test.go:181: default-case native round4 count=1286 duration=2.023663649s
+    owned_fourth_test.go:187: default-case native 654.70 findings/s (1286, 78 files, best of five)
+    owned_fourth_test.go:187: default-case Node 779.74 findings/s (1286, 78 files, best of five)
+    owned_fourth_test.go:187: default-case Go 5627.74 findings/s (1286, 78 files, best of five)
+    owned_fourth_test.go:181: no-extra-label Go round0 count=1001 duration=216.555439ms
+    owned_fourth_test.go:181: no-extra-label Node round0 count=1001 duration=916.59062ms
+    owned_fourth_test.go:181: no-extra-label native round0 count=1001 duration=1.209892076s
+    owned_fourth_test.go:181: no-extra-label Go round1 count=1001 duration=217.284302ms
+    owned_fourth_test.go:181: no-extra-label Node round1 count=1001 duration=826.669918ms
+    owned_fourth_test.go:181: no-extra-label native round1 count=1001 duration=1.341412557s
+    owned_fourth_test.go:181: no-extra-label Go round2 count=1001 duration=213.738278ms
+    owned_fourth_test.go:181: no-extra-label Node round2 count=1001 duration=939.767724ms
+    owned_fourth_test.go:181: no-extra-label native round2 count=1001 duration=1.333703124s
+    owned_fourth_test.go:181: no-extra-label Go round3 count=1001 duration=205.434152ms
+    owned_fourth_test.go:181: no-extra-label Node round3 count=1001 duration=913.852904ms
+    owned_fourth_test.go:181: no-extra-label native round3 count=1001 duration=1.297187615s
+    owned_fourth_test.go:181: no-extra-label Go round4 count=1001 duration=201.375562ms
+    owned_fourth_test.go:181: no-extra-label Node round4 count=1001 duration=997.317636ms
+    owned_fourth_test.go:181: no-extra-label native round4 count=1001 duration=1.290827817s
+    owned_fourth_test.go:187: no-extra-label native 827.35 findings/s (1001, 78 files, best of five)
+    owned_fourth_test.go:187: no-extra-label Node 1210.88 findings/s (1001, 78 files, best of five)
+    owned_fourth_test.go:187: no-extra-label Go 4970.81 findings/s (1001, 78 files, best of five)
+    owned_fourth_test.go:181: no-fallthrough Go round0 count=1009 duration=260.333119ms
+    owned_fourth_test.go:181: no-fallthrough Node round0 count=1009 duration=4.978630163s
+    owned_fourth_test.go:181: no-fallthrough native round0 count=1009 duration=2.162506024s
+    owned_fourth_test.go:181: no-fallthrough Go round1 count=1009 duration=253.559226ms
+    owned_fourth_test.go:181: no-fallthrough Node round1 count=1009 duration=4.876509585s
+    owned_fourth_test.go:181: no-fallthrough native round1 count=1009 duration=2.147387238s
+    owned_fourth_test.go:181: no-fallthrough Go round2 count=1009 duration=238.090564ms
+    owned_fourth_test.go:181: no-fallthrough Node round2 count=1009 duration=4.903652096s
+    owned_fourth_test.go:181: no-fallthrough native round2 count=1009 duration=2.166173869s
+    owned_fourth_test.go:181: no-fallthrough Go round3 count=1009 duration=254.126398ms
+    owned_fourth_test.go:181: no-fallthrough Node round3 count=1009 duration=4.67326228s
+    owned_fourth_test.go:181: no-fallthrough native round3 count=1009 duration=2.049103219s
+    owned_fourth_test.go:181: no-fallthrough Go round4 count=1009 duration=268.718468ms
+    owned_fourth_test.go:181: no-fallthrough Node round4 count=1009 duration=5.007009572s
+    owned_fourth_test.go:181: no-fallthrough native round4 count=1009 duration=2.085081328s
+    owned_fourth_test.go:187: no-fallthrough native 492.41 findings/s (1009, 78 files, best of five)
+    owned_fourth_test.go:187: no-fallthrough Node 215.91 findings/s (1009, 78 files, best of five)
+    owned_fourth_test.go:187: no-fallthrough Go 4237.88 findings/s (1009, 78 files, best of five)
+--- PASS: TestFourthThroughput (75.19s)
+=== RUN   TestFourthShapes
+    owned_fourth_test.go:221: Go, Node, emitted JavaScript, native identical: 6411 bytes
+--- PASS: TestFourthShapes (20.56s)
+=== RUN   TestFourthPatternRefusal
+    owned_fourth_test.go:275: Node explicit unsupported-regex refusal matches
+    owned_fourth_test.go:275: emitted JavaScript explicit unsupported-regex refusal matches
+    owned_fourth_test.go:275: native explicit unsupported-regex refusal matches
+    owned_fourth_test.go:280: unsupported_pattern_accepted compiled and finished on Node; refusal output comparison catches it: "unsupported pattern accepted\nunsupported pattern accepted: false\n"
+    owned_fourth_test.go:280: unsupported_pattern_accepted compiled and finished on emitted JavaScript; refusal output comparison catches it: "unsupported pattern accepted\nunsupported pattern accepted: false\n"
+    owned_fourth_test.go:280: unsupported_pattern_accepted compiled and finished on native; refusal output comparison catches it: "unsupported pattern accepted\nunsupported pattern accepted: false\n"
+--- PASS: TestFourthPatternRefusal (0.72s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	346.558s

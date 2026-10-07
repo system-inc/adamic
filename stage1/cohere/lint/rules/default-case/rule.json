@@ -1,0 +1,12 @@
+{
+  "name": "default-case",
+  "kinds": [
+    "SwitchStatement"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleDefaultCase",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestDefaultCase"
+}

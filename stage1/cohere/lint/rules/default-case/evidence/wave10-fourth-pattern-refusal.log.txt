@@ -1,0 +1,10 @@
+=== RUN   TestFourthPatternRefusal
+    owned_fourth_test.go:275: Node explicit unsupported-regex refusal matches
+    owned_fourth_test.go:275: emitted JavaScript explicit unsupported-regex refusal matches
+    owned_fourth_test.go:275: native explicit unsupported-regex refusal matches
+    owned_fourth_test.go:280: unsupported_pattern_accepted compiled and finished on Node; refusal output comparison catches it: "unsupported pattern accepted\nunsupported pattern accepted: false\n"
+    owned_fourth_test.go:280: unsupported_pattern_accepted compiled and finished on emitted JavaScript; refusal output comparison catches it: "unsupported pattern accepted\nunsupported pattern accepted: false\n"
+    owned_fourth_test.go:280: unsupported_pattern_accepted compiled and finished on native; refusal output comparison catches it: "unsupported pattern accepted\nunsupported pattern accepted: false\n"
+--- PASS: TestFourthPatternRefusal (0.68s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	0.685s

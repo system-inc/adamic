@@ -1,0 +1,27 @@
+=== RUN   TestFourthWitnesses
+    owned_fourth_test.go:26: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-1703846445/main.c:31325:4: error: non-void function 'adamic_function_267_Pattern_new' should return a value [-Wreturn-mismatch]
+         31325 |                         return;
+               |                         ^
+        /tmp/adamic-gate/adamic-build-1703846445/main.c:31430:4: error: non-void function 'adamic_function_267_Pattern_new_in' should return a value [-Wreturn-mismatch]
+         31430 |                         return;
+               |                         ^
+        2 errors generated.
+        
+--- FAIL: TestFourthWitnesses (7.09s)
+=== RUN   TestFourthUpstream
+    lint_test.go:327: cohere cases: 1001 unique source/rule/options combinations
+    owned_fourth_test.go:73: fourth upstream counts: map[default-case:27 no-extra-label:38 no-fallthrough:94]; JSX exclusions=1
+    owned_fourth_test.go:74: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-991322271/main.c:31325:4: error: non-void function 'adamic_function_267_Pattern_new' should return a value [-Wreturn-mismatch]
+         31325 |                         return;
+               |                         ^
+        /tmp/adamic-gate/adamic-build-991322271/main.c:31430:4: error: non-void function 'adamic_function_267_Pattern_new_in' should return a value [-Wreturn-mismatch]
+         31430 |                         return;
+               |                         ^
+        2 errors generated.
+        
+--- FAIL: TestFourthUpstream (11.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	18.133s
+FAIL
