@@ -245,3 +245,19 @@ control and exact coverage limits are in
 [the next-three report](wave1-12-next-evidence/REPORT.md). The claims remain owned
 by this branch pending that foundation. No per-rule parity, mutants or throughput
 result is claimed for these three names.
+
+## Third batch, October 7
+
+Prior work is pushed through b4656c7c. Main remains
+ef3d907ecdc4c771b016f7d9c52372def057a340. After fetching all origin heads,
+310 refs and 32 unique claim Markdown blobs were inspected alongside main lint
+.a/.ts source. All 46 helper-ready names occur in claims. The first remaining
+inventory entries with needs_type_information=false are claimed here:
+
+1. @next/next/no-before-interactive-script-outside-document
+2. @next/next/no-css-tags
+3. @next/next/no-document-import-in-page
+
+This ownership update is pushed before new source or probes. Reserved rule
+directories are next-no-before-interactive-script-outside-document,
+next-no-css-tags and next-no-document-import-in-page.
