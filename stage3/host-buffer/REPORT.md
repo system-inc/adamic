@@ -1,8 +1,178 @@
-Catchable crypto errors remain unsupported: Adamic Error has name/message but no Node .code; try around hash operations is rejected.
-Built Buffer encodings, BOM swaps, indexing/length, System wrapper chains and SHA-256 on both backends; removed all unit declaration copies and the loader hook.
-Implementation commits: 1321859fccc4c7391d1ca3b34eeb1f18b16ba818 and 4453ba184af55ffba9ac1c1a3b72c801af9fc6e1; branch codex/host-buffer-crypto.
-Current validation: Go compilation, vet, formatting, IR proofs and declaration-independent Node runtime comparison pass; source fixtures need the shared @types/node hook.
-Mutants: prior 15 semantic and three proof mutants caught; one new independent hash mutant caught by Node. Shared hook merge, real sys.ts fixtures, native tsc proof and macOS remain pending.
+Built canonical node:crypto namespace presence and typeof reads; unimplemented namespace values remain named NotYet.
+Landing branch codex/host-buffer-crypto-land advances from 77a34e2; compiler d882fbc was merged only in a detached scratch checkout.
+Checks: lowering/load/full flow/freshness/IR PASS; all owned oracle fixtures PASS uncached; full Linux counts regenerated and verified; vet/format PASS.
+Mutant: namespace object replaced with typed undefined; compiled on both backends and caught only by Node stdout comparisons, including batch-3 truthiness.
+Remaining: full 21 advances to rmSync options NotYet in the proof merge; 22's undefined declaration is language-side. No require implementation, full repository gate or macOS execution.
+
+Crypto namespace read, October 7
+
+Implemented the read fixture 21 performs in `_crypto ? createSHA256Hash : generateDjb2Hash`. Recognition requires the resolved namespace symbol's module declaration to be node:crypto in the canonical pinned @types/node 25.3.3 tree. The value is a present object token, admitted only in condition/negation and typeof observations. It cannot escape into assignments, reflection or enumeration. Static crypto.createHash calls retain the existing intrinsic lowering. Unsupported exports retain the shared named NotYet guard. All code lives in library_node_buffer.go with a three-line named value hook in expression.go; no compiler batch-3 commit was added to this landing branch.
+
+The landing branch's new node_buffer_namespace.a oracle fixture reads the namespace with typeof and selects actual SHA-256 calls using that observation. The isolated proof checkout substitutes the exact direct namespace conditional that batch 3 admits; [namespace/truthiness.a](namespace/truthiness.a) preserves that executed source. The ordinary landing branch still keeps its non-null and strict-condition rules until compiler integration merges batch 3.
+
+Scratch: detached worktree at 77a34e2, merged d882fbced8e07b2f317fdd203400ed547190cccf with --no-commit --no-ff, then applied only the namespace fix. The merge was clean. Shared local dependency symlinks caused Go VCS stamping to fail on the first acceptance-driver attempt; reran with GOFLAGS=-buildvcs=false in the scratch only. This is a harness setup workaround, not a compiler change.
+
+Observed unmodified fixture stages on both backends in that scratch:
+
+| Fixture | Node bytes | Native | JavaScript |
+| --- | --- | --- | --- |
+| 02_readFile_utf16le.a | Agree | Checker | Checker |
+| 03_readFile_utf16be.a | Agree | Checker | Checker |
+| 21_createHash.a | Agree | NotYet, rmSync evaluated option literals | NotYet, rmSync evaluated option literals |
+| 22_createHash_fallback.a | Agree | NotYet, undefined value | NotYet, undefined value |
+
+Before the fix, 21 stopped at line 17 with `node:crypto."node:crypto" read as a value`. After the fix, it reaches line 30: `rmSync: fs option literals containing evaluated expressions; bind a plain options object first`. The namespace read is closed, but full fixture 21 is not claimed green. The audited host fixtures and status.json are unchanged.
+
+22 is a language representation gap, not an optional crypto result. Exact one-line reproducer: `const c: undefined = undefined;`. On the compiler proof merge this passes the checker and then reports `stage 0 can't lower a value of type undefined yet` at 1:7. An earlier probe added console.log(c), which introduced an unrelated checker error; that attempt is not the reproducer.
+
+Commands after export GOPROXY='https://proxy.golang.org|direct' and source /workspace/adamic-tools/env.sh:
+
+- bash cloud/setup.sh: Go/clang/Node/submodules ready 0s each; cache warm 93s; done 93s; nproc=5, cgroup quota=4.
+- go test ./internal/lower -run TestNodeBufferRefusals -count=1 -v: PASS 2.234s, including new namespace alias/reflection/member refusals.
+- go test ./internal/lower ./internal/load ./internal/flow ./internal/fresh ./internal/ir -count=1 -timeout 30m: PASS. Lower 86.255s, load 6.008s, full flow 137.628s, freshness 108.200s, IR 20.989s.
+- ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'Test(Native|Input)AgreesWithNode/internal/oracle/testdata/node_buffer_' -count=1 -v -timeout 30m: PASS 3.974s, zero cache hits; release/sanitized native and JavaScript held to source Node.
+- go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 30m -args -update-counts: PASS 75.449s. One namespace row added; directory-system row changed because it enumerates the added fixture.
+- go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 30m: verification PASS 29.893s.
+- go vet ./internal/lower ./internal/oracle, gofmt -l cmd internal and git diff --check: PASS, no output.
+- Scratch namespace oracle: PASS 13.009s; exact direct-truthiness version PASS 0.674s. Unmodified four-fixture acceptance returns 1 explicitly for frontend blockers; all four Node observations agree.
+
+Semantic mutant `crypto_namespace_absent` changes only the present namespace object token to ir.Undefined{Of: ir.Object}. Main and proof inputs compiled successfully on both backends and failed only source Node stdout comparison, with no compiler/sanitizer/leak failures. Runtime/Go source restored exactly after each run. Restored uncached namespace baseline: PASS 0.740s on landing, PASS 1.862s on the proof's direct-truthiness fixture. The reusable mutant is in node_buffer_mutants.py. [Namespace evidence](namespace/) contains the command logs as tracked text and the proof fixture stages.
+
+No full repository or whole oracle gate was repeated for this follow-up; the touched package gates, full flow, uncached owned oracle set and full count-table execution/verification ran. No runtime implementation, private declaration hook, require lowering or audited upstream source was changed.
+
+The following reports are historical.
+
+Catchable crypto finalization still needs runtime integration; owned full fixtures stop at Checker (02/03), non-null refusal (21), or undefined lowering (22).
+Merged area/library 53f44e05 with fs-file and macOS fixes, retaining both units through named Buffer hooks.
+Merge parents: a38287b and 53f44e05; codex/host-buffer-crypto-land. Merge commit, no rebase, force-push or push to main.
+Linux counts and full merge gates PASS; added fs decoder source fixture PASS on both backends; byte-index and fs byte-swap mutants caught by Node.
+All 25 Node observations agree; 11_setModifiedTime executes and agrees on both backends. Other full fixtures remain frontend-blocked; macOS and native tsc are untested.
+
+Continued unit coverage after the merge
+
+Added internal/oracle/testdata/node_buffer_fs_decode.a through the unit-owned fixture registration, leaving oracle_test.go unchanged. It performs real mkdtempSync, writeFileSync(Buffer), readFileSync(Buffer), BOM decoding, BE byte swaps and rmSync on both backends. Its cases include empty files, LE/BE BOM-only files, lone high/low surrogates, valid surrogate pairs, odd byte lengths, malformed UTF-8 and a UTF-8 BOM. This is additional checked source coverage; it does not rewrite or claim to close the four upstream acceptance fixtures.
+
+The first filtered invocation preceded registration and printed "no tests to run"; it is not counted as evidence. After registration, ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_fs_decode.a$' -count=1 -v -timeout 30m ran the named subtest and passed in 0.779s, with zero cache hits. The new fs_byte_swap_store mutant suppresses actual native byte stores while preserving compilation and cleanup. Source Node stdout comparison caught it. Exact runtime restored; the named uncached baseline passed in 0.673s.
+
+Follow-up gates: full Linux counts regenerated (29.654s); TestCountsAreRecorded plus all owned node_buffer native/source/JavaScript fixtures passed (32.554s). go vet ./internal/oracle and git diff --check passed without output. One new fixture row and the directory-system row that observes the added fixture changed. No compiler or runtime implementation changed after the complete merge package/oracle gates.
+
+The remaining crypto error integration needs both normal cleanup paths and Node's custom error rendering. Observed independently on Node v24.19.0 for update and digest after finalization: name="Error", code="ERR_CRYPTO_HASH_FINALIZED", message="Digest already called", but String(error)="Error [ERR_CRYPTO_HASH_FINALIZED]: Digest already called". The landed general error runtime now carries .code, so this is an implementation gap rather than a claim that the language cannot ever represent that field. The existing named NotYet guard remains until all paths can be held to Node.
+
+Library area fs-file merge, October 7
+
+Resolved the shared expression dispatch against the area version, preserving processValue, nodeFSDirectoryValue, named unsupported-host refusals, never-returning closures and omitted-argument shaping. Reapplied nodeBufferRepresentation and nodeBufferContextualView as small named hooks. The Buffer contextual view now accepts the fs worker's synchronous readSync/writeFileSync Buffer arguments. Kept the area's runtime error layout, process layouts, freshness handling and Buffer tests. NOTICE and host/status.json retain the area versions unchanged.
+
+Preserved _DARWIN_C_SOURCE after _POSIX_C_SOURCE in fs-file and process runtimes, Linux-only detect_leaks settings, concurrent terminal draining and canonical directory handling. Linux was the execution platform; no macOS execution is claimed.
+
+Commands after sourcing /workspace/adamic-tools/env.sh:
+
+- `go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 30m -args -update-counts`: PASS, 115.024s. Full Linux table regenerated, including two changed area rows.
+- `go test ./internal/load ./internal/lower ./internal/native ./internal/javascript ./internal/fresh ./internal/flow ./internal/ir -count=1 -timeout 30m`: PASS. Load 5.240s, lower 84.716s, native 223.145s, fresh 101.499s, flow 162.755s, IR 2.996s; JavaScript has no standalone tests.
+- `go test ./internal/oracle -count=1 -timeout 30m`: PASS, 356.494s, whole oracle under ordinary worker cache policy.
+- `go test ./internal/lower -run 'NodeBuffer|NodeFSFile|NodeLibrary' -count=1 -v`: PASS, 9.754s, final conflict resolution.
+- `python3 stage3/host-buffer/check_host_acceptance.py --all --logs /tmp/host-buffer-area53-host`: 25 source Node observations agree. Both backends record the same stages; exit 1 explicitly marks remaining blocked fixtures. The sole compiling fixture matches recorded stdout, stderr and exit on both backends. Full table and diagnostics: [area53/host-stages.md](area53/host-stages.md) and [area53/host-stages.json](area53/host-stages.json).
+- `go vet ./internal/load ./internal/lower ./internal/native ./internal/javascript ./internal/fresh ./internal/flow ./internal/ir ./internal/oracle`: PASS, no output. `gofmt -l cmd internal`: no output.
+- `python3 internal/oracle/node_buffer_mutants.py buffer_index`: CAUGHT by source Node stdout comparisons on native and JavaScript; compiler and sanitizers accepted the mutant. Exact source restored. `ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_writes.a$' -count=1 -timeout 30m`: restored baseline PASS, 0.710s.
+
+Owned fixture blockers: 02/03 retain TS2322 on b[0]=b[1] under checked indexed access; 21 now reaches Adamic's non-null assertion refusal at _crypto!.createHash("sha256"); 22 reaches NotYet for const c: undefined=undefined. The independent owned components passed in the native package gate. The audited source fixtures were not rewritten to bypass these language checks. All earlier unit mutant evidence is retained below.
+
+The following reports are historical.
+
+Catchable Node crypto .code remains unsupported; full host fixtures retain the indexed-read and fs.mkdtempSync blockers.
+Merged area/library 2faf682 into the Buffer/crypto landing branch, keeping compiler semantics with small named host hooks and the audited host records.
+Merge parents: 2a4a229 and 2faf682; branch codex/host-buffer-crypto-land. No rebase, force-push or push to main.
+Checks: full touched packages including internal/flow PASS; full oracle PASS; Linux counts regenerated; nine owned fixtures PASS uncached; byte-index mutant caught by Node.
+Full acceptance on both backends remains 02/03 Checker and 21/22 NotYet; owned host components pass. Native tsc proof and macOS remain untested.
+
+Library area merge, October 7
+
+Merged origin/area/library at 2faf682bbf365dcc0afde3768832a2fdffc7b965 into the existing published landing branch. Conflicts were expression.go, library_node_test.go, counts.md, stage3/fixtures/NOTICE and stage3/fixtures/host/status.json. This landing uses a merge commit with both published parents, without rewriting history.
+
+Expression conflict: took the compiler's entire area version, retaining iterator refusal, acceptsUndefined, typeof presence handling, proven satisfies relations, spelling of stale narrowings and conditional pair handling. Reapplied the host representation, unsupported-use and view checks as small named hooks. nodeBufferRepresentation and nodeBufferContextualView live in library_node_buffer.go; existing nodeBufferUnsupportedUse/nodeBufferView remain the refusal hooks. Buffer.from's input-copy exception is preserved without weakening the compiler checks on ordinary expressions.
+
+QualifiedName conflict: kept the area's corrected test and invariance.go fix. A proven qualified assertion passes; an Error-to-ErrnoException downcast with unproven optional fields is refused. NOTICE and host/status.json are byte-identical to origin/area/library, as requested. Linux counts were regenerated from executions of the complete fixture set. Compared with the area table, only the nine new Buffer/crypto rows are added; no area row changes or disappears.
+
+Gate commands, after sourcing /workspace/adamic-tools/env.sh:
+
+- `go test ./internal/lower -run 'NodeBuffer|NodeLibrary|Proven|Predicat|Narrowed|Iterator' -count=1 -v`: PASS, 5.239s.
+- `go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 30m -args -update-counts`: PASS, 94.983s, Linux.
+- `go test ./internal/load ./internal/lower ./internal/native ./internal/javascript ./internal/fresh ./internal/flow ./internal/ir -count=1 -timeout 30m`: PASS. Load 4.952s, lower 49.974s, native 189.610s, fresh 65.732s, flow 117.399s, IR 3.192s; JavaScript has no standalone tests. This runs the whole flow package explicitly.
+- `go test ./internal/oracle -count=1 -timeout 30m`: PASS, 305.632s, including count-table verification and the area's regex/map fixtures. Ordinary worker cache policy; not claimed uncached.
+- `ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'Test(Native|Input)AgreesWithNode/internal/oracle/testdata/node_buffer_' -count=1 -v -timeout 30m`: PASS, 6.153s, all nine owned fixtures; native release/sanitizer and JavaScript held to Node, zero cache hits.
+- `python3 stage3/host-buffer/check_host_acceptance.py --logs /tmp/host-buffer-area-acceptance`: exits 1 as intended for blocked acceptance; actual Node output agrees for all four fixtures. 02/03 are Checker on both backends, 21/22 are NotYet at node:fs.mkdtempSync on both backends. Owned component tests pass in the full native package gate.
+- `go vet ./...`, `gofmt -l cmd internal`, `git diff --check`: pass, no output.
+
+The old byte-index mutant pattern did not match the compiler's new l.defined wrapper. That attempt was invalid and not counted as a catch. The unit mutant runner was updated to keep the compiler wrapper intact while changing only Buffer's index by +1; the actual mutant was caught by stdout differences against source Node on native and JavaScript, with no compiler/sanitizer failure. Restored baseline: `ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_writes.a$' -count=1 -timeout 30m` PASS, 0.614s. Exact source restored; /tmp/host-buffer-area-buffer-index-mutant.log and /tmp/host-buffer-area-mutant-restored.log record both results. All earlier mutant evidence is retained in the historical sections.
+
+Logs are under /tmp/host-buffer-area-*.log; each test invocation writes to a file. The complete repository gate was not run; all touched packages, the full oracle, explicit flow and the owned uncached fixtures were run. No private Node declaration files are added.
+
+The sections below are historical reports from earlier landing stages.
+
+Landing with the shared Node types, October 7
+
+Merged 69c71d5171801bc355400452a0dff8a93533ac2e into the original host branch at 9ed6a002f61eb24ade6af1e2ba88a763251be448, created codex/host-buffer-crypto-land, and rebased onto current origin/main e8ba3d5d81de4d3773c723914fccd4c76248b965. The shared loader changes are replayed as c6fc99f, 26b5efc and efac77f. No private node_*.d.ts files are present. Per the standing rule, landing uses a separate rebased branch, an oracle gate and a normal push; only integration moves main. No force-push or PR.
+
+The shared default-refusal guard requires registration. bcbce83 registers exactly Buffer, BufferConstructor.from, Buffer.toString, crypto.createHash, Hash.update and Hash.digest. Recognition now uses load.IsNodeLibrary's canonical pinned path. Other declared members still get named NotYet; tests now expect the shared guard's declaring owner for BufferConstructor.alloc and inherited Writable.writable.
+
+The API directory is absent from the census branch in this checkout, so the official npm package was installed locally using `npm install --prefix stage3/api --no-save --package-lock=false @types/node@25.3.3`. The upstream package and its undici-types dependency are not committed or copied into internal/load. Loader and unit tests confirm canonical declaration identity and member refusals.
+
+After the loader merge, the four unmodified full fixtures have these exact stages on both backends:
+
+| Fixture | Node observation | Native | JavaScript | Owned component |
+| --- | --- | --- | --- | --- |
+| 02_readFile_utf16le.a | Matches status.json | Checker | Checker | Pass |
+| 03_readFile_utf16be.a | Matches status.json | Checker | Checker | Pass |
+| 21_createHash.a | Matches status.json | NotYet, node:fs.mkdtempSync | NotYet, node:fs.mkdtempSync | Pass |
+| 22_createHash_fallback.a | Matches status.json | NotYet, node:fs.mkdtempSync | NotYet, node:fs.mkdtempSync | Pass |
+
+The actual checker blocker for 02 and 03 is TS2322 at the upstream BE byte-swap assignments (lines 25 and 26): number | undefined cannot be assigned to number. One-line reproducer: `import {Buffer} from 'node:buffer'; const b=Buffer.from([1,2]); b[0]=b[1];`. It was reported immediately. Proving the loop's index bounds or changing the upstream patch set belongs to the checker/TypeScript seats; this unit did not weaken the types or invent a coercion. The older undefined-selector blocker for fixture 22 remains separate from its currently observed first refusal. The fs core branch was not merged because the user requested 69c71d5 specifically.
+
+Re-green commands, all after sourcing /workspace/adamic-tools/env.sh:
+
+- `go test ./internal/lower -run 'TestNodeBuffer|TestNodeLibrary' -count=1 -v`: PASS, 4.458s. All fourteen unit refusal probes and the shared member/type tests pass.
+- `ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'Test(Native|Input)AgreesWithNode/internal/oracle/testdata/node_buffer_' -count=1 -v -timeout 30m`: PASS, 2.712s; eight native fixtures plus the input fixture, both backends, native release/sanitizer, zero cache hits.
+- `go test ./internal/native -run 'TestNodeBufferHost|TestNodeBufferRuntimeWithoutDeclarations' -count=1 -v`: PASS, 1.167s.
+- `python3 stage3/host-buffer/check_host_acceptance.py --logs /tmp/host-buffer-land-acceptance`: exits 1, preserving the exact blocked stages above; Node observations all agree.
+
+Final restored gate and mutant observations:
+
+- `python3 internal/oracle/node_buffer_mutants.py`: all fifteen mutants caught by byte-for-byte Node comparison. Each mutant listed in the semantic results below was rerun after rebase. None was killed by the compiler, sanitizer or leak checker. Sources restored after each.
+- `python3 internal/oracle/node_buffer_proof_mutants.py`: hash_alias caught by TestNodeBufferHashUpdateKeepsAlias; hash_fields by TestRuntimeFieldLayoutsAreIncluded; host_cycle_dispatch by TestEveryWriteIsRecordedAndKnown. Exact sources restored.
+- `go test ./internal/load ./internal/lower ./internal/native ./internal/javascript ./internal/flow ./internal/fresh ./internal/ir -run 'NodeBuffer|NodeLibrary|RuntimeFieldLayoutsAreIncluded|EveryWriteIsRecordedAndKnown' -count=1 -timeout 30m`: PASS. Load 2.140s, lower 9.269s, native 3.719s, fresh 11.760s; JavaScript has no standalone tests and the flow/IR packages have no matching tests.
+- After restoring every mutant, the same uncached nine-fixture oracle command above: PASS, 2.743s, zero cache hits; see /tmp/host-buffer-land-oracle-restored.log.
+- `go vet ./...`, `gofmt -l cmd internal`, and `git diff --check`: exit 0, no output. Complete repository test gate was not rerun; this is the focused worker gate plus the owned uncached oracle.
+- Logs: /tmp/host-buffer-land-{focused,mutants,proof-mutants,oracle-restored,acceptance,vet,format,diff-check}.log and /tmp/host-buffer-mutants/ for each individual mutant.
+
+Full acceptance remains incomplete at the exact stages above. Catchable Node error .code, the undefined fallback selector, downstream host members, native tsc --noEmit and macOS are not proven by this gate.
+
+The following sections record earlier stages and validations chronologically. Their missing-loader observations are historical; the loader dependency is now resolved.
+
+Real host acceptance, October 7
+
+The user's host fixture branch is merged and pushed. `internal/native/node_buffer_host_test.go` compares stdout, stderr and exit status with the unmodified fixture's Node run and committed status.json. Buffer decoding/swap and SHA-256 use direct IR to isolate this unit from missing module declarations and fs runtime. The fallback test lowers the verbatim generateDjb2Hash function through the checker and both backends. It does not prove the undefined-crypto selector or the ambient SHA function declaration. These are component passes, not full acceptance passes.
+
+| Fixture | Node vs status.json | Native full fixture | JavaScript full fixture | Owned component |
+| --- | --- | --- | --- | --- |
+| 02_readFile_utf16le.a | Agrees | Checker | Checker | Pass, LE BOM offset/odd byte/surrogate cases |
+| 03_readFile_utf16be.a | Agrees | Checker | Checker | Pass, byte swap and LE decoding |
+| 21_createHash.a | Agrees | Checker | Checker | Pass, four SHA-256 digests |
+| 22_createHash_fallback.a | Agrees | Checker | Checker | Pass, verbatim djb2 function |
+
+`python3 stage3/host-buffer/check_host_acceptance.py --logs /tmp/host-buffer-acceptance` exits 1 and records exact diagnostics: the full fixtures cannot resolve node:* modules. The fs_file worker's published branch at 080789f still contains the old unit declaration copy, not the requested shared pinned-type hook. It was not merged. The hook SHA has been requested. We cannot verify canonical @types/node symbol identity or unsupported-member guards against that hook until it arrives.
+
+Language blocker reported immediately: `const absent: undefined = undefined;` fails with `stage 0 can't lower a value of type undefined yet`. An extraction of fixture 22 preserving its undefined-crypto selector confirms this independently of Node imports. Its log is host-fallback-blocker.log. Shared language files were not changed. Other downstream language issues are unverified while the checker blocks the full fixtures.
+
+Commands and observations:
+
+- `python3 stage3/fixtures/host/check.py --mutants --logs /tmp/host-buffer-real-fixtures`: all 25 Node observations and initial Checker statuses agree; all 25 source mutants and the diagnostic-status mutant caught. This checks the fixture baseline, not acceptance progress.
+- `go test ./internal/native -run 'TestNodeBufferHost|TestNodeBufferRuntimeWithoutDeclarations' -count=1 -v`: PASS, 1.330s after restoring all four new mutants. Both backend outputs match; native release and sanitizer checked.
+- `go test ./internal/load ./internal/lower ./internal/native ./internal/javascript ./internal/flow ./internal/fresh ./internal/ir -run '^$'`: PASS; `go vet ./internal/native`: PASS; acceptance runner Python compilation and git diff check: PASS.
+- New SHA initial-state mutant 6a09e667 -> 6a09e666: native stdout differs from status.json.
+- New LE start-offset mutant 2 -> 0: native stdout retains BOM and differs from status.json.
+- New BE buffer write mutant leaves the old byte: native decoded stdout differs from status.json.
+- New djb2 seed mutant 5381 -> 5382 in the extracted function: generated JavaScript stdout differs from status.json.
+
+No compiler error or sanitizer failure counted as a mutant catch. Exact source bytes were restored after every mutant, followed by the passing baseline. Logs and stage diagnostics are committed beside this report. Linux only; macOS and the native tsc proof remain untested.
 
 Scope and references
 

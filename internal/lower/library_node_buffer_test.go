@@ -8,6 +8,9 @@ import (
 func TestNodeBufferRefusals(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source, reason string }{
+		{"namespace alias", "import * as crypto from 'node:crypto'; const alias = crypto; console.log(typeof alias);", "node:crypto namespace read"},
+		{"namespace reflection", "import * as crypto from 'node:crypto'; console.log(Object.keys(crypto).length);", "node:crypto namespace read"},
+		{"namespace missing member", "import * as crypto from 'node:crypto'; crypto.randomBytes(2);", "node:crypto.randomBytes"},
 		{"buffer alloc", "import { Buffer } from 'node:buffer'; Buffer.alloc(2);", "node:buffer.BufferConstructor.alloc"},
 		{"buffer read", "import { Buffer } from 'node:buffer'; console.log(Buffer.from('abc').byteOffset);", "Buffer.byteOffset"},
 		{"hash inherited read", "import { createHash } from 'node:crypto'; console.log(createHash('sha256').writable);", "writable"},
