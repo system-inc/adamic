@@ -105,11 +105,7 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		if err != nil {
 			return err
 		}
-		if function.Closure && (declared.Initializer != nil || declared.QuestionToken != nil) {
-			// A function value is called with the arguments its caller has, and no more.
-			return l.notYet(parameter, "a function value with an optional parameter")
-		}
-		if function.Closure && slotless(l.result.Locals[local].Type) {
+		if function.Closure && argumentSlotless(l.result.Locals[local].Type) {
 			// Its arguments are each one adamic_value.
 			return l.notYet(parameter, "a function value taking "+l.checker.TypeToString(l.checker.GetTypeAtLocation(parameter.Name())))
 		}
@@ -126,7 +122,7 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		function.Parameters = append(function.Parameters, incoming)
 		defaults = append(defaults, defaulted{local: local, incoming: incoming, initializer: declared.Initializer})
 	}
-	if function.Closure && slotless(function.Returns) {
+	if function.Closure && argumentSlotless(function.Returns) {
 		// A function value's arguments and result are each one adamic_value, and number | undefined
 		// needs two words.
 		return l.notYet(declaration, "a function value returning "+typeName(function.Returns))
@@ -144,6 +140,9 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 
 // lowerBody lowers the body of the function at index, whose signature is written.
 func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, defaults []defaulted, patterns []patterned) error {
+	if declaration.Body() == nil {
+		return l.notYet(declaration, "a function without a body")
+	}
 	function := l.result.Functions[index]
 	if !function.Closure {
 		// A function declaration, a method or a constructor has its body lowered where a use of it is first met,
@@ -227,8 +226,10 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 	// The environment may have grown while the body was lowered (captures are found as they're
 	// read), so it's taken from what's recorded, not from this copy.
 	function.Environment = l.result.Functions[index].Environment
+	function.ForwardedNestedParent = l.result.Functions[index].ForwardedNestedParent
 	function.Body = append(function.Body, prologue...)
 	function.Body = append(function.Body, lowered...)
+	l.finishNestedEnvironment(&function, index)
 	l.result.Functions[index] = function
 	return nil
 }
