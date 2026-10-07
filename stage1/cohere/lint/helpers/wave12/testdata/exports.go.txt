@@ -1,0 +1,5 @@
+package tailwind
+
+func AdamicNormalizeArgument(argument string) string {
+    return normalizeValueFunctionArgument(argument)
+}

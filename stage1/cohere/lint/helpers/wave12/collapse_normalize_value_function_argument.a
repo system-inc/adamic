@@ -1,0 +1,44 @@
+// Go's four RE2 replacements, in their original order. Its \s is ASCII,
+// and the lazy nested-key match ends immediately after the second --.
+export function normalizeValueFunctionArgument(argument: string): string {
+    argument = argument.split('\\*').join('*');
+    let joined = '';
+    let consumed = 0;
+    let search = 0;
+    while(search < argument.length) {
+        const start = argument.indexOf('--', search);
+        if(start < 0) { break; }
+        let boundary = -1;
+        for(let index = start + 2; index < argument.length; index++) {
+            const character = argument.slice(index, index + 1);
+            if(' \t\n\r\f'.includes(character) && argument.slice(index + 1, index + 3) === '--') {
+                boundary = index;
+                break;
+            }
+            if(character === '\n') { break; }
+        }
+        if(boundary < 0) { search = start + 1; continue; }
+        joined += argument.slice(consumed, boundary) + '-*--';
+        consumed = boundary + 3;
+        search = consumed;
+    }
+    argument = joined + argument.slice(consumed);
+    let compact = '';
+    for(let index = 0; index < argument.length; index++) {
+        const character = argument.slice(index, index + 1);
+        if(!' \t\n\r\f'.includes(character)) { compact += character; }
+    }
+    let collapsed = '';
+    for(let index = 0; index < compact.length; index++) {
+        if(compact.slice(index, index + 2) !== '-*') { collapsed += compact.slice(index, index + 1); continue; }
+        collapsed += '-*';
+        index += 2;
+        while(compact.slice(index, index + 2) === '-*') { index += 2; }
+        index--;
+    }
+    argument = collapsed;
+    if(argument.startsWith('--') && !argument.includes('(') && !argument.includes('-*')) {
+        argument += '-*';
+    }
+    return argument;
+}

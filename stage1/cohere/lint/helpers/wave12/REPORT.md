@@ -1,0 +1,11 @@
+Built: value-function argument normalization in one .a helper file for six Tailwind consumers.
+Commits: ownership 61519ec4 was pushed before code; implementation commit follows this report.
+Checks: 9,364 cases / 309,422 bytes match Go, Node source, emitted JavaScript and sanitized native; package PASS 9.092s, vet clean, uncached oracle PASS 6.398s.
+Mutants: namespace suffix, crossing newline and nested-key insertion all compiled and were caught only by comparison on all three backends, rows 8, 168 and 12.
+Uncovered: missing repository-specific fixtures, arbitrary raw invalid UTF-8, complete repository gate and whole rule port/finding parity; zero final helper blockers removed alone.
+
+See README.md for the API, six named consumer rules, reproduction commands and boundaries. testdata/coverage.json records 138 distinct consumer inputs and 24 observed real helper arguments; consumer and utility evidence retains all skips. No shared entry point, registration, harness or readiness file was changed. Go overlays supply actual functions rather than replicas.
+
+Setup passed in 115 seconds: Go ready at 0s, clang/Node/submodules at 1s, cache warm at 115s; nproc is 5 (four-core cgroup quota). Go 1.27.1, clang 20.1.8, Node 24.19.0. The pinned cohere revision is 715ba94f3608a6500086b1076ce5cb7e51b836db; scratch npm installed tailwindcss 4.3.3 without scripts.
+
+The initial consumer run failed because only one of several fixture search roots was redirected, and it selected additional repository-corpus tests with absent local sources. consumers-initial.log retains that failure. The final capture redirects the test-only package search roots in all six fixture files and uses their exact test function names; missing source-tree tests remain skipped. All six consumer rules have captured cases. The utility family contributes additional real normalization arguments; its missing repository corpus is also skipped. The initial emitted-JavaScript execution lacked the runtime resolver; normalization-initial.log retains ERR_MODULE_NOT_FOUND. The final owned test runs emitted modules through the existing oracle runtime resolver, then passes every backend and all three mutants. Neither initial failure is credited as a comparison success.

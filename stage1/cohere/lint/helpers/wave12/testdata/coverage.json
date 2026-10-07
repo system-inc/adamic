@@ -1,0 +1,16 @@
+{
+  "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.normalizeValueFunctionArgument",
+  "consumer_rules": [
+    "better-tailwindcss/enforce-canonical-classes",
+    "better-tailwindcss/enforce-consistent-class-order",
+    "better-tailwindcss/enforce-consistent-variant-order",
+    "better-tailwindcss/enforce-shorthand-classes",
+    "better-tailwindcss/no-conflicting-classes",
+    "better-tailwindcss/no-unknown-classes"
+  ],
+  "fixtures": 138,
+  "observed_distinct_helper_arguments": 24,
+  "controls": 9202,
+  "cases": 9364,
+  "final_blockers_removed": 0
+}

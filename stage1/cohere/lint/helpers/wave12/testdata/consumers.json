@@ -1,0 +1,1768 @@
+[
+  {
+    "rule": "better-tailwindcss/enforce-canonical-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"-mt-1 -mb-1\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 44,
+        "messageId": "canonicalCollapse",
+        "message": "The classes \"-mt-1\", \"-mb-1\" say the same thing as \"-my-1\". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/enforce-canonical-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"border-l border-r\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 50,
+        "messageId": "canonicalCollapse",
+        "message": "The classes \"border-l\", \"border-r\" say the same thing as \"border-x\". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/enforce-canonical-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"flex items-center truncate\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-canonical-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"flex px-4 items-center py-4 gap-2\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 66,
+        "messageId": "canonicalCollapse",
+        "message": "The classes \"px-4\", \"py-4\" say the same thing as \"p-4\". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/enforce-canonical-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"gap-x-2 gap-y-2\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 48,
+        "messageId": "canonicalCollapse",
+        "message": "The classes \"gap-x-2\", \"gap-y-2\" say the same thing as \"gap-2\". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/enforce-canonical-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"ml-2 pt-2\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-canonical-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"ml-2\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-canonical-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"mt-1 mb-1 ml-1 mr-1\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 52,
+        "messageId": "canonicalCollapse",
+        "message": "The classes \"mt-1\", \"mb-1\" say the same thing as \"my-1\". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks."
+      },
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 52,
+        "messageId": "canonicalCollapse",
+        "message": "The classes \"ml-1\", \"mr-1\" say the same thing as \"mx-1\". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks."
+      },
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 52,
+        "messageId": "canonicalCollapse",
+        "message": "The classes \"my-1\", \"mx-1\" say the same thing as \"m-1\". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/enforce-canonical-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"px-4 py-2\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-canonical-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"px-4 py-4!\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-canonical-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"px-4 py-4\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 42,
+        "messageId": "canonicalCollapse",
+        "message": "The classes \"px-4\", \"py-4\" say the same thing as \"p-4\". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/enforce-canonical-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"px-4 sm:py-4\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-canonical-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"px-[3px] py-[3px]\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 50,
+        "messageId": "canonicalCollapse",
+        "message": "The classes \"px-[3px]\", \"py-[3px]\" say the same thing as \"p-[3px]\". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/enforce-canonical-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"rounded-tl-md rounded-tr-md\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 60,
+        "messageId": "canonicalCollapse",
+        "message": "The classes \"rounded-tl-md\", \"rounded-tr-md\" say the same thing as \"rounded-t-md\". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/enforce-canonical-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"sm:px-4 sm:py-4\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 48,
+        "messageId": "canonicalCollapse",
+        "message": "The classes \"sm:px-4\", \"sm:py-4\" say the same thing as \"sm:p-4\". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/enforce-canonical-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"space-x-2 text-left\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-canonical-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"w-8 h-4\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-canonical-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"w-8 h-8\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 40,
+        "messageId": "canonicalCollapse",
+        "message": "The classes \"w-8\", \"h-8\" say the same thing as \"size-8\". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/enforce-canonical-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div title=\"px-4 py-4\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-canonical-classes",
+    "file": "Component.tsx",
+    "source": "const merged = mergeClassNames('px-4 py-4');\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 42,
+        "messageId": "canonicalCollapse",
+        "message": "The classes \"px-4\", \"py-4\" say the same thing as \"p-4\". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/enforce-canonical-classes",
+    "file": "Component.tsx",
+    "source": "const value = someOtherFunction('px-4 py-4');\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-canonical-classes",
+    "file": "Styles.ts",
+    "source": "const buttonClassName = 'w-8 h-8';\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 26,
+        "endLine": 1,
+        "endColumn": 33,
+        "messageId": "canonicalCollapse",
+        "message": "The classes \"w-8\", \"h-8\" say the same thing as \"size-8\". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-class-order",
+    "file": "Component.tsx",
+    "source": "const element = <div\n  className=\"items-center\n    flex\n    gap-2\"\n/>;\n",
+    "otherFiles": 1,
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 2,
+        "column": 14,
+        "endLine": 4,
+        "endColumn": 10,
+        "messageId": "inconsistentClassOrder",
+        "message": "These classes are not in Tailwind's own order, which is \"flex items-center gap-2\". Order carries no meaning to the browser, which is exactly why it should be mechanical: two elements with the same classes should read as the same line, so a diff shows what actually changed and a reader can scan a list without parsing it.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "const element = <div\n  className=\"flex\n    items-center\n    gap-2\"\n/>;\n"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-class-order",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"  items-center   flex \" />;\n",
+    "otherFiles": 1,
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 55,
+        "messageId": "inconsistentClassOrder",
+        "message": "These classes are not in Tailwind's own order, which is \"flex items-center\". Order carries no meaning to the browser, which is exactly why it should be mechanical: two elements with the same classes should read as the same line, so a diff shows what actually changed and a reader can scan a list without parsing it.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "const element = <div className=\"  flex   items-center \" />;\n"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-class-order",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"ahralia-splash flex items-center\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-class-order",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"flex group\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 43,
+        "messageId": "inconsistentClassOrder",
+        "message": "These classes are not in Tailwind's own order, which is \"group flex\". Order carries no meaning to the browser, which is exactly why it should be mechanical: two elements with the same classes should read as the same line, so a diff shows what actually changed and a reader can scan a list without parsing it.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-class-order",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"flex items-center gap-2\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-class-order",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"flex peer group\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 48,
+        "messageId": "inconsistentClassOrder",
+        "message": "These classes are not in Tailwind's own order, which is \"peer group flex\". Order carries no meaning to the browser, which is exactly why it should be mechanical: two elements with the same classes should read as the same line, so a diff shows what actually changed and a reader can scan a list without parsing it.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-class-order",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"flex\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-class-order",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"focus-visible:ring-1 focus-visible:ring-(--color-content-informative) focus-visible:ring-offset-1 focus-visible:outline-none\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-class-order",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"gap-2 items-center flex\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 56,
+        "messageId": "inconsistentClassOrder",
+        "message": "These classes are not in Tailwind's own order, which is \"flex items-center gap-2\". Order carries no meaning to the browser, which is exactly why it should be mechanical: two elements with the same classes should read as the same line, so a diff shows what actually changed and a reader can scan a list without parsing it.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-class-order",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"group flex\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-class-order",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"group peer flex\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-class-order",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"hover:px-8 px-4\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 48,
+        "messageId": "inconsistentClassOrder",
+        "message": "These classes are not in Tailwind's own order, which is \"px-4 hover:px-8\". Order carries no meaning to the browser, which is exactly why it should be mechanical: two elements with the same classes should read as the same line, so a diff shows what actually changed and a reader can scan a list without parsing it.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-class-order",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"items-center flex ahralia-splash\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 65,
+        "messageId": "inconsistentClassOrder",
+        "message": "These classes are not in Tailwind's own order, which is \"ahralia-splash flex items-center\". Order carries no meaning to the browser, which is exactly why it should be mechanical: two elements with the same classes should read as the same line, so a diff shows what actually changed and a reader can scan a list without parsing it.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-class-order",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"items-center flex flex\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-class-order",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"items-center flex\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 50,
+        "messageId": "inconsistentClassOrder",
+        "message": "These classes are not in Tailwind's own order, which is \"flex items-center\". Order carries no meaning to the browser, which is exactly why it should be mechanical: two elements with the same classes should read as the same line, so a diff shows what actually changed and a reader can scan a list without parsing it.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-class-order",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"items-center flex-grow\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 55,
+        "messageId": "inconsistentClassOrder",
+        "message": "These classes are not in Tailwind's own order, which is \"flex-grow items-center\". Order carries no meaning to the browser, which is exactly why it should be mechanical: two elements with the same classes should read as the same line, so a diff shows what actually changed and a reader can scan a list without parsing it."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-class-order",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"items-center peer flex ahralia-splash\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 70,
+        "messageId": "inconsistentClassOrder",
+        "message": "These classes are not in Tailwind's own order, which is \"peer ahralia-splash flex items-center\". Order carries no meaning to the browser, which is exactly why it should be mechanical: two elements with the same classes should read as the same line, so a diff shows what actually changed and a reader can scan a list without parsing it.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "const element = <div className=\"peer ahralia-splash flex items-center\" />;\n"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-class-order",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"peer group flex\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-class-order",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"pointer-events-none hidden md:absolute md:inset-x-0 md:flex md:w-full\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-class-order",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"px-4 hover:px-8\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-class-order",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"truncate font-mono text-[10px]\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-class-order",
+    "file": "Component.tsx",
+    "source": "const element = <div className={`${x}items-center flex block`} />;\n",
+    "otherFiles": 1,
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 38,
+        "endLine": 1,
+        "endColumn": 61,
+        "messageId": "inconsistentClassOrder",
+        "message": "These classes are not in Tailwind's own order, which is \"items-center block flex\". Order carries no meaning to the browser, which is exactly why it should be mechanical: two elements with the same classes should read as the same line, so a diff shows what actually changed and a reader can scan a list without parsing it.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "const element = <div className={`${x}items-center block flex`} />;\n"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-class-order",
+    "file": "Component.tsx",
+    "source": "const element = <div className={`flex ${a ? `items-center block ${b}` : ''}`} />;\n",
+    "otherFiles": 1,
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 46,
+        "endLine": 1,
+        "endColumn": 65,
+        "messageId": "inconsistentClassOrder",
+        "message": "These classes are not in Tailwind's own order, which is \"block items-center\". Order carries no meaning to the browser, which is exactly why it should be mechanical: two elements with the same classes should read as the same line, so a diff shows what actually changed and a reader can scan a list without parsing it.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "const element = <div className={`flex ${a ? `block items-center ${b}` : ''}`} />;\n"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-class-order",
+    "file": "Component.tsx",
+    "source": "const element = <div className={`flex items-center ${x} block gap-2`} />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-class-order",
+    "file": "Component.tsx",
+    "source": "const element = <div className={`items-center flex flex ${x}`} />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-class-order",
+    "file": "Component.tsx",
+    "source": "const element = <div className={`items-center flex px-${size}`} />;\n",
+    "otherFiles": 1,
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 34,
+        "endLine": 1,
+        "endColumn": 55,
+        "messageId": "inconsistentClassOrder",
+        "message": "These classes are not in Tailwind's own order, which is \"flex items-center px-\". Order carries no meaning to the browser, which is exactly why it should be mechanical: two elements with the same classes should read as the same line, so a diff shows what actually changed and a reader can scan a list without parsing it.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "const element = <div className={`flex items-center px-${size}`} />;\n"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-class-order",
+    "file": "Component.tsx",
+    "source": "const element = <div className={`items-center flex-${grow} block flex ${x}`} />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-class-order",
+    "file": "Component.tsx",
+    "source": "const element = <div className={`px-${size} items-center flex`} />;\n",
+    "otherFiles": 1,
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 44,
+        "endLine": 1,
+        "endColumn": 62,
+        "messageId": "inconsistentClassOrder",
+        "message": "These classes are not in Tailwind's own order, which is \"flex items-center\". Order carries no meaning to the browser, which is exactly why it should be mechanical: two elements with the same classes should read as the same line, so a diff shows what actually changed and a reader can scan a list without parsing it.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "const element = <div className={`px-${size} flex items-center`} />;\n"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-class-order",
+    "file": "Component.tsx",
+    "source": "const element = <div className={open ? `items-center flex ${x}` : 'flex'} />;\n",
+    "otherFiles": 1,
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 41,
+        "endLine": 1,
+        "endColumn": 59,
+        "messageId": "inconsistentClassOrder",
+        "message": "These classes are not in Tailwind's own order, which is \"flex items-center\". Order carries no meaning to the browser, which is exactly why it should be mechanical: two elements with the same classes should read as the same line, so a diff shows what actually changed and a reader can scan a list without parsing it.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "const element = <div className={open ? `flex items-center ${x}` : 'flex'} />;\n"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-class-order",
+    "file": "Component.tsx",
+    "source": "const element = <div title=\"items-center flex\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-class-order",
+    "file": "Component.tsx",
+    "source": "const merged = mergeClassNames('items-center flex');\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 50,
+        "messageId": "inconsistentClassOrder",
+        "message": "These classes are not in Tailwind's own order, which is \"flex items-center\". Order carries no meaning to the browser, which is exactly why it should be mechanical: two elements with the same classes should read as the same line, so a diff shows what actually changed and a reader can scan a list without parsing it.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-class-order",
+    "file": "Component.tsx",
+    "source": "const merged = mergeClassNames('items-center\\u0020flex');\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 55,
+        "messageId": "inconsistentClassOrder",
+        "message": "These classes are not in Tailwind's own order, which is \"flex items-center\". Order carries no meaning to the browser, which is exactly why it should be mechanical: two elements with the same classes should read as the same line, so a diff shows what actually changed and a reader can scan a list without parsing it."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-class-order",
+    "file": "Component.tsx",
+    "source": "const merged = mergeClassNames(`items-center   flex ${x} gap-2   block`);\n",
+    "otherFiles": 1,
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 53,
+        "messageId": "inconsistentClassOrder",
+        "message": "These classes are not in Tailwind's own order, which is \"flex items-center\". Order carries no meaning to the browser, which is exactly why it should be mechanical: two elements with the same classes should read as the same line, so a diff shows what actually changed and a reader can scan a list without parsing it.",
+        "fix": true
+      },
+      {
+        "line": 1,
+        "column": 57,
+        "endLine": 1,
+        "endColumn": 71,
+        "messageId": "inconsistentClassOrder",
+        "message": "These classes are not in Tailwind's own order, which is \"block gap-2\". Order carries no meaning to the browser, which is exactly why it should be mechanical: two elements with the same classes should read as the same line, so a diff shows what actually changed and a reader can scan a list without parsing it.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "const merged = mergeClassNames(`flex   items-center ${x} block   gap-2`);\n"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-class-order",
+    "file": "Component.tsx",
+    "source": "const value = someOtherFunction('items-center flex');\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-class-order",
+    "file": "Styles.ts",
+    "source": "const buttonClassName = 'items-center flex';\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 26,
+        "endLine": 1,
+        "endColumn": 43,
+        "messageId": "inconsistentClassOrder",
+        "message": "These classes are not in Tailwind's own order, which is \"flex items-center\". Order carries no meaning to the browser, which is exactly why it should be mechanical: two elements with the same classes should read as the same line, so a diff shows what actually changed and a reader can scan a list without parsing it.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-variant-order",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"[@media(hover)]:md:flex\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 56,
+        "messageId": "variantOrder",
+        "message": "The variants on \"[@media(hover)]:md:flex\" are written in an order Tailwind does not emit them in; it compiles to the same CSS as \"md:[@media(hover)]:flex\", which is the spelling the engine's own sort produces. Nothing breaks either way, and that is why the two spellings accumulate side by side until a reader cannot tell whether a difference between two class lists is meaningful. Write it as \"md:[@media(hover)]:flex\"."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-variant-order",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"dark:hover:flex hover:dark:flex\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-variant-order",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"dark:md:flex\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 45,
+        "messageId": "variantOrder",
+        "message": "The variants on \"dark:md:flex\" are written in an order Tailwind does not emit them in; it compiles to the same CSS as \"md:dark:flex\", which is the spelling the engine's own sort produces. Nothing breaks either way, and that is why the two spellings accumulate side by side until a reader cannot tell whether a difference between two class lists is meaningful. Write it as \"md:dark:flex\"."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-variant-order",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"flex items-center\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-variant-order",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"focus:hover:lg:text-red-500\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 60,
+        "messageId": "variantOrder",
+        "message": "The variants on \"focus:hover:lg:text-red-500\" are written in an order Tailwind does not emit them in; it compiles to the same CSS as \"lg:focus:hover:text-red-500\", which is the spelling the engine's own sort produces. Nothing breaks either way, and that is why the two spellings accumulate side by side until a reader cannot tell whether a difference between two class lists is meaningful. Write it as \"lg:focus:hover:text-red-500\"."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-variant-order",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"group-hover:md:flex\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 52,
+        "messageId": "variantOrder",
+        "message": "The variants on \"group-hover:md:flex\" are written in an order Tailwind does not emit them in; it compiles to the same CSS as \"md:group-hover:flex\", which is the spelling the engine's own sort produces. Nothing breaks either way, and that is why the two spellings accumulate side by side until a reader cannot tell whether a difference between two class lists is meaningful. Write it as \"md:group-hover:flex\"."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-variant-order",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"has-[:checked]:md:flex\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 55,
+        "messageId": "variantOrder",
+        "message": "The variants on \"has-[:checked]:md:flex\" are written in an order Tailwind does not emit them in; it compiles to the same CSS as \"md:has-[:checked]:flex\", which is the spelling the engine's own sort produces. Nothing breaks either way, and that is why the two spellings accumulate side by side until a reader cannot tell whether a difference between two class lists is meaningful. Write it as \"md:has-[:checked]:flex\"."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-variant-order",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"hover:flex\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-variant-order",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"hover:focus:underline focus:hover:underline\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-variant-order",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"hover:max-md:flex\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-variant-order",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"hover:sm:flex\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 46,
+        "messageId": "variantOrder",
+        "message": "The variants on \"hover:sm:flex\" are written in an order Tailwind does not emit them in; it compiles to the same CSS as \"sm:hover:flex\", which is the spelling the engine's own sort produces. Nothing breaks either way, and that is why the two spellings accumulate side by side until a reader cannot tell whether a difference between two class lists is meaningful. Write it as \"sm:hover:flex\"."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-variant-order",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"hover:supports-[display:grid]:flex\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-variant-order",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"hover:unknown-variant:text-red-500\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-variant-order",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"sm:hover:flex\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-variant-order",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"sm:lg:flex\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 43,
+        "messageId": "variantOrder",
+        "message": "The variants on \"sm:lg:flex\" are written in an order Tailwind does not emit them in; it compiles to the same CSS as \"lg:sm:flex\", which is the spelling the engine's own sort produces. Nothing breaks either way, and that is why the two spellings accumulate side by side until a reader cannot tell whether a difference between two class lists is meaningful. Write it as \"lg:sm:flex\"."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/enforce-shorthand-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"!pt-2 !pb-2\" />;",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 44,
+        "messageId": "shorthandClasses",
+        "message": "\"!pt-2 !pb-2\" is the longhand spelling of \"!py-2\", which sets the same declarations in one class. The pair carries no information the single class does not, and it costs the next reader a moment working out whether the two halves were meant to move together or drifted apart. Write it as \"!py-2\"."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/enforce-shorthand-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"!pt-2 pb-2\" />;",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-shorthand-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"-mt-2 -mb-2\" />;",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 44,
+        "messageId": "shorthandClasses",
+        "message": "\"-mt-2 -mb-2\" is the longhand spelling of \"-my-2\", which sets the same declarations in one class. The pair carries no information the single class does not, and it costs the next reader a moment working out whether the two halves were meant to move together or drifted apart. Write it as \"-my-2\"."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/enforce-shorthand-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"-mt-2 mb-2\" />;",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-shorthand-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"[&_button]:border-s-0 [&_button]:border-e-0\" />;",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 76,
+        "messageId": "shorthandClasses",
+        "message": "\"[&_button]:border-s-0 [&_button]:border-e-0\" is the longhand spelling of \"[&_button]:border-x-0\", which sets the same declarations in one class. The pair carries no information the single class does not, and it costs the next reader a moment working out whether the two halves were meant to move together or drifted apart. Write it as \"[&_button]:border-x-0\"."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/enforce-shorthand-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"flex items-center\" />;",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-shorthand-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"h-auto w-auto\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 46,
+        "messageId": "shorthandClasses",
+        "message": "\"w-auto h-auto\" is the longhand spelling of \"size-auto\", which sets the same declarations in one class. The pair carries no information the single class does not, and it costs the next reader a moment working out whether the two halves were meant to move together or drifted apart. Write it as \"size-auto\"."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/enforce-shorthand-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"h-screen w-screen\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-shorthand-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"hover:ps-4 hover:pe-4\" />;",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 54,
+        "messageId": "shorthandClasses",
+        "message": "\"hover:ps-4 hover:pe-4\" is the longhand spelling of \"hover:px-4\", which sets the same declarations in one class. The pair carries no information the single class does not, and it costs the next reader a moment working out whether the two halves were meant to move together or drifted apart. Write it as \"hover:px-4\"."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/enforce-shorthand-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"ml-1 mr-1 mt-1 mb-1\" />;",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 52,
+        "messageId": "shorthandClasses",
+        "message": "\"ml-1 mr-1 mt-1 mb-1\" is the longhand spelling of \"m-1\", which sets the same declarations in one class. The pair carries no information the single class does not, and it costs the next reader a moment working out whether the two halves were meant to move together or drifted apart. Write it as \"m-1\"."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/enforce-shorthand-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"ps-4 hover:pe-4\" />;",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-shorthand-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"ps-4 pe-4 mt-2 mb-2\" />;",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 52,
+        "messageId": "shorthandClasses",
+        "message": "\"mt-2 mb-2\" is the longhand spelling of \"my-2\", which sets the same declarations in one class. The pair carries no information the single class does not, and it costs the next reader a moment working out whether the two halves were meant to move together or drifted apart. Write it as \"my-2\"."
+      },
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 52,
+        "messageId": "shorthandClasses",
+        "message": "\"ps-4 pe-4\" is the longhand spelling of \"px-4\", which sets the same declarations in one class. The pair carries no information the single class does not, and it costs the next reader a moment working out whether the two halves were meant to move together or drifted apart. Write it as \"px-4\"."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/enforce-shorthand-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"ps-4 pe-4\" />;",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 42,
+        "messageId": "shorthandClasses",
+        "message": "\"ps-4 pe-4\" is the longhand spelling of \"px-4\", which sets the same declarations in one class. The pair carries no information the single class does not, and it costs the next reader a moment working out whether the two halves were meant to move together or drifted apart. Write it as \"px-4\"."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/enforce-shorthand-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"ps-4 pe-8\" />;",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-shorthand-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"ps-4\" />;",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-shorthand-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"ps-[2px] pe-[2px]\" />;",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 50,
+        "messageId": "shorthandClasses",
+        "message": "\"ps-[2px] pe-[2px]\" is the longhand spelling of \"px-[2px]\", which sets the same declarations in one class. The pair carries no information the single class does not, and it costs the next reader a moment working out whether the two halves were meant to move together or drifted apart. Write it as \"px-[2px]\"."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/enforce-shorthand-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"pt-2 pb-2\" />;",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 42,
+        "messageId": "shorthandClasses",
+        "message": "\"pt-2 pb-2\" is the longhand spelling of \"py-2\", which sets the same declarations in one class. The pair carries no information the single class does not, and it costs the next reader a moment working out whether the two halves were meant to move together or drifted apart. Write it as \"py-2\"."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/enforce-shorthand-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"pt-2! pb-2!\" />;",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 44,
+        "messageId": "shorthandClasses",
+        "message": "\"pt-2! pb-2!\" is the longhand spelling of \"py-2!\", which sets the same declarations in one class. The pair carries no information the single class does not, and it costs the next reader a moment working out whether the two halves were meant to move together or drifted apart. Write it as \"py-2!\"."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/enforce-shorthand-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"px-4 py-4 p-4\" />;",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/enforce-shorthand-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"top-0 right-0 bottom-0 left-0\" />;",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 62,
+        "messageId": "shorthandClasses",
+        "message": "\"top-0 right-0 bottom-0 left-0\" is the longhand spelling of \"inset-0\", which sets the same declarations in one class. The pair carries no information the single class does not, and it costs the next reader a moment working out whether the two halves were meant to move together or drifted apart. Write it as \"inset-0\"."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/enforce-shorthand-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"w-4 h-4\" />;",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 40,
+        "messageId": "shorthandClasses",
+        "message": "\"w-4 h-4\" is the longhand spelling of \"size-4\", which sets the same declarations in one class. The pair carries no information the single class does not, and it costs the next reader a moment working out whether the two halves were meant to move together or drifted apart. Write it as \"size-4\"."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/no-conflicting-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"border border-dashed\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/no-conflicting-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"divide-neutral-200 border-neutral-200\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/no-conflicting-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"flex block grid\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 48,
+        "messageId": "conflictingClasses",
+        "message": "The class \"flex\" and \"block\", \"grid\" set the same CSS property (display), so only one of them takes effect and which one depends on the order Tailwind emitted them in rather than the order they are written here. Keep the one that was meant and remove the rest."
+      },
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 48,
+        "messageId": "conflictingClasses",
+        "message": "The class \"block\" and \"flex\", \"grid\" set the same CSS property (display), so only one of them takes effect and which one depends on the order Tailwind emitted them in rather than the order they are written here. Keep the one that was meant and remove the rest."
+      },
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 48,
+        "messageId": "conflictingClasses",
+        "message": "The class \"grid\" and \"flex\", \"block\" set the same CSS property (display), so only one of them takes effect and which one depends on the order Tailwind emitted them in rather than the order they are written here. Keep the one that was meant and remove the rest."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/no-conflicting-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"flex block\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 43,
+        "messageId": "conflictingClasses",
+        "message": "The class \"flex\" and \"block\" set the same CSS property (display), so only one of them takes effect and which one depends on the order Tailwind emitted them in rather than the order they are written here. Keep the one that was meant and remove the rest."
+      },
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 43,
+        "messageId": "conflictingClasses",
+        "message": "The class \"block\" and \"flex\" set the same CSS property (display), so only one of them takes effect and which one depends on the order Tailwind emitted them in rather than the order they are written here. Keep the one that was meant and remove the rest."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/no-conflicting-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"flex flex\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/no-conflicting-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"flex hover:block\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/no-conflicting-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"flex items-center gap-2\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/no-conflicting-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"flex\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/no-conflicting-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"hover:flex hover:block\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 55,
+        "messageId": "conflictingClasses",
+        "message": "The class \"hover:flex\" and \"hover:block\" set the same CSS property (display), so only one of them takes effect and which one depends on the order Tailwind emitted them in rather than the order they are written here. Keep the one that was meant and remove the rest."
+      },
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 55,
+        "messageId": "conflictingClasses",
+        "message": "The class \"hover:block\" and \"hover:flex\" set the same CSS property (display), so only one of them takes effect and which one depends on the order Tailwind emitted them in rather than the order they are written here. Keep the one that was meant and remove the rest."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/no-conflicting-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"mt-2 mb-2\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/no-conflicting-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"p-4 px-8\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/no-conflicting-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"px-4 px-8\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 42,
+        "messageId": "conflictingClasses",
+        "message": "The class \"px-4\" and \"px-8\" set the same CSS property (padding-inline), so only one of them takes effect and which one depends on the order Tailwind emitted them in rather than the order they are written here. Keep the one that was meant and remove the rest."
+      },
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 42,
+        "messageId": "conflictingClasses",
+        "message": "The class \"px-8\" and \"px-4\" set the same CSS property (padding-inline), so only one of them takes effect and which one depends on the order Tailwind emitted them in rather than the order they are written here. Keep the one that was meant and remove the rest."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/no-conflicting-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"ring-1 ring-inset\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/no-conflicting-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"shadow-lg ring-1\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/no-conflicting-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"text-left text-right\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 53,
+        "messageId": "conflictingClasses",
+        "message": "The class \"text-left\" and \"text-right\" set the same CSS property (text-align), so only one of them takes effect and which one depends on the order Tailwind emitted them in rather than the order they are written here. Keep the one that was meant and remove the rest."
+      },
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 53,
+        "messageId": "conflictingClasses",
+        "message": "The class \"text-right\" and \"text-left\" set the same CSS property (text-align), so only one of them takes effect and which one depends on the order Tailwind emitted them in rather than the order they are written here. Keep the one that was meant and remove the rest."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/no-conflicting-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"w-8 h-8\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/no-conflicting-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"w-full container\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/no-conflicting-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div title=\"flex block\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/no-conflicting-classes",
+    "file": "Component.tsx",
+    "source": "const merged = mergeClassNames('flex block');\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 43,
+        "messageId": "conflictingClasses",
+        "message": "The class \"flex\" and \"block\" set the same CSS property (display), so only one of them takes effect and which one depends on the order Tailwind emitted them in rather than the order they are written here. Keep the one that was meant and remove the rest."
+      },
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 43,
+        "messageId": "conflictingClasses",
+        "message": "The class \"block\" and \"flex\" set the same CSS property (display), so only one of them takes effect and which one depends on the order Tailwind emitted them in rather than the order they are written here. Keep the one that was meant and remove the rest."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/no-conflicting-classes",
+    "file": "Component.tsx",
+    "source": "const value = someOtherFunction('flex block');\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/no-conflicting-classes",
+    "file": "Styles.ts",
+    "source": "const buttonClassName = 'px-4 px-8';\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 26,
+        "endLine": 1,
+        "endColumn": 35,
+        "messageId": "conflictingClasses",
+        "message": "The class \"px-4\" and \"px-8\" set the same CSS property (padding-inline), so only one of them takes effect and which one depends on the order Tailwind emitted them in rather than the order they are written here. Keep the one that was meant and remove the rest."
+      },
+      {
+        "line": 1,
+        "column": 26,
+        "endLine": 1,
+        "endColumn": 35,
+        "messageId": "conflictingClasses",
+        "message": "The class \"px-8\" and \"px-4\" set the same CSS property (padding-inline), so only one of them takes effect and which one depends on the order Tailwind emitted them in rather than the order they are written here. Keep the one that was meant and remove the rest."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/no-unknown-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"[font:inherit]\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/no-unknown-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"ahralia-splash\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 47,
+        "messageId": "unknownClass",
+        "message": "The class \"ahralia-splash\" is not one Tailwind knows, so it generates no CSS and does nothing. Nothing errors: the class sits in the markup, the element renders, and the style it was meant to apply is simply absent. That is usually a typo, and occasionally a class from a stylesheet the design system does not know about, which needs adding to the ignore list rather than fixing."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/no-unknown-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"container\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/no-unknown-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"flex items-center gap-2\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/no-unknown-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"flx grd\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 40,
+        "messageId": "unknownClass",
+        "message": "The class \"flx\" is not one Tailwind knows, so it generates no CSS and does nothing. Nothing errors: the class sits in the markup, the element renders, and the style it was meant to apply is simply absent. That is usually a typo, and occasionally a class from a stylesheet the design system does not know about, which needs adding to the ignore list rather than fixing."
+      },
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 40,
+        "messageId": "unknownClass",
+        "message": "The class \"grd\" is not one Tailwind knows, so it generates no CSS and does nothing. Nothing errors: the class sits in the markup, the element renders, and the style it was meant to apply is simply absent. That is usually a typo, and occasionally a class from a stylesheet the design system does not know about, which needs adding to the ignore list rather than fixing."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/no-unknown-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"flx items-center\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 49,
+        "messageId": "unknownClass",
+        "message": "The class \"flx\" is not one Tailwind knows, so it generates no CSS and does nothing. Nothing errors: the class sits in the markup, the element renders, and the style it was meant to apply is simply absent. That is usually a typo, and occasionally a class from a stylesheet the design system does not know about, which needs adding to the ignore list rather than fixing."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/no-unknown-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"from-black/70 to-transparent\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/no-unknown-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"group peer\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/no-unknown-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"group/item\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/no-unknown-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"hover:px-4 sm:hover:flex\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/no-unknown-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"hover:synthetic-static\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/no-unknown-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"not-a-real-class-xyz\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 53,
+        "messageId": "unknownClass",
+        "message": "The class \"not-a-real-class-xyz\" is not one Tailwind knows, so it generates no CSS and does nothing. Nothing errors: the class sits in the markup, the element renders, and the style it was meant to apply is simply absent. That is usually a typo, and occasionally a class from a stylesheet the design system does not know about, which needs adding to the ignore list rather than fixing."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/no-unknown-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"notavariant:flex\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 49,
+        "messageId": "unknownClass",
+        "message": "The class \"notavariant:flex\" is not one Tailwind knows, so it generates no CSS and does nothing. Nothing errors: the class sits in the markup, the element renders, and the style it was meant to apply is simply absent. That is usually a typo, and occasionally a class from a stylesheet the design system does not know about, which needs adding to the ignore list rather than fixing."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/no-unknown-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"px-4!\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/no-unknown-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"px4\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 36,
+        "messageId": "unknownClass",
+        "message": "The class \"px4\" is not one Tailwind knows, so it generates no CSS and does nothing. Nothing errors: the class sits in the markup, the element renders, and the style it was meant to apply is simply absent. That is usually a typo, and occasionally a class from a stylesheet the design system does not know about, which needs adding to the ignore list rather than fixing."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/no-unknown-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"synthetic-fn-small synthetic-fn-large\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/no-unknown-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"synthetic-static flx\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 53,
+        "messageId": "unknownClass",
+        "message": "The class \"flx\" is not one Tailwind knows, so it generates no CSS and does nothing. Nothing errors: the class sits in the markup, the element renders, and the style it was meant to apply is simply absent. That is usually a typo, and occasionally a class from a stylesheet the design system does not know about, which needs adding to the ignore list rather than fixing."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/no-unknown-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"synthetic-static\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/no-unknown-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"w-[13px] h-[calc(100%-3px)]\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/no-unknown-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div className=\"wfull textcenter\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 49,
+        "messageId": "unknownClass",
+        "message": "The class \"wfull\" is not one Tailwind knows, so it generates no CSS and does nothing. Nothing errors: the class sits in the markup, the element renders, and the style it was meant to apply is simply absent. That is usually a typo, and occasionally a class from a stylesheet the design system does not know about, which needs adding to the ignore list rather than fixing."
+      },
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 49,
+        "messageId": "unknownClass",
+        "message": "The class \"textcenter\" is not one Tailwind knows, so it generates no CSS and does nothing. Nothing errors: the class sits in the markup, the element renders, and the style it was meant to apply is simply absent. That is usually a typo, and occasionally a class from a stylesheet the design system does not know about, which needs adding to the ignore list rather than fixing."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/no-unknown-classes",
+    "file": "Component.tsx",
+    "source": "const element = <div title=\"flx\" />;\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/no-unknown-classes",
+    "file": "Component.tsx",
+    "source": "const merged = mergeClassNames('flx');\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 33,
+        "endLine": 1,
+        "endColumn": 36,
+        "messageId": "unknownClass",
+        "message": "The class \"flx\" is not one Tailwind knows, so it generates no CSS and does nothing. Nothing errors: the class sits in the markup, the element renders, and the style it was meant to apply is simply absent. That is usually a typo, and occasionally a class from a stylesheet the design system does not know about, which needs adding to the ignore list rather than fixing."
+      }
+    ]
+  },
+  {
+    "rule": "better-tailwindcss/no-unknown-classes",
+    "file": "Component.tsx",
+    "source": "const value = someOtherFunction('flx');\n",
+    "otherFiles": 1,
+    "outcome": "Clean"
+  },
+  {
+    "rule": "better-tailwindcss/no-unknown-classes",
+    "file": "Styles.ts",
+    "source": "const buttonClassName = 'not-a-real-class-xyz';\n",
+    "otherFiles": 1,
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 26,
+        "endLine": 1,
+        "endColumn": 46,
+        "messageId": "unknownClass",
+        "message": "The class \"not-a-real-class-xyz\" is not one Tailwind knows, so it generates no CSS and does nothing. Nothing errors: the class sits in the markup, the element renders, and the style it was meant to apply is simply absent. That is usually a typo, and occasionally a class from a stylesheet the design system does not know about, which needs adding to the ignore list rather than fixing."
+      }
+    ]
+  }
+]

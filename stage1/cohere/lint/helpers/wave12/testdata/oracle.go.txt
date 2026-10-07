@@ -1,0 +1,19 @@
+package main
+
+import (
+    "encoding/json"
+    "fmt"
+    "os"
+    "unicode/utf16"
+    collapse "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse"
+)
+func main() {
+    source, err := os.ReadFile(os.Args[1]); if err != nil { panic(err) }
+    var inputs []string
+    if err := json.Unmarshal(source, &inputs); err != nil { panic(err) }
+    for _, input := range inputs {
+        output := collapse.AdamicNormalizeArgument(input)
+        for _, unit := range utf16.Encode([]rune(output)) { fmt.Printf("%d,", unit) }
+        fmt.Println()
+    }
+}
