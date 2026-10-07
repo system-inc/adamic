@@ -1,16 +1,14 @@
 package main
 
 import (
-	"bytes"
 	"os"
 	"path/filepath"
-	"strings"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/load"
 )
 
-func TestAdaptUndefinedReturnsPreservesNodeAndDisk(t *testing.T) {
+func TestImplicitReturnsNeedNoAdaptation(t *testing.T) {
 	t.Parallel()
 	const source = `type Result<T> = T | undefined;
 function lookup<T>(value: T, mode: number, undefined: number): Result<T> {
@@ -37,27 +35,23 @@ console.log("value " + arrow(0)); console.log("value " + arrow(1)); console.log(
 				t.Fatal(err)
 			}
 			_, before := load.Load([]string{path})
-			if diagnosticCount(before, "7030") != 4 {
-				t.Fatalf("want four return findings: %v", before)
+			if before != nil {
+				t.Fatalf("implicit undefined returns should compile without TS7030: %v", before)
 			}
 			overlay, rewrites, err := adaptations([]string{path}, before)
 			if err != nil {
 				t.Fatal(err)
 			}
-			if len(rewrites) != 1 || rewrites[0].FunctionsChanged != 4 || rewrites[0].Removed != 4 {
+			if len(rewrites) != 0 || len(overlay) != 0 {
 				t.Fatalf("rewrites=%#v", rewrites)
-			}
-			adapted := overlay[path]
-			if !strings.Contains(adapted, "return void 0 /* bare */;") {
-				t.Fatalf("bare return not explicit: %s", adapted)
 			}
 			_, after := load.LoadOverlay([]string{path}, overlay)
 			if after != nil {
 				t.Fatal(after)
 			}
-			originalOutput := nodeOptionalSource(t, source)
-			if output := nodeOptionalSource(t, adapted); !bytes.Equal(output, originalOutput) {
-				t.Fatalf("adapted Node output=%q, original=%q", output, originalOutput)
+			const want = "fallthrough\nfinally 0\nvalue undefined\nfinally 1\nvalue 5\nfinally 2\nvalue undefined\nfallthrough\nfinally 3\nvalue 5\narrow\nvalue undefined\nvalue 7\nvalue undefined\n"
+			if output := nodeOptionalSource(t, source); string(output) != want {
+				t.Fatalf("implicit return Node output=%q, want=%q", output, want)
 			}
 			disk, err := os.ReadFile(path)
 			if err != nil || string(disk) != source {
@@ -86,8 +80,8 @@ function* generator(flag: boolean): Generator<number, number | undefined> { if (
 		t.Fatal(err)
 	}
 	_, before := load.Load([]string{path})
-	if diagnosticCount(before, "7030") == 0 {
-		t.Fatalf("no return finding: %v", before)
+	if diagnosticCount(before, "7030") != 0 || diagnosticCount(before, "2366") != 2 {
+		t.Fatalf("want only the two required-return findings, without TS7030: %v", before)
 	}
 	overlay, changed, err := returnAdaptations([]string{path}, nil, before)
 	if err != nil || changed != 0 || len(overlay) != 0 {
@@ -103,12 +97,12 @@ func TestReturnAdaptationOwnsOnlyRoots(t *testing.T) {
 	if err := os.WriteFile(external, []byte(`export function f(flag: boolean): number | undefined { if (flag) return 1; }`), 0644); err != nil {
 		t.Fatal(err)
 	}
-	if err := os.WriteFile(root, []byte(`import {f} from "./external.ts"; console.log(f(false));`), 0644); err != nil {
+	if err := os.WriteFile(root, []byte(`import {f} from "./external.ts"; console.log('' + f(false));`), 0644); err != nil {
 		t.Fatal(err)
 	}
 	_, before := load.Load([]string{root})
-	if diagnosticCount(before, "7030") != 1 {
-		t.Fatalf("no external finding: %v", before)
+	if before != nil {
+		t.Fatalf("external implicit return should compile without TS7030: %v", before)
 	}
 	overlay, changed, err := returnAdaptations([]string{root}, nil, before)
 	if err != nil || changed != 0 || len(overlay) != 0 {

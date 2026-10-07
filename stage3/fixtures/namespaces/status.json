@@ -14,8 +14,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Checker",
-      "what": "stage3/fixtures/namespaces/01_builder_state.a:10:18: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      "outcome": "Refused",
+      "what": "stage3/fixtures/namespaces/01_builder_state.a:10:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports"
     }
   },
   {
@@ -31,8 +31,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Checker",
-      "what": "stage3/fixtures/namespaces/02_jsx_names.a:6:11: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      "outcome": "Refused",
+      "what": "stage3/fixtures/namespaces/02_jsx_names.a:6:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports"
     }
   },
   {
@@ -48,8 +48,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Checker",
-      "what": "stage3/fixtures/namespaces/03_react_names.a:6:11: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      "outcome": "Refused",
+      "what": "stage3/fixtures/namespaces/03_react_names.a:6:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports"
     }
   },
   {
@@ -66,8 +66,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Checker",
-      "what": "stage3/fixtures/namespaces/04_debug_state.a:13:18: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.\nstage3/fixtures/namespaces/04_debug_state.a:5:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      "outcome": "Refused",
+      "what": "stage3/fixtures/namespaces/04_debug_state.a:13:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports"
     }
   },
   {
@@ -85,8 +85,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Checker",
-      "what": "stage3/fixtures/namespaces/05_debug_log_merge.a:18:18: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.\nstage3/fixtures/namespaces/05_debug_log_merge.a:39:22: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.\nstage3/fixtures/namespaces/05_debug_log_merge.a:6:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      "outcome": "Refused",
+      "what": "stage3/fixtures/namespaces/05_debug_log_merge.a:18:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports"
     }
   },
   {
@@ -103,8 +103,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Checker",
-      "what": "stage3/fixtures/namespaces/06_binary_expression_state.a:11:11: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      "outcome": "Refused",
+      "what": "stage3/fixtures/namespaces/06_binary_expression_state.a:11:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports"
     }
   },
   {
@@ -121,8 +121,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Checker",
-      "what": "stage3/fixtures/namespaces/07_parser_singleton.a:6:11: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      "outcome": "Refused",
+      "what": "stage3/fixtures/namespaces/07_parser_singleton.a:6:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports"
     }
   },
   {
@@ -142,8 +142,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Checker",
-      "what": "stage3/fixtures/namespaces/08_parser_jsdoc_nested.a:11:11: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.\nstage3/fixtures/namespaces/08_parser_jsdoc_nested.a:20:22: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.\nstage3/fixtures/namespaces/08_parser_jsdoc_nested.a:21:20: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.\nstage3/fixtures/namespaces/08_parser_jsdoc_nested.a:28:20: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.\nstage3/fixtures/namespaces/08_parser_jsdoc_nested.a:9:6: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      "outcome": "Refused",
+      "what": "stage3/fixtures/namespaces/08_parser_jsdoc_nested.a:11:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports"
     }
   },
   {
@@ -160,8 +160,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Checker",
-      "what": "stage3/fixtures/namespaces/09_incremental_parser.a:18:16: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.\nstage3/fixtures/namespaces/09_incremental_parser.a:5:6: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.\nstage3/fixtures/namespaces/09_incremental_parser.a:7:11: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      "outcome": "Refused",
+      "what": "stage3/fixtures/namespaces/09_incremental_parser.a:7:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports"
     }
   },
   {
@@ -179,8 +179,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Checker",
-      "what": "stage3/fixtures/namespaces/10_tracing_escape.a:18:23: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.\nstage3/fixtures/namespaces/10_tracing_escape.a:7:18: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      "outcome": "Refused",
+      "what": "stage3/fixtures/namespaces/10_tracing_escape.a:7:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports"
     }
   },
   {
@@ -196,8 +196,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Checker",
-      "what": "stage3/fixtures/namespaces/11_status_type_only.a:6:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      "outcome": "Refused",
+      "what": "stage3/fixtures/namespaces/11_status_type_only.a:36:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports"
     }
   },
   {
@@ -214,8 +214,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Checker",
-      "what": "stage3/fixtures/namespaces/12_builder_release_cache.a:10:18: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      "outcome": "Refused",
+      "what": "stage3/fixtures/namespaces/12_builder_release_cache.a:10:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports"
     }
   }
 ]
