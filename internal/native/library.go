@@ -26,6 +26,9 @@ var runtimeBuilds sync.Map
 // uses the embedded runtime; the fuzzer supplies another checkout's runtime directory instead.
 // Sources and headers are snapshotted together, so the key and the compiled bytes cannot disagree.
 func RuntimeLibrary(directory string, options Options) (string, error) {
+	if err := ValidateOptions(options); err != nil {
+		return "", err
+	}
 	var sources fs.FS = runtime
 	root := "runtime"
 	if directory != "" {
@@ -138,7 +141,7 @@ func cachedRuntime(files []runtimeFile, flags []string, compiler string, version
 		return "", fmt.Errorf("native: runtime has no C sources")
 	}
 	arguments := append([]string{"rcs", filepath.Join(temporary, "runtime.a")}, objects...)
-	if output, err := exec.Command("ar", arguments...).CombinedOutput(); err != nil {
+	if output, err := exec.Command(archiverName(compiler), arguments...).CombinedOutput(); err != nil {
 		return "", fmt.Errorf("native: archiving runtime: %w\n%s", err, output)
 	}
 	// Publish everything together. A competing process may already have published this key; its

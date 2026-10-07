@@ -29,11 +29,13 @@ started=$EPOCHREALTIME
 loadBefore=$(cat /proc/loadavg)
 warmTests=false
 gateInputs=false
+wasiSDK=false
 for argument in "$@"; do
 	case "$argument" in
 		--warm-tests) warmTests=true ;;
 		--gate-inputs) gateInputs=true ;;
-		*) echo "usage: bash cloud/setup.sh [--warm-tests] [--gate-inputs]" >&2; exit 2 ;;
+		--wasi-sdk) wasiSDK=true ;;
+		*) echo "usage: bash cloud/setup.sh [--warm-tests] [--gate-inputs] [--wasi-sdk]" >&2; exit 2 ;;
 	esac
 done
 step() {
@@ -201,6 +203,22 @@ done
 [ "$failed" = 0 ] || exit 1
 [ -x "$tools/go/bin/go" ] && export PATH="$tools/go/bin:$PATH"
 
+# Optional WASI SDK 27: native clang remains the default in PATH.
+if "$wasiSDK"; then
+ wasiVersion=27
+ wasiDirectory="$tools/wasi-sdk"
+ if [ ! -x "$wasiDirectory/bin/clang" ]; then
+  case $(uname -m) in
+   x86_64) wasiArchitecture=x86_64 ;;
+   *) wasiArchitecture=arm64 ;;
+  esac
+  mkdir -p "$wasiDirectory"
+  curl -fsSL "https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-$wasiVersion/wasi-sdk-$wasiVersion.0-$wasiArchitecture-linux.tar.gz" | tar --no-same-owner -xz -C "$wasiDirectory" --strip-components 1
+ fi
+ "$wasiDirectory/bin/clang" --version | head -n 1
+ step "wasi sdk ready ($wasiDirectory)"
+fi
+
 # One file every shell sources: the agent's shell in Codex is a different session from this one.
 cat > "$tools/env.sh" << ENV
 export PATH="$tools/bin:$([ -x "$tools/go/bin/go" ] && echo "$tools/go/bin:")\$PATH"
@@ -208,6 +226,9 @@ export GOTOOLCHAIN=auto
 export TMPDIR=$gate
 export ADAMIC_MARKDOWNWIDTH_DEPS="$markdownDependencies"
 ENV
+if "$wasiSDK"; then
+ printf 'export WASI_SYSROOT=%q\n' "$wasiDirectory/share/wasi-sysroot" >> "$tools/env.sh"
+fi
 if "$gateInputs"; then
 	# Node, Go and submodules are now ready; build this seat's checker archive.
 	export PATH="$tools/bin:$PATH"
