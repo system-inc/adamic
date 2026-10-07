@@ -172,105 +172,9 @@ func splitDeclarations(source string) ([]cDeclaration, error) {
 	return declarations, nil
 }
 
-// splitC gives every generated static symbol one external definition. Token replacement never
-// touches literal bytes. The fixed namespace cannot collide with runtime API names. Existing
-// program-wide indexes distinguish symbols; no whole-program content hash invalidates all units.
+// splitC keeps module ownership and declaration dependencies independent of encounter order.
 func splitC(source string) (string, []compilationUnit, error) {
-	declarations, err := splitDeclarations(source)
-	if err != nil {
-		return "", nil, err
-	}
-	names := map[string]string{}
-	for _, d := range declarations {
-		if d.name != "" && d.name != "main" {
-			names[d.name] = "adamic_unit_" + d.name
-		}
-	}
-	rewrite := func(tokens []cToken) string {
-		if len(tokens) == 0 {
-			return ""
-		}
-		var out strings.Builder
-		position := tokens[0].start
-		for _, t := range tokens {
-			out.WriteString(source[position:t.start])
-			name, found := names[t.text]
-			if found {
-				out.WriteString(name)
-			} else {
-				out.WriteString(t.text)
-			}
-			position = t.end
-		}
-		return out.String()
-	}
-	var header, state strings.Builder
-	header.WriteString("#ifndef ADAMIC_UNITS_H\n#define ADAMIC_UNITS_H\n")
-	var units []compilationUnit
-	defined := map[string]bool{}
-	for _, d := range declarations {
-		if d.name == "" {
-			header.WriteString(rewrite(d.tokens) + "\n")
-			continue
-		}
-		tokens := d.tokens
-		if tokens[0].text == "static" {
-			tokens = tokens[1:]
-		}
-		if d.function {
-			// body indexes still refer to the original tokens, before static was removed.
-			signature := rewrite(d.tokens[1:d.body])
-			if d.name == "main" {
-				signature = rewrite(d.tokens[:d.body])
-			}
-			header.WriteString(signature + ";\n")
-			units = append(units, compilationUnit{d.name + ".c", rewrite(tokens) + "\n"})
-			continue
-		}
-		limit := len(d.tokens) - 1
-		if d.initializer >= 0 {
-			limit = d.initializer
-		}
-		header.WriteString("extern " + rewrite(d.tokens[1:limit]) + ";\n")
-		// Class forward declarations precede their initialized definition. A slot cache without an
-		// initializer is a real zero-initialized definition, so preserve it in the state unit.
-		if d.initializer < 0 && strings.HasPrefix(d.name, "adamic_class_") {
-			continue
-		}
-		if defined[d.name] {
-			return "", nil, fmt.Errorf("native: split: duplicate definition %s", d.name)
-		}
-		defined[d.name] = true
-		state.WriteString(rewrite(tokens) + "\n")
-	}
-	header.WriteString("#endif\n")
-	// Sixteen consecutive functions amortize clang startup and repeated header parsing. A body
-	// edit changes one group; main stays separate from the shared state and function groups.
-	var groups []compilationUnit
-	functionsInGroup := 0
-	for _, unit := range units {
-		if unit.name == "main.c" {
-			continue
-		}
-		index := len(groups) - 1
-		if index < 0 || functionsInGroup == 16 {
-			groups = append(groups, compilationUnit{name: fmt.Sprintf("functions_%04d.c", len(groups))})
-			index++
-			functionsInGroup = 0
-		}
-		groups[index].source += unit.source
-		functionsInGroup++
-	}
-	for _, unit := range units {
-		if unit.name == "main.c" {
-			groups = append(groups, unit)
-		}
-	}
-	units = append([]compilationUnit{{"state.c", state.String()}}, groups...)
-	for i := range units {
-		units[i].source = "#include \"units.h\"\n" + units[i].source
-	}
-	return header.String(), units, nil
+	return stableSplitC(source)
 }
 
 var unitBuilds sync.Map
@@ -278,7 +182,7 @@ var unitBuilds sync.Map
 // Preprocessed source/header bytes, ordered flags, compiler identity/version and platform enter
 // the key. Preprocessing on every lookup also observes ambient and system include dependencies.
 func unitKey(files []runtimeFile, flags []string, compiler, version string) string {
-	return runtimeKey(files, append([]string{"adamic-units-v2"}, flags...), compiler, version)
+	return runtimeKey(files, append([]string{"adamic-units-v3"}, flags...), compiler, version)
 }
 
 func compileUnit(unit compilationUnit, files []runtimeFile, flags []string, compiler, version, cache, directory string, uncached bool) (string, error) {
