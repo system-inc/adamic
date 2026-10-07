@@ -35,3 +35,13 @@ No-confusing-non-null-assertion stays claimed but blocked: the shared Finding an
 oracle serializer cannot carry its suggestion ranges, arrays and multiple edits.
 The exact independent probes and limits are recorded in
 ../rules/typescript-eslint-no-duplicate-enum-values/REPORT.md.
+
+## Third batch
+
+All helper-ready names remain represented in fetched origin claims. The next
+three syntax-ready inventory rules, absent from main and all origin claim files,
+are claimed here before implementation:
+
+- @typescript-eslint/no-extra-non-null-assertion
+- @typescript-eslint/no-misused-new
+- @typescript-eslint/no-unnecessary-parameter-property-assignment
