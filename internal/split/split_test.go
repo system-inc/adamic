@@ -38,6 +38,15 @@ func TestFixtures(t *testing.T) {
 	}
 	for _, path := range paths {
 		t.Run(filepath.Base(path), func(t *testing.T) {
+			if filepath.Base(path) == "compute_json.a" {
+				// The encoder lands independently. This fixture runs in the
+				// compute integration witness until its implementation lands.
+				if _, err := os.Stat("../ir/library_json_encode.go"); os.IsNotExist(err) {
+					t.Skip("encodeJson dependency absent; run in compute integration checkout")
+				} else if err != nil {
+					t.Fatal(err)
+				}
+			}
 			program := lowered(t, path)
 			var output bytes.Buffer
 			if err := split.Print(&output, split.Analyze(program)); err != nil {
