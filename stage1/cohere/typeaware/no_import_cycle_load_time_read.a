@@ -1,0 +1,382 @@
+import { panic, readTextFile } from 'adamic';
+import { Parser } from '../../typescript/parser/parser.ts';
+import { Scanner } from '../../typescript/scanner/scanner.ts';
+import { UnaryMinus, byteOffsets } from './unary_minus.ts';
+import { Rules } from './rules.ts';
+import { Bindings } from './bindings.ts';
+import { ModuleLinks } from './module_links.a';
+import { WaveSymbol } from './wave08_symbol.a';
+import { SyntaxMetadata } from './syntax_metadata.a';
+import { Diagnostic } from './diagnostic.ts';
+
+export class CycleFile {
+    readonly rules: Rules;
+    readonly root: number;
+    readonly bindings: Bindings;
+    readonly symbols = new Map<number, WaveSymbol>();
+    readonly syntax = new Map<number, SyntaxMetadata>();
+    readonly importNames: number[] = [];
+    readonly namespaces: number[] = [];
+    readonly statements: number[] = [];
+    readonly targets: string[] = [];
+    server = false;
+    constructor(rules: Rules, root: number, bindings: Bindings) {
+        this.rules = rules;
+        this.root = root;
+        this.bindings = bindings;
+    }
+    symbol(index: number): WaveSymbol {
+        if(!this.symbols.has(index)) {
+            this.symbols.set(index, new WaveSymbol(this.rules, index));
+        }
+        return this.symbols.get(index) ?? panic('missing cycle symbol');
+    }
+    metadata(index: number): SyntaxMetadata {
+        if(!this.syntax.has(index)) {
+            this.syntax.set(index, new SyntaxMetadata(this.rules, index));
+        }
+        return this.syntax.get(index) ?? panic('missing syntax metadata');
+    }
+    names(index: number): number[] {
+        const result: number[] = [];
+        const statement = this.rules.parser.node(index);
+        const clause = statement.children.find((child) => this.rules.parser.node(child).kind === 'ImportClause') ?? -1;
+        if(clause < 0 || this.rules.parser.node(clause).semantic === 'TypeKeyword') {
+            return result;
+        }
+        for(const child of this.rules.parser.node(clause).children) {
+            const node = this.rules.parser.node(child);
+            if(node.kind === 'Identifier') {
+                result.push(child);
+            }
+            if(node.kind === 'NamespaceImport') {
+                const name = node.children[0] ?? -1;
+                result.push(name);
+                this.namespaces.push(name);
+            }
+            if(node.kind === 'NamedImports') {
+                for(const specifier of node.children) {
+                    const spec = this.rules.parser.node(specifier);
+                    if(spec.semantic !== '1') {
+                        result.push(spec.children[spec.children.length - 1] ?? -1);
+                    }
+                }
+            }
+        }
+        return result;
+    }
+    walk(index: number, loadOnly: boolean, result: number[]): void {
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'EndOfFile' || node.pos === node.end) {
+            return;
+        }
+        const metadata = this.metadata(index);
+        if((metadata.flags & 8388608) !== 0) {
+            return;
+        }
+        if(node.kind === 'Identifier') {
+            const parent = this.bindings.parent(index);
+            if(parent < 0 || this.rules.parser.node(parent).kind !== 'JsxClosingElement') {
+                result.push(index);
+            }
+            return;
+        }
+        if(
+            [
+                'ImportDeclaration',
+                'ImportEqualsDeclaration',
+                'ExportDeclaration',
+                'InterfaceDeclaration',
+                'TypeAliasDeclaration',
+                'TypeParameter',
+            ].includes(node.kind)
+        ) {
+            return;
+        }
+        if(node.kind === 'EnumDeclaration' && (metadata.modifiers & 4096) !== 0) {
+            return;
+        }
+        if(node.kind === 'HeritageClause') {
+            const parent = this.bindings.parent(index);
+            if(
+                node.operator === 'ExtendsKeyword' &&
+                parent >= 0 &&
+                ['ClassDeclaration', 'ClassExpression'].includes(this.rules.parser.node(parent).kind)
+            ) {
+                for(const child of node.children) {
+                    const expression = this.rules.parser.node(child).children[0] ?? -1;
+                    if(expression >= 0) {
+                        this.walk(expression, loadOnly, result);
+                    }
+                }
+            }
+            return;
+        }
+        if(node.kind === 'ExpressionWithTypeArguments') {
+            const expression = node.children[0] ?? -1;
+            if(expression >= 0) {
+                this.walk(expression, loadOnly, result);
+            }
+            return;
+        }
+        if(loadOnly && node.kind === 'PropertyDeclaration' && (metadata.modifiers & 256) === 0) {
+            return;
+        }
+        if(loadOnly && this.bindings.functionKind(node.kind)) {
+            return;
+        }
+        if(metadata.typeNode) {
+            return;
+        }
+        for(const child of node.children) {
+            this.walk(child, loadOnly, result);
+        }
+    }
+    identifiers(loadOnly: boolean): number[] {
+        const result: number[] = [];
+        for(const child of this.rules.parser.node(this.root).children) {
+            this.walk(child, loadOnly, result);
+        }
+        return result;
+    }
+    runtime(statement: number): boolean {
+        const node = this.rules.parser.node(statement);
+        if(node.kind === 'ExportDeclaration') {
+            const clause =
+                node.children.find((child) =>
+                    ['NamedExports', 'NamespaceExport'].includes(this.rules.parser.node(child).kind),
+                ) ?? -1;
+            if(clause < 0 || this.rules.parser.node(clause).kind === 'NamespaceExport') {
+                return true;
+            }
+            return this.rules.parser
+                .node(clause)
+                .children.some(
+                    (specifier) =>
+                        this.rules.parser.node(specifier).semantic !== '1' && this.symbol(specifier).valueAlias(),
+                );
+        }
+        const clause = node.children.find((child) => this.rules.parser.node(child).kind === 'ImportClause') ?? -1;
+        if(clause < 0) {
+            return true;
+        }
+        const names = this.names(statement);
+        const referenced: number[] = [];
+        const texts = names.map((name) => this.rules.parser.node(name).text);
+        for(const identifier of this.identifiers(false)) {
+            if(texts.includes(this.rules.parser.node(identifier).text)) {
+                referenced.push(this.symbol(identifier).id);
+            }
+        }
+        return names.some((name) => referenced.includes(this.symbol(name).id) && this.symbol(name).valueAlias());
+    }
+}
+export class NoImportCycleLoadTimeRead {
+    readonly files: CycleFile[] = [];
+    readonly empty: string[] = [];
+    readonly byPath = new Map<string, number>();
+    readonly edges = new Map<string, string[]>();
+    constructor(program: number, links: ModuleLinks) {
+        for(let at = 0; at < links.paths.length; at++) {
+            const path = links.paths[at] ?? '';
+            if(links.declarations[at] === true || path.includes('/node_modules/')) {
+                continue;
+            }
+            const source = readTextFile(path);
+            if(source.kind === 'Error') {
+                panic(source.message);
+            }
+            const parser = new Parser(source.text, path);
+            const scanner = new Scanner(source.text);
+            const offsets = byteOffsets(source.text);
+            const unary = new UnaryMinus(program, path, parser, scanner, offsets);
+            const rules = new Rules(program, path, parser, scanner, offsets, unary);
+            const root = parser.file();
+            for(let index = 0; index < parser.nodes.length; index++) {
+                rules.parents.push(-1);
+            }
+            rules.links(root, -1);
+            const bindings = new Bindings(rules);
+            const file = new CycleFile(rules, root, bindings);
+            this.byPath.set(path, this.files.length);
+            this.files.push(file);
+            const candidates: string[] = [];
+            for(const statement of parser.node(root).children) {
+                const node = parser.node(statement);
+                if(['ImportDeclaration', 'ExportDeclaration'].includes(node.kind)) {
+                    if(node.kind === 'ExportDeclaration' && node.semantic === '1') {
+                        continue;
+                    }
+                    const clause = node.children.find((child) => parser.node(child).kind === 'ImportClause') ?? -1;
+                    if(clause >= 0 && parser.node(clause).semantic === 'TypeKeyword') {
+                        continue;
+                    }
+                    const specifier =
+                        node.children.find((child) =>
+                            ['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(parser.node(child).kind),
+                        ) ?? -1;
+                    if(specifier < 0) {
+                        continue;
+                    }
+                    const s = parser.node(specifier);
+                    const target = links.targets.get(`${path}:${rules.byte(s.pos)}:${rules.byte(s.end)}`) ?? '';
+                    if(target === '' || target === path) {
+                        continue;
+                    }
+                    file.statements.push(statement);
+                    file.targets.push(target);
+                    candidates.push(target);
+                    if(node.kind === 'ImportDeclaration') {
+                        for(const name of file.names(statement)) {
+                            file.importNames.push(name);
+                        }
+                    }
+                }
+            }
+            for(const statement of parser.node(root).children) {
+                const node = parser.node(statement);
+                if(node.kind !== 'ExpressionStatement') {
+                    break;
+                }
+                const expression = parser.node(node.children[0] ?? -1);
+                if(expression.kind !== 'StringLiteral') {
+                    break;
+                }
+                if(expression.text === 'use server') {
+                    file.server = true;
+                }
+            }
+            this.edges.set(path, candidates);
+        }
+        // First graph is a syntactic superset. Resolve value usage only where
+        // both endpoints can reach each other, then retain runtime edges.
+        const verified = new Map<string, string[]>();
+        for(const file of this.files) {
+            const targets: string[] = [];
+            for(let at = 0; at < file.targets.length; at++) {
+                const target = file.targets[at] ?? '';
+                const targetIndex = this.byPath.get(target) ?? -1;
+                if(targetIndex < 0 || (this.files[targetIndex] ?? panic('missing file')).server) {
+                    continue;
+                }
+                if(this.shortest(target, file.rules.path).length > 0 && file.runtime(file.statements[at] ?? -1)) {
+                    targets.push(target);
+                }
+            }
+            verified.set(file.rules.path, targets);
+        }
+        for(const file of this.files) {
+            this.edges.set(file.rules.path, verified.get(file.rules.path) ?? this.empty);
+        }
+    }
+    shortest(from: string, to: string): string[] {
+        const previous = new Map<string, string>();
+        previous.set(from, from);
+        const queue: string[] = [from];
+        for(let at = 0; at < queue.length; at++) {
+            const current = queue[at] ?? '';
+            if(current === to) {
+                const steps: string[] = [];
+                let step = to;
+                while(step !== from) {
+                    steps.push(step);
+                    step = previous.get(step) ?? panic('broken cycle path');
+                }
+                steps.push(from);
+                return steps.reverse();
+            }
+            for(const next of this.edges.get(current) ?? this.empty) {
+                if(!previous.has(next)) {
+                    previous.set(next, current);
+                    queue.push(next);
+                }
+            }
+        }
+        return [];
+    }
+    basename(path: string): string {
+        const parts = path.split('/');
+        return parts[parts.length - 1] ?? '';
+    }
+    run(rules: Rules): void {
+        const index = this.byPath.get(rules.path) ?? -1;
+        if(index < 0) {
+            return;
+        }
+        const file = this.files[index] ?? panic('missing reader');
+        if(!(this.edges.get(rules.path) ?? this.empty).some((target) => this.shortest(target, rules.path).length > 0)) {
+            return;
+        }
+        for(const identifier of file.identifiers(true)) {
+            const text = file.rules.parser.node(identifier).text;
+            for(const name of file.importNames) {
+                if(file.rules.parser.node(name).text !== text || file.symbol(identifier).id !== file.symbol(name).id) {
+                    continue;
+                }
+                let read = identifier;
+                let target = file.symbol(name);
+                if(file.namespaces.includes(name)) {
+                    const parent = file.bindings.parent(identifier);
+                    if(
+                        parent < 0 ||
+                        file.rules.parser.node(parent).kind !== 'PropertyAccessExpression' ||
+                        file.rules.parser.node(parent).children[0] !== identifier
+                    ) {
+                        break;
+                    }
+                    const access = file.rules.parser.node(parent);
+                    target = file.symbol(access.children[access.children.length - 1] ?? -1);
+                    read = parent;
+                }
+                if(
+                    target.target === 0 ||
+                    (target.valueFlags & 8388608) !== 0 ||
+                    target.path === '' ||
+                    target.path === rules.path
+                ) {
+                    break;
+                }
+                const uninitialized =
+                    ['VariableDeclaration', 'BindingElement', 'ClassDeclaration', 'ClassExpression'].includes(
+                        target.kind,
+                    ) ||
+                    (target.kind === 'EnumDeclaration' && (target.modifiers & 4096) === 0) ||
+                    (target.kind === 'ExportAssignment' && !target.exportEquals);
+                if(!uninitialized) {
+                    break;
+                }
+                const there = this.shortest(rules.path, target.path);
+                const back = this.shortest(target.path, rules.path);
+                if(there.length === 0 || back.length === 0) {
+                    break;
+                }
+                const cycle = there
+                    .concat(back.slice(1))
+                    .map((path) => this.basename(path))
+                    .join(' → ');
+                const fileName = this.basename(target.path);
+                const message = `\`${target.name}\` is read while this module loads, and it is declared in \`${fileName}\`, which is in an import cycle with this file (${cycle}). If \`${fileName}\` is loaded first, this line runs before \`${target.name}\` is initialized and throws \`Cannot access '${target.name}' before initialization\`. Break the cycle, or move the read into a function that runs after load.`;
+                const node = file.rules.parser.node(read);
+                // The graph's parser and the manifest parser have identical spans.
+                const own = rules.parser.nodes.findIndex(
+                    (candidate) =>
+                        candidate.kind === node.kind && candidate.pos === node.pos && candidate.end === node.end,
+                );
+                if(own < 0) {
+                    panic('cycle read absent from manifest parser');
+                }
+                rules.findings.push(
+                    new Diagnostic(
+                        'nexus/correctness-no-import-cycle-load-time-read',
+                        'loadTimeReadInImportCycle',
+                        message,
+                        rules.byte(rules.start(rules.parser.node(own))),
+                        rules.byte(node.end),
+                        '',
+                    ),
+                );
+                break;
+            }
+        }
+    }
+}

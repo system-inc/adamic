@@ -1,0 +1,6 @@
+=== RUN   TestWave08Facts
+    wave08_facts_test.go:88: declaration differs: ["1" "wave08-symbol" "1" "0" "2097152" "1" "/tmp/adamic-gate/TestWave08Facts3831109107/001/input.a" "ImportSpecifier" "8" "13" "8388608" "0" "value" "2" "2" "1" "/tmp/adamic-gate/TestWave08Facts3831109107/001/other.ts" "VariableDeclaration" "0" "0" "0"]
+--- FAIL: TestWave08Facts (0.05s)
+FAIL
+FAIL	github.com/system-inc/adamic/bridge/tsgo/checker	0.056s
+FAIL

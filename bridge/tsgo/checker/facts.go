@@ -203,7 +203,7 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 	mode := strings.Split(question, "\n")[0]
 	out.text(mode)
 	switch mode {
-	case "node-symbol-details", "declaration-details", "type-symbol-details", "property-declarations":
+	case "node-symbol-details", "declaration-details", "type-symbol-details", "property-declarations", "wave08-symbol", "syntax-metadata", "module-links":
 		if err := p.declarationFacts(out, c, node, mode, question); err != nil {
 			return "", err
 		}

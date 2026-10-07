@@ -1,0 +1,22 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+export class SyntaxMetadata {
+    readonly flags: number;
+    readonly modifiers: number;
+    readonly typeNode: boolean;
+    readonly excludedStart: number;
+    readonly excludedEnd: number;
+    readonly generator: boolean;
+    constructor(rules: Rules, index: number) {
+        const frames = new Frames(rules.ask(index, 'syntax-metadata'));
+        header(frames, 'syntax-metadata');
+        this.flags = frames.natural();
+        this.modifiers = frames.natural();
+        this.typeNode = frames.yes();
+        const excluded = frames.yes();
+        this.excludedStart = excluded ? frames.natural() : -1;
+        this.excludedEnd = excluded ? frames.natural() : -1;
+        this.generator = frames.yes();
+        frames.end();
+    }
+}

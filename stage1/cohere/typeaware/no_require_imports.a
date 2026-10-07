@@ -1,0 +1,38 @@
+import type { Rules } from './rules.ts';
+import { WaveSymbol } from './wave08_symbol.a';
+
+const message =
+    'This loads a module with a CommonJS `require` call. A `require` is an ordinary function call evaluated at runtime, so a missing module or a mistyped path is a crash when the line executes rather than an error the compiler reports, and a bundler cannot see through it to drop the parts of the module nothing uses. Scattered calls also hide what a file depends on, which an import list at the top makes plain. Use an `import` declaration, or `import()` where the load genuinely has to be deferred.';
+export class NoRequireImports {
+    readonly rules: Rules;
+    constructor(rules: Rules) {
+        this.rules = rules;
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            const node = this.rules.parser.node(index);
+            if((this.rules.parents[index] ?? -1) < 0) {
+                continue;
+            }
+            if(node.kind === 'ExternalModuleReference') {
+                const parent = this.rules.parents[index] ?? -1;
+                if(parent >= 0) {
+                    this.rules.add('no-require-imports', 'noRequireImports', message, parent);
+                }
+            }
+            if(node.kind !== 'CallExpression') {
+                continue;
+            }
+            const callee = this.rules.skip(node.children[0] ?? -1);
+            const name = this.rules.parser.node(callee);
+            if(name.kind !== 'Identifier' || name.text !== 'require') {
+                continue;
+            }
+            const symbol = new WaveSymbol(this.rules, callee);
+            if(symbol.declarations.some((declaration) => (declaration.flags & 8388608) === 0)) {
+                continue;
+            }
+            this.rules.add('no-require-imports', 'noRequireImports', message, index);
+        }
+    }
+}

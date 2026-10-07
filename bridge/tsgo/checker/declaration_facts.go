@@ -117,5 +117,5 @@ func (p *Program) declarationFacts(out *fields, c *checker.Checker, node *ast.No
 			p.writeSymbolDetails(out, checker.Checker_getPropertyOfType(c, subject, split[2]))
 		}
 	}
-	return nil
+	return p.wave08Facts(out, c, node, mode, question)
 }

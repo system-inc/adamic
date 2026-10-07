@@ -1,0 +1,282 @@
+import type { Rules } from './rules.ts';
+import { Bindings } from './bindings.ts';
+import { Reassign } from './reassign.ts';
+import { SyntaxMetadata } from './syntax_metadata.a';
+import { Diagnostic } from './diagnostic.ts';
+
+const message =
+    'This function is created inside a loop and closes over a variable the loop reassigns, so every iteration builds a function sharing one binding rather than capturing the value it was made with. By the time any of them runs the variable holds whatever the last iteration left, which is why the callbacks all report the same index. Declare the variable with `let` or `const` inside the loop body so each iteration gets its own, or pass the value in as an argument.';
+export class NoLoopFunc {
+    readonly rules: Rules;
+    readonly bindings: Bindings;
+    readonly writes: Reassign;
+    readonly skipped: number[] = [];
+    readonly empty: number[] = [];
+    readonly declarations = new Map<number, number>();
+    readonly references = new Map<number, number[]>();
+    constructor(rules: Rules, bindings: Bindings) {
+        this.rules = rules;
+        this.bindings = bindings;
+        this.writes = new Reassign(rules);
+    }
+    readable(index: number): boolean {
+        const parent = this.bindings.parent(index);
+        if(parent < 0) {
+            return true;
+        }
+        const node = this.rules.parser.node(parent);
+        if(['PropertyAccessExpression', 'QualifiedName'].includes(node.kind)) {
+            return node.children[node.children.length - 1] !== index;
+        }
+        if(
+            ['PropertyAssignment', 'PropertyDeclaration', 'MethodDeclaration', 'GetAccessor', 'SetAccessor'].includes(
+                node.kind,
+            )
+        ) {
+            return this.bindings.shape.name(parent) !== index && node.children[0] !== index;
+        }
+        return !['BreakStatement', 'ContinueStatement', 'LabeledStatement'].includes(node.kind);
+    }
+    scope(index: number): number {
+        let current = index;
+        while(current >= 0) {
+            const kind = this.rules.parser.node(current).kind;
+            if(this.bindings.functionKind(kind) || ['ClassStaticBlockDeclaration', 'SourceFile'].includes(kind)) {
+                return current;
+            }
+            current = this.bindings.parent(current);
+        }
+        return -1;
+    }
+    loop(index: number): number {
+        let current = index;
+        while(this.bindings.parent(current) >= 0) {
+            const parent = this.bindings.parent(current);
+            const node = this.rules.parser.node(parent);
+            if(['WhileStatement', 'DoStatement'].includes(node.kind)) {
+                return parent;
+            }
+            if(['ForStatement', 'ForInStatement', 'ForOfStatement'].includes(node.kind)) {
+                const syntax = new SyntaxMetadata(this.rules, parent);
+                const child = this.rules.parser.node(current);
+                if(
+                    this.rules.byte(child.pos) !== syntax.excludedStart ||
+                    this.rules.byte(child.end) !== syntax.excludedEnd
+                ) {
+                    return parent;
+                }
+            }
+            if(this.bindings.functionKind(node.kind) && !this.skipped.includes(parent)) {
+                return -1;
+            }
+            current = parent;
+        }
+        return -1;
+    }
+    statement(declaration: number): number {
+        if(this.rules.parser.node(declaration).kind !== 'VariableDeclaration') {
+            return declaration;
+        }
+        const list = this.bindings.parent(declaration);
+        if(list < 0) {
+            return declaration;
+        }
+        const parent = this.bindings.parent(list);
+        return parent >= 0 && this.rules.parser.node(parent).kind === 'VariableStatement' ? parent : list;
+    }
+    list(declaration: number): number {
+        let current = declaration;
+        while(current >= 0) {
+            const kind = this.rules.parser.node(current).kind;
+            if(kind === 'VariableDeclarationList') {
+                return current;
+            }
+            if(
+                !['VariableDeclaration', 'BindingElement', 'ArrayBindingPattern', 'ObjectBindingPattern'].includes(kind)
+            ) {
+                return -1;
+            }
+            current = this.bindings.parent(current);
+        }
+        return -1;
+    }
+    stored(index: number): boolean {
+        if(this.writes.writes(index)) {
+            return true;
+        }
+        let current = index;
+        while(this.bindings.parent(current) >= 0) {
+            const parent = this.bindings.parent(current);
+            const node = this.rules.parser.node(parent);
+            if(node.kind === 'VariableDeclaration') {
+                if(this.bindings.shape.name(parent) !== current) {
+                    return false;
+                }
+                if(this.bindings.shape.initializer(parent) >= 0) {
+                    return true;
+                }
+                const list = this.bindings.parent(parent);
+                const loop = this.bindings.parent(list);
+                return (
+                    loop >= 0 &&
+                    ['ForInStatement', 'ForOfStatement'].includes(this.rules.parser.node(loop).kind) &&
+                    this.rules.parser.node(loop).children[0] === list
+                );
+            }
+            if(node.kind === 'BindingElement' && this.bindings.shape.name(parent) !== current) {
+                return false;
+            }
+            if(!['BindingElement', 'ArrayBindingPattern', 'ObjectBindingPattern'].includes(node.kind)) {
+                return false;
+            }
+            current = parent;
+        }
+        return false;
+    }
+    safe(loop: number, declaration: number): boolean {
+        const list = this.list(declaration);
+        const flags = list >= 0 ? Number.parseInt(this.rules.parser.node(list).semantic, 10) : 0;
+        if((flags & 6) !== 0) {
+            return true;
+        }
+        const letBinding = (flags & 1) !== 0;
+        const statement = this.statement(declaration);
+        const declared = this.rules.parser.node(statement);
+        const containing = this.rules.parser.node(loop);
+        if(letBinding && declared.pos > containing.pos && declared.end < containing.end) {
+            return true;
+        }
+        const excluded = letBinding ? declared.end : 0;
+        let borderLoop = loop;
+        let current = loop;
+        while(current >= 0 && this.rules.parser.node(current).pos >= excluded) {
+            borderLoop = current;
+            current = this.loop(current);
+        }
+        const border = this.rules.parser.node(borderLoop).pos;
+        for(const reference of this.references.get(declaration) ?? this.empty) {
+            if(
+                this.stored(reference) &&
+                !(this.scope(reference) === this.scope(declaration) && this.rules.parser.node(reference).pos < border)
+            ) {
+                return false;
+            }
+        }
+        return true;
+    }
+    escaping(index: number, function_: number, result: number[]): void {
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'Identifier') {
+            const declaration = this.declarations.get(index) ?? -1;
+            if(
+                this.readable(index) &&
+                (declaration < 0 || declaration === function_ || !this.bindings.contains(function_, declaration))
+            ) {
+                result.push(index);
+            }
+            return;
+        }
+        for(const child of node.children) {
+            this.escaping(child, function_, result);
+        }
+    }
+    visit(index: number): void {
+        const node = this.rules.parser.node(index);
+        if(this.bindings.functionKind(node.kind)) {
+            const loop = this.loop(index);
+            if(loop >= 0) {
+                const escaping: number[] = [];
+                const body =
+                    node.children.find((child) => this.rules.parser.node(child).kind === 'Block') ??
+                    (node.kind === 'ArrowFunction' ? (node.children[node.children.length - 1] ?? -1) : -1);
+                for(const parameter of node.children.filter(
+                    (child) => this.rules.parser.node(child).kind === 'Parameter',
+                )) {
+                    const initializer = this.bindings.shape.initializer(parameter);
+                    if(initializer >= 0) {
+                        this.escaping(initializer, index, escaping);
+                    }
+                }
+                if(body >= 0) {
+                    this.escaping(body, index, escaping);
+                }
+                const syntax = new SyntaxMetadata(this.rules, index);
+                let wrapped = index;
+                while(
+                    this.bindings.parent(wrapped) >= 0 &&
+                    this.rules.parser.node(this.bindings.parent(wrapped)).kind === 'ParenthesizedExpression'
+                ) {
+                    wrapped = this.bindings.parent(wrapped);
+                }
+                const parent = this.bindings.parent(wrapped);
+                const name = this.bindings.shape.name(index);
+                const reachableName =
+                    node.kind === 'FunctionExpression' &&
+                    name >= 0 &&
+                    escaping.some(
+                        (reference) => this.rules.parser.node(reference).text === this.rules.parser.node(name).text,
+                    );
+                if(
+                    (syntax.modifiers & 1024) === 0 &&
+                    !syntax.generator &&
+                    parent >= 0 &&
+                    this.rules.parser.node(parent).kind === 'CallExpression' &&
+                    this.rules.parser.node(parent).children[0] === wrapped &&
+                    !reachableName
+                ) {
+                    this.skipped.push(index);
+                }
+                else {
+                    const names: string[] = [];
+                    for(const reference of escaping) {
+                        const declaration = this.declarations.get(reference) ?? -1;
+                        const text = this.rules.parser.node(reference).text;
+                        if(declaration >= 0 && !this.safe(loop, declaration) && !names.includes(text)) {
+                            names.push(text);
+                        }
+                    }
+                    if(names.length > 0) {
+                        this.rules.findings.push(
+                            new Diagnostic(
+                                'no-loop-func',
+                                'unsafeRefs',
+                                `${message} The unsafe reference is to '${names.join("', '")}'.`,
+                                this.rules.byte(this.rules.start(node)),
+                                this.rules.byte(node.end),
+                                '',
+                            ),
+                        );
+                    }
+                }
+            }
+        }
+        for(const child of node.children) {
+            this.visit(child);
+        }
+    }
+    run(root: number): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            if(
+                this.bindings.parent(index) < 0 ||
+                this.rules.parser.node(index).kind !== 'Identifier' ||
+                !this.readable(index)
+            ) {
+                continue;
+            }
+            let earliest = -1;
+            for(const declaration of this.bindings.list(index, 'binding-declarations', false)) {
+                if(earliest < 0 || this.rules.parser.node(declaration).pos < this.rules.parser.node(earliest).pos) {
+                    earliest = declaration;
+                }
+            }
+            this.declarations.set(index, earliest);
+            if(earliest >= 0) {
+                const empty: number[] = [];
+                const references = this.references.get(earliest) ?? empty;
+                references.push(index);
+                this.references.set(earliest, references);
+            }
+        }
+        this.visit(root);
+    }
+}

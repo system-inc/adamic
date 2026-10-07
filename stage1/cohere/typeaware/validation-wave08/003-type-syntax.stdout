@@ -1,0 +1,6 @@
+=== RUN   TestWave08Facts
+    wave08_facts_test.go:55: syntax differs at KindSourceFile: ["1" "syntax-metadata" "0" "0" "1" "0" "0"]
+--- FAIL: TestWave08Facts (0.06s)
+FAIL
+FAIL	github.com/system-inc/adamic/bridge/tsgo/checker	0.062s
+FAIL

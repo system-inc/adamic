@@ -1,0 +1,25 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+export class ModuleLinks {
+    readonly paths: string[] = [];
+    readonly declarations: boolean[] = [];
+    readonly targets = new Map<string, string>();
+    constructor(rules: Rules, root: number) {
+        const frames = new Frames(rules.ask(root, 'module-links'));
+        header(frames, 'module-links');
+        const count = frames.natural();
+        for(let at = 0; at < count; at++) {
+            const path = frames.field();
+            this.paths.push(path);
+            this.declarations.push(frames.yes());
+            const imports = frames.natural();
+            for(let i = 0; i < imports; i++) {
+                const start = frames.natural();
+                const end = frames.natural();
+                const target = frames.field();
+                this.targets.set(`${path}:${start}:${end}`, target);
+            }
+        }
+        frames.end();
+    }
+}

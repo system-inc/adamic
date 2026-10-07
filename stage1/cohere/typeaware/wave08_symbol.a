@@ -1,0 +1,67 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+
+export class SymbolDeclaration {
+    readonly path: string;
+    readonly kind: string;
+    readonly start: number;
+    readonly end: number;
+    readonly flags: number;
+    constructor(path: string, kind: string, start: number, end: number, flags: number) {
+        this.path = path;
+        this.kind = kind;
+        this.start = start;
+        this.end = end;
+        this.flags = flags;
+    }
+}
+export class WaveSymbol {
+    id = 0;
+    flags = 0;
+    readonly declarations: SymbolDeclaration[] = [];
+    typeOnly = false;
+    name = '';
+    targetFlags = 0;
+    target = 0;
+    path = '';
+    kind = '';
+    valueFlags = 0;
+    modifiers = 0;
+    exportEquals = false;
+    constructor(rules: Rules, index: number) {
+        const frames = new Frames(rules.ask(index, 'wave08-symbol'));
+        header(frames, 'wave08-symbol');
+        this.id = frames.natural();
+        frames.natural();
+        this.flags = frames.natural();
+        const count = frames.natural();
+        for(let at = 0; at < count; at++) {
+            this.declarations.push(
+                new SymbolDeclaration(
+                    frames.field(),
+                    frames.field(),
+                    frames.natural(),
+                    frames.natural(),
+                    frames.natural(),
+                ),
+            );
+        }
+        this.typeOnly = frames.yes();
+        this.name = frames.field();
+        this.targetFlags = frames.natural();
+        this.target = frames.natural();
+        if(this.target !== 0 && frames.yes()) {
+            this.path = frames.field();
+            this.kind = frames.field();
+            this.valueFlags = frames.natural();
+            this.modifiers = frames.natural();
+            this.exportEquals = frames.yes();
+        }
+        frames.end();
+    }
+    valueAlias(): boolean {
+        return (
+            !this.typeOnly && this.target !== 0 && (this.targetFlags & 111551) !== 0 && (this.targetFlags & 128) === 0
+        );
+    }
+}
