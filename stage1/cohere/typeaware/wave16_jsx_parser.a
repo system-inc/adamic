@@ -2,7 +2,7 @@
 // Expression descent follows cohere/TypeScript/tsc/internal/parser/parser.go.
 import { panic } from 'adamic';
 import { Scanner } from './wave16_jsx_scanner.a';
-import { Statements } from '../../typescript/parser/statements.ts';
+import { Statements } from './wave16_jsx_statements.a';
 import { Jsx } from './wave16_jsx.a';
 import { ParseNode } from '../../typescript/parser/nodes.ts';
 import { precedence, reservedKinds } from '../../typescript/parser/grammar.ts';
