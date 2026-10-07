@@ -181,3 +181,14 @@ at f619ea20dd1d3f4650532eb063effcc0ecd7b037. Six wave-18 suites, rebuilt JSX par
 bridge, parked reporters, vet and filtered uncached Node pass. Four analysis
 claims remain parked. No new reservation was made in this landing unit.
 See wave_18_jsx/LANDING_C019_REPORT.md and validation-c019 for evidence.
+
+## Final unclaimed pair
+
+Reserved react/static-property-placement and react/style-prop-object.
+Fetched 576 origin refs and inspected 33 distinct claim Markdown blobs.
+These are the only two remaining unclaimed entries in the 197-rule ranking,
+after baseline ports and all origin claims are excluded. Neither requires
+HIR/SSA/capture analysis; both use syntax and declaration facts. No named
+port exists on an origin branch. Main remains c01907a70 and this branch
+is landing-ready at a37d18a51. There is no third unclaimed ranked rule.
+New rule.json kinds use ast.Kind names as required by the registry.
