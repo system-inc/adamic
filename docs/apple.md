@@ -60,6 +60,26 @@ A result marked `-> new object` comes back retained (`alloc`, `new`, `copy`); an
 
 The seed bindings are written by hand for the first proof. The generator (#qxe07rq) writes them from the SDK's headers through clang's syntax tree, with the rename table (#cgs2gpc) choosing each Adamic name, and replaces them.
 
+## SwiftUI
+
+SwiftUI is Swift only: its views are generic value types no C can name. So `internal/native/apple/swiftui.swift` makes them Objective-C classes the bridge already reaches: an `AdamicSwiftUIView` holds an `AnyView`, made by class methods (`text:`, `button:action:`, `verticalStack:children:`) and changed by modifiers (`padding:`, `font:`), and an `AdamicSwiftUIHost` shows one in an `NSHostingView` and swaps it when the program renders again. It's compiled with `swiftc` once per version of it and of `swiftc`, cached under the user cache directory, and linked only into a program whose C names one of its classes. This first cut is written by hand; the generator writes it per API an app uses (#7xv3pcs), and then it's measured against calling Swift's stable binary interface directly.
+
+```ts
+const count = new State<number>(0);
+function body(): View {
+	return verticalStack({ spacing: 12 }, [
+		text(`Count: ${count.value}`).font('Title'),
+		button('Add one', () => count.set(count.value + 1)),
+	]).padding(20);
+}
+const host = new Host(body());
+renderWhenStateChanges(() => host.render(body()));
+```
+
+`State` (`apple/swiftui/state`) is written in Adamic, not declared: some `apple/` modules are Adamic code, embedded as `internal/load/apple/<path>.a` and served by the loader where the resolver looks for any package, one module however many directories import it (`internal/load/apple.go`). Setting a `State` renders again through whatever `renderWhenStateChanges` was given. Bindings for plain functions that message a class use `@objc send <Class> <selector>`, and an array of views crosses as an `NSArray` (`objects`).
+
+`examples/apple/counter.a` is the app.
+
 ## How a call is compiled
 
 Lowering (`internal/lower/foreign.go`) makes each call an ordinary `ir.Call` of a function whose `ir.Function.Foreign` describes the message: its kind, class, selector, and where each native argument comes from. Its parameters are the receiver, then the values the call evaluates, in the order the source evaluates them, so JavaScript's evaluation order holds. One function is made per class, selector and shape of call.
@@ -100,9 +120,11 @@ Node can't run AppKit, so an Apple program answers to a witness instead (`intern
 
 macOS's `leaks` tool isn't one of the checks. Inside an AppKit process it reports nothing for an object leaked on purpose, in plain Objective-C as in Adamic, though it finds the same leak in a program that only uses Foundation. A check that can't fail proves nothing.
 
-The test serves JSON from a server of its own and gives every program its address. `window.a` drives a window, a view, a label and a button through real target-action; `fetch.a` makes two requests through `URLSession`, one fetching the JSON and one refused, each completion a closure Apple calls as a block on a background queue.
+The test serves JSON from a server of its own and gives every program its address. `window.a` drives a window, a view, a label and a button through real target-action; `fetch.a` makes two requests through `URLSession`, one fetching the JSON and one refused, each completion a closure Apple calls as a block on a background queue; `counter.a` is a SwiftUI counter, held to `counter.swift`, the same view written as plain SwiftUI (where the API is Swift only, the witness is Swift). Both read the size SwiftUI lays the view out at: ten presses make the count a digit wider, 122 by 102 points becoming 131.5 by 102, so a render that didn't happen shows.
 
-Each check has been shown to fail: dropping the closure's release in an action's `dealloc` (allocations 47, frees 46), a box that retains what it was handed already retained (47, 46), draining the pool after the counts are reported (47, 46), dropping the last UTF-16 unit of a string coming back (the witness disagrees), never letting go of the `NSString`s made for arguments (73 owed), a block's dispose that keeps its holder (26, 24), a block's deliver that keeps the values it made (26, 23), and a block's invoke that calls Adamic without the hop to the main thread (the program panics).
+A SwiftUI button is pressed by running the block its `Button` holds, in both. SwiftUI's accessibility tree is empty until an assistive client connects, and its buttons aren't `NSButton`s, so nothing in process can reach the button itself: SwiftUI's own tap dispatch is the one step these tests don't exercise.
+
+Each check has been shown to fail: dropping the closure's release in an action's `dealloc` (allocations 47, frees 46), a box that retains what it was handed already retained (47, 46), draining the pool after the counts are reported (47, 46), dropping the last UTF-16 unit of a string coming back (the witness disagrees), never letting go of the `NSString`s made for arguments (73 owed), a block's dispose that keeps its holder (26, 24), a block's deliver that keeps the values it made (26, 23), and a block's invoke that calls Adamic without the hop to the main thread (the program panics), a `State` that doesn't render when it's set (the counter disagrees with its witness), and the shim keeping its buttons' actions past exit (119 allocated, 118 freed).
 
 ## Not yet
 

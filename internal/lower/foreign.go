@@ -22,6 +22,9 @@ import (
 //	@objc set <selector> <type>                       a property's setter
 //	@objc function <symbol> <arguments> -> <result>   a C function; on an instance member, the
 //	                                                  object is its first argument
+//	@objc send <Class> <selector> <arguments> -> <result>
+//	                                                  a function that's a message to a class
+//	                                                  (text(...) is +[AdamicSwiftUIView text:])
 //	@objc alloc <Class> <selector> <arguments> -> <result>
 //	                                                  alloc sent to another class, then the init,
 //	                                                  its result retained ([[NSString alloc]
@@ -94,12 +97,12 @@ func parseForeignTag(text string) (foreignTag, error) {
 	}
 	tag.kind, tag.selector = words[0], words[1]
 	words = words[2:]
-	if tag.kind == "alloc" {
+	if tag.kind == "alloc" || tag.kind == "send" {
 		if len(words) < 1 {
-			return tag, errors.New("alloc names a class, then a selector")
+			return tag, errors.New(tag.kind + " names a class, then a selector")
 		}
 		tag.class, tag.selector, words = tag.selector, words[0], words[1:]
-		tag.retained = true
+		tag.retained = tag.kind == "alloc"
 	}
 	switch tag.kind {
 	case "class":
@@ -118,7 +121,7 @@ func parseForeignTag(text string) (foreignTag, error) {
 		tag.arguments = []foreignSource{{position: 0, native: native}}
 		tag.returns = ir.NativeType{Kind: ir.NativeVoid}
 		return tag, nil
-	case "static", "method", "get", "function", "alloc":
+	case "static", "method", "get", "function", "alloc", "send":
 	default:
 		return tag, fmt.Errorf("%s is not a tag kind", tag.kind)
 	}
@@ -201,6 +204,9 @@ func parseNativeType(text string) (ir.NativeType, error) {
 	if name, members, isMembers := strings.Cut(strings.TrimSuffix(text, ")"), "("); isMembers && name == "block" {
 		native.Kind = ir.NativeBlock
 		for _, member := range strings.Split(members, ",") {
+			if members == "" {
+				break
+			}
 			parameter, err := parseNativeType(member)
 			if err != nil {
 				return native, fmt.Errorf("%s: %w", text, err)
@@ -235,7 +241,7 @@ func parseNativeType(text string) (ir.NativeType, error) {
 	kinds := map[string]ir.NativeKind{
 		"void": ir.NativeVoid, "double": ir.NativeDouble, "integer": ir.NativeInteger, "unsigned": ir.NativeUnsigned,
 		"boolean": ir.NativeBoolean, "string": ir.NativeString, "string?": ir.NativeString, "object": ir.NativeObject, "object?": ir.NativeObject,
-		"rectangle": ir.NativeRectangle, "action": ir.NativeAction,
+		"rectangle": ir.NativeRectangle, "action": ir.NativeAction, "objects": ir.NativeObjects,
 	}
 	kind, isKind := kinds[text]
 	if !isKind {
@@ -254,7 +260,7 @@ func adamicType(native ir.NativeType) ir.Type {
 		return ir.Boolean
 	case ir.NativeString, ir.NativeEnumeration:
 		return ir.String
-	case ir.NativeOptions:
+	case ir.NativeOptions, ir.NativeObjects:
 		return ir.Array
 	case ir.NativeAction, ir.NativeBlock:
 		return ir.Closure
@@ -300,7 +306,7 @@ func (l *lowering) foreignClass(node *ast.Node, symbol *ast.Symbol) (string, err
 func (l *lowering) foreignCall(node *ast.Node) (ir.Expression, bool, error) {
 	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
 	if ast.IsIdentifier(callee) && isForeign(l.symbol(callee)) {
-		tag, err := l.foreignTag(node, l.symbol(callee).Declarations[0], "function")
+		tag, err := l.foreignTag(node, l.symbol(callee).Declarations[0], "function", "send")
 		if err != nil {
 			return nil, true, err
 		}
@@ -407,6 +413,8 @@ func (l *lowering) foreignSend(node *ast.Node, tag foreignTag, receiver *ast.Nod
 	}
 	isClass := receiverSymbol != nil && receiverSymbol.Flags&ast.SymbolFlagsClass != 0 && isForeign(receiverSymbol)
 	switch {
+	case tag.kind == "send":
+		foreign.Kind, foreign.Class = ir.ClassMessage, tag.class
 	case tag.kind == "alloc":
 		// Made by another class, from this object: the object is a value the init takes.
 		foreign.Kind, foreign.Class = ir.Construct, tag.class
@@ -442,7 +450,7 @@ func (l *lowering) foreignSend(node *ast.Node, tag foreignTag, receiver *ast.Nod
 			foreign.Kind = ir.CFunction
 		}
 	}
-	if foreign.Kind == ir.ClassMessage || (foreign.Kind == ir.Construct && foreign.Class == "") {
+	if (foreign.Kind == ir.ClassMessage || foreign.Kind == ir.Construct) && foreign.Class == "" {
 		class, err := l.foreignClass(node, l.foreignReceiverClass(receiverSymbol, receiver))
 		if err != nil {
 			return nil, err
@@ -537,7 +545,7 @@ func (l *lowering) foreignSend(node *ast.Node, tag foreignTag, receiver *ast.Nod
 		foreign.Arguments = append([]ir.ForeignArgument{{Type: ir.NativeType{Kind: ir.NativeObject}, Parameter: 0}}, foreign.Arguments...)
 	}
 	switch tag.returns.Kind {
-	case ir.NativeRectangle, ir.NativeEnumeration, ir.NativeOptions, ir.NativeAction:
+	case ir.NativeRectangle, ir.NativeEnumeration, ir.NativeOptions, ir.NativeAction, ir.NativeObjects, ir.NativeBlock:
 		return nil, l.notYet(node, "an Apple result held as a "+tag.selector+" gives it (rectangles, enumerations, options and actions come back later)")
 	}
 	returns := adamicType(tag.returns)
