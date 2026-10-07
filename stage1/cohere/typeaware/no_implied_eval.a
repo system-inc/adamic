@@ -1,0 +1,55 @@
+import type { Bindings } from './bindings.ts';
+import { coreFinding } from './wave_22_core_finding.a';
+import { globalBinding } from './global_binding.a';
+export class NoImpliedEval {
+    readonly bindings: Bindings;
+    constructor(bindings: Bindings) { this.bindings = bindings; }
+    global(index: number): boolean {
+        const facts = globalBinding(this.bindings, index); if(!facts.symbol.present) { return false; }
+        const declarations = facts.local.declarations.length > facts.symbol.declarations.length ? facts.local : facts.symbol;
+        for(let at = 0; at < declarations.files.length; at++) { if(declarations.files[at] === true && declarations.declarations[at] !== true) { return false; } }
+        return true;
+    }
+    kind(index: number): string { return index < 0 ? '' : this.bindings.rules.parser.node(index).kind; }
+    objects(name: string): boolean { return ['global', 'window', 'globalThis', 'self'].includes(name); }
+    property(index: number): string {
+        const rules = this.bindings.rules; const node = rules.parser.node(index);
+        if(!['PropertyAccessExpression', 'ElementAccessExpression'].includes(node.kind)) { return ''; }
+        const key = rules.skip(node.children[node.children.length - 1] ?? -1); if(key < 0) { return ''; }
+        const name = rules.parser.node(key);
+        if(node.kind === 'ElementAccessExpression' && ['Identifier', 'PrivateIdentifier'].includes(name.kind)) { return ''; }
+        return ['Identifier', 'StringLiteral', 'NoSubstitutionTemplateLiteral', 'NumericLiteral'].includes(name.kind) ? name.text : '';
+    }
+    callee(index: number): string {
+        const rules = this.bindings.rules; index = rules.skip(index); if(index < 0) { return ''; }
+        const node = rules.parser.node(index);
+        if(node.kind === 'Identifier') { return this.global(index) ? node.text : ''; }
+        const name = this.property(index); if(name === '') { return ''; } let receiver = node.children[0] ?? -1;
+        while(receiver >= 0) {
+            receiver = rules.skip(receiver); const root = rules.parser.node(receiver);
+            if(root.kind === 'Identifier') { return this.objects(root.text) && this.global(receiver) ? name : ''; }
+            if(!this.objects(this.property(receiver))) { return ''; } receiver = root.children[0] ?? -1;
+        }
+        return '';
+    }
+    string(index: number): boolean {
+        if(index < 0) { return false; } const rules = this.bindings.rules; index = rules.skip(index); const node = rules.parser.node(index);
+        if(['StringLiteral', 'NoSubstitutionTemplateLiteral', 'TemplateExpression'].includes(node.kind)) { return true; }
+        return node.kind === 'BinaryExpression' && this.kind(node.children[1] ?? -1) === 'PlusToken' &&
+            (this.string(node.children[0] ?? -1) || this.string(node.children[node.children.length - 1] ?? -1));
+    }
+    run(): void {
+        const rules = this.bindings.rules;
+        for(let index = 0; index < rules.parser.nodes.length; index++) {
+            const node = rules.parser.node(index); if(node.kind !== 'CallExpression') { continue; }
+            const callee = rules.skip(node.children[0] ?? -1); const target = rules.parser.node(callee);
+            const candidate = target.kind === 'Identifier' ? target.text : this.property(callee);
+            if(!['setTimeout', 'setInterval', 'execScript'].includes(candidate)) { continue; }
+            const name = this.callee(callee);
+            if(!['setTimeout', 'setInterval', 'execScript'].includes(name) || !this.string((node.list <= 0 ? -1 : node.children[node.children.length - node.list] ?? -1))) { continue; }
+            coreFinding(this.bindings, 'no-implied-eval', name === 'execScript' ? 'execScript' : 'impliedEval', name === 'execScript' ?
+                'This calls `execScript` with a string, which compiles and runs that text as code. It is `eval` under another name, and it is not standard. Call a function instead.' :
+                'This passes a string where a function belongs, so the string is compiled and run when the timer fires. That is `eval` with a delay: the code loses the surrounding scope and anything interpolated into it becomes executable. Pass a function instead.', index);
+        }
+    }
+}
