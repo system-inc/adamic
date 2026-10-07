@@ -1,0 +1,6 @@
+=== RUN   TestCacheBypass
+    cache_test.go:118: bypass reused evidence
+--- FAIL: TestCacheBypass (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/cmd/adamic-test262	0.048s
+FAIL

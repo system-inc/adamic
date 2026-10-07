@@ -95,7 +95,8 @@ typedef struct adamic_string {
 	adamic_heap heap;
 	size_t length;
 	const char *bytes;
-	// units is the length in UTF-16 units plus one, once it's been asked for, and 0 until then; index is
+	// units is the length in UTF-16 units plus one, propagated when building, or 0 if unknown.
+	// units == length + 1 is the ASCII flag: no unit counting or decoding is needed. index is
 	// a long non-ASCII string's position index, once built (string_index.c). Both are caches, which
 	// every initializer that leaves them out leaves empty.
 	size_t units;
@@ -109,6 +110,20 @@ typedef struct adamic_string {
 	// bytes can't grow: a constant, a shared slice, one made on the stack.
 	size_t capacity;
 } adamic_string;
+
+struct adamic_string_index {
+	// The last code point found: its first unit, and its byte offset.
+	size_t cursor_unit;
+	size_t cursor_offset;
+	// checkpoints[k] is where unit k * STEP is: the byte offset of the code point holding it, shifted
+	// left once, and 1 when that unit is the low half of a surrogate pair, whose code point starts a
+	// unit earlier.
+	size_t count;
+	// Each UTF-16 unit, including both halves of supplementary points and lone surrogates.
+	// The byte checkpoints still serve slices and searches.
+	uint16_t *view;
+	uint32_t checkpoints[];
+};
 
 // ADAMIC_LITERAL_INDEX marks a constant's index as not yet built: a constant lives as long as the
 // program, so a long one can have an index that does too (string_index.c). Only a constant of static
@@ -240,13 +255,29 @@ adamic_value *adamic_object_write_field(adamic_object *object, const char *name,
 // A readonly numeric view may see a field made with the undefined-only reference representation.
 adamic_maybe_number adamic_object_maybe_number(const adamic_object *object, const char *name, adamic_slot_cache *cache);
 // Optional own fields may be absent; NULL then asks the reader to produce typed undefined.
-adamic_value *adamic_object_optional_field(const adamic_object *object, const char *name, adamic_slot_cache *cache);
-static inline adamic_value *adamic_object_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
-	if (object->class != NULL && object->class->is_static) { return adamic_static_field(object, name, cache); }
+adamic_value *adamic_object_optional_find(const adamic_object *object, const char *name, adamic_slot_cache *cache);
+static inline adamic_value *adamic_object_optional_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
+	if (cache->shape != object->shape) {
+		return adamic_object_optional_find(object, name, cache);
+	}
+	if (cache->index == object->shape->count) {
+		return NULL;
+	}
+	return &((adamic_object *)object)->slots[cache->index];
+}
+// Data lookup is also available to emitted accesses whose field name occurs in no static
+// layout. That whole-program proof excludes inherited constructor storage, so the cache
+// hit needs only the shape comparison, without loading a class descriptor.
+static inline adamic_value *adamic_object_data_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
 	if (cache->shape == object->shape) {
 		return &((adamic_object *)object)->slots[cache->index];
 	}
 	return adamic_object_find(object, name, cache);
+}
+
+static inline adamic_value *adamic_object_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
+	if (object->class != NULL && object->class->is_static) { return adamic_static_field(object, name, cache); }
+	return adamic_object_data_field(object, name, cache);
 }
 
 // Static Object methods (library_object.c). Returned collections and freeze own one reference.
@@ -258,6 +289,12 @@ struct adamic_array *adamic_object_keys(const adamic_object *object);
 struct adamic_array *adamic_object_values(const adamic_object *object, bool references, bool entries);
 void adamic_object_assign(adamic_object *target, const adamic_object *source);
 void adamic_object_check_write(const adamic_object *object, const char *name);
+// Keep frozen-object failures out of the ordinary write's call path.
+static inline void adamic_object_check_data_write(const adamic_object *object, const char *name) {
+	if (object->frozen) {
+		adamic_object_check_write(object, name);
+	}
+}
 
 // adamic_array is an array (array.c). references says whether its elements are references.
 typedef struct adamic_array {
@@ -540,11 +577,9 @@ bool adamic_maybe_boolean_equal(adamic_maybe_boolean left, adamic_maybe_boolean 
 
 // A string's UTF-16 view (string.c): length, charCodeAt and trim as JavaScript means them.
 //
-// length is the count of units, once it's been made, inline; and charCodeAt of an ASCII string (its
-// units are its bytes) at an index inside it is that byte, inline, which is what a scanner's loop
-// does. NaN, a negative, past the end, a non-ASCII string (through its index, string_index.c) and a
-// length not yet counted go to adamic_string_char_code, out of line. A position from 0 up to the
-// length truncates to its index as (size_t) does.
+// length reads the propagated or counted units inline. charCodeAt reads ASCII bytes or a built
+// UTF-16 view inline. An unknown length, an unbuilt index, NaN, a negative or past the end goes
+// to adamic_string_char_code. A position in range truncates to its index as (size_t) does.
 size_t adamic_string_units(const adamic_string *string);
 double adamic_string_char_code(const adamic_string *string, double position);
 static inline double adamic_string_length(const adamic_string *string) {
@@ -553,6 +588,11 @@ static inline double adamic_string_length(const adamic_string *string) {
 static inline double adamic_string_char_code_at(const adamic_string *string, double position) {
 	if (string->units == string->length + 1 && position >= 0 && position < (double)string->length) {
 		return (double)(unsigned char)string->bytes[(size_t)position];
+	}
+	// A built index has a direct UTF-16 view, including supplementary halves. The range
+	// comparisons reject NaN and infinities before conversion; a fraction truncates as JS does.
+	if (string->index != NULL && string->index != ADAMIC_LITERAL_INDEX && position >= 0 && position < (double)(string->units - 1)) {
+		return (double)string->index->view[(size_t)position];
 	}
 	return adamic_string_char_code(string, position);
 }
@@ -838,12 +878,27 @@ _Noreturn void adamic_panic(const char *message, size_t length);
 // when the address sanitizer keeps locals elsewhere.
 extern uintptr_t adamic_stack_limit;
 _Noreturn void adamic_stack_overflow(void);
+#ifdef ADAMIC_TARGET_WASI
+// Even a function using only Wasm locals must advance the linear stack. Otherwise
+// its engine call stack can trap before this check sees any movement. The volatile
+// endpoints preserve a 64-byte frame, including in optimized recursive functions.
+#define ADAMIC_CHECK_STACK() \
+	do { \
+		volatile unsigned char adamic_stack_frame[64]; \
+		adamic_stack_frame[0] = 0; \
+		adamic_stack_frame[63] = 0; \
+		if ((uintptr_t)adamic_stack_frame < adamic_stack_limit) { \
+			adamic_stack_overflow(); \
+		} \
+	} while (0)
+#else
 #define ADAMIC_CHECK_STACK() \
 	do { \
 		if ((uintptr_t)__builtin_frame_address(0) < adamic_stack_limit) { \
 			adamic_stack_overflow(); \
 		} \
 	} while (0)
+#endif
 
 // adamic_unreachable ends a function the checker proved always returns. Reaching it is a compiler
 // bug, and it says so rather than returning garbage.
