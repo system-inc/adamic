@@ -31,3 +31,26 @@ are .a and with the rule-directory-only ownership boundary. No shared generator
 or dispatch file is changed by this unit. docs/parallel-work.md is absent on
 main and on both requested foundation refs. Implementation is blocked pending
 compatible foundations; this claim does not assert a completed port.
+
+## Continuation claim, October 7
+
+The user requested the next three unported-on-main and unclaimed rules on the
+same branch. Existing work was pushed first, then all origin heads fetched with
+--no-recurse-submodules. Main observed: ef3d907e.
+
+The first 45 helper-ready entries are recorded in claims on origin branches.
+The final helper entry is available. Continue in inventory order for the next
+two syntax-only rules (needs_type_information false, binding_only false):
+
+1. structure/tailwind-no-physical-direction
+2. @eslint-community/eslint-comments/require-description
+3. @next/next/google-font-display
+
+None appears in claims on any fetched origin branch or in Adamic lint source on
+origin/main. Metadata and frequency observations are not implementations.
+This update is pushed before new code. New Adamic modules will be .a.
+The original no-restricted-types reservation remains in place.
+
+docs/parallel-work.md was found and read on origin/codex/no-shared-lists.
+The existing .a registration limitation remains; any compatibility work used
+for validation will stay in scratch overlays, not shared production files.
