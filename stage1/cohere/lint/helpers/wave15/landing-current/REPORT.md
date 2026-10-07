@@ -11,7 +11,7 @@ parseCSSString: 198,584 queries, 5,648,824 byte-identical output bytes against u
 
 parseCSSDeclaration: 8,836 queries, 619,181 byte-identical bytes on the same four sides. Its important-range mutant was likewise caught only by comparison on all three backends.
 
-Each helper covers literals from every original fixture file of six consuming rules: structure/tailwind-enforce-canonical-classes, structure/tailwind-enforce-consistent-class-order, structure/tailwind-enforce-consistent-variant-order, structure/tailwind-enforce-shorthand-classes, structure/tailwind-no-conflicting-classes, structure/tailwind-no-unknown-classes. Their unchanged upstream Go tests pass. These helper implementations unblock those dependencies; they do not port the six consumers.
+Each helper covers literals from every original fixture file of six consuming rules: better-tailwindcss/enforce-canonical-classes, better-tailwindcss/enforce-consistent-class-order, better-tailwindcss/enforce-consistent-variant-order, better-tailwindcss/enforce-shorthand-classes, better-tailwindcss/no-conflicting-classes, better-tailwindcss/no-unknown-classes. Their unchanged upstream Go tests pass. These helper implementations unblock those dependencies; they do not port the six consumers.
 
 The foundation helper packages pass in 48.570s and 102.987s. The comment package reruns all five semantic mutants and the explicit JSX refusal guard mutant, caught by their independent comparisons. The external input oracle passes in 1.381s with six probe misses and zero hits.
 
