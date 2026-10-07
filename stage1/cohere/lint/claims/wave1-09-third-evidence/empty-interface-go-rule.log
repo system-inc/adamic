@@ -1,0 +1,11 @@
+case 0
+/workspace/adamic/stage1/cohere/lint/claims/wave1-09-third-evidence/empty-interface.ts.txt:1:11
+  @typescript-eslint/no-empty-object-type  An interface with no members allows any non-nullish value, so it constrains nothing: every object, every string, every number satisfies it. It reads like a type and behaves like `unknown` with better manners. Give it members, or use the type it actually means.
+
+panic: unexpected suggestion shape
+
+goroutine 1 [running]:
+main.run({0x74a1e9d4870?, 0x74a1eaf9040?}, 0x0, 0x74a1eaf9040)
+	/workspace/adamic/cohere/wave109_oracle.go:70 +0x8f8
+main.main()
+	/workspace/adamic/cohere/wave109_oracle.go:143 +0x2f7

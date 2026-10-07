@@ -1,0 +1,10 @@
+baseline exit 0
+no-debugger
+no-empty
+eqeqeq
+no-var
+no-duplicate-case
+identical module renamed .a exit 1
+open /tmp/adamic-gate/lint-wave1-09-a-q22c2obb/rules/no-debugger/rule.ts: no such file or directory
+exit status 1
+Observed: .a registration is blocked before rule compilation or execution.
