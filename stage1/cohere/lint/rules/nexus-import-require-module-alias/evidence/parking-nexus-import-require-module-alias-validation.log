@@ -4,67 +4,67 @@
     lint_test.go:327: cohere cases: 917 unique source/rule/options combinations
     wave1_14_test.go:52: module alias captured source/options combinations: 27
     wave1_14_test.go:74: rule fixture findings: 42
-    wave1_14_test.go:75: Go, Node, native identical: 17774 bytes
-    wave1_14_test.go:75: emitted JavaScript identical: 17774 bytes
---- PASS: TestWave14Rules (117.52s)
+    wave1_14_test.go:75: Go, Node, native identical: 17816 bytes
+    wave1_14_test.go:75: emitted JavaScript identical: 17816 bytes
+--- PASS: TestWave14Rules (137.83s)
 === RUN   TestWave14Corpus
     wave1_14_test.go:108: /tmp/lint-wave1-14-typescript-pinned/src/compiler corpus files: 77
     wave1_14_test.go:108: /workspace/adamic-landing-wave14/stage1 corpus files: 254
     wave1_14_test.go:108: Go, Node, native identical: 13182291 bytes
     wave1_14_test.go:108: emitted JavaScript identical: 13182291 bytes
---- PASS: TestWave14Corpus (34.07s)
+--- PASS: TestWave14Corpus (31.13s)
 === RUN   TestWave14Mutant
-    wave1_14_test.go:122: compiling, successful mutant caught only by comparison on Node source: case 0 line 2: port "/tmp/adamic-gate/TestWave14Mutant875362319/001/nexus-import-require-module-alias-0.ts:2:8", Go "/tmp/adamic-gate/TestWave14Mutant875362319/001/nexus-import-require-module-alias-0.ts:1:8"
+    wave1_14_test.go:122: compiling, successful mutant caught only by comparison on Node source: case 0 line 2: port "/tmp/adamic-gate/TestWave14Mutant1299560788/001/nexus-import-require-module-alias-0.ts:2:8", Go "/tmp/adamic-gate/TestWave14Mutant1299560788/001/nexus-import-require-module-alias-0.ts:1:8"
         Go context:
         case 0
-        /tmp/adamic-gate/TestWave14Mutant875362319/001/nexus-import-require-module-alias-0.ts:1:8
+        /tmp/adamic-gate/TestWave14Mutant1299560788/001/nexus-import-require-module-alias-0.ts:1:8
           nexus/import-require-module-alias  Import "react" as a default import: `import React from 'react'`. A namespace object is frozen and, under esModuleInterop, is not the value the default import yields, so the two forms are not interchangeable.
         
         range 7 17 requireDefaultStyle 		
-        /tmp/adamic-gate/TestWave14Mutant875362319/001/nexus-import-require-module-alias-0.ts:2:8
-    wave1_14_test.go:122: compiling, successful mutant caught only by comparison on sanitized native: case 0 line 2: port "/tmp/adamic-gate/TestWave14Mutant875362319/001/nexus-import-require-module-alias-0.ts:2:8", Go "/tmp/adamic-gate/TestWave14Mutant875362319/001/nexus-import-require-module-alias-0.ts:1:8"
+        /tmp/adamic-gate/TestWave14Mutant1299560788/001/nexus-import-require-module-alias-0.ts:2:8
+    wave1_14_test.go:122: compiling, successful mutant caught only by comparison on sanitized native: case 0 line 2: port "/tmp/adamic-gate/TestWave14Mutant1299560788/001/nexus-import-require-module-alias-0.ts:2:8", Go "/tmp/adamic-gate/TestWave14Mutant1299560788/001/nexus-import-require-module-alias-0.ts:1:8"
         Go context:
         case 0
-        /tmp/adamic-gate/TestWave14Mutant875362319/001/nexus-import-require-module-alias-0.ts:1:8
+        /tmp/adamic-gate/TestWave14Mutant1299560788/001/nexus-import-require-module-alias-0.ts:1:8
           nexus/import-require-module-alias  Import "react" as a default import: `import React from 'react'`. A namespace object is frozen and, under esModuleInterop, is not the value the default import yields, so the two forms are not interchangeable.
         
         range 7 17 requireDefaultStyle 		
-        /tmp/adamic-gate/TestWave14Mutant875362319/001/nexus-import-require-module-alias-0.ts:2:8
-    wave1_14_test.go:122: compiling, successful mutant caught only by comparison on emitted JavaScript: case 0 line 2: port "/tmp/adamic-gate/TestWave14Mutant875362319/001/nexus-import-require-module-alias-0.ts:2:8", Go "/tmp/adamic-gate/TestWave14Mutant875362319/001/nexus-import-require-module-alias-0.ts:1:8"
+        /tmp/adamic-gate/TestWave14Mutant1299560788/001/nexus-import-require-module-alias-0.ts:2:8
+    wave1_14_test.go:122: compiling, successful mutant caught only by comparison on emitted JavaScript: case 0 line 2: port "/tmp/adamic-gate/TestWave14Mutant1299560788/001/nexus-import-require-module-alias-0.ts:2:8", Go "/tmp/adamic-gate/TestWave14Mutant1299560788/001/nexus-import-require-module-alias-0.ts:1:8"
         Go context:
         case 0
-        /tmp/adamic-gate/TestWave14Mutant875362319/001/nexus-import-require-module-alias-0.ts:1:8
+        /tmp/adamic-gate/TestWave14Mutant1299560788/001/nexus-import-require-module-alias-0.ts:1:8
           nexus/import-require-module-alias  Import "react" as a default import: `import React from 'react'`. A namespace object is frozen and, under esModuleInterop, is not the value the default import yields, so the two forms are not interchangeable.
         
         range 7 17 requireDefaultStyle 		
-        /tmp/adamic-gate/TestWave14Mutant875362319/001/nexus-import-require-module-alias-0.ts:2:8
---- PASS: TestWave14Mutant (14.70s)
+        /tmp/adamic-gate/TestWave14Mutant1299560788/001/nexus-import-require-module-alias-0.ts:2:8
+--- PASS: TestWave14Mutant (15.22s)
 === RUN   TestWave14Throughput
     wave1_14_test.go:129: /tmp/lint-wave1-14-typescript-pinned/src/compiler corpus files: 77
     wave1_14_test.go:129: /workspace/adamic-landing-wave14/stage1 corpus files: 254
     wave1_14_test.go:133: natural compiler plus stage1 findings: 0
     wave1_14_test.go:141: zero natural findings: throughput workload adds 500 witness copies (2000 findings); do not interpret this as natural compiler throughput
-    wave1_14_test.go:157: round 1 Go: 268.456324ms findings=2000
-    wave1_14_test.go:157: round 1 native: 1.509286239s findings=2000
-    wave1_14_test.go:157: round 1 Node: 984.374458ms findings=2000
-    wave1_14_test.go:157: round 2 Go: 243.706943ms findings=2000
-    wave1_14_test.go:157: round 2 native: 1.403303711s findings=2000
-    wave1_14_test.go:157: round 2 Node: 954.19485ms findings=2000
-    wave1_14_test.go:157: round 3 Go: 259.382227ms findings=2000
-    wave1_14_test.go:157: round 3 native: 1.42926733s findings=2000
-    wave1_14_test.go:157: round 3 Node: 891.674014ms findings=2000
-    wave1_14_test.go:157: round 4 Go: 256.363665ms findings=2000
-    wave1_14_test.go:157: round 4 native: 1.505500789s findings=2000
-    wave1_14_test.go:157: round 4 Node: 969.069313ms findings=2000
-    wave1_14_test.go:157: round 5 Go: 285.447331ms findings=2000
-    wave1_14_test.go:157: round 5 native: 1.589611716s findings=2000
-    wave1_14_test.go:157: round 5 Node: 943.50469ms findings=2000
-    wave1_14_test.go:162: native 1.403304s 1425.21 findings/s count=2000 files=332
-    wave1_14_test.go:162: Node 0.891674s 2242.97 findings/s count=2000 files=332
-    wave1_14_test.go:162: Go 0.243707s 8206.58 findings/s count=2000 files=332
---- PASS: TestWave14Throughput (20.48s)
+    wave1_14_test.go:157: round 1 Go: 250.108902ms findings=2000
+    wave1_14_test.go:157: round 1 native: 1.566402313s findings=2000
+    wave1_14_test.go:157: round 1 Node: 1.023949888s findings=2000
+    wave1_14_test.go:157: round 2 Go: 261.914878ms findings=2000
+    wave1_14_test.go:157: round 2 native: 1.477876924s findings=2000
+    wave1_14_test.go:157: round 2 Node: 972.686746ms findings=2000
+    wave1_14_test.go:157: round 3 Go: 240.876168ms findings=2000
+    wave1_14_test.go:157: round 3 native: 1.513399805s findings=2000
+    wave1_14_test.go:157: round 3 Node: 881.849434ms findings=2000
+    wave1_14_test.go:157: round 4 Go: 233.756597ms findings=2000
+    wave1_14_test.go:157: round 4 native: 1.408194752s findings=2000
+    wave1_14_test.go:157: round 4 Node: 865.619464ms findings=2000
+    wave1_14_test.go:157: round 5 Go: 242.217316ms findings=2000
+    wave1_14_test.go:157: round 5 native: 1.456543524s findings=2000
+    wave1_14_test.go:157: round 5 Node: 916.566067ms findings=2000
+    wave1_14_test.go:162: native 1.408195s 1420.26 findings/s count=2000 files=332
+    wave1_14_test.go:162: Node 0.865619s 2310.48 findings/s count=2000 files=332
+    wave1_14_test.go:162: Go 0.233757s 8555.91 findings/s count=2000 files=332
+--- PASS: TestWave14Throughput (19.93s)
 === RUN   TestWave14DuplicateOptions
     wave1_14_test.go:197: duplicate-key refusal identical on Node, emitted JavaScript and sanitized native; deleting the guard compiles and prints accepted on all three
---- PASS: TestWave14DuplicateOptions (16.78s)
+--- PASS: TestWave14DuplicateOptions (17.20s)
 PASS
-ok  	github.com/system-inc/adamic/stage1/cohere/lint	203.551s
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	221.322s
