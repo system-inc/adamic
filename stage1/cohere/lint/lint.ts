@@ -437,7 +437,7 @@ export class Linter {
         }
     }
     walk(index: number, parent: number): void {
-        this.rules?.visit(index, parent);
+        if(this.rules !== undefined) { this.rules.visit(index, parent); }
         this.parents[index] = parent;
         const node = this.node(index);
         const parentKind = parent < 0 ? '' : this.node(parent).kind;

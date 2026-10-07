@@ -5,17 +5,18 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 	"io/fs"
 	"os"
 	"os/exec"
 	"path/filepath"
-"regexp"
-"github.com/system-inc/adamic/stage1/cohere/lint/registry"
+	"regexp"
 	"sort"
 	"strings"
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
@@ -43,7 +44,7 @@ func portFiles(t *testing.T) []string {
 		if entry.IsDir() && (path == "gaps" || strings.HasSuffix(path, "testdata")) {
 			return filepath.SkipDir
 		}
-		if !entry.IsDir() && (strings.HasSuffix(path, ".ts") || strings.HasSuffix(path, "rule.json") || strings.HasSuffix(path, "mutant.json") || strings.HasSuffix(path, "oracle.go")) {
+		if !entry.IsDir() && (strings.HasSuffix(path, ".ts") || strings.HasSuffix(path, ".a") || strings.HasSuffix(path, "rule.json") || strings.HasSuffix(path, "mutant.json") || strings.HasSuffix(path, "oracle.go")) {
 			files = append(files, path)
 		}
 		return nil
@@ -131,7 +132,7 @@ func goOracle(t *testing.T) string {
 
 func buildPort(t *testing.T, directory string, sanitize bool) string {
 	t.Helper()
-prepareRegistry(t, directory)
+	prepareRegistry(t, directory)
 	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
 	if err != nil {
 		t.Fatal(err)
@@ -149,7 +150,7 @@ prepareRegistry(t, directory)
 
 func node(t *testing.T, directory, manifest string, count bool) execution {
 	t.Helper()
-prepareRegistry(t, directory)
+	prepareRegistry(t, directory)
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	if err != nil {
 		t.Fatal(err)
@@ -265,6 +266,15 @@ func upstream(t *testing.T) []string {
 	execute(t, root, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/core", "-run", "Test(NoDebugger|NoEmpty|Eqeqeq|NoVar|NoDuplicateCase|NoContinue|NoWith|NoNew|NoSparseArrays|RequireYield|NoAwaitInLoop|VarsOnTop|NoTemplateCurlyInString|NoDivRegex|NoBitwise|NoLabels|NoSequences|UnicodeBom|NoUnneededTernary|NoWarningComments|NoPlusplus|NoNegatedCondition|NoReturnAssign)", "-count=1", "-timeout=10m")
 	execute(t, root, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/base", "./internal/lint/rules/nexus", "./internal/lint/rules/adamic", "-run", "Test(ConsistencyNoConsole|ConsistencyRequireTypeSuffix|ConsistencyNoEnum|NoTypePredicate)", "-count=1", "-timeout=10m")
 	execute(t, root, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/typescript", "-run", "Test(MethodSignatureStyle|NoWrapperObjectTypes|PreferLiteralEnumMember)", "-count=1", "-timeout=10m")
+	discovered := map[string]bool{}
+	packages := map[string][]string{}
+	for _, d := range prepareRegistry(t, ".") {
+		discovered[d.Name] = true
+		packages[d.UpstreamPackage] = append(packages[d.UpstreamPackage], d.UpstreamTest)
+	}
+	for name, tests := range packages {
+		execute(t, root, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/"+name, "-run", "^("+strings.Join(tests, "|")+")", "-count=1", "-timeout=10m")
+	}
 	files, err := filepath.Glob(filepath.Join(capture, "*.jsonl"))
 	if err != nil {
 		t.Fatal(err)
@@ -287,7 +297,7 @@ func upstream(t *testing.T) []string {
 			if err := json.Unmarshal(line, &row); err != nil {
 				t.Fatal(err)
 			}
-			if !strings.Contains("|no-debugger|no-empty|eqeqeq|no-var|no-duplicate-case|no-continue|no-with|no-new|no-sparse-arrays|require-yield|no-await-in-loop|vars-on-top|no-template-curly-in-string|no-div-regex|no-bitwise|no-labels|no-sequences|unicode-bom|no-unneeded-ternary|no-warning-comments|no-plusplus|base/consistency-no-console|nexus/consistency-require-type-suffix|adamic/no-type-predicate|@typescript-eslint/method-signature-style|@typescript-eslint/no-wrapper-object-types|@typescript-eslint/prefer-literal-enum-member|nexus/consistency-no-enum|no-negated-condition|no-return-assign|", "|"+row.Rule+"|") {
+			if !discovered[row.Rule] && !strings.Contains("|no-debugger|no-empty|eqeqeq|no-var|no-duplicate-case|no-continue|no-with|no-new|no-sparse-arrays|require-yield|no-await-in-loop|vars-on-top|no-template-curly-in-string|no-div-regex|no-bitwise|no-labels|no-sequences|unicode-bom|no-unneeded-ternary|no-warning-comments|no-plusplus|base/consistency-no-console|nexus/consistency-require-type-suffix|adamic/no-type-predicate|@typescript-eslint/method-signature-style|@typescript-eslint/no-wrapper-object-types|@typescript-eslint/prefer-literal-enum-member|nexus/consistency-no-enum|no-negated-condition|no-return-assign|", "|"+row.Rule+"|") {
 				continue
 			}
 			key := fmt.Sprintf("%s\t%+v\t%s", row.Rule, row.Options, row.Source)
@@ -337,16 +347,20 @@ func upstream(t *testing.T) []string {
 }
 func compare(t *testing.T, oracle, binary, directory, path string) []byte {
 	t.Helper()
+	return compareWithJavaScript(t, oracle, binary, directory, path, emittedJavaScript(t, directory))
+}
+func compareWithJavaScript(t *testing.T, oracle, binary, directory, path, module string) []byte {
+	t.Helper()
 	want := execute(t, "", oracle, "--manifest", path)
 	for _, side := range []struct {
 		name string
 		run  execution
-	}{{"Node", node(t, directory, path, false)}, {"native", execute(t, "", binary, "--manifest", path)}} {
+	}{{"Node", node(t, directory, path, false)}, {"emitted JavaScript", runJavaScript(t, module, path, false)}, {"native", execute(t, "", binary, "--manifest", path)}} {
 		if diff := difference(side.run.output, want.output); diff != "" {
 			t.Fatalf("%s: %s", side.name, diff)
 		}
 	}
-	t.Logf("Go, Node, native identical: %d bytes", len(want.output))
+	t.Logf("Go, Node, emitted JavaScript, native identical: %d bytes", len(want.output))
 	return want.output
 }
 
@@ -386,7 +400,7 @@ func TestCompilerAndStage1Agree(t *testing.T) {
 			if err != nil {
 				return err
 			}
-			if !entry.IsDir() && strings.HasSuffix(path, ".ts") {
+			if !entry.IsDir() && (strings.HasSuffix(path, ".ts") || strings.HasSuffix(path, ".a")) {
 				absolute, err := filepath.Abs(path)
 				if err != nil {
 					return err
@@ -407,8 +421,12 @@ func TestCompilerAndStage1Agree(t *testing.T) {
 	compare(t, goOracle(t), buildPort(t, directory, true), directory, manifest(t, rows))
 }
 func mutant(t *testing.T, from, to string, targets ...string) string {
-	if len(targets) == 0 && from != "" { targets = []string{"lint.ts"} }
- directory := t.TempDir()
+	return copyPort(t, t.TempDir(), from, to, targets...)
+}
+func copyPort(t *testing.T, directory, from, to string, targets ...string) string {
+	if len(targets) == 0 && from != "" {
+		targets = []string{"lint.ts"}
+	}
 	changed := 0
 	prepareRegistry(t, ".")
 	for _, file := range portFiles(t) {
@@ -425,7 +443,7 @@ func mutant(t *testing.T, from, to string, targets ...string) string {
 			source = strings.Replace(source, from, to, 1)
 			changed++
 		}
-		if strings.HasSuffix(file, ".ts") {
+		if strings.HasSuffix(file, ".ts") || strings.HasSuffix(file, ".a") {
 			source = rewritePortImports(t, file, source)
 		}
 		destination := filepath.Join(directory, file)
@@ -458,6 +476,7 @@ func mutant(t *testing.T, from, to string, targets ...string) string {
 	}
 	return directory
 }
+
 // Not parallel: sanitized rebuilds run in sequence to bound memory and precede timing.
 func TestLegacyMutants(t *testing.T) {
 	path := manifest(t, generated(t))
@@ -484,7 +503,7 @@ func TestLegacyMutants(t *testing.T) {
 			for _, side := range []struct {
 				name string
 				run  execution
-			}{{"Node", node(t, directory, path, false)}, {"native", execute(t, "", buildPort(t, directory, true), "--manifest", path)}} {
+			}{{"Node", node(t, directory, path, false)}, {"emitted JavaScript", emittedNode(t, directory, path, false)}, {"native", execute(t, "", buildPort(t, directory, true), "--manifest", path)}} {
 				if bytes.Equal(side.run.output, want) {
 					t.Fatalf("%s mutant survived on %s", change.name, side.name)
 				}
@@ -557,7 +576,7 @@ func TestThroughput(t *testing.T) {
 		if err != nil {
 			return err
 		}
-		if !entry.IsDir() && strings.HasSuffix(path, ".ts") {
+		if !entry.IsDir() && (strings.HasSuffix(path, ".ts") || strings.HasSuffix(path, ".a")) {
 			rows = append(rows, path)
 		}
 		return nil
@@ -641,13 +660,13 @@ func TestMutants(t *testing.T) {
 			path := manifest(t, rows)
 			want := execute(t, "", oracle, "--manifest", path).output
 			if change.File == "" {
-				change.File = "rule.ts"
+				change.File = descriptor.Module
 			}
 			directory := mutant(t, change.From, change.To, filepath.Join("rules", descriptor.Slug, change.File))
 			for _, side := range []struct {
 				name string
 				run  execution
-			}{{"Node", node(t, directory, path, false)}, {"native", execute(t, "", buildPort(t, directory, true), "--manifest", path)}} {
+			}{{"Node", node(t, directory, path, false)}, {"emitted JavaScript", emittedNode(t, directory, path, false)}, {"native", execute(t, "", buildPort(t, directory, true), "--manifest", path)}} {
 				if bytes.Equal(side.run.output, want) {
 					t.Fatalf("%s mutant survived on %s", change.Name, side.name)
 				}
@@ -656,7 +675,6 @@ func TestMutants(t *testing.T) {
 		})
 	}
 }
-
 
 var portImport = regexp.MustCompile(`(?m)(^import\s+[^;]*?\s+from\s+)(['"])([^'"]+)(['"])`)
 
@@ -683,4 +701,38 @@ func rewritePortImports(t *testing.T, file, source string) string {
 		}
 		return parts[1] + parts[2] + filepath.ToSlash(absolute) + parts[4]
 	})
+}
+
+func emittedJavaScript(t *testing.T, directory string) string {
+	t.Helper()
+	prepareRegistry(t, directory)
+	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
+	if err != nil {
+		t.Fatal(err)
+	}
+	lowered, err := lower.Lower(context.Background(), program)
+	if err != nil {
+		t.Fatal(err)
+	}
+	path := filepath.Join(t.TempDir(), "lint.mjs")
+	if err := os.WriteFile(path, []byte(javascript.JavaScript(lowered)), 0644); err != nil {
+		t.Fatal(err)
+	}
+	return path
+}
+func emittedNode(t *testing.T, directory, manifest string, count bool) execution {
+	t.Helper()
+	return runJavaScript(t, emittedJavaScript(t, directory), manifest, count)
+}
+func runJavaScript(t *testing.T, module, manifest string, count bool) execution {
+	t.Helper()
+	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	args := []string{"--disable-warning=ExperimentalWarning", runner, module, "--manifest", manifest}
+	if count {
+		args = append(args, "--count")
+	}
+	return execute(t, "", "node", args...)
 }

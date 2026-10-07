@@ -37,6 +37,19 @@ func written(text string) string {
 	}
 	return result.String()
 }
+
+// The wave workers' compact protocol is retained where its delimiters cannot collide.
+func simpleSuggestion(fixes []rule.Fix) bool {
+	if len(fixes) == 0 {
+		return false
+	}
+	for _, fix := range fixes {
+		if strings.ContainsAny(fix.Text, "|:") {
+			return false
+		}
+	}
+	return true
+}
 func run(row string, countOnly bool, out *bufio.Writer) int {
 	fields := strings.Split(row, "\t")
 	for len(fields) < 7 {
@@ -72,23 +85,40 @@ func run(row string, countOnly bool, out *bufio.Writer) int {
 		}
 		if len(d.Suggestions) > 0 {
 			s := d.Suggestions[0]
-			if len(d.Suggestions) != 1 || len(s.Fixes) != 1 {
-				panic("unexpected suggestion shape")
+			if len(d.Suggestions) == 1 && len(s.Fixes) == 1 && s.Fixes[0].Range == d.Range {
+				repair = "suggestion"
+				replacement = s.Fixes[0].Text
+				suggestion = s.Message.Description
+			} else if len(d.Suggestions) == 1 && simpleSuggestion(s.Fixes) {
+				repair = "suggestion-edits:" + s.Message.Id
+				var edits []string
+				for _, fix := range s.Fixes {
+					edits = append(edits, fmt.Sprintf("%d:%d:%s", fix.Range.Pos(), fix.Range.End(), fix.Text))
+				}
+				replacement = strings.Join(edits, "|")
+				suggestion = s.Message.Description
+			} else {
+				repair = "suggestions"
 			}
-			repair = "suggestion"
-			replacement = s.Fixes[0].Text
-			suggestion = s.Message.Description
 		}
 		editStart, editEnd := start, end
 		if len(d.Fixes) > 0 {
 			editStart = d.Fixes[0].Range.Pos()
 			editEnd = d.Fixes[0].Range.End()
 		}
-		if len(d.Suggestions) > 0 {
+		if repair == "suggestion" {
 			editStart = d.Suggestions[0].Fixes[0].Range.Pos()
 			editEnd = d.Suggestions[0].Fixes[0].Range.End()
 		}
 		fmt.Fprintf(out, "range %d %d %s %s\t%s\t%s\t%d %d\n", start, end, d.Message.Id, repair, written(replacement), written(suggestion), editStart, editEnd)
+		if repair == "suggestions" {
+			for _, suggestion := range d.Suggestions {
+				fmt.Fprintf(out, "suggestion\t%s\t%s\t%d\n", written(suggestion.Message.Id), written(suggestion.Message.Description), len(suggestion.Fixes))
+				for _, fix := range suggestion.Fixes {
+					fmt.Fprintf(out, "suggestion-edit\t%d %d\t%s\n", fix.Range.Pos(), fix.Range.End(), written(fix.Text))
+				}
+			}
+		}
 	}
 	if fields[6] == "recovery" {
 		fmt.Fprintln(out, "recovery findings only")
@@ -114,11 +144,17 @@ func collect(path, source string, fields []string) []rule.Diagnostic {
 	}
 	selected := []rule.Rule{rules.NoDebugger, rules.NoEmpty, rules.Eqeqeq, rules.NoVar, rules.NoDuplicateCase, rules.NoContinue, rules.NoWith, rules.NoNew, rules.NoSparseArrays, rules.RequireYield, rules.NoAwaitInLoop, rules.VarsOnTop, rules.NoTemplateCurlyInString, rules.NoDivRegex, rules.NoBitwise, rules.NoLabels, rules.NoSequences, rules.UnicodeBom, rules.NoUnneededTernary, rules.NoWarningComments, rules.NoPlusplus, base.ConsistencyNoConsole, nexus.ConsistencyRequireTypeSuffix, adamic.NoTypePredicate, typescript.MethodSignatureStyle, typescript.NoWrapperObjectTypes, typescript.PreferLiteralEnumMember, nexus.ConsistencyNoEnum, rules.NoNegatedCondition, rules.NoReturnAssign}
 	registered := registeredRules()
-    for _, item := range registered {
-        found := false
-        for _, subject := range selected { if subject.Name == item.subject.Name { found = true } }
-        if !found { selected = append(selected, item.subject) }
-    }
+	for _, item := range registered {
+		found := false
+		for _, subject := range selected {
+			if subject.Name == item.subject.Name {
+				found = true
+			}
+		}
+		if !found {
+			selected = append(selected, item.subject)
+		}
+	}
 	var diagnostics []rule.Diagnostic
 	var listeners []rule.Listeners
 	for _, subject := range selected {
@@ -219,7 +255,11 @@ func collect(path, source string, fields []string) []rule.Diagnostic {
 		if subject.Name == "no-empty" {
 			options = rules.NoEmptyOptions{AllowEmptyCatch: fields[4] == "true"}
 		}
-        for _, item := range registered { if subject.Name == item.subject.Name { options = item.options(fields) } }
+		for _, item := range registered {
+			if subject.Name == item.subject.Name {
+				options = item.options(fields)
+			}
+		}
 		listeners = append(listeners, subject.Run(ctx, options))
 	}
 	var walk func(*ast.Node)

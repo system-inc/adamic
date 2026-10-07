@@ -29,20 +29,8 @@ func TestProfileArtifacts(t *testing.T) {
 	if strings.TrimSpace(string(pin.output)) != compilerCommit {
 		t.Fatal("compiler checkout has the wrong pin")
 	}
-	for _, name := range portFiles {
-		data, err := os.ReadFile(name)
-		if err != nil {
-			t.Fatal(err)
-		}
-		typescript, err := filepath.Abs("../../typescript")
-		if err != nil {
-			t.Fatal(err)
-		}
-		text := strings.ReplaceAll(string(data), "../../typescript/", typescript+"/")
-		if err := os.WriteFile(filepath.Join(directory, name), []byte(text), 0644); err != nil {
-			t.Fatal(err)
-		}
-	}
+	copyPort(t, directory, "", "")
+	prepareRegistry(t, directory)
 	var files []string
 	err := filepath.WalkDir(filepath.Join(sourceRoot, "src/compiler"), func(path string, entry os.DirEntry, err error) error {
 		if err == nil && !entry.IsDir() && strings.HasSuffix(path, ".ts") {
@@ -67,7 +55,7 @@ func TestProfileArtifacts(t *testing.T) {
 	if err := os.WriteFile(filepath.Join(directory, "oracle"), oracle, 0755); err != nil {
 		t.Fatal(err)
 	}
-	program, err := load.Load([]string{"main.ts"})
+	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -163,6 +151,7 @@ func TestProfileSnapshotsAgree(t *testing.T) {
 			{"release", execute(t, "", filepath.Join(directory, "scanner"), "--manifest", path)},
 			{"profiled", execute(t, "", filepath.Join(directory, "profiled"), "--manifest", path)},
 			{"Node", node(t, directory, path, false)},
+			{"emitted JavaScript", emittedNode(t, directory, path, false)},
 		} {
 			if diff := difference(side.run.output, want); diff != "" {
 				t.Fatalf("%s %s: %s", directory, side.name, diff)
@@ -182,6 +171,7 @@ func TestCommentFoldMutant(t *testing.T) {
 		run  execution
 	}{
 		{"Node", node(t, directory, path, false)},
+		{"emitted JavaScript", emittedNode(t, directory, path, false)},
 		{"native", execute(t, "", binary, "--manifest", path)},
 	} {
 		if diff := difference(side.run.output, want); diff == "" {
@@ -202,6 +192,7 @@ func TestPositionIndexMutant(t *testing.T) {
 		run  execution
 	}{
 		{"Node", node(t, directory, path, false)},
+		{"emitted JavaScript", emittedNode(t, directory, path, false)},
 		{"native", execute(t, "", binary, "--manifest", path)},
 	} {
 		if diff := difference(side.run.output, want); diff == "" {
