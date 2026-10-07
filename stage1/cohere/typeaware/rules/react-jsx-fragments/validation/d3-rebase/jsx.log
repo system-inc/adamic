@@ -1,0 +1,11 @@
+Go default whole process ns 237522097
+Go --element whole process ns 311886545
+Go --globals whole process ns 191734001
+Traceback (most recent call last):
+  File "/workspace/adamic/stage1/cohere/typeaware/rules/react-jsx-fragments/testdata/check.py", line 35, in <module>
+    run([compiler,'build',str(d/'controls.a'),'-o',str(binary)]+(['--sanitize'] if sanitizer else []),dirname+suffix+'-build')
+  File "/workspace/adamic/stage1/cohere/typeaware/rules/react-jsx-fragments/testdata/check.py", line 19, in run
+    if p.returncode: raise RuntimeError(f'{label}: exit {p.returncode}: {p.stderr.decode()[:1500]}')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: react-jsx-fragments-build: exit 1: adamic: native: mkdir /home/agent/.cache/adamic/runtime/.build-2940258976: no space left on device
+

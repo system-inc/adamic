@@ -1,0 +1,9 @@
+Go all scalar values IsUpper 1886 uppercase points
+Node literal matches Go across 1114112 code points
+Traceback (most recent call last):
+  File "/workspace/adamic/stage1/cohere/typeaware/rules/react-jsx-no-constructed-context-values/testdata/check_unicode.py", line 19, in <module>
+    run([compiler,'build',str(rule/'unicode_controls.a'),'-o',str(out/label)] + (['--sanitize'] if sanitize else []), label+'-build')
+  File "/workspace/adamic/stage1/cohere/typeaware/rules/react-jsx-no-constructed-context-values/testdata/check_unicode.py", line 10, in run
+    assert result.returncode == 0, (label, result.returncode, result.stderr.decode()[:2000])
+           ^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('unicode-build', 1, 'adamic: native: mkdir /home/agent/.cache/adamic/runtime/.build-3123585659: no space left on device\n')

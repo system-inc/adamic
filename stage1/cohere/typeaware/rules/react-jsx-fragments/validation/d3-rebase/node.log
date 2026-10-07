@@ -1,0 +1,41 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== RUN   TestTheOracleCatchesOneByte
+=== PAUSE TestTheOracleCatchesOneByte
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null.a
+=== CONT  TestTheOracleCatchesOneByte
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/typeof_dispatch.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/typeof_dispatch.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/typeof_string_literal.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/typeof_string_literal.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_compare.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_compare.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_switch.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_switch.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_slots.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_slots.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_roll.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_roll.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_switch.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_string_literal.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_compare.a
+--- PASS: TestTheOracleCatchesOneByte (0.52s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_dispatch.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_slots.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_roll.a
+--- PASS: TestNativeAgreesWithNode (0.01s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/typeof_string_literal.a (0.62s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null.a (0.75s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_switch.a (0.80s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_compare.a (0.80s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/typeof_dispatch.a (0.61s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_slots.a (0.55s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_roll.a (0.43s)
+PASS
+gate cache: native hits=0 misses=22
+gate cache: node hits=0 misses=15
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.197s

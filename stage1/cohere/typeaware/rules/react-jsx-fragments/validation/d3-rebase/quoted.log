@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage1/cohere/typeaware/rules/react-jsx-no-constructed-context-values/testdata/check_quoted.py", line 14, in <module>
+    run([compiler,'build',str(rule/'quoted_controls.a'),'-o',str(out/label)]+(['--sanitize'] if sanitize else []),label+'-build')
+  File "/workspace/adamic/stage1/cohere/typeaware/rules/react-jsx-no-constructed-context-values/testdata/check_quoted.py", line 9, in run
+    assert p.returncode==0,(label,p.returncode,p.stderr[:2000]);return p.stdout,time.perf_counter_ns()-start
+           ^^^^^^^^^^^^^^^
+AssertionError: ('quoted-build', 1, b'adamic: native: mkdir /home/agent/.cache/adamic/runtime/.build-3618843727: no space left on device\n')
