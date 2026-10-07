@@ -265,3 +265,52 @@ Working estimate for lane 1 nullish plus optional: October 8 22:00 UTC (16:00 MD
 with native null/undefined separation and mutation/alias parity still a risk.
 This is an estimate, not a completion claim; each family is pushed only after its
 both-backend oracle and semantic mutants pass.
+
+## Lane 4: mixed unions and full union admission
+
+Worker on `codex/views-mixed-unions`, based on lane 1 b4cfd1aa (which descends
+from af0a0ae7), with lane 2 0b141c26 merged. The user reserves this addition to
+this plan for lane 4; earlier plan-only-lane-1 ownership does not apply here.
+Lane 1 continues to own nullish representation and optional/readiness checks.
+Lane 4 owns new `internal/lower/view_unions_mixed.go` and its tests, new
+`internal/native/view_unions_mixed.go` and its tests, new
+`internal/javascript/view_unions_mixed.go` and its tests, new runtime
+`view_unions_mixed.c/.h`, new oracle `checked_views_mixed_unions_test.go`,
+and `stage3/interface-downcasts/lane4/` fixtures, census, logs and reports.
+Existing union files and shared dispatch remain lane 1 territory.
+
+Required handoffs before compiler admission:
+
+1. In `view_contracts.go`, add `viewMixedUnionContractHook viewContractHook`;
+   route unions through it before callable detection and representation refusal.
+   Lane 4 registers `internMixedUnionViewContract` in its new file after this
+   variable exists. The shared registry, recursive builder callback and rollback
+   on failed member construction must retain their common contract semantics.
+2. In `view_unions.go`, dispatch mixed and untagged union field registration to
+   `viewMixedUnionFields(node,target,fields,seen)` before the finite tag refusal.
+   In `view_objects.go` and `interface_cast.go`, permit complete union contracts
+   in field reads/aliases rather than the current scalar/object/array range gate.
+   In `cast.go`, route union targets to the shared view entry before refusing.
+   Admission must still preserve writable-slot and nominal restrictions.
+3. Native runtime: expose a non-panicking, readiness-aware slot probe returning
+   presence, initialized state, logical runtime kind and normalized payload.
+   It must classify original storage before conversion, distinguish null from
+   undefined using lane 1 representation, respect static ownership/accessors,
+   and never call a getter while testing alternatives. Current
+   `adamic_object_view` panics on the first rejected member and cannot select
+   between two untagged object alternatives. An object heap tag alone is not
+   structural membership. Lane 4 will consume this probe; it will not duplicate
+   object.c readiness or manufacture nullish evidence.
+4. Shared backend field dispatch must hand the already evaluated operand,
+   complete ViewUnion id, expression text and declared union name to lane 4
+   selection. Keep the selected member contract on aliases and narrowed reads;
+   a successful tag test never erases its transitive payload checks. Primitive
+   conversion happens only after selection. Include lane 4 runtime helpers.
+   Array alternatives use lane 2 contracts, including later element reads.
+
+No census family is removed just because its contract builder or standalone
+selector passes. The integration checkpoint requires actual source lowering,
+source Node controls, both backend refusal pins and all three requested mutants.
+An untagged object union may overlap: accept a value satisfying any complete
+member; never commit to the first heap-kind match. Failed alternatives must not
+panic before all alternatives have been considered.
