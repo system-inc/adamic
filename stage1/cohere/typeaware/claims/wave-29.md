@@ -79,3 +79,9 @@ HIR/SSA/capture pipeline. Main and the bridge branch mention these names only
 in inventories/counts, not native rule implementations. This claim is pushed
 before new code. Shared JSX/numeric-node dependencies, if encountered, will be
 reported explicitly without editing the shared parser or driver.
+
+Fourth-batch status: partial kernels pushed, not full source ports. See
+[wave-29-fourth/REPORT.md](../wave-29-fourth/REPORT.md). Numeric manifests and
+three compiling kernel mutants pass; shared numeric JSX source preparation,
+checker binding acquisition and context memo/escape analysis are not integrated.
+No further claims are taken in this continuation.

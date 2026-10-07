@@ -1,0 +1,28 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { Frames } from '../frames.ts';
+import { RawNode, RawTree } from './raw_nodes.a';
+import { declarationIsFragment, visit } from './rules/react-jsx-fragments/rule.a';
+import { reference } from './rules/react-jsx-no-undef/rule.a';
+import { construction, message } from './rules/react-jsx-no-constructed-context-values/rule.a';
+const text = readTextFile(programArguments()[0] ?? panic('missing raw node frames'));
+if(text.kind === 'Error') { panic(text.message); }
+const frames = new Frames(text.text);
+const length = frames.natural();
+for(let index = 0; index < length; index++) {
+    const mode = frames.natural();
+    const count = frames.natural();
+    const nodes: RawNode[] = [];
+    for(let id = 0; id < count; id++) { nodes.push(new RawNode(id, frames.natural(), frames.field(), frames.number(), frames.number(), frames.number(), frames.natural())); }
+    const tree = new RawTree(nodes);
+    const queries = frames.natural();
+    for(let query = 0; query < queries; query++) {
+        const node = tree.get(frames.natural());
+        if(mode === 0) { console.log(`${index}\t${node.id}\t${declarationIsFragment(tree, node)}`); }
+        else if(mode === 1) { console.log(`${index}\t${node.id}\t${reference(tree, node)}`); }
+        else if(mode === 2) {
+            const found = construction(tree, node, 0);
+            console.log(found.node < 0 ? `${index}\t${node.id}\t-` : `${index}\t${node.id}\t${found.kind}\t${found.node}\t${found.usage}\t${message(found, 3, 5, 'v')}`);
+        } else if(mode === 3 || mode === 4) { console.log(`${index}\t${node.id}\t${visit(tree, node, mode === 4, true, [])}`); } else { panic('unknown JSX kernel profile'); }
+    }
+}
+frames.end();

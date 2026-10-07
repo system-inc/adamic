@@ -1,0 +1,4 @@
+import { Parser } from '../../../../../../typescript/parser/parser.ts';
+const parser = new Parser('const element=<Missing/>;', 'input.tsx');
+parser.file();
+for(const node of parser.nodes) { console.log(node.kind); }

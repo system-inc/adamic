@@ -1,0 +1,4 @@
+import { Parser } from '../../../../../../typescript/parser/parser.ts';
+const parser = new Parser('function Component(){return <Ctx.Provider value={{a:1}}/>;}', 'input.tsx');
+parser.file();
+for(const node of parser.nodes) { console.log(node.kind); }

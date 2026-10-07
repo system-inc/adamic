@@ -1,0 +1,25 @@
+=== RUN   TestWave29FourthKernels
+--- FAIL: TestWave29FourthKernels (0.00s)
+panic: interface conversion: ast.nodeData is *ast.SatisfiesExpression, not *ast.AsExpression [recovered, repanicked]
+
+goroutine 8 [running]:
+testing.tRunner.func1.2({0x1a8ebf8, 0x11f4a5bc9500})
+	/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232
+testing.tRunner.func1()
+	/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329
+panic({0x1a8ebf8?, 0x11f4a5bc9500?})
+	/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).AsAsExpression(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:9351
+github.com/system-inc/cohere/internal/lint/rules/react.jsxNoConstructedContextValuesConstructionOf({0x0, {0x0, 0x0}, 0x0, 0x0, 0x0, 0x0}, 0x11f4a5c5a080, 0x1b230f0?)
+	/workspace/adamic/cohere/internal/lint/rules/react/jsx_no_constructed_context_values.go:484 +0x80c
+github.com/system-inc/cohere/internal/lint/rules/react.jsxNoConstructedContextValuesConstructionOf({0x0, {0x0, 0x0}, 0x0, 0x0, 0x0, 0x0}, 0x11f4a5ba18f0, 0x0?)
+	/workspace/adamic/cohere/internal/lint/rules/react/jsx_no_constructed_context_values.go:475 +0x30e
+github.com/system-inc/cohere/internal/lint/rules/react.TestWave29FourthKernels(0x11f4a5b7cd88)
+	/workspace/adamic/cohere/internal/lint/rules/react/adamic_wave29_fourth_test.go:75 +0x181d
+testing.tRunner(0x11f4a5b7cd88, 0x1bf18d0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+FAIL	github.com/system-inc/cohere/internal/lint/rules/react	0.010s
+FAIL

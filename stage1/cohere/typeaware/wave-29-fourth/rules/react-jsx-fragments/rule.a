@@ -1,0 +1,55 @@
+import { RawNode, RawTree } from '../../raw_nodes.a';
+import { BindingElement, CallExpression, Identifier, ImportClause, ImportDeclaration, ImportSpecifier, JsxElement, JsxFragment, NamedImports, NoSubstitutionTemplateLiteral, ObjectBindingPattern, PropertyAccessExpression, StringLiteral, VariableDeclaration } from '../../syntax_kinds.a';
+export const listenerKinds: readonly number[] = [285, 286, 289];
+function text(tree: RawTree, id: number, expected: string): boolean {
+    return id >= 0 && tree.get(id).kind === Identifier && tree.get(id).text === expected;
+}
+function source(tree: RawTree, node: RawNode): boolean {
+    if(node.kind === Identifier) { return node.text === 'React'; }
+    if(node.kind === PropertyAccessExpression) {
+        return text(tree, node.a, 'React') && text(tree, node.b, 'Fragment');
+    }
+    if(node.kind === CallExpression && text(tree, node.a, 'require') && node.b >= 0) {
+        const argument = tree.get(node.b);
+        return (argument.kind === StringLiteral || argument.kind === NoSubstitutionTemplateLiteral) && argument.text === 'react';
+    }
+    return false;
+}
+// Receives the actual declaration node; binding acquisition belongs to the pending adapter.
+export function declarationIsFragment(tree: RawTree, node: RawNode): boolean {
+    if(node.kind === ImportSpecifier) {
+        if(!text(tree, node.a >= 0 ? node.a : node.b, 'Fragment') || node.parent < 0) { return false; }
+        const named = tree.get(node.parent);
+        if(named.kind !== NamedImports || named.parent < 0) { return false; }
+        const clause = tree.get(named.parent);
+        if(clause.kind !== ImportClause || clause.parent < 0) { return false; }
+        const declaration = tree.get(clause.parent);
+        if(declaration.kind !== ImportDeclaration || declaration.a < 0) { return false; }
+        const module = tree.get(declaration.a);
+        return (module.kind === StringLiteral || module.kind === NoSubstitutionTemplateLiteral) && module.text === 'react';
+    }
+    if(node.kind === BindingElement) {
+        if(node.parent < 0) { return false; }
+        const pattern = tree.get(node.parent);
+        if(pattern.kind !== ObjectBindingPattern || pattern.parent < 0) { return false; }
+        const variable = tree.get(pattern.parent);
+        return variable.kind === VariableDeclaration && variable.a >= 0 && source(tree, tree.get(variable.a));
+    }
+    return node.kind === VariableDeclaration && node.a >= 0 && source(tree, tree.get(node.a));
+}
+
+// Handler logic over a supplied numeric node and raw declaration identities.
+// The shared source adapter that obtains these facts has not landed.
+export function visit(tree: RawTree, node: RawNode, elementMode: boolean, checkerAvailable: boolean, declarations: readonly number[]): string {
+    if(node.kind === JsxFragment) { return elementMode ? 'preferPragma' : ''; }
+    if(elementMode || !checkerAvailable) { return ''; }
+    const opening = node.kind === JsxElement ? tree.get(node.a) : node;
+    if(opening.a < 0 || opening.operator > 0) { return ''; }
+    const tag = tree.get(opening.a);
+    let binds = false;
+    if(tag.kind === PropertyAccessExpression) { binds = text(tree, tag.a, 'React') && text(tree, tag.b, 'Fragment'); }
+    else if(tag.kind === Identifier) {
+        for(const declaration of declarations) { if(declarationIsFragment(tree, tree.get(declaration))) { binds = true; break; } }
+    }
+    return binds ? 'preferFragment' : '';
+}

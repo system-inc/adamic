@@ -1,0 +1,20 @@
+import { RawNode, RawTree } from '../../raw_nodes.a';
+import { Identifier, PropertyAccessExpression } from '../../syntax_kinds.a';
+export const listenerKinds: readonly number[] = [286, 287];
+export function isComponentName(name: string): boolean {
+    if(name.length === 0 || name.includes('-')) { return false; }
+    const first = name.charCodeAt(0);
+    return first >= 128 || first < 97 || first > 122;
+}
+// The caller hands over the opening node once. Only related tag nodes are followed.
+export function reference(tree: RawTree, opening: RawNode): number {
+    if(opening.a < 0) { return -1; }
+    let tag = tree.get(opening.a);
+    if(tag.kind === Identifier) { return isComponentName(tag.text) ? tag.id : -1; }
+    if(tag.kind !== PropertyAccessExpression) { return -1; }
+    while(tag.kind === PropertyAccessExpression) {
+        if(tag.a < 0) { return -1; }
+        tag = tree.get(tag.a);
+    }
+    return tag.kind === Identifier ? tag.id : -1;
+}

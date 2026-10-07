@@ -1,0 +1,20 @@
+import { panic } from 'adamic';
+// Supplied raw parser facts, not a shared parser/driver contract or a lint verdict.
+export class RawNode {
+    readonly id: number;
+    readonly kind: number;
+    readonly text: string;
+    readonly parent: number;
+    readonly a: number;
+    readonly b: number;
+    readonly operator: number;
+    constructor(id: number, kind: number, text: string, parent: number, a: number, b: number, operator: number) {
+        this.id = id; this.kind = kind; this.text = text; this.parent = parent;
+        this.a = a; this.b = b; this.operator = operator;
+    }
+}
+export class RawTree {
+    readonly nodes: RawNode[];
+    constructor(nodes: RawNode[]) { this.nodes = nodes; }
+    get(id: number): RawNode { return this.nodes[id] ?? panic('missing raw numeric node'); }
+}

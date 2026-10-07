@@ -1,0 +1,64 @@
+import { panic } from 'adamic';
+import { RawNode, RawTree } from '../../raw_nodes.a';
+import { And, ArrayLiteralExpression, ArrowFunction, AsExpression, BinaryExpression, ClassExpression, ConditionalExpression, FirstAssignment, FunctionExpression, Identifier, JsxElement, JsxFragment, JsxSelfClosingElement, LastAssignment, NewExpression, Nullish, ObjectLiteralExpression, Or, ParenthesizedExpression, PropertyAccessExpression, RegularExpressionLiteral, SatisfiesExpression } from '../../syntax_kinds.a';
+export const listenerKinds: readonly number[] = [286, 287];
+export class Construction {
+    readonly kind: string;
+    readonly node: number;
+    readonly usage: number;
+    constructor(kind: string, node: number, usage: number) { this.kind = kind; this.node = node; this.usage = usage; }
+}
+function empty(): Construction { return new Construction('', -1, -1); }
+// This is the direct syntax kernel. Identifier/memo/capture analysis is explicitly unavailable.
+export function construction(tree: RawTree, node: RawNode, depth: number): Construction {
+    if(depth > 16) { return empty(); }
+    let kind = '';
+    switch(node.kind) {
+        case 211: kind = 'object'; break;
+        case 210: kind = 'array'; break;
+        case 220: case 219: kind = 'function expression'; break;
+        case 232: kind = 'class expression'; break;
+        case 215: kind = 'new expression'; break;
+        case 13: kind = 'regular expression'; break;
+        case 285: case 286: kind = 'JSX element'; break;
+        case 289: kind = 'JSX fragment'; break;
+        case 239: panic('pinned Go construction helper panics for satisfies');
+        case 79: panic('NotYet: context construction identifier binding adapter');
+    }
+    if(kind.length > 0) { return new Construction(kind, node.id, -1); }
+    if(node.kind === ParenthesizedExpression || node.kind === AsExpression) {
+        return node.a < 0 ? empty() : construction(tree, tree.get(node.a), depth + 1);
+    }
+    if(node.kind === ConditionalExpression) {
+        const first = node.a < 0 ? empty() : construction(tree, tree.get(node.a), depth + 1);
+        return first.node >= 0 || node.b < 0 ? first : construction(tree, tree.get(node.b), depth + 1);
+    }
+    if(node.kind === BinaryExpression) {
+        if(node.operator >= FirstAssignment && node.operator <= LastAssignment) {
+            const found = node.b < 0 ? empty() : construction(tree, tree.get(node.b), depth + 1);
+            return found.node < 0 ? found : new Construction('assignment expression', found.node, node.id);
+        }
+        if(node.operator !== And && node.operator !== Or && node.operator !== Nullish) { return empty(); }
+        const first = node.a < 0 ? empty() : construction(tree, tree.get(node.a), depth + 1);
+        return first.node >= 0 || node.b < 0 ? first : construction(tree, tree.get(node.b), depth + 1);
+    }
+    if(node.kind === PropertyAccessExpression && node.a >= 0) {
+        const found = construction(tree, tree.get(node.a), depth + 1);
+        return found.node < 0 ? found : new Construction(found.kind, found.node, node.a);
+    }
+    return empty();
+}
+export function message(found: Construction, nodeLine: number, usageLine: number, variableName: string): string {
+    // The kernel probe supplies an ASCII identifier. Arbitrary Go %q escaping needs the source adapter.
+    for(let index = 0; index < variableName.length; index++) {
+        const unit = variableName.charCodeAt(index);
+        if(unit < 32 || unit >= 127 || unit === 34 || unit === 92) { panic('NotYet: Go quoted context variable name'); }
+    }
+    const functionKind = found.kind === 'function expression' || found.kind === 'function declaration';
+    const remedy = functionKind ? 'useCallback' : 'useMemo';
+    const suffix = functionKind ? 'Func' : '';
+    if(found.usage < 0) {
+        return `defaultMsg${suffix}\tThe ${found.kind} passed as the value prop to the Context provider (at line ${nodeLine}) changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a ${remedy} hook so the identity is stable between renders.`;
+    }
+    return `withIdentifierMsg${suffix}\tThe "${variableName}" ${found.kind} (at line ${nodeLine}) passed as the value prop to the Context provider (at line ${usageLine}) changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a ${remedy} hook so the identity is stable between renders.`;
+}
