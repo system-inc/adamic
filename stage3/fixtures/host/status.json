@@ -97,7 +97,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/host/06_fileExists.a:48:5: stage 0 can't lower node:fs.symlinkSync yet"
+      "what": "stage3/fixtures/host/06_fileExists.a:29:9: stage 0 can't lower a PrefixUnaryExpression on a value yet"
     }
   },
   {
@@ -117,7 +117,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/host/07_directoryExists.a:48:5: stage 0 can't lower node:fs.symlinkSync yet"
+      "what": "stage3/fixtures/host/07_directoryExists.a:29:9: stage 0 can't lower a PrefixUnaryExpression on a value yet"
     }
   },
   {
@@ -147,7 +147,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/host/08_getDirectories.a:208:5: stage 0 can't lower node:fs.symlinkSync yet"
+      "what": "stage3/fixtures/host/08_getDirectories.a:143:44: stage 0 can't lower a parameter that isn't a plain name yet"
     }
   },
   {
@@ -166,7 +166,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/host/09_realpath.a:27:5: stage 0 can't lower node:fs.symlinkSync yet"
+      "what": "stage3/fixtures/host/09_realpath.a:12:21: stage 0 can't lower a PrefixUnaryExpression on a value yet"
     }
   },
   {
@@ -184,7 +184,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/host/10_getModifiedTime.a:33:5: stage 0 can't lower node:fs.symlinkSync yet"
+      "what": "stage3/fixtures/host/10_getModifiedTime.a:31:24: stage 0 can't lower a call through ?. (an optional call) yet"
     }
   },
   {
@@ -215,8 +215,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/12_deleteFile.a:21:5: stage 0 can't lower node:fs.symlinkSync yet"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -271,8 +271,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/15_getExecutingFilePath.a:21:21: stage 0 can't lower node:path.basename yet"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -430,7 +430,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/host/24_useCaseSensitiveFileNames.a:20:16: stage 0 can't lower statSync: fs options other than a fixed literal or its plain const binding yet"
+      "what": "stage3/fixtures/host/24_useCaseSensitiveFileNames.a:32:9: stage 0 can't lower a PrefixUnaryExpression on a value yet"
     }
   },
   {
