@@ -1,3 +1,59 @@
+Built: merged current main and the upstream host fixtures; added path.relative and a strict dual-backend acceptance runner.
+Commits: main merge 5fbaa4d (e011f8f), fixture merge aa987b3 (1037217), relative component 0ad74bf; all pushed.
+Checks: recorded Node output agrees for all five owned fixtures; both backend attempts stop at Checker; relative component passes on both emitters.
+Mutants: five upstream source mutants and the compiled relative-to-join mutant are caught only by stdout comparison with Node.
+Uncovered: shared @types/node loader hook and sibling host dependencies are pending; no owned upstream acceptance fixture is green yet.
+
+## Upstream acceptance fixtures on current main
+
+Run from the repository root after sourcing /workspace/adamic-tools/env.sh:
+
+```sh
+python3 stage3/host/check_fs_directory.py --mutants --logs /tmp/fs-directory-acceptance > /tmp/fs-directory-acceptance.log 2>&1
+```
+
+This runner preserves stage3/fixtures/host/status.json and all five upstream sources. It compares source Node observations to the recorded bytes, independently attempts native and JavaScript compilation, and requires both compiled observations to match. Native runs enable ASan/UBSan and leak detection. Checker, NotYet, Refused and unexpected tool failure are distinct outcomes. The runner exits 1 until every owned fixture agrees on both backends; it never accepts the historical Checker status as success.
+
+| Fixture | Source on Node | Native stage | JavaScript stage |
+| --- | --- | --- | --- |
+| 07_directoryExists | Agrees with status.json | Checker | Checker |
+| 08_getDirectories | Agrees with status.json | Checker | Checker |
+| 09_realpath | Agrees with status.json | Checker | Checker |
+| 24_useCaseSensitiveFileNames | Agrees with status.json | Checker | Checker |
+| 25_readDirectory | Agrees with status.json | Checker | Checker |
+
+Exact stdout, stderr, exit codes and results.json are committed under logs/fs_directory_acceptance/. The five source mutants from the supplied check.py each exit cleanly and differ only in stdout: directoryExists uses isFile; directory sort reverses; failed realpath resolves the input; case sensitivity inverts its probe; readDirectory bypasses extension filtering. These are fixture sensitivity evidence, not evidence of compiled acceptance mutants, since declaration loading is still blocked.
+
+Both merges were explicitly requested and preserve history. The main conflict in internal/lower/object.go was resolved by retaining Node host dispatch and main's userMethodCall dispatch. No main-side functionality was discarded. fs_file's inspected branch tip 080789f still used unit-local declaration copies; it was not merged in place of the corrected shared hook. No shared hook SHA has yet been supplied.
+
+## Independent language blocker in readDirectory
+
+Current compilation of fixture 25 reports TS2345 for bounds-guarded generic indexed reads, TS2322/TS2532 for potentially absent array values, TS2775 for the unannotated Debug assertion object, and TS7030 for an implicit undefined return. The missing Node imports are additional blockers. The source audit's upstream function bodies are unchanged.
+
+One-line reproducer, checked independently of Node declarations:
+
+```typescript
+export function map<T, U>(xs: readonly T[], f: (x: T) => U): U[] { const out: U[] = []; for (let i = 0; i < xs.length; i++) out.push(f(xs[i])); return out; }
+```
+
+`go run ./cmd/adamic types /workspace/scratch/fs-directory/index-proof.a` reports TS2345: T | undefined is not assignable to T. This needs the coordinated sound indexed-read adaptation/proof support; suppressing the diagnostic or weakening NoUncheckedIndexedAccess would not be a sound fix. The diagnostic is saved in logs/fs_directory_index-proof.log.
+
+## Relative-path component
+
+The actual readDirectory driver calls node:path.relative, so this unit now builds it as well as resolve, dirname and join. Its fixture node_path_relative.a covers 144 pairs, including empty segments, roots, divergent name prefixes, dot components, Unicode and NUL. TestNodePathRelativeRuntime constructs the equivalent host-call IR and holds both emitters to the unlowered source on Node. It deliberately bypasses the unavailable declaration loader and therefore does not claim that node_path_relative.a compiles through the checker or lowering. Register its normal input/counts gate after the shared declarations land.
+
+```sh
+go test ./internal/oracle -run TestNodePathRelativeRuntime -count=1 -timeout 15m -v > /tmp/fs-directory-relative-runtime.log 2>&1
+```
+
+Observed: PASS, 47.755s. Both emitters agree, sanitizer and leak checks pass, and the native join mutant runs cleanly and is caught only by stdout comparison with Node. POSIX relative compares whole normalized components and preserves Node's equal-input shortcut before cwd resolution.
+
+Setup on the merged main: Go go1.27.1 ready 0s, clang 20.1.8 ready 0s, Node v24.19.0 ready 0s, submodules ready 0s, build cache warm 321s, total 321s. nproc reports 5, cgroup cpu.max is 400000 100000. The printed environment is /workspace/adamic-tools/env.sh.
+
+Further current-main package and independent-loader results are appended after completion. Earlier sections below are historical, pre-merge evidence.
+
+---
+
 Built: runtime and lowering retained; local Node declarations and this unit's loader hook removed per the corrected integration brief.
 Commits: correction follows eef83ac, afe01f1 and f09e4c3; see branch history for the correction SHA.
 Checks: load and lower package tests pass after removal; host fixture checks now need the shared fs_file declaration hook.
