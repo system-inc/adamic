@@ -1,0 +1,70 @@
+package main
+
+import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+	syntax "github.com/microsoft/TypeScript/tsc/shim/ast"
+	"os"
+	"strings"
+)
+
+func listener(data []byte) (Descriptor, error) {
+	var d Descriptor
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	if err := decoder.Decode(&d); err != nil {
+		return d, err
+	}
+	kinds := map[string]bool{}
+	for kind := syntax.Kind(0); kind < syntax.KindCount; kind++ {
+		kinds[strings.TrimPrefix(kind.String(), "Kind")] = true
+	}
+	seen := map[string]bool{}
+	for _, kind := range d.Kinds {
+		if !identifier.MatchString(kind) || seen[kind] || !kinds[kind] {
+			return d, fmt.Errorf("invalid kind %q", kind)
+		}
+		seen[kind] = true
+	}
+	if !d.Node || len(d.Kinds) == 0 {
+		return d, fmt.Errorf("missing handed-node declaration")
+	}
+	return d, nil
+}
+func main() {
+	for _, path := range os.Args[1:] {
+		data, err := os.ReadFile(path)
+		if err != nil {
+			panic(err)
+		}
+		d, err := listener(data)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Printf("PASS %s node=%v kinds=%v\n", d.Name, d.Node, d.Kinds)
+		d.Factory, d.Class, d.Visit, d.Oracle, d.Slug, d.Module = "create", "Rule", "visit", "oracle", "probe", "rule.a"
+		generated, _ := Render([]Descriptor{d})
+		if !strings.Contains(string(generated), "this.rule0.visit(node, index)") {
+			panic("wrong handed-node dispatch")
+		}
+		for _, kind := range d.Kinds {
+			if !strings.Contains(string(generated), "case '"+kind+"':") {
+				panic("missing listener bucket")
+			}
+		}
+	}
+	for _, mutant := range []string{
+		`{"name":"symbol-description","node":true,"kinds":[214]}`,
+		`{"name":"symbol-description","node":true,"kinds":["CallExpressions"]}`,
+		`{"name":"symbol-description","node":true,"kinds":["CallExpression","CallExpression"]}`,
+		`{"name":"symbol-description","node":false,"kinds":["CallExpression"]}`,
+	} {
+		if _, err := listener([]byte(mutant)); err == nil {
+			panic("invalid declaration accepted")
+		} else {
+			fmt.Printf("CAUGHT %s\n", err)
+		}
+	}
+	fmt.Println("PASS listener subset and generated handed-node calls; full Discover registration is not implemented")
+}

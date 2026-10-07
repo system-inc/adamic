@@ -8,14 +8,21 @@ The three earlier React claims are PARKED under the user's explicit instruction.
 The first six rules remain completed; their full landing observations are in
 ../wave_10_react/README.md. No additional rule is claimed beyond these three.
 
-Each directory has rule.json with numeric kinds from the pinned typescript-go
-parser's ast.Kind, measured by testdata/kinds.go. CallExpression is 214;
-require-await listens to 263, 219, 220, 175, 178, 179 and 177. These declarations
-are not a claim that the shared native parser now exposes numeric kinds.
-The shared ParseNode still carries a string kind; its native kind mapping and
-supplied-node ABI are absent. No shared harness or registration generator is
-changed. The visit functions use supplied facts and numeric kind checks, with
-no node refetch or file walk.
+Each directory has rule.json listener metadata using canonical typescript-go
+ast.Kind names and "node": true, as specified by the registry at harness commit
+ab70f38d4. Symbol and hook listeners declare CallExpression; require-await declares
+FunctionDeclaration, FunctionExpression, ArrowFunction, MethodDeclaration,
+GetAccessor, SetAccessor and Constructor. The generated driver hands each listener
+(node, index), with optional parent when requested. Numeric kind minting is not
+planned and is not a blocker. The isolated supplied-fact modules still use numeric
+checker AST observations internally; they are not ParseNode adapters.
+
+These are partial listener declarations, not complete Discover registrations.
+The old unrecognized entry field is removed. The registry additionally requires
+named factories/classes, hooks, provenance, owned oracle adapters, mutants and
+witnesses. Those integration pieces remain unwritten. No shared registry or
+harness is changed. reportNode and reportRange are present in the referenced
+RuleContext; its source does not expose the live checker facts these rules need.
 
 Symbol-description implements all verdict logic on its supplied call facts,
 including parentheses-normalized callee syntax and the FIRST declaration's
@@ -36,12 +43,12 @@ are NOT ported. The current owned interface models only the body facts, not a
 finished function adapter. This is incomplete work, not a complete rule hidden
 behind a harness exception.
 
-The concrete shared boundary is construction and dispatch of numeric supplied
-nodes. Current main has neither a numeric ParseNode API nor a rule.json driver.
-The owned interfaces here are isolated fact contracts, not an invented declaration
-of the coming shared ABI. The live checker adapters are not implemented, and no
-new bridge question is registered. Existing bridge modes do supply many relevant
-raw type/origin facts; absence of a lint-verdict question is not the blocker.
+The remaining work is adapting the handed ParseNode and checker facts to these
+owned fact contracts and emitting results through reportNode/reportRange. The
+handed-node contract is now specified on origin/lint-rules/harness, though it is
+not on this landing base. Live checker adapters are not implemented and no new
+bridge question is registered. Existing bridge modes supply many relevant raw
+type/origin facts; absence of a lint-verdict question is not a blocker.
 No rule verdict is delegated to Go by the native modules.
 
 Validation (source the setup environment, redirect output to a log):
@@ -118,3 +125,30 @@ They are separate from the incomparable isolated-core timing above.
 | blocking-controls | 5.667838 | 0.077326 | 73.298x |
 | blocking-compiler | 2.148552 | 0.307177 | 6.995x |
 | blocking-repository | 0.366139 | 0.131993 | 2.774x |
+
+## Canonical listener contract correction
+
+The user confirmed canonical kind names and the ab70f38d4 handed-node contract.
+The three listener declarations now use that contract. Earlier numeric-API
+blocker descriptions are superseded; adapter implementation and require-await
+reporting remain incomplete. Main remains c01907a7 after fetching origin, so
+this metadata/documentation correction does not change the previously green
+runtime sources or require another rebase. No additional rule is claimed.
+
+Validation uses the exact registry.go from ab70f38d4 with a scratch probe:
+
+```sh
+go run /tmp/wave-10-kind-contract/registry.go /tmp/wave-10-kind-contract/probe.go \
+  stage1/cohere/typeaware/wave_10_leaf/symbol_description/rule.json \
+  stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/rule.json \
+  stage1/cohere/typeaware/wave_10_leaf/require_await/rule.json \
+  > /tmp/wave-10-kind-contract-validation.log 2>&1
+```
+
+Exit 0: all three listener subsets pass canonical ast.Kind validation. The actual
+registry Render function produces their named kind buckets and visit(node, index)
+calls using explicitly supplied scratch factory/class placeholders. Negative
+controls reject numeric kinds, an unknown name, duplicate kinds and node: false.
+This checks listener metadata and generated dispatch, not full Discover or module
+compilation. Evidence preserves the probe and its output. The existing native
+sources are unchanged; no new runtime, sanitizer or corpus run is claimed.

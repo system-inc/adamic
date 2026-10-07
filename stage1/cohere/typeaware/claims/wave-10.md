@@ -70,7 +70,7 @@ produces one production Go iframe finding, while the unchanged native stage-1
 parser exits 70 expecting GreaterThanToken at the self-closing slash. Shared
 JSX parsing blocks these rules before listener dispatch. The current parking instruction counts these claims as finished for the
 landing cap while preserving their incomplete implementation status. Blockers:
-shared native JSX parsing and the numeric node-kind/supplied-node adapter API.
+shared native JSX parsing and incomplete rule adapters.
 JSX is landing on area/stage1-lint; analysis modules are tracked on #dnv6f2c.
 No shared parser is edited.
 See ../wave_10_react/README.md for the input, exact error, Go verdict and limits.
@@ -103,12 +103,12 @@ New modules will be .a, in owned rule directories, with rule.json kinds and
 supplied-node listeners. Byte agreement, native mutants, sanitizer/release checks
 and native/Go timing remain required; a claim is not a completion claim.
 
-Third continuation status: IN PROGRESS, not complete or parked. Numeric rule.json
-metadata and isolated symbol/hook verdict modules are written in wave_10_leaf.
+Third continuation status: IN PROGRESS, not complete or parked. Canonical kind-name
+rule.json metadata and isolated symbol/hook verdict modules are written in wave_10_leaf.
 Their supplied-fact Go comparisons and sanitizers pass. require-await's body
 filters pass context-free Go controls; candidate reporting explicitly refuses.
-The shared numeric supplied-node adapter is absent; live bridge/corpus validation
-is not performed. Contextual require-await reporting remains unported. See
+The handed-node contract is specified by harness ab70f38d4; live bridge/corpus
+adapters are not implemented or validated. Numeric kind minting is not planned. Contextual require-await reporting remains unported. See
 ../wave_10_leaf/README.md for exact observations and limits. No further claim.
 
 Latest landing base: c01907a7. Six completed-rule oracle gates and the isolated
