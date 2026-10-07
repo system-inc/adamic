@@ -39,3 +39,8 @@ ranked rules. All higher-ranked remaining candidates are claimed.
 
 These three are claimed for this continuation. No implementation precedes this
 claim commit and push. The earlier released lost-update claim remains released.
+
+Continuation completion: all three rules above are implemented in a74cf501,
+with independent Go byte agreement, per-rule mutants, sanitizer runs and released
+handles verified. Evidence is in ../WAVE_30_NEXT_REPORT.md and validation-wave-30-next.
+No further rules were claimed after Ahra's correction.

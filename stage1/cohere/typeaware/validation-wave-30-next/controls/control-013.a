@@ -1,0 +1,2 @@
+class Registry extends Map<string,number>{label='x'};declare const r:Registry;r[0];Object.keys(r);r.size<0;
+export {};

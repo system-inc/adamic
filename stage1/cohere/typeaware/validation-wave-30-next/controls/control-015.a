@@ -1,0 +1,2 @@
+declare const m:Map<string,number>&{extra:string};m['x'];Object.keys(m);m.size<0;
+export {};

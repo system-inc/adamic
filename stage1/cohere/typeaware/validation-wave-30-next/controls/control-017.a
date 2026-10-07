@@ -1,0 +1,2 @@
+const Object={keys:(x:unknown)=>[]};declare const m:Map<string,number>;Object.keys(m);
+export {};

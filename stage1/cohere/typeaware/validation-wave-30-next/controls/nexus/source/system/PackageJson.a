@@ -1,0 +1,1 @@
+export type PackageJsonReadOutcomeType={outcome:'Read';value:object}|{outcome:'Unreadable';message:string};export declare function readPackage():PackageJsonReadOutcomeType;

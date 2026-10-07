@@ -1,0 +1,2 @@
+class Text{trim(){return this}}new Text().trim();interface Label{slice(x:number):Label}declare const l:Label;l.slice(1);interface Array<T>{slice(x:number):void;first:T}declare const a:Array<string>;a.slice(1);
+export {};

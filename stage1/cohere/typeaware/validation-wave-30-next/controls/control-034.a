@@ -1,0 +1,2 @@
+import {JsonParseOutcomeType} from './nexus/source/structured-text/json/Json';import {JsonFileWriteOutcomeType} from './nexus/source/structured-text/json/JsonFile';declare function both():JsonFileWriteOutcomeType|JsonParseOutcomeType;both();
+export {};

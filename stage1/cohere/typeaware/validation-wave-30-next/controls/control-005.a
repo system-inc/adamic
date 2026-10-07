@@ -1,0 +1,2 @@
+declare const text:string;declare const bytes:Uint8Array;text.length===-1;bytes.length<=-1;declare const tuple:readonly [1,2];tuple.length==-1;
+export {};

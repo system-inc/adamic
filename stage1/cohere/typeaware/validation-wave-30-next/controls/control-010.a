@@ -1,0 +1,2 @@
+declare const m:Map<string,number>;m['size'];m['get'];m[Symbol.iterator];declare const key:string;m[key];m[true];m[1n];m[null];m[undefined];
+export {};

@@ -1,0 +1,2 @@
+type JsonParseOutcomeType={outcome:'Parsed'}|{outcome:'Failed'};declare function local():JsonParseOutcomeType;local();
+export {};

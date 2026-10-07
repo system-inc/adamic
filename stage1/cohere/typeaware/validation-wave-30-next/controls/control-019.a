@@ -1,0 +1,2 @@
+declare const s:string|undefined;s?.toLowerCase();declare const a:readonly string[];a.indexOf('x');declare const both:string|string[];both.includes('x');(a.join(','));
+export {};

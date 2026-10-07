@@ -1,0 +1,2 @@
+declare const a:string[]|number[];declare const key:'missing'|'length';'absent' in a;key in a;declare const mixed:string[]|Record<string,number>;'absent' in mixed;
+export {};

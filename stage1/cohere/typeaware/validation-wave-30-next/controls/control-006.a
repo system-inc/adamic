@@ -1,0 +1,2 @@
+export function generic<T extends string[]>(items:T){return items.length<0;}declare const items:string[]|undefined;items?.length<0;declare const like:ArrayLike<string>;like.length<0;
+export {};

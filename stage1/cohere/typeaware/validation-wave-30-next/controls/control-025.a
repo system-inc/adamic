@@ -1,0 +1,2 @@
+declare const a:number[];a.toSorted((x,y)=>x-y);a.toSorted();a.toReversed();a.toSpliced(0,1);a.with(0,2);a.at(0);
+export {};

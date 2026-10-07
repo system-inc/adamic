@@ -1,0 +1,2 @@
+declare const s:string;declare const loose:any;declare const unknownValue:unknown;declare const callback:((s:string)=>string)|undefined;s.replace(/x/,loose);s.replace(/x/,unknownValue);s.replace(/x/,callback);
+export {};

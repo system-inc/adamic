@@ -1,0 +1,2 @@
+import {parse} from './nexus/source/structured-text/json/Json';export async function list(){await Promise.all([parse(),parse()]);}true && parse();true?parse():parse();
+export {};

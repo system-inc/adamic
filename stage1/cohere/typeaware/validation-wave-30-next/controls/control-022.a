@@ -1,0 +1,2 @@
+declare const a:string[];a.push('x');a.sort();a.splice(0,1);a.map(x=>x);a.forEach(x=>console.log(x));declare const s:string;s.normalize('NFC');s.repeat(2);s.localeCompare('x');
+export {};

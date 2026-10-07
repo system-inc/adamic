@@ -1,0 +1,2 @@
+declare const m:Map<string,number>;export function own(Object:ObjectConstructor){Object.keys(m)};const fake={keys:(x:unknown)=>[]};fake.keys(m);
+export {};

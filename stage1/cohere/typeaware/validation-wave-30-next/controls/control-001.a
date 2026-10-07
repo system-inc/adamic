@@ -1,0 +1,2 @@
+declare const a:string[];declare const key:'Admin'|'Member';'Admin' in a;key in a;'0' in a;'length' in a;'map' in a;'00' in a;'4294967294' in a;'4294967295' in a;
+export {};

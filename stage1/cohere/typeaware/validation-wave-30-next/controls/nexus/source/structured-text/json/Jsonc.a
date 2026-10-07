@@ -1,0 +1,1 @@
+export type JsoncParseOutcomeType={outcome:'Parsed'}|{outcome:'Failed'};export declare function parseJsonc():JsoncParseOutcomeType;

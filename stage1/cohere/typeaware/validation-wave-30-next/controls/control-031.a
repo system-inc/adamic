@@ -1,0 +1,2 @@
+import {parse} from './nexus/source/structured-text/json/Json';declare function extra():ReturnType<typeof parse>|{outcome:'Extra'};extra();export function wrapper(){return parse()}wrapper();
+export {};

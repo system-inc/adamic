@@ -1,0 +1,2 @@
+declare const m:Map<string,number>|Set<number>;m['extra'];Object.keys(m);Object.values(m);Object.entries(m);Object.getOwnPropertyNames(m);Object.freeze(m);
+export {};

@@ -1,0 +1,2 @@
+declare const a:readonly [string,string];'third' in a;declare const wide:string;wide in a;0 in a;Symbol.iterator in a;
+export {};

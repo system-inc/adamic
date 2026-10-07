@@ -1,0 +1,2 @@
+declare const s:string;declare const a:string[];s.trim().padStart(4);s.replace(/x/g,()=>{a.push('x');return 'x'});declare const replacer:(s:string)=>string;s.replace(/x/,replacer);
+export {};

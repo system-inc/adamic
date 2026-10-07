@@ -1,0 +1,2 @@
+declare const s:string;declare const args:[string,string];s.concat(...args);declare const fn:((s:string)=>string)&{tag:number};s.replace(/x/,fn);
+export {};

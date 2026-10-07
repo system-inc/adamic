@@ -1,0 +1,2 @@
+declare let text:string;declare const list:string[];text.trim();text.replace('old','new');list.concat(['a']);list.slice(1);text=text.trim();const result=list.slice(0);void text.trim();
+export {};

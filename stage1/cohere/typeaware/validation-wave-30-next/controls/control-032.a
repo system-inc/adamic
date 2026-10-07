@@ -1,0 +1,2 @@
+import {parse} from './nexus/source/structured-text/json/Json';declare function only():Extract<ReturnType<typeof parse>,{outcome:'Parsed'}>;only();
+export {};

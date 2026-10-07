@@ -1,0 +1,2 @@
+declare const w:WeakMap<object,number>;declare const s:WeakSet<object>;w['x'];s[false];w.size<0;Object.keys(w);
+export {};

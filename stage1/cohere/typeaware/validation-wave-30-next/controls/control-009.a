@@ -1,0 +1,2 @@
+declare const m:Map<string,number>;declare const s:Set<string>;declare const r:ReadonlyMap<string,number>;m.size!==-1;s.size>=0;r.size>-1;m['total']=1;s[0];r[1];
+export {};

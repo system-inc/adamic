@@ -1,0 +1,2 @@
+import {read,write,writeAsync,success,optional} from './nexus/source/structured-text/json/JsonFile';read<number>();write();writeAsync();export async function f(){await (writeAsync());}success();optional?.();
+export {};
