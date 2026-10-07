@@ -92,3 +92,44 @@ func TestSlabLaneCatchesEarlyRelease(t *testing.T) {
 		t.Logf("string_append.a slabs=%v caught %s", slabs, report)
 	}
 }
+
+// This constructed mutant drops a real fixture value's count only after its address
+// was recycled. Malloc's ASan quarantine prevents that path; slabs take it immediately.
+func TestSlabLaneCatchesRecycledRelease(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/string_append.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	source := native.C(program)
+	allocation := "adamic_string * adamic_temporary_27 = adamic_string_concat("
+	use := "adamic_local_17_doubled = adamic_string_append(adamic_local_17_doubled,"
+	if strings.Count(source, allocation) != 1 || strings.Count(source, use) != 1 {
+		t.Fatal("mutant insertion points changed")
+	}
+	source = strings.Replace(source, allocation, "adamic_string *recycle_probe = adamic_string_allocate(7);\n\tuintptr_t recycled_address = (uintptr_t)recycle_probe;\n\tadamic_release(recycle_probe);\n\t"+allocation, 1)
+	source = strings.Replace(source, use, "if ((uintptr_t)adamic_local_17_doubled == recycled_address) { adamic_release(adamic_local_17_doubled); }\n\t"+use, 1)
+	expected := onNode(t, path)
+	for _, slabs := range []bool{false, true} {
+		binary := filepath.Join(t.TempDir(), "mutant")
+		if err := native.Build(source, binary, native.Options{Sanitize: true, Slabs: slabs}); err != nil {
+			t.Fatal(err)
+		}
+		actual := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary)
+		if slabs {
+			if actual.exitCode == 0 || !strings.Contains(string(actual.stderr), "ERROR: AddressSanitizer: use-after-poison") {
+				t.Fatalf("recycled-release mutant escaped: exit %d\n%s", actual.exitCode, actual.stderr)
+			}
+			t.Log("string_append.a: recycled-release mutant caught by slabs: use-after-poison")
+		} else {
+			if difference := disagreement(expected, actual); difference != "" {
+				t.Fatalf("malloc control differs: %s\n%s", difference, actual.stderr)
+			}
+			t.Log("string_append.a: recycled-release mutant passes malloc byte for byte")
+		}
+	}
+}
