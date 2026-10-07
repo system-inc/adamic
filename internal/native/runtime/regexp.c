@@ -250,6 +250,13 @@ static bool regex_run(const adamic_regex_program *p, const uint16_t *input, size
 				}
 				positions[j] = value;
 			}
+			// A class is a set: equal endpoints are one alternative, including strings
+			// equal after Canonicalize. Repeating duplicate choices is exponential.
+			size_t unique = 0;
+			for (size_t k = 0; k < count; k++)
+				if (unique == 0 || positions[k] != positions[unique - 1])
+					positions[unique++] = positions[k];
+			count = unique;
 			if (count == 0)
 				failed = true;
 			else {
@@ -428,7 +435,12 @@ static size_t regex_to_length(double value) {
 		return 0;
 	return (size_t)fmin(trunc(value), 9007199254740991.0);
 }
-static uint16_t *regex_input(adamic_string *input, size_t *length) {
+static const uint16_t *regex_input(adamic_string *input, size_t *length) {
+	const uint16_t *cached = adamic_string_utf16_view(input);
+	if (cached != NULL) {
+		*length = adamic_string_units(input);
+		return cached;
+	}
 	// Decode immutable WTF-8 once, preserving lone surrogates and pair halves.
 	// Repeated charCodeAt calls otherwise redo UTF-16-to-byte index lookups.
 	uint16_t *units = regex_memory(input->length * sizeof *units);
@@ -448,6 +460,10 @@ static uint16_t *regex_input(adamic_string *input, size_t *length) {
 			units[(*length)++] = (uint16_t)point;
 	}
 	return units;
+}
+static void regex_input_free(adamic_string *input, const uint16_t *units) {
+	if (units != adamic_string_utf16_view(input))
+		free((void *)units);
 }
 static ptrdiff_t *regex_execute(adamic_object *regex, const uint16_t *input, size_t length,
 								bool force_sticky, uint64_t *steps) {
@@ -612,10 +628,10 @@ adamic_value adamic_regex_property(adamic_array *array, const char *name) {
 }
 adamic_array *adamic_regex_exec(adamic_object *regex, adamic_string *input) {
 	size_t length;
-	uint16_t *units = regex_input(input, &length);
+	const uint16_t *units = regex_input(input, &length);
 	uint64_t steps = 0;
 	ptrdiff_t *spans = regex_execute(regex, units, length, false, &steps);
-	free(units);
+	regex_input_free(input, units);
 	if (spans == NULL)
 		return NULL;
 	adamic_array *result = regex_result(regex_program(regex), input, spans);
@@ -663,12 +679,12 @@ bool adamic_regex_test(adamic_object *regex, adamic_string *input) {
 		return false;
 	}
 	size_t length;
-	uint16_t *units = regex_input(input, &length);
+	const uint16_t *units = regex_input(input, &length);
 	uint64_t steps = 0;
 	ptrdiff_t *spans = regex_execute(regex, units, length, false, &steps);
 	bool result = spans != NULL;
 	free(spans);
-	free(units);
+	regex_input_free(input, units);
 	return result;
 }
 static size_t regex_advance(const uint16_t *units, size_t length, size_t at, bool unicode) {
@@ -681,7 +697,7 @@ adamic_array *adamic_regex_match(adamic_string *input, adamic_object *regex) {
 	regex->slots[1].number = 0;
 	adamic_array *result = adamic_array_new(0, true);
 	size_t length;
-	uint16_t *units = regex_input(input, &length);
+	const uint16_t *units = regex_input(input, &length);
 	uint64_t steps = 0;
 	for (;;) {
 		ptrdiff_t *spans = regex_execute(regex, units, length, false, &steps);
@@ -695,7 +711,7 @@ adamic_array *adamic_regex_match(adamic_string *input, adamic_object *regex) {
 				units, length, regex_to_length(regex->slots[1].number), p->flags & 4);
 		free(spans);
 	}
-	free(units);
+	regex_input_free(input, units);
 	if (result->length == 0) {
 		adamic_release(result);
 		return NULL;
@@ -732,11 +748,11 @@ adamic_array *adamic_regex_iterator_step(adamic_object *iterator) {
 		adamic_string *whole = result->elements[0].reference;
 		if (adamic_string_length(whole) == 0) {
 			size_t length;
-			uint16_t *units = regex_input(input, &length);
+			const uint16_t *units = regex_input(input, &length);
 			regex->slots[1].number =
 				(double)regex_advance(units, length, regex_to_length(regex->slots[1].number),
 									  regex_program(regex)->flags & 4);
-			free(units);
+			regex_input_free(input, units);
 		}
 	}
 	return result;
@@ -755,12 +771,12 @@ double adamic_regex_search(adamic_string *input, adamic_object *regex) {
 	double previous = regex->slots[1].number;
 	regex->slots[1].number = 0;
 	size_t length;
-	uint16_t *units = regex_input(input, &length);
+	const uint16_t *units = regex_input(input, &length);
 	uint64_t steps = 0;
 	ptrdiff_t *spans = regex_execute(regex, units, length, false, &steps);
 	double result = spans == NULL ? -1 : (double)spans[0];
 	free(spans);
-	free(units);
+	regex_input_free(input, units);
 	regex->slots[1].number = previous;
 	return result;
 }
@@ -772,7 +788,7 @@ adamic_array *adamic_regex_split(adamic_string *input, adamic_object *regex, dou
 	const adamic_regex_program *p = regex_program(regex);
 	adamic_object *copy = adamic_regex_new(p, regex->slots[2].reference, regex->slots[3].reference);
 	size_t length;
-	uint16_t *units = regex_input(input, &length);
+	const uint16_t *units = regex_input(input, &length);
 	uint64_t steps = 0;
 	size_t previous = 0, at = 0;
 	if (length == 0) {
@@ -824,7 +840,7 @@ adamic_array *adamic_regex_split(adamic_string *input, adamic_object *regex, dou
 	adamic_array_push(result, (adamic_value){.reference = adamic_string_slice(
 												 input, (double)previous, (double)length, true)});
 finished_split:
-	free(units);
+	regex_input_free(input, units);
 	adamic_release(copy);
 	return result;
 }
@@ -933,7 +949,7 @@ adamic_string *adamic_regex_replace(adamic_string *input, adamic_object *regex,
 	if (global)
 		regex->slots[1].number = 0;
 	size_t length, replacement_length;
-	uint16_t *units = regex_input(input, &length),
+	const uint16_t *units = regex_input(input, &length),
 			 *text = regex_input(replacement, &replacement_length);
 	uint64_t steps = 0;
 	adamic_array *pieces = adamic_array_new(0, true);
@@ -956,8 +972,7 @@ adamic_string *adamic_regex_replace(adamic_string *input, adamic_object *regex,
 	regex_piece(pieces, input, previous, length);
 	adamic_string *result = adamic_array_join(pieces, &adamic_string_empty, adamic_join_strings);
 	adamic_release(pieces);
-	free(text);
-	free(units);
-
+	regex_input_free(replacement, text);
+	regex_input_free(input, units);
 	return result;
 }

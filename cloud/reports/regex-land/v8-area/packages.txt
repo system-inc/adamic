@@ -1,0 +1,21 @@
+ok  	github.com/system-inc/adamic/internal/lower	50.114s
+ok  	github.com/system-inc/adamic/internal/regexp	26.115s
+ok  	github.com/system-inc/adamic/internal/native	283.517s
+--- FAIL: TestEveryFunctionIsInSingleAssignment (61.98s)
+    flow_test.go:87: Lower: /workspace/adamic/internal/oracle/testdata/regexp_native_write_groups_compound_missing.a:4:3: stage 0 can't lower overriding a RegExp or iterator property yet
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph (0.06s)
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/regexp_native_write_groups_compound_missing.a (0.59s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/regexp_native_write_groups_compound_missing.a:4:3: stage 0 can't lower overriding a RegExp or iterator property yet
+--- FAIL: TestEveryMutationIsInItsRange (172.03s)
+    --- FAIL: TestEveryMutationIsInItsRange/programs (0.03s)
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/regexp_native_write_groups_compound_missing.a (0.29s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/regexp_native_write_groups_compound_missing.a:4:3: stage 0 can't lower overriding a RegExp or iterator property yet
+    ranges_test.go:78: 77937 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+--- FAIL: TestLivenessHoldsOnEveryPath (172.18s)
+    --- FAIL: TestLivenessHoldsOnEveryPath/programs (0.07s)
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/regexp_native_write_groups_compound_missing.a (0.35s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/regexp_native_write_groups_compound_missing.a:4:3: stage 0 can't lower overriding a RegExp or iterator property yet
+    trace_test.go:426: 43976285 variable-and-point pairs checked
+FAIL
+FAIL	github.com/system-inc/adamic/internal/flow	172.205s
+FAIL

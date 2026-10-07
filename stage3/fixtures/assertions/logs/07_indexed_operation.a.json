@@ -1,0 +1,22 @@
+{
+  "command": [
+    "go",
+    "run",
+    "./cmd/adamic",
+    "build",
+    "stage3/fixtures/assertions/07_indexed_operation.a",
+    "-o",
+    "/tmp/adamic-gate/assertions-observe-18fowr2x/program"
+  ],
+  "build": {
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/assertions/07_indexed_operation.a:40:24: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\nexit status 1\n",
+    "exit": 1
+  },
+  "node": {
+    "stdout": "statement\nleft=right\nendfinally\n",
+    "stderr": "",
+    "exit": 0
+  },
+  "native": null
+}

@@ -1,0 +1,33 @@
+// From TypeScript 6.0.3, src/compiler/transformers/module/system.ts:1769
+// Census reason: delete
+interface Node { kind: number; id: number; }
+type SourceFile = Node;
+type EmitHint = number;
+const SyntaxKind = {SourceFile: 308};
+let currentSourceFile: SourceFile | undefined;
+let moduleInfo: string | undefined;
+let exportFunction: string | undefined;
+let noSubstitution: boolean | undefined;
+let contextObject: string | undefined;
+const moduleInfoMap: {[id: number]: string} = {1: "module"};
+const exportFunctionsMap: {[id: number]: string} = {1: "exports"};
+const noSubstitutionMap: {[id: number]: boolean} = {1: true};
+const contextObjectMap: {[id: number]: string} = {1: "context"};
+function getOriginalNodeId(node: Node): number { return node.id; }
+function onEmitNode(hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void): void {
+        if (node.kind === SyntaxKind.SourceFile) {
+            const id = getOriginalNodeId(node);
+            currentSourceFile = node as SourceFile;
+            moduleInfo = moduleInfoMap[id];
+            exportFunction = exportFunctionsMap[id];
+            noSubstitution = noSubstitutionMap[id];
+            contextObject = contextObjectMap[id];
+
+            if (noSubstitution) {
+                delete noSubstitutionMap[id];
+            }
+
+        emitCallback(hint, node);
+    }
+}
+onEmitNode(0, {kind: 308, id: 1}, () => console.log(`${noSubstitution}:${noSubstitutionMap[1]}`));

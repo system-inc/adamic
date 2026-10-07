@@ -1,0 +1,300 @@
+{
+  "tool": "stock TypeScript 6.0.3",
+  "entries": [
+    "src/compiler/scanner.ts:createScanner",
+    "src/compiler/types.ts:ScriptTarget",
+    "src/compiler/types.ts:SyntaxKind"
+  ],
+  "files": [
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "owner": "32",
+      "indexed_expressions": 0,
+      "reads": []
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "owner": "30",
+      "indexed_expressions": 14,
+      "reads": [
+        {
+          "line": 36,
+          "column": 37,
+          "expression": "array[i]",
+          "occurrence": 1,
+          "type": "T | undefined",
+          "status": "30:assert"
+        },
+        {
+          "line": 2205,
+          "column": 9,
+          "expression": "previous[i]",
+          "occurrence": 1,
+          "type": "any",
+          "status": "pure store"
+        },
+        {
+          "line": 2212,
+          "column": 9,
+          "expression": "current[0]",
+          "occurrence": 1,
+          "type": "any",
+          "status": "pure store"
+        },
+        {
+          "line": 2216,
+          "column": 13,
+          "expression": "current[j]",
+          "occurrence": 1,
+          "type": "any",
+          "status": "pure store"
+        },
+        {
+          "line": 2220,
+          "column": 42,
+          "expression": "s1[i - 1]",
+          "occurrence": 1,
+          "type": "string | undefined",
+          "status": "30:assert"
+        },
+        {
+          "line": 2220,
+          "column": 71,
+          "expression": "s2[j - 1]",
+          "occurrence": 1,
+          "type": "string | undefined",
+          "status": "30:assert"
+        },
+        {
+          "line": 2221,
+          "column": 20,
+          "expression": "previous[j - 1]",
+          "occurrence": 1,
+          "type": "any",
+          "status": "checker does not require presence"
+        },
+        {
+          "line": 2222,
+          "column": 20,
+          "expression": "previous[j - 1]",
+          "occurrence": 2,
+          "type": "any",
+          "status": "checker does not require presence"
+        },
+        {
+          "line": 2224,
+          "column": 19,
+          "expression": "previous[j - 1]",
+          "occurrence": 3,
+          "type": "any",
+          "status": "checker does not require presence"
+        },
+        {
+          "line": 2225,
+          "column": 39,
+          "expression": "previous[j]",
+          "occurrence": 1,
+          "type": "any",
+          "status": "checker does not require presence"
+        },
+        {
+          "line": 2225,
+          "column": 67,
+          "expression": "current[j - 1]",
+          "occurrence": 1,
+          "type": "any",
+          "status": "checker does not require presence"
+        },
+        {
+          "line": 2226,
+          "column": 13,
+          "expression": "current[j]",
+          "occurrence": 2,
+          "type": "any",
+          "status": "pure store"
+        },
+        {
+          "line": 2230,
+          "column": 13,
+          "expression": "current[j]",
+          "occurrence": 3,
+          "type": "any",
+          "status": "pure store"
+        },
+        {
+          "line": 2242,
+          "column": 17,
+          "expression": "previous[s2.length]",
+          "occurrence": 1,
+          "type": "any",
+          "status": "checker does not require presence"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/corePublic.ts",
+      "owner": "32",
+      "indexed_expressions": 0,
+      "reads": []
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "owner": "30",
+      "indexed_expressions": 0,
+      "reads": []
+    },
+    {
+      "file": "src/compiler/diagnosticInformationMap.generated.ts",
+      "owner": "32",
+      "indexed_expressions": 0,
+      "reads": []
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "owner": "30",
+      "indexed_expressions": 11,
+      "reads": [
+        {
+          "line": 360,
+          "column": 16,
+          "expression": "map[0]",
+          "occurrence": 1,
+          "type": "number | undefined",
+          "status": "30:assert"
+        },
+        {
+          "line": 373,
+          "column": 13,
+          "expression": "map[mid]",
+          "occurrence": 1,
+          "type": "number | undefined",
+          "status": "30:assert"
+        },
+        {
+          "line": 373,
+          "column": 42,
+          "expression": "map[mid + 1]",
+          "occurrence": 1,
+          "type": "number | undefined",
+          "status": "30:assert"
+        },
+        {
+          "line": 377,
+          "column": 20,
+          "expression": "map[mid]",
+          "occurrence": 2,
+          "type": "number | undefined",
+          "status": "30:assert"
+        },
+        {
+          "line": 801,
+          "column": 21,
+          "expression": "shebangTriviaRegex.exec(text)[0]",
+          "occurrence": 1,
+          "type": "string",
+          "status": "checker does not require presence"
+        },
+        {
+          "line": 1334,
+          "column": 29,
+          "expression": "text[identifierStart]",
+          "occurrence": 1,
+          "type": "string | undefined",
+          "status": "30:decline"
+        },
+        {
+          "line": 1858,
+          "column": 22,
+          "expression": "text[pos]",
+          "occurrence": 1,
+          "type": "string | undefined",
+          "status": "30:assert"
+        },
+        {
+          "line": 2325,
+          "column": 38,
+          "expression": "text[pos + 1]",
+          "occurrence": 1,
+          "type": "string | undefined",
+          "status": "30:decline"
+        },
+        {
+          "line": 3507,
+          "column": 69,
+          "expression": "valuesOfNonBinaryUnicodeProperties[propertyName]",
+          "occurrence": 1,
+          "type": "Set<string>",
+          "status": "checker does not require presence"
+        },
+        {
+          "line": 3509,
+          "column": 89,
+          "expression": "valuesOfNonBinaryUnicodeProperties[propertyName]",
+          "occurrence": 2,
+          "type": "Set<string>",
+          "status": "checker does not require presence"
+        },
+        {
+          "line": 3644,
+          "column": 17,
+          "expression": "match[1]",
+          "occurrence": 1,
+          "type": "string | undefined",
+          "status": "30:decline"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "owner": "32",
+      "indexed_expressions": 0,
+      "reads": []
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "owner": "30",
+      "indexed_expressions": 4,
+      "reads": [
+        {
+          "line": 10502,
+          "column": 9,
+          "expression": "segments[segment]",
+          "occurrence": 1,
+          "type": "number | undefined",
+          "status": "30:assert"
+        },
+        {
+          "line": 10504,
+          "column": 23,
+          "expression": "segments[segment + 1]",
+          "occurrence": 1,
+          "type": "number | undefined",
+          "status": "30:assert"
+        },
+        {
+          "line": 10514,
+          "column": 46,
+          "expression": "segments[segment]",
+          "occurrence": 2,
+          "type": "number | undefined",
+          "status": "30:assert"
+        },
+        {
+          "line": 10516,
+          "column": 13,
+          "expression": "segments[segment]",
+          "occurrence": 3,
+          "type": "number",
+          "status": "pure store"
+        }
+      ]
+    }
+  ],
+  "owner_sites": {
+    "31": [],
+    "32": [],
+    "33": [],
+    "unassigned": []
+  },
+  "unresolved": []
+}
