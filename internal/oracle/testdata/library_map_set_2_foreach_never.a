@@ -1,0 +1,31 @@
+// Abrupt callbacks run once, propagate, and release the live iterator and held references.
+let visits = 0;
+const set = new Set<string>(['ab'.repeat(2), 'cd'.repeat(2)]);
+try {
+    set.forEach((value: string): never => {
+        visits++;
+        set.delete(value);
+        set.add('ef'.repeat(2));
+        throw new Error('set stop');
+    });
+    console.log('set returned');
+} catch (error) { if (error instanceof Error) { console.log(`set caught ${error.message}`); } }
+console.log(`set ${visits} ${set.size}`);
+const map = new Map<string, string>([['key'.repeat(2), 'value'.repeat(2)], ['next'.repeat(2), 'later'.repeat(2)]]);
+try {
+    map.forEach((value: string, key: string): never => {
+        visits++;
+        map.delete(key);
+        throw new Error(`map stop ${value}`);
+    });
+    console.log('map returned');
+} catch (error) { if (error instanceof Error) { console.log(`map caught ${error.message}`); } }
+console.log(`map ${visits} ${map.size}`);
+let contexts = 0;
+function context(): number { contexts++; return 5; }
+try {
+    set.forEach((): never => { throw new Error('context stop'); }, context());
+} catch (error) { if (error instanceof Error) { console.log(`context caught ${error.message} ${contexts}`); } }
+const empty = new Set<number>();
+empty.forEach((): never => { throw new Error('unreachable'); });
+console.log(`empty ${empty.size}`);

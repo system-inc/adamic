@@ -37,6 +37,18 @@ The following are language features, not implementations claimed by this library
 
 - implicit arguments object (1): `function callback(value: number) { return arguments.length; } Map.groupBy([1], callback);`
 
+The detached-method group contains three separate compiler mechanisms:
+
+- Reading an inherited method as a function: `const has = new Set<number>([1]).has;`
+- Binding a dynamic receiver with call: `Set.prototype.has.call({}, 1);`
+- Replacing a builtin prototype method: `Set.prototype.add = function (value: number) { throw new Error(); };`
+
+The representation group also contains separate unknown and never cases:
+
+- Unknown values: `const m = new Map(); m.set(1, 'one');`
+- Never result keys: `Map.groupBy([1], (): never => { throw new Error(); });`
+- Mutable variance: `const empty = new Set([]); const result = new Set([1]).union(empty);`
+
 The seven array-throws cases are labeled refused by this runner because Adamic emits TS2739 and stock tsc emits TS2345 for the same invalid argument. They are not tsc-accepted programs. Do not weaken the Set signature or implement these as accepted programs; route diagnostic-code classification to the runner owner.
 
 The six custom set-like cases use array iterators and ordinary methods. They need general iterator/inherited-method dispatch and, for methods observing this, dynamic receiver binding. Concrete Set/Map operands avoid those compiler dependencies. No generic protocol approximation is claimed.
