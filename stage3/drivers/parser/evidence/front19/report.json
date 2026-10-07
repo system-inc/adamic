@@ -1,0 +1,66 @@
+{
+  "status": "red: validated slice stops before C; nine of eleven current probes green",
+  "scratch_head": "e3846087ac18710414d2343e8a3474860569a38b",
+  "inputs": [
+    {
+      "ref": "scratch base",
+      "sha": "975e4d0bd6b1fcca55af5c5f4416b44cecfa6b06",
+      "scratch_contains": true
+    },
+    {
+      "ref": "codex/views-arrays-callables-parser",
+      "sha": "c898009bfb8520b03c5a366ac23c308e1e56c882",
+      "scratch_contains": true
+    }
+  ],
+  "front3_selection": "git ls-remote --heads origin compiler/stage3-front-3 returned no ref before merge; used supplied c898009b",
+  "compiler_build_exit": 0,
+  "validated_entry": "/workspace/scratch/parser-temp65-slice/parser-proof-main.a",
+  "first_real_stop": "src/compiler/core.ts:11:52, new Map<never, never>(), namespaceInitialization NotYet: a call before all runtime namespaces are initialized",
+  "minimal": "native-map-before-namespace.a; native build NotYet at 4:45; Node stdout 0:false\n, exit 0, empty stderr",
+  "probe_count": {
+    "passing": 9,
+    "total": 11,
+    "rows_green": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      7,
+      8,
+      9,
+      11
+    ],
+    "rows_red": [
+      6,
+      10
+    ],
+    "qualification": "Row 8 has sanctioned unknown signature; the other ten probe sources remain unchanged. Row 10 is original cast probe; actual slice adaptation 65 removes the cast."
+  },
+  "byte_mutants": "all nine green main probes plus both repaired array witnesses: actual native stdout first byte XOR 1, each cmp exit 1",
+  "array_witnesses": "nullable return and readonly empty conditional both build and match Node stdout/stderr/exit; core 204 and 421 no longer fail as standalone witnesses, but validated slice traversal does not reach those sites due to earlier namespace preflight",
+  "split_modes": "unsplit, split and repeat all exit 1 at same first real stop, before C emission; repeat not warm",
+  "tests": {
+    "command": "GOWORK=off TMPDIR=/workspace/scratch/parser-build-tmp go test ./internal/lower -run 'TestSharedArrayContractAdapter|TestViewPreflight|TestViewArrayConsumer|TestViewArrayOptionalComparator|TestCensusPredicateInteraction|TestCensusPredicateMarkerKeepsProofBoundaries' -count=1",
+    "exit": 0,
+    "output": "ok  \tgithub.com/system-inc/adamic/internal/lower\t0.544s\n"
+  },
+  "metrics": {
+    "nproc": 5,
+    "generated_c_bytes": null,
+    "generated_c_lines": null,
+    "clang_wall_unsplit": null,
+    "clang_wall_split": null,
+    "clang_wall_warm": null,
+    "native_parser_binary_bytes": null,
+    "native_parser_user_time": null,
+    "native_reference_comparisons": "not run: no binary; both fixed Node references remain acceptance targets"
+  },
+  "merge_conflicts": [
+    "invariance.go: keep equivalent never early relation and explanatory comment.",
+    "object.go: take incoming shared viewNeverArrayElement adapter in place of old literal-specific empty never handling. Other paths auto-merged."
+  ],
+  "known_regressions": "Merged host-blockers a85a9cb1: user reports unknown narrowing regressions in library fixtures 05 and 13, not reproduced here and still outstanding. Front16 broad namespace tests previously failed; not rerun by this focused array test command.",
+  "limits": "No source stubs or compiler proof bypass in validated run. No complete gate, counts gate, sanitizer or full oracle run. No native 81-file or 10406-case comparison. No behind-stub discovery added at this namespace preflight stop. Compiler merge remains unpushed."
+}

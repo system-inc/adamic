@@ -1,3 +1,60 @@
+# Nullable-array rerun: nine probes green, slice red at namespace initialization
+
+Before merging, `git ls-remote --heads origin compiler/stage3-front-3` returned
+no ref. Used the supplied views-arrays-callables-parser c898009b, merged into
+unpushed scratch 975e4d0b, yielding e3846087. Compiler and current native metrics
+helper rebuild successfully. The validated parser-temp65-slice was not edited.
+
+Both split modes and repeat exit 1 before C emission at
+src/compiler/core.ts:11:52, `new Map<never, never>()`, with NotYet:
+`a call before all runtime namespaces are initialized; put namespaces before executable module code`.
+This is now the first real stop, earlier than the array sites. Inspection:
+namespaceInitialization counts every runtime namespace, then refuses all
+new/call expressions while any are pending, even without a namespace read.
+The minimal native-map-before-namespace.a reproduces NotYet at 4:45 with an
+independent Map construction before a Debug namespace; Node prints `0:false\n`,
+exit 0 and empty stderr. No compiler proof bypass or source adaptation was made.
+
+The full current probe count is 9/11, rows 1, 2, 3, 4, 5, 7, 8, 9 and 11 green.
+Each matches Node stdout/stderr/exit byte for byte. All nine native-output
+one-byte mutants are caught (cmp exit 1). Row 8 has the sanctioned unknown
+signature; the other ten sources are unchanged. The remaining probes are row 6,
+arguments.length Refused, and row 10, the original process-as-any cast Refused.
+Adaptation 65 removes row 10's cast in the actual slice; it does not clear
+unrelated reads of process.nextTick.
+
+Both additional array witnesses clear: native-same-map-return-cast.a prints
+`2\nundefined\n`, and native-sorted-empty-conditional.a prints `0\n1\n`,
+matching Node byte for byte, exit 0, empty stderr. Both additional native-output
+byte mutants are caught. These prove the former core.ts:204 and 421 forms as
+standalone programs; the full slice preflight stops before reaching those sites.
+
+Focused shared-array-adapter, preflight refusal/consumer/comparer, predicate
+interaction and marker-boundary lower tests pass in 0.544s. No full gate,
+complete oracle, counts gate or sanitizer run was performed. The merge has two
+lowering conflicts: retain equivalent never relation semantics in invariance.go,
+and use incoming shared viewNeverArrayElement in object.go. Exact ancestry,
+commands, outputs and scratch-only merge patch are in evidence/front19.
+
+C bytes/lines, clang times, native parser binary size and timing remain
+unavailable; no parser C was emitted. Split-repeat has an empty cache and is not
+warm. nproc is 5. Neither native acceptance reference ran: the extended 81-file
+Node reference and the 10,406-case manifest remain targets, not native passes.
+
+Known outstanding integration issues remain documented: user-reported
+host-blockers a85a9cb1 regressions in library unknown-narrowing fixtures 05 and
+13 (not reproduced here), and earlier broad namespace expectation failures in
+front16 (not rerun by these focused tests). No behind-stub discovery was added
+at this namespace initialization stop. Wait for the combined front-3 SHA for
+future integration. The scratch compiler merge was never pushed.
+
+Reproduce with probe-stops.py and measure-builds.py, compiler
+/workspace/scratch/parser-front19-adamic, metrics parser-front19-metrics,
+scratch /tmp/parser-front7-scratch and validated parser-temp65-slice entry,
+jobs 5. Additional witnesses use evidence/front19/run-array-witnesses.py.
+
+---
+
 # Reconciled census/predicate rerun: all six requested probes remain green
 
 Reported upstream after this run: merged host-blockers a85a9cb1 regresses
