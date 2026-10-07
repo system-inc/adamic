@@ -115,3 +115,9 @@ Fresh native parsing closes the JSX failure; handed-node and shared finding
 support are present. Numeric ParseNode kinds remain unavailable. Fifth-batch
 source analyses are still unfinished; fourth-batch HIR claims remain parked.
 See react-jsx-fragments/HARNESS_REBASE_REPORT.md. No additional claims.
+
+Fifth-batch progress: react/jsx-no-undef now has a tested native source analysis
+in its own directory (661963afd): 53 controls/29 findings, both corpora, sanitizer,
+semantic mutant and released query PASS. Shared registration/checker context and
+Node fact transport remain unfinished. The other two JSX analyses are not yet
+implemented; the batch is not complete and no further rules are claimed.

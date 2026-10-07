@@ -1,0 +1,18 @@
+{
+  "controls": 53,
+  "findings": 29,
+  "semantic_mutant": "caught by bytes",
+  "corpora": "both normal/sanitized PASS",
+  "released_question": "panic 70",
+  "bench": {
+    "repository": {
+      "native": 0.3655310419999296,
+      "go": 0.21621638199940207
+    },
+    "compiler": {
+      "native": 1.8195996879985614,
+      "go": 0.3650197000024491
+    }
+  },
+  "shared_registration": false
+}

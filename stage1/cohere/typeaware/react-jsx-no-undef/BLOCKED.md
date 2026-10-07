@@ -69,3 +69,12 @@ and optional handed-node visitor are present. ParseNode.kind and the registry
 still use string kinds; the numeric shared interface remains pending. Source
 analyses remain unfinished (HIR/SSA claims remain parked). See
 ../react-jsx-fragments/HARNESS_REBASE_REPORT.md for fresh gates and limits.
+
+## Source analysis implemented
+
+The no-undef decision and exact spans now run through analysis.a in a private
+native typed runner: 53 controls/29 findings, both corpora, sanitizers, compiling
+semantic mutant and released-handle check pass. See ANALYSIS_REPORT.md.
+The remaining shared boundary is checker program/lease access and Node fact
+transport; RuleContext has neither. A numeric entry-kind guard is unnecessary
+for a visitor consuming the handed node. Shared registration remains unfinished.
