@@ -12,19 +12,19 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 const runtimeUrl = new URL('./adamic.mjs', import.meta.url).href;
 
 registerHooks({
-	resolve(specifier, context, nextResolve) {
-		if (specifier === 'adamic') {
-			return { url: runtimeUrl, shortCircuit: true };
-		}
-		return nextResolve(specifier, context);
-	},
-	load(url, context, nextLoad) {
-		if (url.endsWith('.a') || url.endsWith('.ts')) {
-			const source = readFileSync(fileURLToPath(url), 'utf8');
-			return { format: 'module', source: stripTypeScriptTypes(source), shortCircuit: true };
-		}
-		return nextLoad(url, context);
-	},
+    resolve(specifier, context, nextResolve) {
+        if(specifier === 'adamic') {
+            return { url: runtimeUrl, shortCircuit: true };
+        }
+        return nextResolve(specifier, context);
+    },
+    load(url, context, nextLoad) {
+        if(url.endsWith('.a') || url.endsWith('.ts')) {
+            const source = readFileSync(fileURLToPath(url), 'utf8');
+            return { format: 'module', source: stripTypeScriptTypes(source), shortCircuit: true };
+        }
+        return nextLoad(url, context);
+    },
 });
 
 // The program sees argv as if Node ran it directly, [node, program, ...arguments]: this file takes its
