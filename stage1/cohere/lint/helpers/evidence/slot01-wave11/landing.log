@@ -1,0 +1,1677 @@
+=== RUN   TestHelpersMatchCohere
+    helpers_test.go:101: 22412 oracle output lines matched Go, Node and sanitized native
+--- PASS: TestHelpersMatchCohere (11.79s)
+=== RUN   TestHelperMutants
+=== RUN   TestHelperMutants/options_json.ts
+    helpers_test.go:145: compiled semantic mutant caught at output line 15157: got "valid", Go "invalid"
+=== RUN   TestHelperMutants/option_schema.ts
+    helpers_test.go:145: compiled semantic mutant caught at output line 15166: got "valid", Go "invalid"
+=== RUN   TestHelperMutants/policy_message.ts
+    helpers_test.go:145: compiled semantic mutant caught at output line 22166: got "This throws a bare `{{constructor}}`, which names no declared failure. Raise it through the tier that declares it, `AccountModule.error(identifier, data, cause)`, `ApiWorker.error(...)` or `Base.error(...)`. A bare throw carries no identifier, so the board groups it by its message and one interpolated value mints one identity per value, and it normalizes to 500, so a refusal reads as our fault.", Go "This throws a bare `sentinel é😀`, which names no declared failure. Raise it through the tier that declares it, `AccountModule.error(identifier, data, cause)`, `ApiWorker.error(...)` or `Base.error(...)`. A bare throw carries no identifier, so the board groups it by its message and one interpolated value mints one identity per value, and it normalizes to 500, so a refusal reads as our fault."
+=== RUN   TestHelperMutants/strict_options.ts
+    helpers_test.go:145: compiled semantic mutant caught at output line 15178: got "valid", Go "invalid"
+--- PASS: TestHelperMutants (26.64s)
+    --- PASS: TestHelperMutants/options_json.ts (5.11s)
+    --- PASS: TestHelperMutants/option_schema.ts (4.92s)
+    --- PASS: TestHelperMutants/policy_message.ts (5.11s)
+    --- PASS: TestHelperMutants/strict_options.ts (5.04s)
+=== RUN   TestMessageRefusalsMatchGo
+    helpers_test.go:237: 10 message refusal cases match Go on Node and sanitized native
+--- PASS: TestMessageRefusalsMatchGo (5.53s)
+=== RUN   TestKnownGapsAreExplicit
+--- PASS: TestKnownGapsAreExplicit (1.24s)
+=== RUN   TestSlot01FileContextMatchesCohere
+    slot01_test.go:151: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/structure/boundary_no_project_theme_value_test.go: 74 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/network_no_direct_fetch_test.go: 33 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/network_no_forbidden_import_test.go: 42 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/next_no_page_state_test.go: 36 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/next_require_api_parameter_name_test.go: 45 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/next_require_page_default_export_test.go: 58 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_component_no_const_assignment_test.go: 47 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_component_no_destructuring_test.go: 52 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_component_no_separate_named_export_test.go: 65 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_component_require_named_export_test.go: 76 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_component_require_properties_parameter_test.go: 35 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_component_require_properties_type_suffix_test.go: 50 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_no_intrinsic_element_test.go: 48 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_no_intrinsic_element_test.go: 48 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_hook_no_properties_in_dependencies_test.go: 56 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_hook_require_effect_comment_test.go: 50 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_hook_require_result_naming_test.go: 43 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/storage_no_direct_local_storage_test.go: 37 string inputs
+        895 fixture strings; 1815 helper input batches (context)
+    slot01_test.go:156: 1815 Go answers matched Node and sanitized native
+    slot01_test.go:183: compiled structure_file_context.a mutant caught at output line 7: got "true false false false false false false false false", Go "true true false false false false true false false"
+--- PASS: TestSlot01FileContextMatchesCohere (3.45s)
+=== RUN   TestSlot01Es6ComponentClassMatchesCohere
+    slot01_test.go:151: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/react/no_arrow_function_lifecycle_test.go: 226 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/react/no_did_mount_set_state_test.go: 133 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/react/no_did_update_set_state_test.go: 134 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/react/no_direct_mutation_state_test.go: 133 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/react/no_string_refs_test.go: 158 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/react/no_this_in_sfc_test.go: 196 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/react/no_typos_test.go: 459 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/react/no_unused_class_component_methods_test.go: 291 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/react/no_will_update_set_state_test.go: 136 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/react/prefer_stateless_function_test.go: 152 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/react/require_optimization_test.go: 195 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/react/state_in_constructor_test.go: 193 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/consistency_require_matching_file_name_test.go: 172 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_component_no_display_name_test.go: 50 string inputs
+        class batch: 59 nodes, 4 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 31 nodes, 1 positive answers
+        class batch: 27 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 48 nodes, 1 positive answers
+        class batch: 47 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 13 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 15 nodes, 1 positive answers
+        class batch: 17 nodes, 1 positive answers
+        class batch: 17 nodes, 1 positive answers
+        class batch: 22 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 29 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 29 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 27 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 22 nodes, 1 positive answers
+        class batch: 14 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 29 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 29 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 27 nodes, 1 positive answers
+        class batch: 27 nodes, 1 positive answers
+        class batch: 22 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 34 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 22 nodes, 1 positive answers
+        class batch: 22 nodes, 1 positive answers
+        class batch: 22 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 29 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 29 nodes, 1 positive answers
+        class batch: 29 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 17 nodes, 1 positive answers
+        class batch: 34 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 22 nodes, 1 positive answers
+        class batch: 22 nodes, 1 positive answers
+        class batch: 39 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 22 nodes, 1 positive answers
+        class batch: 22 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 22 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 29 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 71 nodes, 1 positive answers
+        class batch: 20 nodes, 1 positive answers
+        class batch: 20 nodes, 1 positive answers
+        class batch: 29 nodes, 2 positive answers
+        class batch: 36 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 41 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 22 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 22 nodes, 1 positive answers
+        class batch: 20 nodes, 1 positive answers
+        class batch: 22 nodes, 1 positive answers
+        class batch: 22 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 22 nodes, 1 positive answers
+        class batch: 20 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 20 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 29 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 13 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 13 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 13 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 13 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 13 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 13 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 13 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 13 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 66 nodes, 1 positive answers
+        class batch: 66 nodes, 1 positive answers
+        class batch: 66 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 40 nodes, 1 positive answers
+        class batch: 34 nodes, 1 positive answers
+        class batch: 41 nodes, 1 positive answers
+        class batch: 41 nodes, 1 positive answers
+        class batch: 41 nodes, 1 positive answers
+        class batch: 42 nodes, 1 positive answers
+        class batch: 41 nodes, 1 positive answers
+        class batch: 48 nodes, 1 positive answers
+        class batch: 49 nodes, 1 positive answers
+        class batch: 44 nodes, 1 positive answers
+        class batch: 12 nodes, 1 positive answers
+        class batch: 43 nodes, 1 positive answers
+        class batch: 42 nodes, 1 positive answers
+        class batch: 42 nodes, 1 positive answers
+        class batch: 12 nodes, 1 positive answers
+        class batch: 37 nodes, 1 positive answers
+        class batch: 49 nodes, 1 positive answers
+        class batch: 49 nodes, 1 positive answers
+        class batch: 49 nodes, 1 positive answers
+        class batch: 57 nodes, 1 positive answers
+        class batch: 51 nodes, 1 positive answers
+        class batch: 15 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 33 nodes, 1 positive answers
+        class batch: 54 nodes, 1 positive answers
+        class batch: 34 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 54 nodes, 1 positive answers
+        class batch: 54 nodes, 1 positive answers
+        class batch: 43 nodes, 1 positive answers
+        class batch: 36 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 36 nodes, 1 positive answers
+        class batch: 36 nodes, 1 positive answers
+        class batch: 39 nodes, 1 positive answers
+        class batch: 31 nodes, 1 positive answers
+        class batch: 37 nodes, 1 positive answers
+        class batch: 22 nodes, 1 positive answers
+        class batch: 31 nodes, 1 positive answers
+        class batch: 33 nodes, 1 positive answers
+        class batch: 31 nodes, 1 positive answers
+        class batch: 27 nodes, 1 positive answers
+        class batch: 33 nodes, 1 positive answers
+        class batch: 34 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 36 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 42 nodes, 1 positive answers
+        class batch: 44 nodes, 1 positive answers
+        class batch: 40 nodes, 1 positive answers
+        class batch: 40 nodes, 1 positive answers
+        class batch: 38 nodes, 1 positive answers
+        class batch: 42 nodes, 1 positive answers
+        class batch: 53 nodes, 1 positive answers
+        class batch: 43 nodes, 1 positive answers
+        class batch: 44 nodes, 1 positive answers
+        class batch: 41 nodes, 1 positive answers
+        class batch: 50 nodes, 1 positive answers
+        class batch: 47 nodes, 1 positive answers
+        class batch: 50 nodes, 1 positive answers
+        class batch: 42 nodes, 1 positive answers
+        class batch: 43 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 40 nodes, 1 positive answers
+        class batch: 47 nodes, 1 positive answers
+        class batch: 45 nodes, 1 positive answers
+        class batch: 54 nodes, 1 positive answers
+        class batch: 40 nodes, 1 positive answers
+        class batch: 40 nodes, 1 positive answers
+        class batch: 40 nodes, 1 positive answers
+        class batch: 42 nodes, 1 positive answers
+        class batch: 43 nodes, 1 positive answers
+        class batch: 44 nodes, 1 positive answers
+        class batch: 44 nodes, 1 positive answers
+        class batch: 15 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 22 nodes, 1 positive answers
+        class batch: 31 nodes, 1 positive answers
+        class batch: 33 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 33 nodes, 1 positive answers
+        class batch: 17 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 33 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 35 nodes, 1 positive answers
+        class batch: 35 nodes, 1 positive answers
+        class batch: 35 nodes, 1 positive answers
+        class batch: 35 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 36 nodes, 1 positive answers
+        class batch: 34 nodes, 1 positive answers
+        class batch: 35 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 17 nodes, 1 positive answers
+        class batch: 20 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 20 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 17 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 20 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 20 nodes, 1 positive answers
+        class batch: 20 nodes, 1 positive answers
+        class batch: 43 nodes, 1 positive answers
+        class batch: 29 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 31 nodes, 1 positive answers
+        class batch: 27 nodes, 1 positive answers
+        class batch: 36 nodes, 1 positive answers
+        class batch: 29 nodes, 1 positive answers
+        class batch: 41 nodes, 1 positive answers
+        class batch: 39 nodes, 1 positive answers
+        class batch: 27 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 39 nodes, 1 positive answers
+        class batch: 39 nodes, 1 positive answers
+        class batch: 40 nodes, 1 positive answers
+        class batch: 39 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 20 nodes, 1 positive answers
+        class batch: 68 nodes, 1 positive answers
+        class batch: 20 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 34 nodes, 1 positive answers
+        class batch: 33 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 33 nodes, 1 positive answers
+        class batch: 36 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 33 nodes, 1 positive answers
+        class batch: 34 nodes, 1 positive answers
+        class batch: 36 nodes, 1 positive answers
+        class batch: 36 nodes, 1 positive answers
+        class batch: 34 nodes, 1 positive answers
+        class batch: 35 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 31 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 31 nodes, 1 positive answers
+        class batch: 31 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 36 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 31 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 38 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 41 nodes, 2 positive answers
+        class batch: 15 nodes, 1 positive answers
+        class batch: 37 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 29 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 29 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 20 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 20 nodes, 1 positive answers
+        class batch: 20 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 14 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 20 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 31 nodes, 1 positive answers
+        class batch: 29 nodes, 1 positive answers
+        class batch: 36 nodes, 1 positive answers
+        class batch: 34 nodes, 1 positive answers
+        class batch: 31 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 40 nodes, 1 positive answers
+        class batch: 35 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 37 nodes, 1 positive answers
+        class batch: 39 nodes, 1 positive answers
+        class batch: 40 nodes, 1 positive answers
+        class batch: 39 nodes, 1 positive answers
+        class batch: 41 nodes, 1 positive answers
+        class batch: 42 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 50 nodes, 1 positive answers
+        class batch: 50 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 27 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 29 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 33 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 37 nodes, 1 positive answers
+        class batch: 27 nodes, 1 positive answers
+        class batch: 29 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 75 nodes, 1 positive answers
+        class batch: 72 nodes, 1 positive answers
+        class batch: 65 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 14 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 20 nodes, 1 positive answers
+        class batch: 22 nodes, 1 positive answers
+        class batch: 20 nodes, 1 positive answers
+        class batch: 20 nodes, 1 positive answers
+        class batch: 20 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 29 nodes, 1 positive answers
+        class batch: 31 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 29 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 29 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 14 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 14 nodes, 1 positive answers
+        class batch: 14 nodes, 1 positive answers
+        class batch: 13 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 13 nodes, 1 positive answers
+        class batch: 33 nodes, 1 positive answers
+        class batch: 35 nodes, 1 positive answers
+        class batch: 14 nodes, 1 positive answers
+        class batch: 13 nodes, 1 positive answers
+        class batch: 13 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 17 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 13 nodes, 1 positive answers
+        class batch: 13 nodes, 1 positive answers
+        class batch: 13 nodes, 1 positive answers
+        class batch: 14 nodes, 1 positive answers
+        class batch: 40 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 32 nodes, 2 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 55 nodes, 1 positive answers
+        class batch: 55 nodes, 1 positive answers
+        class batch: 55 nodes, 1 positive answers
+        class batch: 55 nodes, 1 positive answers
+        class batch: 51 nodes, 1 positive answers
+        class batch: 52 nodes, 1 positive answers
+        class batch: 51 nodes, 1 positive answers
+        class batch: 15 nodes, 1 positive answers
+        class batch: 9 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 31 nodes, 1 positive answers
+        class batch: 13 nodes, 1 positive answers
+        class batch: 37 nodes, 1 positive answers
+        class batch: 13 nodes, 1 positive answers
+        class batch: 22 nodes, 1 positive answers
+        class batch: 7 nodes, 1 positive answers
+        class batch: 22 nodes, 1 positive answers
+        class batch: 9 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 8 nodes, 1 positive answers
+        class batch: 15 nodes, 1 positive answers
+        class batch: 15 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 38 nodes, 1 positive answers
+        class batch: 44 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 44 nodes, 1 positive answers
+        class batch: 44 nodes, 1 positive answers
+        class batch: 41 nodes, 1 positive answers
+        class batch: 20 nodes, 1 positive answers
+        class batch: 38 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 36 nodes, 1 positive answers
+        class batch: 20 nodes, 1 positive answers
+        class batch: 9 nodes, 1 positive answers
+        class batch: 17 nodes, 1 positive answers
+        class batch: 27 nodes, 1 positive answers
+        class batch: 22 nodes, 1 positive answers
+        class batch: 33 nodes, 1 positive answers
+        class batch: 27 nodes, 2 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 44 nodes, 2 positive answers
+        class batch: 39 nodes, 2 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 17 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 17 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 17 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 17 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        2628 fixture strings; 3548 helper input batches (class)
+    slot01_test.go:156: 62020 Go answers matched Node and sanitized native
+    slot01_test.go:183: compiled react_es6_component_class.a mutant caught at output line 13400: got "false", Go "true"
+--- PASS: TestSlot01Es6ComponentClassMatchesCohere (7.35s)
+=== RUN   TestSlot01TailwindDefaultsMatchCohere
+    slot01_test.go:151: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_important_position_test.go: 37 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variable_syntax_test.go: 39 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_concatenated_classes_test.go: 60 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_deprecated_classes_test.go: 100 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_duplicate_classes_test.go: 80 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unnecessary_whitespace_test.go: 75 string inputs
+        1016 fixture strings; 1936 helper input batches (defaults)
+    slot01_test.go:156: 5808 Go answers matched Node and sanitized native
+    slot01_test.go:183: compiled tailwind_default_class_literal_settings.a mutant caught at output line 1: got "className;mergeClassNames|createVariantClassNames;.*[Cc]lassName$|.*[Cc]lassNames$", Go "class|className;mergeClassNames|createVariantClassNames;.*[Cc]lassName$|.*[Cc]lassNames$"
+    slot01_test.go:206: compiled shared attributeNames mutant caught at output line 3: got "mutated attribute|className;mergeClassNames|createVariantClassNames;.*[Cc]lassName$|.*[Cc]lassNames$", Go "class|className;mergeClassNames|createVariantClassNames;.*[Cc]lassName$|.*[Cc]lassNames$"
+    slot01_test.go:206: compiled shared calleeNames mutant caught at output line 3: got "class|className;mutated callee|createVariantClassNames;.*[Cc]lassName$|.*[Cc]lassNames$", Go "class|className;mergeClassNames|createVariantClassNames;.*[Cc]lassName$|.*[Cc]lassNames$"
+    slot01_test.go:206: compiled shared variablePatterns mutant caught at output line 3: got "class|className;mergeClassNames|createVariantClassNames;mutated pattern|.*[Cc]lassNames$", Go "class|className;mergeClassNames|createVariantClassNames;.*[Cc]lassName$|.*[Cc]lassNames$"
+--- PASS: TestSlot01TailwindDefaultsMatchCohere (5.71s)
+=== RUN   TestSlot01Wave10Word
+    slot01_wave10_test.go:155: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/next/no_html_link_for_pages_test.go: 280 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/typescript/no_empty_object_type_test.go: 47 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/core/no_restricted_exports_test.go: 177 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/core/no_restricted_imports_test.go: 414 string inputs
+        918 fixture strings; 14768 word queries, all sixteen flag combinations and fresh-result probes
+    slot01_wave10_test.go:155: 295360 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave10_test.go:155: compiled regexp_word_class_atoms.a mutant caught at output line 19: got "6", Go "4"
+--- PASS: TestSlot01Wave10Word (3.63s)
+=== RUN   TestSlot01Wave10NonWord
+    slot01_wave10_test.go:160: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/next/no_html_link_for_pages_test.go: 280 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/typescript/no_empty_object_type_test.go: 47 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/core/no_restricted_exports_test.go: 177 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/core/no_restricted_imports_test.go: 414 string inputs
+        918 fixture strings; 14768 nonword queries, all sixteen flag combinations and fresh-result probes
+    slot01_wave10_test.go:160: 354432 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave10_test.go:160: compiled regexp_nonword_class_atoms.a mutant caught at output line 10: got "1:123:65535", Go "1:123:1114111"
+--- PASS: TestSlot01Wave10NonWord (5.42s)
+=== RUN   TestSlot01Wave10Boundary
+    slot01_wave10_test.go:165: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/next/no_html_link_for_pages_test.go: 280 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/typescript/no_empty_object_type_test.go: 47 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/core/no_restricted_exports_test.go: 177 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/core/no_restricted_imports_test.go: 414 string inputs
+        918 fixture strings; 29536 boundary queries, all sixteen flag combinations and fresh-result probes
+    slot01_wave10_test.go:165: 88608 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave10_test.go:165: compiled regexp_word_boundary.a mutant caught at output line 1: got "(?:(?<=[0-9A-Z\\u005fa-z])(?=[0-9A-Z\\u005fa-z])|(?<![0-9A-Z\\u005fa-z])(?![0-9A-Z\\u005fa-z]))", Go "(?:(?<![0-9A-Z\\u005fa-z])(?=[0-9A-Z\\u005fa-z])|(?<=[0-9A-Z\\u005fa-z])(?![0-9A-Z\\u005fa-z]))"
+--- PASS: TestSlot01Wave10Boundary (4.95s)
+=== RUN   TestSlot01Wave10WordFresh
+    slot01_wave10_test.go:170: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/next/no_html_link_for_pages_test.go: 280 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/typescript/no_empty_object_type_test.go: 47 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/core/no_restricted_exports_test.go: 177 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/core/no_restricted_imports_test.go: 414 string inputs
+        918 fixture strings; 14768 word queries, all sixteen flag combinations and fresh-result probes
+    slot01_wave10_test.go:170: 295360 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave10_test.go:170: compiled regexp_word_class_atoms.a mutant caught at output line 11: got "1:99999:57", Go "1:48:57"
+--- PASS: TestSlot01Wave10WordFresh (3.44s)
+=== RUN   TestSlot01Wave10NonWordFresh
+    slot01_wave10_test.go:175: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/next/no_html_link_for_pages_test.go: 280 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/typescript/no_empty_object_type_test.go: 47 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/core/no_restricted_exports_test.go: 177 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/core/no_restricted_imports_test.go: 414 string inputs
+        918 fixture strings; 14768 nonword queries, all sixteen flag combinations and fresh-result probes
+    slot01_wave10_test.go:175: 354432 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave10_test.go:175: compiled regexp_nonword_class_atoms.a mutant caught at output line 13: got "1:99999:47", Go "1:0:47"
+--- PASS: TestSlot01Wave10NonWordFresh (3.86s)
+=== RUN   TestSlot01Wave10BoundaryForward
+    slot01_wave10_test.go:180: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/next/no_html_link_for_pages_test.go: 280 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/typescript/no_empty_object_type_test.go: 47 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/core/no_restricted_exports_test.go: 177 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/core/no_restricted_imports_test.go: 414 string inputs
+        918 fixture strings; 29536 boundary queries, all sixteen flag combinations and fresh-result probes
+    slot01_wave10_test.go:180: 88608 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave10_test.go:180: compiled regexp_word_boundary.a mutant caught at output line 9: got "0", Go "1"
+--- PASS: TestSlot01Wave10BoundaryForward (4.99s)
+=== RUN   TestSlot01Wave10BoundaryCount
+    slot01_wave10_test.go:185: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/next/no_html_link_for_pages_test.go: 280 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/typescript/no_empty_object_type_test.go: 47 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/core/no_restricted_exports_test.go: 177 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/core/no_restricted_imports_test.go: 414 string inputs
+        918 fixture strings; 29536 boundary queries, all sixteen flag combinations and fresh-result probes
+    slot01_wave10_test.go:185: 88608 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave10_test.go:185: compiled regexp_word_boundary.a mutant caught at output line 2: got "2", Go "1"
+--- PASS: TestSlot01Wave10BoundaryCount (4.75s)
+=== RUN   TestSlot01Wave11Node
+    slot01_wave11_test.go:173: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        460 fixture strings; 5115 node tree cases; 345 actual ParseCSS trees; nil/empty/header/alias controls
+    slot01_wave11_test.go:173: 783668 Go output lines matched source Node; native parity not yet established
+    slot01_wave11_test.go:173: source-only collapse_clone_node.a mutant caught at output line 43: got "true:false:true", Go "true:true:true"; not native mutant credit
+    slot01_wave11_test.go:173: BLOCKED: node arena ownership refused; native/emitted-JS parity and compiled mutant pending: /workspace/adamic/stage1/cohere/lint/helpers/gaps/slot01_wave11_main.a:51:11: Adamic 0.1 refuses CollapseCopyNode[], an array whose elements can reach back to an array like it: a cycle reference counting can't free, and the write at /workspace/adamic/stage1/cohere/lint/helpers/gaps/slot01_wave11_main.a:58:9 may close one (the value written reaches something this function didn't make or let escape, and what it's written into wasn't made here); declare the elements weak, Weak<CollapseCopyNode>[] (import type { Weak } from 'adamic'), which don't count and read undefined once what they point to is freed; or make it readonly CollapseCopyNode[]; or write into such an array only values this function made, or only into one it made (adamic/cycle-capable)
+--- SKIP: TestSlot01Wave11Node (4.25s)
+=== RUN   TestSlot01Wave11Context
+    slot01_wave11_test.go:178: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        460 fixture strings; 5115 node tree cases; 345 actual ParseCSS trees; nil/empty/header/alias controls
+    slot01_wave11_test.go:178: 783668 Go output lines matched source Node; native parity not yet established
+    slot01_wave11_test.go:178: source-only collapse_clone_node.a mutant caught at output line 143: got "3", Go "2"; not native mutant credit
+    slot01_wave11_test.go:178: BLOCKED: node arena ownership refused; native/emitted-JS parity and compiled mutant pending: /workspace/adamic/stage1/cohere/lint/helpers/gaps/slot01_wave11_main.a:51:11: Adamic 0.1 refuses CollapseCopyNode[], an array whose elements can reach back to an array like it: a cycle reference counting can't free, and the write at /workspace/adamic/stage1/cohere/lint/helpers/gaps/slot01_wave11_main.a:58:9 may close one (the value written reaches something this function didn't make or let escape, and what it's written into wasn't made here); declare the elements weak, Weak<CollapseCopyNode>[] (import type { Weak } from 'adamic'), which don't count and read undefined once what they point to is freed; or make it readonly CollapseCopyNode[]; or write into such an array only values this function made, or only into one it made (adamic/cycle-capable)
+--- SKIP: TestSlot01Wave11Context (4.21s)
+=== RUN   TestSlot01Wave11Children
+    slot01_wave11_test.go:183: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        460 fixture strings; 5115 node tree cases; 345 actual ParseCSS trees; nil/empty/header/alias controls
+    slot01_wave11_test.go:183: 783668 Go output lines matched source Node; native parity not yet established
+    slot01_wave11_test.go:183: source-only collapse_clone_node.a mutant caught at output line 33: got "1", Go "-2"; not native mutant credit
+    slot01_wave11_test.go:183: BLOCKED: node arena ownership refused; native/emitted-JS parity and compiled mutant pending: /workspace/adamic/stage1/cohere/lint/helpers/gaps/slot01_wave11_main.a:51:11: Adamic 0.1 refuses CollapseCopyNode[], an array whose elements can reach back to an array like it: a cycle reference counting can't free, and the write at /workspace/adamic/stage1/cohere/lint/helpers/gaps/slot01_wave11_main.a:58:9 may close one (the value written reaches something this function didn't make or let escape, and what it's written into wasn't made here); declare the elements weak, Weak<CollapseCopyNode>[] (import type { Weak } from 'adamic'), which don't count and read undefined once what they point to is freed; or make it readonly CollapseCopyNode[]; or write into such an array only values this function made, or only into one it made (adamic/cycle-capable)
+--- SKIP: TestSlot01Wave11Children (3.86s)
+=== RUN   TestSlot01Wave11List
+    slot01_wave11_test.go:188: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        460 fixture strings; 5115 list tree cases; 345 actual ParseCSS trees; nil/empty/header/alias controls
+    slot01_wave11_test.go:188: 1159052 Go output lines matched source Node; native parity not yet established
+    slot01_wave11_test.go:188: source-only collapse_clone_nodes.a mutant caught at output line 10: got "0", Go "-2"; not native mutant credit
+    slot01_wave11_test.go:188: BLOCKED: node arena ownership refused; native/emitted-JS parity and compiled mutant pending: /workspace/adamic/stage1/cohere/lint/helpers/gaps/slot01_wave11_main.a:51:11: Adamic 0.1 refuses CollapseCopyNode[], an array whose elements can reach back to an array like it: a cycle reference counting can't free, and the write at /workspace/adamic/stage1/cohere/lint/helpers/gaps/slot01_wave11_main.a:58:9 may close one (the value written reaches something this function didn't make or let escape, and what it's written into wasn't made here); declare the elements weak, Weak<CollapseCopyNode>[] (import type { Weak } from 'adamic'), which don't count and read undefined once what they point to is freed; or make it readonly CollapseCopyNode[]; or write into such an array only values this function made, or only into one it made (adamic/cycle-capable)
+--- SKIP: TestSlot01Wave11List (5.04s)
+=== RUN   TestSlot01Wave11ListNil
+    slot01_wave11_test.go:193: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        460 fixture strings; 5115 list tree cases; 345 actual ParseCSS trees; nil/empty/header/alias controls
+    slot01_wave11_test.go:193: 1159052 Go output lines matched source Node; native parity not yet established
+    slot01_wave11_test.go:193: source-only collapse_clone_nodes.a mutant caught at output line 1: got "false:0:0", Go "true:0:0"; not native mutant credit
+    slot01_wave11_test.go:193: BLOCKED: node arena ownership refused; native/emitted-JS parity and compiled mutant pending: /workspace/adamic/stage1/cohere/lint/helpers/gaps/slot01_wave11_main.a:51:11: Adamic 0.1 refuses CollapseCopyNode[], an array whose elements can reach back to an array like it: a cycle reference counting can't free, and the write at /workspace/adamic/stage1/cohere/lint/helpers/gaps/slot01_wave11_main.a:58:9 may close one (the value written reaches something this function didn't make or let escape, and what it's written into wasn't made here); declare the elements weak, Weak<CollapseCopyNode>[] (import type { Weak } from 'adamic'), which don't count and read undefined once what they point to is freed; or make it readonly CollapseCopyNode[]; or write into such an array only values this function made, or only into one it made (adamic/cycle-capable)
+--- SKIP: TestSlot01Wave11ListNil (5.71s)
+=== RUN   TestSlot01Wave11Remove
+    slot01_wave11_test.go:198: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        460 fixture strings; 5115 remove tree cases; 345 actual ParseCSS trees; nil/empty/header/alias controls
+    slot01_wave11_test.go:198: 566371 Go output lines matched source Node; native parity not yet established
+    slot01_wave11_test.go:198: source-only collapse_remove_nodes.a mutant caught at output line 719: got "false:0:2", Go "false:2:2"; not native mutant credit
+    slot01_wave11_test.go:198: BLOCKED: node arena ownership refused; native/emitted-JS parity and compiled mutant pending: /workspace/adamic/stage1/cohere/lint/helpers/gaps/slot01_wave11_main.a:51:11: Adamic 0.1 refuses CollapseCopyNode[], an array whose elements can reach back to an array like it: a cycle reference counting can't free, and the write at /workspace/adamic/stage1/cohere/lint/helpers/gaps/slot01_wave11_main.a:58:9 may close one (the value written reaches something this function didn't make or let escape, and what it's written into wasn't made here); declare the elements weak, Weak<CollapseCopyNode>[] (import type { Weak } from 'adamic'), which don't count and read undefined once what they point to is freed; or make it readonly CollapseCopyNode[]; or write into such an array only values this function made, or only into one it made (adamic/cycle-capable)
+--- SKIP: TestSlot01Wave11Remove (3.27s)
+=== RUN   TestSlot01Wave11RemoveIdentity
+    slot01_wave11_test.go:203: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        460 fixture strings; 5115 remove tree cases; 345 actual ParseCSS trees; nil/empty/header/alias controls
+    slot01_wave11_test.go:203: 566371 Go output lines matched source Node; native parity not yet established
+    slot01_wave11_test.go:203: source-only collapse_remove_nodes.a mutant caught at output line 1: got "false:0:0", Go "true:0:0"; not native mutant credit
+    slot01_wave11_test.go:203: BLOCKED: node arena ownership refused; native/emitted-JS parity and compiled mutant pending: /workspace/adamic/stage1/cohere/lint/helpers/gaps/slot01_wave11_main.a:51:11: Adamic 0.1 refuses CollapseCopyNode[], an array whose elements can reach back to an array like it: a cycle reference counting can't free, and the write at /workspace/adamic/stage1/cohere/lint/helpers/gaps/slot01_wave11_main.a:58:9 may close one (the value written reaches something this function didn't make or let escape, and what it's written into wasn't made here); declare the elements weak, Weak<CollapseCopyNode>[] (import type { Weak } from 'adamic'), which don't count and read undefined once what they point to is freed; or make it readonly CollapseCopyNode[]; or write into such an array only values this function made, or only into one it made (adamic/cycle-capable)
+--- SKIP: TestSlot01Wave11RemoveIdentity (3.29s)
+=== RUN   TestSlot01Wave11RemoveEmpty
+    slot01_wave11_test.go:208: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        460 fixture strings; 5115 remove tree cases; 345 actual ParseCSS trees; nil/empty/header/alias controls
+    slot01_wave11_test.go:208: 566371 Go output lines matched source Node; native parity not yet established
+    slot01_wave11_test.go:208: source-only collapse_remove_nodes.a mutant caught at output line 453: got "false:0:2", Go "false:2:2"; not native mutant credit
+    slot01_wave11_test.go:208: BLOCKED: node arena ownership refused; native/emitted-JS parity and compiled mutant pending: /workspace/adamic/stage1/cohere/lint/helpers/gaps/slot01_wave11_main.a:51:11: Adamic 0.1 refuses CollapseCopyNode[], an array whose elements can reach back to an array like it: a cycle reference counting can't free, and the write at /workspace/adamic/stage1/cohere/lint/helpers/gaps/slot01_wave11_main.a:58:9 may close one (the value written reaches something this function didn't make or let escape, and what it's written into wasn't made here); declare the elements weak, Weak<CollapseCopyNode>[] (import type { Weak } from 'adamic'), which don't count and read undefined once what they point to is freed; or make it readonly CollapseCopyNode[]; or write into such an array only values this function made, or only into one it made (adamic/cycle-capable)
+--- SKIP: TestSlot01Wave11RemoveEmpty (3.22s)
+=== RUN   TestSlot01Wave2FactoryMatchesCohere
+    slot01_wave2_test.go:13: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_important_position_test.go: 37 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variable_syntax_test.go: 39 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_concatenated_classes_test.go: 60 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_deprecated_classes_test.go: 100 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_duplicate_classes_test.go: 80 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unnecessary_whitespace_test.go: 75 string inputs
+        1016 fixture strings; 1936 helper input batches (factory)
+    slot01_wave2_test.go:13: 148474 Go output lines matched Node and sanitized native
+    slot01_wave2_test.go:13: compiled tailwind_new_class_literal_reader.a mutant caught at output line 14: got "^custom$", Go ".*[Cc]lassName$"
+--- PASS: TestSlot01Wave2FactoryMatchesCohere (8.13s)
+=== RUN   TestSlot01Wave2MemoMatchesCohere
+    slot01_wave2_test.go:16: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_important_position_test.go: 37 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variable_syntax_test.go: 39 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_deprecated_classes_test.go: 100 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_duplicate_classes_test.go: 80 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unnecessary_whitespace_test.go: 75 string inputs
+        956 fixture strings; 1876 helper input batches (memo)
+    slot01_wave2_test.go:16: 37832 Go output lines matched Node and sanitized native
+    slot01_wave2_test.go:16: compiled tailwind_class_values_in.a mutant caught at output line 14: got "", Go "!"
+--- PASS: TestSlot01Wave2MemoMatchesCohere (4.41s)
+=== RUN   TestSlot01Wave2LiteralMatchesCohere
+    slot01_wave2_test.go:19: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_important_position_test.go: 37 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variable_syntax_test.go: 39 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_deprecated_classes_test.go: 100 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_duplicate_classes_test.go: 80 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unnecessary_whitespace_test.go: 75 string inputs
+        956 fixture strings; 1888 helper input batches (literal)
+    slot01_wave2_test.go:19: 5940 Go output lines matched Node and sanitized native
+    slot01_wave2_test.go:19: compiled tailwind_class_literal_from.a mutant caught at output line 2: got "225 235 false false", Go "226 235 false false"
+--- PASS: TestSlot01Wave2LiteralMatchesCohere (4.06s)
+=== RUN   TestSlot01Wave2LiteralShortRangeMutant
+    slot01_wave2_test.go:22: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_important_position_test.go: 37 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variable_syntax_test.go: 39 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_deprecated_classes_test.go: 100 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_duplicate_classes_test.go: 80 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unnecessary_whitespace_test.go: 75 string inputs
+        956 fixture strings; 1888 helper input batches (literal)
+    slot01_wave2_test.go:22: 5940 Go output lines matched Node and sanitized native
+    slot01_wave2_test.go:22: compiled tailwind_class_literal_from.a mutant caught at output line 522: got "1 0 false false", Go "0 1 false false"
+--- PASS: TestSlot01Wave2LiteralShortRangeMutant (4.46s)
+=== RUN   TestSlot01Wave2FactoryInvalidPatternMutant
+    slot01_wave2_test.go:25: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_important_position_test.go: 37 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variable_syntax_test.go: 39 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_concatenated_classes_test.go: 60 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_deprecated_classes_test.go: 100 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_duplicate_classes_test.go: 80 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unnecessary_whitespace_test.go: 75 string inputs
+        1016 fixture strings; 1936 helper input batches (factory)
+    slot01_wave2_test.go:25: 148474 Go output lines matched Node and sanitized native
+    slot01_wave2_test.go:25: compiled tailwind_new_class_literal_reader.a mutant caught at output line 1: got "3 3 6 true", Go "3 3 5 true"
+--- PASS: TestSlot01Wave2FactoryInvalidPatternMutant (8.39s)
+=== RUN   TestSlot01Wave2FactoryAttributeMutant
+    slot01_wave2_test.go:28: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_important_position_test.go: 37 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variable_syntax_test.go: 39 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_concatenated_classes_test.go: 60 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_deprecated_classes_test.go: 100 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_duplicate_classes_test.go: 80 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unnecessary_whitespace_test.go: 75 string inputs
+        1016 fixture strings; 1936 helper input batches (factory)
+    slot01_wave2_test.go:28: 148474 Go output lines matched Node and sanitized native
+    slot01_wave2_test.go:28: compiled tailwind_new_class_literal_reader.a mutant caught at output line 2: got "false true", Go "true true"
+--- PASS: TestSlot01Wave2FactoryAttributeMutant (8.05s)
+=== RUN   TestSlot01Wave2MemoUnboundMutant
+    slot01_wave2_test.go:31: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_important_position_test.go: 37 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variable_syntax_test.go: 39 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_deprecated_classes_test.go: 100 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_duplicate_classes_test.go: 80 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unnecessary_whitespace_test.go: 75 string inputs
+        956 fixture strings; 1876 helper input batches (memo)
+    slot01_wave2_test.go:31: 37832 Go output lines matched Node and sanitized native
+    slot01_wave2_test.go:31: compiled tailwind_class_values_in.a mutant caught at output line 1: got "1 0 1", Go "1 0 0"
+--- PASS: TestSlot01Wave2MemoUnboundMutant (3.91s)
+=== RUN   TestSlot01Wave2MemoEmptyMutant
+    slot01_wave2_test.go:34: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_important_position_test.go: 37 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variable_syntax_test.go: 39 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_deprecated_classes_test.go: 100 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_duplicate_classes_test.go: 80 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unnecessary_whitespace_test.go: 75 string inputs
+        956 fixture strings; 1876 helper input batches (memo)
+    slot01_wave2_test.go:34: 37832 Go output lines matched Node and sanitized native
+    slot01_wave2_test.go:34: compiled tailwind_class_values_in.a mutant caught at output line 19: got "0 0 2", Go "0 0 3"
+--- PASS: TestSlot01Wave2MemoEmptyMutant (4.04s)
+=== RUN   TestSlot01Wave3AttributeMatchesCohere
+    slot01_wave3_test.go:19: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_important_position_test.go: 37 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variable_syntax_test.go: 39 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_deprecated_classes_test.go: 100 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_duplicate_classes_test.go: 80 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unnecessary_whitespace_test.go: 75 string inputs
+        956 fixture strings; 962 source batches; 720 helper queries
+    slot01_wave3_test.go:19: 1432 Go output lines match Node, sanitized native and emitted JavaScript
+    slot01_wave3_test.go:19: compiled tailwind_attribute_values.a mutant caught at output line 5: got "1 0", Go "0 0"
+--- PASS: TestSlot01Wave3AttributeMatchesCohere (4.94s)
+=== RUN   TestSlot01Wave3EntityMatchesCohere
+    slot01_wave3_test.go:161: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/next/google_font_display_test.go: 35 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/google_font_preconnect_test.go: 35 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/next_script_for_ga_test.go: 99 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_before_interactive_script_outside_document_test.go: 114 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_css_tags_test.go: 35 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_html_link_for_pages_test.go: 280 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_page_custom_font_test.go: 87 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_unwanted_polyfillio_test.go: 104 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/boundary_no_project_theme_value_test.go: 74 string inputs
+        863 fixture strings; 8044 entity queries; 253 pinned named entities
+    slot01_wave3_test.go:161: 24134 Go output lines match Node, sanitized native and emitted JavaScript
+    slot01_wave3_test.go:161: compiled text_decode_entity.a mutant caught at output line 20: got "0", Go "38,35,49,49,49,52,49,49,50,59"
+--- PASS: TestSlot01Wave3EntityMatchesCohere (5.31s)
+=== RUN   TestSlot01Wave3EntitySurrogateMutant
+    slot01_wave3_test.go:164: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/next/google_font_display_test.go: 35 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/google_font_preconnect_test.go: 35 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/next_script_for_ga_test.go: 99 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_before_interactive_script_outside_document_test.go: 114 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_css_tags_test.go: 35 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_html_link_for_pages_test.go: 280 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_page_custom_font_test.go: 87 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_unwanted_polyfillio_test.go: 104 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/boundary_no_project_theme_value_test.go: 74 string inputs
+        863 fixture strings; 8044 entity queries; 253 pinned named entities
+    slot01_wave3_test.go:164: 24134 Go output lines match Node, sanitized native and emitted JavaScript
+    slot01_wave3_test.go:164: compiled text_decode_entity.a mutant caught at output line 5384: got "55832", Go "65533"
+--- PASS: TestSlot01Wave3EntitySurrogateMutant (5.25s)
+=== RUN   TestSlot01Wave3ComponentMatchesCohere
+    slot01_wave3_test.go:169: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/structure/consistency_require_matching_file_name_test.go: 172 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_component_no_const_assignment_test.go: 47 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_component_no_destructuring_test.go: 52 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_component_no_display_name_test.go: 50 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_component_no_separate_named_export_test.go: 65 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_component_require_named_export_test.go: 76 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_component_require_properties_type_suffix_test.go: 50 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_hook_no_properties_in_dependencies_test.go: 56 string inputs
+        568 fixture strings; 1115624 component-name queries; Unicode 17.0.0
+    slot01_wave3_test.go:169: 1115624 Go output lines match Node, sanitized native and emitted JavaScript
+    slot01_wave3_test.go:169: compiled react_likely_component_name.a mutant caught at output line 580: got "false", Go "true"
+--- PASS: TestSlot01Wave3ComponentMatchesCohere (39.43s)
+=== RUN   TestSlot01Wave3AttributeFalseValueMutant
+    slot01_wave3_test.go:191: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_important_position_test.go: 37 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variable_syntax_test.go: 39 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_deprecated_classes_test.go: 100 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_duplicate_classes_test.go: 80 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unnecessary_whitespace_test.go: 75 string inputs
+        956 fixture strings; 962 source batches; 720 helper queries
+    slot01_wave3_test.go:191: 1432 Go output lines match Node, sanitized native and emitted JavaScript
+    slot01_wave3_test.go:191: compiled tailwind_attribute_values.a mutant caught at output line 5: got "1 0", Go "0 0"
+--- PASS: TestSlot01Wave3AttributeFalseValueMutant (5.37s)
+=== RUN   TestSlot01Wave3EntityNamedTableMutant
+    slot01_wave3_test.go:194: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/next/google_font_display_test.go: 35 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/google_font_preconnect_test.go: 35 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/next_script_for_ga_test.go: 99 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_before_interactive_script_outside_document_test.go: 114 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_css_tags_test.go: 35 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_html_link_for_pages_test.go: 280 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_page_custom_font_test.go: 87 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_unwanted_polyfillio_test.go: 104 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/boundary_no_project_theme_value_test.go: 74 string inputs
+        863 fixture strings; 8044 entity queries; 253 pinned named entities
+    slot01_wave3_test.go:194: 24134 Go output lines match Node, sanitized native and emitted JavaScript
+    slot01_wave3_test.go:194: compiled text_decode_entity.a mutant caught at output line 50: got "38,97,109,112,59", Go "38"
+--- PASS: TestSlot01Wave3EntityNamedTableMutant (5.55s)
+=== RUN   TestSlot01Wave3ComponentStrideMutant
+    slot01_wave3_test.go:199: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/structure/consistency_require_matching_file_name_test.go: 172 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_component_no_const_assignment_test.go: 47 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_component_no_destructuring_test.go: 52 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_component_no_display_name_test.go: 50 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_component_no_separate_named_export_test.go: 65 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_component_require_named_export_test.go: 76 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_component_require_properties_type_suffix_test.go: 50 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_hook_no_properties_in_dependencies_test.go: 56 string inputs
+        568 fixture strings; 1115624 component-name queries; Unicode 17.0.0
+    slot01_wave3_test.go:199: 1115624 Go output lines match Node, sanitized native and emitted JavaScript
+    slot01_wave3_test.go:199: compiled react_likely_component_name.a mutant caught at output line 584: got "true", Go "false"
+--- PASS: TestSlot01Wave3ComponentStrideMutant (40.28s)
+=== RUN   TestSlot01Wave4StringValueMatchesCohere
+    slot01_wave4_test.go:15: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/next/google_font_display_test.go: 35 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/google_font_preconnect_test.go: 35 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/next_script_for_ga_test.go: 99 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_css_tags_test.go: 35 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_html_link_for_pages_test.go: 280 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_page_custom_font_test.go: 87 string inputs
+        571 fixture strings; 576 batches; 4690 string-value queries
+    slot01_wave4_test.go:15: 9382 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave4_test.go:15: compiled jsx_string_attribute_value.a mutant caught at output line 3: got "true", Go "false"
+--- PASS: TestSlot01Wave4StringValueMatchesCohere (3.70s)
+=== RUN   TestSlot01Wave4HexMatchesCohere
+    slot01_wave4_test.go:146: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 27316 byte queries, all 256 byte values
+    slot01_wave4_test.go:146: 27316 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave4_test.go:146: compiled collapse_is_hex_digit.a mutant caught at output line 64: got "false", Go "true"
+--- PASS: TestSlot01Wave4HexMatchesCohere (2.83s)
+=== RUN   TestSlot01Wave4ContainerMatchesCohere
+    slot01_wave4_test.go:151: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 697 container queries; 54 parsed CSS nodes; 145 CSS parse errors (not helper failures)
+    slot01_wave4_test.go:151: 697 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave4_test.go:151: compiled collapse_node_is_container.a mutant caught at output line 3: got "false", Go "true"
+--- PASS: TestSlot01Wave4ContainerMatchesCohere (2.27s)
+=== RUN   TestSlot01Wave4StringDecoderMutant
+    slot01_wave4_test.go:156: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/next/google_font_display_test.go: 35 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/google_font_preconnect_test.go: 35 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/next_script_for_ga_test.go: 99 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_css_tags_test.go: 35 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_html_link_for_pages_test.go: 280 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_page_custom_font_test.go: 87 string inputs
+        571 fixture strings; 576 batches; 4690 string-value queries
+    slot01_wave4_test.go:156: 9382 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave4_test.go:156: compiled jsx_string_attribute_value.a mutant caught at output line 64: got "&#47;about", Go "/about"
+--- PASS: TestSlot01Wave4StringDecoderMutant (3.74s)
+=== RUN   TestSlot01Wave4StringNilFirstMutant
+    slot01_wave4_test.go:159: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/next/google_font_display_test.go: 35 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/google_font_preconnect_test.go: 35 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/next_script_for_ga_test.go: 99 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_css_tags_test.go: 35 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_html_link_for_pages_test.go: 280 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_page_custom_font_test.go: 87 string inputs
+        571 fixture strings; 576 batches; 4690 string-value queries
+    slot01_wave4_test.go:159: 9382 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave4_test.go:159: compiled jsx_string_attribute_value.a mutant caught at output line 75: got "true", Go "false"
+--- PASS: TestSlot01Wave4StringNilFirstMutant (3.60s)
+=== RUN   TestSlot01Wave4HexDomainRefusal
+    slot01_wave4_test.go:218: compiled byte-domain guard mutant accepted 256 and printed false; source/native/emitted-JS refusal checks catch it
+--- PASS: TestSlot01Wave4HexDomainRefusal (1.58s)
+=== RUN   TestSlot01Wave5NamedMatchesCohere
+    slot01_wave5_test.go:142: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 1706 helper queries (named)
+    slot01_wave5_test.go:142: 1706 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave5_test.go:142: compiled collapse_valid_named_value.a mutant caught at output line 637: got "false", Go "true"
+--- PASS: TestSlot01Wave5NamedMatchesCohere (1.65s)
+=== RUN   TestSlot01Wave5NamedEmptyMutant
+    slot01_wave5_test.go:145: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 1706 helper queries (named)
+    slot01_wave5_test.go:145: 1706 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave5_test.go:145: compiled collapse_valid_named_value.a mutant caught at output line 1: got "true", Go "false"
+--- PASS: TestSlot01Wave5NamedEmptyMutant (1.57s)
+=== RUN   TestSlot01Wave5ArbitraryMatchesCohere
+    slot01_wave5_test.go:150: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 1706 helper queries (arbitrary)
+    slot01_wave5_test.go:150: 1706 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave5_test.go:150: compiled collapse_valid_arbitrary.a mutant caught at output line 4: got "true", Go "false"
+--- PASS: TestSlot01Wave5ArbitraryMatchesCohere (1.60s)
+=== RUN   TestSlot01Wave5ArbitraryFinalMutant
+    slot01_wave5_test.go:153: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 1706 helper queries (arbitrary)
+    slot01_wave5_test.go:153: 1706 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave5_test.go:153: compiled collapse_valid_arbitrary.a mutant caught at output line 648: got "false", Go "true"
+--- PASS: TestSlot01Wave5ArbitraryFinalMutant (1.63s)
+=== RUN   TestSlot01Wave5ArbitraryEscapeMutant
+    slot01_wave5_test.go:156: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 1706 helper queries (arbitrary)
+    slot01_wave5_test.go:156: 1706 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave5_test.go:156: compiled collapse_valid_arbitrary.a mutant caught at output line 1021: got "true", Go "false"
+--- PASS: TestSlot01Wave5ArbitraryEscapeMutant (1.67s)
+=== RUN   TestSlot01Wave5ThemeMatchesCohere
+    slot01_wave5_test.go:161: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 1706 helper queries (theme)
+    slot01_wave5_test.go:161: 1706 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave5_test.go:161: compiled collapse_parse_theme_options.a mutant caught at output line 1693: got "13 0:", Go "15 0:"
+--- PASS: TestSlot01Wave5ThemeMatchesCohere (1.80s)
+=== RUN   TestSlot01Wave5ThemeLastPrefixMutant
+    slot01_wave5_test.go:164: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 1706 helper queries (theme)
+    slot01_wave5_test.go:164: 1706 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave5_test.go:164: compiled collapse_parse_theme_options.a mutant caught at output line 1695: got "0 5:102,105,114,115,116,", Go "0 6:115,101,99,111,110,100,"
+--- PASS: TestSlot01Wave5ThemeLastPrefixMutant (1.77s)
+=== RUN   TestSlot01Wave6DefinitionMatchesCohere
+    slot01_wave6_test.go:156: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 1284 tree batches (definition), six arena nodes each
+    slot01_wave6_test.go:156: 7704 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave6_test.go:156: compiled collapse_normalize_utility_definition.a mutant caught at output line 4: got "43:99,97,108,99,40,45,45,109,111,100,105,102,105,101,114,40,45,45,116,101,120,116,45,42,45,45,108,105,110,101,45,104,101,105,103,104,116,41,32,42,32,50,41,", Go "42:99,97,108,99,40,45,45,109,111,100,105,102,105,101,114,40,45,45,116,101,120,116,32,45,45,108,105,110,101,45,104,101,105,103,104,116,41,32,42,32,50,41,"
+--- PASS: TestSlot01Wave6DefinitionMatchesCohere (5.10s)
+=== RUN   TestSlot01Wave6DefinitionForwardMutant
+    slot01_wave6_test.go:159: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 1284 tree batches (definition), six arena nodes each
+    slot01_wave6_test.go:159: 7704 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave6_test.go:159: compiled collapse_normalize_utility_definition.a mutant caught at output line 10: got "42:99,97,108,99,40,45,45,109,111,100,105,102,105,101,114,40,45,45,116,101,120,116,32,45,45,108,105,110,101,45,104,101,105,103,104,116,41,32,42,32,50,41,", Go "43:99,97,108,99,40,45,45,109,111,100,105,102,105,101,114,40,45,45,116,101,120,116,45,42,45,45,108,105,110,101,45,104,101,105,103,104,116,41,32,42,32,50,41,"
+--- PASS: TestSlot01Wave6DefinitionForwardMutant (5.31s)
+=== RUN   TestSlot01Wave6WalkerMatchesCohere
+    slot01_wave6_test.go:164: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 1284 tree batches (walker), six arena nodes each
+    slot01_wave6_test.go:164: 9641 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave6_test.go:164: compiled collapse_normalize_value_function_arguments.a mutant caught at output line 11: got "42:99,97,108,99,40,45,45,109,111,100,105,102,105,101,114,40,45,45,116,101,120,116,32,45,45,108,105,110,101,45,104,101,105,103,104,116,41,32,42,32,50,41,", Go "43:99,97,108,99,40,45,45,109,111,100,105,102,105,101,114,40,45,45,116,101,120,116,45,42,45,45,108,105,110,101,45,104,101,105,103,104,116,41,32,42,32,50,41,"
+--- PASS: TestSlot01Wave6WalkerMatchesCohere (5.43s)
+=== RUN   TestSlot01Wave6WalkerPresentMutant
+    slot01_wave6_test.go:167: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 1284 tree batches (walker), six arena nodes each
+    slot01_wave6_test.go:167: 9641 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave6_test.go:167: compiled collapse_normalize_value_function_arguments.a mutant caught at output line 7377: got "164:64,105,109,112,111,114,116,32,39,116,97,105,108,119,105,110,100,99,115,115,39,59,10,64,116,104,101,109,101,32,123,32,45,45,102,114,111,98,110,105,99,97,116,101,45,115,109,97,108,108,58,32,50,112,120,59,32,125,10,64,117,116,105,108,105,116,121,32,103,117,116,116,101,114,45,42,32,123,10,32,32,32,32,38,32,62,32,58,110,111,116,40,58,108,97,115,116,45,99,104,105,108,100,41,32,123,32,109,97,114,103,105,110,45,105,110,108,105,110,101,45,101,110,100,58,32,45,45,118,97,108,117,101,40,45,45,102,114,111,98,110,105,99,97,116,101,45,42,44,91,108,101,110,103,116,104,93,41,59,32,125,10,125,10,", Go "165:64,105,109,112,111,114,116,32,39,116,97,105,108,119,105,110,100,99,115,115,39,59,10,64,116,104,101,109,101,32,123,32,45,45,102,114,111,98,110,105,99,97,116,101,45,115,109,97,108,108,58,32,50,112,120,59,32,125,10,64,117,116,105,108,105,116,121,32,103,117,116,116,101,114,45,42,32,123,10,32,32,32,32,38,32,62,32,58,110,111,116,40,58,108,97,115,116,45,99,104,105,108,100,41,32,123,32,109,97,114,103,105,110,45,105,110,108,105,110,101,45,101,110,100,58,32,45,45,118,97,108,117,101,40,45,45,102,114,111,98,110,105,99,97,116,101,45,42,44,32,91,108,101,110,103,116,104,93,41,59,32,125,10,125,10,"
+--- PASS: TestSlot01Wave6WalkerPresentMutant (5.18s)
+=== RUN   TestSlot01Wave6WalkerKindMutant
+    slot01_wave6_test.go:170: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 1284 tree batches (walker), six arena nodes each
+    slot01_wave6_test.go:170: 9641 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave6_test.go:170: compiled collapse_normalize_value_function_arguments.a mutant caught at output line 7373: got "164:64,105,109,112,111,114,116,32,39,116,97,105,108,119,105,110,100,99,115,115,39,59,10,64,116,104,101,109,101,32,123,32,45,45,102,114,111,98,110,105,99,97,116,101,45,115,109,97,108,108,58,32,50,112,120,59,32,125,10,64,117,116,105,108,105,116,121,32,103,117,116,116,101,114,45,42,32,123,10,32,32,32,32,38,32,62,32,58,110,111,116,40,58,108,97,115,116,45,99,104,105,108,100,41,32,123,32,109,97,114,103,105,110,45,105,110,108,105,110,101,45,101,110,100,58,32,45,45,118,97,108,117,101,40,45,45,102,114,111,98,110,105,99,97,116,101,45,42,44,91,108,101,110,103,116,104,93,41,59,32,125,10,125,10,", Go "165:64,105,109,112,111,114,116,32,39,116,97,105,108,119,105,110,100,99,115,115,39,59,10,64,116,104,101,109,101,32,123,32,45,45,102,114,111,98,110,105,99,97,116,101,45,115,109,97,108,108,58,32,50,112,120,59,32,125,10,64,117,116,105,108,105,116,121,32,103,117,116,116,101,114,45,42,32,123,10,32,32,32,32,38,32,62,32,58,110,111,116,40,58,108,97,115,116,45,99,104,105,108,100,41,32,123,32,109,97,114,103,105,110,45,105,110,108,105,110,101,45,101,110,100,58,32,45,45,118,97,108,117,101,40,45,45,102,114,111,98,110,105,99,97,116,101,45,42,44,32,91,108,101,110,103,116,104,93,41,59,32,125,10,125,10,"
+--- PASS: TestSlot01Wave6WalkerKindMutant (5.28s)
+=== RUN   TestSlot01Wave6WalkerBailMutant
+    slot01_wave6_test.go:173: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 1284 tree batches (walker), six arena nodes each
+    slot01_wave6_test.go:173: 9641 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave6_test.go:173: compiled collapse_normalize_value_function_arguments.a mutant caught at output line 29: got "trace:2", Go "trace:1"
+--- PASS: TestSlot01Wave6WalkerBailMutant (5.18s)
+=== RUN   TestSlot01Wave6WalkerOrderMutant
+    slot01_wave6_test.go:178: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 1284 tree batches (walker), six arena nodes each
+    slot01_wave6_test.go:178: 9641 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave6_test.go:178: compiled collapse_normalize_value_function_arguments.a mutant caught at output line 7380: got "165:64,105,109,112,111,114,116,32,39,116,97,105,108,119,105,110,100,99,115,115,39,59,10,64,116,104,101,109,101,32,123,32,45,45,102,114,111,98,110,105,99,97,116,101,45,115,109,97,108,108,58,32,50,112,120,59,32,125,10,64,117,116,105,108,105,116,121,32,103,117,116,116,101,114,45,42,32,123,10,32,32,32,32,38,32,62,32,58,110,111,116,40,58,108,97,115,116,45,99,104,105,108,100,41,32,123,32,109,97,114,103,105,110,45,105,110,108,105,110,101,45,101,110,100,58,32,45,45,118,97,108,117,101,40,45,45,102,114,111,98,110,105,99,97,116,101,45,42,44,32,91,108,101,110,103,116,104,93,41,59,32,125,10,125,10,", Go "42:99,97,108,99,40,45,45,109,111,100,105,102,105,101,114,40,45,45,116,101,120,116,32,45,45,108,105,110,101,45,104,101,105,103,104,116,41,32,42,32,50,41,"
+--- PASS: TestSlot01Wave6WalkerOrderMutant (5.24s)
+=== RUN   TestSlot01Wave6FrameworkMatchesCohere
+    slot01_wave6_test.go:187: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 1296 registry batches, three snapshots each
+    slot01_wave6_test.go:187: 63720 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave6_test.go:187: compiled collapse_register_framework_variants.a mutant caught at output line 2: got "1000", Go "3"
+--- PASS: TestSlot01Wave6FrameworkMatchesCohere (4.44s)
+=== RUN   TestSlot01Wave6FrameworkLastOrderMutant
+    slot01_wave6_test.go:190: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 1296 registry batches, three snapshots each
+    slot01_wave6_test.go:190: 63720 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave6_test.go:190: compiled collapse_register_framework_variants.a mutant caught at output line 1: got "3 5", Go "5 5"
+--- PASS: TestSlot01Wave6FrameworkLastOrderMutant (4.67s)
+=== RUN   TestSlot01Wave6FrameworkCopyMutant
+    slot01_wave6_test.go:193: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 1296 registry batches, three snapshots each
+    slot01_wave6_test.go:193: 63720 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave6_test.go:193: compiled collapse_register_framework_variants.a mutant caught at output line 26: got "8:116,97,109,112,101,114,101,100,", Go "6:115,116,97,116,105,99,"
+--- PASS: TestSlot01Wave6FrameworkCopyMutant (4.35s)
+=== RUN   TestSlot01Wave6FrameworkDomainRefusal
+    slot01_wave6_test.go:252: compiled exact-integer guard mutant accepted 9007199254740993 as rounded 9007199254740992; source/native/emitted-JS refusal checks catch it
+--- PASS: TestSlot01Wave6FrameworkDomainRefusal (1.99s)
+=== RUN   TestSlot01Wave7ThemeMatchesCohere
+    slot01_wave7_test.go:217: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 652 helper batches
+    slot01_wave7_test.go:217: 3258 Go output lines matched source Node, sanitized native and emitted JavaScript
+    slot01_wave7_test.go:217: compiled collapse_ingest_theme_block.a mutant caught at output line 1: got "107:102,105,120,116,117,114,101,46,99,115,115,58,32,96,64,116,104,101,109,101,96,32,98,108,111,99,107,115,32,109,117,115,116,32,111,110,108,121,32,99,111,110,116,97,105,110,32,99,117,115,116,111,109,32,112,114,111,112,101,114,116,105,101,115,32,111,114,32,96,64,107,101,121,102,114,97,109,101,115,96,44,32,102,111,117,110,100,32,100,101,99,108,97,114,97,116,105,111,110,32,34,99,111,108,111,114,34,", Go "64:102,105,120,116,117,114,101,46,99,115,115,58,32,48,58,32,73,110,118,97,108,105,100,32,116,104,101,109,101,32,118,97,108,117,101,32,96,96,32,102,111,114,32,110,97,109,101,115,112,97,99,101,32,96,45,45,99,111,108,111,114,45,42,96,"
+--- PASS: TestSlot01Wave7ThemeMatchesCohere (6.54s)
+=== RUN   TestSlot01Wave7ThemePrefixMutant
+    slot01_wave7_test.go:220: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 652 helper batches
+    slot01_wave7_test.go:220: 3258 Go output lines matched source Node, sanitized native and emitted JavaScript
+    slot01_wave7_test.go:220: compiled collapse_ingest_theme_block.a mutant caught at output line 3157: got "3:111,108,100,", Go "2:111,107,"
+--- PASS: TestSlot01Wave7ThemePrefixMutant (6.46s)
+=== RUN   TestSlot01Wave7ThemePropertyMutant
+    slot01_wave7_test.go:223: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 652 helper batches
+    slot01_wave7_test.go:223: 3258 Go output lines matched source Node, sanitized native and emitted JavaScript
+    slot01_wave7_test.go:223: compiled collapse_ingest_theme_block.a mutant caught at output line 3199: got "0:", Go "109:102,105,120,116,117,114,101,46,99,115,115,58,32,96,64,116,104,101,109,101,96,32,98,108,111,99,107,115,32,109,117,115,116,32,111,110,108,121,32,99,111,110,116,97,105,110,32,99,117,115,116,111,109,32,112,114,111,112,101,114,116,105,101,115,32,111,114,32,96,64,107,101,121,102,114,97,109,101,115,96,44,32,102,111,117,110,100,32,100,101,99,108,97,114,97,116,105,111,110,32,34,105,110,105,116,105,97,108,34,"
+--- PASS: TestSlot01Wave7ThemePropertyMutant (6.45s)
+=== RUN   TestSlot01Wave7ThemeUnescapeMutant
+    slot01_wave7_test.go:227: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 652 helper batches
+    slot01_wave7_test.go:227: 3258 Go output lines matched source Node, sanitized native and emitted JavaScript
+    slot01_wave7_test.go:227: compiled collapse_ingest_theme_block.a mutant caught at output line 4: got "11:45,45,99,111,108,111,114,45,92,54,49, 0: 0", Go "9:45,45,99,111,108,111,114,45,97, 0: 0"
+--- PASS: TestSlot01Wave7ThemeUnescapeMutant (6.29s)
+=== RUN   TestSlot01Wave7ThemeErrorStopMutant
+    slot01_wave7_test.go:230: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 652 helper batches
+    slot01_wave7_test.go:230: 3258 Go output lines matched source Node, sanitized native and emitted JavaScript
+    slot01_wave7_test.go:230: compiled collapse_ingest_theme_block.a mutant caught at output line 1: got "102:102,105,120,116,117,114,101,46,99,115,115,58,32,96,64,116,104,101,109,101,96,32,98,108,111,99,107,115,32,109,117,115,116,32,111,110,108,121,32,99,111,110,116,97,105,110,32,99,117,115,116,111,109,32,112,114,111,112,101,114,116,105,101,115,32,111,114,32,96,64,107,101,121,102,114,97,109,101,115,96,44,32,102,111,117,110,100,32,100,101,99,108,97,114,97,116,105,111,110,32,34,34,", Go "64:102,105,120,116,117,114,101,46,99,115,115,58,32,48,58,32,73,110,118,97,108,105,100,32,116,104,101,109,101,32,118,97,108,117,101,32,96,96,32,102,111,114,32,110,97,109,101,115,112,97,99,101,32,96,45,45,99,111,108,111,114,45,42,96,"
+--- PASS: TestSlot01Wave7ThemeErrorStopMutant (6.19s)
+=== RUN   TestSlot01Wave7ThemeInvalidPrefixMutant
+    slot01_wave7_test.go:233: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 652 helper batches
+    slot01_wave7_test.go:233: 3258 Go output lines matched source Node, sanitized native and emitted JavaScript
+    slot01_wave7_test.go:233: compiled collapse_ingest_theme_block.a mutant caught at output line 3161: got "69:102,105,120,116,117,114,101,46,99,115,115,58,32,48,58,32,73,110,118,97,108,105,100,32,116,104,101,109,101,32,118,97,108,117,101,32,96,102,111,111,45,42,96,32,102,111,114,32,110,97,109,101,115,112,97,99,101,32,96,45,45,99,111,108,111,114,45,42,96,", Go "93:102,105,120,116,117,114,101,46,99,115,115,58,32,116,104,101,32,112,114,101,102,105,120,32,34,66,65,68,34,32,105,115,32,105,110,118,97,108,105,100,46,32,80,114,101,102,105,120,101,115,32,109,117,115,116,32,98,101,32,108,111,119,101,114,99,97,115,101,32,65,83,67,73,73,32,108,101,116,116,101,114,115,32,40,97,45,122,41,32,111,110,108,121,"
+--- PASS: TestSlot01Wave7ThemeInvalidPrefixMutant (6.17s)
+=== RUN   TestSlot01Wave7TableMatchesCohere
+    slot01_wave7_test.go:238: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        Go framework metadata: 78 descriptor handles, 890 static registrations, 359 property positions
+        625 fixture strings; 1304 table batches
+    slot01_wave7_test.go:238: 28688 Go output lines matched source Node, sanitized native and emitted JavaScript
+    slot01_wave7_test.go:238: compiled collapse_new_table.a mutant caught at output line 2: got "false 79 891 0 0", Go "false 0 0 0 0"
+--- PASS: TestSlot01Wave7TableMatchesCohere (10.63s)
+=== RUN   TestSlot01Wave7TableReadingCopyMutant
+    slot01_wave7_test.go:241: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        Go framework metadata: 78 descriptor handles, 890 static registrations, 359 property positions
+        625 fixture strings; 1304 table batches
+    slot01_wave7_test.go:241: 28688 Go output lines matched source Node, sanitized native and emitted JavaScript
+    slot01_wave7_test.go:241: compiled collapse_new_table.a mutant caught at output line 41: got "99999 0 0", Go "1 1 1 99999"
+--- PASS: TestSlot01Wave7TableReadingCopyMutant (9.22s)
+=== RUN   TestSlot01Wave7TablePropertyAliasMutant
+    slot01_wave7_test.go:244: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        Go framework metadata: 78 descriptor handles, 890 static registrations, 359 property positions
+        625 fixture strings; 1304 table batches
+    slot01_wave7_test.go:244: 28688 Go output lines matched source Node, sanitized native and emitted JavaScript
+    slot01_wave7_test.go:244: compiled collapse_new_table.a mutant caught at output line 44: got "297", Go "99999"
+--- PASS: TestSlot01Wave7TablePropertyAliasMutant (9.58s)
+=== RUN   TestSlot01Wave7TableOrderMutant
+    slot01_wave7_test.go:247: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        Go framework metadata: 78 descriptor handles, 890 static registrations, 359 property positions
+        625 fixture strings; 1304 table batches
+    slot01_wave7_test.go:247: 28688 Go output lines matched source Node, sanitized native and emitted JavaScript
+    slot01_wave7_test.go:247: compiled collapse_new_table.a mutant caught at output line 25: got "table.addRepositoryStatics(system),table.addThemeNamespaces(system.theme),table.addRepositoryFunctionalRoots(system)", Go "table.addThemeNamespaces(system.theme),table.addRepositoryStatics(system),table.addRepositoryFunctionalRoots(system)"
+--- PASS: TestSlot01Wave7TableOrderMutant (9.24s)
+=== RUN   TestSlot01Wave7TableDescriptorMapMutant
+    slot01_wave7_test.go:251: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        Go framework metadata: 78 descriptor handles, 890 static registrations, 359 property positions
+        625 fixture strings; 1304 table batches
+    slot01_wave7_test.go:251: 28688 Go output lines matched source Node, sanitized native and emitted JavaScript
+    slot01_wave7_test.go:251: compiled collapse_new_table.a mutant caught at output line 35: got "true 78 891 359 7", Go "true 79 891 359 7"
+--- PASS: TestSlot01Wave7TableDescriptorMapMutant (9.45s)
+=== RUN   TestSlot01Wave7TableFrameworkMutant
+    slot01_wave7_test.go:254: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        Go framework metadata: 78 descriptor handles, 890 static registrations, 359 property positions
+        625 fixture strings; 1304 table batches
+    slot01_wave7_test.go:254: 28688 Go output lines matched source Node, sanitized native and emitted JavaScript
+    slot01_wave7_test.go:254: compiled collapse_new_table.a mutant caught at output line 24: got "true 79 1 359 7", Go "true 79 891 359 7"
+--- PASS: TestSlot01Wave7TableFrameworkMutant (8.43s)
+=== RUN   TestSlot01Wave7TableHeaderCopyMutant
+    slot01_wave7_test.go:258: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        Go framework metadata: 78 descriptor handles, 890 static registrations, 359 property positions
+        625 fixture strings; 1304 table batches
+    slot01_wave7_test.go:258: 28688 Go output lines matched source Node, sanitized native and emitted JavaScript
+    slot01_wave7_test.go:258: compiled collapse_new_table.a mutant caught at output line 41: got "1 0 0", Go "1 1 1 99999"
+--- PASS: TestSlot01Wave7TableHeaderCopyMutant (9.07s)
+=== RUN   TestSlot01Wave7TableBackingShareMutant
+    slot01_wave7_test.go:261: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        Go framework metadata: 78 descriptor handles, 890 static registrations, 359 property positions
+        625 fixture strings; 1304 table batches
+    slot01_wave7_test.go:261: 28688 Go output lines matched source Node, sanitized native and emitted JavaScript
+    slot01_wave7_test.go:261: compiled collapse_new_table.a mutant caught at output line 41: got "1 1 1 39", Go "1 1 1 99999"
+--- PASS: TestSlot01Wave7TableBackingShareMutant (9.59s)
+=== RUN   TestSlot01Wave7DissectMatchesCohere
+    slot01_wave7_test.go:266: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_deprecated_classes_test.go: 100 string inputs
+        679 fixture strings; 706 helper batches
+    slot01_wave7_test.go:266: 2118 Go output lines matched source Node, sanitized native and emitted JavaScript
+    slot01_wave7_test.go:266: compiled tailwind_dissect_class.a mutant caught at output line 91: got "35:99,111,110,115,116,32,101,108,101,109,101,110,116,32,61,32,60,100,105,118,32,99,108,97,115,115,78,97,109,101,61,34,115,109,58,", Go "43:99,111,110,115,116,32,101,108,101,109,101,110,116,32,61,32,60,100,105,118,32,99,108,97,115,115,78,97,109,101,61,34,115,109,58,112,120,45,52,32,115,109,58,"
+--- PASS: TestSlot01Wave7DissectMatchesCohere (4.87s)
+=== RUN   TestSlot01Wave7DissectSuffixMutant
+    slot01_wave7_test.go:269: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_deprecated_classes_test.go: 100 string inputs
+        679 fixture strings; 706 helper batches
+    slot01_wave7_test.go:269: 2118 Go output lines matched source Node, sanitized native and emitted JavaScript
+    slot01_wave7_test.go:269: compiled tailwind_dissect_class.a mutant caught at output line 332: got "5:112,120,45,52,33,", Go "4:112,120,45,52,"
+--- PASS: TestSlot01Wave7DissectSuffixMutant (4.84s)
+=== RUN   TestSlot01Wave7DissectColonMutant
+    slot01_wave7_test.go:272: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_deprecated_classes_test.go: 100 string inputs
+        679 fixture strings; 706 helper batches
+    slot01_wave7_test.go:272: 2118 Go output lines matched source Node, sanitized native and emitted JavaScript
+    slot01_wave7_test.go:272: compiled tailwind_dissect_class.a mutant caught at output line 7: got "55:99,111,110,115,116,32,101,61,60,100,105,118,32,104,114,101,102,61,34,34,32,72,82,69,70,61,34,38,35,52,55,59,97,98,111,117,116,34,32,123,46,46,46,112,114,111,112,115,125,32,120,108,105,110,107,", Go "56:99,111,110,115,116,32,101,61,60,100,105,118,32,104,114,101,102,61,34,34,32,72,82,69,70,61,34,38,35,52,55,59,97,98,111,117,116,34,32,123,46,46,46,112,114,111,112,115,125,32,120,108,105,110,107,58,"
+--- PASS: TestSlot01Wave7DissectColonMutant (4.90s)
+=== RUN   TestSlot01Wave8Decimal
+    slot01_wave8_test.go:142: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/next/no_html_link_for_pages_test.go: 280 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/typescript/no_empty_object_type_test.go: 47 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/core/no_restricted_exports_test.go: 177 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/core/no_restricted_imports_test.go: 414 string inputs
+        918 fixture strings; 27441 decimal queries
+    slot01_wave8_test.go:142: 54882 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave8_test.go:142: compiled regexp_decimal_escape.a mutant caught at output line 51577: got "123456789", Go "1234567"
+--- PASS: TestSlot01Wave8Decimal (21.66s)
+=== RUN   TestSlot01Wave8Octal
+    slot01_wave8_test.go:147: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/next/no_html_link_for_pages_test.go: 280 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/typescript/no_empty_object_type_test.go: 47 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/core/no_restricted_exports_test.go: 177 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/core/no_restricted_imports_test.go: 414 string inputs
+        918 fixture strings; 26508 octal queries
+    slot01_wave8_test.go:147: 53016 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave8_test.go:147: compiled regexp_legacy_octal.a mutant caught at output line 49739: got "302", Go "37"
+--- PASS: TestSlot01Wave8Octal (21.05s)
+=== RUN   TestSlot01Wave8Coverage
+    slot01_wave8_test.go:152: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/next/no_html_link_for_pages_test.go: 280 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/typescript/no_empty_object_type_test.go: 47 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/core/no_restricted_exports_test.go: 177 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/core/no_restricted_imports_test.go: 414 string inputs
+        918 fixture strings; 2388 covers queries
+    slot01_wave8_test.go:152: 2388 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave8_test.go:152: compiled regexp_class_atom_covers.a mutant caught at output line 6: got "false", Go "true"
+--- PASS: TestSlot01Wave8Coverage (1.76s)
+=== RUN   TestSlot01Wave9Bounded
+    slot01_wave9_test.go:142: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/next/no_html_link_for_pages_test.go: 280 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/typescript/no_empty_object_type_test.go: 47 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/core/no_restricted_exports_test.go: 177 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/core/no_restricted_imports_test.go: 414 string inputs
+        918 fixture strings; 27783 bounded queries
+    slot01_wave9_test.go:142: 27783 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave9_test.go:142: compiled regexp_bounded_quantifier_width.a mutant caught at output line 22: got "2", Go "0"
+--- PASS: TestSlot01Wave9Bounded (21.47s)
+=== RUN   TestSlot01Wave9Quantifier
+    slot01_wave9_test.go:147: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/next/no_html_link_for_pages_test.go: 280 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/typescript/no_empty_object_type_test.go: 47 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/core/no_restricted_exports_test.go: 177 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/core/no_restricted_imports_test.go: 414 string inputs
+        918 fixture strings; 27783 quantifier queries
+    slot01_wave9_test.go:147: 27783 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave9_test.go:147: compiled regexp_quantifier_width.a mutant caught at output line 25795: got "1", Go "2"
+--- PASS: TestSlot01Wave9Quantifier (21.82s)
+=== RUN   TestSlot01Wave9Group
+    slot01_wave9_test.go:152: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/next/no_html_link_for_pages_test.go: 280 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/typescript/no_empty_object_type_test.go: 47 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/core/no_restricted_exports_test.go: 177 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/core/no_restricted_imports_test.go: 414 string inputs
+        918 fixture strings; 27783 group queries
+    slot01_wave9_test.go:152: 27783 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave9_test.go:152: compiled regexp_group_kind.a mutant caught at output line 25936: got "0", Go "2"
+--- PASS: TestSlot01Wave9Group (21.30s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers	595.735s
