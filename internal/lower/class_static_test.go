@@ -25,9 +25,9 @@ func TestStaticMethodsLowerAsFunctions(t *testing.T) {
 				t.Fatal(err)
 			}
 			for _, function := range program.Functions {
-				if function.Name == "Stepper_down" {
-					if len(function.Parameters) != 1 || program.Locals[function.Parameters[0]].Name != "count" {
-						t.Fatalf("static down must have only its count parameter, got %+v", function)
+				if function.Name == "Stepper_static_down" {
+					if len(function.Parameters) != 2 || program.Locals[function.Parameters[0]].Name != "this" || program.Locals[function.Parameters[1]].Name != "count" {
+						t.Fatalf("static down must have its class receiver and count parameter, got %+v", function)
 					}
 					return
 				}
@@ -37,26 +37,32 @@ func TestStaticMethodsLowerAsFunctions(t *testing.T) {
 	}
 }
 
-func TestUnsupportedStaticUsesHaveReasons(t *testing.T) {
+func TestStaticUsesFollowCurrentClassRepresentation(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct {
 		name, source, message string
 		refused               bool
 	}{
-		{"generic class", `class Box<T> { static down(count: number): number { return count + 1; } } console.log(` + "`${Box.down(3)}`" + `);`, "static method Box.down on a generic class", false},
-		{"anonymous static field", `console.log(` + "`${(class { static readonly count = 4; }).count}`" + `);`, "static field count", false},
+		{"generic class", `class Box<T> { static down(count: number): number { return count + 1; } } console.log(` + "`${Box.down(3)}`" + `);`, "", false},
+		{"anonymous static field", `console.log(` + "`${(class { static readonly count = 4; }).count}`" + `);`, "ClassExpression", false},
 		{"anonymous static method", `console.log(` + "`${(class { static down(count: number): number { return count + 1; } }).down(3)}`" + `);`, "a method of an anonymous class", false},
-		{"static field", `class Stepper { static readonly count = 4; } console.log(` + "`${Stepper.count}`" + `);`, "static field Stepper.count", false},
-		{"destructured static method", `class Stepper { static down(count: number): number { return count + 1; } } const { down } = Stepper; console.log(` + "`${down(3)}`" + `);`, "class constructor or class alias as a runtime value", false},
+		{"static field", `class Stepper { static readonly count = 4; } console.log(` + "`${Stepper.count}`" + `);`, "", false},
+		{"destructured static method", `class Stepper { static down(count: number): number { return count + 1; } } const { down } = Stepper; console.log(` + "`${down(3)}`" + `);`, "a method in object destructuring", true},
 		{"static function value", `class Stepper { static down(count: number): number { return count + 1; } } const down = Stepper.down; console.log(` + "`${down(3)}`" + `);`, "down would lose its object", true},
-		{"static this", `class Stepper { static down(count: number): number { return count + 1; } static twice(count: number): number { return this.down(count); } } console.log(` + "`${Stepper.twice(3)}`" + `);`, "this in static method Stepper.twice", false},
-		{"alias runtime value", `class Stepper { static down(count: number): number { return count + 1; } } const Alias = Stepper; console.log(` + "`${Alias === Stepper}`" + `);`, "class constructor or class alias as a runtime value", false},
-		{"wider alias runtime value", `class Stepper { static down(count: number): number { return count + 1; } } const Alias: { down(count: number): number } = Stepper; console.log(typeof Alias);`, "class constructor or class alias as a runtime value", false},
-		{"mutable alias", `class Stepper { static down(count: number): number { return count + 1; } } let Alias = Stepper; console.log(` + "`${Alias.down(3)}`" + `);`, "class constructor or class alias as a runtime value", false},
+		{"static this", `class Stepper { static down(count: number): number { return count + 1; } static twice(count: number): number { return this.down(count); } } console.log(` + "`${Stepper.twice(3)}`" + `);`, "", false},
+		{"alias runtime value", `class Stepper { static down(count: number): number { return count + 1; } } const Alias = Stepper; console.log(` + "`${Alias === Stepper}`" + `);`, "", false},
+		{"wider alias runtime value", `class Stepper { static down(count: number): number { return count + 1; } } const Alias: { down(count: number): number } = Stepper; console.log(typeof Alias);`, "", false},
+		{"mutable alias", `class Stepper { static down(count: number): number { return count + 1; } } let Alias = Stepper; console.log(` + "`${Alias.down(3)}`" + `);`, "", false},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
 			_, err := lowerSource(t, probe.source)
+			if probe.message == "" {
+				if err != nil {
+					t.Fatalf("want supported static use, got %v", err)
+				}
+				return
+			}
 			var gap *NotYet
 			var refusal *Refused
 			if (probe.refused && !errors.As(err, &refusal)) || (!probe.refused && !errors.As(err, &gap)) || !strings.Contains(err.Error(), probe.message) {

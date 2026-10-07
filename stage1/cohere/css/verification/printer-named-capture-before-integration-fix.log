@@ -1,0 +1,29 @@
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/regexp.a (6.92s)
+        oracle_test.go:497: gate cache node miss
+        oracle_test.go:497: gate cache node miss
+        oracle_test.go:386: gate cache native miss
+        cache_test.go:340: native: clang failed: exit status 1
+            /tmp/adamic-gate/adamic-build-257749316/main.c:3045:120: error: missing field 'methods' initializer [-Werror,-Wmissing-field-initializers]
+             3045 | static const adamic_shape adamic_regex_19_group_shape = {1,adamic_regex_19_group_names,adamic_regex_19_group_references};
+                  |                                                                                                                        ^
+            /tmp/adamic-gate/adamic-build-257749316/main.c:3104:120: error: missing field 'methods' initializer [-Werror,-Wmissing-field-initializers]
+             3104 | static const adamic_shape adamic_regex_25_group_shape = {1,adamic_regex_25_group_names,adamic_regex_25_group_references};
+                  |                                                                                                                        ^
+            /tmp/adamic-gate/adamic-build-257749316/main.c:3127:120: error: missing field 'methods' initializer [-Werror,-Wmissing-field-initializers]
+             3127 | static const adamic_shape adamic_regex_27_group_shape = {1,adamic_regex_27_group_names,adamic_regex_27_group_references};
+                  |                                                                                                                        ^
+            /tmp/adamic-gate/adamic-build-257749316/main.c:3162:120: error: missing field 'methods' initializer [-Werror,-Wmissing-field-initializers]
+             3162 | static const adamic_shape adamic_regex_31_group_shape = {1,adamic_regex_31_group_names,adamic_regex_31_group_references};
+                  |                                                                                                                        ^
+            /tmp/adamic-gate/adamic-build-257749316/main.c:3264:120: error: missing field 'methods' initializer [-Werror,-Wmissing-field-initializers]
+             3264 | static const adamic_shape adamic_regex_45_group_shape = {2,adamic_regex_45_group_names,adamic_regex_45_group_references};
+                  |                                                                                                                        ^
+            5 errors generated.
+
+FAIL
+gate cache: native hits=0 misses=7
+gate cache: node hits=0 misses=8
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	7.028s
+FAIL

@@ -20,6 +20,7 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 }
 
 func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
+	proven = l.concrete(proven)
 	flags := proven.Flags()
 	if flags&checker.TypeFlagsTypeParameter != 0 {
 		// Inside a generic class, a type parameter is what this instantiation made it.
@@ -378,14 +379,11 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 	case ast.KindTrueKeyword, ast.KindFalseKeyword:
 		return ir.BooleanConstant{Value: node.Kind == ast.KindTrueKeyword}, nil
 	case ast.KindIdentifier:
-		if symbol := l.symbol(node); symbol != nil && len(symbol.Declarations) == 1 && l.staticClassAlias(symbol.Declarations[0]) {
-			return nil, l.notYet(node, "reading a class constructor or class alias as a runtime value")
-		}
-		if proven := l.checker.GetTypeAtLocation(node); proven.Symbol() != nil && proven.Symbol().Flags&ast.SymbolFlagsClass != 0 && !isClassInstance(proven) {
-			return nil, l.notYet(node, "reading a class constructor or class alias as a runtime value")
-		}
 		if value, known, err := l.libraryGlobalValue(node); known {
 			return value, err
+		}
+		if value, handled := l.staticClassRead(node); handled {
+			return value, nil
 		}
 		local, isLocal := l.local(node)
 		if !isLocal && node.Text() == "undefined" {

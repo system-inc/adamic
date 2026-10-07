@@ -96,13 +96,16 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 				l.classes = map[*ast.Symbol]*ast.Node{}
 			}
 			l.classes[l.symbol(statement.Name())] = statement
-			if l.classHasStaticMethods(statement) {
+			if l.needsStatics(statement) {
+				if l.staticGlobals == nil {
+					l.staticGlobals = map[*ast.Symbol]int{}
+				}
 				local, err := l.declareLocal(statement.Name())
 				if err != nil {
 					return err
 				}
 				l.result.Locals[local].Global = true
-				l.noteLocal(local, l.checker.GetTypeOfSymbol(l.symbol(statement.Name())), statement.Name())
+				l.staticStorage(statement)
 			}
 		case ast.KindFunctionDeclaration:
 			symbol := l.symbol(statement.Name())
@@ -125,6 +128,13 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 	for _, declaration := range declarations {
 		if err := l.signature(l.functions[l.symbol(declaration.Name())], declaration, -1); err != nil {
 			return err
+		}
+	}
+	for _, statement := range statements {
+		if statement.Kind == ast.KindClassDeclaration && l.needsStatics(statement) {
+			if _, err := l.staticInstance(statement); err != nil {
+				return err
+			}
 		}
 	}
 	for _, declaration := range declarations {

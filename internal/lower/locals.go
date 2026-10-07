@@ -33,17 +33,6 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
 		if err != nil {
 			return nil, err
 		}
-		if l.staticClassAlias(declaration) {
-			// Keep the class marker, including its initialization check, through every alias.
-			initializer := ast.SkipParentheses(declaration.AsVariableDeclaration().Initializer)
-			previous, known := l.local(initializer)
-			if !known {
-				return nil, l.notYet(initializer, "a class alias used before its declaration")
-			}
-			value := ir.Read{Local: previous, Of: ir.Object, Checked: l.checked(previous)}
-			statements = append(statements, ir.Declare{Local: local, Value: value})
-			continue
-		}
 		var value ir.Expression
 		if initializer := declaration.AsVariableDeclaration().Initializer; initializer != nil {
 			if l.initializing == nil {
@@ -55,6 +44,10 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
 			if err != nil {
 				return nil, err
 			}
+		} else if l.includesUndefined(l.checker.GetTypeAtLocation(name)) {
+			// An optional declaration can be read before assignment. Its first value
+			// is undefined, not the backend's unobservable storage placeholder.
+			value = ir.Undefined{Of: ir.Object}
 		}
 		statements = append(statements, ir.Declare{Local: local, Value: fit(value, l.result.Locals[local].Type)})
 	}
