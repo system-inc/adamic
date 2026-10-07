@@ -1,0 +1,16 @@
+{
+  "valid_sources": 91,
+  "extracted_sources": 100,
+  "findings": 48,
+  "canonical_bytes": 37138,
+  "core_mutants": [
+    "wave_18_react_cores_test.go:176: render-unconditional: exit 0, empty stderr; independent complete-byte comparison catches byte 456",
+    "wave_18_react_cores_test.go:176: effect-setter: exit 0, empty stderr; independent complete-byte comparison catches byte 1556",
+    "wave_18_react_cores_test.go:176: static-creator: exit 0, empty stderr; independent complete-byte comparison catches byte 57",
+    "wave_18_react_cores_test.go:218: adjacency-row alias mutant: exit 0, empty stderr; byte comparison catches byte 3123"
+  ],
+  "core_source_commit": "76e453e773c4e15f4f87b6ce6fcea8e56f5a2546",
+  "base": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+  "adapted_from_wave21": "e9ec024c3213ec7c9ad967d39029e4dd004abb9a",
+  "source_adapter_native": false
+}

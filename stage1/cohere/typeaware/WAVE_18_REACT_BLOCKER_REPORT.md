@@ -67,3 +67,9 @@ refusal in owned directories. See wave_18_react_partial/REPORT.md for byte
 comparisons, sanitizers and reporting/refusal mutants. The earlier absence of
 native validation described above applies to the initial blocker-only commit;
 source analysis and the full corpus/timing requirements remain unfulfilled.
+
+Native validator cores and post-dominance are now implemented in 76e453e7;
+wave_18_react_partial/CORE_REPORT.md provides prepared-HIR comparison evidence.
+The remaining infrastructure gap is native source lowering/SSA and source gates,
+not the absence of validator algorithms. An independent two-creator probe also
+reproduces nondeterministic Go creation-site message selection.

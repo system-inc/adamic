@@ -117,3 +117,8 @@ Landing-first update: rebased onto origin/main e8ba3d5d; tested code 72cb3b4f.
 All five existing wave-18 oracle suites, checker tests, vet, filtered uncached Node
 checks and React reporting/refusal checks pass again. WAVE_18_LANDING_REPORT.md
 records fresh evidence. React source analysis remains unfinished; no new claims.
+
+Prepared-HIR continuation: native React validator cores are implemented in
+76e453e7. wave_18_react_partial/CORE_REPORT.md records full prepared-input
+comparisons, sanitizer runs, four byte mutants and the independently reproduced
+Go phi-message ambiguity. Native source integration remains unfinished. No new claims.

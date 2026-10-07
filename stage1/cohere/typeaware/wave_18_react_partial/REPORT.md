@@ -81,3 +81,7 @@ to this partial work. No native/Go lint time ratio is reported: Go performs sour
 loading and rule analysis while native currently formats supplied findings.
 The corpus byte comparisons and timing bar remain unmet for all three rules.
 No full root gate was run for this isolated reporting portion.
+
+Native validator cores are now available in 76e453e7. CORE_REPORT.md records
+91 prepared-HIR controls, 48 findings, both corpora, sanitizers and four core
+mutants. Source lowering/gates remain missing; these are not end-to-end ports.
