@@ -16,6 +16,7 @@ func TestFourthWitnesses(t *testing.T) {
   options:="null";if d.Slug=="array-callback-return"{options=`{"checkForEach":true,"allowVoid":true}`}
   for _,source:=range ownedWitnesses(t,".",d.Slug) {
    rows=append(rows,source+"\t"+d.Name+"\t\t\tfalse\t"+options+"\tapply")
+   rows=append(rows,source+"\tall\t\t\tfalse\tnull\tapply")
   }
  }
  directory,err:=filepath.Abs(".");if err!=nil{t.Fatal(err)}

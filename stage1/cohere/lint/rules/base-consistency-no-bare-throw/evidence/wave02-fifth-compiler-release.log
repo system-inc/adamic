@@ -1,0 +1,6 @@
+=== RUN   TestFourthCompiler
+    lint_test.go:921: compiler/stage1 222 files, 666 rule/file pairs; explicit Go CFG metadata adapter for array callback end reachability
+    lint_test.go:924: Go, Node, emitted JavaScript, native identical: 36861977 bytes
+--- PASS: TestFourthCompiler (97.17s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	97.188s

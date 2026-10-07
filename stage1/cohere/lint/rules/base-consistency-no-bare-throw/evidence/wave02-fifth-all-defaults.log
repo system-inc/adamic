@@ -1,0 +1,5 @@
+=== RUN   TestFourthWitnesses
+    lint_test.go:876: Go, Node, emitted JavaScript, native identical: 9199 bytes
+--- PASS: TestFourthWitnesses (19.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	19.014s

@@ -1,0 +1,17 @@
+=== RUN   TestFourthWitnesses
+    lint_test.go:876: /tmp/adamic-gate/TestFourthWitnesses3973514086/004/oracle [--manifest /tmp/adamic-gate/TestFourthWitnesses3973514086/009/flow-manifest.tsv]: exit status 2
+        panic: @eslint-community/eslint-comments/require-description: json: unknown field "checkForEach"
+        
+        goroutine 1 [running]:
+        main.oracleRequireDescriptionOptions({0x33c09738c580?, 0x1701698?, 0x0?})
+        	/workspace/adamic/cohere/adamic_lint_eslint_comments_require_description.go:17 +0x65
+        main.collect({0x33c0971e6eb9, 0x4d}, {0x33c096fc88c0?, 0x1?}, {0x33c09738c580, 0x8, 0x8})
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:103 +0x426
+        main.run({0x33c0971e6eb9?, 0x33c09738a100?}, 0x0, 0x33c09738a100)
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:46 +0x12f
+        main.main()
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:160 +0x3cd
+--- FAIL: TestFourthWitnesses (16.64s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	16.648s
+FAIL
