@@ -18,6 +18,10 @@ func (l *lowering) nestedDeclarations(nodes []*ast.Node) ([]ir.Statement, error)
 		if node.Kind != ast.KindFunctionDeclaration {
 			continue
 		}
+		if node.Parent != nil && (node.Parent.Kind == ast.KindCaseClause || node.Parent.Kind == ast.KindDefaultClause) {
+			// switchBindings owns the shared case environment and hoists these functions.
+			continue
+		}
 		if node.Parent == nil || node.Parent.Kind != ast.KindBlock || !ast.IsFunctionLike(node.Parent.Parent) {
 			return nil, l.notYet(node, "a block-scoped nested function declaration")
 		}

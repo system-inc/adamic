@@ -349,7 +349,7 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 			return nil, l.notYet(binding, "a destructured name held otherwise than its field")
 		}
 		value := ir.Property{Object: ir.Read{Local: held, Of: ir.Object}, Name: field, Of: of, Absent: absent}
-		statements = append(statements, ir.Declare{Local: local, Value: value})
+		statements = append(statements, l.initializeLocal(local, value)...)
 	}
 	return statements, nil
 }

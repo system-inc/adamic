@@ -32,12 +32,15 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 		// Types erase to nothing, and so does an empty statement.
 		return nil, nil
 	case ast.KindImportDeclaration, ast.KindExportDeclaration:
-		// What an import brings in is resolved through the checker at each use, and the module it
-		// names runs first (moduleOrder).
+		// The checker resolves bindings and moduleOrder preserves module evaluation edges.
 		return nil, nil
 	case ast.KindExportAssignment:
 		return nil, &Refused{Where: l.program.Where(node), What: describe(node), Fix: "export where you declare: export function, export const (one name for one thing)"}
 	case ast.KindFunctionDeclaration:
+		if node.Parent != nil && (node.Parent.Kind == ast.KindCaseClause || node.Parent.Kind == ast.KindDefaultClause) {
+			// Switch functions are initialized at entry, before dispatch.
+			return nil, nil
+		}
 		if l.function != nil {
 			if local, ok := l.locals[l.symbol(node.Name())]; ok && l.result.Locals[local].NestedFunction != 0 {
 				return nil, nil

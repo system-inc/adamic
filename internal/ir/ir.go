@@ -192,6 +192,10 @@ type Local struct {
 	// NestedFunction is the named declaration this binding holds, plus one.
 	NestedFunction int
 
+	// Ready is the readiness local index plus one for a switch lexical binding.
+	// Its storage exists at switch entry, but its declaration initializes it later.
+	Ready int
+
 	// Borrowed is a reference parameter the function only looks at: its caller keeps the value alive
 	// for the whole call, so the function neither retains it on entry nor releases it on the way out
 	// (docs/memory.md, "Borrowed parameters"). Nothing ever assigns a borrowed parameter.
@@ -219,9 +223,9 @@ type (
 	StringConstant  struct{ Index int }
 
 	// Read reads a local. Of is the local's type, so a Read is typed without the program in hand.
-	// Checked is a global read whose initialization is not proven, including function
-	// bodies and cyclic module evaluation. JavaScript throws in the temporal dead zone;
-	// Adamic checks it out loud.
+	// Checked guards switch lexical bindings, captured cells, and globals whose initialization
+	// is not proven, including function bodies and cyclic module evaluation. JavaScript throws
+	// in the temporal dead zone; Adamic checks it out loud.
 	Read struct {
 		Local   int
 		Of      Type
@@ -1025,7 +1029,7 @@ type (
 	}
 
 	// Assign gives a local a new value, releasing the old one if it's a string. Checked is as for
-	// Read: a write to a global from inside a function.
+	// Read: a write to an unready switch binding or a global from inside a function.
 	Assign struct {
 		Local   int
 		Value   Expression

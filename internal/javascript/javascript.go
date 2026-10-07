@@ -219,6 +219,17 @@ func (e *emitter) cellName(local int) string {
 	return e.name(local) + "_cell"
 }
 
+// ready reads the same captured readiness cell as the binding it guards.
+func (e *emitter) ready(local int) string {
+	if binding := e.program.Locals[local].Ready; binding != 0 {
+		return e.variable(binding - 1)
+	}
+	if e.program.Locals[local].Captured && !e.program.Locals[local].Global {
+		return e.cell(local) + ".ready"
+	}
+	return readyName(local)
+}
+
 func readyName(local int) string {
 	return fmt.Sprintf("ready_%d", local)
 }
@@ -1021,13 +1032,6 @@ func quote(text string) string {
 
 // narrowedAwayMessage is native's (internal/native), word for word: the checks are the same on both sides.
 const narrowedAwayMessage = "undefined where the checker narrowed it away: a call since the narrowing put it back"
-
-func (e *emitter) ready(local int) string {
-	if e.program.Locals[local].Captured && !e.program.Locals[local].Global {
-		return e.cell(local) + ".ready"
-	}
-	return readyName(local)
-}
 
 func (e *emitter) allocateEnvironment(cells []int) {
 	if len(cells) == 0 {

@@ -52,7 +52,7 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
 		if closure, literal := value.(ir.MakeClosure); literal && list.Flags&ast.NodeFlagsConst != 0 {
 			l.result.Locals[local].ConstantClosure = closure.Function + 1
 		}
-		statements = append(statements, ir.Declare{Local: local, Value: fit(value, l.result.Locals[local].Type)})
+		statements = append(statements, l.initializeLocal(local, fit(value, l.result.Locals[local].Type))...)
 	}
 	return statements, nil
 }
@@ -142,6 +142,9 @@ func (l *lowering) local(identifier *ast.Node) (int, bool) {
 // between its function and this one carries that cell in its environment.
 func (l *lowering) touch(local int) {
 	declared := l.result.Locals[local]
+	if declared.Ready != 0 {
+		l.touch(declared.Ready - 1)
+	}
 	if declared.Global || declared.Function == l.functionIndex {
 		return
 	}
@@ -165,11 +168,9 @@ func (l *lowering) touch(local int) {
 	}
 }
 
-// checked reports whether touching a local must be checked against the temporal dead zone: a
-// global reached from a function or a cyclic module body may precede its declaration.
+// checked guards switch lexical bindings, captured cells, and globals reached before initialization.
 func (l *lowering) checked(local int) bool {
-	return (l.result.Locals[local].Global && (l.function != nil || l.cyclicModules)) || (l.function != nil && l.result.Locals[local].Preallocated && l.result.Locals[local].Captured)
-
+	return l.result.Locals[local].Ready != 0 || (l.result.Locals[local].Global && (l.function != nil || l.cyclicModules)) || (l.function != nil && l.result.Locals[local].Preallocated && l.result.Locals[local].Captured)
 }
 
 func (l *lowering) constant(value string) int {
