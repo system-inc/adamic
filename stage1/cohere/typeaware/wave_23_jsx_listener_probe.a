@@ -1,0 +1,9 @@
+import { jsxFragmentsListener } from './jsx_fragments_listener.a';
+import { jsxNoConstructedContextValuesListener } from './jsx_no_constructed_context_values_listener.a';
+import { jsxNoUndefListener } from './jsx_no_undef_listener.a';
+
+for(const listener of [jsxFragmentsListener, jsxNoConstructedContextValuesListener, jsxNoUndefListener]) {
+    let kinds = '';
+    for(const kind of listener.kinds) { kinds += `${kinds.length === 0 ? '' : ','}${kind}`; }
+    console.log(`${listener.name}\t${kinds}`);
+}

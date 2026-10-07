@@ -1,0 +1,6 @@
+import type { Wave23ListenerDeclarationInterface } from './wave_23_listener_kinds.a';
+
+export const jsxNoConstructedContextValuesListener: Wave23ListenerDeclarationInterface = {
+    name: 'react/jsx-no-constructed-context-values',
+    kinds: [286, 287],
+};

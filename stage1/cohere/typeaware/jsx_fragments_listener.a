@@ -1,0 +1,6 @@
+import type { Wave23ListenerDeclarationInterface } from './wave_23_listener_kinds.a';
+
+export const jsxFragmentsListener: Wave23ListenerDeclarationInterface = {
+    name: 'react/jsx-fragments',
+    kinds: [285, 286, 289],
+};

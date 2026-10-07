@@ -122,3 +122,9 @@ These are the first three unclaimed entries and do not use native HIR/SSA or
 capture passes; their analyses are AST and checker queries. Shared JSX frontend
 integration is still needed for native execution. No conflicting claim was found.
 This claim update is pushed before implementation or declaration work.
+
+Status of the sixth continuation: numeric listener declarations, rule.json
+manifests, independent Go registration/finding controls and metadata mutants
+are pushed. Native decision ports are blocked on shared JSX frontend integration
+on area/stage1-lint. These three AST/checker rules do not require the HIR/SSA
+passes parked above. No native findings/fixes/suggestions parity is claimed.

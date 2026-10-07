@@ -1,0 +1,138 @@
+{
+  "findings.stdout": {
+    "bytes": 1056,
+    "sha256": "e000b4e05bea26926a199af02a5eb25008cc14cf18bd064a15c9c5f1240affaa"
+  },
+  "go-build.log": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "native-asan.stdout": {
+    "bytes": 107,
+    "sha256": "dfb55fd005b61faa356bc167d6a47b4ef2d6ab0331b38c0ffeb9318b2ce54adf"
+  },
+  "fragment.tsx": {
+    "bytes": 92,
+    "sha256": "7e690afc8f52e087778843986e4000ba2d0a759d027be4ddeaed3920fed73ec2"
+  },
+  "context.tsx": {
+    "bytes": 88,
+    "sha256": "54afc2dd320e6ad9f07cf2ebf942ab9777f5d5163e5aafc5096a53aa2c21744b"
+  },
+  "diff.log": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "listeners.stdout": {
+    "bytes": 107,
+    "sha256": "dfb55fd005b61faa356bc167d6a47b4ef2d6ab0331b38c0ffeb9318b2ce54adf"
+  },
+  "overlay.json": {
+    "bytes": 148,
+    "sha256": "1577205d2738b027b0ae189f18178be2a8dcd87949e5036f10e7f9edf3bb0dd5"
+  },
+  "listeners.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "native.stdout": {
+    "bytes": 107,
+    "sha256": "dfb55fd005b61faa356bc167d6a47b4ef2d6ab0331b38c0ffeb9318b2ce54adf"
+  },
+  "native.build.log": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "vet.log": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "native-asan.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "native.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "fragment.native.stderr": {
+    "bytes": 120,
+    "sha256": "91f987405e9a2b31521b2578fd7a4a9de76c83e2bacd7eb35be908907ead5027"
+  },
+  "observations.json": {
+    "bytes": 946,
+    "sha256": "215740700f810592883b49922ffd7b5f0056ed68c0ce85d25e66f9caac60195e"
+  },
+  "undef.tsx": {
+    "bytes": 50,
+    "sha256": "d9fe3d854c3e7bce589aa32735e0ca95c871821f5e3e0a04b3faf32f088090ed"
+  },
+  "undef.native.stderr": {
+    "bytes": 117,
+    "sha256": "90797562253a63d2937f5e10df04de98c6895c6c89b78eeb2cd6d342cd23d431"
+  },
+  "manifest": {
+    "bytes": 119,
+    "sha256": "369454f664892d2e9be0eaae0a307b000c5ccdc2cc5339e74330246614a5b641"
+  },
+  "context.native.stderr": {
+    "bytes": 119,
+    "sha256": "70750b42e5e615f07e85e7327ca54d07c12af7b5023de29a3028969e9dbe2069"
+  },
+  "native-asan.build.log": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "findings.stderr": {
+    "bytes": 53,
+    "sha256": "b4cc6095eff0da906baf3fba9d7167fe2c799c8b003f65b84419617425aa2843"
+  },
+  "mutant-2/stdout": {
+    "bytes": 105,
+    "sha256": "425a0bf399949fe75dd0161b56cbb42ba2e219cdf7596782838f70a99257c655"
+  },
+  "mutant-2/stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "mutant-2/probe.a": {
+    "bytes": 621,
+    "sha256": "84925347c9748060ad1a53856632508af9db061a198b8bf7de9387ee5edb0468"
+  },
+  "mutant-2/native.build.log": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "mutant-0/stdout": {
+    "bytes": 105,
+    "sha256": "b6b42eff130754e2f0947f82567f702f2f7e5826dbb128c3b887ebce73e68e9c"
+  },
+  "mutant-0/stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "mutant-0/probe.a": {
+    "bytes": 621,
+    "sha256": "7472ba8e4c76ebfaaf929f1e13f4a4e7c3bc24faefa83a428fa970b52f070d16"
+  },
+  "mutant-0/native.build.log": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "mutant-1/stdout": {
+    "bytes": 105,
+    "sha256": "d5ba51fcea9613ae4315f11299c27e76d71f18fd429a192f738444eab4d96e1d"
+  },
+  "mutant-1/stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "mutant-1/probe.a": {
+    "bytes": 621,
+    "sha256": "ff204965d53993d19e040159b7ceb0119a6519eb72df43ceb2d5d9818976f024"
+  },
+  "mutant-1/native.build.log": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

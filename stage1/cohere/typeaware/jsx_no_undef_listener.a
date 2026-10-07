@@ -1,0 +1,6 @@
+import type { Wave23ListenerDeclarationInterface } from './wave_23_listener_kinds.a';
+
+export const jsxNoUndefListener: Wave23ListenerDeclarationInterface = {
+    name: 'react/jsx-no-undef',
+    kinds: [286, 287],
+};
