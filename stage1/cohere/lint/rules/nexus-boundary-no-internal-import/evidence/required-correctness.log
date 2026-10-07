@@ -1,0 +1,107 @@
+=== RUN   TestCompilerExpressionsAgree
+    parser_test.go:290: 77 whole compiler files, 28836875 identical expression tree bytes
+--- PASS: TestCompilerExpressionsAgree (104.87s)
+=== RUN   TestWholeCompilerAgrees
+    whole_test.go:39: 77 whole compiler files, 44766682 identical whole-tree bytes
+--- PASS: TestWholeCompilerAgrees (73.65s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/typescript/parser	178.641s
+=== RUN   TestThePortParsesAsGoCohereDoes
+    css_test.go:121: Go oracle: testing: warning: no tests to run
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css/postcss	0.039s [no tests to run]
+    css_test.go:121: open /tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2371179841/001/answers.txt: no such file or directory
+--- FAIL: TestThePortParsesAsGoCohereDoes (141.79s)
+=== RUN   TestCSSPrinterAgreesWithGo
+    print_test.go:53: Go oracle: testing: warning: no tests to run
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css/postcss	0.011s [no tests to run]
+    print_test.go:53: open /tmp/adamic-gate/TestCSSPrinterAgreesWithGo2138027505/001/answers.txt: no such file or directory
+--- FAIL: TestCSSPrinterAgreesWithGo (3.26s)
+=== RUN   TestCSSPrinterBoundaryProofs
+    print_test.go:305: go: downloading github.com/dop251/goja v0.0.0-20260822123354-58e940e0d230
+        go: downloading github.com/google/pprof v0.0.0-20230207041349-798e818bf904
+        go: downloading github.com/go-sourcemap/sourcemap v2.1.3+incompatible
+        testing: warning: no tests to run
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css	0.008s [no tests to run]
+    print_test.go:305: open /tmp/adamic-gate/TestCSSPrinterBoundaryProofs85270058/002/answers.txt: no such file or directory
+--- FAIL: TestCSSPrinterBoundaryProofs (19.55s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/css	164.621s
+=== RUN   TestThePortParsesAsGoCohereDoes
+=== PAUSE TestThePortParsesAsGoCohereDoes
+=== CONT  TestThePortParsesAsGoCohereDoes
+    graphql_test.go:55: open /tmp/adamic-gate/TestThePortParsesAsGoCohereDoes1129784922/001/answers.txt: no such file or directory
+--- FAIL: TestThePortParsesAsGoCohereDoes (17.57s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/graphql	17.618s
+=== RUN   TestThePortParsesAsGoCohereDoes
+=== PAUSE TestThePortParsesAsGoCohereDoes
+=== CONT  TestThePortParsesAsGoCohereDoes
+    mediaquery_test.go:260: open /tmp/adamic-gate/TestThePortParsesAsGoCohereDoes3001248454/001/answers-true.txt: no such file or directory
+--- FAIL: TestThePortParsesAsGoCohereDoes (9.65s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/mediaquery	9.751s
+=== RUN   TestThePortParsesAsGoCohereDoes
+=== PAUSE TestThePortParsesAsGoCohereDoes
+=== RUN   TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars
+=== PAUSE TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars
+=== CONT  TestThePortParsesAsGoCohereDoes
+=== CONT  TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars
+=== RUN   TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|_b
+=== PAUSE TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|_b
+=== RUN   TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/:is(a|)
+=== PAUSE TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/:is(a|)
+=== RUN   TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|@x
+=== PAUSE TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|@x
+=== RUN   TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/*|)
+=== PAUSE TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/*|)
+=== CONT  TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|_b
+=== CONT  TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|@x
+=== CONT  TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/:is(a|)
+=== CONT  TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/*|)
+=== NAME  TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/:is(a|)
+    selector_test.go:472: entered parser, no return within 1s, killed at deadline
+=== NAME  TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/*|)
+    selector_test.go:472: entered parser, no return within 1s, killed at deadline
+=== NAME  TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|@x
+    selector_test.go:472: entered parser, no return within 1s, killed at deadline
+=== NAME  TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|_b
+    selector_test.go:472: entered parser, no return within 1s, killed at deadline
+--- PASS: TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars (0.00s)
+    --- PASS: TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/:is(a|) (1.02s)
+    --- PASS: TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/*|) (1.02s)
+    --- PASS: TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|@x (1.03s)
+    --- PASS: TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|_b (1.04s)
+=== NAME  TestThePortParsesAsGoCohereDoes
+    selector_test.go:49: Go oracle: testing: warning: no tests to run
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css/selector	0.017s [no tests to run]
+    selector_test.go:49: corpus: node:fs:484
+            return binding.readFileUtf8(path, stringToFlags(options.flag));
+                           ^
+        
+        Error: ENOENT: no such file or directory, open '/tmp/adamic-gate/TestThePortParsesAsGoCohereDoes4010582140/001/test-texts.json'
+            at readFileSync (node:fs:484:20)
+            at file:///workspace/scratch/wave12-area-validation/stage1/cohere/selector/testdata/library.mjs:85:38
+            at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+            at async node:internal/modules/esm/loader:643:26
+            at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+          errno: -2,
+          code: 'ENOENT',
+          syscall: 'open',
+          path: '/tmp/adamic-gate/TestThePortParsesAsGoCohereDoes4010582140/001/test-texts.json'
+        }
+        
+        Node.js v24.19.0
+--- FAIL: TestThePortParsesAsGoCohereDoes (9.20s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/selector	9.363s
+=== RUN   TestThePortParsesAsGoCohereDoes
+=== PAUSE TestThePortParsesAsGoCohereDoes
+=== CONT  TestThePortParsesAsGoCohereDoes
+    values_test.go:52: open /tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2774727744/001/answers.txt: no such file or directory
+--- FAIL: TestThePortParsesAsGoCohereDoes (2.55s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/values	2.564s
