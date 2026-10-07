@@ -11,6 +11,7 @@ package shards
 import (
 	"bytes"
 	"fmt"
+	"os"
 	"os/exec"
 	"strconv"
 	"sync"
@@ -21,6 +22,16 @@ import (
 func Run(binary, manifest string, count int, countOnly bool) ([]byte, error) {
 	if count < 1 {
 		return nil, fmt.Errorf("shard count %d, want at least 1", count)
+	}
+	text, err := os.ReadFile(manifest)
+	if err != nil {
+		return nil, err
+	}
+	rows := 0
+	for _, row := range bytes.Split(text, []byte("\n")) {
+		if len(row) > 0 {
+			rows++
+		}
 	}
 	outputs := make([][]byte, count)
 	failures := make([]error, count)
@@ -61,7 +72,7 @@ func Run(binary, manifest string, count int, countOnly bool) ([]byte, error) {
 		}
 		return []byte(strconv.Itoa(total) + "\n"), nil
 	}
-	return Merge(outputs)
+	return Merge(outputs, rows)
 }
 
 var casePrefix = []byte("case ")
@@ -69,8 +80,9 @@ var casePrefix = []byte("case ")
 // Merge puts the shards' case blocks back in case order. A block starts at a line `case <n>` and runs to
 // the next one; nothing a case prints starts a line that way, since findings, ranges, edits and the fixed
 // text are printed under their own prefixes with newlines escaped. Every case number from 0 must appear
-// exactly once, so a shard that lost or repeated a row fails here instead of shifting the output.
-func Merge(outputs [][]byte) ([]byte, error) {
+// exactly once, and exactly rows of them, the manifest's non-empty rows: a shard that lost or repeated a
+// row fails here instead of shifting the output, including one that lost the last rows, which leaves no gap.
+func Merge(outputs [][]byte, rows int) ([]byte, error) {
 	blocks := map[int][]byte{}
 	for shard, output := range outputs {
 		if len(output) == 0 {
@@ -108,8 +120,16 @@ func Merge(outputs [][]byte) ([]byte, error) {
 			start = end
 		}
 	}
+	if len(blocks) != rows {
+		for number := 0; number < rows; number++ {
+			if _, ok := blocks[number]; !ok {
+				return nil, fmt.Errorf("case %d missing from every shard", number)
+			}
+		}
+		return nil, fmt.Errorf("%d cases printed, want the manifest's %d", len(blocks), rows)
+	}
 	var merged bytes.Buffer
-	for number := 0; number < len(blocks); number++ {
+	for number := 0; number < rows; number++ {
 		block, ok := blocks[number]
 		if !ok {
 			return nil, fmt.Errorf("case %d missing from every shard", number)
