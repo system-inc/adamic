@@ -1,0 +1,147 @@
+build-flags-before: {"commit": "8062ddc5fbf25ca989e2d50fc1b4105e0e1ef9b1", "nproc": "5", "cpu_max": "400000 100000", "go": "unavailable", "clang": "unavailable", "node": "unavailable", "load": "11.10 7.32 4.71 1/200 36122", "cached": "empty-action-cache"}
++ 1791342307.000590 /workspace/setup-trials-86bm_izh/before-3/before.sh:10: set -euo pipefail
+++ 1791342307.000968 /workspace/setup-trials-86bm_izh/before-3/before.sh:12: date +%s
++ 1791342307.001993 /workspace/setup-trials-86bm_izh/before-3/before.sh:12: started=1791342307
++ 1791342307.002034 /workspace/setup-trials-86bm_izh/before-3/before.sh:15: repository=/workspace/setup-trials-86bm_izh/before-3/repository
++ 1791342307.002047 /workspace/setup-trials-86bm_izh/before-3/before.sh:16: tools=/workspace/setup-trials-86bm_izh/before-3/tools
++ 1791342307.002062 /workspace/setup-trials-86bm_izh/before-3/before.sh:17: mkdir -p /workspace/setup-trials-86bm_izh/before-3/tools/bin
++ 1791342307.003247 /workspace/setup-trials-86bm_izh/before-3/before.sh:18: gate=/tmp/adamic-gate
++ 1791342307.003266 /workspace/setup-trials-86bm_izh/before-3/before.sh:21: install -d -m 1777 /tmp/adamic-gate
++ 1791342307.004527 /workspace/setup-trials-86bm_izh/before-3/before.sh:22: case $(uname -m) in
+++ 1791342307.004770 /workspace/setup-trials-86bm_izh/before-3/before.sh:22: uname -m
++ 1791342307.005493 /workspace/setup-trials-86bm_izh/before-3/before.sh:23: goArchitecture=amd64
++ 1791342307.005502 /workspace/setup-trials-86bm_izh/before-3/before.sh:23: nodeArchitecture=x64
++ 1791342307.005521 /workspace/setup-trials-86bm_izh/before-3/before.sh:23: llvmArchitecture=X64
++ 1791342307.005536 /workspace/setup-trials-86bm_izh/before-3/before.sh:30: export GOTOOLCHAIN=auto
++ 1791342307.005542 /workspace/setup-trials-86bm_izh/before-3/before.sh:30: GOTOOLCHAIN=auto
++ 1791342307.005572 /workspace/setup-trials-86bm_izh/before-3/before.sh:33: command -v go
++ 1791342307.005603 /workspace/setup-trials-86bm_izh/before-3/before.sh:33: realGo go
++ 1791342307.005857 /workspace/setup-trials-86bm_izh/before-3/before.sh:32: go version
++ 1791342307.005907 /workspace/setup-trials-86bm_izh/before-3/before.sh:32: grep -q '^go version go1\.'
++ 1791342307.006928 /workspace/setup-trials-86bm_izh/before-3/before.sh:33: '[' '!' -x /workspace/setup-trials-86bm_izh/before-3/tools/go/bin/go ']'
+++ 1791342307.007375 /workspace/setup-trials-86bm_izh/before-3/before.sh:34: curl -fsSL 'https://go.dev/VERSION?m=text'
+++ 1791342307.007441 /workspace/setup-trials-86bm_izh/before-3/before.sh:34: head -n 1
++ 1791342307.242639 /workspace/setup-trials-86bm_izh/before-3/before.sh:34: goVersion=go1.27.1
++ 1791342307.243011 /workspace/setup-trials-86bm_izh/before-3/before.sh:35: curl -fsSL https://dl.google.com/go/go1.27.1.linux-amd64.tar.gz
++ 1791342307.243039 /workspace/setup-trials-86bm_izh/before-3/before.sh:35: tar --no-same-owner -xz -C /workspace/setup-trials-86bm_izh/before-3/tools
++ 1791342311.460745 /workspace/setup-trials-86bm_izh/before-3/before.sh:37: '[' -x /workspace/setup-trials-86bm_izh/before-3/tools/go/bin/go ']'
++ 1791342311.460786 /workspace/setup-trials-86bm_izh/before-3/before.sh:37: export PATH=/workspace/setup-trials-86bm_izh/before-3/tools/go/bin:/usr/local/bin:/usr/bin:/bin
++ 1791342311.460792 /workspace/setup-trials-86bm_izh/before-3/before.sh:37: PATH=/workspace/setup-trials-86bm_izh/before-3/tools/go/bin:/usr/local/bin:/usr/bin:/bin
++ 1791342311.461126 /workspace/setup-trials-86bm_izh/before-3/before.sh:38: cd /workspace/setup-trials-86bm_izh/before-3/repository
++ 1791342311.461257 /workspace/setup-trials-86bm_izh/before-3/before.sh:38: go version
+go version go1.27.1 linux/amd64
++ 1791342311.464499 /workspace/setup-trials-86bm_izh/before-3/before.sh:39: step 'go ready'
+++ 1791342311.464807 /workspace/setup-trials-86bm_izh/before-3/before.sh:13: date +%s
++ 1791342311.465968 /workspace/setup-trials-86bm_izh/before-3/before.sh:13: echo 'setup: go ready (4s)'
+setup: go ready (4s)
+++ 1791342311.466169 /workspace/setup-trials-86bm_izh/before-3/before.sh:44: mktemp -d
++ 1791342311.466868 /workspace/setup-trials-86bm_izh/before-3/before.sh:44: probe=/tmp/adamic-gate/tmp.ScrPF1soY1
++ 1791342311.466894 /workspace/setup-trials-86bm_izh/before-3/before.sh:45: cat
++ 1791342311.467872 /workspace/setup-trials-86bm_izh/before-3/before.sh:53: clang=
+++ 1791342311.468237 /workspace/setup-trials-86bm_izh/before-3/before.sh:54: ls -d '/usr/lib/llvm-*/bin/clang'
+++ 1791342311.468266 /workspace/setup-trials-86bm_izh/before-3/before.sh:54: sort -t- -k2 -V -r
+++ 1791342311.469639 /workspace/setup-trials-86bm_izh/before-3/before.sh:54: command -v clang
+++ 1791342311.469737 /workspace/setup-trials-86bm_izh/before-3/before.sh:54: true
++ 1791342311.469882 /workspace/setup-trials-86bm_izh/before-3/before.sh:54: for candidate in "$tools/llvm/bin/clang" $(ls -d /usr/lib/llvm-*/bin/clang 2> /dev/null | sort -t- -k2 -V -r) $(command -v clang || true)
++ 1791342311.469903 /workspace/setup-trials-86bm_izh/before-3/before.sh:55: '[' -x /workspace/setup-trials-86bm_izh/before-3/tools/llvm/bin/clang ']'
++ 1791342311.469947 /workspace/setup-trials-86bm_izh/before-3/before.sh:60: '[' -z '' ']'
++ 1791342311.469955 /workspace/setup-trials-86bm_izh/before-3/before.sh:61: llvmVersion=20.1.8
++ 1791342311.469961 /workspace/setup-trials-86bm_izh/before-3/before.sh:62: mkdir -p /workspace/setup-trials-86bm_izh/before-3/tools/llvm
++ 1791342311.471274 /workspace/setup-trials-86bm_izh/before-3/before.sh:63: curl -fsSL https://github.com/llvm/llvm-project/releases/download/llvmorg-20.1.8/LLVM-20.1.8-Linux-X64.tar.xz
++ 1791342311.471339 /workspace/setup-trials-86bm_izh/before-3/before.sh:63: tar --no-same-owner -xJ -C /workspace/setup-trials-86bm_izh/before-3/tools/llvm --strip-components 1
++ 1791342345.596240 /workspace/setup-trials-86bm_izh/before-3/before.sh:64: saneClang /workspace/setup-trials-86bm_izh/before-3/tools/llvm/bin/clang
++ 1791342345.596279 /workspace/setup-trials-86bm_izh/before-3/before.sh:50: /workspace/setup-trials-86bm_izh/before-3/tools/llvm/bin/clang -fsanitize=address,undefined -g /tmp/adamic-gate/tmp.ScrPF1soY1/overflow.c -o /tmp/adamic-gate/tmp.ScrPF1soY1/overflow
++ 1791342345.727922 /workspace/setup-trials-86bm_izh/before-3/before.sh:51: /tmp/adamic-gate/tmp.ScrPF1soY1/overflow
++ 1791342345.731264 /workspace/setup-trials-86bm_izh/before-3/before.sh:51: grep -q heap-buffer-overflow /tmp/adamic-gate/tmp.ScrPF1soY1/report
++ 1791342345.732373 /workspace/setup-trials-86bm_izh/before-3/before.sh:65: clang=/workspace/setup-trials-86bm_izh/before-3/tools/llvm/bin/clang
++ 1791342345.732415 /workspace/setup-trials-86bm_izh/before-3/before.sh:68: for tool in clang clang++ llvm-symbolizer
+++ 1791342345.732667 /workspace/setup-trials-86bm_izh/before-3/before.sh:69: dirname /workspace/setup-trials-86bm_izh/before-3/tools/llvm/bin/clang
++ 1791342345.733478 /workspace/setup-trials-86bm_izh/before-3/before.sh:69: '[' -x /workspace/setup-trials-86bm_izh/before-3/tools/llvm/bin/clang ']'
+++ 1791342345.733766 /workspace/setup-trials-86bm_izh/before-3/before.sh:69: dirname /workspace/setup-trials-86bm_izh/before-3/tools/llvm/bin/clang
++ 1791342345.734470 /workspace/setup-trials-86bm_izh/before-3/before.sh:69: ln -sf /workspace/setup-trials-86bm_izh/before-3/tools/llvm/bin/clang /workspace/setup-trials-86bm_izh/before-3/tools/bin/clang
++ 1791342345.735313 /workspace/setup-trials-86bm_izh/before-3/before.sh:68: for tool in clang clang++ llvm-symbolizer
+++ 1791342345.735516 /workspace/setup-trials-86bm_izh/before-3/before.sh:69: dirname /workspace/setup-trials-86bm_izh/before-3/tools/llvm/bin/clang
++ 1791342345.736459 /workspace/setup-trials-86bm_izh/before-3/before.sh:69: '[' -x /workspace/setup-trials-86bm_izh/before-3/tools/llvm/bin/clang++ ']'
+++ 1791342345.736724 /workspace/setup-trials-86bm_izh/before-3/before.sh:69: dirname /workspace/setup-trials-86bm_izh/before-3/tools/llvm/bin/clang
++ 1791342345.737457 /workspace/setup-trials-86bm_izh/before-3/before.sh:69: ln -sf /workspace/setup-trials-86bm_izh/before-3/tools/llvm/bin/clang++ /workspace/setup-trials-86bm_izh/before-3/tools/bin/clang++
++ 1791342345.738359 /workspace/setup-trials-86bm_izh/before-3/before.sh:68: for tool in clang clang++ llvm-symbolizer
+++ 1791342345.738570 /workspace/setup-trials-86bm_izh/before-3/before.sh:69: dirname /workspace/setup-trials-86bm_izh/before-3/tools/llvm/bin/clang
++ 1791342345.739229 /workspace/setup-trials-86bm_izh/before-3/before.sh:69: '[' -x /workspace/setup-trials-86bm_izh/before-3/tools/llvm/bin/llvm-symbolizer ']'
+++ 1791342345.739468 /workspace/setup-trials-86bm_izh/before-3/before.sh:69: dirname /workspace/setup-trials-86bm_izh/before-3/tools/llvm/bin/clang
++ 1791342345.740223 /workspace/setup-trials-86bm_izh/before-3/before.sh:69: ln -sf /workspace/setup-trials-86bm_izh/before-3/tools/llvm/bin/llvm-symbolizer /workspace/setup-trials-86bm_izh/before-3/tools/bin/llvm-symbolizer
++ 1791342345.741247 /workspace/setup-trials-86bm_izh/before-3/before.sh:71: /workspace/setup-trials-86bm_izh/before-3/tools/llvm/bin/clang --version
++ 1791342345.741313 /workspace/setup-trials-86bm_izh/before-3/before.sh:71: head -n 1
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
++ 1791342345.746927 /workspace/setup-trials-86bm_izh/before-3/before.sh:72: step 'clang ready (/workspace/setup-trials-86bm_izh/before-3/tools/llvm/bin/clang)'
+++ 1791342345.747183 /workspace/setup-trials-86bm_izh/before-3/before.sh:13: date +%s
++ 1791342345.747958 /workspace/setup-trials-86bm_izh/before-3/before.sh:13: echo 'setup: clang ready (/workspace/setup-trials-86bm_izh/before-3/tools/llvm/bin/clang) (38s)'
+setup: clang ready (/workspace/setup-trials-86bm_izh/before-3/tools/llvm/bin/clang) (38s)
++ 1791342345.748163 /workspace/setup-trials-86bm_izh/before-3/before.sh:75: /workspace/setup-trials-86bm_izh/before-3/tools/bin/node --version
++ 1791342345.748264 /workspace/setup-trials-86bm_izh/before-3/before.sh:75: grep -q '^v24\.'
++ 1791342345.749200 /workspace/setup-trials-86bm_izh/before-3/before.sh:76: existing=
+++ 1791342345.749456 /workspace/setup-trials-86bm_izh/before-3/before.sh:77: command -v node
+++ 1791342345.749516 /workspace/setup-trials-86bm_izh/before-3/before.sh:77: true
++ 1791342345.749621 /workspace/setup-trials-86bm_izh/before-3/before.sh:77: for candidate in $(command -v node || true) /root/.nvm/versions/node/v24*/bin/node
++ 1791342345.749636 /workspace/setup-trials-86bm_izh/before-3/before.sh:78: '[' -x '/root/.nvm/versions/node/v24*/bin/node' ']'
++ 1791342345.749648 /workspace/setup-trials-86bm_izh/before-3/before.sh:83: '[' -n '' ']'
+++ 1791342345.750070 /workspace/setup-trials-86bm_izh/before-3/before.sh:86: curl -fsSL https://nodejs.org/dist/index.json
+++ 1791342345.750100 /workspace/setup-trials-86bm_izh/before-3/before.sh:86: python3 -c 'import json, sys; print(next(r["version"] for r in json.load(sys.stdin) if r["version"].startswith("v24.")))'
++ 1791342345.830609 /workspace/setup-trials-86bm_izh/before-3/before.sh:86: nodeVersion=v24.21.0
++ 1791342345.830901 /workspace/setup-trials-86bm_izh/before-3/before.sh:87: curl -fsSL https://nodejs.org/dist/v24.21.0/node-v24.21.0-linux-x64.tar.xz
++ 1791342345.830953 /workspace/setup-trials-86bm_izh/before-3/before.sh:87: tar --no-same-owner -xJ -C /workspace/setup-trials-86bm_izh/before-3/tools --strip-components 2 --wildcards '*/bin/node'
++ 1791342347.224832 /workspace/setup-trials-86bm_izh/before-3/before.sh:88: mv /workspace/setup-trials-86bm_izh/before-3/tools/node /workspace/setup-trials-86bm_izh/before-3/tools/bin/node
++ 1791342347.226317 /workspace/setup-trials-86bm_izh/before-3/before.sh:91: /workspace/setup-trials-86bm_izh/before-3/tools/bin/node --version
+v24.21.0
++ 1791342347.232107 /workspace/setup-trials-86bm_izh/before-3/before.sh:92: step 'node ready'
+++ 1791342347.232373 /workspace/setup-trials-86bm_izh/before-3/before.sh:13: date +%s
++ 1791342347.233191 /workspace/setup-trials-86bm_izh/before-3/before.sh:13: echo 'setup: node ready (40s)'
+setup: node ready (40s)
++ 1791342347.233218 /workspace/setup-trials-86bm_izh/before-3/before.sh:95: cat
+++ 1791342347.233660 /workspace/setup-trials-86bm_izh/before-3/before.sh:95: '[' -x /workspace/setup-trials-86bm_izh/before-3/tools/go/bin/go ']'
+++ 1791342347.233727 /workspace/setup-trials-86bm_izh/before-3/before.sh:95: echo /workspace/setup-trials-86bm_izh/before-3/tools/go/bin:
++ 1791342347.234524 /workspace/setup-trials-86bm_izh/before-3/before.sh:100: grep -qs /workspace/setup-trials-86bm_izh/before-3/tools/env.sh /home/agent/.bashrc
++ 1791342347.235623 /workspace/setup-trials-86bm_izh/before-3/before.sh:100: echo 'source /workspace/setup-trials-86bm_izh/before-3/tools/env.sh'
++ 1791342347.235671 /workspace/setup-trials-86bm_izh/before-3/before.sh:102: source /workspace/setup-trials-86bm_izh/before-3/tools/env.sh
+++ 1791342347.235718 /workspace/setup-trials-86bm_izh/before-3/tools/env.sh:1: export PATH=/workspace/setup-trials-86bm_izh/before-3/tools/bin:/workspace/setup-trials-86bm_izh/before-3/tools/go/bin:/workspace/setup-trials-86bm_izh/before-3/tools/go/bin:/usr/local/bin:/usr/bin:/bin
+++ 1791342347.235724 /workspace/setup-trials-86bm_izh/before-3/tools/env.sh:1: PATH=/workspace/setup-trials-86bm_izh/before-3/tools/bin:/workspace/setup-trials-86bm_izh/before-3/tools/go/bin:/workspace/setup-trials-86bm_izh/before-3/tools/go/bin:/usr/local/bin:/usr/bin:/bin
+++ 1791342347.235732 /workspace/setup-trials-86bm_izh/before-3/tools/env.sh:2: export GOTOOLCHAIN=auto
+++ 1791342347.235735 /workspace/setup-trials-86bm_izh/before-3/tools/env.sh:2: GOTOOLCHAIN=auto
+++ 1791342347.235742 /workspace/setup-trials-86bm_izh/before-3/tools/env.sh:3: export TMPDIR=/tmp/adamic-gate
+++ 1791342347.235745 /workspace/setup-trials-86bm_izh/before-3/tools/env.sh:3: TMPDIR=/tmp/adamic-gate
++ 1791342347.235754 /workspace/setup-trials-86bm_izh/before-3/before.sh:105: cd /workspace/setup-trials-86bm_izh/before-3/repository
++ 1791342347.235769 /workspace/setup-trials-86bm_izh/before-3/before.sh:106: git config submodule.cohere.url https://github.com/system-inc/cohere.git
++ 1791342347.237264 /workspace/setup-trials-86bm_izh/before-3/before.sh:107: git submodule update --init --recursive --depth 1
+Cloning into '/workspace/setup-trials-86bm_izh/before-3/repository/cohere'...
+From https://github.com/system-inc/cohere
+ * branch            715ba94f3608a6500086b1076ce5cb7e51b836db -> FETCH_HEAD
+Submodule path 'cohere': checked out '715ba94f3608a6500086b1076ce5cb7e51b836db'
+Submodule 'TypeScript' (https://github.com/kirkouimet/TypeScript.git) registered for path 'cohere/TypeScript'
+Cloning into '/workspace/setup-trials-86bm_izh/before-3/repository/cohere/TypeScript'...
+From https://github.com/kirkouimet/TypeScript
+ * branch              8d550c837c90bd1805b047b7eeccc2baac2d5e7a -> FETCH_HEAD
+Submodule path 'cohere/TypeScript': checked out '8d550c837c90bd1805b047b7eeccc2baac2d5e7a'
++ 1791342367.729354 /workspace/setup-trials-86bm_izh/before-3/before.sh:108: step 'submodules ready'
+++ 1791342367.729784 /workspace/setup-trials-86bm_izh/before-3/before.sh:13: date +%s
++ 1791342367.730773 /workspace/setup-trials-86bm_izh/before-3/before.sh:13: echo 'setup: submodules ready (60s)'
+setup: submodules ready (60s)
++ 1791342367.730845 /workspace/setup-trials-86bm_izh/before-3/before.sh:111: go build ./...
+go: downloading github.com/zeebo/xxh3 v1.1.0
+go: downloading golang.org/x/text v0.42.0
+go: downloading golang.org/x/sync v0.23.0
+go: downloading golang.org/x/sys v0.48.0
+go: downloading github.com/klauspost/cpuid/v2 v2.2.10
++ 1791342479.734188 /workspace/setup-trials-86bm_izh/before-3/before.sh:112: go test -count=1 -run '^$' ./...
++ 1791342557.005000 /workspace/setup-trials-86bm_izh/before-3/before.sh:113: step 'build cache warm'
+++ 1791342557.005533 /workspace/setup-trials-86bm_izh/before-3/before.sh:13: date +%s
++ 1791342557.006616 /workspace/setup-trials-86bm_izh/before-3/before.sh:13: echo 'setup: build cache warm (250s)'
+setup: build cache warm (250s)
+++ 1791342557.006947 /workspace/setup-trials-86bm_izh/before-3/before.sh:115: cat /sys/fs/cgroup/cpu.max
++ 1791342557.008565 /workspace/setup-trials-86bm_izh/before-3/before.sh:115: cpuQuota='400000 100000'
+++ 1791342557.008844 /workspace/setup-trials-86bm_izh/before-3/before.sh:116: awk '/MemTotal/ {printf "%.1f GB", $2 / 1048576}' /proc/meminfo
++ 1791342557.009892 /workspace/setup-trials-86bm_izh/before-3/before.sh:116: memory='17.6 GB'
+++ 1791342557.010176 /workspace/setup-trials-86bm_izh/before-3/before.sh:117: date +%s
+++ 1791342557.011307 /workspace/setup-trials-86bm_izh/before-3/before.sh:117: nproc
++ 1791342557.012104 /workspace/setup-trials-86bm_izh/before-3/before.sh:117: echo 'setup: done in 250s on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB'
+setup: done in 250s on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB
+build-flags-after: {"commit": "8062ddc5fbf25ca989e2d50fc1b4105e0e1ef9b1", "nproc": "5", "cpu_max": "400000 100000", "go": "go version go1.27.1 linux/amd64", "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)", "node": "v24.21.0", "load": "10.02 7.85 5.45 1/204 40942", "cached": "empty-action-cache"}
+wall=250.013163 exit=0

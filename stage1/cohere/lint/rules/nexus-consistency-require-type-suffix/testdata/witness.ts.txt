@@ -1,0 +1,8 @@
+interface Bare {
+    n: number;
+}
+interface WrongType {
+    value: number;
+}
+type Alias = string;
+const Choice = { Yes: 'Yes' } as const;
