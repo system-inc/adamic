@@ -1,0 +1,4334 @@
+[
+  {
+    "name": "@next/next/google-font-display:Component.tsx",
+    "source": "export const Test = () => <Foo.link href=\"https://fonts.googleapis.com/css2?family=Krona+One\" />;"
+  },
+  {
+    "name": "@next/next/google-font-display:Component.tsx",
+    "source": "export const Test = () => <link href=\"https://example.com/css?family=Krona+One\" />;"
+  },
+  {
+    "name": "@next/next/google-font-display:Component.tsx",
+    "source": "export const Test = () => <link href=\"https://fonts.googleapis.com/css2\" />;"
+  },
+  {
+    "name": "@next/next/google-font-display:Component.tsx",
+    "source": "export const Test = () => <link href=\"https://fonts.googleapis.com/css2?display=fallback&family=Krona+One\" />;"
+  },
+  {
+    "name": "@next/next/google-font-display:Component.tsx",
+    "source": "export const Test = () => <link href=\"https://fonts.googleapis.com/css2?family=Krona+One\" />;"
+  },
+  {
+    "name": "@next/next/google-font-display:Component.tsx",
+    "source": "export const Test = () => <link href=\"https://fonts.googleapis.com/css2?family=Krona+One&amp;display=block\" />;"
+  },
+  {
+    "name": "@next/next/google-font-display:Component.tsx",
+    "source": "export const Test = () => <link href=\"https://fonts.googleapis.com/css2?family=Krona+One&amp;display=optional\" />;"
+  },
+  {
+    "name": "@next/next/google-font-display:Component.tsx",
+    "source": "export const Test = () => <link href=\"https://fonts.googleapis.com/css2?family=Krona+One&display\" />;"
+  },
+  {
+    "name": "@next/next/google-font-display:Component.tsx",
+    "source": "export const Test = () => <link href=\"https://fonts.googleapis.com/css2?family=Krona+One&display=auto\" />;"
+  },
+  {
+    "name": "@next/next/google-font-display:Component.tsx",
+    "source": "export const Test = () => <link href=\"https://fonts.googleapis.com/css2?family=Krona+One&display=block\" />;"
+  },
+  {
+    "name": "@next/next/google-font-display:Component.tsx",
+    "source": "export const Test = () => <link href=\"https://fonts.googleapis.com/css2?family=Krona+One&display=optional\" />;"
+  },
+  {
+    "name": "@next/next/google-font-display:Component.tsx",
+    "source": "export const Test = () => <link href=\"https://fonts.googleapis.com/css2?family=Krona+One&display=something\" />;"
+  },
+  {
+    "name": "@next/next/google-font-display:Component.tsx",
+    "source": "export const Test = () => <link href=\"https://fonts.googleapis.com/css?family=Krona+One&display=swap\" />;"
+  },
+  {
+    "name": "@next/next/google-font-display:Component.tsx",
+    "source": "export const Test = () => <link href={fontUrl} />;"
+  },
+  {
+    "name": "@next/next/google-font-display:Component.tsx",
+    "source": "export const Test = () => <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" />;"
+  },
+  {
+    "name": "@next/next/google-font-display:Component.tsx",
+    "source": "export const Test = (props) => <link {...props} />;"
+  },
+  {
+    "name": "@next/next/google-font-preconnect:Component.tsx",
+    "source": "export const Test = () => <Foo.link href=\"https://fonts.gstatic.com\" />;"
+  },
+  {
+    "name": "@next/next/google-font-preconnect:Component.tsx",
+    "source": "export const Test = () => <div><link href=\"https://fonts.gstatic.com\" /></div>;"
+  },
+  {
+    "name": "@next/next/google-font-preconnect:Component.tsx",
+    "source": "export const Test = () => <link HREF=\"https://fonts.gstatic.com\" />;"
+  },
+  {
+    "name": "@next/next/google-font-preconnect:Component.tsx",
+    "source": "export const Test = () => <link REL=\"preconnect\" href=\"https://fonts.gstatic.com\" />;"
+  },
+  {
+    "name": "@next/next/google-font-preconnect:Component.tsx",
+    "source": "export const Test = () => <link href=\"https:&#47;&#47;fonts.gstatic.com\" />;"
+  },
+  {
+    "name": "@next/next/google-font-preconnect:Component.tsx",
+    "source": "export const Test = () => <link href=\"https://example.com/a.css\" rel=\"stylesheet\" />;"
+  },
+  {
+    "name": "@next/next/google-font-preconnect:Component.tsx",
+    "source": "export const Test = () => <link href=\"https://fonts.googleapis.com/css?family=Krona+One\" rel=\"stylesheet\" />;"
+  },
+  {
+    "name": "@next/next/google-font-preconnect:Component.tsx",
+    "source": "export const Test = () => <link href=\"https://fonts.gstatic.com/s/font.woff2\" />;"
+  },
+  {
+    "name": "@next/next/google-font-preconnect:Component.tsx",
+    "source": "export const Test = () => <link href={new URL(\"../public/favicon.ico\", import.meta.url).toString()} rel=\"icon\" />;"
+  },
+  {
+    "name": "@next/next/google-font-preconnect:Component.tsx",
+    "source": "export const Test = () => <link href={process.env.NEXT_PUBLIC_CANONICAL_URL} rel=\"canonical\" />;"
+  },
+  {
+    "name": "@next/next/google-font-preconnect:Component.tsx",
+    "source": "export const Test = () => <link rel=\"pre&#99;onnect\" href=\"https://fonts.gstatic.com\" />;"
+  },
+  {
+    "name": "@next/next/google-font-preconnect:Component.tsx",
+    "source": "export const Test = () => <link rel=\"preconnect\" />;"
+  },
+  {
+    "name": "@next/next/google-font-preconnect:Component.tsx",
+    "source": "export const Test = () => <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" />;"
+  },
+  {
+    "name": "@next/next/google-font-preconnect:Component.tsx",
+    "source": "export const Test = () => <link rel=\"stylesheet\" href=\"https://fonts.gstatic.com\" />;"
+  },
+  {
+    "name": "@next/next/google-font-preconnect:Component.tsx",
+    "source": "export const Test = () => <link rel={kind} href=\"https://fonts.gstatic.com\" />;"
+  },
+  {
+    "name": "@next/next/google-font-preconnect:Component.tsx",
+    "source": "export const Test = (props) => <link {...props} />;"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "\n\t\t\t        export class Blah extends Head {\n\t\t\t          createGoogleAnalyticsMarkup() {\n\t\t\t            return {\n\t\t\t              __html: `\n\t\t\t                window.dataLayer = window.dataLayer || [];\n\t\t\t                function gtag(){dataLayer.push(arguments);}\n\t\t\t                gtag('js', new Date());\n\t\t\t                gtag('config', 'UA-148481588-2');`,\n\t\t\t            };\n\t\t\t          }\n\n\t\t\t          render() {\n\t\t\t            return (\n\t\t\t              <div>\n\t\t\t                <h1>Hello title</h1>\n\t\t\t                <script dangerouslySetInnerHTML={this.createGoogleAnalyticsMarkup()} />\n\t\t\t                <script async src='https://www.google-analytics.com/analytics.js'></script>\n\t\t\t              </div>\n\t\t\t            );\n\t\t\t          }\n\t\t\t      }"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "\n\t\t\t        export class Blah extends Head {\n\t\t\t          render() {\n\t\t\t            return (\n\t\t\t              <div>\n\t\t\t                <h1>Hello title</h1>\n\t\t\t                <script async src='https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}' />\n\t\t\t                <script\n\t\t\t                  dangerouslySetInnerHTML={{\n\t\t\t                    __html: `\n\t\t\t                      window.dataLayer = window.dataLayer || [];\n\t\t\t                      function gtag(){dataLayer.push(arguments);}\n\t\t\t                      gtag('js', new Date());\n\t\t\t                      gtag('config', '${GA_TRACKING_ID}', {\n\t\t\t                        page_path: window.location.pathname,\n\t\t\t                      });\n\t\t\t                  `,\n\t\t\t                }}/>\n\t\t\t              </div>\n\t\t\t            );\n\t\t\t          }\n\t\t\t      }"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "\n\t\t\t        export class Blah extends Head {\n\t\t\t          render() {\n\t\t\t            return (\n\t\t\t              <div>\n\t\t\t                <h1>Hello title</h1>\n\t\t\t                <script dangerouslySetInnerHTML={{\n\t\t\t                    __html: `\n\t\t\t                        window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;\n\t\t\t                        ga('create', 'UA-XXXXX-Y', 'auto');\n\t\t\t                        ga('send', 'pageview');\n\t\t\t                    `,\n\t\t\t                  }}/>\n\t\t\t                <script async src='https://www.google-analytics.com/analytics.js'></script>\n\t\t\t              </div>\n\t\t\t            );\n\t\t\t          }\n\t\t\t      }"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "\n\t\t\t        export class Blah extends Head {\n\t\t\t          render() {\n\t\t\t            return (\n\t\t\t              <div>\n\t\t\t                <h1>Hello title</h1>\n\t\t\t                <script dangerouslySetInnerHTML={{\n\t\t\t                    __html: `\n\t\t\t                      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){\n\t\t\t                        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),\n\t\t\t                        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)\n\t\t\t                        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');\n\n\t\t\t                        ga('create', 'UA-XXXXX-Y', 'auto');\n\t\t\t                        ga('send', 'pageview');\n\t\t\t                    `,\n\t\t\t                  }}/>\n\t\t\t              </div>\n\t\t\t            );\n\t\t\t          }\n\t\t\t      }"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "\n\t\t\t        export class Blah extends Head {\n\t\t\t          render() {\n\t\t\t            return (\n\t\t\t              <div>\n\t\t\t                <h1>Hello title</h1> qqq\n\t\t\t                {/* Google Tag Manager - Global base code */}\n\t\t\t                <script\n\t\t\t                dangerouslySetInnerHTML={{\n\t\t\t                  __html: `\n\t\t\t                    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':\n\t\t\t                    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],\n\t\t\t                    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=\n\t\t\t                    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);\n\t\t\t                    })(window,document,'script','dataLayer', '${GTM_ID}');\n\t\t\t                  `,\n\t\t\t                }}/>\n\t\t\t              </div>\n\t\t\t            );\n\t\t\t          }\n\t\t\t      }"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export class Blah extends Head {\n\t\t\t          render() {\n\t\t\t            return (\n\t\t\t              <div>\n\t\t\t                <h1>Hello title</h1>\n\t\t\t                <script dangerouslySetInnerHTML={{}} />\n\t\t\t              </div>\n\t\t\t            );\n\t\t\t          }\n\t\t\t      }"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <SCRIPT src=\"https://www.google-analytics.com/analytics.js\" />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <div dangerouslySetInnerHTML={{__html: `www.google-analytics.com/analytics.js`}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script DANGEROUSLYSETINNERHTML={{__html: `www.googletagmanager.com/gtm.js`}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script SRC=\"https://www.google-analytics.com/analytics.js\" />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script dangerouslySetInnerHTML={(({__html: `www.google-analytics.com/analytics.js`}))} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script dangerouslySetInnerHTML={markup} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script dangerouslySetInnerHTML={markup} dangerouslySetInnerHTML={{__html: `www.google-analytics.com/analytics.js`}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script dangerouslySetInnerHTML={{\"__html\": `www.google-analytics.com/analytics.js`}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script dangerouslySetInnerHTML={{...markup}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script dangerouslySetInnerHTML={{...rest, __html: `www.google-analytics.com/analytics.js`}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script dangerouslySetInnerHTML={{[\"__html\"]: `www.google-analytics.com/analytics.js`}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script dangerouslySetInnerHTML={{__html() { return 1; }}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script dangerouslySetInnerHTML={{__html: \"www.google-analytics.com/analytics.js\"}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script dangerouslySetInnerHTML={{__html: `harmless`, __html: `www.google-analytics.com/analytics.js`}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script dangerouslySetInnerHTML={{__html: `head${x}www.google-analytics.com/analytics.js`}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script dangerouslySetInnerHTML={{__html: `www.google-analytics.com/analytics.js${x}tail`}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script dangerouslySetInnerHTML={{__html: `www.google-analytics.com/analytics.js`}}></script>;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script dangerouslySetInnerHTML={{__html: `www.google-analytics.com/analytics\\u002ejs`}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script dangerouslySetInnerHTML={{__html: `www.googletagmanager.com/gtag/js`}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script dangerouslySetInnerHTML={{__html: `www.googletagmanager.com/gtm.js`}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script dangerouslySetInnerHTML={{__html}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script dangerouslySetInnerHTML={{get __html() { return 1; }}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script dangerouslySetInnerHTML={{other, __html: `www.google-analytics.com/analytics.js`}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script dangerouslySetInnerHTML={{other: 1, __html: `www.google-analytics.com/analytics.js`}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script dangerouslySetInnerHTML={{}} dangerouslySetInnerHTML={{__html: `www.google-analytics.com/analytics.js`}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script dangerouslysetinnerhtml={{}} dangerouslySetInnerHTML={{__html: `www.google-analytics.com/analytics.js`}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script src=\"/local.js\" dangerouslySetInnerHTML={{__html: `www.googletagmanager.com/gtm.js`}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script src=\"WWW.GOOGLE-ANALYTICS.COM/ANALYTICS.JS\" />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script src=\"http://www.google-analytics.com/analytics.js\" />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script src=\"https://www.example.com&#47;analytics.js\" />;"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script src=\"https://www.google-analytics.com&#47;analytics.js\" />;"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script src=\"https://www.google-analytics.com/analytics.js\" />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script src=\"https://www.google-analytics.com/analytics.js\" dangerouslySetInnerHTML={{__html: `www.googletagmanager.com/gtm.js`}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script src=\"https://www.googletagmanager.com/gtm.js?id=X\" />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script src={someUrl} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script x:src=\"https://www.google-analytics.com/analytics.js\" />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script {...rest} dangerouslySetInnerHTML={{__html: `www.googletagmanager.com/gtm.js`}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "import Script from 'next/script'\n\n\t\t\t        export class Blah extends Head {\n\t\t\t        render() {\n\t\t\t            return (\n\t\t\t            <div>\n\t\t\t                <h1>Hello title</h1>\n\t\t\t                <Script id=\"google-analytics\">\n\t\t\t                    {`window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;\n\t\t\t                    ga('create', 'UA-XXXXX-Y', 'auto');\n\t\t\t                    ga('send', 'pageview');\n\t\t\t                    })`}\n\t\t\t                </Script>\n\t\t\t            </div>\n\t\t\t            );\n\t\t\t        }\n\t\t\t    }"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "import Script from 'next/script'\n\n\t\t\t      export class Blah extends Head {\n\t\t\t        render() {\n\t\t\t          return (\n\t\t\t            <div>\n\t\t\t              <h1>Hello title</h1>\n\t\t\t              <Script\n\t\t\t                src=\"https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID\"\n\t\t\t                strategy=\"lazyOnload\"\n\t\t\t              />\n\t\t\t              <Script id=\"google-analytics\">\n\t\t\t                {`\n\t\t\t                  window.dataLayer = window.dataLayer || [];\n\t\t\t                  function gtag(){window.dataLayer.push(arguments);}\n\t\t\t                  gtag('js', new Date());\n\n\t\t\t                  gtag('config', 'GA_MEASUREMENT_ID');\n\t\t\t                `}\n\t\t\t              </Script>\n\t\t\t            </div>\n\t\t\t          );\n\t\t\t        }\n\t\t\t    }"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "import Script from 'next/script'\n\n\t\t\t      export class Blah extends Head {\n\t\t\t        render() {\n\t\t\t          return (\n\t\t\t            <div>\n\t\t\t              <h1>Hello title</h1>\n\t\t\t              <Script id=\"google-analytics\">\n\t\t\t                {`(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){\n\t\t\t                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),\n\t\t\t                    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)\n\t\t\t                    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');\n\n\t\t\t                    ga('create', 'UA-XXXXX-Y', 'auto');\n\t\t\t                    ga('send', 'pageview');\n\t\t\t                })`}\n\t\t\t              </Script>\n\t\t\t            </div>\n\t\t\t          );\n\t\t\t        }\n\t\t\t    }"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:layout.tsx",
+    "source": "import Script from \"next/script\";\n\n                  export default function Index() {\n                    return (\n                      <html lang=\"en\">\n                        <body className={inter.className}>{children}</body>\n                        <Script\n                          src=\"https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js?a=scriptBeforeInteractive\"\n                          strategy='beforeInteractive'\n                        />\n                      </html>\n                    );\n                  }\n\t\t\t"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:layout.tsx",
+    "source": " import Script from \"next/script\";\n\n                  export default function Index() {\n                    return (\n                      <html lang=\"en\">\n                        <body className={inter.className}>{children}</body>\n                        <Script\n                          src=\"https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js?a=scriptBeforeInteractive\"\n                          strategy='beforeInteractive'\n                        />\n                      </html>\n                    );\n                  }\n\t\t\t"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:layout.tsx",
+    "source": "import Script from \"next/script\";\n\n                  export default function Index() {\n                    return (\n                      <html lang=\"en\">\n                        <body className={inter.className}>{children}</body>\n                        <Script\n                          src=\"https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js?a=scriptBeforeInteractive\"\n                          strategy='beforeInteractive'\n                        />\n                      </html>\n                    );\n                  }\n\t\t\t"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:layout.tsx",
+    "source": " import Script from \"next/script\";\n\n                  export default function Index() {\n                    return (\n                      <html lang=\"en\">\n                        <body className={inter.className}>{children}</body>\n                        <Script\n                          src=\"https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js?a=scriptBeforeInteractive\"\n                          strategy='beforeInteractive'\n                        />\n                      </html>\n                    );\n                  }\n\t\t\t"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:C:\\Users\\username\\projects\\project-name\\app\\layout.tsx",
+    "source": "import Script from \"next/script\";\n\n                  export default function test() {\n                    return (\n                      <html lang=\"en\">\n                        <body className={inter.className}>{children}</body>\n                        <Script\n                          src=\"https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js?a=scriptBeforeInteractive\"\n                          strategy='beforeInteractive'\n                        />\n                      </html>\n                    );\n                  }\n\t\t\t"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:C:\\Users\\username\\projects\\project-name\\pages\\layout.tsx",
+    "source": " import Script from \"next/script\";\n\n                  export default function Index() {\n                    return (\n                      <html lang=\"en\">\n                        <body className={inter.className}>{children}</body>\n                        <Script\n                          src=\"https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js?a=scriptBeforeInteractive\"\n                          strategy='beforeInteractive'\n                        />\n                      </html>\n                    );\n                  }\n\t\t\t"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:C:\\Users\\username\\projects\\project-name\\src\\app\\layout.tsx",
+    "source": "import Script from \"next/script\";\n\n                  export default function test() {\n                    return (\n                      <html lang=\"en\">\n                        <body className={inter.className}>{children}</body>\n                        <Script\n                          src=\"https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js?a=scriptBeforeInteractive\"\n                          strategy='beforeInteractive'\n                        />\n                      </html>\n                    );\n                  }\n\t\t\t"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:C:\\Users\\username\\projects\\project-name\\src\\pages\\layout.tsx",
+    "source": " import Script from \"next/script\";\n\n                  export default function test() {\n                    return (\n                      <html lang=\"en\">\n                        <body className={inter.className}>{children}</body>\n                        <Script\n                          src=\"https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js?a=scriptBeforeInteractive\"\n                          strategy='beforeInteractive'\n                        />\n                      </html>\n                    );\n                  }\n\t\t\t"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:_document.tsx",
+    "source": "import Script from \"next/script\";\nexport default function Index() {\n  return <Script strategy=\"beforeInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:outside-known-dirs.js",
+    "source": " import Head from \"next/head\";\n             import Script from \"next/script\";\n\n             export default function Index() {\n               return (\n                 <Script\n                   id=\"scriptBeforeInteractive\"\n                   src=\"https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js?a=scriptBeforeInteractive\"\n                   strategy=\"beforeInteractive\"\n                 ></Script>\n               );\n             }\n\t\t\t"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import Script from \"next/script\";\nexport default function Index() {\n  return <Script strategy=\"beforeInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:_document.js",
+    "source": "import Document, { Html, Main, NextScript } from 'next/document'\n                  import Script from 'next/script'\n\n                  class MyDocument extends Document {\n                    render() {\n                      return (\n                        <Html>\n                          <Head>\n                            <meta charSet=\"utf-8\" />\n                          </Head>\n                          <body>\n                            <Main />\n                            <NextScript />\n                            <Script\n                              id=\"scriptBeforeInteractive\"\n                              src=\"https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js?a=scriptBeforeInteractive\"\n                              strategy=\"beforeInteractive\"\n                            ></Script>\n                          </body>\n                        </Html>\n                      )\n                    }\n                  }\n\n                  export default MyDocument\n\t\t\t"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:_document.tsx",
+    "source": "import Document, { Html, Main, NextScript } from 'next/document'\n                  import ScriptComponent from 'next/script'\n\n                  class MyDocument extends Document {\n                    render() {\n                      return (\n                        <Html>\n                          <Head>\n                            <meta charSet=\"utf-8\" />\n                          </Head>\n                          <body>\n                            <Main />\n                            <NextScript />\n                            <ScriptComponent\n                              id=\"scriptBeforeInteractive\"\n                              src=\"https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js?a=scriptBeforeInteractive\"\n                              strategy=\"beforeInteractive\"\n                            ></ScriptComponent>\n                          </body>\n                        </Html>\n                      )\n                    }\n                  }\n\n                  export default MyDocument\n\t\t\t"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:_document.tsx",
+    "source": "import Document, { Html, Main, NextScript } from 'next/document'\n                  import ScriptComponent from 'next/script'\n\n                  class MyDocument extends Document {\n                    render() {\n                      return (\n                        <Html>\n                          <Head>\n                            <meta charSet=\"utf-8\" />\n                          </Head>\n                          <body>\n                            <Main />\n                            <NextScript />\n                            <ScriptComponent\n                              id=\"scriptBeforeInteractive\"\n                              src=\"https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js?a=scriptBeforeInteractive\"\n                            ></ScriptComponent>\n                          </body>\n                        </Html>\n                      )\n                    }\n                  }\n\n                  export default MyDocument\n\t\t\t"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import Script from \"next/script\";\nexport default function Index() {\n  return <Script strategy=\"beforeInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:_documentation.tsx",
+    "source": "import Script from \"next/script\";\nexport default function Index() {\n  return <Script strategy=\"beforeInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.js",
+    "source": "import Head from \"next/head\";\n                  import Script from \"next/script\";\n\n                  export default function Index() {\n                    return (\n                      <Script\n                        id=\"scriptBeforeInteractive\"\n                        src=\"https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js?a=scriptBeforeInteractive\"\n                        strategy=\"beforeInteractive\"\n                      ></Script>\n                    );\n                  }\n\t\t\t"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "export default function Index() {\n  return <Script strategy=\"beforeInteractive\" />;\n}\nimport Script from \"next/script\";\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "function Script() {\n  return null;\n}\nexport default function Index() {\n  return <Script strategy=\"beforeInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import \"next/script\";\nexport default function Index() {\n  return <Script strategy=\"beforeInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import * as All from \"next/script\";\nexport default function Index() {\n  return <All strategy=\"beforeInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import A from \"next/script\";\nimport B from \"next/script\";\nexport default function Index() {\n  return <B strategy=\"beforeInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import S from \"next/script\";\nfunction Script() {\n  return null;\n}\nexport default function Index() {\n  return <Script strategy=\"beforeInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import Script from \"ext/script\";\nexport default function Index() {\n  return <Script strategy=\"beforeInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import Script from \"next/script\";\nconst properties = { strategy: \"beforeInteractive\" };\nexport default function Index() {\n  return <Script {...properties} />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import Script from \"next/script\";\nexport default function Index() {\n  return (\n    <>\n      <Script src=\"/a.js\" strategy=\"beforeInteractive\" />\n      <Script id=\"b\" strategy=\"beforeInteractive\"></Script>\n    </>\n  );\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import Script from \"next/script\";\nexport default function Index() {\n  return <Script />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import Script from \"next/script\";\nexport default function Index() {\n  return <Script Strategy=\"beforeInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import Script from \"next/script\";\nexport default function Index() {\n  return <Script src=\"/a.js\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import Script from \"next/script\";\nexport default function Index() {\n  return <Script src=\"/a.js\" strategy=\"beforeInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import Script from \"next/script\";\nexport default function Index() {\n  return <Script strategy=\"afterInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import Script from \"next/script\";\nexport default function Index() {\n  return <Script strategy=\"afterInteractive\" strategy=\"beforeInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import Script from \"next/script\";\nexport default function Index() {\n  return <Script strategy=\"before&#73;nteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import Script from \"next/script\";\nexport default function Index() {\n  return <Script strategy=\"beforeInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import Script from \"next/script\";\nexport default function Index() {\n  return <Script strategy=\"beforeInteractive\" strategy=\"afterInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import Script from \"next/script\";\nexport default function Index() {\n  return <Script strategy=\"beforeInteractive\"></Script>;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import Script from \"next/script\";\nexport default function Index() {\n  return <Script strategy=\"lazyOnload\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import Script from \"next/script\";\nexport default function Index() {\n  return <Script strategy={\"beforeInteractive\"} />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import Script from \"next/script\";\nexport default function Index() {\n  return <Script strategy={x} strategy=\"beforeInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import Script from \"next/script\";\nexport default function Index() {\n  return <Script {...properties} strategy=\"beforeInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import Script from \"next/script\";\nexport default function Index() {\n  return <Script {...{ strategy: \"beforeInteractive\" }} />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import Script from \"next/script\";\nexport default function Index() {\n  return <Script.Inner strategy=\"beforeInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import Script from \"next/scripts\";\nexport default function Index() {\n  return <Script strategy=\"beforeInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import { Foo as Bar } from \"next/script\";\nexport default function Index() {\n  return <Bar strategy=\"beforeInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import { Foo as Bar } from \"next/script\";\nexport default function Index() {\n  return <Foo strategy=\"beforeInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import { Foo } from \"next/script\";\nexport default function Index() {\n  return <Foo strategy=\"beforeInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:_document.tsx",
+    "source": "import Script from \"next/script\";\nexport default function Index() {\n  return <Script strategy=\"beforeInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-css-tags:Component.tsx",
+    "source": "export const C = () => <Foo.link rel=\"stylesheet\" href=\"/a.css\" />;"
+  },
+  {
+    "name": "@next/next/no-css-tags:Component.tsx",
+    "source": "export const C = () => <div><h1>Hello title</h1></div>;"
+  },
+  {
+    "name": "@next/next/no-css-tags:Component.tsx",
+    "source": "export const C = () => <div><link href=\"/_next/static/css/styles.css\" rel=\"stylesheet\" /></div>;"
+  },
+  {
+    "name": "@next/next/no-css-tags:Component.tsx",
+    "source": "export const C = () => <link href=\"http://example.com/a.css\" rel=\"stylesheet\" />;"
+  },
+  {
+    "name": "@next/next/no-css-tags:Component.tsx",
+    "source": "export const C = () => <link href=\"https://fonts.googleapis.com/css?family=Open+Sans\" rel=\"stylesheet\" />;"
+  },
+  {
+    "name": "@next/next/no-css-tags:Component.tsx",
+    "source": "export const C = () => <link rel=\"icon\" href=\"/favicon.ico\" />;"
+  },
+  {
+    "name": "@next/next/no-css-tags:Component.tsx",
+    "source": "export const C = () => <link rel=\"style&#115;heet\" href=\"/a.css\" />;"
+  },
+  {
+    "name": "@next/next/no-css-tags:Component.tsx",
+    "source": "export const C = () => <link rel=\"stylesheet\" />;"
+  },
+  {
+    "name": "@next/next/no-css-tags:Component.tsx",
+    "source": "export const C = () => <link rel=\"stylesheet\" href=\"//example.com/a.css\" />;"
+  },
+  {
+    "name": "@next/next/no-css-tags:Component.tsx",
+    "source": "export const C = () => <link rel=\"stylesheet\" href=\"/a.css\" />;"
+  },
+  {
+    "name": "@next/next/no-css-tags:Component.tsx",
+    "source": "export const C = () => <link rel=\"stylesheet\" href=\"/a.css\"></link>;"
+  },
+  {
+    "name": "@next/next/no-css-tags:Component.tsx",
+    "source": "export const C = () => <link rel=\"stylesheet\" href=\"https:&#47;&#47;example.com/a.css\" />;"
+  },
+  {
+    "name": "@next/next/no-css-tags:Component.tsx",
+    "source": "export const C = () => <link rel=\"stylesheet\" href=\"styles.css\" />;"
+  },
+  {
+    "name": "@next/next/no-css-tags:Component.tsx",
+    "source": "export const C = () => <link rel=\"stylesheet\" href={path} />;"
+  },
+  {
+    "name": "@next/next/no-css-tags:Component.tsx",
+    "source": "export const C = () => <link rel={kind} href=\"/a.css\" />;"
+  },
+  {
+    "name": "@next/next/no-css-tags:Component.tsx",
+    "source": "export const C = (props) => <link {...props} />;"
+  },
+  {
+    "name": "@next/next/no-head-element:Page.tsx",
+    "source": "export const C = () => <head><title>x</title></head>;"
+  },
+  {
+    "name": "@next/next/no-head-element:Shell.tsx",
+    "source": "export const C = () => <Foo.head />;"
+  },
+  {
+    "name": "@next/next/no-head-element:Shell.tsx",
+    "source": "export const C = () => <div><h1>x</h1></div>;"
+  },
+  {
+    "name": "@next/next/no-head-element:Shell.tsx",
+    "source": "export const C = () => <div><head /></div>;"
+  },
+  {
+    "name": "@next/next/no-head-element:Shell.tsx",
+    "source": "import Head from 'next/head';\nexport const C = () => <Head><title>x</title></Head>;"
+  },
+  {
+    "name": "@next/next/no-head-element:Index.tsx",
+    "source": "export const C = () => <head><title>x</title></head>;"
+  },
+  {
+    "name": "@next/next/no-head-element:Shell.tsx",
+    "source": "export const C = () => <head><title>x</title></head>;"
+  },
+  {
+    "name": "@next/next/no-head-element:Shell.tsx",
+    "source": "export const C = () => <head><title>x</title></head>;"
+  },
+  {
+    "name": "@next/next/no-html-link-for-pages:foo.tsx",
+    "source": "export const C = () => (<Link href=\"/about\">About</Link>);\n"
+  },
+  {
+    "name": "@next/next/no-html-link-for-pages:foo.tsx",
+    "source": "export const C = () => (<a href=\"/about\" target=\"_blank\">About</a>);\n"
+  },
+  {
+    "name": "@next/next/no-html-link-for-pages:foo.tsx",
+    "source": "export const C = () => (<a href=\"/contact\">Contact</a>);\n"
+  },
+  {
+    "name": "@next/next/no-html-link-for-pages:foo.tsx",
+    "source": "export const C = () => (<a href='/about' />);\n"
+  },
+  {
+    "name": "@next/next/no-html-link-for-pages:foo.tsx",
+    "source": "export const C = () => (<a href='/about'>About</a>);\n"
+  },
+  {
+    "name": "@next/next/no-html-link-for-pages:index.tsx",
+    "source": "export const C = () => (\n<>\n<a href=\"/\">x</a>\n</>\n);\n"
+  },
+  {
+    "name": "@next/next/no-img-element:Component.tsx",
+    "source": "export class MyComponent {\n  render() {\n    return (\n      <div>\n        <img src=\"/test.png\" alt=\"Test picture\" width={500} height={500} />\n      </div>\n    );\n  }\n}"
+  },
+  {
+    "name": "@next/next/no-img-element:Component.tsx",
+    "source": "export class MyComponent {\n  render() {\n    return (\n      <div>\n        <picture>\n          <source media=\"(min-width:650px)\" srcSet=\"/test.jpg\" />\n          <img src=\"/test.png\" alt=\"Test picture\" />\n        </picture>\n      </div>\n    );\n  }\n}"
+  },
+  {
+    "name": "@next/next/no-img-element:Component.tsx",
+    "source": "export class MyComponent {\n  render() {\n    return (\n      <picture>\n        <img src=\"/test.png\" alt=\"Test picture\" width={500} height={500} />\n      </picture>\n    );\n  }\n}"
+  },
+  {
+    "name": "@next/next/no-img-element:Component.tsx",
+    "source": "export class MyComponent {\n  render() {\n    return <img src=\"/test.png\" alt=\"Test picture\" width={500} height={500} />;\n  }\n}"
+  },
+  {
+    "name": "@next/next/no-img-element:Component.tsx",
+    "source": "export const C = () => <Foo.img src=\"/test.png\" />;"
+  },
+  {
+    "name": "@next/next/no-img-element:Component.tsx",
+    "source": "export const C = () => <div><img src=\"/test.png\"></img></div>;"
+  },
+  {
+    "name": "@next/next/no-img-element:Component.tsx",
+    "source": "export const C = () => <picture><div><img src=\"/test.png\" /></div></picture>;"
+  },
+  {
+    "name": "@next/next/no-img-element:Component.tsx",
+    "source": "export const C = () => <picture><img src=\"/test.png\"></img></picture>;"
+  },
+  {
+    "name": "@next/next/no-img-element:Component.tsx",
+    "source": "import somePicture from './foo.png';\nexport const MyComponent = () => <img src={somePicture.src} alt='foo' />;"
+  },
+  {
+    "name": "@next/next/no-img-element:Component.tsx",
+    "source": "import { Image } from 'next/image';\nexport class MyComponent {\n  render() {\n    return (\n      <div>\n        <Image src=\"/test.png\" alt=\"Test picture\" width={500} height={500} />\n      </div>\n    );\n  }\n}"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:_document.tsx",
+    "source": "function Links() { return (<link href=\"https://fonts.googleapis.com/css2?family=Inter\" />) }\nexport default function D() { return (<div><Links /></div>) }\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:_document.jsx",
+    "source": "\n\t\t\t      import Document, { Html, Head } from \"next/document\";\n\t\t\t      class MyDocument {\n\t\t\t        render() {\n\t\t\t          return (\n\t\t\t            <Html>\n\t\t\t              <Head>\n\t\t\t                <link\n\t\t\t                  href=\"https://fonts.googleapis.com/css2?family=Krona+One&display=swap\"\n\t\t\t                  rel=\"stylesheet\"\n\t\t\t                />\n\t\t\t              </Head>\n\t\t\t            </Html>\n\t\t\t          );\n\t\t\t        }\n\t\t\t      }\n\n\t\t\t      export default MyDocument;"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:_document.jsx",
+    "source": "\n\t\t\t      import Head from 'next/head'\n\n\n\t\t\t      function Links() {\n\t\t\t        return (\n\t\t\t          <>\n\t\t\t            <link\n\t\t\t              href=\"https://fonts.googleapis.com/css2?family=Inter\"\n\t\t\t              rel=\"stylesheet\"\n\t\t\t            />\n\t\t\t            <link\n\t\t\t              href=\"https://fonts.googleapis.com/css2?family=Open+Sans\"\n\t\t\t              rel=\"stylesheet\"\n\t\t\t              />\n\t\t\t          </>\n\t\t\t        )\n\t\t\t      }\n\n\t\t\t      export default function IndexPage() {\n\t\t\t        return (\n\t\t\t          <div>\n\t\t\t            <Head>\n\t\t\t              <Links />\n\t\t\t            </Head>\n\t\t\t            <p>Hello world!</p>\n\t\t\t          </div>\n\t\t\t        )\n\t\t\t      }\n\t\t\t      "
+  },
+  {
+    "name": "@next/next/no-page-custom-font:_document.jsx",
+    "source": "export default function CustomDocument() {\n\t\t\t      return (\n\t\t\t        <Html>\n\t\t\t          <Head>\n\t\t\t            <link\n\t\t\t              href=\"https://fonts.googleapis.com/css2?family=Krona+One&display=swap\"\n\t\t\t              rel=\"stylesheet\"\n\t\t\t            />\n\t\t\t          </Head>\n\t\t\t        </Html>\n\t\t\t      )\n\t\t\t    }"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:_document.jsx",
+    "source": "export default function() {\n\t\t\t      return (\n\t\t\t        <Html>\n\t\t\t          <Head>\n\t\t\t            <link\n\t\t\t              href=\"https://fonts.googleapis.com/css2?family=Krona+One&display=swap\"\n\t\t\t              rel=\"stylesheet\"\n\t\t\t            />\n\t\t\t          </Head>\n\t\t\t        </Html>\n\t\t\t      )\n\t\t\t    }"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:_document.jsx",
+    "source": "function CustomDocument() {\n\t\t\t      return (\n\t\t\t        <Html>\n\t\t\t          <Head>\n\t\t\t            <link\n\t\t\t              href=\"https://fonts.googleapis.com/css2?family=Krona+One&display=swap\"\n\t\t\t              rel=\"stylesheet\"\n\t\t\t            />\n\t\t\t          </Head>\n\t\t\t        </Html>\n\t\t\t      )\n\t\t\t    }\n\n\t\t\t    export default CustomDocument;\n\t\t\t    "
+  },
+  {
+    "name": "@next/next/no-page-custom-font:_document.jsx",
+    "source": "function a() {\n\t\t\t      return (\n\t\t\t        <Html>\n\t\t\t          <Head>\n                  <link\n                    rel=\"apple-touch-startup-image\"\n                    href=\"/assets/public/pwa/splash/apple-splash-2048-2732.jpg\"\n                  />\n\t\t\t          </Head>\n\t\t\t        </Html>\n\t\t\t      )\n\t\t\t    }"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:_document.jsx",
+    "source": "import Document, { Html, Head } from \"next/document\";\n\t\t\tclass MyDocument extends Document {\n\t\t\t\trender() {\n\t\t\t\t\treturn (\n\t\t\t\t\t\t<Html>\n\t\t\t\t\t\t\t<Head>\n\t\t\t\t\t\t\t\t<link\n\t\t\t\t\t\t\t\t\thref=\"https://fonts.googleapis.com/css2?family=Krona+One&display=swap\"\n\t\t\t\t\t\t\t\t\trel=\"stylesheet\"\n\t\t\t\t\t\t\t\t/>\n\t\t\t\t\t\t\t</Head>\n\t\t\t\t\t\t</Html>\n\t\t\t\t\t);\n\t\t\t\t}\n\t\t\t}\n\t\t\texport default MyDocument;"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:_document.jsx",
+    "source": "import NextDocument, { Html, Head } from \"next/document\";\n\t\t\t    class Document extends NextDocument {\n\t\t\t      render() {\n\t\t\t        return (\n\t\t\t          <Html>\n\t\t\t            <Head>\n\t\t\t              <link\n\t\t\t                href=\"https://fonts.googleapis.com/css2?family=Krona+One&display=swap\"\n\t\t\t                rel=\"stylesheet\"\n\t\t\t              />\n\t\t\t            </Head>\n\t\t\t          </Html>\n\t\t\t        );\n\t\t\t      }\n\t\t\t    }\n\t\t\t    export default Document;\n\t\t\t    "
+  },
+  {
+    "name": "@next/next/no-page-custom-font:_document.tsx",
+    "source": "const D = () => (<link href=\"https://fonts.googleapis.com/css2?family=Inter\" />);\nexport default D;\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:_document.tsx",
+    "source": "const D = class { render() { return (<link href=\"https://fonts.googleapis.com/css2?family=Inter\" />) } };\nexport default D;\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:_document.tsx",
+    "source": "const D = function () { return (<link href=\"https://fonts.googleapis.com/css2?family=Inter\" />) };\nexport default D;\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:_document.tsx",
+    "source": "const D = function Inner() { return (<link href=\"https://fonts.googleapis.com/css2?family=Inter\" />) };\nexport default D;\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:_document.tsx",
+    "source": "const Q = () => (<link href=\"https://fonts.googleapis.com/css2?family=Inter\" />);\nexport default function D() { return <div /> }\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:_document.tsx",
+    "source": "const [D] = [() => (<link href=\"https://fonts.googleapis.com/css2?family=Inter\" />)];\nexport default D;\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:_document.tsx",
+    "source": "export default () => (<link href=\"https://fonts.googleapis.com/css2?family=Inter\" />);\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:_document.tsx",
+    "source": "function D() { return (<link href=\"https://fonts.googleapis.com/css2?family=Inter\" />) }\nexport { D as default };\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:_document.tsx",
+    "source": "function Links() {\n  return <link href=\"https://fonts.googleapis.com/css2?family=Inter\" />\n}\nexport default function D() { return <div><Links /></div> }\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:_document.tsx",
+    "source": "function Links() { return (<link href=\"https://fonts.googleapis.com/css2?family=Inter\"></link>) }\nexport default function D() { return (<div><Links /></div>) }\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:_document.tsx",
+    "source": "function Links() { return (<link href=\"https://fonts.googleapis.com/cssANYTHING\" />) }\nexport default function D() { return (<div><Links /></div>) }\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:_document.tsx",
+    "source": "function Links() { return (<link rel=\"preload\" href=\"https://fonts.googleapis.com/css?family=X\" />) }\nexport default function D() { return (<div><Links /></div>) }\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:_documentation.tsx",
+    "source": "export default function D() { return (<link href=\"https://fonts.googleapis.com/css2?family=Inter\" />) }\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:index.tsx",
+    "source": "\n\t\t\t      import Head from 'next/head'\n\t\t\t      export default function IndexPage() {\n\t\t\t        return (\n\t\t\t          <div>\n\t\t\t            <Head>\n\t\t\t              <link\n\t\t\t                href=\"https://fonts.googleapis.com/css2?family=Inter\"\n\t\t\t                rel=\"stylesheet\"\n\t\t\t              />\n\t\t\t            </Head>\n\t\t\t            <p>Hello world!</p>\n\t\t\t          </div>\n\t\t\t        )\n\t\t\t      }\n\t\t\t      "
+  },
+  {
+    "name": "@next/next/no-page-custom-font:index.tsx",
+    "source": "const u = \"https://fonts.googleapis.com/css2?family=Inter\";\nexport default function D() { return (<link rel=\"stylesheet\" href={u} />) }\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:index.tsx",
+    "source": "export default function D() {\n  return <div><link href=\"https://example.com&#47;css2?family=Inter\" rel=\"stylesheet\" /></div>\n}\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:index.tsx",
+    "source": "export default function D() {\n  return <div><link href=\"https://fonts.googleapis.com&#47;css2?family=Inter\" rel=\"stylesheet\" /></div>\n}\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:index.tsx",
+    "source": "export default function D() {\n  return <div><link href=\"https://fonts.googleapis.com/css2?family=Inter\" rel=\"stylesheet\" /></div>\n}\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:index.tsx",
+    "source": "export default function D() {\n  return <div><link href=\"https://fonts.googleapis.com/css2?family=Inter\"></link></div>\n}\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:index.tsx",
+    "source": "export default function D() { return (<Link href=\"https://fonts.googleapis.com/css2?family=Inter\" />) }\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:index.tsx",
+    "source": "export default function D() { return (<link href=\" https://fonts.googleapis.com/css2?family=Inter\" />) }\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:index.tsx",
+    "source": "export default function D() { return (<link href=\"https://cdn.example.com/proxy?u=https://fonts.googleapis.com/css2?family=Inter\" />) }\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:index.tsx",
+    "source": "export default function D() { return (<link rel=\"stylesheet\" HREF=\"https://fonts.googleapis.com/css2?family=Inter\" />) }\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:index.tsx",
+    "source": "export default function D() { return (<link rel=\"stylesheet\" href=\"http://fonts.googleapis.com/css2?family=Inter\" />) }\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:index.tsx",
+    "source": "export default function D() { return (<link rel=\"stylesheet\" href=\"https://use.typekit.net/abc.css\" />) }\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:index.tsx",
+    "source": "export default function D() { return (<link {...{href:\"https://fonts.googleapis.com/css2?family=Inter\"}} />) }\n"
+  },
+  {
+    "name": "@next/next/no-styled-jsx-in-document:_document.tsx",
+    "source": "export const C = () => <style jsx>{\"body{color:red}\"}</style>;"
+  },
+  {
+    "name": "@next/next/no-styled-jsx-in-document:_document.jsx",
+    "source": "\n\t\t\t            import Document, { Html, Head, Main, NextScript } from 'next/document'\n\n\t\t\t            export class MyDocument extends Document {\n\t\t\t              static async getInitialProps(ctx) {\n\t\t\t                const initialProps = await Document.getInitialProps(ctx)\n\t\t\t                return { ...initialProps }\n\t\t\t              }\n\n\t\t\t              render() {\n\t\t\t                return (\n\t\t\t                  <Html>\n\t\t\t                    <Head />\n\t\t\t                    <style jsx>{\"                    body{                      color:red;                    }                    \"}</style>\n\t\t\t                    <body>\n\t\t\t                      <Main />\n\t\t\t                      <NextScript />\n\t\t\t                    </body>\n\t\t\t                  </Html>\n\t\t\t                )\n\t\t\t              }\n\t\t\t            }"
+  },
+  {
+    "name": "@next/next/no-styled-jsx-in-document:_document.tsx",
+    "source": "export const C = () => <Style jsx>{\"x\"}</Style>;"
+  },
+  {
+    "name": "@next/next/no-styled-jsx-in-document:_document.tsx",
+    "source": "export const C = () => <div jsx>{\"x\"}</div>;"
+  },
+  {
+    "name": "@next/next/no-styled-jsx-in-document:_document.tsx",
+    "source": "export const C = () => <style JSX>{\"x\"}</style>;"
+  },
+  {
+    "name": "@next/next/no-styled-jsx-in-document:_document.tsx",
+    "source": "export const C = () => <style data-jsx>{\"x\"}</style>;"
+  },
+  {
+    "name": "@next/next/no-styled-jsx-in-document:_document.tsx",
+    "source": "export const C = () => <style global>{\"x\"}</style>;"
+  },
+  {
+    "name": "@next/next/no-styled-jsx-in-document:_document.tsx",
+    "source": "export const C = () => <style jsx />;"
+  },
+  {
+    "name": "@next/next/no-styled-jsx-in-document:_document.tsx",
+    "source": "export const C = () => <style jsx global>{\"x\"}</style>;"
+  },
+  {
+    "name": "@next/next/no-styled-jsx-in-document:_document.tsx",
+    "source": "export const C = () => <style jsx=\"true\">{\"x\"}</style>;"
+  },
+  {
+    "name": "@next/next/no-styled-jsx-in-document:_document.tsx",
+    "source": "export const C = () => <style {...{jsx: true}}></style>;"
+  },
+  {
+    "name": "@next/next/no-styled-jsx-in-document:_document.tsx",
+    "source": "export const C = () => <style.x jsx>{\"x\"}</style.x>;"
+  },
+  {
+    "name": "@next/next/no-styled-jsx-in-document:_document.tsx",
+    "source": "export const a = <style jsx />;\n"
+  },
+  {
+    "name": "@next/next/no-styled-jsx-in-document:_document.tsx",
+    "source": "export const a = <style jsx>{\"x\"}</style>;\n"
+  },
+  {
+    "name": "@next/next/no-styled-jsx-in-document:_document.tsx",
+    "source": "import Document, { Html, Head, Main, NextScript } from 'next/document'\n\n\t\t\t        export class MyDocument extends Document {\n\t\t\t          static async getInitialProps(ctx) {\n\t\t\t            const initialProps = await Document.getInitialProps(ctx)\n\t\t\t            return { ...initialProps }\n\t\t\t          }\n\n\t\t\t          render() {\n\t\t\t            return (\n\t\t\t              <Html>\n\t\t\t                <Head />\n\t\t\t                <body>\n\t\t\t                  <Main />\n\t\t\t                  <NextScript />\n\t\t\t                </body>\n\t\t\t              </Html>\n\t\t\t            )\n\t\t\t          }\n\t\t\t        }"
+  },
+  {
+    "name": "@next/next/no-styled-jsx-in-document:_document.tsx",
+    "source": "import Document, { Html, Head, Main, NextScript } from 'next/document'\n\n\t\t\t        export class MyDocument extends Document {\n\t\t\t          static async getInitialProps(ctx) {\n\t\t\t            const initialProps = await Document.getInitialProps(ctx)\n\t\t\t            return { ...initialProps }\n\t\t\t          }\n\n\t\t\t          render() {\n\t\t\t            return (\n\t\t\t              <Html>\n\t\t\t                <Head />\n\t\t\t                <style>{\"                  body{                    color:red;                  }                \"}</style>\n\t\t\t                <style {...{nonce: '123' }}></style>\n\t\t\t                <body>\n\t\t\t                  <Main />\n\t\t\t                  <NextScript />\n\t\t\t                </body>\n\t\t\t              </Html>\n\t\t\t            )\n\t\t\t          }\n\t\t\t        }"
+  },
+  {
+    "name": "@next/next/no-styled-jsx-in-document:index.tsx",
+    "source": "export const C = () => <style jsx>{\"body{color:red}\"}</style>;"
+  },
+  {
+    "name": "@next/next/no-styled-jsx-in-document:_documentation.tsx",
+    "source": "export const C = () => <style jsx>{\"body{color:red}\"}</style>;"
+  },
+  {
+    "name": "@next/next/no-styled-jsx-in-document:index.jsx",
+    "source": "\n\t\t\t          export default function Page() {\n\t\t\t            return (\n\t\t\t              <>\n\t\t\t                <p>Hello world</p>\n\t\t\t                <style jsx>{`\n\t\t\t                  p {\n\t\t\t                    color: orange;\n\t\t\t                  }\n\t\t\t                `}</style>\n\t\t\t              </>\n\t\t\t            )\n\t\t\t          }\n\t\t\t          "
+  },
+  {
+    "name": "@next/next/no-sync-scripts:Component.tsx",
+    "source": "export const C = () => <Foo.script src=\"/a.js\" />;"
+  },
+  {
+    "name": "@next/next/no-sync-scripts:Component.tsx",
+    "source": "export const C = () => <div><script src=\"https://blah.com\"></script></div>;"
+  },
+  {
+    "name": "@next/next/no-sync-scripts:Component.tsx",
+    "source": "export const C = () => <script src=\"/a.js\" />;"
+  },
+  {
+    "name": "@next/next/no-sync-scripts:Component.tsx",
+    "source": "export const C = () => <script src=\"/a.js\" async />;"
+  },
+  {
+    "name": "@next/next/no-sync-scripts:Component.tsx",
+    "source": "export const C = () => <script src=\"/a.js\" async={true} />;"
+  },
+  {
+    "name": "@next/next/no-sync-scripts:Component.tsx",
+    "source": "export const C = () => <script src=\"/a.js\" defer />;"
+  },
+  {
+    "name": "@next/next/no-sync-scripts:Component.tsx",
+    "source": "export const C = () => <script src=\"/a.js\" type=\"text/javascript\" />;"
+  },
+  {
+    "name": "@next/next/no-sync-scripts:Component.tsx",
+    "source": "export const C = () => <script>{\"var a = 1;\"}</script>;"
+  },
+  {
+    "name": "@next/next/no-sync-scripts:Component.tsx",
+    "source": "export const C = (props) => <script src={props.src}></script>;"
+  },
+  {
+    "name": "@next/next/no-sync-scripts:Component.tsx",
+    "source": "export const C = (props) => <script {...props}></script>;"
+  },
+  {
+    "name": "@next/next/no-sync-scripts:Component.tsx",
+    "source": "import Script from 'next/script';\nexport const C = () => <Script src=\"/a.js\" />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export class Blah {\n            render() {\n                return (\n                    <div>\n                        <h1>Hello title</h1>\n                        <script src='https://polyfill.io/v3/polyfill.min.js'></script>\n                    </div>\n                );\n            }\n        }"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <SCRIPT src='https://polyfill.io/v3/polyfill.min.js' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <Script src='https://polyfill.io/v3/polyfill.min.js' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <div src='https://polyfill.io/v3/polyfill.min.js' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script src='//cdn.polyfill.io/v2/polyfill.min.js' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script src='/v3/polyfill.min.js?features=Promise' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script src='http://polyfill.io/v3/polyfill.min.js' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script src='https:&#47;&#47;polyfill-fastly.io/v3/polyfill.min.js?features=Array.prototype.copyWithin' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script src='https://cdn.polyfill.io/v2/polyfill.min.js?features=Promise' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script src='https://cdnjs.cloudflare.com/polyfill/v3/p.js?features=' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script src='https://cdnjs.cloudflare.com/polyfill/v3/p.js?features=AbortController&features=Promise' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script src='https://cdnjs.cloudflare.com/polyfill/v3/p.js?features=Array.prototype' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script src='https://cdnjs.cloudflare.com/polyfill/v3/p.js?features=Array.prototype.@@iterator' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script src='https://cdnjs.cloudflare.com/polyfill/v3/p.js?features=Foo,Promise' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script src='https://cdnjs.cloudflare.com/polyfill/v3/p.js?features=Number.Epsilon,Number.EPSILON' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script src='https://cdnjs.cloudflare.com/polyfill/v3/p.js?features=Promise%2CObject.fromEntries' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script src='https://cdnjs.cloudflare.com/polyfill/v3/p.js?features=Promise%2cSet' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script src='https://cdnjs.cloudflare.com/polyfill/v3/p.js?features=es5,es6' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script src='https://cdnjs.cloudflare.com/polyfill/v3/p.js?features=promise' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script src='https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script src='https://example.com/x.js?features=Promise' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script src='https://polyfill-fastly.io/v3/p.js?features=Array.prototype.copyWithin' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script src='https://polyfill-fastly.io/v3/p.js?features=Promise' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script src='https://polyfill-fastly.io/v3/polyfill.min.js?features=Array.prototype.copy&#87;ithin' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script src='https://polyfill-fastly.net/v3/p.js?features=Promise' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script src='https://polyfill.io/v3/polyfill.min.js' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script>{\"var a = 1;\"}</script>;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = (p) => <script {...p} />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export function MyApp({ Component, pageProps }) {\n            return (\n                <div>\n                    <Component {...pageProps} />\n                    <script src='https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=Promise%2CObject.fromEntries' />\n                </div>\n            );\n        }"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "import * as S from 'next/script';\nexport const A = () => <S src='https://polyfill.io/v3/polyfill.min.js' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "import Poly from 'next/script';\nexport const A = () => <Poly src='https://polyfill.io/v3/polyfill.min.js' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "import Script from 'next/script';\n        export function MyApp({ Component, pageProps }) {\n            return (\n                <div>\n                    <Component {...pageProps} />\n                    <Script src='https://cdn.polyfill.io/v2/polyfill.min.js?features=Promise' />\n                </div>\n            );\n        }"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "import Script from 'next/script';\n        export function MyApp({ Component, pageProps }) {\n            return (\n                <div>\n                    <Component {...pageProps} />\n                    <Script src='https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=IntersectionObserver' />\n                </div>\n            );\n        }"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "import Script from 'next/script';\n        export function MyApp({ Component, pageProps }) {\n            return (\n                <div>\n                <Component {...pageProps} />\n                <Script src='https://polyfill-fastly.io/v3/polyfill.min.js?features=Array.prototype.copyWithin' />\n                </div>\n            );\n        }"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "import Script from 'next/script';\nexport const A = () => <Script.Sub src='https://polyfill.io/v3/polyfill.min.js' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "import Script from 'next/script';\nexport const A = (p) => <Script src={p.url} />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "import Script from 'other/script';\nexport const A = () => <Script src='https://polyfill.io/v3/polyfill.min.js' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "import {Head} from 'next/document';\n        export class Blah extends Head {\n            render() {\n                return (\n                    <div>\n                        <h1>Hello title</h1>\n                        <script src='https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=AbortController'></script>\n                    </div>\n                );\n            }\n        }"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "import {Head} from 'next/document';\n        export class Blah extends Head {\n            render() {\n                return (\n                    <div>\n                        <h1>Hello title</h1>\n                        <script src='https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=IntersectionObserver'></script>\n                    </div>\n                );\n            }\n        }"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "import {Script} from 'next/script';\nexport const A = () => <Script src='https://polyfill.io/v3/polyfill.min.js' />;"
+  },
+  {
+    "name": "react/forbid-dom-props:ForbidDomProps.js",
+    "source": "<div className=\"foo\" />"
+  },
+  {
+    "name": "react/forbid-dom-props:ForbidDomProps.jsx",
+    "source": "<div className=\"foo\" />"
+  },
+  {
+    "name": "react/forbid-dom-props:ForbidDomProps.tsx",
+    "source": "\n        class First extends createReactClass {\n          render() {\n            return <div id=\"bar\" />;\n          }\n        }\n      "
+  },
+  {
+    "name": "react/forbid-dom-props:ForbidDomProps.tsx",
+    "source": "\n        class First extends createReactClass {\n          render() {\n            return <this.foo id=\"bar\" />;\n          }\n        }\n      "
+  },
+  {
+    "name": "react/forbid-dom-props:ForbidDomProps.tsx",
+    "source": "\n        const First = (props) => (\n          <Foo someProp=\"someValue\" />\n        );\n      "
+  },
+  {
+    "name": "react/forbid-dom-props:ForbidDomProps.tsx",
+    "source": "\n        const First = (props) => (\n          <div className=\"foo\" />\n        );\n      "
+  },
+  {
+    "name": "react/forbid-dom-props:ForbidDomProps.tsx",
+    "source": "\n        const First = (props) => (\n          <div className=\"foo\">\n            <div otherProp=\"bar\" />\n          </div>\n        );\n      "
+  },
+  {
+    "name": "react/forbid-dom-props:ForbidDomProps.tsx",
+    "source": "\n        const First = (props) => (\n          <div className=\"foo\">\n            <input className=\"boo\" />\n            <span className=\"foobar\">Foobar</span>\n            <div otherProp=\"bar\" />\n            <p thirdProp=\"foo\" />\n            <div thirdProp=\"baz\" />\n            <p thirdProp=\"bar\" />\n            <p thirdProp=\"baz\" />\n          </div>\n        );\n      "
+  },
+  {
+    "name": "react/forbid-dom-props:ForbidDomProps.tsx",
+    "source": "\n        const First = (props) => (\n          <div className=\"foo\">\n            <input className=\"boo\" />\n            <span className=\"foobar\">Foobar</span>\n            <div otherProp=\"bar\" />\n          </div>\n        );\n      "
+  },
+  {
+    "name": "react/forbid-dom-props:ForbidDomProps.tsx",
+    "source": "\n        const First = (props) => (\n          <div id=\"foo\" />\n        );\n      "
+  },
+  {
+    "name": "react/forbid-dom-props:ForbidDomProps.tsx",
+    "source": "\n        const First = (props) => (\n          <div name=\"foo\" />\n        );\n      "
+  },
+  {
+    "name": "react/forbid-dom-props:ForbidDomProps.tsx",
+    "source": "\n        const First = (props) => (\n          <div otherProp=\"bar\" />\n        );\n      "
+  },
+  {
+    "name": "react/forbid-dom-props:ForbidDomProps.tsx",
+    "source": "\n        const First = (props) => (\n          <div someProp=\"someValue\" />\n        );\n      "
+  },
+  {
+    "name": "react/forbid-dom-props:ForbidDomProps.tsx",
+    "source": "\n        const First = (props) => (\n          <div someProp=\"value\" />\n        );\n      "
+  },
+  {
+    "name": "react/forbid-dom-props:ForbidDomProps.tsx",
+    "source": "\n        const First = (props) => (\n          <fbt:param name=\"name\">{props.name}</fbt:param>\n        );\n      "
+  },
+  {
+    "name": "react/forbid-dom-props:ForbidDomProps.tsx",
+    "source": "\n        const First = (props) => (\n          <form accept='file'>\n            <input type=\"file\" id=\"videoFile\" accept=\"video/*\" />\n            <input type=\"hidden\" name=\"fullname\" />\n          </form>\n        );\n      "
+  },
+  {
+    "name": "react/forbid-dom-props:ForbidDomProps.tsx",
+    "source": "\n        const First = (props) => (\n          <span otherProp=\"bar\" />\n        );\n      "
+  },
+  {
+    "name": "react/forbid-dom-props:ForbidDomProps.tsx",
+    "source": "\n        const First = (props) => (\n          <this.Foo {...props} />\n        );\n      "
+  },
+  {
+    "name": "react/forbid-dom-props:ForbidDomProps.tsx",
+    "source": "\n        var First = createReactClass({\n          propTypes: externalPropTypes,\n          render: function() {\n            return <Foo id=\"bar\" style={{color: \"red\"}} />;\n          }\n        });\n      "
+  },
+  {
+    "name": "react/forbid-dom-props:ForbidDomProps.tsx",
+    "source": "\n        var First = createReactClass({\n          propTypes: externalPropTypes,\n          render: function() {\n            return <div id=\"bar\" />;\n          }\n        });\n      "
+  },
+  {
+    "name": "react/forbid-dom-props:ForbidDomProps.tsx",
+    "source": "\n        var First = createReactClass({\n          propTypes: externalPropTypes,\n          render: function() {\n            return <this.Foo bar=\"baz\" />;\n          }\n        });\n      "
+  },
+  {
+    "name": "react/forbid-dom-props:ForbidDomProps.tsx",
+    "source": "\n        var First = createReactClass({\n          render: function() {\n            return <Foo id=\"foo\" />;\n          }\n        });\n      "
+  },
+  {
+    "name": "react/forbid-dom-props:ForbidDomProps.tsx",
+    "source": "<Div someProp=\"v\" />"
+  },
+  {
+    "name": "react/forbid-dom-props:ForbidDomProps.tsx",
+    "source": "<_div someProp=\"v\" />"
+  },
+  {
+    "name": "react/forbid-dom-props:ForbidDomProps.tsx",
+    "source": "<a.b someProp=\"v\" />"
+  },
+  {
+    "name": "react/forbid-dom-props:ForbidDomProps.tsx",
+    "source": "<div className=\"foo\" />"
+  },
+  {
+    "name": "react/forbid-dom-props:ForbidDomProps.tsx",
+    "source": "<div className=\"x\" />"
+  },
+  {
+    "name": "react/forbid-dom-props:ForbidDomProps.tsx",
+    "source": "<div someProp />"
+  },
+  {
+    "name": "react/forbid-dom-props:ForbidDomProps.tsx",
+    "source": "<div someProp={5} />"
+  },
+  {
+    "name": "react/forbid-dom-props:ForbidDomProps.tsx",
+    "source": "<div someProp={x} />"
+  },
+  {
+    "name": "react/forbid-dom-props:ForbidDomProps.tsx",
+    "source": "<div xlink:someProp=\"v\" />"
+  },
+  {
+    "name": "react/forbid-dom-props:ForbidDomProps.tsx",
+    "source": "<div {...properties} />"
+  },
+  {
+    "name": "react/forbid-dom-props:ForbidDomProps.tsx",
+    "source": "<span className=\"x\" />"
+  },
+  {
+    "name": "react/forbid-dom-props:ForbidDomProps.tsx",
+    "source": "<svg:a someProp=\"v\" />"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "\n        // testrule.jsx\n        const trackLink = () => {};\n        const getAnalyticsUiElement = () => {};\n\n        const onTextButtonClick = (e, item) => trackLink([, getAnalyticsUiElement(item), item.name], e);\n      "
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "\n        Array.from([1, 2, 3], (item) => {\n          return item === 'bar' ? <div>{item}</div> : <span>{item}</span>;\n        })"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "\n        [1, 2, 3].map((item) => {\n          return item === 'bar' ? <div>{item}</div> : <span>{item}</span>;\n        })"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "\n        [1, 2, 3].map((item) => {\n         return item === 'bar' ? <div key={item}>{item}</div> : <span key={item}>{item}</span>;\n        })"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "\n        [1, 2, 3].map(function(item) {\n          return item === 'bar' ? <div>{item}</div> : <span>{item}</span>;\n        })"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "\n        const Test = () => {\n          const list = [1, 2, 3, 4, 5];\n\n          return (\n            <div>\n              {list.map(item => {\n                if (item < 2) {\n                  return <div>{item}</div>;\n                }\n\n                return <div />;\n              })}\n            </div>\n          );\n        };\n      "
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "\n        const TestCase = () => {\n          const list = [1, 2, 3, 4, 5];\n\n          return (\n            <div>\n              {list.map(item => {\n                if (item < 2) return <div>{item}</div>;\n                else if (item < 5) return <div />;\n                else return <div />;\n              })}\n            </div>\n          );\n        };\n      "
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "\n        const TestCase = () => {\n          const list = [1, 2, 3, 4, 5];\n\n          return (\n            <div>\n              {list.map(x => <div {...spread} key={x} />)}\n            </div>\n          );\n        };\n      "
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "\n        const TestO = () => {\n          const list = [1, 2, 3, 4, 5];\n\n          return (\n            <div>\n              {list.map(item => {\n                if (item < 2) {\n                  return <div>{item}</div>;\n                } else if (item < 5) {\n                  return <div></div>\n                }  else {\n                  return <div></div>\n                }\n\n                return <div />;\n              })}\n            </div>\n          );\n        };\n      "
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "\n        const baz = foo?.bar?.()?.[1] ?? 'qux';\n\n        qux()?.map()\n\n        const directiveRanges = comments?.map(tryParseTSDirective)\n      "
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "\n        const div = (\n          <div>\n            <span key=\"notunique\"/>\n            <span key=\"notunique\"/>\n          </div>\n        );\n      "
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "\n        const spans = [\n          <span key=\"notunique\"/>,\n          <span key=\"notunique\"/>,\n        ];\n      "
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "\n        function Component(props) {\n          return hasPayment ? (\n            <div className=\"stuff\">\n              <BookingDetailSomething {...props} />\n              {props.modal && props.calculatedPrice && (\n                <SomeOtherThing items={props.something} discount={props.discount} />\n              )}\n            </div>\n          ) : null;\n        }\n      "
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "\n        function Component({ allRatings }) {\n          return (\n            <RatingDetailsStyles>\n              {Object.entries(allRatings)?.map(([key, value], index) => {\n                const rate = value?.split(/(?=[%, /])/);\n\n                if (!rate) return null;\n\n                return (\n                  <li key={`${entertainment.tmdbId}${index}`}>\n                    <img src={`/assets/rating/${key}.png`} />\n                    <span className=\"rating-details--rate\">{rate?.[0]}</span>\n                    <span className=\"rating-details--rate-suffix\">{rate?.[1]}</span>\n                  </li>\n                );\n              })}\n            </RatingDetailsStyles>\n          );\n        }\n      "
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "\n        import Act from 'react';\n        import { Children as ReactChildren } from 'react';\n\n        const { Children } = Act;\n        const { toArray } = Children;\n\n        Act.Children.toArray([1, 2 ,3].map(x => <App />));\n        Act.Children.toArray(Array.from([1, 2 ,3], x => <App />));\n        Children.toArray([1, 2 ,3].map(x => <App />));\n        Children.toArray(Array.from([1, 2 ,3], x => <App />));\n        // ReactChildren.toArray([1, 2 ,3].map(x => <App />));\n        // ReactChildren.toArray(Array.from([1, 2 ,3], x => <App />));\n        // toArray([1, 2 ,3].map(x => <App />));\n        // toArray(Array.from([1, 2 ,3], x => <App />));\n      "
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "\n        import React, { FC, useRef, useState } from 'react';\n\n        import './ResourceVideo.sass';\n        import VimeoVideoPlayInModal from '../vimeoVideoPlayInModal/VimeoVideoPlayInModal';\n\n        type Props = {\n          videoUrl: string;\n          videoTitle: string;\n        };\n        const ResourceVideo: FC<Props> = ({\n          videoUrl,\n          videoTitle,\n        }: Props): JSX.Element => {\n          return (\n            <div className=\"resource-video\">\n              <VimeoVideoPlayInModal videoUrl={videoUrl} />\n              <h3>{videoTitle}</h3>\n            </div>\n          );\n        };\n\n        export default ResourceVideo;\n      "
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "\n        import { Children } from \"react\";\n        Children.toArray([1, 2 ,3].map(x => <App />));\n      "
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "\n        import { Fragment } from 'react';\n\n        const ITEMS = ['bar', 'foo'];\n\n        export default function BugIssue() {\n          return (\n            <Fragment>\n              {ITEMS.map((item) => {\n                return item === 'bar' ? <div>{item}</div> : <span>{item}</span>;\n              })}\n            </Fragment>\n          );\n        }\n      "
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "\n        import { observable } from \"mobx\";\n\n        export interface ClusterFrameInfo {\n          frameId: number;\n          processId: number;\n        }\n\n        export const clusterFrameMap = observable.map<string, ClusterFrameInfo>();\n      "
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "([1,2,3].map)(x => <App />);"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "([<App />]);"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "/** @jsx Act */ Act.Children.toArray([1,2,3].map(x => <App />));"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "<></>;"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "<App />;"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "<App key=\"keyBeforeSpread\" {...{}} />;"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "<App {...{}} />;"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "<div key=\"keyBeforeSpread\" {...{}} />;"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "<div><></></div>;"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "<div><App /></div>;"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "<div><App /><App /></div>;"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "<div><App key=\"a\"/><App key=\"a\"/></div>;"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "<div><App {...obj} key=\"k\" /></div>;"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "Array.from([1, 2 ,3], (x => <App />));"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "Array.from([1, 2 ,3], (x => { return <App /> }));"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "Array.from([1, 2 ,3], function(x) { return <App /> });"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "Array.from([1, 2, 3]);"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "Array.from([1, 2, 3], (x => <App key={x} />));"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "Array.from([1, 2, 3], (x => {return <App key={x} />}));"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "Array.from([1, 2, 3], function(x) { return <App key={x} /> });"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "Array.from([1, 2, 3], someFn);"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "Array.from([1,2,3]);"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "Array.from([1,2,3], (x => <App />));"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "Array.from([1,2,3], someFn);"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "Array.from([1,2,3], x => <App />);"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "Children.toArray([1,2,3].map(x => <App />));"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "Foo.Children.toArray([1,2,3].map(x => <App />));"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "React.Children.toArray([1, 2 ,3].map(x => <App />));"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "React.Children.toArray([1,2,3].map(x => <App />));"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "React.Children.toArray([1,2,3].map(x => <App />)); [<B />];"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "React.Children.toArray([[<App />]]);"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[(<App />)];"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[, <App />];"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1, 2 ,3].map(function(x) { return <App /> });"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1, 2 ,3].map(x => <App />);"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1, 2 ,3].map(x => x && <App x={x} />);"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1, 2 ,3].map(x => x && <App x={x} key={x} />);"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1, 2 ,3].map(x => x ? <App x={x} /> : <OtherApp x={x} key=\"2\" />);"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1, 2 ,3].map(x => x ? <App x={x} key=\"1\" /> : <OtherApp x={x} />);"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1, 2 ,3].map(x => x ? <App x={x} key=\"1\" /> : <OtherApp x={x} key=\"2\" />);"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1, 2 ,3].map(x => { return <App /> });"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1, 2, 3].foo(x => <App />);"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1, 2, 3].map(function () {})"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1, 2, 3].map(function(x) { return <App key={x} /> });"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1, 2, 3].map(function(x) { return; });"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1, 2, 3].map(x => <>{x}</>);"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1, 2, 3].map(x => <App key={x} />);"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1, 2, 3].map(x => { return <App key={x} /> });"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1, 2, 3].map(x => { return x && <App />; });"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1, 2, 3].map(x => { return x && <App key={x} />; });"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1, 2, 3].map(x => { return x && foo(); });"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1, 2, 3].map(x => { return x && y && <App key={x} />; });"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1, 2, 3].map(x => { return x || y || <App />; });"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1, 2, 3];"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1, 2, 3]?.map(x => <BabelEslintApp />)"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1, 2, 3]?.map(x => <TypescriptEslintApp />)"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1,2,3].foo(x => <App />);"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1,2,3].map(((x => <App />)));"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1,2,3].map((function(x) { return <App /> }));"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1,2,3].map((x => <App />));"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1,2,3].map((x) => ((<div key={x} />)));"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1,2,3].map((x) => (<div key={x}>{x}</div>));"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1,2,3].map((x) => c ? (<div key={x} />) : (<span key={x} />));"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1,2,3].map();"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1,2,3].map(function(x) { return <App /> });"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1,2,3].map(function(x) { return c ? (<div key={x} />) : (<span key={x} />); });"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1,2,3].map(someFn);"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1,2,3].map(someFn, x => <App />);"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1,2,3].map(x => (<App />));"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1,2,3].map(x => <>{x}</>);"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1,2,3].map(x => <App />);"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1,2,3].map(x => <App KEY={x} />);"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1,2,3].map(x => <App key={x} />);"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1,2,3].map(x => <App {...p} />);"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1,2,3].map(x => <div {...s} key={x} />);"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1,2,3].map(x => x && <A />);"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1,2,3].map(x => x ? <A /> : <B />);"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1,2,3].map(x => { const y = <A />; });"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1,2,3].map(x => { for (;;) { return <A />; } });"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1,2,3].map(x => { function f() { return <A />; } return <B />; });"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1,2,3].map(x => { if (a) { if (b) { return <A />; } } });"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1,2,3].map(x => { if (x) return <A />; else return <B />; });"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1,2,3].map(x => { if (x) { return <App />; } return <B />; });"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1,2,3].map(x => { return (<App />); });"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1,2,3].map(x => { return (c ? <A/> : <B/>); });"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1,2,3].map(x => { return <App /> && y; });"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1,2,3].map(x => { return <App /> });"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1,2,3].map(x => { return x && <A />; });"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1,2,3].map(x => { return x ? <A /> : <B />; });"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1,2,3].map(x => { return; });"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1,2,3].map(x => { try { return <A />; } catch(e) {} });"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1,2,3].map(x);"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[1,2,3]?.map(x => <App />)"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[<></>];"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[<App />];"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[<App KEY={1} />];"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[<App key=\"a\" key=\"a\" />];"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[<App key=\"k\" {...obj} />];"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[<App key={0} />, <App key={1} />];"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[<App key={0}/>, <App />];"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[<App key={1} />];"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[<App {...key} />];"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[<App {...obj} key=\"k\" />];"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[<App {...obj} key=\"keyAfterSpread\" />];"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[<App {...o} key=\"a\" key=\"b\" />];"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[<App {...p} />];"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[<React.Fragment key={1}></React.Fragment>];"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[<React.Fragment></React.Fragment>];"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[<a key=\"one\"/>, <b key=\"two\"/>, <c key=\"one\"/>, <d key=\"three\"/>, <e key=\"two\"/>, <f key=\"three\"/>];"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[<div {...obj} key=\"keyAfterSpread\" />];"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[<span key=\"a\"/>, <span key=\"a\"/>];"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[[<App />]];"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "[];"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "const d = (<div><span key=\"a\"/><span key=\"a\"/></div>);"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "const s = [<span key=\"a\"/>, <span key=\"a\"/>, <span key=\"a\"/>];"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "const s = [<span key=\"a\"/>, <span key=\"a\"/>];"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "const s = [<span key=\"a\"/>, <span key=\"b\"/>];"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "fn()"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "foo(() => <></>);"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "foo(() => <div />);"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "from(a, x => <App />);"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "map(x => <App />);"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "obj.list.map(x => <App />);"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "obj?.list?.map(x => <App />);"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "toArray([1,2,3].map(x => <App />));"
+  },
+  {
+    "name": "react/jsx-key:JsxKey.tsx",
+    "source": "var App = () => <div />;"
+  },
+  {
+    "name": "react/jsx-key:Probe.js",
+    "source": "[<App />];"
+  },
+  {
+    "name": "react/jsx-key:Probe.jsx",
+    "source": "[<App />];"
+  },
+  {
+    "name": "react/jsx-key:Probe.tsx",
+    "source": "[<App />];"
+  },
+  {
+    "name": "react/jsx-no-duplicate-props:Duplicate.tsx",
+    "source": "\n            <App\n                a=\"a\"\n                {...this.props}\n                a={{foo: 'bar'}}\n                b=\"b\"\n            />;\n        "
+  },
+  {
+    "name": "react/jsx-no-duplicate-props:Duplicate.tsx",
+    "source": "<A a /><B a />;"
+  },
+  {
+    "name": "react/jsx-no-duplicate-props:Duplicate.tsx",
+    "source": "<A a><B a /></A>;"
+  },
+  {
+    "name": "react/jsx-no-duplicate-props:Duplicate.tsx",
+    "source": "<App />;"
+  },
+  {
+    "name": "react/jsx-no-duplicate-props:Duplicate.tsx",
+    "source": "<App A a />;"
+  },
+  {
+    "name": "react/jsx-no-duplicate-props:Duplicate.tsx",
+    "source": "<App A b a />;"
+  },
+  {
+    "name": "react/jsx-no-duplicate-props:Duplicate.tsx",
+    "source": "<App A b c A />;"
+  },
+  {
+    "name": "react/jsx-no-duplicate-props:Duplicate.tsx",
+    "source": "<App A=\"a\" b=\"b\" B=\"B\" />;"
+  },
+  {
+    "name": "react/jsx-no-duplicate-props:Duplicate.tsx",
+    "source": "<App a a />;"
+  },
+  {
+    "name": "react/jsx-no-duplicate-props:Duplicate.tsx",
+    "source": "<App a a a />;"
+  },
+  {
+    "name": "react/jsx-no-duplicate-props:Duplicate.tsx",
+    "source": "<App a a a a />;"
+  },
+  {
+    "name": "react/jsx-no-duplicate-props:Duplicate.tsx",
+    "source": "<App a a></App>;"
+  },
+  {
+    "name": "react/jsx-no-duplicate-props:Duplicate.tsx",
+    "source": "<App a b c />;"
+  },
+  {
+    "name": "react/jsx-no-duplicate-props:Duplicate.tsx",
+    "source": "<App a b c A />;"
+  },
+  {
+    "name": "react/jsx-no-duplicate-props:Duplicate.tsx",
+    "source": "<App a b=\"b\" {...this.props} a=\"a\" />;"
+  },
+  {
+    "name": "react/jsx-no-duplicate-props:Duplicate.tsx",
+    "source": "<App a {...{a: 1}} />;"
+  },
+  {
+    "name": "react/jsx-no-duplicate-props:Duplicate.tsx",
+    "source": "<App a:b=\"c\" />;"
+  },
+  {
+    "name": "react/jsx-no-duplicate-props:Duplicate.tsx",
+    "source": "<App a=\"a\" b=\"b\" a=\"a\" />;"
+  },
+  {
+    "name": "react/jsx-no-duplicate-props:Duplicate.tsx",
+    "source": "<App a=\"a\" b=\"b\" a=\"a\" {...this.props} />;"
+  },
+  {
+    "name": "react/jsx-no-duplicate-props:Duplicate.tsx",
+    "source": "<App a=\"a\" {...this.props} b=\"b\" a=\"a\" />;"
+  },
+  {
+    "name": "react/jsx-no-duplicate-props:Duplicate.tsx",
+    "source": "<App a=\"c\" b=\"b\" c=\"a\" />;"
+  },
+  {
+    "name": "react/jsx-no-duplicate-props:Duplicate.tsx",
+    "source": "<App a={[]} b=\"b\" {...this.props} a=\"a\" />;"
+  },
+  {
+    "name": "react/jsx-no-duplicate-props:Duplicate.tsx",
+    "source": "<App c {...this.props} a b />;"
+  },
+  {
+    "name": "react/jsx-no-duplicate-props:Duplicate.tsx",
+    "source": "<App c=\"a\" {...this.props} a=\"c\" b=\"b\" />;"
+  },
+  {
+    "name": "react/jsx-no-duplicate-props:Duplicate.tsx",
+    "source": "<App data-x data-x />;"
+  },
+  {
+    "name": "react/jsx-no-duplicate-props:Duplicate.tsx",
+    "source": "<App foo Foo />;"
+  },
+  {
+    "name": "react/jsx-no-duplicate-props:Duplicate.tsx",
+    "source": "<App foo foo />;"
+  },
+  {
+    "name": "react/jsx-no-duplicate-props:Duplicate.tsx",
+    "source": "<App {...p} b b />;"
+  },
+  {
+    "name": "react/jsx-no-duplicate-props:Duplicate.tsx",
+    "source": "<App {...this.props} />;"
+  },
+  {
+    "name": "react/jsx-no-duplicate-props:Duplicate.tsx",
+    "source": "<App {...this.props} a b c />;"
+  },
+  {
+    "name": "react/jsx-no-duplicate-props:Duplicate.tsx",
+    "source": "<App {...this.props} a=\"a\" b=\"b\" a=\"a\" />;"
+  },
+  {
+    "name": "react/jsx-no-duplicate-props:Duplicate.tsx",
+    "source": "<App {...this.props} a=\"c\" b=\"b\" c=\"a\" />;"
+  },
+  {
+    "name": "react/jsx-no-duplicate-props:Duplicate.tsx",
+    "source": "<svg a:b=\"c\" A:b=\"d\" />;"
+  },
+  {
+    "name": "react/jsx-no-duplicate-props:Duplicate.tsx",
+    "source": "<svg href=\"x\" xlink:href=\"y\" />;"
+  },
+  {
+    "name": "react/jsx-no-duplicate-props:Duplicate.tsx",
+    "source": "<svg xlink:href=\"x\" xlink:href=\"y\" />;"
+  },
+  {
+    "name": "react/jsx-no-script-url:JsxNoScriptUrl.js",
+    "source": "<a href=\"javascript:\"></a>"
+  },
+  {
+    "name": "react/jsx-no-script-url:JsxNoScriptUrl.jsx",
+    "source": "<a href=\"javascript:\"></a>"
+  },
+  {
+    "name": "react/jsx-no-script-url:JsxNoScriptUrl.tsx",
+    "source": "\n      <div>\n        <Foo href=\"javascript:\"></Foo>\n        <Bar link=\"javascript:\"></Bar>\n      </div>\n    "
+  },
+  {
+    "name": "react/jsx-no-script-url:JsxNoScriptUrl.tsx",
+    "source": "<A href=\"javascript:\"></A>"
+  },
+  {
+    "name": "react/jsx-no-script-url:JsxNoScriptUrl.tsx",
+    "source": "<Foo href=\"javascript:\"></Foo>"
+  },
+  {
+    "name": "react/jsx-no-script-url:JsxNoScriptUrl.tsx",
+    "source": "<Foo other=\"javascript:\"></Foo>"
+  },
+  {
+    "name": "react/jsx-no-script-url:JsxNoScriptUrl.tsx",
+    "source": "<Foo to=\"javascript:\"></Foo>"
+  },
+  {
+    "name": "react/jsx-no-script-url:JsxNoScriptUrl.tsx",
+    "source": "<a href />"
+  },
+  {
+    "name": "react/jsx-no-script-url:JsxNoScriptUrl.tsx",
+    "source": "<a href=\"\u0001javascript:x\"></a>"
+  },
+  {
+    "name": "react/jsx-no-script-url:JsxNoScriptUrl.tsx",
+    "source": "<a href=\"\tjavascript:x\"></a>"
+  },
+  {
+    "name": "react/jsx-no-script-url:JsxNoScriptUrl.tsx",
+    "source": "<a href=\"\u001fjavascript:x\"></a>"
+  },
+  {
+    "name": "react/jsx-no-script-url:JsxNoScriptUrl.tsx",
+    "source": "<a href=\" javascript:x\"></a>"
+  },
+  {
+    "name": "react/jsx-no-script-url:JsxNoScriptUrl.tsx",
+    "source": "<a href=\"\"></a>"
+  },
+  {
+    "name": "react/jsx-no-script-url:JsxNoScriptUrl.tsx",
+    "source": "<a href=\"#\"></a>"
+  },
+  {
+    "name": "react/jsx-no-script-url:JsxNoScriptUrl.tsx",
+    "source": "<a href=\"JAVASCRIPT:void(0)\"></a>"
+  },
+  {
+    "name": "react/jsx-no-script-url:JsxNoScriptUrl.tsx",
+    "source": "<a href=\"JaVaScRiPt:x\"></a>"
+  },
+  {
+    "name": "react/jsx-no-script-url:JsxNoScriptUrl.tsx",
+    "source": "<a href=\"https://reactjs.org\"></a>"
+  },
+  {
+    "name": "react/jsx-no-script-url:JsxNoScriptUrl.tsx",
+    "source": "<a href=\"j\n\n\na\rv\tascript:\"></a>"
+  },
+  {
+    "name": "react/jsx-no-script-url:JsxNoScriptUrl.tsx",
+    "source": "<a href=\"ja\nvascript:x\"></a>"
+  },
+  {
+    "name": "react/jsx-no-script-url:JsxNoScriptUrl.tsx",
+    "source": "<a href=\"ja vascript:x\"></a>"
+  },
+  {
+    "name": "react/jsx-no-script-url:JsxNoScriptUrl.tsx",
+    "source": "<a href=\"javascript\t:x\"></a>"
+  },
+  {
+    "name": "react/jsx-no-script-url:JsxNoScriptUrl.tsx",
+    "source": "<a href=\"javascript\"></a>"
+  },
+  {
+    "name": "react/jsx-no-script-url:JsxNoScriptUrl.tsx",
+    "source": "<a href=\"javascript:\" />"
+  },
+  {
+    "name": "react/jsx-no-script-url:JsxNoScriptUrl.tsx",
+    "source": "<a href=\"javascript:\"></a>"
+  },
+  {
+    "name": "react/jsx-no-script-url:JsxNoScriptUrl.tsx",
+    "source": "<a href=\"javascript:void(0)\"></a>"
+  },
+  {
+    "name": "react/jsx-no-script-url:JsxNoScriptUrl.tsx",
+    "source": "<a href=\"mailto:foo@bar.com\"></a>"
+  },
+  {
+    "name": "react/jsx-no-script-url:JsxNoScriptUrl.tsx",
+    "source": "<a href=\"\u007fjavascript:x\"></a>"
+  },
+  {
+    "name": "react/jsx-no-script-url:JsxNoScriptUrl.tsx",
+    "source": "<a href={\"javascript:\"}></a>"
+  },
+  {
+    "name": "react/jsx-no-script-url:JsxNoScriptUrl.tsx",
+    "source": "<a href={`javascript:`}></a>"
+  },
+  {
+    "name": "react/jsx-no-script-url:JsxNoScriptUrl.tsx",
+    "source": "<a name=\"foo\"></a>"
+  },
+  {
+    "name": "react/jsx-no-script-url:JsxNoScriptUrl.tsx",
+    "source": "<a to=\"javascript:\"></a>"
+  },
+  {
+    "name": "react/jsx-no-script-url:JsxNoScriptUrl.tsx",
+    "source": "<a xlink:href=\"javascript:\"></a>"
+  },
+  {
+    "name": "react/jsx-no-script-url:JsxNoScriptUrl.tsx",
+    "source": "<a {...properties} />"
+  },
+  {
+    "name": "react/jsx-no-script-url:JsxNoScriptUrl.tsx",
+    "source": "<a.b href=\"javascript:\"></a.b>"
+  },
+  {
+    "name": "react/jsx-no-script-url:JsxNoScriptUrl.tsx",
+    "source": "<form action=\"javascript:\"></form>"
+  },
+  {
+    "name": "react/jsx-no-script-url:JsxNoScriptUrl.tsx",
+    "source": "<svg:a href=\"javascript:\"></svg:a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<A target='_blank' href='http://x.com'></A>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<Link target=\"_blank\" href={ dynamicLink }></Link>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<Link target=\"_blank\" to={ dynamicLink }></Link>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href target=\"_blank\"/>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href=\"foobar\" target=\"_BLANK\" rel=\"NOOPENER noreferrer\"></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href=\"foobar\" target=\"_BLANK\" rel=\"NOREFERRER\"></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href=\"foobar\" target=\"_blank\" rel=\"noopener noreferrer\"></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href=\"foobar\" target=\"_blank\" rel=\"noopener\"></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href=\"foobar\" target=\"_blank\" rel=\"noreferrer\" {...someObject}></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href=\"foobar\" target=\"_blank\" rel=\"noreferrer\"></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href=\"foobar\" target=\"_blank\" rel={\"noopener noreferrer\"}></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href=\"foobar\" target=\"_blank\" rel={\"noreferrer\"}></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href=\"foobar\" target=\"_blank\" {...someObject}></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href=\"foobar\" {...someObject} target=\"_blank\"></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href=\"foobar\"></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href=\"https://example.com/20\" target=\"_blank\" rel></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href=\"https://example.com/20\" target=\"_blank\"></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href=\"some-link\" target=\"some-non-blank-target\" {...otherProps}></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href=\"some-link\" {...otherProps} target=\"some-non-blank-target\"></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href='http://x.com' target='_blank' rel='noreferrer' rel='x'></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href='http://x.com' target='_blank' rel='x' rel='noreferrer'></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href='http://x.com' target='_blank' rel={5}></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href='http://x.com' target='_blank' rel={`${x} noreferrer`}></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href='http://x.com' target='_blank' rel={`noreferrer`}></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href='http://x.com' target='_blank' rel={null}></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href='http://x.com' target='_blank' rel={true}></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href='http://x.com' target='_blank' rel={undefined}></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href='http://x.com' target='_blank' rel></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href='http://x.com' target={c ? '_blank' : '_self'} rel={c ? 'noreferrer' : 'x'}></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href='http://x.com' target={c ? '_blank' : '_self'} rel={c ? 'x' : 'noreferrer'}></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href='http://x.com' target={c ? '_blank' : '_self'} rel={d ? 'noreferrer' : 'x'}></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href='http://x.com' target={c ? '_self' : '_blank'} rel={c ? 'x' : 'noreferrer'}></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href={\"foobar\"} target={\"_blank\"} rel={\"noopener noreferrer\"}></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href={\"foobar\"} target={\"_blank\"} rel={\"noreferrer\"}></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href={'foobar'} target={'_blank'} rel={'noopener noreferrer'}></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href={'foobar'} target={'_blank'} rel={'noreferrer'}></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href={`foobar`} target={`_blank`} rel={`noopener noreferrer`}></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href={`foobar`} target={`_blank`} rel={`noreferrer`}></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href={href} target=\"_blank\" rel={isExternal ? \"noopener noreferrer\" : \"3\"} />"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href={href} target=\"_blank\" rel={isExternal ? \"noopener\" : \"2\"} />"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href={href} target=\"_blank\" rel={isExternal ? \"noopener\" : undefined} />"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href={href} target=\"_blank\" rel={isExternal ? \"noreferrer\" : \"noopener\"} />"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href={href} target=\"_blank\" rel={isExternal ? \"undefined\" : \"noopener\"} />"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href={href} target=\"_blank\" rel={isExternal ? \"undefined\" : \"undefined\"} />"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href={href} target=\"_blank\" rel={isExternal ? 3 : \"noopener noreferrer\"} />"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href={href} target={isExternal ? \"_blank\" : undefined} rel=\"noopener noreferrer\" />"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href={href} target={isExternal ? \"_blank\" : undefined} rel={isExternal ? \"noopener noreferrer\" : undefined} />"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href={href} target={isExternal ? \"_blank\" : undefined} rel={isExternal ? \"noreferrer\" : undefined} />"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href={href} target={isExternal ? \"_blank\" : undefined} rel={isExternal ? undefined : \"noopener noreferrer\"} />"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href={href} target={isExternal ? undefined : \"_blank\"} rel={isExternal ? \"noreferrer noopener\" : \"noreferrer\"} />"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href={href} target={isExternal ? undefined : \"_blank\"} rel={isExternal ? \"noreferrer\" : \"noopener noreferrer\"} />"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href={href} target={isSelf ? \"_self\" : \"\"} rel={isSelf ? undefined : \"\"} />"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a href={href} target={isSelf ? \"_self\" : \"_blank\"} rel={isSelf ? undefined : \"noreferrer\"} />"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a randomTag></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a rel='noreferrer' {...p} target='_blank' href='http://x.com'></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target />"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target=\"_BLANK\" href=\"https://example.com/8\"></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target=\"_blank\" href=\"//example.com\" rel></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target=\"_blank\" href=\"//example.com/10\" rel={true}></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target=\"_blank\" href=\"//example.com/11\" rel={3}></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target=\"_blank\" href=\"//example.com/12\" rel={null}></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target=\"_blank\" href=\"//example.com/13\" rel={getRel()}></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target=\"_blank\" href=\"//example.com/14\" rel={\"noopenernoreferrer\"}></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target=\"_blank\" href=\"//example.com/17\" rel></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target=\"_blank\" href=\"//example.com/9\"></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target=\"_blank\" href=\"/absolute/path\"></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target=\"_blank\" href=\"http://x.com\"></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target=\"_blank\" href=\"https://example.com/1\"></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target=\"_blank\" href={ dynamicLink }></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target=\"_blank\" href={dynamicLink}></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target=\"_blank\" rel=\"\" href=\"https://example.com/2\"></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target=\"_blank\" rel=\"no referrer\" href=\"https://example.com/7\"></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target=\"_blank\" rel=\"noopener noreferrer\" {...spreadProps}></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target=\"_blank\" rel=\"noopenernoreferrer\" href=\"https://example.com/6\"></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target=\"_blank\" rel=\"noreferrer\" {...spreadProps}></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target=\"_blank\" rel={0} href=\"https://example.com/3\"></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target=\"_blank\" rel={1} href=\"https://example.com/3\"></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target=\"_blank\" rel={false} href=\"https://example.com/4\"></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target=\"_blank\" rel={null} href=\"https://example.com/5\"></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target=\"_blank\" rel={relValue}></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target=\"_blank\" {...spreadProps} rel=\"noopener noreferrer\"></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target=\"_blank\" {...spreadProps} rel=\"noreferrer\"></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target='_BLANK' href='http://x.com'></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target='_blank' href='//example.com'></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target='_blank' href=':nocolonword'></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target='_blank' href='http://x.com' />"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target='_blank' href='http://x.com' href='/rel'></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target='_blank' href='http://x.com' rel='NOREFERRER'></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target='_blank' href='http://x.com' rel='noopener'></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target='_blank' href='http://x.com'></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target='_blank' href='http://x.com'>text</a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target='_blank' href='mailto:a@b.c'></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target='_blank' href='tel:123'></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target='_blank' href={x}></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target='_blank' {...p} href='http://x.com'></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target='_self' target='_blank' href='http://x.com'></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target={\"_blank\"} href=\"//example.com/19\"></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target={\"_blank\"} href={ dynamicLink }></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target={\"_blank\"} href={\"//example.com/15\"} rel={\"noopenernoreferrer\"}></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target={\"_blank\"} href={\"//example.com/16\"} rel={\"noopenernoreferrernoreferrernoreferrernoreferrernoreferrer\"}></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target={\"targetValue\"} href=\"/absolute/path\"></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target={''} href='http://x.com'></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target={'_blank'} href=\"//example.com/18\"></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target={'_blank'} href={ dynamicLink }></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target={'targetValue'} href=\"/absolute/path\"></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target={3} />"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target={c ? '' : '_blank'} href='http://x.com'></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target={null} href=\"//example.com\"></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target={targetValue} href=\"/absolute/path\"></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target={targetValue} href=\"relative/path\"></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target={targetValue} rel=\"noopener noreferrer\"></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target={targetValue} rel=\"noreferrer\"></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target={targetValue} rel={\"noopener noreferrer\"}></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a target={targetValue} rel={\"noreferrer\"}></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a {...p} href='http://x.com'></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a {...someObject} href=\"/absolute/path\"></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a {...someObject} href=\"foobar\" target=\"_blank\"></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a {...someObject} rel=\"noreferrer\" target=\"_blank\"></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a {...someObject} rel=\"noreferrer\"></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a {...someObject} target=\"_blank\"></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a {...someObject}></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a {...spreadProps} target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://example.com\">s</a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a {...spreadProps} target=\"_blank\" rel=\"noreferrer\" href=\"https://example.com\">s</a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<a.b target='_blank' href='http://x.com'></a.b>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<form action=\"https://example.com\" target=\"_blank\" rel=\"noopener noreferrer\"></form>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<form action=\"https://example.com\" target=\"_blank\"></form>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<form action={action} />"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<form action={action} target=\"_blank\" />"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<form action={action} {...spread} />"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<form method=\"POST\" action=\"https://example.com\" rel=\"\" target=\"_blank\"></form>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<form method=\"POST\" action=\"https://example.com\" rel=\"noopenernoreferrer\" target=\"_blank\"></form>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<form method=\"POST\" action=\"https://example.com\" target=\"_blank\"></form>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<form target='_blank' action='http://x.com' rel='noopener'></form>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<form target='_blank' action='http://x.com'></form>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<form target='_blank' action='http://x.com'>x</form>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:JsxNoTargetBlank.tsx",
+    "source": "<p target=\"_blank\"></p>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:Probe.js",
+    "source": "<a target=\"_blank\" href=\"http://x.com\"></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:Probe.jsx",
+    "source": "<a target=\"_blank\" href=\"http://x.com\"></a>"
+  },
+  {
+    "name": "react/jsx-no-target-blank:Probe.tsx",
+    "source": "<a target=\"_blank\" href=\"http://x.com\"></a>"
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "\n          const a = {};\n          <App {...a} />\n        "
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "\n          const a = {};\n          const b = {};\n          <App {...a} {...b} />\n        "
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "\n          const props = {};\n          <App {...(props.foo).baz} {...(props.foo.baz)} />\n        "
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "\n          const props = {};\n          <App {...props.foo} {...props.foo} />\n        "
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "\n          const props = {};\n          <App {...props} {...props} />\n        "
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "\n          const props = {};\n          <div {...props} a=\"a\" {...props} />\n        "
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "\n          const props = {};\n          <div {...props} {...props} {...props} />\n        "
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "\n        const props = {};\n        <App {...(props.foo).baz} {...(props.y.baz)} />\n      "
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "\n        const props = {};\n        <App {...props.x} {...props.foo} />\n      "
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "const a = <App />;\n"
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "const a = <App a=\"a\" b=\"b\" />;\n"
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "const a = <App {...\"abc\".length} {...\"abc\".length} />;\n"
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "const a = <App {...\"abc\".length} {...\"abd\".length} />;\n"
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "const a = <App {...(1).toFixed} {...\"1\".toFixed} />;\n"
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "const a = <App {...(props.foo).baz} {...(props.foo.baz)} />;\n"
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "const a = <App {...(props?.a).b} {...(props.a).b} />;\n"
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "const a = <App {...(props?.a).b} {...(props?.a).b} />;\n"
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "const a = <App {...(props?.a.b)} {...(props?.a.b)} />;\n"
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "const a = <App {.../r/.source} {.../q/.source} />;\n"
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "const a = <App {.../r/.source} {.../r/.source} />;\n"
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "const a = <App {...one.foo} {...two.foo} />;\n"
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "const a = <App {...one} {...two} {...one} {...two} />;\n"
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "const a = <App {...props()} {...props()} />;\n"
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "const a = <App {...props.a} {...props.a} {...props.a} />;\n"
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "const a = <App {...props.foo} {...props.foo} />;\n"
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "const a = <App {...props?.a.b} {...props?.a.b} />;\n"
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "const a = <App {...props?.foo} {...props?.foo} />;\n"
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "const a = <App {...props[\"k\"]} {...props[k]} />;\n"
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "const a = <App {...props[o[\"x\"]]} {...props[o[\"x\"]]} />;\n"
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "const a = <App {...props[o[\"x\"]]} {...props[o[\"y\"]]} />;\n"
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "const a = <App {...props[o[1]]} {...props[o[\"1\"]]} />;\n"
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "const a = <App {...props[x?.y]} {...props[x.y]} />;\n"
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "const a = <App {...props[x]} {...props[y]} />;\n"
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "const a = <App {...props} {...props} />;\n"
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "const a = <App {...this.props} {...this.props} />;\n"
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "const a = <App {...{a: 1}} {...{a: 1}} />;\n"
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "const a = <div {...props} a=\"a\" {...props} />;\n"
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "const a = <div><App {...props} /><App {...props} /></div>;\n"
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "const props = {};\nconst a = <App {...(props)} {...props} />;\n"
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "const props = {};\nconst a = <App {...props!} {...props as any} />;\n"
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "const props = {};\nconst a = <App {...props.a.b} {...props.a.b} />;\n"
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "const props = {};\nconst a = <App {...props.foo} {...props.foo} {...props.foo} />;\n"
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "const props = {};\nconst a = <App {...props[\"foo\"]} {...props.foo} />;\n"
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "const props = {};\nconst a = <App {...props[k]} {...props[k]} />;\n"
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "const props = {};\nconst a = <App {...props} {...props.foo} />;\n"
+  },
+  {
+    "name": "react/jsx-props-no-spread-multi:Spread.tsx",
+    "source": "const props = {};\nconst a = <div {...props} {...props}>text</div>;\n"
+  },
+  {
+    "name": "react/no-danger:Danger.jsx",
+    "source": "<div dangerouslySetInnerHTML={{__html:''}} />;"
+  },
+  {
+    "name": "react/no-danger:Danger.tsx",
+    "source": "\n        function App() {\n          return <FooText dangerouslySetInnerHTML={{ __html: \"<span>hello</span>\" }} />;\n        }\n      "
+  },
+  {
+    "name": "react/no-danger:Danger.tsx",
+    "source": "\n        function App() {\n          return <TextFoo dangerouslySetInnerHTML={{ __html: \"<span>hello</span>\" }} />;\n        }\n      "
+  },
+  {
+    "name": "react/no-danger:Danger.tsx",
+    "source": "\n        function App() {\n          return <TextMUI dangerouslySetInnerHTML={{ __html: \"<span>hello</span>\" }} />;\n        }\n      "
+  },
+  {
+    "name": "react/no-danger:Danger.tsx",
+    "source": "\n        function App() {\n          return <Title dangerouslySetInnerHTML={{ __html: \"<span>hello</span>\" }} />;\n        }\n      "
+  },
+  {
+    "name": "react/no-danger:Danger.tsx",
+    "source": "\n        import type { ComponentProps } from \"react\";\n\n        const Comp = \"div\";\n        const Component = () => <></>;\n\n        const NestedComponent = (_props: ComponentProps<\"div\">) => <></>;\n\n        Component.NestedComponent = NestedComponent;\n\n        function App() {\n          return (\n            <>\n              <div dangerouslySetInnerHTML={{ __html: \"<div>aaa</div>\" }} />\n              <Comp dangerouslySetInnerHTML={{ __html: \"<div>aaa</div>\" }} />\n\n              <Component.NestedComponent\n                dangerouslySetInnerHTML={{ __html: '<div>aaa</div>' }}\n              />\n            </>\n          );\n        }\n      "
+  },
+  {
+    "name": "react/no-danger:Danger.tsx",
+    "source": "<A.B dangerouslySetInnerHTML={{__html:''}} />;"
+  },
+  {
+    "name": "react/no-danger:Danger.tsx",
+    "source": "<A.B.C dangerouslySetInnerHTML={{__html:''}} />;"
+  },
+  {
+    "name": "react/no-danger:Danger.tsx",
+    "source": "<A.B.C.D className=\"x\" />;"
+  },
+  {
+    "name": "react/no-danger:Danger.tsx",
+    "source": "<App />;"
+  },
+  {
+    "name": "react/no-danger:Danger.tsx",
+    "source": "<App dangerouslySetInnerHTML={{ __html: \"\" }} />;"
+  },
+  {
+    "name": "react/no-danger:Danger.tsx",
+    "source": "<App dangerouslySetInnerHTML={{ __html: \"<span>hello</span>\" }} />;"
+  },
+  {
+    "name": "react/no-danger:Danger.tsx",
+    "source": "<App dangerouslySetInnerHTML={{__html:''}} />;"
+  },
+  {
+    "name": "react/no-danger:Danger.tsx",
+    "source": "<Ns:App dangerouslySetInnerHTML={{__html:''}} />;"
+  },
+  {
+    "name": "react/no-danger:Danger.tsx",
+    "source": "<TextMUI dangerouslySetInnerHTML={{__html:''}} />;"
+  },
+  {
+    "name": "react/no-danger:Danger.tsx",
+    "source": "<Title dangerouslySetInnerHTML={{__html:''}} />;"
+  },
+  {
+    "name": "react/no-danger:Danger.tsx",
+    "source": "<a.b dangerouslySetInnerHTML={{__html:''}} />;"
+  },
+  {
+    "name": "react/no-danger:Danger.tsx",
+    "source": "<a.b.c.d dangerouslySetInnerHTML={{__html:''}} />;"
+  },
+  {
+    "name": "react/no-danger:Danger.tsx",
+    "source": "<a.b></a.b>;"
+  },
+  {
+    "name": "react/no-danger:Danger.tsx",
+    "source": "<div DANGEROUSLYSETINNERHTML={{__html:''}} />;"
+  },
+  {
+    "name": "react/no-danger:Danger.tsx",
+    "source": "<div className=\"bar\" />;"
+  },
+  {
+    "name": "react/no-danger:Danger.tsx",
+    "source": "<div className=\"bar\"></div>;"
+  },
+  {
+    "name": "react/no-danger:Danger.tsx",
+    "source": "<div dangerouslySetInnerHTML />;"
+  },
+  {
+    "name": "react/no-danger:Danger.tsx",
+    "source": "<div dangerouslySetInnerHTML=\"x\" />;"
+  },
+  {
+    "name": "react/no-danger:Danger.tsx",
+    "source": "<div dangerouslySetInnerHTML={{ __html: \"\" }}></div>;"
+  },
+  {
+    "name": "react/no-danger:Danger.tsx",
+    "source": "<div dangerouslySetInnerHTML={{__html:''}} />;"
+  },
+  {
+    "name": "react/no-danger:Danger.tsx",
+    "source": "<div dangerouslySetInnerHTML={{__html:''}} dangerouslySetInnerHTML={{__html:''}} />;"
+  },
+  {
+    "name": "react/no-danger:Danger.tsx",
+    "source": "<div dangerouslySetInnerHTML={{__html:''}}></div>;"
+  },
+  {
+    "name": "react/no-danger:Danger.tsx",
+    "source": "<div dangerouslysetinnerhtml={{__html:''}} />;"
+  },
+  {
+    "name": "react/no-danger:Danger.tsx",
+    "source": "<div ns:dangerouslySetInnerHTML={{__html:''}} />;"
+  },
+  {
+    "name": "react/no-danger:Danger.tsx",
+    "source": "<div {...props} />;"
+  },
+  {
+    "name": "react/no-danger:Danger.tsx",
+    "source": "<div:ns dangerouslySetInnerHTML={{__html:''}} />;"
+  },
+  {
+    "name": "react/no-danger:Danger.tsx",
+    "source": "<ns:App dangerouslySetInnerHTML={{__html:''}} />;"
+  },
+  {
+    "name": "react/no-danger:Danger.tsx",
+    "source": "<ns:tag className=\"x\" />;"
+  },
+  {
+    "name": "react/no-danger:Danger.tsx",
+    "source": "<this.Foo dangerouslySetInnerHTML={{__html:''}} />;"
+  },
+  {
+    "name": "react/no-danger:Danger.tsx",
+    "source": "<x-custom dangerouslySetInnerHTML={{__html:''}} />;"
+  },
+  {
+    "name": "react/no-danger:Danger.tsx",
+    "source": "const a = <div dangerouslySetInnerHTML />;"
+  },
+  {
+    "name": "react/no-danger:Danger.tsx",
+    "source": "const a = <div dangerouslySetInnerHTML={{__html:''}} />;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.js",
+    "source": "<div class=\"x\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.jsx",
+    "source": "<div class=\"x\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "\n        <div className=\"App\" data-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash:c=\"customValue\">\n          Hello, world!\n        </div>\n      "
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "\n        <div className=\"App\" data-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash=\"customValue\">\n          Hello, world!\n        </div>\n      "
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "\n        <div>\n          <button popoverTarget=\"my-popover\" popoverTargetAction=\"toggle\">Open Popover</button>\n\n          <div id=\"my-popover\" onBeforeToggle={this.onBeforeToggle} popover>Greetings, one and all!</div>\n        </div>\n      "
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "\n        <div>\n          <button popovertarget=\"my-popover\" popovertargetaction=\"toggle\">Open Popover</button>\n\n          <div popover id=\"my-popover\">Greetings, one and all!</div>\n        </div>\n      "
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "\n        <table align=\"top\">\n          <caption align=\"top\">Table Caption</caption>\n          <colgroup valign=\"top\" align=\"top\">\n            <col valign=\"top\" align=\"top\"/>\n          </colgroup>\n          <thead valign=\"top\" align=\"top\">\n            <tr valign=\"top\" align=\"top\">\n              <th valign=\"top\" align=\"top\">Header</th>\n              <td valign=\"top\" align=\"top\">Cell</td>\n            </tr>\n          </thead>\n          <tbody valign=\"top\" align=\"top\" />\n          <tfoot valign=\"top\" align=\"top\" />\n        </table>\n      "
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<App accept-charset=\"bar\" />;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<App class=\"bar\" />;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<App clip-path=\"bar\" />;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<App data-testID=\"bar\" data-under_sCoRe=\"bar\" dataNotAnDataAttribute=\"yes\" />;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<App dataNotAnDataAttribute=\"yes\" />;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<App for=\"bar\" />;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<App http-equiv=\"bar\" />;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<App someProp=\"bar\" />;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<App xlink:href=\"bar\" />;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<Foo bogus=\"x\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<Foo data-Baz=\"x\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<Foo.Bar bogus=\"x\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<Foo.Bar data-Baz=\"x\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<Foo.bar for=\"bar\" />;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<a href=\"someLink\" download=\"foo\">Read more</a>"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<applet align=\"top\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<area download=\"foo\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<atom-panel class=\"foo\"></atom-panel>;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<audio controlsList=\"nodownload\" controls={this.controls} crossOrigin=\"anonymous\" disableRemotePlayback loop muted preload=\"none\" src=\"something\" onAbort={this.abort} onDurationChange={this.durationChange} onEmptied={this.emptied} onEnded={this.end} onError={this.error} onResize={this.onResize}></audio>"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<audio crossOrigin />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<body onLoad={bar} />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<button aria-haspopup=\"true\">Click me to open pop up</button>;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<button aria-label=\"Close\" onClick={someThing.close} />;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<button disabled>You cannot click me</button>;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<details onToggle={this.onToggle}>Some details</details>"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<dialog closedby=\"something\" onClose={handler} open id=\"dialog\" returnValue=\"something\" onCancel={handler2} />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div ARIA-HIDDEN=\"true\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div abbr=\"abbr\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div abc=\"should not be allowed property\"></div>;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div accept-charset=\"bar\"></div>;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div accesskey=\"bar\"></div>;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div allowTransparency=\"true\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div allowfullscreen=\"true\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div aria-Hidden=\"true\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div aria-bogus=\"true\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div aria-fake=\"should not be allowed property\"></div>;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div aria-hidden=\"true\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div as=\"audio\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div bogus=\"x\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div charset=\"utf-8\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div class=\"bar\"></div>;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div class=\"foo\" is=\"my-elem\"></div>;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div class=\"x\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div class={someExpression} />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div className=\"bar\"></div>;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div controls={this.controls} loop={true} muted={false} src={this.videoSrc} playsInline={true} allowFullScreen></div>"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div crossOrigin />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div crossorigin />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div css={{flex: 1}}></div>;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div data-Foo=\"x\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div data-e2e-id=\"5678\"></div>;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div data-foo-bar=\"baz\"></div>;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div data-foo=\"bar\"></div>;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div data-foo=\"x\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div data-index-number=\"1234\"></div>;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div data-parent=\"parent\"></div>;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div data-testID=\"bar\" data-under_sCoRe=\"bar\" />;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div data-testID=\"bar\" data-under_sCoRe=\"bar\" dataNotAnDataAttribute=\"yes\" />;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div data-xml-anything=\"invalid\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div data-xmlFoo=\"x\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div download=\"foo\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div fill=\"pink\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div foo:bar=\"x\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div for=\"bar\"></div>;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div hasOwnProperty=\"should not be allowed property\"></div>;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div http-equiv=\"bar\"></div>;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div imageSizes=\"someImageSizes\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div imageSrcSet=\"someImageSrcSet\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div inert children=\"anything\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div is=\"my-elem\" bogus=\"x\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div onAbort={this.abort} onDurationChange={this.durationChange} onEmptied={this.emptied} onEnded={this.end} onResize={this.resize} onError={this.error} />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div onLoad={this.load} />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div onMouseDown={this._onMouseDown}></div>;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div onMousedown=\"bar\"></div>;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div onPointerDown={this.onDown} onPointerUp={this.onUp} />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div onScrollEnd={this._onScrollEnd}></div>;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div onScrollEndCapture={this._onScrollEndCapture}></div>;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div onTouchStart={this.startAnimation} onTouchEnd={this.stopAnimation} onTouchCancel={this.cancel} onTouchMove={this.move} onMouseMoveCapture={this.capture} onTouchCancelCapture={this.log} />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div onclick=\"bar\"></div>;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div onmousedown=\"bar\"></div>;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div someProp=\"bar\"></div>;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div webkitDirectory=\"\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div webkitdirectory=\"\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div {...properties} />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<div {...this.props} class=\"foo\" is=\"my-elem\"></div>;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<fbs desc=\"foo\" doNotExtract />;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<fbt bogus=\"x\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<fbt desc=\"foo\" doNotExtract />;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<g fill=\"#7B82A0\" fillRule=\"evenodd\"></g>"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<hr align=\"top\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<iframe allowFullScreen webkitAllowFullScreen mozAllowFullScreen />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<iframe onError={foo} onLoad={bar} />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<iframe scrolling=\"?\" onLoad={a} onError={b} align=\"top\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<img onError={foo} onLoad={bar} />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<img src=\"cat_keyboard.jpeg\" alt=\"A cat sleeping on a keyboard\" align=\"top\" fetchPriority=\"high\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<input key=\"bar\" type=\"radio\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<input ref={this.input} type=\"radio\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<input type=\"checkbox\" checked={checked} disabled={disabled} id={id} onChange={onChange} />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<input type=\"checkbox\" defaultChecked={this.state.checkbox} />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<input type=\"file\" webkitDirectory=\"\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<input type=\"file\" webkitdirectory=\"\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<input type=\"password\" required />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<label for=\"x\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<line fill=\"pink\" x1=\"0\" y1=\"80\" x2=\"100\" y2=\"20\"></line>"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<link as=\"audio\">Audio content</link>"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<link onLoad={bar} onError={foo} />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<link precedence=\"medium\" href=\"https://foo.bar\" rel=\"canonical\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<link rel=\"preload\" as=\"image\" href=\"someHref\" imageSrcSet=\"someImageSrcSet\" imageSizes=\"someImageSizes\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<marker fill=\"#000\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<marker id={markerId} viewBox=\"0 0 2 2\" refX=\"1\" refY=\"1\" markerWidth=\"1\" markerHeight=\"1\" orient=\"auto\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<mask fill=\"#7B82A0\"></mask>"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<math displaystyle=\"true\" />;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<meta charSet=\"utf-8\" />;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<meta charset=\"utf-8\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<meta charset=\"utf-8\" />;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<meta http-equiv=\"refresh\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<meta property=\"og:type\" content=\"website\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<my-elem bogus=\"x\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<object onLoad={bar} />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<path fill=\"pink\" d=\"M 10,30 A 20,20 0,0,1 50,30 A 20,20 0,0,1 90,30 Q 90,60 50,90 Q 10,60 10,30 z\"></path>"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<path stroke-width=\"1\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<path strokeWidth=\"1\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<pattern id=\"pattern\" viewBox=\"0,0,10,10\" width=\"10%\" height=\"10%\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<picture inert={false} onError={foo} onLoad={bar} />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<rect clip-path=\"bar\" transform-origin=\"center\" />;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<script crossOrigin noModule />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<script crossorigin nomodule />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<script onLoad={bar} onError={foo} />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<source onLoad={bar} onError={foo} />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<svg focusable><image crossOrigin /></svg>"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<svg key=\"lock\" viewBox=\"box\" fill={10} d=\"d\" stroke={1} strokeWidth={2} strokeLinecap={3} strokeLinejoin={4} transform=\"something\" clipRule=\"else\" x1={5} x2=\"6\" y1=\"7\" y2=\"8\"></svg>"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<svg xmlns:xlink=\"u\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<svg><use xlink:href=\"#a\" /></svg>"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<symbol fill=\"#7B82A0\"></symbol>"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<symbol id=\"myDot\" width=\"10\" height=\"10\" viewBox=\"0 0 2 2\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<table border=\"1\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<td abbr=\"abbr\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<template shadowrootmode=\"open\" shadowrootclonable shadowrootdelegatesfocus shadowrootserializable />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<th abbr=\"abbr\" />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<use xlink:href=\"bar\" />;"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<video allowFullScreen webkitAllowFullScreen mozAllowFullScreen />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<video controlsList=\"nodownload\" controls={this.controls} loop={true} muted={false} src={this.videoSrc} playsInline={true} onResize={this.onResize}></video>"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<video playsInline />"
+  },
+  {
+    "name": "react/no-unknown-property:NoUnknownProperty.tsx",
+    "source": "<view id=\"one\" viewBox=\"0 0 100 100\" />"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "\n                const props = {};\n                React.createElement('img', props);\n            "
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "\n                import React, {createElement, PureComponent} from 'react';\n                class Button extends PureComponent {\n                    handleClick(ev) {\n                        ev.preventDefault();\n                    }\n                    render() {\n                        return <div onClick={this.handleClick}>Hello</div>;\n                    }\n                }\n            "
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "\n                import React, {createElement} from 'react';\n                createElement('div');\n            "
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "\n                import React, {createElement} from 'react';\n                createElement('img');\n            "
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "\n                import React, {createElement} from 'react';\n                createElement('img', { children: 'Foo' });\n            "
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "\n                import React, {createElement} from 'react';\n                createElement('img', { dangerouslySetInnerHTML: { __html: 'Foo' } });\n            "
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "\n                import React, {createElement} from 'react';\n                createElement('img', {}, 'Foo');\n            "
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "(React.createElement)('br', {}, 'Foo');"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "(createElement)('br', {}, 'Foo');"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "<BR>Foo</BR>;"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "<Br>Foo</Br>;"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "<Foo.br>x</Foo.br>;"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "<Img children='Foo' />;"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "<area children='Foo' />;"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "<base children='Foo' />;"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "<br children='Foo' />;"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "<br children='Foo'>Foo</br>;"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "<br dangerouslySetInnerHTML={{ __html: 'Foo' }} />;"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "<br dangerouslySetInnerHTML={{ __html: 'Foo' }}>Foo</br>;"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "<br data-children='Foo' />;"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "<br xlink:children='Foo' />;"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "<br {...props} />;"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "<br {...{children: 1}} />;"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "<br>\n</br>;"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "<br> </br>;"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "<br></br>;"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "<br>Foo</br>;"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "<br>{'x'}</br>;"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "<br>{}</br>;"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "<col children='Foo' />;"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "<div children='Foo' />;"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "<div dangerouslySetInnerHTML={{ __html: 'Foo' }} />;"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "<div>Foo</div>;"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "<embed children='Foo' />;"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "<hr children='Foo' />;"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "<img children='Foo' />;"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "<img {...props} children='Foo' />;"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "<input children='Foo' />;"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "<keygen children='Foo' />;"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "<link children='Foo' />;"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "<menuitem children='Foo' />;"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "<menuitem>Foo</menuitem>;"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "<meta children='Foo' />;"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "<param children='Foo' />;"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "<source children='Foo' />;"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "<track children='Foo' />;"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "<wbr children='Foo' />;"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "Preact.createElement('br', {}, 'Foo');"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "React.createElement(\"br\", {}, \"Foo\");"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "React.createElement('BR', {}, 'Foo');"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "React.createElement('br', 'notanobject', 'Foo');"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "React.createElement('br', null, 'Foo');"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "React.createElement('br', { children: 'Foo' });"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "React.createElement('br', { children: 'Foo' }, 'Bar');"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "React.createElement('br', { dangerouslySetInnerHTML: { __html: 'Foo' } });"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "React.createElement('br', {'children': 'Foo'});"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "React.createElement('br', {'dangerouslySetInnerHTML': {__html: 'Foo'}});"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "React.createElement('br', {...props});"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "React.createElement('br', {...{children: 1}});"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "React.createElement('br', {['children']: 'Foo'});"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "React.createElement('br', {}, 'Foo');"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "React.createElement('div', { children: 'Foo' });"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "React.createElement('div', { dangerouslySetInnerHTML: { __html: 'Foo' } });"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "React.createElement('div', {}, 'Foo');"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "React.createElement('img');"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "React.createElement('img', {}, 'Foo');"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "React.createElement(('br'), {}, 'Foo');"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "React.createElement();"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "React.createElement(Component, {}, 'Foo');"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "React.createElement(`br`, {}, 'Foo');"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "React['createElement']('br', {}, 'Foo');"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "const props = {children: 'Foo'}; React.createElement('br', props);"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "createElement('br', {}, 'Foo');"
+  },
+  {
+    "name": "react/void-dom-elements-no-children:VoidDomElements.tsx",
+    "source": "document.createElement('br', {}, 'Foo');"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <Button variant=\"Emphasized\" />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <AnimatedButton variant=\"Emphasized\" />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <AnimatedButton variant=\"Ghost\" />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <Button size=\"Huge\" />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <Button size=\"Small\" />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <Button title=\"Emphasized\" />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <Button variant />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <Button variant=\"\" />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <Button variant=\"Emphasized\" />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <Button variant=\"Emphasized\">go</Button>;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <Button variant=\"Gh&#111;st\" />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <Button variant=\"Ghost\" />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <Button variant=\"Outline\" />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <Button variant=\"ghost\" />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <Button variant={`Gh${x}`} />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <Button variant={chosen} />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <Button variantName=\"Emphasized\" />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <Calendar size=\"Nope\" />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <Calendar variant=\"A\" size=\"Base\" />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <Calendar variant=\"Nope\" />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <Card variant=\"Flat\" />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <Card variant=\"Raised\" />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <Foo.Button variant=\"Emphasized\" />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <TipButton variant=\"Emphasized\" />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <Unthemed variant=\"Emphasized\" />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <button variant=\"Emphasized\" />;\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:page.tsx",
+    "source": "declare const Field: { displayName: string };\nlet other;\nexport const value = other;\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:page.tsx",
+    "source": "declare const memo: unknown;\nexport const value = 1;\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:page.tsx",
+    "source": "export default function ThingPageRoute() {\n    let pending;\n    return pending;\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:page.tsx",
+    "source": "export function Page() { return null; }\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:page.tsx",
+    "source": "export function Panel() {\n    declare const value: unknown;\n    return value;\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:page.tsx",
+    "source": "export function Panel() {\n    let pending;\n    return pending;\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:page.tsx",
+    "source": "export function Panel() {\n    let { label };\n    return label;\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:page.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\ndeclare const Document: unknown;\ndeclare const identifier: string;\nexport function useThingRequest(variables: { identifier: string }) {\n    return networkService.useGraphQlQuery(Document, { identifier });\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:page.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\ndeclare const Document: unknown;\nexport function useThingRequest(o?: unknown) { return networkService.useGraphQlQuery(Document, { shorthand }, o); }\ndeclare const shorthand: unknown;\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:page.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\nexport function useThingRequest() { return networkService.useGraphQlQuery(); }\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:page.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\nlet useThingRequest;\nexport const value = useThingRequest;\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:Thing.ts",
+    "source": "export const value = 1;\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:ThingRequest.ts",
+    "source": "declare const Field: { displayName: string };\nlet other;\nexport const value = other;\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:ThingRequest.ts",
+    "source": "declare const memo: unknown;\nexport const value = 1;\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:ThingRequest.ts",
+    "source": "export default function ThingPageRoute() {\n    let pending;\n    return pending;\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:ThingRequest.ts",
+    "source": "export function Page() { return null; }\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:ThingRequest.ts",
+    "source": "export function Panel() {\n    declare const value: unknown;\n    return value;\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:ThingRequest.ts",
+    "source": "export function Panel() {\n    let pending;\n    return pending;\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:ThingRequest.ts",
+    "source": "export function Panel() {\n    let { label };\n    return label;\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:ThingRequest.ts",
+    "source": "import { networkService } from './NetworkService.ts';\ndeclare const Document: unknown;\ndeclare const identifier: string;\nexport function useThingRequest(variables: { identifier: string }) {\n    return networkService.useGraphQlQuery(Document, { identifier });\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:ThingRequest.ts",
+    "source": "import { networkService } from './NetworkService.ts';\ndeclare const Document: unknown;\nexport function useThingRequest(o?: unknown) { return networkService.useGraphQlQuery(Document, { shorthand }, o); }\ndeclare const shorthand: unknown;\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:ThingRequest.ts",
+    "source": "import { networkService } from './NetworkService.ts';\nexport function useThingRequest() { return networkService.useGraphQlQuery(); }\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:ThingRequest.ts",
+    "source": "import { networkService } from './NetworkService.ts';\nlet useThingRequest;\nexport const value = useThingRequest;\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:Page.tsx",
+    "source": "declare const Namespace: { a: (properties: { href: string }) => unknown };\nexport function Page() {\n    return <Namespace.a href=\"/about\" />;\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:Page.tsx",
+    "source": "declare function A(properties: { href: string }): unknown;\nexport function Page() {\n    return <A href=\"/about\" />;\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:Page.tsx",
+    "source": "declare function Link(properties: { href: string; children?: unknown }): unknown;\nexport function Page() {\n    return <Link href=\"/about\">About</Link>;\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:Page.tsx",
+    "source": "export function Page() {\n    const a = 1;\n    return <div>{a}</div>;\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:Page.tsx",
+    "source": "export function Page() {\n    return <><a href=\"/a\">A</a></>;\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:Page.tsx",
+    "source": "export function Page() {\n    return <a href=\"/about\" />;\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:Page.tsx",
+    "source": "export function Page() {\n    return <a href=\"/about\">About</a>;\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:Page.tsx",
+    "source": "export function Page() {\n    return <div><a href=\"/a\">A</a><a href=\"/b\">B</a></div>;\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:Page.tsx",
+    "source": "export function Page() {\n    return <div><span><a href=\"/a\">A</a></span></div>;\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:Page.tsx",
+    "source": "export function Page() {\n    return <div><span>text</span><abbr>x</abbr></div>;\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:ThingRequest.tsx",
+    "source": "declare const Field: { displayName: string };\nlet other;\nexport const value = other;\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:ThingRequest.tsx",
+    "source": "declare const memo: unknown;\nexport const value = 1;\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:ThingRequest.tsx",
+    "source": "export default function ThingPageRoute() {\n    let pending;\n    return pending;\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:ThingRequest.tsx",
+    "source": "export function Page() { return null; }\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:ThingRequest.tsx",
+    "source": "export function Panel() {\n    declare const value: unknown;\n    return value;\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:ThingRequest.tsx",
+    "source": "export function Panel() {\n    let pending;\n    return pending;\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:ThingRequest.tsx",
+    "source": "export function Panel() {\n    let { label };\n    return label;\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:ThingRequest.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\ndeclare const Document: unknown;\ndeclare const identifier: string;\nexport function useThingRequest(variables: { identifier: string }) {\n    return networkService.useGraphQlQuery(Document, { identifier });\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:ThingRequest.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\ndeclare const Document: unknown;\nexport function useThingRequest(o?: unknown) { return networkService.useGraphQlQuery(Document, { shorthand }, o); }\ndeclare const shorthand: unknown;\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:ThingRequest.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\nexport function useThingRequest() { return networkService.useGraphQlQuery(); }\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:ThingRequest.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\nlet useThingRequest;\nexport const value = useThingRequest;\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:Link.tsx",
+    "source": "export function Link() {\n    return <a href=\"/about\" />;\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:Link.tsx",
+    "source": "export function Link() {\n    return <a href=\"/about\">About</a>;\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-anchor:Link.tsx",
+    "source": "export function Link() {\n    return <a href=\"/a\">A</a>;\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-horizontal-rule:page.tsx",
+    "source": "declare const Field: { displayName: string };\nlet other;\nexport const value = other;\n"
+  },
+  {
+    "name": "structure/react-element-no-horizontal-rule:page.tsx",
+    "source": "declare const memo: unknown;\nexport const value = 1;\n"
+  },
+  {
+    "name": "structure/react-element-no-horizontal-rule:page.tsx",
+    "source": "export default function ThingPageRoute() {\n    let pending;\n    return pending;\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-horizontal-rule:page.tsx",
+    "source": "export function Page() { return null; }\n"
+  },
+  {
+    "name": "structure/react-element-no-horizontal-rule:page.tsx",
+    "source": "export function Panel() {\n    declare const value: unknown;\n    return value;\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-horizontal-rule:page.tsx",
+    "source": "export function Panel() {\n    let pending;\n    return pending;\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-horizontal-rule:page.tsx",
+    "source": "export function Panel() {\n    let { label };\n    return label;\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-horizontal-rule:page.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\ndeclare const Document: unknown;\ndeclare const identifier: string;\nexport function useThingRequest(variables: { identifier: string }) {\n    return networkService.useGraphQlQuery(Document, { identifier });\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-horizontal-rule:page.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\ndeclare const Document: unknown;\nexport function useThingRequest(o?: unknown) { return networkService.useGraphQlQuery(Document, { shorthand }, o); }\ndeclare const shorthand: unknown;\n"
+  },
+  {
+    "name": "structure/react-element-no-horizontal-rule:page.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\nexport function useThingRequest() { return networkService.useGraphQlQuery(); }\n"
+  },
+  {
+    "name": "structure/react-element-no-horizontal-rule:page.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\nlet useThingRequest;\nexport const value = useThingRequest;\n"
+  },
+  {
+    "name": "structure/react-element-no-horizontal-rule:ThingRequest.ts",
+    "source": "declare const Field: { displayName: string };\nlet other;\nexport const value = other;\n"
+  },
+  {
+    "name": "structure/react-element-no-horizontal-rule:ThingRequest.ts",
+    "source": "declare const memo: unknown;\nexport const value = 1;\n"
+  },
+  {
+    "name": "structure/react-element-no-horizontal-rule:ThingRequest.ts",
+    "source": "export default function ThingPageRoute() {\n    let pending;\n    return pending;\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-horizontal-rule:ThingRequest.ts",
+    "source": "export function Page() { return null; }\n"
+  },
+  {
+    "name": "structure/react-element-no-horizontal-rule:ThingRequest.ts",
+    "source": "export function Panel() {\n    declare const value: unknown;\n    return value;\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-horizontal-rule:ThingRequest.ts",
+    "source": "export function Panel() {\n    let pending;\n    return pending;\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-horizontal-rule:ThingRequest.ts",
+    "source": "export function Panel() {\n    let { label };\n    return label;\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-horizontal-rule:ThingRequest.ts",
+    "source": "import { networkService } from './NetworkService.ts';\ndeclare const Document: unknown;\ndeclare const identifier: string;\nexport function useThingRequest(variables: { identifier: string }) {\n    return networkService.useGraphQlQuery(Document, { identifier });\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-horizontal-rule:ThingRequest.ts",
+    "source": "import { networkService } from './NetworkService.ts';\ndeclare const Document: unknown;\nexport function useThingRequest(o?: unknown) { return networkService.useGraphQlQuery(Document, { shorthand }, o); }\ndeclare const shorthand: unknown;\n"
+  },
+  {
+    "name": "structure/react-element-no-horizontal-rule:ThingRequest.ts",
+    "source": "import { networkService } from './NetworkService.ts';\nexport function useThingRequest() { return networkService.useGraphQlQuery(); }\n"
+  },
+  {
+    "name": "structure/react-element-no-horizontal-rule:ThingRequest.ts",
+    "source": "import { networkService } from './NetworkService.ts';\nlet useThingRequest;\nexport const value = useThingRequest;\n"
+  },
+  {
+    "name": "structure/react-element-no-horizontal-rule:Page.tsx",
+    "source": "declare function HorizontalRule(): unknown;\nexport function Page() {\n    return <HorizontalRule />;\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-horizontal-rule:Page.tsx",
+    "source": "export function Page() {\n    return <a href=\"/a\">A</a>;\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-horizontal-rule:Page.tsx",
+    "source": "export function Page() {\n    return <div><hr /></div>;\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-horizontal-rule:Page.tsx",
+    "source": "export function Page() {\n    return <div><hr /><hr /></div>;\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-horizontal-rule:ThingRequest.tsx",
+    "source": "declare const Field: { displayName: string };\nlet other;\nexport const value = other;\n"
+  },
+  {
+    "name": "structure/react-element-no-horizontal-rule:ThingRequest.tsx",
+    "source": "declare const memo: unknown;\nexport const value = 1;\n"
+  },
+  {
+    "name": "structure/react-element-no-horizontal-rule:ThingRequest.tsx",
+    "source": "export default function ThingPageRoute() {\n    let pending;\n    return pending;\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-horizontal-rule:ThingRequest.tsx",
+    "source": "export function Page() { return null; }\n"
+  },
+  {
+    "name": "structure/react-element-no-horizontal-rule:ThingRequest.tsx",
+    "source": "export function Panel() {\n    declare const value: unknown;\n    return value;\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-horizontal-rule:ThingRequest.tsx",
+    "source": "export function Panel() {\n    let pending;\n    return pending;\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-horizontal-rule:ThingRequest.tsx",
+    "source": "export function Panel() {\n    let { label };\n    return label;\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-horizontal-rule:ThingRequest.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\ndeclare const Document: unknown;\ndeclare const identifier: string;\nexport function useThingRequest(variables: { identifier: string }) {\n    return networkService.useGraphQlQuery(Document, { identifier });\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-horizontal-rule:ThingRequest.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\ndeclare const Document: unknown;\nexport function useThingRequest(o?: unknown) { return networkService.useGraphQlQuery(Document, { shorthand }, o); }\ndeclare const shorthand: unknown;\n"
+  },
+  {
+    "name": "structure/react-element-no-horizontal-rule:ThingRequest.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\nexport function useThingRequest() { return networkService.useGraphQlQuery(); }\n"
+  },
+  {
+    "name": "structure/react-element-no-horizontal-rule:ThingRequest.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\nlet useThingRequest;\nexport const value = useThingRequest;\n"
+  },
+  {
+    "name": "structure/react-element-no-horizontal-rule:HorizontalRule.tsx",
+    "source": "export function HorizontalRule() {\n    return <hr />;\n}\n"
+  },
+  {
+    "name": "structure/react-element-no-horizontal-rule:Link.tsx",
+    "source": "export function Link() {\n    return <a href=\"/a\">A</a>;\n}\n"
+  }
+]

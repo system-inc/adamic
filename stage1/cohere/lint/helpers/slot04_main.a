@@ -1,0 +1,33 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from './options_json.ts';
+import { JsxArena, type JsxNode } from './jsx_ast.a';
+import { elementParts } from './jsx_element_parts.a';
+function fieldText(corpus: OptionsJson, row: number, field: string): string {
+    return corpus.node(corpus.field(row, field)).text;
+}
+const input = readTextFile(programArguments()[0] ?? panic('corpus path'));
+if(input.kind === 'Error') {
+    panic(input.message);
+}
+const corpus = new OptionsJson(input.text);
+const root = corpus.parse();
+if(root < 0) {
+    panic(corpus.error);
+}
+for(const row of corpus.node(root).children) {
+    const nodes: JsxNode[] = [];
+    for(const raw of corpus.node(corpus.field(row, 'ast')).children) {
+        nodes.push({
+            kind: fieldText(corpus, raw, 'kind'),
+            text: fieldText(corpus, raw, 'text'),
+            name: Number(fieldText(corpus, raw, 'name')),
+            tagName: Number(fieldText(corpus, raw, 'tagName')),
+            attributes: Number(fieldText(corpus, raw, 'attributes')),
+        });
+    }
+    const arena = new JsxArena(nodes);
+    for(let index = 0; index < nodes.length; index++) {
+        const parts = elementParts(arena, index);
+        console.log(`parts ${parts.tagName} ${parts.attributes}`);
+    }
+}

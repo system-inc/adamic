@@ -1,0 +1,1114 @@
+[
+  {
+    "name": "better-tailwindcss/enforce-canonical-classes:Component.tsx",
+    "source": "const element = <div className=\"-mt-1 -mb-1\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-canonical-classes:Component.tsx",
+    "source": "const element = <div className=\"border-l border-r\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-canonical-classes:Component.tsx",
+    "source": "const element = <div className=\"flex items-center truncate\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-canonical-classes:Component.tsx",
+    "source": "const element = <div className=\"flex px-4 items-center py-4 gap-2\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-canonical-classes:Component.tsx",
+    "source": "const element = <div className=\"gap-x-2 gap-y-2\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-canonical-classes:Component.tsx",
+    "source": "const element = <div className=\"ml-2 pt-2\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-canonical-classes:Component.tsx",
+    "source": "const element = <div className=\"ml-2\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-canonical-classes:Component.tsx",
+    "source": "const element = <div className=\"mt-1 mb-1 ml-1 mr-1\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-canonical-classes:Component.tsx",
+    "source": "const element = <div className=\"px-4 py-2\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-canonical-classes:Component.tsx",
+    "source": "const element = <div className=\"px-4 py-4!\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-canonical-classes:Component.tsx",
+    "source": "const element = <div className=\"px-4 py-4\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-canonical-classes:Component.tsx",
+    "source": "const element = <div className=\"px-4 sm:py-4\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-canonical-classes:Component.tsx",
+    "source": "const element = <div className=\"px-[3px] py-[3px]\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-canonical-classes:Component.tsx",
+    "source": "const element = <div className=\"rounded-tl-md rounded-tr-md\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-canonical-classes:Component.tsx",
+    "source": "const element = <div className=\"sm:px-4 sm:py-4\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-canonical-classes:Component.tsx",
+    "source": "const element = <div className=\"space-x-2 text-left\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-canonical-classes:Component.tsx",
+    "source": "const element = <div className=\"w-8 h-4\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-canonical-classes:Component.tsx",
+    "source": "const element = <div className=\"w-8 h-8\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-canonical-classes:Component.tsx",
+    "source": "const element = <div title=\"px-4 py-4\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-canonical-classes:Component.tsx",
+    "source": "const merged = mergeClassNames('px-4 py-4');\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-canonical-classes:Component.tsx",
+    "source": "const value = someOtherFunction('px-4 py-4');\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-canonical-classes:Styles.ts",
+    "source": "const buttonClassName = 'w-8 h-8';\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div\n  className=\"items-center\n    flex\n    gap-2\"\n/>;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className=\"  items-center   flex \" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className=\"ahralia-splash flex items-center\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className=\"flex group\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className=\"flex items-center gap-2\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className=\"flex peer group\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className=\"flex\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className=\"focus-visible:ring-1 focus-visible:ring-(--color-content-informative) focus-visible:ring-offset-1 focus-visible:outline-none\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className=\"gap-2 items-center flex\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className=\"group flex\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className=\"group peer flex\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className=\"hover:px-8 px-4\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className=\"items-center flex ahralia-splash\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className=\"items-center flex flex\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className=\"items-center flex\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className=\"items-center flex-grow\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className=\"items-center peer flex ahralia-splash\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className=\"peer group flex\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className=\"pointer-events-none hidden md:absolute md:inset-x-0 md:flex md:w-full\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className=\"px-4 hover:px-8\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className=\"truncate font-mono text-[10px]\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className={`${x}items-center flex block`} />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className={`flex ${a ? `items-center block ${b}` : ''}`} />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className={`flex items-center ${x} block gap-2`} />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className={`items-center flex flex ${x}`} />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className={`items-center flex px-${size}`} />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className={`items-center flex-${grow} block flex ${x}`} />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className={`px-${size} items-center flex`} />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className={open ? `items-center flex ${x}` : 'flex'} />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div title=\"items-center flex\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const merged = mergeClassNames('items-center flex');\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const merged = mergeClassNames('items-center\\u0020flex');\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const merged = mergeClassNames(`items-center   flex ${x} gap-2   block`);\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const value = someOtherFunction('items-center flex');\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "export const element = <img className=\"a b\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "export const element = <img className=\"absolute w-full\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "export const element = <img className=\"b a\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "export const element = <img className=\"cy-24 cx-12 flex\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "export const element = <img className=\"cy-24 flex cx-12\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "export const element = <img className=\"flex cx-12 cy-24\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "export const element = <img className=\"flex cy-24 cx-12\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "export const element = <img className=\"flex unknown\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "export const element = <img className=\"px-12 py-24\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "export const element = <img className=\"py-24 px-12\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "export const element = <img className=\"w-full absolute\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Styles.ts",
+    "source": "const buttonClassName = 'items-center flex';\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-important-position:Component.tsx",
+    "source": "const element = <div className=\"!\" />;"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-important-position:Component.tsx",
+    "source": "const element = <div className=\"!-mt-4\" />;"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-important-position:Component.tsx",
+    "source": "const element = <div className=\"![color:red]\" />;"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-important-position:Component.tsx",
+    "source": "const element = <div className=\"!bg-[url('a!b.png')]\" />;"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-important-position:Component.tsx",
+    "source": "const element = <div className=\"!flex!\" />;"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-important-position:Component.tsx",
+    "source": "const element = <div className=\"!text-red-500\" />;"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-important-position:Component.tsx",
+    "source": "const element = <div className=\"!unknown-class\" />;"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-important-position:Component.tsx",
+    "source": "const element = <div className=\"-!mt-4\" />;"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-important-position:Component.tsx",
+    "source": "const element = <div className=\"-mt-4!\" />;"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-important-position:Component.tsx",
+    "source": "const element = <div className=\"flex items-center\" />;"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-important-position:Component.tsx",
+    "source": "const element = <div className=\"hover:!flex\" />;"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-important-position:Component.tsx",
+    "source": "const element = <div className=\"hover:flex!\" />;"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-important-position:Component.tsx",
+    "source": "const element = <div className=\"md:hover:!text-sm\" />;"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-important-position:Component.tsx",
+    "source": "const element = <div className=\"text-red-500!\" />;"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-variable-syntax:Component.tsx",
+    "source": "const element = <div className=\"bg-[var(--other)]\" />;"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-variable-syntax:Component.tsx",
+    "source": "const element = <div className=\"flex items-center\" />;"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-variable-syntax:Component.tsx",
+    "source": "const element = <div className=\"hover:text-[--v]\" />;"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-variable-syntax:Component.tsx",
+    "source": "const element = <div className=\"shadow-[var(--a),var(--b)]\" />;"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-variable-syntax:Component.tsx",
+    "source": "const element = <div className=\"text-(--my-var)\" />;"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-variable-syntax:Component.tsx",
+    "source": "const element = <div className=\"text-[--a-b_c]\" />;"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-variable-syntax:Component.tsx",
+    "source": "const element = <div className=\"text-[--my-var]\" />;"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-variable-syntax:Component.tsx",
+    "source": "const element = <div className=\"text-[--v]/50\" />;"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-variable-syntax:Component.tsx",
+    "source": "const element = <div className=\"text-[color:red]\" />;"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-variable-syntax:Component.tsx",
+    "source": "const element = <div className=\"text-[var(--my-var)]\" />;"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-variable-syntax:Component.tsx",
+    "source": "const element = <div className=\"w-[calc(var(--x)*2)]\" />;"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-variable-syntax:Component.tsx",
+    "source": "const element = <div className=\"w-[var(--x,10px)]\" />;"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-variant-order:Component.tsx",
+    "source": "const element = <div className=\"[@media(hover)]:md:flex\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-variant-order:Component.tsx",
+    "source": "const element = <div className=\"dark:hover:flex hover:dark:flex\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-variant-order:Component.tsx",
+    "source": "const element = <div className=\"dark:md:flex\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-variant-order:Component.tsx",
+    "source": "const element = <div className=\"flex items-center\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-variant-order:Component.tsx",
+    "source": "const element = <div className=\"focus:hover:lg:text-red-500\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-variant-order:Component.tsx",
+    "source": "const element = <div className=\"group-hover:md:flex\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-variant-order:Component.tsx",
+    "source": "const element = <div className=\"has-[:checked]:md:flex\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-variant-order:Component.tsx",
+    "source": "const element = <div className=\"hover:flex\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-variant-order:Component.tsx",
+    "source": "const element = <div className=\"hover:focus:underline focus:hover:underline\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-variant-order:Component.tsx",
+    "source": "const element = <div className=\"hover:max-md:flex\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-variant-order:Component.tsx",
+    "source": "const element = <div className=\"hover:sm:flex\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-variant-order:Component.tsx",
+    "source": "const element = <div className=\"hover:supports-[display:grid]:flex\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-variant-order:Component.tsx",
+    "source": "const element = <div className=\"hover:unknown-variant:text-red-500\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-variant-order:Component.tsx",
+    "source": "const element = <div className=\"sm:hover:flex\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-variant-order:Component.tsx",
+    "source": "const element = <div className=\"sm:lg:flex\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-shorthand-classes:Component.tsx",
+    "source": "const element = <div className=\"!pt-2 !pb-2\" />;"
+  },
+  {
+    "name": "better-tailwindcss/enforce-shorthand-classes:Component.tsx",
+    "source": "const element = <div className=\"!pt-2 pb-2\" />;"
+  },
+  {
+    "name": "better-tailwindcss/enforce-shorthand-classes:Component.tsx",
+    "source": "const element = <div className=\"-mt-2 -mb-2\" />;"
+  },
+  {
+    "name": "better-tailwindcss/enforce-shorthand-classes:Component.tsx",
+    "source": "const element = <div className=\"-mt-2 mb-2\" />;"
+  },
+  {
+    "name": "better-tailwindcss/enforce-shorthand-classes:Component.tsx",
+    "source": "const element = <div className=\"[&_button]:border-s-0 [&_button]:border-e-0\" />;"
+  },
+  {
+    "name": "better-tailwindcss/enforce-shorthand-classes:Component.tsx",
+    "source": "const element = <div className=\"flex items-center\" />;"
+  },
+  {
+    "name": "better-tailwindcss/enforce-shorthand-classes:Component.tsx",
+    "source": "const element = <div className=\"h-auto w-auto\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-shorthand-classes:Component.tsx",
+    "source": "const element = <div className=\"h-screen w-screen\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/enforce-shorthand-classes:Component.tsx",
+    "source": "const element = <div className=\"hover:ps-4 hover:pe-4\" />;"
+  },
+  {
+    "name": "better-tailwindcss/enforce-shorthand-classes:Component.tsx",
+    "source": "const element = <div className=\"ml-1 mr-1 mt-1 mb-1\" />;"
+  },
+  {
+    "name": "better-tailwindcss/enforce-shorthand-classes:Component.tsx",
+    "source": "const element = <div className=\"ps-4 hover:pe-4\" />;"
+  },
+  {
+    "name": "better-tailwindcss/enforce-shorthand-classes:Component.tsx",
+    "source": "const element = <div className=\"ps-4 pe-4 mt-2 mb-2\" />;"
+  },
+  {
+    "name": "better-tailwindcss/enforce-shorthand-classes:Component.tsx",
+    "source": "const element = <div className=\"ps-4 pe-4\" />;"
+  },
+  {
+    "name": "better-tailwindcss/enforce-shorthand-classes:Component.tsx",
+    "source": "const element = <div className=\"ps-4 pe-8\" />;"
+  },
+  {
+    "name": "better-tailwindcss/enforce-shorthand-classes:Component.tsx",
+    "source": "const element = <div className=\"ps-4\" />;"
+  },
+  {
+    "name": "better-tailwindcss/enforce-shorthand-classes:Component.tsx",
+    "source": "const element = <div className=\"ps-[2px] pe-[2px]\" />;"
+  },
+  {
+    "name": "better-tailwindcss/enforce-shorthand-classes:Component.tsx",
+    "source": "const element = <div className=\"pt-2 pb-2\" />;"
+  },
+  {
+    "name": "better-tailwindcss/enforce-shorthand-classes:Component.tsx",
+    "source": "const element = <div className=\"pt-2! pb-2!\" />;"
+  },
+  {
+    "name": "better-tailwindcss/enforce-shorthand-classes:Component.tsx",
+    "source": "const element = <div className=\"px-4 py-4 p-4\" />;"
+  },
+  {
+    "name": "better-tailwindcss/enforce-shorthand-classes:Component.tsx",
+    "source": "const element = <div className=\"top-0 right-0 bottom-0 left-0\" />;"
+  },
+  {
+    "name": "better-tailwindcss/enforce-shorthand-classes:Component.tsx",
+    "source": "const element = <div className=\"w-4 h-4\" />;"
+  },
+  {
+    "name": "better-tailwindcss/no-concatenated-classes:Component.tsx",
+    "source": "const element = <div className={'bg-[' + color + ']'} />;"
+  },
+  {
+    "name": "better-tailwindcss/no-concatenated-classes:Component.tsx",
+    "source": "const element = <div className={'px-' + size} />;"
+  },
+  {
+    "name": "better-tailwindcss/no-concatenated-classes:Component.tsx",
+    "source": "const element = <div className={`${a}${b}`} />;"
+  },
+  {
+    "name": "better-tailwindcss/no-concatenated-classes:Component.tsx",
+    "source": "const element = <div className={`${extra} flex`} />;"
+  },
+  {
+    "name": "better-tailwindcss/no-concatenated-classes:Component.tsx",
+    "source": "const element = <div className={`${prefix}-4`} />;"
+  },
+  {
+    "name": "better-tailwindcss/no-concatenated-classes:Component.tsx",
+    "source": "const element = <div className={`bg-[${color}]`} />;"
+  },
+  {
+    "name": "better-tailwindcss/no-concatenated-classes:Component.tsx",
+    "source": "const element = <div className={`flex\t${extra}`} />;"
+  },
+  {
+    "name": "better-tailwindcss/no-concatenated-classes:Component.tsx",
+    "source": "const element = <div className={`flex\n${extra}`} />;"
+  },
+  {
+    "name": "better-tailwindcss/no-concatenated-classes:Component.tsx",
+    "source": "const element = <div className={`flex ${a} gap-${b}`} />;"
+  },
+  {
+    "name": "better-tailwindcss/no-concatenated-classes:Component.tsx",
+    "source": "const element = <div className={`flex ${extra} gap-2`} />;"
+  },
+  {
+    "name": "better-tailwindcss/no-concatenated-classes:Component.tsx",
+    "source": "const element = <div className={`flex ${extra}`} />;"
+  },
+  {
+    "name": "better-tailwindcss/no-concatenated-classes:Component.tsx",
+    "source": "const element = <div className={`flex items-center`} />;"
+  },
+  {
+    "name": "better-tailwindcss/no-concatenated-classes:Component.tsx",
+    "source": "const element = <div className={`px-${size}`} />;"
+  },
+  {
+    "name": "better-tailwindcss/no-concatenated-classes:Component.tsx",
+    "source": "const element = <div className={isWide ? 'px-8' : 'px-4'} />;"
+  },
+  {
+    "name": "better-tailwindcss/no-concatenated-classes:Component.tsx",
+    "source": "const element = <div title={`px-${size}`} />;"
+  },
+  {
+    "name": "better-tailwindcss/no-concatenated-classes:Component.tsx",
+    "source": "const merged = mergeClassNames(`px-${size}`);"
+  },
+  {
+    "name": "better-tailwindcss/no-concatenated-classes:Component.tsx",
+    "source": "const value = someOtherFunction(`px-${size}`);"
+  },
+  {
+    "name": "better-tailwindcss/no-concatenated-classes:Styles.ts",
+    "source": "const buttonClassName = `rounded-${radius}`;"
+  },
+  {
+    "name": "better-tailwindcss/no-concatenated-classes:Styles.ts",
+    "source": "const description = `px-${size}`;"
+  },
+  {
+    "name": "better-tailwindcss/no-concatenated-classes:Styles.ts",
+    "source": "const rowClassName = 'border-b border--2 ' + 'data-[state=selected]:x';"
+  },
+  {
+    "name": "better-tailwindcss/no-conflicting-classes:Component.tsx",
+    "source": "const element = <div className=\"border border-dashed\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/no-conflicting-classes:Component.tsx",
+    "source": "const element = <div className=\"divide-neutral-200 border-neutral-200\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/no-conflicting-classes:Component.tsx",
+    "source": "const element = <div className=\"flex block grid\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/no-conflicting-classes:Component.tsx",
+    "source": "const element = <div className=\"flex block\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/no-conflicting-classes:Component.tsx",
+    "source": "const element = <div className=\"flex flex\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/no-conflicting-classes:Component.tsx",
+    "source": "const element = <div className=\"flex hover:block\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/no-conflicting-classes:Component.tsx",
+    "source": "const element = <div className=\"flex items-center gap-2\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/no-conflicting-classes:Component.tsx",
+    "source": "const element = <div className=\"flex\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/no-conflicting-classes:Component.tsx",
+    "source": "const element = <div className=\"hover:flex hover:block\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/no-conflicting-classes:Component.tsx",
+    "source": "const element = <div className=\"mt-2 mb-2\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/no-conflicting-classes:Component.tsx",
+    "source": "const element = <div className=\"p-4 px-8\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/no-conflicting-classes:Component.tsx",
+    "source": "const element = <div className=\"px-4 px-8\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/no-conflicting-classes:Component.tsx",
+    "source": "const element = <div className=\"ring-1 ring-inset\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/no-conflicting-classes:Component.tsx",
+    "source": "const element = <div className=\"shadow-lg ring-1\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/no-conflicting-classes:Component.tsx",
+    "source": "const element = <div className=\"text-left text-right\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/no-conflicting-classes:Component.tsx",
+    "source": "const element = <div className=\"w-8 h-8\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/no-conflicting-classes:Component.tsx",
+    "source": "const element = <div className=\"w-full container\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/no-conflicting-classes:Component.tsx",
+    "source": "const element = <div title=\"flex block\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/no-conflicting-classes:Component.tsx",
+    "source": "const merged = mergeClassNames('flex block');\n"
+  },
+  {
+    "name": "better-tailwindcss/no-conflicting-classes:Component.tsx",
+    "source": "const value = someOtherFunction('flex block');\n"
+  },
+  {
+    "name": "better-tailwindcss/no-conflicting-classes:Styles.ts",
+    "source": "const buttonClassName = 'px-4 px-8';\n"
+  },
+  {
+    "name": "better-tailwindcss/no-deprecated-classes:Component.tsx",
+    "source": "const element = <div className=\"bg-left-top\" />;"
+  },
+  {
+    "name": "better-tailwindcss/no-deprecated-classes:Component.tsx",
+    "source": "const element = <div className=\"bg-opacity-50\" />;"
+  },
+  {
+    "name": "better-tailwindcss/no-deprecated-classes:Component.tsx",
+    "source": "const element = <div className=\"bg-top-left object-bottom-right\" />;"
+  },
+  {
+    "name": "better-tailwindcss/no-deprecated-classes:Component.tsx",
+    "source": "const element = <div className=\"flex flex-shrink-0 gap-2\" />;"
+  },
+  {
+    "name": "better-tailwindcss/no-deprecated-classes:Component.tsx",
+    "source": "const element = <div className=\"flex items-center gap-2\" />;"
+  },
+  {
+    "name": "better-tailwindcss/no-deprecated-classes:Component.tsx",
+    "source": "const element = <div className=\"flex-grow-2\" />;"
+  },
+  {
+    "name": "better-tailwindcss/no-deprecated-classes:Component.tsx",
+    "source": "const element = <div className=\"flex-shrink-0 flex flex-grow\" />;"
+  },
+  {
+    "name": "better-tailwindcss/no-deprecated-classes:Component.tsx",
+    "source": "const element = <div className=\"flex-shrink-0 flex-shrink-0\" />;"
+  },
+  {
+    "name": "better-tailwindcss/no-deprecated-classes:Component.tsx",
+    "source": "const element = <div className=\"flex-shrink-0 overflow-ellipsis\" />;"
+  },
+  {
+    "name": "better-tailwindcss/no-deprecated-classes:Component.tsx",
+    "source": "const element = <div className=\"flex-shrink-0!\" />;"
+  },
+  {
+    "name": "better-tailwindcss/no-deprecated-classes:Component.tsx",
+    "source": "const element = <div className=\"flex-shrink-0\" />;"
+  },
+  {
+    "name": "better-tailwindcss/no-deprecated-classes:Component.tsx",
+    "source": "const element = <div className=\"hover:flex-shrink-0\" />;"
+  },
+  {
+    "name": "better-tailwindcss/no-deprecated-classes:Component.tsx",
+    "source": "const element = <div className=\"overflow-ellipsis\" />;"
+  },
+  {
+    "name": "better-tailwindcss/no-deprecated-classes:Component.tsx",
+    "source": "const element = <div className=\"rounded\" />;"
+  },
+  {
+    "name": "better-tailwindcss/no-deprecated-classes:Component.tsx",
+    "source": "const element = <div className=\"shadow\" />;"
+  },
+  {
+    "name": "better-tailwindcss/no-deprecated-classes:Component.tsx",
+    "source": "const element = <div className=\"shadow-sm rounded-sm\" />;"
+  },
+  {
+    "name": "better-tailwindcss/no-deprecated-classes:Component.tsx",
+    "source": "const element = <div className=\"shrink grow\" />;"
+  },
+  {
+    "name": "better-tailwindcss/no-deprecated-classes:Component.tsx",
+    "source": "const element = <div className=\"shrink-0\" />;"
+  },
+  {
+    "name": "better-tailwindcss/no-deprecated-classes:Component.tsx",
+    "source": "const element = <div className=\"sm:hover:flex-grow-2\" />;"
+  },
+  {
+    "name": "better-tailwindcss/no-deprecated-classes:Component.tsx",
+    "source": "const element = <div title=\"flex-shrink-0\" />;"
+  },
+  {
+    "name": "better-tailwindcss/no-deprecated-classes:Component.tsx",
+    "source": "const merged = mergeClassNames('flex-shrink-0');"
+  },
+  {
+    "name": "better-tailwindcss/no-deprecated-classes:Component.tsx",
+    "source": "const value = someOtherFunction('flex-shrink-0');"
+  },
+  {
+    "name": "better-tailwindcss/no-deprecated-classes:Styles.ts",
+    "source": "const buttonClassName = 'overflow-ellipsis';"
+  },
+  {
+    "name": "better-tailwindcss/no-deprecated-classes:Styles.ts",
+    "source": "const description = 'flex-shrink-0';"
+  },
+  {
+    "name": "better-tailwindcss/no-duplicate-classes:Component.tsx",
+    "source": "const element = <div class=\"px-4 py-2 px-4\" />;"
+  },
+  {
+    "name": "better-tailwindcss/no-duplicate-classes:Component.tsx",
+    "source": "const element = <div className=\"   \" />;"
+  },
+  {
+    "name": "better-tailwindcss/no-duplicate-classes:Component.tsx",
+    "source": "const element = <div className=\"\" />;"
+  },
+  {
+    "name": "better-tailwindcss/no-duplicate-classes:Component.tsx",
+    "source": "const element = <div className=\"a b c a b\" />;"
+  },
+  {
+    "name": "better-tailwindcss/no-duplicate-classes:Component.tsx",
+    "source": "const element = <div className=\"border-l border-r\" />;"
+  },
+  {
+    "name": "better-tailwindcss/no-duplicate-classes:Component.tsx",
+    "source": "const element = <div className=\"flex\n  items-center\n  flex\" />;"
+  },
+  {
+    "name": "better-tailwindcss/no-duplicate-classes:Component.tsx",
+    "source": "const element = <div className=\"flex flex flex\" />;"
+  },
+  {
+    "name": "better-tailwindcss/no-duplicate-classes:Component.tsx",
+    "source": "const element = <div className=\"flex items-center flex\" />;"
+  },
+  {
+    "name": "better-tailwindcss/no-duplicate-classes:Component.tsx",
+    "source": "const element = <div className=\"flex items-center gap-2\" />;"
+  },
+  {
+    "name": "better-tailwindcss/no-duplicate-classes:Component.tsx",
+    "source": "const element = <div className=\"flex\" />;"
+  },
+  {
+    "name": "better-tailwindcss/no-duplicate-classes:Component.tsx",
+    "source": "const element = <div className=\"px-4 py-4\" />;"
+  },
+  {
+    "name": "better-tailwindcss/no-duplicate-classes:Component.tsx",
+    "source": "const element = <div className=\"text-sm   text-sm\" />;"
+  },
+  {
+    "name": "better-tailwindcss/no-duplicate-classes:Component.tsx",
+    "source": "const element = <div className={\"flex flex\"} />;"
+  },
+  {
+    "name": "better-tailwindcss/no-duplicate-classes:Component.tsx",
+    "source": "const element = <div className={'flex flex' && 'p-2'} />;"
+  },
+  {
+    "name": "better-tailwindcss/no-duplicate-classes:Component.tsx",
+    "source": "const element = <div className={'flex flex' + suffix} />;"
+  },
+  {
+    "name": "better-tailwindcss/no-duplicate-classes:Component.tsx",
+    "source": "const element = <div className={`${size} gap-2 block gap-2`} />;"
+  },
+  {
+    "name": "better-tailwindcss/no-duplicate-classes:Component.tsx",
+    "source": "const element = <div className={`flex ${dynamic} gap-2`} />;"
+  },
+  {
+    "name": "better-tailwindcss/no-duplicate-classes:Component.tsx",
+    "source": "const element = <div className={size === 'sm sm' ? 'p-2' : 'p-4'} />;"
+  },
+  {
+    "name": "better-tailwindcss/no-duplicate-classes:Component.tsx",
+    "source": "const element = <div className={translate('hello hello')} />;"
+  },
+  {
+    "name": "better-tailwindcss/no-duplicate-classes:Component.tsx",
+    "source": "const element = <div title=\"flex flex\" />;"
+  },
+  {
+    "name": "better-tailwindcss/no-duplicate-classes:Component.tsx",
+    "source": "const element = <div title={open ? 'flex flex' : ''} />;"
+  },
+  {
+    "name": "better-tailwindcss/no-duplicate-classes:Component.tsx",
+    "source": "const merged = mergeClassNames(\n    'flex flex',\n);\n"
+  },
+  {
+    "name": "better-tailwindcss/no-duplicate-classes:Component.tsx",
+    "source": "const merged = mergeClassNames('flex flex');\n"
+  },
+  {
+    "name": "better-tailwindcss/no-duplicate-classes:Component.tsx",
+    "source": "const merged = mergeClassNames('flex flex', 'gap-2 gap-2');"
+  },
+  {
+    "name": "better-tailwindcss/no-duplicate-classes:Component.tsx",
+    "source": "const merged = mergeClassNames('p-2', 'flex flex');\n"
+  },
+  {
+    "name": "better-tailwindcss/no-duplicate-classes:Component.tsx",
+    "source": "const merged = mergeClassNames('px-4 py-2 px-4');"
+  },
+  {
+    "name": "better-tailwindcss/no-duplicate-classes:Component.tsx",
+    "source": "const merged = mergeClassNames(`flex ${size} block`);"
+  },
+  {
+    "name": "better-tailwindcss/no-duplicate-classes:Component.tsx",
+    "source": "const merged = mergeClassNames(`flex ${size} flex`);"
+  },
+  {
+    "name": "better-tailwindcss/no-duplicate-classes:Component.tsx",
+    "source": "const merged = mergeClassNames(`flex flex ${size}`);"
+  },
+  {
+    "name": "better-tailwindcss/no-duplicate-classes:Component.tsx",
+    "source": "const merged = mergeClassNames(`flex px-${a} flex-${b} block`);"
+  },
+  {
+    "name": "better-tailwindcss/no-duplicate-classes:Component.tsx",
+    "source": "const merged = mergeClassNames(`items-center flex flex px-${size} block`);"
+  },
+  {
+    "name": "better-tailwindcss/no-duplicate-classes:Component.tsx",
+    "source": "const merged = mergeClassNames(`px-${a} px-${b}`);"
+  },
+  {
+    "name": "better-tailwindcss/no-duplicate-classes:Component.tsx",
+    "source": "const value = someOtherFunction('flex flex');"
+  },
+  {
+    "name": "better-tailwindcss/no-duplicate-classes:Component.tsx",
+    "source": "const value = theme.mergeClassNames('flex flex');"
+  },
+  {
+    "name": "better-tailwindcss/no-duplicate-classes:Styles.ts",
+    "source": "const buttonClassName = 'rounded-md rounded-md';"
+  },
+  {
+    "name": "better-tailwindcss/no-duplicate-classes:Styles.ts",
+    "source": "const buttonClassNames = 'p-2 p-2';"
+  },
+  {
+    "name": "better-tailwindcss/no-duplicate-classes:Styles.ts",
+    "source": "const description = 'flex flex';"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const element = <div className=\"[font:inherit]\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const element = <div className=\"ahralia-splash\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const element = <div className=\"container\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const element = <div className=\"flex items-center gap-2\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const element = <div className=\"flx grd\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const element = <div className=\"flx items-center\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const element = <div className=\"from-black/70 to-transparent\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const element = <div className=\"group peer\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const element = <div className=\"group/item\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const element = <div className=\"hover:px-4 sm:hover:flex\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const element = <div className=\"hover:synthetic-static\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const element = <div className=\"not-a-real-class-xyz\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const element = <div className=\"notavariant:flex\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const element = <div className=\"px-4!\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const element = <div className=\"px4\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const element = <div className=\"synthetic-fn-small synthetic-fn-large\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const element = <div className=\"synthetic-static flx\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const element = <div className=\"synthetic-static\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const element = <div className=\"w-[13px] h-[calc(100%-3px)]\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const element = <div className=\"wfull textcenter\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const element = <div title=\"flx\" />;\n"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const merged = mergeClassNames('flx');\n"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const value = someOtherFunction('flx');\n"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Styles.ts",
+    "source": "const buttonClassName = 'not-a-real-class-xyz';\n"
+  },
+  {
+    "name": "better-tailwindcss/no-unnecessary-whitespace:Component.tsx",
+    "source": "const element = <div className=\"   \" />;"
+  },
+  {
+    "name": "better-tailwindcss/no-unnecessary-whitespace:Component.tsx",
+    "source": "const element = <div className=\" flex\" />;"
+  },
+  {
+    "name": "better-tailwindcss/no-unnecessary-whitespace:Component.tsx",
+    "source": "const element = <div className=\"\" />;"
+  },
+  {
+    "name": "better-tailwindcss/no-unnecessary-whitespace:Component.tsx",
+    "source": "const element = <div className=\"flex\t\titems-center\" />;"
+  },
+  {
+    "name": "better-tailwindcss/no-unnecessary-whitespace:Component.tsx",
+    "source": "const element = <div className=\"flex\titems-center\" />;"
+  },
+  {
+    "name": "better-tailwindcss/no-unnecessary-whitespace:Component.tsx",
+    "source": "const element = <div className=\"flex  items-center\" />;"
+  },
+  {
+    "name": "better-tailwindcss/no-unnecessary-whitespace:Component.tsx",
+    "source": "const element = <div className=\"flex \" />;"
+  },
+  {
+    "name": "better-tailwindcss/no-unnecessary-whitespace:Component.tsx",
+    "source": "const element = <div className=\"flex items-center gap-2\" />;"
+  },
+  {
+    "name": "better-tailwindcss/no-unnecessary-whitespace:Component.tsx",
+    "source": "const element = <div className=\"flex\" />;"
+  },
+  {
+    "name": "better-tailwindcss/no-unnecessary-whitespace:Component.tsx",
+    "source": "const element = <div className={`${a}${b}`} />;"
+  },
+  {
+    "name": "better-tailwindcss/no-unnecessary-whitespace:Component.tsx",
+    "source": "const element = <div className={`${extra}  flex`} />;"
+  },
+  {
+    "name": "better-tailwindcss/no-unnecessary-whitespace:Component.tsx",
+    "source": "const element = <div className={`flex\n    items-center`} />;"
+  },
+  {
+    "name": "better-tailwindcss/no-unnecessary-whitespace:Component.tsx",
+    "source": "const element = <div className={`flex  \n    items-center`} />;"
+  },
+  {
+    "name": "better-tailwindcss/no-unnecessary-whitespace:Component.tsx",
+    "source": "const element = <div className={`flex  ${extra}`} />;"
+  },
+  {
+    "name": "better-tailwindcss/no-unnecessary-whitespace:Component.tsx",
+    "source": "const element = <div className={`flex ${extra} gap-2`} />;"
+  },
+  {
+    "name": "better-tailwindcss/no-unnecessary-whitespace:Component.tsx",
+    "source": "const element = <div className={`px-${size}`} />;"
+  },
+  {
+    "name": "better-tailwindcss/no-unnecessary-whitespace:Component.tsx",
+    "source": "const element = <div title=\"flex  items-center\" />;"
+  },
+  {
+    "name": "better-tailwindcss/no-unnecessary-whitespace:Component.tsx",
+    "source": "const element = <img className={`\n      d  c\n      b  a\n    `} />;"
+  },
+  {
+    "name": "better-tailwindcss/no-unnecessary-whitespace:Component.tsx",
+    "source": "const merged = mergeClassNames('flex  items-center');"
+  },
+  {
+    "name": "better-tailwindcss/no-unnecessary-whitespace:Component.tsx",
+    "source": "const value = someOtherFunction('flex  items-center');"
+  },
+  {
+    "name": "better-tailwindcss/no-unnecessary-whitespace:Styles.ts",
+    "source": "const buttonClassName = 'px-4  py-2';"
+  },
+  {
+    "name": "better-tailwindcss/no-unnecessary-whitespace:Styles.ts",
+    "source": "const description = 'flex  items-center';"
+  }
+]

@@ -1,0 +1,46 @@
+import { panic, programArguments, readTextFile, utf8At, utf8Length } from 'adamic';
+import { OptionsJson } from './options_json.ts';
+import { classLiteralSettingsKey } from './tailwind_settings_key.a';
+import { CompiledClassLiteralReaderCache } from './tailwind_compiled_reader.a';
+import type { ClassLiteralSettings04 } from './tailwind_settings04.a';
+interface ReaderWitness {
+    readonly identity: number;
+    readonly settingsKey: string;
+}
+let created = 0;
+function create(settings: ClassLiteralSettings04): ReaderWitness {
+    created++;
+    return { identity: created, settingsKey: classLiteralSettingsKey(settings) };
+}
+function names(corpus: OptionsJson, row: number, field: string): string[] {
+    const result: string[] = [];
+    for(const index of corpus.node(corpus.field(row, field)).children) {
+        result.push(corpus.node(index).text);
+    }
+    return result;
+}
+const input = readTextFile(programArguments()[0] ?? panic('corpus path'));
+if(input.kind === 'Error') {
+    panic(input.message);
+}
+const corpus = new OptionsJson(input.text);
+const root = corpus.parse();
+if(root < 0) {
+    panic(corpus.error);
+}
+const cache = new CompiledClassLiteralReaderCache<ReaderWitness>();
+for(const row of corpus.node(root).children) {
+    const settings: ClassLiteralSettings04 = {
+        attributeNames: names(corpus, row, 'AttributeNames'),
+        calleeNames: names(corpus, row, 'CalleeNames'),
+        variablePatterns: names(corpus, row, 'VariablePatterns'),
+    };
+    const explicit = corpus.field(row, 'Key');
+    const key = explicit < 0 ? classLiteralSettingsKey(settings) : corpus.node(explicit).text;
+    const reader = cache.reader(key, settings, create);
+    let bytes = '';
+    for(let index = 0; index < utf8Length(reader.settingsKey); index++) {
+        bytes += `${utf8At(reader.settingsKey, index)},`;
+    }
+    console.log(`reader ${reader.identity} ${created} ${bytes}`);
+}

@@ -1,0 +1,34 @@
+[
+  {
+    "name": "control0.tsx",
+    "source": "const view = <link rel='x' />;"
+  },
+  {
+    "name": "control1.tsx",
+    "source": "const view = <div id='x'>text<img /></div>;"
+  },
+  {
+    "name": "control2.tsx",
+    "source": "const view = <><Thing /><svg xlink:href='x' /><Foo.link /></>;"
+  },
+  {
+    "name": "control3.tsx",
+    "source": "const view = <a:b data-id={x} {...props} children />;"
+  },
+  {
+    "name": "control4.tsx",
+    "source": "const view = <div \u00e5='x' \u6570\u636e='x' />;"
+  },
+  {
+    "name": "control5.tsx",
+    "source": "const view = <div />; function test(){return 0}"
+  },
+  {
+    "name": "control6.tsx",
+    "source": "const view = <div = />;"
+  },
+  {
+    "name": "control7.tsx",
+    "source": "const view = <div attr= />;"
+  }
+]

@@ -1,0 +1,18 @@
+import type { ClassLiteralSettings04 } from './tailwind_settings04.a';
+// Preserve list order and duplicates. Go uses NUL after every name and SOH
+// between lists. Even names containing those separators retain Go's encoding.
+export function classLiteralSettingsKey(settings: ClassLiteralSettings04): string {
+    let key = '';
+    for(const name of settings.attributeNames) {
+        key += name + '\u0000';
+    }
+    key += '\u0001';
+    for(const name of settings.calleeNames) {
+        key += name + '\u0000';
+    }
+    key += '\u0001';
+    for(const name of settings.variablePatterns) {
+        key += name + '\u0000';
+    }
+    return key;
+}

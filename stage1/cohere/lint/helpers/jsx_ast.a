@@ -1,0 +1,19 @@
+// Adapter contract: stable indices identify Go AST nodes; -1 is a nil link.
+// Kind names omit Go's Kind prefix. Text is decoded AST text, not source slices.
+import { panic } from 'adamic';
+export interface JsxNode {
+    readonly kind: string;
+    readonly text: string;
+    readonly name: number;
+    readonly tagName: number;
+    readonly attributes: number;
+}
+export class JsxArena {
+    readonly nodes: readonly JsxNode[];
+    constructor(nodes: readonly JsxNode[]) {
+        this.nodes = nodes;
+    }
+    node(index: number): JsxNode {
+        return this.nodes[index] ?? panic('missing JSX adapter node');
+    }
+}

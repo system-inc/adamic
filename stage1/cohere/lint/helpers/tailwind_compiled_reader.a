@@ -1,0 +1,16 @@
+import type { ClassLiteralSettings04 } from './tailwind_settings04.a';
+// One instance per lint run represents Go's process-global compiled-reader map.
+// The reader factory is a dependency, not a second helper port in this file.
+// The first settings under a key win, even if a later caller supplies others.
+export class CompiledClassLiteralReaderCache<Reader extends object> {
+    private readonly readers = new Map<string, Reader>();
+    reader(key: string, settings: ClassLiteralSettings04, create: (settings: ClassLiteralSettings04) => Reader): Reader {
+        const previous = this.readers.get(key);
+        if(previous !== undefined) {
+            return previous;
+        }
+        const created = create(settings);
+        this.readers.set(key, created);
+        return created;
+    }
+}
