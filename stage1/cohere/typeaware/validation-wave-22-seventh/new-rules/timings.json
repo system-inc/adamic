@@ -1,0 +1,50 @@
+[
+  {
+    "corpus": "repository",
+    "engine": "oracle",
+    "command": [
+      "/workspace/wave-22-seventh-work/oracle",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave-22-seventh-work/repository.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.25066981200143346,
+    "cpu_seconds": 0.39818
+  },
+  {
+    "corpus": "repository",
+    "engine": "native",
+    "command": [
+      "/workspace/wave-22-seventh-work/native",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave-22-seventh-work/repository.manifest"
+    ],
+    "exit": 0,
+    "seconds": 5.109100604997366,
+    "cpu_seconds": 5.156245999999999
+  },
+  {
+    "corpus": "compiler",
+    "engine": "oracle",
+    "command": [
+      "/workspace/wave-22-seventh-work/oracle",
+      "/workspace/wave-22-typescript-pinned/src/compiler/tsconfig.json",
+      "/workspace/wave-22-seventh-work/compiler.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.6619181919995754,
+    "cpu_seconds": 0.8664770000000004
+  },
+  {
+    "corpus": "compiler",
+    "engine": "native",
+    "command": [
+      "/workspace/wave-22-seventh-work/native",
+      "/workspace/wave-22-typescript-pinned/src/compiler/tsconfig.json",
+      "/workspace/wave-22-seventh-work/compiler.manifest"
+    ],
+    "exit": 0,
+    "seconds": 41.51205592699989,
+    "cpu_seconds": 41.599709
+  }
+]
