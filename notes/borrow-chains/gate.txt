@@ -1,0 +1,29 @@
+?   	github.com/system-inc/adamic/bench	[no test files]
+?   	github.com/system-inc/adamic/bench/regex	[no test files]
+ok  	github.com/system-inc/adamic/bridge/tsgo	445.414s
+?   	github.com/system-inc/adamic/bridge/tsgo/archive	[no test files]
+ok  	github.com/system-inc/adamic/bridge/tsgo/checker	0.231s
+?   	github.com/system-inc/adamic/bridge/tsgo/cost	[no test files]
+?   	github.com/system-inc/adamic/bridge/tsgo/oracle	[no test files]
+?   	github.com/system-inc/adamic/bridge/tsgo/spec	[no test files]
+?   	github.com/system-inc/adamic/cmd/adamic	[no test files]
+?   	github.com/system-inc/adamic/cmd/adamic-fuzz	[no test files]
+ok  	github.com/system-inc/adamic/cmd/adamic-meter	8.182s
+ok  	github.com/system-inc/adamic/cmd/adamic-stage1-progress	0.430s
+ok  	github.com/system-inc/adamic/cmd/adamic-test262	83.869s
+--- FAIL: TestEveryMutationIsInItsRange (127.46s)
+    --- FAIL: TestEveryMutationIsInItsRange/programs (0.09s)
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/borrow_chain_coverage_callbacks.a (0.60s)
+            ranges_test.go:63: function 1 (changes): child$2 was mutated at instruction 2 (order 3), outside its range [1, 2)
+    ranges_test.go:78: 77949 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+FAIL
+FAIL	github.com/system-inc/adamic/internal/flow	135.566s
+ok  	github.com/system-inc/adamic/internal/fresh	67.561s
+ok  	github.com/system-inc/adamic/internal/fuzz	21.976s
+ok  	github.com/system-inc/adamic/internal/ir	3.258s
+?   	github.com/system-inc/adamic/internal/javascript	[no test files]
+ok  	github.com/system-inc/adamic/internal/load	1.691s
+ok  	github.com/system-inc/adamic/internal/lower	39.265s
+ok  	github.com/system-inc/adamic/internal/native	239.371s
+ok  	github.com/system-inc/adamic/internal/oracle	213.352s
+ok  	github.com/system-inc/adamic/internal/regexp	9.166s

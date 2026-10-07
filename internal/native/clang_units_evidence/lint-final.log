@@ -1,0 +1,101 @@
+=== RUN   TestCompleteSuggestionSerialization
+    harness_test.go:114: Go, Node, emitted JavaScript, native identical: 735 bytes
+    harness_test.go:140: second suggestion edit mutant caught on Node: case 0 line 8: port "suggestion-edit\t9 11\t", Go "suggestion-edit\t9 10\t"
+        Go context:
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 8 17 unexpectedDebugger suggestions			8 17
+        suggestion	first	first | :\u000a\ud83d\ude00	2
+        suggestion-edit	8 9	a|:\u0009\u000a\ud83d\ude00\u005c
+        suggestion-edit	9 10	
+        suggestion	second	second	1
+        suggestion-edit	10 10	?.
+        suggestion	empty	no edits	0
+        fixed	/*\ud83d\ude00*/debugger;\u000a
+    harness_test.go:140: second suggestion edit mutant caught on emitted JavaScript: case 0 line 8: port "suggestion-edit\t9 11\t", Go "suggestion-edit\t9 10\t"
+        Go context:
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 8 17 unexpectedDebugger suggestions			8 17
+        suggestion	first	first | :\u000a\ud83d\ude00	2
+        suggestion-edit	8 9	a|:\u0009\u000a\ud83d\ude00\u005c
+        suggestion-edit	9 10	
+        suggestion	second	second	1
+        suggestion-edit	10 10	?.
+        suggestion	empty	no edits	0
+        fixed	/*\ud83d\ude00*/debugger;\u000a
+    harness_test.go:140: second suggestion edit mutant caught on native: case 0 line 8: port "suggestion-edit\t9 11\t", Go "suggestion-edit\t9 10\t"
+        Go context:
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 8 17 unexpectedDebugger suggestions			8 17
+        suggestion	first	first | :\u000a\ud83d\ude00	2
+        suggestion-edit	8 9	a|:\u0009\u000a\ud83d\ude00\u005c
+        suggestion-edit	9 10	
+        suggestion	second	second	1
+        suggestion-edit	10 10	?.
+        suggestion	empty	no edits	0
+        fixed	/*\ud83d\ude00*/debugger;\u000a
+--- PASS: TestCompleteSuggestionSerialization (52.65s)
+=== RUN   TestSuggestionAlongsideAutomaticFix
+    harness_test.go:167: Go, Node, emitted JavaScript, native identical: 720 bytes
+    harness_test.go:171: automatic fix remains applied while all three suggestions remain unapplied and serialized
+--- PASS: TestSuggestionAlongsideAutomaticFix (27.86s)
+=== RUN   TestRulesAgree
+    lint_test.go:359: cohere cases: 1273 unique source/rule/options combinations
+    lint_test.go:392: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree160706448/019/case-079/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:393: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:393: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree160706448/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree160706448/019/case-079/Thing.ts
+    lint_test.go:393: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree160706448/019/case-079/Thing.ts
+    lint_test.go:392: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree160706448/019/case-081/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:393: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:393: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree160706448/003/scanner: timeout=true: signal: killed: 
+    lint_test.go:393: explicit unsupported recovery: node: timeout=true: signal: killed: 
+    lint_test.go:392: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree160706448/019/case-085/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:393: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:393: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree160706448/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree160706448/019/case-085/Thing.ts
+    lint_test.go:393: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree160706448/019/case-085/Thing.ts
+    lint_test.go:392: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree160706448/019/case-086/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:393: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:393: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree160706448/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree160706448/019/case-086/Thing.ts
+    lint_test.go:393: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree160706448/019/case-086/Thing.ts
+    lint_test.go:392: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree160706448/019/case-095/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:393: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:393: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree160706448/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree160706448/019/case-095/Thing.ts
+    lint_test.go:393: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree160706448/019/case-095/Thing.ts
+    lint_test.go:392: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree160706448/019/case-097/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:393: Go recovered output: case 0
+        /tmp/adamic-gate/TestRulesAgree160706448/019/case-097/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 33 errorMethod fix	m: (a: string) => void;		14 33
+        recovery findings only
+    lint_test.go:393: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree160706448/003/scanner: timeout=true: signal: killed: 
+    lint_test.go:393: explicit unsupported recovery: node: timeout=true: signal: killed: 
+    lint_test.go:392: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree160706448/019/case-099/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:393: Go recovered output: case 0
+        /tmp/adamic-gate/TestRulesAgree160706448/019/case-099/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 34 errorMethod fix	m: (a: string) => void;		14 34
+        recovery findings only
+    lint_test.go:393: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree160706448/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree160706448/019/case-099/Thing.ts
+    lint_test.go:393: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree160706448/019/case-099/Thing.ts
+    lint_test.go:392: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree160706448/019/case-100/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:393: Go recovered output: case 0
+        /tmp/adamic-gate/TestRulesAgree160706448/019/case-100/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 27 errorMethod 			14 27
+        recovery findings only
+    lint_test.go:393: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree160706448/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree160706448/019/case-100/Thing.ts
+    lint_test.go:393: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree160706448/019/case-100/Thing.ts
+    lint_test.go:398: Go, Node, emitted JavaScript, native identical: 757785 bytes
+--- PASS: TestRulesAgree (40.24s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	120.817s

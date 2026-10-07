@@ -1,0 +1,30 @@
+// Every unbounded value must keep an element alive across removal.
+interface Item { readonly label: string; }
+type Action = (items: Item[]) => void;
+function remove(items: Item[]): void { items.pop(); }
+function returned(): Action { return (items) => { items.splice(0, 1); }; }
+function invoke(action: Action, items: Item[]): void { action(items); }
+function inspect(action: Action, index: number): void {
+    const items: Item[] = [{ label: `argument${index}` }];
+    const first = items[0] ?? { label: `missing${index}` };
+    invoke(action, items);
+    console.log(`${first.label}/${items.length}`);
+}
+function forms(index: number): void {
+    const items: Item[] = [{ label: `form${index}` }];
+    const first = items[0] ?? { label: `missing${index}` };
+    if (index === 0) {
+        const holder = { action: returned() };
+        holder.action(items);
+    } else if (index === 1) {
+        returned()(items);
+    } else if (index === 2) {
+        (index > 0 ? returned() : remove)(items);
+    } else {
+        const alias = remove;
+        alias(items);
+    }
+    console.log(`${first.label}/${items.length}`);
+}
+inspect((items) => { items.pop(); }, 4);
+for (let index = 0; index < 4; index += 1) { forms(index); }

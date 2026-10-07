@@ -1,0 +1,31 @@
+// Calls before a throw must preserve aliases, and retained arguments outlive the frame.
+interface Item { readonly label: string; }
+let saved: Item | undefined;
+function make(index: number): Item { return { label: `loop${index}` }; }
+class Reader {
+    act(items: Item[], value: Item): void { console.log(value.label); }
+}
+class Keeper extends Reader {
+    override act(items: Item[], value: Item): void {
+        saved = value;
+        items.pop();
+        throw new Error(`stopped${value.label}`);
+    }
+}
+function inspect(reader: Reader): void {
+    for (let index = 0; index < 3; index += 1) {
+        const items = [make(index)];
+        const first = items[0] ?? make(9);
+        try {
+            reader.act(items, make(index + 10));
+            console.log(`returned${index}`);
+        } catch (error) {
+            console.log(error instanceof Error ? error.message : 'unknown');
+        } finally {
+            console.log(`${first.label}/${items.length}`);
+        }
+        console.log(saved?.label ?? 'none');
+    }
+}
+inspect(new Reader());
+inspect(new Keeper());
