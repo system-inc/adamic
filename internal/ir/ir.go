@@ -181,6 +181,10 @@ type Local struct {
 	// (docs/memory.md, "Borrowed parameters"). Nothing ever assigns a borrowed parameter.
 	Borrowed bool
 
+	// ConstantClosure is the function index plus one for a const initialized directly
+	// with a closure literal. Zero means no such proof.
+	ConstantClosure int
+
 	// Counter is a for loop's counter proven to hold only whole numbers no larger than 2^53, each a
 	// double exactly, so the native backend keeps it in an integer and reads it as the same double
 	// (internal/lower/counters.go). Only the loop's update ever writes it, by a whole constant step.
@@ -1140,23 +1144,6 @@ func (Break) statement()       {}
 func (Continue) statement()    {}
 func (Throw) statement()       {}
 func (Try) statement()         {}
-
-// CallTargets names every implementation a virtual call may reach, or its direct callee.
-func (p *Program) CallTargets(call Call) []int {
-	if call.Virtual != 0 {
-		return p.MethodTargets[call.Function]
-	}
-	return []int{call.Function}
-}
-
-func (p *Program) CallMayThrow(call Call) bool {
-	for _, target := range p.CallTargets(call) {
-		if p.Functions[target].MayThrow {
-			return true
-		}
-	}
-	return false
-}
 
 func (p *Program) HasInheritance() bool {
 	for _, class := range p.Classes {
