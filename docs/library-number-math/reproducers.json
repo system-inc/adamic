@@ -1,0 +1,144 @@
+[
+  {
+    "name": "array_growth",
+    "source": "const values = new Array<number>(); values[0] = 1; console.log(`${values[0]}`);",
+    "typescript": [],
+    "adamicExit": 1,
+    "reason": "adamic: /workspace/number-math-refusal-probes/array_growth.a:1:16: stage 0 can't lower new an Identifier yet"
+  },
+  {
+    "name": "stored_number",
+    "source": "const value = new Number(1); console.log(value.toString());",
+    "typescript": [],
+    "adamicExit": 1,
+    "reason": "adamic: /workspace/number-math-refusal-probes/stored_number.a:1:15: stage 0 can't lower new an Identifier yet"
+  },
+  {
+    "name": "boxed_string",
+    "source": "console.log(`${Number(new String(\"10\"))}`);",
+    "typescript": [],
+    "adamicExit": 1,
+    "reason": "adamic: /workspace/number-math-refusal-probes/boxed_string.a:1:23: stage 0 can't lower new an Identifier yet"
+  },
+  {
+    "name": "boxed_object",
+    "source": "console.log(`${Number(new Object(10))}`);",
+    "typescript": [],
+    "adamicExit": 1,
+    "reason": "adamic: /workspace/number-math-refusal-probes/boxed_object.a:1:23: stage 0 can't lower new an Identifier yet"
+  },
+  {
+    "name": "dynamic_toprimitive",
+    "source": "console.log(`${Number({valueOf: () => 1})}`);",
+    "typescript": [],
+    "adamicExit": 1,
+    "reason": "adamic: /workspace/number-math-refusal-probes/dynamic_toprimitive.a:1:23: stage 0 can't lower Number conversion of an object yet"
+  },
+  {
+    "name": "prototype_chain",
+    "source": "console.log(`${Number.prototype.isPrototypeOf({})}`);",
+    "typescript": [],
+    "adamicExit": 1,
+    "reason": "adamic: /workspace/number-math-refusal-probes/prototype_chain.a:1:16: stage 0 can't lower Number.prototype.isPrototypeOf yet"
+  },
+  {
+    "name": "prototype_mutation",
+    "source": "Number.prototype.toString = () => \"changed\"; console.log(Number.prototype.toString());",
+    "typescript": [],
+    "adamicExit": 1,
+    "reason": "adamic: /workspace/number-math-refusal-probes/prototype_mutation.a:1:1: Adamic 0.1 refuses a method read as a value (toString would lose its object, and this with it); call it in an arrow that keeps the object: (radix) => its object.toString(radix) (unbound-method)"
+  },
+  {
+    "name": "prototype_reflection",
+    "source": "console.log(`${Object.getPrototypeOf(new Number(1))}`);",
+    "typescript": [],
+    "adamicExit": 1,
+    "reason": "adamic: /workspace/number-math-refusal-probes/prototype_reflection.a:1:16: Adamic 0.1 refuses Object.getPrototypeOf; prototypes expose or replace fields outside the declared shape; use a declared object or class with composition"
+  },
+  {
+    "name": "detached_method",
+    "source": "const value = {}; const print = value.toString; console.log(print());",
+    "typescript": [],
+    "adamicExit": 1,
+    "reason": "adamic: /workspace/number-math-refusal-probes/detached_method.a:1:33: Adamic 0.1 refuses a method read as a value (toString would lose its object, and this with it); call it in an arrow that keeps the object: () => value.toString() (unbound-method)"
+  },
+  {
+    "name": "for_in_intrinsic",
+    "source": "for (const key in Number) { console.log(key); }",
+    "typescript": [],
+    "adamicExit": 1,
+    "reason": "adamic: /workspace/number-math-refusal-probes/for_in_intrinsic.a:1:19: stage 0 can't lower for...in without a proven fixed plain-object origin (arrays, prototypes and absent synthetic fields cannot be enumerated soundly) yet"
+  },
+  {
+    "name": "var",
+    "source": "var value = 1; console.log(`${value}`);",
+    "typescript": [],
+    "adamicExit": 1,
+    "reason": "adamic: /workspace/number-math-refusal-probes/var.a:1:1: Adamic 0.1 refuses var; use const or let"
+  },
+  {
+    "name": "loose_equality",
+    "source": "console.log(`${1 == 1}`);",
+    "typescript": [],
+    "adamicExit": 1,
+    "reason": "adamic: /workspace/number-math-refusal-probes/loose_equality.a:1:18: Adamic 0.1 refuses ==; use ===, which doesn't coerce"
+  },
+  {
+    "name": "void",
+    "source": "console.log(`${void 0}`);",
+    "typescript": [],
+    "adamicExit": 1,
+    "reason": "adamic: /workspace/number-math-refusal-probes/void.a:1:16: Adamic 0.1 refuses the void operator; evaluate the expression as a statement"
+  },
+  {
+    "name": "mixed_add",
+    "source": "console.log(\"value:\" + 1);",
+    "typescript": [],
+    "adamicExit": 1,
+    "reason": "adamic: /workspace/number-math-refusal-probes/mixed_add.a:1:13: stage 0 can't lower a BinaryExpression with a string and a number yet"
+  },
+  {
+    "name": "catch_toFixed",
+    "source": "try { console.log((1).toFixed(-1)); } catch { console.log(\"caught\"); }",
+    "typescript": [],
+    "adamicExit": 1,
+    "reason": "adamic: /workspace/number-math-refusal-probes/catch_toFixed.a:1:1: stage 0 can't lower a try around toFixed, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet"
+  },
+  {
+    "name": "catch_toPrecision",
+    "source": "try { console.log((1).toPrecision(0)); } catch { console.log(\"caught\"); }",
+    "typescript": [],
+    "adamicExit": 1,
+    "reason": "adamic: /workspace/number-math-refusal-probes/catch_toPrecision.a:1:1: stage 0 can't lower a try around toPrecision, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet"
+  },
+  {
+    "name": "catch_toExponential",
+    "source": "try { console.log((1).toExponential(101)); } catch { console.log(\"caught\"); }",
+    "typescript": [],
+    "adamicExit": 1,
+    "reason": "adamic: /workspace/number-math-refusal-probes/catch_toExponential.a:1:1: stage 0 can't lower a try around toExponential, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet"
+  },
+  {
+    "name": "catch_toString",
+    "source": "try { console.log((1).toString(1)); } catch { console.log(\"caught\"); }",
+    "typescript": [],
+    "adamicExit": 1,
+    "reason": "adamic: /workspace/number-math-refusal-probes/catch_toString.a:1:1: stage 0 can't lower a try around toString, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet"
+  },
+  {
+    "name": "random",
+    "source": "console.log(`${Math.random()}`);",
+    "typescript": [],
+    "adamicExit": 1,
+    "reason": "adamic: /workspace/number-math-refusal-probes/random.a:1:16: Adamic 0.1 refuses Math.random; 0.1 programs are deterministic, so the oracle can hold them to Node; compute the values you need, with a generator of your own seeded by a constant"
+  },
+  {
+    "name": "sumPrecise",
+    "source": "console.log(`${Math.sumPrecise([1, 2])}`);",
+    "typescript": [
+      "TS2339"
+    ],
+    "adamicExit": 1,
+    "reason": "/workspace/number-math-refusal-probes/sumPrecise.a:1:21: error TS2550: Property 'sumPrecise' does not exist on type 'Math'. Do you need to change your target library? Try changing the 'lib' compiler option to 'es2026' or later."
+  }
+]
