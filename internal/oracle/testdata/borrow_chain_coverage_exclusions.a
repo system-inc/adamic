@@ -1,0 +1,15 @@
+interface Leaf { readonly text: string; }
+interface Root { child: Leaf | undefined; }
+const globalRoot: Root = { child: { text: `global${1}` } };
+function inspect(root: Root): void {
+ console.log(root.child?.text ?? 'missing');
+ if (root.child !== undefined) { const text = root.child.text; console.log(text); }
+ let child = root.child;
+ child = { text: `assigned${2}` };
+ console.log(child.text);
+ console.log(globalRoot.child?.text ?? 'missing');
+}
+function capture(root: Root): () => string { return () => root.child?.text ?? 'missing'; }
+inspect({ child: { text: `present${3}` } });
+inspect({ child: undefined });
+console.log(capture({ child: { text: `captured${4}` } })());
