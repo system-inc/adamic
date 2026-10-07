@@ -11,6 +11,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 sys.dont_write_bytecode = True
 SOURCE = Path(__file__).resolve().parent
@@ -44,6 +45,13 @@ class InstallationKey(unittest.TestCase):
             self.assertNotEqual(changed, permissions)
             file.rename(root / 'other.js')
             self.assertNotEqual(permissions, helper.tree_digest(root))
+
+    def test_unexpected_symlink_is_rejected(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / 'index.js').symlink_to('/outside/install')
+            with self.assertRaisesRegex(ValueError, 'unexpected installed symlink'):
+                helper.tree_digest(root)
 
     def test_integrity_rejects_corruption(self):
         data = b'archive bytes'
@@ -103,6 +111,36 @@ class InstallationIntegration(unittest.TestCase):
         lock.write_text(json.dumps(content))
         self.assertIn('EINTEGRITY', run(failure=True))
         self.assertEqual(cached, helper.tree_digest(destination))
+
+    def test_install_uses_the_keyed_input_snapshot(self):
+        scratch = Path(tempfile.mkdtemp(prefix='markdown-snapshot-', dir='/tmp/adamic-gate'))
+        print('snapshot integration:', scratch, flush=True)
+        source = scratch / 'source'
+        shutil.copytree(SOURCE / 'markdown-width', source)
+        lock = source / 'package-lock.json'
+        original = lock.read_bytes()
+        destination = scratch / 'dependencies'
+        run = helper.subprocess.run
+
+        def concurrent_edit(arguments, **kwargs):
+            if arguments[0] == 'curl':
+                lock.write_bytes(original + b'\n')
+            return run(arguments, **kwargs)
+
+        with (scratch / 'install.log').open('w') as output, patch.object(helper.subprocess, 'run', concurrent_edit):
+            # Keep the real download/npm processes and mutate only the checkout input.
+            # Redirect file descriptors because npm inherits the process's stdout/stderr.
+            stdout, stderr = os.dup(1), os.dup(2)
+            try:
+                os.dup2(output.fileno(), 1)
+                os.dup2(output.fileno(), 2)
+                helper.prepare(source, destination, os.environ.get('ADAMIC_SETUP_NODE', '/workspace/adamic-tools/bin/node'))
+            finally:
+                os.dup2(stdout, 1)
+                os.dup2(stderr, 2)
+                os.close(stdout)
+                os.close(stderr)
+        self.assertEqual(original, (destination / 'package-lock.json').read_bytes())
 
 
 if __name__ == '__main__':

@@ -49,7 +49,11 @@ def prepare(source, destination, node):
     source, destination = Path(source), Path(destination)
     if destination.resolve().is_relative_to('/root'):
         raise ValueError('Markdown dependencies must be outside /root')
-    key = installation_key(*(digest((source / name).read_bytes()) for name in
+    # Use the same immutable inputs for the key and npm, even if a checkout changes
+    # during a download. The next invocation will validate the new checkout's key.
+    inputs = {name: (source / name).read_bytes() for name in
+              ['package-lock.json', 'package.json', 'npm-bootstrap.json']}
+    key = installation_key(*(digest(inputs[name]) for name in
                              ['package-lock.json', 'package.json', 'npm-bootstrap.json']),
                            digest(Path(__file__).read_bytes()),
                            subprocess.check_output([node, '--version']).decode().strip())
@@ -65,7 +69,7 @@ def prepare(source, destination, node):
     # No globally installed npm or npm cache is assumed, even when Node was copied alone.
     with tempfile.TemporaryDirectory(prefix='markdown-install-', dir=destination.parent) as temporary:
         scratch = Path(temporary)
-        bootstrap = json.loads((source / 'npm-bootstrap.json').read_text())
+        bootstrap = json.loads(inputs['npm-bootstrap.json'])
         archive = scratch / 'npm.tgz'
         subprocess.run(['curl', '-fsSL', bootstrap['url'], '-o', str(archive)], check=True)
         verified_archive(archive.read_bytes(), bootstrap['integrity'])
@@ -73,10 +77,11 @@ def prepare(source, destination, node):
         install = scratch / 'dependencies'
         install.mkdir(mode=0o755)
         for name in ['package.json', 'package-lock.json']:
-            shutil.copyfile(source / name, install / name)
+            (install / name).write_bytes(inputs[name])
         subprocess.run([node, str(scratch / 'package/bin/npm-cli.js'), 'ci',
                         '--prefix', str(install), '--cache', str(scratch / 'cache'),
                         '--ignore-scripts', '--no-audit', '--no-fund', '--fetch-retries=0',
+                        '--global=false', '--dry-run=false', '--install-strategy=hoisted',
                         '--registry=https://registry.npmjs.org'], check=True,
                        env=dict(os.environ, npm_config_update_notifier='false'))
         for path in install.rglob('*'):
