@@ -1,0 +1,174 @@
+=== RUN   TestNetworkNoInvalidateCacheLiteralKeyFires
+=== PAUSE TestNetworkNoInvalidateCacheLiteralKeyFires
+=== RUN   TestNetworkNoInvalidateCacheLiteralKeyStaysSilent
+=== PAUSE TestNetworkNoInvalidateCacheLiteralKeyStaysSilent
+=== RUN   TestNetworkNoStringLiteralQueryFires
+=== PAUSE TestNetworkNoStringLiteralQueryFires
+=== RUN   TestNetworkNoStringLiteralQueryStaysSilent
+=== PAUSE TestNetworkNoStringLiteralQueryStaysSilent
+=== CONT  TestNetworkNoInvalidateCacheLiteralKeyFires
+=== RUN   TestNetworkNoInvalidateCacheLiteralKeyFires/a_string_literal
+=== PAUSE TestNetworkNoInvalidateCacheLiteralKeyFires/a_string_literal
+=== RUN   TestNetworkNoInvalidateCacheLiteralKeyFires/a_template_literal_with_interpolation
+=== PAUSE TestNetworkNoInvalidateCacheLiteralKeyFires/a_template_literal_with_interpolation
+=== RUN   TestNetworkNoInvalidateCacheLiteralKeyFires/a_template_literal_with_no_substitutions
+=== PAUSE TestNetworkNoInvalidateCacheLiteralKeyFires/a_template_literal_with_no_substitutions
+=== RUN   TestNetworkNoInvalidateCacheLiteralKeyFires/one_literal_among_imported_keys
+=== PAUSE TestNetworkNoInvalidateCacheLiteralKeyFires/one_literal_among_imported_keys
+=== RUN   TestNetworkNoInvalidateCacheLiteralKeyFires/two_literals_in_one_array_report_twice
+=== PAUSE TestNetworkNoInvalidateCacheLiteralKeyFires/two_literals_in_one_array_report_twice
+=== RUN   TestNetworkNoInvalidateCacheLiteralKeyFires/a_template_inside_an_array
+=== PAUSE TestNetworkNoInvalidateCacheLiteralKeyFires/a_template_inside_an_array
+=== RUN   TestNetworkNoInvalidateCacheLiteralKeyFires/a_cache_that_is_not_a_service's
+=== PAUSE TestNetworkNoInvalidateCacheLiteralKeyFires/a_cache_that_is_not_a_service's
+=== CONT  TestNetworkNoInvalidateCacheLiteralKeyFires/a_string_literal
+=== CONT  TestNetworkNoStringLiteralQueryStaysSilent
+=== RUN   TestNetworkNoStringLiteralQueryStaysSilent/a_gql_tagged_document
+=== PAUSE TestNetworkNoStringLiteralQueryStaysSilent/a_gql_tagged_document
+=== RUN   TestNetworkNoStringLiteralQueryStaysSilent/an_identifier_holding_a_gql_result
+=== PAUSE TestNetworkNoStringLiteralQueryStaysSilent/an_identifier_holding_a_gql_result
+=== RUN   TestNetworkNoStringLiteralQueryStaysSilent/an_inner_binding_shadowing_an_outer_string
+=== PAUSE TestNetworkNoStringLiteralQueryStaysSilent/an_inner_binding_shadowing_an_outer_string
+=== RUN   TestNetworkNoStringLiteralQueryStaysSilent/an_identifier_with_no_binding_in_the_file
+=== PAUSE TestNetworkNoStringLiteralQueryStaysSilent/an_identifier_with_no_binding_in_the_file
+=== RUN   TestNetworkNoStringLiteralQueryStaysSilent/a_parameter,_which_has_no_initializer_to_read
+=== PAUSE TestNetworkNoStringLiteralQueryStaysSilent/a_parameter,_which_has_no_initializer_to_read
+=== RUN   TestNetworkNoStringLiteralQueryStaysSilent/a_string_in_the_variables_argument
+=== PAUSE TestNetworkNoStringLiteralQueryStaysSilent/a_string_in_the_variables_argument
+=== RUN   TestNetworkNoStringLiteralQueryStaysSilent/a_method_that_does_not_take_a_document
+=== PAUSE TestNetworkNoStringLiteralQueryStaysSilent/a_method_that_does_not_take_a_document
+=== RUN   TestNetworkNoStringLiteralQueryStaysSilent/a_bare_call_that_is_not_a_member_access
+=== PAUSE TestNetworkNoStringLiteralQueryStaysSilent/a_bare_call_that_is_not_a_member_access
+=== RUN   TestNetworkNoStringLiteralQueryStaysSilent/a_call_with_no_arguments
+=== PAUSE TestNetworkNoStringLiteralQueryStaysSilent/a_call_with_no_arguments
+=== RUN   TestNetworkNoStringLiteralQueryStaysSilent/a_cycle_between_two_bindings_does_not_hang
+=== PAUSE TestNetworkNoStringLiteralQueryStaysSilent/a_cycle_between_two_bindings_does_not_hang
+=== RUN   TestNetworkNoStringLiteralQueryStaysSilent/no_calls_at_all
+=== PAUSE TestNetworkNoStringLiteralQueryStaysSilent/no_calls_at_all
+=== CONT  TestNetworkNoStringLiteralQueryStaysSilent/a_gql_tagged_document
+=== CONT  TestNetworkNoStringLiteralQueryFires
+=== RUN   TestNetworkNoStringLiteralQueryFires/a_plain_string_document
+=== PAUSE TestNetworkNoStringLiteralQueryFires/a_plain_string_document
+=== RUN   TestNetworkNoStringLiteralQueryFires/a_template_with_no_substitutions
+=== PAUSE TestNetworkNoStringLiteralQueryFires/a_template_with_no_substitutions
+=== RUN   TestNetworkNoStringLiteralQueryFires/a_template_with_interpolation
+=== PAUSE TestNetworkNoStringLiteralQueryFires/a_template_with_interpolation
+=== RUN   TestNetworkNoStringLiteralQueryFires/an_identifier_holding_a_string
+=== PAUSE TestNetworkNoStringLiteralQueryFires/an_identifier_holding_a_string
+=== RUN   TestNetworkNoStringLiteralQueryFires/an_identifier_holding_a_template
+=== PAUSE TestNetworkNoStringLiteralQueryFires/an_identifier_holding_a_template
+=== RUN   TestNetworkNoStringLiteralQueryFires/an_identifier_resolving_through_a_second_identifier
+=== PAUSE TestNetworkNoStringLiteralQueryFires/an_identifier_resolving_through_a_second_identifier
+=== RUN   TestNetworkNoStringLiteralQueryFires/a_string_behind_an_as-expression
+=== PAUSE TestNetworkNoStringLiteralQueryFires/a_string_behind_an_as-expression
+=== RUN   TestNetworkNoStringLiteralQueryFires/useGraphQlMutation
+=== PAUSE TestNetworkNoStringLiteralQueryFires/useGraphQlMutation
+=== RUN   TestNetworkNoStringLiteralQueryFires/useSuspenseGraphQlQuery
+=== PAUSE TestNetworkNoStringLiteralQueryFires/useSuspenseGraphQlQuery
+=== RUN   TestNetworkNoStringLiteralQueryFires/graphQlRequest
+=== PAUSE TestNetworkNoStringLiteralQueryFires/graphQlRequest
+=== RUN   TestNetworkNoStringLiteralQueryFires/a_receiver_that_is_not_networkService
+=== CONT  TestNetworkNoStringLiteralQueryStaysSilent/a_cycle_between_two_bindings_does_not_hang
+=== CONT  TestNetworkNoInvalidateCacheLiteralKeyStaysSilent
+=== CONT  TestNetworkNoInvalidateCacheLiteralKeyFires/a_cache_that_is_not_a_service's
+=== CONT  TestNetworkNoInvalidateCacheLiteralKeyFires/a_template_inside_an_array
+=== CONT  TestNetworkNoInvalidateCacheLiteralKeyFires/two_literals_in_one_array_report_twice
+=== RUN   TestNetworkNoInvalidateCacheLiteralKeyStaysSilent/an_imported_key
+=== PAUSE TestNetworkNoInvalidateCacheLiteralKeyStaysSilent/an_imported_key
+=== RUN   TestNetworkNoInvalidateCacheLiteralKeyStaysSilent/an_array_of_imported_keys
+=== CONT  TestNetworkNoInvalidateCacheLiteralKeyFires/one_literal_among_imported_keys
+=== PAUSE TestNetworkNoInvalidateCacheLiteralKeyStaysSilent/an_array_of_imported_keys
+=== RUN   TestNetworkNoInvalidateCacheLiteralKeyStaysSilent/an_empty_array
+=== PAUSE TestNetworkNoInvalidateCacheLiteralKeyStaysSilent/an_empty_array
+=== CONT  TestNetworkNoInvalidateCacheLiteralKeyFires/a_template_literal_with_no_substitutions
+=== RUN   TestNetworkNoInvalidateCacheLiteralKeyStaysSilent/a_call_with_no_arguments
+=== PAUSE TestNetworkNoInvalidateCacheLiteralKeyStaysSilent/a_call_with_no_arguments
+=== RUN   TestNetworkNoInvalidateCacheLiteralKeyStaysSilent/invalidate_reached_directly_off_a_binding
+=== PAUSE TestNetworkNoInvalidateCacheLiteralKeyStaysSilent/invalidate_reached_directly_off_a_binding
+=== RUN   TestNetworkNoInvalidateCacheLiteralKeyStaysSilent/invalidate_reached_through_a_property_that_is_not_cache
+=== PAUSE TestNetworkNoStringLiteralQueryFires/a_receiver_that_is_not_networkService
+=== CONT  TestNetworkNoStringLiteralQueryStaysSilent/no_calls_at_all
+=== PAUSE TestNetworkNoInvalidateCacheLiteralKeyStaysSilent/invalidate_reached_through_a_property_that_is_not_cache
+=== CONT  TestNetworkNoStringLiteralQueryStaysSilent/a_string_in_the_variables_argument
+=== CONT  TestNetworkNoInvalidateCacheLiteralKeyFires/a_template_literal_with_interpolation
+=== RUN   TestNetworkNoStringLiteralQueryFires/an_inner_binding_shadowing_an_outer_gql_document
+=== PAUSE TestNetworkNoStringLiteralQueryFires/an_inner_binding_shadowing_an_outer_gql_document
+=== CONT  TestNetworkNoStringLiteralQueryStaysSilent/a_call_with_no_arguments
+=== CONT  TestNetworkNoStringLiteralQueryStaysSilent/a_bare_call_that_is_not_a_member_access
+=== CONT  TestNetworkNoStringLiteralQueryStaysSilent/a_method_that_does_not_take_a_document
+=== CONT  TestNetworkNoStringLiteralQueryStaysSilent/an_identifier_with_no_binding_in_the_file
+=== CONT  TestNetworkNoStringLiteralQueryStaysSilent/a_parameter,_which_has_no_initializer_to_read
+=== CONT  TestNetworkNoStringLiteralQueryStaysSilent/an_inner_binding_shadowing_an_outer_string
+=== CONT  TestNetworkNoStringLiteralQueryStaysSilent/an_identifier_holding_a_gql_result
+=== CONT  TestNetworkNoStringLiteralQueryFires/a_plain_string_document
+=== CONT  TestNetworkNoStringLiteralQueryFires/a_string_behind_an_as-expression
+=== CONT  TestNetworkNoStringLiteralQueryFires/an_inner_binding_shadowing_an_outer_gql_document
+=== CONT  TestNetworkNoStringLiteralQueryFires/a_receiver_that_is_not_networkService
+=== CONT  TestNetworkNoStringLiteralQueryFires/graphQlRequest
+=== RUN   TestNetworkNoInvalidateCacheLiteralKeyStaysSilent/a_cache_method_that_is_not_invalidate
+=== CONT  TestNetworkNoStringLiteralQueryFires/useSuspenseGraphQlQuery
+=== CONT  TestNetworkNoStringLiteralQueryFires/useGraphQlMutation
+=== CONT  TestNetworkNoStringLiteralQueryFires/an_identifier_holding_a_string
+--- PASS: TestNetworkNoInvalidateCacheLiteralKeyFires (0.00s)
+    --- PASS: TestNetworkNoInvalidateCacheLiteralKeyFires/a_string_literal (0.00s)
+    --- PASS: TestNetworkNoInvalidateCacheLiteralKeyFires/a_template_inside_an_array (0.00s)
+    --- PASS: TestNetworkNoInvalidateCacheLiteralKeyFires/two_literals_in_one_array_report_twice (0.00s)
+    --- PASS: TestNetworkNoInvalidateCacheLiteralKeyFires/one_literal_among_imported_keys (0.00s)
+    --- PASS: TestNetworkNoInvalidateCacheLiteralKeyFires/a_cache_that_is_not_a_service's (0.00s)
+    --- PASS: TestNetworkNoInvalidateCacheLiteralKeyFires/a_template_literal_with_interpolation (0.00s)
+    --- PASS: TestNetworkNoInvalidateCacheLiteralKeyFires/a_template_literal_with_no_substitutions (0.00s)
+=== CONT  TestNetworkNoStringLiteralQueryFires/an_identifier_resolving_through_a_second_identifier
+=== CONT  TestNetworkNoStringLiteralQueryFires/an_identifier_holding_a_template
+=== CONT  TestNetworkNoStringLiteralQueryFires/a_template_with_no_substitutions
+=== CONT  TestNetworkNoStringLiteralQueryFires/a_template_with_interpolation
+--- PASS: TestNetworkNoStringLiteralQueryStaysSilent (0.00s)
+    --- PASS: TestNetworkNoStringLiteralQueryStaysSilent/a_gql_tagged_document (0.00s)
+    --- PASS: TestNetworkNoStringLiteralQueryStaysSilent/a_cycle_between_two_bindings_does_not_hang (0.00s)
+    --- PASS: TestNetworkNoStringLiteralQueryStaysSilent/no_calls_at_all (0.00s)
+    --- PASS: TestNetworkNoStringLiteralQueryStaysSilent/a_call_with_no_arguments (0.00s)
+    --- PASS: TestNetworkNoStringLiteralQueryStaysSilent/a_method_that_does_not_take_a_document (0.00s)
+    --- PASS: TestNetworkNoStringLiteralQueryStaysSilent/a_bare_call_that_is_not_a_member_access (0.00s)
+    --- PASS: TestNetworkNoStringLiteralQueryStaysSilent/an_identifier_with_no_binding_in_the_file (0.00s)
+    --- PASS: TestNetworkNoStringLiteralQueryStaysSilent/a_parameter,_which_has_no_initializer_to_read (0.00s)
+    --- PASS: TestNetworkNoStringLiteralQueryStaysSilent/an_inner_binding_shadowing_an_outer_string (0.00s)
+    --- PASS: TestNetworkNoStringLiteralQueryStaysSilent/an_identifier_holding_a_gql_result (0.00s)
+    --- PASS: TestNetworkNoStringLiteralQueryStaysSilent/a_string_in_the_variables_argument (0.00s)
+--- PASS: TestNetworkNoStringLiteralQueryFires (0.00s)
+    --- PASS: TestNetworkNoStringLiteralQueryFires/a_plain_string_document (0.00s)
+    --- PASS: TestNetworkNoStringLiteralQueryFires/a_string_behind_an_as-expression (0.00s)
+    --- PASS: TestNetworkNoStringLiteralQueryFires/an_inner_binding_shadowing_an_outer_gql_document (0.00s)
+    --- PASS: TestNetworkNoStringLiteralQueryFires/a_receiver_that_is_not_networkService (0.00s)
+    --- PASS: TestNetworkNoStringLiteralQueryFires/graphQlRequest (0.00s)
+    --- PASS: TestNetworkNoStringLiteralQueryFires/useGraphQlMutation (0.00s)
+    --- PASS: TestNetworkNoStringLiteralQueryFires/useSuspenseGraphQlQuery (0.00s)
+    --- PASS: TestNetworkNoStringLiteralQueryFires/an_identifier_resolving_through_a_second_identifier (0.00s)
+    --- PASS: TestNetworkNoStringLiteralQueryFires/a_template_with_no_substitutions (0.00s)
+    --- PASS: TestNetworkNoStringLiteralQueryFires/an_identifier_holding_a_template (0.00s)
+    --- PASS: TestNetworkNoStringLiteralQueryFires/a_template_with_interpolation (0.00s)
+    --- PASS: TestNetworkNoStringLiteralQueryFires/an_identifier_holding_a_string (0.00s)
+=== PAUSE TestNetworkNoInvalidateCacheLiteralKeyStaysSilent/a_cache_method_that_is_not_invalidate
+=== RUN   TestNetworkNoInvalidateCacheLiteralKeyStaysSilent/a_literal_in_an_unrelated_call
+=== PAUSE TestNetworkNoInvalidateCacheLiteralKeyStaysSilent/a_literal_in_an_unrelated_call
+=== RUN   TestNetworkNoInvalidateCacheLiteralKeyStaysSilent/no_calls_at_all
+=== PAUSE TestNetworkNoInvalidateCacheLiteralKeyStaysSilent/no_calls_at_all
+=== CONT  TestNetworkNoInvalidateCacheLiteralKeyStaysSilent/an_imported_key
+=== CONT  TestNetworkNoInvalidateCacheLiteralKeyStaysSilent/invalidate_reached_through_a_property_that_is_not_cache
+=== CONT  TestNetworkNoInvalidateCacheLiteralKeyStaysSilent/a_call_with_no_arguments
+=== CONT  TestNetworkNoInvalidateCacheLiteralKeyStaysSilent/no_calls_at_all
+=== CONT  TestNetworkNoInvalidateCacheLiteralKeyStaysSilent/invalidate_reached_directly_off_a_binding
+=== CONT  TestNetworkNoInvalidateCacheLiteralKeyStaysSilent/a_literal_in_an_unrelated_call
+=== CONT  TestNetworkNoInvalidateCacheLiteralKeyStaysSilent/a_cache_method_that_is_not_invalidate
+=== CONT  TestNetworkNoInvalidateCacheLiteralKeyStaysSilent/an_array_of_imported_keys
+=== CONT  TestNetworkNoInvalidateCacheLiteralKeyStaysSilent/an_empty_array
+--- PASS: TestNetworkNoInvalidateCacheLiteralKeyStaysSilent (0.00s)
+    --- PASS: TestNetworkNoInvalidateCacheLiteralKeyStaysSilent/invalidate_reached_through_a_property_that_is_not_cache (0.00s)
+    --- PASS: TestNetworkNoInvalidateCacheLiteralKeyStaysSilent/a_call_with_no_arguments (0.00s)
+    --- PASS: TestNetworkNoInvalidateCacheLiteralKeyStaysSilent/no_calls_at_all (0.00s)
+    --- PASS: TestNetworkNoInvalidateCacheLiteralKeyStaysSilent/a_literal_in_an_unrelated_call (0.00s)
+    --- PASS: TestNetworkNoInvalidateCacheLiteralKeyStaysSilent/invalidate_reached_directly_off_a_binding (0.00s)
+    --- PASS: TestNetworkNoInvalidateCacheLiteralKeyStaysSilent/a_cache_method_that_is_not_invalidate (0.00s)
+    --- PASS: TestNetworkNoInvalidateCacheLiteralKeyStaysSilent/an_empty_array (0.00s)
+    --- PASS: TestNetworkNoInvalidateCacheLiteralKeyStaysSilent/an_imported_key (0.00s)
+    --- PASS: TestNetworkNoInvalidateCacheLiteralKeyStaysSilent/an_array_of_imported_keys (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/structure	0.021s

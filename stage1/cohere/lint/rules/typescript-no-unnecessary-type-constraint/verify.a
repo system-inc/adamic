@@ -1,0 +1,107 @@
+import { panic, readTextFile, programArguments } from 'adamic';
+import { Parser } from '../../../../typescript/parser/parser.ts';
+import { written } from '../../../../typescript/parser/nodes.ts';
+import { Scanner } from '../../../../typescript/scanner/scanner.ts';
+import { RuleContext } from '../../context.ts';
+import { Settings } from '../../settings.ts';
+import { Rule as Constraint } from './rule.a';
+import { Rule as ConstRule } from '../typescript-prefer-as-const/rule.a';
+import { Rule as EnumRule } from '../typescript-prefer-enum-initializers/rule.a';
+import { Rule as Namespace } from '../nexus-import-require-node-namespace/rule.a';
+import { Rule as Invalidate } from '../structure-network-no-invalidate-cache-literal-key/rule.a';
+import { Rule as Query } from '../structure-network-no-string-literal-query/rule.a';
+import { Result, Edit } from './results.a';
+
+function ancestry(context: RuleContext, parents: number[], index: number, parent: number): void {
+    parents[index] = parent;
+    for(const child of context.node(index).children) { ancestry(context, parents, child, index); }
+}
+function walk(context: RuleContext, index: number, constraint: Constraint, constant: ConstRule, enumeration: EnumRule, selected: string, bridge: boolean, namespace: Namespace, invalidate: Invalidate, query: Query): void {
+    if(selected === '@typescript-eslint/no-unnecessary-type-constraint') {
+        if(bridge) { constraint.visit(index); } else { constraint.evaluate(index); }
+    }
+    if(selected === '@typescript-eslint/prefer-as-const') {
+        if(bridge) { constant.visit(index); } else { constant.evaluate(index); }
+    }
+    if(selected === '@typescript-eslint/prefer-enum-initializers') {
+        if(bridge) { enumeration.visit(index); } else { enumeration.evaluate(index); }
+    }
+    if(selected === 'nexus/import-require-node-namespace') { if(bridge) { namespace.visit(index); } else { namespace.evaluate(index); } }
+    if(selected === 'structure/network-no-invalidate-cache-literal-key') { if(bridge) { invalidate.visit(index); } else { invalidate.evaluate(index); } }
+    if(selected === 'structure/network-no-string-literal-query') { if(bridge) { query.visit(index); } else { query.evaluate(index); } }
+    for(const child of context.node(index).children) { walk(context, child, constraint, constant, enumeration, selected, bridge, namespace, invalidate, query); }
+}
+function byteOffset(source: string, end: number): number {
+    let bytes = 0;
+    for(let position = 0; position < end; position++) {
+        const code = source.codePointAt(position) ?? 0;
+        bytes += code < 128 ? 1 : code < 2048 ? 2 : code < 65536 ? 3 : 4;
+        if(code > 65535) { position++; }
+    }
+    return bytes;
+}
+function apply(source: string, edits: readonly Edit[]): string {
+    const ordered = [...edits];
+    ordered.sort((left, right) => left.start - right.start);
+    let text = source;
+    let previous = source.length;
+    for(let position = ordered.length - 1; position >= 0; position--) {
+        const edit = ordered[position] ?? panic('missing edit');
+        if(edit.end > previous) { panic('overlapping owned edits'); }
+        text = text.slice(0, edit.start) + edit.text + text.slice(edit.end);
+        previous = edit.start;
+    }
+    return text;
+}
+function run(path: string, selected: string, count: boolean, bridge: boolean, proposals: boolean): number {
+    const source = readTextFile(path);
+    if(source.kind === 'Error') { panic(source.message); }
+    const parser = new Parser(source.text, path);
+    const root = parser.file();
+    const parents: number[] = [];
+    for(const node of parser.nodes) { parents.push(-1); }
+    const context = new RuleContext(source.text, parser, new Scanner(source.text), selected, '', '', false, parents, new Settings());
+    ancestry(context, parents, root, -1);
+    const constraint = new Constraint(context);
+    const constant = new ConstRule(context);
+    const enumeration = new EnumRule(context);
+    const namespace = new Namespace(context);
+    const invalidate = new Invalidate(context);
+    const query = new Query(context);
+    walk(context, root, constraint, constant, enumeration, selected, bridge, namespace, invalidate, query);
+    const results: Result[] = [...constraint.results, ...constant.results, ...enumeration.results, ...namespace.results, ...invalidate.results, ...query.results];
+    results.sort((left, right) => context.start(left.index) - context.start(right.index));
+    if(count) { return results.length; }
+    const fixes: Edit[] = [];
+    for(const result of results) {
+        const start = byteOffset(source.text, context.start(result.index));
+        const end = byteOffset(source.text, context.node(result.index).end);
+        console.log(`finding ${start} ${end} ${result.id}\t${written(result.message)}`);
+        for(const edit of result.edits) {
+            console.log(`fix ${byteOffset(source.text, edit.start)} ${byteOffset(source.text, edit.end)}\t${written(edit.text)}`);
+            fixes.push(edit);
+        }
+        for(const suggestion of result.suggestions) {
+            console.log(`suggestion ${suggestion.id}\t${written(suggestion.message)}`);
+            for(const edit of suggestion.edits) {
+                console.log(`edit ${byteOffset(source.text, edit.start)} ${byteOffset(source.text, edit.end)}\t${written(edit.text)}`);
+            }
+            if(!proposals) { console.log(`applied\t${written(apply(source.text, suggestion.edits))}`); }
+        }
+    }
+    console.log(`fixed\t${written(apply(source.text, fixes))}`);
+    return results.length;
+}
+const args = programArguments();
+const manifest = readTextFile(args[0] ?? panic('missing manifest'));
+if(manifest.kind === 'Error') { panic(manifest.message); }
+let cases = 0;
+let findings = 0;
+for(const row of manifest.text.split('\n')) {
+    if(row === '') { continue; }
+    const fields = row.split('\t');
+    if(!args.includes('--count')) { console.log(`case ${cases}`); }
+    findings += run(fields[0] ?? '', fields[1] ?? '', args.includes('--count'), args.includes('--bridge'), args.includes('--proposals-only'));
+    cases++;
+}
+if(args.includes('--count')) { console.log(`${findings}`); }

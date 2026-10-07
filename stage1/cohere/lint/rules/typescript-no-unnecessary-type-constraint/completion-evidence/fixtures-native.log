@@ -1,0 +1,899 @@
+case 0
+finding 20 21 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 21 37	
+applied	class Data { member<T>() {} }
+fixed	class Data { member<T extends unknown>() {} }
+case 1
+finding 11 12 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 12 28	
+applied	class Data<T> {}
+fixed	class Data<T extends unknown> {}
+case 2
+finding 28 29 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 29 45	
+applied	const Data = class { member<T>() {} };
+fixed	const Data = class { member<T extends unknown>() {} };
+case 3
+finding 19 20 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 20 36	
+applied	const Data = class<T> {};
+fixed	const Data = class<T extends unknown> {};
+case 4
+fixed	const data = () => {};
+case 5
+finding 14 15 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	
+applied	const data = <T , >() => {};
+fixed	const data = <T extends any , >() => {};
+case 6
+finding 14 15 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	
+applied	const data = <T ,>() => {};
+fixed	const data = <T extends any ,>() => {};
+case 7
+finding 14 15 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	
+applied	const data = <T = unknown>() => {};
+fixed	const data = <T extends any = unknown>() => {};
+case 8
+finding 14 15 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	
+applied	const data = <T, >() => {};
+fixed	const data = <T extends any, >() => {};
+case 9
+finding 14 15 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	
+applied	const data = <T, U extends any>() => {};
+finding 29 30 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 30 42	
+applied	const data = <T extends any, U>() => {};
+fixed	const data = <T extends any, U extends any>() => {};
+case 10
+finding 14 15 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	
+applied	const data = <T,>() => {};
+fixed	const data = <T extends any,>() => {};
+case 11
+finding 14 15 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	,
+applied	const data = <T,>() => {};
+fixed	const data = <T extends any>() => {};
+case 12
+fixed	const data = <T extends number | string>() => {};
+case 13
+fixed	const data = <T extends number>() => {};
+case 14
+finding 14 15 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 31	,
+applied	const data = <T,>() => {};
+fixed	const data = <T extends unknown>() => {};
+case 15
+fixed	const data = <T, >() => {};
+case 16
+fixed	const data = <T, U>() => {};
+case 17
+fixed	function data() {}
+case 18
+fixed	function data<T extends (any)>() {}
+case 19
+fixed	function data<T extends (unknown)>() {}
+case 20
+fixed	function data<T extends any | number>() {}
+case 21
+finding 14 15 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	
+applied	function data<T, U extends T>() {}
+fixed	function data<T extends any, U extends T>() {}
+case 22
+finding 14 15 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	
+applied	function data<T, U>() {}
+fixed	function data<T extends any, U>() {}
+case 23
+finding 14 15 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	
+applied	function data<T>() {}
+fixed	function data<T extends any>() {}
+case 24
+fixed	function data<T extends never>() {}
+case 25
+fixed	function data<T extends number | string>() {}
+case 26
+fixed	function data<T extends number>() {}
+case 27
+fixed	function data<T extends object>() {}
+case 28
+finding 14 15 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 31	
+applied	function data<T>() {}
+fixed	function data<T extends unknown>() {}
+case 29
+fixed	function data<T extends void>() {}
+case 30
+fixed	function data<T extends {}>() {}
+case 31
+finding 17 18 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 18 30	
+applied	function data<T, U>() {}
+fixed	function data<T, U extends any>() {}
+case 32
+fixed	function data<T, U>() {}
+case 33
+fixed	function data<T>() {}
+case 34
+finding 15 16 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 16 32	
+applied	interface Data<T> {}
+fixed	interface Data<T extends unknown> {}
+case 35
+finding 10 11 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 11 27	
+applied	type Data<T> = {};
+fixed	type Data<T extends unknown> = {};
+case 36
+fixed	type X = any; function data<T extends X>() {}
+case 37
+fixed	\u000a                  class foo {\u000a                    bar = 'baz' as const;\u000a                  }\u000a                
+case 38
+fixed	\u000a                  class foo {\u000a                    bar = 'baz';\u000a                  }\u000a                
+case 39
+fixed	\u000a                  class foo {\u000a                    bar = () => 'bar' as const;\u000a                  }\u000a                
+case 40
+fixed	\u000a                  class foo {\u000a                    bar = 2 as const;\u000a                  }\u000a                
+case 41
+fixed	\u000a                  class foo {\u000a                    bar(): void {}\u000a                  }\u000a                
+case 42
+fixed	\u000a                  class foo {\u000a                    bar: 'baz';\u000a                  }\u000a                
+case 43
+fixed	\u000a                  class foo {\u000a                    bar: number = 1;\u000a                  }\u000a                
+case 44
+fixed	\u000a                  class foo {\u000a                    bar: string = 'baz';\u000a                  }\u000a                
+case 45
+fixed	\u000a                  class foo {\u000a                    bar;\u000a                  }\u000a                
+case 46
+fixed	\u000a                  class foo {\u000a                    get bar(): 'bar' {}\u000a                    set bar(bar: 'bar') {}\u000a                  }\u000a                
+case 47
+fixed	\u000a                  type BazFunction = () => 'baz';\u000a                  class foo {\u000a                    bar: BazFunction = () => 'bar';\u000a                  }\u000a                
+case 48
+finding 44 49 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 42 49	
+fix 57 57	 as const
+fixed	\u000a            class foo {\u000a              bar = 'baz' as const;\u000a            }\u000a                  
+case 49
+finding 44 45 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 42 45	
+fix 49 49	 as const
+fixed	\u000a            class foo {\u000a              bar = 2 as const;\u000a            }\u000a                  
+case 50
+finding 54 59 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 54 59	const
+fixed	\u000a            class foo {\u000a              foo = 'bar' as const;\u000a            }\u000a                  
+case 51
+finding 50 51 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 50 51	const
+fixed	\u000a            class foo {\u000a              foo = 5 as const;\u000a            }\u000a                  
+case 52
+fixed	\u000a            class foo {\u000a              foo = <'bar'>'bar';\u000a            }\u000a                  
+case 53
+finding 53 58 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 51 58	
+fix 66 66	 as const
+fixed	\u000a            class foo {\u000a              readonly bar = 'baz' as const;\u000a            }\u000a                  
+case 54
+finding 51 52 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 49 52	
+fix 56 56	 as const
+fixed	\u000a            class foo {\u000a              static bar = 2 as const;\u000a            }\u000a                  
+case 55
+fixed	class C { p!: 'baz' = 'baz'; }
+case 56
+finding 19 24 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 17 24	
+fix 32 32	 as const
+fixed	class foo {\u000a  bar = 'baz' as const;\u000a}\u000a
+case 57
+finding 15 22 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 13 22	
+fix 32 32	 as const
+fixed	const example = 'hello' as const;
+case 58
+finding 11 12 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 9 12	
+fix 16 16	 as const
+fixed	const foo = 2 as const;
+case 59
+fixed	declare function g<T>(x: T): T;\u000aconst r = g<'bar'>('bar');
+case 60
+fixed	function f(p: 'bar' = 'bar') {}
+case 61
+finding 8 13 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fixed	let []: 'bar' = 'bar';
+case 62
+finding 10 15 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 7 15	
+fix 23 23	 as const
+fixed	let a   = 'bar' as const;\u000a
+case 63
+fixed	let a!: 'bar' = 'bar';
+case 64
+fixed	let a: '2' = 2;
+case 65
+finding 7 12 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 5 12	
+fix 26 26	 as const
+fixed	let a /*c*/ = 'bar' as const;\u000a
+case 66
+finding 7 12 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 5 12	
+fix 20 20	 as const
+fixed	let a = 'bar' as const /*t*/;\u000a
+case 67
+fixed	let a: ('bar') = 'bar';
+case 68
+fixed	let a: -2 = -2;
+case 69
+finding 7 11 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 5 11	
+fix 16 16	 as const
+fixed	let a = 16 as const;
+case 70
+finding 7 10 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 5 10	
+fix 15 15	 as const
+fixed	let a = 10 as const;
+case 71
+finding 7 10 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 5 10	
+fix 16 16	 as const
+fixed	let a = 100 as const;
+case 72
+fixed	let a: 2 = '2';
+case 73
+finding 7 8 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 5 8	
+fix 14 14	 as const
+fixed	let a = 2.0 as const;
+case 74
+fixed	let a: 2n = 2n;
+case 75
+fixed	let a: true = true;
+case 76
+finding 19 24 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 19 24	const
+fixed	let foo = 'bar' as const;
+case 77
+fixed	let foo = 'bar' as string;
+case 78
+fixed	let foo = 'bar';
+case 79
+fixed	let foo = 'baz' as const;
+case 80
+fixed	let foo = 1 as const;
+case 81
+finding 15 16 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 15 16	const
+fixed	let foo = 5 as const;
+case 82
+fixed	let foo = <'bar'>'bar';
+case 83
+fixed	let foo = <4>4;
+case 84
+fixed	let foo = `bar` as 'bar';
+case 85
+fixed	let foo = `bar` as `bar`;
+case 86
+fixed	let foo = `bar` as `foo`;
+case 87
+fixed	let foo = { bar };
+case 88
+finding 26 31 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 26 31	const
+fixed	let foo = { bar: 'baz' as const };
+case 89
+fixed	let foo = { bar: 'baz' as const };
+case 90
+fixed	let foo = { bar: 'baz' };
+case 91
+finding 22 23 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 22 23	const
+fixed	let foo = { bar: 1 as const };
+case 92
+fixed	let foo = { bar: 1 as const };
+case 93
+fixed	let foo = { bar: 2 };
+case 94
+finding 9 14 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 7 14	
+fix 22 22	 as const
+fixed	let foo = "bar" as const;
+case 95
+finding 26 31 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 26 31	const
+fixed	let foo: 'bar' = 'bar' as const;
+case 96
+finding 9 14 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 7 14	
+fix 22 22	 as const
+fixed	let foo = 'bar' as const;
+case 97
+fixed	let foo: 'bar' = 'baz';
+case 98
+fixed	let foo: 'bar' = baz;
+case 99
+fixed	let foo: 'bar';
+case 100
+fixed	let foo: 'baz' = 'baz' as const;
+case 101
+finding 9 10 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 7 10	
+fix 14 14	 as const
+fixed	let foo = 2 as const;
+case 102
+fixed	let foo: 2 = 3;
+case 103
+fixed	let foo: number = 1;
+case 104
+fixed	let foo: string = 'bar';
+case 105
+finding 8 13 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fixed	let {}: 'bar' = 'bar';
+case 106
+fixed	\u000aenum Direction {\u000a  Up = 'Up',\u000a  Down = 'Down',\u000a}\u000a    
+case 107
+finding 33 37 defineInitializer	The value of the member 'Down' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to Down = 1
+edit 33 37	Down = 1
+applied	\u000aenum Direction {\u000a  Up = 'Up',\u000a  Down = 1,\u000a}\u000a      
+suggestion defineInitializerSuggestion	Can be fixed to Down = 2
+edit 33 37	Down = 2
+applied	\u000aenum Direction {\u000a  Up = 'Up',\u000a  Down = 2,\u000a}\u000a      
+suggestion defineInitializerSuggestion	Can be fixed to Down = 'Down'
+edit 33 37	Down = 'Down'
+applied	\u000aenum Direction {\u000a  Up = 'Up',\u000a  Down = 'Down',\u000a}\u000a      
+fixed	\u000aenum Direction {\u000a  Up = 'Up',\u000a  Down,\u000a}\u000a      
+case 108
+fixed	\u000aenum Direction {\u000a  Up = 1,\u000a  Down = 2,\u000a}\u000a    
+case 109
+fixed	\u000aenum Direction {\u000a  Up = 1,\u000a}\u000a    
+case 110
+finding 20 22 defineInitializer	The value of the member 'Up' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to Up = 0
+edit 20 22	Up = 0
+applied	\u000aenum Direction {\u000a  Up = 0,\u000a  Down = 'Down',\u000a}\u000a      
+suggestion defineInitializerSuggestion	Can be fixed to Up = 1
+edit 20 22	Up = 1
+applied	\u000aenum Direction {\u000a  Up = 1,\u000a  Down = 'Down',\u000a}\u000a      
+suggestion defineInitializerSuggestion	Can be fixed to Up = 'Up'
+edit 20 22	Up = 'Up'
+applied	\u000aenum Direction {\u000a  Up = 'Up',\u000a  Down = 'Down',\u000a}\u000a      
+fixed	\u000aenum Direction {\u000a  Up,\u000a  Down = 'Down',\u000a}\u000a      
+case 111
+finding 20 22 defineInitializer	The value of the member 'Up' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to Up = 0
+edit 20 22	Up = 0
+applied	\u000aenum Direction {\u000a  Up = 0,\u000a  Down,\u000a}\u000a      
+suggestion defineInitializerSuggestion	Can be fixed to Up = 1
+edit 20 22	Up = 1
+applied	\u000aenum Direction {\u000a  Up = 1,\u000a  Down,\u000a}\u000a      
+suggestion defineInitializerSuggestion	Can be fixed to Up = 'Up'
+edit 20 22	Up = 'Up'
+applied	\u000aenum Direction {\u000a  Up = 'Up',\u000a  Down,\u000a}\u000a      
+finding 26 30 defineInitializer	The value of the member 'Down' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to Down = 1
+edit 26 30	Down = 1
+applied	\u000aenum Direction {\u000a  Up,\u000a  Down = 1,\u000a}\u000a      
+suggestion defineInitializerSuggestion	Can be fixed to Down = 2
+edit 26 30	Down = 2
+applied	\u000aenum Direction {\u000a  Up,\u000a  Down = 2,\u000a}\u000a      
+suggestion defineInitializerSuggestion	Can be fixed to Down = 'Down'
+edit 26 30	Down = 'Down'
+applied	\u000aenum Direction {\u000a  Up,\u000a  Down = 'Down',\u000a}\u000a      
+fixed	\u000aenum Direction {\u000a  Up,\u000a  Down,\u000a}\u000a      
+case 112
+finding 20 22 defineInitializer	The value of the member 'Up' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to Up = 0
+edit 20 22	Up = 0
+applied	\u000aenum Direction {\u000a  Up = 0,\u000a}\u000a      
+suggestion defineInitializerSuggestion	Can be fixed to Up = 1
+edit 20 22	Up = 1
+applied	\u000aenum Direction {\u000a  Up = 1,\u000a}\u000a      
+suggestion defineInitializerSuggestion	Can be fixed to Up = 'Up'
+edit 20 22	Up = 'Up'
+applied	\u000aenum Direction {\u000a  Up = 'Up',\u000a}\u000a      
+fixed	\u000aenum Direction {\u000a  Up,\u000a}\u000a      
+case 113
+fixed	\u000aenum Direction {}\u000a    
+case 114
+finding 17 19 defineInitializer	The value of the member 'Up' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to Up = 0
+edit 17 19	Up = 0
+applied	const enum D {\u000a  Up = 0,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to Up = 1
+edit 17 19	Up = 1
+applied	const enum D {\u000a  Up = 1,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to Up = 'Up'
+edit 17 19	Up = 'Up'
+applied	const enum D {\u000a  Up = 'Up',\u000a}
+fixed	const enum D {\u000a  Up,\u000a}
+case 115
+finding 19 21 defineInitializer	The value of the member 'Up' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to Up = 0
+edit 19 21	Up = 0
+applied	declare enum D {\u000a  Up = 0,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to Up = 1
+edit 19 21	Up = 1
+applied	declare enum D {\u000a  Up = 1,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to Up = 'Up'
+edit 19 21	Up = 'Up'
+applied	declare enum D {\u000a  Up = 'Up',\u000a}
+fixed	declare enum D {\u000a  Up,\u000a}
+case 116
+finding 11 19 defineInitializer	The value of the member ''quoted'' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to 'quoted' = 0
+edit 11 19	'quoted' = 0
+applied	enum D {\u000a  'quoted' = 0,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to 'quoted' = 1
+edit 11 19	'quoted' = 1
+applied	enum D {\u000a  'quoted' = 1,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to 'quoted' = ''quoted''
+edit 11 19	'quoted' = ''quoted''
+applied	enum D {\u000a  'quoted' = ''quoted'',\u000a}
+fixed	enum D {\u000a  'quoted',\u000a}
+case 117
+fixed	enum D {\u000a  A = 'a'.length,\u000a}
+case 118
+fixed	enum D {\u000a  A = 1 << 0,\u000a}
+case 119
+finding 20 21 defineInitializer	The value of the member 'B' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to B = 1
+edit 20 21	B = 1
+applied	enum D {\u000a  A = 1,\u000a  B = 1,\u000a  C,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to B = 2
+edit 20 21	B = 2
+applied	enum D {\u000a  A = 1,\u000a  B = 2,\u000a  C,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to B = 'B'
+edit 20 21	B = 'B'
+applied	enum D {\u000a  A = 1,\u000a  B = 'B',\u000a  C,\u000a}
+finding 25 26 defineInitializer	The value of the member 'C' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to C = 2
+edit 25 26	C = 2
+applied	enum D {\u000a  A = 1,\u000a  B,\u000a  C = 2,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to C = 3
+edit 25 26	C = 3
+applied	enum D {\u000a  A = 1,\u000a  B,\u000a  C = 3,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to C = 'C'
+edit 25 26	C = 'C'
+applied	enum D {\u000a  A = 1,\u000a  B,\u000a  C = 'C',\u000a}
+fixed	enum D {\u000a  A = 1,\u000a  B,\u000a  C,\u000a}
+case 120
+finding 11 12 defineInitializer	The value of the member 'A' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to A = 0
+edit 11 12	A = 0
+applied	enum D {\u000a  A = 0,\u000a  B = 1,\u000a  C,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to A = 1
+edit 11 12	A = 1
+applied	enum D {\u000a  A = 1,\u000a  B = 1,\u000a  C,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to A = 'A'
+edit 11 12	A = 'A'
+applied	enum D {\u000a  A = 'A',\u000a  B = 1,\u000a  C,\u000a}
+finding 25 26 defineInitializer	The value of the member 'C' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to C = 2
+edit 25 26	C = 2
+applied	enum D {\u000a  A,\u000a  B = 1,\u000a  C = 2,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to C = 3
+edit 25 26	C = 3
+applied	enum D {\u000a  A,\u000a  B = 1,\u000a  C = 3,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to C = 'C'
+edit 25 26	C = 'C'
+applied	enum D {\u000a  A,\u000a  B = 1,\u000a  C = 'C',\u000a}
+fixed	enum D {\u000a  A,\u000a  B = 1,\u000a  C,\u000a}
+case 121
+finding 11 12 defineInitializer	The value of the member 'A' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to A = 0
+edit 11 12	A = 0
+applied	enum D {\u000a  A = 0,\u000a  B,\u000a  C,\u000a  D2,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to A = 1
+edit 11 12	A = 1
+applied	enum D {\u000a  A = 1,\u000a  B,\u000a  C,\u000a  D2,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to A = 'A'
+edit 11 12	A = 'A'
+applied	enum D {\u000a  A = 'A',\u000a  B,\u000a  C,\u000a  D2,\u000a}
+finding 16 17 defineInitializer	The value of the member 'B' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to B = 1
+edit 16 17	B = 1
+applied	enum D {\u000a  A,\u000a  B = 1,\u000a  C,\u000a  D2,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to B = 2
+edit 16 17	B = 2
+applied	enum D {\u000a  A,\u000a  B = 2,\u000a  C,\u000a  D2,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to B = 'B'
+edit 16 17	B = 'B'
+applied	enum D {\u000a  A,\u000a  B = 'B',\u000a  C,\u000a  D2,\u000a}
+finding 21 22 defineInitializer	The value of the member 'C' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to C = 2
+edit 21 22	C = 2
+applied	enum D {\u000a  A,\u000a  B,\u000a  C = 2,\u000a  D2,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to C = 3
+edit 21 22	C = 3
+applied	enum D {\u000a  A,\u000a  B,\u000a  C = 3,\u000a  D2,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to C = 'C'
+edit 21 22	C = 'C'
+applied	enum D {\u000a  A,\u000a  B,\u000a  C = 'C',\u000a  D2,\u000a}
+finding 26 28 defineInitializer	The value of the member 'D2' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to D2 = 3
+edit 26 28	D2 = 3
+applied	enum D {\u000a  A,\u000a  B,\u000a  C,\u000a  D2 = 3,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to D2 = 4
+edit 26 28	D2 = 4
+applied	enum D {\u000a  A,\u000a  B,\u000a  C,\u000a  D2 = 4,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to D2 = 'D2'
+edit 26 28	D2 = 'D2'
+applied	enum D {\u000a  A,\u000a  B,\u000a  C,\u000a  D2 = 'D2',\u000a}
+fixed	enum D {\u000a  A,\u000a  B,\u000a  C,\u000a  D2,\u000a}
+case 122
+fixed	enum D {\u000a  Up = 'Up',\u000a  Down = 'Down',\u000a}
+case 123
+finding 11 23 defineInitializer	The value of the member '['computed']' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to ['computed'] = 0
+edit 11 23	['computed'] = 0
+applied	enum D {\u000a  ['computed'] = 0,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to ['computed'] = 1
+edit 11 23	['computed'] = 1
+applied	enum D {\u000a  ['computed'] = 1,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to ['computed'] = '['computed']'
+edit 11 23	['computed'] = '['computed']'
+applied	enum D {\u000a  ['computed'] = '['computed']',\u000a}
+fixed	enum D {\u000a  ['computed'],\u000a}
+case 124
+finding 9 11 defineInitializer	The value of the member 'Up' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to Up = 0
+edit 9 11	Up = 0
+applied	enum D { Up = 0 }
+suggestion defineInitializerSuggestion	Can be fixed to Up = 1
+edit 9 11	Up = 1
+applied	enum D { Up = 1 }
+suggestion defineInitializerSuggestion	Can be fixed to Up = 'Up'
+edit 9 11	Up = 'Up'
+applied	enum D { Up = 'Up' }
+fixed	enum D { Up }
+case 125
+finding 18 20 defineInitializer	The value of the member 'Up' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to Up = 0
+edit 18 20	Up = 0
+applied	export enum D {\u000a  Up = 0,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to Up = 1
+edit 18 20	Up = 1
+applied	export enum D {\u000a  Up = 1,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to Up = 'Up'
+edit 18 20	Up = 'Up'
+applied	export enum D {\u000a  Up = 'Up',\u000a}
+fixed	export enum D {\u000a  Up,\u000a}
+case 126
+finding 29 31 defineInitializer	The value of the member 'Up' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to Up = 0
+edit 29 31	Up = 0
+applied	namespace N {\u000a  enum D {\u000a    Up = 0,\u000a  }\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to Up = 1
+edit 29 31	Up = 1
+applied	namespace N {\u000a  enum D {\u000a    Up = 1,\u000a  }\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to Up = 'Up'
+edit 29 31	Up = 'Up'
+applied	namespace N {\u000a  enum D {\u000a    Up = 'Up',\u000a  }\u000a}
+fixed	namespace N {\u000a  enum D {\u000a    Up,\u000a  }\u000a}
+case 127
+finding 0 37 requireNodePrefix	Node built-in 'fs' must use the 'node:' prefix, which says the module is Node's rather than a package that happens to share its name. Use: import * as NodeFileSystem from 'node:fs'
+fix 32 36	'node:fs'
+fixed	import * as NodeFileSystem from 'node:fs';\u000a
+case 128
+fixed	import * as NodeChildProcess from 'node:child_process';\u000a
+case 129
+finding 0 37 requireNodePrefix	Node built-in 'fs' must use the 'node:' prefix, which says the module is Node's rather than a package that happens to share its name. Use: import * as NodeFileSystem from 'node:fs'
+fix 32 36	'node:fs'
+fixed	import * as NodeFileSystem from 'node:fs';\u000a
+case 130
+fixed	import * as NodeFileSystem from 'node:fs';\u000a
+case 131
+fixed	import * as NodeFileSystemPromises from 'node:fs/promises';\u000a
+case 132
+fixed	import * as NodeOperatingSystem from 'node:os';\u000a
+case 133
+finding 7 14 requireCorrectAlias	Node namespace alias must be 'NodeChildProcess', got 'cp'. The alias is the Node-prefixed expansion of the module, so a reader forty lines down knows what they are looking at without finding the import. Use: import * as NodeChildProcess from 'node:child_process'
+fixed	import * as cp from 'node:child_process';\u000a
+case 134
+finding 0 25 requireNodePrefix	Node built-in 'fs' must use the 'node:' prefix, which says the module is Node's rather than a package that happens to share its name. Use: import * as NodeFileSystem from 'node:fs'
+fix 20 24	'node:fs'
+finding 7 14 requireCorrectAlias	Node namespace alias must be 'NodeFileSystem', got 'fs'. The alias is the Node-prefixed expansion of the module, so a reader forty lines down knows what they are looking at without finding the import. Use: import * as NodeFileSystem from 'node:fs'
+fixed	import * as fs from 'node:fs';\u000a
+case 135
+finding 7 14 requireCorrectAlias	Node namespace alias must be 'NodeFileSystem', got 'fs'. The alias is the Node-prefixed expansion of the module, so a reader forty lines down knows what they are looking at without finding the import. Use: import * as NodeFileSystem from 'node:fs'
+fixed	import * as fs from 'node:fs';\u000a
+case 136
+finding 7 15 requireCorrectAlias	Node namespace alias must be 'NodeFileSystemPromises', got 'fsp'. The alias is the Node-prefixed expansion of the module, so a reader forty lines down knows what they are looking at without finding the import. Use: import * as NodeFileSystemPromises from 'node:fs/promises'
+fixed	import * as fsp from 'node:fs/promises';\u000a
+case 137
+finding 0 25 requireNamespaceImport	Node built-in 'node:fs' must use a namespace import, so every call site says which module it came from. Use: import * as NodeFileSystem from 'node:fs'
+fixed	import fs from 'node:fs';\u000a
+case 138
+fixed	import pathBrowserify from 'path-browserify';\u000a
+case 139
+fixed	import react from 'react';\u000a
+case 140
+finding 0 39 requireNamespaceImport	Node built-in 'node:fs' must use a namespace import, so every call site says which module it came from. Use: import * as NodeFileSystem from 'node:fs'
+fixed	import { readFileSync } from 'node:fs';\u000a
+case 141
+fixed	import { thing } from './local-module';\u000a
+case 142
+fixed	declare const networkService: { cache: { invalidate(key: unknown): void } };\u000adeclare const UserCacheKey: string;\u000adeclare const PostCacheKey: string;\u000adeclare const id: string;\u000adeclare const direct: { invalidate(key: unknown): void };\u000aexport function run() {\u000a    direct.invalidate('users');\u000a}\u000a
+case 143
+fixed	declare const networkService: { cache: { invalidate(key: unknown): void } };\u000adeclare const UserCacheKey: string;\u000adeclare const PostCacheKey: string;\u000adeclare const id: string;\u000adeclare const holder: { store: { invalidate(key: unknown): void } };\u000aexport function run() {\u000a    holder.store.invalidate('users');\u000a}\u000a
+case 144
+finding 294 301 noStringLiteralInvalidateCache	cache.invalidate takes a string literal here rather than an imported key. Cache keys are strings that have to match exactly across the file that writes the cache and every file that invalidates it, and nothing checks that they do. A typo produces no error and no finding: the invalidation runs, matches nothing, and the stale value stays. Export the key from where the cache is created and import it, so a rename is a compiler error rather than a silent miss.
+fixed	declare const networkService: { cache: { invalidate(key: unknown): void } };\u000adeclare const UserCacheKey: string;\u000adeclare const PostCacheKey: string;\u000adeclare const id: string;\u000adeclare const store: { cache: { invalidate(key: unknown): void } };\u000aexport function run() {\u000a    store.cache.invalidate('users');\u000a}\u000a
+case 145
+fixed	declare const networkService: { cache: { invalidate(key: unknown): void } };\u000adeclare const UserCacheKey: string;\u000adeclare const PostCacheKey: string;\u000adeclare const id: string;\u000adeclare const svc: { cache: { clear(key: unknown): void } };\u000aexport function run() {\u000a    svc.cache.clear('users');\u000a}\u000a
+case 146
+fixed	declare const networkService: { cache: { invalidate(key: unknown): void } };\u000adeclare const UserCacheKey: string;\u000adeclare const PostCacheKey: string;\u000adeclare const id: string;\u000adeclare function log(message: string): void;\u000aexport function run() {\u000a    log('users');\u000a}\u000a
+case 147
+fixed	declare const networkService: { cache: { invalidate(key: unknown): void } };\u000adeclare const UserCacheKey: string;\u000adeclare const PostCacheKey: string;\u000adeclare const id: string;\u000aexport const Value = 1;\u000a
+case 148
+finding 235 242 noStringLiteralInvalidateCache	cache.invalidate takes a string literal here rather than an imported key. Cache keys are strings that have to match exactly across the file that writes the cache and every file that invalidates it, and nothing checks that they do. A typo produces no error and no finding: the invalidation runs, matches nothing, and the stale value stays. Export the key from where the cache is created and import it, so a rename is a compiler error rather than a silent miss.
+fixed	declare const networkService: { cache: { invalidate(key: unknown): void } };\u000adeclare const UserCacheKey: string;\u000adeclare const PostCacheKey: string;\u000adeclare const id: string;\u000aexport function run() {\u000a    networkService.cache.invalidate('users');\u000a}\u000a
+case 149
+fixed	declare const networkService: { cache: { invalidate(key: unknown): void } };\u000adeclare const UserCacheKey: string;\u000adeclare const PostCacheKey: string;\u000adeclare const id: string;\u000aexport function run() {\u000a    networkService.cache.invalidate(UserCacheKey);\u000a}\u000a
+case 150
+finding 236 243 noArrayWithStringLiteralInvalidateCache	This element of the cache.invalidate array is a literal rather than an imported key. Cache keys are strings that have to match exactly across the file that writes the cache and every file that invalidates it, and nothing checks that they do. A typo produces no error and no finding: the invalidation runs, matches nothing, and the stale value stays. Export the key from where the cache is created and import it, so a rename is a compiler error rather than a silent miss.
+finding 245 252 noArrayWithStringLiteralInvalidateCache	This element of the cache.invalidate array is a literal rather than an imported key. Cache keys are strings that have to match exactly across the file that writes the cache and every file that invalidates it, and nothing checks that they do. A typo produces no error and no finding: the invalidation runs, matches nothing, and the stale value stays. Export the key from where the cache is created and import it, so a rename is a compiler error rather than a silent miss.
+fixed	declare const networkService: { cache: { invalidate(key: unknown): void } };\u000adeclare const UserCacheKey: string;\u000adeclare const PostCacheKey: string;\u000adeclare const id: string;\u000aexport function run() {\u000a    networkService.cache.invalidate(['users', 'posts']);\u000a}\u000a
+case 151
+finding 250 257 noArrayWithStringLiteralInvalidateCache	This element of the cache.invalidate array is a literal rather than an imported key. Cache keys are strings that have to match exactly across the file that writes the cache and every file that invalidates it, and nothing checks that they do. A typo produces no error and no finding: the invalidation runs, matches nothing, and the stale value stays. Export the key from where the cache is created and import it, so a rename is a compiler error rather than a silent miss.
+fixed	declare const networkService: { cache: { invalidate(key: unknown): void } };\u000adeclare const UserCacheKey: string;\u000adeclare const PostCacheKey: string;\u000adeclare const id: string;\u000aexport function run() {\u000a    networkService.cache.invalidate([UserCacheKey, 'posts', PostCacheKey]);\u000a}\u000a
+case 152
+fixed	declare const networkService: { cache: { invalidate(key: unknown): void } };\u000adeclare const UserCacheKey: string;\u000adeclare const PostCacheKey: string;\u000adeclare const id: string;\u000aexport function run() {\u000a    networkService.cache.invalidate([UserCacheKey, PostCacheKey]);\u000a}\u000a
+case 153
+fixed	declare const networkService: { cache: { invalidate(key: unknown): void } };\u000adeclare const UserCacheKey: string;\u000adeclare const PostCacheKey: string;\u000adeclare const id: string;\u000aexport function run() {\u000a    networkService.cache.invalidate([]);\u000a}\u000a
+case 154
+finding 236 249 noTemplateLiteralInvalidateCache	cache.invalidate takes a template literal here rather than an imported key. Cache keys are strings that have to match exactly across the file that writes the cache and every file that invalidates it, and nothing checks that they do. A typo produces no error and no finding: the invalidation runs, matches nothing, and the stale value stays. Export the key from where the cache is created and import it, so a rename is a compiler error rather than a silent miss. A template is worse than a plain string, since the interpolated parts make the final key invisible at the call site.
+fixed	declare const networkService: { cache: { invalidate(key: unknown): void } };\u000adeclare const UserCacheKey: string;\u000adeclare const PostCacheKey: string;\u000adeclare const id: string;\u000aexport function run() {\u000a    networkService.cache.invalidate([`users-${id}`]);\u000a}\u000a
+case 155
+finding 235 248 noTemplateLiteralInvalidateCache	cache.invalidate takes a template literal here rather than an imported key. Cache keys are strings that have to match exactly across the file that writes the cache and every file that invalidates it, and nothing checks that they do. A typo produces no error and no finding: the invalidation runs, matches nothing, and the stale value stays. Export the key from where the cache is created and import it, so a rename is a compiler error rather than a silent miss. A template is worse than a plain string, since the interpolated parts make the final key invisible at the call site.
+fixed	declare const networkService: { cache: { invalidate(key: unknown): void } };\u000adeclare const UserCacheKey: string;\u000adeclare const PostCacheKey: string;\u000adeclare const id: string;\u000aexport function run() {\u000a    networkService.cache.invalidate(`users-${id}`);\u000a}\u000a
+case 156
+finding 235 242 noTemplateLiteralInvalidateCache	cache.invalidate takes a template literal here rather than an imported key. Cache keys are strings that have to match exactly across the file that writes the cache and every file that invalidates it, and nothing checks that they do. A typo produces no error and no finding: the invalidation runs, matches nothing, and the stale value stays. Export the key from where the cache is created and import it, so a rename is a compiler error rather than a silent miss. A template is worse than a plain string, since the interpolated parts make the final key invisible at the call site.
+fixed	declare const networkService: { cache: { invalidate(key: unknown): void } };\u000adeclare const UserCacheKey: string;\u000adeclare const PostCacheKey: string;\u000adeclare const id: string;\u000aexport function run() {\u000a    networkService.cache.invalidate(`users`);\u000a}\u000a
+case 157
+fixed	declare const networkService: { cache: { invalidate(key: unknown): void } };\u000adeclare const UserCacheKey: string;\u000adeclare const PostCacheKey: string;\u000adeclare const id: string;\u000aexport function run() {\u000a    networkService.cache.invalidate(undefined);\u000a}\u000a
+case 158
+finding 511 523 noStringLiteralGraphQlQuery	This GraphQL document is a string rather than a gql tagged template. The gql tag is what lets the code generator see the document and produce the operation's types, so a plain string compiles and runs while every variable and every field of the result goes untyped. Import gql from NetworkService and write gql(`query { ... }`).
+fixed	declare const networkService: {\u000a    useGraphQlQuery(document: unknown, variables?: unknown): unknown;\u000a    useGraphQlMutation(document: unknown): unknown;\u000a    useSuspenseGraphQlQuery(document: unknown): unknown;\u000a    graphQlRequest(document: unknown): unknown;\u000a    other(document: unknown): unknown;\u000a};\u000adeclare function gql(document: unknown): unknown;\u000adeclare const identifier: string;\u000aconst Inner = 'query { user { id } }';\u000aconst UserDocument = Inner;\u000aexport function run() {\u000a    networkService.useGraphQlQuery(UserDocument);\u000a}\u000a
+case 159
+fixed	declare const networkService: {\u000a    useGraphQlQuery(document: unknown, variables?: unknown): unknown;\u000a    useGraphQlMutation(document: unknown): unknown;\u000a    useSuspenseGraphQlQuery(document: unknown): unknown;\u000a    graphQlRequest(document: unknown): unknown;\u000a    other(document: unknown): unknown;\u000a};\u000adeclare function gql(document: unknown): unknown;\u000adeclare const identifier: string;\u000aconst UserDocument = 'query { user { id } }';\u000aexport function run() {\u000a    const UserDocument = gql(`query { user { id } }`);\u000a    networkService.useGraphQlQuery(UserDocument);\u000a}\u000a
+case 160
+finding 490 502 noStringLiteralGraphQlQuery	This GraphQL document is a string rather than a gql tagged template. The gql tag is what lets the code generator see the document and produce the operation's types, so a plain string compiles and runs while every variable and every field of the result goes untyped. Import gql from NetworkService and write gql(`query { ... }`).
+fixed	declare const networkService: {\u000a    useGraphQlQuery(document: unknown, variables?: unknown): unknown;\u000a    useGraphQlMutation(document: unknown): unknown;\u000a    useSuspenseGraphQlQuery(document: unknown): unknown;\u000a    graphQlRequest(document: unknown): unknown;\u000a    other(document: unknown): unknown;\u000a};\u000adeclare function gql(document: unknown): unknown;\u000adeclare const identifier: string;\u000aconst UserDocument = 'query { user { id } }';\u000aexport function run() {\u000a    networkService.useGraphQlQuery(UserDocument);\u000a}\u000a
+case 161
+finding 490 502 noStringLiteralGraphQlQuery	This GraphQL document is a string rather than a gql tagged template. The gql tag is what lets the code generator see the document and produce the operation's types, so a plain string compiles and runs while every variable and every field of the result goes untyped. Import gql from NetworkService and write gql(`query { ... }`).
+fixed	declare const networkService: {\u000a    useGraphQlQuery(document: unknown, variables?: unknown): unknown;\u000a    useGraphQlMutation(document: unknown): unknown;\u000a    useSuspenseGraphQlQuery(document: unknown): unknown;\u000a    graphQlRequest(document: unknown): unknown;\u000a    other(document: unknown): unknown;\u000a};\u000adeclare function gql(document: unknown): unknown;\u000adeclare const identifier: string;\u000aconst UserDocument = `query { user { id } }`;\u000aexport function run() {\u000a    networkService.useGraphQlQuery(UserDocument);\u000a}\u000a
+case 162
+finding 545 557 noStringLiteralGraphQlQuery	This GraphQL document is a string rather than a gql tagged template. The gql tag is what lets the code generator see the document and produce the operation's types, so a plain string compiles and runs while every variable and every field of the result goes untyped. Import gql from NetworkService and write gql(`query { ... }`).
+fixed	declare const networkService: {\u000a    useGraphQlQuery(document: unknown, variables?: unknown): unknown;\u000a    useGraphQlMutation(document: unknown): unknown;\u000a    useSuspenseGraphQlQuery(document: unknown): unknown;\u000a    graphQlRequest(document: unknown): unknown;\u000a    other(document: unknown): unknown;\u000a};\u000adeclare function gql(document: unknown): unknown;\u000adeclare const identifier: string;\u000aconst UserDocument = gql(`query { user { id } }`);\u000aexport function run() {\u000a    const UserDocument = 'query { user { id } }';\u000a    networkService.useGraphQlQuery(UserDocument);\u000a}\u000a
+case 163
+fixed	declare const networkService: {\u000a    useGraphQlQuery(document: unknown, variables?: unknown): unknown;\u000a    useGraphQlMutation(document: unknown): unknown;\u000a    useSuspenseGraphQlQuery(document: unknown): unknown;\u000a    graphQlRequest(document: unknown): unknown;\u000a    other(document: unknown): unknown;\u000a};\u000adeclare function gql(document: unknown): unknown;\u000adeclare const identifier: string;\u000aconst UserDocument = gql(`query { user { id } }`);\u000aexport function run() {\u000a    networkService.useGraphQlQuery(UserDocument);\u000a}\u000a
+case 164
+fixed	declare const networkService: {\u000a    useGraphQlQuery(document: unknown, variables?: unknown): unknown;\u000a    useGraphQlMutation(document: unknown): unknown;\u000a    useSuspenseGraphQlQuery(document: unknown): unknown;\u000a    graphQlRequest(document: unknown): unknown;\u000a    other(document: unknown): unknown;\u000a};\u000adeclare function gql(document: unknown): unknown;\u000adeclare const identifier: string;\u000adeclare const ImportedDocument: unknown;\u000aexport function run() {\u000a    networkService.useGraphQlQuery(ImportedDocument);\u000a}\u000a
+case 165
+finding 507 530 noStringLiteralGraphQlQuery	This GraphQL document is a string rather than a gql tagged template. The gql tag is what lets the code generator see the document and produce the operation's types, so a plain string compiles and runs while every variable and every field of the result goes untyped. Import gql from NetworkService and write gql(`query { ... }`).
+fixed	declare const networkService: {\u000a    useGraphQlQuery(document: unknown, variables?: unknown): unknown;\u000a    useGraphQlMutation(document: unknown): unknown;\u000a    useSuspenseGraphQlQuery(document: unknown): unknown;\u000a    graphQlRequest(document: unknown): unknown;\u000a    other(document: unknown): unknown;\u000a};\u000adeclare function gql(document: unknown): unknown;\u000adeclare const identifier: string;\u000adeclare const client: { useGraphQlQuery(document: unknown): unknown };\u000aexport function run() {\u000a    client.useGraphQlQuery('query { user { id } }');\u000a}\u000a
+case 166
+fixed	declare const networkService: {\u000a    useGraphQlQuery(document: unknown, variables?: unknown): unknown;\u000a    useGraphQlMutation(document: unknown): unknown;\u000a    useSuspenseGraphQlQuery(document: unknown): unknown;\u000a    graphQlRequest(document: unknown): unknown;\u000a    other(document: unknown): unknown;\u000a};\u000adeclare function gql(document: unknown): unknown;\u000adeclare const identifier: string;\u000adeclare const seed: unknown;\u000aexport function run() {\u000a    const first: unknown = seed;\u000a    networkService.useGraphQlQuery(first);\u000a}\u000a
+case 167
+fixed	declare const networkService: {\u000a    useGraphQlQuery(document: unknown, variables?: unknown): unknown;\u000a    useGraphQlMutation(document: unknown): unknown;\u000a    useSuspenseGraphQlQuery(document: unknown): unknown;\u000a    graphQlRequest(document: unknown): unknown;\u000a    other(document: unknown): unknown;\u000a};\u000adeclare function gql(document: unknown): unknown;\u000adeclare const identifier: string;\u000adeclare function useGraphQlQuery(document: unknown): unknown;\u000aexport function run() {\u000a    useGraphQlQuery('query { user { id } }');\u000a}\u000a
+case 168
+fixed	declare const networkService: {\u000a    useGraphQlQuery(document: unknown, variables?: unknown): unknown;\u000a    useGraphQlMutation(document: unknown): unknown;\u000a    useSuspenseGraphQlQuery(document: unknown): unknown;\u000a    graphQlRequest(document: unknown): unknown;\u000a    other(document: unknown): unknown;\u000a};\u000adeclare function gql(document: unknown): unknown;\u000adeclare const identifier: string;\u000aexport const Value = 1;\u000a
+case 169
+finding 443 466 noStringLiteralGraphQlQuery	This GraphQL document is a string rather than a gql tagged template. The gql tag is what lets the code generator see the document and produce the operation's types, so a plain string compiles and runs while every variable and every field of the result goes untyped. Import gql from NetworkService and write gql(`query { ... }`).
+fixed	declare const networkService: {\u000a    useGraphQlQuery(document: unknown, variables?: unknown): unknown;\u000a    useGraphQlMutation(document: unknown): unknown;\u000a    useSuspenseGraphQlQuery(document: unknown): unknown;\u000a    graphQlRequest(document: unknown): unknown;\u000a    other(document: unknown): unknown;\u000a};\u000adeclare function gql(document: unknown): unknown;\u000adeclare const identifier: string;\u000aexport function run() {\u000a    networkService.graphQlRequest('query { user { id } }');\u000a}\u000a
+case 170
+fixed	declare const networkService: {\u000a    useGraphQlQuery(document: unknown, variables?: unknown): unknown;\u000a    useGraphQlMutation(document: unknown): unknown;\u000a    useSuspenseGraphQlQuery(document: unknown): unknown;\u000a    graphQlRequest(document: unknown): unknown;\u000a    other(document: unknown): unknown;\u000a};\u000adeclare function gql(document: unknown): unknown;\u000adeclare const identifier: string;\u000aexport function run() {\u000a    networkService.graphQlRequest();\u000a}\u000a
+case 171
+fixed	declare const networkService: {\u000a    useGraphQlQuery(document: unknown, variables?: unknown): unknown;\u000a    useGraphQlMutation(document: unknown): unknown;\u000a    useSuspenseGraphQlQuery(document: unknown): unknown;\u000a    graphQlRequest(document: unknown): unknown;\u000a    other(document: unknown): unknown;\u000a};\u000adeclare function gql(document: unknown): unknown;\u000adeclare const identifier: string;\u000aexport function run() {\u000a    networkService.other('query { user { id } }');\u000a}\u000a
+case 172
+finding 447 473 noStringLiteralGraphQlQuery	This GraphQL document is a string rather than a gql tagged template. The gql tag is what lets the code generator see the document and produce the operation's types, so a plain string compiles and runs while every variable and every field of the result goes untyped. Import gql from NetworkService and write gql(`query { ... }`).
+fixed	declare const networkService: {\u000a    useGraphQlQuery(document: unknown, variables?: unknown): unknown;\u000a    useGraphQlMutation(document: unknown): unknown;\u000a    useSuspenseGraphQlQuery(document: unknown): unknown;\u000a    graphQlRequest(document: unknown): unknown;\u000a    other(document: unknown): unknown;\u000a};\u000adeclare function gql(document: unknown): unknown;\u000adeclare const identifier: string;\u000aexport function run() {\u000a    networkService.useGraphQlMutation('mutation { save { id } }');\u000a}\u000a
+case 173
+finding 444 477 noStringLiteralGraphQlQuery	This GraphQL document is a string rather than a gql tagged template. The gql tag is what lets the code generator see the document and produce the operation's types, so a plain string compiles and runs while every variable and every field of the result goes untyped. Import gql from NetworkService and write gql(`query { ... }`).
+fixed	declare const networkService: {\u000a    useGraphQlQuery(document: unknown, variables?: unknown): unknown;\u000a    useGraphQlMutation(document: unknown): unknown;\u000a    useSuspenseGraphQlQuery(document: unknown): unknown;\u000a    graphQlRequest(document: unknown): unknown;\u000a    other(document: unknown): unknown;\u000a};\u000adeclare function gql(document: unknown): unknown;\u000adeclare const identifier: string;\u000aexport function run() {\u000a    networkService.useGraphQlQuery('query { user { id } }' as string);\u000a}\u000a
+case 174
+finding 444 467 noStringLiteralGraphQlQuery	This GraphQL document is a string rather than a gql tagged template. The gql tag is what lets the code generator see the document and produce the operation's types, so a plain string compiles and runs while every variable and every field of the result goes untyped. Import gql from NetworkService and write gql(`query { ... }`).
+fixed	declare const networkService: {\u000a    useGraphQlQuery(document: unknown, variables?: unknown): unknown;\u000a    useGraphQlMutation(document: unknown): unknown;\u000a    useSuspenseGraphQlQuery(document: unknown): unknown;\u000a    graphQlRequest(document: unknown): unknown;\u000a    other(document: unknown): unknown;\u000a};\u000adeclare function gql(document: unknown): unknown;\u000adeclare const identifier: string;\u000aexport function run() {\u000a    networkService.useGraphQlQuery('query { user { id } }');\u000a}\u000a
+case 175
+finding 444 467 noStringLiteralGraphQlQuery	This GraphQL document is a string rather than a gql tagged template. The gql tag is what lets the code generator see the document and produce the operation's types, so a plain string compiles and runs while every variable and every field of the result goes untyped. Import gql from NetworkService and write gql(`query { ... }`).
+fixed	declare const networkService: {\u000a    useGraphQlQuery(document: unknown, variables?: unknown): unknown;\u000a    useGraphQlMutation(document: unknown): unknown;\u000a    useSuspenseGraphQlQuery(document: unknown): unknown;\u000a    graphQlRequest(document: unknown): unknown;\u000a    other(document: unknown): unknown;\u000a};\u000adeclare function gql(document: unknown): unknown;\u000adeclare const identifier: string;\u000aexport function run() {\u000a    networkService.useGraphQlQuery(`query { user { id } }`);\u000a}\u000a
+case 176
+finding 444 488 noStringLiteralGraphQlQuery	This GraphQL document is a string rather than a gql tagged template. The gql tag is what lets the code generator see the document and produce the operation's types, so a plain string compiles and runs while every variable and every field of the result goes untyped. Import gql from NetworkService and write gql(`query { ... }`).
+fixed	declare const networkService: {\u000a    useGraphQlQuery(document: unknown, variables?: unknown): unknown;\u000a    useGraphQlMutation(document: unknown): unknown;\u000a    useSuspenseGraphQlQuery(document: unknown): unknown;\u000a    graphQlRequest(document: unknown): unknown;\u000a    other(document: unknown): unknown;\u000a};\u000adeclare function gql(document: unknown): unknown;\u000adeclare const identifier: string;\u000aexport function run() {\u000a    networkService.useGraphQlQuery(`query { user(id: "${identifier}") { id } }`);\u000a}\u000a
+case 177
+fixed	declare const networkService: {\u000a    useGraphQlQuery(document: unknown, variables?: unknown): unknown;\u000a    useGraphQlMutation(document: unknown): unknown;\u000a    useSuspenseGraphQlQuery(document: unknown): unknown;\u000a    graphQlRequest(document: unknown): unknown;\u000a    other(document: unknown): unknown;\u000a};\u000adeclare function gql(document: unknown): unknown;\u000adeclare const identifier: string;\u000aexport function run() {\u000a    networkService.useGraphQlQuery(gql(`query { user { id } }`));\u000a}\u000a
+case 178
+fixed	declare const networkService: {\u000a    useGraphQlQuery(document: unknown, variables?: unknown): unknown;\u000a    useGraphQlMutation(document: unknown): unknown;\u000a    useSuspenseGraphQlQuery(document: unknown): unknown;\u000a    graphQlRequest(document: unknown): unknown;\u000a    other(document: unknown): unknown;\u000a};\u000adeclare function gql(document: unknown): unknown;\u000adeclare const identifier: string;\u000aexport function run() {\u000a    networkService.useGraphQlQuery(gql(`query { user { id } }`), { identifier: 'abc' });\u000a}\u000a
+case 179
+finding 452 475 noStringLiteralGraphQlQuery	This GraphQL document is a string rather than a gql tagged template. The gql tag is what lets the code generator see the document and produce the operation's types, so a plain string compiles and runs while every variable and every field of the result goes untyped. Import gql from NetworkService and write gql(`query { ... }`).
+fixed	declare const networkService: {\u000a    useGraphQlQuery(document: unknown, variables?: unknown): unknown;\u000a    useGraphQlMutation(document: unknown): unknown;\u000a    useSuspenseGraphQlQuery(document: unknown): unknown;\u000a    graphQlRequest(document: unknown): unknown;\u000a    other(document: unknown): unknown;\u000a};\u000adeclare function gql(document: unknown): unknown;\u000adeclare const identifier: string;\u000aexport function run() {\u000a    networkService.useSuspenseGraphQlQuery('query { user { id } }');\u000a}\u000a
+case 180
+fixed	declare const networkService: {\u000a    useGraphQlQuery(document: unknown, variables?: unknown): unknown;\u000a    useGraphQlMutation(document: unknown): unknown;\u000a    useSuspenseGraphQlQuery(document: unknown): unknown;\u000a    graphQlRequest(document: unknown): unknown;\u000a    other(document: unknown): unknown;\u000a};\u000adeclare function gql(document: unknown): unknown;\u000adeclare const identifier: string;\u000aexport function run(document: unknown) {\u000a    networkService.useGraphQlQuery(document);\u000a}\u000a
+case 181
+finding 14 15 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	,
+applied	const data = <T, /* , */>() => {};
+fixed	const data = <T extends any /* , */>() => {};
+case 182
+finding 14 15 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	
+applied	const data = <T /* comment */,>() => {};
+fixed	const data = <T extends any /* comment */,>() => {};
+case 183
+finding 14 15 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	,
+applied	const data = <T, /* comment */>() => {};
+fixed	const data = <T extends any /* comment */>() => {};
+case 184
+finding 14 21 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 21 37	,
+applied	const data = <Element,>() => {};
+fixed	const data = <Element extends unknown>() => {};
+case 185
+finding 14 15 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	
+applied	const data = <T>() => {};
+fixed	const data = <T extends any>() => {};
+case 186
+finding 14 15 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	,
+applied	const data = <T,>() => {};
+fixed	const data = <T extends any>() => {};
+case 187
+finding 14 15 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	,
+applied	const data = <T,>() => {};
+fixed	const data = <T extends any>() => {};
+case 188
+finding 0 33 requireNamespaceImport	Node built-in 'node:path' must use a namespace import, so every call site says which module it came from. Use: import * as NodePath from 'node:path'
+fixed	import NodePath from 'node:path';\u000a
+case 189
+finding 7 26 requireCorrectAlias	Node namespace alias must be 'NodeFileSystemPromises', got 'NodeFileSystem'. The alias is the Node-prefixed expansion of the module, so a reader forty lines down knows what they are looking at without finding the import. Use: import * as NodeFileSystemPromises from 'node:fs/promises'
+fixed	import * as NodeFileSystem from 'node:fs/promises';\u000a
+case 190
+finding 0 50 requireNodePrefix	Node built-in 'child_process' must use the 'node:' prefix, which says the module is Node's rather than a package that happens to share its name. Use: import * as NodeChildProcess from 'node:child_process'
+fix 34 49	'node:child_process'
+fixed	import * as NodeChildProcess from 'node:child_process';\u000a
+case 191
+finding 14 15 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 31	,
+applied	const data = <T,>() => {};
+fixed	const data = <T extends unknown>() => {};
+case 192
+finding 14 15 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 31	,
+applied	const data = <T,>() => {};
+fixed	const data = <T extends unknown>() => {};
+case 193
+finding 14 15 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 31	
+applied	const data = <T>() => {};
+fixed	const data = <T extends unknown>() => {};
+case 194
+finding 25 26 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 26 42	
+applied	// \ud83d\udc8e\u000afunction data<T, U>() {}
+fixed	// \ud83d\udc8e\u000afunction data<T, U extends unknown>() {}
+case 195
+finding 11 15 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 9 15	
+fix 20 20	 as const
+finding 33 42 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 31 42	
+fix 49 49	 as const
+finding 71 72 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 69 72	
+fix 76 76	 as const
+fixed	let value = 16 as const; let other = 'ab' as const; class C { static x = 2 as const; }
+case 196
+finding 17 18 defineInitializer	The value of the member 'B' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to B = 1
+edit 17 18	B = 1
+applied	enum D { A = 10, B = 1, 'quoted' }
+suggestion defineInitializerSuggestion	Can be fixed to B = 2
+edit 17 18	B = 2
+applied	enum D { A = 10, B = 2, 'quoted' }
+suggestion defineInitializerSuggestion	Can be fixed to B = 'B'
+edit 17 18	B = 'B'
+applied	enum D { A = 10, B = 'B', 'quoted' }
+finding 20 28 defineInitializer	The value of the member ''quoted'' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to 'quoted' = 2
+edit 20 28	'quoted' = 2
+applied	enum D { A = 10, B, 'quoted' = 2 }
+suggestion defineInitializerSuggestion	Can be fixed to 'quoted' = 3
+edit 20 28	'quoted' = 3
+applied	enum D { A = 10, B, 'quoted' = 3 }
+suggestion defineInitializerSuggestion	Can be fixed to 'quoted' = ''quoted''
+edit 20 28	'quoted' = ''quoted''
+applied	enum D { A = 10, B, 'quoted' = ''quoted'' }
+fixed	enum D { A = 10, B, 'quoted' }
+case 197
+finding 0 30 requireNodePrefix	Node built-in 'fs' must use the 'node:' prefix, which says the module is Node's rather than a package that happens to share its name. Use: import * as NodeFileSystem from 'node:fs'
+fix 25 29	'node:fs'
+finding 12 19 requireCorrectAlias	Node namespace alias must be 'NodeFileSystem', got 'fs'. The alias is the Node-prefixed expansion of the module, so a reader forty lines down knows what they are looking at without finding the import. Use: import * as NodeFileSystem from 'node:fs'
+finding 38 49 requireCorrectAlias	Node namespace alias must be 'NodeOperatingSystem', got 'System'. The alias is the Node-prefixed expansion of the module, so a reader forty lines down knows what they are looking at without finding the import. Use: import * as NodeOperatingSystem from 'node:os'
+finding 66 85 requireNamespaceImport	Node built-in 'node:path' must use a namespace import, so every call site says which module it came from. Use: import * as NodePath from 'node:path'
+fixed	import type * as fs from 'node:fs'; import * as System from 'node:os'; import 'node:path';
+case 198
+finding 36 43 noArrayWithStringLiteralInvalidateCache	This element of the cache.invalidate array is a literal rather than an imported key. Cache keys are strings that have to match exactly across the file that writes the cache and every file that invalidates it, and nothing checks that they do. A typo produces no error and no finding: the invalidation runs, matches nothing, and the stale value stays. Export the key from where the cache is created and import it, so a rename is a compiler error rather than a silent miss.
+finding 45 60 noTemplateLiteralInvalidateCache	cache.invalidate takes a template literal here rather than an imported key. Cache keys are strings that have to match exactly across the file that writes the cache and every file that invalidates it, and nothing checks that they do. A typo produces no error and no finding: the invalidation runs, matches nothing, and the stale value stays. Export the key from where the cache is created and import it, so a rename is a compiler error rather than a silent miss. A template is worse than a plain string, since the interpolated parts make the final key invisible at the call site.
+fixed	(client.cache).invalidate<string>((['users', (`posts-${id}`), , ...others]));
+case 199
+finding 124 144 noStringLiteralGraphQlQuery	This GraphQL document is a string rather than a gql tagged template. The gql tag is what lets the code generator see the document and produce the operation's types, so a plain string compiles and runs while every variable and every field of the result goes untyped. Import gql from NetworkService and write gql(`query { ... }`).
+fixed	const first = second; const second = first; client.graphQlRequest(first); { const Document = 'query'; client.graphQlRequest((Document as string)); }
+case 200
+finding 14 15 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	
+applied	function data<T>() {}\u000a
+fixed	function data<T extends any>() {}\u000a
+case 201
+finding 11 16 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 9 16	
+fix 24 24	 as const
+fixed	let value = 'bar' as const;\u000a
+case 202
+finding 9 11 defineInitializer	The value of the member 'Up' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to Up = 0
+edit 9 11	Up = 0
+applied	enum D { Up = 0 }\u000a
+suggestion defineInitializerSuggestion	Can be fixed to Up = 1
+edit 9 11	Up = 1
+applied	enum D { Up = 1 }\u000a
+suggestion defineInitializerSuggestion	Can be fixed to Up = 'Up'
+edit 9 11	Up = 'Up'
+applied	enum D { Up = 'Up' }\u000a
+fixed	enum D { Up }\u000a
+case 203
+finding 0 25 requireNodePrefix	Node built-in 'fs' must use the 'node:' prefix, which says the module is Node's rather than a package that happens to share its name. Use: import * as NodeFileSystem from 'node:fs'
+fix 20 24	'node:fs'
+finding 7 14 requireCorrectAlias	Node namespace alias must be 'NodeFileSystem', got 'fs'. The alias is the Node-prefixed expansion of the module, so a reader forty lines down knows what they are looking at without finding the import. Use: import * as NodeFileSystem from 'node:fs'
+fixed	import * as fs from 'node:fs';\u000a
+case 204
+finding 26 33 noArrayWithStringLiteralInvalidateCache	This element of the cache.invalidate array is a literal rather than an imported key. Cache keys are strings that have to match exactly across the file that writes the cache and every file that invalidates it, and nothing checks that they do. A typo produces no error and no finding: the invalidation runs, matches nothing, and the stale value stays. Export the key from where the cache is created and import it, so a rename is a compiler error rather than a silent miss.
+finding 35 48 noTemplateLiteralInvalidateCache	cache.invalidate takes a template literal here rather than an imported key. Cache keys are strings that have to match exactly across the file that writes the cache and every file that invalidates it, and nothing checks that they do. A typo produces no error and no finding: the invalidation runs, matches nothing, and the stale value stays. Export the key from where the cache is created and import it, so a rename is a compiler error rather than a silent miss. A template is worse than a plain string, since the interpolated parts make the final key invisible at the call site.
+fixed	service.cache.invalidate(['users', `posts-${id}`]);\u000a
+case 205
+finding 56 64 noStringLiteralGraphQlQuery	This GraphQL document is a string rather than a gql tagged template. The gql tag is what lets the code generator see the document and produce the operation's types, so a plain string compiles and runs while every variable and every field of the result goes untyped. Import gql from NetworkService and write gql(`query { ... }`).
+fixed	const Document = 'query { id }'; client.useGraphQlQuery(Document);\u000a

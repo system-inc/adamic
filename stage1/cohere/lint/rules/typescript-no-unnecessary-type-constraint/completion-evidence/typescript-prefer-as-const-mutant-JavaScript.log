@@ -1,0 +1,148 @@
+case 0
+fixed	\u000a                  class foo {\u000a                    bar = 'baz' as const;\u000a                  }\u000a                
+case 1
+fixed	\u000a                  class foo {\u000a                    bar = 'baz';\u000a                  }\u000a                
+case 2
+fixed	\u000a                  class foo {\u000a                    bar = () => 'bar' as const;\u000a                  }\u000a                
+case 3
+fixed	\u000a                  class foo {\u000a                    bar = 2 as const;\u000a                  }\u000a                
+case 4
+fixed	\u000a                  class foo {\u000a                    bar(): void {}\u000a                  }\u000a                
+case 5
+fixed	\u000a                  class foo {\u000a                    bar: 'baz';\u000a                  }\u000a                
+case 6
+fixed	\u000a                  class foo {\u000a                    bar: number = 1;\u000a                  }\u000a                
+case 7
+fixed	\u000a                  class foo {\u000a                    bar: string = 'baz';\u000a                  }\u000a                
+case 8
+fixed	\u000a                  class foo {\u000a                    bar;\u000a                  }\u000a                
+case 9
+fixed	\u000a                  class foo {\u000a                    get bar(): 'bar' {}\u000a                    set bar(bar: 'bar') {}\u000a                  }\u000a                
+case 10
+fixed	\u000a                  type BazFunction = () => 'baz';\u000a                  class foo {\u000a                    bar: BazFunction = () => 'bar';\u000a                  }\u000a                
+case 11
+fixed	\u000a            class foo {\u000a              bar: 'baz' = 'baz';\u000a            }\u000a                  
+case 12
+fixed	\u000a            class foo {\u000a              bar: 2 = 2;\u000a            }\u000a                  
+case 13
+fixed	\u000a            class foo {\u000a              foo = 'bar' as 'bar';\u000a            }\u000a                  
+case 14
+fixed	\u000a            class foo {\u000a              foo = 5 as 5;\u000a            }\u000a                  
+case 15
+fixed	\u000a            class foo {\u000a              foo = <'bar'>'bar';\u000a            }\u000a                  
+case 16
+fixed	\u000a            class foo {\u000a              readonly bar: 'baz' = 'baz';\u000a            }\u000a                  
+case 17
+fixed	\u000a            class foo {\u000a              static bar: 2 = 2;\u000a            }\u000a                  
+case 18
+fixed	class C { p!: 'baz' = 'baz'; }
+case 19
+fixed	class foo {\u000a  bar: 'baz' = 'baz';\u000a}\u000a
+case 20
+fixed	const example: 'hello' = 'hello';
+case 21
+fixed	const foo: 2 = 2;
+case 22
+fixed	declare function g<T>(x: T): T;\u000aconst r = g<'bar'>('bar');
+case 23
+fixed	function f(p: 'bar' = 'bar') {}
+case 24
+fixed	let []: 'bar' = 'bar';
+case 25
+fixed	let a  :  'bar' = 'bar';\u000a
+case 26
+fixed	let a!: 'bar' = 'bar';
+case 27
+fixed	let a: '2' = 2;
+case 28
+fixed	let a: 'bar' /*c*/ = 'bar';\u000a
+case 29
+fixed	let a: 'bar' = 'bar' /*t*/;\u000a
+case 30
+fixed	let a: ('bar') = 'bar';
+case 31
+fixed	let a: -2 = -2;
+case 32
+fixed	let a: 0x10 = 16;
+case 33
+fixed	let a: 1_0 = 10;
+case 34
+fixed	let a: 1e2 = 100;
+case 35
+fixed	let a: 2 = '2';
+case 36
+fixed	let a: 2 = 2.0;
+case 37
+fixed	let a: 2n = 2n;
+case 38
+fixed	let a: true = true;
+case 39
+fixed	let foo = 'bar' as 'bar';
+case 40
+fixed	let foo = 'bar' as string;
+case 41
+fixed	let foo = 'bar';
+case 42
+fixed	let foo = 'baz' as const;
+case 43
+fixed	let foo = 1 as const;
+case 44
+fixed	let foo = 5 as 5;
+case 45
+fixed	let foo = <'bar'>'bar';
+case 46
+fixed	let foo = <4>4;
+case 47
+fixed	let foo = `bar` as 'bar';
+case 48
+fixed	let foo = `bar` as `bar`;
+case 49
+fixed	let foo = `bar` as `foo`;
+case 50
+fixed	let foo = { bar };
+case 51
+fixed	let foo = { bar: 'baz' as 'baz' };
+case 52
+fixed	let foo = { bar: 'baz' as const };
+case 53
+fixed	let foo = { bar: 'baz' };
+case 54
+fixed	let foo = { bar: 1 as 1 };
+case 55
+fixed	let foo = { bar: 1 as const };
+case 56
+fixed	let foo = { bar: 2 };
+case 57
+fixed	let foo: 'bar' = "bar";
+case 58
+fixed	let foo: 'bar' = 'bar' as 'bar';
+case 59
+fixed	let foo: 'bar' = 'bar';
+case 60
+finding 9 14 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 7 14	
+fix 22 22	 as const
+fixed	let foo = 'baz' as const;
+case 61
+fixed	let foo: 'bar' = baz;
+case 62
+fixed	let foo: 'bar';
+case 63
+fixed	let foo: 'baz' = 'baz' as const;
+case 64
+fixed	let foo: 2 = 2;
+case 65
+finding 9 10 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 7 10	
+fix 14 14	 as const
+fixed	let foo = 3 as const;
+case 66
+fixed	let foo: number = 1;
+case 67
+fixed	let foo: string = 'bar';
+case 68
+fixed	let {}: 'bar' = 'bar';
+case 69
+fixed	let value: 0x10 = 16; let other: 'a\u005cu0062' = 'ab'; class C { static x: 2 = 2; }
+case 70
+fixed	let value: 'bar' = 'bar';\u000a

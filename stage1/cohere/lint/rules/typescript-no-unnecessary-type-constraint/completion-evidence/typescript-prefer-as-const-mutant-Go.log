@@ -1,0 +1,221 @@
+case 0
+fixed	\u000a                  class foo {\u000a                    bar = 'baz' as const;\u000a                  }\u000a                
+case 1
+fixed	\u000a                  class foo {\u000a                    bar = 'baz';\u000a                  }\u000a                
+case 2
+fixed	\u000a                  class foo {\u000a                    bar = () => 'bar' as const;\u000a                  }\u000a                
+case 3
+fixed	\u000a                  class foo {\u000a                    bar = 2 as const;\u000a                  }\u000a                
+case 4
+fixed	\u000a                  class foo {\u000a                    bar(): void {}\u000a                  }\u000a                
+case 5
+fixed	\u000a                  class foo {\u000a                    bar: 'baz';\u000a                  }\u000a                
+case 6
+fixed	\u000a                  class foo {\u000a                    bar: number = 1;\u000a                  }\u000a                
+case 7
+fixed	\u000a                  class foo {\u000a                    bar: string = 'baz';\u000a                  }\u000a                
+case 8
+fixed	\u000a                  class foo {\u000a                    bar;\u000a                  }\u000a                
+case 9
+fixed	\u000a                  class foo {\u000a                    get bar(): 'bar' {}\u000a                    set bar(bar: 'bar') {}\u000a                  }\u000a                
+case 10
+fixed	\u000a                  type BazFunction = () => 'baz';\u000a                  class foo {\u000a                    bar: BazFunction = () => 'bar';\u000a                  }\u000a                
+case 11
+finding 44 49 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 42 49	
+fix 57 57	 as const
+fixed	\u000a            class foo {\u000a              bar = 'baz' as const;\u000a            }\u000a                  
+case 12
+finding 44 45 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 42 45	
+fix 49 49	 as const
+fixed	\u000a            class foo {\u000a              bar = 2 as const;\u000a            }\u000a                  
+case 13
+finding 54 59 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 54 59	const
+fixed	\u000a            class foo {\u000a              foo = 'bar' as const;\u000a            }\u000a                  
+case 14
+finding 50 51 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 50 51	const
+fixed	\u000a            class foo {\u000a              foo = 5 as const;\u000a            }\u000a                  
+case 15
+fixed	\u000a            class foo {\u000a              foo = <'bar'>'bar';\u000a            }\u000a                  
+case 16
+finding 53 58 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 51 58	
+fix 66 66	 as const
+fixed	\u000a            class foo {\u000a              readonly bar = 'baz' as const;\u000a            }\u000a                  
+case 17
+finding 51 52 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 49 52	
+fix 56 56	 as const
+fixed	\u000a            class foo {\u000a              static bar = 2 as const;\u000a            }\u000a                  
+case 18
+fixed	class C { p!: 'baz' = 'baz'; }
+case 19
+finding 19 24 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 17 24	
+fix 32 32	 as const
+fixed	class foo {\u000a  bar = 'baz' as const;\u000a}\u000a
+case 20
+finding 15 22 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 13 22	
+fix 32 32	 as const
+fixed	const example = 'hello' as const;
+case 21
+finding 11 12 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 9 12	
+fix 16 16	 as const
+fixed	const foo = 2 as const;
+case 22
+fixed	declare function g<T>(x: T): T;\u000aconst r = g<'bar'>('bar');
+case 23
+fixed	function f(p: 'bar' = 'bar') {}
+case 24
+finding 8 13 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fixed	let []: 'bar' = 'bar';
+case 25
+finding 10 15 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 7 15	
+fix 23 23	 as const
+fixed	let a   = 'bar' as const;\u000a
+case 26
+fixed	let a!: 'bar' = 'bar';
+case 27
+fixed	let a: '2' = 2;
+case 28
+finding 7 12 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 5 12	
+fix 26 26	 as const
+fixed	let a /*c*/ = 'bar' as const;\u000a
+case 29
+finding 7 12 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 5 12	
+fix 20 20	 as const
+fixed	let a = 'bar' as const /*t*/;\u000a
+case 30
+fixed	let a: ('bar') = 'bar';
+case 31
+fixed	let a: -2 = -2;
+case 32
+finding 7 11 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 5 11	
+fix 16 16	 as const
+fixed	let a = 16 as const;
+case 33
+finding 7 10 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 5 10	
+fix 15 15	 as const
+fixed	let a = 10 as const;
+case 34
+finding 7 10 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 5 10	
+fix 16 16	 as const
+fixed	let a = 100 as const;
+case 35
+fixed	let a: 2 = '2';
+case 36
+finding 7 8 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 5 8	
+fix 14 14	 as const
+fixed	let a = 2.0 as const;
+case 37
+fixed	let a: 2n = 2n;
+case 38
+fixed	let a: true = true;
+case 39
+finding 19 24 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 19 24	const
+fixed	let foo = 'bar' as const;
+case 40
+fixed	let foo = 'bar' as string;
+case 41
+fixed	let foo = 'bar';
+case 42
+fixed	let foo = 'baz' as const;
+case 43
+fixed	let foo = 1 as const;
+case 44
+finding 15 16 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 15 16	const
+fixed	let foo = 5 as const;
+case 45
+fixed	let foo = <'bar'>'bar';
+case 46
+fixed	let foo = <4>4;
+case 47
+fixed	let foo = `bar` as 'bar';
+case 48
+fixed	let foo = `bar` as `bar`;
+case 49
+fixed	let foo = `bar` as `foo`;
+case 50
+fixed	let foo = { bar };
+case 51
+finding 26 31 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 26 31	const
+fixed	let foo = { bar: 'baz' as const };
+case 52
+fixed	let foo = { bar: 'baz' as const };
+case 53
+fixed	let foo = { bar: 'baz' };
+case 54
+finding 22 23 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 22 23	const
+fixed	let foo = { bar: 1 as const };
+case 55
+fixed	let foo = { bar: 1 as const };
+case 56
+fixed	let foo = { bar: 2 };
+case 57
+finding 9 14 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 7 14	
+fix 22 22	 as const
+fixed	let foo = "bar" as const;
+case 58
+finding 26 31 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 26 31	const
+fixed	let foo: 'bar' = 'bar' as const;
+case 59
+finding 9 14 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 7 14	
+fix 22 22	 as const
+fixed	let foo = 'bar' as const;
+case 60
+fixed	let foo: 'bar' = 'baz';
+case 61
+fixed	let foo: 'bar' = baz;
+case 62
+fixed	let foo: 'bar';
+case 63
+fixed	let foo: 'baz' = 'baz' as const;
+case 64
+finding 9 10 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 7 10	
+fix 14 14	 as const
+fixed	let foo = 2 as const;
+case 65
+fixed	let foo: 2 = 3;
+case 66
+fixed	let foo: number = 1;
+case 67
+fixed	let foo: string = 'bar';
+case 68
+finding 8 13 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fixed	let {}: 'bar' = 'bar';
+case 69
+finding 11 15 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 9 15	
+fix 20 20	 as const
+finding 33 42 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 31 42	
+fix 49 49	 as const
+finding 71 72 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 69 72	
+fix 76 76	 as const
+fixed	let value = 16 as const; let other = 'ab' as const; class C { static x = 2 as const; }
+case 70
+finding 11 16 preferAsConst	This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+fix 9 16	
+fix 24 24	 as const
+fixed	let value = 'bar' as const;\u000a

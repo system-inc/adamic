@@ -1,0 +1,113 @@
+package main
+
+import (
+	"fmt"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/core"
+	"github.com/microsoft/TypeScript/tsc/shim/parser"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
+	"github.com/system-inc/cohere/internal/lint/rule"
+	nexus "github.com/system-inc/cohere/internal/lint/rules/nexus"
+	structure "github.com/system-inc/cohere/internal/lint/rules/structure"
+	rules "github.com/system-inc/cohere/internal/lint/rules/typescript"
+	"os"
+	"sort"
+	"strings"
+	"unicode/utf16"
+)
+
+func written(text string) string {
+	var result strings.Builder
+	for _, r := range text {
+		if r >= 32 && r <= 126 && r != '\\' {
+			result.WriteRune(r)
+		} else if r <= 65535 {
+			fmt.Fprintf(&result, `\u%04x`, r)
+		} else {
+			h, l := utf16.EncodeRune(r)
+			fmt.Fprintf(&result, `\u%04x\u%04x`, h, l)
+		}
+	}
+	return result.String()
+}
+func apply(source string, fixes []rule.Fix) string {
+	ordered := append([]rule.Fix(nil), fixes...)
+	sort.SliceStable(ordered, func(i, j int) bool { return ordered[i].Range.Pos() < ordered[j].Range.Pos() })
+	previous := len(source)
+	for i := len(ordered) - 1; i >= 0; i-- {
+		f := ordered[i]
+		if f.Range.End() > previous {
+			panic("overlapping oracle edits")
+		}
+		source = source[:f.Range.Pos()] + f.Text + source[f.Range.End():]
+		previous = f.Range.Pos()
+	}
+	return source
+}
+func run(path, name string, count bool, proposals bool) int {
+	data, err := os.ReadFile(path)
+	if err != nil {
+		panic(err)
+	}
+	source := string(data)
+	file := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: path, Path: tspath.Path(path)}, source, core.ScriptKindTS)
+	// The Go corpus includes recovered invalid computed enum keys. Preserve its tree.
+	var diagnostics []rule.Diagnostic
+	for _, subject := range []rule.Rule{rules.NoUnnecessaryTypeConstraint, rules.PreferAsConst, rules.PreferEnumInitializers, nexus.ImportRequireNodeNamespace, structure.NetworkNoInvalidateCacheLiteralKey, structure.NetworkNoStringLiteralQuery} {
+		if subject.Name != name {
+			continue
+		}
+		listeners := subject.Run(rule.Context{SourceFile: file, FileCache: rule.NewFileCache(), Report: func(d rule.Diagnostic) { diagnostics = append(diagnostics, d) }}, nil)
+		var walk func(*ast.Node)
+		walk = func(n *ast.Node) {
+			if visit := listeners[n.Kind]; visit != nil {
+				visit(n)
+			}
+			n.ForEachChild(func(c *ast.Node) bool { walk(c); return false })
+		}
+		walk(file.AsNode())
+	}
+	sort.SliceStable(diagnostics, func(i, j int) bool { return diagnostics[i].Range.Pos() < diagnostics[j].Range.Pos() })
+	if count {
+		return len(diagnostics)
+	}
+	var fixes []rule.Fix
+	for _, d := range diagnostics {
+		fmt.Printf("finding %d %d %s\t%s\n", d.Range.Pos(), d.Range.End(), d.Message.Id, written(d.Message.Description))
+		for _, f := range d.Fixes {
+			fmt.Printf("fix %d %d\t%s\n", f.Range.Pos(), f.Range.End(), written(f.Text))
+			fixes = append(fixes, f)
+		}
+		for _, s := range d.Suggestions {
+			fmt.Printf("suggestion %s\t%s\n", s.Message.Id, written(s.Message.Description))
+			for _, f := range s.Fixes {
+				fmt.Printf("edit %d %d\t%s\n", f.Range.Pos(), f.Range.End(), written(f.Text))
+			}
+			if !proposals { fmt.Printf("applied\t%s\n", written(apply(source, s.Fixes))) }
+		}
+	}
+	fmt.Printf("fixed\t%s\n", written(apply(source, fixes)))
+	return len(diagnostics)
+}
+func main() {
+	data, err := os.ReadFile(os.Args[1])
+	if err != nil {
+		panic(err)
+	}
+	count := len(os.Args) > 2 && os.Args[2] == "--count"
+	cases, total := 0, 0
+	for _, row := range strings.Split(string(data), "\n") {
+		if row == "" {
+			continue
+		}
+		fields := strings.Split(row, "\t")
+		if !count {
+			fmt.Printf("case %d\n", cases)
+		}
+		total += run(fields[0], fields[1], count, len(os.Args)>2 && os.Args[2]=="--proposals-only")
+		cases++
+	}
+	if count {
+		fmt.Println(total)
+	}
+}

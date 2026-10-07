@@ -1,0 +1,190 @@
+case 0
+finding 20 21 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 21 37	
+applied	class Data { member<T>() {} }
+fixed	class Data { member<T extends unknown>() {} }
+case 1
+finding 11 12 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 12 28	
+applied	class Data<T> {}
+fixed	class Data<T extends unknown> {}
+case 2
+finding 28 29 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 29 45	
+applied	const Data = class { member<T>() {} };
+fixed	const Data = class { member<T extends unknown>() {} };
+case 3
+finding 19 20 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 20 36	
+applied	const Data = class<T> {};
+fixed	const Data = class<T extends unknown> {};
+case 4
+fixed	const data = () => {};
+case 5
+finding 14 15 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	
+applied	const data = <T , >() => {};
+fixed	const data = <T extends any , >() => {};
+case 6
+finding 14 15 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	
+applied	const data = <T ,>() => {};
+fixed	const data = <T extends any ,>() => {};
+case 7
+finding 14 15 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	
+applied	const data = <T = unknown>() => {};
+fixed	const data = <T extends any = unknown>() => {};
+case 8
+finding 14 15 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	
+applied	const data = <T, >() => {};
+fixed	const data = <T extends any, >() => {};
+case 9
+finding 14 15 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	
+applied	const data = <T, U extends any>() => {};
+finding 29 30 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 30 42	
+applied	const data = <T extends any, U>() => {};
+fixed	const data = <T extends any, U extends any>() => {};
+case 10
+finding 14 15 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	
+applied	const data = <T,>() => {};
+fixed	const data = <T extends any,>() => {};
+case 11
+finding 14 15 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	,
+applied	const data = <T,>() => {};
+fixed	const data = <T extends any>() => {};
+case 12
+fixed	const data = <T extends number | string>() => {};
+case 13
+fixed	const data = <T extends number>() => {};
+case 14
+finding 14 15 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 31	,
+applied	const data = <T,>() => {};
+fixed	const data = <T extends unknown>() => {};
+case 15
+fixed	const data = <T, >() => {};
+case 16
+fixed	const data = <T, U>() => {};
+case 17
+fixed	function data() {}
+case 18
+fixed	function data<T extends (any)>() {}
+case 19
+fixed	function data<T extends (unknown)>() {}
+case 20
+fixed	function data<T extends any | number>() {}
+case 21
+finding 14 15 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	
+applied	function data<T, U extends T>() {}
+fixed	function data<T extends any, U extends T>() {}
+case 22
+finding 14 15 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	
+applied	function data<T, U>() {}
+fixed	function data<T extends any, U>() {}
+case 23
+finding 14 15 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	
+applied	function data<T>() {}
+fixed	function data<T extends any>() {}
+case 24
+fixed	function data<T extends never>() {}
+case 25
+fixed	function data<T extends number | string>() {}
+case 26
+fixed	function data<T extends number>() {}
+case 27
+fixed	function data<T extends object>() {}
+case 28
+finding 14 15 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 31	
+applied	function data<T>() {}
+fixed	function data<T extends unknown>() {}
+case 29
+fixed	function data<T extends void>() {}
+case 30
+fixed	function data<T extends {}>() {}
+case 31
+finding 17 18 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 18 30	
+applied	function data<T, U>() {}
+fixed	function data<T, U extends any>() {}
+case 32
+fixed	function data<T, U>() {}
+case 33
+fixed	function data<T>() {}
+case 34
+finding 15 16 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 16 32	
+applied	interface Data<T> {}
+fixed	interface Data<T extends unknown> {}
+case 35
+finding 10 11 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 11 27	
+applied	type Data<T> = {};
+fixed	type Data<T extends unknown> = {};
+case 36
+fixed	type X = any; function data<T extends X>() {}
+case 37
+finding 14 15 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	,
+applied	const data = <T, /* , */>() => {};
+fixed	const data = <T extends any /* , */>() => {};
+case 38
+finding 14 15 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 31	,
+applied	const data = <T,>() => {};
+fixed	const data = <T extends unknown>() => {};
+case 39
+finding 14 15 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 31	,
+applied	const data = <T,>() => {};
+fixed	const data = <T extends unknown>() => {};
+case 40
+finding 14 15 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 31	
+applied	const data = <T>() => {};
+fixed	const data = <T extends unknown>() => {};
+case 41
+finding 25 26 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 26 42	
+applied	// \ud83d\udc8e\u000afunction data<T, U>() {}
+fixed	// \ud83d\udc8e\u000afunction data<T, U extends unknown>() {}
+case 42
+finding 14 15 noUnnecessaryTypeConstraint	A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	
+applied	function data<T>() {}\u000a
+fixed	function data<T extends any>() {}\u000a
