@@ -11,7 +11,7 @@ import (
 
 // variables lowers const and let declarations, each to a local of its own.
 func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
-	if list.Flags&ast.NodeFlagsBlockScoped == 0 && !assertionVarList(list) {
+	if list.Flags&ast.NodeFlagsBlockScoped == 0 && !assertionVarList(list) && !namespaceVariable(list) {
 		return nil, &Refused{Where: l.program.Where(list), What: "var", Fix: "use const or let"}
 	}
 	statements := []ir.Statement{}
@@ -41,6 +41,9 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
 		}
 		if list.Flags&ast.NodeFlagsBlockScoped == 0 {
 			l.result.Locals[local].Hoisted = true
+		}
+		if l.result.Locals[local].NamespaceVar && declaration.Initializer() == nil {
+			continue // Hoisted storage must not overwrite an earlier assignment.
 		}
 		if l.uninitializedDeclaration(declaration) {
 			l.result.Locals[local].Uninitialized = true
@@ -82,7 +85,13 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
 		if closure, literal := value.(ir.MakeClosure); literal && list.Flags&ast.NodeFlagsConst != 0 {
 			l.result.Locals[local].ConstantClosure = closure.Function + 1
 		}
-		statements = append(statements, l.initializeLocal(local, fit(value, l.result.Locals[local].Type))...)
+		if l.result.Locals[local].NamespaceVar {
+			if value != nil {
+				statements = append(statements, ir.Assign{Local: local, Value: fit(value, l.result.Locals[local].Type)})
+			}
+		} else {
+			statements = append(statements, l.initializeLocal(local, fit(value, l.result.Locals[local].Type))...)
+		}
 	}
 	return statements, nil
 }
@@ -208,7 +217,7 @@ func (l *lowering) touch(local int) {
 
 // checked guards switch lexical bindings, captured cells, and globals reached before initialization.
 func (l *lowering) checked(local int) bool {
-	return l.result.Locals[local].Ready != 0 || (l.result.Locals[local].Global && (l.function != nil || l.cyclicModules)) || (l.function != nil && l.result.Locals[local].Preallocated && l.result.Locals[local].Captured)
+	return l.result.Locals[local].NamespaceState || l.result.Locals[local].Ready != 0 || (l.result.Locals[local].Global && (l.function != nil || l.cyclicModules)) || (l.function != nil && l.result.Locals[local].Preallocated && l.result.Locals[local].Captured)
 }
 
 func (l *lowering) constant(value string) int {

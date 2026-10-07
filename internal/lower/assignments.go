@@ -67,7 +67,7 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 			return nil, err
 		}
 	}
-	return []ir.Statement{ir.Assign{Local: local, Value: fit(value, l.result.Locals[local].Type), Checked: l.checked(local)}}, nil
+	return []ir.Statement{ir.Assign{Local: local, Value: fit(value, l.result.Locals[local].Type), Checked: l.checked(local) && !l.result.Locals[local].NamespaceState}}, nil
 }
 
 // tupleField reads element index of the tuple held in the local held, as the tuple's element type

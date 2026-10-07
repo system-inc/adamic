@@ -191,13 +191,13 @@ func (l *lowering) namespaceRefusal(node *ast.Node) error {
 			case ast.KindVariableStatement:
 				list := member.AsVariableStatement().DeclarationList
 				if list.Flags&ast.NodeFlagsBlockScoped == 0 {
-					return l.notYet(member, "var inside a namespace; use initialized private let or const")
+					// Namespace var uses hoisted module storage.
 				}
 				if ast.HasSyntacticModifier(member, ast.ModifierFlagsExport) && list.Flags&ast.NodeFlagsConst == 0 {
 					return l.notYet(member, "a mutable namespace export; use a module or export functions around private state")
 				}
 				for _, variable := range list.AsVariableDeclarationList().Declarations.Nodes {
-					if !ast.IsIdentifier(variable.Name()) || variable.Initializer() == nil {
+					if !ast.IsIdentifier(variable.Name()) {
 						return l.notYet(variable, "a namespace binding without a plain initialized name")
 					}
 				}
@@ -285,4 +285,35 @@ func (l *lowering) namespaceInitialization(modules []*ast.SourceFile) error {
 		}
 	}
 	return nil
+}
+
+// namespaceVariable identifies direct singleton storage, excluding function-local var.
+func namespaceVariable(list *ast.Node) bool {
+	return list.Parent != nil && list.Parent.Parent != nil && list.Parent.Parent.Kind == ast.KindModuleBlock
+}
+
+func (l *lowering) namespaceBody(node *ast.Node) ([]ir.Statement, error) {
+	hoisted := []ir.Statement{}
+	for _, statement := range namespaceStatements(node) {
+		if statement.Kind != ast.KindVariableStatement {
+			continue
+		}
+		list := statement.AsVariableStatement().DeclarationList
+		if list.Flags&ast.NodeFlagsBlockScoped != 0 {
+			continue
+		}
+		for _, declaration := range list.AsVariableDeclarationList().Declarations.Nodes {
+			local, err := l.declareLocal(declaration.Name())
+			if err != nil {
+				return nil, err
+			}
+			var value ir.Expression
+			if l.includesUndefined(l.checker.GetTypeAtLocation(declaration.Name())) {
+				value = fit(ir.Undefined{Of: l.result.Locals[local].Type}, l.result.Locals[local].Type)
+			}
+			hoisted = append(hoisted, ir.Declare{Local: local, Value: value})
+		}
+	}
+	body, err := l.statements(namespaceStatements(node))
+	return append(hoisted, body...), err
 }

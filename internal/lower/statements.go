@@ -29,7 +29,7 @@ func (l *lowering) statements(nodes []*ast.Node) ([]ir.Statement, error) {
 func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 	switch node.Kind {
 	case ast.KindModuleDeclaration:
-		return l.statements(namespaceStatements(node))
+		return l.namespaceBody(node)
 	case ast.KindDebuggerStatement:
 		// Preserve it for JavaScript; native builds have no attached debugger.
 		return []ir.Statement{ir.Debugger{}}, nil
