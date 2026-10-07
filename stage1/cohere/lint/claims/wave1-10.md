@@ -51,3 +51,26 @@ Fetched all origin heads again and checked main ef3d907ecdc4c771b016f7d9c52372de
 - no-extra-bind
 
 This update is committed and pushed before writing implementation code. No inventory fallback was needed. The shared harness dependency is origin/codex/lint-harness-dot-a at 2650ad595b82220c368631ea13139fad4b306ed6; no shared files are edited here.
+
+## Fourth claim, October 7
+
+Previous implementations, tests, reports and explicit shared-harness gaps are fully
+pushed through 39d19398. Fetched all 348 origin refs and checked actual claim
+documents under every claims directory against main
+ ef3d907ecdc4c771b016f7d9c52372def057a340.
+
+The first three available rules in the helper report's measured handoff are:
+
+- default-case
+- no-extra-label
+- no-fallthrough
+
+Selection JSON inventories under another unit's evidence directory mention these
+names while explicitly recording claims: []. Such inventory rows are not claims.
+They caused the previous scan to skip default-case incorrectly; it is the first
+unreserved helper-ready name and is reserved now. No syntax-only fallback was needed.
+
+This claim is committed and pushed before writing any implementation. Shared
+multi-edit fixes and JSX parsing remain blocked as previously reported; the latest
+harness f4d98cab still rejects multiple fixes. Only owned rule directories will be
+changed after this claim.
