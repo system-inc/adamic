@@ -27,3 +27,15 @@
         Node.js v24.19.0
 --- FAIL: TestMarkdownInline (160.69s)
 
+== github.com/system-inc/adamic/stage1/cohere/tsprinter TestStatementsAgainstGoAndPrettier
+=== RUN   TestStatementsAgainstGoAndPrettier
+    statements_test.go:83: === RUN   TestAdamicStatementCorpus
+            adamic_statements_test.go:141: 814 files, 0 parse failures, 56751 supported statement/program fragments, 13 complete files
+        --- PASS: TestAdamicStatementCorpus (6.92s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	6.981s
+        
+    statements_test.go:87: Node exit 70 stderr adamic: panic: parser slice unsupported primary EqualsToken at 30 in statements.ts
+         diff line 2381: "", Go cohere "ok\t{\\n    declare = true;\\n}\\n"
+--- FAIL: TestStatementsAgainstGoAndPrettier (20.51s)
+
