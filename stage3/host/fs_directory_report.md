@@ -1,0 +1,63 @@
+Built: catchable Node fs directory/realpath calls, POSIX path.resolve/dirname/join, and the System directory adapter.
+Commit: eef83ac19215884ab83872f96510d17a2c03d44a, based on 035999ea5a55bafd69f88e9445cf488fdbfc92c8.
+Checks: five dual-backend fixtures, permission probe, 19 mutants, touched packages, vet, formatting and counts passed.
+Mutants: all 19 ran cleanly under ASan/UBSan and leak detection; only stdout comparison with Node caught them.
+Uncovered: compiler matchFiles integration and native tsc proof, fs_file statSync replacement, macOS and Windows execution.
+
+## Delivered behavior
+
+The declarations merge into node:fs and node:path beside the prelude load. Lowering, JavaScript emission, native runtime and fixtures implement the census calls. The path census uses only resolve, dirname and join; normalize, relative, basename, extname, isAbsolute, sep and delimiter are not exposed by this unit.
+
+readdirSync returns strings or Dirent objects, orders raw names as Node does on Linux, and preserves the three requested predicates. Both realpathSync functions throw catchable errors with code and message; the walk reports its failing component and native uses libc realpath on the original argument. NUL paths receive Node-style TypeError inspection. Ordinary Error.code remains undefined. Fixtures cover empty paths, missing entries, ENOTDIR, EACCES, dangling links, cycles, symlink/.. traversal, Unicode, dot components and trailing slashes.
+
+stage3/host/fs_directory.a supplies getDirectories, getAccessibleFileSystemEntries, directoryExists, realpath, resolvePath, useCaseSensitiveFileNames and readDirectory. createDirectorySystem receives the executing filename, current-directory provider and compiler's own matchFiles. Its fixture verifies all nine forwarded arguments, omitted options and the callbacks. It does not prove wildcard matching end to end. The private statusType bridge uses existing fileStatus and is explicitly marked for replacement by fs_file statSync; no second statSync was built. POSIX sys.ts prefers native realpath and returns the input on error. Case sensitivity probes the swapped ASCII-case executing filename against the filesystem.
+
+Optional closure calls now supply typed undefined for omitted parameters. The readDirectory(path) fixture exposed an actual native stack-buffer-overflow before that correction. Error-code layout, throwing-call analysis and ownership handling are wired through the existing mechanisms. None of internal/native/emit.go, internal/lower/lower.go, internal/native/native.go or internal/oracle/oracle_test.go was edited.
+
+## Commands and observations
+
+All test output was redirected to log files. Source /workspace/adamic-tools/env.sh before Go commands.
+
+| Command | Observed result |
+| --- | --- |
+| bash cloud/setup.sh | Go go1.27.1, clang 20.1.8, Node v24.19.0; ready timings 0s each, submodules 0s, cache warm 133s, total 133s; nproc 5, cgroup quota 4 CPUs |
+| go vet ./... | exit 0, empty log |
+| go test ./internal/load ./internal/lower ./internal/native ./internal/javascript ./internal/flow ./internal/fresh -count=1 -timeout 30m | load 1.706s; lower 40.987s; native 189.551s; flow 130.180s; fresh 70.592s; JavaScript has no package tests |
+| go test ./internal/oracle -run 'TestNodeFSDirectory|TestInputAgreesWithNode/internal/oracle/testdata/node_' -count=1 -timeout 30m -v | PASS, 50.740s; five fixtures both backends, permission probe, 19 mutants |
+| go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m -args -update-counts | PASS, 101.307s |
+| go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m | PASS, 16.295s |
+| gofmt -l cmd internal; git diff --check | empty output |
+
+The full uncached repository gate was not run. Raw final logs are in logs/fs_directory_*.log. The permission test drops root to uid/gid 65534 and requires Node to observe EACCES before comparison.
+
+## Mutant evidence
+
+Every row below was executed by TestNodeFSDirectoryMutants. Every mutated binary compiled, exited zero with empty stderr under ASan/UBSan and leak checks, and was rejected only because its stdout differed from Node.
+
+| Mutant | Deliberate wrong behavior |
+| --- | --- |
+| resolve | Use join |
+| join | Use resolve |
+| dirname | Use join on the input |
+| readdir order | Reverse listing |
+| Dirent name | Replace names with wrong |
+| isFile | Use isDirectory |
+| isDirectory | Use isFile |
+| isSymbolicLink | Use isFile |
+| realpath walk | Use native |
+| realpath native | Use walk |
+| error code | Replace code with WRONG |
+| error message | Replace message with wrong |
+| getAccessibleFileSystemEntries | Return empty lists |
+| getDirectories | Return empty list |
+| directoryExists | Return false |
+| realpath | Return input |
+| resolvePath | Return input |
+| isFileSystemCaseSensitive | Return false |
+| readDirectory | Swap extensions and excludes passed to matchFiles |
+
+## Remaining integration and platform limits
+
+The actual compiler matchFiles and native tiny-project tsc --noEmit diagnostic comparison remain integration work. require routing belongs to the separately coordinated patch set. The fs_file unit was absent from this base, so its shared statSync must replace the marked bridge when available.
+
+Only census string-path UTF-8 calls and requested Dirent methods are declared; Buffer/URL paths, other encodings and unrelated fs/path exports are outside this implementation. Resource-exhaustion/race errno paths and deleted-current-directory failures have implementation support but were not fault-injected. Linux is the tested gate. macOS was not run; case sensitivity depends on the mounted filesystem and filename normalization can differ. Windows path semantics are deliberately outside this POSIX unit.
