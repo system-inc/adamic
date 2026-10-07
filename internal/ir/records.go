@@ -8,6 +8,8 @@ type RecordCall struct {
 	Element   Type
 	Returns   Type
 	Site      int
+	// OwnOnly changes prototype handling, never the value provenance or ownership.
+	OwnOnly bool
 }
 
 func (c RecordCall) Type() Type { return c.Returns }

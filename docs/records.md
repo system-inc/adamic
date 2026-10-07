@@ -78,14 +78,16 @@ fixed-shape `Object` nor a
 JavaScript `Map`. Record expressions carry their instantiated element type;
 write sites carry source/type information for invariance and cycle analysis.
 The semantic operations below use `RecordCall` with `Method`, ordered
-`Arguments`, `Element`, `Returns` and a source `Site`. Creation uses
+`Arguments`, `Element`, `Returns`, `OwnOnly` and a source `Site`.
+`OwnOnly` selects get_own for a proven unobserved inherited result. Value
+provenance, borrow inference and cycle reachability remain those of an ordinary get. Creation uses
 `RecordLiteral`; lazy `??=` uses `RecordCoalesce`.
 
 | Source | IR operation and meaning |
 | --- | --- |
 | `{}` or a contextually typed record literal | `RecordLiteral`: allocate a record; define own data entries in source evaluation order |
 | `r[k]` | `RecordRead`: own value or missing `undefined`, with the ruled missing-member check below |
-| an own-key-proven `r[k]` | the same `RecordCall(get)`: an own hit returns before the runtime guard |
+| an unobserved read snapshot | `hasOwn` followed by `getOwn` only on a hit; preserve receiver/key evaluation |
 | `r[k] = value` | `RecordSet`: assignment semantics, one receiver/key/value evaluation, stores `T` and returns the assigned value where used |
 | `delete r[k]` | `RecordDelete`: delete an own entry; JavaScript's delete expression returns true even when absent |
 | `k in r` | `RecordHas`: own presence with the same missing-member check, not value truthiness |
@@ -152,6 +154,73 @@ even when an own data property exists. General primitive conversion is not added
 
 The JavaScript backend may use a plain object or a Map plus explicit ordering
 and prototype behavior; raw Map insertion order is insufficient.
+
+## Inherited-key observations and read use
+
+The per-site evidence is pinned to `7e400a0`,
+`stage3/fixtures/records/INHERITED_KEYS.md` on the fixtures branch. Its global
+census has 1,041 source operations, including 145 string-capable sites. The
+ownership review covers all 36 user-input and 43 unknown sites. These are source
+counts, not observed whole-compiler executions. The table does not establish
+that every possible valid input avoids an inherited miss.
+
+A pure record read whose result is discarded now preserves evaluation of the
+receiver and key, checks `has_own`, and fetches with `get_own` only on an own hit.
+This includes a read used directly as a statement and a non-exported const
+snapshot with no uses. A const snapshot can also be read before an immediately
+following `if (Object.hasOwn(record, key))` when every use of the snapshot is
+inside its true branch. Matching uses checker symbol identity, not spelling.
+The receiver must be an identifier and the key an identifier or literal; no intervening statement or second
+binding is admitted. This proves ownership at the snapshot time and preserves
+a reference even if the branch subsequently deletes its entry. An intervening
+call, a different key, or an observation outside the branch retains the loud
+lookup. A matching own check can also dominate the read itself when the read is in the
+first statement of its true branch, reached through a return, a single binding
+or the first argument of an identifier/console call. These evaluation paths
+contain no intervening call or write. Normal narrowed-value checks remain on
+observed own reads. Other control-flow proofs and aliased own-test intrinsics
+remain gaps.
+Literal prototype names are permitted only when this proof or the primitive
+comparison proof below establishes that no inherited value is observed.
+
+Strict equality or inequality between a record read and a present primitive
+(number, string or boolean) also uses `has_own` then `get_own`. Every default
+Object.prototype value is a function or the prototype object; none can strictly
+equal that primitive. A missing own value therefore selects false for `===` or
+true for `!==` without fetching an inherited value. Both operands still run in
+source order. A left record read is snapshotted before a right operand can delete
+or overwrite its entry. Comparisons with undefined, other records, functions or
+objects do not acquire this exemption. There is no blanket substitution of
+undefined for an observable inherited result.
+
+| Original location | Resolution | Evidence and fixture |
+| --- | --- | --- |
+| utilities.ts:8159:28, `src[e]` | reads then rejects, scalar bucket | `records_compare_missing_scalar.a` specializes the helper to number records; own and missing constructor, toString, hasOwnProperty and __proto__ print exactly Node's results |
+| utilities.ts:8154:45, `src[e]` | input-dependent rejection or real observable inherited value | Original buckets 17 and 19 distinguish nonempty objects (false) from empty arrays (true); the any-valued recursive helper remains refused rather than rewritten to an own miss |
+| core.ts:2143:18, `a[key]` | real loud-stop boundary | Neither receiver-presence test proves key ownership; an arbitrary comparer can observe the inherited value. `records_compare_properties_left.a` isolates a missing left and an own right |
+| core.ts:2143:26, `b[key]` | real loud-stop boundary | The same argument applies to the right. `records_compare_properties_right.a` isolates an own left and missing right |
+| sys.ts:1566:24, `process.env[name]` | real inherited-value boundary; host storage still unsupported | Stock Node reports no own toString and a function on read. `records_environment_boundary.a` checks the analogous plain-record loud stop; it does not claim process.env has a dictionary representation |
+
+No compiler caller of the exported core compareProperties helper was found in
+the pinned table; checker.ts has a separate local helper. The environment keys
+used by compiler callers exclude the prototype member spellings. Thus these
+boundary probes are helper/API observations, not CLI counterexamples. The table
+records no demonstrated user-input read-first miss; absence of a demonstration
+is not a whole-program proof.
+
+The original comparison bucket fixtures 17, 18 and 19 are retained unchanged in
+`internal/oracle/testdata/records_buckets`. The dedicated oracle runs their
+unchanged text on stock Node and checks all four keys. These intentional
+any/refusal fixtures are excluded from ordinary cohere source linting in
+CohereSettings.json, like the existing 0.1 refusal fixtures. For Adamic checking, only
+the boolean console arguments are wrapped with String in a scratch source;
+the complete helper body remains unchanged and is refused for any. The native
+scalar slice is an explicitly typed adaptation, not an untouched upstream build.
+All three supported read shapes have guard-removal mutants: restoring a loud
+lookup yields exit 70 with the missing-member message where Node prints and
+finishes. Sanitized and release native runs, JavaScript, and counted ownership
+runs cover the new successful fixtures; the observable boundary cases are
+checked stops and do not reach normal-exit leak checks.
 
 ## Ownership and soundness
 
