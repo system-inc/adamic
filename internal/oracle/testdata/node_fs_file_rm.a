@@ -13,9 +13,9 @@ mkdirSync(root + '/tree/child', { recursive: true });
 writeFileSync(root + '/tree/child/data', 'x');
 rmSync(root + '/tree', { recursive: true, force: true });
 console.log(`tree=${existsSync(root + '/tree')}`);
-rmSync(root + '/missing', { force: true }); console.log('forced missing');
+try { rmSync(root + '/missing', { force: true }); console.log('forced missing'); } catch (error) { if (error instanceof Error) { failure(error); } }
 const options = { recursive: true, force: true };
-rmSync(root + '/missing', options);
+try { rmSync(root + '/missing', options); } catch (error) { if (error instanceof Error) { failure(error); } }
 for (const path of [root + '/missing', root + '/directory', root + '/locked/file', root + '/closed', root + '/bad\0']) {
     try { rmSync(path); } catch (error) { if (error instanceof Error) { failure(error); } }
 }

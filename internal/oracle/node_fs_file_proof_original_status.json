@@ -123,12 +123,14 @@
     "file": "11_setModifiedTime.a",
     "nodeMatches": true,
     "native": {
-      "stage": "NotYet",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/11_setModifiedTime.a:28:5: stage 0 can't lower rmSync: fs option literals containing evaluated expressions; bind a plain options object first yet\n"
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
     },
     "javascript": {
-      "stage": "NotYet",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/11_setModifiedTime.a:28:5: stage 0 can't lower rmSync: fs option literals containing evaluated expressions; bind a plain options object first yet\n"
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
     }
   },
   {
@@ -159,12 +161,12 @@
     "file": "14_getCurrentDirectory.a",
     "nodeMatches": true,
     "native": {
-      "stage": "NotYet",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:34:5: stage 0 can't lower rmSync: fs option literals containing evaluated expressions; bind a plain options object first yet\n"
+      "stage": "Refused",
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:10:28: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function callback() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)\n"
     },
     "javascript": {
-      "stage": "NotYet",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:34:5: stage 0 can't lower rmSync: fs option literals containing evaluated expressions; bind a plain options object first yet\n"
+      "stage": "Refused",
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:10:28: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function callback() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)\n"
     }
   },
   {
@@ -183,24 +185,28 @@
     "file": "16_getEnvironmentVariable.a",
     "nodeMatches": true,
     "native": {
-      "stage": "NotYet",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/16_getEnvironmentVariable.a:27:5: stage 0 can't lower rmSync: fs option literals containing evaluated expressions; bind a plain options object first yet\n"
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
     },
     "javascript": {
-      "stage": "NotYet",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/16_getEnvironmentVariable.a:27:5: stage 0 can't lower rmSync: fs option literals containing evaluated expressions; bind a plain options object first yet\n"
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
     }
   },
   {
     "file": "17_write.a",
     "nodeMatches": true,
     "native": {
-      "stage": "NotYet",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/17_write.a:23:5: stage 0 can't lower rmSync: fs option literals containing evaluated expressions; bind a plain options object first yet\n"
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
     },
     "javascript": {
-      "stage": "NotYet",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/17_write.a:23:5: stage 0 can't lower rmSync: fs option literals containing evaluated expressions; bind a plain options object first yet\n"
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
     }
   },
   {

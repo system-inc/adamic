@@ -148,6 +148,7 @@ func TestNodeFSFileMutants(t *testing.T) {
 	t.Parallel()
 	cases := []struct{ name, fixture, operation, helper string }{
 		{"mkdtempSync suffix", "mkdtemp", "mkdtemp", `static adamic_string *fs_file_mutant(const adamic_string *prefix) {static adamic_string suffix=ADAMIC_STRING("!");adamic_string *changed=adamic_string_concat(2,(adamic_string *const[]){(adamic_string *)prefix,&suffix});adamic_string *result=adamic_fs_file_mkdtemp(changed);adamic_release(changed);return result;}`},
+		{"rmSync drop force", "rm", "rm", `static double fs_file_mutant(const adamic_string *path,bool recursive,bool force) {(void)force;return adamic_fs_file_rm(path,recursive,false);}`},
 		{"rmSync force", "rm", "rm", `static double fs_file_mutant(const adamic_string *path,bool recursive,bool force) {(void)force;return adamic_fs_file_rm(path,recursive,true);}`},
 
 		{"writeFileSync Buffer bytes", "write_buffer", "write_buffer", `static double fs_file_mutant(const adamic_string *path,const adamic_array *data,const adamic_string *flag,double mode,bool flush) {static adamic_string truncate=ADAMIC_STRING("w");if(flag->length==1&&flag->bytes[0]=='a')flag=&truncate;return adamic_fs_file_write_buffer(path,data,flag,mode,flush);}`},
