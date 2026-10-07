@@ -1,0 +1,51 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+
+export class Edit {
+    readonly start: number;
+    readonly end: number;
+    readonly text: string;
+    constructor(start: number, end: number, text: string) {
+        this.start = start;
+        this.end = end;
+        this.text = text;
+    }
+}
+export class Suggestion {
+    readonly id: string;
+    readonly message: string;
+    readonly edits: Edit[] = [];
+    constructor(id: string, message: string, start = -1) {
+        this.id = id;
+        this.message = message;
+    }
+}
+export class Diagnostic {
+    readonly rule: string;
+    readonly id: string;
+    readonly message: string;
+    readonly start: number;
+    readonly end: number;
+    readonly fixes: Edit[] = [];
+    readonly suggestions: Suggestion[] = [];
+    constructor(context: RuleContext, index: number, rule: string, id: string, message: string, start = -1) {
+        this.rule = rule;
+        this.id = id;
+        this.message = message;
+        this.start = start < 0 ? context.start(index) : start;
+        this.end = context.node(index).end;
+    }
+}
+export function publish(context: RuleContext, index: number, record: Diagnostic): void {
+    const fix = record.fixes[0];
+    const supported = record.fixes.length === 1 && fix !== undefined && fix.start === record.start && fix.end === record.end;
+    context.report(index, record.rule, record.id, record.message, supported ? 'fix' : '', supported ? fix?.text ?? '' : '', '');
+}
+export function requireRepairs(records: readonly Diagnostic[]): void {
+    for(const record of records) {
+        const fix = record.fixes[0];
+        if(record.suggestions.length > 0 || record.fixes.length > 1 || (fix !== undefined && (fix.start !== record.start || fix.end !== record.end))) {
+            panic(`${record.rule}: shared finding serialization cannot carry the complete repair record`);
+        }
+    }
+}
