@@ -1,0 +1,268 @@
+[
+  {
+    "name": "go",
+    "args": [
+      "go",
+      "run",
+      "-overlay",
+      "/workspace/wave29-b8fb-listeners/overlay.json",
+      "/workspace/adamic/cohere/adamic_wave29_listener_oracle.go"
+    ],
+    "exit": 0,
+    "ns": 193995467
+  },
+  {
+    "name": "native-build",
+    "args": [
+      "/workspace/wave29-b8fb-adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-third/listener_probe.a",
+      "-o",
+      "/workspace/wave29-b8fb-listeners/native",
+      "--tsgo",
+      "/workspace/wave29-next-checker.a"
+    ],
+    "exit": 0,
+    "ns": 1020623799
+  },
+  {
+    "name": "native",
+    "args": [
+      "/workspace/wave29-b8fb-listeners/native"
+    ],
+    "exit": 0,
+    "ns": 1129264
+  },
+  {
+    "name": "node",
+    "args": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-third/listener_probe.a"
+    ],
+    "exit": 0,
+    "ns": 130760322
+  },
+  {
+    "name": "asan-build",
+    "args": [
+      "/workspace/wave29-b8fb-adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-third/listener_probe.a",
+      "-o",
+      "/workspace/wave29-b8fb-listeners/asan",
+      "--tsgo",
+      "/workspace/wave29-next-checker.a",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "ns": 1052362452
+  },
+  {
+    "name": "asan",
+    "args": [
+      "/workspace/wave29-b8fb-listeners/asan"
+    ],
+    "exit": 0,
+    "ns": 9046351
+  },
+  {
+    "name": "denylist-build",
+    "args": [
+      "/workspace/wave29-b8fb-adamic",
+      "build",
+      "/workspace/wave29-b8fb-listeners/mutant-denylist/listener_probe.a",
+      "-o",
+      "/workspace/wave29-b8fb-listeners/mutant-denylist/native",
+      "--tsgo",
+      "/workspace/wave29-next-checker.a"
+    ],
+    "exit": 0,
+    "ns": 868909419
+  },
+  {
+    "name": "denylist",
+    "args": [
+      "/workspace/wave29-b8fb-listeners/mutant-denylist/native"
+    ],
+    "exit": 0,
+    "ns": 1167681
+  },
+  {
+    "name": "match-build",
+    "args": [
+      "/workspace/wave29-b8fb-adamic",
+      "build",
+      "/workspace/wave29-b8fb-listeners/mutant-match/listener_probe.a",
+      "-o",
+      "/workspace/wave29-b8fb-listeners/mutant-match/native",
+      "--tsgo",
+      "/workspace/wave29-next-checker.a"
+    ],
+    "exit": 0,
+    "ns": 1932145287
+  },
+  {
+    "name": "match",
+    "args": [
+      "/workspace/wave29-b8fb-listeners/mutant-match/native"
+    ],
+    "exit": 0,
+    "ns": 21762216
+  },
+  {
+    "name": "concurrency-build",
+    "args": [
+      "/workspace/wave29-b8fb-adamic",
+      "build",
+      "/workspace/wave29-b8fb-listeners/mutant-concurrency/listener_probe.a",
+      "-o",
+      "/workspace/wave29-b8fb-listeners/mutant-concurrency/native",
+      "--tsgo",
+      "/workspace/wave29-next-checker.a"
+    ],
+    "exit": 0,
+    "ns": 777630354
+  },
+  {
+    "name": "concurrency",
+    "args": [
+      "/workspace/wave29-b8fb-listeners/mutant-concurrency/native"
+    ],
+    "exit": 0,
+    "ns": 1375253
+  },
+  {
+    "name": "globals-build",
+    "args": [
+      "/workspace/wave29-b8fb-adamic",
+      "build",
+      "/workspace/wave29-b8fb-listeners/mutant-globals/listener_probe.a",
+      "-o",
+      "/workspace/wave29-b8fb-listeners/mutant-globals/native",
+      "--tsgo",
+      "/workspace/wave29-next-checker.a"
+    ],
+    "exit": 0,
+    "ns": 698532481
+  },
+  {
+    "name": "globals",
+    "args": [
+      "/workspace/wave29-b8fb-listeners/mutant-globals/native"
+    ],
+    "exit": 0,
+    "ns": 1304176
+  },
+  {
+    "name": "setter-build",
+    "args": [
+      "/workspace/wave29-b8fb-adamic",
+      "build",
+      "/workspace/wave29-b8fb-listeners/mutant-setter/listener_probe.a",
+      "-o",
+      "/workspace/wave29-b8fb-listeners/mutant-setter/native",
+      "--tsgo",
+      "/workspace/wave29-next-checker.a"
+    ],
+    "exit": 0,
+    "ns": 838892472
+  },
+  {
+    "name": "setter",
+    "args": [
+      "/workspace/wave29-b8fb-listeners/mutant-setter/native"
+    ],
+    "exit": 0,
+    "ns": 2838577
+  },
+  {
+    "name": "shadow-build",
+    "args": [
+      "/workspace/wave29-b8fb-adamic",
+      "build",
+      "/workspace/wave29-b8fb-listeners/mutant-shadow/listener_probe.a",
+      "-o",
+      "/workspace/wave29-b8fb-listeners/mutant-shadow/native",
+      "--tsgo",
+      "/workspace/wave29-next-checker.a"
+    ],
+    "exit": 0,
+    "ns": 796906810
+  },
+  {
+    "name": "shadow",
+    "args": [
+      "/workspace/wave29-b8fb-listeners/mutant-shadow/native"
+    ],
+    "exit": 0,
+    "ns": 2166249
+  },
+  {
+    "name": "effect-build",
+    "args": [
+      "/workspace/wave29-b8fb-adamic",
+      "build",
+      "/workspace/wave29-b8fb-listeners/mutant-effect/listener_probe.a",
+      "-o",
+      "/workspace/wave29-b8fb-listeners/mutant-effect/native",
+      "--tsgo",
+      "/workspace/wave29-next-checker.a"
+    ],
+    "exit": 0,
+    "ns": 843151564
+  },
+  {
+    "name": "effect",
+    "args": [
+      "/workspace/wave29-b8fb-listeners/mutant-effect/native"
+    ],
+    "exit": 0,
+    "ns": 1292558
+  },
+  {
+    "name": "render-build",
+    "args": [
+      "/workspace/wave29-b8fb-adamic",
+      "build",
+      "/workspace/wave29-b8fb-listeners/mutant-render/listener_probe.a",
+      "-o",
+      "/workspace/wave29-b8fb-listeners/mutant-render/native",
+      "--tsgo",
+      "/workspace/wave29-next-checker.a"
+    ],
+    "exit": 0,
+    "ns": 891963380
+  },
+  {
+    "name": "render",
+    "args": [
+      "/workspace/wave29-b8fb-listeners/mutant-render/native"
+    ],
+    "exit": 0,
+    "ns": 1141692
+  },
+  {
+    "name": "static-build",
+    "args": [
+      "/workspace/wave29-b8fb-adamic",
+      "build",
+      "/workspace/wave29-b8fb-listeners/mutant-static/listener_probe.a",
+      "-o",
+      "/workspace/wave29-b8fb-listeners/mutant-static/native",
+      "--tsgo",
+      "/workspace/wave29-next-checker.a"
+    ],
+    "exit": 0,
+    "ns": 783879919
+  },
+  {
+    "name": "static",
+    "args": [
+      "/workspace/wave29-b8fb-listeners/mutant-static/native"
+    ],
+    "exit": 0,
+    "ns": 1551692
+  }
+]

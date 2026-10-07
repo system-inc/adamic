@@ -23,4 +23,4 @@ for row in profile:
  name=row['rule'].replace('/','-');probe=s/'rules'/name/'gaps/source.a'
  run(name+'-build',[c,'build',probe,'-o',d/name]);got=run(name,[d/name],expected=None);status=commands[-1]['exit'];err=(d/(name+'.stderr')).read_text()
  assert status==0 and not err and b'Jsx' in got and b'TypeAssertionExpression' not in got
- print(name+': compiled, exit 0, empty stderr, real JSX nodes; parser blocker closed, numeric/checker adapter still required',flush=True)
+ print(name+': compiled, exit 0, empty stderr, real JSX nodes; parser blocker closed, checker source adapter still required',flush=True)

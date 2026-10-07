@@ -120,3 +120,13 @@ export mutants pass their failure proofs. The numeric registry refusal is no
 longer a blocker. Full checker-backed JSX source adapters and configured dynamic
 id-match remain incomplete; the React analysis claims remain parked. No new
 claims are taken. See [NAMED_KINDS_REPORT.md](../wave-29-fourth/NAMED_KINDS_REPORT.md).
+
+## Landing-first rebase onto b8fb957aa
+
+Current main advanced through the inherited static-field fix. All owned
+supported profiles re-green after a clean rebase retaining ab70f38d4. Named
+listener declarations, rule/kernel mutants, corpus bytes, releases and sanitizer
+checks pass with the new compiler. The specific new main fixture also passes
+the independent Node/native/emitted-JavaScript oracle. Existing checker-backed
+source, React analysis and dynamic-RegExp gaps remain explicit; no new claims
+are taken. See [landing report](../wave-29-fourth/LANDING_B8FB957A_REPORT.md).
