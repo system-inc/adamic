@@ -8,6 +8,450 @@ Status: **draft, written October 5, 2026 by @system_adamic** (#w318mqs), with st
 - **Strings, objects, arrays, maps and closures** live on the heap behind a reference, and each carries a reference count.
 - A **constant** the program spells out (`'Fizz'`, a literal object of constants, later) is static and immortal: its count is 0, and retain and release skip it. Every program's `''`, `'true'` and `'false'` are immortal too.
 
+## Worked examples
+
+Examples 1 to 5 were measured at commit `9c04abcc0569eaae387c5cb467201fec3c9f093c` (task #w318mqs).
+Example 6 was regenerated at merge commit `fb07d6bae0fdd27fbf6066a6f9c2a02dd27391ab`,
+which includes the shared-slice append fix `7b6f986` and its counts row `aeb1708`.
+These are complete programs in `internal/oracle/testdata/memory_examples/`.
+C below is copied from `adamic c <file>` at the stated commit, with intervening lines
+omitted; identifiers are unchanged. Each row comes from `adamic build <file> -o <binary> --count`
+and one run of the binary, in the same column order as `internal/oracle/counts.md`.
+Allocations count heap values, not allocator buffers; retains and releases count calls,
+even for NULL and immortal values. Freeing a container releases its contents internally,
+without adding a release call to the counter.
+
+The compiled fixtures are registered with the Node oracle, ASan, UBSan and the leak
+check. The two refused programs run on Node in `TestMemoryExamplesRefused` and must
+be refused before C generation: they have no generated C or counted-build row.
+
+### 1. Prepend, walk and map a list
+
+Source: `internal/oracle/testdata/memory_examples/list.a`
+
+```ts
+interface Item {
+	readonly value: number;
+	readonly next: Item | undefined;
+}
+function map(item: Item | undefined): Item | undefined {
+	if (item === undefined) return undefined;
+	return { ...item, value: item.value * 2, next: map(item.next) };
+}
+function sum(item: Item | undefined): number {
+	return item === undefined ? 0 : item.value + sum(item.next);
+}
+function run(): void {
+	let head: Item | undefined = undefined;
+	for (let value = 1; value <= 3; value++) {
+		head = { value, next: head };
+	}
+	console.log(`${sum(head)}`);
+	const mapped = map(head);
+	console.log(`${sum(mapped)}`);
+}
+run();
+```
+
+Generated C, selected lines in emission order:
+
+```c
+adamic_release(adamic_local_0_item);
+/* ... */
+bool adamic_temporary_2 = ((adamic_local_0_item->heap.references == 1 && !adamic_weak_held(adamic_local_0_item)) && !adamic_local_0_item->frozen);
+adamic_object * adamic_temporary_3 = (adamic_temporary_2 ? adamic_retain(adamic_local_0_item) : adamic_object_copy(adamic_local_0_item));
+/* ... */
+adamic_object * adamic_temporary_8 = (adamic_object *)(adamic_temporary_2 ? adamic_temporary_6->reference : adamic_retain(adamic_temporary_6->reference));
+/* ... */
+adamic_temporary_6->reference = NULL;
+/* ... */
+adamic_object * adamic_temporary_9 = adamic_function_0_map(adamic_temporary_8);
+/* ... */
+adamic_release(adamic_temporary_12->reference);
+adamic_temporary_12->reference = adamic_temporary_9;
+/* ... */
+adamic_release(adamic_local_0_item);
+/* ... */
+adamic_object * adamic_temporary_18 = adamic_retain(((adamic_object *)adamic_object_field(adamic_local_1_item, "next", &adamic_cache_17)->reference));
+/* ... */
+adamic_release(adamic_temporary_18);
+/* ... */
+adamic_object * adamic_local_2_head = NULL;
+/* ... */
+adamic_object * adamic_temporary_23 = adamic_object_new(&adamic_shape_0);
+/* ... */
+adamic_temporary_23->slots[1].reference = adamic_retain(adamic_local_2_head);
+/* ... */
+adamic_local_2_head = adamic_temporary_23;
+adamic_release(adamic_temporary_24);
+/* ... */
+adamic_object * adamic_temporary_28 = adamic_local_2_head;
+adamic_local_2_head = NULL;
+adamic_object * adamic_temporary_29 = adamic_function_0_map(adamic_temporary_28);
+/* ... */
+adamic_release(adamic_local_4_mapped);
+adamic_release(adamic_local_2_head);
+```
+
+| Fixture | Allocations | Frees | Retains | Releases | Peak live | In regions |
+|---|---:|---:|---:|---:|---:|---:|
+| internal/oracle/testdata/memory_examples/list.a | 7 | 7 | 12 | 22 | 5 | 0 |
+
+The output is `6` then `12`: three nodes are allocated while prepending, and the map's three spreads reuse them because the dead local `head` is moved into a consumed parameter, each node is unique, unfrozen and has no Weak handle, and each replaced `next` field moves into the recursive call.
+The other four allocations and frees are two number strings and two concatenations for output, giving seven allocations and seven frees, with peak five (three nodes plus two output strings) and no regions.
+The twelve retains are three prepend links (including NULL), six `next` reads across the two walks, and three reuse retains; the twenty-two releases are three old heads, six walk temporaries, four consumed map arguments (including NULL), three replaced links, four output temporaries and two locals at scope exit.
+
+### 2. A tree whose parent is Weak
+
+Source: `internal/oracle/testdata/memory_examples/tree.a`
+
+```ts
+import type { Weak } from 'adamic';
+interface Tree {
+	readonly value: number;
+	parent: Weak<Tree>;
+	readonly children: readonly Tree[];
+}
+function leaf(value: number): Tree {
+	return { value, parent: undefined, children: [] };
+}
+function branch(value: number, children: readonly Tree[]): Tree {
+	const root: Tree = { value, parent: undefined, children };
+	for (const child of children) child.parent = root;
+	return root;
+}
+function up(node: Tree): number {
+	const parent = node.parent;
+	return node.value + (parent === undefined ? 0 : up(parent));
+}
+function run(): void {
+	const root = branch(1, [branch(2, [leaf(3)]), leaf(4)]);
+	const first = root.children[0];
+	if (first !== undefined) {
+		const last = first.children[0];
+		if (last !== undefined) console.log(`${up(last)}`);
+	}
+}
+run();
+```
+
+Generated C, selected lines in emission order:
+
+```c
+adamic_weak * adamic_temporary_1 = adamic_weak_of(NULL);
+adamic_array * adamic_temporary_2 = adamic_array_new(0, true);
+adamic_object * adamic_temporary_3 = adamic_object_new(&adamic_shape_0);
+/* ... */
+adamic_temporary_3->slots[1].reference = adamic_temporary_1;
+adamic_temporary_3->slots[2].reference = adamic_temporary_2;
+/* ... */
+adamic_object * adamic_temporary_10 = adamic_object_new(&adamic_shape_0);
+/* ... */
+adamic_temporary_10->slots[2].reference = adamic_retain(adamic_local_2_children);
+/* ... */
+adamic_weak * adamic_temporary_17 = adamic_weak_of(adamic_local_4_root);
+/* ... */
+adamic_temporary_18->reference = adamic_temporary_17;
+if (adamic_temporary_20 != NULL) adamic_release(adamic_temporary_20);
+/* ... */
+adamic_weak * adamic_temporary_23 = adamic_retain(((adamic_weak *)adamic_object_field(adamic_local_3_node, "parent", &adamic_cache_22)->reference));
+adamic_object * adamic_temporary_24 = (adamic_object *)adamic_retain(adamic_weak_target(adamic_temporary_23));
+adamic_weak * adamic_temporary_25 = adamic_weak_of(adamic_temporary_24);
+/* ... */
+adamic_object * adamic_temporary_28 = (adamic_object *)adamic_retain(adamic_weak_target(adamic_local_6_parent));
+/* ... */
+adamic_object * adamic_temporary_29 = (adamic_object *)adamic_retain(adamic_weak_target_present(adamic_local_6_parent));
+/* ... */
+adamic_release(adamic_local_9_last);
+/* ... */
+adamic_release(adamic_local_8_first);
+adamic_release(adamic_local_7_root);
+```
+
+| Fixture | Allocations | Frees | Retains | Releases | Peak live | In regions |
+|---|---:|---:|---:|---:|---:|---:|
+| internal/oracle/testdata/memory_examples/tree.a | 12 | 12 | 28 | 31 | 12 | 0 |
+
+The output is `6`: strong child edges own the tree, while a parent's Weak edge owns a counted handle rather than its target; `runtime/weak.c` makes one handle per target and reuses it for siblings (two handles here, not three).
+The twelve allocations and frees are four nodes, four child arrays, two handles and two output strings; peak twelve occurs during output, and no statement uses a region.
+The twenty-eight retains and thirty-one release calls protect child arrays, loop elements, construction temporaries and Weak reads, including temporary strong target reads; `last` and `first` are released before `root`, so releasing the root's final count then frees every remaining node, array and handle through `runtime/heap.c`'s iterative teardown, as the leak check verifies.
+
+### 3. The same tree with a strong parent
+
+Source: `internal/oracle/testdata/memory_examples/refused/tree.a`
+
+```ts
+interface Tree {
+	readonly value: number;
+	parent: Tree | undefined;
+	readonly children: readonly Tree[];
+}
+function leaf(value: number): Tree {
+	return { value, parent: undefined, children: [] };
+}
+function branch(value: number, children: readonly Tree[]): Tree {
+	const root: Tree = { value, parent: undefined, children };
+	for (const child of children) child.parent = root;
+	return root;
+}
+function up(node: Tree): number {
+	const parent = node.parent;
+	return node.value + (parent === undefined ? 0 : up(parent));
+}
+function run(): void {
+	const root = branch(1, [branch(2, [leaf(3)]), leaf(4)]);
+	const first = root.children[0];
+	if (first !== undefined) {
+		const last = first.children[0];
+		if (last !== undefined) console.log(`${up(last)}`);
+	}
+}
+run();
+```
+
+Refusal from `adamic c` (repository absolute prefix removed):
+
+```text
+adamic: internal/oracle/testdata/memory_examples/refused/tree.a:3:2: Adamic 0.1 refuses Tree.parent, a mutable field of type Tree | undefined, which can reach back to the Tree holding it: a cycle reference counting can't free, and the write at internal/oracle/testdata/memory_examples/refused/tree.a:11:32 may close one (the value written may reach what it's written into, where run is called from the top level); declare it parent: Weak<Tree> (import type { Weak } from 'adamic'), which doesn't count and reads undefined once what it points to is freed; or make it readonly; or write into it only values this function made, or only into what it made (adamic/cycle-capable)
+```
+
+No C is emitted; `adamic build ... --count` is refused too, so there are no counts.
+
+Changing only the import and `parent` type makes the back edge strong: the parent's children can reach it again, so the assignment in `branch` can close a cycle.
+The exact fix for this program is to restore `import type { Weak } from 'adamic'` and `parent: Weak<Tree>`, as in example 2; merely making the parent readonly would require a different builder and would not by itself prove every constructor write safe.
+
+### 4. Captured const, captured let, and a captured function
+
+Source: `internal/oracle/testdata/memory_examples/closures.a`
+
+```ts
+function run(): void {
+	const fixed = 7;
+	const readFixed = (): number => fixed;
+	let changing = 7;
+	const readChanging = (): number => changing;
+	changing = 9;
+	console.log(`${readFixed()} ${readChanging()}`);
+}
+function countdown(n: number): number {
+	return n === 0 ? 0 : 1 + countdown(n - 1);
+}
+run();
+console.log(`${countdown(3)}`);
+```
+
+Generated C, selected lines in emission order:
+
+```c
+adamic_cell *adamic_local_1_fixed_cell = adamic_cell_new((adamic_value){.number = (0x1.cp+02)}, false);
+adamic_closure * adamic_temporary_1 = adamic_closure_new(adamic_function_2_closure, 1);
+adamic_temporary_1->cells[0] = adamic_retain(adamic_local_1_fixed_cell);
+/* ... */
+adamic_cell *adamic_local_3_changing_cell = adamic_cell_new((adamic_value){.number = (0x1.cp+02)}, false);
+adamic_closure * adamic_temporary_2 = adamic_closure_new(adamic_function_3_closure, 1);
+adamic_temporary_2->cells[0] = adamic_retain(adamic_local_3_changing_cell);
+/* ... */
+adamic_local_3_changing_cell->value.number = (0x1.2p+03);
+/* ... */
+adamic_release(adamic_local_4_readChanging);
+adamic_release(adamic_local_3_changing_cell);
+adamic_release(adamic_local_2_readFixed);
+adamic_release(adamic_local_1_fixed_cell);
+/* ... */
+double adamic_temporary_13 = self->cells[0]->value.number;
+/* ... */
+double adamic_temporary_15 = self->cells[0]->value.number;
+```
+
+| Fixture | Allocations | Frees | Retains | Releases | Peak live | In regions |
+|---|---:|---:|---:|---:|---:|---:|
+| internal/oracle/testdata/memory_examples/closures.a | 9 | 9 | 2 | 9 | 7 | 0 |
+
+The current design uses a cell for both captured `const` and captured `let`: `const fixed = 7` gets `adamic_cell_new`, just like `let changing`, and both closures read `self->cells[0]`, consistent with the [Cycles section](#cycles-found-by-the-compiler-broken-by-weak), which includes captures of either binding kind in its cell-based cycle rule.
+The output is `7 9` then `3`, and nine allocations and frees comprise two cells, two closures and five output strings, with peak seven (four capture values plus the first statement's three strings) and no regions.
+Two retains give the closures ownership of their cells, and nine release calls drop five output strings and four scope owners; the function-declaration fix below allocates no function value or cell for its recursion.
+
+Source: `internal/oracle/testdata/memory_examples/refused/closure.a`
+
+```ts
+function run(): void {
+	let countdown: (n: number) => number = (n) => n;
+	countdown = (n) => n === 0 ? 0 : 1 + countdown(n - 1);
+	console.log(`${countdown(3)}`);
+}
+run();
+```
+
+Refusal from `adamic c` (repository absolute prefix removed):
+
+```text
+adamic: internal/oracle/testdata/memory_examples/refused/closure.a:2:6: Adamic 0.1 refuses 'countdown', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function countdown() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+```
+
+No C is emitted; `adamic build ... --count` is refused too, so there are no counts.
+
+This closure captures the local variable that owns the closure, so it would keep its own cell alive forever.
+Replace it with the `function countdown(n: number): number` declaration in the accepted program above: recursion calls a named C function directly and creates no self-capture cycle.
+
+### 5. A graph per loop item, summarized
+
+Source: `internal/oracle/testdata/memory_examples/regions.a`
+
+```ts
+interface Graph {
+	readonly value: number;
+	readonly next: Graph | undefined;
+}
+function build(value: number): Graph {
+	return { value, next: tail(value + 1) };
+}
+function tail(value: number): Graph {
+	return { value, next: undefined };
+}
+function sum(graph: Graph): number {
+	if (graph.next === undefined) return graph.value + 0;
+	return graph.value + graph.next.value;
+}
+function run(): void {
+	let total = 0;
+	for (let item = 0; item < 3; item++) {
+		total += sum(build(item));
+		const held = build(item);
+		total += sum(held);
+	}
+	console.log(`${total}`);
+}
+run();
+```
+
+Generated C, selected lines in emission order:
+
+```c
+static adamic_object * adamic_function_0_build_in(adamic_region *region, double adamic_local_0_value);
+/* ... */
+adamic_object * adamic_temporary_1 = adamic_function_1_tail((adamic_local_0_value + (0x1p+00)));
+adamic_object * adamic_temporary_2 = adamic_object_new(&adamic_shape_0);
+/* ... */
+adamic_temporary_2->slots[1].reference = adamic_temporary_1;
+/* ... */
+static adamic_object * adamic_function_0_build_in(adamic_region *region, double adamic_local_0_value) {
+/* ... */
+adamic_object *adamic_temporary_4 = adamic_function_1_tail_in(region, (adamic_local_0_value + (0x1p+00)));
+adamic_object *adamic_temporary_5 = adamic_object_new_in(region, &adamic_shape_0);
+/* ... */
+adamic_temporary_5->slots[1].reference = adamic_temporary_4;
+/* ... */
+adamic_object *adamic_temporary_9 = adamic_object_new_in(region, &adamic_shape_0);
+/* ... */
+adamic_region adamic_temporary_25 = ADAMIC_REGION;
+adamic_object *adamic_temporary_26 = adamic_function_0_build_in(&adamic_temporary_25, ((double)adamic_local_4_item));
+double adamic_temporary_27 = adamic_function_2_sum(adamic_temporary_26);
+/* ... */
+adamic_region_end(&adamic_temporary_25);
+adamic_object * adamic_temporary_28 = adamic_function_0_build(((double)adamic_local_4_item));
+adamic_object * adamic_local_5_held = adamic_temporary_28;
+double adamic_temporary_29 = adamic_function_2_sum(adamic_local_5_held);
+/* ... */
+adamic_release(adamic_local_5_held);
+```
+
+| Fixture | Allocations | Frees | Retains | Releases | Peak live | In regions |
+|---|---:|---:|---:|---:|---:|---:|
+| internal/oracle/testdata/memory_examples/regions.a | 14 | 8 | 0 | 5 | 2 | 6 |
+
+The output is `18`: each of three `total += sum(build(item))` statements uses its own region and frees its two nodes together, while `const held = build(item)` uses the heap because `held` survives its declaration statement.
+Fourteen allocations are twelve nodes and two output strings: six nodes go with regions, eight values are freed individually, peak live is two, and zero retains plus five releases reflect moves into returned fields, borrowed `sum` parameters, three heap owners and two output temporaries.
+This is a region for one statement inside a loop, not for the whole iteration: values kept across statements still use the heap; regions for an entire call or request and arrays in regions remain outside this example's supported pattern (`internal/native/region.go`, `runtime/region.c`).
+
+### 6. Append a string, slice it, then append to the slice
+
+Source: `internal/oracle/testdata/memory_examples/strings.a`
+
+```ts
+function run(): void {
+	let text = '';
+	for (let index = 0; index < 160; index++) text += 'x';
+	let slice = text.slice(16, 144);
+	slice += '!';
+	console.log(`${text.length} ${slice.length} ${text.charAt(144)} ${slice.charAt(128)}`);
+}
+run();
+```
+
+Generated C, selected lines in emission order:
+
+```c
+static adamic_string adamic_string_0 = ADAMIC_STRING("");
+static adamic_string adamic_string_1 = ADAMIC_STRING("x");
+static adamic_string adamic_string_2 = ADAMIC_STRING("!");
+static adamic_string adamic_string_3 = ADAMIC_STRING(" ");
+/* ... */
+adamic_string * adamic_local_0_text = adamic_retain(&adamic_string_0);
+/* ... */
+adamic_local_0_text = adamic_string_append(adamic_local_0_text, 1, (adamic_string *const[]){&adamic_string_1});
+/* ... */
+adamic_string * adamic_temporary_2 = adamic_string_slice(adamic_local_0_text, (0x1p+04), (0x1.2p+07), true);
+adamic_string * adamic_local_2_slice = adamic_temporary_2;
+adamic_local_2_slice = adamic_string_append(adamic_local_2_slice, 1, (adamic_string *const[]){&adamic_string_2});
+/* ... */
+adamic_release(adamic_local_2_slice);
+adamic_release(adamic_local_0_text);
+```
+
+| Fixture | Allocations | Frees | Retains | Releases | Peak live | In regions |
+|---|---:|---:|---:|---:|---:|---:|
+| internal/oracle/testdata/memory_examples/strings.a | 16 | 16 | 2 | 17 | 7 | 0 |
+
+Nine owned string allocations grow the 160 one-byte appends geometrically; appends within the available capacity reuse the unique owned string, and `runtime/string_share.c` makes one shared slice header for this 128-byte slice (at least 64 bytes and at least a quarter of the owner).
+Appending to this shared slice copies because its bytes belong to its owner and its capacity is zero: `runtime/string_append.c` requires `length + added <= capacity` before writing in place, fixed in `7b6f986` and held by `shared_slice_append.a`; Node and native now both print `160 129 x !`, with the generated C above unchanged at the merged runtime.
+The sixteen allocations and frees are nine grown owners, one slice header, one owned copy for the slice append and five output strings (two numbers, two characters and one concatenation), with peak seven, no regions, two retains (initial immortal empty string and slice owner) and seventeen releases (nine replaced loop strings, the replaced slice header, five output temporaries and the two locals).
+
+### Checking the documented counts
+
+`TestMemoryExampleCountsMatchDocumentation` builds each compiled example counted afresh
+(no observation-cache reuse), runs it with the counts table's 8 MiB stack, and compares
+all six numbers with its row above; it also requires each example registered with Node.
+`TestCountsAreRecorded` separately holds these rows in `internal/oracle/counts.md`.
+Mutant: change the list's documented allocations from `7` to `8`, keeping the source
+and counts table unchanged. The documentation test fails only `list.a`, reporting the
+measured row with `7`; restoring `7` makes it pass. No compiler change is needed.
+
+Run: `go test ./internal/oracle -run '^TestMemoryExampleCountsMatchDocumentation$' -count=1 -v`.
+The mutant exits 1; after restoration it exits 0. Refusal-check mutants replace the
+strong-parent probe with example 2 and the self-capture probe with the function-declaration
+fix in example 4: `go test ./internal/oracle -run '^TestMemoryExamplesRefused$/tree$' -count=1 -v`
+and the same command ending in `/closure$` each exit 1 with
+`want cycle refusal with fix, got <nil>`; the restored refusal probes pass.
+
+## What the runtime is
+
+All paths below are under `internal/native/runtime/`.
+
+- **Heap header:** `adamic.h` defines `adamic_heap`: `size_t references`, kind tag and
+  `uint32_t slab`. `heap.c` retains, releases and iteratively frees values and their contents.
+- **Size-class allocator:** `heap.c` serves values up to 256 bytes in 16-byte classes
+  from 64 KiB chunks, recycles empty chunks across classes, and uses malloc for larger
+  values. Sanitized builds use malloc/free per value so ASan and LeakSanitizer see them.
+- **Strings:** `string.c` and `string_build_impl.h` own UTF-8/WTF-8 storage;
+  `adamic.h` defines immortal constants; `string_share.c` holds owners for shared
+  slices; `string_append.c` grows owned strings. `string_index.c` keeps UTF-16 length,
+  checkpoints, cursor and compact UTF-16-view caches; slices have their own caches,
+  and in-place append invalidates the old index and length. Shared-slice append
+  copies into owned storage, preserving the owner's bytes.
+- **Arrays and maps:** `array.c` holds typed elements in a growable buffer; `map.c`
+  holds keys and values in an ordered hash table, with typed wrappers in `map_set.c`.
+  Their element and entry ownership is released by `heap.c`.
+- **Regions:** `region.c` bump-allocates statement-scoped objects, releases heap
+  references they hold and frees its blocks on `adamic_region_end`; region values
+  have count zero while alive. `internal/native/region.go` proves the call pattern
+  and emits heap and `_in` variants.
+- **Weak handles:** `weak.c` shares a counted handle per target, using a side table;
+  the target is uncounted by the handle and freeing it invalidates the handle.
+- **Sharing across threads:** the header's count is plain today. See
+  [docs/concurrency.md](concurrency.md) (branch `codex/concurrency`) for how only
+  shared values acquire atomic counts; `adamic.h` and `heap.c` are the current
+  single-threaded implementation, not an implementation of that design.
+
 ## Counting
 
 Every heap value starts at 1. `adamic_retain` adds one, and `adamic_release` subtracts one and frees at zero. The compiler inserts every retain and release; nothing at runtime guesses who's still looking.
