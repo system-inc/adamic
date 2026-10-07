@@ -1,0 +1,17 @@
+array-callback-return-original 3 actual calls
+array-callback-return-probe 2 actual calls
+consistent-return-original 2 actual calls
+consistent-return-probe 4 actual calls
+no-unreachable-loop-original 0 actual calls
+no-unreachable-loop-probe 8 actual calls
+react-hooks-rules-of-hooks-original 1 actual calls
+react-hooks-rules-of-hooks-probe 2 actual calls
+controls 62 actual calls
+baseline 864 bytes True True True
+alias-baseline 641 bytes True True True
+mutant-invert-bit 864 bytes False False False
+mutant-reverse-order 864 bytes False False False
+reused-buffer-pointwise-control 864 bytes True True True
+mutant-reuse-buffer 641 bytes False False False
+PASS: original suites and live probes for every consumer; three clean-executing semantic mutants caught.
+workdir /tmp/adamic-gate/wave02-snapshot-lukqs5xn

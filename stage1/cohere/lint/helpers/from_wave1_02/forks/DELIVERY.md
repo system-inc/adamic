@@ -108,3 +108,36 @@ occurrences removed, zero newly complete rules. No full CFG, whole-rule
 findings/fixes, fresh throughput or full repository gate is asserted.
 No shared harness or compiler file was edited. Incoming main developer-tools
 changes were preserved. No push to main or area branches.
+
+
+## Current main c7991b90 refresh
+
+Rebased twenty owned commits cleanly onto origin/main
+c7991b900362796aefd111474e65eb5398e91953. All five existing verifiers rerun:
+final/verify.py, thrown/verify.py, verify_joint.py, forks/verify_snapshot.py
+and forks/verify_restore.py. All PASS with direct per-command log files:
+../evidence/main-c7991b90-*.log. Go, source Node, emitted JavaScript and
+sanitized native agree on 7,432 observations and 211,466 bytes.
+
+All twelve compiling semantic mutants caught only by comparison: final's
+unreachable/final guards; thrown's unreachable/thrown guards and wrong final
+flag; joint wrong destination list; snapshot inverted bits, reversed order,
+reused buffer; restore inverted bits, clobbered suffix, reversed shared-frame
+writes. The snapshot buffer mutant still passes pointwise 864 bytes but fails
+the 641-byte retained-array comparison. Reverse restore still passes unique
+105,613 bytes but fails shared-frame 6,096 bytes. No failure is compiler-only.
+
+Same four consumers: array-callback-return, consistent-return,
+no-unreachable-loop, react-hooks/rules-of-hooks. Four helpers remove sixteen
+helper dependency occurrences; zero newly complete rules. Whole CFG,
+whole-rule findings/fixes, throughput and full required-input repository gate
+are outside this proof. No correctness check was removed, relaxed or forced
+to skip. No shared harness or compiler file was edited.
+
+Rule landing successor rebased cleanly onto origin/area/stage1-lint
+b84a9d9314b65d3d0261ee017e233287b4f071da and pushed at b88dc7dd9.
+Ledger unchanged, six winners retained, losing copies retired, shared lint
+hunks zero. Registry PASS 0.066s; TestOwnedWitnesses FAIL 3.034s at default
+restricted-types witness because shared witness options are absent. This is
+not a green whole-rule landing. No further helper or batch-only port claimed.
+No push to main or area branches.
