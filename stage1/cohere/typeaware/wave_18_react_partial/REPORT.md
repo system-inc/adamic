@@ -126,3 +126,33 @@ are caught only by numeric output comparison. No source-analysis or full
 gate coverage is inferred from these checks. Exact logs, generated .a probes,
 mutation results and hashes are retained in validation-listeners/. Comparable
 end-to-end native/Go timing remains unavailable as described in CORE_REPORT.md.
+
+## rule.json listener manifests
+
+Added rule.json containing numeric kinds: [307] in each of the three owned
+rule directories, matching their native syntaxKinds declarations and the pinned
+Go rules' SourceFile listeners. The shared kind-indexed driver is not changed.
+Source dispatch remains unimplemented; these entry points refuse rather than
+claiming to consume a supplied source node. No rule relevance decision reads
+a source kind string in these three entry points. Prepared HIR cores consume
+supplied graphs; that is still not a native source port.
+
+Fetched 495 origin refs. Main remains e8ba3d5d, already an ancestor of own
+pushed tip c5bbfee0 before this metadata-only change. No rebase was needed.
+No native React source Lower/Construct/SSA adapter was found; wave 03's syntax
+node still exposes a string kind. No batch-8 Diagnostic integration SHA was
+provided in the instruction, and no finding model migration was attempted.
+No new claims were taken, and only codex/typeaware-wave-18 is pushed.
+
+Manifest validation parsed all three JSON files, compared them with numeric
+SourceFile 307 from the pinned Go AST constants and production Go listener
+registrations, and checked consistency with native declarations. For each rule,
+a valid JSON mutant changing 307 to 308 was rejected only by the numeric
+comparison. This is manifest verification, not a new full-rule oracle run.
+Existing native algorithm, sanitizer and byte-only mutant evidence remains
+unchanged in CORE_REPORT.md and validation-listeners/. No full gate or
+end-to-end lint timing was rerun for this metadata-only increment.
+
+Setup printed Go 0s, clang 1s, Node 1s, submodules 1s, cache warm 27s,
+done 27s; nproc 5, CPU quota 4. Validation exited 0 and printed PASS for
+three declarations and three parsed mutants. Exact logs are retained below.
