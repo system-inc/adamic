@@ -20,6 +20,10 @@ import (
 // retain and a release on every assignment for that simplicity; removing them where they cancel is
 // the memory model's work, measured against this.
 func C(program *ir.Program) string {
+	return cProgram(program, -1)
+}
+
+func cProgram(program *ir.Program, handler int) string {
 	// Borrowed elements first: reuse must see the variables they mark Borrowed.
 	elementBorrows, lending := planElementBorrows(program)
 	emitter := &emitter{program: program, reuse: planReuse(program, lending), regions: planRegions(program), elementBorrows: elementBorrows}
@@ -98,9 +102,15 @@ func C(program *ir.Program) string {
 	bodies.WriteString("int main(int argc, char **argv) {\n\tadamic_start(argc, argv);\n")
 	emitter.indent = 1
 	emitter.moduleMain()
-	emitter.releaseGlobals()
+	if handler < 0 {
+		emitter.releaseGlobals()
+	}
+
 	bodies.WriteString(emitter.out.String())
 	bodies.WriteString("\treturn 0;\n}\n")
+	if handler >= 0 {
+		bodies.WriteString(emitter.requestABI(handler))
+	}
 
 	prototypes := map[string]bool{}
 	for index := range program.Functions {
