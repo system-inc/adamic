@@ -176,3 +176,72 @@ adamic_string *adamic_node_path_dirname(const adamic_string *path) {
 	}
 	return text(path->bytes, end);
 }
+
+// Compare normalized components, not a byte prefix that might end inside a
+// name.
+adamic_string *adamic_node_path_relative(const adamic_string *from,
+										 const adamic_string *to) {
+	if (from->length == to->length &&
+		memcmp(from->bytes, to->bytes, from->length) == 0) {
+		return text("", 0);
+	}
+	adamic_string *absolute_from = adamic_node_path_resolve(
+		1, (adamic_string *const[]){(adamic_string *)from});
+	if (absolute_from == NULL) {
+		return NULL;
+	}
+	adamic_string *absolute_to = adamic_node_path_resolve(
+		1, (adamic_string *const[]){(adamic_string *)to});
+	if (absolute_to == NULL) {
+		adamic_release(absolute_from);
+		return NULL;
+	}
+	size_t from_at = 1, to_at = 1;
+	while (from_at < absolute_from->length && to_at < absolute_to->length) {
+		size_t from_end = from_at, to_end = to_at;
+		while (from_end < absolute_from->length &&
+			   absolute_from->bytes[from_end] != '/') {
+			from_end++;
+		}
+		while (to_end < absolute_to->length &&
+			   absolute_to->bytes[to_end] != '/') {
+			to_end++;
+		}
+		size_t length = from_end - from_at;
+		if (length != to_end - to_at ||
+			memcmp(absolute_from->bytes + from_at, absolute_to->bytes + to_at,
+				   length) != 0) {
+			break;
+		}
+		from_at = from_end + (from_end < absolute_from->length);
+		to_at = to_end + (to_end < absolute_to->length);
+	}
+	size_t parents = 0;
+	for (size_t at = from_at; at < absolute_from->length; at++) {
+		if (at == from_at || absolute_from->bytes[at - 1] == '/') {
+			parents++;
+		}
+	}
+	size_t rest = absolute_to->length - to_at;
+	char *bytes = allocate(parents * 3 + rest + 1);
+	size_t used = 0;
+	for (size_t i = 0; i < parents; i++) {
+		if (used > 0) {
+			bytes[used++] = '/';
+		}
+		bytes[used++] = '.';
+		bytes[used++] = '.';
+	}
+	if (rest > 0) {
+		if (used > 0) {
+			bytes[used++] = '/';
+		}
+		memcpy(bytes + used, absolute_to->bytes + to_at, rest);
+		used += rest;
+	}
+	adamic_string *result = text(bytes, used);
+	free(bytes);
+	adamic_release(absolute_from);
+	adamic_release(absolute_to);
+	return result;
+}

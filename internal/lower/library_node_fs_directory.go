@@ -78,7 +78,7 @@ func (l *lowering) nodeFSDirectoryCall(node *ast.Node) (ir.Expression, bool, err
 	lowered := ir.NodeHostCall{Module: module, Member: member}
 	if module == "node:path" {
 		switch member {
-		case "resolve", "dirname", "join":
+		case "resolve", "dirname", "join", "relative":
 			lowered.Returns = ir.String
 			lowered.Throws = nodePathThrows(member)
 		default:
@@ -117,7 +117,7 @@ func (l *lowering) nodeFSDirectoryCall(node *ast.Node) (ir.Expression, bool, err
 		lowered.Arguments = append(lowered.Arguments, value)
 	}
 	if module == "node:path" {
-		if member == "dirname" && len(lowered.Arguments) != 1 {
+		if (member == "dirname" && len(lowered.Arguments) != 1) || (member == "relative" && len(lowered.Arguments) != 2) {
 			return nil, true, l.notYet(node, module+"."+member+" with these arguments")
 		}
 		for _, value := range lowered.Arguments {
