@@ -1,0 +1,97 @@
+import {Frames, header} from '../../frames.ts';
+import {JSXStructure} from '../jsx_structure.a';
+import {printable} from '../unicode_tables.a';
+
+export class ButtonHasTypeRule {
+    readonly tree: JSXStructure;
+    readonly button: boolean; readonly submit: boolean; readonly reset: boolean;
+    constructor(tree: JSXStructure, button = true, submit = true, reset = true) {
+        this.tree = tree; this.button = button; this.submit = submit; this.reset = reset;
+    }
+    permitted(value: string): boolean {
+        return value === 'button' && this.button || value === 'submit' && this.submit || value === 'reset' && this.reset;
+    }
+    missing(id: number): void {
+        this.tree.syntax.add(id, 'react/button-has-type', 'missingType', 'This `button` has no `type`. HTML defaults a button inside a form to `type="submit"`, so a button written for anything else submits the form and reloads the page the first time somebody clicks it. Write the type you meant, which is usually `type="button"`.');
+    }
+    value(id: number, value: string): void {
+        if(this.permitted(value)) {return;}
+        const known = ['button','submit','reset'].includes(value);
+        const quote = this.quote(value);
+        this.tree.syntax.add(id, 'react/button-has-type', known ? 'forbiddenValue' : 'invalidValue', `${quote} is an invalid value for button type attribute. A button type has to be one of \`submit\`, \`reset\` or \`button\`, and a browser silently treats anything else as \`submit\`.`);
+    }
+    quote(value: string): string {
+        let out = '"';
+        for(let i = 0; i < value.length; i++) {
+            const unit = value.codePointAt(i) ?? 0;
+            const width = unit > 65535 ? 2 : 1; const character = value.slice(i,i+width); i += width-1;
+            if(unit === 34 || unit === 92) {out += '\\' + character;}
+            else if(unit === 10) {out += '\\n';}
+            else if(unit === 13) {out += '\\r';}
+            else if(unit === 9) {out += '\\t';}
+            else if(unit === 7) {out += '\\a';}
+            else if(unit === 8) {out += '\\b';}
+            else if(unit === 11) {out += '\\v';}
+            else if(unit === 12) {out += '\\f';}
+            else if(!printable(unit)) {out += unit < 128 ? '\\x' + unit.toString(16).padStart(2,'0') : unit < 65536 ? '\\u' + unit.toString(16).padStart(4,'0') : '\\U' + unit.toString(16).padStart(8,'0');}
+            else {out += character;}
+        }
+        return out + '"';
+    }
+    expression(reported: number, expression: number): void {
+        const id = this.tree.syntax.skip(expression);
+        if(id === 0) {return;}
+        const node = this.tree.syntax.node(id); const kind = node.kind;
+        if(['StringLiteral','NumericLiteral','RegularExpressionLiteral','NoSubstitutionTemplateLiteral'].includes(kind)) {this.value(reported,this.tree.text(id));return;}
+        if(kind === 'BigIntLiteral') {const text = this.tree.text(id);this.value(reported,text.endsWith('n') ? text.slice(0,-1) : text);return;}
+        if(['TrueKeyword','FalseKeyword','NullKeyword'].includes(kind)) {this.value(reported,kind === 'TrueKeyword' ? 'true' : kind === 'FalseKeyword' ? 'false' : 'null');return;}
+        if(kind === 'ConditionalExpression') {this.expression(reported,node.role(6));this.expression(reported,node.role(7));return;}
+        const type = this.tree.syntax.shape(id);
+        let proven = type.present;
+        if(proven) {
+            for(const part of type.parts(type.root())) {
+                const record = type.type(part);
+                if((record.flags & 1024) === 0) {proven = false;break;}
+                const frames = new Frames(this.tree.syntax.ask(id, `literal-value\n${part}`));
+                header(frames,'literal-value'); const tag = frames.field(); const value = frames.field(); frames.end();
+                if(tag !== 'string' || !this.permitted(value)) {proven = false;break;}
+            }
+        }
+        if(!proven) {this.tree.syntax.add(id,'react/button-has-type','complexType','This `button` computes its `type`, so no reader and no tool can tell whether it submits. The rule reads a static string or a ternary between static strings, and anything else could evaluate to a value that silently submits a form. Write the type out, or branch between written-out types.');}
+    }
+    element(reported: number, opening: number): void {
+        const metadata = this.tree.node(opening);
+        if(this.tree.kind(metadata.tag) !== 'Identifier' || this.tree.text(metadata.tag) !== 'button') {return;}
+        let attribute = 0;
+        if(this.tree.kind(metadata.attributes) === 'JsxAttributes') {
+            for(const id of this.tree.syntax.node(metadata.attributes).children) {
+                if(this.tree.kind(id) === 'JsxAttribute' && this.tree.kind(this.tree.node(id).name) === 'Identifier' && this.tree.text(this.tree.node(id).name) === 'type') {attribute = id;break;}
+            }
+        }
+        if(attribute === 0) {this.missing(reported);return;}
+        const value = this.tree.node(attribute).value;
+        if(value === 0) {this.value(reported,'true');}
+        else if(this.tree.kind(value) === 'JsxExpression') {this.expression(reported,this.tree.syntax.node(value).role(0));}
+        else {this.value(reported,this.tree.text(value));}
+    }
+    run(): void {
+        for(let id = 1; id <= this.tree.syntax.nodes.length; id++) {
+            const node = this.tree.syntax.node(id);
+            if(node.kind === 'JsxElement') {const opening = this.tree.node(id).opening;if(opening !== 0) {this.element(id,opening);}}
+            else if(node.kind === 'JsxSelfClosingElement') {this.element(id,id);}
+            else if(node.kind === 'CallExpression' && this.tree.createElement(id)) {
+                const first = node.arguments[0] ?? 0;
+                if(this.tree.kind(first) !== 'StringLiteral' || this.tree.text(first) !== 'button') {continue;}
+                const object = node.arguments[1] ?? 0;
+                if(this.tree.kind(object) !== 'ObjectLiteralExpression') {this.missing(id);continue;}
+                let property = 0;
+                for(const candidate of this.tree.syntax.node(object).children) {
+                    const name = this.tree.node(candidate).name;
+                    if(this.tree.kind(name) === 'Identifier' && this.tree.text(name) === 'type') {property = candidate;break;}
+                }
+                if(property === 0) {this.missing(id);}
+                else {this.expression(id,this.tree.kind(property) === 'PropertyAssignment' ? this.tree.syntax.node(property).role(0) : property);}
+            }
+        }
+    }
+}

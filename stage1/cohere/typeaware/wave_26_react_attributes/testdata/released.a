@@ -1,0 +1,7 @@
+import {programArguments,tsgoProgram,tsgoInspect,tsgoRelease} from 'adamic';
+const args = programArguments();const file = args[1] ?? '';
+const program = tsgoProgram(args[0] ?? '',[file]);
+const question = args[3] ?? 'jsx-structure';const length = Number(args[2] ?? '0');
+const copied = tsgoInspect(program,file,0,length,'SourceFile',question);
+tsgoRelease(program);console.log(`${copied.length}`);
+console.log(`${tsgoInspect(program,file,0,length,'SourceFile',question).length}`);

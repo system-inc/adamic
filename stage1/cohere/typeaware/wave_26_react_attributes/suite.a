@@ -1,0 +1,29 @@
+import {panic, utf8Length, programArguments, readTextFile, tsgoProgram, tsgoRelease} from 'adamic';
+import {written} from '../../../typescript/parser/nodes.ts';
+import {PreferenceStructure} from '../preference_structure.a';
+import {JSXStructure} from './jsx_structure.a';
+import {ButtonHasTypeRule} from './button_has_type/rule.a';
+import {CheckedRequiresOnChangeOrReadOnlyRule} from './checked_requires_onchange_or_readonly/rule.a';
+import {DisplayNameRule} from './display_name/rule.a';
+const args = programArguments();
+const config = args[0] ?? panic('missing config');
+const manifest = readTextFile(args[1] ?? panic('missing manifest'));
+if(manifest.kind !== 'Ok') {panic('cannot read manifest');}
+const files = manifest.text.split('\n').filter(file => file !== '');
+const program = tsgoProgram(config, files);
+let count = 0;
+for(const file of files) {
+    const source = readTextFile(file);
+    if(source.kind !== 'Ok') {panic('cannot read source');}
+    const syntax = new PreferenceStructure(program, file, utf8Length(source.text));
+    const tree = new JSXStructure(syntax);
+    const button = new ButtonHasTypeRule(tree); button.run();
+    const checked = new CheckedRequiresOnChangeOrReadOnlyRule(tree); checked.run();
+    const display = new DisplayNameRule(tree, source.text); display.run();
+    const lines = syntax.findings.map(finding => finding.written()).sort((a, b) => a < b ? -1 : a > b ? 1 : 0);
+    count += lines.length;
+    console.log(`file\t${written(file)}`);
+    for(const line of lines) {console.log(line);}
+}
+console.log(`findings ${count}`);
+tsgoRelease(program);

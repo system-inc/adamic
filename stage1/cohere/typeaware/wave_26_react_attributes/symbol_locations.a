@@ -1,0 +1,15 @@
+import {Frames, header} from '../frames.ts';
+import {PreferenceStructure} from '../preference_structure.a';
+export class SymbolLocation {
+    readonly file: string; readonly kind: string; readonly start: number; readonly end: number;
+    constructor(frames: Frames) {this.file = frames.field();this.kind = frames.field();this.start = frames.natural();this.end = frames.natural();}
+}
+export class SymbolLocations {
+    readonly declarations: readonly SymbolLocation[];
+    constructor(syntax: PreferenceStructure, id: number) {
+        const frames = new Frames(syntax.ask(id,'symbol-locations'));header(frames,'symbol-locations');
+        const count = frames.natural();const declarations: SymbolLocation[] = [];
+        for(let i = 0; i < count; i++) {declarations.push(new SymbolLocation(frames));}
+        frames.end();this.declarations = declarations;
+    }
+}

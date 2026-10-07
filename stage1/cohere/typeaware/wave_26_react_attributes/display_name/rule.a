@@ -1,0 +1,130 @@
+import {utf8Length} from 'adamic';
+import {Diagnostic} from '../../diagnostic.ts';
+import {JSXStructure} from '../jsx_structure.a';
+import {Components} from './components.a';
+import {SymbolLocations} from '../symbol_locations.a';
+
+export class DisplayNameRule {
+    readonly tree: JSXStructure; readonly source: string;
+    readonly ignoreTranspiler: boolean; readonly checkContexts: boolean;
+    constructor(tree: JSXStructure, source: string, ignoreTranspiler = false, checkContexts = false) {
+        this.tree = tree; this.source = source; this.ignoreTranspiler = ignoreTranspiler; this.checkContexts = checkContexts;
+    }
+    factoryObject(id: number, detector: Components): boolean {return this.tree.kind(id) === 'ObjectLiteralExpression' && detector.factory(this.tree.parent(id));}
+    transpiler(id: number, detector: Components): boolean {
+        const kind = this.tree.kind(id); const parent = this.tree.parent(id);
+        if(kind === 'CallExpression' && detector.wrapper(id,new Set<string>())) {
+            if(detector.wrapperFor(id,new Set<string>()) !== 0) {return true;}
+            const first = this.tree.syntax.skip(this.tree.syntax.node(id).arguments[0] ?? 0);
+            return first !== 0 && this.transpiler(first,detector);
+        }
+        if(['ClassDeclaration','ClassExpression'].includes(kind)) {return this.tree.node(id).name !== 0;}
+        if(['FunctionDeclaration','FunctionExpression'].includes(kind) && this.tree.node(id).name !== 0) {return true;}
+        if(kind === 'ObjectLiteralExpression') {
+            if(parent === 0) {return false;}
+            const grandparent = this.tree.parent(parent); const outer = this.tree.kind(grandparent);
+            if(outer === 'VariableDeclaration') {return true;}
+            if(outer === 'BinaryExpression') {const binary = this.tree.syntax.node(grandparent);return binary.operator === 'EqualsToken' && !detector.moduleExports(binary.role(4));}
+            return false;
+        }
+        if(kind === 'MethodDeclaration') {return this.tree.node(id).name !== 0 && !this.factoryObject(parent,detector);}
+        if(!['FunctionExpression','ArrowFunction'].includes(kind) || parent === 0) {return false;}
+        if(!['VariableDeclaration','PropertyAssignment','MethodDeclaration'].includes(this.tree.kind(parent))) {return false;}
+        const grandparent = this.tree.parent(parent);
+        return grandparent === 0 || !this.factoryObject(grandparent,detector);
+    }
+    displayKey(id: number): boolean {
+        const kind = this.tree.kind(id);
+        if(kind === 'Identifier' || kind === 'StringLiteral') {return this.tree.text(id) === 'displayName';}
+        if(kind !== 'ComputedPropertyName') {return false;}
+        const inner = this.tree.syntax.skip(this.tree.syntax.node(id).role(0));
+        return this.tree.kind(inner) === 'StringLiteral' && this.tree.text(inner) === 'displayName';
+    }
+    componentFor(declaration: number, components: Set<number>): number {
+        if(components.has(declaration)) {return declaration;}
+        const kind = this.tree.kind(declaration);
+        if(kind !== 'VariableDeclaration' && kind !== 'PropertyAssignment') {return 0;}
+        const initializer = this.tree.syntax.skip(this.tree.syntax.node(declaration).role(0));
+        if(components.has(initializer)) {return initializer;}
+        if(kind === 'VariableDeclaration' && this.tree.kind(initializer) === 'CallExpression') {
+            const first = this.tree.syntax.skip(this.tree.syntax.node(initializer).arguments[0] ?? 0);
+            if(components.has(first)) {return first;}
+        }
+        return 0;
+    }
+    context(id: number): boolean {
+        id = this.tree.syntax.skip(id);
+        if(this.tree.kind(id) !== 'CallExpression') {return false;}
+        const callee = this.tree.syntax.skip(this.tree.syntax.node(id).role(0));
+        return this.tree.kind(callee) === 'Identifier' && this.tree.text(callee) === 'createContext' ||
+            this.tree.kind(callee) === 'PropertyAccessExpression' && this.tree.text(this.tree.node(callee).name) === 'createContext';
+    }
+    token(start: number): number {
+        let unit = 0; let bytes = 0;
+        while(unit < this.source.length && bytes < start) {
+            const code = this.source.charCodeAt(unit); const length = code < 128 ? 1 : code < 2048 ? 2 : code >= 55296 && code <= 56319 ? 4 : 3;
+            unit += length === 4 ? 2 : 1; bytes += length;
+        }
+        while(unit < this.source.length) {
+            const char = this.source.slice(unit,unit+1);
+            if([' ','\t','\r','\n','\v','\f','\u00a0','\ufeff'].includes(char)) {unit++;continue;}
+            if(this.source.slice(unit,unit+2) === '/*') {const end = this.source.indexOf('*/',unit+2);if(end < 0) {break;}unit = end+2;continue;}
+            if(this.source.slice(unit,unit+2) === '//') {const end = this.source.indexOf('\n',unit+2);if(end < 0) {break;}unit = end+1;continue;}
+            break;
+        }
+        return utf8Length(this.source.slice(0,unit));
+    }
+    run(): void {
+        const detector = new Components(this.tree); detector.run();
+        const components = new Set<number>(detector.found); const named = new Set<number>();
+        if(!this.ignoreTranspiler) {for(const id of detector.found) {if(this.transpiler(id,detector)) {named.add(id);}}}
+        const contexts = new Map<number,number>(); const namedContexts = new Set<number>();
+        if(this.checkContexts) {
+            for(let id = 1; id <= this.tree.syntax.nodes.length; id++) {
+                const node = this.tree.syntax.node(id);
+                if(node.kind === 'VariableDeclaration' && this.context(node.role(0))) {contexts.set(id,id);}
+                else if(node.kind === 'BinaryExpression' && node.operator === 'EqualsToken' && this.context(node.role(5))) {
+                    const target = this.tree.syntax.skip(node.role(4));
+                    if(this.tree.kind(target) === 'Identifier') {for(const declaration of this.tree.declarations(target)) {contexts.set(declaration,id);}}
+                }
+            }
+        }
+        for(let id = 1; id <= this.tree.syntax.nodes.length; id++) {
+            const node = this.tree.syntax.node(id);
+            if(['PropertyDeclaration','MethodDeclaration','GetAccessor','SetAccessor'].includes(node.kind) && this.displayKey(this.tree.node(id).name)) {
+                let parent = node.parent;
+                while(parent !== 0 && !['ClassDeclaration','ClassExpression'].includes(this.tree.kind(parent))) {parent = this.tree.syntax.node(parent).parent;}
+                if(parent !== 0) {named.add(parent);}
+            }
+            else if(node.kind === 'PropertyAssignment' && this.displayKey(this.tree.node(id).name)) {
+                const parent = this.tree.parent(id); if(this.tree.kind(parent) === 'ObjectLiteralExpression') {named.add(parent);}
+            }
+            else if(node.kind === 'PropertyAccessExpression' && this.displayKey(this.tree.node(id).name)) {
+                const object = this.tree.syntax.skip(node.role(0));
+                if(object !== 0) {
+                    for(const declaration of this.tree.declarations(object)) {
+                        const component = this.componentFor(declaration,components); if(component !== 0) {named.add(component);}
+                        if(contexts.has(declaration)) {namedContexts.add(declaration);}
+                    }
+                }
+            }
+        }
+        for(const id of detector.found) {
+            if(named.has(id)) {continue;}
+            const node = this.tree.syntax.node(id);
+            if(node.kind === 'CallExpression') {
+                const parent = this.tree.parent(id);
+                if(this.tree.kind(parent) === 'CallExpression' && this.tree.syntax.skip(this.tree.syntax.node(parent).arguments[0] ?? 0) === id && detector.wrapper(parent,new Set<string>())) {continue;}
+                const callee = this.tree.syntax.skip(node.role(0));
+                if(this.tree.kind(callee) === 'Identifier' && ['memo','forwardRef'].includes(this.tree.text(callee))) {
+                    const locations = new SymbolLocations(this.tree.syntax,callee);
+                    if(locations.declarations.length !== 0 && !locations.declarations.some(declaration => ['ImportSpecifier','ImportClause','NamespaceImport'].includes(declaration.kind))) {continue;}
+                }
+            }
+            const modifierEnd = this.tree.node(id).modifierEnd;
+            const start = modifierEnd > 0 && modifierEnd < node.end ? this.token(modifierEnd) : node.token;
+            this.tree.syntax.findings.push(new Diagnostic('react/display-name','noDisplayName','Component definition is missing display name',start,node.end,''));
+        }
+        for(const [declaration, anchor] of contexts) {if(!namedContexts.has(declaration)) {this.tree.syntax.add(anchor,'react/display-name','noContextDisplayName','Context definition is missing display name');}}
+    }
+}

@@ -1,0 +1,35 @@
+import {JSXStructure} from '../jsx_structure.a';
+export class CheckedRequiresOnChangeOrReadOnlyRule {
+    readonly tree: JSXStructure;
+    readonly ignoreMissing: boolean; readonly ignoreExclusive: boolean;
+    constructor(tree: JSXStructure, ignoreMissing = false, ignoreExclusive = false) {
+        this.tree = tree; this.ignoreMissing = ignoreMissing; this.ignoreExclusive = ignoreExclusive;
+    }
+    report(id: number, properties: readonly number[]): void {
+        const names = new Set<string>();
+        for(const property of properties) {
+            const name = this.tree.node(property).name;
+            if(this.tree.kind(name) === 'Identifier') {names.add(this.tree.text(name));}
+        }
+        if(!names.has('checked')) {return;}
+        if(!this.ignoreExclusive && names.has('defaultChecked')) {
+            this.tree.syntax.add(id,'react/checked-requires-onchange-or-readonly','exclusiveCheckedAttribute','This `input` writes both `checked` and `defaultChecked`. The first makes React own the value and the second hands the initial value to the browser, so writing both asks for a controlled and an uncontrolled input at once. React keeps `checked` and ignores `defaultChecked`, which makes the discarded one read as live configuration.');
+        }
+        if(!this.ignoreMissing && !names.has('onChange') && !names.has('readOnly')) {
+            this.tree.syntax.add(id,'react/checked-requires-onchange-or-readonly','missingProperty','This `input` is `checked` with no `onChange` and no `readOnly`. React treats `checked` as the single source of truth for the control, so without a handler to move that value the box refuses every click and looks broken rather than disabled. Add `onChange` to make it interactive, or `readOnly` to say the frozen state is deliberate.');
+        }
+    }
+    run(): void {
+        for(let id = 1; id <= this.tree.syntax.nodes.length; id++) {
+            const node = this.tree.syntax.node(id);
+            if(['JsxOpeningElement','JsxSelfClosingElement'].includes(node.kind)) {
+                const metadata = this.tree.node(id);
+                if(this.tree.kind(metadata.tag) === 'Identifier' && this.tree.text(metadata.tag) === 'input' && this.tree.kind(metadata.attributes) === 'JsxAttributes') {this.report(id,this.tree.syntax.node(metadata.attributes).children);}
+            }
+            else if(node.kind === 'CallExpression' && this.tree.createElement(id)) {
+                const first = node.arguments[0] ?? 0; const second = node.arguments[1] ?? 0;
+                if(this.tree.kind(first) === 'StringLiteral' && this.tree.text(first) === 'input' && this.tree.kind(second) === 'ObjectLiteralExpression') {this.report(id,this.tree.syntax.node(second).children);}
+            }
+        }
+    }
+}

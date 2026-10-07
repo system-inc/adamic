@@ -203,6 +203,8 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 	mode := strings.Split(question, "\n")[0]
 	out.text(mode)
 	switch mode {
+	case "symbol-locations": return p.symbolLocations(out, c, node, question)
+	case "jsx-structure": return p.jsxStructure(out, source, node, question)
 	case "react-hir": return p.reactHIR(out, c, node, question)
 	case "binding-structure": return p.bindingStructure(out, source, node, question)
 	case "binding-origin": return p.bindingOrigin(out, c, node, question)

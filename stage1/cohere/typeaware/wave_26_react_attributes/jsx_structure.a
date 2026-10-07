@@ -1,0 +1,95 @@
+import {panic} from 'adamic';
+import {Frames, header} from '../frames.ts';
+import {PreferenceStructure} from '../preference_structure.a';
+import {SymbolLocations} from './symbol_locations.a';
+
+export class JSXNode {
+    readonly name: number; readonly value: number; readonly tag: number;
+    readonly attributes: number; readonly opening: number; readonly body: number;
+    readonly text: string; readonly heritage: string; readonly modifierEnd: number;
+    readonly asyncGenerator: boolean;
+    constructor(frames: Frames) {
+        this.name = frames.natural(); this.value = frames.natural(); this.tag = frames.natural();
+        this.attributes = frames.natural(); this.opening = frames.natural(); this.body = frames.natural();
+        this.text = frames.field(); this.heritage = frames.field(); this.modifierEnd = frames.natural();
+        this.asyncGenerator = frames.yes();
+    }
+}
+export class JSXStructure {
+    readonly syntax: PreferenceStructure;
+    readonly nodes: readonly JSXNode[];
+    constructor(syntax: PreferenceStructure) {
+        this.syntax = syntax;
+        const frames = new Frames(syntax.ask(1, 'jsx-structure'));
+        header(frames, 'jsx-structure'); const count = frames.natural();
+        if(count !== syntax.nodes.length) {panic('JSX syntax identities disagree');}
+        const nodes: JSXNode[] = [];
+        for(let i = 0; i < count; i++) {nodes.push(new JSXNode(frames));}
+        frames.end(); this.nodes = nodes;
+        for(const node of nodes) {
+            for(const id of [node.name,node.value,node.tag,node.attributes,node.opening,node.body]) {
+                if(id > count) {panic('invalid JSX syntax identity');}
+            }
+        }
+    }
+    node(id: number): JSXNode {return this.nodes[id - 1] ?? panic('missing JSX node');}
+    kind(id: number): string {return id === 0 ? '' : this.syntax.node(id).kind;}
+    text(id: number): string {
+        if(id === 0) {return '';}
+        const text = this.syntax.node(id).text;
+        return text === '' ? this.node(id).text : text;
+    }
+    parent(id: number): number {
+        let parent = this.syntax.node(id).parent;
+        while(this.kind(parent) === 'ParenthesizedExpression') {parent = this.syntax.node(parent).parent;}
+        return parent;
+    }
+    declarations(id: number): readonly number[] {
+        const locations = new SymbolLocations(this.syntax,id);const result: number[] = [];
+        for(const location of locations.declarations) {
+            if(location.file !== this.syntax.path) {continue;}
+            const found = this.syntax.nodes.findIndex(node => node.kind === location.kind && node.start === location.start && node.end === location.end);
+            if(found >= 0) {result.push(found + 1);}
+        }
+        return result;
+    }
+    require(id: number): boolean {
+        if(this.kind(id) !== 'CallExpression') {return false;}
+        const node = this.syntax.node(id);
+        return this.kind(node.role(0)) === 'Identifier' && this.text(node.role(0)) === 'require' &&
+            this.kind(node.arguments[0] ?? 0) === 'StringLiteral' && this.text(node.arguments[0] ?? 0) === 'react';
+    }
+    pragma(id: number): boolean {
+        if(this.kind(id) === 'Identifier') {return this.text(id) === 'React';}
+        if(this.kind(id) === 'CallExpression') {return this.require(id);}
+        if(this.kind(id) !== 'PropertyAccessExpression') {return false;}
+        const object = this.syntax.node(id).role(0);
+        return this.kind(object) === 'Identifier' && this.text(object) === 'React' || this.require(object);
+    }
+    declarationFromReact(id: number): boolean {
+        const kind = this.kind(id);
+        if(kind === 'ImportSpecifier') {
+            let parent = this.syntax.node(id).parent;
+            for(let i = 0; i < 2 && parent !== 0; i++) {parent = this.syntax.node(parent).parent;}
+            return this.kind(parent) === 'ImportDeclaration' && this.text(this.node(parent).value) === 'react';
+        }
+        if(kind === 'VariableDeclaration') {return this.pragma(this.syntax.node(id).role(0));}
+        if(kind !== 'BindingElement') {return false;}
+        const pattern = this.syntax.node(id).parent;
+        if(this.kind(pattern) !== 'ObjectBindingPattern') {return false;}
+        const variable = this.syntax.node(pattern).parent;
+        return this.kind(variable) === 'VariableDeclaration' && this.pragma(this.syntax.node(variable).role(0));
+    }
+    createElement(id: number): boolean {
+        if(this.kind(id) !== 'CallExpression') {return false;}
+        const callee = this.syntax.skip(this.syntax.node(id).role(0));
+        if(this.kind(callee) === 'PropertyAccessExpression') {
+            const object = this.syntax.node(callee).role(0);
+            const name = this.node(callee).name;
+            return this.kind(name) === 'Identifier' && this.text(name) === 'createElement' &&
+                this.kind(object) === 'Identifier' && this.text(object) === 'React';
+        }
+        return this.kind(callee) === 'Identifier' && this.text(callee) === 'createElement' &&
+            this.declarations(callee).some(declaration => this.declarationFromReact(declaration));
+    }
+}

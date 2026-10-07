@@ -1,0 +1,187 @@
+import {JSXStructure} from '../jsx_structure.a';
+import {upperChangesCode} from '../unicode_tables.a';
+
+// Mirrors the pinned component detector, including its deliberately narrow
+// return traversal and its file-wide React wrapper binding scan.
+export class Components {
+    readonly tree: JSXStructure;
+    readonly found: number[] = [];
+    readonly seen: Set<number> = new Set<number>();
+    readonly names: Set<string> = new Set<string>();
+    constructor(tree: JSXStructure) {this.tree = tree;}
+    capital(name: string): boolean {
+        let at = 0; while(name.slice(at,at+1) === '_') {at++;}
+        if(at === name.length) {return false;}
+        return !upperChangesCode(name.codePointAt(at) ?? 0);
+    }
+    reactValue(id: number): boolean {
+        id = this.tree.syntax.skip(id);
+        if(this.tree.kind(id) === 'Identifier') {return this.tree.text(id) === 'React';}
+        return this.tree.require(id) && this.tree.syntax.node(id).arguments.length === 1;
+    }
+    fromReact(name: string): boolean {
+        for(let id = 1; id <= this.tree.syntax.nodes.length; id++) {
+            const node = this.tree.syntax.node(id);
+            if(node.kind === 'ImportSpecifier' && this.tree.text(this.tree.node(id).name) === name && this.tree.declarationFromReact(id)) {return true;}
+            if(node.kind !== 'VariableDeclaration') {continue;}
+            const target = this.tree.node(id).name; const initializer = node.role(0);
+            if(this.tree.kind(target) === 'Identifier' && this.tree.text(target) === name && this.tree.kind(initializer) === 'PropertyAccessExpression') {
+                const access = this.tree.syntax.node(initializer);
+                if(this.tree.text(this.tree.node(initializer).name) === name && this.reactValue(access.role(0))) {return true;}
+            }
+            if(this.tree.kind(target) === 'ObjectBindingPattern' && this.reactValue(initializer)) {
+                for(const element of this.tree.syntax.node(target).children) {
+                    if(this.tree.text(this.tree.node(element).name) === name) {return true;}
+                }
+            }
+        }
+        return false;
+    }
+    functionExpression(id: number): boolean {return ['FunctionExpression','ArrowFunction'].includes(this.tree.kind(id));}
+    wrapper(id: number, names: Set<string>): boolean {
+        if(this.tree.kind(id) !== 'CallExpression' || this.tree.syntax.node(id).arguments.length === 0) {return false;}
+        const callee = this.tree.syntax.node(id).role(0);
+        if(this.tree.kind(callee) === 'Identifier') {return ['memo','forwardRef'].includes(this.tree.text(callee)) && this.fromReact(this.tree.text(callee));}
+        if(this.tree.kind(callee) !== 'PropertyAccessExpression') {return false;}
+        const access = this.tree.syntax.node(callee); const object = this.tree.syntax.skip(access.role(0));
+        if(this.tree.kind(object) !== 'Identifier' || this.tree.text(object) !== 'React' || !['memo','forwardRef'].includes(this.tree.text(this.tree.node(callee).name))) {return false;}
+        const wrapped = this.tree.syntax.node(id).arguments[0] ?? 0;
+        if(!this.functionExpression(wrapped)) {return true;}
+        let body = this.tree.syntax.node(wrapped).role(3);
+        if(this.tree.kind(body) === 'Block') {
+            let found = false;
+            for(const statement of this.tree.syntax.node(body).children) {
+                if(this.tree.kind(statement) === 'ReturnStatement') {body = this.tree.node(statement).value;found = true;break;}
+            }
+            if(!found) {return true;}
+        }
+        body = this.tree.syntax.skip(body);
+        if(this.tree.kind(body) === 'JsxElement') {body = this.tree.node(body).opening;}
+        if(!['JsxOpeningElement','JsxSelfClosingElement'].includes(this.tree.kind(body))) {return true;}
+        const tag = this.tree.node(body).tag;
+        return this.tree.kind(tag) !== 'Identifier' || !names.has(this.tree.text(tag));
+    }
+    wrapperFor(id: number, names: Set<string>): number {
+        let wrapper = 0; let current = this.tree.syntax.node(id).parent;
+        while(current !== 0 && this.wrapper(current,names)) {wrapper = current;current = this.tree.syntax.node(current).parent;}
+        return wrapper;
+    }
+    factory(id: number): boolean {
+        if(this.tree.kind(id) !== 'CallExpression') {return false;}
+        const callee = this.tree.syntax.skip(this.tree.syntax.node(id).role(0));
+        if(this.tree.kind(callee) === 'Identifier') {return this.tree.text(callee) === 'createReactClass';}
+        if(this.tree.kind(callee) !== 'PropertyAccessExpression') {return false;}
+        const object = this.tree.syntax.skip(this.tree.syntax.node(callee).role(0));
+        return this.tree.kind(object) === 'Identifier' && this.tree.text(object) === 'React' && this.tree.text(this.tree.node(callee).name) === 'createReactClass';
+    }
+    base(id: number): boolean {
+        id = this.tree.syntax.skip(id);
+        if(this.tree.kind(id) === 'Identifier') {return ['Component','PureComponent'].includes(this.tree.text(id));}
+        if(this.tree.kind(id) !== 'PropertyAccessExpression') {return false;}
+        const object = this.tree.syntax.skip(this.tree.syntax.node(id).role(0));
+        return this.tree.kind(object) === 'Identifier' && this.tree.text(object) === 'React' && ['Component','PureComponent'].includes(this.tree.text(this.tree.node(id).name));
+    }
+    classComponent(id: number): boolean {
+        for(const clause of this.tree.syntax.node(id).children) {
+            if(this.tree.kind(clause) !== 'HeritageClause' || this.tree.node(clause).heritage !== 'ExtendsKeyword') {continue;}
+            for(const type of this.tree.syntax.node(clause).children) {
+                if(this.tree.kind(type) === 'ExpressionWithTypeArguments' && this.base(this.tree.syntax.node(type).role(0))) {return true;}
+            }
+        }
+        return false;
+    }
+    jsx(id: number, acceptNull: boolean): boolean {
+        id = this.tree.syntax.skip(id); const kind = this.tree.kind(id);
+        if(['JsxElement','JsxSelfClosingElement','JsxFragment'].includes(kind)) {return true;}
+        if(kind === 'NullKeyword') {return acceptNull;}
+        if(kind === 'CallExpression') {return this.tree.createElement(id);}
+        if(kind === 'ConditionalExpression') {const node = this.tree.syntax.node(id);return this.jsx(node.role(6),acceptNull) || this.jsx(node.role(7),acceptNull);}
+        if(kind === 'BinaryExpression') {
+            const node = this.tree.syntax.node(id);
+            if(['AmpersandAmpersandToken','BarBarToken','QuestionQuestionToken'].includes(node.operator)) {return this.jsx(node.role(4),acceptNull) || this.jsx(node.role(5),acceptNull);}
+            if(node.operator === 'CommaToken') {return this.jsx(node.role(5),acceptNull);}
+        }
+        return false;
+    }
+    statement(id: number, acceptNull: boolean): boolean {
+        const kind = this.tree.kind(id);
+        if(kind === 'ReturnStatement') {return this.jsx(this.tree.node(id).value,acceptNull);}
+        if(!['Block','IfStatement','ForStatement','WhileStatement','SwitchStatement','CaseBlock','CaseClause','DefaultClause'].includes(kind)) {return false;}
+        return this.tree.syntax.node(id).children.some(child => this.statement(child,acceptNull));
+    }
+    returns(id: number, acceptNull: boolean): boolean {
+        const node = this.tree.syntax.node(id);
+        const body = node.kind === 'MethodDeclaration' ? this.tree.node(id).body : node.role(3);
+        if(node.kind === 'ArrowFunction' && this.tree.kind(body) !== 'Block') {return this.jsx(body,acceptNull);}
+        return this.tree.kind(body) === 'Block' && this.statement(body,acceptNull);
+    }
+    moduleExports(id: number): boolean {
+        id = this.tree.syntax.skip(id);
+        if(this.tree.kind(id) !== 'PropertyAccessExpression') {return false;}
+        const object = this.tree.syntax.skip(this.tree.syntax.node(id).role(0));
+        return this.tree.kind(object) === 'Identifier' && this.tree.text(object) === 'module' && this.tree.text(this.tree.node(id).name) === 'exports';
+    }
+    allowed(id: number): boolean {
+        const parent = this.tree.parent(id); const kind = this.tree.kind(parent);
+        if(['VariableDeclaration','PropertyAssignment','ReturnStatement','ExportAssignment','ArrowFunction'].includes(kind)) {return true;}
+        if(kind !== 'BinaryExpression') {return false;}
+        const node = this.tree.syntax.node(parent);
+        if(node.operator === 'EqualsToken') {return true;}
+        return node.operator === 'CommaToken' && this.tree.syntax.skip(node.role(5)) === id && this.allowed(parent);
+    }
+    stateless(id: number): number {
+        const node = this.tree.syntax.node(id); const name = this.tree.node(id).name;
+        if(this.tree.node(id).asyncGenerator) {return 0;}
+        if(node.kind === 'FunctionDeclaration') {return (name === 0 || this.capital(this.tree.text(name))) && this.returns(id,true) ? id : 0;}
+        const parent = this.tree.parent(id); const kind = this.tree.kind(parent);
+        if(parent === 0) {return 0;}
+        if((kind === 'ReturnStatement' || kind === 'ArrowFunction' && this.tree.syntax.node(parent).role(3) === id) && !this.returns(id,false)) {return 0;}
+        if(kind === 'ExportAssignment') {return this.returns(id,false) ? id : 0;}
+        if(kind === 'VariableDeclaration' && this.returns(id,true)) {
+            const target = this.tree.node(parent).name;
+            return this.tree.kind(target) === 'Identifier' && this.capital(this.tree.text(target)) ? id : 0;
+        }
+        if(kind === 'PropertyAssignment' && !(node.kind === 'FunctionExpression' && name !== 0)) {
+            const key = this.tree.node(parent).name;
+            return key !== 0 && this.returns(id,false) && this.tree.kind(key) === 'Identifier' && this.capital(this.tree.text(key)) ? id : 0;
+        }
+        const wrapper = this.wrapperFor(id,this.names);
+        if(wrapper !== 0 && this.returns(id,true)) {return wrapper;}
+        if(kind === 'MethodDeclaration') {
+            const key = this.tree.node(parent).name;
+            return this.returns(id,false) && this.tree.kind(key) === 'Identifier' && this.capital(this.tree.text(key)) ? id : 0;
+        }
+        if(!this.allowed(id) || !this.returns(id,true)) {return 0;}
+        if(node.kind === 'FunctionExpression' && name !== 0) {return this.capital(this.tree.text(name)) ? id : 0;}
+        if(kind === 'BinaryExpression' && this.tree.syntax.node(parent).operator === 'EqualsToken') {
+            const target = this.tree.syntax.skip(this.tree.syntax.node(parent).role(4));
+            if(this.tree.kind(target) === 'Identifier') {return this.capital(this.tree.text(target)) ? id : 0;}
+            if(this.tree.kind(target) === 'PropertyAccessExpression') {return this.moduleExports(target) || this.capital(this.tree.text(this.tree.node(target).name)) ? id : 0;}
+        }
+        return id;
+    }
+    add(id: number): void {
+        if(id === 0 || this.seen.has(id)) {return;}
+        this.seen.add(id); this.found.push(id);
+        const kind = this.tree.kind(id); let name = 0;
+        if(kind === 'ClassDeclaration') {name = this.tree.node(id).name;}
+        else if(kind === 'ArrowFunction') {const parent = this.tree.parent(id);if(this.tree.kind(parent) === 'VariableDeclaration') {name = this.tree.node(parent).name;}}
+        if(this.tree.kind(name) === 'Identifier') {this.names.add(this.tree.text(name));}
+    }
+    run(): void {
+        for(let id = 1; id <= this.tree.syntax.nodes.length; id++) {
+            const node = this.tree.syntax.node(id);
+            if(['ClassDeclaration','ClassExpression'].includes(node.kind) && this.classComponent(id)) {this.add(id);}
+            else if(node.kind === 'CallExpression') {
+                const first = node.arguments[0] ?? 0;
+                if(this.wrapper(id,this.names) && this.functionExpression(this.tree.syntax.skip(first))) {this.add(id);}
+                if(this.factory(id) && this.tree.kind(first) === 'ObjectLiteralExpression') {this.add(first);}
+            }
+            else if(node.kind === 'MethodDeclaration' && this.tree.kind(node.parent) === 'ObjectLiteralExpression') {
+                const name = this.tree.node(id).name;
+                if(this.tree.kind(name) === 'Identifier' && this.capital(this.tree.text(name)) && this.returns(id,false)) {this.add(id);}
+            }
+            else if(['FunctionDeclaration','FunctionExpression','ArrowFunction'].includes(node.kind)) {this.add(this.stateless(id));}
+        }
+    }
+}
