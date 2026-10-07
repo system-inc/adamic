@@ -1,0 +1,709 @@
+// Numeric kinds from the pinned typescript-go parser, not stock TypeScript.
+export const Unknown = 0;
+export const EndOfFile = 1;
+export const SingleLineCommentTrivia = 2;
+export const MultiLineCommentTrivia = 3;
+export const NewLineTrivia = 4;
+export const WhitespaceTrivia = 5;
+export const ConflictMarkerTrivia = 6;
+export const NonTextFileMarkerTrivia = 7;
+export const NumericLiteral = 8;
+export const BigIntLiteral = 9;
+export const StringLiteral = 10;
+export const JsxText = 11;
+export const JsxTextAllWhiteSpaces = 12;
+export const RegularExpressionLiteral = 13;
+export const NoSubstitutionTemplateLiteral = 14;
+export const TemplateHead = 15;
+export const TemplateMiddle = 16;
+export const TemplateTail = 17;
+export const OpenBraceToken = 18;
+export const CloseBraceToken = 19;
+export const OpenParenToken = 20;
+export const CloseParenToken = 21;
+export const OpenBracketToken = 22;
+export const CloseBracketToken = 23;
+export const DotToken = 24;
+export const DotDotDotToken = 25;
+export const SemicolonToken = 26;
+export const CommaToken = 27;
+export const QuestionDotToken = 28;
+export const LessThanToken = 29;
+export const LessThanSlashToken = 30;
+export const GreaterThanToken = 31;
+export const LessThanEqualsToken = 32;
+export const GreaterThanEqualsToken = 33;
+export const EqualsEqualsToken = 34;
+export const ExclamationEqualsToken = 35;
+export const EqualsEqualsEqualsToken = 36;
+export const ExclamationEqualsEqualsToken = 37;
+export const EqualsGreaterThanToken = 38;
+export const PlusToken = 39;
+export const MinusToken = 40;
+export const AsteriskToken = 41;
+export const AsteriskAsteriskToken = 42;
+export const SlashToken = 43;
+export const PercentToken = 44;
+export const PlusPlusToken = 45;
+export const MinusMinusToken = 46;
+export const LessThanLessThanToken = 47;
+export const GreaterThanGreaterThanToken = 48;
+export const GreaterThanGreaterThanGreaterThanToken = 49;
+export const AmpersandToken = 50;
+export const BarToken = 51;
+export const CaretToken = 52;
+export const ExclamationToken = 53;
+export const TildeToken = 54;
+export const AmpersandAmpersandToken = 55;
+export const BarBarToken = 56;
+export const QuestionToken = 57;
+export const ColonToken = 58;
+export const AtToken = 59;
+export const QuestionQuestionToken = 60;
+export const BacktickToken = 61;
+export const HashToken = 62;
+export const EqualsToken = 63;
+export const PlusEqualsToken = 64;
+export const MinusEqualsToken = 65;
+export const AsteriskEqualsToken = 66;
+export const AsteriskAsteriskEqualsToken = 67;
+export const SlashEqualsToken = 68;
+export const PercentEqualsToken = 69;
+export const LessThanLessThanEqualsToken = 70;
+export const GreaterThanGreaterThanEqualsToken = 71;
+export const GreaterThanGreaterThanGreaterThanEqualsToken = 72;
+export const AmpersandEqualsToken = 73;
+export const BarEqualsToken = 74;
+export const BarBarEqualsToken = 75;
+export const AmpersandAmpersandEqualsToken = 76;
+export const QuestionQuestionEqualsToken = 77;
+export const CaretEqualsToken = 78;
+export const Identifier = 79;
+export const PrivateIdentifier = 80;
+export const JSDocCommentTextToken = 81;
+export const BreakKeyword = 82;
+export const CaseKeyword = 83;
+export const CatchKeyword = 84;
+export const ClassKeyword = 85;
+export const ConstKeyword = 86;
+export const ContinueKeyword = 87;
+export const DebuggerKeyword = 88;
+export const DefaultKeyword = 89;
+export const DeleteKeyword = 90;
+export const DoKeyword = 91;
+export const ElseKeyword = 92;
+export const EnumKeyword = 93;
+export const ExportKeyword = 94;
+export const ExtendsKeyword = 95;
+export const FalseKeyword = 96;
+export const FinallyKeyword = 97;
+export const ForKeyword = 98;
+export const FunctionKeyword = 99;
+export const IfKeyword = 100;
+export const ImportKeyword = 101;
+export const InKeyword = 102;
+export const InstanceOfKeyword = 103;
+export const NewKeyword = 104;
+export const NullKeyword = 105;
+export const ReturnKeyword = 106;
+export const SuperKeyword = 107;
+export const SwitchKeyword = 108;
+export const ThisKeyword = 109;
+export const ThrowKeyword = 110;
+export const TrueKeyword = 111;
+export const TryKeyword = 112;
+export const TypeOfKeyword = 113;
+export const VarKeyword = 114;
+export const VoidKeyword = 115;
+export const WhileKeyword = 116;
+export const WithKeyword = 117;
+export const ImplementsKeyword = 118;
+export const InterfaceKeyword = 119;
+export const LetKeyword = 120;
+export const PackageKeyword = 121;
+export const PrivateKeyword = 122;
+export const ProtectedKeyword = 123;
+export const PublicKeyword = 124;
+export const StaticKeyword = 125;
+export const YieldKeyword = 126;
+export const AbstractKeyword = 127;
+export const AccessorKeyword = 128;
+export const AsKeyword = 129;
+export const AssertsKeyword = 130;
+export const AssertKeyword = 131;
+export const AnyKeyword = 132;
+export const AsyncKeyword = 133;
+export const AwaitKeyword = 134;
+export const BooleanKeyword = 135;
+export const ConstructorKeyword = 136;
+export const DeclareKeyword = 137;
+export const GetKeyword = 138;
+export const ImmediateKeyword = 139;
+export const InferKeyword = 140;
+export const IntrinsicKeyword = 141;
+export const IsKeyword = 142;
+export const KeyOfKeyword = 143;
+export const ModuleKeyword = 144;
+export const NamespaceKeyword = 145;
+export const NeverKeyword = 146;
+export const OutKeyword = 147;
+export const ReadonlyKeyword = 148;
+export const RequireKeyword = 149;
+export const NumberKeyword = 150;
+export const ObjectKeyword = 151;
+export const SatisfiesKeyword = 152;
+export const SetKeyword = 153;
+export const StringKeyword = 154;
+export const SymbolKeyword = 155;
+export const TypeKeyword = 156;
+export const UndefinedKeyword = 157;
+export const UniqueKeyword = 158;
+export const UnknownKeyword = 159;
+export const UsingKeyword = 160;
+export const FromKeyword = 161;
+export const GlobalKeyword = 162;
+export const BigIntKeyword = 163;
+export const OverrideKeyword = 164;
+export const OfKeyword = 165;
+export const DeferKeyword = 166;
+export const QualifiedName = 167;
+export const ComputedPropertyName = 168;
+export const TypeParameter = 169;
+export const Parameter = 170;
+export const Decorator = 171;
+export const PropertySignature = 172;
+export const PropertyDeclaration = 173;
+export const MethodSignature = 174;
+export const MethodDeclaration = 175;
+export const ClassStaticBlockDeclaration = 176;
+export const Constructor = 177;
+export const GetAccessor = 178;
+export const SetAccessor = 179;
+export const CallSignature = 180;
+export const ConstructSignature = 181;
+export const IndexSignature = 182;
+export const TypePredicate = 183;
+export const TypeReference = 184;
+export const FunctionType = 185;
+export const ConstructorType = 186;
+export const TypeQuery = 187;
+export const TypeLiteral = 188;
+export const ArrayType = 189;
+export const TupleType = 190;
+export const OptionalType = 191;
+export const RestType = 192;
+export const UnionType = 193;
+export const IntersectionType = 194;
+export const ConditionalType = 195;
+export const InferType = 196;
+export const ParenthesizedType = 197;
+export const ThisType = 198;
+export const TypeOperator = 199;
+export const IndexedAccessType = 200;
+export const MappedType = 201;
+export const LiteralType = 202;
+export const NamedTupleMember = 203;
+export const TemplateLiteralType = 204;
+export const TemplateLiteralTypeSpan = 205;
+export const ImportType = 206;
+export const ObjectBindingPattern = 207;
+export const ArrayBindingPattern = 208;
+export const BindingElement = 209;
+export const ArrayLiteralExpression = 210;
+export const ObjectLiteralExpression = 211;
+export const PropertyAccessExpression = 212;
+export const ElementAccessExpression = 213;
+export const CallExpression = 214;
+export const NewExpression = 215;
+export const TaggedTemplateExpression = 216;
+export const TypeAssertionExpression = 217;
+export const ParenthesizedExpression = 218;
+export const FunctionExpression = 219;
+export const ArrowFunction = 220;
+export const DeleteExpression = 221;
+export const TypeOfExpression = 222;
+export const VoidExpression = 223;
+export const AwaitExpression = 224;
+export const PrefixUnaryExpression = 225;
+export const PostfixUnaryExpression = 226;
+export const BinaryExpression = 227;
+export const ConditionalExpression = 228;
+export const TemplateExpression = 229;
+export const YieldExpression = 230;
+export const SpreadElement = 231;
+export const ClassExpression = 232;
+export const OmittedExpression = 233;
+export const ExpressionWithTypeArguments = 234;
+export const AsExpression = 235;
+export const NonNullExpression = 236;
+export const MetaProperty = 237;
+export const SyntheticExpression = 238;
+export const SatisfiesExpression = 239;
+export const TemplateSpan = 240;
+export const SemicolonClassElement = 241;
+export const Block = 242;
+export const EmptyStatement = 243;
+export const VariableStatement = 244;
+export const ExpressionStatement = 245;
+export const IfStatement = 246;
+export const DoStatement = 247;
+export const WhileStatement = 248;
+export const ForStatement = 249;
+export const ForInStatement = 250;
+export const ForOfStatement = 251;
+export const ContinueStatement = 252;
+export const BreakStatement = 253;
+export const ReturnStatement = 254;
+export const WithStatement = 255;
+export const SwitchStatement = 256;
+export const LabeledStatement = 257;
+export const ThrowStatement = 258;
+export const TryStatement = 259;
+export const DebuggerStatement = 260;
+export const VariableDeclaration = 261;
+export const VariableDeclarationList = 262;
+export const FunctionDeclaration = 263;
+export const ClassDeclaration = 264;
+export const InterfaceDeclaration = 265;
+export const TypeAliasDeclaration = 266;
+export const EnumDeclaration = 267;
+export const ModuleDeclaration = 268;
+export const ModuleBlock = 269;
+export const CaseBlock = 270;
+export const NamespaceExportDeclaration = 271;
+export const ImportEqualsDeclaration = 272;
+export const ImportDeclaration = 273;
+export const ImportClause = 274;
+export const NamespaceImport = 275;
+export const NamedImports = 276;
+export const ImportSpecifier = 277;
+export const ExportAssignment = 278;
+export const ExportDeclaration = 279;
+export const NamedExports = 280;
+export const NamespaceExport = 281;
+export const ExportSpecifier = 282;
+export const MissingDeclaration = 283;
+export const ExternalModuleReference = 284;
+export const JsxElement = 285;
+export const JsxSelfClosingElement = 286;
+export const JsxOpeningElement = 287;
+export const JsxClosingElement = 288;
+export const JsxFragment = 289;
+export const JsxOpeningFragment = 290;
+export const JsxClosingFragment = 291;
+export const JsxAttribute = 292;
+export const JsxAttributes = 293;
+export const JsxSpreadAttribute = 294;
+export const JsxExpression = 295;
+export const JsxNamespacedName = 296;
+export const CaseClause = 297;
+export const DefaultClause = 298;
+export const HeritageClause = 299;
+export const CatchClause = 300;
+export const ImportAttributes = 301;
+export const ImportAttribute = 302;
+export const PropertyAssignment = 303;
+export const ShorthandPropertyAssignment = 304;
+export const SpreadAssignment = 305;
+export const EnumMember = 306;
+export const SourceFile = 307;
+export const JSDocTypeExpression = 308;
+export const JSDocNameReference = 309;
+export const JSDocAllType = 310;
+export const JSDocNullableType = 311;
+export const JSDocNonNullableType = 312;
+export const JSDocOptionalType = 313;
+export const JSDocVariadicType = 314;
+export const JSDoc = 315;
+export const JSDocText = 316;
+export const JSDocTypeLiteral = 317;
+export const JSDocSignature = 318;
+export const JSDocLink = 319;
+export const JSDocLinkCode = 320;
+export const JSDocLinkPlain = 321;
+export const JSDocUnknownTag = 322;
+export const JSDocAugmentsTag = 323;
+export const JSDocImplementsTag = 324;
+export const JSDocDeprecatedTag = 325;
+export const JSDocPublicTag = 326;
+export const JSDocPrivateTag = 327;
+export const JSDocProtectedTag = 328;
+export const JSDocReadonlyTag = 329;
+export const JSDocOverrideTag = 330;
+export const JSDocCallbackTag = 331;
+export const JSDocOverloadTag = 332;
+export const JSDocParameterTag = 333;
+export const JSDocReturnTag = 334;
+export const JSDocThisTag = 335;
+export const JSDocTypeTag = 336;
+export const JSDocTemplateTag = 337;
+export const JSDocTypedefTag = 338;
+export const JSDocSeeTag = 339;
+export const JSDocPropertyTag = 340;
+export const JSDocThrowsTag = 341;
+export const JSDocSatisfiesTag = 342;
+export const JSDocImportTag = 343;
+export const SyntaxList = 344;
+export const JSTypeAliasDeclaration = 345;
+export const JSImportDeclaration = 346;
+export const NotEmittedStatement = 347;
+export const PartiallyEmittedExpression = 348;
+export const SyntheticReferenceExpression = 349;
+export const NotEmittedTypeElement = 350;
+export const Count = 351;
+
+export const syntaxKinds = new Map<string, number>([
+    ['EndOfFile', 1],
+    ['Unknown', 0],
+    ['EndOfFile', 1],
+    ['SingleLineCommentTrivia', 2],
+    ['MultiLineCommentTrivia', 3],
+    ['NewLineTrivia', 4],
+    ['WhitespaceTrivia', 5],
+    ['ConflictMarkerTrivia', 6],
+    ['NonTextFileMarkerTrivia', 7],
+    ['NumericLiteral', 8],
+    ['BigIntLiteral', 9],
+    ['StringLiteral', 10],
+    ['JsxText', 11],
+    ['JsxTextAllWhiteSpaces', 12],
+    ['RegularExpressionLiteral', 13],
+    ['NoSubstitutionTemplateLiteral', 14],
+    ['TemplateHead', 15],
+    ['TemplateMiddle', 16],
+    ['TemplateTail', 17],
+    ['OpenBraceToken', 18],
+    ['CloseBraceToken', 19],
+    ['OpenParenToken', 20],
+    ['CloseParenToken', 21],
+    ['OpenBracketToken', 22],
+    ['CloseBracketToken', 23],
+    ['DotToken', 24],
+    ['DotDotDotToken', 25],
+    ['SemicolonToken', 26],
+    ['CommaToken', 27],
+    ['QuestionDotToken', 28],
+    ['LessThanToken', 29],
+    ['LessThanSlashToken', 30],
+    ['GreaterThanToken', 31],
+    ['LessThanEqualsToken', 32],
+    ['GreaterThanEqualsToken', 33],
+    ['EqualsEqualsToken', 34],
+    ['ExclamationEqualsToken', 35],
+    ['EqualsEqualsEqualsToken', 36],
+    ['ExclamationEqualsEqualsToken', 37],
+    ['EqualsGreaterThanToken', 38],
+    ['PlusToken', 39],
+    ['MinusToken', 40],
+    ['AsteriskToken', 41],
+    ['AsteriskAsteriskToken', 42],
+    ['SlashToken', 43],
+    ['PercentToken', 44],
+    ['PlusPlusToken', 45],
+    ['MinusMinusToken', 46],
+    ['LessThanLessThanToken', 47],
+    ['GreaterThanGreaterThanToken', 48],
+    ['GreaterThanGreaterThanGreaterThanToken', 49],
+    ['AmpersandToken', 50],
+    ['BarToken', 51],
+    ['CaretToken', 52],
+    ['ExclamationToken', 53],
+    ['TildeToken', 54],
+    ['AmpersandAmpersandToken', 55],
+    ['BarBarToken', 56],
+    ['QuestionToken', 57],
+    ['ColonToken', 58],
+    ['AtToken', 59],
+    ['QuestionQuestionToken', 60],
+    ['BacktickToken', 61],
+    ['HashToken', 62],
+    ['EqualsToken', 63],
+    ['PlusEqualsToken', 64],
+    ['MinusEqualsToken', 65],
+    ['AsteriskEqualsToken', 66],
+    ['AsteriskAsteriskEqualsToken', 67],
+    ['SlashEqualsToken', 68],
+    ['PercentEqualsToken', 69],
+    ['LessThanLessThanEqualsToken', 70],
+    ['GreaterThanGreaterThanEqualsToken', 71],
+    ['GreaterThanGreaterThanGreaterThanEqualsToken', 72],
+    ['AmpersandEqualsToken', 73],
+    ['BarEqualsToken', 74],
+    ['BarBarEqualsToken', 75],
+    ['AmpersandAmpersandEqualsToken', 76],
+    ['QuestionQuestionEqualsToken', 77],
+    ['CaretEqualsToken', 78],
+    ['Identifier', 79],
+    ['PrivateIdentifier', 80],
+    ['JSDocCommentTextToken', 81],
+    ['BreakKeyword', 82],
+    ['CaseKeyword', 83],
+    ['CatchKeyword', 84],
+    ['ClassKeyword', 85],
+    ['ConstKeyword', 86],
+    ['ContinueKeyword', 87],
+    ['DebuggerKeyword', 88],
+    ['DefaultKeyword', 89],
+    ['DeleteKeyword', 90],
+    ['DoKeyword', 91],
+    ['ElseKeyword', 92],
+    ['EnumKeyword', 93],
+    ['ExportKeyword', 94],
+    ['ExtendsKeyword', 95],
+    ['FalseKeyword', 96],
+    ['FinallyKeyword', 97],
+    ['ForKeyword', 98],
+    ['FunctionKeyword', 99],
+    ['IfKeyword', 100],
+    ['ImportKeyword', 101],
+    ['InKeyword', 102],
+    ['InstanceOfKeyword', 103],
+    ['NewKeyword', 104],
+    ['NullKeyword', 105],
+    ['ReturnKeyword', 106],
+    ['SuperKeyword', 107],
+    ['SwitchKeyword', 108],
+    ['ThisKeyword', 109],
+    ['ThrowKeyword', 110],
+    ['TrueKeyword', 111],
+    ['TryKeyword', 112],
+    ['TypeOfKeyword', 113],
+    ['VarKeyword', 114],
+    ['VoidKeyword', 115],
+    ['WhileKeyword', 116],
+    ['WithKeyword', 117],
+    ['ImplementsKeyword', 118],
+    ['InterfaceKeyword', 119],
+    ['LetKeyword', 120],
+    ['PackageKeyword', 121],
+    ['PrivateKeyword', 122],
+    ['ProtectedKeyword', 123],
+    ['PublicKeyword', 124],
+    ['StaticKeyword', 125],
+    ['YieldKeyword', 126],
+    ['AbstractKeyword', 127],
+    ['AccessorKeyword', 128],
+    ['AsKeyword', 129],
+    ['AssertsKeyword', 130],
+    ['AssertKeyword', 131],
+    ['AnyKeyword', 132],
+    ['AsyncKeyword', 133],
+    ['AwaitKeyword', 134],
+    ['BooleanKeyword', 135],
+    ['ConstructorKeyword', 136],
+    ['DeclareKeyword', 137],
+    ['GetKeyword', 138],
+    ['ImmediateKeyword', 139],
+    ['InferKeyword', 140],
+    ['IntrinsicKeyword', 141],
+    ['IsKeyword', 142],
+    ['KeyOfKeyword', 143],
+    ['ModuleKeyword', 144],
+    ['NamespaceKeyword', 145],
+    ['NeverKeyword', 146],
+    ['OutKeyword', 147],
+    ['ReadonlyKeyword', 148],
+    ['RequireKeyword', 149],
+    ['NumberKeyword', 150],
+    ['ObjectKeyword', 151],
+    ['SatisfiesKeyword', 152],
+    ['SetKeyword', 153],
+    ['StringKeyword', 154],
+    ['SymbolKeyword', 155],
+    ['TypeKeyword', 156],
+    ['UndefinedKeyword', 157],
+    ['UniqueKeyword', 158],
+    ['UnknownKeyword', 159],
+    ['UsingKeyword', 160],
+    ['FromKeyword', 161],
+    ['GlobalKeyword', 162],
+    ['BigIntKeyword', 163],
+    ['OverrideKeyword', 164],
+    ['OfKeyword', 165],
+    ['DeferKeyword', 166],
+    ['QualifiedName', 167],
+    ['ComputedPropertyName', 168],
+    ['TypeParameter', 169],
+    ['Parameter', 170],
+    ['Decorator', 171],
+    ['PropertySignature', 172],
+    ['PropertyDeclaration', 173],
+    ['MethodSignature', 174],
+    ['MethodDeclaration', 175],
+    ['ClassStaticBlockDeclaration', 176],
+    ['Constructor', 177],
+    ['GetAccessor', 178],
+    ['SetAccessor', 179],
+    ['CallSignature', 180],
+    ['ConstructSignature', 181],
+    ['IndexSignature', 182],
+    ['TypePredicate', 183],
+    ['TypeReference', 184],
+    ['FunctionType', 185],
+    ['ConstructorType', 186],
+    ['TypeQuery', 187],
+    ['TypeLiteral', 188],
+    ['ArrayType', 189],
+    ['TupleType', 190],
+    ['OptionalType', 191],
+    ['RestType', 192],
+    ['UnionType', 193],
+    ['IntersectionType', 194],
+    ['ConditionalType', 195],
+    ['InferType', 196],
+    ['ParenthesizedType', 197],
+    ['ThisType', 198],
+    ['TypeOperator', 199],
+    ['IndexedAccessType', 200],
+    ['MappedType', 201],
+    ['LiteralType', 202],
+    ['NamedTupleMember', 203],
+    ['TemplateLiteralType', 204],
+    ['TemplateLiteralTypeSpan', 205],
+    ['ImportType', 206],
+    ['ObjectBindingPattern', 207],
+    ['ArrayBindingPattern', 208],
+    ['BindingElement', 209],
+    ['ArrayLiteralExpression', 210],
+    ['ObjectLiteralExpression', 211],
+    ['PropertyAccessExpression', 212],
+    ['ElementAccessExpression', 213],
+    ['CallExpression', 214],
+    ['NewExpression', 215],
+    ['TaggedTemplateExpression', 216],
+    ['TypeAssertionExpression', 217],
+    ['ParenthesizedExpression', 218],
+    ['FunctionExpression', 219],
+    ['ArrowFunction', 220],
+    ['DeleteExpression', 221],
+    ['TypeOfExpression', 222],
+    ['VoidExpression', 223],
+    ['AwaitExpression', 224],
+    ['PrefixUnaryExpression', 225],
+    ['PostfixUnaryExpression', 226],
+    ['BinaryExpression', 227],
+    ['ConditionalExpression', 228],
+    ['TemplateExpression', 229],
+    ['YieldExpression', 230],
+    ['SpreadElement', 231],
+    ['ClassExpression', 232],
+    ['OmittedExpression', 233],
+    ['ExpressionWithTypeArguments', 234],
+    ['AsExpression', 235],
+    ['NonNullExpression', 236],
+    ['MetaProperty', 237],
+    ['SyntheticExpression', 238],
+    ['SatisfiesExpression', 239],
+    ['TemplateSpan', 240],
+    ['SemicolonClassElement', 241],
+    ['Block', 242],
+    ['EmptyStatement', 243],
+    ['VariableStatement', 244],
+    ['ExpressionStatement', 245],
+    ['IfStatement', 246],
+    ['DoStatement', 247],
+    ['WhileStatement', 248],
+    ['ForStatement', 249],
+    ['ForInStatement', 250],
+    ['ForOfStatement', 251],
+    ['ContinueStatement', 252],
+    ['BreakStatement', 253],
+    ['ReturnStatement', 254],
+    ['WithStatement', 255],
+    ['SwitchStatement', 256],
+    ['LabeledStatement', 257],
+    ['ThrowStatement', 258],
+    ['TryStatement', 259],
+    ['DebuggerStatement', 260],
+    ['VariableDeclaration', 261],
+    ['VariableDeclarationList', 262],
+    ['FunctionDeclaration', 263],
+    ['ClassDeclaration', 264],
+    ['InterfaceDeclaration', 265],
+    ['TypeAliasDeclaration', 266],
+    ['EnumDeclaration', 267],
+    ['ModuleDeclaration', 268],
+    ['ModuleBlock', 269],
+    ['CaseBlock', 270],
+    ['NamespaceExportDeclaration', 271],
+    ['ImportEqualsDeclaration', 272],
+    ['ImportDeclaration', 273],
+    ['ImportClause', 274],
+    ['NamespaceImport', 275],
+    ['NamedImports', 276],
+    ['ImportSpecifier', 277],
+    ['ExportAssignment', 278],
+    ['ExportDeclaration', 279],
+    ['NamedExports', 280],
+    ['NamespaceExport', 281],
+    ['ExportSpecifier', 282],
+    ['MissingDeclaration', 283],
+    ['ExternalModuleReference', 284],
+    ['JsxElement', 285],
+    ['JsxSelfClosingElement', 286],
+    ['JsxOpeningElement', 287],
+    ['JsxClosingElement', 288],
+    ['JsxFragment', 289],
+    ['JsxOpeningFragment', 290],
+    ['JsxClosingFragment', 291],
+    ['JsxAttribute', 292],
+    ['JsxAttributes', 293],
+    ['JsxSpreadAttribute', 294],
+    ['JsxExpression', 295],
+    ['JsxNamespacedName', 296],
+    ['CaseClause', 297],
+    ['DefaultClause', 298],
+    ['HeritageClause', 299],
+    ['CatchClause', 300],
+    ['ImportAttributes', 301],
+    ['ImportAttribute', 302],
+    ['PropertyAssignment', 303],
+    ['ShorthandPropertyAssignment', 304],
+    ['SpreadAssignment', 305],
+    ['EnumMember', 306],
+    ['SourceFile', 307],
+    ['JSDocTypeExpression', 308],
+    ['JSDocNameReference', 309],
+    ['JSDocAllType', 310],
+    ['JSDocNullableType', 311],
+    ['JSDocNonNullableType', 312],
+    ['JSDocOptionalType', 313],
+    ['JSDocVariadicType', 314],
+    ['JSDoc', 315],
+    ['JSDocText', 316],
+    ['JSDocTypeLiteral', 317],
+    ['JSDocSignature', 318],
+    ['JSDocLink', 319],
+    ['JSDocLinkCode', 320],
+    ['JSDocLinkPlain', 321],
+    ['JSDocUnknownTag', 322],
+    ['JSDocAugmentsTag', 323],
+    ['JSDocImplementsTag', 324],
+    ['JSDocDeprecatedTag', 325],
+    ['JSDocPublicTag', 326],
+    ['JSDocPrivateTag', 327],
+    ['JSDocProtectedTag', 328],
+    ['JSDocReadonlyTag', 329],
+    ['JSDocOverrideTag', 330],
+    ['JSDocCallbackTag', 331],
+    ['JSDocOverloadTag', 332],
+    ['JSDocParameterTag', 333],
+    ['JSDocReturnTag', 334],
+    ['JSDocThisTag', 335],
+    ['JSDocTypeTag', 336],
+    ['JSDocTemplateTag', 337],
+    ['JSDocTypedefTag', 338],
+    ['JSDocSeeTag', 339],
+    ['JSDocPropertyTag', 340],
+    ['JSDocThrowsTag', 341],
+    ['JSDocSatisfiesTag', 342],
+    ['JSDocImportTag', 343],
+    ['SyntaxList', 344],
+    ['JSTypeAliasDeclaration', 345],
+    ['JSImportDeclaration', 346],
+    ['NotEmittedStatement', 347],
+    ['PartiallyEmittedExpression', 348],
+    ['SyntheticReferenceExpression', 349],
+    ['NotEmittedTypeElement', 350],
+    ['Count', 351],
+]);

@@ -1,0 +1,23 @@
+import type { Context, Node } from './context.a';
+import { Frames, header } from '../frames.ts';
+export class DeclaredCallSignature {
+    readonly present: boolean;
+    readonly typeParameters: readonly number[];
+    readonly parameters: readonly number[];
+    readonly instantiated: readonly number[];
+    readonly rest: boolean;
+    readonly returns: number;
+    readonly contextual: number;
+    constructor(context: Context, node: Node) {
+        const frames = new Frames(context.ask(node, 'declared-call-signature'));
+        header(frames, 'declared-call-signature');
+        this.present = frames.yes();
+        this.typeParameters = this.present ? frames.ids() : [];
+        this.parameters = this.present ? frames.ids() : [];
+        this.instantiated = this.present ? frames.ids() : [];
+        this.rest = this.present ? frames.yes() : false;
+        this.returns = this.present ? frames.natural() : 0;
+        this.contextual = this.present ? frames.natural() : 0;
+        frames.end();
+    }
+}

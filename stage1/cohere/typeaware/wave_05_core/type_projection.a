@@ -1,0 +1,38 @@
+import type { Context, Node } from './context.a';
+import { Frames, header } from '../frames.ts';
+export class Signature {
+    readonly returns: number;
+    readonly parameters: readonly number[];
+    readonly rest: boolean;
+    constructor(returns: number, parameters: readonly number[], rest: boolean) {
+        this.returns = returns;
+        this.parameters = parameters;
+        this.rest = rest;
+    }
+}
+export function project(context: Context, node: Node, id: number, operation: string): number[] {
+    const frames = new Frames(context.ask(node, `type-projection\n${id}\n${operation}`));
+    header(frames, 'type-projection');
+    const result = frames.ids();
+    frames.end();
+    return result;
+}
+export function signatures(context: Context, node: Node, id: number): Signature[] {
+    const frames = new Frames(context.ask(node, `type-projection\n${id}\nsignatures`));
+    header(frames, 'type-projection');
+    const result: Signature[] = [];
+    const count = frames.natural();
+    for(let at = 0; at < count; at++) {
+        result.push(new Signature(frames.natural(), frames.ids(), frames.yes()));
+    }
+    frames.end();
+    return result;
+}
+
+export function heritage(context: Context, node: Node): number[] {
+    const frames = new Frames(context.ask(node, 'type-projection\nheritage'));
+    header(frames, 'type-projection');
+    const result = frames.ids();
+    frames.end();
+    return result;
+}

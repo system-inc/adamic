@@ -1,0 +1,133 @@
+import { panic, tsgoInspect } from 'adamic';
+import type { Scanner } from '../../../typescript/scanner/scanner.ts';
+import type { ParseNode } from '../../../typescript/parser/nodes.ts';
+import { Frames, header } from '../frames.ts';
+import { Diagnostic } from '../diagnostic.ts';
+import { ParenthesizedExpression, syntaxKinds } from './kinds.a';
+
+// The driver converts each parser node once and hands this object to listeners.
+export class Node {
+    readonly index: number;
+    readonly kind: number;
+    readonly queryKind: string;
+    readonly pos: number;
+    readonly start: number;
+    readonly end: number;
+    readonly children: readonly number[];
+    readonly text: string;
+    readonly semantic: string;
+    readonly list: number;
+    readonly operator: string;
+    constructor(index: number, raw: ParseNode, start: number) {
+        this.index = index;
+        this.kind = syntaxKinds.get(raw.kind) ?? panic('unknown parser syntax kind');
+        this.queryKind = raw.kind;
+        this.pos = raw.pos;
+        this.start = start;
+        this.end = raw.end;
+        this.children = raw.children;
+        this.text = raw.text;
+        this.semantic = raw.semantic;
+        this.list = raw.list;
+        this.operator = raw.operator;
+    }
+}
+export class Context {
+    readonly scanner: Scanner;
+    readonly program: number;
+    readonly path: string;
+    readonly text: string;
+    readonly nodes: readonly Node[];
+    readonly parents: readonly number[];
+    readonly offsets: readonly number[];
+    readonly findings: Diagnostic[] = [];
+    constructor(
+        scanner: Scanner,
+        program: number,
+        path: string,
+        text: string,
+        nodes: readonly Node[],
+        parents: readonly number[],
+        offsets: readonly number[],
+    ) {
+        this.scanner = scanner;
+        this.program = program;
+        this.path = path;
+        this.text = text;
+        this.nodes = nodes;
+        this.parents = parents;
+        this.offsets = offsets;
+    }
+    node(index: number): Node {
+        return this.nodes[index] ?? panic('missing indexed node');
+    }
+    parent(node: Node): Node | undefined {
+        const index = this.parents[node.index] ?? -1;
+        return index < 0 ? undefined : this.node(index);
+    }
+    skip(node: Node): Node {
+        let current = node;
+        while(current.kind === ParenthesizedExpression) {
+            current = this.node(current.children[0] ?? -1);
+        }
+        return current;
+    }
+    byte(pos: number): number {
+        return this.offsets[pos] ?? panic('position outside source');
+    }
+    source(node: Node): string {
+        return this.text.slice(node.start, node.end);
+    }
+    ask(node: Node, question: string): string {
+        return tsgoInspect(this.program, this.path, this.byte(node.pos), this.byte(node.end), node.queryKind, question);
+    }
+    add(rule: string, id: string, message: string, node: Node): Diagnostic {
+        const finding = new Diagnostic(rule, id, message, this.byte(node.start), this.byte(node.end), '');
+        this.findings.push(finding);
+        return finding;
+    }
+    hasToken(start: number, end: number, kind: number): boolean {
+        this.scanner.pos = start;
+        while(this.scanner.pos < end) {
+            this.scanner.scan();
+            if(this.scanner.start >= end) {
+                return false;
+            }
+            if(syntaxKinds.get(this.scanner.kind) === kind) {
+                return true;
+            }
+        }
+        return false;
+    }
+    declarations(node: Node): boolean[] {
+        // Raw symbol declarations; no alias following and no rule verdict in Go.
+        const frames = new Frames(this.ask(node, 'output-symbol\nown'));
+        header(frames, 'output-symbol');
+        const result: boolean[] = [];
+        if(frames.yes()) {
+            frames.natural();
+            frames.natural();
+            const count = frames.natural();
+            for(let at = 0; at < count; at++) {
+                frames.field();
+                frames.field();
+                frames.natural();
+                frames.natural();
+                frames.natural();
+                result.push(frames.yes());
+                frames.yes();
+                frames.yes();
+                const parents = frames.natural();
+                for(let p = 0; p < parents; p++) {
+                    frames.field();
+                    frames.field();
+                    frames.field();
+                    frames.natural();
+                    frames.field();
+                }
+            }
+        }
+        frames.end();
+        return result;
+    }
+}
