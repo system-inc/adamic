@@ -61,6 +61,9 @@ cohere checks and formats every Adamic program in this repository, `.ts` and `.a
 - `internal/load/testdata/0.1/refuse/**`: docs/0.1.md's five refused programs, whose job is to be refused.
 - `stage1/**/gaps/**`: each stage-1 slice's smallest programs for what stage 0 can't hold yet, kept exactly as written so their gaps tests notice when a gap closes.
 - `review/**`: reviewers' probes, written to break things.
+- `stage3/drivers/tsc/corpus/**`: 300 programs from TypeScript 6.0.3's own compiler tests, kept byte for byte as upstream wrote them, 240 of them with errors on purpose, for the tsc diagnostics oracle.
+
+The cohere baseline gate (`cloud/cohere_gate.py`, run by `TestRepositoryPassesCohereBaseline` when `ADAMIC_GATE_COHERE=1`, which every gate run sets) builds the pinned submodule binary and checks every repository-owned `.ts` and `.a` file, plus formatting and docs. The pinned cohere does not discover `.a` yet, so the gate checks disposable `.a.ts` copies with their import suffixes adjusted; it never edits cohere or source files. Type and lint phases run separately so intentional type-error fixtures do not hide lint findings, and the existing refusal, gap and review exclusions still apply. It prints what it covered before its verdict. Remaining findings are recorded in `cloud/cohere-baseline.json`, keyed by path, rule, messageId, severity and source line, never message text, so a cohere pin bump that rewords a message changes nothing. `--record` removes resolved entries and refuses additions, and the gate refuses baseline growth relative to `origin/main` and to HEAD.
 
 ## Working here
 
