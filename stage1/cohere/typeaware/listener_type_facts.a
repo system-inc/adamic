@@ -1,0 +1,82 @@
+import { panic } from 'adamic';
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+export class ListenerType {
+    readonly id: number;
+    readonly flags: number;
+    readonly symbol: number;
+    readonly name: string;
+    readonly symbolFlags: number;
+    readonly libraries: boolean[];
+    readonly parts: number[];
+    readonly bases: number[];
+    constructor(
+        id: number,
+        flags: number,
+        symbol: number,
+        name: string,
+        symbolFlags: number,
+        libraries: boolean[],
+        parts: number[],
+        bases: number[],
+    ) {
+        this.id = id;
+        this.flags = flags;
+        this.symbol = symbol;
+        this.name = name;
+        this.symbolFlags = symbolFlags;
+        this.libraries = libraries;
+        this.parts = parts;
+        this.bases = bases;
+    }
+    defaultLibrary(): boolean {
+        return this.libraries.length > 0 && this.libraries.every((value) => value);
+    }
+}
+export class ListenerTypes {
+    readonly assignable: boolean;
+    readonly root: number;
+    readonly records: ListenerType[];
+    constructor(assignable: boolean, root: number, records: ListenerType[]) {
+        this.assignable = assignable;
+        this.root = root;
+        this.records = records;
+    }
+    type(id: number): ListenerType {
+        for(const t of this.records) {
+            if(t.id === id) return t;
+        }
+        panic('missing listener type identity');
+    }
+}
+export function listenerTypeFacts(rules: Rules, index: number): ListenerTypes {
+    const frames = new Frames(rules.ask(index, 'listener-type-facts'));
+    header(frames, 'listener-type-facts');
+    const assignable = frames.yes();
+    const root = frames.natural();
+    const count = frames.natural();
+    const records: ListenerType[] = [];
+    for(let i = 0; i < count; i++) {
+        const id = frames.natural();
+        const flags = frames.natural();
+        const symbol = frames.natural();
+        const name = frames.field();
+        const symbolFlags = frames.natural();
+        const libraries: boolean[] = [];
+        const length = frames.natural();
+        for(let j = 0; j < length; j++) {
+            libraries.push(frames.yes());
+        }
+        const parts = frames.ids();
+        const bases = frames.ids();
+        records.push(new ListenerType(id, flags, symbol, name, symbolFlags, libraries, parts, bases));
+    }
+    frames.end();
+    const result = new ListenerTypes(assignable, root, records);
+    if(root !== 0) result.type(root);
+    for(const record of records) {
+        for(const id of record.parts) result.type(id);
+        for(const id of record.bases) result.type(id);
+    }
+    return result;
+}

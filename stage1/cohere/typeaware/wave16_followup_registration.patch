@@ -1,0 +1,14 @@
+diff --git a/bridge/tsgo/checker/facts.go b/bridge/tsgo/checker/facts.go
+index 3466164d..a6b61b6f 100644
+--- a/bridge/tsgo/checker/facts.go
++++ b/bridge/tsgo/checker/facts.go
+@@ -202,6 +202,9 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
+ 	out.number(1)
+ 	mode := strings.Split(question, "\n")[0]
+ 	out.text(mode)
++	if answer, handled, err := p.additionalAnswer(out, c, node, question); handled {
++		return answer, err
++	}
+ 	switch mode {
+ 	case "node-symbol-details", "declaration-details", "type-symbol-details", "property-declarations":
+ 		if err := p.declarationFacts(out, c, node, mode, question); err != nil {

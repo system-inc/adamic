@@ -1,0 +1,9 @@
+=== RUN   TestWave16FollowupAgreementAndMutants
+    wave16_followup_test.go:95: controls-native: exit status 70
+        file	/workspace/wave16-artifacts/followup/node.d.a
+        
+        adamic: panic: Unhandled case in Type.Types
+--- FAIL: TestWave16FollowupAgreementAndMutants (22.93s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	22.936s
+FAIL

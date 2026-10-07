@@ -1,0 +1,94 @@
+import type { Rules } from './rules.ts';
+import { Bindings } from './bindings.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { signatureAncestry } from './signature_ancestry.a';
+import { emitModuleKind } from './emit_module_kind.a';
+export class NoMockOnModuleNamespace {
+    readonly rules: Rules;
+    readonly bindings: Bindings;
+    constructor(rules: Rules) {
+        this.rules = rules;
+        this.bindings = new Bindings(rules);
+    }
+    unwrap(index: number): number {
+        let at = index;
+        while(
+            [
+                'ParenthesizedExpression',
+                'NonNullExpression',
+                'AsExpression',
+                'SatisfiesExpression',
+                'TypeAssertionExpression',
+            ].includes(this.rules.parser.node(at).kind)
+        ) {
+            const n = this.rules.parser.node(at);
+            at = n.children[n.kind === 'TypeAssertionExpression' ? n.children.length - 1 : 0] ?? -1;
+        }
+        return at;
+    }
+    namespace(index: number): boolean {
+        const decls = this.bindings.list(index, 'binding-declarations', false);
+        if(decls.length !== 1) return false;
+        const decl = decls[0] ?? -1;
+        if(this.rules.parser.node(decl).kind !== 'NamespaceImport') return false;
+        let at = this.bindings.parent(decl);
+        while(at >= 0) {
+            const n = this.rules.parser.node(at);
+            if(n.kind === 'ImportClause') {
+                if(n.semantic === 'TypeKeyword') return false;
+                return true;
+            }
+            at = this.bindings.parent(at);
+        }
+        return false;
+    }
+    tracker(index: number): boolean {
+        const ancestry = signatureAncestry(this.rules, index);
+        const method = ancestry[0],
+            owner = ancestry[1];
+        if(method === undefined || owner === undefined) return false;
+        if(
+            !['MethodSignature', 'MethodDeclaration'].includes(method.kind) ||
+            !['InterfaceDeclaration', 'ClassDeclaration'].includes(owner.kind) ||
+            owner.name !== 'MockTracker'
+        )
+            return false;
+        for(let i = 2; i < ancestry.length; i++) {
+            const current = ancestry[i];
+            if(current === undefined) return false;
+            if(current.kind === 'SourceFile') return false;
+            if(current.kind === 'ModuleDeclaration' && current.nameKind === 'StringLiteral')
+                return current.name === 'node:test' || current.name === 'test';
+        }
+        return false;
+    }
+    run(root: number): void {
+        const path = this.rules.path;
+        if(path.endsWith('.cts') || path.endsWith('.cjs')) return;
+        if(!path.endsWith('.mts') && !path.endsWith('.mjs')) {
+            const kind = emitModuleKind(this.rules, root);
+            if(![5, 6, 7, 99, 200].includes(kind)) return;
+        }
+        for(let i = 0; i < this.rules.parser.nodes.length; i++) {
+            const call = this.rules.parser.node(i);
+            if(call.kind !== 'CallExpression' || (this.rules.parents[i] ?? -1) < 0 || call.list < 1) continue;
+            const callee = this.rules.parser.node(this.rules.skip(call.children[0] ?? -1));
+            if(callee.kind !== 'PropertyAccessExpression') continue;
+            const name = this.rules.parser.node(callee.children[callee.children.length - 1] ?? -1);
+            if(name.kind !== 'Identifier' || !['method', 'getter', 'setter', 'property'].includes(name.text)) continue;
+            const target = this.unwrap(call.children[call.children.length - call.list] ?? -1);
+            if(this.rules.parser.node(target).kind !== 'Identifier' || !this.namespace(target) || !this.tracker(i))
+                continue;
+            this.rules.findings.push(
+                new Diagnostic(
+                    'correctness-no-mock-on-module-namespace',
+                    'mockOnModuleNamespace',
+                    "This mocks a member of an `import * as` namespace with node:test. An ES module namespace is sealed: its properties cannot be redefined, so the mock throws `Cannot redefine property` every time and the test never runs its body. Mock the object the module really exports instead: for a node builtin, the CommonJS exports reached through `createRequire(import.meta.url)`, followed by `syncBuiltinESMExports()` so the namespace's live binding sees the mock.",
+                    this.rules.byte(this.rules.start(call)),
+                    this.rules.byte(call.end),
+                    'nexus/',
+                ),
+            );
+        }
+    }
+}

@@ -1,0 +1,6 @@
+=== RUN   TestWave16FollowupAgreementAndMutants
+    wave16_followup_test.go:95: controls mismatch byte 6243: native "orkspace/wave16-artifacts/followup2/control-009.a\n69\t92\tnexus/correctness-no-mock-on-module-namespace\tmockOnModuleNamespace\tThis mocks a member of an `import * as` namespace with node:test. An ES module namespace is sealed: its properties cannot be redefined, so the mock throws `Cannot redefine prop" Go "orkspace/wave16-artifacts/followup2/control-009.a\nfile\t/workspace/wave16-artifacts/followup2/control-010.a\n58\t89\tnexus/correctness-no-global-listener-target-assertion\tglobalListenerTargetAssertion\tThis asserts `event.target` to a specific element type inside a listener on `document` or `window`. A l"
+--- FAIL: TestWave16FollowupAgreementAndMutants (16.36s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	16.361s
+FAIL

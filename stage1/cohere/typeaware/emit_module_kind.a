@@ -1,0 +1,9 @@
+import { Frames, header } from './frames.ts';
+import type { Rules } from './rules.ts';
+export function emitModuleKind(rules: Rules, index: number): number {
+    const frames = new Frames(rules.ask(index, 'emit-module-kind'));
+    header(frames, 'emit-module-kind');
+    const kind = frames.natural();
+    frames.end();
+    return kind;
+}

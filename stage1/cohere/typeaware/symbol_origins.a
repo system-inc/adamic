@@ -1,0 +1,35 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+export class SymbolOrigins {
+    readonly id: number;
+    readonly flags: number;
+    readonly name: string;
+    readonly kinds: string[];
+    readonly libraries: boolean[];
+    constructor(id: number, flags: number, name: string, kinds: string[], libraries: boolean[]) {
+        this.id = id;
+        this.flags = flags;
+        this.name = name;
+        this.kinds = kinds;
+        this.libraries = libraries;
+    }
+    defaultLibrary(): boolean {
+        return this.libraries.length > 0 && this.libraries.every((value) => value);
+    }
+}
+export function symbolOrigins(rules: Rules, index: number): SymbolOrigins {
+    const frames = new Frames(rules.ask(index, 'symbol-origins'));
+    header(frames, 'symbol-origins');
+    const id = frames.natural();
+    const flags = frames.natural();
+    const name = frames.field();
+    const kinds: string[] = [];
+    const libraries: boolean[] = [];
+    const count = frames.natural();
+    for(let i = 0; i < count; i++) {
+        kinds.push(frames.field());
+        libraries.push(frames.yes());
+    }
+    frames.end();
+    return new SymbolOrigins(id, flags, name, kinds, libraries);
+}

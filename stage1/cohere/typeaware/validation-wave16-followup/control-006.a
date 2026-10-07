@@ -1,0 +1,2 @@
+interface Custom extends HTMLElement {x:number}document.addEventListener('click',e=>{(e.target as Custom).x;(e.target as HTMLInputElement|Custom).x;});
+export {};

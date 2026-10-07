@@ -1,0 +1,2 @@
+const handler=(e:Event)=>{(e.target as HTMLInputElement|HTMLSelectElement|null).value;};document.addEventListener('click',handler);
+export {};

@@ -1,0 +1,7 @@
+# github.com/system-inc/adamic/bridge/tsgo/checker [github.com/system-inc/adamic/bridge/tsgo/checker.test]
+bridge/tsgo/checker/listener_type_facts.go:34:15: p.typeID undefined (type *Program has no field or method typeID)
+bridge/tsgo/checker/listener_type_facts.go:54:16: p.typeID undefined (type *Program has no field or method typeID)
+bridge/tsgo/checker/listener_type_facts.go:75:17: p.typeID undefined (type *Program has no field or method typeID)
+bridge/tsgo/checker/listener_type_facts.go:79:17: p.typeID undefined (type *Program has no field or method typeID)
+FAIL	github.com/system-inc/adamic/bridge/tsgo/checker [build failed]
+FAIL

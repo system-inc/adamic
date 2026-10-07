@@ -1,0 +1,1 @@
+declare module "node:test" { interface MockTracker {method(o:unknown,k:string):void;getter(o:unknown,k:string):void;setter(o:unknown,k:string):void;property(o:unknown,k:string):void;} export const mock:MockTracker;}

@@ -1,0 +1,57 @@
+import { panic } from 'adamic';
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+export class RenderType {
+    readonly id: number;
+    readonly flags: number;
+    readonly held: boolean;
+    readonly literal: string;
+    readonly constraint: number;
+    readonly parts: number[];
+    constructor(id: number, flags: number, held: boolean, literal: string, constraint: number, parts: number[]) {
+        this.id = id;
+        this.flags = flags;
+        this.held = held;
+        this.literal = literal;
+        this.constraint = constraint;
+        this.parts = parts;
+    }
+}
+export class RenderTypes {
+    readonly root: number;
+    readonly records: RenderType[];
+    constructor(root: number, records: RenderType[]) {
+        this.root = root;
+        this.records = records;
+    }
+    type(id: number): RenderType {
+        for(const t of this.records) {
+            if(t.id === id) return t;
+        }
+        panic('missing render type identity');
+    }
+}
+export function renderTypeFacts(rules: Rules, index: number): RenderTypes {
+    const frames = new Frames(rules.ask(index, 'render-type-facts'));
+    header(frames, 'render-type-facts');
+    const root = frames.natural();
+    const count = frames.natural();
+    const records: RenderType[] = [];
+    for(let i = 0; i < count; i++) {
+        const id = frames.natural();
+        const flags = frames.natural();
+        const held = frames.yes();
+        const literal = frames.field();
+        const constraint = frames.natural();
+        const parts = frames.ids();
+        records.push(new RenderType(id, flags, held, literal, constraint, parts));
+    }
+    frames.end();
+    const result = new RenderTypes(root, records);
+    if(root !== 0) result.type(root);
+    for(const record of records) {
+        if(record.constraint !== 0) result.type(record.constraint);
+        for(const id of record.parts) result.type(id);
+    }
+    return result;
+}

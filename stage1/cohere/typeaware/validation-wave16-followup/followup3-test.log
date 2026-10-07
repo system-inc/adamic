@@ -1,0 +1,22 @@
+=== RUN   TestWave16FollowupAgreementAndMutants
+    wave16_followup_test.go:106: controls: 11321 identical finding bytes; findings 22
+    wave16_followup_test.go:114: controls-asan: 11321 identical finding bytes; findings 22
+=== RUN   TestWave16FollowupAgreementAndMutants/listener-general
+    wave16_followup_test.go:131: listener-general: exit 0, Go byte oracle catches byte 699; findings 23
+=== RUN   TestWave16FollowupAgreementAndMutants/render-number
+    wave16_followup_test.go:131: render-number: exit 0, Go byte oracle catches byte 6997; findings 14
+=== RUN   TestWave16FollowupAgreementAndMutants/mock-range
+    wave16_followup_test.go:131: mock-range: exit 0, Go byte oracle catches byte 3468; findings 22
+=== NAME  TestWave16FollowupAgreementAndMutants
+    wave16_followup_test.go:139: repository: 18485 identical finding bytes; findings 0
+    wave16_followup_test.go:140: repository-asan: 18485 identical finding bytes; findings 0
+    wave16_followup_test.go:147: compiler: 5780 identical finding bytes; findings 0
+    wave16_followup_test.go:148: compiler-asan: 5780 identical finding bytes; findings 0
+    wave16_followup_test.go:160: released program queried using the existing fact API: panic 70, invalid or released checker handle
+    wave16_followup_test.go:165: released-registry mutant exits 0, caught by the required panic 70
+--- PASS: TestWave16FollowupAgreementAndMutants (80.37s)
+    --- PASS: TestWave16FollowupAgreementAndMutants/listener-general (6.05s)
+    --- PASS: TestWave16FollowupAgreementAndMutants/render-number (6.05s)
+    --- PASS: TestWave16FollowupAgreementAndMutants/mock-range (6.03s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	80.376s

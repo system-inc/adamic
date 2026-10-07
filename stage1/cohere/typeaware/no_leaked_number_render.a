@@ -1,0 +1,107 @@
+import type { Rules } from './rules.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { renderTypeFacts, RenderTypes, RenderType } from './render_type_facts.a';
+export class NoLeakedNumberRender {
+    readonly rules: Rules;
+    constructor(rules: Rules) {
+        this.rules = rules;
+    }
+    classify(types: RenderTypes, type: RenderType, depth: number): number {
+        if((type.flags & (4 | 8 | 16 | 8192 | 262144)) !== 0) return 1;
+        if((type.flags & (64 | 128)) !== 0) return 2;
+        if((type.flags & (2048 | 4096)) !== 0) return type.held && ['0', '-0', 'NaN'].includes(type.literal) ? 2 : 1;
+        if((type.flags & 268435456) !== 0) {
+            for(const id of type.parts) {
+                if((types.type(id).flags & (64 | 128)) !== 0) return 2;
+            }
+            return 0;
+        }
+        if((type.flags & (524288 | 2097152 | 4194304 | 8388608 | 16777216 | 33554432 | 67108864)) !== 0) {
+            if(depth > 4 || type.constraint === 0 || type.constraint === type.id) return 0;
+            const constraint = types.type(type.constraint);
+            const parts = (constraint.flags & 134217728) !== 0 ? constraint.parts : [constraint.id];
+            let verdict = 1;
+            for(const id of parts) {
+                const v = this.classify(types, types.type(id), depth + 1);
+                if(v === 0) return 0;
+                if(v === 2) verdict = 2;
+            }
+            return verdict;
+        }
+        return 0;
+    }
+    leaks(index: number): boolean {
+        const types = renderTypeFacts(this.rules, index);
+        if(types.root === 0) return false;
+        const root = types.type(types.root);
+        const parts = (root.flags & 134217728) !== 0 ? root.parts : [root.id];
+        let leaks = false;
+        for(const id of parts) {
+            const verdict = this.classify(types, types.type(id), 0);
+            if(verdict === 0) return false;
+            if(verdict === 2) leaks = true;
+        }
+        return leaks;
+    }
+    falsy(index: number): void {
+        const at = this.rules.skip(index);
+        const n = this.rules.parser.node(at);
+        if(n.kind === 'ConditionalExpression') {
+            this.falsy(n.children[2] ?? -1);
+            this.falsy(n.children[4] ?? -1);
+            return;
+        }
+        if(n.kind === 'BinaryExpression') {
+            const op = this.rules.parser.node(n.children[1] ?? -1).kind;
+            if(['AmpersandAmpersandToken', 'QuestionQuestionToken'].includes(op)) {
+                this.falsy(n.children[0] ?? -1);
+                this.falsy(n.children[2] ?? -1);
+                return;
+            }
+            if(op === 'BarBarToken') {
+                this.falsy(n.children[2] ?? -1);
+                return;
+            }
+        }
+        if(this.leaks(at))
+            this.rules.findings.push(
+                new Diagnostic(
+                    'correctness-no-leaked-number-render',
+                    'leakedNumberRender',
+                    'This operand is a number, and `&&` hands back its own value when it is falsy, so when it is `0` (or `NaN`) React renders that number as text where nothing was meant to appear. Test the condition you mean instead, such as `count > 0 &&` or `count !== undefined &&`, so the operand is a boolean.',
+                    this.rules.byte(this.rules.start(n)),
+                    this.rules.byte(n.end),
+                    'nexus/',
+                ),
+            );
+    }
+    rendered(index: number): void {
+        const n = this.rules.parser.node(this.rules.skip(index));
+        if(n.kind === 'ConditionalExpression') {
+            this.rendered(n.children[2] ?? -1);
+            this.rendered(n.children[4] ?? -1);
+            return;
+        }
+        if(n.kind !== 'BinaryExpression') return;
+        const op = this.rules.parser.node(n.children[1] ?? -1).kind;
+        if(op === 'AmpersandAmpersandToken') {
+            this.falsy(n.children[0] ?? -1);
+            this.rendered(n.children[2] ?? -1);
+        }
+        else if(op === 'BarBarToken') {
+            this.rendered(n.children[2] ?? -1);
+        }
+        else if(op === 'QuestionQuestionToken') {
+            this.rendered(n.children[0] ?? -1);
+            this.rendered(n.children[2] ?? -1);
+        }
+    }
+    run(): void {
+        for(let i = 0; i < this.rules.parser.nodes.length; i++) {
+            const n = this.rules.parser.node(i);
+            if(n.kind !== 'JsxExpression' || n.children.length !== 1) continue;
+            const parent = this.rules.parser.node(this.rules.parents[i] ?? -1);
+            if(['JsxElement', 'JsxFragment'].includes(parent.kind)) this.rendered(n.children[0] ?? -1);
+        }
+    }
+}

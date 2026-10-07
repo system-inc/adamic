@@ -1,0 +1,152 @@
+import type { Rules } from './rules.ts';
+import { Bindings } from './bindings.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { symbolOrigins } from './symbol_origins.a';
+import { listenerTypeFacts, ListenerTypes, ListenerType } from './listener_type_facts.a';
+export class NoGlobalListenerTargetAssertion {
+    readonly rules: Rules;
+    readonly bindings: Bindings;
+    constructor(rules: Rules) {
+        this.rules = rules;
+        this.bindings = new Bindings(rules);
+    }
+    handler(index: number): number {
+        const call = this.rules.parser.node(index);
+        if(call.list < 2) return -1;
+        const callee = this.rules.parser.node(this.rules.skip(call.children[0] ?? -1));
+        if(callee.kind !== 'PropertyAccessExpression') return -1;
+        const key = callee.children[callee.children.length - 1] ?? -1;
+        const name = this.rules.parser.node(key);
+        if(name.kind !== 'Identifier' || name.text !== 'addEventListener') return -1;
+        const receiver = this.rules.skip(callee.children[0] ?? -1);
+        const object = this.rules.parser.node(receiver);
+        if(object.kind !== 'Identifier' || !['document', 'window'].includes(object.text)) return -1;
+        const origin = symbolOrigins(this.rules, receiver);
+        if(
+            !origin.defaultLibrary() ||
+            !origin.kinds.every((kind) => kind === 'VariableDeclaration') ||
+            !symbolOrigins(this.rules, key).defaultLibrary()
+        )
+            return -1;
+        const h = this.rules.skip(call.children[call.children.length - call.list + 1] ?? -1);
+        const n = this.rules.parser.node(h);
+        if(['ArrowFunction', 'FunctionExpression'].includes(n.kind)) return h;
+        if(n.kind !== 'Identifier') return -1;
+        const symbol = symbolOrigins(this.rules, h);
+        if(symbol.id === 0 || (symbol.flags & 2097152) !== 0 || symbol.kinds.length !== 1) return -1;
+        const declarations = this.bindings.list(h, 'binding-declarations', false);
+        if(declarations.length !== 1) return -1;
+        const d = declarations[0] ?? -1;
+        const decl = this.rules.parser.node(d);
+        if(decl.kind === 'FunctionDeclaration') return d;
+        if(decl.kind !== 'VariableDeclaration') return -1;
+        const list = this.rules.parser.node(this.bindings.parent(d));
+        if(list.kind !== 'VariableDeclarationList' || !this.rules.text(list).startsWith('const')) return -1;
+        const init = this.rules.skip(this.bindings.shape.initializer(d));
+        return ['ArrowFunction', 'FunctionExpression'].includes(this.rules.parser.node(init).kind) ? init : -1;
+    }
+    extendsElement(types: ListenerTypes, type: ListenerType): boolean {
+        const queue = [type.id];
+        const seen = new Set<number>();
+        seen.add(type.id);
+        for(let i = 0; i < queue.length; i++) {
+            const current = types.type(queue[i] ?? 0);
+            for(const base of current.bases) {
+                const b = types.type(base);
+                if(seen.has(b.id)) continue;
+                if(b.name === 'Element' && b.defaultLibrary()) return true;
+                seen.add(b.id);
+                queue.push(b.id);
+            }
+        }
+        return false;
+    }
+    specific(types: ListenerTypes): boolean {
+        if(types.root === 0) return false;
+        const root = types.type(types.root);
+        const parts = (root.flags & 134217728) !== 0 ? root.parts : [root.id];
+        let specific = false;
+        for(const id of parts) {
+            const part = types.type(id);
+            if((part.flags & (4 | 8)) !== 0) continue;
+            if(
+                part.symbol === 0 ||
+                (part.symbolFlags & 64) === 0 ||
+                ['Element', 'HTMLElement', 'SVGElement', 'MathMLElement'].includes(part.name) ||
+                !part.defaultLibrary() ||
+                !this.extendsElement(types, part)
+            )
+                return false;
+            specific = true;
+        }
+        return specific;
+    }
+    access(index: number, event: number): void {
+        const n = this.rules.parser.node(index);
+        const key = n.children[n.children.length - 1] ?? -1;
+        const name = this.rules.parser.node(key);
+        if(name.kind !== 'Identifier' || name.text !== 'target') return;
+        const receiver = this.rules.skip(n.children[0] ?? -1);
+        const object = this.rules.parser.node(receiver);
+        if(
+            object.kind !== 'Identifier' ||
+            symbolOrigins(this.rules, receiver).id !== event ||
+            !symbolOrigins(this.rules, key).defaultLibrary()
+        )
+            return;
+        let at = this.bindings.parent(index);
+        while(at >= 0) {
+            const outer = this.rules.parser.node(at);
+            if(['ParenthesizedExpression', 'NonNullExpression'].includes(outer.kind)) {
+                at = this.bindings.parent(at);
+                continue;
+            }
+            if(['AsExpression', 'TypeAssertionExpression'].includes(outer.kind)) {
+                const facts = listenerTypeFacts(this.rules, at);
+                if(!this.specific(facts)) {
+                    at = this.bindings.parent(at);
+                    continue;
+                }
+                if(facts.assignable) return;
+                this.rules.findings.push(
+                    new Diagnostic(
+                        'correctness-no-global-listener-target-assertion',
+                        'globalListenerTargetAssertion',
+                        'This asserts `event.target` to a specific element type inside a listener on `document` or `window`. A listener that high up hears the event from every element on the page, so the target is whatever was clicked or focused, and a member read through the assertion (`selectionStart`, `value`, `checked`) is `undefined` on any other element. Check it with `instanceof` first, which narrows the type and makes the assertion unnecessary, or listen on the element itself and read `event.currentTarget`.',
+                        this.rules.byte(this.rules.start(outer)),
+                        this.rules.byte(outer.end),
+                        'nexus/',
+                    ),
+                );
+                return;
+            }
+            return;
+        }
+    }
+    visit(index: number, event: number): void {
+        const n = this.rules.parser.node(index);
+        if(n.kind === 'PropertyAccessExpression') this.access(index, event);
+        for(const child of n.children) this.visit(child, event);
+    }
+    run(): void {
+        for(let i = 0; i < this.rules.parser.nodes.length; i++) {
+            if(this.rules.parser.node(i).kind !== 'CallExpression' || (this.rules.parents[i] ?? -1) < 0) continue;
+            const handler = this.handler(i);
+            if(handler < 0) continue;
+            const n = this.rules.parser.node(handler);
+            const parameters = n.children.filter((child) => this.rules.parser.node(child).kind === 'Parameter');
+            const first = this.rules.parser.node(parameters[0] ?? -1);
+            const name = this.bindings.shape.name(parameters[0] ?? -1);
+            if(
+                first.kind !== 'Parameter' ||
+                this.rules.parser.node(name).kind !== 'Identifier' ||
+                this.rules.parser.node(name).text === 'this'
+            )
+                continue;
+            const event = symbolOrigins(this.rules, name).id;
+            if(event === 0) continue;
+            const body = n.children[n.children.length - 1] ?? -1;
+            if(body >= 0 && this.rules.parser.node(body).kind !== 'Parameter') this.visit(body, event);
+        }
+    }
+}

@@ -1,0 +1,2 @@
+declare const el:HTMLInputElement;el.addEventListener('click',e=>{(e.target as HTMLInputElement).value;});function f(document:{addEventListener:(s:string,h:(e:Event)=>void)=>void}){document.addEventListener('click',e=>{(e.target as HTMLInputElement).value;});}
+export {};
