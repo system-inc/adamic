@@ -34,3 +34,18 @@ const groups = Map.groupBy(values, (value: number | undefined): number => 0);`, 
 		})
 	}
 }
+
+func TestLibraryMapSetIteratorCopyTypesRefused(t *testing.T) {
+	for _, source := range []string{
+		`function copy(value: MapIterator<number> | SetIterator<string>): void { const result = { ...value }; }`,
+		`function copy(value: MapIterator<number> | undefined): void { const result = { ...value }; }`,
+		`const result = { ...(new Set<string>(['a'.repeat(2)]).values()) };`,
+		`function copy(value: MapIterator<number> | SetIterator<string>): void { const result = Object.assign({}, value); }`,
+	} {
+		_, err := lowerSource(t, source)
+		var refusal *NotYet
+		if !errors.As(err, &refusal) || !strings.Contains(err.Error(), "next is inherited, not an own enumerable field") {
+			t.Fatalf("want inherited-next refusal for %s, got %v", source, err)
+		}
+	}
+}
