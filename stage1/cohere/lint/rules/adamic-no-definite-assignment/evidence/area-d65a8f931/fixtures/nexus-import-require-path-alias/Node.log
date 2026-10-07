@@ -1,0 +1,98 @@
+case 0
+nexus/import-require-path-alias	useAlias	22 46	'../../foundation/Thing' climbs 2 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@project/source/foundation/Thing', which reads the same from any file and survives this one moving.
+fix	22 46	'@project/source/foundation/Thing'
+fixed	import { Thing } from '@project/source/foundation/Thing';\u000a
+case 1
+nexus/import-require-path-alias	useAlias	23 44	'../../shared/Helper' climbs 2 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@project/app/shared/Helper', which reads the same from any file and survives this one moving.
+fix	23 44	'@project/app/shared/Helper'
+fixed	import { Helper } from '@project/app/shared/Helper';\u000a
+case 2
+nexus/import-require-path-alias	useAlias	22 60	'../../../libraries/base/source/Thing' climbs 3 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@base/source/Thing', which reads the same from any file and survives this one moving.
+fix	22 60	'@base/source/Thing'
+fixed	import { Thing } from '@base/source/Thing';\u000a
+case 3
+nexus/import-require-path-alias	useAlias	22 46	'../../foundation/Thing' climbs 2 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@project/source/foundation/Thing', which reads the same from any file and survives this one moving.
+fix	22 46	"@project/source/foundation/Thing"
+fixed	import { Thing } from "@project/source/foundation/Thing";\u000a
+case 4
+nexus/import-require-path-alias	useAlias	23 44	'../../shared/Helper' climbs 2 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@project/app/shared/Helper', which reads the same from any file and survives this one moving.
+fix	23 44	'@project/app/shared/Helper'
+fixed	import { Helper } from '@project/app/shared/Helper';\u000a
+case 5
+nexus/import-require-path-alias	useAlias	22 53	'../../source/foundation/Thing' climbs 2 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@basesource/foundation/Thing', which reads the same from any file and survives this one moving.
+fix	22 53	'@basesource/foundation/Thing'
+fixed	import { Thing } from '@basesource/foundation/Thing';\u000a
+case 6
+nexus/import-require-path-alias	useAlias	23 44	'../../shared/Helper' climbs 2 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@app/shared/Helper', which reads the same from any file and survives this one moving.
+fix	23 44	'@app/shared/Helper'
+fixed	import { Helper } from '@app/shared/Helper';\u000a
+case 7
+nexus/import-require-path-alias	useAlias	23 44	'../../shared/Helper' climbs 2 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@app/shared/Helper', which reads the same from any file and survives this one moving.
+fix	23 44	'@app/shared/Helper'
+fixed	import { Helper } from '@app/shared/Helper';\u000a
+case 8
+nexus/import-require-path-alias	useAlias	23 44	'../../shared/Helper' climbs 2 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@app/shared/Helper', which reads the same from any file and survives this one moving.
+fix	23 44	'@app/shared/Helper'
+fixed	import { Helper } from '@app/shared/Helper';\u000a
+case 9
+fixed	import { Sibling } from './Sibling';\u000a
+case 10
+fixed	import { Thing } from '../../foundation/Thing';\u000a
+case 11
+fixed	import { Thing } from '../../foundation/Thing';\u000a
+case 12
+fixed	import { Thing } from '../../foundation/Thing';\u000a
+case 13
+fixed	import { Thing } from '../../foundation/Thing';\u000a
+case 14
+fixed	const thing = import(somePath);\u000a
+case 15
+fixed	import { Thing } from '../../../other/Thing';\u000a
+case 16
+fixed	import { Thing } from '../../elsewhere/Thing';\u000a
+case 17
+fixed	import { Detail } from '../../internal/Detail';\u000a
+case 18
+fixed	import * as NodePath from 'node:path';\u000a
+case 19
+fixed	import { Parent } from '../Parent';\u000a
+case 20
+fixed	import { Thing } from '@base/source/Thing';\u000a
+case 21
+nexus/import-require-path-alias	useAlias	22 46	'../../foundation/Thing' climbs 2 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@project/source/foundation/Thing', which reads the same from any file and survives this one moving.
+fix	22 46	'@project/source/foundation/Thing'
+fixed	const thing = require('@project/source/foundation/Thing');\u000a
+case 22
+nexus/import-require-path-alias	useAliasInStrictRoot	22 32	'../Other' is relative, and everything under 'libraries/base' is imported by alias so one path means one thing in every project that reads it. Import it as '@base/source/Other'.
+fix	22 32	'@base/source/Other'
+fixed	import { Other } from '@base/source/Other';\u000a
+case 23
+nexus/import-require-path-alias	useAliasInStrictRoot	22 31	'./Other' is relative, and everything under 'libraries/base' is imported by alias so one path means one thing in every project that reads it. Import it as '@base/source/Other'.
+fix	22 31	'@base/source/Other'
+fixed	import { Other } from '@base/source/Other';\u000a
+case 24
+nexus/import-require-path-alias	useAlias	22 56	'../../../source/foundation/Thing' climbs 3 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@project/source/foundation/Thing', which reads the same from any file and survives this one moving.
+fix	22 56	'@project/source/foundation/Thing'
+fixed	import { Thing } from '@project/source/foundation/Thing';\u000a
+case 25
+nexus/import-require-path-alias	useAlias	21 45	'../../foundation/Thing' climbs 2 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@project/source/foundation/Thing', which reads the same from any file and survives this one moving.
+fix	21 45	'@project/source/foundation/Thing'
+fixed	const thing = import('@project/source/foundation/Thing');\u000a
+case 26
+fixed	import { Helper } from '../../../libraries/structure/source/Helper';\u000a
+case 27
+fixed	import { Helper } from '../../../libraries/structure/source/Helper';\u000a
+case 28
+fixed	import { Helper } from '../../../libraries/structure/source/Helper';\u000a
+case 29
+fixed	import { Helper } from '../../../libraries/structure/source/Helper';\u000a
+case 30
+fixed	import { Helper } from '../../../libraries/structure/source/Helper';\u000a
+case 31
+fixed	import { Helper } from '../../../libraries/structure/source/Helper';\u000a
+case 32
+fixed	import { Helper } from '../../../libraries/structure/source/Helper';\u000a
+case 33
+fixed	import { Helper } from '../../../libraries/structure/source/Helper';\u000a
+case 34
+fixed	import { Helper } from '../../../libraries/structure/source/Helper';\u000a

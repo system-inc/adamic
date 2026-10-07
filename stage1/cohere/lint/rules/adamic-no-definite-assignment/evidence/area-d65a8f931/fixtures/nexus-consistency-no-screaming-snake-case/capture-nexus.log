@@ -1,0 +1,94 @@
+=== RUN   TestConsistencyNoScreamingSnakeCaseFires
+=== PAUSE TestConsistencyNoScreamingSnakeCaseFires
+=== RUN   TestConsistencyNoScreamingSnakeCaseStaysSilent
+=== PAUSE TestConsistencyNoScreamingSnakeCaseStaysSilent
+=== RUN   TestConsistencyNoScreamingSnakeCaseRespectsTheAllowOption
+=== PAUSE TestConsistencyNoScreamingSnakeCaseRespectsTheAllowOption
+=== RUN   TestConsistencyNoScreamingSnakeCaseSuggestsTheRightCasing
+=== PAUSE TestConsistencyNoScreamingSnakeCaseSuggestsTheRightCasing
+=== CONT  TestConsistencyNoScreamingSnakeCaseFires
+=== RUN   TestConsistencyNoScreamingSnakeCaseFires/local_constant
+=== PAUSE TestConsistencyNoScreamingSnakeCaseFires/local_constant
+=== CONT  TestConsistencyNoScreamingSnakeCaseRespectsTheAllowOption
+=== RUN   TestConsistencyNoScreamingSnakeCaseFires/exported_constant
+=== PAUSE TestConsistencyNoScreamingSnakeCaseFires/exported_constant
+=== CONT  TestConsistencyNoScreamingSnakeCaseStaysSilent
+=== RUN   TestConsistencyNoScreamingSnakeCaseStaysSilent/camelCase_local
+=== PAUSE TestConsistencyNoScreamingSnakeCaseStaysSilent/camelCase_local
+=== CONT  TestConsistencyNoScreamingSnakeCaseSuggestsTheRightCasing
+=== RUN   TestConsistencyNoScreamingSnakeCaseFires/digits_in_the_name
+=== PAUSE TestConsistencyNoScreamingSnakeCaseFires/digits_in_the_name
+=== RUN   TestConsistencyNoScreamingSnakeCaseFires/two_words
+=== PAUSE TestConsistencyNoScreamingSnakeCaseFires/two_words
+--- PASS: TestConsistencyNoScreamingSnakeCaseSuggestsTheRightCasing (0.00s)
+=== RUN   TestConsistencyNoScreamingSnakeCaseStaysSilent/PascalCase_export
+--- PASS: TestConsistencyNoScreamingSnakeCaseRespectsTheAllowOption (0.00s)
+=== PAUSE TestConsistencyNoScreamingSnakeCaseStaysSilent/PascalCase_export
+=== RUN   TestConsistencyNoScreamingSnakeCaseStaysSilent/single_all-caps_word
+=== PAUSE TestConsistencyNoScreamingSnakeCaseStaysSilent/single_all-caps_word
+=== RUN   TestConsistencyNoScreamingSnakeCaseStaysSilent/single_all-caps_export
+=== PAUSE TestConsistencyNoScreamingSnakeCaseStaysSilent/single_all-caps_export
+=== RUN   TestConsistencyNoScreamingSnakeCaseStaysSilent/let_is_not_const
+=== PAUSE TestConsistencyNoScreamingSnakeCaseStaysSilent/let_is_not_const
+=== RUN   TestConsistencyNoScreamingSnakeCaseStaysSilent/var_is_not_const
+=== PAUSE TestConsistencyNoScreamingSnakeCaseStaysSilent/var_is_not_const
+=== RUN   TestConsistencyNoScreamingSnakeCaseFires/process.platform_is_not_an_env_read
+=== PAUSE TestConsistencyNoScreamingSnakeCaseFires/process.platform_is_not_an_env_read
+=== RUN   TestConsistencyNoScreamingSnakeCaseFires/process.argv_is_not_an_env_read
+=== PAUSE TestConsistencyNoScreamingSnakeCaseFires/process.argv_is_not_an_env_read
+=== RUN   TestConsistencyNoScreamingSnakeCaseFires/env-looking_name_from_a_literal
+=== PAUSE TestConsistencyNoScreamingSnakeCaseFires/env-looking_name_from_a_literal
+=== CONT  TestConsistencyNoScreamingSnakeCaseFires/local_constant
+=== CONT  TestConsistencyNoScreamingSnakeCaseFires/process.platform_is_not_an_env_read
+=== CONT  TestConsistencyNoScreamingSnakeCaseFires/exported_constant
+=== CONT  TestConsistencyNoScreamingSnakeCaseFires/process.argv_is_not_an_env_read
+=== CONT  TestConsistencyNoScreamingSnakeCaseFires/digits_in_the_name
+=== CONT  TestConsistencyNoScreamingSnakeCaseFires/env-looking_name_from_a_literal
+=== RUN   TestConsistencyNoScreamingSnakeCaseStaysSilent/direct_process.env_read
+=== PAUSE TestConsistencyNoScreamingSnakeCaseStaysSilent/direct_process.env_read
+=== RUN   TestConsistencyNoScreamingSnakeCaseStaysSilent/process.env_with_a_nullish_fallback
+=== PAUSE TestConsistencyNoScreamingSnakeCaseStaysSilent/process.env_with_a_nullish_fallback
+=== RUN   TestConsistencyNoScreamingSnakeCaseStaysSilent/process.env_with_an_or_fallback
+=== PAUSE TestConsistencyNoScreamingSnakeCaseStaysSilent/process.env_with_an_or_fallback
+=== RUN   TestConsistencyNoScreamingSnakeCaseStaysSilent/mixed_case_with_underscore
+=== PAUSE TestConsistencyNoScreamingSnakeCaseStaysSilent/mixed_case_with_underscore
+=== RUN   TestConsistencyNoScreamingSnakeCaseStaysSilent/lowercase_with_underscore
+=== PAUSE TestConsistencyNoScreamingSnakeCaseStaysSilent/lowercase_with_underscore
+=== RUN   TestConsistencyNoScreamingSnakeCaseStaysSilent/no_declarations
+=== PAUSE TestConsistencyNoScreamingSnakeCaseStaysSilent/no_declarations
+=== CONT  TestConsistencyNoScreamingSnakeCaseFires/two_words
+=== CONT  TestConsistencyNoScreamingSnakeCaseStaysSilent/camelCase_local
+=== CONT  TestConsistencyNoScreamingSnakeCaseStaysSilent/no_declarations
+=== CONT  TestConsistencyNoScreamingSnakeCaseStaysSilent/lowercase_with_underscore
+=== CONT  TestConsistencyNoScreamingSnakeCaseStaysSilent/var_is_not_const
+=== CONT  TestConsistencyNoScreamingSnakeCaseStaysSilent/let_is_not_const
+=== CONT  TestConsistencyNoScreamingSnakeCaseStaysSilent/single_all-caps_export
+=== CONT  TestConsistencyNoScreamingSnakeCaseStaysSilent/process.env_with_an_or_fallback
+=== CONT  TestConsistencyNoScreamingSnakeCaseStaysSilent/single_all-caps_word
+=== CONT  TestConsistencyNoScreamingSnakeCaseStaysSilent/direct_process.env_read
+--- PASS: TestConsistencyNoScreamingSnakeCaseFires (0.00s)
+    --- PASS: TestConsistencyNoScreamingSnakeCaseFires/local_constant (0.00s)
+    --- PASS: TestConsistencyNoScreamingSnakeCaseFires/exported_constant (0.00s)
+    --- PASS: TestConsistencyNoScreamingSnakeCaseFires/process.argv_is_not_an_env_read (0.00s)
+    --- PASS: TestConsistencyNoScreamingSnakeCaseFires/env-looking_name_from_a_literal (0.00s)
+    --- PASS: TestConsistencyNoScreamingSnakeCaseFires/process.platform_is_not_an_env_read (0.00s)
+    --- PASS: TestConsistencyNoScreamingSnakeCaseFires/digits_in_the_name (0.00s)
+    --- PASS: TestConsistencyNoScreamingSnakeCaseFires/two_words (0.00s)
+=== CONT  TestConsistencyNoScreamingSnakeCaseStaysSilent/PascalCase_export
+=== CONT  TestConsistencyNoScreamingSnakeCaseStaysSilent/process.env_with_a_nullish_fallback
+=== CONT  TestConsistencyNoScreamingSnakeCaseStaysSilent/mixed_case_with_underscore
+--- PASS: TestConsistencyNoScreamingSnakeCaseStaysSilent (0.00s)
+    --- PASS: TestConsistencyNoScreamingSnakeCaseStaysSilent/camelCase_local (0.00s)
+    --- PASS: TestConsistencyNoScreamingSnakeCaseStaysSilent/no_declarations (0.00s)
+    --- PASS: TestConsistencyNoScreamingSnakeCaseStaysSilent/lowercase_with_underscore (0.00s)
+    --- PASS: TestConsistencyNoScreamingSnakeCaseStaysSilent/let_is_not_const (0.00s)
+    --- PASS: TestConsistencyNoScreamingSnakeCaseStaysSilent/var_is_not_const (0.00s)
+    --- PASS: TestConsistencyNoScreamingSnakeCaseStaysSilent/single_all-caps_export (0.00s)
+    --- PASS: TestConsistencyNoScreamingSnakeCaseStaysSilent/single_all-caps_word (0.00s)
+    --- PASS: TestConsistencyNoScreamingSnakeCaseStaysSilent/process.env_with_a_nullish_fallback (0.00s)
+    --- PASS: TestConsistencyNoScreamingSnakeCaseStaysSilent/process.env_with_an_or_fallback (0.00s)
+    --- PASS: TestConsistencyNoScreamingSnakeCaseStaysSilent/direct_process.env_read (0.00s)
+    --- PASS: TestConsistencyNoScreamingSnakeCaseStaysSilent/PascalCase_export (0.00s)
+    --- PASS: TestConsistencyNoScreamingSnakeCaseStaysSilent/mixed_case_with_underscore (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/nexus	0.011s

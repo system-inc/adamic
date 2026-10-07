@@ -1,0 +1,70 @@
+case 0
+nexus/import-no-forbidden-source	forbiddenImageImport	159 171	Importing from 'next/image' is not allowed. Use '@structure/source/components/images/Image' instead, so an image renders the same way whichever framework is underneath it.
+fix	159 171	'@structure/source/components/images/Image'
+fixed	// Dependencies - Frameworks\u000a// This is the only place this import is valid\u000a// eslint-disable-next-line nexus/import-no-forbidden-source\u000aimport NextImage from '@structure/source/components/images/Image';\u000a
+case 1
+nexus/import-no-forbidden-source	forbiddenNavigationImport	26 43	Importing from 'next/navigation' is not allowed. Use '@structure/source/router/Navigation', which is the same navigation without binding the file to one framework's router.
+fix	26 43	'@structure/source/router/Navigation'
+fixed	import { useRouter } from '@structure/source/router/Navigation';\u000a
+case 2
+nexus/import-no-forbidden-source	forbiddenLinkImport	21 32	Importing from 'next/link' is not allowed. Use '@structure/source/components/navigation/Link' instead, so a link renders the same way whichever framework is underneath it.
+fix	21 32	'@structure/source/components/navigation/Link'
+fixed	const Link = require('@structure/source/components/navigation/Link');\u000a
+case 3
+nexus/import-no-forbidden-source	forbiddenImageImport	18 30	Importing from 'next/image' is not allowed. Use '@structure/source/components/images/Image' instead, so an image renders the same way whichever framework is underneath it.
+fix	18 30	'@structure/source/components/images/Image'
+fixed	import Image from '@structure/source/components/images/Image';\u000a
+case 4
+nexus/import-no-forbidden-source	forbiddenMotionImport	40 55	Importing from 'framer-motion' is not allowed. Use 'motion/react', which is the same library under the name it ships as now.
+fix	40 55	'motion/react'
+fixed	import { motion, AnimatePresence } from 'motion/react';\u000a
+case 5
+nexus/import-no-forbidden-source	forbiddenMotionImport	23 38	Importing from 'framer-motion' is not allowed. Use 'motion/react', which is the same library under the name it ships as now.
+fix	23 38	'motion/react'
+fixed	import { motion } from 'motion/react';\u000a
+case 6
+fixed	import NextImage from 'next/image';\u000a
+case 7
+fixed	import { useRouter as useNextRouter } from 'next/navigation';\u000a
+case 8
+fixed	import { usePathname } from 'next/navigation';\u000a
+case 9
+fixed	const NextImage = import('next/image');\u000a
+case 10
+fixed	import NextLink from 'next/link';\u000a
+case 11
+nexus/import-no-forbidden-source	forbiddenLinkImport	17 28	Importing from 'next/link' is not allowed. Use '@structure/source/components/navigation/Link' instead, so a link renders the same way whichever framework is underneath it.
+fix	17 28	'@structure/source/components/navigation/Link'
+fixed	import Link from '@structure/source/components/navigation/Link';\u000a
+case 12
+fixed	import Link from '@structure/source/components/navigation/Link';\u000a
+case 13
+nexus/import-no-forbidden-source	forbiddenImageImport	18 30	Importing from 'next/image' is not allowed. Use '@structure/source/components/images/Image' instead, so an image renders the same way whichever framework is underneath it.
+fix	18 30	'@structure/source/components/images/Image'
+fixed	import Image from '@structure/source/components/images/Image';\u000a
+case 14
+nexus/import-no-forbidden-source	forbiddenMotionImport	23 38	Importing from 'framer-motion' is not allowed. Use 'motion/react', which is the same library under the name it ships as now.
+fix	23 38	'motion/react'
+fixed	import { motion } from 'motion/react';\u000a
+case 15
+nexus/import-no-forbidden-source	forbiddenImageImport	21 33	Importing from 'next/image' is not allowed. Use '@structure/source/components/images/Image' instead, so an image renders the same way whichever framework is underneath it.
+fix	21 33	'@structure/source/components/images/Image'
+fixed	const Image = import('@structure/source/components/images/Image');\u000a
+case 16
+nexus/import-no-forbidden-source	forbiddenLinkImport	17 28	Importing from 'next/link' is not allowed. Use '@structure/source/components/navigation/Link' instead, so a link renders the same way whichever framework is underneath it.
+fix	17 28	'@structure/source/components/navigation/Link'
+fixed	import Link from '@structure/source/components/navigation/Link';\u000a
+case 17
+fixed	import { Thing } from './Thing';\u000a
+case 18
+fixed	import { headers } from 'next/headers';\u000a
+case 19
+fixed	import { thing } from 'next/link-utilities';\u000a
+case 20
+fixed	import { motion } from 'motion/react';\u000a
+case 21
+fixed	const module = import(somePath);\u000a
+case 22
+fixed	import { thing } from 'framer-motion-extras';\u000a
+case 23
+fixed	export const Value = 1;\u000a

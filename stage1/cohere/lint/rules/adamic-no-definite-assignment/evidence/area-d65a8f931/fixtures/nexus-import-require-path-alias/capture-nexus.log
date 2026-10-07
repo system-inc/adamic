@@ -1,0 +1,206 @@
+=== RUN   TestImportRequirePathAliasDerivesTheAliasesFromPaths
+=== PAUSE TestImportRequirePathAliasDerivesTheAliasesFromPaths
+=== RUN   TestImportRequirePathAliasFixesWithADerivedAlias
+=== PAUSE TestImportRequirePathAliasFixesWithADerivedAlias
+=== RUN   TestImportRequirePathAliasPrefersAWrittenAliasOnTheSameDirectory
+=== PAUSE TestImportRequirePathAliasPrefersAWrittenAliasOnTheSameDirectory
+=== RUN   TestImportRequirePathAliasDerivesNothingUnlessAsked
+=== PAUSE TestImportRequirePathAliasDerivesNothingUnlessAsked
+=== RUN   TestImportRequirePathAliasLeavesOutPathsThatNameNoDirectory
+=== PAUSE TestImportRequirePathAliasLeavesOutPathsThatNameNoDirectory
+=== RUN   TestImportRequirePathAliasDerivesNothingWithoutAProgram
+=== PAUSE TestImportRequirePathAliasDerivesNothingWithoutAProgram
+=== RUN   TestImportRequirePathAliasRootIsAnchored
+=== PAUSE TestImportRequirePathAliasRootIsAnchored
+=== RUN   TestImportRequirePathAliasFires
+=== PAUSE TestImportRequirePathAliasFires
+=== RUN   TestImportRequirePathAliasStaysSilent
+=== PAUSE TestImportRequirePathAliasStaysSilent
+=== RUN   TestImportRequirePathAliasPrefersTheLongestRoot
+=== PAUSE TestImportRequirePathAliasPrefersTheLongestRoot
+=== RUN   TestImportRequirePathAliasSuggestsTheAliasedPath
+=== PAUSE TestImportRequirePathAliasSuggestsTheAliasedPath
+=== RUN   TestImportRequirePathAliasAcceptsTheRepositoryRoot
+=== PAUSE TestImportRequirePathAliasAcceptsTheRepositoryRoot
+=== RUN   TestImportRequirePathAliasNormalizesConfiguredDirectories
+=== PAUSE TestImportRequirePathAliasNormalizesConfiguredDirectories
+=== RUN   TestImportRequirePathAliasRootDoesNotShadowASubdirectory
+=== PAUSE TestImportRequirePathAliasRootDoesNotShadowASubdirectory
+=== RUN   TestImportRequirePathAliasFixesTheSpecifier
+=== PAUSE TestImportRequirePathAliasFixesTheSpecifier
+=== CONT  TestImportRequirePathAliasDerivesTheAliasesFromPaths
+=== CONT  TestImportRequirePathAliasStaysSilent
+=== RUN   TestImportRequirePathAliasStaysSilent/sibling_import
+=== PAUSE TestImportRequirePathAliasStaysSilent/sibling_import
+=== RUN   TestImportRequirePathAliasStaysSilent/parent_import
+=== PAUSE TestImportRequirePathAliasStaysSilent/parent_import
+=== RUN   TestImportRequirePathAliasStaysSilent/already_aliased
+=== PAUSE TestImportRequirePathAliasStaysSilent/already_aliased
+=== RUN   TestImportRequirePathAliasStaysSilent/a_package_import
+=== PAUSE TestImportRequirePathAliasStaysSilent/a_package_import
+=== RUN   TestImportRequirePathAliasStaysSilent/an_internal_path_must_stay_relative
+=== PAUSE TestImportRequirePathAliasStaysSilent/an_internal_path_must_stay_relative
+=== RUN   TestImportRequirePathAliasStaysSilent/climbs_out_of_the_repository
+=== PAUSE TestImportRequirePathAliasStaysSilent/climbs_out_of_the_repository
+=== RUN   TestImportRequirePathAliasStaysSilent/no_alias_covers_it
+=== PAUSE TestImportRequirePathAliasStaysSilent/no_alias_covers_it
+=== RUN   TestImportRequirePathAliasStaysSilent/a_computed_dynamic_import
+=== PAUSE TestImportRequirePathAliasStaysSilent/a_computed_dynamic_import
+=== CONT  TestImportRequirePathAliasNormalizesConfiguredDirectories
+=== RUN   TestImportRequirePathAliasNormalizesConfiguredDirectories/app
+=== PAUSE TestImportRequirePathAliasNormalizesConfiguredDirectories/app
+=== CONT  TestImportRequirePathAliasFixesTheSpecifier
+=== CONT  TestImportRequirePathAliasRootDoesNotShadowASubdirectory
+=== RUN   TestImportRequirePathAliasStaysSilent/no_options_at_all
+=== PAUSE TestImportRequirePathAliasStaysSilent/no_options_at_all
+=== RUN   TestImportRequirePathAliasNormalizesConfiguredDirectories/./app
+=== PAUSE TestImportRequirePathAliasNormalizesConfiguredDirectories/./app
+=== RUN   TestImportRequirePathAliasStaysSilent/no_aliases_configured
+=== PAUSE TestImportRequirePathAliasStaysSilent/no_aliases_configured
+=== RUN   TestImportRequirePathAliasStaysSilent/no_repository_root
+=== RUN   TestImportRequirePathAliasNormalizesConfiguredDirectories/app/
+=== PAUSE TestImportRequirePathAliasNormalizesConfiguredDirectories/app/
+=== CONT  TestImportRequirePathAliasAcceptsTheRepositoryRoot
+=== PAUSE TestImportRequirePathAliasStaysSilent/no_repository_root
+=== RUN   TestImportRequirePathAliasStaysSilent/file_outside_the_repository
+=== PAUSE TestImportRequirePathAliasStaysSilent/file_outside_the_repository
+=== CONT  TestImportRequirePathAliasLeavesOutPathsThatNameNoDirectory
+--- PASS: TestImportRequirePathAliasAcceptsTheRepositoryRoot (0.00s)
+=== CONT  TestImportRequirePathAliasFires
+=== RUN   TestImportRequirePathAliasFires/climbs_two_levels
+=== PAUSE TestImportRequirePathAliasFires/climbs_two_levels
+=== RUN   TestImportRequirePathAliasFires/climbs_three_levels
+--- PASS: TestImportRequirePathAliasRootDoesNotShadowASubdirectory (0.00s)
+=== CONT  TestImportRequirePathAliasRootIsAnchored
+=== PAUSE TestImportRequirePathAliasFires/climbs_three_levels
+=== RUN   TestImportRequirePathAliasFires/dynamic_import_climbs
+=== PAUSE TestImportRequirePathAliasFires/dynamic_import_climbs
+=== RUN   TestImportRequirePathAliasFires/require_climbs
+=== PAUSE TestImportRequirePathAliasFires/require_climbs
+=== RUN   TestImportRequirePathAliasFires/sibling_inside_a_strict_root
+=== PAUSE TestImportRequirePathAliasFires/sibling_inside_a_strict_root
+=== RUN   TestImportRequirePathAliasFires/parent_inside_a_strict_root
+=== PAUSE TestImportRequirePathAliasFires/parent_inside_a_strict_root
+=== CONT  TestImportRequirePathAliasDerivesNothingWithoutAProgram
+=== RUN   TestImportRequirePathAliasRootIsAnchored/dot_is_the_config's_directory
+=== PAUSE TestImportRequirePathAliasRootIsAnchored/dot_is_the_config's_directory
+=== RUN   TestImportRequirePathAliasRootIsAnchored/a_relative_path_resolves_against_the_config
+=== PAUSE TestImportRequirePathAliasRootIsAnchored/a_relative_path_resolves_against_the_config
+=== RUN   TestImportRequirePathAliasRootIsAnchored/absent_defaults_to_the_project_root
+=== PAUSE TestImportRequirePathAliasRootIsAnchored/absent_defaults_to_the_project_root
+=== RUN   TestImportRequirePathAliasRootIsAnchored/an_absolute_root_holding_the_project_is_kept
+--- PASS: TestImportRequirePathAliasFixesTheSpecifier (0.00s)
+=== CONT  TestImportRequirePathAliasPrefersTheLongestRoot
+=== CONT  TestImportRequirePathAliasPrefersAWrittenAliasOnTheSameDirectory
+=== CONT  TestImportRequirePathAliasDerivesNothingUnlessAsked
+=== PAUSE TestImportRequirePathAliasRootIsAnchored/an_absolute_root_holding_the_project_is_kept
+--- PASS: TestImportRequirePathAliasDerivesNothingWithoutAProgram (0.00s)
+--- PASS: TestImportRequirePathAliasPrefersTheLongestRoot (0.00s)
+=== RUN   TestImportRequirePathAliasRootIsAnchored/an_absolute_root_that_does_not_exist_here
+=== PAUSE TestImportRequirePathAliasRootIsAnchored/an_absolute_root_that_does_not_exist_here
+=== RUN   TestImportRequirePathAliasRootIsAnchored/a_relative_root_that_resolves_to_nothing
+=== PAUSE TestImportRequirePathAliasRootIsAnchored/a_relative_root_that_resolves_to_nothing
+=== RUN   TestImportRequirePathAliasRootIsAnchored/a_root_that_is_a_file
+=== PAUSE TestImportRequirePathAliasRootIsAnchored/a_root_that_is_a_file
+=== RUN   TestImportRequirePathAliasRootIsAnchored/an_existing_absolute_root_beside_the_project
+=== PAUSE TestImportRequirePathAliasRootIsAnchored/an_existing_absolute_root_beside_the_project
+=== RUN   TestImportRequirePathAliasRootIsAnchored/a_relative_root_beside_the_project
+=== PAUSE TestImportRequirePathAliasRootIsAnchored/a_relative_root_beside_the_project
+=== RUN   TestImportRequirePathAliasRootIsAnchored/absent_with_no_project_root_known
+=== PAUSE TestImportRequirePathAliasRootIsAnchored/absent_with_no_project_root_known
+=== RUN   TestImportRequirePathAliasRootIsAnchored/relative_with_no_config_directory_known
+=== PAUSE TestImportRequirePathAliasRootIsAnchored/relative_with_no_config_directory_known
+=== CONT  TestImportRequirePathAliasFixesWithADerivedAlias
+--- PASS: TestImportRequirePathAliasDerivesTheAliasesFromPaths (0.02s)
+=== CONT  TestImportRequirePathAliasSuggestsTheAliasedPath
+--- PASS: TestImportRequirePathAliasSuggestsTheAliasedPath (0.00s)
+=== CONT  TestImportRequirePathAliasNormalizesConfiguredDirectories/app
+=== CONT  TestImportRequirePathAliasNormalizesConfiguredDirectories/app/
+=== CONT  TestImportRequirePathAliasNormalizesConfiguredDirectories/./app
+--- PASS: TestImportRequirePathAliasNormalizesConfiguredDirectories (0.00s)
+    --- PASS: TestImportRequirePathAliasNormalizesConfiguredDirectories/app (0.00s)
+    --- PASS: TestImportRequirePathAliasNormalizesConfiguredDirectories/app/ (0.00s)
+    --- PASS: TestImportRequirePathAliasNormalizesConfiguredDirectories/./app (0.00s)
+=== CONT  TestImportRequirePathAliasStaysSilent/sibling_import
+=== CONT  TestImportRequirePathAliasStaysSilent/file_outside_the_repository
+=== CONT  TestImportRequirePathAliasStaysSilent/no_repository_root
+--- PASS: TestImportRequirePathAliasPrefersAWrittenAliasOnTheSameDirectory (0.02s)
+=== CONT  TestImportRequirePathAliasStaysSilent/no_aliases_configured
+=== CONT  TestImportRequirePathAliasStaysSilent/no_options_at_all
+=== CONT  TestImportRequirePathAliasStaysSilent/a_computed_dynamic_import
+=== CONT  TestImportRequirePathAliasStaysSilent/no_alias_covers_it
+=== CONT  TestImportRequirePathAliasStaysSilent/climbs_out_of_the_repository
+=== CONT  TestImportRequirePathAliasStaysSilent/an_internal_path_must_stay_relative
+=== CONT  TestImportRequirePathAliasStaysSilent/a_package_import
+=== RUN   TestImportRequirePathAliasLeavesOutPathsThatNameNoDirectory/an_exact_key
+=== CONT  TestImportRequirePathAliasStaysSilent/parent_import
+=== PAUSE TestImportRequirePathAliasLeavesOutPathsThatNameNoDirectory/an_exact_key
+=== RUN   TestImportRequirePathAliasLeavesOutPathsThatNameNoDirectory/the_first_of_a_fallback_list
+=== PAUSE TestImportRequirePathAliasLeavesOutPathsThatNameNoDirectory/the_first_of_a_fallback_list
+=== RUN   TestImportRequirePathAliasLeavesOutPathsThatNameNoDirectory/the_second_of_a_fallback_list
+=== PAUSE TestImportRequirePathAliasLeavesOutPathsThatNameNoDirectory/the_second_of_a_fallback_list
+=== RUN   TestImportRequirePathAliasLeavesOutPathsThatNameNoDirectory/a_wildcard_that_is_not_a_directory
+=== PAUSE TestImportRequirePathAliasLeavesOutPathsThatNameNoDirectory/a_wildcard_that_is_not_a_directory
+=== CONT  TestImportRequirePathAliasFires/require_climbs
+=== CONT  TestImportRequirePathAliasStaysSilent/already_aliased
+=== CONT  TestImportRequirePathAliasFires/climbs_two_levels
+=== CONT  TestImportRequirePathAliasFires/parent_inside_a_strict_root
+=== CONT  TestImportRequirePathAliasFires/sibling_inside_a_strict_root
+=== CONT  TestImportRequirePathAliasFires/dynamic_import_climbs
+=== CONT  TestImportRequirePathAliasFires/climbs_three_levels
+--- PASS: TestImportRequirePathAliasStaysSilent (0.00s)
+    --- PASS: TestImportRequirePathAliasStaysSilent/sibling_import (0.00s)
+    --- PASS: TestImportRequirePathAliasStaysSilent/file_outside_the_repository (0.00s)
+    --- PASS: TestImportRequirePathAliasStaysSilent/no_repository_root (0.00s)
+    --- PASS: TestImportRequirePathAliasStaysSilent/no_aliases_configured (0.00s)
+    --- PASS: TestImportRequirePathAliasStaysSilent/no_options_at_all (0.00s)
+    --- PASS: TestImportRequirePathAliasStaysSilent/a_computed_dynamic_import (0.00s)
+    --- PASS: TestImportRequirePathAliasStaysSilent/no_alias_covers_it (0.00s)
+    --- PASS: TestImportRequirePathAliasStaysSilent/climbs_out_of_the_repository (0.00s)
+    --- PASS: TestImportRequirePathAliasStaysSilent/an_internal_path_must_stay_relative (0.00s)
+    --- PASS: TestImportRequirePathAliasStaysSilent/a_package_import (0.00s)
+    --- PASS: TestImportRequirePathAliasStaysSilent/parent_import (0.00s)
+    --- PASS: TestImportRequirePathAliasStaysSilent/already_aliased (0.00s)
+=== CONT  TestImportRequirePathAliasRootIsAnchored/dot_is_the_config's_directory
+--- PASS: TestImportRequirePathAliasFires (0.00s)
+    --- PASS: TestImportRequirePathAliasFires/climbs_two_levels (0.00s)
+    --- PASS: TestImportRequirePathAliasFires/require_climbs (0.00s)
+    --- PASS: TestImportRequirePathAliasFires/sibling_inside_a_strict_root (0.00s)
+    --- PASS: TestImportRequirePathAliasFires/parent_inside_a_strict_root (0.00s)
+    --- PASS: TestImportRequirePathAliasFires/climbs_three_levels (0.00s)
+    --- PASS: TestImportRequirePathAliasFires/dynamic_import_climbs (0.00s)
+=== CONT  TestImportRequirePathAliasRootIsAnchored/relative_with_no_config_directory_known
+=== CONT  TestImportRequirePathAliasRootIsAnchored/a_root_that_is_a_file
+=== CONT  TestImportRequirePathAliasRootIsAnchored/a_relative_root_beside_the_project
+=== CONT  TestImportRequirePathAliasRootIsAnchored/an_existing_absolute_root_beside_the_project
+=== CONT  TestImportRequirePathAliasRootIsAnchored/absent_with_no_project_root_known
+=== CONT  TestImportRequirePathAliasRootIsAnchored/an_absolute_root_holding_the_project_is_kept
+=== CONT  TestImportRequirePathAliasRootIsAnchored/a_relative_root_that_resolves_to_nothing
+=== CONT  TestImportRequirePathAliasRootIsAnchored/an_absolute_root_that_does_not_exist_here
+=== CONT  TestImportRequirePathAliasRootIsAnchored/absent_defaults_to_the_project_root
+=== CONT  TestImportRequirePathAliasRootIsAnchored/a_relative_path_resolves_against_the_config
+=== CONT  TestImportRequirePathAliasLeavesOutPathsThatNameNoDirectory/an_exact_key
+=== CONT  TestImportRequirePathAliasLeavesOutPathsThatNameNoDirectory/the_second_of_a_fallback_list
+=== CONT  TestImportRequirePathAliasLeavesOutPathsThatNameNoDirectory/a_wildcard_that_is_not_a_directory
+=== CONT  TestImportRequirePathAliasLeavesOutPathsThatNameNoDirectory/the_first_of_a_fallback_list
+--- PASS: TestImportRequirePathAliasFixesWithADerivedAlias (0.02s)
+--- PASS: TestImportRequirePathAliasRootIsAnchored (0.00s)
+    --- PASS: TestImportRequirePathAliasRootIsAnchored/dot_is_the_config's_directory (0.00s)
+    --- PASS: TestImportRequirePathAliasRootIsAnchored/relative_with_no_config_directory_known (0.00s)
+    --- PASS: TestImportRequirePathAliasRootIsAnchored/a_root_that_is_a_file (0.00s)
+    --- PASS: TestImportRequirePathAliasRootIsAnchored/an_existing_absolute_root_beside_the_project (0.00s)
+    --- PASS: TestImportRequirePathAliasRootIsAnchored/a_relative_root_beside_the_project (0.00s)
+    --- PASS: TestImportRequirePathAliasRootIsAnchored/an_absolute_root_holding_the_project_is_kept (0.00s)
+    --- PASS: TestImportRequirePathAliasRootIsAnchored/absent_with_no_project_root_known (0.00s)
+    --- PASS: TestImportRequirePathAliasRootIsAnchored/absent_defaults_to_the_project_root (0.00s)
+    --- PASS: TestImportRequirePathAliasRootIsAnchored/a_relative_path_resolves_against_the_config (0.00s)
+    --- PASS: TestImportRequirePathAliasRootIsAnchored/a_relative_root_that_resolves_to_nothing (0.00s)
+    --- PASS: TestImportRequirePathAliasRootIsAnchored/an_absolute_root_that_does_not_exist_here (0.00s)
+--- PASS: TestImportRequirePathAliasDerivesNothingUnlessAsked (0.02s)
+--- PASS: TestImportRequirePathAliasLeavesOutPathsThatNameNoDirectory (0.02s)
+    --- PASS: TestImportRequirePathAliasLeavesOutPathsThatNameNoDirectory/an_exact_key (0.00s)
+    --- PASS: TestImportRequirePathAliasLeavesOutPathsThatNameNoDirectory/a_wildcard_that_is_not_a_directory (0.00s)
+    --- PASS: TestImportRequirePathAliasLeavesOutPathsThatNameNoDirectory/the_first_of_a_fallback_list (0.00s)
+    --- PASS: TestImportRequirePathAliasLeavesOutPathsThatNameNoDirectory/the_second_of_a_fallback_list (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/nexus	0.034s

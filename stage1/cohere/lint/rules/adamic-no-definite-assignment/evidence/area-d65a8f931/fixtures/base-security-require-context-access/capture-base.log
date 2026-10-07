@@ -1,0 +1,354 @@
+=== RUN   TestContextRequiresAccessFires
+=== PAUSE TestContextRequiresAccessFires
+=== RUN   TestContextRequiresAccessStaysSilent
+=== PAUSE TestContextRequiresAccessStaysSilent
+=== RUN   TestContextRequiresAccessNamesTheKey
+=== PAUSE TestContextRequiresAccessNamesTheKey
+=== RUN   TestContextRequiresAccessSurprises
+=== PAUSE TestContextRequiresAccessSurprises
+=== RUN   TestContextRequiresAccessUnmeasurableShapes
+=== PAUSE TestContextRequiresAccessUnmeasurableShapes
+=== RUN   TestContextRequiresAccessRegistersNothingUnconfigured
+=== PAUSE TestContextRequiresAccessRegistersNothingUnconfigured
+=== RUN   TestContextRequiresAccessSurvivesUnusualParameters
+=== PAUSE TestContextRequiresAccessSurvivesUnusualParameters
+=== CONT  TestContextRequiresAccessFires
+=== CONT  TestContextRequiresAccessUnmeasurableShapes
+=== CONT  TestContextRequiresAccessNamesTheKey
+=== CONT  TestContextRequiresAccessSurvivesUnusualParameters
+=== RUN   TestContextRequiresAccessUnmeasurableShapes/a_decorated_constructor_is_a_member_like_any_other
+=== PAUSE TestContextRequiresAccessUnmeasurableShapes/a_decorated_constructor_is_a_member_like_any_other
+=== CONT  TestContextRequiresAccessRegistersNothingUnconfigured
+=== RUN   TestContextRequiresAccessSurvivesUnusualParameters/class_A_{_m(@InjectRequestContext(AccountRequestContextKey)_{_a_}:_{_a:_string_})_{}_}
+--- PASS: TestContextRequiresAccessRegistersNothingUnconfigured (0.00s)
+=== PAUSE TestContextRequiresAccessSurvivesUnusualParameters/class_A_{_m(@InjectRequestContext(AccountRequestContextKey)_{_a_}:_{_a:_string_})_{}_}
+=== RUN   TestContextRequiresAccessUnmeasurableShapes/an_unprotected_constructor_reports
+=== PAUSE TestContextRequiresAccessUnmeasurableShapes/an_unprotected_constructor_reports
+=== RUN   TestContextRequiresAccessNamesTheKey/bare:_unprotected_reports
+=== RUN   TestContextRequiresAccessUnmeasurableShapes/a_plain_function_is_not_a_member_and_is_never_checked
+=== PAUSE TestContextRequiresAccessUnmeasurableShapes/a_plain_function_is_not_a_member_and_is_never_checked
+=== PAUSE TestContextRequiresAccessNamesTheKey/bare:_unprotected_reports
+=== RUN   TestContextRequiresAccessSurvivesUnusualParameters/class_A_{_m(@InjectRequestContext(AccountRequestContextKey)_[a]:_string[])_{}_}
+=== PAUSE TestContextRequiresAccessSurvivesUnusualParameters/class_A_{_m(@InjectRequestContext(AccountRequestContextKey)_[a]:_string[])_{}_}
+=== RUN   TestContextRequiresAccessSurvivesUnusualParameters/class_A_{_m(@InjectRequestContext(AccountRequestContextKey)_...rest:_string[])_{}_}
+=== PAUSE TestContextRequiresAccessSurvivesUnusualParameters/class_A_{_m(@InjectRequestContext(AccountRequestContextKey)_...rest:_string[])_{}_}
+=== RUN   TestContextRequiresAccessSurvivesUnusualParameters/class_A_{_[computed](@InjectRequestContext(AccountRequestContextKey)_a:_string)_{}_}
+=== PAUSE TestContextRequiresAccessSurvivesUnusualParameters/class_A_{_[computed](@InjectRequestContext(AccountRequestContextKey)_a:_string)_{}_}
+=== RUN   TestContextRequiresAccessNamesTheKey/bare:_a_decorator_for_a_different_key_does_not_protect
+=== PAUSE TestContextRequiresAccessNamesTheKey/bare:_a_decorator_for_a_different_key_does_not_protect
+=== RUN   TestContextRequiresAccessNamesTheKey/class_decorator,_wrong_one
+=== PAUSE TestContextRequiresAccessNamesTheKey/class_decorator,_wrong_one
+=== RUN   TestContextRequiresAccessNamesTheKey/member-access_key_resolves_to_the_property
+=== CONT  TestContextRequiresAccessSurprises
+=== PAUSE TestContextRequiresAccessNamesTheKey/member-access_key_resolves_to_the_property
+=== RUN   TestContextRequiresAccessNamesTheKey/no_annotation_at_all_is_NOT_soft_use
+=== PAUSE TestContextRequiresAccessNamesTheKey/no_annotation_at_all_is_NOT_soft_use
+=== RUN   TestContextRequiresAccessNamesTheKey/parameter_property,_unprotected
+=== PAUSE TestContextRequiresAccessNamesTheKey/parameter_property,_unprotected
+=== RUN   TestContextRequiresAccessNamesTheKey/defaulted_parameter,_unprotected
+=== PAUSE TestContextRequiresAccessNamesTheKey/defaulted_parameter,_unprotected
+=== RUN   TestContextRequiresAccessNamesTheKey/two_protected_keys,_both_unprotected
+=== PAUSE TestContextRequiresAccessNamesTheKey/two_protected_keys,_both_unprotected
+=== RUN   TestContextRequiresAccessNamesTheKey/two_keys,_decorator_satisfies_only_one
+=== PAUSE TestContextRequiresAccessNamesTheKey/two_keys,_decorator_satisfies_only_one
+=== RUN   TestContextRequiresAccessNamesTheKey/same_key_twice_reports_once
+=== PAUSE TestContextRequiresAccessNamesTheKey/same_key_twice_reports_once
+=== RUN   TestContextRequiresAccessNamesTheKey/import_alias_resolves_to_the_exported_name
+=== PAUSE TestContextRequiresAccessNamesTheKey/import_alias_resolves_to_the_exported_name
+=== RUN   TestContextRequiresAccessNamesTheKey/non-aliased_import_is_unaffected
+=== PAUSE TestContextRequiresAccessNamesTheKey/non-aliased_import_is_unaffected
+=== RUN   TestContextRequiresAccessSurprises/an_alias_TO_a_configured_name_protects_nothing_and_is_clean
+=== RUN   TestContextRequiresAccessUnmeasurableShapes/a_class_expression's_members_are_checked
+=== PAUSE TestContextRequiresAccessSurprises/an_alias_TO_a_configured_name_protects_nothing_and_is_clean
+=== PAUSE TestContextRequiresAccessUnmeasurableShapes/a_class_expression's_members_are_checked
+=== RUN   TestContextRequiresAccessUnmeasurableShapes/and_a_class_expression's_decorators_protect_its_members
+=== PAUSE TestContextRequiresAccessUnmeasurableShapes/and_a_class_expression's_decorators_protect_its_members
+=== RUN   TestContextRequiresAccessNamesTheKey/computed_method_name
+=== PAUSE TestContextRequiresAccessNamesTheKey/computed_method_name
+=== RUN   TestContextRequiresAccessNamesTheKey/static_method,_unprotected
+=== PAUSE TestContextRequiresAccessNamesTheKey/static_method,_unprotected
+=== RUN   TestContextRequiresAccessNamesTheKey/getter_with_a_decorated_parameter_is_not_a_method_definition_shape
+=== PAUSE TestContextRequiresAccessNamesTheKey/getter_with_a_decorated_parameter_is_not_a_method_definition_shape
+=== RUN   TestContextRequiresAccessNamesTheKey/authentication_key,_unprotected
+=== PAUSE TestContextRequiresAccessNamesTheKey/authentication_key,_unprotected
+=== CONT  TestContextRequiresAccessSurvivesUnusualParameters/class_A_{_m(@InjectRequestContext(AccountRequestContextKey)_{_a_}:_{_a:_string_})_{}_}
+=== RUN   TestContextRequiresAccessFires/bare:_unprotected_reports
+=== PAUSE TestContextRequiresAccessFires/bare:_unprotected_reports
+=== RUN   TestContextRequiresAccessNamesTheKey/namespaced_access_decorator_does_not_match
+=== RUN   TestContextRequiresAccessFires/bare:_a_decorator_for_a_different_key_does_not_protect
+=== PAUSE TestContextRequiresAccessNamesTheKey/namespaced_access_decorator_does_not_match
+=== PAUSE TestContextRequiresAccessFires/bare:_a_decorator_for_a_different_key_does_not_protect
+=== RUN   TestContextRequiresAccessFires/class_decorator,_wrong_one
+=== PAUSE TestContextRequiresAccessFires/class_decorator,_wrong_one
+=== RUN   TestContextRequiresAccessFires/member-access_key_resolves_to_the_property
+=== RUN   TestContextRequiresAccessSurprises/the_control:_the_same_import_unaliased_DOES_report
+=== CONT  TestContextRequiresAccessSurvivesUnusualParameters/class_A_{_m(@InjectRequestContext(AccountRequestContextKey)_...rest:_string[])_{}_}
+=== CONT  TestContextRequiresAccessStaysSilent
+=== PAUSE TestContextRequiresAccessFires/member-access_key_resolves_to_the_property
+=== RUN   TestContextRequiresAccessFires/no_annotation_at_all_is_NOT_soft_use
+=== CONT  TestContextRequiresAccessSurvivesUnusualParameters/class_A_{_m(@InjectRequestContext(AccountRequestContextKey)_[a]:_string[])_{}_}
+=== CONT  TestContextRequiresAccessSurvivesUnusualParameters/class_A_{_[computed](@InjectRequestContext(AccountRequestContextKey)_a:_string)_{}_}
+=== PAUSE TestContextRequiresAccessFires/no_annotation_at_all_is_NOT_soft_use
+=== RUN   TestContextRequiresAccessFires/parameter_property,_unprotected
+=== PAUSE TestContextRequiresAccessFires/parameter_property,_unprotected
+=== RUN   TestContextRequiresAccessFires/defaulted_parameter,_unprotected
+=== PAUSE TestContextRequiresAccessFires/defaulted_parameter,_unprotected
+=== RUN   TestContextRequiresAccessFires/two_protected_keys,_both_unprotected
+=== PAUSE TestContextRequiresAccessFires/two_protected_keys,_both_unprotected
+=== RUN   TestContextRequiresAccessFires/two_keys,_decorator_satisfies_only_one
+=== PAUSE TestContextRequiresAccessFires/two_keys,_decorator_satisfies_only_one
+=== RUN   TestContextRequiresAccessFires/same_key_twice_reports_once
+=== PAUSE TestContextRequiresAccessFires/same_key_twice_reports_once
+=== RUN   TestContextRequiresAccessFires/import_alias_resolves_to_the_exported_name
+=== CONT  TestContextRequiresAccessUnmeasurableShapes/a_decorated_constructor_is_a_member_like_any_other
+=== CONT  TestContextRequiresAccessUnmeasurableShapes/a_plain_function_is_not_a_member_and_is_never_checked
+=== PAUSE TestContextRequiresAccessFires/import_alias_resolves_to_the_exported_name
+=== RUN   TestContextRequiresAccessFires/non-aliased_import_is_unaffected
+=== CONT  TestContextRequiresAccessUnmeasurableShapes/a_class_expression's_members_are_checked
+=== PAUSE TestContextRequiresAccessSurprises/the_control:_the_same_import_unaliased_DOES_report
+=== CONT  TestContextRequiresAccessUnmeasurableShapes/an_unprotected_constructor_reports
+=== RUN   TestContextRequiresAccessStaysSilent/bare:_method_decorator_protects
+=== PAUSE TestContextRequiresAccessFires/non-aliased_import_is_unaffected
+=== RUN   TestContextRequiresAccessFires/computed_method_name
+=== PAUSE TestContextRequiresAccessFires/computed_method_name
+=== RUN   TestContextRequiresAccessFires/static_method,_unprotected
+=== PAUSE TestContextRequiresAccessFires/static_method,_unprotected
+=== RUN   TestContextRequiresAccessFires/getter_with_a_decorated_parameter_is_not_a_method_definition_shape
+=== PAUSE TestContextRequiresAccessFires/getter_with_a_decorated_parameter_is_not_a_method_definition_shape
+=== RUN   TestContextRequiresAccessFires/authentication_key,_unprotected
+=== CONT  TestContextRequiresAccessUnmeasurableShapes/and_a_class_expression's_decorators_protect_its_members
+=== PAUSE TestContextRequiresAccessFires/authentication_key,_unprotected
+=== RUN   TestContextRequiresAccessFires/namespaced_access_decorator_does_not_match
+=== PAUSE TestContextRequiresAccessFires/namespaced_access_decorator_does_not_match
+--- PASS: TestContextRequiresAccessSurvivesUnusualParameters (0.00s)
+    --- PASS: TestContextRequiresAccessSurvivesUnusualParameters/class_A_{_m(@InjectRequestContext(AccountRequestContextKey)_...rest:_string[])_{}_} (0.00s)
+    --- PASS: TestContextRequiresAccessSurvivesUnusualParameters/class_A_{_m(@InjectRequestContext(AccountRequestContextKey)_{_a_}:_{_a:_string_})_{}_} (0.00s)
+    --- PASS: TestContextRequiresAccessSurvivesUnusualParameters/class_A_{_[computed](@InjectRequestContext(AccountRequestContextKey)_a:_string)_{}_} (0.00s)
+    --- PASS: TestContextRequiresAccessSurvivesUnusualParameters/class_A_{_m(@InjectRequestContext(AccountRequestContextKey)_[a]:_string[])_{}_} (0.00s)
+=== CONT  TestContextRequiresAccessNamesTheKey/bare:_unprotected_reports
+=== RUN   TestContextRequiresAccessSurprises/a_bare_access_decorator_with_no_parentheses_protects
+=== PAUSE TestContextRequiresAccessSurprises/a_bare_access_decorator_with_no_parentheses_protects
+=== PAUSE TestContextRequiresAccessStaysSilent/bare:_method_decorator_protects
+=== RUN   TestContextRequiresAccessSurprises/the_control:_a_bare_decorator_of_the_WRONG_name_does_not_protect
+=== RUN   TestContextRequiresAccessStaysSilent/bare:_the_other_alternative_also_protects
+=== PAUSE TestContextRequiresAccessSurprises/the_control:_a_bare_decorator_of_the_WRONG_name_does_not_protect
+=== RUN   TestContextRequiresAccessSurprises/a_namespaced_access_decorator_does_NOT_protect,_called_or_not
+=== PAUSE TestContextRequiresAccessSurprises/a_namespaced_access_decorator_does_NOT_protect,_called_or_not
+=== RUN   TestContextRequiresAccessSurprises/but_a_namespaced_KEY_does_resolve,_by_its_property
+=== PAUSE TestContextRequiresAccessSurprises/but_a_namespaced_KEY_does_resolve,_by_its_property
+=== RUN   TestContextRequiresAccessSurprises/an_unannotated_parameter_is_NOT_soft_use,_though_implicit_any_would_be
+=== PAUSE TestContextRequiresAccessSurprises/an_unannotated_parameter_is_NOT_soft_use,_though_implicit_any_would_be
+=== RUN   TestContextRequiresAccessSurprises/the_control:_an_explicit_any_IS_soft_use
+=== PAUSE TestContextRequiresAccessSurprises/the_control:_an_explicit_any_IS_soft_use
+=== CONT  TestContextRequiresAccessNamesTheKey/same_key_twice_reports_once
+=== PAUSE TestContextRequiresAccessStaysSilent/bare:_the_other_alternative_also_protects
+=== CONT  TestContextRequiresAccessNamesTheKey/two_protected_keys,_both_unprotected
+=== CONT  TestContextRequiresAccessNamesTheKey/two_keys,_decorator_satisfies_only_one
+=== RUN   TestContextRequiresAccessStaysSilent/class_decorator_protects
+=== PAUSE TestContextRequiresAccessStaysSilent/class_decorator_protects
+=== RUN   TestContextRequiresAccessStaysSilent/unconfigured_key_is_ignored
+=== PAUSE TestContextRequiresAccessStaysSilent/unconfigured_key_is_ignored
+=== RUN   TestContextRequiresAccessStaysSilent/computed_member_access_does_not_resolve
+=== PAUSE TestContextRequiresAccessStaysSilent/computed_member_access_does_not_resolve
+=== RUN   TestContextRequiresAccessStaysSilent/soft_use:_optional_parameter
+=== PAUSE TestContextRequiresAccessStaysSilent/soft_use:_optional_parameter
+=== CONT  TestContextRequiresAccessNamesTheKey/defaulted_parameter,_unprotected
+=== RUN   TestContextRequiresAccessStaysSilent/soft_use:_union_with_undefined
+=== PAUSE TestContextRequiresAccessStaysSilent/soft_use:_union_with_undefined
+=== RUN   TestContextRequiresAccessStaysSilent/soft_use:_union_with_null
+=== PAUSE TestContextRequiresAccessStaysSilent/soft_use:_union_with_null
+=== RUN   TestContextRequiresAccessStaysSilent/soft_use:_any
+=== CONT  TestContextRequiresAccessNamesTheKey/member-access_key_resolves_to_the_property
+=== PAUSE TestContextRequiresAccessStaysSilent/soft_use:_any
+=== CONT  TestContextRequiresAccessNamesTheKey/parameter_property,_unprotected
+=== RUN   TestContextRequiresAccessStaysSilent/soft_use:_unknown
+=== PAUSE TestContextRequiresAccessStaysSilent/soft_use:_unknown
+=== CONT  TestContextRequiresAccessNamesTheKey/no_annotation_at_all_is_NOT_soft_use
+=== RUN   TestContextRequiresAccessStaysSilent/soft_use:_void
+=== PAUSE TestContextRequiresAccessStaysSilent/soft_use:_void
+=== RUN   TestContextRequiresAccessStaysSilent/soft_use:_bare_undefined_annotation
+=== PAUSE TestContextRequiresAccessStaysSilent/soft_use:_bare_undefined_annotation
+=== CONT  TestContextRequiresAccessNamesTheKey/static_method,_unprotected
+=== RUN   TestContextRequiresAccessStaysSilent/nested_union_counts_as_soft_use
+=== PAUSE TestContextRequiresAccessStaysSilent/nested_union_counts_as_soft_use
+=== RUN   TestContextRequiresAccessStaysSilent/GraphQlFieldResolver_exempts_the_method
+=== CONT  TestContextRequiresAccessNamesTheKey/namespaced_access_decorator_does_not_match
+=== PAUSE TestContextRequiresAccessStaysSilent/GraphQlFieldResolver_exempts_the_method
+=== RUN   TestContextRequiresAccessStaysSilent/parameter_property,_optional_is_soft_use
+=== PAUSE TestContextRequiresAccessStaysSilent/parameter_property,_optional_is_soft_use
+=== RUN   TestContextRequiresAccessStaysSilent/defaulted_parameter,_optional-typed_is_soft_use
+=== PAUSE TestContextRequiresAccessStaysSilent/defaulted_parameter,_optional-typed_is_soft_use
+=== RUN   TestContextRequiresAccessStaysSilent/two_keys,_one_decorator_satisfies_both
+=== PAUSE TestContextRequiresAccessStaysSilent/two_keys,_one_decorator_satisfies_both
+=== RUN   TestContextRequiresAccessStaysSilent/import_alias,_protected
+=== PAUSE TestContextRequiresAccessStaysSilent/import_alias,_protected
+=== RUN   TestContextRequiresAccessStaysSilent/an_alias_TO_a_configured_name_from_something_else
+=== PAUSE TestContextRequiresAccessStaysSilent/an_alias_TO_a_configured_name_from_something_else
+=== RUN   TestContextRequiresAccessStaysSilent/a_different_decorator_entirely_is_ignored
+=== PAUSE TestContextRequiresAccessStaysSilent/a_different_decorator_entirely_is_ignored
+=== RUN   TestContextRequiresAccessStaysSilent/decorator_with_no_argument
+=== CONT  TestContextRequiresAccessNamesTheKey/getter_with_a_decorated_parameter_is_not_a_method_definition_shape
+=== PAUSE TestContextRequiresAccessStaysSilent/decorator_with_no_argument
+=== CONT  TestContextRequiresAccessNamesTheKey/authentication_key,_unprotected
+=== RUN   TestContextRequiresAccessStaysSilent/bare_decorator,_not_a_call
+=== PAUSE TestContextRequiresAccessStaysSilent/bare_decorator,_not_a_call
+=== RUN   TestContextRequiresAccessStaysSilent/authentication_key,_its_own_alternative
+=== PAUSE TestContextRequiresAccessStaysSilent/authentication_key,_its_own_alternative
+=== RUN   TestContextRequiresAccessStaysSilent/device_key,_its_own_alternative
+=== PAUSE TestContextRequiresAccessStaysSilent/device_key,_its_own_alternative
+=== CONT  TestContextRequiresAccessNamesTheKey/computed_method_name
+=== RUN   TestContextRequiresAccessStaysSilent/bare_access_decorator,_not_a_call
+=== PAUSE TestContextRequiresAccessStaysSilent/bare_access_decorator,_not_a_call
+=== CONT  TestContextRequiresAccessNamesTheKey/non-aliased_import_is_unaffected
+=== RUN   TestContextRequiresAccessStaysSilent/empty_requirements:_rule_is_inert
+=== PAUSE TestContextRequiresAccessStaysSilent/empty_requirements:_rule_is_inert
+=== RUN   TestContextRequiresAccessStaysSilent/parameter_property,_class-protected
+=== PAUSE TestContextRequiresAccessStaysSilent/parameter_property,_class-protected
+=== RUN   TestContextRequiresAccessStaysSilent/alias_TO_a_configured_name_(recheck)
+=== PAUSE TestContextRequiresAccessStaysSilent/alias_TO_a_configured_name_(recheck)
+=== RUN   TestContextRequiresAccessStaysSilent/bare_access_decorator,_not_a_call_(recheck)
+=== PAUSE TestContextRequiresAccessStaysSilent/bare_access_decorator,_not_a_call_(recheck)
+=== RUN   TestContextRequiresAccessStaysSilent/bare_access_decorator_on_the_class
+=== PAUSE TestContextRequiresAccessStaysSilent/bare_access_decorator_on_the_class
+=== CONT  TestContextRequiresAccessNamesTheKey/class_decorator,_wrong_one
+--- PASS: TestContextRequiresAccessUnmeasurableShapes (0.00s)
+    --- PASS: TestContextRequiresAccessUnmeasurableShapes/a_decorated_constructor_is_a_member_like_any_other (0.00s)
+    --- PASS: TestContextRequiresAccessUnmeasurableShapes/a_plain_function_is_not_a_member_and_is_never_checked (0.00s)
+    --- PASS: TestContextRequiresAccessUnmeasurableShapes/a_class_expression's_members_are_checked (0.00s)
+    --- PASS: TestContextRequiresAccessUnmeasurableShapes/and_a_class_expression's_decorators_protect_its_members (0.00s)
+    --- PASS: TestContextRequiresAccessUnmeasurableShapes/an_unprotected_constructor_reports (0.00s)
+=== CONT  TestContextRequiresAccessNamesTheKey/bare:_a_decorator_for_a_different_key_does_not_protect
+=== CONT  TestContextRequiresAccessFires/bare:_unprotected_reports
+=== CONT  TestContextRequiresAccessNamesTheKey/import_alias_resolves_to_the_exported_name
+=== CONT  TestContextRequiresAccessFires/same_key_twice_reports_once
+=== CONT  TestContextRequiresAccessSurprises/but_a_namespaced_KEY_does_resolve,_by_its_property
+=== CONT  TestContextRequiresAccessFires/namespaced_access_decorator_does_not_match
+--- PASS: TestContextRequiresAccessNamesTheKey (0.00s)
+    --- PASS: TestContextRequiresAccessNamesTheKey/same_key_twice_reports_once (0.00s)
+    --- PASS: TestContextRequiresAccessNamesTheKey/bare:_unprotected_reports (0.00s)
+    --- PASS: TestContextRequiresAccessNamesTheKey/two_protected_keys,_both_unprotected (0.00s)
+    --- PASS: TestContextRequiresAccessNamesTheKey/two_keys,_decorator_satisfies_only_one (0.00s)
+    --- PASS: TestContextRequiresAccessNamesTheKey/member-access_key_resolves_to_the_property (0.00s)
+    --- PASS: TestContextRequiresAccessNamesTheKey/parameter_property,_unprotected (0.00s)
+    --- PASS: TestContextRequiresAccessNamesTheKey/no_annotation_at_all_is_NOT_soft_use (0.00s)
+    --- PASS: TestContextRequiresAccessNamesTheKey/static_method,_unprotected (0.00s)
+    --- PASS: TestContextRequiresAccessNamesTheKey/namespaced_access_decorator_does_not_match (0.00s)
+    --- PASS: TestContextRequiresAccessNamesTheKey/getter_with_a_decorated_parameter_is_not_a_method_definition_shape (0.00s)
+    --- PASS: TestContextRequiresAccessNamesTheKey/authentication_key,_unprotected (0.00s)
+    --- PASS: TestContextRequiresAccessNamesTheKey/defaulted_parameter,_unprotected (0.00s)
+    --- PASS: TestContextRequiresAccessNamesTheKey/computed_method_name (0.00s)
+    --- PASS: TestContextRequiresAccessNamesTheKey/non-aliased_import_is_unaffected (0.00s)
+    --- PASS: TestContextRequiresAccessNamesTheKey/bare:_a_decorator_for_a_different_key_does_not_protect (0.00s)
+    --- PASS: TestContextRequiresAccessNamesTheKey/import_alias_resolves_to_the_exported_name (0.00s)
+    --- PASS: TestContextRequiresAccessNamesTheKey/class_decorator,_wrong_one (0.00s)
+=== CONT  TestContextRequiresAccessFires/static_method,_unprotected
+=== CONT  TestContextRequiresAccessFires/computed_method_name
+=== CONT  TestContextRequiresAccessFires/non-aliased_import_is_unaffected
+=== CONT  TestContextRequiresAccessFires/getter_with_a_decorated_parameter_is_not_a_method_definition_shape
+=== CONT  TestContextRequiresAccessFires/import_alias_resolves_to_the_exported_name
+=== CONT  TestContextRequiresAccessFires/parameter_property,_unprotected
+=== CONT  TestContextRequiresAccessFires/two_keys,_decorator_satisfies_only_one
+=== CONT  TestContextRequiresAccessFires/two_protected_keys,_both_unprotected
+=== CONT  TestContextRequiresAccessFires/defaulted_parameter,_unprotected
+=== CONT  TestContextRequiresAccessSurprises/the_control:_an_explicit_any_IS_soft_use
+=== CONT  TestContextRequiresAccessSurprises/an_unannotated_parameter_is_NOT_soft_use,_though_implicit_any_would_be
+=== CONT  TestContextRequiresAccessSurprises/the_control:_a_bare_decorator_of_the_WRONG_name_does_not_protect
+=== CONT  TestContextRequiresAccessSurprises/a_namespaced_access_decorator_does_NOT_protect,_called_or_not
+=== CONT  TestContextRequiresAccessFires/member-access_key_resolves_to_the_property
+=== CONT  TestContextRequiresAccessFires/no_annotation_at_all_is_NOT_soft_use
+=== CONT  TestContextRequiresAccessSurprises/an_alias_TO_a_configured_name_protects_nothing_and_is_clean
+=== CONT  TestContextRequiresAccessSurprises/a_bare_access_decorator_with_no_parentheses_protects
+=== CONT  TestContextRequiresAccessFires/class_decorator,_wrong_one
+=== CONT  TestContextRequiresAccessSurprises/the_control:_the_same_import_unaliased_DOES_report
+=== CONT  TestContextRequiresAccessFires/bare:_a_decorator_for_a_different_key_does_not_protect
+=== CONT  TestContextRequiresAccessStaysSilent/two_keys,_one_decorator_satisfies_both
+=== CONT  TestContextRequiresAccessStaysSilent/bare:_method_decorator_protects
+=== CONT  TestContextRequiresAccessFires/authentication_key,_unprotected
+=== CONT  TestContextRequiresAccessStaysSilent/device_key,_its_own_alternative
+=== CONT  TestContextRequiresAccessStaysSilent/bare_access_decorator_on_the_class
+=== CONT  TestContextRequiresAccessStaysSilent/bare_access_decorator,_not_a_call_(recheck)
+=== CONT  TestContextRequiresAccessStaysSilent/alias_TO_a_configured_name_(recheck)
+=== CONT  TestContextRequiresAccessStaysSilent/parameter_property,_class-protected
+=== CONT  TestContextRequiresAccessStaysSilent/empty_requirements:_rule_is_inert
+=== CONT  TestContextRequiresAccessStaysSilent/bare_access_decorator,_not_a_call
+=== CONT  TestContextRequiresAccessStaysSilent/soft_use:_any
+=== CONT  TestContextRequiresAccessStaysSilent/defaulted_parameter,_optional-typed_is_soft_use
+=== CONT  TestContextRequiresAccessStaysSilent/parameter_property,_optional_is_soft_use
+=== CONT  TestContextRequiresAccessStaysSilent/GraphQlFieldResolver_exempts_the_method
+=== CONT  TestContextRequiresAccessStaysSilent/nested_union_counts_as_soft_use
+=== CONT  TestContextRequiresAccessStaysSilent/soft_use:_bare_undefined_annotation
+=== CONT  TestContextRequiresAccessStaysSilent/soft_use:_unknown
+=== CONT  TestContextRequiresAccessStaysSilent/soft_use:_void
+=== CONT  TestContextRequiresAccessStaysSilent/soft_use:_union_with_null
+=== CONT  TestContextRequiresAccessStaysSilent/soft_use:_union_with_undefined
+=== CONT  TestContextRequiresAccessStaysSilent/decorator_with_no_argument
+=== CONT  TestContextRequiresAccessStaysSilent/authentication_key,_its_own_alternative
+=== CONT  TestContextRequiresAccessStaysSilent/bare_decorator,_not_a_call
+=== CONT  TestContextRequiresAccessStaysSilent/computed_member_access_does_not_resolve
+=== CONT  TestContextRequiresAccessStaysSilent/class_decorator_protects
+=== CONT  TestContextRequiresAccessStaysSilent/unconfigured_key_is_ignored
+=== CONT  TestContextRequiresAccessStaysSilent/an_alias_TO_a_configured_name_from_something_else
+=== CONT  TestContextRequiresAccessStaysSilent/a_different_decorator_entirely_is_ignored
+=== CONT  TestContextRequiresAccessStaysSilent/import_alias,_protected
+=== CONT  TestContextRequiresAccessStaysSilent/bare:_the_other_alternative_also_protects
+=== CONT  TestContextRequiresAccessStaysSilent/soft_use:_optional_parameter
+--- PASS: TestContextRequiresAccessSurprises (0.00s)
+    --- PASS: TestContextRequiresAccessSurprises/but_a_namespaced_KEY_does_resolve,_by_its_property (0.00s)
+    --- PASS: TestContextRequiresAccessSurprises/the_control:_an_explicit_any_IS_soft_use (0.00s)
+    --- PASS: TestContextRequiresAccessSurprises/the_control:_a_bare_decorator_of_the_WRONG_name_does_not_protect (0.00s)
+    --- PASS: TestContextRequiresAccessSurprises/an_unannotated_parameter_is_NOT_soft_use,_though_implicit_any_would_be (0.00s)
+    --- PASS: TestContextRequiresAccessSurprises/a_namespaced_access_decorator_does_NOT_protect,_called_or_not (0.00s)
+    --- PASS: TestContextRequiresAccessSurprises/the_control:_the_same_import_unaliased_DOES_report (0.00s)
+    --- PASS: TestContextRequiresAccessSurprises/a_bare_access_decorator_with_no_parentheses_protects (0.00s)
+    --- PASS: TestContextRequiresAccessSurprises/an_alias_TO_a_configured_name_protects_nothing_and_is_clean (0.00s)
+--- PASS: TestContextRequiresAccessFires (0.01s)
+    --- PASS: TestContextRequiresAccessFires/bare:_unprotected_reports (0.00s)
+    --- PASS: TestContextRequiresAccessFires/same_key_twice_reports_once (0.00s)
+    --- PASS: TestContextRequiresAccessFires/namespaced_access_decorator_does_not_match (0.00s)
+    --- PASS: TestContextRequiresAccessFires/static_method,_unprotected (0.00s)
+    --- PASS: TestContextRequiresAccessFires/non-aliased_import_is_unaffected (0.00s)
+    --- PASS: TestContextRequiresAccessFires/computed_method_name (0.00s)
+    --- PASS: TestContextRequiresAccessFires/getter_with_a_decorated_parameter_is_not_a_method_definition_shape (0.00s)
+    --- PASS: TestContextRequiresAccessFires/import_alias_resolves_to_the_exported_name (0.00s)
+    --- PASS: TestContextRequiresAccessFires/parameter_property,_unprotected (0.00s)
+    --- PASS: TestContextRequiresAccessFires/two_keys,_decorator_satisfies_only_one (0.00s)
+    --- PASS: TestContextRequiresAccessFires/two_protected_keys,_both_unprotected (0.00s)
+    --- PASS: TestContextRequiresAccessFires/defaulted_parameter,_unprotected (0.00s)
+    --- PASS: TestContextRequiresAccessFires/no_annotation_at_all_is_NOT_soft_use (0.00s)
+    --- PASS: TestContextRequiresAccessFires/member-access_key_resolves_to_the_property (0.00s)
+    --- PASS: TestContextRequiresAccessFires/bare:_a_decorator_for_a_different_key_does_not_protect (0.00s)
+    --- PASS: TestContextRequiresAccessFires/authentication_key,_unprotected (0.00s)
+    --- PASS: TestContextRequiresAccessFires/class_decorator,_wrong_one (0.00s)
+--- PASS: TestContextRequiresAccessStaysSilent (0.00s)
+    --- PASS: TestContextRequiresAccessStaysSilent/two_keys,_one_decorator_satisfies_both (0.00s)
+    --- PASS: TestContextRequiresAccessStaysSilent/device_key,_its_own_alternative (0.00s)
+    --- PASS: TestContextRequiresAccessStaysSilent/bare_access_decorator_on_the_class (0.00s)
+    --- PASS: TestContextRequiresAccessStaysSilent/bare:_method_decorator_protects (0.00s)
+    --- PASS: TestContextRequiresAccessStaysSilent/alias_TO_a_configured_name_(recheck) (0.00s)
+    --- PASS: TestContextRequiresAccessStaysSilent/bare_access_decorator,_not_a_call_(recheck) (0.00s)
+    --- PASS: TestContextRequiresAccessStaysSilent/empty_requirements:_rule_is_inert (0.00s)
+    --- PASS: TestContextRequiresAccessStaysSilent/soft_use:_any (0.00s)
+    --- PASS: TestContextRequiresAccessStaysSilent/bare_access_decorator,_not_a_call (0.00s)
+    --- PASS: TestContextRequiresAccessStaysSilent/parameter_property,_class-protected (0.00s)
+    --- PASS: TestContextRequiresAccessStaysSilent/defaulted_parameter,_optional-typed_is_soft_use (0.00s)
+    --- PASS: TestContextRequiresAccessStaysSilent/parameter_property,_optional_is_soft_use (0.00s)
+    --- PASS: TestContextRequiresAccessStaysSilent/nested_union_counts_as_soft_use (0.00s)
+    --- PASS: TestContextRequiresAccessStaysSilent/GraphQlFieldResolver_exempts_the_method (0.00s)
+    --- PASS: TestContextRequiresAccessStaysSilent/soft_use:_unknown (0.00s)
+    --- PASS: TestContextRequiresAccessStaysSilent/soft_use:_union_with_null (0.00s)
+    --- PASS: TestContextRequiresAccessStaysSilent/soft_use:_union_with_undefined (0.00s)
+    --- PASS: TestContextRequiresAccessStaysSilent/soft_use:_void (0.00s)
+    --- PASS: TestContextRequiresAccessStaysSilent/decorator_with_no_argument (0.00s)
+    --- PASS: TestContextRequiresAccessStaysSilent/authentication_key,_its_own_alternative (0.00s)
+    --- PASS: TestContextRequiresAccessStaysSilent/bare_decorator,_not_a_call (0.00s)
+    --- PASS: TestContextRequiresAccessStaysSilent/class_decorator_protects (0.00s)
+    --- PASS: TestContextRequiresAccessStaysSilent/unconfigured_key_is_ignored (0.00s)
+    --- PASS: TestContextRequiresAccessStaysSilent/computed_member_access_does_not_resolve (0.00s)
+    --- PASS: TestContextRequiresAccessStaysSilent/an_alias_TO_a_configured_name_from_something_else (0.00s)
+    --- PASS: TestContextRequiresAccessStaysSilent/a_different_decorator_entirely_is_ignored (0.00s)
+    --- PASS: TestContextRequiresAccessStaysSilent/import_alias,_protected (0.00s)
+    --- PASS: TestContextRequiresAccessStaysSilent/bare:_the_other_alternative_also_protects (0.00s)
+    --- PASS: TestContextRequiresAccessStaysSilent/soft_use:_optional_parameter (0.00s)
+    --- PASS: TestContextRequiresAccessStaysSilent/soft_use:_bare_undefined_annotation (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/base	0.016s

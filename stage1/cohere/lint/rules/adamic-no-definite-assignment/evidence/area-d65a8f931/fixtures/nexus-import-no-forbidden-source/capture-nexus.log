@@ -1,0 +1,110 @@
+=== RUN   TestImportNoForbiddenSourceFires
+=== PAUSE TestImportNoForbiddenSourceFires
+=== RUN   TestImportNoForbiddenSourceExemptsOnlyTheSanctionedWrapper
+=== PAUSE TestImportNoForbiddenSourceExemptsOnlyTheSanctionedWrapper
+=== RUN   TestImportNoForbiddenSourceReportsAtTheSpecifier
+=== PAUSE TestImportNoForbiddenSourceReportsAtTheSpecifier
+=== RUN   TestImportNoForbiddenSourceStaysSilent
+=== PAUSE TestImportNoForbiddenSourceStaysSilent
+=== CONT  TestImportNoForbiddenSourceFires
+=== RUN   TestImportNoForbiddenSourceFires/next_navigation
+=== PAUSE TestImportNoForbiddenSourceFires/next_navigation
+=== CONT  TestImportNoForbiddenSourceReportsAtTheSpecifier
+=== RUN   TestImportNoForbiddenSourceFires/next_link
+=== PAUSE TestImportNoForbiddenSourceFires/next_link
+=== RUN   TestImportNoForbiddenSourceFires/next_image
+=== PAUSE TestImportNoForbiddenSourceFires/next_image
+=== RUN   TestImportNoForbiddenSourceFires/framer_motion
+--- PASS: TestImportNoForbiddenSourceReportsAtTheSpecifier (0.00s)
+=== PAUSE TestImportNoForbiddenSourceFires/framer_motion
+=== RUN   TestImportNoForbiddenSourceFires/require
+=== PAUSE TestImportNoForbiddenSourceFires/require
+=== RUN   TestImportNoForbiddenSourceFires/dynamic_import
+=== PAUSE TestImportNoForbiddenSourceFires/dynamic_import
+=== RUN   TestImportNoForbiddenSourceFires/named_imports_keep_their_bindings
+=== PAUSE TestImportNoForbiddenSourceFires/named_imports_keep_their_bindings
+=== CONT  TestImportNoForbiddenSourceFires/next_navigation
+=== CONT  TestImportNoForbiddenSourceExemptsOnlyTheSanctionedWrapper
+=== RUN   TestImportNoForbiddenSourceExemptsOnlyTheSanctionedWrapper/the_Image_wrapper
+=== PAUSE TestImportNoForbiddenSourceExemptsOnlyTheSanctionedWrapper/the_Image_wrapper
+=== RUN   TestImportNoForbiddenSourceExemptsOnlyTheSanctionedWrapper/the_Link_wrapper
+=== PAUSE TestImportNoForbiddenSourceExemptsOnlyTheSanctionedWrapper/the_Link_wrapper
+=== CONT  TestImportNoForbiddenSourceFires/require
+=== RUN   TestImportNoForbiddenSourceExemptsOnlyTheSanctionedWrapper/the_Navigation_module
+=== CONT  TestImportNoForbiddenSourceStaysSilent
+=== RUN   TestImportNoForbiddenSourceStaysSilent/the_replacement_itself
+=== PAUSE TestImportNoForbiddenSourceStaysSilent/the_replacement_itself
+=== CONT  TestImportNoForbiddenSourceFires/named_imports_keep_their_bindings
+=== PAUSE TestImportNoForbiddenSourceExemptsOnlyTheSanctionedWrapper/the_Navigation_module
+=== RUN   TestImportNoForbiddenSourceExemptsOnlyTheSanctionedWrapper/Navigation's_router_hook
+=== PAUSE TestImportNoForbiddenSourceExemptsOnlyTheSanctionedWrapper/Navigation's_router_hook
+=== RUN   TestImportNoForbiddenSourceExemptsOnlyTheSanctionedWrapper/the_Image_wrapper,_through_a_dynamic_import
+=== PAUSE TestImportNoForbiddenSourceExemptsOnlyTheSanctionedWrapper/the_Image_wrapper,_through_a_dynamic_import
+=== RUN   TestImportNoForbiddenSourceExemptsOnlyTheSanctionedWrapper/a_dialog_beside_the_Image_wrapper
+=== PAUSE TestImportNoForbiddenSourceExemptsOnlyTheSanctionedWrapper/a_dialog_beside_the_Image_wrapper
+=== RUN   TestImportNoForbiddenSourceExemptsOnlyTheSanctionedWrapper/a_component_beside_the_Link_wrapper
+=== PAUSE TestImportNoForbiddenSourceExemptsOnlyTheSanctionedWrapper/a_component_beside_the_Link_wrapper
+=== CONT  TestImportNoForbiddenSourceFires/next_image
+=== CONT  TestImportNoForbiddenSourceFires/framer_motion
+=== RUN   TestImportNoForbiddenSourceExemptsOnlyTheSanctionedWrapper/framer-motion_has_no_wrapper_to_exempt
+=== PAUSE TestImportNoForbiddenSourceExemptsOnlyTheSanctionedWrapper/framer-motion_has_no_wrapper_to_exempt
+=== CONT  TestImportNoForbiddenSourceExemptsOnlyTheSanctionedWrapper/the_Image_wrapper
+=== RUN   TestImportNoForbiddenSourceStaysSilent/the_motion_replacement
+=== PAUSE TestImportNoForbiddenSourceStaysSilent/the_motion_replacement
+=== RUN   TestImportNoForbiddenSourceStaysSilent/an_unrelated_next_module
+=== PAUSE TestImportNoForbiddenSourceStaysSilent/an_unrelated_next_module
+=== CONT  TestImportNoForbiddenSourceExemptsOnlyTheSanctionedWrapper/the_Image_wrapper,_through_a_dynamic_import
+=== CONT  TestImportNoForbiddenSourceExemptsOnlyTheSanctionedWrapper/Navigation's_router_hook
+=== CONT  TestImportNoForbiddenSourceExemptsOnlyTheSanctionedWrapper/the_Navigation_module
+=== CONT  TestImportNoForbiddenSourceExemptsOnlyTheSanctionedWrapper/the_Link_wrapper
+=== RUN   TestImportNoForbiddenSourceStaysSilent/a_longer_specifier_sharing_a_prefix
+=== CONT  TestImportNoForbiddenSourceExemptsOnlyTheSanctionedWrapper/a_component_beside_the_Link_wrapper
+=== PAUSE TestImportNoForbiddenSourceStaysSilent/a_longer_specifier_sharing_a_prefix
+=== RUN   TestImportNoForbiddenSourceStaysSilent/a_package_whose_name_contains_a_forbidden_one
+=== PAUSE TestImportNoForbiddenSourceStaysSilent/a_package_whose_name_contains_a_forbidden_one
+=== RUN   TestImportNoForbiddenSourceStaysSilent/an_ordinary_relative_import
+=== PAUSE TestImportNoForbiddenSourceStaysSilent/an_ordinary_relative_import
+=== CONT  TestImportNoForbiddenSourceExemptsOnlyTheSanctionedWrapper/framer-motion_has_no_wrapper_to_exempt
+=== RUN   TestImportNoForbiddenSourceStaysSilent/a_computed_dynamic_import
+=== PAUSE TestImportNoForbiddenSourceStaysSilent/a_computed_dynamic_import
+=== RUN   TestImportNoForbiddenSourceStaysSilent/no_imports_at_all
+=== PAUSE TestImportNoForbiddenSourceStaysSilent/no_imports_at_all
+=== CONT  TestImportNoForbiddenSourceStaysSilent/the_replacement_itself
+=== CONT  TestImportNoForbiddenSourceExemptsOnlyTheSanctionedWrapper/a_dialog_beside_the_Image_wrapper
+=== CONT  TestImportNoForbiddenSourceFires/dynamic_import
+=== CONT  TestImportNoForbiddenSourceFires/next_link
+=== CONT  TestImportNoForbiddenSourceStaysSilent/an_ordinary_relative_import
+=== CONT  TestImportNoForbiddenSourceStaysSilent/an_unrelated_next_module
+=== CONT  TestImportNoForbiddenSourceStaysSilent/a_longer_specifier_sharing_a_prefix
+=== CONT  TestImportNoForbiddenSourceStaysSilent/the_motion_replacement
+--- PASS: TestImportNoForbiddenSourceExemptsOnlyTheSanctionedWrapper (0.03s)
+    --- PASS: TestImportNoForbiddenSourceExemptsOnlyTheSanctionedWrapper/the_Image_wrapper (0.00s)
+    --- PASS: TestImportNoForbiddenSourceExemptsOnlyTheSanctionedWrapper/Navigation's_router_hook (0.00s)
+    --- PASS: TestImportNoForbiddenSourceExemptsOnlyTheSanctionedWrapper/the_Navigation_module (0.00s)
+    --- PASS: TestImportNoForbiddenSourceExemptsOnlyTheSanctionedWrapper/the_Image_wrapper,_through_a_dynamic_import (0.00s)
+    --- PASS: TestImportNoForbiddenSourceExemptsOnlyTheSanctionedWrapper/the_Link_wrapper (0.00s)
+    --- PASS: TestImportNoForbiddenSourceExemptsOnlyTheSanctionedWrapper/a_component_beside_the_Link_wrapper (0.00s)
+    --- PASS: TestImportNoForbiddenSourceExemptsOnlyTheSanctionedWrapper/a_dialog_beside_the_Image_wrapper (0.00s)
+    --- PASS: TestImportNoForbiddenSourceExemptsOnlyTheSanctionedWrapper/framer-motion_has_no_wrapper_to_exempt (0.00s)
+=== CONT  TestImportNoForbiddenSourceStaysSilent/a_package_whose_name_contains_a_forbidden_one
+=== CONT  TestImportNoForbiddenSourceStaysSilent/no_imports_at_all
+=== CONT  TestImportNoForbiddenSourceStaysSilent/a_computed_dynamic_import
+--- PASS: TestImportNoForbiddenSourceStaysSilent (0.00s)
+    --- PASS: TestImportNoForbiddenSourceStaysSilent/the_replacement_itself (0.00s)
+    --- PASS: TestImportNoForbiddenSourceStaysSilent/an_ordinary_relative_import (0.00s)
+    --- PASS: TestImportNoForbiddenSourceStaysSilent/an_unrelated_next_module (0.00s)
+    --- PASS: TestImportNoForbiddenSourceStaysSilent/a_longer_specifier_sharing_a_prefix (0.00s)
+    --- PASS: TestImportNoForbiddenSourceStaysSilent/the_motion_replacement (0.00s)
+    --- PASS: TestImportNoForbiddenSourceStaysSilent/a_computed_dynamic_import (0.00s)
+    --- PASS: TestImportNoForbiddenSourceStaysSilent/a_package_whose_name_contains_a_forbidden_one (0.00s)
+    --- PASS: TestImportNoForbiddenSourceStaysSilent/no_imports_at_all (0.00s)
+--- PASS: TestImportNoForbiddenSourceFires (0.00s)
+    --- PASS: TestImportNoForbiddenSourceFires/next_navigation (0.03s)
+    --- PASS: TestImportNoForbiddenSourceFires/require (0.03s)
+    --- PASS: TestImportNoForbiddenSourceFires/next_image (0.00s)
+    --- PASS: TestImportNoForbiddenSourceFires/named_imports_keep_their_bindings (0.00s)
+    --- PASS: TestImportNoForbiddenSourceFires/framer_motion (0.00s)
+    --- PASS: TestImportNoForbiddenSourceFires/dynamic_import (0.00s)
+    --- PASS: TestImportNoForbiddenSourceFires/next_link (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/nexus	0.057s
