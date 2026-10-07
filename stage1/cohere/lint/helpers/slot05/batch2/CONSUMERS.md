@@ -29,4 +29,3 @@ Each delivered helper removes one listed dependency from each of these 11 rules.
 - better-tailwindcss/no-duplicate-classes
 - better-tailwindcss/no-unknown-classes
 - better-tailwindcss/no-unnecessary-whitespace
-

@@ -21,3 +21,7 @@ go test ./stage1/cohere/lint/helpers -run '^TestSlot05' -count=1 -v -timeout=10m
 ```
 
 Set `ADAMIC_SLOT05_EVIDENCE` to an existing directory to save per-consumer literal counts and deterministic generated-corpus SHA-256 hashes. Tests write no repository artifacts by default. Every run regenerates the corpus against cohere `715ba94f3608a6500086b1076ce5cb7e51b836db`; pin drift fails the tests. No existing helper, linter entry point, compiler implementation or Go cohere worktree is edited.
+
+## Continuation
+
+[batch2/REPORT.md](batch2/REPORT.md) records two retained Tailwind readers, their oracle checks and consumer dependencies. Factory and dispatcher claim collisions were yielded to earlier reservations. Ahra instructed workers to finish existing claims and stop claiming; no replacement for the third continuation slot was reserved. All continuation code and its independent oracle runner stay inside batch2/.
