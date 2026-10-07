@@ -35,3 +35,17 @@ Released older reservations were also checked: their rules now have active
 continuation claims on wave 22. No selected rule was ported on main or the
 bridge branch or named in an origin claim at the final pre-claim inspection.
 This claim update is committed and pushed before implementation begins.
+
+## Third batch
+
+The previous six ports are completed and pushed through 98f1cd3230075b5363f0736395db9c5b88e5fe22.
+After refreshing all 356 origin refs, the next unported and unclaimed entries are:
+
+1. react-hooks/globals (0 compiler, 0 repository).
+2. react-hooks/immutability (0 compiler, 0 repository).
+3. react-hooks/no-deriving-state-in-effects (0 compiler, 0 repository).
+
+The immediate refresh found new claims for prefer-promise-reject-errors,
+prefer-regex-literals, prefer-rest-params and react-hooks/exhaustive-deps.
+Those candidates were skipped. Main is ef3d907e and the bridge branch is 5afbdb83.
+This reservation is pushed before implementation.
