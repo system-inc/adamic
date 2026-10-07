@@ -1,0 +1,5 @@
+let g = 0;
+function Component() {
+  g = 1;
+  return <div />;
+}
