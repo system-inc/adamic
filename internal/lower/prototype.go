@@ -69,7 +69,7 @@ func (l *lowering) librarySymbol(symbol *ast.Symbol) bool {
 
 func (l *lowering) prototypeRead(node *ast.Node, name string) error {
 	if name == "isPrototypeOf" {
-		return &Refused{Where: l.program.Where(node), What: "isPrototypeOf", Fix: "Adamic has no observable prototype chain; use instanceof for class identity or an explicit discriminant"}
+		return &Refused{Where: l.program.Where(node), What: "isPrototypeOf", Fix: "Adamic has no observable prototype chain; use instanceof for class identity or an explicit discriminant (adamic/no-prototype-reflection)"}
 	}
 	return &Refused{Where: l.program.Where(node), What: "inherited library member " + name + " read as an own field", Fix: "prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)"}
 }
@@ -85,7 +85,7 @@ func (l *lowering) objectPrototypeCall(node, receiver *ast.Node, name string) (i
 		return nil, false, nil
 	}
 	if name == "isPrototypeOf" {
-		return nil, true, &Refused{Where: l.program.Where(node), What: "isPrototypeOf", Fix: "Adamic has no observable prototype chain; use instanceof for class identity or an explicit discriminant"}
+		return nil, true, &Refused{Where: l.program.Where(node), What: "isPrototypeOf", Fix: "Adamic has no observable prototype chain; use instanceof for class identity or an explicit discriminant (adamic/no-prototype-reflection)"}
 	}
 	if name != "valueOf" && l.isLibraryType(l.checker.GetTypeAtLocation(receiver), "Error") {
 		return nil, true, l.notYet(node, name+" on Error (its prototype and non-enumerable own descriptors differ from plain objects)")
@@ -100,7 +100,7 @@ func (l *lowering) objectPrototypeCall(node, receiver *ast.Node, name string) (i
 		return nil, false, nil
 	} // Number's radix overload.
 	if name == "toLocaleString" && of == ir.Number {
-		return nil, true, &Refused{Where: l.program.Where(node), What: name + " on a number", Fix: "JavaScript uses locale-sensitive number formatting; use toString for deterministic formatting"}
+		return nil, true, &Refused{Where: l.program.Where(node), What: name + " on a number", Fix: "JavaScript uses locale-sensitive number formatting; use toString for deterministic formatting (adamic/deterministic)"}
 	}
 	if name == "toLocaleString" && of == ir.Array {
 		element, err := l.elementType(receiver)
@@ -108,7 +108,7 @@ func (l *lowering) objectPrototypeCall(node, receiver *ast.Node, name string) (i
 			return nil, true, err
 		}
 		if element != ir.String && element != ir.Boolean {
-			return nil, true, &Refused{Where: l.program.Where(node), What: name + " on this array", Fix: "JavaScript formats each element with its own toLocaleString, which may be locale-sensitive or user-defined; use toString for deterministic formatting"}
+			return nil, true, &Refused{Where: l.program.Where(node), What: name + " on this array", Fix: "JavaScript formats each element with its own toLocaleString, which may be locale-sensitive or user-defined; use toString for deterministic formatting (adamic/deterministic)"}
 		}
 	}
 	if name == "hasOwnProperty" || name == "propertyIsEnumerable" {

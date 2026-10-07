@@ -165,7 +165,7 @@ func (l *lowering) destructureIterator(pattern, sourceNode *ast.Node, plan *iter
 		} else {
 			valueType := l.checker.GetTypeOfSymbol(l.checker.GetPropertyOfType(plan.step, "value"))
 			if !l.includesUndefined(valueType) {
-				return nil, &Refused{Where: l.program.Where(binding), What: "an iterator binding whose type omits undefined on exhaustion", Fix: "give the binding a default, [value = fallback], or make the yielded type include undefined; TypeScript does not account for early iterator exhaustion"}
+				return nil, &Refused{Where: l.program.Where(binding), What: "an iterator binding whose type omits undefined on exhaustion", Fix: "give the binding a default, [value = fallback], or make the yielded type include undefined; TypeScript does not account for early iterator exhaustion (adamic/iterator-exhaustion)"}
 			}
 			fallback = fit(ir.Undefined{}, plan.element)
 		}

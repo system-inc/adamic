@@ -19,30 +19,30 @@ type refusal struct {
 // refusals by syntax kind. Each is checked before lowering, so a program learns it has written
 // something 0.1 refuses for good, never that stage 0 hasn't got to it yet.
 var refusals = map[ast.Kind]refusal{
-	ast.KindAwaitExpression:   {"await", "0.1 has no async; it arrives with the concurrency model"},
-	ast.KindYieldExpression:   {"yield (generators)", "build an array, or call a function per item"},
-	ast.KindDecorator:         {"a decorator", "write the behavior where it applies; 0.1 doesn't rewrite classes at runtime"},
-	ast.KindLabeledStatement:  {"a label", "move the loop into a function and return from it"},
-	ast.KindWithStatement:     {"with", "name the object you mean"},
-	ast.KindDeleteExpression:  {"delete", "an object's shape is fixed; use a Map for keys that come and go"},
-	ast.KindDebuggerStatement: {"debugger", "remove it"},
-	ast.KindEnumDeclaration:   {"enum", "use a union of string literals, like 'Circle' | 'Square'"},
-	ast.KindModuleDeclaration: {"a namespace", "use a module: a file of its own, with named exports"},
-	ast.KindVoidExpression:    {"the void operator", "evaluate the expression as a statement"},
-	ast.KindIndexSignature:    {"an index signature", "use a Map, which keeps keys in the order they were added"},
-	ast.KindExportAssignment:  {"export default", "export by name: one name for one thing"},
+	ast.KindAwaitExpression:   {"await", "0.1 has no async; it arrives with the concurrency model (adamic/no-async)"},
+	ast.KindYieldExpression:   {"yield (generators)", "build an array, or call a function per item (adamic/no-generators)"},
+	ast.KindDecorator:         {"a decorator", "write the behavior where it applies; 0.1 doesn't rewrite classes at runtime (adamic/no-decorators)"},
+	ast.KindLabeledStatement:  {"a label", "move the loop into a function and return from it (adamic/no-labels)"},
+	ast.KindWithStatement:     {"with", "name the object you mean (adamic/no-with)"},
+	ast.KindDeleteExpression:  {"delete", "an object's shape is fixed; use a Map for keys that come and go (adamic/fixed-shape)"},
+	ast.KindDebuggerStatement: {"debugger", "remove it (adamic/no-debugger)"},
+	ast.KindEnumDeclaration:   {"enum", "use a union of string literals, like 'Circle' | 'Square' (adamic/no-enum)"},
+	ast.KindModuleDeclaration: {"a namespace", "use a module: a file of its own, with named exports (adamic/no-namespace)"},
+	ast.KindVoidExpression:    {"the void operator", "evaluate the expression as a statement (adamic/no-void-operator)"},
+	ast.KindIndexSignature:    {"an index signature", "use a Map, which keeps keys in the order they were added (adamic/no-index-signature)"},
+	ast.KindExportAssignment:  {"export default", "export by name: one name for one thing (adamic/named-declaration-export)"},
 	ast.KindTypePredicate:     {"a type predicate", "narrow where you use it, with ===, typeof or instanceof (adamic/no-type-predicate)"},
-	ast.KindNonNullExpression: {"the non-null assertion !", "write ?? panic('why it can't be missing'), or narrow and handle the missing case"},
+	ast.KindNonNullExpression: {"the non-null assertion !", "write ?? panic('why it can't be missing'), or narrow and handle the missing case (no-non-null-assertion)"},
 }
 
 // refusedOperators are binary operators 0.1 refuses.
 var refusedOperators = map[ast.Kind]refusal{
-	ast.KindEqualsEqualsToken:             {"==", "use ===, which doesn't coerce"},
-	ast.KindExclamationEqualsToken:        {"!=", "use !==, which doesn't coerce"},
-	ast.KindInKeyword:                     {"in", "an object's shape is known; use a discriminant, or a Map"},
-	ast.KindCommaToken:                    {"the comma operator", "write each expression as its own statement"},
-	ast.KindAmpersandAmpersandEqualsToken: {"&&=", "write the if"},
-	ast.KindBarBarEqualsToken:             {"||=", "write the if"},
+	ast.KindEqualsEqualsToken:             {"==", "use ===, which doesn't coerce (adamic/strict-equality)"},
+	ast.KindExclamationEqualsToken:        {"!=", "use !==, which doesn't coerce (adamic/strict-equality)"},
+	ast.KindInKeyword:                     {"in", "an object's shape is known; use a discriminant, or a Map (adamic/no-in-operator)"},
+	ast.KindCommaToken:                    {"the comma operator", "write each expression as its own statement (adamic/no-comma-operator)"},
+	ast.KindAmpersandAmpersandEqualsToken: {"&&=", "write the if (adamic/no-logical-assignment)"},
+	ast.KindBarBarEqualsToken:             {"||=", "write the if (adamic/no-logical-assignment)"},
 }
 
 // refuse walks a module for what 0.1 refuses and returns the first, with where it is and the fix.
@@ -56,7 +56,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			name = "@ts-expect-error"
 		}
 		line, column := scanner.GetLineAndCharacterOfPosition(module, directive.Loc.Pos())
-		return &Refused{Where: fmt.Sprintf("%s:%d:%d", l.program.FileName(module), line+1, column+1), What: name + " suppression directive", Fix: "remove it and fix the type error"}
+		return &Refused{Where: fmt.Sprintf("%s:%d:%d", l.program.FileName(module), line+1, column+1), What: name + " suppression directive", Fix: "remove it and fix the type error (ban-ts-comment)"}
 	}
 	var found error
 	var visit ast.Visitor
@@ -78,7 +78,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			assertion = node.AsVariableDeclaration().ExclamationToken
 		}
 		if assertion != nil {
-			found = &Refused{Where: l.program.Where(assertion), What: "a definite assignment assertion !", Fix: "remove ! and initialize it where it is declared or in the constructor, or type it T | undefined"}
+			found = &Refused{Where: l.program.Where(assertion), What: "a definite assignment assertion !", Fix: "remove ! and initialize it where it is declared or in the constructor, or type it T | undefined (adamic/no-definite-assignment)"}
 			return true
 		}
 		if node.Kind == ast.KindBinaryExpression {
@@ -97,17 +97,17 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			generator = node.AsMethodDeclaration().AsteriskToken != nil
 		}
 		if generator {
-			found = &Refused{Where: l.program.Where(node), What: "a generator function", Fix: "use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"}
+			found = &Refused{Where: l.program.Where(node), What: "a generator function", Fix: "use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md) (adamic/no-generators)"}
 			return true
 		}
 		if ast.IsFunctionLike(node) && ast.HasSyntacticModifier(node, ast.ModifierFlagsAsync) {
-			found = &Refused{Where: l.program.Where(node), What: "an async function", Fix: "0.1 has no async; it arrives with the concurrency model"}
+			found = &Refused{Where: l.program.Where(node), What: "an async function", Fix: "0.1 has no async; it arrives with the concurrency model (adamic/no-async)"}
 			return true
 		}
 		if node.Kind == ast.KindIdentifier && node.Text() == "arguments" {
 			// JavaScript's arguments object, not a variable the program named arguments.
 			if symbol := l.checker.GetSymbolAtLocation(node); symbol != nil && len(symbol.Declarations) == 0 {
-				found = &Refused{Where: l.program.Where(node), What: "arguments", Fix: "name the parameters, or take a rest parameter"}
+				found = &Refused{Where: l.program.Where(node), What: "arguments", Fix: "name the parameters, or take a rest parameter (adamic/no-arguments)"}
 				return true
 			}
 		}

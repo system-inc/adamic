@@ -17,7 +17,7 @@ func (l *lowering) moduleOrder(entry *ast.SourceFile) ([]*ast.SourceFile, error)
 	visit = func(module *ast.SourceFile, from *ast.Node) error {
 		switch state[module] {
 		case 1:
-			return &Refused{Where: l.program.Where(from), What: "an import cycle", Fix: "move what both modules need into a third that neither imports"}
+			return &Refused{Where: l.program.Where(from), What: "an import cycle", Fix: "move what both modules need into a third that neither imports (adamic/import-cycle)"}
 		case 2:
 			return nil
 		}

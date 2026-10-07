@@ -19,7 +19,7 @@ func (l *lowering) arrayFrom(node *ast.Node) (ir.Expression, bool, error) {
 			return nil, true, err
 		} else if plan != nil {
 			if len(arguments) > 2 {
-				return nil, true, l.notYet(node, "Array.from with thisArg")
+				return nil, true, l.notYet(node, "Array.from with thisArg (capture the receiver in an arrow callback instead of passing thisArg)")
 			}
 			element, err := l.elementType(node)
 			if err != nil {
@@ -34,15 +34,15 @@ func (l *lowering) arrayFrom(node *ast.Node) (ir.Expression, bool, error) {
 		}
 	}
 	if len(arguments) != 2 {
-		return nil, true, l.notYet(node, "Array.from with other than { length } and a callback")
+		return nil, true, l.notYet(node, "Array.from with other than { length } and a callback (write Array.from({ length: count }, (_, index) => value))")
 	}
 	source := ast.SkipParentheses(arguments[0])
 	if source.Kind != ast.KindObjectLiteralExpression || len(source.AsObjectLiteralExpression().Properties.Nodes) != 1 {
-		return nil, true, l.notYet(arguments[0], "Array.from of anything but { length }")
+		return nil, true, l.notYet(arguments[0], "Array.from of anything but { length } (copy an array with [...items], or generate values with Array.from({ length: count }, (_, index) => value))")
 	}
 	property := source.AsObjectLiteralExpression().Properties.Nodes[0]
 	if (property.Kind != ast.KindPropertyAssignment && property.Kind != ast.KindShorthandPropertyAssignment) || !ast.IsIdentifier(property.Name()) || property.Name().Text() != "length" {
-		return nil, true, l.notYet(arguments[0], "Array.from of anything but { length }")
+		return nil, true, l.notYet(arguments[0], "Array.from of anything but { length } (write a source literal with only a numeric length field: { length: count })")
 	}
 	element, err := l.elementType(node)
 	if err != nil {
@@ -58,13 +58,13 @@ func (l *lowering) arrayFrom(node *ast.Node) (ir.Expression, bool, error) {
 		return nil, true, err
 	}
 	if length.Type() != ir.Number {
-		return nil, true, l.notYet(property, "Array.from with a length that isn't a number")
+		return nil, true, l.notYet(property, "Array.from with a length that isn't a number (give length a number value)")
 	}
 	callback := ast.SkipParentheses(arguments[1])
 	if callback.Kind != ast.KindArrowFunction && callback.Kind != ast.KindFunctionExpression {
 		// A function value from elsewhere would be typed (value: unknown, index: number), and an
 		// unknown parameter isn't something stage 0 holds.
-		return nil, true, l.notYet(arguments[1], "Array.from with a callback that isn't an arrow function written in place")
+		return nil, true, l.notYet(arguments[1], "Array.from with a callback that isn't an arrow function written in place (write the computation in an inline arrow, (_, index) => value)")
 	}
 	if parameters := callback.Parameters(); len(parameters) > 0 && ast.IsIdentifier(parameters[0].Name()) {
 		received := l.checker.GetTypeAtLocation(parameters[0].Name())
@@ -77,7 +77,7 @@ func (l *lowering) arrayFrom(node *ast.Node) (ir.Expression, bool, error) {
 		case !l.includesUndefined(received):
 			// The checker reads { length } as an array-like of whatever the parameter says, but
 			// it has no elements: the parameter is undefined every time, whatever its type claims.
-			return nil, true, &Refused{Where: l.program.Where(parameters[0]), What: "a first Array.from parameter typed " + l.checker.TypeToString(received) + ", which is undefined every time", Fix: "name it _ and leave it untyped, (_, index) => ..., or type it undefined (the type would be a lie the checker can't see)"}
+			return nil, true, &Refused{Where: l.program.Where(parameters[0]), What: "a first Array.from parameter typed " + l.checker.TypeToString(received) + ", which is undefined every time", Fix: "name it _ and leave it untyped, (_, index) => ..., or type it undefined (the type would be a lie the checker can't see) (adamic/array-from-undefined)"}
 		}
 	}
 	mapped, err := l.expression(callback)

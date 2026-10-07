@@ -100,7 +100,7 @@ func (l *lowering) condition(node *ast.Node) (ir.Expression, error) {
 		return nil, err
 	}
 	if condition.Type() != ir.Boolean {
-		return nil, &Refused{Where: l.program.Where(node), What: "a " + typeName(condition.Type()) + " as a condition", Fix: "compare it explicitly, like name.length > 0 or count !== 0"}
+		return nil, &Refused{Where: l.program.Where(node), What: "a " + typeName(condition.Type()) + " as a condition", Fix: "compare it explicitly, like name.length > 0 or count !== 0 (strict-boolean-expressions)"}
 	}
 	return condition, nil
 }
