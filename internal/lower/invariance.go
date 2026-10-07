@@ -8,8 +8,8 @@ import (
 
 // Mutable locations are invariant in 0.1 (docs/0.1.md, adamic/invariant-mutable): tsc relates an
 // array's elements, a property and a map's values covariantly, so a Dog[] is accepted as an Animal[],
-// and the wider name can then write a cat where the dogs are read. Stage 0 doesn't run cohere's lint,
-// so it refuses the same views itself, before lowering: every place a value goes into a typed slot
+// and the wider name can then write a cat where the dogs are read. Cohere judges conditional
+// expressions; Stage 0 refuses the other views itself: every place a value goes into a typed slot
 // (an initializer, an assignment, an argument, a return, a literal's property or element), the value's
 // type is walked against the slot's, all the way down, as the Weak view check walks them.
 //
@@ -487,13 +487,8 @@ func (l *lowering) freshOrWidened(node *ast.Node, own *checker.Type, contextual 
 		// Made as the type it's written into, held by nothing else: its own parts are sites.
 		return nil
 	case ast.KindConditionalExpression:
-		// Either branch is the value: each judged as it is.
-		conditional := node.AsConditionalExpression()
-		for _, branch := range []*ast.Node{conditional.WhenTrue, conditional.WhenFalse} {
-			if found := l.freshOrWidened(branch, l.checker.GetTypeAtLocation(branch), contextual); found != nil {
-				return found
-			}
-		}
+		// Cohere's invariant-mutable rule judges this view in refuseConditionalCopies.
+		// A conditional of fresh copies no longer inherits each branch's freshness.
 		return nil
 	}
 	visited := map[[2]*checker.Type]bool{}

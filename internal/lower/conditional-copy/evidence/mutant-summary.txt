@@ -1,0 +1,3 @@
+Removed cohere invocation: caught by conditional refusal assertion, got nil; no build failure.
+Unguarded conditional copy: normal native/JavaScript/Node and sanitizer oracle passes.
+Invocation restored.

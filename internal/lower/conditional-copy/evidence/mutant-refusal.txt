@@ -1,0 +1,10 @@
+=== RUN   TestConditionalCopyRefusedByCohere
+    conditional_copy_test.go:31: gate cache node miss
+    conditional_copy_test.go:38: want cohere conditional refusal at 4:27, got <nil>
+--- FAIL: TestConditionalCopyRefusedByCohere (0.44s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.474s
+FAIL

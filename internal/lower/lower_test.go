@@ -517,10 +517,6 @@ const animals: Animal[] = dogs.length > 5 ? [{ name: 'Tom' }] : [];
 const byName = new Map<string, Dog>(pairs);
 console.log(` + "`${byName.size}`" + `);
 `},
-		{"a conditional of fresh copies", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
-const animals: Animal[] = dogs.length > 5 ? dogs.slice() : [];
-animals.push({ name: 'Tom' });
-`},
 		{"a new Map passed", `function add(animals: Map<string, Animal>): void {
 	animals.set('Tom', { name: 'Tom' });
 }
