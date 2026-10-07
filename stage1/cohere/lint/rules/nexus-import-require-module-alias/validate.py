@@ -52,7 +52,7 @@ side.write_text(s)
 overlay = scratch/'overlay.json'
 overlay.write_text(json.dumps({'Replace':replacements}))
 print(f'test-only overlay: {overlay}', flush=True)
-args = ['go','test','-overlay='+str(overlay),'./stage1/cohere/lint','-run','^TestWave14', '-count=1','-v','-timeout=20m']
+args = ['go','test','-overlay='+str(overlay),'./stage1/cohere/lint','-run',os.environ.get('ADAMIC_RULE_TEST_FILTER','^TestWave14'), '-count=1','-v','-timeout=20m']
 log = owned/'evidence/validation.log'
 log.parent.mkdir(exist_ok=True)
 with log.open('w') as output:

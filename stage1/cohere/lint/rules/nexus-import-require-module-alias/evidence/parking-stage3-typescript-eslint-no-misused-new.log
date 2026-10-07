@@ -1,0 +1,41 @@
+=== RUN   TestWave14ThirdRules
+    lint_test.go:296: NOT COMPARED: upstream JSX silence fixture, Adamic parser has no JSX support
+    lint_test.go:296: NOT COMPARED: upstream JSX silence fixture, Adamic parser has no JSX support
+    lint_test.go:327: cohere cases: 917 unique source/rule/options combinations
+=== RUN   TestWave14ThirdRules/typescript-eslint-no-misused-new
+    wave1_14_next_test.go:36: captured upstream cases: 45
+    wave1_14_next_test.go:40: findings: 16
+    wave1_14_next_test.go:42: Go, Node, native identical: 8905 bytes
+    wave1_14_next_test.go:42: emitted JavaScript identical: 8905 bytes
+--- PASS: TestWave14ThirdRules (22.75s)
+    --- PASS: TestWave14ThirdRules/typescript-eslint-no-misused-new (1.18s)
+=== RUN   TestWave14ThirdMutants
+=== RUN   TestWave14ThirdMutants/typescript-eslint-no-misused-new
+    wave1_14_next_test.go:75: getter named new silently skipped: Node source caught only by comparison: case 0 line 2: port "/tmp/adamic-gate/TestWave14ThirdMutantstypescript-eslint-no-misused-new3130945842/002/typescript-eslint-no-misused-new-0.ts:2:15", Go "/tmp/adamic-gate/TestWave14ThirdMutantstypescript-eslint-no-misused-new3130945842/002/typescript-eslint-no-misused-new-0.ts:1:32"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave14ThirdMutantstypescript-eslint-no-misused-new3130945842/002/typescript-eslint-no-misused-new-0.ts:1:32
+          @typescript-eslint/no-misused-new  This method is named `new` and declares that it returns the class it belongs to, which reads as a constructor and is not one. Calling it does not construct anything, so the name misleads every reader; a constructor is spelled `constructor`.
+        
+        range 31 34 classNew 		
+        /tmp/adamic-gate/TestWave14ThirdMutantstypescript-eslint-no-misused-new3130945842/002/typescript-eslint-no-misused-new-0.ts:2:15
+    wave1_14_next_test.go:75: getter named new silently skipped: sanitized native caught only by comparison: case 0 line 2: port "/tmp/adamic-gate/TestWave14ThirdMutantstypescript-eslint-no-misused-new3130945842/002/typescript-eslint-no-misused-new-0.ts:2:15", Go "/tmp/adamic-gate/TestWave14ThirdMutantstypescript-eslint-no-misused-new3130945842/002/typescript-eslint-no-misused-new-0.ts:1:32"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave14ThirdMutantstypescript-eslint-no-misused-new3130945842/002/typescript-eslint-no-misused-new-0.ts:1:32
+          @typescript-eslint/no-misused-new  This method is named `new` and declares that it returns the class it belongs to, which reads as a constructor and is not one. Calling it does not construct anything, so the name misleads every reader; a constructor is spelled `constructor`.
+        
+        range 31 34 classNew 		
+        /tmp/adamic-gate/TestWave14ThirdMutantstypescript-eslint-no-misused-new3130945842/002/typescript-eslint-no-misused-new-0.ts:2:15
+    wave1_14_next_test.go:75: getter named new silently skipped: emitted JavaScript caught only by comparison: case 0 line 2: port "/tmp/adamic-gate/TestWave14ThirdMutantstypescript-eslint-no-misused-new3130945842/002/typescript-eslint-no-misused-new-0.ts:2:15", Go "/tmp/adamic-gate/TestWave14ThirdMutantstypescript-eslint-no-misused-new3130945842/002/typescript-eslint-no-misused-new-0.ts:1:32"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave14ThirdMutantstypescript-eslint-no-misused-new3130945842/002/typescript-eslint-no-misused-new-0.ts:1:32
+          @typescript-eslint/no-misused-new  This method is named `new` and declares that it returns the class it belongs to, which reads as a constructor and is not one. Calling it does not construct anything, so the name misleads every reader; a constructor is spelled `constructor`.
+        
+        range 31 34 classNew 		
+        /tmp/adamic-gate/TestWave14ThirdMutantstypescript-eslint-no-misused-new3130945842/002/typescript-eslint-no-misused-new-0.ts:2:15
+--- PASS: TestWave14ThirdMutants (15.32s)
+    --- PASS: TestWave14ThirdMutants/typescript-eslint-no-misused-new (12.98s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	38.072s

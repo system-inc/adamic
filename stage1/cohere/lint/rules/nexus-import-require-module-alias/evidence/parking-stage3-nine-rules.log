@@ -1,0 +1,38 @@
+Current main adds only an oracle test to the compiler/dependency/corpus paths; all compiled inputs and corpus bytes are identical.
+no-unnecessary-type-constraint: fresh four-way fixture bytes PASS 15302
+no-unnecessary-type-constraint: clean compiling mutant caught by Go comparison on Node
+no-unnecessary-type-constraint: clean compiling mutant caught by Go comparison on native
+no-unnecessary-type-constraint: clean compiling mutant caught by Go comparison on emitted JavaScript
+prefer-as-const: fresh four-way fixture bytes PASS 13934
+prefer-as-const: clean compiling mutant caught by Go comparison on Node
+prefer-as-const: clean compiling mutant caught by Go comparison on native
+prefer-as-const: clean compiling mutant caught by Go comparison on emitted JavaScript
+prefer-enum-initializers: fresh four-way fixture bytes PASS 13658
+prefer-enum-initializers: clean compiling mutant caught by Go comparison on Node
+prefer-enum-initializers: clean compiling mutant caught by Go comparison on native
+prefer-enum-initializers: clean compiling mutant caught by Go comparison on emitted JavaScript
+no-extra-non-null-assertion: fresh four-way fixture bytes PASS 5447
+no-extra-non-null-assertion: clean compiling mutant caught by Go comparison on Node
+no-extra-non-null-assertion: clean compiling mutant caught by Go comparison on native
+no-extra-non-null-assertion: clean compiling mutant caught by Go comparison on emitted JavaScript
+no-confusing-non-null-assertion: fresh four-way fixture bytes PASS 4975
+no-confusing-non-null-assertion: clean compiling mutant caught by Go comparison on Node
+no-confusing-non-null-assertion: clean compiling mutant caught by Go comparison on native
+no-confusing-non-null-assertion: clean compiling mutant caught by Go comparison on emitted JavaScript
+no-unnecessary-parameter-property-assignment: fresh four-way fixture bytes PASS 56815
+no-unnecessary-parameter-property-assignment: clean compiling mutant caught by Go comparison on Node
+no-unnecessary-parameter-property-assignment: clean compiling mutant caught by Go comparison on native
+no-unnecessary-parameter-property-assignment: clean compiling mutant caught by Go comparison on emitted JavaScript
+no-lone-blocks: fresh four-way fixture bytes PASS 26908
+no-lone-blocks: clean compiling mutant caught by Go comparison on Node
+no-lone-blocks: clean compiling mutant caught by Go comparison on native
+no-lone-blocks: clean compiling mutant caught by Go comparison on emitted JavaScript
+no-lonely-if: fresh four-way fixture bytes PASS 10967
+no-lonely-if: clean compiling mutant caught by Go comparison on Node
+no-lonely-if: clean compiling mutant caught by Go comparison on native
+no-lonely-if: clean compiling mutant caught by Go comparison on emitted JavaScript
+no-loss-of-precision: fresh four-way fixture bytes PASS 38186
+no-loss-of-precision: clean compiling mutant caught by Go comparison on Node
+no-loss-of-precision: clean compiling mutant caught by Go comparison on native
+no-loss-of-precision: clean compiling mutant caught by Go comparison on emitted JavaScript
+PASS current-main identity recheck, fresh fixtures and all nine mutants. Full corpus evidence reused only because compiler, runners, dependencies, tools and corpus are unchanged.
