@@ -33,3 +33,18 @@ type information nor a binding bridge. The helper report links HELPERS.md and
 readiness.json for its ordered handoff.
 
 This update is pushed before writing code. Original three-rule claim remains.
+
+## Third batch, October 7
+
+After pushing all existing work and fetching all origin heads, claim the next
+three available syntax inventory entries:
+
+1. @next/next/no-before-interactive-script-outside-document
+2. @next/next/no-css-tags
+3. @next/next/no-document-import-in-page
+
+All helper-ready entries now appear in claim documents on origin branches.
+The origin audit covered 310 refs and 27 claim/report documents, excluding
+nested evidence. No selected name occurs in main's lint source modules.
+The inventory rules array is scanned in order, excluding needs_type_information
+and binding_only entries. This update is pushed before writing code.
