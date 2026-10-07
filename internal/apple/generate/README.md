@@ -1,0 +1,205 @@
+# Objective-C binding generation
+
+`Generate(io.Reader, Configuration)` consumes clang's JSON translation unit and
+returns a sorted `Output` containing module files and `bindings-check.m`.
+`RunClang` supplies a stdout pipe and refuses failed clang invocations.
+`Output.Write` writes the validated result. The loader can call the library
+without spawning the command or changing its own embedded-binding mechanism.
+
+On a Mac, using the current SDK:
+
+```sh
+go run ./cmd/adamic-apple-bindings AppKit Foundation CoreGraphics -o internal/load/apple
+```
+
+The command accepts framework operands before or after flags. `-sdk` selects
+macosx, iphoneos/iphonesimulator, appletvos/appletvsimulator,
+watchos/watchsimulator, or xros/xrsimulator. `-platform` can explicitly set the
+availability platform. The command obtains clang, the sysroot and SDK version
+from xcrun, then uses an arm64 target at that SDK version. It generates an
+umbrella importing the selected frameworks. Framework dependencies needed as
+object types must also be selected; unbound types are omitted with a reason.
+Only public headers under the configured framework header directories export
+declarations. The caller supplies header roots when using the library.
+
+For the original Linux fixture SDK:
+
+```sh
+go run ./cmd/adamic-apple-bindings AppKit Foundation -o /tmp/apple-fixture-bindings \
+  -headers internal/apple/generate/testdata/SDK \
+  -umbrella internal/apple/generate/testdata/umbrella.h
+clang -x objective-c -fobjc-runtime=macosx-10.13 -fblocks -fsyntax-only \
+  -Werror -Wno-nullability-completeness \
+  -F internal/apple/generate/testdata/SDK \
+  -I internal/apple/generate/testdata \
+  /tmp/apple-fixture-bindings/bindings-check.m
+```
+
+Linux clang 20.1.8 crashes in its legacy Objective-C runtime's JSON method-name
+dumper. Selecting the macOS Objective-C runtime makes syntax-only fixture
+inspection work; it neither links an Apple framework nor emulates one.
+
+## Patterns and rules
+
+| Pattern | Generated behavior |
+| --- | --- |
+| Translation-unit `inner` array | Decode and process one declaration at a time. Never decode the whole JSON tree or use ReadAll on the AST. |
+| File deltas | Consume locations and ranges in document order, including discarded children and macro spelling/expansion locations. `includedFrom` does not change the location's own file. A declaration keeps the file resolved at its own `loc`. |
+| Class definitions | Naming chooses the class and module. Emit `@objc class`, original-name documentation and callable members. Forward declarations are not exports. A class with no bound constructor has a private constructor, or a protected one when bound subclasses need to extend it. |
+| Class inheritance | Import and extend the bound superclass. Inherited property names are supplied to naming's word-omission protection. |
+| Categories | Merge members into their owning class; do not manufacture a separate runtime class. |
+| Protocols | Export structural interfaces with tagged callable properties and tagged instance properties. Object parameters use the protocol's interface type. Class messages and constructors need a concrete class and are omitted. Optional protocol markers are recovered from source; optional members are omitted because presence cannot be proved. Delegate implementation is outside this generator. |
+| Explicit Swift names | Read the attribute's source expansion range and balance parentheses to recover `NS_SWIFT_NAME`, including initializer labels. Direct `swift_name("...")` attributes are also read. |
+| Refined declarations | Feed `SwiftPrivateAttr` to naming; keep the original selector in the tag. No handwritten Swift overlay is synthesized. |
+| Availability | Read `API_UNAVAILABLE` or direct `availability(...,unavailable)` attributes. Omit declarations unavailable on the selected platform. Availability for another platform does not suppress a declaration. Unknown attribute spellings fail explicitly. |
+| Nullability | `_Nonnull` references are present; `_Nullable`, `_Null_unspecified` and unannotated references include `undefined` and use nullable native tags. Clang supplies assume-nonnull-region annotations. |
+| Properties | Preserve explicit custom getter/setter selectors and readonly/class facts. Do not emit implicit accessors as duplicate methods. Explicit getter/setter method pairs become one property. BOOL properties preserve an `is...` getter. |
+| Instance/class methods | Keep Apple's selector in `method`/`static` tags. Naming supplies the base and argument labels. An unlabeled first argument is positional; labeled arguments use a single trailing object. |
+| Initializers/factories | Naming identifies constructors; instance initializers use `init`, class factories use `static`. All declared parameters remain required; nullability does not invent default arguments. |
+| Ownership | Object results in alloc/new/copy/mutableCopy families, or with `NSReturnsRetainedAttr`, use `new object`; explicit `NSReturnsNotRetainedAttr` overrides the family inference. Retained C object/string results use the same ownership tag. |
+| Enum constants | Recover evaluated nested ConstantExpr values, including shifted expressions; implicit values increment the previous value. Naming strips the common word prefix and rejects collisions. Values must fit the bridge's signed 64-bit table. |
+| `FlagEnumAttr` | Emit PascalCase literal domains, readonly-array parameters and `options(Name=bit,...)` tags. Ordinary enums use unions and `enum(Name=value,...)`. Fixed underlying types must match the bridge's long/unsigned long ABI when passed. |
+| Scalars | Double/CGFloat, long/NSInteger, unsigned long/NSUInteger and BOOL use their documented tags and Adamic number/boolean types. NSString pointers become strings. Narrow integers and float are omitted because the bridge has no matching native call type. |
+| CGRect/NSRect | Resolve NSRect's desugared CGRect identity. Emit the four-number Rectangle interface and rectangle argument tag. No rectangle result is emitted. |
+| C functions | Emit standalone tagged functions; preserve positional C parameters and their order. |
+| Module output | One ambient declaration file per module, sorted paths, imports, declarations, comments and witness calls. Original spellings are comments and tags; source offsets, addresses and absolute SDK paths are absent. |
+| Name collisions | Validate the emitted surface with naming.Build before returning output. No overload winner, numeric suffix or silent merge is selected. Imports that would hide a local export or another imported type also fail. A collision aborts generation. |
+
+The naming amendment reserves every audited ES2024 global, plus Dictionary by
+explicit policy. NSError, NSDate, NSString, NSNumber, NSArray, NSSet,
+NSDictionary and NSObject retain Foundation in their exported type names;
+NSProxy does too. Primitive NSString parameters still use string.
+See [the naming rules](../naming/README.md) and its complete global audit.
+The pure naming package retains its previously accepted null-based type
+spelling; the binding generator uses the bridge's undefined-based spelling.
+
+## Header witness
+
+Every emitted method, property accessor, constructor and C function has a typed
+call in `bindings-check.m`. The witness derives native C types from the emitted
+tags: double, long, unsigned long, BOOL, id and adamic_apple_rectangle. Calls use
+Objective-C receivers whose declared types select the actual header declaration;
+they do not cast objc_msgSend and thereby bypass header checking.
+
+Scalar parameter/result compatibility, enum values and the 64-bit ABI are held
+by static assertions. Rectangle assertions compare size, alignment, coordinate
+offsets and coordinate types before copying the native rectangle's bits into
+CGRect/NSRect for the typed call. The copying bridges C's nominally different
+struct types; the check does not cast an incompatible struct into a call.
+A deliberately wrong enumeration parameter type fails the header ABI assertion.
+The check is compiled without running it. On the Mac, compile it against the
+same SDK/sysroot and target used to generate it, with `-fsyntax-only -Werror`.
+Deprecated declarations remain represented; a SDK may require choosing warning
+settings for deprecations when compiling the full check file.
+
+## Explicit omissions and limits
+
+One-line comments identify omitted declarations. Blocks are deliberately omitted
+by this generator, including the limited block shapes the handwritten bridge
+already carries. C arrays, variadics, unions, function pointers, other structs,
+unknown/object-pointer shapes, generic collections, unbound object types,
+opaque CF references and unsupported scalar widths are omitted. Manual retain/release/autorelease/dealloc messages, consumed parameters and
+nonconstructor consumed receivers would violate the bridge's borrowed-reference
+contract and are omitted. Global constants
+have no native-load tag, so they are omitted too. Noncanonical typedef aliases
+have no independent bridge representation. Anonymous enum constants likewise
+have no global native-load tag. Rectangle, enumeration and option results are
+omitted because lowering cannot yet carry them.
+
+This is a synchronous generator over JSON/header facts, not Swift's complete
+SDK importer. It does not read SDK API-note YAML, bridge overlays, async/throws
+transformations, deployment-version availability, category implementations,
+protocol inheritance/conformance synthesis, or inherited methods from an
+unbound superclass. An overload or normalized-name collision remains a fatal
+naming error. Class/protocol declarations sharing one original Objective-C
+name are also refused instead of discarding one kind; effective SDK protocol
+renaming and separate type namespaces need a later importer extension. This can prevent a full framework export until the naming policy
+or generator input supplies a collision-free surface. The fixture suite proves
+the implemented patterns; it does not establish that a complete current SDK
+can be emitted without such errors.
+
+The existing bridge cannot lower a literal undefined as a nullable string
+argument: it assigns that literal the object representation. The compiler
+fixture instead passes a nullable string returned by a generated property.
+Its string | undefined declaration remains independently held by the golden
+and pattern tests. No compiler change is made for this limitation.
+
+The Linux run cannot regenerate or replace the real SDK seed bindings, compile
+the check against Apple headers, link the generated C to Apple frameworks, or
+run Apple's framework methods. The real seed files remain unchanged. The Mac
+must generate the real files and compile the header witness before using them.
+Output.Write does not delete old seed or previously generated files; removing
+obsolete modules is a separate SDK-generation integration step.
+
+## Evidence
+
+The original fixture headers define a fictional root and APIs. Vendor header
+text was not copied. They produce 17 declaration files plus the header witness,
+held byte for byte by testdata/golden. They exercise both ordinary and macro
+attribute ranges, assume-nonnull and unannotated pointers, enum expressions,
+custom properties, getter/setter pairs, categories, protocols and an excluded
+framework followed by another selected declaration.
+
+`TestCompilerLowersGeneratedModules` runs the actual command
+`go run -overlay <temporary overlay> ./cmd/adamic c testdata/bindings.a` from the
+repository root (the fixture path there is internal/apple/generate/testdata/bindings.a).
+A Go build overlay replaces one existing embedded seed file with the generated
+files' bytes and a type-only loader anchor. The program imports the generated
+modules, constructs objects and calls rectangle, enum, options, nullable-object,
+nullable-string, property, protocol and C-function bindings. It checks the emitted
+C for the selectors and conversion routines. Seed files are never edited by the
+test. This proves checking/lowering and C generation, not linking on Linux.
+
+The standalone mutant runner edits implementation files one at a time, logs the
+selected test, requires an assertion failure rather than a Go build failure and
+restores the file in finally. Run it alone:
+
+```sh
+python3 internal/apple/generate/testdata/mutants.py > /tmp/apple-generator-mutants.log 2>&1
+```
+
+| Mutant | Holding test |
+| --- | --- |
+| Drop nullability from takeText's parameter | TestPatterns |
+| Emit an option set with an enum tag | TestPatterns |
+| Keep a platform-unavailable method | TestPatterns |
+| Resolve a declaration's file after its children | TestDocumentOrderFileDelta |
+| Leave module paths in map iteration order | TestCanonicalModuleOrder |
+| Drop the global type's framework prefix | naming.TestGlobalNameBijection |
+| Read the entire AST before visiting declarations | TestStreamVisitsBeforeEOF |
+| Promise an optional protocol method is present | TestPatterns |
+| Permit an import to hide a local export | TestImportNameCollision |
+| Feed a raw struct declarator to the naming layer | TestWrittenTagTypeSpellings |
+| Borrow a consumed parameter | TestPatterns |
+| Bind manual release | TestPatterns |
+| Borrow a consumed receiver | TestPatterns |
+| Lose retained C string ownership | TestCompilerLowersGeneratedModules |
+| Hide a class/protocol declaration kind | TestDeclarationKindCollision |
+| Pass a double where an enum tag promises long | TestHeaderWitness's independent clang assertion |
+
+Naming surprises visible in the fixture: takeRecord becomes take, copyRecord
+becomes copy, currentPanel becomes current, while takeObject retains Object.
+A Swift-labeled init(count:) uses an options object even with one parameter;
+the explicit init(_:) leaves its first argument positional.
+
+Final Linux validation on October 7, 2026:
+
+```sh
+go test -count=1 -race -cover ./internal/apple/... ./cmd/adamic-apple-bindings > /tmp/apple-generator-race.log 2>&1
+gofmt -l cmd internal > /tmp/apple-generator-format.log
+go vet ./... > /tmp/apple-generator-vet.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -count=1 -timeout 5m -run '^TestNativeAgreesWithNode$/^internal$/^load$/^testdata$/^0.1$/^compile$/^(01_hello.ts|06_stack.ts|10_unicode.ts)$' > /tmp/apple-generator-oracle.log 2>&1
+```
+
+All passed. Generate: 2.602 seconds, 79.8% coverage; naming: 6.898 seconds,
+90.1%; command: 1.384 seconds, 51.9%. Formatting and vet logs were empty,
+and git diff --check was clean. The uncached external oracle passed in
+9.602 seconds. The fifteen implementation mutants each exited 1 through an
+assertion failure; the additional ABI mutant failed its clang static assertion.
+The full repository test suite was not run; the scoped package checks include
+the compiler command probe, and the external oracle is explicitly filtered.
+
+Setup completed successfully: Go 1.27.1, clang 20.1.8 and Node 24.19.0,
+all ready at 0 seconds, submodules ready at 0 seconds, build-cache warming
+92 seconds, total 92 seconds. nproc was 5, with cgroup CPU quota 4 cores.
+The printed tool environment is /workspace/adamic-tools/env.sh.

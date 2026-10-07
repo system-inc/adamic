@@ -1,0 +1,563 @@
+package generate
+
+import (
+	"fmt"
+	"math/big"
+	"path/filepath"
+	"sort"
+	"strconv"
+	"strings"
+
+	"github.com/system-inc/adamic/internal/apple/naming"
+)
+
+type definition struct {
+	node        *node
+	declaration naming.Declaration
+	output      naming.Output
+	members     []string
+	values      []string
+	options     bool
+}
+type module struct {
+	imports      map[string]string
+	declarations []string
+	comments     []string
+}
+type generator struct {
+	configuration Configuration
+	nodes         []*node
+	types         map[string]*definition
+	sources       map[string][]byte
+	modules       map[string]*module
+	declarations  []naming.Declaration
+	checks        []checkCall
+	importError   error
+}
+type nativeType struct {
+	tag, adamic, c, header string
+	reference              *definition
+	nullable               bool
+}
+
+func cleanType(s string) string {
+	for _, qualifier := range []string{"_Nonnull", "_Nullable", "_Null_unspecified", "const ", "volatile ", "__kindof "} {
+		s = strings.ReplaceAll(s, qualifier, "")
+	}
+	return strings.TrimSpace(s)
+}
+func (g *generator) getModule(path string) *module {
+	m := g.modules[path]
+	if m == nil {
+		m = &module{imports: map[string]string{}}
+		g.modules[path] = m
+	}
+	return m
+}
+func (g *generator) addImport(m *module, own string, d *definition) {
+	if d != nil && d.output.Module != own {
+		if other, exists := m.imports[d.output.Name]; exists && other != d.output.Module {
+			g.importError = fmt.Errorf("module %s imports %s from both %s and %s", own, d.output.Name, other, d.output.Module)
+			return
+		}
+		for _, local := range g.types {
+			if local.output.Module == own && local.output.Name == d.output.Name {
+				g.importError = fmt.Errorf("module %s imports %s from %s but already exports that name", own, d.output.Name, d.output.Module)
+				return
+			}
+		}
+		m.imports[d.output.Name] = d.output.Module
+	}
+}
+func children(n *node, kind string) []*node {
+	var result []*node
+	for _, child := range n.Children {
+		if child.Kind == kind {
+			result = append(result, child)
+		}
+	}
+	return result
+}
+func has(n *node, kind string) bool { return len(children(n, kind)) > 0 }
+func (g *generator) text(l location) (string, error) {
+	if !l.Valid {
+		return "", fmt.Errorf("attribute has no source range")
+	}
+	name, err := filepath.Abs(l.File)
+	if err != nil {
+		return "", err
+	}
+	source, ok := g.sources[name]
+	if !ok {
+		source, err = g.configuration.ReadSource(name)
+		if err != nil {
+			return "", err
+		}
+		g.sources[name] = source
+	}
+	if l.Offset < 0 || l.Offset >= len(source) {
+		return "", fmt.Errorf("attribute offset outside %s", name)
+	}
+	end := l.Offset
+	for end < len(source) && (source[end] >= 'a' && source[end] <= 'z' || source[end] >= 'A' && source[end] <= 'Z' || source[end] == '_') {
+		end++
+	}
+	for end < len(source) && (source[end] == ' ' || source[end] == '\t') {
+		end++
+	}
+	if end < len(source) && source[end] == '(' {
+		depth := 0
+		quote := byte(0)
+		for ; end < len(source); end++ {
+			c := source[end]
+			if quote != 0 {
+				if c == '\\' {
+					end++
+					continue
+				}
+				if c == quote {
+					quote = 0
+				}
+				continue
+			}
+			if c == '"' || c == '\'' {
+				quote = c
+				continue
+			}
+			if c == '(' {
+				depth++
+			}
+			if c == ')' {
+				depth--
+				if depth == 0 {
+					end++
+					break
+				}
+			}
+		}
+		if depth != 0 {
+			return "", fmt.Errorf("unterminated attribute in %s", name)
+		}
+	}
+	return string(source[l.Offset:end]), nil
+}
+func (g *generator) attributes(n *node) (swift string, refined, unavailable bool, err error) {
+	for _, child := range n.Children {
+		switch child.Kind {
+		case "SwiftPrivateAttr":
+			refined = true
+		case "UnavailableAttr":
+			unavailable = true
+		case "SwiftNameAttr", "AvailabilityAttr":
+			var text string
+			text, err = g.text(child.Begin)
+			if err != nil {
+				return
+			}
+			left := strings.IndexByte(text, '(')
+			right := strings.LastIndexByte(text, ')')
+			if left < 0 || right <= left {
+				err = fmt.Errorf("cannot read attribute %q", text)
+				return
+			}
+			arguments := text[left+1 : right]
+			if child.Kind == "SwiftNameAttr" {
+				if strings.HasPrefix(arguments, "\"") {
+					swift, err = strconv.Unquote(arguments)
+				} else {
+					swift = strings.TrimSpace(arguments)
+				}
+			} else {
+				upper := strings.ToUpper(text)
+				if strings.Contains(upper, "UNAVAILABLE") {
+					platform := g.configuration.Platform
+					for _, part := range strings.FieldsFunc(strings.ToLower(arguments), func(c rune) bool { return c == ',' || c == ' ' || c == '\t' || c == '(' || c == ')' }) {
+						if part == platform || platform == "macos" && part == "macosx" || platform == "visionos" && part == "xros" {
+							unavailable = true
+						}
+					}
+				} else if !strings.Contains(upper, "AVAILABLE") && !strings.Contains(upper, "DEPRECATED") && !strings.HasPrefix(text, "availability(") {
+					err = fmt.Errorf("unrecognized availability attribute %q", text)
+					return
+				}
+			}
+		}
+	}
+	return
+}
+func (g *generator) description(n *node, kind naming.Kind, parent string) (naming.Declaration, bool, error) {
+	swift, refined, unavailable, err := g.attributes(n)
+	return naming.Declaration{Kind: kind, Name: n.Name, Parent: parent, Framework: n.Framework, SwiftName: swift, RefinedForSwift: refined}, unavailable, err
+}
+func (g *generator) skipped(n *node, reason string) {
+	path := "apple/" + strings.ToLower(n.Framework) + "/unsupported"
+	g.getModule(path).comments = append(g.getModule(path).comments, "// Skipped "+n.Name+": "+strings.ReplaceAll(reason, "\n", " ")+".")
+}
+func enumValue(n *node) (string, bool) {
+	if n.Kind == "ConstantExpr" && n.Value != "" {
+		return n.Value, true
+	}
+	for _, child := range n.Children {
+		if v, ok := enumValue(child); ok {
+			return v, true
+		}
+	}
+	if n.Kind == "IntegerLiteral" && n.Value != "" {
+		return n.Value, true
+	}
+	return "", false
+}
+func (g *generator) inventory() error {
+	// Definitions are registered before references are mapped, regardless of
+	// header order. Forward declarations never replace a complete declaration.
+	for _, n := range g.nodes {
+		var kind naming.Kind
+		switch n.Kind {
+		case "ObjCInterfaceDecl", "ObjCProtocolDecl":
+			if len(n.Children) == 0 {
+				source, err := g.sourceRange(n)
+				if err != nil {
+					return err
+				}
+				if !strings.Contains(source, "@end") {
+					continue
+				}
+			}
+			kind = naming.Class
+			if n.Kind == "ObjCProtocolDecl" {
+				kind = naming.Protocol
+			}
+		case "EnumDecl":
+			if n.Name == "" {
+				g.skipped(n, "anonymous enum constants have no native load tag")
+				continue
+			}
+			if len(children(n, "EnumConstantDecl")) == 0 {
+				continue
+			}
+			kind = naming.Enum
+			if has(n, "FlagEnumAttr") {
+				kind = naming.OptionSet
+			}
+		case "RecordDecl":
+			if n.Name == "" {
+				g.skipped(n, "anonymous structs have no bridge representation")
+				continue
+			}
+			if !n.Complete {
+				continue
+			}
+			if n.Tag == "union" {
+				g.skipped(n, "unions are not carried by the bridge")
+				continue
+			}
+			kind = naming.Struct
+		case "TypedefDecl":
+			continue
+		default:
+			continue
+		}
+		d, unavailable, err := g.description(n, kind, "")
+		if err != nil {
+			return err
+		}
+		if unavailable {
+			g.skipped(n, "unavailable on "+g.configuration.Platform)
+			continue
+		}
+		out, err := naming.Name(d)
+		if err != nil {
+			return err
+		}
+		if old := g.types[n.Name]; old != nil {
+			if old.declaration.Kind != d.Kind {
+				return fmt.Errorf("ambiguous class/protocol or type kind for %s; refusing to discard either declaration", n.Name)
+			}
+			if len(n.Children) <= len(old.node.Children) {
+				continue
+			}
+		}
+		g.types[n.Name] = &definition{node: n, declaration: d, output: out, options: kind == naming.OptionSet}
+	}
+	// Read every enumerator's evaluated value. Implicit values use the previous
+	// evaluated value plus one, not a search for an arbitrary integer leaf.
+	for _, name := range sortedKeys(g.types) {
+		def := g.types[name]
+		if def.declaration.Kind != naming.Enum && def.declaration.Kind != naming.OptionSet {
+			continue
+		}
+		siblings := []naming.Enumerator{}
+		for _, child := range children(def.node, "EnumConstantDecl") {
+			swift, _, unavailable, err := g.attributes(child)
+			if err != nil {
+				return err
+			}
+			siblings = append(siblings, naming.Enumerator{Name: child.Name, SwiftName: swift, Unavailable: unavailable, Deprecated: has(child, "DeprecatedAttr")})
+		}
+		next := big.NewInt(0)
+		for i, child := range children(def.node, "EnumConstantDecl") {
+			value, found := enumValue(child)
+			if found {
+				if _, ok := next.SetString(value, 0); !ok {
+					return fmt.Errorf("invalid enum value %q", value)
+				}
+			}
+			current := next.String()
+			next.Add(next, big.NewInt(1))
+			if siblings[i].Unavailable {
+				continue
+			}
+			parsed, err := strconv.ParseInt(current, 10, 64)
+			if err != nil {
+				return fmt.Errorf("%s: bridge enum table requires signed 64-bit values: %w", child.Name, err)
+			}
+			kind := naming.EnumConstant
+			if def.options {
+				kind = naming.OptionConstant
+			}
+			d := naming.Declaration{Kind: kind, Name: child.Name, Parent: def.node.Name, ParentSwiftName: def.output.SwiftName, Framework: def.node.Framework, SwiftName: siblings[i].SwiftName, Enumerators: siblings}
+			out, err := naming.Name(d)
+			if err != nil {
+				return err
+			}
+			def.members = append(def.members, out.Name)
+			def.values = append(def.values, strconv.FormatInt(parsed, 10))
+			g.declarations = append(g.declarations, d)
+		}
+	}
+	return nil
+}
+func sortedKeys[T any](m map[string]T) []string {
+	keys := make([]string, 0, len(m))
+	for k := range m {
+		keys = append(keys, k)
+	}
+	sort.Strings(keys)
+	return keys
+}
+func (g *generator) native(t writtenType, parent string, result bool) (nativeType, error) {
+	q := cleanType(t.Qual)
+	desugared := cleanType(t.Desugared)
+	if desugared == "" {
+		desugared = q
+	}
+	if desugared == q {
+		switch q {
+		case "NSInteger":
+			desugared = "long"
+		case "NSUInteger":
+			desugared = "unsigned long"
+		case "CGFloat":
+			desugared = "double"
+		}
+	}
+	mapped := nativeType{header: q, nullable: !strings.Contains(t.Qual, "_Nonnull")}
+	if strings.Contains(q, "^") {
+		return mapped, fmt.Errorf("blocks are omitted by this generator")
+	}
+	if strings.ContainsAny(q, "[]") {
+		return mapped, fmt.Errorf("C arrays are not carried by the bridge")
+	}
+	if strings.Contains(q, "(") || strings.Contains(desugared, "(") {
+		return mapped, fmt.Errorf("function pointers are not carried by the bridge")
+	}
+	if strings.HasPrefix(q, "union ") || strings.HasPrefix(desugared, "union ") {
+		return mapped, fmt.Errorf("unions are not carried by the bridge")
+	}
+	if q == "instancetype" {
+		q = parent + " *"
+		mapped.header = q
+	}
+	if q == "void" {
+		mapped.tag = "void"
+		mapped.adamic = "void"
+		mapped.c = "void"
+		return mapped, nil
+	}
+	if q == "BOOL" {
+		mapped.tag = "boolean"
+		mapped.adamic = "boolean"
+		mapped.c = "BOOL"
+		return mapped, nil
+	}
+	switch desugared {
+	case "double":
+		mapped.tag = "double"
+		mapped.adamic = "number"
+		mapped.c = "double"
+		return mapped, nil
+	case "long":
+		mapped.tag = "integer"
+		mapped.adamic = "number"
+		mapped.c = "long"
+		return mapped, nil
+	case "unsigned long":
+		mapped.tag = "unsigned"
+		mapped.adamic = "number"
+		mapped.c = "unsigned long"
+		return mapped, nil
+	}
+	base := strings.TrimPrefix(q, "enum ")
+	if def := g.types[base]; def != nil && (def.declaration.Kind == naming.Enum || def.options) {
+		underlying := cleanType(def.node.Underlying.Desugared)
+		if underlying == "" {
+			underlying = cleanType(def.node.Underlying.Qual)
+		}
+		if underlying == "NSInteger" {
+			underlying = "long"
+		}
+		if underlying == "NSUInteger" {
+			underlying = "unsigned long"
+		}
+		want := "long"
+		tag := "enum"
+		mapped.adamic = def.output.Name
+		if def.options {
+			want = "unsigned long"
+			tag = "options"
+			mapped.adamic = "readonly " + def.output.Name + "[]"
+		}
+		if underlying != want {
+			return mapped, fmt.Errorf("enum width/sign %s cannot cross as %s", underlying, want)
+		}
+		if result {
+			return mapped, fmt.Errorf("enumeration and option results are not carried by the bridge")
+		}
+		if len(def.members) == 0 {
+			return mapped, fmt.Errorf("enum has no available cases")
+		}
+		pairs := []string{}
+		for i, name := range def.members {
+			pairs = append(pairs, strings.Trim(name, "'")+"="+def.values[i])
+		}
+		mapped.tag = tag + "(" + strings.Join(pairs, ",") + ")"
+		mapped.c = want
+		mapped.reference = def
+		return mapped, nil
+	}
+	if q == "CGRect" || q == "NSRect" || desugared == "struct CGRect" {
+		if result {
+			return mapped, fmt.Errorf("rectangle results are not carried by the bridge")
+		}
+		def := g.types["CGRect"]
+		if def == nil {
+			return mapped, fmt.Errorf("CGRect definition not among generated headers")
+		}
+		mapped.tag = "rectangle"
+		mapped.adamic = def.output.Name
+		mapped.c = "adamic_apple_rectangle"
+		mapped.reference = def
+		return mapped, nil
+	}
+	if q == "NSString *" {
+		mapped.tag = "string"
+		mapped.adamic = "string"
+		mapped.c = "id"
+	} else {
+		if strings.Count(q, "*") > 1 {
+			return mapped, fmt.Errorf("pointer-to-pointer types are not carried by the bridge")
+		}
+		base = strings.TrimSpace(strings.TrimSuffix(q, "*"))
+		base = strings.TrimPrefix(base, "id<")
+		base = strings.TrimSuffix(base, ">")
+		def := g.types[base]
+		if def == nil || def.declaration.Kind != naming.Class && def.declaration.Kind != naming.Protocol {
+			return mapped, fmt.Errorf("unsupported or unbound native type %q", t.Qual)
+		}
+		if !strings.HasSuffix(q, "*") && !strings.HasPrefix(q, "id<") {
+			return mapped, fmt.Errorf("object type needs a pointer")
+		}
+		mapped.tag = "object"
+		mapped.adamic = def.output.Name
+		mapped.c = "id"
+		mapped.reference = def
+	}
+	if mapped.nullable {
+		mapped.tag += "?"
+		mapped.adamic += " | undefined"
+	}
+	return mapped, nil
+}
+
+func (g *generator) sourceRange(n *node) (string, error) {
+	if !n.Begin.Valid || !n.End.Valid || n.Begin.File != n.End.File {
+		return "", nil
+	}
+	name, err := filepath.Abs(n.Begin.File)
+	if err != nil {
+		return "", err
+	}
+	source, ok := g.sources[name]
+	if !ok {
+		source, err = g.configuration.ReadSource(name)
+		if err != nil {
+			return "", err
+		}
+		g.sources[name] = source
+	}
+	end := n.End.Offset + n.End.Length
+	if n.Begin.Offset < 0 || end < n.Begin.Offset || end > len(source) {
+		return "", fmt.Errorf("source range outside %s", name)
+	}
+	return string(source[n.Begin.Offset:end]), nil
+}
+
+// JSON omits protocol @optional state. Read markers before the member, outside
+// comments and strings, rather than promising an optional method is present.
+func (g *generator) protocolOptional(owner, member *node) (bool, error) {
+	source, err := g.sourceRange(owner)
+	if err != nil {
+		return false, err
+	}
+	offset := member.Begin.Offset - owner.Begin.Offset
+	if !member.Begin.Valid || member.Begin.File != owner.Begin.File || offset < 0 || offset > len(source) {
+		return false, fmt.Errorf("cannot recover protocol optionality for %s", member.Name)
+	}
+	text := []byte(source[:offset])
+	for i := 0; i < len(text); {
+		if i+1 < len(text) && text[i] == '/' && text[i+1] == '/' {
+			for i < len(text) && text[i] != '\n' {
+				text[i] = ' '
+				i++
+			}
+			continue
+		}
+		if i+1 < len(text) && text[i] == '/' && text[i+1] == '*' {
+			text[i], text[i+1] = ' ', ' '
+			i += 2
+			for i < len(text) {
+				if i+1 < len(text) && text[i] == '*' && text[i+1] == '/' {
+					text[i], text[i+1] = ' ', ' '
+					i += 2
+					break
+				}
+				text[i] = ' '
+				i++
+			}
+			continue
+		}
+		if text[i] == '"' || text[i] == '\'' {
+			quote := text[i]
+			text[i] = ' '
+			i++
+			for i < len(text) {
+				c := text[i]
+				text[i] = ' '
+				i++
+				if c == '\\' && i < len(text) {
+					text[i] = ' '
+					i++
+					continue
+				}
+				if c == quote {
+					break
+				}
+			}
+			continue
+		}
+		i++
+	}
+	optional := strings.LastIndex(string(text), "@optional")
+	required := strings.LastIndex(string(text), "@required")
+	return optional > required, nil
+}
