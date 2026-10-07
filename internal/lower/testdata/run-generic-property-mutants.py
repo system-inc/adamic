@@ -19,6 +19,7 @@ for name,filename,old,new,package,test,expected in cases:
  source=root/'internal/lower'/filename
  original=source.read_text();assert original.count(old)==1,(name,original.count(old))
  mutant=pathlib.Path('/tmp/generic-property-mutant-'+name+'.go');replacement=original.replace(old,new,1)
+ if name=='erased-cast': replacement=replacement.replace('assertion := ast.SkipParentheses(node)','assertion := ast.SkipParentheses(node); _ = assertion',1)
  if name=='conversion': replacement=replacement.replace('if fromGeneric != nil && (','if fromGeneric != nil && toGeneric != nil && (',1)
  mutant.write_text(replacement)
  overlay=pathlib.Path('/tmp/generic-property-mutant-'+name+'.json');overlay.write_text(json.dumps({'Replace':{str(source):str(mutant)}}))
