@@ -2,23 +2,94 @@ package lower
 
 import (
 	"math"
+	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
-	"github.com/system-inc/adamic/internal/load"
 )
 
+// The shared loader supplies the pinned @types/node tree. Ambient modules in
+// application files are not host declarations, even when their names match.
+func nodeBufferModule(symbol *ast.Symbol) string {
+	if symbol == nil {
+		return ""
+	}
+	for _, declaration := range symbol.Declarations {
+		source := ast.GetSourceFileOfNode(declaration)
+		if source == nil || !strings.Contains(strings.ReplaceAll(source.FileName(), "\\", "/"), "/@types/node/") {
+			continue
+		}
+		for parent := declaration; parent != nil; parent = parent.Parent {
+			if parent.Kind == ast.KindModuleDeclaration && parent.Name() != nil && parent.Name().Kind == ast.KindStringLiteral {
+				switch name := parent.Name().Text(); name {
+				case "node:buffer", "node:crypto":
+					return name
+				}
+			}
+		}
+	}
+	return ""
+}
 func (l *lowering) nodeBufferSymbol(node *ast.Node, name string) bool {
 	symbol := l.symbol(node)
-	return symbol != nil && symbol.Name == name && len(symbol.Declarations) > 0 && load.IsPrelude(ast.GetSourceFileOfNode(symbol.Declarations[0]))
+	return symbol != nil && symbol.Name == name && nodeBufferModule(symbol) != ""
 }
 func (l *lowering) nodeBufferType(proven *checker.Type, name string) bool {
 	if proven == nil {
 		return false
 	}
 	symbol := proven.Symbol()
-	return symbol != nil && symbol.Name == name && len(symbol.Declarations) > 0 && load.IsPrelude(ast.GetSourceFileOfNode(symbol.Declarations[0]))
+	return symbol != nil && symbol.Name == name && nodeBufferModule(symbol) != ""
+}
+
+// Reading a host member as a value must not fall through to ordinary object
+// slots. Hash's private runtime layout is not its inherited stream layout.
+func (l *lowering) nodeBufferUnsupportedUse(node *ast.Node) error {
+	node = ast.SkipParentheses(node)
+	if node.Kind == ast.KindPropertyAccessExpression {
+		access := node.AsPropertyAccessExpression()
+		name := node.Name().Text()
+		receiver := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression))
+		switch {
+		case l.nodeBufferSymbol(access.Expression, "Buffer"):
+			return l.notYet(node, "Buffer."+name+" read as a value")
+		case l.nodeBufferType(receiver, "Buffer"):
+			if name != "length" {
+				return l.notYet(node, "Buffer."+name+" outside the census value reads")
+			}
+		case l.nodeBufferType(receiver, "Hash"):
+			return l.notYet(node, "Hash."+name+" outside the census value reads")
+		}
+	}
+	if node.Kind == ast.KindElementAccessExpression {
+		access := node.AsElementAccessExpression()
+		member := ast.SkipParentheses(access.ArgumentExpression)
+		receiver := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression))
+		if member.Kind == ast.KindStringLiteral {
+			for _, name := range []string{"Buffer", "Hash"} {
+				if l.nodeBufferType(receiver, name) || (name == "Buffer" && l.nodeBufferSymbol(access.Expression, name)) {
+					return l.notYet(node, name+"."+member.Text()+" accessed through a string index")
+				}
+			}
+		}
+	}
+	if node.Kind == ast.KindIdentifier || node.Kind == ast.KindPropertyAccessExpression || node.Kind == ast.KindElementAccessExpression {
+		symbol := l.symbol(node)
+		if module := nodeBufferModule(symbol); module != "" {
+			if symbol.Name == "Buffer" && node.Parent != nil && node.Parent.Kind == ast.KindPropertyAccessExpression && node.Parent.Name().Text() == "from" && called(node.Parent) {
+				return nil
+			}
+			return l.notYet(node, module+"."+symbol.Name+" read as a value")
+		}
+	}
+	if node.Kind == ast.KindNewExpression {
+		symbol := l.symbol(node.AsNewExpression().Expression)
+		if module := nodeBufferModule(symbol); module != "" {
+			return l.notYet(node, module+"."+symbol.Name+" outside the host census")
+		}
+	}
+	return nil
 }
 func (l *lowering) nodeBufferReadArgument(node *ast.Node) bool {
 	outer := node
@@ -74,6 +145,9 @@ func (l *lowering) libraryNodeBuffer(node *ast.Node) (ir.Expression, bool, error
 		return ir.NodeBufferCall{Function: "hash_new", Returns: ir.Object}, true, nil
 	}
 	if callee.Kind != ast.KindPropertyAccessExpression {
+		if symbol := l.symbol(callee); nodeBufferModule(symbol) != "" {
+			return nil, true, l.notYet(node, nodeBufferModule(symbol)+"."+symbol.Name+" outside the host census")
+		}
 		return nil, false, nil
 	}
 	access := callee.AsPropertyAccessExpression()
@@ -81,7 +155,7 @@ func (l *lowering) libraryNodeBuffer(node *ast.Node) (ir.Expression, bool, error
 	switch {
 	case l.nodeBufferSymbol(access.Expression, "Buffer"):
 		if name != "from" || len(args) < 1 || len(args) > 2 {
-			return nil, true, l.notYet(node, "Buffer constructor outside from(input, encoding)")
+			return nil, true, l.notYet(node, "Buffer."+name+" outside from(input, encoding)")
 		}
 		operation = "buffer_from"
 	case l.nodeBufferType(l.checker.GetTypeAtLocation(access.Expression), "Buffer"):
@@ -106,6 +180,9 @@ func (l *lowering) libraryNodeBuffer(node *ast.Node) (ir.Expression, bool, error
 			return nil, true, l.notYet(node, "Hash."+name+" outside the host census")
 		}
 	default:
+		if symbol := l.symbol(callee); nodeBufferModule(symbol) != "" {
+			return nil, true, l.notYet(node, nodeBufferModule(symbol)+"."+symbol.Name+" outside the host census")
+		}
 		return nil, false, nil
 	}
 	var encodingNode *ast.Node
