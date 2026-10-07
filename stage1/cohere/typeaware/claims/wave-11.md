@@ -61,3 +61,9 @@ is ported on origin/main or origin/codex/tsgo-c-library or named in an origin
 claim document. Continue on codex/typeaware-wave-11. New Adamic sources use `.a`.
 Shared generator and harness remain untouched; isolated raw questions, complete
 Go byte agreement and comparison-only mutants are required.
+
+Third batch completed in `9c9cfa57`: all three rules have complete-byte normal
+and sanitized agreement, positive controls, comparison-only rule and judgment
+mutants, and released-handle checks. Evidence, timings and coverage limits are
+in ../WAVE_11_THIRD_REPORT.md. All nine wave-11 reservations are implemented;
+no additional rules are reserved by this completion update.

@@ -1,0 +1,66 @@
+From https://github.com/system-inc/adamic
+   5261b195..cdeadaf6  cloud/integrate-s2-1    -> origin/cloud/integrate-s2-1
+ * [new branch]        codex/cohere-dry-guard  -> origin/codex/cohere-dry-guard
+   d55d7349..55d2c89b  codex/concurrency-async -> origin/codex/concurrency-async
+ * [new branch]        codex/fuzz-moves        -> origin/codex/fuzz-moves
+ * [new branch]        codex/lint-harness-dot-a -> origin/codex/lint-harness-dot-a
+   652dd713..b3923a0d  codex/lint-helpers-01   -> origin/codex/lint-helpers-01
+   4a377bb3..597a5eef  codex/lint-helpers-02   -> origin/codex/lint-helpers-02
+   3bad254b..c5841459  codex/lint-helpers-03   -> origin/codex/lint-helpers-03
+   fd9dd3c2..502d072e  codex/lint-helpers-04   -> origin/codex/lint-helpers-04
+   77b2029e..bf077865  codex/lint-helpers-05   -> origin/codex/lint-helpers-05
+   7647ff47..928829df  codex/lint-wave1-01     -> origin/codex/lint-wave1-01
+   339f88af..c6ef8e93  codex/lint-wave1-02     -> origin/codex/lint-wave1-02
+   c1e9724b..b3a01d98  codex/lint-wave1-03     -> origin/codex/lint-wave1-03
+   7d1d4d29..e373f8e0  codex/lint-wave1-04     -> origin/codex/lint-wave1-04
+   4570161b..878da5f8  codex/lint-wave1-05     -> origin/codex/lint-wave1-05
+   68304ac0..b1c0dac2  codex/lint-wave1-06     -> origin/codex/lint-wave1-06
+   53a741e2..e4e9b247  codex/lint-wave1-07     -> origin/codex/lint-wave1-07
+   f81b353a..86546bbf  codex/lint-wave1-08     -> origin/codex/lint-wave1-08
+   4348b268..7da651d1  codex/lint-wave1-09     -> origin/codex/lint-wave1-09
+   e6b39bf2..86dc232f  codex/lint-wave1-10     -> origin/codex/lint-wave1-10
+   2048afe0..7a485580  codex/lint-wave1-11     -> origin/codex/lint-wave1-11
+   e50c08c4..e5fef3b1  codex/lint-wave1-12     -> origin/codex/lint-wave1-12
+   d87b5dd3..df9f0451  codex/lint-wave1-13     -> origin/codex/lint-wave1-13
+   a6b67854..f1055c53  codex/lint-wave1-14     -> origin/codex/lint-wave1-14
+   37eee07b..a39da616  codex/lint-wave1-15     -> origin/codex/lint-wave1-15
+ * [new branch]        codex/loop-array-hold   -> origin/codex/loop-array-hold
+ * [new branch]        codex/nbody-speed       -> origin/codex/nbody-speed
+ * [new branch]        codex/nested-functions  -> origin/codex/nested-functions
+ * [new branch]        codex/no-optional-widening -> origin/codex/no-optional-widening
+ * [new branch]        codex/race-checks-reliable -> origin/codex/race-checks-reliable
+   394a34f2..31862c1e  codex/regex-remaining   -> origin/codex/regex-remaining
+   e1f09583..4a8deeb8  codex/stage1-estree     -> origin/codex/stage1-estree
+   3dd85f29..5d67de46  codex/stage1-ts-printer -> origin/codex/stage1-ts-printer
+ * [new branch]        codex/tsc-census        -> origin/codex/tsc-census
+   9887237b..2bfc6381  codex/typeaware-wave-01 -> origin/codex/typeaware-wave-01
+   1a75bc1d..958c5c2f  codex/typeaware-wave-02 -> origin/codex/typeaware-wave-02
+   85651ba0..83bfce4b  codex/typeaware-wave-03 -> origin/codex/typeaware-wave-03
+   c8653c7c..940df421  codex/typeaware-wave-04 -> origin/codex/typeaware-wave-04
+   739be38b..d8b312d9  codex/typeaware-wave-05 -> origin/codex/typeaware-wave-05
+   bf0b933b..b57fbb83  codex/typeaware-wave-06 -> origin/codex/typeaware-wave-06
+   54694064..fd86b9e2  codex/typeaware-wave-07 -> origin/codex/typeaware-wave-07
+   ddc55032..126c0358  codex/typeaware-wave-08 -> origin/codex/typeaware-wave-08
+   03ea146b..24667c85  codex/typeaware-wave-09 -> origin/codex/typeaware-wave-09
+   e8a4e896..0ac7b51b  codex/typeaware-wave-10 -> origin/codex/typeaware-wave-10
+   fca4b6e5..617850b4  codex/typeaware-wave-11 -> origin/codex/typeaware-wave-11
+   1a1be27f..047ec355  codex/typeaware-wave-12 -> origin/codex/typeaware-wave-12
+   153eb7ef..30798c64  codex/typeaware-wave-13 -> origin/codex/typeaware-wave-13
+   c043d14a..5bd31ee5  codex/typeaware-wave-14 -> origin/codex/typeaware-wave-14
+   2467cd3a..edf39f73  codex/typeaware-wave-15 -> origin/codex/typeaware-wave-15
+   d94b805f..be3ab457  codex/typeaware-wave-16 -> origin/codex/typeaware-wave-16
+   32735084..1330dbc2  codex/typeaware-wave-17 -> origin/codex/typeaware-wave-17
+   a7a173c0..1a7f2a3a  codex/typeaware-wave-18 -> origin/codex/typeaware-wave-18
+   bd3aca9a..aec393d7  codex/typeaware-wave-19 -> origin/codex/typeaware-wave-19
+   2d839012..f3f30a65  codex/typeaware-wave-20 -> origin/codex/typeaware-wave-20
+   2f77e8b0..dbc18374  codex/typeaware-wave-21 -> origin/codex/typeaware-wave-21
+   63298efb..6066e31c  codex/typeaware-wave-22 -> origin/codex/typeaware-wave-22
+   e67b14f4..6b1e4e2f  codex/typeaware-wave-23 -> origin/codex/typeaware-wave-23
+   bd26db5b..1d3d2b3f  codex/typeaware-wave-24 -> origin/codex/typeaware-wave-24
+   585a2a19..b22f8858  codex/typeaware-wave-25 -> origin/codex/typeaware-wave-25
+   8035ca2f..a21c17fb  codex/typeaware-wave-26 -> origin/codex/typeaware-wave-26
+   5da2444b..d095b4f7  codex/typeaware-wave-27 -> origin/codex/typeaware-wave-27
+   ef4a0ad7..d45c4d67  codex/typeaware-wave-28 -> origin/codex/typeaware-wave-28
+   8e90a405..0ab90614  codex/typeaware-wave-29 -> origin/codex/typeaware-wave-29
+   333b5ccd..952a900c  codex/typeaware-wave-30 -> origin/codex/typeaware-wave-30
+ * [new branch]        coverage/normalize-long -> origin/coverage/normalize-long
