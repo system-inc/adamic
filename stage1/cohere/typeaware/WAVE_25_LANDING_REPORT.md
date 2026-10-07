@@ -533,3 +533,38 @@ standalone checker-bridge wave suite remain unrun. Boolean-prop-naming's
 options, imported props, typed wrappers, placeholder regex and remaining
 dispatch migrations are still partial; this is not an IR/SSA/capture parking
 classification. No main or area ref was pushed.
+
+## Current main and area landing pass
+
+Rebased cleanly onto origin/area/stage1-lint b84a9d931, which contains current
+origin/main c7991b900. Tested head: 376da95b077ca0682038f0b31d371e2cce2934e5.
+The final fetch confirms both bases remained current. No rule source changed,
+no upstream changes were reverted, and no additional claims were taken.
+
+All five claimed-rule suites and Boolean refusal checks passed in 407.789s.
+Inherited ten-rule coverage passed in 521.978s, with 7,120,613 identical compiler
+finding bytes under normal and sanitizer builds. All 24 rule mutants compiled
+and exited normally, and Go byte comparisons caught them. Released-handle and
+registry mutants passed. Bridge packages passed (70.514s and 0.234s). The
+uncached filtered Node oracle passed in 11.219s with zero cache hits, 25 native
+misses and 17 Node misses. go vet ./... passed with empty output. Registry
+generation passed. Exact commands and intact logs are archived in
+validation-wave-25-current.
+
+Three interleaved rebuilt fifth-suite measurements, with nil Boolean options,
+matched Go output each time. Compiler medians: native 3.882697298s,
+Go 0.402715340s, ratio 9.641. Repository medians: native 0.527243499s,
+Go 0.139099595s, ratio 3.790. These measure the whole adapter, not equivalent
+individual listener execution.
+
+The current compiler still rejects the archived options-regexp.a reproducer
+at 3:28 with build exit 1: stage 0 can't lower RegExp with a nonconstant pattern
+yet. Boolean-prop-naming remains partial for options, imported props, typed
+wrappers, placeholder regex and remaining dispatch migrations. It does not
+qualify for IR/SSA/capture parking. The full gate, including all 17 mandatory
+external-input correctness checks, and standalone wave emitted-JavaScript
+certification remain unrun. No checks were skipped, relaxed or deleted.
+
+To avoid exhausting the disk, only explicitly named obsolete executables in
+my first wave-25-landing scratch directory were removed; its source and logs
+and the current test binaries remain. No main or area ref was pushed.

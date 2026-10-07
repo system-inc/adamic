@@ -1,0 +1,4 @@
+import { programArguments } from 'adamic';
+const pattern = programArguments()[0] ?? '^is';
+const matched = new RegExp(pattern, 'u').test('isEnabled');
+console.log(matched ? 'true' : 'false');

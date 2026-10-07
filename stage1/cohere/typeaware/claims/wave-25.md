@@ -155,3 +155,9 @@ All owned suites, dependency, mutants, sanitizers, handles, bridge, uncached
 Node including lastIndexOf, shared finding model and vet pass. Evidence:
 validation-wave-25-area-next. Existing partial paths remain reserved and no
 new claims were made. Only the wave-25 branch is pushed.
+
+Landing refreshed onto area b84a9d931 and main c7991b900. Claimed suites,
+inherited checker coverage, bridge, filtered Node and vet passed again.
+Boolean-prop-naming remains partial and reserved; current compiler reproduces
+the nonconstant RegExp lowering blocker. No new claims. Evidence:
+../validation-wave-25-current and ../WAVE_25_LANDING_REPORT.md.
