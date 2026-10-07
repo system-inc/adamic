@@ -1,0 +1,40 @@
+// Number keys and values are not references. forEach still walks them live, and a number result is dropped.
+function probe(mode: number): void {
+	const collection = new Map<number, number>();
+	for (let index = 0; index < 8; index += 1) {
+		collection.set(index, index * 10);
+	}
+	const keptKeys: number[] = [];
+	const keptValues: number[] = [];
+	let sum = 0;
+	try {
+		collection.forEach((item, current, owner): number => {
+			if (mode === 0) { owner.delete(current); }
+			if (mode === 1 && current === 0) { owner.delete(1); }
+			if (mode === 2) { owner.clear(); }
+			if (mode === 3) { owner.set(current, item + 100); }
+			if (mode === 4 && current === 0) {
+				owner.delete(current);
+				owner.set(8, 80);
+			}
+			if (mode === 5) {
+				owner.delete(current);
+				keptKeys.push(current);
+				keptValues.push(item);
+				throw new Error(`deleted ${current} ${item}`);
+			}
+			keptKeys.push(current);
+			keptValues.push(item);
+			sum += item;
+			console.log(`${mode}: ${current} ${item} ${owner.size}`);
+			return item;
+		});
+	} catch (error) {
+		console.log(error instanceof Error ? error.message : "unexpected");
+	}
+	console.log(`kept ${mode}: ${keptKeys.join(",")} ${keptValues.join(",")} sum ${sum}`);
+	console.log(`remaining ${mode}: ${collection.size}`);
+	collection.forEach((item, current) => { console.log(`after ${current} ${item}`); });
+}
+
+for (let mode = 0; mode < 6; mode += 1) { probe(mode); }

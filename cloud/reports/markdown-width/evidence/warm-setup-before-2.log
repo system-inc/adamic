@@ -1,0 +1,192 @@
+build-flags-before: {"commit": "b13f759028c2703c5b4d54acff8627e6cf7d0be7", "nproc": "5", "cpu_max": "400000 100000", "go": "go version go1.27.1 linux/amd64", "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)", "node": "v24.19.0", "load": "8.62 5.90 3.69 2/331 85033", "cached": "action-cache"}
++ 1791346801.354492 /workspace/setup-trials-e8wcw_93/before-2/before.sh:13: set -euo pipefail
++ 1791346801.354527 /workspace/setup-trials-e8wcw_93/before-2/before.sh:15: started=1791346801.354524
+++ 1791346801.354812 /workspace/setup-trials-e8wcw_93/before-2/before.sh:16: cat /proc/loadavg
++ 1791346801.355616 /workspace/setup-trials-e8wcw_93/before-2/before.sh:16: loadBefore='8.62 5.90 3.69 2/333 85035'
++ 1791346801.355635 /workspace/setup-trials-e8wcw_93/before-2/before.sh:17: warmTests=false
++ 1791346801.355674 /workspace/setup-trials-e8wcw_93/before-2/before.sh:30: repository=/workspace/adamic
++ 1791346801.355711 /workspace/setup-trials-e8wcw_93/before-2/before.sh:31: tools=/workspace/adamic-tools
++ 1791346801.355732 /workspace/setup-trials-e8wcw_93/before-2/before.sh:32: mkdir -p /workspace/adamic-tools/bin
++ 1791346801.356902 /workspace/setup-trials-e8wcw_93/before-2/before.sh:33: gate=/tmp/adamic-gate
++ 1791346801.356919 /workspace/setup-trials-e8wcw_93/before-2/before.sh:36: install -d -m 1777 /tmp/adamic-gate
++ 1791346801.358099 /workspace/setup-trials-e8wcw_93/before-2/before.sh:38: exec
++ 1791346801.358142 /workspace/setup-trials-e8wcw_93/before-2/before.sh:39: flock 9
+++ 1791346801.359176 /workspace/setup-trials-e8wcw_93/before-2/before.sh:40: mktemp -d /tmp/adamic-gate/setup.XXXXXX
++ 1791346801.359982 /workspace/setup-trials-e8wcw_93/before-2/before.sh:40: run=/tmp/adamic-gate/setup.pyodJ7
++ 1791346801.360013 /workspace/setup-trials-e8wcw_93/before-2/before.sh:41: case $(uname -m) in
+++ 1791346801.360225 /workspace/setup-trials-e8wcw_93/before-2/before.sh:41: uname -m
++ 1791346801.360998 /workspace/setup-trials-e8wcw_93/before-2/before.sh:42: goArchitecture=amd64
++ 1791346801.361007 /workspace/setup-trials-e8wcw_93/before-2/before.sh:42: nodeArchitecture=x64
++ 1791346801.361010 /workspace/setup-trials-e8wcw_93/before-2/before.sh:42: llvmArchitecture=X64
++ 1791346801.361025 /workspace/setup-trials-e8wcw_93/before-2/before.sh:49: export GOTOOLCHAIN=auto
++ 1791346801.361030 /workspace/setup-trials-e8wcw_93/before-2/before.sh:49: GOTOOLCHAIN=auto
++ 1791346801.361338 /workspace/setup-trials-e8wcw_93/before-2/before.sh:130: goProcess=85041
++ 1791346801.361408 /workspace/setup-trials-e8wcw_93/before-2/before.sh:130: prepareGo
++ 1791346801.361442 /workspace/setup-trials-e8wcw_93/before-2/before.sh:131: clangProcess=85042
++ 1791346801.361499 /workspace/setup-trials-e8wcw_93/before-2/before.sh:53: command -v go
++ 1791346801.361502 /workspace/setup-trials-e8wcw_93/before-2/before.sh:131: prepareClang
++ 1791346801.361556 /workspace/setup-trials-e8wcw_93/before-2/before.sh:132: nodeProcess=85043
++ 1791346801.361560 /workspace/setup-trials-e8wcw_93/before-2/before.sh:53: realGo go
++ 1791346801.361585 /workspace/setup-trials-e8wcw_93/before-2/before.sh:66: probe=/tmp/adamic-gate/setup.pyodJ7
++ 1791346801.361597 /workspace/setup-trials-e8wcw_93/before-2/before.sh:67: cat
++ 1791346801.361654 /workspace/setup-trials-e8wcw_93/before-2/before.sh:132: prepareNode
++ 1791346801.361770 /workspace/setup-trials-e8wcw_93/before-2/before.sh:133: submoduleProcess=85046
++ 1791346801.361792 /workspace/setup-trials-e8wcw_93/before-2/before.sh:134: failed=0
++ 1791346801.361808 /workspace/setup-trials-e8wcw_93/before-2/before.sh:135: for process in "$goProcess" "$clangProcess" "$nodeProcess" "$submoduleProcess"
++ 1791346801.361814 /workspace/setup-trials-e8wcw_93/before-2/before.sh:136: wait 85041
++ 1791346801.361940 /workspace/setup-trials-e8wcw_93/before-2/before.sh:133: prepareSubmodules
++ 1791346801.362011 /workspace/setup-trials-e8wcw_93/before-2/before.sh:121: cd /workspace/adamic
++ 1791346801.362032 /workspace/setup-trials-e8wcw_93/before-2/before.sh:122: git config submodule.cohere.url https://github.com/system-inc/cohere.git
++ 1791346801.362069 /workspace/setup-trials-e8wcw_93/before-2/before.sh:52: grep -q '^go version go1\.'
++ 1791346801.362170 /workspace/setup-trials-e8wcw_93/before-2/before.sh:99: grep -q '^v24\.'
++ 1791346801.362558 /workspace/setup-trials-e8wcw_93/before-2/before.sh:75: clang=
+++ 1791346801.363059 /workspace/setup-trials-e8wcw_93/before-2/before.sh:76: ls -d '/usr/lib/llvm-*/bin/clang'
++ 1791346801.363154 /workspace/setup-trials-e8wcw_93/before-2/before.sh:99: /workspace/adamic-tools/bin/node --version
++ 1791346801.363337 /workspace/setup-trials-e8wcw_93/before-2/before.sh:52: go version
++ 1791346801.363536 /workspace/setup-trials-e8wcw_93/before-2/before.sh:123: git submodule update --init --recursive --depth 1 --filter=blob:none
+++ 1791346801.364243 /workspace/setup-trials-e8wcw_93/before-2/before.sh:76: sort -t- -k2 -V -r
+++ 1791346801.365551 /workspace/setup-trials-e8wcw_93/before-2/before.sh:76: command -v clang
++ 1791346801.365743 /workspace/setup-trials-e8wcw_93/before-2/before.sh:76: for candidate in "$tools/llvm/bin/clang" $(ls -d /usr/lib/llvm-*/bin/clang 2> /dev/null | sort -t- -k2 -V -r) $(command -v clang || true)
++ 1791346801.365778 /workspace/setup-trials-e8wcw_93/before-2/before.sh:77: '[' -x /workspace/adamic-tools/llvm/bin/clang ']'
++ 1791346801.365800 /workspace/setup-trials-e8wcw_93/before-2/before.sh:77: saneClang /workspace/adamic-tools/llvm/bin/clang
++ 1791346801.365817 /workspace/setup-trials-e8wcw_93/before-2/before.sh:72: /workspace/adamic-tools/llvm/bin/clang -fsanitize=address,undefined -g /tmp/adamic-gate/setup.pyodJ7/overflow.c -o /tmp/adamic-gate/setup.pyodJ7/overflow
++ 1791346801.368468 /workspace/setup-trials-e8wcw_93/before-2/before.sh:57: '[' -x /workspace/adamic-tools/go/bin/go ']'
++ 1791346801.368507 /workspace/setup-trials-e8wcw_93/before-2/before.sh:57: export PATH=/workspace/adamic-tools/go/bin:/workspace/adamic-tools/bin:/workspace/adamic-tools/go/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback
++ 1791346801.368517 /workspace/setup-trials-e8wcw_93/before-2/before.sh:57: PATH=/workspace/adamic-tools/go/bin:/workspace/adamic-tools/bin:/workspace/adamic-tools/go/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback
++ 1791346801.368752 /workspace/setup-trials-e8wcw_93/before-2/before.sh:58: cd /workspace/adamic
++ 1791346801.368814 /workspace/setup-trials-e8wcw_93/before-2/before.sh:58: go version
++ 1791346801.370186 /workspace/setup-trials-e8wcw_93/before-2/before.sh:115: /workspace/adamic-tools/bin/node --version
+go version go1.27.1 linux/amd64
++ 1791346801.372234 /workspace/setup-trials-e8wcw_93/before-2/before.sh:59: step 'go ready'
++ 1791346801.372259 /workspace/setup-trials-e8wcw_93/before-2/before.sh:25: local elapsed
+++ 1791346801.373050 /workspace/setup-trials-e8wcw_93/before-2/before.sh:26: awk -v start=1791346801.354524 -v now=1791346801.373027 'BEGIN {printf "%.3f", now - start}'
++ 1791346801.373899 /workspace/setup-trials-e8wcw_93/before-2/before.sh:26: elapsed=0.019
++ 1791346801.373930 /workspace/setup-trials-e8wcw_93/before-2/before.sh:27: echo 'setup: go ready (0.019s)'
+setup: go ready (0.019s)
+v24.19.0
++ 1791346801.374652 /workspace/setup-trials-e8wcw_93/before-2/before.sh:135: for process in "$goProcess" "$clangProcess" "$nodeProcess" "$submoduleProcess"
++ 1791346801.374673 /workspace/setup-trials-e8wcw_93/before-2/before.sh:136: wait 85042
++ 1791346801.375176 /workspace/setup-trials-e8wcw_93/before-2/before.sh:116: step 'node ready'
++ 1791346801.375200 /workspace/setup-trials-e8wcw_93/before-2/before.sh:25: local elapsed
+++ 1791346801.375480 /workspace/setup-trials-e8wcw_93/before-2/before.sh:26: awk -v start=1791346801.354524 -v now=1791346801.375457 'BEGIN {printf "%.3f", now - start}'
++ 1791346801.376896 /workspace/setup-trials-e8wcw_93/before-2/before.sh:26: elapsed=0.021
++ 1791346801.376921 /workspace/setup-trials-e8wcw_93/before-2/before.sh:27: echo 'setup: node ready (0.021s)'
+setup: node ready (0.021s)
++ 1791346801.409988 /workspace/setup-trials-e8wcw_93/before-2/before.sh:124: step 'submodules ready'
++ 1791346801.410029 /workspace/setup-trials-e8wcw_93/before-2/before.sh:25: local elapsed
+++ 1791346801.410440 /workspace/setup-trials-e8wcw_93/before-2/before.sh:26: awk -v start=1791346801.354524 -v now=1791346801.410412 'BEGIN {printf "%.3f", now - start}'
++ 1791346801.411458 /workspace/setup-trials-e8wcw_93/before-2/before.sh:26: elapsed=0.056
++ 1791346801.411479 /workspace/setup-trials-e8wcw_93/before-2/before.sh:27: echo 'setup: submodules ready (0.056s)'
+setup: submodules ready (0.056s)
++ 1791346801.469373 /workspace/setup-trials-e8wcw_93/before-2/before.sh:73: /tmp/adamic-gate/setup.pyodJ7/overflow
++ 1791346801.488628 /workspace/setup-trials-e8wcw_93/before-2/before.sh:73: grep -q heap-buffer-overflow /tmp/adamic-gate/setup.pyodJ7/report
++ 1791346801.491247 /workspace/setup-trials-e8wcw_93/before-2/before.sh:78: clang=/workspace/adamic-tools/llvm/bin/clang
++ 1791346801.491263 /workspace/setup-trials-e8wcw_93/before-2/before.sh:79: break
++ 1791346801.491279 /workspace/setup-trials-e8wcw_93/before-2/before.sh:82: '[' -z /workspace/adamic-tools/llvm/bin/clang ']'
++ 1791346801.491288 /workspace/setup-trials-e8wcw_93/before-2/before.sh:90: for tool in clang clang++ llvm-symbolizer
+++ 1791346801.491567 /workspace/setup-trials-e8wcw_93/before-2/before.sh:91: dirname /workspace/adamic-tools/llvm/bin/clang
++ 1791346801.492388 /workspace/setup-trials-e8wcw_93/before-2/before.sh:91: '[' -x /workspace/adamic-tools/llvm/bin/clang ']'
+++ 1791346801.492642 /workspace/setup-trials-e8wcw_93/before-2/before.sh:91: dirname /workspace/adamic-tools/llvm/bin/clang
++ 1791346801.493462 /workspace/setup-trials-e8wcw_93/before-2/before.sh:91: ln -sf /workspace/adamic-tools/llvm/bin/clang /workspace/adamic-tools/bin/clang
++ 1791346801.494366 /workspace/setup-trials-e8wcw_93/before-2/before.sh:90: for tool in clang clang++ llvm-symbolizer
+++ 1791346801.494596 /workspace/setup-trials-e8wcw_93/before-2/before.sh:91: dirname /workspace/adamic-tools/llvm/bin/clang
++ 1791346801.495343 /workspace/setup-trials-e8wcw_93/before-2/before.sh:91: '[' -x /workspace/adamic-tools/llvm/bin/clang++ ']'
+++ 1791346801.495565 /workspace/setup-trials-e8wcw_93/before-2/before.sh:91: dirname /workspace/adamic-tools/llvm/bin/clang
++ 1791346801.496359 /workspace/setup-trials-e8wcw_93/before-2/before.sh:91: ln -sf /workspace/adamic-tools/llvm/bin/clang++ /workspace/adamic-tools/bin/clang++
++ 1791346801.497165 /workspace/setup-trials-e8wcw_93/before-2/before.sh:90: for tool in clang clang++ llvm-symbolizer
+++ 1791346801.497401 /workspace/setup-trials-e8wcw_93/before-2/before.sh:91: dirname /workspace/adamic-tools/llvm/bin/clang
++ 1791346801.498259 /workspace/setup-trials-e8wcw_93/before-2/before.sh:91: '[' -x /workspace/adamic-tools/llvm/bin/llvm-symbolizer ']'
+++ 1791346801.498488 /workspace/setup-trials-e8wcw_93/before-2/before.sh:91: dirname /workspace/adamic-tools/llvm/bin/clang
++ 1791346801.499254 /workspace/setup-trials-e8wcw_93/before-2/before.sh:91: ln -sf /workspace/adamic-tools/llvm/bin/llvm-symbolizer /workspace/adamic-tools/bin/llvm-symbolizer
++ 1791346801.500311 /workspace/setup-trials-e8wcw_93/before-2/before.sh:93: /workspace/adamic-tools/llvm/bin/clang --version
++ 1791346801.500396 /workspace/setup-trials-e8wcw_93/before-2/before.sh:93: head -n 1
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
++ 1791346801.509394 /workspace/setup-trials-e8wcw_93/before-2/before.sh:94: step 'clang ready (/workspace/adamic-tools/llvm/bin/clang)'
++ 1791346801.509419 /workspace/setup-trials-e8wcw_93/before-2/before.sh:25: local elapsed
+++ 1791346801.509751 /workspace/setup-trials-e8wcw_93/before-2/before.sh:26: awk -v start=1791346801.354524 -v now=1791346801.509727 'BEGIN {printf "%.3f", now - start}'
++ 1791346801.510623 /workspace/setup-trials-e8wcw_93/before-2/before.sh:26: elapsed=0.155
++ 1791346801.510645 /workspace/setup-trials-e8wcw_93/before-2/before.sh:27: echo 'setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.155s)'
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.155s)
++ 1791346801.510819 /workspace/setup-trials-e8wcw_93/before-2/before.sh:135: for process in "$goProcess" "$clangProcess" "$nodeProcess" "$submoduleProcess"
++ 1791346801.510837 /workspace/setup-trials-e8wcw_93/before-2/before.sh:136: wait 85043
++ 1791346801.510845 /workspace/setup-trials-e8wcw_93/before-2/before.sh:135: for process in "$goProcess" "$clangProcess" "$nodeProcess" "$submoduleProcess"
++ 1791346801.510850 /workspace/setup-trials-e8wcw_93/before-2/before.sh:136: wait 85046
++ 1791346801.510865 /workspace/setup-trials-e8wcw_93/before-2/before.sh:138: '[' 0 = 0 ']'
++ 1791346801.510884 /workspace/setup-trials-e8wcw_93/before-2/before.sh:139: '[' -x /workspace/adamic-tools/go/bin/go ']'
++ 1791346801.510904 /workspace/setup-trials-e8wcw_93/before-2/before.sh:139: export PATH=/workspace/adamic-tools/go/bin:/workspace/adamic-tools/bin:/workspace/adamic-tools/go/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback
++ 1791346801.510911 /workspace/setup-trials-e8wcw_93/before-2/before.sh:139: PATH=/workspace/adamic-tools/go/bin:/workspace/adamic-tools/bin:/workspace/adamic-tools/go/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback
++ 1791346801.510924 /workspace/setup-trials-e8wcw_93/before-2/before.sh:142: cat
+++ 1791346801.511433 /workspace/setup-trials-e8wcw_93/before-2/before.sh:142: '[' -x /workspace/adamic-tools/go/bin/go ']'
+++ 1791346801.511478 /workspace/setup-trials-e8wcw_93/before-2/before.sh:142: echo /workspace/adamic-tools/go/bin:
++ 1791346801.512428 /workspace/setup-trials-e8wcw_93/before-2/before.sh:147: grep -qs /workspace/adamic-tools/env.sh /home/agent/.bashrc
++ 1791346801.513731 /workspace/setup-trials-e8wcw_93/before-2/before.sh:149: source /workspace/adamic-tools/env.sh
+++ 1791346801.513776 /workspace/adamic-tools/env.sh:1: export PATH=/workspace/adamic-tools/bin:/workspace/adamic-tools/go/bin:/workspace/adamic-tools/go/bin:/workspace/adamic-tools/bin:/workspace/adamic-tools/go/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback
+++ 1791346801.513783 /workspace/adamic-tools/env.sh:1: PATH=/workspace/adamic-tools/bin:/workspace/adamic-tools/go/bin:/workspace/adamic-tools/go/bin:/workspace/adamic-tools/bin:/workspace/adamic-tools/go/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback
+++ 1791346801.513797 /workspace/adamic-tools/env.sh:2: export GOTOOLCHAIN=auto
+++ 1791346801.513800 /workspace/adamic-tools/env.sh:2: GOTOOLCHAIN=auto
+++ 1791346801.513805 /workspace/adamic-tools/env.sh:3: export TMPDIR=/tmp/adamic-gate
+++ 1791346801.513808 /workspace/adamic-tools/env.sh:3: TMPDIR=/tmp/adamic-gate
++ 1791346801.513816 /workspace/setup-trials-e8wcw_93/before-2/before.sh:150: cd /workspace/adamic
++ 1791346801.513830 /workspace/setup-trials-e8wcw_93/before-2/before.sh:154: buildArguments=()
++ 1791346801.513838 /workspace/setup-trials-e8wcw_93/before-2/before.sh:155: key=
+++ 1791346801.514235 /workspace/setup-trials-e8wcw_93/before-2/before.sh:156: printf %s /workspace/adamic
+++ 1791346801.514295 /workspace/setup-trials-e8wcw_93/before-2/before.sh:156: sha256sum
+++ 1791346801.514436 /workspace/setup-trials-e8wcw_93/before-2/before.sh:156: cut '-d ' -f1
++ 1791346801.516669 /workspace/setup-trials-e8wcw_93/before-2/before.sh:156: stamp=/workspace/adamic-tools/warm-62ef6a669dfa788150457d5e0c05fc10701e83cf28363be965ee0d6c91be7a4e-false
++ 1791346801.516751 /workspace/setup-trials-e8wcw_93/before-2/before.sh:157: '[' 0 = 1 ']'
++ 1791346801.516759 /workspace/setup-trials-e8wcw_93/before-2/before.sh:160: listArguments=()
++ 1791346801.516765 /workspace/setup-trials-e8wcw_93/before-2/before.sh:161: false
++ 1791346801.516776 /workspace/setup-trials-e8wcw_93/before-2/before.sh:162: go list -deps -export -json ./...
+++ 1791346801.804848 /workspace/setup-trials-e8wcw_93/before-2/before.sh:163: python3 /workspace/adamic/cloud/setup-key.py /workspace/adamic /tmp/adamic-gate/setup.pyodJ7/packages.json false
++ 1791346801.920883 /workspace/setup-trials-e8wcw_93/before-2/before.sh:163: key=4a042f93282611c2bbce04f3038eaa2bfa600efdd19b182cd2cc330d8b23ea68
++ 1791346801.921054 /workspace/setup-trials-e8wcw_93/before-2/before.sh:165: '[' -n 4a042f93282611c2bbce04f3038eaa2bfa600efdd19b182cd2cc330d8b23ea68 ']'
+++ 1791346801.921622 /workspace/setup-trials-e8wcw_93/before-2/before.sh:165: cat /workspace/adamic-tools/warm-62ef6a669dfa788150457d5e0c05fc10701e83cf28363be965ee0d6c91be7a4e-false
++ 1791346801.923029 /workspace/setup-trials-e8wcw_93/before-2/before.sh:165: '[' 4a042f93282611c2bbce04f3038eaa2bfa600efdd19b182cd2cc330d8b23ea68 = 4a042f93282611c2bbce04f3038eaa2bfa600efdd19b182cd2cc330d8b23ea68 ']'
++ 1791346801.923046 /workspace/setup-trials-e8wcw_93/before-2/before.sh:166: step 'go build skipped (validated warming stamp)'
++ 1791346801.923060 /workspace/setup-trials-e8wcw_93/before-2/before.sh:25: local elapsed
+++ 1791346801.923336 /workspace/setup-trials-e8wcw_93/before-2/before.sh:26: awk -v start=1791346801.354524 -v now=1791346801.923313 'BEGIN {printf "%.3f", now - start}'
++ 1791346801.924445 /workspace/setup-trials-e8wcw_93/before-2/before.sh:26: elapsed=0.569
++ 1791346801.924465 /workspace/setup-trials-e8wcw_93/before-2/before.sh:27: echo 'setup: go build skipped (validated warming stamp) (0.569s)'
+setup: go build skipped (validated warming stamp) (0.569s)
++ 1791346801.924481 /workspace/setup-trials-e8wcw_93/before-2/before.sh:167: false
++ 1791346801.924501 /workspace/setup-trials-e8wcw_93/before-2/before.sh:182: false
++ 1791346801.924507 /workspace/setup-trials-e8wcw_93/before-2/before.sh:182: step 'test binaries deferred (use --warm-tests)'
++ 1791346801.924513 /workspace/setup-trials-e8wcw_93/before-2/before.sh:25: local elapsed
+++ 1791346801.924797 /workspace/setup-trials-e8wcw_93/before-2/before.sh:26: awk -v start=1791346801.354524 -v now=1791346801.924771 'BEGIN {printf "%.3f", now - start}'
++ 1791346801.925593 /workspace/setup-trials-e8wcw_93/before-2/before.sh:26: elapsed=0.570
++ 1791346801.925616 /workspace/setup-trials-e8wcw_93/before-2/before.sh:27: echo 'setup: test binaries deferred (use --warm-tests) (0.570s)'
+setup: test binaries deferred (use --warm-tests) (0.570s)
++ 1791346801.925634 /workspace/setup-trials-e8wcw_93/before-2/before.sh:183: step 'build cache warm'
++ 1791346801.925640 /workspace/setup-trials-e8wcw_93/before-2/before.sh:25: local elapsed
+++ 1791346801.926022 /workspace/setup-trials-e8wcw_93/before-2/before.sh:26: awk -v start=1791346801.354524 -v now=1791346801.926000 'BEGIN {printf "%.3f", now - start}'
++ 1791346801.926838 /workspace/setup-trials-e8wcw_93/before-2/before.sh:26: elapsed=0.571
++ 1791346801.926857 /workspace/setup-trials-e8wcw_93/before-2/before.sh:27: echo 'setup: build cache warm (0.571s)'
+setup: build cache warm (0.571s)
+++ 1791346801.927101 /workspace/setup-trials-e8wcw_93/before-2/before.sh:185: cat /sys/fs/cgroup/cpu.max
++ 1791346801.928264 /workspace/setup-trials-e8wcw_93/before-2/before.sh:185: cpuQuota='400000 100000'
+++ 1791346801.928504 /workspace/setup-trials-e8wcw_93/before-2/before.sh:186: awk '/MemTotal/ {printf "%.1f GB", $2 / 1048576}' /proc/meminfo
++ 1791346801.929431 /workspace/setup-trials-e8wcw_93/before-2/before.sh:186: memory='17.6 GB'
+++ 1791346801.929731 /workspace/setup-trials-e8wcw_93/before-2/before.sh:187: git -C /workspace/adamic rev-parse HEAD
+++ 1791346801.931507 /workspace/setup-trials-e8wcw_93/before-2/before.sh:187: nproc
+++ 1791346801.932541 /workspace/setup-trials-e8wcw_93/before-2/before.sh:187: go version
+++ 1791346801.936352 /workspace/setup-trials-e8wcw_93/before-2/before.sh:187: clang --version
+++ 1791346801.936454 /workspace/setup-trials-e8wcw_93/before-2/before.sh:187: head -n 1
+++ 1791346801.946051 /workspace/setup-trials-e8wcw_93/before-2/before.sh:187: node --version
+++ 1791346801.950176 /workspace/setup-trials-e8wcw_93/before-2/before.sh:187: '[' 0 = 1 ']'
+++ 1791346801.950217 /workspace/setup-trials-e8wcw_93/before-2/before.sh:187: echo yes
+++ 1791346801.950545 /workspace/setup-trials-e8wcw_93/before-2/before.sh:187: cat /proc/loadavg
++ 1791346801.951420 /workspace/setup-trials-e8wcw_93/before-2/before.sh:187: echo 'setup: build-flags commit=b13f759028c2703c5b4d54acff8627e6cf7d0be7 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false load-before=8.62 5.90 3.69 2/333 85035 load-after=8.09 5.83 3.68 2/334 85227'
+setup: build-flags commit=b13f759028c2703c5b4d54acff8627e6cf7d0be7 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false load-before=8.62 5.90 3.69 2/333 85035 load-after=8.09 5.83 3.68 2/334 85227
+++ 1791346801.951654 /workspace/setup-trials-e8wcw_93/before-2/before.sh:188: nproc
++ 1791346801.952518 /workspace/setup-trials-e8wcw_93/before-2/before.sh:188: step 'done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB'
++ 1791346801.952536 /workspace/setup-trials-e8wcw_93/before-2/before.sh:25: local elapsed
+++ 1791346801.952800 /workspace/setup-trials-e8wcw_93/before-2/before.sh:26: awk -v start=1791346801.354524 -v now=1791346801.952779 'BEGIN {printf "%.3f", now - start}'
++ 1791346801.953626 /workspace/setup-trials-e8wcw_93/before-2/before.sh:26: elapsed=0.598
++ 1791346801.953644 /workspace/setup-trials-e8wcw_93/before-2/before.sh:27: echo 'setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (0.598s)'
+setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (0.598s)
++ 1791346801.953666 /workspace/setup-trials-e8wcw_93/before-2/before.sh:189: echo 'setup: source /workspace/adamic-tools/env.sh'
+setup: source /workspace/adamic-tools/env.sh
++ 1791346801.953672 /workspace/setup-trials-e8wcw_93/before-2/before.sh:190: echo 'setup: logs /tmp/adamic-gate/setup.pyodJ7'
+setup: logs /tmp/adamic-gate/setup.pyodJ7
+build-flags-after: {"commit": "b13f759028c2703c5b4d54acff8627e6cf7d0be7", "nproc": "5", "cpu_max": "400000 100000", "go": "go version go1.27.1 linux/amd64", "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)", "node": "v24.19.0", "load": "8.09 5.83 3.68 2/332 85237", "cached": "action-cache"}
+wall=0.600886 exit=0
