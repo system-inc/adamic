@@ -155,7 +155,7 @@ func TestMarkdownSourceDecoding(t *testing.T) {
 				}
 				write(t, filepath.Join(scratch, file), b)
 			}
-			result := nativelyRun(t, lowered(t, filepath.Join(scratch, "testdata/decode_probe.ts")), mutantCases)
+			result := onNode(t, filepath.Join(scratch, "testdata/decode_probe.ts"), mutantCases)
 			clean(t, m.name, result)
 			if bytes.Equal(result.stdout, mutantWant.stdout) {
 				t.Fatal("survived")
