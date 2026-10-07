@@ -1,0 +1,10 @@
+// Parser prerequisite probe only. This is not a rule implementation.
+import { panic, programArguments, readTextFile } from 'adamic';
+import { Parser } from '../../../typescript/parser/parser.ts';
+const args = programArguments();
+const path = args[0] ?? panic('source path');
+const source = readTextFile(path);
+if(source.kind === 'Error') { panic(source.message); }
+const parser = new Parser(source.text, path);
+const root = parser.file();
+console.log(`parsed ${parser.node(root).kind}`);

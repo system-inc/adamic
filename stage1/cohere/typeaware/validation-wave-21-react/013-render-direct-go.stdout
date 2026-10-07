@@ -1,0 +1,3 @@
+file	/workspace/wave21-react-final/render-direct.a
+89	97	react-hooks/set-state-in-render	setStateInRender	This state setter is called while the component is rendering, on every render rather than in response to an event. Setting state schedules another render, and that render calls the setter again, so this loops until React gives up and throws `Too many re-renders`. To reset state when a prop changes, keep the previous prop in state and compare it during render. To derive a value from state or props, compute it during render instead of storing it.	0	0
+findings 1

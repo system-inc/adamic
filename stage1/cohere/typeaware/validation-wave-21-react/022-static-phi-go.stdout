@@ -1,0 +1,3 @@
+file	/workspace/wave21-react-final/static-phi.tsx
+123	132	react-hooks/static-components	staticComponents	This component is created during render, at `createComponent`, so it gets a new identity every time this function runs. React compares components by identity, so it unmounts the previous one and mounts this as a fresh component rather than updating it, discarding all of its state and re-rendering its whole subtree on every render. The usual symptom is an input that loses what was typed into it. Move the component to module scope, or pass the value that varies as a prop.	0	0
+findings 1

@@ -1,0 +1,22 @@
+=== RUN   TestWave21ReactPrerequisites
+    wave_21_react_prerequisites_test.go:66: effect-direct production Go: findings 1
+    wave_21_react_prerequisites_test.go:66: effect-captures production Go: findings 1
+    wave_21_react_prerequisites_test.go:66: render-direct production Go: findings 1
+    wave_21_react_prerequisites_test.go:66: render-captures production Go: findings 1
+    wave_21_react_prerequisites_test.go:66: static-direct production Go: findings 1
+    wave_21_react_prerequisites_test.go:74: static-direct normal parser refusal: adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 76 in /workspace/wave21-react-prerequisites/static-direct.tsx
+    wave_21_react_prerequisites_test.go:74: static-direct asan parser refusal: adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 76 in /workspace/wave21-react-prerequisites/static-direct.tsx
+    wave_21_react_prerequisites_test.go:66: static-phi production Go: findings 1
+    wave_21_react_prerequisites_test.go:74: static-phi normal parser refusal: adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 133 in /workspace/wave21-react-prerequisites/static-phi.tsx
+    wave_21_react_prerequisites_test.go:74: static-phi asan parser refusal: adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 133 in /workspace/wave21-react-prerequisites/static-phi.tsx
+    wave_21_react_prerequisites_test.go:82: compiler-go: exit status 2
+        
+        panic: invalid tsconfig
+        
+        goroutine 1 [running]:
+        main.main()
+        	/workspace/adamic/cohere/adamic_react-prerequisite-oracle.go:67 +0x16b8
+--- FAIL: TestWave21ReactPrerequisites (37.87s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	37.873s
+FAIL

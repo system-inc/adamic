@@ -1,0 +1,26 @@
+[
+  {
+    "file": "effect-captures.a",
+    "source": "import {useState,useEffect} from './react';function Component(){const [state,setState]=useState(0);const f=()=>{setState(1);};const g=()=>{f();};useEffect(()=>{g();});return state;}\n"
+  },
+  {
+    "file": "effect-direct.a",
+    "source": "import {useState,useEffect} from './react';function Component(){const [state,setState]=useState(0);useEffect(()=>{setState(1);});return state;}\n"
+  },
+  {
+    "file": "render-captures.a",
+    "source": "import {useState} from './react';function Component(){const [state,setState]=useState(0);const f=()=>{setState(1);};const g=()=>{f();};g();return state;}\n"
+  },
+  {
+    "file": "render-direct.a",
+    "source": "import {useState} from './react';function Component(){const [state,setState]=useState(0);setState(1);return state;}\n"
+  },
+  {
+    "file": "static-direct.tsx",
+    "source": "function Example(props){const Component=createComponent();return <Component />;}\n"
+  },
+  {
+    "file": "static-phi.tsx",
+    "source": "function Example(props){let Component;if(props.cond){Component=createComponent();}else{Component=DefaultComponent;}return <Component />;}\n"
+  }
+]

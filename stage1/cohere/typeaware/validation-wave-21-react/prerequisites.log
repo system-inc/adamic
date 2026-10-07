@@ -1,0 +1,20 @@
+=== RUN   TestWave21ReactPrerequisites
+    wave_21_react_prerequisites_test.go:71: effect-direct production Go: findings 1
+    wave_21_react_prerequisites_test.go:71: effect-captures production Go: findings 1
+    wave_21_react_prerequisites_test.go:71: render-direct production Go: findings 1
+    wave_21_react_prerequisites_test.go:71: render-captures production Go: findings 1
+    wave_21_react_prerequisites_test.go:71: static-direct production Go: findings 1
+    wave_21_react_prerequisites_test.go:79: static-direct normal parser refusal: adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 76 in /workspace/wave21-react-final/static-direct.tsx
+    wave_21_react_prerequisites_test.go:79: static-direct asan parser refusal: adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 76 in /workspace/wave21-react-final/static-direct.tsx
+    wave_21_react_prerequisites_test.go:71: static-phi production Go: findings 1
+    wave_21_react_prerequisites_test.go:79: static-phi normal parser refusal: adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 133 in /workspace/wave21-react-final/static-phi.tsx
+    wave_21_react_prerequisites_test.go:79: static-phi asan parser refusal: adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 133 in /workspace/wave21-react-final/static-phi.tsx
+    wave_21_react_prerequisites_test.go:114: effect-positive prerequisite guard mutant: exit 0; required Go message disappeared
+    wave_21_react_prerequisites_test.go:114: render-positive prerequisite guard mutant: exit 0; required Go message disappeared
+    wave_21_react_prerequisites_test.go:114: static-positive prerequisite guard mutant: exit 0; required Go message disappeared
+    wave_21_react_prerequisites_test.go:129: parser guard mutant: exit 0; required JSX refusal disappeared
+    wave_21_react_prerequisites_test.go:133: compiler Go baseline only: findings 0; 5087 canonical bytes
+    wave_21_react_prerequisites_test.go:133: repository Go baseline only: findings 0; 18485 canonical bytes
+--- PASS: TestWave21ReactPrerequisites (47.81s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	47.819s

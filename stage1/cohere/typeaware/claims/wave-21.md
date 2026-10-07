@@ -119,3 +119,12 @@ with lexical ties, are reserved here before writing code:
 
 None is ported on either base branch or named in any fetched origin claim.
 This claim update is pushed before implementation.
+
+
+Fifth batch status: all three reservations remain unimplemented, blocked on
+missing native React HIR lowering/SSA and graph transforms. Static-components
+also encounters native JSX parser refusals. Independent Go positives, native
+parser/sanitizer prerequisites and guard mutants are recorded in
+../WAVE_21_REACT_REPORT.md and ../validation-wave-21-react/. No native rule
+agreement, qualifying native rule mutants or completed ports are claimed.
+Reservations are retained; no subsequent rules were claimed.
