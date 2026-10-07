@@ -35,3 +35,22 @@ func internArrayViewContract(l *lowering, node *ast.Node, target *checker.Type, 
 	l.result.ViewContracts[int(id)-1] = contract
 	return id, nil
 }
+
+// Optional arrays keep the array descriptor and its element edge. Undefined is
+// a field-presence alternative, not an object union requiring a discriminant.
+func (l *lowering) viewOptionalArrayContract(node *ast.Node, target *checker.Type) (ir.ViewContractID, bool, error) {
+	if !l.includesUndefined(target) || !l.checker.IsArrayType(l.checker.GetNonNullableType(target)) {
+		return 0, false, nil
+	}
+	present, err := l.viewContract(node, l.checker.GetNonNullableType(target))
+	if err != nil {
+		return 0, true, err
+	}
+	contract := l.result.ViewContracts[present-1]
+	contract.Undefined = true
+	contract.Name = l.checker.TypeToString(target)
+	id := ir.ViewContractID(len(l.result.ViewContracts) + 1)
+	l.result.ViewContracts = append(l.result.ViewContracts, contract)
+	l.result.ViewContractTypes[int(target.Id())] = id
+	return id, true, nil
+}

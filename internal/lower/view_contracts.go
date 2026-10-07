@@ -41,6 +41,9 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 		}
 		return viewCallableContractHook(l, node, target, build)
 	}
+	if id, handled, err := l.viewOptionalArrayContract(node, target); handled {
+		return id, err
+	}
 	if l.includesUndefined(target) {
 		present := l.checker.GetNonNullableType(target)
 		if of, known := l.representation(present); known && of == ir.Object {

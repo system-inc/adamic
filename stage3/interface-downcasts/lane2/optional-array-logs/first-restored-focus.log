@@ -1,0 +1,13 @@
+ok  	github.com/system-inc/adamic/internal/lower	12.618s
+ok  	github.com/system-inc/adamic/internal/native	33.219s
+ok  	github.com/system-inc/adamic/internal/javascript	8.105s
+ok  	github.com/system-inc/adamic/internal/ir	0.099s [no tests to run]
+--- FAIL: TestCheckedViewOptionalDeclarations (0.01s)
+    --- FAIL: TestCheckedViewOptionalDeclarations/optional-declarations-lazy (0.15s)
+        checked_views_optional_arrays_test.go:18: /workspace/adamic/stage3/interface-downcasts/lane2/optional-declarations-lazy.a:5:53: stage 0 can't lower an array of number | { name: string; } yet
+FAIL
+gate cache: native hits=0 misses=8
+gate cache: node hits=0 misses=268
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	101.516s
+FAIL
