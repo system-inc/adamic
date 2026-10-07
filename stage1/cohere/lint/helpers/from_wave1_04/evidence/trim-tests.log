@@ -1,0 +1,27 @@
+=== RUN   TestTrimLeadingJavaScriptSpaceMatchesGo
+    trim_test.go:70: better-tailwindcss/enforce-consistent-class-order: 148 original fixture literal/field inputs
+    trim_test.go:70: better-tailwindcss/enforce-shorthand-classes: 69 original fixture literal/field inputs
+    trim_test.go:70: better-tailwindcss/no-conflicting-classes: 64 original fixture literal/field inputs
+    trim_test.go:70: better-tailwindcss/no-unknown-classes: 65 original fixture literal/field inputs
+    trim_test.go:70: 63845 total cases, all 63,488 BMP scalar leading points and 25 actual Go whitespace members
+    trim_test.go:78: 883340 exact Go bytes on source Node, emitted JavaScript and ASan/UBSan native
+--- PASS: TestTrimLeadingJavaScriptSpaceMatchesGo (3.44s)
+=== RUN   TestTrimLeadingJavaScriptSpaceMutants
+    trim_test.go:84: better-tailwindcss/enforce-consistent-class-order: 148 original fixture literal/field inputs
+    trim_test.go:84: better-tailwindcss/enforce-shorthand-classes: 69 original fixture literal/field inputs
+    trim_test.go:84: better-tailwindcss/no-conflicting-classes: 64 original fixture literal/field inputs
+    trim_test.go:84: better-tailwindcss/no-unknown-classes: 65 original fixture literal/field inputs
+    trim_test.go:84: 63845 total cases, all 63,488 BMP scalar leading points and 25 actual Go whitespace members
+=== RUN   TestTrimLeadingJavaScriptSpaceMutants/omit_leading_BOM
+    trim_test.go:93: compiled and completed cleanly; only Go comparison caught omit leading BOM on source Node: line 63578 got="63577\t\\ufeffX" Go="63577\tX"
+    trim_test.go:93: compiled and completed cleanly; only Go comparison caught omit leading BOM on emitted JavaScript: line 63578 got="63577\t\\ufeffX" Go="63577\tX"
+    trim_test.go:93: compiled and completed cleanly; only Go comparison caught omit leading BOM on ASan/UBSan native: line 63578 got="63577\t\\ufeffX" Go="63577\tX"
+=== RUN   TestTrimLeadingJavaScriptSpaceMutants/strip_an_extra_suffix_character
+    trim_test.go:93: compiled and completed cleanly; only Go comparison caught strip an extra suffix character on source Node: line 1 got="0\ttems-center\\u000a    flex\\u000a    gap-2" Go="0\titems-center\\u000a    flex\\u000a    gap-2"
+    trim_test.go:93: compiled and completed cleanly; only Go comparison caught strip an extra suffix character on emitted JavaScript: line 1 got="0\ttems-center\\u000a    flex\\u000a    gap-2" Go="0\titems-center\\u000a    flex\\u000a    gap-2"
+    trim_test.go:93: compiled and completed cleanly; only Go comparison caught strip an extra suffix character on ASan/UBSan native: line 1 got="0\ttems-center\\u000a    flex\\u000a    gap-2" Go="0\titems-center\\u000a    flex\\u000a    gap-2"
+--- PASS: TestTrimLeadingJavaScriptSpaceMutants (5.90s)
+    --- PASS: TestTrimLeadingJavaScriptSpaceMutants/omit_leading_BOM (2.68s)
+    --- PASS: TestTrimLeadingJavaScriptSpaceMutants/strip_an_extra_suffix_character (2.52s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from_wave1_04	9.351s

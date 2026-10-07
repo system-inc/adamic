@@ -62,3 +62,9 @@ rule prerequisites. No claim of whole-rule/native CSS engine completion is made.
    domains from all four consumers plus Unicode and boundary controls, source
    Node, emitted JavaScript and sanitized native; require compiling mutants.
    One helper per .a file. This claim is pushed before implementation.
+
+Delivery 3: trimLeadingJavaScriptSpace is implemented and validated. All 38 original
+Go consumer tests pass; 63,845 helper cases yield 883,340 identical bytes across
+source Node, emitted JavaScript and sanitized native. Both compiling mutants are
+caught. Complete owned helper gate PASS 26.695s, all seven semantic mutants;
+vet and six uncached input probes pass. See from_wave1_04/TRIM_REPORT.md.

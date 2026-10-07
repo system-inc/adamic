@@ -1,0 +1,19 @@
+// Go strings.TrimLeftFunc with the separately owned JavaScript-space predicate.
+// Decode UTF-16 pairs before invoking the rune predicate; preserve the suffix exactly.
+export function trimLeadingJavaScriptSpace(value: string, isJavaScriptSpace: (point: number) => boolean): string {
+    let index = 0;
+    while(index < value.length) {
+        let point = value.charCodeAt(index);
+        let width = 1;
+        if(point >= 0xd800 && point <= 0xdbff && index + 1 < value.length) {
+            const low = value.charCodeAt(index + 1);
+            if(low >= 0xdc00 && low <= 0xdfff) {
+                point = 0x10000 + (point - 0xd800) * 0x400 + low - 0xdc00;
+                width = 2;
+            }
+        }
+        if(!isJavaScriptSpace(point)) { break; }
+        index += width;
+    }
+    return value.slice(index);
+}

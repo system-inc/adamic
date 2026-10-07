@@ -1,0 +1,12 @@
+package tailwind
+
+func Wave104TrimLeadingJavaScriptSpace(value string) string { return trimLeadingJavaScriptSpace(value) }
+func Wave104JavaScriptSpaces() []int {
+	var spaces []int
+	for point := rune(0); point <= 0x10ffff; point++ {
+		if isJavaScriptSpace(point) {
+			spaces = append(spaces, int(point))
+		}
+	}
+	return spaces
+}

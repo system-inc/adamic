@@ -1,0 +1,113 @@
+package main
+
+import (
+	"bufio"
+	"encoding/json"
+	"fmt"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/core"
+	"github.com/microsoft/TypeScript/tsc/shim/parser"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
+	collapse "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse"
+	"os"
+	"path/filepath"
+	"strings"
+	"unicode/utf16"
+)
+
+type Input struct{ Rule, File, Source string }
+type Case struct {
+	Rule  string `json:",omitempty"`
+	File  string `json:",omitempty"`
+	Value string
+}
+type Corpus struct {
+	Spaces []int
+	Cases  []Case
+}
+
+func written(value string) string {
+	var b strings.Builder
+	for _, r := range value {
+		if r >= 32 && r <= 126 && r != '\\' {
+			b.WriteRune(r)
+		} else if r <= 65535 {
+			fmt.Fprintf(&b, `\u%04x`, r)
+		} else {
+			h, l := utf16.EncodeRune(r)
+			fmt.Fprintf(&b, `\u%04x\u%04x`, h, l)
+		}
+	}
+	return b.String()
+}
+func main() {
+	if os.Args[1] == "--generate" {
+		data, err := os.ReadFile(os.Args[2])
+		if err != nil {
+			panic(err)
+		}
+		var inputs []Input
+		if err = json.Unmarshal(data, &inputs); err != nil {
+			panic(err)
+		}
+		corpus := Corpus{Spaces: collapse.Wave104JavaScriptSpaces()}
+		consumers := map[string]bool{"better-tailwindcss/enforce-consistent-class-order": true, "better-tailwindcss/enforce-shorthand-classes": true, "better-tailwindcss/no-conflicting-classes": true, "better-tailwindcss/no-unknown-classes": true}
+		for _, input := range inputs {
+			if !consumers[input.Rule] {
+				continue
+			}
+			kind := core.ScriptKindTS
+			if strings.HasSuffix(input.File, ".tsx") || strings.HasSuffix(input.File, ".jsx") {
+				kind = core.ScriptKindTSX
+			}
+			name, err := filepath.Abs(input.File)
+			if err != nil {
+				panic(err)
+			}
+			file := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: name, Path: tspath.Path(name)}, input.Source, kind)
+			var visit func(*ast.Node)
+			visit = func(node *ast.Node) {
+				switch node.Kind {
+				case ast.KindStringLiteral, ast.KindNoSubstitutionTemplateLiteral, ast.KindTemplateHead, ast.KindTemplateMiddle, ast.KindTemplateTail:
+					value := node.Text()
+					corpus.Cases = append(corpus.Cases, Case{Rule: input.Rule, File: input.File, Value: value})
+					for _, part := range strings.Fields(value) {
+						corpus.Cases = append(corpus.Cases, Case{Rule: input.Rule, File: input.File, Value: part})
+					}
+				}
+				node.ForEachChild(func(child *ast.Node) bool { visit(child); return false })
+			}
+			visit(file.AsNode())
+		}
+		for point := rune(0); point <= 65535; point++ {
+			if point >= 0xd800 && point <= 0xdfff {
+				continue
+			}
+			corpus.Cases = append(corpus.Cases, Case{Value: " " + string(point) + "X"})
+		}
+		for _, value := range []string{"", " ", " \t\n\r\v\f", "X ", "\ufeff\u2000X \t", "\u0085X", "\u180eX", "\u200bX", " \U0001f600 X", " \U0010ffffX", "\u2028\u2029"} {
+			corpus.Cases = append(corpus.Cases, Case{Value: value})
+		}
+		data, err = json.Marshal(corpus)
+		if err != nil {
+			panic(err)
+		}
+		if err = os.WriteFile(os.Args[3], data, 0644); err != nil {
+			panic(err)
+		}
+		return
+	}
+	data, err := os.ReadFile(os.Args[1])
+	if err != nil {
+		panic(err)
+	}
+	var corpus Corpus
+	if err = json.Unmarshal(data, &corpus); err != nil {
+		panic(err)
+	}
+	out := bufio.NewWriter(os.Stdout)
+	defer out.Flush()
+	for i, c := range corpus.Cases {
+		fmt.Fprintf(out, "%d\t%s\n", i, written(collapse.Wave104TrimLeadingJavaScriptSpace(c.Value)))
+	}
+}
