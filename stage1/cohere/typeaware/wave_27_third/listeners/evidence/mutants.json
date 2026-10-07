@@ -1,0 +1,74 @@
+[
+  {
+    "rule_file": "correctness_no_process_exit_after_output_listeners.a",
+    "mutation": "307 to 308",
+    "exit": 0,
+    "stderr": "",
+    "caught_by": "independent Go numeric SyntaxKind bytes",
+    "first_difference": 216
+  },
+  {
+    "rule_file": "correctness_no_uncleared_race_timeout_listeners.a",
+    "mutation": "214 to 215",
+    "exit": 0,
+    "stderr": "",
+    "caught_by": "independent Go numeric SyntaxKind bytes",
+    "first_difference": 264
+  },
+  {
+    "rule_file": "correctness_require_blocking_standard_streams_listeners.a",
+    "mutation": "307 to 308",
+    "exit": 0,
+    "stderr": "",
+    "caught_by": "independent Go numeric SyntaxKind bytes",
+    "first_difference": 320
+  },
+  {
+    "rule_file": "correctness_require_orm_column_nullable_parity_listeners.a",
+    "mutation": "171 to 172",
+    "exit": 0,
+    "stderr": "",
+    "caught_by": "independent Go numeric SyntaxKind bytes",
+    "first_difference": 54
+  },
+  {
+    "rule_file": "correctness_require_serializable_nullable_parity_listeners.a",
+    "mutation": "171 to 172",
+    "exit": 0,
+    "stderr": "",
+    "caught_by": "independent Go numeric SyntaxKind bytes",
+    "first_difference": 112
+  },
+  {
+    "rule_file": "correctness_require_verify_array_parity_listeners.a",
+    "mutation": "173 to 174",
+    "exit": 0,
+    "stderr": "",
+    "caught_by": "independent Go numeric SyntaxKind bytes",
+    "first_difference": 161
+  },
+  {
+    "rule_file": "exhaustive_deps_listeners.a",
+    "mutation": "214 to 215",
+    "exit": 0,
+    "stderr": "",
+    "caught_by": "independent Go numeric SyntaxKind bytes",
+    "first_difference": 400
+  },
+  {
+    "rule_file": "prefer_regex_literals_listeners.a",
+    "mutation": "307 to 308",
+    "exit": 0,
+    "stderr": "",
+    "caught_by": "independent Go numeric SyntaxKind bytes",
+    "first_difference": 346
+  },
+  {
+    "rule_file": "prefer_rest_params_listeners.a",
+    "mutation": "79 to 80",
+    "exit": 0,
+    "stderr": "",
+    "caught_by": "independent Go numeric SyntaxKind bytes",
+    "first_difference": 367
+  }
+]

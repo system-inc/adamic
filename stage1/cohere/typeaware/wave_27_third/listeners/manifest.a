@@ -1,0 +1,21 @@
+import { ruleName as rule0, syntaxKinds as kinds0 } from './correctness_require_orm_column_nullable_parity_listeners.a';
+import {
+    ruleName as rule1,
+    syntaxKinds as kinds1,
+} from './correctness_require_serializable_nullable_parity_listeners.a';
+import { ruleName as rule2, syntaxKinds as kinds2 } from './correctness_require_verify_array_parity_listeners.a';
+import { ruleName as rule3, syntaxKinds as kinds3 } from './correctness_no_process_exit_after_output_listeners.a';
+import { ruleName as rule4, syntaxKinds as kinds4 } from './correctness_no_uncleared_race_timeout_listeners.a';
+import { ruleName as rule5, syntaxKinds as kinds5 } from './correctness_require_blocking_standard_streams_listeners.a';
+import { ruleName as rule6, syntaxKinds as kinds6 } from './prefer_regex_literals_listeners.a';
+import { ruleName as rule7, syntaxKinds as kinds7 } from './prefer_rest_params_listeners.a';
+import { ruleName as rule8, syntaxKinds as kinds8 } from './exhaustive_deps_listeners.a';
+console.log(`${rule0}\t${kinds0.join(',')}`);
+console.log(`${rule1}\t${kinds1.join(',')}`);
+console.log(`${rule2}\t${kinds2.join(',')}`);
+console.log(`${rule3}\t${kinds3.join(',')}`);
+console.log(`${rule4}\t${kinds4.join(',')}`);
+console.log(`${rule5}\t${kinds5.join(',')}`);
+console.log(`${rule6}\t${kinds6.join(',')}`);
+console.log(`${rule7}\t${kinds7.join(',')}`);
+console.log(`${rule8}\t${kinds8.join(',')}`);

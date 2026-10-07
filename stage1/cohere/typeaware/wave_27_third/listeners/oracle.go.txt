@@ -1,0 +1,18 @@
+package main
+
+import (
+	"fmt"
+	"github.com/microsoft/TypeScript/tsc/internal/ast"
+)
+
+func main() {
+	fmt.Printf("base/correctness-require-orm-column-nullable-parity\t%d\n", int(ast.KindDecorator))
+	fmt.Printf("base/correctness-require-serializable-nullable-parity\t%d\n", int(ast.KindDecorator))
+	fmt.Printf("base/correctness-require-verify-array-parity\t%d,%d\n", int(ast.KindPropertyDeclaration), int(ast.KindParameter))
+	fmt.Printf("nexus/correctness-no-process-exit-after-output\t%d\n", int(ast.KindSourceFile))
+	fmt.Printf("nexus/correctness-no-uncleared-race-timeout\t%d\n", int(ast.KindCallExpression))
+	fmt.Printf("nexus/correctness-require-blocking-standard-streams\t%d\n", int(ast.KindSourceFile))
+	fmt.Printf("prefer-regex-literals\t%d\n", int(ast.KindSourceFile))
+	fmt.Printf("prefer-rest-params\t%d\n", int(ast.KindIdentifier))
+	fmt.Printf("react-hooks/exhaustive-deps\t%d\n", int(ast.KindCallExpression))
+}

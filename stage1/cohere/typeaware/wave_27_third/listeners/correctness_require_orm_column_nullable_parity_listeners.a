@@ -1,0 +1,4 @@
+// Listener metadata for the incoming numeric kind driver.
+// Numeric values are pinned to the production Go SyntaxKind enumeration.
+export const ruleName = 'base/correctness-require-orm-column-nullable-parity';
+export const syntaxKinds: readonly number[] = [171];
