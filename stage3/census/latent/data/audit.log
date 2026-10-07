@@ -1,0 +1,11 @@
+{
+  "continuation": "pass",
+  "all_refusal_sites": "pass",
+  "no_IR_output": "pass",
+  "mutant": {
+    "one.a_delta": 1,
+    "two.a_delta": 0,
+    "location": "one.a:2:1"
+  },
+  "misattribution_mutant": "caught"
+}

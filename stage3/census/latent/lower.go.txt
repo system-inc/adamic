@@ -1,0 +1,96 @@
+// This file is compiled only through a scratch Go overlay.
+package lower
+
+import (
+	"context"
+	"errors"
+	"fmt"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
+	"os"
+)
+
+type LatentFinding struct {
+	Kind   string `json:"kind"`
+	Where  string `json:"where"`
+	Reason string `json:"reason"`
+	Text   string `json:"text"`
+}
+
+// The measurement driver is sequential. Nothing returns usable IR.
+var latentFindings []LatentFinding
+
+func latentRecord(err error) {
+	if err == nil {
+		return
+	}
+	finding := LatentFinding{Kind: "error", Text: err.Error()}
+	var refused *Refused
+	var notYet *NotYet
+	switch {
+	case errors.As(err, &refused):
+		finding.Kind, finding.Where, finding.Reason = "Refused", refused.Where, refused.What
+	case errors.As(err, &notYet):
+		finding.Kind, finding.Where, finding.Reason = "NotYet", notYet.Where, notYet.What
+	default:
+		finding.Reason = err.Error()
+	}
+	latentFindings = append(latentFindings, finding)
+}
+
+// Latent measures each top-level unit with fresh lowering state and its checked file's context.
+// Refusal scanning continues at every node; lowering still stops within a failing unit.
+// This is not an exhaustive inventory of all errors within each function or specialization.
+func Latent(ctx context.Context, program *load.Program) (findings []LatentFinding, units int) {
+	latentFindings = nil
+	for _, file := range program.Files() {
+		checker, release := program.Checker(ctx, file)
+		fresh := func() *lowering {
+			return &lowering{program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1}
+		}
+		l := fresh()
+		latentRecord(l.latentRefuse(file))
+		for _, node := range file.Statements.Nodes {
+			units++
+			func() {
+				defer func() {
+					if failure := recover(); failure != nil {
+						latentFindings = append(latentFindings, LatentFinding{Kind: "panic", Where: program.Where(node), Reason: fmt.Sprint(failure), Text: fmt.Sprint(failure)})
+					}
+				}()
+				l := fresh()
+				l.noteInheritance([]*ast.SourceFile{file})
+				l.noteAccessorNames([]*ast.SourceFile{file})
+				if node.Kind == ast.KindFunctionDeclaration && node.Name() != nil && node.Name().Text() == os.Getenv("LATENT_MUTANT_FUNCTION") {
+					latentRecord(l.notYet(node, "latent planted extra NotYet"))
+				}
+				if node.Kind == ast.KindFunctionDeclaration && len(node.TypeParameters()) > 0 {
+					// No invented concrete specialization: attempt the declaration as written.
+					l.functions = map[*ast.Symbol]int{l.symbol(node.Name()): 0}
+					l.result.Functions = append(l.result.Functions, ir.Function{Name: node.Name().Text()})
+					latentRecord(l.lowerFunction(0, node, -1))
+				} else if err := l.declareModule([]*ast.Node{node}); err != nil {
+					latentRecord(err)
+				} else {
+					_, err := l.statement(node)
+					latentRecord(err)
+				}
+				latentRecord(l.unlowerable)
+			}()
+		}
+		release()
+	}
+	// Deduplicate diagnostics seen by both refusal scanning and unit lowering.
+	seen := map[LatentFinding]bool{}
+	for _, finding := range latentFindings {
+		if !seen[finding] {
+			findings = append(findings, finding)
+			seen[finding] = true
+		}
+	}
+	if findings == nil {
+		findings = []LatentFinding{}
+	}
+	return findings, units
+}

@@ -1,0 +1,93 @@
+package main
+
+import (
+	"context"
+	"encoding/json"
+	"errors"
+	"fmt"
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+	"os"
+	"path/filepath"
+	"sort"
+	"strings"
+)
+
+func main() {
+	if len(os.Args) != 3 {
+		panic("usage: latent source-directory output.json")
+	}
+	var paths []string
+	err := filepath.WalkDir(os.Args[1], func(path string, entry os.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		if !entry.IsDir() && (filepath.Ext(path) == ".ts" || filepath.Ext(path) == ".a") {
+			paths = append(paths, path)
+		}
+		return nil
+	})
+	if err != nil {
+		panic(err)
+	}
+	sort.Strings(paths)
+	output, err := os.Create(os.Args[2])
+	if err != nil {
+		panic(err)
+	}
+	defer output.Close()
+	encoder := json.NewEncoder(output)
+	program, err := load.Load(paths)
+	if err != nil {
+		var checked *load.CheckError
+		if !errors.As(err, &checked) {
+			panic(err)
+		}
+		if err := encoder.Encode(map[string]any{"status": "checker", "diagnostics": checked.Diagnostics}); err != nil {
+			panic(err)
+		}
+		for _, path := range paths {
+			var diagnostics []string
+			for _, diagnostic := range checked.Diagnostics {
+				if strings.HasPrefix(diagnostic, path+":") {
+					diagnostics = append(diagnostics, diagnostic)
+				}
+			}
+			if diagnostics == nil {
+				diagnostics = []string{}
+			}
+			if err := encoder.Encode(map[string]any{"file": path, "status": "blocked", "checker_diagnostics": diagnostics, "findings": nil}); err != nil {
+				panic(err)
+			}
+		}
+		return
+	}
+	if os.Getenv("LATENT_ASSERT_NO_OUTPUT") != "" {
+		output, failure := lower.Lower(context.Background(), program)
+		if output != nil || failure == nil || failure.Error() != "latent census: measurement only; no IR output" {
+			panic("measurement returned usable IR")
+		}
+	}
+	// Reuse the whole-project checker; Latent creates fresh state for every unit.
+	findings, units := lower.Latent(context.Background(), program)
+	if err := encoder.Encode(map[string]any{"status": "measurement", "units": units}); err != nil {
+		panic(err)
+	}
+	for _, path := range paths {
+		var own []lower.LatentFinding
+		for _, finding := range findings {
+			if strings.HasPrefix(finding.Where, path+":") {
+				own = append(own, finding)
+			}
+		}
+		if own == nil {
+			own = []lower.LatentFinding{}
+		}
+		record := map[string]any{"file": path, "status": "measured"}
+		record["findings"] = own
+		if err := encoder.Encode(record); err != nil {
+			panic(err)
+		}
+		fmt.Fprintln(os.Stderr, path, record["status"])
+	}
+}
