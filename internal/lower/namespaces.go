@@ -131,11 +131,20 @@ func (l *lowering) namespaceRefusal(node *ast.Node) error {
 			if declaration == node || declaration.Kind == ast.KindInterfaceDeclaration || declaration.Kind == ast.KindTypeAliasDeclaration {
 				continue
 			}
-			return l.notYet(node, "a reopened namespace or namespace merged with a runtime value; put the declarations in one namespace or use a module")
+			switch declaration.Kind {
+			case ast.KindFunctionDeclaration:
+				return l.notYet(node, "a namespace merged with a function; callable object properties, identity and receivers are not represented")
+			case ast.KindClassDeclaration:
+				return l.notYet(node, "a namespace merged with a class; constructor identity and staged static properties are not represented")
+			default:
+				return l.notYet(node, "a reopened namespace or namespace merged with a runtime value; put the declarations in one namespace or use a module")
+			}
 		}
 		for _, member := range namespaceStatements(node) {
 			switch member.Kind {
 			case ast.KindInterfaceDeclaration, ast.KindTypeAliasDeclaration, ast.KindEmptyStatement, ast.KindModuleDeclaration, ast.KindEnumDeclaration:
+			case ast.KindClassDeclaration:
+				return l.notYet(member, "a class inside a namespace; namespace constructor registration and initialization are not yet proven")
 			case ast.KindExpressionStatement, ast.KindBlock, ast.KindIfStatement, ast.KindForStatement, ast.KindWhileStatement, ast.KindDoStatement, ast.KindForOfStatement, ast.KindSwitchStatement:
 				// Statement lowering keeps module evaluation order. Calls still pass preflight.
 			case ast.KindFunctionDeclaration:
@@ -149,12 +158,9 @@ func (l *lowering) namespaceRefusal(node *ast.Node) error {
 				}
 			case ast.KindVariableStatement:
 				list := member.AsVariableStatement().DeclarationList
-				if list.Flags&ast.NodeFlagsBlockScoped == 0 {
-					// Namespace var uses hoisted module storage.
-				}
 				for _, variable := range list.AsVariableDeclarationList().Declarations.Nodes {
 					if !ast.IsIdentifier(variable.Name()) {
-						return l.notYet(variable, "a namespace binding without a plain initialized name")
+						return l.notYet(variable, "destructuring inside a namespace; use plain singleton bindings")
 					}
 				}
 			default:
@@ -199,7 +205,7 @@ func (l *lowering) namespaceRefusal(node *ast.Node) error {
 }
 
 // Namespace vars are hoisted and their export assignments are staged in JavaScript. Until we
-// model those partial objects, no call runs while a runtime namespace is still uninitialized.
+// model those partial objects, arbitrary calls wait until every runtime namespace is initialized.
 // Bodies of functions are deferred; private bindings keep their ordinary checked lexical storage.
 func (l *lowering) namespaceInitialization(modules []*ast.SourceFile) error {
 	if err := l.enumInitialization(modules); err != nil {

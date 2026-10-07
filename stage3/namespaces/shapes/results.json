@@ -1,0 +1,62 @@
+[
+  {
+    "name": "BuilderState",
+    "exit": 0,
+    "stderr": "",
+    "lowers": true
+  },
+  {
+    "name": "JsxNames",
+    "exit": 0,
+    "stderr": "",
+    "lowers": true
+  },
+  {
+    "name": "ReactNames",
+    "exit": 0,
+    "stderr": "",
+    "lowers": true
+  },
+  {
+    "name": "Debug",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/namespaces/shapes/Debug.a:64:30: stage 0 can't lower a call before all runtime namespaces are initialized; put namespaces before executable module code yet\n",
+    "lowers": false
+  },
+  {
+    "name": "Debug.log",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/namespaces/shapes/Debug.log.a:5:1: stage 0 can't lower a namespace merged with a function; callable object properties, identity and receivers are not represented yet\n",
+    "lowers": false
+  },
+  {
+    "name": "BinaryExpressionState",
+    "exit": 0,
+    "stderr": "",
+    "lowers": true
+  },
+  {
+    "name": "Parser",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/namespaces/shapes/Parser.a:4:20: stage 0 can't lower a call before all runtime namespaces are initialized; put namespaces before executable module code yet\n",
+    "lowers": false
+  },
+  {
+    "name": "Parser.JSDocParser",
+    "exit": 0,
+    "stderr": "",
+    "lowers": true
+  },
+  {
+    "name": "IncrementalParser",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/namespaces/shapes/IncrementalParser.a:6:1: stage 0 can't lower a function without a body yet\n",
+    "lowers": false
+  },
+  {
+    "name": "tracingEnabled",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/namespaces/shapes/tracingEnabled.a:30:15: stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet\n",
+    "lowers": false
+  }
+]

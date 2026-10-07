@@ -1,0 +1,512 @@
+// Declaration shape only: external types, bodies and enum expressions are normalized.
+function shapeInitialize():number{return 1;}
+namespace Parser {
+var scanner:number=shapeInitialize();
+var disallowInAndDecoratorContext:number=1;
+var NodeConstructor:number;
+var TokenConstructor:number;
+var IdentifierConstructor:number;
+var PrivateIdentifierConstructor:number;
+var SourceFileConstructor:number;
+function countNode(): number {return 0;}
+var baseNodeFactory:number=1;
+var factory:number=shapeInitialize();
+var {
+        createNodeArray: factoryCreateNodeArray,
+        createNumericLiteral: factoryCreateNumericLiteral,
+        createStringLiteral: factoryCreateStringLiteral,
+        createLiteralLikeNode: factoryCreateLiteralLikeNode,
+        createIdentifier: factoryCreateIdentifier,
+        createPrivateIdentifier: factoryCreatePrivateIdentifier,
+        createToken: factoryCreateToken,
+        createArrayLiteralExpression: factoryCreateArrayLiteralExpression,
+        createObjectLiteralExpression: factoryCreateObjectLiteralExpression,
+        createPropertyAccessExpression: factoryCreatePropertyAccessExpression,
+        createPropertyAccessChain: factoryCreatePropertyAccessChain,
+        createElementAccessExpression: factoryCreateElementAccessExpression,
+        createElementAccessChain: factoryCreateElementAccessChain,
+        createCallExpression: factoryCreateCallExpression,
+        createCallChain: factoryCreateCallChain,
+        createNewExpression: factoryCreateNewExpression,
+        createParenthesizedExpression: factoryCreateParenthesizedExpression,
+        createBlock: factoryCreateBlock,
+        createVariableStatement: factoryCreateVariableStatement,
+        createExpressionStatement: factoryCreateExpressionStatement,
+        createIfStatement: factoryCreateIfStatement,
+        createWhileStatement: factoryCreateWhileStatement,
+        createForStatement: factoryCreateForStatement,
+        createForOfStatement: factoryCreateForOfStatement,
+        createVariableDeclaration: factoryCreateVariableDeclaration,
+        createVariableDeclarationList: factoryCreateVariableDeclarationList,
+    }={createNodeArray:1,createNumericLiteral:1,createStringLiteral:1,createLiteralLikeNode:1,createIdentifier:1,createPrivateIdentifier:1,createToken:1,createArrayLiteralExpression:1,createObjectLiteralExpression:1,createPropertyAccessExpression:1,createPropertyAccessChain:1,createElementAccessExpression:1,createElementAccessChain:1,createCallExpression:1,createCallChain:1,createNewExpression:1,createParenthesizedExpression:1,createBlock:1,createVariableStatement:1,createExpressionStatement:1,createIfStatement:1,createWhileStatement:1,createForStatement:1,createForOfStatement:1,createVariableDeclaration:1,createVariableDeclarationList:1};
+var fileName:number;
+var sourceFlags:number;
+var sourceText:number;
+var languageVersion:number;
+var scriptKind:number;
+var languageVariant:number;
+var parseDiagnostics:number;
+var jsDocDiagnostics:number;
+var syntaxCursor:number;
+var currentToken:number;
+var nodeCount:number;
+var identifiers:number;
+var identifierCount:number;
+var parsingContext:number;
+var notParenthesizedArrow:number;
+var contextFlags:number;
+var topLevel:boolean=true;
+var parseErrorBeforeNextFinishedNode:boolean=false;
+export function parseSourceFile(): number {return 0;}
+export function parseIsolatedEntityName(): number {return 0;}
+export function parseJsonText(): number {return 0;}
+function initializeState(): number {return 0;}
+function clearState(): number {return 0;}
+function parseSourceFileWorker(): number {return 0;}
+let hasDeprecatedTag:boolean=false;
+function withJSDoc<T>(): number {return 0;}
+function reparseTopLevelAwait(): number {return 0;}
+export function fixupParentReferences(): number {return 0;}
+function createSourceFile(): number {return 0;}
+function setContextFlag(): number {return 0;}
+function setDisallowInContext(): number {return 0;}
+function setYieldContext(): number {return 0;}
+function setDecoratorContext(): number {return 0;}
+function setAwaitContext(): number {return 0;}
+function doOutsideOfContext<T>(): number {return 0;}
+function doInsideOfContext<T>(): number {return 0;}
+function allowInAnd<T>(): number {return 0;}
+function disallowInAnd<T>(): number {return 0;}
+function allowConditionalTypesAnd<T>(): number {return 0;}
+function disallowConditionalTypesAnd<T>(): number {return 0;}
+function doInYieldContext<T>(): number {return 0;}
+function doInDecoratorContext<T>(): number {return 0;}
+function doInAwaitContext<T>(): number {return 0;}
+function doOutsideOfAwaitContext<T>(): number {return 0;}
+function doInYieldAndAwaitContext<T>(): number {return 0;}
+function doOutsideOfYieldAndAwaitContext<T>(): number {return 0;}
+function inContext(): number {return 0;}
+function inYieldContext(): number {return 0;}
+function inDisallowInContext(): number {return 0;}
+function inDisallowConditionalTypesContext(): number {return 0;}
+function inDecoratorContext(): number {return 0;}
+function inAwaitContext(): number {return 0;}
+function parseErrorAtCurrentToken(): number {return 0;}
+function parseErrorAtPosition(): number {return 0;}
+function parseErrorAt(): number {return 0;}
+function parseErrorAtRange(): number {return 0;}
+function scanError(): number {return 0;}
+function getNodePos(): number {return 0;}
+function hasPrecedingJSDocComment(): number {return 0;}
+function token(): number {return 0;}
+function nextTokenWithoutCheck(): number {return 0;}
+function nextTokenAnd<T>(): number {return 0;}
+function nextToken(): number {return 0;}
+function nextTokenJSDoc(): number {return 0;}
+function nextJSDocCommentTextToken(): number {return 0;}
+function reScanGreaterToken(): number {return 0;}
+function reScanSlashToken(): number {return 0;}
+function reScanTemplateToken(): number {return 0;}
+function reScanLessThanToken(): number {return 0;}
+function reScanHashToken(): number {return 0;}
+function scanJsxIdentifier(): number {return 0;}
+function scanJsxText(): number {return 0;}
+function scanJsxAttributeValue(): number {return 0;}
+function speculationHelper<T>(): number {return 0;}
+function lookAhead<T>(): number {return 0;}
+function tryParse<T>(): number {return 0;}
+function isBindingIdentifier(): number {return 0;}
+function isIdentifier(): number {return 0;}
+function parseExpected(): number {return 0;}
+const viableKeywordSuggestions:number=shapeInitialize();
+function parseErrorForMissingSemicolonAfter(): number {return 0;}
+function parseErrorForInvalidName(): number {return 0;}
+function getSpaceSuggestion(): number {return 0;}
+function parseSemicolonAfterPropertyName(): number {return 0;}
+function parseExpectedJSDoc(): number {return 0;}
+function parseExpectedMatchingBrackets(): number {return 0;}
+function parseOptional(): number {return 0;}
+function parseOptionalToken<TKind>(): number;
+function parseOptionalToken(): number {return 0;}
+function parseOptionalTokenJSDoc<TKind>(): number;
+function parseOptionalTokenJSDoc(): number {return 0;}
+function parseExpectedToken<TKind>(): number;
+function parseExpectedToken(): number {return 0;}
+function parseExpectedTokenJSDoc<TKind>(): number;
+function parseExpectedTokenJSDoc(): number {return 0;}
+function parseTokenNode<T>(): number {return 0;}
+function parseTokenNodeJSDoc<T>(): number {return 0;}
+function canParseSemicolon(): number {return 0;}
+function tryParseSemicolon(): number {return 0;}
+function parseSemicolon(): number {return 0;}
+function createNodeArray<T>(): number {return 0;}
+function finishNode<T>(): number {return 0;}
+function createMissingNode<T>(): number;
+function createMissingNode<T>(): number;
+function createMissingNode<T>(): number {return 0;}
+function internIdentifier(): number {return 0;}
+function createIdentifier(): number {return 0;}
+function parseBindingIdentifier(): number {return 0;}
+function parseIdentifier(): number {return 0;}
+function parseIdentifierName(): number {return 0;}
+function parseIdentifierNameErrorOnUnicodeEscapeSequence(): number {return 0;}
+function isLiteralPropertyName(): number {return 0;}
+function isImportAttributeName(): number {return 0;}
+function parsePropertyNameWorker(): number {return 0;}
+function parsePropertyName(): number {return 0;}
+function parseComputedPropertyName(): number {return 0;}
+function parsePrivateIdentifier(): number {return 0;}
+function parseContextualModifier(): number {return 0;}
+function nextTokenIsOnSameLineAndCanFollowModifier(): number {return 0;}
+function nextTokenCanFollowModifier(): number {return 0;}
+function canFollowExportModifier(): number {return 0;}
+function nextTokenCanFollowExportModifier(): number {return 0;}
+function parseAnyContextualModifier(): number {return 0;}
+function canFollowModifier(): number {return 0;}
+function canFollowGetOrSetKeyword(): number {return 0;}
+function nextTokenCanFollowDefaultKeyword(): number {return 0;}
+function isListElement(): number {return 0;}
+function isValidHeritageClauseObjectLiteral(): number {return 0;}
+function nextTokenIsIdentifier(): number {return 0;}
+function nextTokenIsIdentifierOrKeyword(): number {return 0;}
+function nextTokenIsIdentifierOrKeywordOrGreaterThan(): number {return 0;}
+function isHeritageClauseExtendsOrImplementsKeyword(): number {return 0;}
+function nextTokenIsStartOfExpression(): number {return 0;}
+function nextTokenIsStartOfType(): number {return 0;}
+function isListTerminator(): number {return 0;}
+function isVariableDeclaratorListTerminator(): number {return 0;}
+function isInSomeParsingContext(): number {return 0;}
+function parseList<T>(): number {return 0;}
+function parseListElement<T>(): number {return 0;}
+function currentNode(): number {return 0;}
+function consumeNode(): number {return 0;}
+function isReusableParsingContext(): number {return 0;}
+function canReuseNode(): number {return 0;}
+function isReusableClassMember(): number {return 0;}
+function isReusableSwitchClause(): number {return 0;}
+function isReusableStatement(): number {return 0;}
+function isReusableEnumMember(): number {return 0;}
+function isReusableTypeMember(): number {return 0;}
+function isReusableVariableDeclaration(): number {return 0;}
+function isReusableParameter(): number {return 0;}
+function abortParsingListOrMoveToNextToken(): number {return 0;}
+function parsingContextErrors(): number {return 0;}
+function parseDelimitedList<T>(): number;
+function parseDelimitedList<T>(): number;
+function parseDelimitedList<T>(): number {return 0;}
+function getExpectedCommaDiagnostic(): number {return 0;}
+interface MissingList<T> {}
+function createMissingList<T>(): number {return 0;}
+function isMissingList(): number {return 0;}
+function parseBracketedList<T>(): number {return 0;}
+function parseEntityName(): number {return 0;}
+function createQualifiedName(): number {return 0;}
+function parseRightSideOfDot(): number {return 0;}
+function parseTemplateSpans(): number {return 0;}
+function parseTemplateExpression(): number {return 0;}
+function parseTemplateType(): number {return 0;}
+function parseTemplateTypeSpans(): number {return 0;}
+function parseTemplateTypeSpan(): number {return 0;}
+function parseLiteralOfTemplateSpan(): number {return 0;}
+function parseTemplateSpan(): number {return 0;}
+function parseLiteralNode(): number {return 0;}
+function parseTemplateHead(): number {return 0;}
+function parseTemplateMiddleOrTemplateTail(): number {return 0;}
+function getTemplateLiteralRawText(): number {return 0;}
+function parseLiteralLikeNode(): number {return 0;}
+function parseEntityNameOfTypeReference(): number {return 0;}
+function parseTypeArgumentsOfTypeReference(): number {return 0;}
+function parseTypeReference(): number {return 0;}
+function typeHasArrowFunctionBlockingParseError(): number {return 0;}
+function parseThisTypePredicate(): number {return 0;}
+function parseThisTypeNode(): number {return 0;}
+function parseJSDocAllType(): number {return 0;}
+function parseJSDocNonNullableType(): number {return 0;}
+function parseJSDocUnknownOrNullableType(): number {return 0;}
+function parseJSDocFunctionType(): number {return 0;}
+function parseJSDocParameter(): number {return 0;}
+function parseJSDocType(): number {return 0;}
+function parseTypeQuery(): number {return 0;}
+function parseTypeParameter(): number {return 0;}
+function parseTypeParameters(): number {return 0;}
+function isStartOfParameter(): number {return 0;}
+function parseNameOfParameter(): number {return 0;}
+function isParameterNameStart(): number {return 0;}
+function parseParameter(): number {return 0;}
+function parseParameterForSpeculation(): number {return 0;}
+function parseParameterWorker(): number;
+function parseParameterWorker(): number;
+function parseParameterWorker(): number {return 0;}
+function parseReturnType(): number;
+function parseReturnType(): number;
+function parseReturnType(): number {return 0;}
+function shouldParseReturnType(): number {return 0;}
+function parseParametersWorker(): number;
+function parseParametersWorker(): number;
+function parseParametersWorker(): number {return 0;}
+function parseParameters(): number {return 0;}
+function parseTypeMemberSemicolon(): number {return 0;}
+function parseSignatureMember(): number {return 0;}
+function isIndexSignature(): number {return 0;}
+function isUnambiguouslyIndexSignature(): number {return 0;}
+function parseIndexSignatureDeclaration(): number {return 0;}
+function parsePropertyOrMethodSignature(): number {return 0;}
+function isTypeMemberStart(): number {return 0;}
+function parseTypeMember(): number {return 0;}
+function nextTokenIsOpenParenOrLessThan(): number {return 0;}
+function nextTokenIsDot(): number {return 0;}
+function nextTokenIsOpenParenOrLessThanOrDot(): number {return 0;}
+function parseTypeLiteral(): number {return 0;}
+function parseObjectTypeMembers(): number {return 0;}
+function isStartOfMappedType(): number {return 0;}
+function parseMappedTypeParameter(): number {return 0;}
+function parseMappedType(): number {return 0;}
+function parseTupleElementType(): number {return 0;}
+function isNextTokenColonOrQuestionColon(): number {return 0;}
+function isTupleElementName(): number {return 0;}
+function parseTupleElementNameOrTupleElementType(): number {return 0;}
+function parseTupleType(): number {return 0;}
+function parseParenthesizedType(): number {return 0;}
+function parseModifiersForConstructorType(): number {return 0;}
+function parseFunctionOrConstructorType(): number {return 0;}
+function parseKeywordAndNoDot(): number {return 0;}
+function parseLiteralTypeNode(): number {return 0;}
+function isStartOfTypeOfImportType(): number {return 0;}
+function parseImportType(): number {return 0;}
+function nextTokenIsNumericOrBigIntLiteral(): number {return 0;}
+function parseNonArrayType(): number {return 0;}
+function isStartOfType(): number {return 0;}
+function isStartOfParenthesizedOrFunctionType(): number {return 0;}
+function parsePostfixTypeOrHigher(): number {return 0;}
+function parseTypeOperator(): number {return 0;}
+function tryParseConstraintOfInferType(): number {return 0;}
+function parseTypeParameterOfInferType(): number {return 0;}
+function parseInferType(): number {return 0;}
+function parseTypeOperatorOrHigher(): number {return 0;}
+function parseFunctionOrConstructorTypeToError(): number {return 0;}
+function parseUnionOrIntersectionType(): number {return 0;}
+function parseIntersectionTypeOrHigher(): number {return 0;}
+function parseUnionTypeOrHigher(): number {return 0;}
+function nextTokenIsNewKeyword(): number {return 0;}
+function isStartOfFunctionTypeOrConstructorType(): number {return 0;}
+function skipParameterStart(): number {return 0;}
+function isUnambiguouslyStartOfFunctionType(): number {return 0;}
+function parseTypeOrTypePredicate(): number {return 0;}
+function parseTypePredicatePrefix(): number {return 0;}
+function parseAssertsTypePredicate(): number {return 0;}
+function parseType(): number {return 0;}
+function parseTypeAnnotation(): number {return 0;}
+function isStartOfLeftHandSideExpression(): number {return 0;}
+function isStartOfExpression(): number {return 0;}
+function isStartOfExpressionStatement(): number {return 0;}
+function parseExpression(): number {return 0;}
+function parseInitializer(): number {return 0;}
+function parseAssignmentExpressionOrHigher(): number {return 0;}
+function isYieldExpression(): number {return 0;}
+function nextTokenIsIdentifierOnSameLine(): number {return 0;}
+function parseYieldExpression(): number {return 0;}
+function parseSimpleArrowFunctionExpression(): number {return 0;}
+function tryParseParenthesizedArrowFunctionExpression(): number {return 0;}
+function isParenthesizedArrowFunctionExpression(): number {return 0;}
+function isParenthesizedArrowFunctionExpressionWorker(): number {return 0;}
+function parsePossibleParenthesizedArrowFunctionExpression(): number {return 0;}
+function tryParseAsyncSimpleArrowFunctionExpression(): number {return 0;}
+function isUnParenthesizedAsyncArrowFunctionWorker(): number {return 0;}
+function parseParenthesizedArrowFunctionExpression(): number {return 0;}
+function parseArrowFunctionExpressionBody(): number {return 0;}
+function parseConditionalExpressionRest(): number {return 0;}
+function parseBinaryExpressionOrHigher(): number {return 0;}
+function isInOrOfKeyword(): number {return 0;}
+function parseBinaryExpressionRest(): number {return 0;}
+function isBinaryOperator(): number {return 0;}
+function makeSatisfiesExpression(): number {return 0;}
+function makeBinaryExpression(): number {return 0;}
+function makeAsExpression(): number {return 0;}
+function parsePrefixUnaryExpression(): number {return 0;}
+function parseDeleteExpression(): number {return 0;}
+function parseTypeOfExpression(): number {return 0;}
+function parseVoidExpression(): number {return 0;}
+function isAwaitExpression(): number {return 0;}
+function parseAwaitExpression(): number {return 0;}
+function parseUnaryExpressionOrHigher(): number {return 0;}
+function parseSimpleUnaryExpression(): number {return 0;}
+function isUpdateExpression(): number {return 0;}
+function parseUpdateExpression(): number {return 0;}
+function parseLeftHandSideExpressionOrHigher(): number {return 0;}
+function parseMemberExpressionOrHigher(): number {return 0;}
+function parseSuperExpression(): number {return 0;}
+function parseJsxElementOrSelfClosingElementOrFragment(): number {return 0;}
+function parseJsxText(): number {return 0;}
+function parseJsxChild(): number {return 0;}
+function parseJsxChildren(): number {return 0;}
+function parseJsxAttributes(): number {return 0;}
+function parseJsxOpeningOrSelfClosingElementOrOpeningFragment(): number {return 0;}
+function parseJsxElementName(): number {return 0;}
+function parseJsxTagName(): number {return 0;}
+function parseJsxExpression(): number {return 0;}
+function parseJsxAttribute(): number {return 0;}
+function parseJsxAttributeValue(): number {return 0;}
+function parseJsxAttributeName(): number {return 0;}
+function parseJsxSpreadAttribute(): number {return 0;}
+function parseJsxClosingElement(): number {return 0;}
+function parseJsxClosingFragment(): number {return 0;}
+function parseTypeAssertion(): number {return 0;}
+function nextTokenIsIdentifierOrKeywordOrOpenBracketOrTemplate(): number {return 0;}
+function isStartOfOptionalPropertyOrElementAccessChain(): number {return 0;}
+function tryReparseOptionalChain(): number {return 0;}
+function parsePropertyAccessExpressionRest(): number {return 0;}
+function parseElementAccessExpressionRest(): number {return 0;}
+function parseMemberExpressionRest(): number {return 0;}
+function isTemplateStartOfTaggedTemplate(): number {return 0;}
+function parseTaggedTemplateRest(): number {return 0;}
+function parseCallExpressionRest(): number {return 0;}
+function parseArgumentList(): number {return 0;}
+function parseTypeArgumentsInExpression(): number {return 0;}
+function canFollowTypeArgumentsInExpression(): number {return 0;}
+function parsePrimaryExpression(): number {return 0;}
+function parseParenthesizedExpression(): number {return 0;}
+function parseSpreadElement(): number {return 0;}
+function parseArgumentOrArrayLiteralElement(): number {return 0;}
+function parseArgumentExpression(): number {return 0;}
+function parseArrayLiteralExpression(): number {return 0;}
+function parseObjectLiteralElement(): number {return 0;}
+function parseObjectLiteralExpression(): number {return 0;}
+function parseFunctionExpression(): number {return 0;}
+function parseOptionalBindingIdentifier(): number {return 0;}
+function parseNewExpressionOrNewDotTarget(): number {return 0;}
+function parseBlock(): number {return 0;}
+function parseFunctionBlock(): number {return 0;}
+function parseEmptyStatement(): number {return 0;}
+function parseIfStatement(): number {return 0;}
+function parseDoStatement(): number {return 0;}
+function parseWhileStatement(): number {return 0;}
+function parseForOrForInOrForOfStatement(): number {return 0;}
+function parseBreakOrContinueStatement(): number {return 0;}
+function parseReturnStatement(): number {return 0;}
+function parseWithStatement(): number {return 0;}
+function parseCaseClause(): number {return 0;}
+function parseDefaultClause(): number {return 0;}
+function parseCaseOrDefaultClause(): number {return 0;}
+function parseCaseBlock(): number {return 0;}
+function parseSwitchStatement(): number {return 0;}
+function parseThrowStatement(): number {return 0;}
+function parseTryStatement(): number {return 0;}
+function parseCatchClause(): number {return 0;}
+function parseDebuggerStatement(): number {return 0;}
+function parseExpressionOrLabeledStatement(): number {return 0;}
+function nextTokenIsIdentifierOrKeywordOnSameLine(): number {return 0;}
+function nextTokenIsClassKeywordOnSameLine(): number {return 0;}
+function nextTokenIsFunctionKeywordOnSameLine(): number {return 0;}
+function nextTokenIsIdentifierOrKeywordOrLiteralOnSameLine(): number {return 0;}
+function isDeclaration(): number {return 0;}
+function isStartOfDeclaration(): number {return 0;}
+function isStartOfStatement(): number {return 0;}
+function nextTokenIsBindingIdentifierOrStartOfDestructuring(): number {return 0;}
+function isLetDeclaration(): number {return 0;}
+function nextTokenIsBindingIdentifierOrStartOfDestructuringOnSameLineDisallowOf(): number {return 0;}
+function nextTokenIsEqualsOrSemicolonOrColonToken(): number {return 0;}
+function nextTokenIsBindingIdentifierOrStartOfDestructuringOnSameLine(): number {return 0;}
+function isUsingDeclaration(): number {return 0;}
+function nextTokenIsUsingKeywordThenBindingIdentifierOrStartOfObjectDestructuringOnSameLine(): number {return 0;}
+function isAwaitUsingDeclaration(): number {return 0;}
+function parseStatement(): number {return 0;}
+function isDeclareModifier(): number {return 0;}
+function parseDeclaration(): number {return 0;}
+function tryReuseAmbientDeclaration(): number {return 0;}
+function parseDeclarationWorker(): number {return 0;}
+function nextTokenIsStringLiteral(): number {return 0;}
+function nextTokenIsFromKeywordOrEqualsToken(): number {return 0;}
+function nextTokenIsIdentifierOrStringLiteralOnSameLine(): number {return 0;}
+function parseFunctionBlockOrSemicolon(): number {return 0;}
+function parseArrayBindingElement(): number {return 0;}
+function parseObjectBindingElement(): number {return 0;}
+function parseObjectBindingPattern(): number {return 0;}
+function parseArrayBindingPattern(): number {return 0;}
+function isBindingIdentifierOrPrivateIdentifierOrPattern(): number {return 0;}
+function parseIdentifierOrPattern(): number {return 0;}
+function parseVariableDeclarationAllowExclamation(): number {return 0;}
+function parseVariableDeclaration(): number {return 0;}
+function parseVariableDeclarationList(): number {return 0;}
+function canFollowContextualOfKeyword(): number {return 0;}
+function parseVariableStatement(): number {return 0;}
+function parseFunctionDeclaration(): number {return 0;}
+function parseConstructorName(): number {return 0;}
+function tryParseConstructorDeclaration(): number {return 0;}
+function parseMethodDeclaration(): number {return 0;}
+function parsePropertyDeclaration(): number {return 0;}
+function parsePropertyOrMethodDeclaration(): number {return 0;}
+function parseAccessorDeclaration(): number {return 0;}
+function isClassMemberStart(): number {return 0;}
+function parseClassStaticBlockDeclaration(): number {return 0;}
+function parseClassStaticBlockBody(): number {return 0;}
+function parseDecoratorExpression(): number {return 0;}
+function tryParseDecorator(): number {return 0;}
+function tryParseModifier(): number {return 0;}
+function parseModifiers(): number;
+function parseModifiers(): number;
+function parseModifiers(): number {return 0;}
+function parseModifiersForArrowFunction(): number {return 0;}
+function parseClassElement(): number {return 0;}
+function parseDecoratedExpression(): number {return 0;}
+function parseClassExpression(): number {return 0;}
+function parseClassDeclaration(): number {return 0;}
+function parseClassDeclarationOrExpression(): number {return 0;}
+function parseNameOfClassDeclarationOrExpression(): number {return 0;}
+function isImplementsClause(): number {return 0;}
+function parseHeritageClauses(): number {return 0;}
+function parseHeritageClause(): number {return 0;}
+function parseExpressionWithTypeArguments(): number {return 0;}
+function tryParseTypeArguments(): number {return 0;}
+function isHeritageClause(): number {return 0;}
+function parseClassMembers(): number {return 0;}
+function parseInterfaceDeclaration(): number {return 0;}
+function parseTypeAliasDeclaration(): number {return 0;}
+function parseEnumMember(): number {return 0;}
+function parseEnumDeclaration(): number {return 0;}
+function parseModuleBlock(): number {return 0;}
+function parseModuleOrNamespaceDeclaration(): number {return 0;}
+function parseAmbientExternalModuleDeclaration(): number {return 0;}
+function parseModuleDeclaration(): number {return 0;}
+function isExternalModuleReference(): number {return 0;}
+function nextTokenIsOpenParen(): number {return 0;}
+function nextTokenIsOpenBrace(): number {return 0;}
+function nextTokenIsSlash(): number {return 0;}
+function parseNamespaceExportDeclaration(): number {return 0;}
+function parseImportDeclarationOrImportEqualsDeclaration(): number {return 0;}
+function tryParseImportClause(): number {return 0;}
+function tryParseImportAttributes(): number {return 0;}
+function parseImportAttribute(): number {return 0;}
+function parseImportAttributes(): number {return 0;}
+function tokenAfterImportDefinitelyProducesImportDeclaration(): number {return 0;}
+function tokenAfterImportedIdentifierDefinitelyProducesImportDeclaration(): number {return 0;}
+function parseImportEqualsDeclaration(): number {return 0;}
+function parseImportClause(): number {return 0;}
+function parseModuleReference(): number {return 0;}
+function parseExternalModuleReference(): number {return 0;}
+function parseModuleSpecifier(): number {return 0;}
+function parseNamespaceImport(): number {return 0;}
+function canParseModuleExportName(): number {return 0;}
+function parseModuleExportName(): number {return 0;}
+function parseNamedImportsOrExports(): number;
+function parseNamedImportsOrExports(): number;
+function parseNamedImportsOrExports(): number {return 0;}
+function parseExportSpecifier(): number {return 0;}
+function parseImportSpecifier(): number {return 0;}
+function parseImportOrExportSpecifier(): number {return 0;}
+function parseNamespaceExport(): number {return 0;}
+function parseExportDeclaration(): number {return 0;}
+function parseExportAssignment(): number {return 0;}
+const enum ParsingContext {SourceElements=0,BlockStatements=1,SwitchClauses=2,SwitchClauseStatements=3,TypeMembers=4,ClassMembers=5,EnumMembers=6,HeritageClauseElement=7,VariableDeclarations=8,ObjectBindingElements=9,ArrayBindingElements=10,ArgumentExpressions=11,ObjectLiteralMembers=12,JsxAttributes=13,JsxChildren=14,ArrayLiteralMembers=15,Parameters=16,JSDocParameters=17,RestProperties=18,TypeParameters=19,TypeArguments=20,TupleElementTypes=21,HeritageClauses=22,ImportOrExportSpecifiers=23,ImportAttributes=24,JSDocComment=25,Count=26}
+const enum Tristate {False=0,True=1,Unknown=2}
+export namespace JSDocParser {
+export function parseJSDocTypeExpressionForTests(): number {return 0;}
+export function parseJSDocTypeExpression(): number {return 0;}
+export function parseJSDocNameReference(): number {return 0;}
+export function parseIsolatedJSDocComment(): number {return 0;}
+export function parseJSDocComment(): number {return 0;}
+const enum JSDocState {BeginningOfLine=0,SawAsterisk=1,SavingComments=2,SavingBackticks=3}
+const enum PropertyLikeParse {Property=0,Parameter=1,CallbackParameter=2}
+function parseJSDocCommentWorker(): number {return 0;}
+}
+}
+console.log("shape:Parser");

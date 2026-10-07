@@ -17,9 +17,9 @@ func TestNamespaceLimitsStayLoud(t *testing.T) {
 		{"object value", "namespace N {export const x=1;} const value=N;", "namespace object"},
 		{"reflection", "namespace N {export const x=1;} console.log(Object.keys(N).join(' '));", "namespace object"},
 		{"reopening", "namespace N {export const x=1;} namespace N {export const y=2;}", "reopened namespace"},
-		{"function merge", "function N():number{return 1;} namespace N {export const x=1;}", "merged with a runtime value"},
-		{"class merge", "class N {} namespace N {export const x=1;}", "merged with a runtime value"},
-		{"destructured state", "namespace N {const [x]=[1];}", "plain initialized name"},
+		{"function merge", "function N():number{return 1;} namespace N {export const x=1;}", "namespace merged with a function"},
+		{"class merge", "class N {} namespace N {export const x=1;}", "namespace merged with a class"},
+		{"destructured state", "namespace N {const [x]=[1];}", "destructuring inside a namespace"},
 		{"computed member", "namespace N {export const x=1;} console.log(`${N['x']}`);", "namespace object"},
 		{"replace function", "namespace N {export function read():number{return 1;}} N.read=()=>2;", "replacing a namespace export"},
 		{"early call", "function early():number{return N.x;} const x=early(); namespace N {export const x=1;}", "call before all runtime namespaces"},
@@ -72,5 +72,25 @@ func TestTracingNamespaceEscapeStaysNotYet(t *testing.T) {
 	var notYet *NotYet
 	if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "no runtime container is emitted") {
 		t.Fatalf("got %v, want the explicit missing runtime-container reason", err)
+	}
+}
+
+func TestDebugNamespaceMergesStayNotYet(t *testing.T) {
+	for _, test := range []struct{ name, reason string }{
+		{"debug_log.a", "callable object properties"},
+		{"class_merge.a", "constructor identity"},
+		{"debug_class.a", "constructor registration"},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			source, err := os.ReadFile("testdata/namespaces_notyet/" + test.name)
+			if err != nil {
+				t.Fatal(err)
+			}
+			_, err = lowerSource(t, string(source))
+			var notYet *NotYet
+			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), test.reason) {
+				t.Fatalf("got %v, want NotYet %s", err, test.reason)
+			}
+		})
 	}
 }

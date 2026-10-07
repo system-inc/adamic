@@ -1,0 +1,11 @@
+namespace Debug {
+ export function log(message: string): void {console.log(message);}
+ export namespace log {
+  export function isEnabled(): boolean {return true;}
+  export function error(message: string): void {console.log(message);}
+  export function warn(message: string): void {console.log(message);}
+  export function info(message: string): void {console.log(message);}
+ }
+}
+Debug.log('call');
+console.log(`${Debug.log.isEnabled()}`);
