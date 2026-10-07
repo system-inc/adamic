@@ -1,0 +1,9 @@
+import { wave23ListenerKinds } from './wave_23_listener_kinds.a';
+
+for(const listener of wave23ListenerKinds) {
+    let kinds = '';
+    for(const kind of listener.kinds) {
+        kinds += `${kinds.length === 0 ? '' : ','}${kind}`;
+    }
+    console.log(`${listener.name}\t${kinds}`);
+}
