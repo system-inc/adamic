@@ -1,0 +1,6 @@
+{
+  "Name": "report-left-reference",
+  "File": "rule.a",
+  "From": "if(left.text === right.text) { this.finding(r); }",
+  "To": "if(left.text === right.text) { this.finding(l); }"
+}
