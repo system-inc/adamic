@@ -10,7 +10,7 @@ import (
 
 // value emits what an expression needs evaluated first, in JavaScript's order, and returns a C
 // expression that stays valid to the end of the statement.
-func (e *emitter) evaluate(expression ir.Expression) string {
+func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 	switch expression := expression.(type) {
 	case ir.NodeFSFile:
 		return e.nodeFSFile(expression)
@@ -314,8 +314,10 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		if e.hasArrayHoles() {
 			return e.arrayHolesMap(expression)
 		}
-		if mapped, ok := e.mapped(expression); ok {
-			return mapped
+		if !ir.HasArrayViews(e.program) {
+			if mapped, ok := e.mapped(expression); ok {
+				return mapped
+			}
 		}
 		source := e.temporary()
 		e.line("adamic_array *%s = %s;", source, e.value(expression.Array))
@@ -332,7 +334,11 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		e.line("\t}")
 		e.indent++
 		element := e.temporary()
-		e.line("adamic_value %s = %s->code(%s, (adamic_value[]){%s->elements[%s], {.number = (double)%s}, {.reference = %s}}, 3);", element, callback, callback, source, index, index, source)
+		argument := fmt.Sprintf("%s->elements[%s]", source, index)
+		if expression.ViewRead.View != "" {
+			argument = e.viewArrayElementSlot(expression.ViewRead, source, index)
+		}
+		e.line("adamic_value %s = %s->code(%s, (adamic_value[]){%s, {.number = (double)%s}, {.reference = %s}}, 3);", element, callback, callback, argument, index, source)
 		// What's mapped so far is the statement's, let go with its temporaries.
 		e.closureThrown()
 		e.line("adamic_array_push(%s, %s);", mapped, element)
@@ -411,6 +417,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		// Retained, so a write later in the statement can't free it from under its reader.
 		return e.own(expression.Element, fmt.Sprintf("%s == NULL ? NULL : (%s)adamic_retain(%s->reference)", slot, cType(expression.Element), slot))
 	case ir.ArrayPop:
+		if expression.ViewRead.View != "" {
+			return e.emitViewArrayPop(expression)
+		}
 		array := e.temporary()
 		e.line("adamic_array *%s = %s;", array, e.value(expression.Array))
 		if expression.Type().IsMaybe() {
@@ -556,6 +565,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.ArrayPush:
 		array := e.value(expression.Array)
 		value := e.value(expression.Value)
+		e.viewArrayMutation(array, expression.Element)
 		if expression.Element.IsReference() {
 			value = retained(value)
 		}

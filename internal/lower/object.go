@@ -527,6 +527,8 @@ func (l *lowering) readObjectField(node *ast.Node, property ir.Property) ir.Expr
 		declared := l.checker.GetTypeOfSymbol(symbol)
 		property.ViewType = l.checker.TypeToString(declared)
 		property.ViewAllowed = l.viewLiterals(declared)
+		property.ViewTypeID = int(declared.Id())
+		property.ViewContract = l.result.ViewContractTypes[property.ViewTypeID]
 	}
 	field := l.checker.GetSymbolAtLocation(node.Name())
 	if field != nil {
@@ -688,7 +690,7 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 		if err != nil {
 			return nil, true, err
 		}
-		return ir.ArrayPop{Array: array, Element: element}, true, nil
+		return ir.ArrayPop{Array: array, Element: element, ViewRead: l.viewArrayUse(node, receiver, element, false)}, true, nil
 	}
 	if receiverType == ir.Array && libraryArrayMethods[name] {
 		return l.libraryArrayMethod(node, receiver, name)
@@ -926,7 +928,7 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 	default:
 		return nil, l.notYet(statement.Expression, "for...of over a "+typeName(iterable.Type()))
 	}
-	lowered := ir.ForOf{Iterable: iterable, Element: element, RegexIterator: iterable.Type() == ir.Object}
+	lowered := ir.ForOf{Iterable: iterable, Element: element, RegexIterator: iterable.Type() == ir.Object, ViewRead: l.viewArrayUse(node, statement.Expression, element, true)}
 	if ast.IsIdentifier(name) {
 		if lowered.Local, err = l.declareLocal(name); err != nil {
 			return nil, err
@@ -1143,7 +1145,7 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 		if err != nil {
 			return nil, true, err
 		}
-		return ir.ArrayMap{Array: array, Callback: callback, Element: element, Result: result}, true, nil
+		return ir.ArrayMap{Array: array, Callback: callback, Element: element, Result: result, ViewRead: l.viewArrayUse(node, receiver, element, true)}, true, nil
 	}
 	if _, isVisit := visits[name]; isVisit {
 		return l.arrayVisit(node, array, element, name)
@@ -1194,7 +1196,14 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 		if len(arguments) != 1 || arguments[0].Type() != ir.Number {
 			return nil, true, l.notYet(node, "at with other than one number")
 		}
-		return ir.ArrayIndex{Array: array, Index: arguments[0], Element: element, Relative: true}, true, nil
+		return func() ir.ArrayIndex {
+			read := l.viewArrayUse(node, receiver, element, false).Index()
+			read.Array = array
+			read.Index = arguments[0]
+			read.Relative = true
+			read.View = sourceExpression(node)
+			return read
+		}(), true, nil
 	case "reverse":
 		return ir.ArrayReverse{Array: array}, true, nil
 	case "fill":
@@ -1325,7 +1334,7 @@ func (l *lowering) arrayVisit(node *ast.Node, array ir.Expression, element ir.Ty
 	if name != "forEach" && returns != ir.Boolean {
 		return nil, true, &Refused{Where: l.program.Where(arguments[0]), What: "a " + name + " callback that doesn't return a boolean", Fix: "return a comparison, like word.length > 0: 0.1 has no truthiness"}
 	}
-	return ir.ArrayVisit{Method: name, Array: array, Callback: callback, Element: element, Returns: returns}, true, nil
+	return ir.ArrayVisit{Method: name, Array: array, Callback: callback, Element: element, Returns: returns, ViewRead: l.viewArrayUse(node, node.AsCallExpression().Expression.AsPropertyAccessExpression().Expression, element, true)}, true, nil
 }
 
 // arrayReduce lowers array.reduce(callback, initial). 0.1 requires the initial value (docs/0.1.md):
@@ -1357,7 +1366,7 @@ func (l *lowering) arrayReduce(node *ast.Node, array ir.Expression, element ir.T
 	if result != initial.Type() || slotless(result) {
 		return nil, true, l.notYet(node, "reduce to a "+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))
 	}
-	return ir.ArrayReduce{Array: array, Callback: callback, Initial: initial, Element: element, Result: result}, true, nil
+	return ir.ArrayReduce{Array: array, Callback: callback, Initial: initial, Element: element, Result: result, ViewRead: l.viewArrayUse(node, node.AsCallExpression().Expression.AsPropertyAccessExpression().Expression, element, true)}, true, nil
 }
 
 // mapTypes is a Map's key and value representations. 0.1's maps have string or number keys.
@@ -1731,7 +1740,7 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 		if position.Type() != ir.Number {
 			return nil, l.notYet(node, "an array index that isn't a number")
 		}
-		return l.defined(node, ir.ArrayIndex{Array: object, Index: position, Element: element}), nil
+		return l.defined(node, l.markViewArrayRead(node, ir.ArrayIndex{Array: object, Index: position, Element: element})), nil
 	}
 	// pairs[0]?.[0]: the tuple may be missing, and the read is undefined then (collections.go).
 	if optional {

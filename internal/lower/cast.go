@@ -17,22 +17,48 @@ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 	if l.nodeRequirePerformanceProjection(node) {
 		return l.expression(as.Expression)
 	}
-	proof, err := l.castProof(node)
-	if err != nil {
-		return nil, err
-	}
 	value, err := l.expression(as.Expression)
 	if err != nil {
 		return nil, err
 	}
-	if len(proof.allowed) == 0 && len(proof.classes) == 0 {
+	if as.Type.Kind == ast.KindTypeReference && ast.IsIdentifier(as.Type.AsTypeReferenceNode().TypeName) && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
 		return value, nil
 	}
 	source := l.concrete(l.checker.GetTypeAtLocation(as.Expression))
 	target := l.concrete(l.checker.GetTypeAtLocation(node))
-	refused := &Refused{Where: l.program.Where(node), What: "a cast without an object tag representation", Fix: castRepair}
-	if value.Type() != ir.Object {
+	// An object literal's type is fresh, and a fresh type is held to excess properties, so { name, age }
+	// as Named would read as not assignable. Its widened type isn't fresh; its own keeps the literal
+	// fields a discriminated union needs. Either assignable makes an upcast candidate; the sound
+	// relation below still has to prove its writable slots, function views and nominal ancestry.
+	if l.checker.IsTypeAssignableTo(source, target) || l.checker.IsTypeAssignableTo(l.checker.GetWidenedType(source), target) {
+		if err := l.provenRelation(node, as.Expression, target); err != nil {
+			return nil, err
+		}
+		return value, nil
+	}
+	if checked, err := l.viewArrayCast(node, value, source, target); checked != nil || err != nil {
+		return checked, err
+	}
+	if checked, err := l.viewProvenClassCast(node, value, source, target); checked != nil || err != nil {
+		return checked, err
+	}
+	refused := &Refused{Where: l.program.Where(node), What: "a cast the runtime can't check", Fix: "narrow it instead (===, typeof, a discriminant), or cast a discriminated union to its members (adamic/no-unchecked-cast)"}
+	if source.Flags()&checker.TypeFlagsUnion == 0 {
+		if checked, err := l.interfaceCast(node, value, source, target); checked != nil || err != nil {
+			return checked, err
+		}
+	}
+	if source.Flags()&checker.TypeFlagsUnion == 0 {
+		if checked, err := l.structuralViewCast(node, value, source, target); checked != nil || err != nil {
+			return checked, err
+		}
+	}
+	if value.Type() != ir.Object || source.Flags()&checker.TypeFlagsUnion == 0 {
 		return nil, refused
+	}
+	proof, err := l.castProof(node)
+	if err != nil {
+		return nil, err
 	}
 	message := "cast failed: this " + l.checker.TypeToString(source) + " is not a " + l.checker.TypeToString(target)
 	if len(proof.classes) > 0 {

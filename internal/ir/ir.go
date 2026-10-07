@@ -11,7 +11,9 @@ import "fmt"
 // Program is one compiled Adamic program.
 type Program struct {
 	// CheckedFields conservatively checks these field names at every object read.
-	CheckedFields map[string]bool
+	CheckedFields     map[string]bool
+	ViewContracts     []ViewContract
+	ViewContractTypes map[int]ViewContractID
 
 	// Source is the entry file's base name, as written, for the header of what the backends emit.
 	Source string
@@ -312,9 +314,11 @@ type (
 	// number field read that way is number | undefined.
 	Property struct {
 		// View names a required field read whose presence, readiness and representation are checked.
-		View        string
-		ViewType    string
-		ViewAllowed []Expression
+		View         string
+		ViewType     string
+		ViewAllowed  []Expression
+		ViewContract ViewContractID
+		ViewTypeID   int
 		// Readiness is the source expression for a checked field read, empty when proven ready.
 		Readiness string
 		Object    Expression
@@ -522,9 +526,15 @@ type (
 	// null reference, or a Maybe pair). Relative is array.at(index), where a negative index counts
 	// from the end and a fraction truncates.
 	ArrayIndex struct {
-		Array, Index Expression
-		Element      Type
-		Relative     bool
+		Required         bool
+		UndefinedAllowed bool
+		View, ViewType   string
+		ViewAllowed      []ViewLiteral
+		ViewContract     ViewContractID
+		ViewTypeID       int
+		Array, Index     Expression
+		Element          Type
+		Relative         bool
 	}
 
 	// ArraySearch is array.indexOf(Value), with ===, and array.includes(Value), with SameValueZero,
@@ -581,6 +591,7 @@ type (
 	// last returned (Initial the first time), the element, its index and the array, read and skipped
 	// as ArrayVisit does. Result is Initial's type, and the callback's.
 	ArrayReduce struct {
+		ViewRead                 ArrayViewRead
 		Array, Callback, Initial Expression
 		Element, Result          Type
 	}
@@ -592,8 +603,9 @@ type (
 	// ArrayPop is array.pop(): the last element, removed, or undefined when there's none (a null
 	// reference, or a Maybe pair).
 	ArrayPop struct {
-		Array   Expression
-		Element Type
+		ViewRead ArrayViewRead
+		Array    Expression
+		Element  Type
 	}
 
 	// MakeClosure makes a closure of a function, capturing the cells of its Environment.
@@ -609,6 +621,7 @@ type (
 	// ArrayMap is array.map(callback): a new array of the callback's results, each called with the
 	// element, its index and the array.
 	ArrayMap struct {
+		ViewRead ArrayViewRead
 		Array    Expression
 		Callback Expression
 		Element  Type
@@ -621,6 +634,7 @@ type (
 	// is skipped, both as JavaScript does. Returns is what the callback returns, 0 for nothing; every
 	// method but forEach requires a boolean.
 	ArrayVisit struct {
+		ViewRead ArrayViewRead
 		Method   string
 		Array    Expression
 		Callback Expression
@@ -1100,6 +1114,7 @@ type (
 	// length is read again before each pass, as JavaScript's array iterator does; over a string, the
 	// elements are its code points, each a string.
 	ForOf struct {
+		ViewRead ArrayViewRead
 		Iterable Expression
 		Element  Type
 		Local    int

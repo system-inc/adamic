@@ -11,12 +11,12 @@ import (
 func (e *emitter) viewField(property ir.Property) string {
 	object := e.value(property.Object)
 	slot := e.temporary()
-	names := map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Array: "array", ir.Map: "Map"}
+	names := map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Array: "array", ir.Map: "Map", ir.Closure: "function"}
 	name, supported := names[property.Of]
 	if !supported || property.Optional || property.Absent || property.Method {
 		panic("compiler bug: incomplete checked field contract")
 	}
-	if property.ViewType != "" {
+	if property.ViewType != "" && property.Of != ir.Closure {
 		name = property.ViewType
 	}
 	e.line("adamic_value %s = adamic_object_view(%s, %s, &%s, %d, %s, %s);", slot, object, cString(property.Name), e.cache(), property.Of, cString(name), cString(property.View))
@@ -27,6 +27,9 @@ func (e *emitter) viewField(property ir.Property) string {
 			tests = append(tests, e.binary(ir.Equal, property.Of, value, e.value(allowed)))
 		}
 		e.line("if (!(%s)) adamic_view_literal_failure(%s, %s, %d, %s);", strings.Join(tests, " || "), cString(property.View), cString(name), property.Of, slot)
+	}
+	if property.Of == ir.Object {
+		e.viewObjectUnion(property, value)
 	}
 	if property.Of.IsReference() {
 		return e.own(property.Of, fmt.Sprintf("adamic_retain((%s)%s)", cType(property.Of), value))
