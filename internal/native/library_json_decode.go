@@ -8,9 +8,15 @@ import (
 
 func (e *emitter) jsonDecode(expression ir.JSONDecode) string {
 	e.declarations = append(e.declarations, `#include "json_decode.h"`)
+	name := e.jsonDecodeSchema(expression.Schema)
+	return e.own(ir.Object, fmt.Sprintf("adamic_json_decode(%s, &%s)", e.value(expression.Text), name))
+}
+
+// The encoder and decoder consume the same descriptor format.
+func (e *emitter) jsonDecodeSchema(schema ir.JSONDecodeSchema) string {
 	name := e.temporary() + "_decode"
 	nodes := []string{}
-	for i, n := range expression.Schema.Nodes {
+	for i, n := range schema.Nodes {
 		fields := "NULL"
 		if len(n.Fields) > 0 {
 			values := []string{}
@@ -38,8 +44,8 @@ func (e *emitter) jsonDecode(expression ir.JSONDecode) string {
 		nodes = append(nodes, fmt.Sprintf("{%s, %d, %s, %s, %s, %t, %d, %s, %d, %s, %s}", cString(n.Kind), n.Of, cString(n.Expected), literal, cNumber(n.Number), n.Boolean, len(n.Children), children, len(n.Fields), fields, cString(n.Discriminant)))
 	}
 	e.declarations = append(e.declarations, fmt.Sprintf("static const adamic_decode_node %s_nodes[] = {%s};", name, strings.Join(nodes, ", ")))
-	e.declarations = append(e.declarations, fmt.Sprintf("static const adamic_decode_schema %s = {%s_nodes, %d};", name, name, expression.Schema.Root))
-	return e.own(ir.Object, fmt.Sprintf("adamic_json_decode(%s, &%s)", e.value(expression.Text), name))
+	e.declarations = append(e.declarations, fmt.Sprintf("static const adamic_decode_schema %s = {%s_nodes, %d};", name, name, schema.Root))
+	return name
 }
 
 // Optional fields compact decoded layouts, so the whole-program fixed-offset proof must defer

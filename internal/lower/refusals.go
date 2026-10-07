@@ -76,7 +76,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
 			return true
 		}
-		if node.Kind == ast.KindCallExpression && l.isPreludeFunction(node.AsCallExpression().Expression, "decodeJson") {
+		if node.Kind == ast.KindCallExpression && (l.isPreludeFunction(node.AsCallExpression().Expression, "decodeJson") || l.isPreludeFunction(node.AsCallExpression().Expression, "encodeJson")) {
 			_, found = l.decodeJsonType(node)
 			if found != nil {
 				return true

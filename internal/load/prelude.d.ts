@@ -20,6 +20,7 @@ declare module 'adamic' {
 	export function panic(message: string): never;
 
 	// Input, opened in 0.2 (docs/0.1.md). A failure is a value: 0.2 has no exceptions yet.
+	export function encodeJson<T>(value: T): string;
 	export function decodeJson<T>(text: string): { readonly kind: 'Ok'; readonly value: T } | { readonly kind: 'Error'; readonly message: string };
 	export function readTextFile(path: string): { readonly kind: 'Ok'; readonly text: string } | { readonly kind: 'Error'; readonly message: string };
 	export function programArguments(): readonly string[];
