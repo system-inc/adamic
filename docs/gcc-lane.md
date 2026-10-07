@@ -1,5 +1,7 @@
 # GCC differential lane
 
+The [completed comparison report](gcc-lane-completion.md) supersedes the blocked-build results below. GCC now runs with nonfatal warnings in this diagnostic lane; the text below preserves the previous worker's report.
+
 Built an opt-in `native.Options{Compiler: "gcc"}` and an uncached differential test; clang stays the default.
 Implementation commits and final validation are recorded below; base is `15ab80659cf70a3cd0ddd292b7c4bdb6084f2d33` from `origin/area/developer-tools`.
 Release and sanitizer lane commands reached all 328 lowered fixtures, but GCC runtime warnings blocked every link; the clang baseline passed.
