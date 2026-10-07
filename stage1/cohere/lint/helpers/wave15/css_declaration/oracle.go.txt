@@ -1,0 +1,9 @@
+package tailwind
+
+func Wave15CSSDeclaration(input string, colon int) (bool, string, bool, bool, string, string) {
+	node := parseCSSDeclaration(input, colon)
+	if node == nil {
+		return false, "", false, false, "", ""
+	}
+	return true, string(node.Kind), node.ValuePresent, node.Important, node.Property, node.Value
+}

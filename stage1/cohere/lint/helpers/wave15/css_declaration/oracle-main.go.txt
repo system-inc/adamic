@@ -1,0 +1,114 @@
+package main
+
+import (
+	"bufio"
+	"encoding/hex"
+	"encoding/json"
+	"fmt"
+	rules "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse"
+	"go/ast"
+	"go/parser"
+	"go/token"
+	"os"
+	"path/filepath"
+	"sort"
+	"strconv"
+	"strings"
+)
+
+func encode(value string) string { return hex.EncodeToString([]byte(value)) }
+func decode(value string) string {
+	b, e := hex.DecodeString(value)
+	if e != nil {
+		panic(e)
+	}
+	return string(b)
+}
+func main() {
+	if os.Args[1] == "generate" {
+		output, e := os.Create(os.Args[2])
+		if e != nil {
+			panic(e)
+		}
+		defer output.Close()
+		coverage := map[string]int{}
+		stems := []string{"enforce_canonical_classes", "enforce_consistent_class_order", "enforce_consistent_variant_order", "enforce_shorthand_classes", "no_conflicting_classes", "no_unknown_classes"}
+		for _, stem := range stems {
+			paths, e := filepath.Glob(filepath.Join(os.Args[3], stem+"*_test.go"))
+			if e != nil {
+				panic(e)
+			}
+			set := map[string]bool{}
+			for _, path := range paths {
+				f, e := parser.ParseFile(token.NewFileSet(), path, nil, 0)
+				if e != nil {
+					panic(e)
+				}
+				ast.Inspect(f, func(n ast.Node) bool {
+					lit, ok := n.(*ast.BasicLit)
+					if ok && lit.Kind == token.STRING {
+						value, e := strconv.Unquote(lit.Value)
+						if e != nil {
+							panic(e)
+						}
+						set[value] = true
+					}
+					return true
+				})
+			}
+			keys := []string{}
+			for k := range set {
+				keys = append(keys, k)
+			}
+			sort.Strings(keys)
+			coverage[stem] = len(keys)
+			for _, root := range keys {
+				for _, input := range []string{root, root + ":" + root, "--!important:" + root, root + ": !important tail", "\u0085" + root + "\u00a0: \u3000" + root + "\u202f"} {
+					fmt.Fprintf(output, "%s\t%d\n", encode(input), strings.IndexByte(input, ':'))
+					fmt.Fprintf(output, "%s\t%d\n", encode(input), len(input)+1)
+				}
+			}
+		}
+		for value := 0; value < 256; value++ {
+			for _, input := range []string{string([]byte{byte(value), 'p', byte(value), ':', byte(value), 'v', byte(value)}), string([]byte{'p', ':', byte(value)}), string([]byte{byte(value), ':', 'v'})} {
+				fmt.Fprintf(output, "%s\t%d\n", encode(input), strings.IndexByte(input, ':'))
+			}
+		}
+		for _, space := range []rune{9, 10, 11, 12, 13, 32, 0x85, 0xa0, 0x1680, 0x2000, 0x2001, 0x2002, 0x2003, 0x2004, 0x2005, 0x2006, 0x2007, 0x2008, 0x2009, 0x200a, 0x2028, 0x2029, 0x202f, 0x205f, 0x3000, 0xfeff, 0x180e, 0x200b} {
+			input := string(space) + " p " + string(space) + ":" + string(space) + " v " + string(space)
+			fmt.Fprintf(output, "%s\t%d\n", encode(input), strings.IndexByte(input, ':'))
+		}
+		for _, input := range []string{"", ":", "p:", "!important:v", "--!important:ok", "p:v!importantignored", "p:!IMPORTANT", "p:v!important!important", "p:v !important tail", "p:v\x00!important"} {
+			fmt.Fprintf(output, "%s\t%d\n", encode(input), strings.IndexByte(input, ':'))
+		}
+
+		data, e := json.MarshalIndent(coverage, "", "  ")
+		if e != nil {
+			panic(e)
+		}
+		if e = os.WriteFile(os.Args[2]+".coverage.json", data, 0644); e != nil {
+			panic(e)
+		}
+		return
+	}
+	file, e := os.Open(os.Args[1])
+	if e != nil {
+		panic(e)
+	}
+	defer file.Close()
+	scanner := bufio.NewScanner(file)
+	scanner.Buffer(make([]byte, 4096), 16*1024*1024)
+	for scanner.Scan() {
+		fields := strings.Split(scanner.Text(), "\t")
+		input := decode(fields[0])
+		start, e := strconv.Atoi(fields[1])
+		if e != nil {
+			panic(e)
+		}
+		present, kind, valuePresent, important, property, value := rules.Wave15CSSDeclaration(input, start)
+		fmt.Printf("%t\t%s\t%t\t%t\t%s.\t%s.\n", present, kind, valuePresent, important, encode(property), encode(value))
+	}
+	if e = scanner.Err(); e != nil {
+		panic(e)
+	}
+}

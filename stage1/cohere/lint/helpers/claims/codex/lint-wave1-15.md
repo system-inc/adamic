@@ -48,3 +48,14 @@ colon slicing, important search after the colon only, Unicode TrimSpace, fresh
 result records and absent-declaration states. Compare actual private Go over
 every consumer fixture and byte/Unicode/marker controls on Node, emitted
 JavaScript and sanitized native, with a compiling mutant. Claim precedes code.
+
+## Retained implementation outcome
+
+parseCSSString passed 198,584 four-way cases with its compiling escape mutant.
+parseCSSDeclaration passed 8,836 four-way cases with its compiling important
+search mutant. All original six consumer test families pass. Each helper
+supplies six prerequisites, twelve total across the same six Tailwind rules,
+and zero final blockers. The final 421-ref, 17-claim-blob refresh finds
+these two targets only on this branch. VariantKind remains withdrawn and its
+source removed; no duplicate or further helper is delivered or reserved.
+Reports, complete byte observations and hash records live under wave15/.

@@ -1,0 +1,63 @@
+import { panic } from 'adamic';
+export class CssDeclaration {
+    readonly present: boolean;
+    readonly kind: string;
+    readonly property: readonly number[];
+    readonly value: readonly number[];
+    readonly valuePresent: boolean;
+    readonly important: boolean;
+    constructor(present: boolean, property: readonly number[], value: readonly number[], important: boolean) {
+        this.present = present; this.kind = present ? 'declaration' : '';
+        this.property = property; this.value = value;
+        this.valuePresent = present; this.important = important;
+    }
+}
+// strings.TrimSpace recognizes Unicode White_Space, not JavaScript's trim set.
+// Match only its UTF-8 byte sequences so malformed bytes are never replaced.
+function whiteWidth(input: readonly number[], start: number, end: number): number {
+    const first = input[start] ?? -1;
+    if(first === 32 || (first >= 9 && first <= 13)) { return 1; }
+    if(start + 1 < end && first === 194 && ((input[start + 1] ?? -1) === 133 || (input[start + 1] ?? -1) === 160)) { return 2; }
+    if(start + 2 >= end) { return 0; }
+    const second = input[start + 1] ?? -1;
+    const third = input[start + 2] ?? -1;
+    if(first === 225 && second === 154 && third === 128) { return 3; }
+    if(first === 226 && second === 128 && ((third >= 128 && third <= 138) || third === 168 || third === 169 || third === 175)) { return 3; }
+    if(first === 226 && second === 129 && third === 159) { return 3; }
+    if(first === 227 && second === 128 && third === 128) { return 3; }
+    return 0;
+}
+function trimSpace(input: readonly number[]): number[] {
+    let start = 0;
+    let end = input.length;
+    while(start < end) {
+        const width = whiteWidth(input, start, end);
+        if(width === 0) { break; }
+        start += width;
+    }
+    while(start < end) {
+        let width = 0;
+        for(let candidate = 1; candidate <= 3 && end - candidate >= start; candidate++) {
+            if(whiteWidth(input, end - candidate, end) === candidate) { width = candidate; break; }
+        }
+        if(width === 0) { break; }
+        end -= width;
+    }
+    return input.slice(start, end);
+}
+export function parseCssDeclaration(input: readonly number[], colon: number): CssDeclaration {
+    const empty: number[] = [];
+    if(colon === -1 || colon > input.length) { return new CssDeclaration(false, empty, empty, false); }
+    if(!Number.isInteger(colon) || colon < -1 || colon === input.length) { panic('Refused: CSS declaration colon is outside the slice contract'); }
+    let valueEnd = input.length;
+    let important = false;
+    const marker = '!important';
+    for(let position = colon + 1; position + marker.length <= input.length; position++) {
+        let matches = true;
+        for(let character = 0; character < marker.length; character++) {
+            if(input[position + character] !== marker.charCodeAt(character)) { matches = false; break; }
+        }
+        if(matches) { valueEnd = position; important = true; break; }
+    }
+    return new CssDeclaration(true, trimSpace(input.slice(0, colon)), trimSpace(input.slice(colon + 1, valueEnd)), important);
+}
