@@ -63,3 +63,7 @@ Evidence is retained in suffix-tests.log, five-helpers-tests.log and suffix-vet.
 under evidence/. Readiness removes only delivered symbols and conservatively
 retains all other prerequisites. The shared registration blocker #zmh9v36 remains
 named on the separate parked rule branch; no shared harness handoff SHA was named.
+
+Landing refresh on main b8fb957aa839a9e8cb0b54279dd9864fa317bd30
+
+All five helpers were rebased cleanly and rechecked after the inherited static-field native emitter change. The complete owned Go comparison package passed in 89.628s, including twelve compiling mutants on Node, emitted JavaScript and sanitized native. The filtered uncached input oracle passed in 0.919s. Owned package vet passed. cloud/setup.sh passed in 87s; nproc is 5. Logs are in evidence/b8fb-*.log. No shared harness files changed; full consumer runtime CSS engine coverage remains outside this helper certificate.
