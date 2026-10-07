@@ -1,0 +1,7 @@
+no_unnecessary_type_parameters.a [220, 263, 219, 180, 181, 186, 185, 174, 175, 264, 232] matches Go; changed numeric kind caught by metadata comparison
+no_useless_assignment.a [307] matches Go; changed numeric kind caught by metadata comparison
+restrict_template_expressions.a [229] matches Go; changed numeric kind caught by metadata comparison
+wave_05_next/no_uncleared_race_timeout.a [214] matches Go; changed numeric kind caught by metadata comparison
+wave_05_next/no_process_exit_after_output.a [307] matches Go; changed numeric kind caught by metadata comparison
+wave_05_next/require_blocking_standard_streams.a [307] matches Go; changed numeric kind caught by metadata comparison
+PASS six numeric listener declarations and six metadata mutants

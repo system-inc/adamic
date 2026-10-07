@@ -1,0 +1,4 @@
+require_await ['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction', 'MethodDeclaration', 'GetAccessor', 'SetAccessor', 'Constructor'] matches Go and driver; unknown kind-name mutant caught
+symbol_description ['CallExpression'] matches Go and driver; unknown kind-name mutant caught
+valid_typeof ['BinaryExpression'] matches Go and driver; unknown kind-name mutant caught
+PASS three kind-indexed callback declarations; no string-kind comparisons in rule files

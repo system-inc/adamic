@@ -1,0 +1,13 @@
+controls 106 parse-valid 106
+controls 46837 identical bytes findings 76
+controls-asan 46837 identical bytes findings 76
+symbol mutant exits 0, empty stderr; only Go bytes catch it
+typeof mutant exits 0, empty stderr; only Go bytes catch it
+await mutant exits 0, empty stderr; only Go bytes catch it
+declared-call-signature released handle exact refusal 70
+type-projection released handle exact refusal 70
+repository 18485 identical bytes findings 0
+repository-asan 18485 identical bytes findings 0
+compiler 5318 identical bytes findings 0
+compiler-asan 5318 identical bytes findings 0
+PASS three core rules, controls, mutants, corpora and sanitizers

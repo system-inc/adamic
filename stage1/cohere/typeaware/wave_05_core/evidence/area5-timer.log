@@ -1,0 +1,12 @@
+dom-controls identical bytes 7800 sha256 33c693923dea9d594eefd29f620dd468ae49dfe1a998b4ad3b650c143045731c findings 12
+node-controls identical bytes 7800 sha256 33c693923dea9d594eefd29f620dd468ae49dfe1a998b4ad3b650c143045731c findings 12
+dom-asan identical bytes 7800 sha256 33c693923dea9d594eefd29f620dd468ae49dfe1a998b4ad3b650c143045731c findings 12
+node-asan identical bytes 7800 sha256 33c693923dea9d594eefd29f620dd468ae49dfe1a998b4ad3b650c143045731c findings 12
+timer mutant exits 0, empty stderr; independent bytes catch it
+released symbol-ancestry handle: exit 70, exact refusal
+CFG reuse blocked: stage 0 constructor refusal at shared bindings.ts:49:33
+repository identical bytes 18485 sha256 20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f findings 0
+repository-asan identical bytes 18485 sha256 20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f findings 0
+compiler identical bytes 5318 sha256 7cfb6143ad95344317ca4494f9c3cfd3b3d3e67b163691f8a4e52200c00fd871 findings 0
+compiler-asan identical bytes 5318 sha256 7cfb6143ad95344317ca4494f9c3cfd3b3d3e67b163691f8a4e52200c00fd871 findings 0
+PASS timer comparison, mutant and sanitizers

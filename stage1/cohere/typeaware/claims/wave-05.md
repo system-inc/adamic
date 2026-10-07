@@ -154,3 +154,8 @@ Latest landing: all nine completed ports are rebased and revalidated on
 area b4691483, including main c7991b90. No ranked name is unclaimed;
 the three React analysis claims remain PARKED. Exact filtered-gate scope
 and outputs are in `../wave_05_core/AREA_4_REPORT.md`.
+
+Latest landing: all nine completed ports are rebased and revalidated on
+area d3a37422, including main b6b1538b. No ranked name is unclaimed;
+the three React analysis claims remain PARKED. Exact filtered-gate scope
+and outputs are in `../wave_05_core/AREA_5_REPORT.md`.
