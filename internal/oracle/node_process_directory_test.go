@@ -19,7 +19,7 @@ func TestNodeProcessDirectoryRuntime(t *testing.T) {
 	if err := os.Mkdir(child, 0700); err != nil {
 		t.Fatal(err)
 	}
-	source, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/node_process_directory_mutation.a"))
+	source, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/node_process_runtime/node_process_directory_mutation.a"))
 	if err != nil {
 		t.Fatal(err)
 	}

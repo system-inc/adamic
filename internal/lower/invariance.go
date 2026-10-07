@@ -380,9 +380,21 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 	var found *widening
 	switch {
 	case node.Kind == ast.KindAsExpression:
-		// x as Wider is a view as much as an initializer is; cast.go takes an upcast as the value.
-		own, contextual = l.checker.GetTypeAtLocation(node.AsAsExpression().Expression), l.checker.GetTypeAtLocation(node)
-		found = l.freshOrWidened(node.AsAsExpression().Expression, own, contextual)
+		as := node.AsAsExpression()
+		// A qualified name (NodeJS.ErrnoException) has no Text; only the identifier const is as const.
+		if as.Type.Kind == ast.KindTypeReference && ast.IsIdentifier(as.Type.AsTypeReferenceNode().TypeName) && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
+			return nil
+		}
+		source, target := l.checker.GetTypeAtLocation(as.Expression), l.checker.GetTypeAtLocation(node)
+		if l.checker.IsTypeAssignableTo(source, target) || l.checker.IsTypeAssignableTo(l.checker.GetWidenedType(source), target) {
+			return l.provenRelation(node, as.Expression, target)
+		}
+		// Preserve the existing checks on downcasts; their lowering belongs to cast.go.
+		own, contextual = source, target
+		found = l.freshOrWidened(as.Expression, own, contextual)
+	case node.Kind == ast.KindSatisfiesExpression:
+		satisfies := node.AsSatisfiesExpression()
+		return l.provenRelation(node, satisfies.Expression, l.checker.GetTypeAtLocation(satisfies.Type))
 	case node.Kind == ast.KindShorthandPropertyAssignment:
 		// { pets } is { pets: pets }: the variable seen as the literal's property.
 		literal := l.checker.GetContextualType(node.Parent, checker.ContextFlagsNone)
@@ -445,6 +457,10 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 	if found == nil {
 		return nil
 	}
+	return l.wideningRefusal(node, own, contextual, found)
+}
+
+func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type, found *widening) error {
 	what := "a value of type " + l.checker.TypeToString(own) + " seen as " + l.checker.TypeToString(contextual) + ", which can write " + l.checker.TypeToString(found.target) + " where " + l.checker.TypeToString(found.source) + " is read"
 	fix := "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
 	if found.parameter {
