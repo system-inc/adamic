@@ -1,0 +1,3 @@
+file	/workspace/wave-05-react-probe/derived.tsx
+143	151	react-hooks/no-deriving-state-in-effects	noDerivingStateInEffects	This effect exists only to copy a value into state that was already computable from the values it depends on. React renders once with the stale state, runs the effect, then renders a second time with the new state, so the user can briefly see the old value and every dependent effect runs twice. Compute the value during render instead, as a plain constant beside the values it derives from. If the derivation is expensive, wrap that constant in `useMemo` rather than storing it in state.	0	0
+findings 1

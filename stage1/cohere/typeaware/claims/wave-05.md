@@ -73,4 +73,12 @@ than directly constructing Diagnostic. The 26th baseline port,
 method-signature-style, is outside this checker-dependent ranking.
 These three React hook names have no baseline implementation or existing
 origin claim. Implementation remains inside this wave's directories.
-Continuation 2 status: claimed, not yet implemented or validated.
+Continuation 2 status: blocked and unported. The shared stage-1 parser refuses
+ordinary JSX (`<div />`) with `expected GreaterThanToken, got SlashToken`, exit
+70, before native rule execution. Independent production Go reports on a
+positive JSX control for each of these three rules. A non-JSX control succeeds,
+and a skipped-parser probe mutant is rejected by the refusal assertion.
+The parser is outside this wave's allowed directories; under Ahra's instruction
+to stop on other blockers, no shared frontend repair or further claim is made.
+Exact reproduction and limitations are in `../wave_05_react/REPORT.md`.
+All six earlier reservations remain complete, tested and pushed.

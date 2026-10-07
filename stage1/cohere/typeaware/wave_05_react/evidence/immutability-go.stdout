@@ -1,0 +1,3 @@
+file	/workspace/wave-05-react-probe/immutability.tsx
+48	53	react-hooks/immutability	immutableValue	This value is a prop or a hook argument, so it belongs to the caller. Change it where it is owned and pass an update callback down, or copy it into local state. React re-renders by comparing values rather than by observing writes, so a value it has already read is fixed from that moment. Writing through it afterwards changes what this code sees while leaving what React sees untouched, and the interface keeps showing the old value until some unrelated update happens to schedule a render.	0	0
+findings 1
