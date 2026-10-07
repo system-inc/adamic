@@ -102,6 +102,11 @@ func (l *lowering) viewArrayUnsupportedUses(node *ast.Node) error {
 			if callee.Kind == ast.KindPropertyAccessExpression && l.checker.IsArrayType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression))) {
 				switch callee.Name().Text() {
 				case "map", "forEach", "filter", "some", "every", "find", "findIndex", "reduce", "slice", "at", "pop", "push":
+				case "join":
+					element := l.checker.GetElementTypeOfArrayType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression)))
+					if l.checker.IsArrayType(l.checker.GetNonNullableType(element)) {
+						found = l.notYet(part, "checked nested array view consumer .join requiring recursive element conversion")
+					}
 				default:
 					found = l.notYet(part, "checked array view consumer ."+callee.Name().Text()+" requiring element conversion")
 				}
@@ -140,4 +145,29 @@ func (l *lowering) viewArrayCast(node *ast.Node, value ir.Expression, source, ta
 		}
 	}
 	return l.view(node, value, target)
+}
+
+// Attach the declared element contract at the consuming join, never at a field read.
+func (l *lowering) viewArrayJoin(node, receiver *ast.Node, array, separator ir.Expression, element ir.Type) ir.ArrayJoin {
+	return ir.ArrayJoin{Array: array, Separator: separator, Element: element, ViewRead: l.viewArrayUse(node, receiver, element, false)}
+}
+
+// Only lift the hole guard for consumers whose sparse runtime paths are wired.
+// Other holey programs keep the library lane's existing refusals.
+func (l *lowering) viewArrayHolesMethod(name string) bool {
+	if !ir.HasArrayViews(l.result) {
+		return false
+	}
+	return name == "push" || name == "pop" || name == "slice"
+}
+
+func (l *lowering) viewArrayHolesConsumer(node any) bool {
+	if !ir.HasArrayViews(l.result) {
+		return false
+	}
+	switch node.(type) {
+	case ir.ArrayPush, ir.ArrayPop, ir.ArraySlice:
+		return true
+	}
+	return false
 }

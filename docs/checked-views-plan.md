@@ -300,6 +300,53 @@ Push every passing checkpoint. Any unfinished family or unmeasured census stays
 explicitly unclaimed. Compiler changes begin only after reading view() and its
 callers and the shared flow implementation.
 
+## Lane 5: callable shape checks (October 7)
+
+Lane 5 owns branch `codex/views-callables`, based on lane 2 parser tip
+`2de6d1ba` (descendant of `c898009b`). The task explicitly authorizes this
+territory entry. The lane 2 handoff below transfers its existing callable files
+to lane 5; shared read dispatch and closure producer files remain owner handoffs.
+New lane 5 files: `internal/lower/view_callables_contract.go` and its test;
+`internal/native/view_callables_contract.go` and its test;
+`internal/javascript/view_callables_contract.go` and its test;
+`internal/native/runtime/view_callables_contract.h`;
+`internal/oracle/checked_views_callable_contract_test.go`;
+`stage3/interface-downcasts/lane5/` fixtures, census ranking and reports.
+
+The October 7 ruling supersedes the earlier implementation-only admission
+policy: every reached callable read must check recorded closure signature
+against declared arity, parameter and result representations. A function tag
+alone or a same-name program scan is insufficient. Unsupported unread members
+must not refuse a cast. Missing optional members yield undefined; reserved
+uninitialized slots fail using the existing readiness machinery.
+
+Required owner handoffs, not implemented claims:
+
+- Lane 1/lane 2: have `buildViewCallableContract` delegate signature construction
+  to lane 5's builder; keep registration in its existing owner file. Fill the
+  existing `ViewContract.Parameters` and `Result` fields. Preserve deferred
+  unsupported signatures until a reached read.
+- Closure-convention owner: record the implementation's arity, parameter and
+  result representation descriptor on every created closure and method thunk.
+  Native `adamic_closure` currently has only code and capture cells. JavaScript
+  closures need the same immutable descriptor. Never derive it from the view.
+  Unknown metadata must fail at a viewed callable read.
+- Lane 1 shared read dispatch: after presence/readiness and callable-kind checks,
+  call lane 5's shape helper before storing or calling the read value, including
+  optional present callbacks. Pass evaluated operands and expression text once.
+  Native method tables need signature descriptors too; keep receiver binding.
+- Lane 1 propagation: viewed values reaching shared helpers, generics, callbacks
+  and fields must retain checks; unknown flow cannot authorize trust.
+- Call emission: use the reconciled closure convention after its supplied SHA is
+  merged. No second calling convention is introduced by lane 5.
+
+Working estimate for all 308 pairs / 1,503 potential reads: October 10 at
+18:00 UTC (12:00 MDT), conditional on lazy-read dispatch and recorded closure
+metadata handoffs. This is an estimate, not certified coverage. The ranked
+ledger will retain every pair until both-backend integration and mutants prove
+its read checks. Intrinsic string/map/set members appear in the callable census;
+method contracts require intrinsic implementation signatures, not closure tags.
+
 ## Lane 5 callable handoff after c898009b
 
 The lead moved callable work to lane 5 on codex/views-callables, starting from
@@ -626,3 +673,75 @@ Lane-4 primitive phantom scalar reads are reconciled with that lazy entry point;
 standalone selector evidence does not imply production union admission.
 See stage3/interface-downcasts/integration/REPORT.md for conflict choices,
 validation, reproduced baseline failures and mutants.
+
+Lane 5 helper checkpoint: `completeViewCallableShapeContract(node,target,id,build)`
+is a reached-read hook, not an admission hook. It fills the placeholder's existing
+Parameters/Result slots for fixed, nongeneric, single signatures and propagates
+child failures. Optional/rest/generic/overload signatures remain unknown until
+implemented. Native `adamic_view_callable_shape(value,recorded,expected,expression,
+optional)` and JavaScript `adamicViewCallableShape` compare producer metadata;
+they introduce no call convention. Native NULL is confirmed undefined from the
+shared presence/nullish check, never permission to treat null as absent.
+Lane 1 wires completion only at reads and wires shape checks after readiness;
+the closure owner supplies metadata at creation. These helpers alone certify
+zero census reads. Lane 1 tip ab4d6f90 has 13 shared code/count merge conflicts;
+per the lane 2 handoff, lane 1 resolves and publishes the reconciled lazy tip.
+Both backends also provide `emitViewCallableShape(value,recorded,expected,
+expression,optional)`, inserting the helper around already evaluated operands.
+It returns the same callable identity and adds no ownership or receiver wrapper.
+The caller must preserve the field-read's existing lifetime and route subsequent
+calls through the reconciled convention.
+Producer handoff locations on this base: native closure creation is in
+`emit_expressions.go` (adamic_closure_new), and JavaScript creation is in
+`javascript.go` (new AdamicClosure). Both are shared owner files. Use the
+implementation Function.Parameters/Returns, excluding a hidden receiver from
+advertised arity. Function.Returns zero means void in existing IR; it must not
+be copied as the helper's zero/unknown signature code. A void descriptor needs
+an explicit agreed representation before enabling that family. Count-row and
+real-source read-time failure registration remain central owner handoffs.
+
+## Lane 5 read adapter handoff to views-integration
+
+Coordination supersedes the individual-lane merge instructions above: lane 5
+merges only codex/views-integration after its integrator publishes a tip. On this
+checkpoint that remote branch is not yet published. Do not merge fetched lazy or
+closure tips directly. The 11,648 explicit witnesses remain an Unknown-fallback
+upper bound; remeasure what viewed values can reach after lazy provenance lands.
+
+New lane 5 territory: internal/lower/view_callables_read.go and tests;
+internal/native/view_callables_signature.go and tests;
+internal/javascript/view_callables_signature.go and tests;
+lane5/run-read-adapter-mutants.py. JavaScript's owned viewCallablesRuntime now
+includes the shape runtime. The native certificate emitter includes its header
+in generated declarations. No shared owner file was changed.
+
+Concrete integration hooks requested:
+
+- At the shared callable read with KnownViewed or Unknown provenance, call
+  `l.prepareViewCallableRead(node, declared)` and propagate its error at that read.
+  Install the returned id on Property.ViewContract. This strips only optional
+  undefined and builds representation descriptors without walking object members
+  of argument/result types. It must not be called from cast admission or from the
+  global same-name field scan. Keep the existing refusal until all its reads
+  have equivalent runtime coverage; removing the scan alone is unsound.
+- After shared presence, readiness and storage-kind validation, snapshot the
+  callable, then use `e.emitViewCallableCertificate(property, value)` on both
+  backends before capturing or calling it. Native `value` must be an evaluated
+  C name; JS snapshots with a one-argument arrow wrapper. Check every read path,
+  including native viewField and dynamic method-call lookup. Existing owned
+  callable lookup still follows the previous proof path until these hooks land.
+- Optional absence must be returned by the shared read, not passed through the
+  old required-field helper. Native NULL may represent confirmed undefined only;
+  present null cannot be excused as optional. Pass Property.Absent appropriately.
+- The adapter selects immutable producer descriptors by generated closure code
+  identity and IR parameter/result representations. It neither guesses arity
+  from calls nor uses declared view metadata as a producer certificate. Unknown
+  code, Receiver closures and class method thunks remain uncertified. Use the
+  reconciled closure ABI for eventual receiver/method certificates; do not treat
+  the current fixed ordinary-closure adapter as coverage for them. Void remains
+  unknown. Table emission is deliberately a correctness-first prototype, with
+  per-read tables; compact it after the integration protocol is stable.
+
+All adapters are tested, but none certifies a corpus pair without the shared
+source-read hooks. Three new semantic mutants catch forged producer descriptors
+(native and JavaScript) and eager argument/result object-member traversal.

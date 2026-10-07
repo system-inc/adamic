@@ -451,7 +451,11 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 		for index, argument := range expression.Arguments {
 			arguments[index] = e.value(argument)
 		}
-		return e.graphArray(fmt.Sprintf("adamic_array_slice(%s, %s, %s, %t)", array, arguments[0], arguments[1], len(expression.Arguments) == 2), expression.GraphTypes)
+		slice := "adamic_array_slice"
+		if ir.HasArrayViews(e.program) {
+			slice = "adamic_view_array_slice"
+		}
+		return e.graphArray(fmt.Sprintf("%s(%s, %s, %s, %t)", slice, array, arguments[0], arguments[1], len(expression.Arguments) == 2), expression.GraphTypes)
 	case ir.ArraySort:
 		array := e.value(expression.Array)
 		sort := "adamic_array_sort"
@@ -581,11 +585,18 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 			value = e.heldReferenceIn(array, value)
 		}
 		// The append happens here, in JavaScript's order, and the new length is the value.
-		e.line("adamic_array_push(%s, (adamic_value){.%s = %s});", array, member(expression.Element), slotted(expression.Element, value))
+		push := "adamic_array_push"
+		if ir.HasArrayViews(e.program) {
+			push = "adamic_view_array_push"
+		}
+		e.line("%s(%s, (adamic_value){.%s = %s});", push, array, member(expression.Element), slotted(expression.Element, value))
 		length := e.temporary()
 		e.line("double %s = (double)%s->length;", length, array)
 		return length
 	case ir.ArrayJoin:
+		if expression.ViewRead.View != "" {
+			return e.emitViewArrayJoin(expression)
+		}
 		if e.hasArrayHoles() {
 			array := e.value(expression.Array)
 			separator := e.value(expression.Separator)

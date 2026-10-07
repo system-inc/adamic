@@ -87,3 +87,34 @@ and vet are the lane-4 gates. Owner overload result-stop/append controls are
 included beyond the view filter. The all-results covariance mutant is caught
 with a valid build: TestPhantomOverloadBrandLiteralConstraintRefused sees nil
 instead of the required branded-literal refusal.
+
+## Lane 5 reconciliation
+
+Tip 9c4d0904 includes newer native-array lane 2 bf544d5c through 1e47e792.
+Three conflict hunks across two files were individually reconciled:
+
+- docs/checked-views-plan.md, two hunks: retain lazy/lane-4 checkpoints and both
+  callable shape/read-producer handoffs as dated evidence.
+- internal/native/emit_expressions.go, ArraySlice hunk: use lane 2's sparse-aware
+  adamic_view_array_slice when array views exist, retaining graphArray and
+  GraphTypes from the owner. Automatically merged ArrayPush keeps graph-held
+  reference ownership plus sparse-aware push dispatch.
+
+The newer array runtime consumes element_kind, certifying physical allocation
+storage without a second view storage byte. Checked sparse pop/copy/join and
+write-kind refusals are retained. Fixtures native-array-sparse,
+native-array-sparse-pop-hole, native-array-copy-bad, native-array-write-bad,
+native-array-push-bad and native-array-join-literal pin these paths, alongside
+native-array-string-mutation and large-field/evaluation controls.
+
+Fixed callable signature/read/producer adapters remain components where shared
+source wiring is deferred. No unsupported callable refusal, Unknown frontier,
+receiver convention or void signature was enabled by this merge. Three isolated
+Go-overlay mutants were rerun and caught semantically: native-forge-producer by
+TestViewCallableProducerCertificateNative/wrong-arity, javascript-forge-producer
+by TestViewCallableProducerCertificateNode/wrong-arity, and eager descendants by
+TestPrepareViewCallableRead/interface_Result. Production files were not mutated.
+
+Focused lower/native/JavaScript, additional prepare-read adapter, full IR,
+filtered checked-view/Node oracle (same recorded baseline exclusion), and vet
+are the gates. The full repository gate remains unclaimed.

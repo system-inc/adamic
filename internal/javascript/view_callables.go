@@ -17,7 +17,7 @@ const viewCallablesRuntime = `const adamicViewCallableRead = (object, name, expr
     return value;
 };
 const adamicViewCallableCall = (value, receiver, arguments_, method) => method ? value(receiver, ...arguments_) : adamicCall(value, arguments_);
-`
+` + viewCallableShapeRuntime
 
 func emitViewCallableRead(object, member, expression string, method bool) string {
 	return fmt.Sprintf("adamicViewCallableRead(%s, %s, %s, %t)", object, quote(member), quote(expression), method)
