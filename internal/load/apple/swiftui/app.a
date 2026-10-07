@@ -1,0 +1,31 @@
+// A SwiftUI app in one call. Written in Adamic, served as apple/swiftui/app
+// (internal/load/apple.go): run makes the window, shows the root view in it, renders it again
+// whenever a State is set, and runs AppKit until the window's app is quit.
+
+import { Application } from 'apple/appkit/application';
+import { Window } from 'apple/appkit/window';
+import { Host } from 'apple/swiftui/host';
+import { renderWhenStateChanges } from 'apple/swiftui/state';
+import type { View } from 'apple/swiftui/views';
+
+// run shows root(), a function so each render asks it again, in a window with this title.
+export function run(title: string, root: () => View, options: { readonly width?: number; readonly height?: number }): void {
+	const application = Application.shared;
+	application.setActivationPolicy('Regular');
+	const host = new Host(root());
+	renderWhenStateChanges(() => {
+		host.render(root());
+	});
+	const window = new Window({
+		contentRectangle: { x: 0, y: 0, width: options.width ?? 420, height: options.height ?? 560 },
+		styleMask: ['Titled', 'Closable', 'Miniaturizable', 'Resizable'],
+		backing: 'Buffered',
+		defer: false,
+	});
+	window.title = title;
+	window.contentView = host.view();
+	window.center();
+	window.makeKeyAndOrderFront(undefined);
+	application.activate();
+	application.run();
+}
