@@ -1,0 +1,33 @@
+import type { Rules } from './rules.ts';
+import type { Types } from './types.ts';
+import { Frames, header } from './frames.ts';
+import { types } from './facts.ts';
+export class DeclarationContract {
+    readonly own: number;
+    readonly self: readonly boolean[];
+    readonly present: readonly boolean[];
+    readonly flags: readonly number[];
+    readonly rests: readonly boolean[];
+    readonly graph: Types;
+    constructor(rules: Rules, index: number) {
+        const frames = new Frames(rules.ask(index, 'declaration-contract'));
+        header(frames, 'declaration-contract');
+        this.own = frames.natural();
+        const count = frames.natural();
+        const self: boolean[] = [];
+        const present: boolean[] = [];
+        const flags: number[] = [];
+        const rests: boolean[] = [];
+        for(let at = 0; at < count; at++) {
+            self.push(frames.yes());
+            present.push(frames.yes());
+            flags.push(frames.natural());
+            rests.push(frames.yes());
+        }
+        this.self = self;
+        this.present = present;
+        this.flags = flags;
+        this.rests = rests;
+        this.graph = types(`1\n120\ndeclaration-contract${frames.text.slice(frames.cursor)}`, 'declaration-contract');
+    }
+}

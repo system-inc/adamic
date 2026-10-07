@@ -1,0 +1,244 @@
+import type { Rules } from './rules.ts';
+import type { Types } from './types.ts';
+import type { TypeFact } from './type_fact.ts';
+import { types } from './facts.ts';
+import { Bindings } from './bindings.ts';
+import { Flow } from './flow.ts';
+import { CheckerFacts } from './checker_facts.ts';
+import { DeclarationContract } from './declaration_contract.a';
+import { Frames, header } from './frames.ts';
+import { Repair } from './repair.ts';
+
+export class DefaultTarget {
+    readonly graph: Types;
+    readonly type: TypeFact;
+    constructor(graph: Types, type: TypeFact) {
+        this.graph = graph;
+        this.type = type;
+    }
+}
+export class NoUselessDefaultAssignment {
+    readonly rules: Rules;
+    readonly bindings: Bindings;
+    readonly flow: Flow;
+    readonly facts: CheckerFacts;
+    constructor(rules: Rules) {
+        this.rules = rules;
+        this.bindings = new Bindings(rules);
+        this.flow = new Flow(this.bindings);
+        this.facts = new CheckerFacts(rules);
+    }
+    initializer(index: number): number {
+        const node = this.rules.parser.node(index);
+        const last = node.children[node.children.length - 1] ?? -1;
+        if(last < 0 || last === this.bindings.shape.name(index)) {
+            return -1;
+        }
+        const position = this.rules.parser.node(last).pos;
+        this.rules.scanner.pos = node.pos;
+        let previous = '';
+        while(this.rules.scanner.pos < position) {
+            this.rules.scanner.scan();
+            if(this.rules.scanner.pos > position) {
+                return -1;
+            }
+            previous = this.rules.scanner.kind;
+        }
+        return previous === 'EqualsToken' ? last : -1;
+    }
+    undefinedType(graph: Types, type: TypeFact): boolean {
+        return (type.flags & 3) !== 0 || graph.has(type, 4);
+    }
+    key(index: number): string {
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'ComputedPropertyName') {
+            return this.key(node.children[0] ?? -1);
+        }
+        return ['Identifier', 'StringLiteral', 'NumericLiteral', 'NoSubstitutionTemplateLiteral'].includes(node.kind)
+            ? node.text
+            : '';
+    }
+    propertyName(index: number): string {
+        const node = this.rules.parser.node(index);
+        const initializer = this.initializer(index);
+        const children = node.children.filter(
+            (child) => child !== initializer && this.rules.parser.node(child).kind !== 'DotDotDotToken',
+        );
+        return this.key(children[0] ?? -1);
+    }
+    allBranches(index: number, key: string): boolean {
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'ConditionalExpression') {
+            return this.allBranches(node.children[2] ?? -1, key) && this.allBranches(node.children[4] ?? -1, key);
+        }
+        if(node.kind !== 'ObjectLiteralExpression') {
+            return false;
+        }
+        return node.children.some((child) => this.key(this.rules.parser.node(child).children[0] ?? -1) === key);
+    }
+    conditionalAbove(index: number): number {
+        let current = index;
+        while(current >= 0) {
+            const parent = this.rules.parents[current] ?? -1;
+            if(parent < 0) {
+                return -1;
+            }
+            if(this.rules.parser.node(parent).kind === 'VariableDeclaration') {
+                const initializer = this.initializer(parent);
+                return initializer >= 0 &&
+                    ['ConditionalExpression', 'BinaryExpression'].includes(this.rules.parser.node(initializer).kind)
+                    ? initializer
+                    : -1;
+            }
+            current = parent;
+        }
+        return -1;
+    }
+    source(pattern: number): DefaultTarget | undefined {
+        const parent = this.rules.parents[pattern] ?? -1;
+        if(parent < 0) {
+            return undefined;
+        }
+        const node = this.rules.parser.node(parent);
+        if(node.kind === 'VariableDeclaration') {
+            const initializer = this.initializer(parent);
+            if(initializer < 0) {
+                return undefined;
+            }
+            const graph = types(this.rules.ask(initializer, 'raw-shape'), 'raw-shape');
+            return new DefaultTarget(graph, graph.root());
+        }
+        if(node.kind === 'Parameter') {
+            const contract = new DeclarationContract(this.rules, parent);
+            return contract.own === 0
+                ? undefined
+                : new DefaultTarget(contract.graph, contract.graph.type(contract.own));
+        }
+        if(node.kind === 'BindingElement') {
+            return this.bindingTarget(parent, true);
+        }
+        return undefined;
+    }
+    bindingTarget(index: number, nested = false): DefaultTarget | undefined {
+        const pattern = this.rules.parents[index] ?? -1;
+        if(pattern < 0) {
+            return undefined;
+        }
+        const source = this.source(pattern);
+        if(source === undefined) {
+            return undefined;
+        }
+        const node = this.rules.parser.node(pattern);
+        if(node.kind === 'ObjectBindingPattern') {
+            const key = this.propertyName(index);
+            if(key === '') {
+                return undefined;
+            }
+            const properties = this.facts.properties(index, source.type);
+            const position = properties.names.indexOf(key);
+            if(position < 0) {
+                return undefined;
+            }
+            const conditional = this.conditionalAbove(pattern);
+            if(
+                ((properties.flags[position] ?? 0) & 16777216) !== 0 &&
+                conditional >= 0 &&
+                !this.allBranches(conditional, key)
+            ) {
+                return undefined;
+            }
+            return new DefaultTarget(properties.types, properties.types.root(position));
+        }
+        if(node.kind === 'ArrayBindingPattern') {
+            const position = node.children.indexOf(index);
+            if(source.type.tuple >= 0 && position >= 0 && position < source.type.arguments.length) {
+                return new DefaultTarget(source.graph, source.graph.type(source.type.arguments[position] ?? 0));
+            }
+            if(nested && source.type.element !== 0) {
+                return new DefaultTarget(source.graph, source.graph.type(source.type.element));
+            }
+        }
+        return undefined;
+    }
+    parameterTarget(index: number): DefaultTarget | undefined {
+        const parent = this.rules.parents[index] ?? -1;
+        if(parent < 0 || !['ArrowFunction', 'FunctionExpression'].includes(this.rules.parser.node(parent).kind)) {
+            return undefined;
+        }
+        const contract = new DeclarationContract(this.rules, index);
+        if(contract.self.length === 0 || (contract.self[0] ?? false)) {
+            return undefined;
+        }
+        for(let at = 0; at < contract.self.length; at++) {
+            const id = contract.graph.roots[at] ?? 0;
+            if(
+                !(contract.present[at] ?? false) ||
+                (contract.rests[at] ?? false) ||
+                ((contract.flags[at] ?? 0) & 16777216) !== 0 ||
+                id === 0
+            ) {
+                return undefined;
+            }
+            const type = contract.graph.type(id);
+            if((type.flags & 524288) !== 0 || this.undefinedType(contract.graph, type)) {
+                return undefined;
+            }
+        }
+        return new DefaultTarget(contract.graph, contract.graph.root());
+    }
+    visit(index: number): void {
+        const node = this.rules.parser.node(index);
+        if(!['Parameter', 'BindingElement'].includes(node.kind)) {
+            return;
+        }
+        const initializer = this.initializer(index);
+        if(initializer < 0) {
+            return;
+        }
+        const name = this.bindings.shape.name(index);
+        if(name < 0) {
+            return;
+        }
+        const annotation = node.kind === 'Parameter' ? this.flow.annotation(index) : -1;
+        const value = this.rules.parser.node(initializer);
+        const kind = node.kind === 'Parameter' ? 'parameter' : 'property';
+        let id = 'uselessDefaultAssignment';
+        let message = `Default value is useless because the ${kind} is not optional.`;
+        let optional = false;
+        if(value.kind === 'Identifier' && value.text === 'undefined') {
+            if(annotation >= 0) {
+                const graph = types(this.rules.ask(annotation, 'annotation-shape'), 'annotation-shape');
+                optional = this.undefinedType(graph, graph.root());
+            }
+            id = optional ? 'preferOptionalSyntax' : 'uselessUndefined';
+            message = optional
+                ? 'Using `= undefined` to make a parameter optional adds unnecessary runtime logic. Use the `?` optional syntax instead.'
+                : `Default value is useless because it is undefined. Optional ${kind}s are already undefined by default.`;
+        }
+        else {
+            const target = node.kind === 'Parameter' ? this.parameterTarget(index) : this.bindingTarget(index);
+            if(target === undefined || this.undefinedType(target.graph, target.type)) {
+                return;
+            }
+        }
+        const finding = this.rules.add('no-useless-default-assignment', id, message, initializer);
+        const end = this.rules.parser.node(annotation >= 0 ? annotation : name).end;
+        finding.repairs.push(new Repair(this.rules.byte(end), this.rules.byte(value.end), ''));
+        if(optional && this.rules.parser.node(name).kind === 'Identifier') {
+            const position = this.rules.byte(this.rules.parser.node(name).end);
+            finding.repairs.push(new Repair(position, position, '?'));
+        }
+    }
+    run(): void {
+        const frames = new Frames(this.rules.ask(this.rules.parser.file(), 'options'));
+        header(frames, 'options');
+        const strict = frames.yes();
+        frames.end();
+        if(!strict) {
+            return;
+        }
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            this.visit(index);
+        }
+    }
+}

@@ -1,0 +1,58 @@
+import type { Rules } from './rules.ts';
+import type { Types } from './types.ts';
+import type { TypeFact } from './type_fact.ts';
+import { types } from './facts.ts';
+
+export class RequireArraySortCompare {
+    readonly rules: Rules;
+    constructor(rules: Rules) {
+        this.rules = rules;
+    }
+    stringType(graph: Types, type: TypeFact): boolean {
+        if((type.flags & (32 | 1024 | 4194304 | 8388608)) !== 0) {
+            return true;
+        }
+        if((type.flags & 524288) !== 0 && type.constraint !== 0) {
+            return this.stringType(graph, graph.type(type.constraint));
+        }
+        if((type.flags & 134217728) !== 0) {
+            return type.parts.every((id) => this.stringType(graph, graph.type(id)));
+        }
+        if((type.flags & 268435456) !== 0) {
+            return type.parts.some((id) => this.stringType(graph, graph.type(id)));
+        }
+        return false;
+    }
+    visit(index: number): void {
+        const node = this.rules.parser.node(index);
+        if(node.kind !== 'CallExpression' || node.list !== 0) {
+            return;
+        }
+        const callee = this.rules.parser.node(this.rules.skip(node.children[0] ?? -1));
+        if(!['PropertyAccessExpression', 'ElementAccessExpression'].includes(callee.kind)) {
+            return;
+        }
+        const key = this.rules.parser.node(callee.children[callee.children.length - 1] ?? -1);
+        if(callee.kind === 'ElementAccessExpression' && key.kind !== 'StringLiteral') {
+            return;
+        }
+        if(key.text !== 'sort' && key.text !== 'toSorted') {
+            return;
+        }
+        const receiver = callee.children[0] ?? -1;
+        const graph = types(this.rules.ask(receiver, 'type-shape'), 'type-shape');
+        const type = graph.root();
+        if((type.array || type.tuple >= 0) && type.arguments.every((id) => this.stringType(graph, graph.type(id)))) {
+            return;
+        }
+        if(!graph.parts(type).every((id) => graph.type(id).array)) {
+            return;
+        }
+        this.rules.add('require-array-sort-compare', 'requireCompare', "Require 'compare' argument.", index);
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            this.visit(index);
+        }
+    }
+}

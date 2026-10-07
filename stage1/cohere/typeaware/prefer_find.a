@@ -1,0 +1,146 @@
+import type { Rules } from './rules.ts';
+import type { Types } from './types.ts';
+import type { TypeFact } from './type_fact.ts';
+import { types } from './facts.ts';
+import { Repair } from './repair.ts';
+import { Suggestion } from './suggestion.ts';
+
+export class PreferFind {
+    readonly rules: Rules;
+    constructor(rules: Rules) {
+        this.rules = rules;
+    }
+    constant(index: number): string | undefined {
+        const node = this.rules.parser.node(index);
+        if(['StringLiteral', 'NumericLiteral', 'NoSubstitutionTemplateLiteral'].includes(node.kind)) {
+            return node.text;
+        }
+        if(node.kind === 'Identifier' && ['NaN', 'Infinity'].includes(node.text)) {
+            return node.text;
+        }
+        if(node.kind === 'PrefixUnaryExpression' && node.operator === 'MinusToken') {
+            const operand = this.rules.parser.node(node.children[0] ?? -1);
+            if(operand.kind === 'Identifier' && operand.text === 'Infinity') {
+                return '-Infinity';
+            }
+        }
+        const graph = types(this.rules.ask(index, 'raw-shape'), 'raw-shape');
+        const type = graph.root();
+        if((type.flags & (1024 | 2048 | 4096)) === 0) {
+            return undefined;
+        }
+        let name = this.rules.name(type, index);
+        if(name.length >= 2 && (name.startsWith('"') || name.startsWith("'")) && name.slice(-1) === name.slice(0, 1)) {
+            name = name.slice(1, -1);
+        }
+        if((type.flags & 4096) !== 0 && name.endsWith('n')) {
+            name = name.slice(0, -1);
+        }
+        return name;
+    }
+    member(index: number): string | undefined {
+        const node = this.rules.parser.node(index);
+        if(!['PropertyAccessExpression', 'ElementAccessExpression'].includes(node.kind)) {
+            return undefined;
+        }
+        const key = node.children[node.children.length - 1] ?? -1;
+        return node.kind === 'PropertyAccessExpression' ? this.rules.parser.node(key).text : this.constant(key);
+    }
+    arrayish(graph: Types, type: TypeFact): boolean {
+        let found = false;
+        for(const id of graph.parts(type)) {
+            const part = graph.type(id);
+            if((part.flags & (4 | 8)) !== 0) {
+                continue;
+            }
+            if(!graph.parts(part, 268435456).every((item) => graph.type(item).array || graph.type(item).tuple >= 0)) {
+                return false;
+            }
+            found = true;
+        }
+        return found;
+    }
+    filters(index: number): number[] {
+        const node = this.rules.parser.node(this.rules.skip(index));
+        if(node.kind === 'BinaryExpression' && this.rules.parser.node(node.children[1] ?? -1).kind === 'CommaToken') {
+            return this.filters(node.children[2] ?? -1);
+        }
+        if(node.kind === 'ConditionalExpression') {
+            const left = this.filters(node.children[2] ?? -1);
+            const right = this.filters(node.children[4] ?? -1);
+            return left.length === 0 || right.length === 0 ? [] : left.concat(right);
+        }
+        if(node.kind !== 'CallExpression' || node.optional) {
+            return [];
+        }
+        const calleeIndex = node.children[0] ?? -1;
+        if(this.member(calleeIndex) !== 'filter') {
+            return [];
+        }
+        const callee = this.rules.parser.node(calleeIndex);
+        const graph = types(this.rules.ask(callee.children[0] ?? -1, 'type-shape'), 'type-shape');
+        return this.arrayish(graph, graph.root()) ? [calleeIndex] : [];
+    }
+    visit(index: number): void {
+        const node = this.rules.parser.node(index);
+        let receiver = -1;
+        if(
+            node.kind === 'ElementAccessExpression' &&
+            !node.optional &&
+            this.constant(node.children[node.children.length - 1] ?? -1) === '0'
+        ) {
+            receiver = node.children[0] ?? -1;
+        }
+        if(node.kind === 'CallExpression' && node.list === 1) {
+            const callee = this.rules.parser.node(node.children[0] ?? -1);
+            if(!callee.optional && this.member(node.children[0] ?? -1) === 'at') {
+                const value = this.constant(node.children[node.children.length - 1] ?? -1);
+                if(value !== undefined) {
+                    const parsed = Number.parseFloat(value);
+                    if(Number.isNaN(parsed) || (Number.isFinite(parsed) && Math.trunc(parsed) === 0)) {
+                        receiver = callee.children[0] ?? -1;
+                    }
+                }
+            }
+        }
+        if(receiver < 0) {
+            return;
+        }
+        const filters = this.filters(receiver);
+        if(filters.length === 0) {
+            return;
+        }
+        const finding = this.rules.add(
+            'prefer-find',
+            'preferFind',
+            'Prefer .find(...) instead of .filter(...)[0].',
+            index,
+        );
+        const repairs: Repair[] = [];
+        for(const filter of filters) {
+            const callee = this.rules.parser.node(filter);
+            const key = this.rules.parser.node(callee.children[callee.children.length - 1] ?? -1);
+            repairs.push(
+                new Repair(
+                    this.rules.byte(this.rules.start(key)),
+                    this.rules.byte(key.end),
+                    callee.kind === 'ElementAccessExpression' ? '"find"' : 'find',
+                ),
+            );
+        }
+        this.rules.scanner.pos = this.rules.parser.node(receiver).end;
+        this.rules.scanner.scan();
+        if(!['DotToken', 'OpenBracketToken'].includes(this.rules.scanner.kind)) {
+            return;
+        }
+        repairs.push(new Repair(this.rules.byte(this.rules.scanner.start), this.rules.byte(node.end), ''));
+        finding.suggestions.push(
+            new Suggestion('preferFindSuggestion', 'Use .find(...) instead of .filter(...)[0].', repairs),
+        );
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            this.visit(index);
+        }
+    }
+}
