@@ -210,3 +210,5 @@ such as U+1C89. Node comparisons and seven reference mutants pass in 4.465s;
 accepting U+2E2F is caught explicitly. C parser identity includes these two probes.
 
 Counted SyntaxError followup: the parser now compares full message lengths and bytes, including an invalid pattern containing NUL. A real C mutant corrupting the message after NUL is caught. Linux ASan/UBSan, WASI parser identity and TestRuntimeStaticsAreListed pass; see counted-error-mutant.txt.
+
+Current integrated result: POSTMERGE_REPORT.md records the approved lowering, merge 047e857, post-merge contract, eighteen mutants, lint checks and unchanged WASI size proof.

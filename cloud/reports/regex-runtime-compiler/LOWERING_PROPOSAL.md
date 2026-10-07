@@ -125,3 +125,5 @@ native/emit_expressions.go and fields.go, lower/exceptions.go and regexp.go, and
 cmd/adamic-test262/run.go. native.go's one-line Build hook is explicitly approved and applied. No matcher algorithm, atomics or mutable runtime statics were added.
 Baseline map TSan race is attached in baseline-map-tsan.txt for the concurrency
 owner. The size table above is the platform evidence for the reviewed proposal.
+
+Post-merge results and the current native.go hook line are in POSTMERGE_REPORT.md. Its proof tables and no-overlay commands supersede the construction proposal.

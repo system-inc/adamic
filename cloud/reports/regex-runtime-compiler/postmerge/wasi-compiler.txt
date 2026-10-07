@@ -1,0 +1,14 @@
+=== RUN   TestRegExpRuntimeBytecodeWASI
+    regexp_compile_bytecode_test.go:18: byte-identical: 7433 programs, 3197 syntax/refusal cases (WASI=true)
+--- PASS: TestRegExpRuntimeBytecodeWASI (3.43s)
+=== RUN   TestRegExpRuntimeV8WASI
+    regexp_compile_bytecode_test.go:258: byte-identical: 7677 programs, 3354 syntax/refusal cases (WASI=true)
+--- PASS: TestRegExpRuntimeV8WASI (3.60s)
+=== RUN   TestRegExpRuntimeParserWASI
+    regexp_compile_parser_test.go:21: 5746 test262 + 875 cohere + 4000 seeded + 9 ruling probes agree on acceptance, complete Node SyntaxError messages and Go divergence reasons (WASI=true)
+--- PASS: TestRegExpRuntimeParserWASI (3.25s)
+=== RUN   TestRegExpRuntimePropertiesWASI
+    regexp_compile_test.go:220: entry identity: 1722 aliases, 448 unique properties, 23045 ranges, 7906 strings
+--- PASS: TestRegExpRuntimePropertiesWASI (0.53s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	10.832s
