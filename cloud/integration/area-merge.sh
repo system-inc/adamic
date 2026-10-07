@@ -215,7 +215,12 @@ fi
 # Stage 3's adaptations are .cjs, .py, .json and .sh, so no Go test sees them: a change under
 # stage3/ applies every adaptation to tsc and runs upstream's whole suite on the result, which
 # must pass exactly the expected count with no baseline differences beyond the sanctioned ones.
-if printf '%s\n' "$changed" | grep -q '^stage3/'; then
+if printf '%s\n' "$changed" | grep -q '^stage3/' && [ -x stage3/lane/run.sh ]; then
+	# Stage 3's owner keeps the exact judgment (the one sanctioned failing test by name, the API
+	# snapshot diff line for line) in its own lane script; use it when the merged tree has it.
+	stage3/lane/run.sh >"$logs/stage3-lane.log" 2>&1 || { echo "stage3/lane/run.sh failed: $logs/stage3-lane.log"; status=1; }
+	echo "ran: stage3/lane/run.sh on the merged tree"
+elif printf '%s\n' "$changed" | grep -q '^stage3/'; then
 	expectedPassing=${ADAMIC_STAGE3_EXPECTED_PASSING:-106367}
 	sanctioned=${ADAMIC_STAGE3_SANCTIONED_DIFFS:-api/typescript.d.ts}
 	if ! bash stage3/apply.sh "$logs/stage3-tree" >"$logs/stage3-apply.log" 2>&1; then
