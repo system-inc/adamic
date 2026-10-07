@@ -2,6 +2,7 @@
 """Run the checkout's full adaptation and upstream oracle in fresh directories."""
 import argparse
 import json
+import shutil
 from pathlib import Path
 import subprocess
 import time
@@ -48,13 +49,21 @@ def main():
 
     tree = results / 'adapted-tree'
     execution['apply_exit'] = run('apply', ['bash', str(ROOT / 'stage3/apply.sh'), str(tree)])
+    table_error = None
     if execution['apply_exit'] == 0:
+        try:
+            shutil.copyfile(tree / 'patch-set.md', results / 'patch-set.md')
+        except OSError as error:
+            table_error = f'cannot preserve apply patch table: {error}'
+    if execution['apply_exit'] == 0 and table_error is None:
         execution['oracle_exit'] = run('oracle', ['bash', str(ROOT / 'stage3/oracle/run.sh'),
                                                 str(tree), str(results / 'oracle')])
     execution['wall_seconds'] = round(time.monotonic() - started, 3)
     (results / 'execution.json').write_text(json.dumps(execution, indent=2) + '\n')
     if execution['apply_exit'] != 0:
         report = dict(status='fail', errors=[f"apply exit: expected 0, observed {execution['apply_exit']}; see apply.log"])
+    elif table_error is not None:
+        report = dict(status='fail', errors=[table_error])
     else:
         report = check_results(results)
     report['execution'] = execution

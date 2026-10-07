@@ -12,7 +12,8 @@ The results directory must be new. The lane calls this checkout's unmodified
 `stage3/oracle/run.sh` with that tree and `results/oracle`. Apply's normal
 `STAGE3_CACHE` override also selects the pinned TypeScript compiler API used
 by the declaration guard. All command output goes to logs. The lane writes
-`execution.json`, `report.json`, and a one-line `verdict.txt`; its own exit is
+`execution.json`, `report.json`, a copy of the adapted tree's `patch-set.md`,
+and a one-line `verdict.txt`; its own exit is
 zero only for PASS. Existing results are never replaced. To replay the guard
 against preserved results, run `python3 stage3/lane/check.py RESULTS`.
 
@@ -129,6 +130,8 @@ use the real upstream reporter's failure title and count output.
 
 Integration owns wiring the lane into every area/stage3 merge and main push
 that touches stage3. This unit changes no adaptation, compiler, shared oracle,
-workflow, or fixture bucket. `apply.sh` still writes its normal generated
-`stage3/patch-set.md`; that scoreboard is not part of this unit's commit.
+workflow, or fixture bucket. Ordinary `apply.sh` writes its generated table
+inside the adapted output tree; only explicit `--write-table` also updates
+the checked-in `stage3/patch-set.md`. The lane uses ordinary apply and
+preserves a copy beside its report.json.
 See REPORT.md and evidence for the measured area-tip verdict.
