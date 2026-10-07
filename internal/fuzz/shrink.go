@@ -44,6 +44,11 @@ type shrinker struct {
 // fails says whether the current program, as it now stands, still fails the same way.
 func (s *shrinker) fails() bool {
 	source := s.current.Source()
+	// A move refusal's comments alone would make any accepted empty program
+	// look like the same compiler regression. Keep the actual task boundary.
+	if s.current.RefusalFix != "" && !strings.Contains(source, "parallelMap(") {
+		return false
+	}
 	if s.seen[source] || s.budget <= 0 {
 		return false
 	}
@@ -193,6 +198,9 @@ func WriteFinding(path string, program *Program, seed uint64, without []string, 
 		return err
 	}
 	command := fmt.Sprintf("go run ./cmd/adamic-fuzz -seed %d -count 1", seed)
+	if program.Feature == "moves" {
+		command += " -only-moves"
+	}
 	if len(without) > 0 {
 		command += " -without " + strings.Join(without, ",")
 	}

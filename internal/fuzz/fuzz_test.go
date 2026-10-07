@@ -2,6 +2,7 @@ package fuzz
 
 import (
 	"context"
+	"errors"
 	"os"
 	"path/filepath"
 	"strings"
@@ -39,7 +40,11 @@ func TestGeneratedProgramsCheckAndLower(t *testing.T) {
 		}
 		loaded, err := load.Load([]string{path})
 		if program.Refusal != "" {
-			if !strings.Contains(source, "// parallel-refuse: "+program.Refusal) {
+			prefix := parallelRefusePrefix + " "
+			if program.RefusalFix != "" {
+				prefix = movesRefusePrefix + " "
+			}
+			if !strings.Contains(source, prefix+program.Refusal) {
 				t.Errorf("seed %d: refusal %q is not in the source", seed, program.Refusal)
 			}
 			if err != nil {
@@ -50,6 +55,10 @@ func TestGeneratedProgramsCheckAndLower(t *testing.T) {
 			if err == nil {
 				t.Errorf("seed %d: compiler accepted a program it must refuse (%s)", seed, program.Refusal)
 				continue
+			}
+			var move *lower.Refused
+			if program.RefusalFix != "" && (!errors.As(err, &move) || move.What != program.Refusal || move.Fix != program.RefusalFix) {
+				t.Errorf("seed %d: wrong move refusal: %v", seed, err)
 			}
 			if !strings.Contains(err.Error(), program.Refusal) {
 				t.Errorf("seed %d: refusal did not name the path %q:\n%v", seed, program.Refusal, err)
@@ -74,7 +83,7 @@ func TestParallelFeatureCoverage(t *testing.T) {
 	refusals := map[string]bool{}
 	accepted := 0
 	for seed := uint64(1); seed <= 240; seed++ {
-		program := Generate(seed)
+		program := GenerateWithout(seed, []string{"moves"})
 		source := program.Source()
 		if program.Refusal != "" {
 			switch {

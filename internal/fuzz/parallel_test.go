@@ -27,7 +27,7 @@ func TestParallelRunnerAgreesAndCanFail(t *testing.T) {
 	var generated *Program
 	var refused *Program
 	for seed := uint64(1); seed <= 80; seed++ {
-		candidate := Generate(seed)
+		candidate := GenerateWithout(seed, []string{"moves"})
 		if generated == nil && candidate.Refusal == "" && strings.Contains(candidate.Source(), "// parallel-shape: strings") {
 			generated = candidate
 		}
