@@ -6,7 +6,7 @@ static adamic_string *repeat_unchecked(const adamic_string *string, double count
 	for (double index = 0; index < count; index++) {
 		builder_add(&build, string->bytes, string->length);
 	}
-	return builder_finish(&build);
+	return builder_finish_units(&build, (size_t)count * adamic_string_units(string) + 1);
 }
 
 adamic_string *adamic_string_repeat(const adamic_string *string, double count) {

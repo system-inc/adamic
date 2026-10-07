@@ -31,14 +31,14 @@ func TestOwnedWitnesses(t *testing.T) {
 	oracle := goOracle(t)
 	var rows []string
 	for _, d := range prepareRegistry(t, ".") {
-		paths := ownedWitnesses(t, directory, d.Slug)
-		for _, path := range paths {
-			selected := path + "\t" + d.Name
-			answer := execute(t, "", oracle, "--manifest", manifest(t, []string{selected}), "--count")
+		for _, row := range ownedWitnessRows(t, directory, d) {
+			path := strings.SplitN(row, "\t", 2)[0]
+			pair := recoveryRows(t, oracle, []string{row, path + "\tall"})
+			answer := execute(t, "", oracle, "--manifest", manifest(t, pair[:1]), "--count")
 			if string(answer.output) == "0\n" {
 				t.Fatalf("%s witness reports no findings", d.Name)
 			}
-			rows = append(rows, selected, path+"\tall")
+			rows = append(rows, pair...)
 		}
 	}
 	path := manifest(t, rows)
@@ -139,7 +139,7 @@ func TestFactoryHooks(t *testing.T) {
 // Raw corpus text stays outside the project's TypeScript module graph.
 func ownedWitnesses(t *testing.T, directory, slug string) []string {
 	t.Helper()
-	paths, err := filepath.Glob(filepath.Join(directory, "rules", slug, "testdata", "*.ts.txt"))
+	paths, err := registry.Witnesses(filepath.Join(directory, "rules", slug))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -149,7 +149,7 @@ func ownedWitnesses(t *testing.T, directory, slug string) []string {
 		if err != nil {
 			t.Fatal(err)
 		}
-		target := filepath.Join(t.TempDir(), fmt.Sprintf("%s-%d.ts", slug, index))
+		target := filepath.Join(t.TempDir(), fmt.Sprintf("%s-%d%s", slug, index, filepath.Ext(strings.TrimSuffix(path, ".txt"))))
 		if err := os.WriteFile(target, data, 0644); err != nil {
 			t.Fatal(err)
 		}
@@ -159,6 +159,43 @@ func ownedWitnesses(t *testing.T, directory, slug string) []string {
 		t.Fatalf("%s has no witnesses", slug)
 	}
 	return sources
+}
+
+// ownedWitnessRows returns a manifest row selecting the rule for each of its witnesses. A witness may carry
+// the rule's options beside it, as foo.options.json next to foo.ts.txt: a rule that reports nothing by
+// default, such as one that bans only the types it is configured with, can only witness a finding with
+// options. They go in the row's options field, as a captured upstream case's do, so the oracle hands them to
+// the rule's adapter and the port reads the same settings. The "all" row stays unconfigured, because there
+// the options would be every rule's.
+func ownedWitnessRows(t *testing.T, directory string, d registry.Descriptor) []string {
+	t.Helper()
+	paths, err := registry.Witnesses(filepath.Join(directory, "rules", d.Slug))
+	if err != nil {
+		t.Fatal(err)
+	}
+	sources := ownedWitnesses(t, directory, d.Slug)
+	var rows []string
+	for index, path := range paths {
+		row := sources[index] + "\t" + d.Name
+		sidecar := strings.TrimSuffix(strings.TrimSuffix(path, ".txt"), filepath.Ext(strings.TrimSuffix(path, ".txt"))) +
+			".options.json"
+		data, err := os.ReadFile(sidecar)
+		if err == nil {
+			var options any
+			if err := json.Unmarshal(data, &options); err != nil {
+				t.Fatalf("%s: %v", sidecar, err)
+			}
+			compact, err := json.Marshal(options)
+			if err != nil {
+				t.Fatal(err)
+			}
+			row += "\t\t\tfalse\t" + string(compact)
+		} else if !os.IsNotExist(err) {
+			t.Fatal(err)
+		}
+		rows = append(rows, row)
+	}
+	return rows
 }
 
 func TestNestedOutsideModuleCopy(t *testing.T) {

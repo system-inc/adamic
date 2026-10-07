@@ -1,0 +1,14 @@
+{
+  "name": "no-bitwise",
+  "kinds": [
+    "BinaryExpression",
+    "PrefixUnaryExpression"
+  ],
+  "visit": "visit",
+  "node": true,
+  "oracle": "oracleNoBitwise",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoBitwise",
+  "factory": "create",
+  "class": "Rule"
+}

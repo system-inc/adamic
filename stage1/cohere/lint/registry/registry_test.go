@@ -146,3 +146,27 @@ func TestDuplicateOracleAdapter(t *testing.T) {
 	}
 	t.Logf("mutant rejected: %v", err)
 }
+
+func TestAdamicRuleModule(t *testing.T) {
+	t.Parallel()
+	root := copyRules(t)
+	directory := filepath.Join(root, "rules/no-debugger")
+	if err := os.Rename(filepath.Join(directory, "rule.ts"), filepath.Join(directory, "rule.a")); err != nil {
+		t.Fatal(err)
+	}
+	descriptors, err := Generate(root)
+	if err != nil {
+		t.Fatal(err)
+	}
+	ts, _ := Render(descriptors)
+	if !bytes.Contains(ts, []byte("no-debugger/rule.a")) {
+		t.Fatal(".a entry not registered")
+	}
+	if err := os.WriteFile(filepath.Join(directory, "rule.ts"), []byte("stale rename"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := Generate(root); err == nil || !strings.Contains(err.Error(), "ambiguous") {
+		t.Fatalf("ambiguous module survived: %v", err)
+	}
+	t.Log("stale .ts alongside .a rejected")
+}

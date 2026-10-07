@@ -88,3 +88,47 @@ The published claim was commit `acb5e0f`, pushed before implementation. Four sep
 - `no-extra-boolean-cast`: custom/unsupported Go target decoder
 - `no-restricted-exports`: regex schema or boundaries extension
 - `object-shorthand`: custom/unsupported Go target decoder
+
+## Next claim: parser-anchored comments
+
+Claimed before implementation on the same branch, following the 46-rule handoff. Territory: new `helpers/comments/` files and this claim. Existing rule entry points and first-unit helper files remain owned by their current workers.
+
+Next bounded dependency bundle: `comments.All` and `comments.ForFile`, with `canBeginAt`, `collectListInteriors`, and `sortByPosition` in separate source files. Together these five symbols serve 24 of the 152 remaining rules and remove the last recorded helper blockers from 16. None removes a last blocker individually; the cache completes this bundle. The next package bundles are JSX (8 rules), imports (7), and property names (5). React has 18 package-only candidates but spans 64 symbols; it needs smaller dependency-set ranking rather than treating its whole family as a single helper.
+
+The claim covers comment collection, source-order deduplication, UTF-8 ranges and byte columns, EOF/shebang/trailing comments, parser-owned empty and trailing-comma list interiors, and a cache explicitly scoped to one immutable parsed file. Compare actual Go cohere helpers on consumer fixtures, Node and sanitized native running identical TypeScript, plus a compiling semantic mutant for each helper file. Unsupported parser shapes must refuse explicitly. No rule is claimed implemented. Publish measured readiness only after those comparisons pass.
+
+## Second measured handoff: comments
+
+Claim `29990b4` was pushed before implementation. Five separate helper files implement the parser-anchored comment scan and per-file sharing; `comment.ts` is its result data model. Original Go consumer fixtures, boundary inputs and compiling mutants hold the implementation. See [the API and evidence boundary](helpers/comments/README.md), [the report](helpers/comments/REPORT.md), and [the residual ledger](helpers/comments/readiness.json).
+
+| Helper, in prerequisite order | Consumers of the completed scan bundle | Additional fully helper-ready rules |
+|---|---:|---:|
+| `canBeginAt` | 24 | 0 alone |
+| `collectListInteriors` | 24 | 0 alone |
+| `sortByPosition` | 24 | 0 alone |
+| `All` | 24 | 0 until `ForFile` is available |
+| `ForFile` | 24 | 16 with the scan prerequisites |
+| Cumulative first and second units | overlapping consumers | 62 of 198; 136 still helper-blocked |
+
+These remain inventory dependency counts under its common AST adapter assumption. The helpers are compared on all 4,513 captured inputs from 24 consumers, using only Go's actual AST geometry as adapter input and the unmodified Go helpers as the answers. Forty-seven boundary sources also use independently parsed Adamic trees. The owned independent-parser adapter explicitly refuses four valid JSX boundary sources; the underlying parser was observed to silently reinterpret one before this guard. This is still an integration gap for `react/jsx-curly-brace-presence`, even though the comment helper works with its JSX AST. No rule is claimed ported or fully integrated.
+
+The 16 additional candidates:
+
+- `@typescript-eslint/ban-tslint-comment`
+- `@typescript-eslint/no-invalid-this`
+- `@typescript-eslint/prefer-function-type`
+- `arrow-body-style`
+- `default-case`
+- `max-lines`
+- `no-extra-bind`
+- `no-extra-label`
+- `no-fallthrough`
+- `no-inline-comments`
+- `no-invalid-this`
+- `no-irregular-whitespace`
+- `no-unused-labels`
+- `no-useless-rename`
+- `operator-assignment`
+- `react/jsx-curly-brace-presence`
+
+Remaining adjacent work includes JSX (8 package-only candidates), imports (7 package-only candidates; `BindingsOf` alone adds 4 after this comment bundle), and property names (5 package-only candidates). The 136-rule residual ledger should drive the next claim; these projections are not implemented here. `Comment.IsJsDoc`, `ContentLines`, `LeadingRunFor`, directives and rule-local options are outside this claim.
