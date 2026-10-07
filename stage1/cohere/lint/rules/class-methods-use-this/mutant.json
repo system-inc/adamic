@@ -1,0 +1,6 @@
+{
+  "name": "empty_method_silenced",
+  "file": "rule.a",
+  "from": "member >= 0 && !used && this.included(member)",
+  "to": "member >= 0 && used && this.included(member)"
+}

@@ -1,0 +1,12 @@
+{
+  "name": "class-methods-use-this",
+  "kinds": [
+    "SourceFile"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleClassMethodsUseThis",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestClassMethodsUseThis"
+}
