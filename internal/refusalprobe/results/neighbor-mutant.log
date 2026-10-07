@@ -1,0 +1,14 @@
+--- FAIL: TestNeighborFailureIsNotACompilerHole (0.04s)
+    probe_test.go:99: broken control became a compiler finding: &{not-yet {0 1 any generic any import { panic } from 'adamic';
+        const padding = 891;
+        console.log(`${padding}`);
+        function run<T>(item: T): T {
+        let value: any = 1;
+        
+        return item;
+        }
+        run(1);
+         const value: number = 'wrong';} main.a:5:5: stage 0 can't lower a value of type any yet}
+FAIL
+FAIL	github.com/system-inc/adamic/internal/refusalprobe	0.043s
+FAIL
