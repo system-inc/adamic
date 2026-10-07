@@ -82,3 +82,22 @@ Inventory source: origin/codex/lint-inventory; needs_type_information and
 binding_only are both false for each selection. None is ported on main or
 named in any fetched origin claim. This update is pushed before new code.
 Previous reservations and their explicitly reported integration gaps remain.
+
+## Fourth reservation, October 7
+
+All earlier implementation and gap evidence through 2f48129f was pushed first.
+No-restricted-types is now ported and compared; Google font policy is ported
+behind the explicitly blocked shared JSX adapter. See the owned rule report.
+Fetched all origin heads. Main remains ef3d907ecdc4c771b016f7d9c52372def057a340.
+The original 46 helper-ready entries are all on main or named in origin claims.
+The first three remaining syntax-only entries in inventory order are reserved:
+
+1. array-callback-return
+2. arrow-body-style
+3. base/consistency-no-bare-throw
+
+Selection read 335 origin refs and 52 claim Markdown files, matching complete
+public names including trailing sentence punctuation. All three have false
+needs_type_information and binding_only inventory flags. No name appears in
+main port source or any fetched origin claim. This claim is pushed before code.
+Shared-harness gaps will be stated, with independent rule logic still ported.
