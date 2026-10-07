@@ -318,8 +318,8 @@ static void free_one(void *value) {
 void adamic_release(void *value) {
 	ADAMIC_COUNT_RELEASE();
 	let_go(value);
-	if (draining) {
-		// An outer release is already working through the list.
+	if (freeing_count == 0 || draining) {
+		// Nothing reached its last reference, or an outer release is already draining the list.
 		return;
 	}
 	draining = true;
