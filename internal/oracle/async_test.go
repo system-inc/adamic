@@ -1,10 +1,12 @@
 package oracle
 
 import (
-	"github.com/system-inc/adamic/internal/native"
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/leakcheck"
+	"github.com/system-inc/adamic/internal/native"
 )
 
 // Generated-C mutants keep the lowering and runtime builds unchanged; warning failures are not kills.
@@ -29,9 +31,12 @@ func TestAsyncCompilerChecksCatchMutants(t *testing.T) {
 		if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
 			t.Fatal(err)
 		}
-		result := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
+		result := execute(t, binary)
 		if disagreement(oracle, result) != "stdout differs" || result.exitCode != 0 || len(result.stderr) != 0 {
 			t.Fatalf("only the Node stdout check must catch the mutant: %+v", result)
+		}
+		if report := leakcheck.Report(t, code, binary); report != "" {
+			t.Fatal(report)
 		}
 		t.Log("wrong resumed value caught only by Node stdout comparison")
 	})
@@ -44,7 +49,7 @@ func TestAsyncCompilerChecksCatchMutants(t *testing.T) {
 		if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
 			t.Fatal(err)
 		}
-		result := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
+		result := execute(t, binary)
 		if result.exitCode == 0 || !strings.Contains(string(result.stderr), "heap-use-after-free") {
 			t.Fatalf("ASan did not catch a borrowed dynamic parameter across await: %+v", result)
 		}
@@ -53,7 +58,7 @@ func TestAsyncCompilerChecksCatchMutants(t *testing.T) {
 }
 
 // The source oracle covers the uncaught throw. This internal root harness consumes that rejection
-// instead of panicking, so Linux LSan can check frame cleanup even though the source exits nonzero.
+// instead of panicking, so the shared leak checker can check frame cleanup on Linux and Darwin.
 func TestAsyncThrowReleasesFrame(t *testing.T) {
 	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/async_throw.a"))
@@ -89,14 +94,23 @@ func TestAsyncThrowReleasesFrame(t *testing.T) {
 			if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
 			}
-			result := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
+			report := leakcheck.Report(t, source, binary)
+			// Exercise Darwin's counted rule on Linux too, using this actual frame mutant.
+			counted := filepath.Join(t.TempDir(), "counted-proof")
+			if err := native.Build(source, counted, native.Options{Count: true}); err != nil {
+				t.Fatal(err)
+			}
+			countedReport := leakcheck.Unbalanced(leakRun(execute(t, counted)))
 			if mutant {
-				if result.exitCode == 0 || !strings.Contains(string(result.stderr), "LeakSanitizer: detected memory leaks") {
-					t.Fatalf("leak mutant survived: %+v", result)
+				if !strings.Contains(report, "LeakSanitizer: detected memory leaks") && !strings.Contains(report, "heap values leaked:") {
+					t.Fatalf("leak mutant survived: %s", report)
 				}
-				t.Log("throw frame local release mutant caught by LeakSanitizer")
-			} else if result.exitCode != 0 || len(result.stderr) != 0 {
-				t.Fatalf("throw root cleanup leaked: %+v", result)
+				if !strings.Contains(countedReport, "heap values leaked:") {
+					t.Fatalf("counted rule missed local leak: %s", countedReport)
+				}
+				t.Logf("throw frame local release mutant caught: %s; counted rule: %s", report, countedReport)
+			} else if report != "" || countedReport != "" {
+				t.Fatalf("throw root cleanup leaked: %s; counted rule: %s", report, countedReport)
 			}
 		})
 	}
@@ -133,8 +147,11 @@ func TestAsyncTypeOfWrongKindMutant(t *testing.T) {
 	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
+	if report := leakcheck.Report(t, native.C(program), binary); report != "" {
+		t.Fatal(report)
+	}
 	for name, result := range map[string]run{
-		"native":     executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary),
+		"native":     execute(t, binary),
 		"JavaScript": onJavaScriptBackend(t, program),
 	} {
 		if disagreement(oracle, result) != "stdout differs" || result.exitCode != 0 || len(result.stderr) != 0 {
