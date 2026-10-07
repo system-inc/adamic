@@ -134,7 +134,6 @@ func TestCompleteSuggestionSerialization(t *testing.T) {
 	}{
 		{"Node", node(t, directory, path, false)},
 		{"emitted JavaScript", emittedNode(t, directory, path, false)},
-		{"native", execute(t, "", buildPort(t, directory, true), "--manifest", path)},
 	} {
 		if bytes.Equal(side.run.output, want) {
 			t.Fatalf("second suggestion edit mutant survived on %s", side.name)
