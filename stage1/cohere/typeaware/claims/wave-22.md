@@ -141,3 +141,24 @@ Current main still blocks the direct parser build with its constructor
 escape refusal and has not integrated JSX. Shared parser/harness integration
 is pending; those files were not edited. See WAVE_22_SIXTH_REPORT.md.
 The earlier three React graph claims remain parked. No further rules claimed.
+
+## Seventh batch claim
+
+All fifteen native implementations and their evidence were pushed as 90fa0cbb4
+on current main c01907a7036a22c2ea7ee686ed5fe4c6cd4bbc06. The three earlier
+React HIR/SSA claims remain parked. All origin heads were fetched again: 570
+refs and 33 distinct Markdown claim blobs were inspected. The first three
+remaining entries of the combined by-volume ranking, lexical ties, are:
+
+1. react/no-object-type-as-default-prop
+2. react/no-unstable-nested-components
+3. react/sort-default-props
+
+All have zero recorded findings on both corpora. They use syntax and checker
+binding facts, not the parked HIR/SSA/capture pipeline. These names are now
+reserved for this branch before implementation. Exact refs and exclusions are
+in validation-wave-22-seventh/selection.json. Native sources use .a, numeric
+listener kinds, and handed-node visitors. The shared model ab70f38d4 is on
+origin/lint-rules/harness and is not yet on main; shared files stay untouched.
+Go regexes will use JS RegExp literals, with the shared translation row when
+available; no hand-rolled regex matcher is authorized.
