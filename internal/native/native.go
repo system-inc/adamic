@@ -182,7 +182,7 @@ func Build(source string, output string, options Options) error {
 		arguments = append(arguments, WASILinkFlags(options)...)
 	}
 	command := exec.Command(compilerName(options), arguments...)
-	if options.Profile != "" || options.ProfileGenerate {
+	if shippedRelease(options) && (options.Profile != "" || options.ProfileGenerate) {
 		// Keep ThinLTO source identities stable across cold caches and temp directories.
 		command.Dir = directory
 		for index, argument := range command.Args {

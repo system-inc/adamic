@@ -3,6 +3,7 @@ package main
 
 import (
 	"context"
+	"crypto/sha256"
 	"encoding/json"
 	"flag"
 	"fmt"
@@ -70,6 +71,11 @@ func main() {
 	switch *policy {
 	case "profile":
 		options.Profile = filepath.Join(filepath.Dir(sourcePath), "profiles", runtime.GOOS+"-"+runtime.GOARCH, "profile.txt")
+		var diagnostic string
+		options.Profile, diagnostic = profileForTraining(options.Profile, "stage1/profiles/training.json")
+		if diagnostic != "" {
+			fmt.Fprintln(os.Stderr, diagnostic)
+		}
 	case "thin":
 	case "o2":
 		options.Release = false
@@ -82,4 +88,23 @@ func main() {
 		fail(err)
 	}
 }
+
+// The native builder checks code/runtime identity. This executable's build also
+// checks its corpus identity, so an older profile cannot outlive a changed list.
+func profileForTraining(profile, trainingPath string) (string, string) {
+	data, err := os.ReadFile(filepath.Join(filepath.Dir(profile), "manifest.json"))
+	if err != nil {
+		return profile, "" // Native Build reports the missing manifest once.
+	}
+	var record native.Stage1ProfileManifest
+	if json.Unmarshal(data, &record) != nil {
+		return profile, "" // Native Build reports the invalid manifest once.
+	}
+	training, err := os.ReadFile(trainingPath)
+	if err != nil || fmt.Sprintf("%x", sha256.Sum256(training)) != record.Training {
+		return "", "adamic: stage 1 profile unavailable (training manifest changed); using plain ThinLTO"
+	}
+	return profile, ""
+}
+
 func fail(err error) { fmt.Fprintln(os.Stderr, err); os.Exit(1) }

@@ -48,7 +48,13 @@ func TestShippedProfileAgreesWithGo(t *testing.T) {
 		t.Fatal(err)
 	}
 	rebuilt := filepath.Join(t.TempDir(), "parse")
-	run(t, repository, "go", "run", "./cmd/adamic-stage1", "-driver", "parse", "-o", rebuilt)
+	tool := filepath.Join(t.TempDir(), "adamic-stage1")
+	run(t, repository, "go", "build", "-o", tool, "./cmd/adamic-stage1")
+	// Preserve Go's cache while forcing a cold, independent native/profile cache.
+	goCache := bytes.TrimSpace(run(t, repository, "go", "env", "GOCACHE"))
+	t.Setenv("GOCACHE", string(goCache))
+	t.Setenv("XDG_CACHE_HOME", filepath.Join(t.TempDir(), "independent-native-cache"))
+	run(t, repository, tool, "-driver", "parse", "-o", rebuilt)
 	first, err := os.ReadFile(binary)
 	if err != nil {
 		t.Fatal(err)

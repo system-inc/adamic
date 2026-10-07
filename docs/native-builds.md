@@ -59,7 +59,7 @@ The additional lane is opt-in and skipped in ordinary test runs:
 source /workspace/adamic-tools/env.sh
 ADAMIC_ORACLE_RELEASE=1 ADAMIC_GATE_UNCACHED=1 \
   go test -count=1 -timeout 30m ./internal/oracle \
-  -run '^TestRelease(AgreesWithNode|OracleCatchesOneByte)$' \
+  -run '^TestRelease(AgreesWithNode|OracleCatchesOneByte|Stage1ProfilesAgree)$' \
   > /tmp/adamic-release-oracle.log 2>&1
 ~~~
 
@@ -95,6 +95,8 @@ The manifest hashes the exact emitted C, every embedded runtime C/header,
 the text profile, flags, target and compiler identity. A missing or changed
 input produces one line saying the build uses plain ThinLTO. The stale
 profile never reaches clang. The check uses bytes, never modification times.
+The stage 1 entrypoint also checks the recorded training-list hash against
+the committed list. A changed list falls back before any profile flag is set.
 A different Apple clang or target regenerates its own profile; this does not
 silently reuse a Linux profile. Unsupported text conversion also falls back.
 
@@ -118,5 +120,5 @@ Set ADAMIC_TYPESCRIPT_SOURCE to that pinned checkout and
 ADAMIC_STAGE1_PARSE_BINARY / ADAMIC_STAGE1_LINT_BINARY to the regenerated
 parse-profile / lint-profile paths when running the release oracle command
 above. It compares those exact binaries to Go and Node and rebuilds them to
-check binary determinism. It is an error to enable that lane without its
+check binary determinism across independent cold native/profile caches. It is an error to enable that lane without its
 shipping binaries. Ordinary tests keep their flags and skip this extra lane.
