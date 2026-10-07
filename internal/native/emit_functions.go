@@ -45,7 +45,9 @@ func (e *emitter) functionBody(function ir.Function) {
 	e.functionDepth = len(e.scopes)
 	e.scopes = append(e.scopes, nil)
 	// Recursion that runs out of stack panics, as Node's does, rather than crashing (stack.c).
-	e.line("ADAMIC_CHECK_STACK();")
+	if !function.StackGuarded {
+		e.line("ADAMIC_CHECK_STACK();")
+	}
 	if function.Closure {
 		e.line("(void)self;")
 		e.line("(void)arguments;")

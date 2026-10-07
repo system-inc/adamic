@@ -1,0 +1,14 @@
+// Reconstructed integration probe: the attachment is not in this workspace.
+const unrelated = { value: 1 };
+Object.freeze(unrelated);
+const original = [1, 2];
+try {
+    console.log(original.with(0, 3).join('|'));
+    console.log(original.with(200, 3).join('|'));
+}
+catch(error) {
+    if(error instanceof RangeError) {
+        console.log('caught RangeError');
+    }
+}
+console.log(`${unrelated.value}|${original.join('|')}`);

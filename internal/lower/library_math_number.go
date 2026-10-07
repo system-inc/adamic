@@ -177,9 +177,9 @@ func (l *lowering) libraryMathNumberCall(node *ast.Node) (ir.Expression, bool, e
 		if argument == nil {
 			argument = ir.NumberConstant{}
 		}
-		return ir.ToFixed{Value: value, Digits: argument}, true, nil
+		return l.checkedToFixed(node, value, argument), true, nil
 	}
-	return ir.NumberFormat{Method: name, Value: value, Argument: argument}, true, nil
+	return l.checkedNumberFormat(node, ir.NumberFormat{Method: name, Value: value, Argument: argument}), true, nil
 }
 
 // A .call with an explicit this is bound, even though its method expression isn't the callee.

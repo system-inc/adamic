@@ -36,6 +36,7 @@ enum adamic_kind {
 	adamic_kind_async_frame,
 	adamic_kind_async_promise,
 	adamic_kind_async_reaction,
+	adamic_kind_null,
 };
 
 typedef struct adamic_heap {
@@ -853,6 +854,8 @@ typedef struct adamic_boolean_box {
 
 extern adamic_boolean_box adamic_box_true;
 extern adamic_boolean_box adamic_box_false;
+// Boxed null is immortal and distinct from NULL, which represents undefined.
+extern adamic_heap adamic_box_null;
 
 // adamic_box_number boxes a number, a reference the caller owns.
 adamic_heap *adamic_box_number(double number);

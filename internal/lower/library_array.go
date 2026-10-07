@@ -333,6 +333,7 @@ func (l *lowering) libraryArrayWith(node *ast.Node, array ir.Expression, element
 	if index.Type() != ir.Number || value.Type() != element {
 		return nil, true, l.notYet(node, "with with incompatible arguments")
 	}
+	failure := l.errorInstance("RangeError")
 	b := l.libraryArrayBuilder([]ir.Expression{array, index, value})
 	source, raw := b.read(b.parameters[0]), b.read(b.parameters[1])
 	zero := ir.NumberConstant{Value: 0}
@@ -342,8 +343,7 @@ func (l *lowering) libraryArrayWith(node *ast.Node, array ir.Expression, element
 	errorLocal := b.local("range_error", ir.Object)
 	message := ir.Concat{Parts: []ir.Expression{ir.StringConstant{Index: l.constant("Invalid index : ")}, ir.NumberToString{Value: raw}}}
 	b.body = append(b.body, ir.If{Condition: outside, Then: []ir.Statement{
-		ir.Declare{Local: errorLocal, Value: ir.MakeError{Message: message}},
-		ir.SetProperty{Object: b.read(errorLocal), Name: "name", Value: ir.StringConstant{Index: l.constant("RangeError")}, Site: l.libraryArraySyntheticWriteSite(node)},
+		ir.Declare{Local: errorLocal, Value: ir.Call{Function: failure.constructor, Returns: ir.Object, Arguments: []ir.Expression{message, ir.Undefined{Of: ir.Union}}}},
 		ir.Throw{Value: b.read(errorLocal)},
 	}})
 	copy := b.declare("copy", ir.ArraySlice{Array: source})

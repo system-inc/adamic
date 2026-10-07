@@ -1,6 +1,7 @@
 // number.c: numbers as text, exactly as JavaScript writes them.
 
 #include "adamic.h"
+#include "library_errors.h"
 
 #include <stdint.h>
 
@@ -128,7 +129,7 @@ adamic_string *adamic_number_to_fixed(double value, double digits) {
 	digits = isnan(digits) ? 0 : trunc(digits);
 	if (!(digits >= 0 && digits <= 100)) {
 		static const char message[] = "RangeError: toFixed() digits argument must be between 0 and 100";
-		adamic_panic(message, sizeof message - 1);
+		adamic_uncaught_library_error(message, sizeof message - 1);
 	}
 	int places = (int)digits;
 	if (isnan(value)) {

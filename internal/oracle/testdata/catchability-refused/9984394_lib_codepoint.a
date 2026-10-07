@@ -1,0 +1,10 @@
+function made(code: number): string {
+    try {
+        return `made ${String.fromCodePoint(code).length}`;
+    }
+    catch {
+        return 'fromCodePoint caught';
+    }
+}
+console.log(made(65));
+console.log(made(-1));

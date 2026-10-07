@@ -493,6 +493,10 @@ func (l *lowering) staticClassDeclaration(declaration *ast.Node) error {
 	}
 	for _, clause := range nodesOf(declaration.AsClassDeclaration().HeritageClauses) {
 		if clause.AsHeritageClause().Token == ast.KindExtendsKeyword && l.staticBase(declaration) == nil {
+			types := clause.AsHeritageClause().Types.Nodes
+			if len(types) == 1 && l.errorGlobal(types[0].AsExpressionWithTypeArguments().Expression) != "" {
+				continue
+			}
 			return l.notYet(clause, "a computed class base; name the base class directly")
 		}
 	}

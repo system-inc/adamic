@@ -8,6 +8,7 @@
 // decompose or compose, and passes through as its WTF-8 bytes, as in Node.
 
 #include "adamic.h"
+#include "library_errors.h"
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -576,7 +577,7 @@ adamic_string *adamic_string_normalize(const adamic_string *string, const adamic
 		compatibility = true, composed = false;
 	} else {
 		static const char message[] = "RangeError: The normalization form should be one of NFC, NFD, NFKC, NFKD.";
-		adamic_panic(message, sizeof message - 1);
+		adamic_uncaught_library_error(message, sizeof message - 1);
 	}
 	// ASCII is the same in every form.
 	bool ascii = true;

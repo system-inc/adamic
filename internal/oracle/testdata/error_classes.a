@@ -1,0 +1,204 @@
+/* eslint-disable max-classes-per-file -- This fixture compares a complete error hierarchy in one program. */
+class MyError extends Error {
+    readonly code: number;
+    constructor(message: string, code: number) {
+        super(message);
+        this.code = code;
+    }
+}
+class DetailedError extends MyError {
+    readonly detail = 'detail';
+}
+function madeElsewhere(): DetailedError {
+    return new DetailedError('failed', 42);
+}
+function throwElsewhere(error: Error): void {
+    throw error;
+}
+const made = madeElsewhere();
+console.log(`${made.name} ${made.message} ${made.code} ${made.detail}`);
+console.log(
+    `${made instanceof DetailedError} ${made instanceof MyError} ${made instanceof Error} ${made instanceof TypeError}`,
+);
+console.log(made.toString());
+try {
+    throwElsewhere(made);
+}
+catch(error) {
+    if(error instanceof DetailedError) console.log(`${error.code} ${error.detail} ${error.message}`);
+    else console.log('wrong catch');
+}
+const changed = new MyError('', 1);
+console.log(changed.toString());
+changed.name = '';
+changed.message = 'just message';
+console.log(changed.toString());
+changed.message = '';
+console.log(changed.toString());
+const type = new TypeError('bad type');
+const range = new RangeError('bad range');
+console.log(
+    `${type.name} ${type.message} ${type.toString()} ${type instanceof Error} ${type instanceof TypeError} ${type instanceof RangeError}`,
+);
+console.log(
+    `${range.name} ${range.message} ${range.toString()} ${range instanceof Error} ${range instanceof RangeError} ${range instanceof TypeError}`,
+);
+console.log(new Error().toString());
+const stringCause = new Error('wrapped', { cause: 'why' });
+if(typeof stringCause.cause === 'string') console.log(stringCause.cause);
+const numberCause = new TypeError('number', { cause: 42 });
+const capturedCause = numberCause.cause;
+if(typeof capturedCause === 'number') console.log(`${capturedCause + 1}`);
+const booleanCause = new RangeError('boolean', { cause: false });
+if(typeof booleanCause.cause === 'boolean') console.log(`${booleanCause.cause}`);
+const nestedCause = new Error('outer', { cause: new Error('inner') });
+if(nestedCause.cause instanceof Error) console.log(nestedCause.cause.message);
+class WrappedError extends Error {
+    constructor(message: string, cause: Error) {
+        super(message, { cause });
+    }
+}
+const wrapped = new WrappedError('wrapped error', new Error('root'));
+if(wrapped.cause instanceof Error) console.log(wrapped.cause.toString());
+console.log(Error.prototype.toString.call(made));
+console.log(Error.prototype.toString.call({ name: '', message: 'plain' }));
+console.log(Error.prototype.toString.call({ name: 'Named' }));
+console.log(Error.prototype.toString.call({ message: 'default name' }));
+console.log(Error.prototype.toString.call({}));
+console.log(Error.prototype.toString.call({ name: 1, message: true }));
+try {
+    console.log(Error.prototype.toString.call(42));
+}
+catch(error) {
+    if(error instanceof TypeError)
+        console.log(`${error instanceof Error} ${error instanceof RangeError} ${error.message}`);
+}
+function fixed(digits: number): string {
+    return (1.25).toFixed(digits);
+}
+try {
+    console.log(fixed(101));
+}
+catch(error) {
+    if(error instanceof RangeError)
+        console.log(`${error instanceof Error} ${error instanceof TypeError} ${error.toString()}`);
+}
+console.log(fixed(2));
+try {
+    console.log('x'.repeat(-1));
+}
+catch(error) {
+    if(error instanceof RangeError) console.log(error.message);
+}
+try {
+    console.log('x'.normalize('BAD'));
+}
+catch(error) {
+    if(error instanceof RangeError) console.log(error.message);
+}
+for(const value of [-1.9, -0.9, NaN, Infinity]) {
+    try {
+        console.log(`repeat ${value}: ${'x'.repeat(value)}`);
+    }
+    catch(error) {
+        if(error instanceof RangeError) console.log(error.toString());
+    }
+}
+try {
+    console.log('x'.repeat(536870889));
+}
+catch(error) {
+    if(error instanceof RangeError) console.log(error.message);
+}
+for(const digits of [0, NaN, 101, 1.5]) {
+    try {
+        console.log((1.25).toPrecision(digits));
+    }
+    catch(error) {
+        if(error instanceof RangeError) console.log(error.message);
+    }
+    try {
+        console.log((1.25).toExponential(digits));
+    }
+    catch(error) {
+        if(error instanceof RangeError) console.log(error.message);
+    }
+    try {
+        console.log((255).toString(digits));
+    }
+    catch(error) {
+        if(error instanceof RangeError) console.log(error.message);
+    }
+}
+console.log(NaN.toPrecision(0));
+console.log(Infinity.toExponential(101));
+
+interface OptionalBoxInterface {
+    value: number;
+}
+let optionalBox: OptionalBoxInterface | undefined = { value: 1 };
+function clearBox(): number {
+    optionalBox = undefined;
+    console.log('cleared');
+    return 2;
+}
+try {
+    if(optionalBox !== undefined) {
+        clearBox();
+        console.log(`${optionalBox.value}`);
+    }
+}
+catch(error) {
+    if(error instanceof TypeError) console.log(`${error instanceof Error} ${error.message}`);
+}
+optionalBox = { value: 1 };
+try {
+    if(optionalBox !== undefined) {
+        clearBox();
+        optionalBox.value = clearBox();
+    }
+}
+catch(error) {
+    if(error instanceof TypeError) console.log(`${error instanceof Error} ${error.message}`);
+}
+
+class DefaultError extends Error {
+    readonly code = 8;
+}
+class DeepDefaultError extends DefaultError {
+    readonly detail = 'default';
+}
+const forwarded = new DeepDefaultError('forwarded', { cause: 'forwarded cause' });
+console.log(`${forwarded.name} ${forwarded.message} ${forwarded.code} ${forwarded.detail}`);
+if(typeof forwarded.cause === 'string') console.log(forwarded.cause);
+console.log(new DefaultError().toString());
+class RangeChild extends RangeError {
+    readonly name: string = 'RangeChild';
+}
+const child = new RangeChild('range child');
+console.log(
+    `${child.toString()} ${child instanceof RangeError} ${child instanceof Error} ${child instanceof TypeError}`,
+);
+class ExplicitChild extends DefaultError {
+    constructor(message: string, cause: string) {
+        super(message, { cause });
+    }
+}
+const explicitChild = new ExplicitChild('explicit child', 'explicit cause');
+if(typeof explicitChild.cause === 'string') console.log(explicitChild.cause);
+
+function incompatibleText(value: string | undefined): void {
+    try {
+        console.log(Error.prototype.toString.call(value));
+    }
+    catch(error) {
+        if(error instanceof TypeError) console.log(error.message);
+    }
+}
+incompatibleText('text');
+incompatibleText(undefined);
+function genericText(value: { name: string | undefined; message: string | undefined }): string {
+    return Error.prototype.toString.call(value);
+}
+console.log(genericText({ name: undefined, message: 'defaulted name' }));
+console.log(genericText({ name: 'Named', message: undefined }));

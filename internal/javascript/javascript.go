@@ -125,6 +125,27 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 			classes = append(classes, fmt.Sprintf("{static: %t, parent: %s, base: %d, methods: [%s], definition: %d, privateFields: [%s], literal: %t, publicKeys: [%s], accessors: {%s}}", class.Static, quote(parent), class.Base, strings.Join(methods, ", "), class.Definition, strings.Join(hidden, ", "), class.Literal, strings.Join(publicKeys, ", "), strings.Join(accessors, ", ")))
 		}
 		fmt.Fprintf(&builder, "const adamicClasses = [%s];\n", strings.Join(classes, ", "))
+		// Node's stack check throws a real built-in error. Attach the nominal
+		// identity when catch receives it, preserving the same error object.
+		builtins := []string{}
+		baseError := ""
+		for index, class := range program.Classes {
+			if class.Definition < 1<<30 || class.Definition > (1<<30)+6 {
+				continue
+			}
+			entry := fmt.Sprintf("[globalThis.%s, %d]", class.Name, index+1)
+			if class.Name == "Error" {
+				baseError = entry
+			} else {
+				builtins = append(builtins, entry)
+			}
+		}
+		if baseError != "" {
+			builtins = append(builtins, baseError)
+		}
+		fmt.Fprintf(&builder, "const adamicCaughtErrors = [%s];\n", strings.Join(builtins, ", "))
+		builder.WriteString("const adamicCatch = (value) => { if (value instanceof globalThis.Error && !adamicClassIdentities.has(value)) { for (const [constructor, id] of adamicCaughtErrors) { if (value instanceof constructor) return adamicClass(value, id); } } return value; };\n")
+
 	}
 	for index, local := range program.Locals {
 		if local.Global {
@@ -385,7 +406,7 @@ func (e *emitter) statement(at *ir.Statement) {
 			// After the value, as JavaScript does: the right side runs, then the write throws.
 			temporary := e.temporary()
 			e.line("const %s = %s;", temporary, value)
-			e.line("if (!%s) adamicUnready(%s);", readyName(statement.Local), quote(e.program.Locals[statement.Local].Name))
+			e.line("if (!%s) %s;", readyName(statement.Local), e.unready(statement.Local))
 			value = temporary
 		}
 		e.line("%s = %s;", e.variable(statement.Local), value)
@@ -496,7 +517,11 @@ func (e *emitter) statement(at *ir.Statement) {
 			// Part 1 of a try is its catch taking the error (flow.Instruction.Part).
 			e.markLine(at, 1)
 			if statement.CatchLocal >= 0 {
-				e.declare(statement.CatchLocal, caught)
+				value := caught
+				if len(e.program.Classes) > 0 {
+					value = fmt.Sprintf("adamicCatch(%s)", caught)
+				}
+				e.declare(statement.CatchLocal, value)
 			}
 			e.statements(statement.Catch)
 			e.indent--
@@ -690,6 +715,8 @@ func (e *emitter) value(expression ir.Expression) string {
 		return "(" + e.value(expression.Value) + " === null)"
 	case ir.NumberConstant:
 		return number(expression.Value)
+	case ir.StackExceeded:
+		return "false"
 	case ir.BooleanConstant:
 		return strconv.FormatBool(expression.Value)
 	case ir.StringConstant:
@@ -700,7 +727,7 @@ func (e *emitter) value(expression ir.Expression) string {
 			return fmt.Sprintf("(%s ? %s : panic(%s))", e.localReady(expression.Local), e.variable(expression.Local), quote(message))
 		}
 		if expression.Checked {
-			return fmt.Sprintf("(%s ? %s : adamicUnready(%s))", readyName(expression.Local), e.variable(expression.Local), quote(e.program.Locals[expression.Local].Name))
+			return fmt.Sprintf("(%s ? %s : %s)", readyName(expression.Local), e.variable(expression.Local), e.unready(expression.Local))
 		}
 		return e.variable(expression.Local)
 	case ir.Truthy:
@@ -1203,3 +1230,11 @@ func quote(text string) string {
 
 // narrowedAwayMessage is native's (internal/native), word for word: the checks are the same on both sides.
 const narrowedAwayMessage = "undefined where the checker narrowed it away: a call since the narrowing put it back"
+
+// unready uses the same nominal error allocator as an explicit new ReferenceError.
+func (e *emitter) unready(local int) string {
+	if failure, found := e.program.ReadyErrors[local]; found {
+		return "(() => { throw " + e.value(failure) + "; })()"
+	}
+	return "adamicUnready(" + quote(e.program.Locals[local].Name) + ")"
+}

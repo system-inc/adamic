@@ -46,7 +46,9 @@ The reason the message gives is the runtime's own loops (`map`, `sort` and the r
 
 **Around it:** each list is its helper's loop, written where graphql-js calls the helper, and marked with the helper's name (`// optionalMany('(', parseVariableDefinition, ')')`). A dispatching method taking the item's kind in the function's place doesn't lower either, since it would call methods declared after it (gap 3 below, met again).
 
-## 2. Throwing an Error made in another function
+## 2. Throwing an Error made in another function (closed by codex/error-classes)
+
+Closed: stage 0 now throws stored, returned and passed errors with nominal identity intact. The minimal gap fixture passes Node, native and the leak check. The port still constructs errors at its throw sites; changing that source is a separate port cleanup.
 
 graphql-js's parser throws what `this.unexpected()` and `syntaxError()` return.
 

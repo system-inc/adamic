@@ -1,0 +1,35 @@
+// Dynamic pad guards through an interface and a callback, with empty-fill bypass.
+interface PadderInterface {
+    readonly pad: (size: number, fill: string) => string;
+}
+class Padder implements PadderInterface {
+    pad(size: number, fill: string): string {
+        return '🌍'.padStart(size, fill);
+    }
+}
+function use(padder: PadderInterface, size: number, fill: string): void {
+    try {
+        console.log(padder.pad(size, fill));
+    }
+    catch(error) {
+        if(error instanceof RangeError) console.log(`${error.name} ${error.message}`);
+    }
+}
+use(new Padder(), Infinity, 'x');
+use(new Padder(), Infinity, '');
+use(new Padder(), NaN, 'x');
+use(new Padder(), -1, 'x');
+use(new Padder(), 5.9, 'ab');
+try {
+    console.log([Infinity].map((size) => 'x'.padEnd(size, 'y')).join(''));
+}
+catch(error) {
+    if(error instanceof RangeError) console.log(error.toString());
+}
+try {
+    console.log(String.prototype.padStart.call('x', Infinity, 'y'));
+}
+catch(error) {
+    if(error instanceof RangeError) console.log(error.toString());
+}
+console.log('after');

@@ -45,6 +45,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.RegExpProperty:
 		return e.regexProperty(expression)
 	case ir.Null:
+		if expression.Of == ir.Union {
+			return "&adamic_box_null"
+		}
 		return "NULL"
 	case ir.IsNull:
 		if expression.AlwaysFalse {
@@ -52,11 +55,13 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			return "false"
 		}
 		if expression.Value.Type() == ir.Union {
-			return fmt.Sprintf("(%s == &adamic_null)", e.value(expression.Value))
+			return fmt.Sprintf("(%s == &adamic_null || %s == &adamic_box_null)", e.value(expression.Value), e.value(expression.Value))
 		}
 		return fmt.Sprintf("(%s == NULL)", e.value(expression.Value))
 	case ir.NumberConstant:
 		return cNumber(expression.Value)
+	case ir.StackExceeded:
+		return "((uintptr_t)__builtin_frame_address(0) < adamic_stack_limit)"
 	case ir.BooleanConstant:
 		return strconv.FormatBool(expression.Value)
 	case ir.StringConstant:
@@ -253,6 +258,10 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.MaybeToString:
 		return e.maybeToString(expression.Value)
 	case ir.Box:
+		if expression.Nullable {
+			value := e.value(expression.Value)
+			return fmt.Sprintf("(%s == NULL ? &adamic_box_null : (adamic_heap *)%s)", value, value)
+		}
 		return e.box(expression.Value)
 	case ir.MakeError:
 		return e.makeError(expression)

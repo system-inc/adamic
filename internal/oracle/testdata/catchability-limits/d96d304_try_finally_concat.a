@@ -1,0 +1,12 @@
+// Node runs finally before reporting the uncaught oversized-string RangeError.
+const half = 'ab'.repeat(2 ** 27);
+function join(): number {
+    try {
+        const whole = half + half;
+        return whole.length;
+    }
+    finally {
+        console.log('finally ran');
+    }
+}
+console.log(`${join()}`);

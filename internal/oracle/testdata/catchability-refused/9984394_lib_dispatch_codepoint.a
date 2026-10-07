@@ -1,0 +1,20 @@
+/* eslint-disable nexus/consistency-require-type-suffix, @typescript-eslint/method-signature-style -- Keep the integration probe's original interface spelling and method signature. */
+// A class method reached through an interface must not hide an unguarded library failure.
+interface Maker {
+    make(code: number): string;
+}
+class CodePoints implements Maker {
+    make(code: number): string {
+        return String.fromCodePoint(code);
+    }
+}
+function made(maker: Maker, code: number): string {
+    try {
+        return `made ${maker.make(code).length}`;
+    }
+    catch {
+        return 'fromCodePoint caught';
+    }
+}
+console.log(made(new CodePoints(), 65));
+console.log(made(new CodePoints(), -1));

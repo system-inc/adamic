@@ -87,9 +87,10 @@ func (l *lowering) erasedMethodField(where *ast.Node, view *checker.Type, name s
 					for _, declaration := range root.Declarations {
 						if declaration.Kind == ast.KindMethodDeclaration && declaration.Parent.Kind == ast.KindClassDeclaration {
 							// Method calls preserve the existing class prototype dispatch. Arrow-field
-							// views and destructuring still erase the represented method origin.
-							member := l.checker.GetPropertyOfType(l.checker.GetNonNullableType(view), name)
-							if isCallee(where) && (isClassInstance(l.checker.GetNonNullableType(view)) || (member != nil && member.Flags&ast.SymbolFlagsMethod != 0)) {
+							// reads and destructuring still erase the represented method origin.
+							// A callback-typed callee also uses Property.Method, which binds class
+							// prototype dispatch while leaving own arrow fields as ordinary closures.
+							if where.Kind == ast.KindPropertyAccessExpression && isCallee(where) {
 								continue
 							}
 							found = l.notYet(where, "a class method through a view that erases its prototype origin")

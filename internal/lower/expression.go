@@ -13,6 +13,18 @@ import (
 // typeOf is what's left at runtime of the type the checker proved for a node: a number, a boolean or
 // a string. A union counts when every member is the same one ('Fizz' | 'Buzz' is a string).
 func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
+	if l.isErrorCause(node) && l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUnknown != 0 {
+		return ir.Union, nil
+	}
+	if ast.IsIdentifier(node) && l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUnknown != 0 {
+		if symbol := l.symbol(node); symbol != nil && len(symbol.Declarations) == 1 && symbol.Declarations[0].Kind == ast.KindVariableDeclaration {
+			initial := symbol.Declarations[0].AsVariableDeclaration().Initializer
+			if initial != nil && l.isErrorCause(initial) && symbol.Declarations[0].Parent.Flags&ast.NodeFlagsConst != 0 {
+				return ir.Union, nil
+			}
+		}
+	}
+
 	if l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined != 0 && (node.Kind == ast.KindVoidExpression || voidInitializer(node)) {
 		return ir.Object, nil
 	}
@@ -499,6 +511,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	if member, handled, err := l.phantomMember(node); handled {
 		return member, err
 	}
+	if value, handled, err := l.libraryErrorValue(node); handled {
+		return value, err
+	}
 	if observed, known := l.libraryArrayObservation(node); known {
 		return observed, nil
 	}
@@ -745,6 +760,9 @@ func fit(value ir.Expression, to ir.Type) ir.Expression {
 	}
 	if to == ir.Weak && value != nil && value.Type() != ir.Weak {
 		return ir.WeakOf{Value: value}
+	}
+	if _, isNull := value.(ir.Null); isNull && to == ir.Union {
+		return ir.Null{Of: ir.Union}
 	}
 	if to == ir.Union && value != nil && value.Type() != ir.Union {
 		return ir.Box{Value: value}
