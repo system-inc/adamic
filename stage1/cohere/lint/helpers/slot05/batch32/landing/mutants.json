@@ -1,0 +1,18 @@
+[
+  "helper_test.go:120: is_jsx_value.a mutant \"node.element ||\" -> \"false ||\" caught at output line 384: mutant \"false\", Go \"true\"",
+  "helper_test.go:120: is_jsx_value.a mutant \"node.fragment ||\" -> \"false ||\" caught at output line 391: mutant \"false\", Go \"true\"",
+  "helper_test.go:120: is_jsx_value.a mutant \"|| node.selfClosing\" -> \"|| false\" caught at output line 161: mutant \"false\", Go \"true\"",
+  "helper_test.go:120: is_jsx_value.a mutant \"if (index < 0) { return false; }\" -> \"if (index < 0) { return true; }\" caught at output line 1: mutant \"true\", Go \"false\"",
+  "helper_test.go:120: jsx_after_parentheses.a mutant \"while ((nodes[expression] ?? panic('missing AST node')).parenthesized)\" -> \"while (false)\" caught at output line 33: mutant \"false\", Go \"true\"",
+  "helper_test.go:120: jsx_after_parentheses.a mutant \"while ((nodes[expression] ?? panic('missing AST node')).parenthesized)\" -> \"if ((nodes[expression] ?? panic('missing AST node')).parenthesized)\" caught at output line 33: mutant \"false\", Go \"true\"",
+  "helper_test.go:120: jsx_after_parentheses.a mutant \"return isJsxValue(nodes, expression);\" -> \"return isJsxValue(nodes, index);\" caught at output line 33: mutant \"false\", Go \"true\"",
+  "helper_test.go:120: jsx_after_parentheses.a mutant \"if (index < 0) { return false; }\" -> \"if (index < 0) { return true; }\" caught at output line 1: mutant \"true\", Go \"false\"",
+  "helper_test.go:120: return_argument_looks_like_jsx.a mutant \"if (index < 0) { return false; }\" -> \"if (index < 0) { return true; }\" caught at output line 1: mutant \"true\", Go \"false\"",
+  "helper_test.go:120: return_argument_looks_like_jsx.a mutant \"while ((nodes[expression] ?? panic('missing AST node')).parenthesized)\" -> \"while (false)\" caught at output line 33: mutant \"false\", Go \"true\"",
+  "helper_test.go:120: return_argument_looks_like_jsx.a mutant \"if (isJsxValue(nodes, expression))\" -> \"if (false)\" caught at output line 33: mutant \"false\", Go \"true\"",
+  "helper_test.go:120: return_argument_looks_like_jsx.a mutant \"if (node.conditional)\" -> \"if (false)\" caught at output line 2606: mutant \"false\", Go \"true\"",
+  "helper_test.go:120: return_argument_looks_like_jsx.a mutant \"jsxAfterParentheses(nodes, node.whenTrue) || jsxAfterParentheses(nodes, node.whenFalse)\" -> \"false || jsxAfterParentheses(nodes, node.whenFalse)\" caught at output line 2606: mutant \"false\", Go \"true\"",
+  "helper_test.go:120: return_argument_looks_like_jsx.a mutant \"jsxAfterParentheses(nodes, node.whenTrue) || jsxAfterParentheses(nodes, node.whenFalse)\" -> \"jsxAfterParentheses(nodes, node.whenTrue) || false\" caught at output line 4144: mutant \"false\", Go \"true\"",
+  "helper_test.go:120: return_argument_looks_like_jsx.a mutant \"jsxAfterParentheses(nodes, node.whenTrue) || jsxAfterParentheses(nodes, node.whenFalse)\" -> \"jsxAfterParentheses(nodes, node.whenTrue) && jsxAfterParentheses(nodes, node.whenFalse)\" caught at output line 2606: mutant \"false\", Go \"true\"",
+  "helper_test.go:120: return_argument_looks_like_jsx.a mutant \"return false;\\n}\" -> \"return true;\\n}\" caught at output line 2: mutant \"true\", Go \"false\""
+]
