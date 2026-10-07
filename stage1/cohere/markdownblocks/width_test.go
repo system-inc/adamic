@@ -134,13 +134,18 @@ func TestMarkdownUnicodeWidths(t *testing.T) {
 				}
 				write(t, filepath.Join(scratch, f), b)
 			}
-			mutant := lowered(t, filepath.Join(scratch, "testdata/width_probe.ts"))
-			r := nativelyRun(t, mutant, cases)
-			clean(t, m.name, r)
-			if bytes.Equal(r.stdout, want.stdout) {
-				t.Fatal("survived")
+			main := filepath.Join(scratch, "testdata/width_probe.ts")
+			mutant := lowered(t, main)
+			for _, side := range []struct {
+				name string
+				result run
+			}{{"Node", onNode(t, main, cases)}, {"native", nativelyRun(t, mutant, cases)}} {
+				clean(t, m.name+" "+side.name, side.result)
+				if bytes.Equal(side.result.stdout, want.stdout) {
+					t.Fatal(side.name + " survived")
+				}
+				t.Log(side.name + " caught by observable width output")
 			}
-			t.Log("caught by observable width output")
 		})
 	}
 	if os.Getenv("ADAMIC_MARKDOWN_BENCH") != "" {
