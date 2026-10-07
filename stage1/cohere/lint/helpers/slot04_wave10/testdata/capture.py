@@ -38,4 +38,3 @@ with tempfile.TemporaryDirectory(prefix='adamic-slot04-capture-') as scratch:
     assert not missing, sorted(missing)
     (HERE / 'consumers.json').write_text(json.dumps(rows, ensure_ascii=True, indent=2)+'\n')
     print('captured', len(rows), 'unique inputs from', len(consumers), 'consumers')
-
