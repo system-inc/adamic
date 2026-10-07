@@ -16,6 +16,9 @@ func NormalizeAsync(program *ir.Program) error {
 		program.AsyncEntry = index + 1
 		program.Main = nil
 	}
+	if err := checkAsyncTaskEnvironments(program); err != nil {
+		return err
+	}
 	for index := range program.Functions {
 		function := &program.Functions[index]
 		if !function.Async {
@@ -327,4 +330,40 @@ func inspectAsyncIR(value reflect.Value, visit func(any)) {
 			inspectAsyncIR(value.Index(index), visit)
 		}
 	}
+}
+
+// A pool cannot share loop-owned protocol roots hidden behind captured cells.
+func checkAsyncTaskEnvironments(program *ir.Program) error {
+	if !program.HasAsync() {
+		return nil
+	}
+	var failure error
+	inspect := func(node any) {
+		task, ok := node.(ir.ParallelMap)
+		if !ok || failure != nil {
+			return
+		}
+		targets := program.ClosureTargets(ir.CallClosure{Closure: task.Work})
+		possible := targets.Functions
+		if targets.Unknown {
+			possible = nil
+			for index := range program.Functions {
+				possible = append(possible, index)
+			}
+		}
+		for _, target := range possible {
+			for _, captured := range program.Functions[target].Environment {
+				declared := program.Locals[captured]
+				if !declared.Global && declared.Function >= 0 && program.Functions[declared.Function].Async {
+					failure = fmt.Errorf("pool tasks capturing an async environment are not yet proven")
+					return
+				}
+			}
+		}
+	}
+	inspectAsyncIR(reflect.ValueOf(program.Main), inspect)
+	for _, function := range program.Functions {
+		inspectAsyncIR(reflect.ValueOf(function.Body), inspect)
+	}
+	return failure
 }

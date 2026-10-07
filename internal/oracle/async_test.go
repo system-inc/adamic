@@ -366,3 +366,49 @@ func TestAsyncCapturedBindingSurvivesFinishMutant(t *testing.T) {
 		t.Fatalf("cleared captured binding survived sanitizer: %+v", result)
 	}
 }
+
+func TestAsyncInstanceAndArrowPayloadMutants(t *testing.T) {
+	for _, fixture := range []string{"async_methods", "async_closures"} {
+		t.Run(fixture, func(t *testing.T) {
+			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", fixture+".a"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			program, err := lowered(t, path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			constant := ir.StringConstant{Index: len(program.Strings)}
+			program.Strings = append(program.Strings, "wrong captured payload")
+			changed := false
+			for index := range program.Functions {
+				function := &program.Functions[index]
+				selected := function.Async && !function.Closure && function.AsyncReturns == ir.String
+				if fixture == "async_closures" {
+					selected = function.Async && function.Closure && function.AsyncReturns == ir.String
+				}
+				if !selected {
+					continue
+				}
+				for position, statement := range function.Body {
+					if returned, ok := statement.(ir.Return); ok {
+						returned.Value = constant
+						function.Body[position] = returned
+						changed = true
+					}
+				}
+			}
+			if !changed {
+				t.Fatal("missing instance method or arrow return")
+			}
+			binary := filepath.Join(t.TempDir(), "mutant")
+			if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+				t.Fatal(err)
+			}
+			result := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
+			if disagreement(onNode(t, path), result) != "stdout differs" || result.exitCode != 0 || len(result.stderr) != 0 {
+				t.Fatalf("Node did not exclusively catch instance/arrow payload mutant: %+v", result)
+			}
+		})
+	}
+}

@@ -698,3 +698,65 @@ snapshot changed by adding fixtures during that run. A narrow conservative patch
 for internal/fresh/fresh.go is prepared at /tmp/async-ordinary-fresh-seam.patch;
 that territory extension is requested and not assumed. A green final full gate
 is not claimed until that seam and main reconciliation are complete.
+
+
+### Main reconciliation and final worker evidence
+
+This branch incorporates origin/main e8ba3d5d81de4d3773c723914fccd4c76248b965
+through f0df6d1. The final fetch still reports that tip as an ancestor. No main
+push or area-branch merge was performed. Implementation commits before the
+reconciliation are 64a3eed and ac78ecb; nested environments were merged in 0fc1f05.
+The merge keeps main's call-target freshness analysis and both fixture lists.
+Async counts remain the measured values above after the merge.
+
+Post-merge required packages pass in /tmp/async-ordinary-main-packages.log:
+lower 69.720s, flow 178.109s, IR 35.281s, native 261.980s. The uncached async
+oracle and existing async mutants pass in 92.476s. Complete counts regeneration
+passes in 101.477s. Independent string-payload mutants for instance methods and
+arrow closures pass in 3.209s, each killed only by Node stdout; these supplement
+the numeric static-method and function-expression mutants, rather than treating
+the numeric mutant as proof for a void-await instance method.
+
+A focused pool probe compiled but panicked with "async values cannot cross worker
+thread": its pure callback captured a cell owned by an async activation. The
+shared IR pipeline now checks ParallelMap callback targets through ClosureTargets
+and rejects captured async environments as NotYet before emission. Unknown
+callback target sets are conservatively checked against possible functions.
+Synchronous programs take a fast path. Omitting that check accepts the probe and
+fails its diagnostic control. The restored control passes. Pool sharing of an
+async environment is added to the explicit gaps; no sharing runtime or producer
+ABI extension is claimed.
+
+The final uncached command was:
+`ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./internal/oracle -run
+'TestNativeAgreesWithNode/internal/oracle/testdata/async_|TestAsync|TestCountsAreRecorded'`.
+It passes in 107.492s, with all sixteen source fixtures, every registered async
+compiler mutant and the complete stable counts table, logged at
+/tmp/async-ordinary-final-async-counts.log. After the pool guard, the changed
+packages lower, flow and IR pass in 44.841s, 131.461s and 24.425s respectively
+(/tmp/async-ordinary-pool-final-packages.log); native emission is unchanged from
+the passing post-main package gate. Repository formatting, diff checks and
+`go vet ./...` pass, with logs /tmp/async-ordinary-main-gofmt.log and
+/tmp/async-ordinary-main-vet.log.
+
+The proposed freshness seam is still outside granted territory. A temporary Go
+overlay of the prepared patch passes the whole internal/fresh package in
+103.653s (/tmp/async-ordinary-fresh-proposal-test.log), without modifying the
+repository file. It recognizes Await and PromiseValue conservatively, disables
+call freshness summaries in async-containing programs and escapes frame-held
+values at Suspend. Applying /tmp/async-ordinary-fresh-seam.patch requires the
+requested narrow territory extension. An overlay pass is not a repository gate
+pass and is not reported as one.
+
+The full uncached repository command was run, found the unknown Await/PromiseValue
+freshness failure and a counts snapshot changed while new fixtures were being
+added, then continued through the remaining stage-1 suites. Counts were repaired
+and checked with a stable fixture list above. The already-failed full attempt
+was stopped after more than 42 minutes under the explicit slow-worker-gate
+exception; exit 143. Its full output is /tmp/async-ordinary-full-gate.log and the
+termination manifest is /tmp/async-ordinary-full-stop.json. CSS, Unicode
+properties, JSON and lint suites passed before stopping; remaining markdown and
+type-aware suites were not completed. A final full green gate is not claimed.
+The freshness seam, exact non-suspending finally completion routing and the
+unavailable shared-SSA reconciliation remain blockers to reporting the entire
+October 9 bar complete.

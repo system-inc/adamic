@@ -28,6 +28,7 @@ func TestAsyncGeneratedIdentityCannotBeClaimedBySource(t *testing.T) {
 func TestAsyncGapsNameTheMissingPiece(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ source, want string }{
+		{"import { parallelMap } from 'adamic'; async function f(): Promise<string> { const extra = 3; await Promise.resolve(); const items: readonly number[] = [1,2]; return parallelMap(items, item => item + extra).join(','); } console.log(await f());", "pool tasks capturing an async environment"},
 		{"async function f(): Promise<void> { await new Promise<void>(() => {}); }\nawait f();", "Promise executors"},
 		{"async function f(): Promise<void> { await Promise.all([Promise.resolve(1)]); }\nawait f();", "Promise.all"},
 		{"async function f(): Promise<void> { try { throw new Error('why'); } catch { await Promise.resolve(); } }\nawait f();", "await in catch or finally"},
@@ -44,7 +45,7 @@ func TestAsyncGapsNameTheMissingPiece(t *testing.T) {
 		if err == nil || !strings.Contains(err.Error(), probe.want) {
 			t.Errorf("%s: got %v, want %s", probe.source, err, probe.want)
 		}
-		if strings.Contains(probe.want, "task") || probe.want == "void operator" || probe.want == "refuses ==" {
+		if probe.want == "unawaited async task" || probe.want == "void operator" || probe.want == "refuses ==" {
 			var refused *Refused
 			if !errors.As(err, &refused) {
 				t.Errorf("permanent refusal became NotYet: %v", err)
