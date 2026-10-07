@@ -53,3 +53,17 @@ b469-helper-vet.log. Helpers still remove 32 prerequisite edges across six
 Tailwind rules; no additional fully helper-ready rule is claimed.
 Related rules pushed at 2b3f09b3e4623da8c4cbcb94bf7069b8857dcde2: core green,
 Tailwind blocked by runtime RegExp lowering. No new claim and no full gate.
+
+Current-main refresh onto area d3a37422c6c2c3dd4a90b8721a2067a4ba0d8898,
+including main b6b1538b0cebc4ba6741ac34f1aedb60293c1d06: ledger unchanged,
+rebase clean, helper sources unchanged. Full seven-helper gate PASS 192.272s,
+with all twenty compiling mutants caught by actual Go comparison on Node,
+emitted JavaScript and ASan/UBSan native. Owned helper vet passes. Commands:
+go test ./stage1/cohere/lint/helpers/from_wave1_04 -count=1 -v -timeout=10m;
+go vet ./stage1/cohere/lint/helpers/from_wave1_04, using the existing toolchain
+environment. Evidence d3-helper-tests.log and d3-helper-vet.log.
+Related rules pushed at 2055f6f3560b4afee1f059bc3702b0fb3c96ae0f: core green,
+Tailwind still blocked by runtime RegExp lowering. Seven helpers continue to
+remove 32 prerequisites across six distinct Tailwind rules, without certifying
+those whole rules or making an additional rule fully helper-ready. No new
+claims, shared-file edits, full gate or seventeen repository-wide checks.
