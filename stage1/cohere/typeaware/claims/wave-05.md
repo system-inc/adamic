@@ -53,3 +53,24 @@ was needed. New raw checker questions each have their own Go and .a files and
 one physical switch-registration line. Details are in
 `../wave_05_next/OUTPUT_REPORT.md`; the old refusal remains as historical evidence.
 No additional rules are claimed in this update.
+
+## Continuation 2
+
+All six prior reservations are complete, tested and pushed through 9d69fd77.
+After fetching all origin heads, rechecked the 197-rule combined by-volume
+ranking against ports on origin/main and origin/codex/tsgo-c-library and every
+origin branch's typeaware claim files. The first three remaining rules are
+reserved here before implementation:
+
+- react-hooks/globals (0 compiler, 0 repository)
+- react-hooks/immutability (0 compiler, 0 repository)
+- react-hooks/no-deriving-state-in-effects (0 compiler, 0 repository)
+
+The scan found 30 unique claim blobs reserving 137 ranked rule names and 25
+ranked baseline ports. Seven high-volume apparent candidates were skipped
+because their existing native implementations emit through Rules.add rather
+than directly constructing Diagnostic. The 26th baseline port,
+method-signature-style, is outside this checker-dependent ranking.
+These three React hook names have no baseline implementation or existing
+origin claim. Implementation remains inside this wave's directories.
+Continuation 2 status: claimed, not yet implemented or validated.
