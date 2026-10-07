@@ -1,5 +1,5 @@
 Built: native validator cores for the three reserved React rules, native post-dominance and an isolated raw type-name question; source-to-HIR integration remains unimplemented.
-Commits: reservation 3e7267e2 and prior evidence fbbf0e59 were pushed before this code; implementation/evidence commit recorded in git history.
+Commits: reservation 3e7267e2 and prior evidence fbbf0e59 were pushed before this code; native cores and evidence bc6750a6 pushed.
 Commands/output: core agreement PASS 409.393s, 91 valid controls with 48 findings; prepared-HIR compiler77/repository287 match normally and under sanitizers; checker PASS 0.144s; Node PASS 16.614s; vet/gofmt clean.
 Mutants: render unconditional guard byte 448, effect setter guard byte 1549, static creator propagation byte 56, adjacency-row alias byte 3115; all exit 0 with empty stderr and fail only complete-byte comparison; retained-handle and suffix mutants also caught.
 Not covered: native source lowering/SSA, source compilation gates and memo shadowing, production harness integration, all upstream multifile contexts, full gate, and deterministic byte parity for Go's two-creator phi messages.
