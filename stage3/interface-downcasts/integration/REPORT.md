@@ -154,3 +154,21 @@ option-element and structural view-read fixtures, preserving their rejection.
 The initial old-message failure is logged. All 84 pairs / 186 reads remain pending;
 component nested mutants prove the adapter seam, not compiler propagation.
 Six selector semantic mutants are rerun and restored before normal gates.
+
+## Lazy owner priority follow-up
+
+Dictionary merge was aborted untouched when fetch revealed owner 5fd6445e.
+This priority merge is clean: owner had consumed integration 4d863661, and no
+previous conflict resolution is replaced. Native Error now physically owns only
+name/message and stamps their actual string kinds; optional code is absent.
+Optional-error and optional-error-fields positive controls match Node; number
+and null code payload mutants retain exit-70 refusals in both backends.
+The adapted census is carried evidence (1,758 tagged / 1,178 untagged descriptors,
+zero production entries compiled, 259 checker diagnostic rows); it is not rerun
+in this integration session. Its remaining runtime reachability is unmeasured.
+A producer-certificate rollback mutant is run before normal gates.
+The producer rollback is caught by optional-error-fields: Node exits 0, valid
+native exits 70 at source.message with unsupported representation. The runner's
+initial textual check expected uncertified storage, but this oracle prints byte
+arrays; semantic exit evidence is verified from the captured log. Production
+exceptions.c was restored in finally.

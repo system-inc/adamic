@@ -1,0 +1,5 @@
+=== RUN   TestLazyViewCensus
+    view_lazy_census_test.go:154: sites=2936 descriptor interned=map[tagged:1758 untagged:1178] production compiled=map[tagged:0 untagged:0] stop=checker
+--- PASS: TestLazyViewCensus (5.10s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	5.131s
