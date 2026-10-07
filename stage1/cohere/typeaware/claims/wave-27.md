@@ -49,3 +49,19 @@ The first three remaining rules, each with combined count zero, are:
 
 Claim matching includes full, unqualified and underscore spellings. This update
 is pushed before writing the third batch's implementation.
+
+## Fourth batch
+
+The first nine ports were tested and pushed at
+24d4f417aa8800a6fc22f70fc8eaa8263f5d9a60 before this selection.
+After fetching all origin heads without recursion, checked the 197-rule
+combined by-volume ranking against ports on origin/main and
+origin/codex/tsgo-c-library and Markdown claims on all 389 origin refs.
+The first three remaining rules, each with combined count zero, are:
+
+- react-hooks/set-state-in-effect
+- react-hooks/set-state-in-render
+- react-hooks/static-components
+
+Claim matching includes full, unqualified and underscore spellings. This update
+is pushed before writing the fourth batch's implementation.
