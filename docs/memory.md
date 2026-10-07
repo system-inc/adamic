@@ -1081,6 +1081,81 @@ API; it is not a graph-specific transfer proof or an executed parallel task.
 The existing runtime shared-region merge refusal remains tested. A task-boundary
 sharing check still needs the real concurrency API; threads remain design only.
 
+Review mutants were run sequentially and restored before the gates. The runner
+is `/tmp/graph-regions-review-mutants.py`; per-mutant logs are
+`/tmp/graph-regions-review-mutant-NAME.log`.
+
+| NAME | Deliberate break | Observation |
+|---|---|---|
+| boundary | Counted holder fails to retain graph child | ASan use-after-free in counted-container read |
+| retain_header | Retain bypasses graph header dispatch | ASan use-after-free in counted-container read |
+| allocation | Literal allocation loses graph tag | Missing region-free report and changed counts |
+| weak | Weak handle retains its target | LeakSanitizer reports 267 bytes in four allocations |
+| throw_skip | Throw omits frame cleanup | Ten allocations, six frees, no region-free report |
+| throw_double | Throw repeats frame cleanup | ASan use-after-free |
+
+The first runner used an incorrect normal-oracle test name for three mutants
+and ran no tests for them. Its corrected rerun selected
+TestNativeAgreesWithNode and caught all six; no no-test run is evidence.
+
+Toolchain setup completed in 203 seconds (ready checks 0 seconds, cache warm
+203 seconds); `nproc` reported 5. Review commands, with output always redirected
+to logs:
+
+```sh
+bash cloud/setup.sh > /tmp/graph-regions-review-setup.log 2>&1
+source /workspace/adamic-tools/env.sh
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 30m -args -update-counts > /tmp/graph-regions-review-counts-update.log 2>&1
+python3 /tmp/graph-regions-review-mutants.py > /tmp/graph-regions-review-mutants-results.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/lower ./internal/native ./internal/fresh -count=1 -timeout 30m > /tmp/graph-regions-review-packages.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/.*(cycle|weak|fresh|regions|nested)|TestFreshWriteProbesUseRegions|TestGraphRegions|TestNested.*|TestCountsAreRecorded|TestWeakRegionReview|TestGraphParallelMap' -count=1 -v -timeout 30m > /tmp/graph-regions-review-oracle.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/.*(cycle|weak|fresh|regions|nested)|TestFreshWriteProbesUseRegions|TestGraphRegions|TestNested.*|TestCountsAreRecorded|TestWeakRegionReview|TestGraphParallelMap|TestProven' -count=1 -v -timeout 30m > /tmp/graph-regions-review-merged-oracle.log 2>&1
+ADAMIC_GATE_UNCACHED=1 timeout 300s go test ./... -count=1 -timeout 5m > /tmp/graph-regions-review-full-gate.log 2>&1
+go vet ./... > /tmp/graph-regions-review-vet.log 2>&1
+```
+
+The initial filtered oracle passed in 113.577s. Counts regeneration passed in
+38.577s. All existing numeric rows were preserved; nine review fixture rows were
+added. Main's inherited-static row moved to canonical fixture order, and its
+five new proven-relation rows received the graph-count columns at merge.
+The initial million-node source rerun measured release native 78996 KiB,
+counted native 79152 KiB and Node through the type-stripping loader 111664 KiB.
+Its report remains 16 bytes per object plus one 64-byte region record, 950001
+reachable members (60800064 payload bytes), and 49999 unreachable members
+(3199936 payload bytes) retained until region free. Release flags are exactly
+the flags printed by TestGraphRegionsCompiledMillion, including `-O2`, without
+ADAMIC_COUNT or sanitizers. The counting build's mark pass remains measurement
+only; no tracing or collection runs in release.
+
+The first required package gate passed: lower 47.209s, native 389.309s,
+fresh 83.618s. The first vet log is empty. Main advanced during the checks;
+`8c84ebb` merges its `c7991b9` tip after the review evidence commit `0d357a7`.
+The five-minute full gate exited 124 at its wall-clock limit. Its log contains
+only the two benchmark packages with no tests; this is not a full-gate pass.
+It ran concurrently with ownership checks and was CPU constrained. Final merged
+package and oracle results are recorded below, separately from that attempt.
+
+The final merged filtered oracle passed in 343.664s, with native cache hits 0,
+misses 798 and Node hits 0, misses 224. It includes the whole counts table,
+all 43 fresh refusal probes, the review fixtures and main's proven-relation
+checks. The merged million-node run measured native release 79036 KiB, counted
+79104 KiB and Node with the oracle loader 112544 KiB; retained-member counts
+and 16000064 metadata bytes were unchanged. Final fetch confirmed current main
+remained `c7991b9` and was included. No production emission file changed in this
+review continuation; the shared assignments.go rebinding refusal is unchanged.
+
+The merged package and vet commands are:
+
+```sh
+ADAMIC_GATE_UNCACHED=1 go test ./internal/lower ./internal/native ./internal/fresh -count=1 -timeout 30m > /tmp/graph-regions-review-merged-packages.log 2>&1
+go vet ./... > /tmp/graph-regions-review-merged-vet.log 2>&1
+```
+
+The final merged required package gate passed: lower 61.466s, native 217.124s,
+fresh 82.054s. The merged vet and review formatting logs are empty, and
+`git diff --check` passed. These are the completed scoped gates; the full
+repository gate remains the separate timed-out attempt described above.
+
 ## Arenas
 
 Some work allocates a lot and frees it all at once: one request, one file checked by cohere. For that, an arena: allocations bump a pointer, and the arena frees everything in one go at the end. A value allocated in an arena must not outlive it, and proving that is escape analysis. The lowering IR's aliasing analysis (#5jck546) is where that comes from. Arenas are for stage 1 (cohere in Adamic), where cohere's own measurements already show that with the collector off, fresh allocation is the cost.
