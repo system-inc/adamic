@@ -6,6 +6,8 @@ import { NoProcessExitAfterOutput, OutputWalk, OutputPosition } from './correctn
 import { ModuleFile, programModules } from './program_modules.a';
 import { ContextDeclaration } from './node_symbol_context.a';
 import { report } from './wave_21_next_facts.a';
+// Numeric listener contract for the shared driver; matches pinned Go listeners.
+export const syntaxKinds: readonly number[] = [307]; // SourceFile
 const suffixes = ['/source/system/StandardStreams.ts', '/source/system/StandardStreams.d.ts'];
 const functionKinds = ['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction', 'MethodDeclaration', 'Constructor', 'GetAccessor', 'SetAccessor'];
 export class BlockingIndex {

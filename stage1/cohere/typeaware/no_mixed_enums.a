@@ -2,6 +2,8 @@ import type { Rules } from './rules.ts';
 import { enumDeclarations } from './enum_declarations.a';
 import { types } from './facts.ts';
 import { stringLike } from './flags.ts';
+// Numeric listener contract for the shared driver; matches pinned Go listeners.
+export const syntaxKinds: readonly number[] = [267]; // EnumDeclaration
 
 const message = 'This enum has both number members and string members. A reader reaches for an enum expecting one kind of value, and a mixed one silently changes what comparison, serialization, and reverse lookup mean from member to member: numeric members get a reverse mapping and string members do not. Pick one kind for the whole enum.';
 

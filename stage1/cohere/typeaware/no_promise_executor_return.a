@@ -2,6 +2,8 @@ import type { Rules } from './rules.ts';
 import { CoreConstructors } from './core_constructor_facts.a';
 import { Suggestion } from './suggestion.ts';
 import { Repair } from './repair.ts';
+// Numeric listener contract for the shared driver; matches pinned Go listeners.
+export const syntaxKinds: readonly number[] = [220, 254]; // ArrowFunction, ReturnStatement
 const message = 'This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.';
 export class NoPromiseExecutorReturn {
     readonly rules: Rules; readonly facts: CoreConstructors; readonly allowVoid: boolean;

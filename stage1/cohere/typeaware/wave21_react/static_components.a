@@ -1,5 +1,7 @@
 import { Diagnostic } from '../diagnostic.ts';
 import { HirFunction, reportIdentity } from './hir.a';
+// Numeric listener contract for the shared driver; matches pinned Go listeners.
+export const syntaxKinds: readonly number[] = [307]; // SourceFile
 // Same single forward walk as Go. Loop back-edge taint is intentionally not fixed.
 export class StaticComponents {
  readonly findings:Diagnostic[];

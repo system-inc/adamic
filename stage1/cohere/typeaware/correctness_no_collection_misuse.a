@@ -3,6 +3,8 @@ import type { Types } from './types.ts';
 import { types } from './facts.ts';
 import { stringLike, numberLike, booleanLike, bigintLike } from './flags.ts';
 import { libraryType, literal, nodeDeclarations, report } from './wave_21_next_facts.a';
+// Numeric listener contract for the shared driver; matches pinned Go listeners.
+export const syntaxKinds: readonly number[] = [227, 213, 214]; // BinaryExpression, ElementAccessExpression, CallExpression
 const collections = ['Map', 'ReadonlyMap', 'Set', 'ReadonlySet', 'WeakMap', 'WeakSet'];
 const sized = ['Map', 'ReadonlyMap', 'Set', 'ReadonlySet'];
 const typedArrays = ['Int8Array', 'Uint8Array', 'Uint8ClampedArray', 'Int16Array', 'Uint16Array', 'Int32Array', 'Uint32Array', 'Float16Array', 'Float32Array', 'Float64Array', 'BigInt64Array', 'BigUint64Array'];

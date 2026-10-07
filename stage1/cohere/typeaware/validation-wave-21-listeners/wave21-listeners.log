@@ -1,0 +1,19 @@
+=== RUN   TestWave21ListenerDeclarations
+    wave_21_listeners_test.go:108: listener contract: no_mixed_enums:266
+        correctness_no_collection_misuse:226,212,213
+        correctness_no_discarded_outcome:244
+        correctness_no_discarded_pure_result:244
+        correctness_no_process_exit_after_output:306
+        correctness_no_uncleared_race_timeout:213
+        correctness_require_blocking_standard_streams:306
+        no_obj_calls:306
+        no_object_constructor:214,213
+        no_promise_executor_return:219,253
+        set_state_in_effect:306
+        set_state_in_render:306
+        static_components:306
+         
+--- FAIL: TestWave21ListenerDeclarations (13.44s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	13.441s
+FAIL

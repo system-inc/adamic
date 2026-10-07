@@ -4,6 +4,8 @@ import { types } from './facts.ts';
 import { awaitedShape } from './awaited_shape.a';
 import { typeDeclarationAncestors, AncestorFact } from './type_declaration_ancestors.a';
 import { report } from './wave_21_next_facts.a';
+// Numeric listener contract for the shared driver; matches pinned Go listeners.
+export const syntaxKinds: readonly number[] = [245]; // ExpressionStatement
 const names = ['JsonParseOutcomeType', 'JsoncParseOutcomeType', 'JsonFileReadOutcomeType', 'JsonFileWriteOutcomeType', 'PackageJsonReadOutcomeType'];
 const suffixes = ['/nexus/source/structured-text/json/Json.ts', '/nexus/source/structured-text/json/Jsonc.ts', '/nexus/source/structured-text/json/JsonFile.ts', '/nexus/source/structured-text/json/JsonFile.ts', '/nexus/source/system/PackageJson.ts'];
 const message = "This call returns a `{{typeName}}` and the statement throws it away, so the arm that says it failed (a write that never landed, a file that would not parse) is never read and the code runs on as if it succeeded. Keep the outcome and handle its failure arm, or return it to a caller that will. If ignoring it is the intent, say so with `void`.";

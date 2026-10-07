@@ -2,6 +2,8 @@ import type { Diagnostic } from '../diagnostic.ts';
 import { HirFunction, HirPlace, HirInstruction, reportPlace } from './hir.a';
 import { PostDominance } from './postdominator.a';
 import { messageSetStateInEffect } from './messages.a';
+// Numeric listener contract for the shared driver; matches pinned Go listeners.
+export const syntaxKinds: readonly number[] = [307]; // SourceFile
 export class SetStateInEffect {
  readonly empty:HirPlace[]=[];readonly findings:Diagnostic[];
  constructor(findings:Diagnostic[]){this.findings=findings;}

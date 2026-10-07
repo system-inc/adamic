@@ -2,6 +2,8 @@ import type { Rules } from './rules.ts';
 import { CoreConstructors } from './core_constructor_facts.a';
 import { Suggestion } from './suggestion.ts';
 import { Repair } from './repair.ts';
+// Numeric listener contract for the shared driver; matches pinned Go listeners.
+export const syntaxKinds: readonly number[] = [215, 214]; // NewExpression, CallExpression
 const message = 'This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.';
 export class NoObjectConstructor {
     readonly rules: Rules; readonly facts: CoreConstructors;

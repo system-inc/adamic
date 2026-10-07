@@ -1,5 +1,7 @@
 import type { Rules } from './rules.ts';
 import { CoreConstructors } from './core_constructor_facts.a';
+// Numeric listener contract for the shared driver; matches pinned Go listeners.
+export const syntaxKinds: readonly number[] = [307]; // SourceFile
 const globals = ['Atomics', 'JSON', 'Math', 'Reflect', 'Intl', 'Temporal'];
 const globalObjects = ['global', 'globalThis', 'self', 'window'];
 class StaticText {

@@ -2,6 +2,8 @@ import type { Rules } from './rules.ts';
 import { Frames, header } from './frames.ts';
 import { types } from './facts.ts';
 import { nodeDeclarations, report } from './wave_21_next_facts.a';
+// Numeric listener contract for the shared driver; matches pinned Go listeners.
+export const syntaxKinds: readonly number[] = [245]; // ExpressionStatement
 const stringMethods = "at charAt charCodeAt codePointAt concat endsWith includes indexOf isWellFormed lastIndexOf match matchAll padEnd padStart replace replaceAll search slice split startsWith substr substring toLocaleLowerCase toLocaleUpperCase toLowerCase toString toUpperCase toWellFormed trim trimEnd trimLeft trimRight trimStart valueOf".split(' ');
 const arrayMethods = "at concat entries flat includes indexOf join keys lastIndexOf slice toReversed toSorted toSpliced values with".split(' ');
 const message = "This call computes a new value and changes nothing, and its result is thrown away, so the statement does nothing. Strings are immutable (`name.trim()` returns a trimmed copy and leaves `name` as it was), and these array methods return a new array or a value without touching the original (`list.concat(more)` does not add to `list`). Assign the result (`name = name.trim()`, `list = list.concat(more)`), use the mutating form (`list.push(...more)`), or delete the statement.";

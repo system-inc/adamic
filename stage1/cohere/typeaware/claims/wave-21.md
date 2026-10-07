@@ -139,3 +139,6 @@ unimplemented. A two-creator phi also produces two different byte outputs from
 unchanged Go on identical input. See ../WAVE_21_REACT_CORE_REPORT.md and
 ../validation-wave-21-react-core/. This is partial core coverage, not completed
 native source ports. No further reservation was taken.
+
+
+Numeric listener continuation: all thirteen owned modules now export pinned numeric syntaxKinds declarations, checked independently against production Go registrations in native and ASAN builds with a qualifying wrong-kind mutant. The shared parser still exposes only string kinds, so numeric dispatch and handed-node integration remain blocked outside this unit. React source ports are still partial; reservations are retained. No new batch claimed. See ../WAVE_21_LISTENER_REPORT.md.
