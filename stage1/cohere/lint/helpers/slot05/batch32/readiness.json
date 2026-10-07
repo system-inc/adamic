@@ -1,0 +1,30 @@
+{
+  "helpers": {
+    "github.com/system-inc/cohere/internal/lint/rules/structure.returnArgumentLooksLikeJsx": [
+      "structure/consistency-require-matching-file-name",
+      "structure/react-component-no-display-name",
+      "structure/react-component-require-named-export"
+    ],
+    "github.com/system-inc/cohere/internal/lint/rules/structure.jsxAfterParentheses": [
+      "structure/consistency-require-matching-file-name",
+      "structure/react-component-no-display-name",
+      "structure/react-component-require-named-export"
+    ],
+    "github.com/system-inc/cohere/internal/lint/rules/structure.isJsxValue": [
+      "structure/consistency-require-matching-file-name",
+      "structure/react-component-no-display-name",
+      "structure/react-component-require-named-export"
+    ]
+  },
+  "dependency_occurrences_removed": 9,
+  "unique_consumers": 3,
+  "newly_helper_ready_from_batch_alone": [],
+  "newly_helper_ready_with_previous_slot05": [],
+  "cumulative_slot05": {
+    "helpers": 92,
+    "dependency_occurrences_removed": 437,
+    "unique_consumers": 77,
+    "helper_ready": 51,
+    "shared_base_helper_ready": 46
+  }
+}
