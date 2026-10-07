@@ -61,10 +61,35 @@ Reserved for this branch. This claim update is committed and pushed before
 implementation. Shared harness, generator and dispatcher files stay untouched;
 new native implementation files will be .a.
 
-Second continuation status: reserved, partially implemented and blocked. Globals
+Second continuation status: PARKED per Ahra. Globals
 has native AST/scope decisions and exact normal/sanitized parity on 35 non-JSX
 controls and both corpora, but the shared parser rejects JSX. Immutability and
 no-deriving-state-in-effects have tested native kernels; their production entry
 points refuse because native React HIR lowering/SSA and the associated passes
 are unavailable. Kernel mutants are not complete rule mutants. Shared files
-were not edited and no further rules are claimed. See ../wave08-react/REPORT.md.
+were not edited. These parked reservations count as finished for the landing cap.
+Native React analysis is being ported on #dnv6f2c; JSX is landing on
+area/stage1-lint. No push targets those integration branches.
+See ../wave08-react/REPORT.md.
+
+## Third continuation claim
+
+All earlier work is pushed and landing-ready on main f8013f0ba, with the six
+complete ports and the supported React partials re-green in 443a69d33. React
+reservations are parked as directed above. Fetched all 529 origin refs, inspected
+33 distinct claim Markdown blobs, and checked main/bridge registrations against
+the 197-entry combined volume ranking. React-associated rules, including
+structure/react-hook-no-any-type, are excluded under the React parking directive.
+
+The first three eligible non-React rules are:
+
+- require-atomic-updates (0)
+- require-await (0)
+- symbol-description (0)
+
+These are reserved for wave 08. Core atomic updates uses the existing ECMAScript
+CFG family rather than React HIR/SSA. This claim update is pushed before code.
+New native sources use .a, declare numeric listeners and rule.json kinds, and
+will receive nodes through an owned indexed profile while the shared driver is
+pending. Shared source remains untouched. Frozen selection is in
+../wave08-core-next/selection.json.gz.
