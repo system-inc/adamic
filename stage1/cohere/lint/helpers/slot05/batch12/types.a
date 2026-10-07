@@ -1,0 +1,1 @@
+export interface CaseTables { readonly byMember: ReadonlyMap<number, readonly number[]>; readonly groups: readonly (readonly number[])[]; }

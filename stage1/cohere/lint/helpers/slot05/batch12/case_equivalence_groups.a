@@ -1,0 +1,4 @@
+import type { CaseTables } from './types.a';
+export function caseEquivalenceGroups(unicodeMode: boolean, tables: (unicodeMode: boolean) => CaseTables): readonly (readonly number[])[] {
+    return tables(unicodeMode).groups;
+}

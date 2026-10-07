@@ -1,0 +1,19 @@
+{
+  "branches_scanned": 20,
+  "main": "c01907a7036a22c2ea7ee686ed5fe4c6cd4bbc06",
+  "main_is_ancestor": true,
+  "matches": [
+    {
+      "branch": "refs/remotes/origin/codex/lint-helpers-05",
+      "file": "stage1/cohere/lint/helpers/claims/05.md",
+      "helpers": [
+        "regexp.caseTables",
+        "regexp.CaseEquivalents",
+        "regexp.CaseEquivalenceGroups"
+      ]
+    }
+  ],
+  "claim": "3d6a92883434f1d0c6569fd61aa081a9fe634776",
+  "named_harness_sha": "ab70f38d47de1d4974082b38f84a56af2368b7af",
+  "named_harness_on_main": false
+}

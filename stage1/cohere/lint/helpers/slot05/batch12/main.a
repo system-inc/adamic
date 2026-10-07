@@ -1,0 +1,44 @@
+import { panic, readTextFile, programArguments } from 'adamic';
+import { OptionsJson } from '../../options_json.ts';
+import type { CaseTables } from './types.a';
+import { caseTables } from './case_tables.a';
+import { caseEquivalents } from './case_equivalents.a';
+import { caseEquivalenceGroups } from './case_equivalence_groups.a';
+const input=readTextFile(programArguments()[0] ?? panic('missing corpus'));
+if(input.kind === 'Error') { panic(input.message); }
+const json=new OptionsJson(input.text);const root=json.parse();if(root < 0) {panic(json.error);}
+function field(index: number,name: string): number {return json.field(index,name);}
+function number(index: number): number {return Number(json.node(index).text);}
+function table(index: number): CaseTables {
+ const groups: number[][]=[];
+ for(const g of json.node(field(index,'groups')).children) {const group: number[]=[];for(const r of json.node(g).children){group.push(number(r));}groups.push(group);}
+ const byMember=new Map<number,readonly number[]>();
+ for(const m of json.node(field(index,'members')).children) {const values=json.node(m).children;const rune=number(values[0] ?? panic('missing rune'));const group=number(values[1] ?? panic('missing group'));byMember.set(rune,groups[group] ?? panic('missing group'));}
+ return {byMember,groups};
+}
+const upper=table(field(root,'upper'));const fold=table(field(root,'fold'));let trace='';
+function folded(): CaseTables {trace+='fold;';return fold;}
+function uppercased(): CaseTables {trace+='upper;';return upper;}
+function tables(unicodeMode: boolean): CaseTables {return caseTables(unicodeMode,folded,uppercased);}
+const mode=json.node(field(root,'mode')).text;
+function observe(rune: number, unicodeMode: boolean): void {
+ trace='';
+ if(mode === 'tables') {
+  const selected=caseTables(unicodeMode,folded,uppercased);
+  const label=selected.byMember === fold.byMember ? 'fold' : selected.byMember === upper.byMember ? 'upper' : 'neither';
+  console.log(`${label}:${selected.groups === fold.groups || selected.groups === upper.groups}:${trace}`);return;
+ }
+ if(mode === 'groups') {
+  const groups=caseEquivalenceGroups(unicodeMode,tables);let value='';for(const g of groups){value+=g.join(',')+';';}
+  const base=unicodeMode ? fold : upper;console.log(`${value}:${groups === base.groups}:${trace}`);return;
+ }
+ const result=caseEquivalents(rune,unicodeMode,tables);const base=unicodeMode ? fold : upper;
+ const shared=result !== undefined && base.groups.some((g) => g === result);
+ console.log(`${result === undefined ? 'nil' : result.join(',')}:${result === base.byMember.get(rune)}:${shared}:${trace}`);
+}
+if(mode === 'equivalents') {
+ for(const unicodeMode of [false,true]) {
+  for(const r of json.node(field(root,'runes')).children){observe(number(r),unicodeMode);}
+  for(let r=0;r<=0x10ffff;r++){observe(r,unicodeMode);}
+ }
+} else {for(const flag of json.node(field(root,'flags')).children){observe(0,json.node(flag).text === 'true');}}

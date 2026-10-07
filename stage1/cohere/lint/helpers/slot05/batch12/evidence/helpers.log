@@ -1,0 +1,38 @@
+=== RUN   TestSlot05CaseTables
+    helper_test.go:74: 4 consumers, 904 captured strings, 112 signed-rune controls, 1144 upper groups, 1482 fold groups, 8 Go queries
+    helper_test.go:84: consumer coverage: {
+          "@next/next/no-html-link-for-pages": 383,
+          "@typescript-eslint/no-empty-object-type": 65,
+          "no-restricted-exports": 480,
+          "no-restricted-imports": 1266
+        }
+    helper_test.go:142: case_tables.a mutant "if(unicodeMode)" -> "if(!unicodeMode)" caught at output line 1 byte 0: mutant "fold:true:fold;", Go "upper:true:upper;"
+    helper_test.go:142: case_tables.a mutant "return uppercaseTables();" -> "return foldTables();" caught at output line 1 byte 0: mutant "fold:true:fold;", Go "upper:true:upper;"
+    helper_test.go:142: case_tables.a mutant "    if(unicodeMode)" -> "    uppercaseTables(); if(unicodeMode)" caught at output line 1 byte 17: mutant "upper:true:upper;upper;", Go "upper:true:upper;"
+--- PASS: TestSlot05CaseTables (3.22s)
+=== RUN   TestSlot05CaseEquivalents
+    helper_test.go:74: 4 consumers, 904 captured strings, 112 signed-rune controls, 1144 upper groups, 1482 fold groups, 2228448 Go queries
+    helper_test.go:84: consumer coverage: {
+          "@next/next/no-html-link-for-pages": 383,
+          "@typescript-eslint/no-empty-object-type": 65,
+          "no-restricted-exports": 480,
+          "no-restricted-imports": 1266
+        }
+    helper_test.go:142: case_equivalents.a mutant "tables(unicodeMode)" -> "tables(!unicodeMode)" caught at output line 1 byte 15: mutant "nil:true:false:fold;", Go "nil:true:false:upper;"
+    helper_test.go:142: case_equivalents.a mutant ".get(rune)" -> ".get(rune + 1)" caught at output line 37 byte 0: mutant "65,97:false:true:upper;", Go "nil:true:false:upper;"
+    helper_test.go:142: case_equivalents.a mutant "return group;" -> "if(group === undefined) { return undefined; } return group.slice();" caught at output line 38 byte 6: mutant "65,97:false:false:upper;", Go "65,97:true:true:upper;"
+--- PASS: TestSlot05CaseEquivalents (19.75s)
+=== RUN   TestSlot05CaseEquivalenceGroups
+    helper_test.go:74: 4 consumers, 904 captured strings, 112 signed-rune controls, 1144 upper groups, 1482 fold groups, 8 Go queries
+    helper_test.go:84: consumer coverage: {
+          "@next/next/no-html-link-for-pages": 383,
+          "@typescript-eslint/no-empty-object-type": 65,
+          "no-restricted-exports": 480,
+          "no-restricted-imports": 1266
+        }
+    helper_test.go:142: case_equivalence_groups.a mutant "tables(unicodeMode)" -> "tables(!unicodeMode)" caught at output line 1 byte 0: mutant "613,42893;5104,5112;7940,7948;9420,9446;65322,65354;65335,65367;66953,66992;68782,68846;308,309;413,626;893,1023;8083,80", Go "440,441;65314,65346;7984,7992;42936,42937;581,652;1219,1220;42812,42813;1223,1224;65336,65368;4295,11559;11452,11453;426"
+    helper_test.go:142: case_equivalence_groups.a mutant ".groups;" -> ".groups.slice();" caught at output line 1 byte 11615: mutant "270,1271;7760,7761;:false:upper;", Go "270,1271;7760,7761;:true:upper;"
+    helper_test.go:142: case_equivalence_groups.a mutant ".groups;" -> ".groups.slice(1);" caught at output line 1 byte 0: mutant "65314,65346;7984,7992;42936,42937;581,652;1219,1220;42812,42813;1223,1224;65336,65368;4295,11559;11452,11453;4261,11525;", Go "440,441;65314,65346;7984,7992;42936,42937;581,652;1219,1220;42812,42813;1223,1224;65336,65368;4295,11559;11452,11453;426"
+--- PASS: TestSlot05CaseEquivalenceGroups (3.31s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch12	26.288s

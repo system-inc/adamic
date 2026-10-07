@@ -1,0 +1,5 @@
+import type { CaseTables } from './types.a';
+export function caseEquivalents(rune: number, unicodeMode: boolean, tables: (unicodeMode: boolean) => CaseTables): readonly number[] | undefined {
+    const group = tables(unicodeMode).byMember.get(rune);
+    return group;
+}

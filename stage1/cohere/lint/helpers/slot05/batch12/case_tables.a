@@ -1,0 +1,5 @@
+import type { CaseTables } from './types.a';
+export function caseTables(unicodeMode: boolean, foldTables: () => CaseTables, uppercaseTables: () => CaseTables): CaseTables {
+    if(unicodeMode) { return foldTables(); }
+    return uppercaseTables();
+}

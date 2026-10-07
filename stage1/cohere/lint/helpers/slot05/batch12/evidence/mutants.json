@@ -1,0 +1,47 @@
+[
+  {
+    "test": "TestSlot05CaseTables",
+    "log_line": 9,
+    "witness": "helper_test.go:142: case_tables.a mutant \"if(unicodeMode)\" -> \"if(!unicodeMode)\" caught at output line 1 byte 0: mutant \"fold:true:fold;\", Go \"upper:true:upper;\""
+  },
+  {
+    "test": "TestSlot05CaseTables",
+    "log_line": 10,
+    "witness": "helper_test.go:142: case_tables.a mutant \"return uppercaseTables();\" -> \"return foldTables();\" caught at output line 1 byte 0: mutant \"fold:true:fold;\", Go \"upper:true:upper;\""
+  },
+  {
+    "test": "TestSlot05CaseTables",
+    "log_line": 11,
+    "witness": "helper_test.go:142: case_tables.a mutant \"    if(unicodeMode)\" -> \"    uppercaseTables(); if(unicodeMode)\" caught at output line 1 byte 17: mutant \"upper:true:upper;upper;\", Go \"upper:true:upper;\""
+  },
+  {
+    "test": "TestSlot05CaseEquivalents",
+    "log_line": 21,
+    "witness": "helper_test.go:142: case_equivalents.a mutant \"tables(unicodeMode)\" -> \"tables(!unicodeMode)\" caught at output line 1 byte 15: mutant \"nil:true:false:fold;\", Go \"nil:true:false:upper;\""
+  },
+  {
+    "test": "TestSlot05CaseEquivalents",
+    "log_line": 22,
+    "witness": "helper_test.go:142: case_equivalents.a mutant \".get(rune)\" -> \".get(rune + 1)\" caught at output line 37 byte 0: mutant \"65,97:false:true:upper;\", Go \"nil:true:false:upper;\""
+  },
+  {
+    "test": "TestSlot05CaseEquivalents",
+    "log_line": 23,
+    "witness": "helper_test.go:142: case_equivalents.a mutant \"return group;\" -> \"if(group === undefined) { return undefined; } return group.slice();\" caught at output line 38 byte 6: mutant \"65,97:false:false:upper;\", Go \"65,97:true:true:upper;\""
+  },
+  {
+    "test": "TestSlot05CaseEquivalenceGroups",
+    "log_line": 33,
+    "witness": "helper_test.go:142: case_equivalence_groups.a mutant \"tables(unicodeMode)\" -> \"tables(!unicodeMode)\" caught at output line 1 byte 0: mutant \"613,42893;5104,5112;7940,7948;9420,9446;65322,65354;65335,65367;66953,66992;68782,68846;308,309;413,626;893,1023;8083,80\", Go \"440,441;65314,65346;7984,7992;42936,42937;581,652;1219,1220;42812,42813;1223,1224;65336,65368;4295,11559;11452,11453;426\""
+  },
+  {
+    "test": "TestSlot05CaseEquivalenceGroups",
+    "log_line": 34,
+    "witness": "helper_test.go:142: case_equivalence_groups.a mutant \".groups;\" -> \".groups.slice();\" caught at output line 1 byte 11615: mutant \"270,1271;7760,7761;:false:upper;\", Go \"270,1271;7760,7761;:true:upper;\""
+  },
+  {
+    "test": "TestSlot05CaseEquivalenceGroups",
+    "log_line": 35,
+    "witness": "helper_test.go:142: case_equivalence_groups.a mutant \".groups;\" -> \".groups.slice(1);\" caught at output line 1 byte 0: mutant \"65314,65346;7984,7992;42936,42937;581,652;1219,1220;42812,42813;1223,1224;65336,65368;4295,11559;11452,11453;4261,11525;\", Go \"440,441;65314,65346;7984,7992;42936,42937;581,652;1219,1220;42812,42813;1223,1224;65336,65368;4295,11559;11452,11453;426\""
+  }
+]
