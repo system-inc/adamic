@@ -21,9 +21,13 @@ normalization rules, including combining repeated header names.
 An `AdamicPanic` is logged with `console.error(message)` and becomes status 500
 with body `internal error`; later requests still run. Other errors propagate.
 File and argument functions panic with `<name>: not available on Workers`.
-UTF-8 functions share their implementation with the Node oracle.
+The Workers UTF-8 functions use TextEncoder; the independent Node oracle uses Buffer.
 
 `node internal/worker/run.mjs output/worker.mjs requests.jsonl` prints one JSON
 response per request, with status, headers as ordered pairs, and body. Requests
 provide method, URL, headers as pairs, and an optional body. Tests use the same
 bridge against source stripped by Node and the compiled handler.
+
+Run `ADAMIC_WORKER_MUTANTS=1 go test -count=1 -v ./internal/worker -run '^TestWorkerMutants$'`
+to prove the named checks catch each mutant in a scratch compiler copy. Ordinary
+test runs skip this opt-in test.

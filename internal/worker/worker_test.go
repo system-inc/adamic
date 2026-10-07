@@ -234,7 +234,7 @@ import assert from 'node:assert/strict';
 const oldBuffer = Buffer;
 const runtime = await import(process.argv[1]);
 const texts = ['', 'ascii', 'héllo 世界 🌍', '\ud800', '\udfff', 'a\ud800b', '\ud800\udfff', ''];
-// Buffer is the pre-change oracle's independent UTF-8 witness.
+// Buffer is the oracle's independent UTF-8 witness.
 for (const text of texts) {
  const bytes = oldBuffer.from(text, 'utf8');
  assert.equal(runtime.utf8Length(text), bytes.length);

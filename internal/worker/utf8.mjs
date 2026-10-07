@@ -1,4 +1,4 @@
-// Shared by the Node oracle and Workers. TextEncoder writes lone surrogates as U+FFFD.
+// Workers UTF-8 runtime. TextEncoder writes lone surrogates as U+FFFD.
 // The last text is cached because byte walks ask about the same string repeatedly.
 export function createUtf8(panic) {
 	const encoder = new TextEncoder();
