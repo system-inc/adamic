@@ -1,5 +1,5 @@
 Re-landed nominal Error classes on the pinned batch 3 parent; all three audit failures are fixed-now.
-Merge parents: a37ebdb0913eca9d3d6e8adbe8f01bb733da52eb and 75a30c4fbe2e26f57cce0fa924e8b20cf8f95926; merge SHA recorded after committing.
+Merge SHA: 701c5ad6a38432844425cd2ba353155940f863c6; parents a37ebdb0913eca9d3d6e8adbe8f01bb733da52eb and 75a30c4fbe2e26f57cce0fa924e8b20cf8f95926.
 Validation: every affected package passes, including uncached native 421.276s and oracle 528.788s; Linux counts, vet and stage 3 byte audit pass.
 Mutants: fourteen final root-cause mutants caught by their intended assertions; inherited exception and range mutants remain in the affected gate.
 Not covered: the entire test262 corpus and the whole go test ./... gate; unsupported opaque reflection and host virtual formatting have named boundaries.
