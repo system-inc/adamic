@@ -1,0 +1,10 @@
+
+ Performance counter stats for 'taskset -c 3 /workspace/scratch/release-lto/implementation/baseline/parse --manifest /workspace/scratch/release-lto/implementation/compiler.txt --count' (10 runs):
+
+   <not supported>      cycles:u                                                              
+   <not supported>      instructions:u                                                        
+   <not supported>      cache-misses:u                                                        
+   <not supported>      branch-misses:u                                                       
+
+            0.9061 +- 0.0236 seconds time elapsed  ( +-  2.60% )
+

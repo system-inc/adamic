@@ -1,0 +1,16 @@
+==103664== Callgrind, a call-graph generating cache profiler
+==103664== Copyright (C) 2002-2017, and GNU GPL'd, by Josef Weidendorfer et al.
+==103664== Using Valgrind-3.24.0 and LibVEX; rerun with -h for copyright info
+==103664== Command: /workspace/scratch/release-lto/implementation/thin/service /tmp/wasm-requests-profile/requests.jsonl run
+==103664== 
+==103664== For interactive control, run 'callgrind_control -h'.
+==103664== brk segment overflow in thread #1: can't grow to 0x483c000
+==103664== (see section Limitations in user manual)
+==103664== NOTE: further instances of this message will not be shown
+serve:start
+serve:stop
+==103664== 
+==103664== Events    : Ir
+==103664== Collected : 86530992097
+==103664== 
+==103664== I   refs:      86,530,992,097

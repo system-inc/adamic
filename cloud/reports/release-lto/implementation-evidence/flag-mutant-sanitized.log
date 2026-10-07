@@ -1,0 +1,5 @@
+--- FAIL: TestNonShippingFlagsStayIdentical (0.00s)
+    release_test.go:32: sanitized release=true: got ["-std=c11" "-Wall" "-Wextra" "-Werror" "-pedantic" "-Wno-unused-variable" "-Wno-unused-but-set-variable" "-Wno-unused-function" "-Wno-unused-parameter" "-Wno-self-assign" "-ffp-contract=off" "-fno-optimize-sibling-calls" "-O1" "-g" "-fsanitize=address,undefined" "-fno-sanitize-recover=all" "-fuse-ld=lld"], want "-std=c11\x00-Wall\x00-Wextra\x00-Werror\x00-pedantic\x00-Wno-unused-variable\x00-Wno-unused-but-set-variable\x00-Wno-unused-function\x00-Wno-unused-parameter\x00-Wno-self-assign\x00-ffp-contract=off\x00-fno-optimize-sibling-calls\x00-O1\x00-g\x00-fsanitize=address,undefined\x00-fno-sanitize-recover=all"
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.004s
+FAIL

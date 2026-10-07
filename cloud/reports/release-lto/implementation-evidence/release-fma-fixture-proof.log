@@ -1,0 +1,7 @@
+=== RUN   TestReleaseFixtureKeepsArithmeticUnfused
+=== PAUSE TestReleaseFixtureKeepsArithmeticUnfused
+=== CONT  TestReleaseFixtureKeepsArithmeticUnfused
+    release_fma_test.go:72: FMA target -march="haswell"; Node and ThinLTO "0\n0\n0\n"; link-option omission "5.551115123125783e-17\n-5.551115123125783e-17\n-8.326672684688674e-19\n"
+--- PASS: TestReleaseFixtureKeepsArithmeticUnfused (1.37s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	1.378s

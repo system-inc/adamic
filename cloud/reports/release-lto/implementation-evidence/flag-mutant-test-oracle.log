@@ -1,0 +1,6 @@
+--- FAIL: TestNonShippingFlagsStayIdentical (0.00s)
+    release_test.go:40: ordinary oracle/test flags changed: ["-std=c11" "-Wall" "-Wextra" "-Werror" "-pedantic" "-Wno-unused-variable" "-Wno-unused-but-set-variable" "-Wno-unused-function" "-Wno-unused-parameter" "-Wno-self-assign" "-ffp-contract=off" "-fno-optimize-sibling-calls" "-O2" "-flto=thin"]
+    release_test.go:40: ordinary oracle/test flags changed: ["-std=c11" "-Wall" "-Wextra" "-Werror" "-pedantic" "-Wno-unused-variable" "-Wno-unused-but-set-variable" "-Wno-unused-function" "-Wno-unused-parameter" "-Wno-self-assign" "-ffp-contract=off" "-fno-optimize-sibling-calls" "-O2" "-flto=thin" "-fuse-ld=lld"]
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.004s
+FAIL

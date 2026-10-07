@@ -1,0 +1,4 @@
+Benchmark 1: taskset -c 3 /workspace/scratch/release-lto/implementation/thin/parse --manifest /workspace/scratch/release-lto/implementation/compiler.txt --count
+0
+  Time (abs ≡):        721.7 ms               [User: 673.4 ms, System: 48.0 ms]
+ 

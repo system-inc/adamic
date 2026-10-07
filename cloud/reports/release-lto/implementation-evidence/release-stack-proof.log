@@ -1,0 +1,15 @@
+=== RUN   TestReleaseRecursionKeepsFrames
+=== RUN   TestReleaseRecursionKeepsFrames/stack_forever.a
+    release_stack_test.go:63: gate cache node miss
+    release_stack_test.go:98: link-only omission caught: mutant loops past deadline where Node and shipped release panic
+=== RUN   TestReleaseRecursionKeepsFrames/stack_tail_call.a
+    release_stack_test.go:63: gate cache node miss
+    release_stack_test.go:96: link-only omission caught by Node disagreement: exit 0 stdout "0\n0\nend\n" stderr "" (<nil>)
+--- PASS: TestReleaseRecursionKeepsFrames (17.02s)
+    --- PASS: TestReleaseRecursionKeepsFrames/stack_forever.a (16.44s)
+    --- PASS: TestReleaseRecursionKeepsFrames/stack_tail_call.a (0.58s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	17.024s

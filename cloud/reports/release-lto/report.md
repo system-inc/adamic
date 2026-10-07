@@ -1,390 +1,257 @@
-Built: unchanged generated C and 48 separately archived runtime units, native -O2 versus ThinLTO; baseline production flags unchanged.  
-Commits: runtime base 1740da37b800ad2793218bec38ebe723cb80ec33; evidence f362559fbec5ab56a5081195002d70ca69df1a22; harness pins below.  
-Commands and outputs: pinned instrument check and five interleaved LTO rounds recorded with wall/user time; full Node/Go byte parity and native/oracle gate PASS.  
-Mutants: compiled SourceFile-to-XourceFile and health-status-200-to-201 outputs caught by byte comparison; summary-plus-one and footer-event-plus-one accounting mutants rejected; pinned output-line mutant rejected.  
-Not covered: full repository gate, other LLVM versions/platforms, WASI execution, a generated-C translation-unit split, a hardware-cycle ranking, host-wide isolation, or a production default change.
+Built: shipped native release ThinLTO, complete semantic link flags, opt-in release oracle, recursion/FMA mutant proofs; ordinary lanes unchanged.  
+Commits: implementation b2c8836c9934e343f3300fb409524ab213828941; runtime 36669add9db2bbc06d486a58c37024f880e94a75 merged first as 574ce70a58cde3f27715bc8ceadd437ae6dfbc41.  
+Commands and outputs: release oracle 420 fixtures PASS; parse 15.67% and service 13.83% less user time; full good outputs identical.  
+Mutants: link-only tail-call and contraction omissions caught; nonshipping LTO policy mutants caught; compiled AST/service byte changes caught; release-oracle one-byte change caught; instruction-accounting +1 caught.  
+Not covered: complete root/cohere gates, hardware cycles/IPC, host-wide isolation, macOS execution, WASI/TSGo shipping execution, or LTO atop activated SCC stack-check elimination.
 
-# Native release ThinLTO, October 7, 2026
+# Shipped native release ThinLTO
 
-## Inputs and tools
+The default is implemented for native `adamic build` shipping output. Counted,
+sanitized, ordinary test/oracle and WASI policies retain their exact previous
+flags. The original measurement and instrument-check report is preserved in
+[measurement.md](measurement.md), with its original raw evidence. This report
+supersedes that report's proposal with the approved implementation and a fresh
+comparison after merging the current runtime.
 
-The branch starts at `origin/area/runtime`,
-`1740da37b800ad2793218bec38ebe723cb80ec33`. No compiler, parser, scanner, runtime,
-or sanitizer source was edited. Both variants use the same generated C bytes.
-The parse-speed branch supplies the harness, not its subsequent compiler changes.
+## Implementation and semantic flags
 
-- Parse harness: `origin/codex/parse-speed`, `2cdf8dd3faff065390720cfc8bc9b09a1c9e62d2`,
-  `internal/native/performance/parse-speed/prepare.py`. It reconstructs batch 8
-  from `4189abd3490757e8abe13722ceb365c451293e92` and removes only the rule traversal
-  in the scratch parse driver. Context construction, line table, parent map,
-  parser/scanner, sorting and cleanup remain. Measured invocation:
-  `parse --manifest compiler.txt --count`.
-- Corpus: TypeScript 6.0.3, `050880ce59e30b356b686bd3144efe24f875ebc8`, exactly 77
-  `src/compiler/*.ts` files. All 77 SHA-256 entries match the upstream harness's
-  corpus manifest. cohere is `715ba94f3608a6500086b1076ce5cb7e51b836db`.
-- Service: the **native command arm** of `origin/codex/wasm-requests-profile`,
-  `a4e0902afc35cdc79c09fa7e58fa8d56b2189f55`. Its command driver, service source,
-  generator and Node expectation calculation are retained unchanged apart from
-  scratch import/file paths. Six routes, 100,000 seeded requests, 417,755,377
-  input bytes; input SHA-256
-  `cba64bd86fdd84d7086973a145a4e8419dd31937470728efe8bf8db156a75c39`.
-  Measured command: `service requests.jsonl run`. Warm timing uses the original
-  `warm` argument, which runs a batch before its `serve:start` marker.
+`cmd/adamic/tsgo.go` selects `Options{Release: true}` for builds. `Flags` adds
+`-flto=thin` only for native, uncounted, unsanitized release builds.
+`RuntimeLibrary` already includes the complete flags, compiler identity and
+runtime snapshot in its cache key, so its existing cache separates ThinLTO
+bitcode archives from ordinary machine-code archives. Every runtime C unit
+uses those flags. `LinkFlags` passes **the entire compilation list** to the
+combined generated-C compilation/link invocation, adding `-fuse-ld=lld` on
+this Linux box. Darwin uses its platform linker. `BuildTSGo` uses the same
+link policy; its external Go archive remains machine code.
 
-Linux 6.18.44, AMD EPYC 9V74, `nproc=5`, cgroup `cpu.max=400000 100000`, 17.6 GB
-reported memory. Go 1.27.1, Node 24.19.0, Valgrind/Callgrind 3.24.0.
-clang, lld and llvm-ar are **20.1.8**, LLVM revision
-`87f0227cb60147a26a1eeb4fb06e3b505e9c7261`.
-The baseline uses **GNU ld 2.44**; ThinLTO uses **lld 20.1.8**.
-[versions.log](evidence/versions.log) preserves the complete version output.
+Semantic options in the policy are `-std=c11`, `-ffp-contract=off`,
+`-fno-optimize-sibling-calls`, and conditional `-DADAMIC_COUNT`,
+`-DADAMIC_SLABS`, `-march=...`, `--target=wasm32-wasi`, `--sysroot=...`,
+`-DADAMIC_TARGET_WASI=1` and `-mno-atomics`. Warning, optimization and
+sanitizer arguments also reach the link. There is no duplicated allowlist
+that can omit a future flag. See [native-builds.md](../../../docs/native-builds.md)
+and the comment above `native.Flags`.
 
-`bash cloud/setup.sh` passed: Go ready 0s; clang ready 0s; Node ready 1s;
-submodules ready 1s; build cache warm 111s; done 111s on 5 processors.
-Every build/test shell sourced `/workspace/adamic-tools/env.sh`.
-Valgrind was absent. `sudo` was unavailable and apt had no package candidate;
-extracting Debian's `valgrind_3.24.0-3_amd64.deb` into scratch worked.
+`TestNonShippingFlagsStayIdentical` compares NUL-separated argument bytes and
+order against independent literals from before this change, for ordinary
+oracle/test, counted, sanitized and combined count/sanitize policies.
+Three actual source-policy mutants independently enable ThinLTO for ordinary,
+counted or sanitized lanes; each fails that test. The CLI audit also records
+actual compilation and link invocations for all three build modes.
 
-## Instrument check before the LTO comparison
+## Node-held semantic proofs
 
-Core 3 is permitted (affinity 0–4). Both programs used taskset -c 3 and
-GOMAXPROCS=1 for Go. The same 77-file manifest and upstream Go cohere harness
-were used: it forces the line table and keeps the parsed source file alive.
-The native is today's unchanged runtime-base release executable.
+The release builds of `stack_forever.a` and `stack_tail_call.a` both match
+Node's stack panic and exit 70. The actual compiler wrapper removes only
+`-fno-optimize-sibling-calls` from the generated-program compilation/link;
+runtime `clang -c` invocations keep it. The unbounded mutant loops past a
+two-second deadline. The self-tail-call mutant exits 0 and prints
+`0\n0\nend\n`, disagreeing with Node. The wrapper audit verifies both link
+mutations and preserved runtime compilation flags.
 
-**perf stat -r 10 -e cycles,instructions,cache-misses,branch-misses reports
-“not supported” for all four events**, on a probe and the actual native/Go
-commands. perf_event_paranoid is 2, but the result is unsupported events,
-not permission denied. perf 6.12.107 and dependencies were extracted from
-Debian trixie because perf was absent. The requested fallback is **hyperfine
-user time**, ten interleaved pairs with alternating native/Go order, pinned
-to core 3. No concurrent test, build, profiler or other benchmark ran.
-One-minute load was 0.40–0.49. Background container services remained;
-host-wide exclusive isolation cannot be certified from this container.
+The new `.a` fixture [release_fma.a](../../../internal/oracle/testdata/release_fma.a)
+loads operands through program arguments to prevent constant folding. It tests
+`0.1*10-1`, `(1/3)*3-1` and `0.1*0.1-0.010000000000000002`, with the operands
+parsed from decimal strings. Node and protected release ThinLTO print
+`0\n0\n0\n`. The mutant drops only `-ffp-contract=off` from the generated-C
+compilation/link, retaining the protected runtime archive. This EPYC has FMA;
+the check uses `-march=haswell` on **both** the good and mutant release builds.
+The mutant prints `5.551115123125783e-17`, `-5.551115123125783e-17`, and
+`-8.326672684688674e-19`, so fusion is actually visible. A separate volatile-C
+arithmetic probe also catches the omission. No warning or sanitizer kills
+these mutants; the Node-held output or termination comparison does.
 
-| Program | Whole-process Callgrind Ir | Best of 10 wall s | Best of 10 user s |
-| --- | ---: | ---: | ---: |
-| Native | 6,503,615,880 | 0.847628 | 0.797904 |
-| Go | 1,598,015,620 | 0.170946 | 0.144318 |
+## Whole release oracle
 
-Native/Go is **5.529x in user time**, versus **4.070x in this fresh instruction
-profile**: 35.8% apart, outside 10%. The historical 6.50G/1.685G (3.9x) ratio
-is also outside the band. The fresh Go count is 1.598G, not historical 1.685G;
-no cause for that difference is established here. Go profiling uses
-GODEBUG=asyncpreemptoff=1 to run under Valgrind; hyperfine uses normal preemption.
-**The instruction ranking is not confirmed by this instrument check.**
-User time measures scheduled execution, not cycles or IPC; no cycle ratio
-can honestly be supplied on this box.
+The environment switch `ADAMIC_ORACLE_RELEASE=1` adds the release lane;
+ordinary test runs skip it. Every registered fixture is checked/lowered again
+and built directly with `native.Options{Release: true}`, without a CPU override:
+these are the **exact generic shipped flags**. Stdout, stderr and status match
+source on Node, or the same explicit inserted-check JavaScript oracle used by
+the ordinary lane. Inserted-check fixtures must distinguish unchecked Node.
+Unsupported entries must still refuse explicitly. Specialized permission,
+stream, leak and counter probes retain their original policies.
 
-### Simulated cache/branch reranking
+~~~sh
+source /workspace/adamic-tools/env.sh
+ADAMIC_ORACLE_RELEASE=1 ADAMIC_GATE_UNCACHED=1 \
+  go test -v -count=1 -timeout 30m ./internal/oracle \
+  -run '^TestRelease(AgreesWithNode|OracleCatchesOneByte)$' -parallel 4 \
+  > release-oracle-final.log 2>&1
+~~~
 
-The requested simulation ran with --cache-sim=yes --branch-sim=yes on an
--O2 -g baseline build. All runtime and generated-program optimization flags
-remain identical. Release and debug executable .text bytes are identical,
-SHA-256 dcbd5108c285686ad30ffae8db0a27b9c55542cbbce54ae676d93525cc16121a.
-DWARF separates inline field checks and inline slab code from generated callers.
-The simulator model is I1/D1 32KiB, 64-byte lines, 8 ways; LL 256MiB,
-direct mapped. This is a simulator model, not a measurement of the EPYC
-cache hierarchy or allocator locality.
+PASS: all **420** fixture subtests, 142.073 seconds including the compiled
+one-byte output mutant. Node observation cache: 0 hits, 431 misses. The additional
+misses come from checks and the mutant, not additional fixture-table entries.
+The new FMA fixture also passes the ordinary sanitized differential lane
+(1.387 seconds), and its count row was added without changing any existing row.
+This switch can run nightly or once per main push; it is not added to ordinary
+runs.
 
-Callgrind has no hardware cycle event here. To give the permitted simulation
-a concrete ranking, the central **hypothetical cycle-cost model** is
-Ir + 4*(I1mr+D1mr+D1mw) + 50*(ILmr+DLmr+DLmw) + 15*(Bcm+Bim).
-L1/LL penalties are additive. Overlap, memory-level parallelism, frequency,
-out-of-order execution and real predictor behavior are not modeled.
-Sensitivity uses (L1,LL,branch) = (2,40,8) and (10,200,25), versus central
-(4,50,15). These assumptions must not be read as measured cycles.
+## Box, setup and instrument limitation
 
-| Disjoint bucket | Ir rank | Central model rank | Ir M | L1 misses M | LL misses M | Branch mispredicts M |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| Remainder: parser, arrays, driver, libc and unattributed inline | 2 | 1 | 1514.968 | 55.806 | 1.128 | 7.606 |
-| Scanner generated control | 1 | 2 | 1585.314 | 18.405 | 0.001 | 6.026 |
-| Character reads and UTF-16 indexing | 3 | 3 | 960.752 | 1.740 | 0.105 | 0.818 |
-| Releases and child destruction | 4 | 4 | 566.150 | 5.555 | 0.000 | 16.597 |
-| Retains | 6 | 5 | 331.008 | 1.958 | 0.000 | 6.670 |
-| String equality | 5 | 6 | 339.705 | 1.879 | 0.000 | 4.498 |
-| File reading and UTF-8 input decode | 7 | 7 | 225.804 | 0.437 | 0.102 | 0.002 |
-| Node construction generated control | 8 | 8 | 212.506 | 3.456 | 0.000 | 0.057 |
-| Object field and call plumbing | 9 | 9 | 194.088 | 4.237 | 0.000 | 0.474 |
-| Allocation entry and libc allocator | 10 | 10 | 146.184 | 2.402 | 0.162 | 1.101 |
-| Slab allocator | 11 | 11 | 123.057 | 0.504 | 0.001 | 0.976 |
-| Other string operations | 12 | 12 | 95.050 | 1.724 | 0.094 | 0.450 |
-| Substrings | 14 | 13 | 81.235 | 1.900 | 0.000 | 0.028 |
-| Line table generated control | 13 | 14 | 83.446 | 0.000 | 0.000 | 0.201 |
-| Parent map generated control | 15 | 15 | 44.350 | 1.379 | 0.000 | 0.921 |
+The box is Linux x86-64 under KVM, AMD EPYC 9V74, 5 visible CPUs (`nproc=5`),
+a four-core cgroup quota (`cpu.max=400000 100000`) and 17.6 GB reported memory.
+clang/lld 20.1.8, LLVM revision `87f0227cb60147a26a1eeb4fb06e3b505e9c7261`;
+Go 1.27.1; Node 24.19.0; Callgrind 3.24.0; hyperfine 1.19.0.
+The ordinary linker is GNU ld 2.44. Production's archive selection on this
+PATH falls back to GNU `ar`; lld reads the archived LLVM bitcode successfully.
 
+`bash cloud/setup.sh` initially failed because the historical evidence copy
+`evidence/go_parse.go` was accidentally treated as a root-module Go package
+and imported the upstream parser shim. It is now preserved as `.go.txt`, with
+the same content hash. Setup retry passed: Go 0s, clang 0s, Node 0s, submodules
+0s, cache warm 86s, total 86s. Build/test shells source
+`/workspace/adamic-tools/env.sh`.
 
-Moved in all three models: remainder 2→1, scanner 1→2, retains 6→5, string
-equality 5→6, substrings 14→13, line table 13→14. In the high-penalty model,
-releases additionally move 4→3 and character reads 3→4. **Slab allocator stays
-11th**, separate from allocation entry/libc (10th), **retains** (5th modeled)
-and **releases/child destruction** (4th central, 3rd high).
-Slab includes inline take/give/chunk/list management and deallocation;
-allocation entry bookkeeping and libc remain separate. This reranks the current
-baseline using the upstream mechanism split extended for today's slab functions.
-It does not assert that older release bucket definitions stayed identical.
-The remainder includes generated parser/arrays and unattributed inline;
-simulation cannot turn it into exact per-mechanism hardware cycle attribution.
+The earlier ten-pair pinned instrument check found native/Go **5.529x user
+time**, versus **4.070x Callgrind instructions**, outside the 10% band. The
+instruction ranking is therefore **not confirmed**. Hardware `perf stat -r 10`
+events were unsupported, rather than denied by `perf_event_paranoid=2`.
+The permitted cache/branch simulation is preserved in the original report.
+Its hypothetical central cost model moves remainder 2 to 1, scanner 1 to 2,
+retains 6 to 5, string equality 5 to 6, substrings 14 to 13 and line table
+13 to 14. Releases remain 4th centrally, move to 3rd with higher miss penalties;
+slab allocator stays 11th, separate from allocation entry/libc at 10th.
+These are **model rankings, not measured cycles**; working PMU counters are
+still needed to establish cycle ranks. The report and evidence retain that
+limitation explicitly.
 
-All 13 simulated self-event sums equal the profile's totals footer.
-Its summary exceeds that footer by exactly **2 Ir**, with zero difference
-in every other event. That observed accounting discrepancy is retained,
-not rounded away or assigned to a bucket. Ranks use self costs.
-The footer's final event +1 mutant is rejected by the same reconciliation
-function. Raw profiles, vectors, ranks, assumptions and logs are committed.
-**An actual cycle ranking remains unmeasured** and needs a host with working
-hardware PMU counters.
+## Post-implementation measurements
 
-## Decision
+Fresh production-built baseline and ThinLTO binaries use the same generated
+C and current runtime bytes. The parse driver is batch 8's parse-only harness,
+with the same 77 TypeScript files; the service is the six-route `a4e0902`
+harness. Corpus and harness pins are in the original report.
 
-**Propose ThinLTO as the native release default on supported clang/linker pairs.**
-Both workloads exceed the requested 10% threshold in pinned, interleaved wall time.
-Parse saves 13.19% wall / 16.81% user time; service saves 15.06% wall / 15.26% user time.
-The parse instruction reduction is 9.14%; the service instruction reduction is 6.02%.
-Every good output comparison passed. This is a proposal, with
-measurements and reproduction helpers, not an implementation of the default.
-Sanitized lanes stay as they are.
-
-The material cost is the parser's link: a cached runtime archive still leaves
-16.08 seconds of generated-C compilation and LTO linking, against 2.52 seconds
-without LTO. Its binary also grows 37.8%. The service has a smaller binary and
-cheaper cold build, but its cached build grows from 0.208 to 0.458 seconds.
-
-## Measurements
-
-These are the final runs after the instrument check: `taskset -c 3`, hyperfine
-1.19.0, five pairs with alternating order and no concurrent build/test/profiler.
-Each hyperfine invocation uses `--runs 1 --warmup 0 --shell none --show-output`,
-so separate invocations alternate programs rather than timing one program five
-times and then the other. The binaries/corpus had already been warmed.
-Best wall and best user values are selected independently, as requested.
-Percent saved is `100 * (1 - ThinLTO / baseline)`.
-
-| Workload | Version | Callgrind Ir | Best wall s | Best user s |
-| --- | --- | ---: | ---: | ---: |
-| Parse | Baseline | 6,503,615,880 | 0.917109 | 0.898100 |
-| Parse | ThinLTO | 5,908,993,714 | 0.796108 | 0.747111 |
-| Service | Baseline | 135,285,492,290 | 11.096163 | 10.699734 |
-| Service | ThinLTO | 127,147,493,270 | 9.425452 | 9.067095 |
-
-| Round | Parse base wall/user s | Parse ThinLTO wall/user s | Service base wall/user s | Service ThinLTO wall/user s |
-| --- | ---: | ---: | ---: | ---: |
-| 1 | 0.934972 / 0.899309 | 0.815627 / 0.795878 | 11.567951 / 11.101677 | 9.769813 / 9.346118 |
-| 2 | 0.956361 / 0.931587 | 0.839235 / 0.790218 | 11.461074 / 11.113848 | 9.727791 / 9.349506 |
-| 3 | 0.940213 / 0.915040 | 0.823577 / 0.791032 | 11.146315 / 10.776314 | 9.571187 / 9.144419 |
-| 4 | 0.917109 / 0.899976 | 0.799632 / 0.747111 | 11.096163 / 10.699734 | 9.425452 / 9.067095 |
-| 5 | 0.919115 / 0.898100 | 0.796108 / 0.779740 | 11.096908 / 10.730139 | 10.026774 / 9.619812 |
-
-One-minute load: parse 0.49–0.57; service 0.57–0.97. Raw JSON retains user,
-system and wall time, command, output logs and all three load averages. No other
-benchmark, build, test or profiler ran concurrently. Background container
-services remained; host isolation and frequency are not independently verifiable.
-Hardware cycles/cache/branch counts are unavailable, so user time is the requested
-fallback, not a renamed cycle measurement. Earlier unpinned and warmed-marker
-wall runs are preserved as supplemental evidence; the table and decision use
-the final pinned series.
-
-Ir is whole-process: startup, file reads/UTF-8 decoding, request splitting or
-manifest handling, work, output and cleanup. The service is the harness's native
-`run` command, including input preparation inside that command. Instructions were
-collected separately, not under hyperfine. No sanitizers, `ADAMIC_COUNT`, PGO or
-extra optimization was used. Callgrind's nonfatal `brk segment overflow` warning
-is retained; each profile completed with exit 0, matching stdout and reconciled
-self costs. Raw compressed profiles are committed. Only the separate simulation
-build adds `-g`; its `.text` bytes equal the baseline's exactly.
-
-## Build cost and size
-
-These are native backend builds from already emitted C: runtime compilation,
-archiving, generated-C compilation and linking. Go compiler construction,
-Adamic checking/lowering/emission, downloads and setup are excluded. Cold means
-a new empty artifact directory and no `runtime.a`, not flushed OS page caches.
-Each workload was cold-built independently, then rebuilt with that same runtime
-archive cached. No ThinLTO backend cache was enabled. All four independently
-rebuilt binaries are byte-identical to the timed executables.
-
-| Workload | Baseline cold wall/user s | ThinLTO cold wall/user s | Baseline cached wall/user s | ThinLTO cached wall/user s | Baseline bytes | ThinLTO bytes |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| Parse | 5.102981 / 4.481244 | 19.448743 / 18.735153 | 2.521755 / 2.415769 | 16.076042 / 16.489838 | 971,936 | 1,339,432 |
-| Service | 2.705089 / 2.105590 | 2.270272 / 2.335112 | 0.207710 / 0.179252 | 0.458260 / 1.047572 | 406,816 | 163,056 |
-
-The ordinary archive is 511,640 bytes; the ThinLTO archive is 667,544 bytes
-(+30.5%). Parse executable size grows 37.8%; service size falls 59.9%.
-Size is complete unstripped ELF file length, consistently without `-g`.
-Runtime frontends defer machine-code generation with ThinLTO; that work moves
-into the link and is paid again for a new generated program.
-
-The final independent cold/cached builds ran with no concurrent benchmark,
-test or profiler, at one-minute load 0.94–0.98. Builds use ordinary toolchain
-parallelism, not core-3 execution pinning; ThinLTO backend workers can make
-aggregate child user time exceed wall time. Every command and child user/system
-time is recorded. Earlier builds with one Callgrind process in the background
-are retained as supplemental evidence, not the primary table. All final fresh
-binaries are byte-identical to the measured binaries.
-
-## Byte parity and mutants
-
-Every measured stdout and ordinary stderr matched its baseline. Parse count
-mode prints only `0\n`, so it is insufficient as an AST correctness check.
-Additional baseline and ThinLTO builds of the whole-tree parser driver matched both
-independent typescript-go and source on Node for all 77 files:
-**44,766,682 identical bytes**, SHA-256
+Both full AST outputs match Node and Go, **44,766,682 bytes**, SHA-256
 `8ae015600498b915cc25abab82730299451ae990b50478980d5a3bc465801bfe`.
-This uses the same parser/scanner but a separate AST-printing driver; it does
-not claim that the count-only Context driver's internal parent array is fully
-observed by its stdout.
+Both full service outputs match Node, **8,018,702 bytes**, including the checksum
+`7394547`. Actual compiled same-length mutants change `SourceFile` to
+`XourceFile` (first differing byte 14) and health status 200 to 201 (byte 12);
+both are caught by the full-byte comparison despite unchanged checksum.
 
-Both service variants matched source on Node for **every full response**,
-8,018,694 JSONL bytes (SHA-256
-`7fa190641de38a460fcc666516e219969cef8f2adda92a0c6082a8f9cfdb384b`),
-plus the final checksum line, 8,018,702 compared bytes. Checksum is 7,394,547
-UTF-16 units. The original four independent service semantic pins passed too.
-A checksum alone is not accepted as evidence of byte parity.
+Hardware events remain unsupported on the fresh ten-run perf probe. Timings use
+the specified hyperfine fallback: core 3, five interleaved rounds, alternating
+baseline/ThinLTO order, after an explicit untimed warmup of each binary. Each
+invocation has `--runs 1 --warmup 0 --shell none --show-output`; output is checked
+on every run. Best wall and best user are selected independently. No build, test
+or profiler ran concurrently with these timings. Background container services
+remain; host-wide isolation/frequency cannot be certified.
 
-| Mutant actually compiled/run | Intended catcher | Observation |
-| --- | --- | --- |
-| AST generated C changes the SourceFile kind to XourceFile | Whole-AST byte comparison against Go/Node | Exit 0, equal 44,766,682-byte lengths; first differing byte 14 |
-| Service generated C changes health status 200 to 201 | Full response comparison against Node | Exit 0, equal 8,018,702-byte lengths and unchanged checksum; first differing byte 12 |
-| Callgrind summary only increased by 1 | Self-cost reconciliation | `callgrind self costs do not sum to summary` |
+| Workload | Variant | Callgrind Ir | Best wall s | Best user s |
+| --- | --- | ---: | ---: | ---: |
+| parse | baseline | 6,254,103,417 | 0.839264 | 0.798564 |
+| parse | thin | 5,658,151,583 | 0.721729 | 0.673444 |
 
-The simulation footer's final event increased by 1 in memory was rejected by
-event-vector reconciliation. Changing the pinned captured output line from 0
-to 1 was rejected by the exact stdout/stderr verifier used by the harness.
-All 40 real pinned-run output captures passed that same verifier.
+Parse saves 14.00% wall, 15.67% user, and 9.53% instructions.
 
-The two program mutants are isolated scratch ThinLTO executables, compiled with
-all release warnings enabled. Neither was stopped by a warning, sanitizer or
-refusal. They do not replace the good measured binaries or runtime sources.
-These deliberate mutant differences are separate from the good-build comparisons;
-no unexpected output difference was observed.
+One-minute load during parse: 2.03 to 2.12. These averages still decay from the earlier gate; its live processes were cleared first. Raw JSON retains all three load averages for every run.
+| service | baseline | 93,130,684,617 | 7.572985 | 7.160951 |
+| service | thin | 86,530,992,097 | 6.600901 | 6.170402 |
 
-Complete ordinary native and oracle packages passed uncached:
+Service saves 12.84% wall, 13.83% user, and 7.09% instructions.
 
-```sh
-source /workspace/adamic-tools/env.sh
-ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./internal/native ./internal/oracle > /workspace/scratch/release-lto/native-oracle.log 2>&1
-```
+One-minute load during service: 1.23 to 1.80. These averages still decay from the earlier gate; its live processes were cleared first. Raw JSON retains all three load averages for every run.
 
-Native: `ok` 196.198s; oracle: `ok` 187.858s. Formatting, `go vet ./...`, and
-`git diff --check` passed with empty logs. These package results use the existing
-release/sanitizer policies; they are not a claim that every oracle fixture was
-rebuilt with ThinLTO. Workload-specific ThinLTO validation is the AST/service
-comparison above. Test output was written to files, never piped.
+Both workloads still exceed the approved 10% wall-time threshold. The release
+default is therefore supported by this fresh comparison; ordinary policies stay
+as they were. These new runtime-base results replace the historical numbers,
+rather than mixing binaries from the two bases.
 
-## Release policy, runtime caching and developer tools
+| Workload | Variant | Cold backend wall/user s | Cached-runtime wall/user s | Binary bytes |
+| --- | --- | ---: | ---: | ---: |
+| parse | baseline | 5.209 / 4.496 | 2.441 / 2.382 | 972,040 |
+| parse | thin | 17.559 / 17.444 | 17.708 / 18.030 | 1,339,872 |
+| service | baseline | 2.754 / 2.175 | 0.219 / 0.185 | 406,904 |
+| service | thin | 2.241 / 2.403 | 0.514 / 1.145 | 163,912 |
 
-The existing `runtimeKey` already hashes source/header bytes, every flag,
-compiler path/full version, OS and architecture. Adding `-flto=thin` to the
-native release compilation policy naturally creates a distinct bitcode archive
-cache entry. Use the compatible `llvm-ar` index, retain whole-archive linkage,
-and apply ThinLTO to **every generated and runtime C unit**. Linking a new main
-against an ordinary cached archive does not test this proposal.
+These are single build observations, not best-of-five timings. Cold means a
+separate empty runtime.a cache for each workload/variant; cached means the next
+build with that exact archive present. Inputs are already emitted C, so these
+times exclude Adamic checking/lowering/C emission and Go tool compilation.
+Tool/filesystem page caches are warm; this is not a host-wide cold-page test.
+Builds may use multiple cores, so aggregated user time can exceed wall time.
+One-minute build load was 1.00 to 1.07. The parser cached ThinLTO build happens
+to be slightly slower than the cold observation: caching saves runtime frontends,
+but the much larger link/backend cost and run variation dominate it.
 
-Keep linker selection in the link policy: `-fuse-ld=lld` on this Linux toolchain,
-or a verified platform ThinLTO linker. Do not put linker-only options into the
-runtime's `clang -c` warning-strict command. Check toolchain support explicitly
-and provide an explicit non-LTO release override. The sanitizer branch remains
-its existing `-O1 -g -fsanitize=address,undefined` policy. WASI needs its own
-measurement and support decision.
+Cached parse backend cost rises from 2.441s to 17.708s wall, and its binary
+grows from 972,040 to 1,339,872 bytes (37.84%). Cached service cost rises from
+0.219s to 0.514s wall; its binary shrinks from 406,904 to 163,912 bytes.
 
-A cached `runtime.a` caches frontend bitcode, not all program-specific backend
-optimization. Measure an lld `--thinlto-cache-dir` policy separately, with bounded
-storage and version/flag isolation. No backend-cache speedup is claimed here.
-Before landing a default, run the complete release oracle with the new policy
-and cover supported macOS/Linux toolchains, option/cache separation, count
-reporting constructors and unavailable-linker diagnostics.
+The exact common baseline flags, in argument order, are:
 
-From the developer-tools translation-unit split, I need the concrete emitted
-unit boundaries, exported prototypes/data and compile/archive/link commands;
-all units must consume the same release flag/link policy and compatible clang.
-Their per-unit object cache must include the ThinLTO flag and toolchain identity.
-Shared definitions need correct linkage instead of per-unit duplicate globals;
-address identity and initialization order must retain their existing semantics.
-ThinLTO can cross those boundaries without a unity build, but splitting the large
-program module changes parallelism, import decisions, cache reuse and code size.
-I need their actual split artifacts to repeat these two measurements and the
-byte/mutant oracles. This report measures one generated program unit plus 48
-runtime units, not that future split.
-
-Disassembly confirms fewer named static call sites: parse calls to
-`adamic_release` fall from 2,383 to 607, and `adamic_object_new` from 43 to 0;
-service calls fall from 187 to 44 and 40 to 4 respectively. These are whole-binary
-static sites, not dynamic call counts or an instruction attribution. Inlining
-moves runtime self costs into callers. The baseline also already has header
-fast paths for field writes, so the aggregate gain must not be presented as
-an isolated gain from tonight's four hot calls. There was no lld-only ablation;
-these observations concern the requested ThinLTO-plus-lld configuration.
-
-## Exact commands and reproduction
-
-The compiler executable was `/workspace/adamic-tools/llvm/bin/clang`.
-The exact common argument list, in order, is:
-
-```text
+~~~text
 -std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O2
-```
+~~~
 
-For every runtime `.c` in lexical order, baseline runs that compiler with those
-arguments followed by `-c /workspace/adamic/internal/native/runtime/FILE.c -o
-/workspace/scratch/release-lto/baseline/FILE.o`. ThinLTO appends `-flto=thin` before
-`-c` and writes to `thin/FILE.o`. Both archive all 48 objects with
-`/workspace/adamic-tools/llvm/bin/llvm-ar rcs MODE/runtime.a OBJECTS...`.
+Every runtime command is `clang [those flags] -c <runtime-file.c> -o <unit.o>`.
+The generated-program command is `clang [those flags] -I <runtime-cache-dir>
+-o <binary> <temporary-main.c> -Xlinker --whole-archive <runtime-cache-dir>/runtime.a
+-Xlinker --no-whole-archive -lm`. ThinLTO adds `-flto=thin` to the same complete
+list on every compilation, and `-fuse-ld=lld` at the program link. There is no
+benchmark CPU override. The paths for temporary main C change each build; its
+bytes are the committed compressed C snapshot. Flag arrays and actual archive
+paths for both production builds are in the `*-build.json` evidence.
 
-The baseline parse link is exactly:
+Reproduction after the original harness preparation, from this repository root:
 
-```sh
-/workspace/adamic-tools/llvm/bin/clang -std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O2 -I /workspace/adamic/internal/native/runtime -o /workspace/scratch/release-lto/baseline/parse /workspace/scratch/release-lto/parse.c -Xlinker --whole-archive /workspace/scratch/release-lto/baseline/runtime.a -Xlinker --no-whole-archive -lm
-```
+~~~sh
+go build -o /tmp/build-shipped ./cloud/reports/release-lto
+/tmp/build-shipped "$scratch/parse.c" "$scratch/baseline/parse"
+/tmp/build-shipped -release "$scratch/parse.c" "$scratch/thin/parse"
+/tmp/build-shipped "$scratch/service.c" "$scratch/baseline/service"
+/tmp/build-shipped -release "$scratch/service.c" "$scratch/thin/service"
+python3 cloud/reports/release-lto/instrument.py "$scratch" --lto-only
+python3 cloud/reports/release-lto/profile-shipped.py "$scratch" "$original_scratch"
+python3 cloud/reports/release-lto/summarize.py "$scratch"
+python3 cloud/reports/release-lto/build-times.py "$scratch"
+~~~
 
-The ThinLTO parse link is exactly:
+The timing helper needs `scratch/tools` pointing to the extracted hyperfine
+tools. The profile helper uses the original scratch Valgrind install. The raw
+four profiles reconcile self costs exactly to instruction summaries; a
+summary-plus-one mutant is rejected. Profiles, timings, build observations,
+good-output hashes and proof logs are in
+[implementation-evidence](implementation-evidence/).
 
-```sh
-/workspace/adamic-tools/llvm/bin/clang -std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O2 -flto=thin -fuse-ld=lld -I /workspace/adamic/internal/native/runtime -o /workspace/scratch/release-lto/thin/parse /workspace/scratch/release-lto/parse.c -Xlinker --whole-archive /workspace/scratch/release-lto/thin/runtime.a -Xlinker --no-whole-archive -lm
-```
+## Validation and limits
 
-Service links replace `parse`/`parse.c` with `service`/`service.c` only.
-[commands.log](evidence/commands.log) and [cold-commands.log](evidence/cold-commands.log)
-contain every expanded command, including all runtime units. Runtime snapshots
-are hashed in [runtime.sha256](evidence/runtime.sha256); generated C, binaries,
-archives and compared outputs in [artifact-hashes.json](evidence/artifact-hashes.json).
+All test output was written to logs. The committed evidence includes:
 
-```sh
-source /workspace/adamic-tools/env.sh
-bash cloud/reports/release-lto/prepare.sh /workspace/scratch/release-lto > /tmp/release-lto-prepare.log 2>&1
-python3 cloud/reports/release-lto/build.py /workspace/scratch/release-lto > /tmp/release-lto-build.log 2>&1
-# Extract Valgrind 3.24.0 under scratch/valgrind, as above.
-python3 cloud/reports/release-lto/measure.py /workspace/scratch/release-lto > /tmp/release-lto-measure.log 2>&1
-# Extract hyperfine 1.19.0 and perf 6.12.107 under scratch/tools.
-(cd cohere && go build -overlay=/workspace/scratch/release-lto/parse-overlay.json -o /workspace/scratch/release-lto/go-parse /workspace/adamic/cohere/adamic_parse.go) > /tmp/release-lto-go-build.log 2>&1
-python3 cloud/reports/release-lto/instrument.py /workspace/scratch/release-lto > /tmp/release-lto-instrument.log 2>&1
-python3 cloud/reports/release-lto/cache-profile.py /workspace/scratch/release-lto > /tmp/release-lto-cache.log 2>&1
-python3 cloud/reports/release-lto/rerank.py /workspace/scratch/release-lto > /tmp/release-lto-rerank.log 2>&1
-python3 cloud/reports/release-lto/validate.py /workspace/scratch/release-lto > /tmp/release-lto-validate.log 2>&1
-python3 cloud/reports/release-lto/summarize.py /workspace/scratch/release-lto > /tmp/release-lto-summarize.log 2>&1
-python3 cloud/reports/release-lto/cold-build.py /workspace/scratch/release-lto isolated > /tmp/release-lto-isolated-build.log 2>&1
-```
+- `gofmt -l cmd internal` and the benchmark Go helper: no output; `go vet ./...`: PASS.
+- Focused native release flag/volatile arithmetic proofs: PASS, 2.042s.
+- `TestReleaseFixtureKeepsArithmeticUnfused`: PASS, 1.378s, including the three observed fused residuals above.
+- `TestReleaseRecursionKeepsFrames`: PASS, 17.024s, both link-only mutants caught and runtime compilation audited.
+- `TestBuildSelectsOnlyShippedReleaseLTO`: PASS, 11.430s, actual CLI compiler commands audited.
+- Three separately run production policy mutants: ordinary test/oracle, counted and sanitized flags each fail the byte golden; production source restored after every run.
+- Complete final opt-in release lane: PASS, 142.073s; full fixture table including the new FMA fixture.
+- Ordinary sanitized oracle for the new fixture: PASS, 1.387s.
+- `TestCountsAreRecorded -args -update-counts`: PASS, 48.881s; exactly one new row, all old rows byte-identical.
+- `ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./...`: interrupted after over 30 minutes because the remaining stage-1 ports were too slow. Complete touched-package results already printed: `cmd/adamic` PASS 41.571s, `internal/native` PASS 648.782s, `internal/oracle` PASS 281.914s. The later-added FMA fixture has the separate focused and final-release runs above. This is **not a full-root-gate pass**. Its owned process tree was terminated and cleared before timing; remaining stage-1 ports were not completed.
+- Fresh full AST/service byte checks and their compiled same-length mutants: PASS.
+- Fresh four-profile instruction reconciliation: PASS; summary-plus-one mutant caught.
+- Additional cohere check for the new `.a` fixture could not run: named-path mode rejects `.a`, and a two-file config inheriting Adamic's options, also tried with explicit `sourceExtensions: [".a"]`, reports that only one of two configured files matched the type graph. Exact errors are retained. No cohere source was changed; stage-0 checked/lowered the actual fixture and both ordinary/release Node oracles passed.
 
-Callgrind invocation, repeated for each measured executable with the workload's
-arguments, is:
-
-```sh
-VALGRIND_LIB=/workspace/scratch/release-lto/valgrind/usr/libexec/valgrind /workspace/scratch/release-lto/valgrind/usr/bin/valgrind --tool=callgrind --callgrind-out-file=/workspace/scratch/release-lto/baseline-parse.callgrind /workspace/scratch/release-lto/baseline/parse --manifest /workspace/scratch/release-lto/compiler.txt --count > /workspace/scratch/release-lto/baseline-parse-profile.stdout 2> /workspace/scratch/release-lto/baseline-parse-profile.stderr
-```
+There was no good-output difference. The ordinary gate's broad interruption is
+a coverage limit, not evidence that the unfinished ports pass. macOS ThinLTO,
+WASI shipping execution, and native TSGo shipping execution were not run.
 
 
-Tool acquisition URLs and package versions/checksums are in
-[evidence/measurement-tool-urls.txt](evidence/measurement-tool-urls.txt) and
-[evidence/measurement-tools.json](evidence/measurement-tools.json).
-Extract hyperfine/perf/dependencies with dpkg-deb -x into scratch/tools and
-Valgrind into scratch/valgrind. perf requires
-LD_LIBRARY_PATH=/workspace/scratch/release-lto/tools/usr/lib/x86_64-linux-gnu.
-Run each helper from the repository root in a fresh scratch artifact directory;
-cache-debug and isolated-* must not already exist.
-The exact actual counter attempts were:
+ThinLTO saves the runtime frontends through `runtime.a` caching, but still
+performs ThinLTO backend work at every generated-program link. Developer tools
+that split generated C across translation units must use the same compile
+policy on every unit and the same full semantic policy at link, invalidate
+object/cache keys by flags and toolchain, and expose their split workload for
+a fresh benchmark. No emitter split is introduced here.
 
-```sh
-GOMAXPROCS=1 /workspace/scratch/release-lto/tools/usr/bin/perf stat -r 10 -e cycles,instructions,cache-misses,branch-misses taskset -c 3 /workspace/scratch/release-lto/baseline/parse --manifest /workspace/scratch/release-lto/compiler.txt --count > /workspace/scratch/release-lto/perf-native.stdout 2> /workspace/scratch/release-lto/perf-native.stderr
-GOMAXPROCS=1 /workspace/scratch/release-lto/tools/usr/bin/perf stat -r 10 -e cycles,instructions,cache-misses,branch-misses taskset -c 3 /workspace/scratch/release-lto/go-parse --manifest /workspace/scratch/release-lto/compiler.txt --count > /workspace/scratch/release-lto/perf-go.stdout 2> /workspace/scratch/release-lto/perf-go.stderr
-```
-The unsupported hardware events prevented an interleaved hardware-counter series;
-the final hyperfine fallback is interleaved. The actual-command perf attempts
-above are diagnostic only and are not the timing series used for decisions.
+The requested combined measurement on `codex/stack-check-scc` is pending that
+optimization actually landing. The supplied `01a114d8` object is unavailable
+in the fetched branch; its current tip is `8abc29aa4b6c0f9fa1db3836c4400fd9fe78ef80`.
+That branch's report says **inactive SCC classifier; production stack-check
+placement unchanged**, and names the missing frame-headroom proof. The current
+runtime also still emits stack checks in every function. Calling this an LTO
+measurement atop removed non-recursive checks would be false. Re-run these
+same helpers once the active optimization lands.
