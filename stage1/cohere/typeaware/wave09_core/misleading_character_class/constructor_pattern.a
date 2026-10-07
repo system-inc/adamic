@@ -1,0 +1,48 @@
+// Constructor argument judgments after reference/constant-string resolution.
+// No source selection or Go verdict is hidden in these explicit inputs.
+import {PatternBytes} from './character_class.a';
+import {cookedToRaw} from './cooked_to_raw.a';
+import {patternFindings} from './pattern_findings.a';
+import {Diagnostic} from '../../diagnostic.ts';
+
+export function stringPatternFindings(rawToken:string,pattern:string,flags:string,tokenStart:number,allowEscape:boolean):Diagnostic[] {
+    const findings:Diagnostic[]=[];
+    if(new PatternBytes(rawToken).bytes.length<2){return findings;}
+    const rawBody=rawToken.slice(1,-1);
+    const sameLength=new PatternBytes(rawBody).bytes.length===new PatternBytes(pattern).bytes.length;
+    const identity:number[]=[];
+    const offsets=sameLength?identity:cookedToRaw(rawBody,pattern);
+    if(offsets===undefined){return findings;}
+    for(const found of patternFindings(pattern,flags,allowEscape,sameLength?pattern:rawBody,offsets)){
+        const start=sameLength?found.start:offsets[found.start];
+        const end=sameLength?found.end:offsets[found.end];
+        if(start===undefined||end===undefined){continue;}
+        findings.push(new Diagnostic('no-misleading-character-class',found.id,found.message,tokenStart+1+start,tokenStart+1+end,''));
+    }
+    return findings;
+}
+
+// Names and concatenations have no member source; report each message once at
+// the whole pattern argument, even with allowEscape enabled.
+export function indirectPatternFindings(pattern:string,flags:string,start:number,end:number):Diagnostic[] {
+    const findings:Diagnostic[]=[];const reported:string[]=[];
+    for(const found of patternFindings(pattern,flags,false)){
+        if(reported.includes(found.id)){continue;}
+        reported.push(found.id);
+        findings.push(new Diagnostic('no-misleading-character-class',found.id,found.message,start,end,''));
+    }
+    return findings;
+}
+
+// The caller records that a constructor with flags owns this regex literal,
+// including when the flags are unknown. Constructor calls offer no u edits.
+export function regexArgumentFindings(text:string,flags:string,flagsKnown:boolean,hasFlags:boolean,start:number,allowEscape:boolean):Diagnostic[] {
+    const findings:Diagnostic[]=[];
+    if(!hasFlags||!flagsKnown){return findings;}
+    const end=text.lastIndexOf('/');
+    const pattern=end<1?text.slice(1):text.slice(1,end);
+    for(const found of patternFindings(pattern,flags,allowEscape)){
+        findings.push(new Diagnostic('no-misleading-character-class',found.id,found.message,start+1+found.start,start+1+found.end,''));
+    }
+    return findings;
+}

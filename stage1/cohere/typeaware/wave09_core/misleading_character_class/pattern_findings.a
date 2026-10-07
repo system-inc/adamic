@@ -9,15 +9,17 @@ function acceptableEscape(p:PatternBytes,start:number,end:number,value:number):b
     let backslashes=last>start;for(let i=start;i<last;i++){if(p.at(i)!==92){backslashes=false;}}
     return !(backslashes&&p.rune(last).value===value);
 }
-function appendCharacter(current:ClassCharacter[],p:PatternBytes,f:RegexFlags,value:number,start:number,end:number,brace:boolean,allowEscape:boolean):void {
-    const escaped=allowEscape&&acceptableEscape(p,start,end,value);
+function appendCharacter(current:ClassCharacter[],p:PatternBytes,f:RegexFlags,value:number,start:number,end:number,brace:boolean,allowEscape:boolean,raw:PatternBytes|undefined,offsets:readonly number[]):void {
+    const sourceStart=offsets.length===0?start:offsets[start]??panic('missing member source start');
+    const sourceEnd=offsets.length===0?end:offsets[end]??panic('missing member source end');
+    const escaped=allowEscape&&acceptableEscape(raw??p,sourceStart,sourceEnd,value);
     if(!f.uv()&&value>65535&&!brace){
         current.push(new ClassCharacter(55296+((value-65536)>>10),start,start,false,escaped));
         current.push(new ClassCharacter(56320+((value-65536)&1023),start,end,false,escaped));
     }
     else{current.push(new ClassCharacter(value,start,end,brace,escaped));}
 }
-export function characterSequences(p:PatternBytes,elements:readonly CharacterElement[],f:RegexFlags,allowEscape:boolean):ClassCharacter[][] {
+export function characterSequences(p:PatternBytes,elements:readonly CharacterElement[],f:RegexFlags,allowEscape:boolean,raw:PatternBytes|undefined=undefined,offsets:readonly number[]=[]):ClassCharacter[][] {
     const sequences:ClassCharacter[][]=[];let current:ClassCharacter[]=[];
     for(const element of elements){
         if(element.kind===2){if(current.length>0){sequences.push(current);current=[];}continue;}
@@ -26,11 +28,11 @@ export function characterSequences(p:PatternBytes,elements:readonly CharacterEle
             const width=p.at(start)!==92?p.rune(start).width:f.uv()&&element.value>65535&&p.at(start+1)===117&&p.at(start+2)!==123?12:skipPatternEscape(p,start,f);
             const minimumEnd=start+width;
             const consistent=width>0&&minimumEnd<element.end&&p.at(minimumEnd)===45;
-            appendCharacter(current,p,f,element.value,start,consistent?minimumEnd:element.end,element.brace,allowEscape);
+            appendCharacter(current,p,f,element.value,start,consistent?minimumEnd:element.end,element.brace,allowEscape,raw,offsets);
             if(current.length>0){sequences.push(current);current=[];}
-            appendCharacter(current,p,f,element.max,consistent?minimumEnd+1:start,element.end,element.maxBrace,allowEscape);
+            appendCharacter(current,p,f,element.max,consistent?minimumEnd+1:start,element.end,element.maxBrace,allowEscape,raw,offsets);
         }
-        else{appendCharacter(current,p,f,element.value,element.start,element.end,element.brace,allowEscape);}
+        else{appendCharacter(current,p,f,element.value,element.start,element.end,element.brace,allowEscape,raw,offsets);}
     }
     if(current.length>0){sequences.push(current);}return sequences;
 }
@@ -48,7 +50,7 @@ export function loneQuantifierBrace(p:PatternBytes,f:RegexFlags):boolean {
     }
     return false;
 }
-export function patternFindings(pattern:string,flags:string,allowEscape:boolean):MisleadingFinding[] {
+export function patternFindings(pattern:string,flags:string,allowEscape:boolean,rawText:string=pattern,offsets:readonly number[]=[]):MisleadingFinding[] {
     if(!pattern.includes('[')){return [];}
     const p=new PatternBytes(pattern);const f=new RegexFlags(flags);
     if(f.uv()&&loneQuantifierBrace(p,f)){return [];}
@@ -56,7 +58,7 @@ export function patternFindings(pattern:string,flags:string,allowEscape:boolean)
     const found:MisleadingFinding[]=[];
     for(const span of scan.spans){
         const parsed=parseClassWithEnd(p,span.start,span.end,f);if(!parsed.ok){return [];}
-        for(const sequence of characterSequences(p,parsed.elements,f,allowEscape)){
+        for(const sequence of characterSequences(p,parsed.elements,f,allowEscape,new PatternBytes(rawText),offsets)){
             for(const finding of sequenceFindings(sequence)){found.push(finding);}
         }
     }

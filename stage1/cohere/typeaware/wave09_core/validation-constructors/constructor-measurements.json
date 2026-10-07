@@ -1,0 +1,24 @@
+{
+  "inputs": 462,
+  "default": {
+    "go": 0.16587132400127302,
+    "bytes": 128783,
+    "findings": "findings 289",
+    "sha256": "595c301ce03311ddbf7846375d1c986ad6ebbb9e10b84ba056a40e0e117706af",
+    "normal": 0.015694677000283264,
+    "sanitized": 0.1138802539990138,
+    "source": 0.16436019800130452,
+    "emitted": 0.11407669499931217
+  },
+  "allow": {
+    "go": 0.16483067300032417,
+    "bytes": 111014,
+    "findings": "findings 241",
+    "sha256": "297e3a53d3b0f2321e97e041095f01dee0c348e76edfd8139ab97b69e7601493",
+    "normal": 0.015862641999774496,
+    "sanitized": 0.11396736899951065,
+    "source": 0.11436780199983332,
+    "emitted": 0.15240116099994339
+  },
+  "mutant_difference": 53
+}
