@@ -839,10 +839,25 @@ Observation: the available original compiler corpus is
 fixture corpus, not a newly cloned `src/compiler` v6.0.3 checkout. No source
 from cohere is copied into Adamic. Locations below refer to that corpus.
 
-Cast counts: pending the location ledger on
-`origin/codex/stage3-fixtures-assertions`. It was absent at the first check.
-Per the scope change, this unit does not repeat the 4,101-site classification.
+Cast counts use the assertions ledger at
+`origin/codex/stage3-fixtures-assertions`, commit
+`5b173f3920ab2c5b7058f0a9fe4b8e4a91f52523`,
+`stage3/fixtures/assertions/ledger-summary.json`. Its TypeScript 6.0.3 source is
+`050880ce59e30b356b686bd3144efe24f875ebc8`, distinct from the local corpus above.
+This unit does not repeat that classification. The ledger partitions 4,101 sites:
+208 upcasts, 16 as const, 136 tagged union downcasts, 1,178 structural interface
+downcasts without a tag, 10 as unknown as nodes, and 2,553 other sites. Of other,
+1,842 are tagged narrowings outside a partitioned union. That is a candidate
+bucket, not an exact base-interface count; the ledger does not separately count
+class downcasts. Its locations and field names supply the census, without claiming
+that a TypeScript assignability result proves an Adamic construction invariant.
 The old counts in this document describe their own historical corpus only.
+
+Observation from that branch's `logs/kind-soundness.json`: a genuine factory
+PlusToken held as Node has its kind changed through Mutable<Node> to Identifier.
+Stock TypeScript reports zero diagnostics; Node prints `true` then `undefined`
+for the tag comparison and escapedText read. This directly disproves a permanent
+kind-to-payload tie even when initial construction uses a genuine factory.
 
 Observation: `types.ts:942` defines `Node.kind: SyntaxKind`.
 `types.ts:1701` defines `Identifier.kind: SyntaxKind.Identifier` and requires
@@ -878,6 +893,38 @@ must prove the convention with definite initialization and escape analysis,
 including callbacks and exceptional paths, rather than trust factory names.
 A universal invariant at every allocation is demonstrably too strong for tsc.
 A weaker invariant at publication/use requires a separate builder proof.
+
+### Shared construction certificate for casts and predicates
+
+The companion body-shape ledger at `origin/codex/stage3-fixtures-predicates`,
+commit `e42eaf9854563617734ff13987cc27e4e09f78b1`, records all 651 predicate
+syntax nodes and 11 fixtures in `stage3/fixtures/predicates`. Its mutually exclusive
+categories are 345 kind-equality bodies, 136 predicate-call bodies, 24 flags bodies,
+8 typeof bodies, 16 asserts bodies, 74 other bodies and 48 bodyless contracts.
+These are body descriptions, not proof verdicts. Its 227 direct equalities in
+nodeTests and the larger kind-equality group expose the same open-Node obligation
+as these casts. A predicate's declared return type is not a construction premise.
+
+Both consumers should request the same certificate: for every object observable
+through the source view, the tested tag implies the full requested interface, and
+publication and subsequent writes preserve this implication. A verified positive
+predicate branch can use that certificate after its body establishes the tag.
+A negative branch additionally needs equivalence between the body test and target
+membership; a positive implication alone cannot justify excluding the target.
+Composition must verify each called predicate and every required nested read.
+For example, a void-zero test needs a valid VoidExpression.expression before
+reading its operand's kind, and a numeric-literal certificate before reading text.
+A signed-numeric test additionally needs the prefix-unary operator and operand
+shape. A flags test needs a separate flag-to-payload invariant: a Transient bit
+does not alone prove TransientSymbol.links. These obligations must not be replaced
+by a whitelist of predicate names or circular trust in asserted return types.
+
+The certificate is necessary, not sufficient, for guard verification. An empty
+assertion body proves nothing; a debug assertion that can be disabled proves
+nothing on that path. A bodyless predicate needs an independently justified host
+contract. Generic assertions and nested refinements remain separate obligations.
+This prototype verifies construction for casts only; it does not admit the
+ledger's predicate declarations or certify all 651 bodies.
 
 ### Proposed language choice: (b), prove construction or refuse
 
