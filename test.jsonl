@@ -785,3 +785,7 @@
 {"Time":"2026-10-07T21:03:44.321748465Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheBypass","Elapsed":0}
 {"Time":"2026-10-07T21:03:44.321752953Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestParallelCachedMatchesSerial"}
 {"Time":"2026-10-07T21:03:44.321758988Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestParallelCachedMatchesSerial","Output":"=== RUN   TestParallelCachedMatchesSerial\n","OutputType":"frame"}
+{"Time":"2026-10-07T21:04:45.127753068Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestRequestNativeStaysCommand","Output":"--- PASS: TestRequestNativeStaysCommand (71.92s)\n","OutputType":"frame"}
+{"Time":"2026-10-07T21:04:45.129307349Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestRequestNativeStaysCommand","Elapsed":71.92}
+{"Time":"2026-10-07T21:04:45.129432552Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestWASIRequestModuleSelection"}
+{"Time":"2026-10-07T21:04:45.129438028Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestWASIRequestModuleSelection","Output":"=== RUN   TestWASIRequestModuleSelection\n","OutputType":"frame"}
