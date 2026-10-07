@@ -1,8 +1,8 @@
-The first six wave-10 claims are native-validated and pushed after rebasing onto current main.
-Landing commit: 95d3ced8; next-three claim commit: b2336a9b; this commit records the parser blocker.
-Go accepts the minimal TSX source and reports one iframe finding at bytes 14..24; the unchanged native parser exits 70.
-No React rule implementation or rule mutant is claimed; the preceding six native decision mutants and release guards pass.
-The three new React claims remain reserved and unported; shared JSX parsing is the exact blocker, with no shared-source edits.
+Six completed wave-10 ports are rebased and native-green on main f8013f0b.
+Rebased source tip bbb91e53; previous pushed tip c4964691; branch codex/typeaware-wave-10.
+Fresh builds, six byte-oracles, both frozen corpora, sanitizers, bridge tests, vet and filtered uncached Node pass.
+All six native decision mutants and both released-registry mutants are caught; no React mutant is claimed.
+Three React claims remain blocked by shared JSX and numeric-kind APIs; no new claims or shared edits.
 
 Claimed rules, in the by-volume order (each combined volume zero):
 
@@ -67,7 +67,7 @@ exit statuses, expected production finding and compressed raw observations are
 under evidence. The helper's loading/serialization is the same independent
 production oracle used by the completed wave.
 
-## Current-main check and numeric listener boundary
+## Previous-main check and numeric listener boundary
 
 On 2026-10-07, fetching all origin heads again leaves origin/main at
 `e8ba3d5d81de4d3773c723914fccd4c76248b965`. It is an ancestor of the pushed
@@ -91,7 +91,7 @@ node without refetching it. These are shared-parser/driver changes, outside this
 unit's permitted directories. No shared files were changed and no further claim
 was made. Current-check logs are stored under evidence/current-main.
 
-## Fresh oracle observations
+## Previous-main oracle observations
 
 The unchanged six implementations were rechecked after the fetch. Commands
 source `/workspace/adamic-tools/env.sh` and run these exact Go tests with
@@ -133,3 +133,89 @@ is compared; worker load is uncontrolled. Ratios denote native slowdown.
 | blocking-controls | 5.548422 | 0.077356 | 71.726x |
 | blocking-compiler | 2.137497 | 0.299683 | 7.133x |
 | blocking-repository | 0.377423 | 0.131031 | 2.880x |
+
+## Landing on main f8013f0b
+
+This section supersedes the earlier landing observations. Fetching origin moves
+main to f8013f0baac41ddc340d76f83bddde38536a8f07. Rebase of the eleven owned
+commits succeeds without conflicts, yielding source tip bbb91e53. Main is fetched
+again after validation and remains f8013f0b. All artifacts below are freshly
+built with the rebased compiler; no previous-main compiler or bridge archive is
+reused. Logs and raw extra timing outputs are in evidence/landing-f801.
+
+Setup prints Go ready 0s, clang ready 0s, Node ready 0s, submodules ready 0s,
+cache warm 100s and total 100s. nproc is 5, cpu.max is 400000 100000,
+with 17.6 GB. Shells source /workspace/adamic-tools/env.sh.
+
+Exact gates, each logged, with -count=1 -v:
+
+- go test ./stage1/cohere/typeaware -run '^TestWave10AgreementAndMutants$' -timeout=10m: PASS 92.810s.
+- go test ./stage1/cohere/typeaware/wave_10_next -run '^TestTimeoutAgreementAndMutants$' -timeout=10m: PASS 53.530s.
+- go test ./stage1/cohere/typeaware/wave_10_next -run '^TestProcessNativeAgreement$' -timeout=3m: PASS 47.298s.
+- go test ./stage1/cohere/typeaware/wave_10_next -run '^TestLandingNativeRulesAndMutants$' -timeout=10m: PASS 179.812s.
+- Selected checker-question tests in ./bridge/tsgo/checker and ./stage1/cohere/typeaware/wave_10_next: PASS.
+- go vet ./bridge/tsgo/checker ./stage1/cohere/typeaware ./stage1/cohere/typeaware/wave_10_next: exit 0, empty output.
+- ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestTheOracleCatchesOneByte$|^TestNativeAgreesWithNode$/internal/oracle/testdata/(maps_and_text|sorting|string_index|lone_surrogates|functions|closures)\.a$' -timeout=5m: PASS 10.537s, 19 Node and 28 native cache misses.
+
+Common corpus environment remains the exact manifest/config paths in the
+previous section. Artifact paths change to /workspace/wave-10-f801-original,
+/workspace/wave-10-f801-timeout and /workspace/wave-10-f801-process using the same
+named environment variables. Timeout uses ADAMIC_WAVE10_NEXT_VALIDATE=1;
+process uses ADAMIC_WAVE10_PROCESS_VALIDATE=1 and
+ADAMIC_WAVE10_PROCESS_ARTIFACTS=/workspace/wave-10-f801-process. Landing uses
+ADAMIC_WAVE10_LANDING_ARTIFACTS=/workspace/wave-10-f801-process and the existing
+92 controls at ADAMIC_WAVE10_LANDING_FIXTURES=/workspace/wave-10-process-validation.
+The selected checker test regex is
+^Test(RuntimeContextFactsAndLiveDispatch|SyntaxMembershipAndDestructuringAncestry|CoverageCheckerQuestions|FactEncoding|ShapeAndNameFacts|ExactIndexMatchesCompilerNodes|MemberParameterSourceText|AdamicRootKeepsConfigDeclarations)$.
+
+Findings, fixes and suggestions agree byte for byte, normal and sanitized, on
+compiler77 and repository287 and all controls. Original controls have 61
+findings; compiler 9, repository 1. Timeout controls have 15 findings; both
+corpora zero. The process bootstrap covers 64 controls with 47 findings; final
+process covers 92 controls with 77 findings and blocking covers 92 with 30.
+Process and blocking have zero findings on both corpora. Native sanitizer
+stderr is empty.
+
+Clean-exit native rule mutants are caught only by byte comparison: loop 548,
+redundant constituents 4569, includes 8447, timeout 51, process 114,
+blocking 13904. The first four positions change with the artifact path embedded
+in serialized file names. Original member-parameters and timeout runtime-context
+released queries exit 70 with the required invalid/released-handle panic;
+the retaining-registry mutants exit 0 and are caught by that check. The Node
+one-byte mutant is also caught.
+
+The JSX CLI is rebuilt using /workspace/wave-10-f801-original/adamic and still
+exits 70 on the same TSX input, with exactly the error recorded above. A freshly
+built production Go iframe oracle exits 0 with one finding at bytes 14..24.
+The shared parser, kind API and Diagnostic files do not change in this landing.
+No numeric kind mapping or rule.json schema is present in current main; no
+fabricated declarations or silent JSX omissions are added. The six legacy ports
+still use their existing string-kind implementation. React implementations,
+non-JSX arms, their native mutants and numeric listener conversion are not
+complete. No full repository gate, full upstream fixture matrix or shared
+emitted-JavaScript lint comparison is claimed. No further rules are claimed.
+
+Fresh timing medians, three alternating complete-process runs for every row,
+including load/parse/checker/serialization; all stdout bytes are compared.
+The original three are measured as their combined suite, not individually.
+Native stderr must be empty; the Go oracle's existing timing-counter line is
+accepted only when it exactly matches its numeric load_ns/rule_ns/run_ns format.
+The first two extra-timing attempts rejected this expected instrumentation;
+their failure logs are retained. They did not find a rule disagreement.
+Worker load is uncontrolled and other validation jobs overlap some runs.
+Ratios are native slowdowns, not speedups.
+
+| Rule or suite and corpus | Native seconds | Go seconds | Native / Go |
+| --- | ---: | ---: | ---: |
+| process-controls | 4.022138 | 0.081926 | 49.095x |
+| process-compiler | 1.929741 | 0.351042 | 5.497x |
+| process-repository | 0.291002 | 0.134879 | 2.158x |
+| blocking-controls | 5.468090 | 0.080602 | 67.840x |
+| blocking-compiler | 2.148160 | 0.304330 | 7.059x |
+| blocking-repository | 0.376349 | 0.148935 | 2.527x |
+| original-three-suite-controls | 0.025833 | 0.033506 | 0.771x |
+| original-three-suite-compiler | 5.412461 | 0.680368 | 7.955x |
+| original-three-suite-repository | 0.524448 | 0.169518 | 3.094x |
+| timeout-controls | 0.181971 | 0.040229 | 4.523x |
+| timeout-compiler | 1.704854 | 0.296843 | 5.743x |
+| timeout-repository | 0.281035 | 0.135875 | 2.068x |

@@ -1,0 +1,156 @@
+{
+  "base": "f8013f0baac41ddc340d76f83bddde38536a8f07",
+  "rebased_source": "bbb91e532a209d6d45ff5f6a34a296bf933f7709",
+  "previous_remote": "c49646918ca982bf6ec491e8b93ba20c6ee7b3e4",
+  "manifest_sha256": {
+    "/workspace/wave-10-compiler.manifest": "ddca3b2f7c479854de408c0585cb4dcff76c0765746a24b560bf5b4a6dc21222",
+    "/workspace/wave-10-repository.manifest": "54821646b689b3819ba1a15e3f1e4fa130feb7590ac42ca9d2ccb621d0e96199",
+    "/workspace/wave-10-process-validation/all-controls.manifest": "7ef24b16e2abbf90376f0740dfd9fa62da923eef074fe454841559e3c2fc3f9e"
+  },
+  "timing_samples": {
+    "process-controls": {
+      "native_ns": [
+        4179769969,
+        4022138433,
+        3707562779
+      ],
+      "go_ns": [
+        77517158,
+        81926164,
+        109723118
+      ]
+    },
+    "process-compiler": {
+      "native_ns": [
+        1929740937,
+        1778753804,
+        2353551114
+      ],
+      "go_ns": [
+        351041549,
+        311286256,
+        383476385
+      ]
+    },
+    "process-repository": {
+      "native_ns": [
+        291002186,
+        291909705,
+        274570605
+      ],
+      "go_ns": [
+        148825176,
+        134878859,
+        134485822
+      ]
+    },
+    "blocking-controls": {
+      "native_ns": [
+        5008465871,
+        5586022104,
+        5468090135
+      ],
+      "go_ns": [
+        80602477,
+        80558294,
+        82816572
+      ]
+    },
+    "blocking-compiler": {
+      "native_ns": [
+        2103651762,
+        2148160207,
+        2225231774
+      ],
+      "go_ns": [
+        304330314,
+        302625880,
+        374527707
+      ]
+    },
+    "blocking-repository": {
+      "native_ns": [
+        406200960,
+        376348598,
+        373892284
+      ],
+      "go_ns": [
+        148935159,
+        163060955,
+        143881963
+      ]
+    },
+    "original-three-suite-controls": {
+      "native_ns": [
+        29622249,
+        25772159,
+        25833319
+      ],
+      "go_ns": [
+        39918761,
+        30806006,
+        33505726
+      ]
+    },
+    "original-three-suite-compiler": {
+      "native_ns": [
+        5412460531,
+        5799071110,
+        4537939822
+      ],
+      "go_ns": [
+        731004194,
+        680367529,
+        605235518
+      ]
+    },
+    "original-three-suite-repository": {
+      "native_ns": [
+        523710599,
+        533344058,
+        524447582
+      ],
+      "go_ns": [
+        169517671,
+        160105423,
+        174116121
+      ]
+    },
+    "timeout-controls": {
+      "native_ns": [
+        185150481,
+        181971367,
+        170727128
+      ],
+      "go_ns": [
+        40936688,
+        32734169,
+        40228880
+      ]
+    },
+    "timeout-compiler": {
+      "native_ns": [
+        1893168401,
+        1704854207,
+        1703605295
+      ],
+      "go_ns": [
+        296843430,
+        295707700,
+        298796726
+      ]
+    },
+    "timeout-repository": {
+      "native_ns": [
+        281035103,
+        288859150,
+        277490211
+      ],
+      "go_ns": [
+        131496070,
+        135874824,
+        136628965
+      ]
+    }
+  }
+}
