@@ -1,0 +1,277 @@
+{
+  "root": [
+    "wave_12_test.go:127: no_redeclare.a mutant exits 0, empty stderr, byte oracle catches byte 48",
+    "wave_12_test.go:127: no_test_on_global_regex.a mutant exits 0, empty stderr, byte oracle catches byte 5520",
+    "wave_12_test.go:127: no_write_only_collection.a mutant exits 0, empty stderr, byte oracle catches byte 9174",
+    "wave_12_test.go:155: released handle panics 70; retaining registry mutant exits 0 and is caught"
+  ],
+  "next": [
+    "agreement_test.go:185: no_process_exit_after_output.a mutant exits 0, empty stderr, byte comparison catches byte 3910",
+    "agreement_test.go:185: no_uncleared_race_timeout.a mutant exits 0, empty stderr, byte comparison catches byte 4565",
+    "agreement_test.go:185: require_blocking_standard_streams.a mutant exits 0, empty stderr, byte comparison catches byte 714",
+    "agreement_test.go:200: ancestry-declaration raw question mutant exits 0, empty stderr, byte comparison catches byte 64",
+    "agreement_test.go:200: signature-body raw question mutant exits 0, empty stderr, byte comparison catches byte 3910",
+    "agreement_test.go:200: import-target raw question mutant exits 0, empty stderr, byte comparison catches byte 13189",
+    "agreement_test.go:219: all three new questions reject released handles with panic 70; registry retention mutant exits 0 and is caught"
+  ],
+  "third": [
+    "agreement_test.go:128: no_new_func.a mutant exits 0, empty stderr, byte comparison catches byte 1407",
+    "agreement_test.go:128: no_new_native_nonconstructor.a mutant exits 0, empty stderr, byte comparison catches byte 57",
+    "agreement_test.go:128: no_new_wrappers.a mutant exits 0, empty stderr, byte comparison catches byte 573",
+    "agreement_test.go:141: declaration-file raw question mutant exits 0, empty stderr, byte comparison catches byte 57",
+    "agreement_test.go:160: new question rejects released handles with panic 70; registry retention mutant exits 0 and is caught"
+  ],
+  "fourth": [
+    "agreement_test.go:135: prefer_regex_literals.a mutant exits 0, empty stderr, byte comparison catches byte 517",
+    "agreement_test.go:135: prefer_rest_params.a mutant exits 0, empty stderr, byte comparison catches byte 5597",
+    "agreement_test.go:135: exhaustive_deps.a mutant exits 0, empty stderr, byte comparison catches byte 6967",
+    "agreement_test.go:135: effect_hook_name.a mutant exits 0, empty stderr, byte comparison catches byte 8339",
+    "agreement_test.go:148: binding-presence raw question mutant exits 0, empty stderr, byte comparison catches byte 58",
+    "agreement_test.go:167: new question rejects released handles with panic 70; registry retention mutant exits 0 and is caught"
+  ],
+  "reporting": [
+    {
+      "rule": "jsx_fragments",
+      "first_difference": 75
+    },
+    {
+      "rule": "jsx_no_undef",
+      "first_difference": 347
+    },
+    {
+      "rule": "jsx_no_constructed_context_values",
+      "first_difference": 758
+    }
+  ],
+  "reporting_guards": [
+    {
+      "guard": "ascii",
+      "normal_exit": 70,
+      "mutant_exit": 0
+    },
+    {
+      "guard": "construction-range",
+      "normal_exit": 70,
+      "mutant_exit": 0
+    }
+  ],
+  "metadata": [
+    {
+      "declaration": "jsx_fragments",
+      "mutation": "refetch-instead-of-supplied-node"
+    },
+    {
+      "declaration": "jsx_no_constructed_context_values",
+      "mutation": "refetch-instead-of-supplied-node"
+    },
+    {
+      "declaration": "jsx_no_undef",
+      "mutation": "refetch-instead-of-supplied-node"
+    },
+    {
+      "declaration": "no_redeclare.a",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "no_redeclare.a",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "no_redeclare.a",
+      "mutation": "wrong-listener"
+    },
+    {
+      "declaration": "no_test_on_global_regex.a",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "no_test_on_global_regex.a",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "no_test_on_global_regex.a",
+      "mutation": "wrong-listener"
+    },
+    {
+      "declaration": "no_write_only_collection.a",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "no_write_only_collection.a",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "no_write_only_collection.a",
+      "mutation": "wrong-listener"
+    },
+    {
+      "declaration": "wave12_next/no_process_exit_after_output.a",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "wave12_next/no_process_exit_after_output.a",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "wave12_next/no_process_exit_after_output.a",
+      "mutation": "wrong-listener"
+    },
+    {
+      "declaration": "wave12_next/no_uncleared_race_timeout.a",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "wave12_next/no_uncleared_race_timeout.a",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "wave12_next/no_uncleared_race_timeout.a",
+      "mutation": "wrong-listener"
+    },
+    {
+      "declaration": "wave12_next/require_blocking_standard_streams.a",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "wave12_next/require_blocking_standard_streams.a",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "wave12_next/require_blocking_standard_streams.a",
+      "mutation": "wrong-listener"
+    },
+    {
+      "declaration": "wave12_third/no_new_func.a",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "wave12_third/no_new_func.a",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "wave12_third/no_new_func.a",
+      "mutation": "wrong-listener"
+    },
+    {
+      "declaration": "wave12_third/no_new_native_nonconstructor.a",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "wave12_third/no_new_native_nonconstructor.a",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "wave12_third/no_new_native_nonconstructor.a",
+      "mutation": "wrong-listener"
+    },
+    {
+      "declaration": "wave12_third/no_new_wrappers.a",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "wave12_third/no_new_wrappers.a",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "wave12_third/no_new_wrappers.a",
+      "mutation": "wrong-listener"
+    },
+    {
+      "declaration": "wave12_fourth/prefer_regex_literals.a",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "wave12_fourth/prefer_regex_literals.a",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "wave12_fourth/prefer_regex_literals.a",
+      "mutation": "wrong-listener"
+    },
+    {
+      "declaration": "wave12_fourth/prefer_rest_params.a",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "wave12_fourth/prefer_rest_params.a",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "wave12_fourth/prefer_rest_params.a",
+      "mutation": "wrong-listener"
+    },
+    {
+      "declaration": "wave12_fourth/exhaustive_deps.a",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "wave12_fourth/exhaustive_deps.a",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "wave12_fourth/exhaustive_deps.a",
+      "mutation": "wrong-listener"
+    },
+    {
+      "declaration": "jsx_fragments",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "jsx_fragments",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "jsx_fragments",
+      "mutation": "wrong-listener"
+    },
+    {
+      "declaration": "jsx_no_constructed_context_values",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "jsx_no_constructed_context_values",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "jsx_no_constructed_context_values",
+      "mutation": "wrong-listener"
+    },
+    {
+      "declaration": "jsx_no_undef",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "jsx_no_undef",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "jsx_no_undef",
+      "mutation": "wrong-listener"
+    }
+  ],
+  "checker_capability": {
+    "source_node_exit": 70,
+    "emitted_js_exit": 1,
+    "bypass_mutant_exit": 0
+  },
+  "parser": [
+    "jsx_mutants_test.go:48: Node compiled mutant caught: case 16 line 356: port \"5 JsxSelfClosingElement 19 38 0 0 -1 0 0\\t\\t\\t\\t2:0\", Go \"5 JsxSelfClosingElement 19 38 0 0 -1 0 0\\t\\t\\t\\t2:1\"",
+    "jsx_mutants_test.go:48: native compiled mutant caught: case 16 line 356: port \"5 JsxSelfClosingElement 19 38 0 0 -1 0 0\\t\\t\\t\\t2:0\", Go \"5 JsxSelfClosingElement 19 38 0 0 -1 0 0\\t\\t\\t\\t2:1\"",
+    "jsx_mutants_test.go:48: Node compiled mutant caught: case 6 line 89: port \"6 JsxText 19 23 0 0 -1 0 0\\t\\ttext!\\t\\t0\", Go \"6 JsxText 19 23 0 0 -1 0 0\\t\\ttext\\t\\t0\"",
+    "jsx_mutants_test.go:48: native compiled mutant caught: case 6 line 89: port \"6 JsxText 19 23 0 0 -1 0 0\\t\\ttext!\\t\\t0\", Go \"6 JsxText 19 23 0 0 -1 0 0\\t\\ttext\\t\\t0\"",
+    "jsx_mutants_test.go:48: Node compiled mutant caught: case 6 line 89: port \"6 JsxText 20 23 0 0 -1 0 0\\t\\ttext\\t\\t0\", Go \"6 JsxText 19 23 0 0 -1 0 0\\t\\ttext\\t\\t0\"",
+    "jsx_mutants_test.go:48: native compiled mutant caught: case 6 line 89: port \"6 JsxText 20 23 0 0 -1 0 0\\t\\ttext\\t\\t0\", Go \"6 JsxText 19 23 0 0 -1 0 0\\t\\ttext\\t\\t0\"",
+    "jsx_mutants_test.go:48: Node compiled mutant caught: case 8 line 133: port \"7 QualifiedName 40 49 0 0 -1 0 0\\t\\t\\t\\t\", Go \"7 JsxNamespacedName 40 49 0 0 -1 0 0\\t\\t\\t\\t\"",
+    "jsx_mutants_test.go:48: native compiled mutant caught: case 8 line 133: port \"7 QualifiedName 40 49 0 0 -1 0 0\\t\\t\\t\\t\", Go \"7 JsxNamespacedName 40 49 0 0 -1 0 0\\t\\t\\t\\t\"",
+    "jsx_mutants_test.go:48: Node compiled mutant caught: case 0 line 8: port \"4 JsxOpeningElement 9 16 0 0 -1 0 0\\t\\t\\t\\t-1:0\", Go \"4 JsxSelfClosingElement 9 16 0 0 -1 0 0\\t\\t\\t\\t-1:0\"",
+    "jsx_mutants_test.go:48: native compiled mutant caught: case 0 line 8: port \"4 JsxOpeningElement 9 16 0 0 -1 0 0\\t\\t\\t\\t-1:0\", Go \"4 JsxSelfClosingElement 9 16 0 0 -1 0 0\\t\\t\\t\\t-1:0\"",
+    "jsx_mutants_test.go:48: Node compiled mutant caught: case 20 line 459: port \"5 JsxText 48 54 0 0 -1 0 0\\t\\t\\\\u000a  \\\\u0009\\\\u000d\\\\u000a\\t\\t0\", Go \"5 JsxText 48 54 0 0 -1 0 0\\t\\t\\\\u000a  \\\\u0009\\\\u000d\\\\u000a\\t\\t1\"",
+    "jsx_mutants_test.go:48: native compiled mutant caught: case 20 line 459: port \"5 JsxText 48 54 0 0 -1 0 0\\t\\t\\\\u000a  \\\\u0009\\\\u000d\\\\u000a\\t\\t0\", Go \"5 JsxText 48 54 0 0 -1 0 0\\t\\t\\\\u000a  \\\\u0009\\\\u000d\\\\u000a\\t\\t1\"",
+    "jsx_mutants_test.go:48: Node compiled mutant caught: case 12 line 228: port \"8 ParenthesizedExpression 31 37 0 0 -1 0 0\\t\\t\\t\\t\", Go \"8 JsxExpression 31 37 0 0 -1 0 0\\t\\t\\t\\t\"",
+    "jsx_mutants_test.go:48: native compiled mutant caught: case 12 line 228: port \"8 ParenthesizedExpression 31 37 0 0 -1 0 0\\t\\t\\t\\t\", Go \"8 JsxExpression 31 37 0 0 -1 0 0\\t\\t\\t\\t\"",
+    "jsx_mutants_test.go:48: Node compiled mutant caught: case 2 line 31: port \"5 JsxClosingElement 15 21 0 0 -1 0 0\\t\\t\\t\\t\", Go \"5 JsxOpeningElement 9 15 0 0 -1 0 0\\t\\t\\t\\t-1:0\"",
+    "jsx_mutants_test.go:48: native compiled mutant caught: case 2 line 31: port \"5 JsxClosingElement 15 21 0 0 -1 0 0\\t\\t\\t\\t\", Go \"5 JsxOpeningElement 9 15 0 0 -1 0 0\\t\\t\\t\\t-1:0\"",
+    "jsx_mutants_test.go:48: Node compiled mutant caught: case 0 line 10: port \"5 JsxAttributes 14 14 0 0 1 0 0\\t\\t\\t\\t\", Go \"5 JsxAttributes 14 14 0 0 0 0 0\\t\\t\\t\\t\"",
+    "jsx_mutants_test.go:48: native compiled mutant caught: case 0 line 10: port \"5 JsxAttributes 14 14 0 0 1 0 0\\t\\t\\t\\t\", Go \"5 JsxAttributes 14 14 0 0 0 0 0\\t\\t\\t\\t\""
+  ]
+}
