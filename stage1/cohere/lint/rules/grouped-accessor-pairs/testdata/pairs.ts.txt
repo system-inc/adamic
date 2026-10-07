@@ -1,0 +1,2 @@
+class Group { get value() {} other() {} set value(input) {} get duplicate() {} other2() {} get duplicate() {} other3() {} set duplicate(input) {} }
+({ get [key]() {}, other: 1, set [key](input) {} });
