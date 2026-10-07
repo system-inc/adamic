@@ -1,0 +1,48 @@
+=== RUN   TestSlot02Batch9
+    slot02_batch9_test.go:78: control_flow_graph.*Builder[E].setCycleBarrier: 4 consumers with actual runtime capture
+    slot02_batch9_test.go:78: control_flow_graph.*Builder[E].linkWithCycleBarrier: 4 consumers with actual runtime capture
+    slot02_batch9_test.go:78: control_flow_graph.*Builder[E].link: 4 consumers with actual runtime capture
+    slot02_batch9_test.go:128: 2119 captures; 2077 parsed sources; 3282 graph roots; 226 observed states; 6658 total cases
+    slot02_batch9_test.go:157: Actual Go, Node source, emitted JavaScript and sanitized native agree
+=== RUN   TestSlot02Batch9/nil_barrier_false_stays_nil
+    slot02_batch9_test.go:210: compiled semantic mutant caught at line 2: got "block:true:true:true:1,:false,"; Go "block:true:true:false:1,:"
+=== RUN   TestSlot02Batch9/barrier_padding_false
+    slot02_batch9_test.go:210: compiled semantic mutant caught at line 2794: got "block:false:false:true:0,0,:true,false,"; Go "block:false:false:true:0,0,:false,false,"
+=== RUN   TestSlot02Batch9/barrier_value
+    slot02_batch9_test.go:210: compiled semantic mutant caught at line 325: got "block:true:true:true:1,:false,"; Go "block:true:true:true:1,:true,"
+=== RUN   TestSlot02Batch9/negative_index_guard
+    slot02_batch9_test.go:210: compiled semantic mutant caught at line 325: got "block:true:true:false:1,:"; Go "block:true:true:true:1,:true,"
+=== RUN   TestSlot02Batch9/edge_index_before_append
+    slot02_batch9_test.go:210: compiled semantic mutant caught at line 4: got "result:1:with:0:1:false;append:0:1;barrier:0:0:false;"; Go "result:0:with:0:1:false;append:0:1;barrier:0:0:false;"
+=== RUN   TestSlot02Batch9/reachable_propagation
+    slot02_batch9_test.go:210: compiled semantic mutant caught at line 3: got "block:false:false:false::"; Go "block:false:true:false::"
+=== RUN   TestSlot02Batch9/incoming_retains_true
+    slot02_batch9_test.go:210: compiled semantic mutant caught at line 3: got "block:false:false:false::"; Go "block:false:true:false::"
+=== RUN   TestSlot02Batch9/barrier_forwarding
+    slot02_batch9_test.go:210: compiled semantic mutant caught at line 1: got "result:-2:with:0:1:false;append:0:1;barrier:0:0:true;"; Go "result:-2:with:0:1:false;append:0:1;barrier:0:0:false;"
+=== RUN   TestSlot02Batch9/plain_link_barrier_false
+    slot02_batch9_test.go:210: compiled semantic mutant caught at line 1: got "result:-2:with:0:1:true;append:0:1;barrier:0:0:true;"; Go "result:-2:with:0:1:false;append:0:1;barrier:0:0:false;"
+=== RUN   TestSlot02Batch9/nil_endpoint_return
+    slot02_batch9_test.go:210: compiled semantic mutant caught at line 88: got "result:-2:with:0:-1:false;"; Go "result:-1:with:0:-1:false;"
+=== RUN   TestSlot02Batch9/plain_link_exactly_once
+    slot02_batch9_test.go:210: compiled semantic mutant caught at line 1: got "result:-2:with:0:1:false;append:0:1;barrier:0:0:false;with:0:1:false;append:0:1;barrier:0:1:false;"; Go "result:-2:with:0:1:false;append:0:1;barrier:0:0:false;"
+=== RUN   TestSlot02Batch9/append_before_barrier
+    slot02_batch9_test.go:210: compiled semantic mutant caught at line 1: got "result:-2:with:0:1:false;barrier:0:0:false;append:0:1;"; Go "result:-2:with:0:1:false;append:0:1;barrier:0:0:false;"
+=== RUN   TestSlot02Batch9/plain_link_target_identity
+    slot02_batch9_test.go:210: compiled semantic mutant caught at line 1: got "result:-2:with:0:0:false;append:0:0;barrier:0:0:false;"; Go "result:-2:with:0:1:false;append:0:1;barrier:0:0:false;"
+--- PASS: TestSlot02Batch9 (82.90s)
+    --- PASS: TestSlot02Batch9/nil_barrier_false_stays_nil (5.07s)
+    --- PASS: TestSlot02Batch9/barrier_padding_false (5.45s)
+    --- PASS: TestSlot02Batch9/barrier_value (5.30s)
+    --- PASS: TestSlot02Batch9/negative_index_guard (4.69s)
+    --- PASS: TestSlot02Batch9/edge_index_before_append (4.68s)
+    --- PASS: TestSlot02Batch9/reachable_propagation (4.36s)
+    --- PASS: TestSlot02Batch9/incoming_retains_true (4.75s)
+    --- PASS: TestSlot02Batch9/barrier_forwarding (6.11s)
+    --- PASS: TestSlot02Batch9/plain_link_barrier_false (4.87s)
+    --- PASS: TestSlot02Batch9/nil_endpoint_return (5.25s)
+    --- PASS: TestSlot02Batch9/plain_link_exactly_once (5.67s)
+    --- PASS: TestSlot02Batch9/append_before_barrier (5.22s)
+    --- PASS: TestSlot02Batch9/plain_link_target_identity (9.08s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers	82.920s

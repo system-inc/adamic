@@ -1,0 +1,6 @@
+branches=20 claim files=19
+main=c01907a7036a22c2ea7ee686ed5fe4c6cd4bbc06
+claim=194914c736af949f4e3d551641af422a945e4fa8
+control_flow_graph.*Builder[E].setCycleBarrier origin/codex/lint-helpers-02:stage1/cohere/lint/helpers/claims/02.md
+control_flow_graph.*Builder[E].linkWithCycleBarrier origin/codex/lint-helpers-02:stage1/cohere/lint/helpers/claims/02.md
+control_flow_graph.*Builder[E].link origin/codex/lint-helpers-02:stage1/cohere/lint/helpers/claims/02.md

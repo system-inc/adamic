@@ -1,0 +1,16 @@
+=== RUN   TestSlot02Batch9
+    slot02_batch9_test.go:78: control_flow_graph.*Builder[E].setCycleBarrier: 4 consumers with actual runtime capture
+    slot02_batch9_test.go:78: control_flow_graph.*Builder[E].linkWithCycleBarrier: 4 consumers with actual runtime capture
+    slot02_batch9_test.go:78: control_flow_graph.*Builder[E].link: 4 consumers with actual runtime capture
+    slot02_batch9_test.go:127: 2119 captures; 2077 parsed sources; 3282 graph roots; 226 observed states; 6658 total cases
+    slot02_batch9_test.go:156: Actual Go, Node source, emitted JavaScript and sanitized native agree
+=== RUN   TestSlot02Batch9/nil_barrier_false_stays_nil
+    slot02_batch9_test.go:199: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestSlot02Batch9nil_barrier_false_stays_nil326618686/001/slot02/batch9/main.a /tmp/adamic-gate/TestSlot02Batch93631389704/007/cases.json]: exit status 70
+        adamic: panic: Go barrier index out of range
+=== RUN   TestSlot02Batch9/barrier_padding_false
+    slot02_batch9_test.go:206: compiled semantic mutant caught at line 2794: got "block:false:false:true:0,0,:true,false,"; Go "block:false:false:true:0,0,:false,false,"
+=== RUN   TestSlot02Batch9/barrier_value
+    slot02_batch9_test.go:206: compiled semantic mutant caught at line 325: got "block:true:true:true:1,:false,"; Go "block:true:true:true:1,:true,"
+=== RUN   TestSlot02Batch9/negative_index_guard
+signal: interrupt
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers	24.009s

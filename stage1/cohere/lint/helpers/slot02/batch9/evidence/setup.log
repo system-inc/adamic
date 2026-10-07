@@ -1,0 +1,9 @@
+go version go1.27.1 linux/amd64
+setup: go ready (0s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (1s)
+v24.19.0
+setup: node ready (1s)
+setup: submodules ready (1s)
+setup: build cache warm (53s)
+setup: done in 53s on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB
