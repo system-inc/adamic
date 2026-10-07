@@ -7,10 +7,10 @@ import { Application } from 'apple/appkit/application';
 import { Button } from 'apple/appkit/button';
 import { Window } from 'apple/appkit/window';
 
-const window = new Window({ x: 0, y: 0, width: 480, height: 240 }, { styleMask: ['Titled', 'Closable'], backing: 'Buffered' });
+const window = new Window({ contentRectangle: { x: 0, y: 0, width: 480, height: 240 }, styleMask: ['Titled', 'Closable'], backing: 'Buffered', defer: false });
 window.title = 'Adamic';
-const button = new Button('Press', () => console.log('pressed'));
-window.makeKeyAndOrderFront();
+const button = new Button({ title: 'Press', action: () => console.log('pressed') });
+window.makeKeyAndOrderFront(undefined);
 Application.shared.run();
 ```
 
@@ -22,14 +22,14 @@ Apple's object model is reference counting with no collector, which is Adamic's.
 
 ## Bindings
 
-What an `apple/` module exports is declared in a binding file: `internal/load/apple/<framework>/<module>.d.ts`, served from inside the compiler at `/adamic-apple/...`, and loaded only when a program imports that module (`internal/load/apple.go`). Each declaration keeps Apple's name in its doc comment and carries the Objective-C it calls in an `@objc` tag:
+What an `apple/` module exports is declared in a binding file, served at `/adamic-apple/<framework>/<module>.d.ts` and loaded only when a program imports that module (`internal/load/apple.go`). Foundation's, AppKit's and CoreGraphics' are generated from the Mac's own SDK (`internal/apple/generate`, its README says how), the first time a program imports one: 1,383 modules in about six seconds, written into `~/Library/Caches/adamic/apple/macosx-<SDK build>-<generator version>/` once their check file compiles against the SDK's headers, so a binding whose tag disagrees with its header never reaches a program. `ADAMIC_APPLE_BINDINGS` names a directory to read instead, which is how a machine with no SDK compiles against generated fixtures. Each declaration keeps Apple's name in its doc comment and carries the Objective-C it calls in an `@objc` tag:
 
 ```ts
 /**
  * -[NSWindow initWithContentRect:styleMask:backing:defer:]
- * @objc init initWithContentRect:styleMask:backing:defer: 0:rectangle 1.styleMask:options(Titled=1,Closable=2) 1.backing:enum(Retained=0,Nonretained=1,Buffered=2) 1.defer?:boolean=no
+ * @objc init initWithContentRect:styleMask:backing:defer: 0.contentRectangle:rectangle 0.styleMask:options(Borderless=0,Titled=1,Closable=2,...) 0.backing:enum(Retained=0,Nonretained=1,Buffered=2) 0.defer:boolean
  */
-constructor(contentRectangle: Rectangle, options: { readonly styleMask: readonly WindowStyle[]; readonly backing: BackingStore; readonly defer?: boolean });
+constructor(options: { readonly contentRectangle: Rectangle; readonly styleMask: readonly WindowStyleMask[]; readonly backing: BackingStoreType; readonly defer: boolean });
 ```
 
 - `@objc class <Class>` on a class names the Objective-C class.
@@ -56,9 +56,9 @@ Each argument is `<source>:<type>`, in the selector's order. The source is the A
 | `action` | a target and its selector | a closure, `() => void` |
 | `block(type,...)` | a block returning nothing | a closure taking those parameters |
 
-A result marked `-> new object` comes back retained (`alloc`, `new`, `copy`); any other object result is retained on its way into Adamic. A result Apple promises isn't `nil` (`object`, `string`), and whatever `new` makes, is checked: `nil` there panics, naming the selector, rather than reaching Adamic as a value its type says can't be. So `new Url('not a url')` panics, as Swift's `URL(string:)!` would.
+A result marked `-> new object` comes back retained (`alloc`, `new`, `copy`); any other object result is retained on its way into Adamic. A result Apple promises isn't `nil` (`object`, `string`), and whatever `new` makes, is checked: `nil` there panics, naming the selector, rather than reaching Adamic as a value its type says can't be. So `new Url({ string: 'not a url' })` panics, as Swift's `URL(string:)!` would.
 
-The seed bindings are written by hand for the first proof. The generator (#qxe07rq) writes them from the SDK's headers through clang's syntax tree, with the rename table (#cgs2gpc) choosing each Adamic name, and replaces them.
+A few binding files are written by hand and embedded in the compiler: whole modules where nothing is generated (SwiftUI's, over the Swift shim; Core Foundation's run loop, `apple/corefoundation/run-loop`), and additions to a generated module, served beside it and merged into it (`apple/foundation/data` adds `utf8Text()`, two messages to another class, to the generated `Data`).
 
 ## SwiftUI
 
@@ -112,7 +112,7 @@ The function's IR body only panics, so the JavaScript backend, which can't reach
 
 ## How it's proven
 
-Node can't run AppKit, so an Apple program answers to a witness instead (`internal/apple/witness_test.go`): every `internal/apple/testdata/<name>.a` has a `<name>.m` that makes the same calls in Objective-C and prints the same lines, built by Apple's toolchain with ARC, independent of everything Adamic's compiler does.
+Node can't run AppKit, so an Apple program answers to a witness instead (`internal/apple/witness_test.go`): every `internal/apple/testdata/<name>.a` has a `<name>.m` that makes the same calls in Objective-C and prints the same lines, built by Apple's toolchain with ARC, independent of everything Adamic's compiler does. The programs compile against the bindings generated from the SDK, as any program does.
 
 1. Both are built under the address and undefined-behavior sanitizers. The program's stdout must equal the witness's byte for byte, and both exit 0.
 2. A counted build must free every Adamic value it allocated.

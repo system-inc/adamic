@@ -1,11 +1,19 @@
 package load
 
 import (
+	"context"
 	"embed"
-	"io/fs"
+	"fmt"
+	"os"
 	"path"
+	"path/filepath"
 	"regexp"
+	"runtime"
+	"sort"
 	"strings"
+	"sync"
+
+	"github.com/system-inc/adamic/internal/apple/generate"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/tspath"
@@ -14,15 +22,123 @@ import (
 
 // Apple's frameworks reach Adamic through binding files: declarations of what an apple/ module
 // exports, each tagged with the Objective-C it calls (docs/apple.md). They're served like the
-// prelude, from inside the binary at a path no disk has, and a program loads only the ones it
-// imports.
+// prelude, at a path no disk has, and a program loads only the ones it imports.
 //
-// These are the seed for the bridge's first proof, written by hand. The generator (#qxe07rq) writes
-// them from the SDK's headers on the Mac that builds, and replaces this directory.
+// Foundation's, AppKit's and CoreGraphics' are generated from this Mac's SDK the first time a
+// program imports one (internal/apple/generate), into a cache keyed by the SDK's build and the
+// generator's version, and held to the SDK's headers by compiling their check file before any
+// program sees them. The few written by hand are embedded: whole modules where nothing is
+// generated (SwiftUI's, over the Swift shim; Core Foundation's run loop), and additions to a
+// generated module, merged into it (Data's utf8Text, two messages to another class).
 const appleDirectory = "/adamic-apple"
 
 //go:embed apple
 var appleBindings embed.FS
+
+// generatedFrameworks are the frameworks generated from the SDK, by their import path's segment.
+var generatedFrameworks = map[string]string{"appkit": "AppKit", "coregraphics": "CoreGraphics", "foundation": "Foundation"}
+
+// AppleBindingsVariable names a directory of generated binding files to read instead of the
+// cache, for a test's generated fixtures or a machine with no SDK.
+const AppleBindingsVariable = "ADAMIC_APPLE_BINDINGS"
+
+var generatedBindings struct {
+	once      sync.Once
+	directory string
+	err       error
+}
+
+// appleBindingsDirectory is where the generated binding files are: AppleBindingsVariable's
+// directory when it's set, or this Mac's cache, generated the first time it's needed.
+func appleBindingsDirectory() (string, error) {
+	if directory := os.Getenv(AppleBindingsVariable); directory != "" {
+		return directory, nil
+	}
+	generatedBindings.once.Do(func() {
+		generatedBindings.directory, generatedBindings.err = cachedAppleBindings()
+	})
+	return generatedBindings.directory, generatedBindings.err
+}
+
+// cachedAppleBindings generates the SDK's bindings once per SDK build and generator version.
+// A directory is complete only once renamed into place, so a run cut short leaves nothing a later
+// run would trust.
+func cachedAppleBindings() (string, error) {
+	if runtime.GOOS != "darwin" {
+		return "", fmt.Errorf("Apple's frameworks are generated from Xcode's SDK, which only a Mac has; set %s to a directory of generated bindings", AppleBindingsVariable)
+	}
+	build, err := generate.SDKBuild("macosx")
+	if err != nil {
+		return "", err
+	}
+	caches, err := os.UserCacheDir()
+	if err != nil {
+		return "", err
+	}
+	directory := filepath.Join(caches, "adamic", "apple", "macosx-"+build+"-"+generate.Version())
+	if _, err := os.Stat(directory); err == nil {
+		return directory, nil
+	}
+	if err := os.MkdirAll(filepath.Dir(directory), 0o755); err != nil {
+		return "", err
+	}
+	partial, err := os.MkdirTemp(filepath.Dir(directory), filepath.Base(directory)+".partial-")
+	if err != nil {
+		return "", err
+	}
+	defer os.RemoveAll(partial)
+	frameworks := []string{}
+	for _, name := range generatedFrameworks {
+		frameworks = append(frameworks, name)
+	}
+	sort.Strings(frameworks)
+	output, err := generate.FromSDK(context.Background(), "macosx", "macos", frameworks)
+	if err != nil {
+		return "", fmt.Errorf("generating Apple's bindings: %w", err)
+	}
+	if err := output.Write(partial); err != nil {
+		return "", err
+	}
+	if err := generate.CheckSDK(context.Background(), "macosx", partial); err != nil {
+		return "", err
+	}
+	if err := os.Rename(partial, directory); err != nil {
+		// Another compile finished first; its directory is the same bytes.
+		if _, statError := os.Stat(directory); statError == nil {
+			return directory, nil
+		}
+		return "", err
+	}
+	return directory, nil
+}
+
+// appleBinding is the binding files for an apple/ module (apple/appkit/window), by the path each
+// is served at: the generated one, and an embedded addition beside it, or the embedded module
+// where its framework isn't generated.
+func appleBinding(module string) (map[string]string, error) {
+	files := map[string]string{}
+	relative := strings.TrimPrefix(module, "apple/")
+	framework, _, _ := strings.Cut(relative, "/")
+	_, generated := generatedFrameworks[framework]
+	if embedded, err := appleBindings.ReadFile(module + ".d.ts"); err == nil {
+		if !generated {
+			files[appleDirectory+"/"+relative+".d.ts"] = string(embedded)
+			return files, nil
+		}
+		files[appleDirectory+"/"+relative+".addition.d.ts"] = string(embedded)
+	}
+	if !generated && os.Getenv(AppleBindingsVariable) == "" {
+		return files, nil
+	}
+	directory, err := appleBindingsDirectory()
+	if err != nil {
+		return files, err
+	}
+	if binding, err := os.ReadFile(filepath.Join(directory, filepath.FromSlash(relative)+".d.ts")); err == nil {
+		files[appleDirectory+"/"+relative+".d.ts"] = string(binding)
+	}
+	return files, nil
+}
 
 // appleImport is an import of an apple/ module, as written in a source or a binding file. A match
 // inside a comment or a string only loads a binding file the program didn't need, which costs a
@@ -35,28 +151,29 @@ var relativeImport = regexp.MustCompile(`(?:from|import)\s*['"](\.{1,2}/[^'"]+)[
 // appleRoots is every binding file the program reaches, as a root for the checker: the apple/
 // modules its sources import, followed through its own imports and the binding files' imports of
 // each other. It adds each one to overlay, which is how the source file system serves it. A module
-// with no binding file is left out, and the checker says it can't find it.
-func appleRoots(source *sourceFS, roots []string, overlay map[string]string) []string {
+// with no binding file is left out, and the checker says it can't find it; bindings that can't be
+// generated are an error.
+func appleRoots(source *sourceFS, roots []string, overlay map[string]string) ([]string, error) {
 	added := []string{}
 	seen := map[string]bool{}
+	var failure error
 	var visit func(fileName string, text string)
 	visit = func(fileName string, text string) {
 		for _, match := range appleImport.FindAllStringSubmatch(text, -1) {
-			// apple/appkit/window is embedded as apple/appkit/window.d.ts and served at
-			// /adamic-apple/appkit/window.d.ts.
-			embedded := match[1] + ".d.ts"
-			bindingPath := "/adamic-" + embedded
-			if seen[bindingPath] {
+			// apple/appkit/window is served at /adamic-apple/appkit/window.d.ts.
+			if seen[match[1]] {
 				continue
 			}
-			seen[bindingPath] = true
-			binding, err := appleBindings.ReadFile(embedded)
-			if err != nil {
-				continue
+			seen[match[1]] = true
+			files, err := appleBinding(match[1])
+			if err != nil && failure == nil {
+				failure = err
 			}
-			overlay[bindingPath] = string(binding)
-			added = append(added, bindingPath)
-			visit(bindingPath, string(binding))
+			for _, bindingPath := range sortedPaths(files) {
+				overlay[bindingPath] = files[bindingPath]
+				added = append(added, bindingPath)
+				visit(bindingPath, files[bindingPath])
+			}
 		}
 		if strings.HasPrefix(fileName, appleDirectory+"/") {
 			return
@@ -79,7 +196,16 @@ func appleRoots(source *sourceFS, roots []string, overlay map[string]string) []s
 			visit(root, text)
 		}
 	}
-	return added
+	return added, failure
+}
+
+func sortedPaths(files map[string]string) []string {
+	paths := make([]string, 0, len(files))
+	for path := range files {
+		paths = append(paths, path)
+	}
+	sort.Strings(paths)
+	return paths
 }
 
 // Some apple/ modules are written in Adamic rather than declared: State, which re-renders a view
@@ -137,16 +263,4 @@ func (s *appleFS) Realpath(path string) string {
 // foreign: an Objective-C message or a C function, never an Adamic body.
 func IsApple(sourceFile *ast.SourceFile) bool {
 	return sourceFile != nil && strings.HasPrefix(sourceFile.FileName(), appleDirectory+"/")
-}
-
-// AppleModules is every apple/ module there's a binding file for, by its import path.
-func AppleModules() []string {
-	modules := []string{}
-	_ = fs.WalkDir(appleBindings, "apple", func(name string, entry fs.DirEntry, err error) error {
-		if err == nil && !entry.IsDir() && strings.HasSuffix(name, ".d.ts") {
-			modules = append(modules, strings.TrimSuffix(name, ".d.ts"))
-		}
-		return nil
-	})
-	return modules
 }

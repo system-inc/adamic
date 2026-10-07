@@ -230,6 +230,12 @@ func parseNativeType(text string) (ir.NativeType, error) {
 		for _, member := range strings.Split(members, ",") {
 			memberName, valueText, found := strings.Cut(member, "=")
 			value, err := strconv.ParseInt(valueText, 0, 64)
+			if native.Kind == ir.NativeOptions {
+				// Option bits are unsigned and may reach bit 63; the bridge carries them in a long.
+				var bits uint64
+				bits, err = strconv.ParseUint(valueText, 0, 64)
+				value = int64(bits)
+			}
 			if !found || err != nil {
 				return native, fmt.Errorf("%s: member %s has no integer value", text, member)
 			}
@@ -286,6 +292,15 @@ func (l *lowering) foreignTag(node *ast.Node, declaration *ast.Node, kinds ...st
 	return foreignTag{}, l.notYet(node, "an Apple declaration whose binding has no @objc "+strings.Join(kinds, " or ")+" tag")
 }
 
+// resolvedDeclaration is the overload the checker chose for a call, each overload carrying its own
+// tag; a symbol with one declaration has nothing to choose.
+func (l *lowering) resolvedDeclaration(node *ast.Node, symbol *ast.Symbol) *ast.Node {
+	if signature := l.checker.GetResolvedSignature(node); signature != nil && signature.Declaration() != nil {
+		return signature.Declaration()
+	}
+	return symbol.Declarations[0]
+}
+
 // foreignClass is the Objective-C class a class declared in a binding file stands for.
 func (l *lowering) foreignClass(node *ast.Node, symbol *ast.Symbol) (string, error) {
 	for _, declaration := range symbol.Declarations {
@@ -306,7 +321,7 @@ func (l *lowering) foreignClass(node *ast.Node, symbol *ast.Symbol) (string, err
 func (l *lowering) foreignCall(node *ast.Node) (ir.Expression, bool, error) {
 	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
 	if ast.IsIdentifier(callee) && isForeign(l.symbol(callee)) {
-		tag, err := l.foreignTag(node, l.symbol(callee).Declarations[0], "function", "send")
+		tag, err := l.foreignTag(node, l.resolvedDeclaration(node, l.symbol(callee)), "function", "send")
 		if err != nil {
 			return nil, true, err
 		}
@@ -323,7 +338,7 @@ func (l *lowering) foreignCall(node *ast.Node) (ir.Expression, bool, error) {
 	if node.Flags&ast.NodeFlagsOptionalChain != 0 {
 		return nil, true, l.notYet(node, "an optional call of an Apple method")
 	}
-	tag, err := l.foreignTag(node, method.Declarations[0], "method", "static", "function", "alloc")
+	tag, err := l.foreignTag(node, l.resolvedDeclaration(node, method), "method", "static", "function", "alloc")
 	if err != nil {
 		return nil, true, err
 	}

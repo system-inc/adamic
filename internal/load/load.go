@@ -119,7 +119,11 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 	}
 	roots = append(roots, preludePath)
 	// Apple's binding files, for the apple/ modules the program imports (apple.go).
-	roots = append(roots, appleRoots(fs, roots[:len(paths)], normalizedOverlay)...)
+	apple, err := appleRoots(fs, roots[:len(paths)], normalizedOverlay)
+	if err != nil {
+		return nil, err
+	}
+	roots = append(roots, apple...)
 
 	// bundled.WrapFS lays the embedded lib.*.d.ts files over the source view, and cachedvfs memoizes
 	// the stats module resolution repeats.

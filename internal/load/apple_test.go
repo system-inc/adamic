@@ -1,8 +1,11 @@
 package load
 
 import (
+	"context"
 	"os"
 	"path/filepath"
+	"sort"
+	"strings"
 	"testing"
 
 	"github.com/microsoft/TypeScript/tsc/shim/vfs/osvfs"
@@ -63,5 +66,40 @@ func TestAProgramImportsAnAppleImplementation(t *testing.T) {
 	}
 	if states != 1 {
 		t.Fatalf("State's module was loaded %d times", states)
+	}
+}
+
+// A module of a generated framework may have an embedded addition beside it, merged into it:
+// Data's utf8Text, a convenience the generator can't write, on the Data the generator wrote.
+func TestAGeneratedModuleTakesItsEmbeddedAddition(t *testing.T) {
+	directory := t.TempDir()
+	if err := os.MkdirAll(filepath.Join(directory, "bindings", "foundation"), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	generated := "declare module 'apple/foundation/data' {\n\t/**\n\t * NSData\n\t * @objc class NSData\n\t */\n\texport class Data {\n\t\tprivate constructor();\n\t}\n}\n"
+	if err := os.WriteFile(filepath.Join(directory, "bindings", "foundation", "data.d.ts"), []byte(generated), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	t.Setenv(AppleBindingsVariable, filepath.Join(directory, "bindings"))
+	source := "import type { Data } from 'apple/foundation/data';\nexport function text(data: Data): string {\n\treturn data.utf8Text() ?? 'not UTF-8';\n}\n"
+	if err := os.WriteFile(filepath.Join(directory, "main.a"), []byte(source), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	program, err := Load([]string{filepath.Join(directory, "main.a")})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if diagnostics := program.diagnostics(context.Background()); len(diagnostics) != 0 {
+		t.Fatalf("the addition didn't merge into the generated module:\n%s", strings.Join(diagnostics, "\n"))
+	}
+	served := []string{}
+	for _, sourceFile := range program.compiler.GetSourceFiles() {
+		if IsApple(sourceFile) {
+			served = append(served, sourceFile.FileName())
+		}
+	}
+	sort.Strings(served)
+	if strings.Join(served, " ") != "/adamic-apple/foundation/data.addition.d.ts /adamic-apple/foundation/data.d.ts" {
+		t.Fatalf("served %v", served)
 	}
 }

@@ -1524,8 +1524,8 @@
       "Framework": "Foundation"
     },
     "swift": "NSObject",
-    "adamic": "Object",
-    "module": "apple/foundation/object",
+    "adamic": "FoundationObject",
+    "module": "apple/foundation/foundation-object",
     "source": "https://developer.apple.com/documentation/objectivec/nsobject-swift.class"
   },
   {
@@ -1535,8 +1535,8 @@
       "Framework": "Foundation"
     },
     "swift": "NSProxy",
-    "adamic": "Proxy",
-    "module": "apple/foundation/proxy",
+    "adamic": "FoundationProxy",
+    "module": "apple/foundation/foundation-proxy",
     "source": "https://developer.apple.com/documentation/foundation/nsproxy"
   },
   {
@@ -1711,8 +1711,8 @@
       "Framework": "Foundation"
     },
     "swift": "NSNumber",
-    "adamic": "Number",
-    "module": "apple/foundation/number",
+    "adamic": "FoundationNumber",
+    "module": "apple/foundation/foundation-number",
     "source": "https://developer.apple.com/documentation/foundation/nsnumber"
   },
   {
@@ -1722,8 +1722,8 @@
       "Framework": "Foundation"
     },
     "swift": "NSError",
-    "adamic": "Error",
-    "module": "apple/foundation/error",
+    "adamic": "FoundationError",
+    "module": "apple/foundation/foundation-error",
     "source": "https://developer.apple.com/documentation/foundation/nserror"
   },
   {

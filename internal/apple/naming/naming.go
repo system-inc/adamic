@@ -5,6 +5,7 @@ package naming
 
 import (
 	"fmt"
+	"sort"
 	"strings"
 )
 
@@ -40,6 +41,7 @@ const (
 // supplies a lightweight generic collection's element type for word omission.
 // OptionCases supplies the option set's complete literal domain.
 type Type struct {
+	Framework   string // declaring framework for reserved global type names
 	Spelling    string
 	Nullability Nullability
 	Element     string
@@ -81,8 +83,16 @@ type Declaration struct {
 	RefinedForSwift bool         // NS_REFINED_FOR_SWIFT; retained, never silently hidden.
 	Enumerators     []Enumerator // all siblings, required for inferred case names
 	PropertyNames   []string     // includes inherited properties, for omission protection
-	Getter          string       // a property's getter selector, including a BOOL is-prefixed getter
-	Setter          string
+	// TakenNames are names this member may not take, of the same staticness: the owner's and its
+	// ancestors' properties, and inherited methods it doesn't override. A method whose name would be
+	// one of them gives way (see foldFirstLabel).
+	TakenNames    []string
+	ClassProperty bool // a property of the class, not its instances (@property (class))
+	// KeepNeedlessWords is Swift's conflict rule: a method whose omitted name would collide with
+	// a sibling's keeps its words (NSArrayController's addObject: beside add:).
+	KeepNeedlessWords bool
+	Getter            string // a property's getter selector, including a BOOL is-prefixed getter
+	Setter            string
 	// AccessorProperty joins getter/setter declarations to a property. Such
 	// accessors are emitted through the property, not independently by Build.
 	AccessorProperty string
@@ -153,6 +163,9 @@ func Name(d Declaration) (Output, error) {
 	}
 	result := Output{Original: d.Name, SwiftName: swift, RefinedForSwift: d.RefinedForSwift, Getter: d.Getter, Setter: d.Setter}
 	result.Name = normalize(base, isType(d.Kind) || isCase(d.Kind))
+	if isType(d.Kind) {
+		result.Name = typeName(base, d.Framework)
+	}
 	if result.Name == "" {
 		return Output{}, fmt.Errorf("empty imported name for %q", d.Name)
 	}
@@ -166,7 +179,7 @@ func Name(d Declaration) (Output, error) {
 	// Nested types live in their lexical owner's module; their exported name is
 	// still the terminal component. The enclosing type owns its members too.
 	owner = strings.Split(owner, ".")[0]
-	result.Module = "apple/" + strings.ToLower(d.Framework) + "/" + kebab(normalize(dropPrefix(owner), true))
+	result.Module = "apple/" + strings.ToLower(d.Framework) + "/" + kebab(typeName(owner, d.Framework))
 	if isCallable(d.Kind) && d.AccessorProperty == "" {
 		layout := &Layout{Constructor: strings.TrimPrefix(base, "__") == "init"}
 		if layout.Constructor {
@@ -201,12 +214,27 @@ func Name(d Declaration) (Output, error) {
 			}
 		}
 		result.Arguments = layout
+		if (d.Kind == InstanceMethod || d.Kind == ClassMethod) && !layout.Constructor && contains(d.TakenNames, result.Name) {
+			if len(layout.Options) > 0 {
+				foldFirstLabel(&result, d)
+			} else if !d.KeepNeedlessWords {
+				// With no label to fold, Swift's conflict rule: keep the words omission dropped,
+				// when that frees the name (NSControl's drawCell: beside NSView's drawRect:, both
+				// draw(_:) once their types' words are dropped).
+				kept := d
+				kept.KeepNeedlessWords = true
+				if named, err := Name(kept); err == nil && !contains(d.TakenNames, named.Name) {
+					return named, nil
+				}
+			}
+		}
 	}
 	if d.Result.Spelling != "" {
 		resultType := d.Result
 		if resultType.Spelling == "instancetype" {
 			resultType.Spelling = d.Parent + " *"
 			resultType.Object = true
+			resultType.Framework = d.Framework
 		}
 		result.Type, err = MapType(resultType)
 		if err != nil {
@@ -214,6 +242,31 @@ func Name(d Declaration) (Output, error) {
 		}
 	}
 	return result, nil
+}
+
+// foldFirstLabel renames a method that would take a name already taken: Swift tells
+// abbreviation(for:) from the property abbreviation, and NSMatrix's cell(atRow:column:) from
+// NSControl's cell, by their labels, and a class member can't, so the
+// first label joins the name and its argument becomes positional, Objective-C's own reading
+// (abbreviationForDate: is abbreviationFor(date), isValidDateInCalendar: is isValidDateIn(calendar)).
+func foldFirstLabel(result *Output, d Declaration) {
+	layout := result.Arguments
+	first := layout.Options[0]
+	result.Name += normalize(first.SwiftLabel, true)
+	first.Name = normalize(d.Parameters[first.Index].Name, false)
+	if first.Name == "" {
+		first.Name = fmt.Sprintf("argument%d", first.Index+1)
+	}
+	layout.Positional = append(layout.Positional, first)
+	layout.Options = layout.Options[1:]
+}
+func contains(names []string, name string) bool {
+	for _, candidate := range names {
+		if candidate == name {
+			return true
+		}
+	}
+	return false
 }
 
 // MapType refuses unknown pointer shapes rather than claiming they are objects.
@@ -250,7 +303,7 @@ func MapType(t Type) (string, error) {
 	base := strings.TrimSpace(strings.TrimSuffix(s, "*"))
 	var name string
 	switch base {
-	case "CGFloat", "NSInteger", "NSUInteger", "double", "float", "int", "unsigned int", "long", "unsigned long", "short", "unsigned short", "size_t":
+	case "CGFloat", "NSInteger", "NSUInteger", "double", "float", "int", "unsigned int", "long", "unsigned long", "long long", "unsigned long long", "int64_t", "uint64_t", "short", "unsigned short", "size_t":
 		name = "number"
 	case "BOOL", "bool", "_Bool":
 		name = "boolean"
@@ -273,7 +326,7 @@ func MapType(t Type) (string, error) {
 		if pointer && !t.Object {
 			return "", fmt.Errorf("unknown object pointer %q", t.Spelling)
 		}
-		name = normalize(dropPrefix(base), true)
+		name = typeName(base, t.Framework)
 	}
 	if pointer && (name == "number" || name == "boolean" || name == "void") {
 		return "", fmt.Errorf("unsupported scalar pointer %q", t.Spelling)
@@ -320,15 +373,58 @@ type Surface struct {
 	Reverse map[string]string
 }
 
+// A parent's imported name joins its original one, so a protocol's members stay apart from
+// those of a class sharing its Objective-C name (NSAccessibilityElement and its protocol).
 func Identity(d Declaration) string {
-	return string(d.Kind) + ":" + d.Framework + ":" + d.Parent + ":" + d.Name
+	parent := d.Parent
+	if d.ParentSwiftName != "" {
+		parent += "/" + d.ParentSwiftName
+	}
+	kind := string(d.Kind)
+	if d.ClassProperty {
+		kind = "class-" + kind
+	}
+	return kind + ":" + d.Framework + ":" + parent + ":" + d.Name
 }
+
+// A callable's key carries its argument shape, so overloads that a call tells apart by its
+// arguments (initWithLabel:itemSearchDelegate: and initWithRotorType:itemSearchDelegate:, both
+// constructors) are separate exports, while two of one shape still collide.
 func ExportKey(d Declaration, o Output) string {
+	return memberKey(d, o) + Shape(o.Arguments)
+}
+
+// memberKey names a member's slot without its shape: static and instance members are apart, as
+// in a class, and only callables may share a slot, as overloads.
+func memberKey(d Declaration, o Output) string {
 	scope := ""
 	if !isType(d.Kind) && exportContext(d) != "" {
-		scope = normalize(dropPrefix(exportContext(d)), true) + "."
+		scope = typeName(exportContext(d), d.Framework) + "."
+		if d.Kind == ClassMethod || d.ClassProperty {
+			scope += "static "
+		}
 	}
 	return o.Module + "#" + scope + o.Name
+}
+
+// Shape is a callable's argument shape: positional types, then the options object's sorted fields.
+func Shape(layout *Layout) string {
+	if layout == nil {
+		return ""
+	}
+	parts := []string{}
+	for _, argument := range layout.Positional {
+		parts = append(parts, argument.Type)
+	}
+	options := []string{}
+	for _, argument := range layout.Options {
+		options = append(options, argument.Name+": "+argument.Type)
+	}
+	sort.Strings(options)
+	if len(options) > 0 {
+		parts = append(parts, "{ "+strings.Join(options, "; ")+" }")
+	}
+	return "(" + strings.Join(parts, ", ") + ")"
 }
 func explicitName(d Declaration) string {
 	if d.SwiftName != "" {
@@ -345,7 +441,11 @@ func exportContext(d Declaration) string {
 }
 func Build(declarations []Declaration) (Surface, error) {
 	surface := Surface{Forward: map[string]Output{}, Reverse: map[string]string{}}
-	// Sorting is unnecessary: accepted output never depends on encounter order.
+	// Each slot holds one value member, or callables only, whose shapes then tell them apart.
+	slots := map[string]string{}
+	// Every problem is reported at once, sorted, so a whole SDK's collisions show in one run and
+	// the report never depends on encounter order.
+	problems := []string{}
 	for _, d := range declarations {
 		if d.AccessorProperty != "" {
 			return Surface{}, fmt.Errorf("describe accessor %s through its property, with Getter and Setter", d.Name)
@@ -356,13 +456,33 @@ func Build(declarations []Declaration) (Surface, error) {
 		}
 		original, key := Identity(d), ExportKey(d, o)
 		if _, exists := surface.Forward[original]; exists {
-			return Surface{}, fmt.Errorf("duplicate original %s", original)
+			problems = append(problems, "duplicate original "+original)
+			continue
 		}
 		if other, exists := surface.Reverse[key]; exists {
-			return Surface{}, fmt.Errorf("collision at %s between %s and %s", key, other, original)
+			problems = append(problems, fmt.Sprintf("collision at %s between %s", key, pair(other, original)))
+			continue
 		}
+		slot := memberKey(d, o)
+		if other, exists := slots[slot]; exists && (o.Arguments == nil || surface.Forward[other].Arguments == nil) {
+			problems = append(problems, fmt.Sprintf("collision at %s between %s", slot, pair(other, original)))
+			continue
+		}
+		slots[slot] = original
 		surface.Forward[original] = o
 		surface.Reverse[key] = original
 	}
+	if len(problems) > 0 {
+		sort.Strings(problems)
+		return Surface{}, fmt.Errorf("%d naming problems:\n%s", len(problems), strings.Join(problems, "\n"))
+	}
 	return surface, nil
+}
+
+// pair names two colliding originals in sorted order.
+func pair(a, b string) string {
+	if b < a {
+		a, b = b, a
+	}
+	return a + " and " + b
 }

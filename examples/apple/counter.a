@@ -26,10 +26,10 @@ renderWhenStateChanges(() => {
 
 const application = Application.shared;
 application.setActivationPolicy('Regular');
-const window = new Window({ x: 0, y: 0, width: 320, height: 240 }, { styleMask: ['Titled', 'Closable', 'Miniaturizable'], backing: 'Buffered' });
+const window = new Window({ contentRectangle: { x: 0, y: 0, width: 320, height: 240 }, styleMask: ['Titled', 'Closable', 'Miniaturizable'], backing: 'Buffered', defer: false });
 window.title = 'Adamic and SwiftUI';
 window.contentView = host.view;
 window.center();
-window.makeKeyAndOrderFront();
+window.makeKeyAndOrderFront(undefined);
 application.activate();
 application.run();

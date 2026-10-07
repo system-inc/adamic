@@ -24,7 +24,7 @@ const host = new Host(body());
 renderWhenStateChanges(() => {
 	host.render(body());
 });
-const window = new Window({ x: 0, y: 0, width: 300, height: 200 }, { styleMask: ['Titled'], backing: 'Buffered', defer: true });
+const window = new Window({ contentRectangle: { x: 0, y: 0, width: 300, height: 200 }, styleMask: ['Titled'], backing: 'Buffered', defer: true });
 window.contentView = host.view;
 
 console.log(`size: ${host.fittingWidth} by ${host.fittingHeight}`);

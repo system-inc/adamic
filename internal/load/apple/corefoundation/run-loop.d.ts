@@ -1,7 +1,7 @@
-// The main thread's run loop, through Core Foundation: a seed binding, until the generator writes
-// these (#qxe07rq).
+// The main thread's run loop, through Core Foundation, which isn't generated: CFRunLoopRef is an
+// opaque reference the generator doesn't bind.
 
-declare module 'apple/foundation/run-loop' {
+declare module 'apple/corefoundation/run-loop' {
 	/**
 	 * CFRunLoopRef
 	 * @objc class __NSCFType
