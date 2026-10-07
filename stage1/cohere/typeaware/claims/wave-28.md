@@ -27,3 +27,13 @@ After the original three ports were tested and pushed at `24c600f017352ef3dd8d7c
 3. `nexus/correctness-require-blocking-standard-streams` (0 compiler, 0 repository).
 
 There were 33 distinct Markdown claim blobs naming 96 ranked rules at this snapshot. None of these three is claimed or implemented on main or the bridge branch. This continuation claim is pushed before any implementation. Shared registration generators and shared test harness files remain outside this worker's territory.
+
+## Third batch claim
+
+The six earlier ports are tested and pushed at `4f3a94110b2e2ec55098cef7cf1a913881b3a53b`. After another all-heads fetch, 348 origin refs contain 33 distinct claim blobs naming 126 ranked rules. Excluding those claims and the base/main ports leaves these first three by combined volume:
+
+1. `no-throw-literal` (0 compiler, 0 repository).
+2. `no-useless-backreference` (0 compiler, 0 repository).
+3. `prefer-arrow-callback` (0 compiler, 0 repository).
+
+No matching source literal occurs in the 34 distinct origin typeaware trees. No selected rule was skipped. This claim is pushed before any third-batch implementation.
