@@ -1,0 +1,7 @@
+=== RUN   TestOwnedWitnesses
+    registration_test.go:45: node [--disable-warning=ExperimentalWarning /tmp/wave109-rules-landing/oracle/node.mjs /tmp/wave109-rules-landing/stage1/cohere/lint/main.ts --manifest /tmp/adamic-gate/TestOwnedWitnesses1329382742/288/manifest.txt]: exit status 70
+        adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 21 in fixed source
+--- FAIL: TestOwnedWitnesses (25.30s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	25.320s
+FAIL

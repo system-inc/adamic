@@ -1,0 +1,42 @@
+=== RUN   TestMutants
+=== RUN   TestMutants/react-no-invalid-html-attribute_listener_suppressed
+    lint_test.go:759: react-no-invalid-html-attribute listener suppressed caught on Node: case 145 line 2758: port "fixed\tconst a = <div rel=\"nofollow\" />;\\u000aconst b = <link rel=\"shortcut  noopener\" />;\\u000aReact.createElement(\"a\", {rel: \"stylesheet\"});\\u000aconst unknownRelation = <a rel=\"not-a-relation\" />;\\u000a", Go "/tmp/adamic-gate/TestMutantsreact-no-invalid-html-attribute_listener_suppressed4122537275/016/react-no-invalid-html-attribute-0.tsx:4:32"
+        Go context:
+        range 54 74 spaceDelimited 			54 74
+        /tmp/adamic-gate/TestMutantsreact-no-invalid-html-attribute_listener_suppressed4122537275/016/react-no-invalid-html-attribute-0.tsx:3:32
+          react/no-invalid-html-attribute  `stylesheet` is a real `rel` value but not one that means anything on `<a>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+        
+        range 110 122 notValidFor 			110 122
+        /tmp/adamic-gate/TestMutantsreact-no-invalid-html-attribute_listener_suppressed4122537275/016/react-no-invalid-html-attribute-0.tsx:4:32
+          react/no-invalid-html-attribute  `not-a-relation` is never a valid `rel` attribute value on any element. The browser does not warn about a rel token it does not recognise, it simply ignores it, so a typo here fails in the direction that looks fine: the relationship the author meant to declare is absent and nothing says so. Check it against the registered link relations.
+        
+        range 157 173 neverValid 			157 173
+        fixed	const a = <div rel="nofollow" />;\u000aconst b = <link rel="shortcut  noopener" />;\u000aReact.createElement("a", {rel: "stylesheet"});\u000aconst unknownRelation = <a rel="not-a-relation" />;\u000a
+    lint_test.go:759: react-no-invalid-html-attribute listener suppressed caught on emitted JavaScript: case 145 line 2758: port "fixed\tconst a = <div rel=\"nofollow\" />;\\u000aconst b = <link rel=\"shortcut  noopener\" />;\\u000aReact.createElement(\"a\", {rel: \"stylesheet\"});\\u000aconst unknownRelation = <a rel=\"not-a-relation\" />;\\u000a", Go "/tmp/adamic-gate/TestMutantsreact-no-invalid-html-attribute_listener_suppressed4122537275/016/react-no-invalid-html-attribute-0.tsx:4:32"
+        Go context:
+        range 54 74 spaceDelimited 			54 74
+        /tmp/adamic-gate/TestMutantsreact-no-invalid-html-attribute_listener_suppressed4122537275/016/react-no-invalid-html-attribute-0.tsx:3:32
+          react/no-invalid-html-attribute  `stylesheet` is a real `rel` value but not one that means anything on `<a>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+        
+        range 110 122 notValidFor 			110 122
+        /tmp/adamic-gate/TestMutantsreact-no-invalid-html-attribute_listener_suppressed4122537275/016/react-no-invalid-html-attribute-0.tsx:4:32
+          react/no-invalid-html-attribute  `not-a-relation` is never a valid `rel` attribute value on any element. The browser does not warn about a rel token it does not recognise, it simply ignores it, so a typo here fails in the direction that looks fine: the relationship the author meant to declare is absent and nothing says so. Check it against the registered link relations.
+        
+        range 157 173 neverValid 			157 173
+        fixed	const a = <div rel="nofollow" />;\u000aconst b = <link rel="shortcut  noopener" />;\u000aReact.createElement("a", {rel: "stylesheet"});\u000aconst unknownRelation = <a rel="not-a-relation" />;\u000a
+    lint_test.go:759: react-no-invalid-html-attribute listener suppressed caught on native: case 145 line 2758: port "fixed\tconst a = <div rel=\"nofollow\" />;\\u000aconst b = <link rel=\"shortcut  noopener\" />;\\u000aReact.createElement(\"a\", {rel: \"stylesheet\"});\\u000aconst unknownRelation = <a rel=\"not-a-relation\" />;\\u000a", Go "/tmp/adamic-gate/TestMutantsreact-no-invalid-html-attribute_listener_suppressed4122537275/016/react-no-invalid-html-attribute-0.tsx:4:32"
+        Go context:
+        range 54 74 spaceDelimited 			54 74
+        /tmp/adamic-gate/TestMutantsreact-no-invalid-html-attribute_listener_suppressed4122537275/016/react-no-invalid-html-attribute-0.tsx:3:32
+          react/no-invalid-html-attribute  `stylesheet` is a real `rel` value but not one that means anything on `<a>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+        
+        range 110 122 notValidFor 			110 122
+        /tmp/adamic-gate/TestMutantsreact-no-invalid-html-attribute_listener_suppressed4122537275/016/react-no-invalid-html-attribute-0.tsx:4:32
+          react/no-invalid-html-attribute  `not-a-relation` is never a valid `rel` attribute value on any element. The browser does not warn about a rel token it does not recognise, it simply ignores it, so a typo here fails in the direction that looks fine: the relationship the author meant to declare is absent and nothing says so. Check it against the registered link relations.
+        
+        range 157 173 neverValid 			157 173
+        fixed	const a = <div rel="nofollow" />;\u000aconst b = <link rel="shortcut  noopener" />;\u000aReact.createElement("a", {rel: "stylesheet"});\u000aconst unknownRelation = <a rel="not-a-relation" />;\u000a
+--- PASS: TestMutants (20.08s)
+    --- PASS: TestMutants/react-no-invalid-html-attribute_listener_suppressed (17.84s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	20.095s
