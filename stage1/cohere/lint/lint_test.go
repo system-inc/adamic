@@ -9,6 +9,8 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+"regexp"
+"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 	"sort"
 	"strings"
 	"testing"
@@ -22,7 +24,35 @@ import (
 const repository = "../../.."
 const compilerCommit = "050880ce59e30b356b686bd3144efe24f875ebc8"
 
-var portFiles = []string{"finding.ts", "messages.ts", "settings.ts", "comments.ts", "unicode.ts", "lint.ts", "main.ts", "volume.ts", "volume_messages.ts"}
+func prepareRegistry(t *testing.T, directory string) []registry.Descriptor {
+	t.Helper()
+	descriptors, err := registry.Generate(directory)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return descriptors
+}
+
+func portFiles(t *testing.T) []string {
+	t.Helper()
+	var files []string
+	err := filepath.WalkDir(".", func(path string, entry fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		if entry.IsDir() && (path == "gaps" || strings.HasSuffix(path, "testdata")) {
+			return filepath.SkipDir
+		}
+		if !entry.IsDir() && (strings.HasSuffix(path, ".ts") || strings.HasSuffix(path, "rule.json") || strings.HasSuffix(path, "mutant.json") || strings.HasSuffix(path, "oracle.go")) {
+			files = append(files, path)
+		}
+		return nil
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	return files
+}
 
 type execution struct {
 	output   []byte
@@ -67,23 +97,41 @@ func goOracle(t *testing.T) string {
 	if err != nil {
 		t.Fatal(err)
 	}
-	virtual := filepath.Join(root, "adamic_lint_oracle.go")
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: side}})
+	descriptors := prepareRegistry(t, ".")
+	directory := t.TempDir()
+	replacements := map[string]string{}
+	var virtualFiles []string
+	add := func(name, source string) {
+		virtual := filepath.Join(root, "adamic_lint_"+name+".go")
+		absolute, err := filepath.Abs(source)
+		if err != nil {
+			t.Fatal(err)
+		}
+		replacements[virtual] = absolute
+		virtualFiles = append(virtualFiles, virtual)
+	}
+	add("oracle", side)
+	add("registry", ".generated/registry.go")
+	for _, d := range descriptors {
+		add(strings.ReplaceAll(d.Slug, "-", "_"), filepath.Join("rules", d.Slug, "oracle.go"))
+	}
+	overlay, err := json.Marshal(map[string]any{"Replace": replacements})
 	if err != nil {
 		t.Fatal(err)
 	}
-	directory := t.TempDir()
 	path := filepath.Join(directory, "overlay.json")
 	if err := os.WriteFile(path, overlay, 0644); err != nil {
 		t.Fatal(err)
 	}
 	binary := filepath.Join(directory, "oracle")
-	execute(t, root, "go", "build", "-overlay="+path, "-o", binary, virtual)
+	args := append([]string{"build", "-overlay=" + path, "-o", binary}, virtualFiles...)
+	execute(t, root, "go", args...)
 	return binary
 }
 
 func buildPort(t *testing.T, directory string, sanitize bool) string {
 	t.Helper()
+prepareRegistry(t, directory)
 	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
 	if err != nil {
 		t.Fatal(err)
@@ -101,6 +149,7 @@ func buildPort(t *testing.T, directory string, sanitize bool) string {
 
 func node(t *testing.T, directory, manifest string, count bool) execution {
 	t.Helper()
+prepareRegistry(t, directory)
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	if err != nil {
 		t.Fatal(err)
@@ -358,44 +407,63 @@ func TestCompilerAndStage1Agree(t *testing.T) {
 	compare(t, goOracle(t), buildPort(t, directory, true), directory, manifest(t, rows))
 }
 func mutant(t *testing.T, from, to string, targets ...string) string {
-	target := "lint.ts"
-	if len(targets) > 0 {
-		target = targets[0]
-	}
-	directory := t.TempDir()
-	for _, file := range portFiles {
+	if len(targets) == 0 && from != "" { targets = []string{"lint.ts"} }
+ directory := t.TempDir()
+	changed := 0
+	prepareRegistry(t, ".")
+	for _, file := range portFiles(t) {
 		data, err := os.ReadFile(file)
 		if err != nil {
 			t.Fatal(err)
 		}
 		source := string(data)
-		if file == target {
+		selected := len(targets) == 0 || filepath.Clean(file) == filepath.Clean(targets[0])
+		if from != "" && selected && !strings.HasSuffix(file, "mutant.json") && strings.Contains(source, from) {
 			if strings.Count(source, from) != 1 {
-				t.Fatalf("mutant anchor count for %q", from)
+				t.Fatalf("mutant anchor repeated in %s", file)
 			}
 			source = strings.Replace(source, from, to, 1)
+			changed++
 		}
-		typescript, err := filepath.Abs("../../typescript")
-		if err != nil {
+		if strings.HasSuffix(file, ".ts") {
+			source = rewritePortImports(t, file, source)
+		}
+		destination := filepath.Join(directory, file)
+		if err := os.MkdirAll(filepath.Dir(destination), 0755); err != nil {
 			t.Fatal(err)
 		}
-		source = strings.ReplaceAll(source, "../../typescript", typescript)
-		if err := os.WriteFile(filepath.Join(directory, file), []byte(source), 0644); err != nil {
+		if err := os.WriteFile(destination, []byte(source), 0644); err != nil {
 			t.Fatal(err)
 		}
 	}
+	// Validation requires each rule's owned witnesses too.
+	for _, d := range prepareRegistry(t, ".") {
+		paths, _ := filepath.Glob(filepath.Join("rules", d.Slug, "testdata", "*.ts.txt"))
+		for _, path := range paths {
+			data, err := os.ReadFile(path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			target := filepath.Join(directory, path)
+			if err := os.MkdirAll(filepath.Dir(target), 0755); err != nil {
+				t.Fatal(err)
+			}
+			if err := os.WriteFile(target, data, 0644); err != nil {
+				t.Fatal(err)
+			}
+		}
+	}
+	if from != "" && changed != 1 {
+		t.Fatalf("mutant anchor count: %d for %q", changed, from)
+	}
 	return directory
 }
-
 // Not parallel: sanitized rebuilds run in sequence to bound memory and precede timing.
-func TestMutants(t *testing.T) {
+func TestLegacyMutants(t *testing.T) {
 	path := manifest(t, generated(t))
 	oracle := goOracle(t)
 	want := execute(t, "", oracle, "--manifest", path).output
 	for _, change := range []struct{ name, from, to string }{
-		{"suggestion applied as fix", "hasTypeOf || sameType ? 'fix' : 'suggestion'", "hasTypeOf || sameType ? 'fix' : 'fix'"},
-		{"empty function body reported", "if(!functionBody && !(this.allowCatch", "if((functionBody || !functionBody) && !(this.allowCatch"},
-		{"duplicate case suppressed", "if(seen.has(signature))", "if(!seen.has(signature))"},
 		{"control statement omitted", "node.kind === 'ContinueStatement' && this.enabled('no-continue')", "node.kind === 'BreakStatement' && this.enabled('no-continue')"},
 		{"destructuring hole reported", "!this.assignmentTarget(index) &&", ""},
 		{"nested generator owns outer yield", "].includes(this.node(child).kind)", "].includes('no boundary')"},
@@ -552,4 +620,67 @@ func TestThroughput(t *testing.T) {
 	}
 	loadAfter, _ := os.ReadFile("/proc/loadavg")
 	t.Logf("load after %s", strings.TrimSpace(string(loadAfter)))
+}
+
+func TestMutants(t *testing.T) {
+	oracle := goOracle(t)
+	for _, descriptor := range prepareRegistry(t, ".") {
+		var change struct{ Name, File, From, To string }
+		data, err := os.ReadFile(filepath.Join("rules", descriptor.Slug, "mutant.json"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if err := json.Unmarshal(data, &change); err != nil {
+			t.Fatal(err)
+		}
+		t.Run(change.Name, func(t *testing.T) {
+			rows := generated(t)
+			for _, source := range ownedWitnesses(t, ".", descriptor.Slug) {
+				rows = append(rows, source+"\t"+descriptor.Name)
+			}
+			path := manifest(t, rows)
+			want := execute(t, "", oracle, "--manifest", path).output
+			if change.File == "" {
+				change.File = "rule.ts"
+			}
+			directory := mutant(t, change.From, change.To, filepath.Join("rules", descriptor.Slug, change.File))
+			for _, side := range []struct {
+				name string
+				run  execution
+			}{{"Node", node(t, directory, path, false)}, {"native", execute(t, "", buildPort(t, directory, true), "--manifest", path)}} {
+				if bytes.Equal(side.run.output, want) {
+					t.Fatalf("%s mutant survived on %s", change.Name, side.name)
+				}
+				t.Logf("%s caught on %s: %s", change.Name, side.name, difference(side.run.output, want))
+			}
+		})
+	}
+}
+
+
+var portImport = regexp.MustCompile(`(?m)(^import\s+[^;]*?\s+from\s+)(['"])([^'"]+)(['"])`)
+
+// Preserve imports within the copied port, and resolve outside imports from their
+// original module directory. Rules may be arbitrarily deeper than context.ts.
+func rewritePortImports(t *testing.T, file, source string) string {
+	t.Helper()
+	root, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	return portImport.ReplaceAllStringFunc(source, func(declaration string) string {
+		parts := portImport.FindStringSubmatch(declaration)
+		if !strings.HasPrefix(parts[3], ".") {
+			return declaration
+		}
+		absolute := filepath.Clean(filepath.Join(root, filepath.Dir(file), parts[3]))
+		relative, err := filepath.Rel(root, absolute)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if relative != ".." && !strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
+			return declaration
+		}
+		return parts[1] + parts[2] + filepath.ToSlash(absolute) + parts[4]
+	})
 }
