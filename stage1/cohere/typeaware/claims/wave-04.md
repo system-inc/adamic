@@ -20,3 +20,20 @@ No existing port or claim was found for these three rules. No rules were skipped
 
 New Adamic source files use `.a`. Checker extensions, if needed, have separate
 files per question, with only one-line registration changes in shared files.
+
+## Continuation claim
+
+Original three rules completed and pushed through `67b15e35`.
+Fetched all origin heads (325 remote references) on October 7, 2026.
+Excluded the 25 checker-dependent base ports (the 26th is not in the checker
+ranking) and every rule named in claim Markdown on any origin branch (98).
+Combined counts descend, with lexical ties; all positive-volume candidates
+are ported or claimed. The first three available entries are:
+
+- nexus/correctness-no-process-exit-after-output (0)
+- nexus/correctness-no-uncleared-race-timeout (0)
+- nexus/correctness-require-blocking-standard-streams (0)
+
+These rules are claimed for the continuation. This claim is committed and
+pushed before any implementation. New code stays in this worker's directories;
+the shared registration generator and existing harness will not be edited.
