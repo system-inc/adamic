@@ -14,10 +14,10 @@ func init() {
 		name   string
 		lowers bool
 	}{
-		{"range_refused", false}, {"typeof_conversion", true}, {"primitive", true}, {"affixes", true}, {"wellformed", true}, {"null_receiver", true}, {"raw_primitive", true},
+		{"range_refused", true}, {"typeof_conversion", true}, {"primitive", true}, {"affixes", true}, {"wellformed", true}, {"null_receiver", true}, {"raw_primitive", true}, {"boxed", true}, {"regex_dispatch", true}, {"ranges", true},
 	} {
 		path := "internal/oracle/testdata/library_string_" + entry.name + ".a"
-		if !entry.lowers {
+		if entry.name == "range_refused" {
 			// The flow gate globs runnable top-level fixtures; refusal probes live separately.
 			path = "internal/oracle/testdata/library_string_refusals/library_string_" + entry.name + ".a"
 		}
@@ -58,6 +58,12 @@ func TestLibraryStringSecondMutants(t *testing.T) {
 					return value
 				}
 				switch node := value.(type) {
+				case ir.BuiltinError:
+					if test.name == "nullReceiver" && node.Kind == 1 {
+						node.Kind = 3
+						changed = true
+						return node
+					}
 				case ir.CallClosure:
 					if test.name == "primitive" {
 						if property, yes := node.Closure.(ir.Property); yes && property.Name == "toString" {
