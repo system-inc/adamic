@@ -4,6 +4,16 @@ Commands and outputs: parse 9,259,807,920 to 8,738,361,433 Ir, 5.631288%; uncach
 Mutants: four classifier mutants failed assertions; a profile summary +1 failed instruction reconciliation.
 Not covered: frame headroom proof, emitter activation, new deep-recursion fixtures or their runtime mutants, and Wasm Workers measurements.
 
+## Cache and user-time follow-up
+
+The [cache comparison](cache/REPORT.md) adds modeled L1 instruction misses and
+ordinary user time for every measured variant. Forced inlining saves 5.63% Ir,
+raises I1 misses 0.18%, expands .text 7.27%, and has a higher median user time in
+seven rounds. Removing the same checks with clang-selected inlining saves 2.96%
+Ir and 6.08% I1 misses with only 0.31% .text growth. Neither establishes a timing
+speedup or changes the incomplete production status. The follow-up uses the
+retained c01907a binaries, independently of the newer main merged for delivery.
+
 ## Measurement first
 
 Reconstructed the exact SPLIT.md parse-only driver from batch 8 commit

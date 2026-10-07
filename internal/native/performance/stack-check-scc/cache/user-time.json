@@ -1,0 +1,418 @@
+{
+  "rounds": 7,
+  "warmup": "one untimed invocation per variant",
+  "instrument": "wait4 direct-child ru_utime; ordinary execution without Valgrind",
+  "load_before": "0.88 0.95 0.46 1/150 19706",
+  "samples": [
+    {
+      "side": "before",
+      "label": "0-before",
+      "pid": 19714,
+      "wallMs": 1100.538585,
+      "userMs": 1052.057,
+      "systemMs": 48.287,
+      "cpuMs": 1100.344,
+      "maxRssBytes": 98705408,
+      "minorFaults": 24975,
+      "majorFaults": 0,
+      "voluntaryContextSwitches": 1,
+      "involuntaryContextSwitches": 2,
+      "exitCode": 0,
+      "timedOut": false
+    },
+    {
+      "side": "natural",
+      "label": "0-natural",
+      "pid": 19716,
+      "wallMs": 1011.849165,
+      "userMs": 971.343,
+      "systemMs": 40.354,
+      "cpuMs": 1011.697,
+      "maxRssBytes": 98738176,
+      "minorFaults": 24974,
+      "majorFaults": 0,
+      "voluntaryContextSwitches": 1,
+      "involuntaryContextSwitches": 3,
+      "exitCode": 0,
+      "timedOut": false
+    },
+    {
+      "side": "after",
+      "label": "0-after",
+      "pid": 19718,
+      "wallMs": 1037.422056,
+      "userMs": 1000.871,
+      "systemMs": 36.06,
+      "cpuMs": 1036.931,
+      "maxRssBytes": 98709504,
+      "minorFaults": 24975,
+      "majorFaults": 0,
+      "voluntaryContextSwitches": 1,
+      "involuntaryContextSwitches": 14,
+      "exitCode": 0,
+      "timedOut": false
+    },
+    {
+      "side": "natural",
+      "label": "1-natural",
+      "pid": 19720,
+      "wallMs": 1154.213211,
+      "userMs": 1108.535,
+      "systemMs": 44.652,
+      "cpuMs": 1153.187,
+      "maxRssBytes": 98709504,
+      "minorFaults": 24975,
+      "majorFaults": 0,
+      "voluntaryContextSwitches": 1,
+      "involuntaryContextSwitches": 20,
+      "exitCode": 0,
+      "timedOut": false
+    },
+    {
+      "side": "after",
+      "label": "1-after",
+      "pid": 19722,
+      "wallMs": 1059.050662,
+      "userMs": 1010.815,
+      "systemMs": 48.098,
+      "cpuMs": 1058.913,
+      "maxRssBytes": 98758656,
+      "minorFaults": 24975,
+      "majorFaults": 0,
+      "voluntaryContextSwitches": 1,
+      "involuntaryContextSwitches": 1,
+      "exitCode": 0,
+      "timedOut": false
+    },
+    {
+      "side": "before",
+      "label": "1-before",
+      "pid": 19724,
+      "wallMs": 1099.296524,
+      "userMs": 1015.476,
+      "systemMs": 83.595,
+      "cpuMs": 1099.071,
+      "maxRssBytes": 98742272,
+      "minorFaults": 24974,
+      "majorFaults": 0,
+      "voluntaryContextSwitches": 1,
+      "involuntaryContextSwitches": 3,
+      "exitCode": 0,
+      "timedOut": false
+    },
+    {
+      "side": "after",
+      "label": "2-after",
+      "pid": 19726,
+      "wallMs": 1162.543,
+      "userMs": 1113.369,
+      "systemMs": 48.048,
+      "cpuMs": 1161.417,
+      "maxRssBytes": 98709504,
+      "minorFaults": 24975,
+      "majorFaults": 0,
+      "voluntaryContextSwitches": 1,
+      "involuntaryContextSwitches": 17,
+      "exitCode": 0,
+      "timedOut": false
+    },
+    {
+      "side": "before",
+      "label": "2-before",
+      "pid": 19728,
+      "wallMs": 1128.138609,
+      "userMs": 1077.583,
+      "systemMs": 50.152,
+      "cpuMs": 1127.735,
+      "maxRssBytes": 98770944,
+      "minorFaults": 24974,
+      "majorFaults": 0,
+      "voluntaryContextSwitches": 1,
+      "involuntaryContextSwitches": 3,
+      "exitCode": 0,
+      "timedOut": false
+    },
+    {
+      "side": "natural",
+      "label": "2-natural",
+      "pid": 19730,
+      "wallMs": 1138.900498,
+      "userMs": 1089.525,
+      "systemMs": 48.207,
+      "cpuMs": 1137.732,
+      "maxRssBytes": 98746368,
+      "minorFaults": 24974,
+      "majorFaults": 0,
+      "voluntaryContextSwitches": 1,
+      "involuntaryContextSwitches": 17,
+      "exitCode": 0,
+      "timedOut": false
+    },
+    {
+      "side": "before",
+      "label": "3-before",
+      "pid": 19732,
+      "wallMs": 1148.602204,
+      "userMs": 1116.541,
+      "systemMs": 31.863,
+      "cpuMs": 1148.404,
+      "maxRssBytes": 98676736,
+      "minorFaults": 24975,
+      "majorFaults": 0,
+      "voluntaryContextSwitches": 1,
+      "involuntaryContextSwitches": 4,
+      "exitCode": 0,
+      "timedOut": false
+    },
+    {
+      "side": "natural",
+      "label": "3-natural",
+      "pid": 19734,
+      "wallMs": 1122.863639,
+      "userMs": 1080.021,
+      "systemMs": 42.417,
+      "cpuMs": 1122.438,
+      "maxRssBytes": 98775040,
+      "minorFaults": 24975,
+      "majorFaults": 0,
+      "voluntaryContextSwitches": 1,
+      "involuntaryContextSwitches": 4,
+      "exitCode": 0,
+      "timedOut": false
+    },
+    {
+      "side": "after",
+      "label": "3-after",
+      "pid": 19736,
+      "wallMs": 1200.738483,
+      "userMs": 1146.464,
+      "systemMs": 54.132,
+      "cpuMs": 1200.596,
+      "maxRssBytes": 98709504,
+      "minorFaults": 24975,
+      "majorFaults": 0,
+      "voluntaryContextSwitches": 1,
+      "involuntaryContextSwitches": 1,
+      "exitCode": 0,
+      "timedOut": false
+    },
+    {
+      "side": "natural",
+      "label": "4-natural",
+      "pid": 19738,
+      "wallMs": 1268.089691,
+      "userMs": 1246.538,
+      "systemMs": 21.355,
+      "cpuMs": 1267.893,
+      "maxRssBytes": 98766848,
+      "minorFaults": 24974,
+      "majorFaults": 0,
+      "voluntaryContextSwitches": 1,
+      "involuntaryContextSwitches": 4,
+      "exitCode": 0,
+      "timedOut": false
+    },
+    {
+      "side": "after",
+      "label": "4-after",
+      "pid": 19749,
+      "wallMs": 1174.971418,
+      "userMs": 1121.504,
+      "systemMs": 53.2,
+      "cpuMs": 1174.704,
+      "maxRssBytes": 98717696,
+      "minorFaults": 24976,
+      "majorFaults": 0,
+      "voluntaryContextSwitches": 1,
+      "involuntaryContextSwitches": 6,
+      "exitCode": 0,
+      "timedOut": false
+    },
+    {
+      "side": "before",
+      "label": "4-before",
+      "pid": 19751,
+      "wallMs": 1182.075486,
+      "userMs": 1136.381,
+      "systemMs": 44.278,
+      "cpuMs": 1180.659,
+      "maxRssBytes": 98742272,
+      "minorFaults": 24975,
+      "majorFaults": 0,
+      "voluntaryContextSwitches": 1,
+      "involuntaryContextSwitches": 21,
+      "exitCode": 0,
+      "timedOut": false
+    },
+    {
+      "side": "after",
+      "label": "5-after",
+      "pid": 19753,
+      "wallMs": 1149.134012,
+      "userMs": 1063.721,
+      "systemMs": 84.887,
+      "cpuMs": 1148.608,
+      "maxRssBytes": 98717696,
+      "minorFaults": 24974,
+      "majorFaults": 0,
+      "voluntaryContextSwitches": 1,
+      "involuntaryContextSwitches": 4,
+      "exitCode": 0,
+      "timedOut": false
+    },
+    {
+      "side": "before",
+      "label": "5-before",
+      "pid": 19755,
+      "wallMs": 1151.084204,
+      "userMs": 1085.949,
+      "systemMs": 64.925,
+      "cpuMs": 1150.874,
+      "maxRssBytes": 98746368,
+      "minorFaults": 24974,
+      "majorFaults": 0,
+      "voluntaryContextSwitches": 1,
+      "involuntaryContextSwitches": 4,
+      "exitCode": 0,
+      "timedOut": false
+    },
+    {
+      "side": "natural",
+      "label": "5-natural",
+      "pid": 19757,
+      "wallMs": 1085.039484,
+      "userMs": 1056.406,
+      "systemMs": 28.403,
+      "cpuMs": 1084.809,
+      "maxRssBytes": 98766848,
+      "minorFaults": 24974,
+      "majorFaults": 0,
+      "voluntaryContextSwitches": 1,
+      "involuntaryContextSwitches": 6,
+      "exitCode": 0,
+      "timedOut": false
+    },
+    {
+      "side": "before",
+      "label": "6-before",
+      "pid": 19759,
+      "wallMs": 1147.306343,
+      "userMs": 1104.947,
+      "systemMs": 41.49,
+      "cpuMs": 1146.437,
+      "maxRssBytes": 98709504,
+      "minorFaults": 24975,
+      "majorFaults": 0,
+      "voluntaryContextSwitches": 1,
+      "involuntaryContextSwitches": 6,
+      "exitCode": 0,
+      "timedOut": false
+    },
+    {
+      "side": "natural",
+      "label": "6-natural",
+      "pid": 19761,
+      "wallMs": 1073.127286,
+      "userMs": 1052.244,
+      "systemMs": 20.446,
+      "cpuMs": 1072.69,
+      "maxRssBytes": 98758656,
+      "minorFaults": 24973,
+      "majorFaults": 0,
+      "voluntaryContextSwitches": 1,
+      "involuntaryContextSwitches": 3,
+      "exitCode": 0,
+      "timedOut": false
+    },
+    {
+      "side": "after",
+      "label": "6-after",
+      "pid": 19763,
+      "wallMs": 1290.945988,
+      "userMs": 1247.168,
+      "systemMs": 43.324,
+      "cpuMs": 1290.492,
+      "maxRssBytes": 98775040,
+      "minorFaults": 24975,
+      "majorFaults": 0,
+      "voluntaryContextSwitches": 1,
+      "involuntaryContextSwitches": 23,
+      "exitCode": 0,
+      "timedOut": false
+    }
+  ],
+  "binaries": {
+    "before": {
+      "sha256": "057a6db5e512cab9b700735c6590234819fcf2a07bbae650f9564d07a7640033",
+      "command": [
+        "/workspace/scratch/stack-check-scc/native-before",
+        "--manifest",
+        "/workspace/scratch/stack-check-scc/compiler.txt",
+        "--count"
+      ]
+    },
+    "natural": {
+      "sha256": "3bc97e1d72570e5f0a006f78e750ebe87e7b2f938d1227290757b33de9f75e49",
+      "command": [
+        "/workspace/scratch/stack-check-scc/native-natural",
+        "--manifest",
+        "/workspace/scratch/stack-check-scc/compiler.txt",
+        "--count"
+      ]
+    },
+    "after": {
+      "sha256": "17a41d0aa712a2bc969bd7ac0fd71fbd6c2a441fa94d2d229fe58f0cf8332bdd",
+      "command": [
+        "/workspace/scratch/stack-check-scc/native-after",
+        "--manifest",
+        "/workspace/scratch/stack-check-scc/compiler.txt",
+        "--count"
+      ]
+    }
+  },
+  "load_after": "0.92 0.96 0.47 1/150 19763",
+  "summary": {
+    "before": {
+      "userMs": {
+        "best": 1015.476,
+        "median": 1085.949
+      },
+      "systemMs": {
+        "best": 31.863,
+        "median": 48.287
+      },
+      "wallMs": {
+        "best": 1099.296524,
+        "median": 1147.306343
+      }
+    },
+    "natural": {
+      "userMs": {
+        "best": 971.343,
+        "median": 1080.021
+      },
+      "systemMs": {
+        "best": 20.446,
+        "median": 40.354
+      },
+      "wallMs": {
+        "best": 1011.849165,
+        "median": 1122.863639
+      }
+    },
+    "after": {
+      "userMs": {
+        "best": 1000.871,
+        "median": 1113.369
+      },
+      "systemMs": {
+        "best": 36.06,
+        "median": 48.098
+      },
+      "wallMs": {
+        "best": 1037.422056,
+        "median": 1162.543
+      }
+    }
+  }
+}

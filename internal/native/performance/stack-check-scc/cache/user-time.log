@@ -1,0 +1,44 @@
+{
+  "before": {
+    "userMs": {
+      "best": 1015.476,
+      "median": 1085.949
+    },
+    "systemMs": {
+      "best": 31.863,
+      "median": 48.287
+    },
+    "wallMs": {
+      "best": 1099.296524,
+      "median": 1147.306343
+    }
+  },
+  "natural": {
+    "userMs": {
+      "best": 971.343,
+      "median": 1080.021
+    },
+    "systemMs": {
+      "best": 20.446,
+      "median": 40.354
+    },
+    "wallMs": {
+      "best": 1011.849165,
+      "median": 1122.863639
+    }
+  },
+  "after": {
+    "userMs": {
+      "best": 1000.871,
+      "median": 1113.369
+    },
+    "systemMs": {
+      "best": 36.06,
+      "median": 48.098
+    },
+    "wallMs": {
+      "best": 1037.422056,
+      "median": 1162.543
+    }
+  }
+}
