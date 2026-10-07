@@ -1,0 +1,24 @@
+{
+  "symbols": [
+    "control_flow_graph.*Builder[E].tryStatement",
+    "nextjs.IsDocumentFile",
+    "nextjs.lastSeparator"
+  ],
+  "rules": [
+    "@next/next/no-head-import-in-document",
+    "@next/next/no-page-custom-font",
+    "@next/next/no-styled-jsx-in-document",
+    "array-callback-return",
+    "consistent-return",
+    "no-unreachable-loop",
+    "react-hooks/rules-of-hooks"
+  ],
+  "sources": 2207,
+  "packages": [
+    "./internal/lint/rules/core",
+    "./internal/lint/rules/next",
+    "./internal/lint/rules/react"
+  ],
+  "capture_gate_exit": 0,
+  "cohere_commit": "715ba94f3608a6500086b1076ce5cb7e51b836db"
+}

@@ -1,0 +1,6 @@
+=== RUN   TestBatch20Helpers
+    batch20_test.go:82: real helper observations: {"control_calls":26,"live":{"@next/next/no-head-import-in-document":{},"@next/next/no-page-custom-font":{},"@next/next/no-styled-jsx-in-document":{},"array-callback-return":{"try":8},"consistent-return":{"try":3},"no-unreachable-loop":{"try":56},"react-hooks/rules-of-hooks":{"try":13}},"live_calls":80,"total_calls":106}
+    batch20_test.go:90: 2335 lines match real Go, Node source, emitted JavaScript and sanitized native
+--- PASS: TestBatch20Helpers (6.69s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot03	6.701s
