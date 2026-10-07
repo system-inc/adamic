@@ -1,0 +1,17 @@
+let count: number | undefined = 1;
+function drop(): void {
+    count = undefined;
+}
+function show(value: number | undefined): string {
+    return value === undefined ? 'none' : `${value}`;
+}
+function choose(flag: boolean): void {
+    if (count !== undefined) {
+        drop();
+        console.log(show(flag ? count : 2));
+        console.log(`${flag ? count : 2}`);
+    }
+}
+choose(true);
+count = 1;
+choose(false);
