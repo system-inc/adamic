@@ -1,0 +1,1772 @@
+{
+  "total": 197,
+  "refs": 389,
+  "claim_blobs": 33,
+  "claimed": 142,
+  "ported": 25,
+  "remaining": [
+    "react-hooks/set-state-in-effect",
+    "react-hooks/set-state-in-render",
+    "react-hooks/static-components",
+    "react-hooks/unsupported-syntax",
+    "react-hooks/use-memo",
+    "react/boolean-prop-naming",
+    "react/button-has-type",
+    "react/checked-requires-onchange-or-readonly",
+    "react/display-name",
+    "react/forbid-elements",
+    "react/forbid-prop-types",
+    "react/iframe-missing-sandbox",
+    "react/jsx-fragments",
+    "react/jsx-no-constructed-context-values",
+    "react/jsx-no-undef",
+    "react/no-adjacent-inline-elements",
+    "react/no-array-index-key",
+    "react/no-danger-with-children",
+    "react/no-multi-comp",
+    "react/no-namespace",
+    "react/no-object-type-as-default-prop",
+    "react/no-unstable-nested-components",
+    "react/sort-default-props",
+    "react/static-property-placement",
+    "react/style-prop-object",
+    "require-atomic-updates",
+    "require-await",
+    "structure/react-hook-no-any-type",
+    "symbol-description",
+    "valid-typeof"
+  ],
+  "selected": [
+    "react-hooks/set-state-in-effect",
+    "react-hooks/set-state-in-render",
+    "react-hooks/static-components"
+  ],
+  "bases": {
+    "origin/main": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+    "origin/codex/tsgo-c-library": "5afbdb83da2ed7ad9815657cd3f6ececd5294bf6"
+  },
+  "rank": [
+    {
+      "rule": "no-use-before-define",
+      "total": 7843,
+      "ported": [
+        "origin/codex/tsgo-c-library:stage1/cohere/typeaware/before.ts"
+      ],
+      "claimed": []
+    },
+    {
+      "rule": "@typescript-eslint/no-unsafe-type-assertion",
+      "total": 3870,
+      "ported": [
+        "origin/codex/tsgo-c-library:stage1/cohere/typeaware/volume.ts",
+        "origin/main:stage1/cohere/typeaware/volume.ts"
+      ],
+      "claimed": []
+    },
+    {
+      "rule": "adamic/no-unchecked-cast",
+      "total": 3586,
+      "ported": [
+        "origin/codex/tsgo-c-library:stage1/cohere/typeaware/casts.ts"
+      ],
+      "claimed": []
+    },
+    {
+      "rule": "@typescript-eslint/no-unsafe-member-access",
+      "total": 2777,
+      "ported": [
+        "origin/codex/tsgo-c-library:stage1/cohere/typeaware/volume.ts",
+        "origin/main:stage1/cohere/typeaware/volume.ts"
+      ],
+      "claimed": []
+    },
+    {
+      "rule": "@typescript-eslint/no-unsafe-argument",
+      "total": 1760,
+      "ported": [
+        "origin/codex/tsgo-c-library:stage1/cohere/typeaware/rules.ts",
+        "origin/main:stage1/cohere/typeaware/rules.ts"
+      ],
+      "claimed": []
+    },
+    {
+      "rule": "@typescript-eslint/prefer-nullish-coalescing",
+      "total": 1422,
+      "ported": [
+        "origin/codex/tsgo-c-library:stage1/cohere/typeaware/volume.ts",
+        "origin/main:stage1/cohere/typeaware/volume.ts"
+      ],
+      "claimed": []
+    },
+    {
+      "rule": "@typescript-eslint/no-shadow",
+      "total": 1198,
+      "ported": [
+        "origin/codex/tsgo-c-library:stage1/cohere/typeaware/shadow.ts",
+        "origin/main:stage1/cohere/typeaware/shadow.ts"
+      ],
+      "claimed": []
+    },
+    {
+      "rule": "@typescript-eslint/no-unsafe-enum-comparison",
+      "total": 1000,
+      "ported": [
+        "origin/codex/tsgo-c-library:stage1/cohere/typeaware/volume.ts",
+        "origin/main:stage1/cohere/typeaware/volume.ts"
+      ],
+      "claimed": []
+    },
+    {
+      "rule": "no-implicit-coercion",
+      "total": 924,
+      "ported": [
+        "origin/codex/tsgo-c-library:stage1/cohere/typeaware/coercion.ts"
+      ],
+      "claimed": []
+    },
+    {
+      "rule": "nexus/correctness-no-caller-data-mutation",
+      "total": 820,
+      "ported": [
+        "origin/codex/tsgo-c-library:stage1/cohere/typeaware/caller.ts"
+      ],
+      "claimed": []
+    },
+    {
+      "rule": "no-param-reassign",
+      "total": 678,
+      "ported": [
+        "origin/codex/tsgo-c-library:stage1/cohere/typeaware/reassign.ts"
+      ],
+      "claimed": []
+    },
+    {
+      "rule": "@typescript-eslint/no-unsafe-assignment",
+      "total": 623,
+      "ported": [
+        "origin/codex/tsgo-c-library:stage1/cohere/typeaware/assignment.ts",
+        "origin/main:stage1/cohere/typeaware/assignment.ts"
+      ],
+      "claimed": []
+    },
+    {
+      "rule": "adamic/invariant-mutable",
+      "total": 575,
+      "ported": [
+        "origin/codex/tsgo-c-library:stage1/cohere/typeaware/flow.ts"
+      ],
+      "claimed": []
+    },
+    {
+      "rule": "@typescript-eslint/no-confusing-void-expression",
+      "total": 484,
+      "ported": [
+        "origin/codex/tsgo-c-library:stage1/cohere/typeaware/void.ts",
+        "origin/main:stage1/cohere/typeaware/void.ts"
+      ],
+      "claimed": []
+    },
+    {
+      "rule": "@typescript-eslint/consistent-return",
+      "total": 434,
+      "ported": [
+        "origin/codex/tsgo-c-library:stage1/cohere/typeaware/returns.ts",
+        "origin/main:stage1/cohere/typeaware/returns.ts"
+      ],
+      "claimed": []
+    },
+    {
+      "rule": "@typescript-eslint/switch-exhaustiveness-check",
+      "total": 424,
+      "ported": [
+        "origin/codex/tsgo-c-library:stage1/cohere/typeaware/volume.ts",
+        "origin/main:stage1/cohere/typeaware/volume.ts"
+      ],
+      "claimed": []
+    },
+    {
+      "rule": "adamic/no-optional-widening",
+      "total": 287,
+      "ported": [
+        "origin/codex/tsgo-c-library:stage1/cohere/typeaware/flow.ts"
+      ],
+      "claimed": []
+    },
+    {
+      "rule": "nexus/consistency-no-property-alias",
+      "total": 282,
+      "ported": [
+        "origin/codex/tsgo-c-library:stage1/cohere/typeaware/property_alias.ts"
+      ],
+      "claimed": []
+    },
+    {
+      "rule": "@typescript-eslint/unbound-method",
+      "total": 281,
+      "ported": [
+        "origin/codex/tsgo-c-library:stage1/cohere/typeaware/unbound.ts",
+        "origin/main:stage1/cohere/typeaware/unbound.ts"
+      ],
+      "claimed": []
+    },
+    {
+      "rule": "@typescript-eslint/no-unused-vars",
+      "total": 266,
+      "ported": [
+        "origin/codex/tsgo-c-library:stage1/cohere/typeaware/unused.ts"
+      ],
+      "claimed": []
+    },
+    {
+      "rule": "nexus/correctness-no-implicit-return",
+      "total": 251,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-01:stage1/cohere/typeaware/claims/wave-01.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/no-deprecated",
+      "total": 238,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-01:stage1/cohere/typeaware/claims/wave-01.md"
+      ]
+    },
+    {
+      "rule": "no-else-return",
+      "total": 202,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-01:stage1/cohere/typeaware/claims/wave-01.md"
+      ]
+    },
+    {
+      "rule": "logical-assignment-operators",
+      "total": 143,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-02:stage1/cohere/typeaware/claims/wave-02.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/no-unsafe-return",
+      "total": 126,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-02:stage1/cohere/typeaware/claims/wave-02.md"
+      ]
+    },
+    {
+      "rule": "nexus/correctness-no-nullish-stripping-assertion",
+      "total": 97,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-02:stage1/cohere/typeaware/claims/wave-02.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/no-unsafe-call",
+      "total": 95,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-03:stage1/cohere/typeaware/claims/wave-03.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/consistent-type-imports",
+      "total": 85,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-03:stage1/cohere/typeaware/claims/wave-03.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/no-unnecessary-template-expression",
+      "total": 84,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-03:stage1/cohere/typeaware/claims/wave-03.md"
+      ]
+    },
+    {
+      "rule": "nexus/consistency-require-constant-casing",
+      "total": 84,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-04:stage1/cohere/typeaware/claims/wave-04-report.md",
+        "origin/codex/typeaware-wave-04:stage1/cohere/typeaware/claims/wave-04.md"
+      ]
+    },
+    {
+      "rule": "nexus/consistency-require-matching-return-type",
+      "total": 74,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-04:stage1/cohere/typeaware/claims/wave-04-report.md",
+        "origin/codex/typeaware-wave-04:stage1/cohere/typeaware/claims/wave-04.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/strict-void-return",
+      "total": 56,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-04:stage1/cohere/typeaware/claims/wave-04-report.md",
+        "origin/codex/typeaware-wave-04:stage1/cohere/typeaware/claims/wave-04.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/no-unnecessary-type-parameters",
+      "total": 31,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-05:stage1/cohere/typeaware/claims/wave-05.md"
+      ]
+    },
+    {
+      "rule": "no-useless-assignment",
+      "total": 29,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-05:stage1/cohere/typeaware/claims/wave-05-report.md",
+        "origin/codex/typeaware-wave-05:stage1/cohere/typeaware/claims/wave-05.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/restrict-template-expressions",
+      "total": 23,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-05:stage1/cohere/typeaware/claims/wave-05.md"
+      ]
+    },
+    {
+      "rule": "adamic/nominal-class",
+      "total": 20,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-06:stage1/cohere/typeaware/claims/wave-06.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/no-duplicate-type-constituents",
+      "total": 19,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-06:stage1/cohere/typeaware/claims/wave-06.md"
+      ]
+    },
+    {
+      "rule": "no-useless-return",
+      "total": 16,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-06:stage1/cohere/typeaware/claims/wave-06.md"
+      ]
+    },
+    {
+      "rule": "no-undef-init",
+      "total": 15,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-07:stage1/cohere/typeaware/claims/wave-07.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/prefer-for-of",
+      "total": 13,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-07:stage1/cohere/typeaware/claims/wave-07.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/consistent-indexed-object-style",
+      "total": 12,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-07:stage1/cohere/typeaware/claims/wave-07.md"
+      ]
+    },
+    {
+      "rule": "no-loop-func",
+      "total": 11,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-08:stage1/cohere/typeaware/claims/wave-08.md"
+      ]
+    },
+    {
+      "rule": "nexus/correctness-no-import-cycle-load-time-read",
+      "total": 10,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-08:stage1/cohere/typeaware/claims/wave-08.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/no-require-imports",
+      "total": 9,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-08:stage1/cohere/typeaware/claims/wave-08.md"
+      ]
+    },
+    {
+      "rule": "prefer-const",
+      "total": 7,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-09:stage1/cohere/typeaware/claims/wave-09.md"
+      ]
+    },
+    {
+      "rule": "radix",
+      "total": 7,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-09:stage1/cohere/typeaware/claims/wave-09.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/non-nullable-type-assertion-style",
+      "total": 4,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-09:stage1/cohere/typeaware/claims/wave-09.md"
+      ]
+    },
+    {
+      "rule": "no-unmodified-loop-condition",
+      "total": 4,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-10:stage1/cohere/typeaware/claims/wave-10.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/no-redundant-type-constituents",
+      "total": 3,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-10:stage1/cohere/typeaware/claims/wave-10.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/prefer-includes",
+      "total": 3,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-10:stage1/cohere/typeaware/claims/wave-10.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/prefer-regexp-exec",
+      "total": 3,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-11:stage1/cohere/typeaware/claims/wave-11.md"
+      ]
+    },
+    {
+      "rule": "nexus/correctness-no-identical-branches",
+      "total": 3,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-11:stage1/cohere/typeaware/claims/wave-11.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/no-for-in-array",
+      "total": 2,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-11:stage1/cohere/typeaware/claims/wave-11.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/no-redeclare",
+      "total": 2,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-12:stage1/cohere/typeaware/claims/wave-12.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/no-unnecessary-boolean-literal-compare",
+      "total": 2,
+      "ported": [
+        "origin/codex/tsgo-c-library:stage1/cohere/typeaware/rules.ts",
+        "origin/main:stage1/cohere/typeaware/rules.ts"
+      ],
+      "claimed": []
+    },
+    {
+      "rule": "@typescript-eslint/no-unsafe-unary-minus",
+      "total": 2,
+      "ported": [
+        "origin/codex/tsgo-c-library:stage1/cohere/typeaware/rules.ts",
+        "origin/codex/tsgo-c-library:stage1/cohere/typeaware/unary_minus.ts",
+        "origin/main:stage1/cohere/typeaware/rules.ts",
+        "origin/main:stage1/cohere/typeaware/unary_minus.ts"
+      ],
+      "claimed": []
+    },
+    {
+      "rule": "nexus/correctness-no-test-on-global-regex",
+      "total": 2,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-12:stage1/cohere/typeaware/claims/wave-12.md"
+      ]
+    },
+    {
+      "rule": "nexus/correctness-no-write-only-collection",
+      "total": 2,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-12:stage1/cohere/typeaware/claims/wave-12.md"
+      ]
+    },
+    {
+      "rule": "no-unassigned-vars",
+      "total": 2,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-13:stage1/cohere/typeaware/claims/wave-13.md"
+      ]
+    },
+    {
+      "rule": "preserve-caught-error",
+      "total": 2,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-13:stage1/cohere/typeaware/claims/wave-13.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/consistent-type-exports",
+      "total": 1,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-13:stage1/cohere/typeaware/claims/wave-13.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/no-array-delete",
+      "total": 1,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-14:stage1/cohere/typeaware/claims/wave-14.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/no-base-to-string",
+      "total": 1,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-14:stage1/cohere/typeaware/claims/wave-14.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/no-extraneous-class",
+      "total": 1,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-14:stage1/cohere/typeaware/claims/wave-14.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/no-useless-default-assignment",
+      "total": 1,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-15:stage1/cohere/typeaware/claims/wave-15.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/prefer-find",
+      "total": 1,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-15:stage1/cohere/typeaware/claims/wave-15.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/require-array-sort-compare",
+      "total": 1,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-15:stage1/cohere/typeaware/claims/wave-15.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/restrict-plus-operands",
+      "total": 1,
+      "ported": [
+        "origin/codex/tsgo-c-library:stage1/cohere/typeaware/rules.ts",
+        "origin/main:stage1/cohere/typeaware/rules.ts"
+      ],
+      "claimed": []
+    },
+    {
+      "rule": "no-import-assign",
+      "total": 1,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-16:stage1/cohere/typeaware/claims/wave-16.md",
+        "origin/codex/typeaware-wave-23:stage1/cohere/typeaware/claims/wave-23.md"
+      ]
+    },
+    {
+      "rule": "prefer-exponentiation-operator",
+      "total": 1,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-16:stage1/cohere/typeaware/claims/wave-16.md"
+      ]
+    },
+    {
+      "rule": "use-isnan",
+      "total": 1,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-16:stage1/cohere/typeaware/claims/wave-16.md"
+      ]
+    },
+    {
+      "rule": "@next/next/no-async-client-component",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-17:stage1/cohere/typeaware/claims/wave-17.md"
+      ]
+    },
+    {
+      "rule": "@next/next/no-duplicate-head",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-17:stage1/cohere/typeaware/claims/wave-17.md"
+      ]
+    },
+    {
+      "rule": "@next/next/no-script-component-in-head",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-17:stage1/cohere/typeaware/claims/wave-17.md"
+      ]
+    },
+    {
+      "rule": "@next/next/no-title-in-document-head",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-18:stage1/cohere/typeaware/claims/wave-18.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/await-thenable",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-18:stage1/cohere/typeaware/claims/wave-18.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/class-literal-property-style",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-18:stage1/cohere/typeaware/claims/wave-18.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/consistent-generic-constructors",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-19:stage1/cohere/typeaware/claims/wave-19.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/dot-notation",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-19:stage1/cohere/typeaware/claims/wave-19.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/no-array-constructor",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-19:stage1/cohere/typeaware/claims/wave-19.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/no-floating-promises",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-20:stage1/cohere/typeaware/claims/wave-20.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/no-implied-eval",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-20:stage1/cohere/typeaware/claims/wave-20.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/no-meaningless-void-operator",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-20:stage1/cohere/typeaware/claims/wave-20.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/no-misused-promises",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-21:stage1/cohere/typeaware/claims/wave-21.md",
+        "origin/codex/typeaware-wave-22:stage1/cohere/typeaware/claims/wave-22.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/no-misused-spread",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-21:stage1/cohere/typeaware/claims/wave-21.md",
+        "origin/codex/typeaware-wave-22:stage1/cohere/typeaware/claims/wave-22.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/no-mixed-enums",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-21:stage1/cohere/typeaware/claims/wave-21.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/no-non-null-asserted-nullish-coalescing",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-22:stage1/cohere/typeaware/claims/wave-22.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/no-unnecessary-qualifier",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-22:stage1/cohere/typeaware/claims/wave-22.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/no-unsafe-declaration-merging",
+      "total": 0,
+      "ported": [
+        "origin/codex/tsgo-c-library:stage1/cohere/typeaware/rules.ts",
+        "origin/main:stage1/cohere/typeaware/rules.ts"
+      ],
+      "claimed": []
+    },
+    {
+      "rule": "@typescript-eslint/no-unused-private-class-members",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-22:stage1/cohere/typeaware/claims/wave-22.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/only-throw-error",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-23:stage1/cohere/typeaware/claims/wave-23.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/prefer-promise-reject-errors",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-02:stage1/cohere/typeaware/claims/wave-02.md",
+        "origin/codex/typeaware-wave-23:stage1/cohere/typeaware/claims/wave-23.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/prefer-reduce-type-parameter",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-23:stage1/cohere/typeaware/claims/wave-23.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/prefer-return-this-type",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-24:stage1/cohere/typeaware/claims/wave-24.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/related-getter-setter-pairs",
+      "total": 0,
+      "ported": [
+        "origin/codex/tsgo-c-library:stage1/cohere/typeaware/rules.ts",
+        "origin/main:stage1/cohere/typeaware/rules.ts"
+      ],
+      "claimed": []
+    },
+    {
+      "rule": "@typescript-eslint/return-await",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-24:stage1/cohere/typeaware/claims/wave-24.md"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/use-unknown-in-catch-callback-variable",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-24:stage1/cohere/typeaware/claims/wave-24.md"
+      ]
+    },
+    {
+      "rule": "accessor-pairs",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-25:stage1/cohere/typeaware/claims/wave-25.md"
+      ]
+    },
+    {
+      "rule": "base/correctness-require-graphql-nullable-parity",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-25:stage1/cohere/typeaware/claims/wave-25.md"
+      ]
+    },
+    {
+      "rule": "base/correctness-require-matching-inject-type",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-25:stage1/cohere/typeaware/claims/wave-25.md"
+      ]
+    },
+    {
+      "rule": "base/correctness-require-matching-operation-context",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-26:stage1/cohere/typeaware/claims/wave-26.md"
+      ]
+    },
+    {
+      "rule": "base/correctness-require-matching-provider-return",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-26:stage1/cohere/typeaware/claims/wave-26.md"
+      ]
+    },
+    {
+      "rule": "base/correctness-require-optional-relation",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-26:stage1/cohere/typeaware/claims/wave-26.md"
+      ]
+    },
+    {
+      "rule": "base/correctness-require-orm-column-nullable-parity",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-27:stage1/cohere/typeaware/claims/wave-27.md"
+      ]
+    },
+    {
+      "rule": "base/correctness-require-serializable-nullable-parity",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-27:stage1/cohere/typeaware/claims/wave-27.md"
+      ]
+    },
+    {
+      "rule": "base/correctness-require-verify-array-parity",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-27:stage1/cohere/typeaware/claims/wave-27.md"
+      ]
+    },
+    {
+      "rule": "base/correctness-require-verify-optional-parity",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-28:stage1/cohere/typeaware/claims/wave-28.md"
+      ]
+    },
+    {
+      "rule": "block-scoped-var",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-28:stage1/cohere/typeaware/claims/wave-28.md"
+      ]
+    },
+    {
+      "rule": "getter-return",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-28:stage1/cohere/typeaware/claims/wave-28.md"
+      ]
+    },
+    {
+      "rule": "id-denylist",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-29:stage1/cohere/typeaware/claims/wave-29.md"
+      ]
+    },
+    {
+      "rule": "id-match",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-29:stage1/cohere/typeaware/claims/wave-29.md"
+      ]
+    },
+    {
+      "rule": "nexus/concurrency-no-check-then-write",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-29:stage1/cohere/typeaware/claims/wave-29.md"
+      ]
+    },
+    {
+      "rule": "nexus/concurrency-no-lost-update",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-22:stage1/cohere/typeaware/claims/wave-22.md",
+        "origin/codex/typeaware-wave-30:stage1/cohere/typeaware/claims/wave-30.md"
+      ]
+    },
+    {
+      "rule": "nexus/consistency-no-iso-string-date-cut",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-30:stage1/cohere/typeaware/claims/wave-30.md"
+      ]
+    },
+    {
+      "rule": "nexus/correctness-no-callback-in-parse-try",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-30:stage1/cohere/typeaware/claims/wave-30.md"
+      ]
+    },
+    {
+      "rule": "nexus/correctness-no-collection-misuse",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-02:stage1/cohere/typeaware/claims/wave-02.md",
+        "origin/codex/typeaware-wave-11:stage1/cohere/typeaware/claims/wave-11.md",
+        "origin/codex/typeaware-wave-17:stage1/cohere/typeaware/claims/wave-17.md",
+        "origin/codex/typeaware-wave-21:stage1/cohere/typeaware/claims/wave-21.md",
+        "origin/codex/typeaware-wave-23:stage1/cohere/typeaware/claims/wave-23.md",
+        "origin/codex/typeaware-wave-25:stage1/cohere/typeaware/claims/wave-25.md",
+        "origin/codex/typeaware-wave-30:stage1/cohere/typeaware/claims/wave-30.md"
+      ]
+    },
+    {
+      "rule": "nexus/correctness-no-discarded-outcome",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-02:stage1/cohere/typeaware/claims/wave-02.md",
+        "origin/codex/typeaware-wave-11:stage1/cohere/typeaware/claims/wave-11.md",
+        "origin/codex/typeaware-wave-17:stage1/cohere/typeaware/claims/wave-17.md",
+        "origin/codex/typeaware-wave-21:stage1/cohere/typeaware/claims/wave-21.md",
+        "origin/codex/typeaware-wave-23:stage1/cohere/typeaware/claims/wave-23.md",
+        "origin/codex/typeaware-wave-25:stage1/cohere/typeaware/claims/wave-25.md",
+        "origin/codex/typeaware-wave-30:stage1/cohere/typeaware/claims/wave-30.md"
+      ]
+    },
+    {
+      "rule": "nexus/correctness-no-discarded-pure-result",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-02:stage1/cohere/typeaware/claims/wave-02.md",
+        "origin/codex/typeaware-wave-11:stage1/cohere/typeaware/claims/wave-11.md",
+        "origin/codex/typeaware-wave-17:stage1/cohere/typeaware/claims/wave-17.md",
+        "origin/codex/typeaware-wave-21:stage1/cohere/typeaware/claims/wave-21.md",
+        "origin/codex/typeaware-wave-23:stage1/cohere/typeaware/claims/wave-23.md",
+        "origin/codex/typeaware-wave-25:stage1/cohere/typeaware/claims/wave-25.md",
+        "origin/codex/typeaware-wave-30:stage1/cohere/typeaware/claims/wave-30.md"
+      ]
+    },
+    {
+      "rule": "nexus/correctness-no-global-listener-target-assertion",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-14:stage1/cohere/typeaware/claims/wave-14.md",
+        "origin/codex/typeaware-wave-15:stage1/cohere/typeaware/claims/wave-15.md",
+        "origin/codex/typeaware-wave-16:stage1/cohere/typeaware/claims/wave-16.md",
+        "origin/codex/typeaware-wave-26:stage1/cohere/typeaware/claims/wave-26.md"
+      ]
+    },
+    {
+      "rule": "nexus/correctness-no-leaked-number-render",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-14:stage1/cohere/typeaware/claims/wave-14.md",
+        "origin/codex/typeaware-wave-15:stage1/cohere/typeaware/claims/wave-15.md",
+        "origin/codex/typeaware-wave-16:stage1/cohere/typeaware/claims/wave-16.md",
+        "origin/codex/typeaware-wave-26:stage1/cohere/typeaware/claims/wave-26.md"
+      ]
+    },
+    {
+      "rule": "nexus/correctness-no-mock-on-module-namespace",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-14:stage1/cohere/typeaware/claims/wave-14.md",
+        "origin/codex/typeaware-wave-15:stage1/cohere/typeaware/claims/wave-15.md",
+        "origin/codex/typeaware-wave-16:stage1/cohere/typeaware/claims/wave-16.md",
+        "origin/codex/typeaware-wave-26:stage1/cohere/typeaware/claims/wave-26.md"
+      ]
+    },
+    {
+      "rule": "nexus/correctness-no-process-exit-after-output",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-02:stage1/cohere/typeaware/claims/wave-02.md",
+        "origin/codex/typeaware-wave-03:stage1/cohere/typeaware/claims/wave-03.md",
+        "origin/codex/typeaware-wave-04:stage1/cohere/typeaware/claims/wave-04.md",
+        "origin/codex/typeaware-wave-05:stage1/cohere/typeaware/claims/wave-05.md",
+        "origin/codex/typeaware-wave-07:stage1/cohere/typeaware/claims/wave-07.md",
+        "origin/codex/typeaware-wave-08:stage1/cohere/typeaware/claims/wave-08.md",
+        "origin/codex/typeaware-wave-09:stage1/cohere/typeaware/claims/wave-09.md",
+        "origin/codex/typeaware-wave-10:stage1/cohere/typeaware/claims/wave-10.md",
+        "origin/codex/typeaware-wave-12:stage1/cohere/typeaware/claims/wave-12.md",
+        "origin/codex/typeaware-wave-13:stage1/cohere/typeaware/claims/wave-13.md",
+        "origin/codex/typeaware-wave-19:stage1/cohere/typeaware/claims/wave-19.md",
+        "origin/codex/typeaware-wave-20:stage1/cohere/typeaware/claims/wave-20.md",
+        "origin/codex/typeaware-wave-21:stage1/cohere/typeaware/claims/wave-21.md",
+        "origin/codex/typeaware-wave-24:stage1/cohere/typeaware/claims/wave-24.md",
+        "origin/codex/typeaware-wave-25:stage1/cohere/typeaware/claims/wave-25.md",
+        "origin/codex/typeaware-wave-27:stage1/cohere/typeaware/claims/wave-27.md",
+        "origin/codex/typeaware-wave-28:stage1/cohere/typeaware/claims/wave-28.md",
+        "origin/codex/typeaware-wave-30:stage1/cohere/typeaware/claims/wave-30.md"
+      ]
+    },
+    {
+      "rule": "nexus/correctness-no-uncleared-race-timeout",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-02:stage1/cohere/typeaware/claims/wave-02.md",
+        "origin/codex/typeaware-wave-03:stage1/cohere/typeaware/claims/wave-03.md",
+        "origin/codex/typeaware-wave-04:stage1/cohere/typeaware/claims/wave-04.md",
+        "origin/codex/typeaware-wave-05:stage1/cohere/typeaware/claims/wave-05.md",
+        "origin/codex/typeaware-wave-07:stage1/cohere/typeaware/claims/wave-07.md",
+        "origin/codex/typeaware-wave-08:stage1/cohere/typeaware/claims/wave-08.md",
+        "origin/codex/typeaware-wave-09:stage1/cohere/typeaware/claims/wave-09.md",
+        "origin/codex/typeaware-wave-10:stage1/cohere/typeaware/claims/wave-10.md",
+        "origin/codex/typeaware-wave-12:stage1/cohere/typeaware/claims/wave-12.md",
+        "origin/codex/typeaware-wave-13:stage1/cohere/typeaware/claims/wave-13.md",
+        "origin/codex/typeaware-wave-19:stage1/cohere/typeaware/claims/wave-19.md",
+        "origin/codex/typeaware-wave-20:stage1/cohere/typeaware/claims/wave-20.md",
+        "origin/codex/typeaware-wave-21:stage1/cohere/typeaware/claims/wave-21.md",
+        "origin/codex/typeaware-wave-24:stage1/cohere/typeaware/claims/wave-24.md",
+        "origin/codex/typeaware-wave-25:stage1/cohere/typeaware/claims/wave-25.md",
+        "origin/codex/typeaware-wave-27:stage1/cohere/typeaware/claims/wave-27.md",
+        "origin/codex/typeaware-wave-28:stage1/cohere/typeaware/claims/wave-28.md",
+        "origin/codex/typeaware-wave-30:stage1/cohere/typeaware/claims/wave-30.md"
+      ]
+    },
+    {
+      "rule": "nexus/correctness-require-blocking-standard-streams",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-02:stage1/cohere/typeaware/claims/wave-02.md",
+        "origin/codex/typeaware-wave-03:stage1/cohere/typeaware/claims/wave-03.md",
+        "origin/codex/typeaware-wave-04:stage1/cohere/typeaware/claims/wave-04.md",
+        "origin/codex/typeaware-wave-05:stage1/cohere/typeaware/claims/wave-05.md",
+        "origin/codex/typeaware-wave-07:stage1/cohere/typeaware/claims/wave-07.md",
+        "origin/codex/typeaware-wave-08:stage1/cohere/typeaware/claims/wave-08.md",
+        "origin/codex/typeaware-wave-09:stage1/cohere/typeaware/claims/wave-09.md",
+        "origin/codex/typeaware-wave-10:stage1/cohere/typeaware/claims/wave-10.md",
+        "origin/codex/typeaware-wave-12:stage1/cohere/typeaware/claims/wave-12.md",
+        "origin/codex/typeaware-wave-13:stage1/cohere/typeaware/claims/wave-13.md",
+        "origin/codex/typeaware-wave-19:stage1/cohere/typeaware/claims/wave-19.md",
+        "origin/codex/typeaware-wave-20:stage1/cohere/typeaware/claims/wave-20.md",
+        "origin/codex/typeaware-wave-21:stage1/cohere/typeaware/claims/wave-21.md",
+        "origin/codex/typeaware-wave-24:stage1/cohere/typeaware/claims/wave-24.md",
+        "origin/codex/typeaware-wave-25:stage1/cohere/typeaware/claims/wave-25.md",
+        "origin/codex/typeaware-wave-27:stage1/cohere/typeaware/claims/wave-27.md",
+        "origin/codex/typeaware-wave-28:stage1/cohere/typeaware/claims/wave-28.md",
+        "origin/codex/typeaware-wave-30:stage1/cohere/typeaware/claims/wave-30.md"
+      ]
+    },
+    {
+      "rule": "nexus/correctness-require-child-process-error-listener",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-01:stage1/cohere/typeaware/claims/wave-01.md",
+        "origin/codex/typeaware-wave-06:stage1/cohere/typeaware/claims/wave-06.md"
+      ]
+    },
+    {
+      "rule": "nexus/correctness-require-response-status-check",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-01:stage1/cohere/typeaware/claims/wave-01.md",
+        "origin/codex/typeaware-wave-06:stage1/cohere/typeaware/claims/wave-06.md"
+      ]
+    },
+    {
+      "rule": "nexus/performance-no-independent-await-in-loop",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-01:stage1/cohere/typeaware/claims/wave-01.md",
+        "origin/codex/typeaware-wave-06:stage1/cohere/typeaware/claims/wave-06.md"
+      ]
+    },
+    {
+      "rule": "nexus/security-no-interpolated-shell-command",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-16:stage1/cohere/typeaware/claims/wave-16.md"
+      ]
+    },
+    {
+      "rule": "nexus/security-no-interpolated-sql-string",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-16:stage1/cohere/typeaware/claims/wave-16.md"
+      ]
+    },
+    {
+      "rule": "no-alert",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-16:stage1/cohere/typeaware/claims/wave-16.md"
+      ]
+    },
+    {
+      "rule": "no-class-assign",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-18:stage1/cohere/typeaware/claims/wave-18.md"
+      ]
+    },
+    {
+      "rule": "no-const-assign",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-18:stage1/cohere/typeaware/claims/wave-18.md"
+      ]
+    },
+    {
+      "rule": "no-constant-binary-expression",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-18:stage1/cohere/typeaware/claims/wave-18.md"
+      ]
+    },
+    {
+      "rule": "no-eval",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-11:stage1/cohere/typeaware/claims/wave-11.md",
+        "origin/codex/typeaware-wave-23:stage1/cohere/typeaware/claims/wave-23.md",
+        "origin/codex/typeaware-wave-26:stage1/cohere/typeaware/claims/wave-26.md"
+      ]
+    },
+    {
+      "rule": "no-extend-native",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-11:stage1/cohere/typeaware/claims/wave-11.md",
+        "origin/codex/typeaware-wave-23:stage1/cohere/typeaware/claims/wave-23.md",
+        "origin/codex/typeaware-wave-26:stage1/cohere/typeaware/claims/wave-26.md"
+      ]
+    },
+    {
+      "rule": "no-func-assign",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-11:stage1/cohere/typeaware/claims/wave-11.md",
+        "origin/codex/typeaware-wave-23:stage1/cohere/typeaware/claims/wave-23.md",
+        "origin/codex/typeaware-wave-26:stage1/cohere/typeaware/claims/wave-26.md"
+      ]
+    },
+    {
+      "rule": "no-global-assign",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-17:stage1/cohere/typeaware/claims/wave-17.md",
+        "origin/codex/typeaware-wave-22:stage1/cohere/typeaware/claims/wave-22.md",
+        "origin/codex/typeaware-wave-23:stage1/cohere/typeaware/claims/wave-23.md"
+      ]
+    },
+    {
+      "rule": "no-implicit-globals",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-17:stage1/cohere/typeaware/claims/wave-17.md",
+        "origin/codex/typeaware-wave-22:stage1/cohere/typeaware/claims/wave-22.md",
+        "origin/codex/typeaware-wave-23:stage1/cohere/typeaware/claims/wave-23.md"
+      ]
+    },
+    {
+      "rule": "no-implied-eval",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-17:stage1/cohere/typeaware/claims/wave-17.md",
+        "origin/codex/typeaware-wave-22:stage1/cohere/typeaware/claims/wave-22.md"
+      ]
+    },
+    {
+      "rule": "no-invalid-regexp",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-09:stage1/cohere/typeaware/claims/wave-09.md",
+        "origin/codex/typeaware-wave-14:stage1/cohere/typeaware/claims/wave-14.md",
+        "origin/codex/typeaware-wave-15:stage1/cohere/typeaware/claims/wave-15.md"
+      ]
+    },
+    {
+      "rule": "no-label-var",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-09:stage1/cohere/typeaware/claims/wave-09.md",
+        "origin/codex/typeaware-wave-14:stage1/cohere/typeaware/claims/wave-14.md",
+        "origin/codex/typeaware-wave-15:stage1/cohere/typeaware/claims/wave-15.md"
+      ]
+    },
+    {
+      "rule": "no-misleading-character-class",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-09:stage1/cohere/typeaware/claims/wave-09.md",
+        "origin/codex/typeaware-wave-14:stage1/cohere/typeaware/claims/wave-14.md",
+        "origin/codex/typeaware-wave-15:stage1/cohere/typeaware/claims/wave-15.md"
+      ]
+    },
+    {
+      "rule": "no-new-func",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-06:stage1/cohere/typeaware/claims/wave-06.md",
+        "origin/codex/typeaware-wave-11:stage1/cohere/typeaware/claims/wave-11.md",
+        "origin/codex/typeaware-wave-12:stage1/cohere/typeaware/claims/wave-12.md",
+        "origin/codex/typeaware-wave-16:stage1/cohere/typeaware/claims/wave-16.md",
+        "origin/codex/typeaware-wave-18:stage1/cohere/typeaware/claims/wave-18.md",
+        "origin/codex/typeaware-wave-23:stage1/cohere/typeaware/claims/wave-23.md",
+        "origin/codex/typeaware-wave-26:stage1/cohere/typeaware/claims/wave-26.md"
+      ]
+    },
+    {
+      "rule": "no-new-native-nonconstructor",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-06:stage1/cohere/typeaware/claims/wave-06.md",
+        "origin/codex/typeaware-wave-11:stage1/cohere/typeaware/claims/wave-11.md",
+        "origin/codex/typeaware-wave-12:stage1/cohere/typeaware/claims/wave-12.md",
+        "origin/codex/typeaware-wave-16:stage1/cohere/typeaware/claims/wave-16.md",
+        "origin/codex/typeaware-wave-18:stage1/cohere/typeaware/claims/wave-18.md",
+        "origin/codex/typeaware-wave-23:stage1/cohere/typeaware/claims/wave-23.md",
+        "origin/codex/typeaware-wave-26:stage1/cohere/typeaware/claims/wave-26.md"
+      ]
+    },
+    {
+      "rule": "no-new-wrappers",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-06:stage1/cohere/typeaware/claims/wave-06.md",
+        "origin/codex/typeaware-wave-11:stage1/cohere/typeaware/claims/wave-11.md",
+        "origin/codex/typeaware-wave-12:stage1/cohere/typeaware/claims/wave-12.md",
+        "origin/codex/typeaware-wave-16:stage1/cohere/typeaware/claims/wave-16.md",
+        "origin/codex/typeaware-wave-18:stage1/cohere/typeaware/claims/wave-18.md",
+        "origin/codex/typeaware-wave-23:stage1/cohere/typeaware/claims/wave-23.md",
+        "origin/codex/typeaware-wave-26:stage1/cohere/typeaware/claims/wave-26.md"
+      ]
+    },
+    {
+      "rule": "no-obj-calls",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-13:stage1/cohere/typeaware/claims/wave-13.md",
+        "origin/codex/typeaware-wave-21:stage1/cohere/typeaware/claims/wave-21.md",
+        "origin/codex/typeaware-wave-23:stage1/cohere/typeaware/claims/wave-23.md"
+      ]
+    },
+    {
+      "rule": "no-object-constructor",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-13:stage1/cohere/typeaware/claims/wave-13.md",
+        "origin/codex/typeaware-wave-21:stage1/cohere/typeaware/claims/wave-21.md",
+        "origin/codex/typeaware-wave-23:stage1/cohere/typeaware/claims/wave-23.md"
+      ]
+    },
+    {
+      "rule": "no-promise-executor-return",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-13:stage1/cohere/typeaware/claims/wave-13.md",
+        "origin/codex/typeaware-wave-21:stage1/cohere/typeaware/claims/wave-21.md",
+        "origin/codex/typeaware-wave-23:stage1/cohere/typeaware/claims/wave-23.md"
+      ]
+    },
+    {
+      "rule": "no-restricted-globals",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-29:stage1/cohere/typeaware/claims/wave-29.md"
+      ]
+    },
+    {
+      "rule": "no-setter-return",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-29:stage1/cohere/typeaware/claims/wave-29.md"
+      ]
+    },
+    {
+      "rule": "no-shadow-restricted-names",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-29:stage1/cohere/typeaware/claims/wave-29.md"
+      ]
+    },
+    {
+      "rule": "no-throw-literal",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-03:stage1/cohere/typeaware/claims/wave-03.md",
+        "origin/codex/typeaware-wave-06:stage1/cohere/typeaware/claims/wave-06.md",
+        "origin/codex/typeaware-wave-11:stage1/cohere/typeaware/claims/wave-11.md",
+        "origin/codex/typeaware-wave-15:stage1/cohere/typeaware/claims/wave-15.md",
+        "origin/codex/typeaware-wave-16:stage1/cohere/typeaware/claims/wave-16.md",
+        "origin/codex/typeaware-wave-17:stage1/cohere/typeaware/claims/wave-17.md",
+        "origin/codex/typeaware-wave-23:stage1/cohere/typeaware/claims/wave-23.md",
+        "origin/codex/typeaware-wave-25:stage1/cohere/typeaware/claims/wave-25.md",
+        "origin/codex/typeaware-wave-28:stage1/cohere/typeaware/claims/wave-28.md"
+      ]
+    },
+    {
+      "rule": "no-useless-backreference",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-03:stage1/cohere/typeaware/claims/wave-03.md",
+        "origin/codex/typeaware-wave-06:stage1/cohere/typeaware/claims/wave-06.md",
+        "origin/codex/typeaware-wave-11:stage1/cohere/typeaware/claims/wave-11.md",
+        "origin/codex/typeaware-wave-15:stage1/cohere/typeaware/claims/wave-15.md",
+        "origin/codex/typeaware-wave-16:stage1/cohere/typeaware/claims/wave-16.md",
+        "origin/codex/typeaware-wave-17:stage1/cohere/typeaware/claims/wave-17.md",
+        "origin/codex/typeaware-wave-23:stage1/cohere/typeaware/claims/wave-23.md",
+        "origin/codex/typeaware-wave-25:stage1/cohere/typeaware/claims/wave-25.md",
+        "origin/codex/typeaware-wave-28:stage1/cohere/typeaware/claims/wave-28.md"
+      ]
+    },
+    {
+      "rule": "prefer-arrow-callback",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-03:stage1/cohere/typeaware/claims/wave-03.md",
+        "origin/codex/typeaware-wave-06:stage1/cohere/typeaware/claims/wave-06.md",
+        "origin/codex/typeaware-wave-11:stage1/cohere/typeaware/claims/wave-11.md",
+        "origin/codex/typeaware-wave-15:stage1/cohere/typeaware/claims/wave-15.md",
+        "origin/codex/typeaware-wave-16:stage1/cohere/typeaware/claims/wave-16.md",
+        "origin/codex/typeaware-wave-17:stage1/cohere/typeaware/claims/wave-17.md",
+        "origin/codex/typeaware-wave-23:stage1/cohere/typeaware/claims/wave-23.md",
+        "origin/codex/typeaware-wave-25:stage1/cohere/typeaware/claims/wave-25.md",
+        "origin/codex/typeaware-wave-28:stage1/cohere/typeaware/claims/wave-28.md"
+      ]
+    },
+    {
+      "rule": "prefer-numeric-literals",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-22:stage1/cohere/typeaware/claims/wave-22.md"
+      ]
+    },
+    {
+      "rule": "prefer-object-has-own",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-22:stage1/cohere/typeaware/claims/wave-22.md"
+      ]
+    },
+    {
+      "rule": "prefer-object-spread",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-22:stage1/cohere/typeaware/claims/wave-22.md"
+      ]
+    },
+    {
+      "rule": "prefer-promise-reject-errors",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-01:stage1/cohere/typeaware/claims/wave-01.md",
+        "origin/codex/typeaware-wave-02:stage1/cohere/typeaware/claims/wave-02.md",
+        "origin/codex/typeaware-wave-07:stage1/cohere/typeaware/claims/wave-07.md",
+        "origin/codex/typeaware-wave-18:stage1/cohere/typeaware/claims/wave-18.md",
+        "origin/codex/typeaware-wave-20:stage1/cohere/typeaware/claims/wave-20.md",
+        "origin/codex/typeaware-wave-24:stage1/cohere/typeaware/claims/wave-24.md",
+        "origin/codex/typeaware-wave-26:stage1/cohere/typeaware/claims/wave-26.md"
+      ]
+    },
+    {
+      "rule": "prefer-regex-literals",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-01:stage1/cohere/typeaware/claims/wave-01.md",
+        "origin/codex/typeaware-wave-02:stage1/cohere/typeaware/claims/wave-02.md",
+        "origin/codex/typeaware-wave-07:stage1/cohere/typeaware/claims/wave-07.md",
+        "origin/codex/typeaware-wave-12:stage1/cohere/typeaware/claims/wave-12.md",
+        "origin/codex/typeaware-wave-18:stage1/cohere/typeaware/claims/wave-18.md",
+        "origin/codex/typeaware-wave-20:stage1/cohere/typeaware/claims/wave-20.md",
+        "origin/codex/typeaware-wave-24:stage1/cohere/typeaware/claims/wave-24.md",
+        "origin/codex/typeaware-wave-26:stage1/cohere/typeaware/claims/wave-26.md",
+        "origin/codex/typeaware-wave-27:stage1/cohere/typeaware/claims/wave-27.md"
+      ]
+    },
+    {
+      "rule": "prefer-rest-params",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-01:stage1/cohere/typeaware/claims/wave-01.md",
+        "origin/codex/typeaware-wave-02:stage1/cohere/typeaware/claims/wave-02.md",
+        "origin/codex/typeaware-wave-07:stage1/cohere/typeaware/claims/wave-07.md",
+        "origin/codex/typeaware-wave-12:stage1/cohere/typeaware/claims/wave-12.md",
+        "origin/codex/typeaware-wave-18:stage1/cohere/typeaware/claims/wave-18.md",
+        "origin/codex/typeaware-wave-20:stage1/cohere/typeaware/claims/wave-20.md",
+        "origin/codex/typeaware-wave-24:stage1/cohere/typeaware/claims/wave-24.md",
+        "origin/codex/typeaware-wave-26:stage1/cohere/typeaware/claims/wave-26.md",
+        "origin/codex/typeaware-wave-27:stage1/cohere/typeaware/claims/wave-27.md"
+      ]
+    },
+    {
+      "rule": "react-hooks/exhaustive-deps",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-02:stage1/cohere/typeaware/claims/wave-02.md",
+        "origin/codex/typeaware-wave-12:stage1/cohere/typeaware/claims/wave-12.md",
+        "origin/codex/typeaware-wave-27:stage1/cohere/typeaware/claims/wave-27.md"
+      ]
+    },
+    {
+      "rule": "react-hooks/globals",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-01:stage1/cohere/typeaware/claims/wave-01.md",
+        "origin/codex/typeaware-wave-05:stage1/cohere/typeaware/claims/wave-05.md",
+        "origin/codex/typeaware-wave-08:stage1/cohere/typeaware/claims/wave-08.md"
+      ]
+    },
+    {
+      "rule": "react-hooks/immutability",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-01:stage1/cohere/typeaware/claims/wave-01.md",
+        "origin/codex/typeaware-wave-05:stage1/cohere/typeaware/claims/wave-05.md",
+        "origin/codex/typeaware-wave-08:stage1/cohere/typeaware/claims/wave-08.md"
+      ]
+    },
+    {
+      "rule": "react-hooks/no-deriving-state-in-effects",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-01:stage1/cohere/typeaware/claims/wave-01.md",
+        "origin/codex/typeaware-wave-05:stage1/cohere/typeaware/claims/wave-05.md",
+        "origin/codex/typeaware-wave-08:stage1/cohere/typeaware/claims/wave-08.md"
+      ]
+    },
+    {
+      "rule": "react-hooks/preserve-manual-memoization",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-04:stage1/cohere/typeaware/claims/wave-04.md",
+        "origin/codex/typeaware-wave-30:stage1/cohere/typeaware/claims/wave-30.md"
+      ]
+    },
+    {
+      "rule": "react-hooks/purity",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-04:stage1/cohere/typeaware/claims/wave-04.md",
+        "origin/codex/typeaware-wave-30:stage1/cohere/typeaware/claims/wave-30.md"
+      ]
+    },
+    {
+      "rule": "react-hooks/refs",
+      "total": 0,
+      "ported": [],
+      "claimed": [
+        "origin/codex/typeaware-wave-04:stage1/cohere/typeaware/claims/wave-04.md",
+        "origin/codex/typeaware-wave-30:stage1/cohere/typeaware/claims/wave-30.md"
+      ]
+    },
+    {
+      "rule": "react-hooks/set-state-in-effect",
+      "total": 0,
+      "ported": [],
+      "claimed": []
+    },
+    {
+      "rule": "react-hooks/set-state-in-render",
+      "total": 0,
+      "ported": [],
+      "claimed": []
+    },
+    {
+      "rule": "react-hooks/static-components",
+      "total": 0,
+      "ported": [],
+      "claimed": []
+    },
+    {
+      "rule": "react-hooks/unsupported-syntax",
+      "total": 0,
+      "ported": [],
+      "claimed": []
+    },
+    {
+      "rule": "react-hooks/use-memo",
+      "total": 0,
+      "ported": [],
+      "claimed": []
+    },
+    {
+      "rule": "react/boolean-prop-naming",
+      "total": 0,
+      "ported": [],
+      "claimed": []
+    },
+    {
+      "rule": "react/button-has-type",
+      "total": 0,
+      "ported": [],
+      "claimed": []
+    },
+    {
+      "rule": "react/checked-requires-onchange-or-readonly",
+      "total": 0,
+      "ported": [],
+      "claimed": []
+    },
+    {
+      "rule": "react/display-name",
+      "total": 0,
+      "ported": [],
+      "claimed": []
+    },
+    {
+      "rule": "react/forbid-elements",
+      "total": 0,
+      "ported": [],
+      "claimed": []
+    },
+    {
+      "rule": "react/forbid-prop-types",
+      "total": 0,
+      "ported": [],
+      "claimed": []
+    },
+    {
+      "rule": "react/iframe-missing-sandbox",
+      "total": 0,
+      "ported": [],
+      "claimed": []
+    },
+    {
+      "rule": "react/jsx-fragments",
+      "total": 0,
+      "ported": [],
+      "claimed": []
+    },
+    {
+      "rule": "react/jsx-no-constructed-context-values",
+      "total": 0,
+      "ported": [],
+      "claimed": []
+    },
+    {
+      "rule": "react/jsx-no-undef",
+      "total": 0,
+      "ported": [],
+      "claimed": []
+    },
+    {
+      "rule": "react/no-adjacent-inline-elements",
+      "total": 0,
+      "ported": [],
+      "claimed": []
+    },
+    {
+      "rule": "react/no-array-index-key",
+      "total": 0,
+      "ported": [],
+      "claimed": []
+    },
+    {
+      "rule": "react/no-danger-with-children",
+      "total": 0,
+      "ported": [],
+      "claimed": []
+    },
+    {
+      "rule": "react/no-multi-comp",
+      "total": 0,
+      "ported": [],
+      "claimed": []
+    },
+    {
+      "rule": "react/no-namespace",
+      "total": 0,
+      "ported": [],
+      "claimed": []
+    },
+    {
+      "rule": "react/no-object-type-as-default-prop",
+      "total": 0,
+      "ported": [],
+      "claimed": []
+    },
+    {
+      "rule": "react/no-unstable-nested-components",
+      "total": 0,
+      "ported": [],
+      "claimed": []
+    },
+    {
+      "rule": "react/sort-default-props",
+      "total": 0,
+      "ported": [],
+      "claimed": []
+    },
+    {
+      "rule": "react/static-property-placement",
+      "total": 0,
+      "ported": [],
+      "claimed": []
+    },
+    {
+      "rule": "react/style-prop-object",
+      "total": 0,
+      "ported": [],
+      "claimed": []
+    },
+    {
+      "rule": "require-atomic-updates",
+      "total": 0,
+      "ported": [],
+      "claimed": []
+    },
+    {
+      "rule": "require-await",
+      "total": 0,
+      "ported": [],
+      "claimed": []
+    },
+    {
+      "rule": "structure/react-hook-no-any-type",
+      "total": 0,
+      "ported": [],
+      "claimed": []
+    },
+    {
+      "rule": "symbol-description",
+      "total": 0,
+      "ported": [],
+      "claimed": []
+    },
+    {
+      "rule": "valid-typeof",
+      "total": 0,
+      "ported": [],
+      "claimed": []
+    }
+  ]
+}

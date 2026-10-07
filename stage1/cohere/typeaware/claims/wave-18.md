@@ -102,3 +102,8 @@ Previous ports and evidence are pushed through eb1251ab. Reserved before code:
 The audit checks 389 origin refs, 142 claimed names and 25 ranked baseline ports.
 Baselines are main e011f8f6 and tsgo-c-library 5afbdb83.
 These are the first remaining names in the combined by-volume ranking.
+
+Fifth-batch status: all three remain unported and reserved.
+WAVE_18_REACT_BLOCKER_REPORT.md records the missing native React HIR/SSA and
+control-dominance dependency. Existing Go oracle tests pass; native agreement,
+mutants, sanitizers and timings are not claimed. No further rules were claimed.
