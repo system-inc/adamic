@@ -15,13 +15,47 @@ Captured cells are never relaxed by the fresh-write proof.
 
 ## Representation and scope
 
-Keep the existing counted cell representation. A frame's nested declarations
-share one logical environment: an ordered vector of the same captured cells.
-Each declaration's closure record contains its code and references to those
-cells. This duplicates the vector of pointers, rather than allocating another
-record to own the vector. It retains the established arrow calling convention
-and destruction paths, at the cost of one retain per cell per declaration.
-Measure that cost in the oracle counts table. Do not claim it is free.
+Allocate one shared environment record per enclosing frame, at one explicit
+IR allocation site. Its stable layout lists captured slots in local-index order,
+with each slot holding its value, reference-kind flag, and initialization-ready
+bit. Siblings carry code plus access to this same record. Captured parameters
+start ready; body locals start unready. Forwarded ancestor slots keep their
+ancestor environment alive and are not copied as independent values.
+
+The record is counted on the heap until an escape proof selects another
+placement. Captured cells are interior views into the record, not separate heap
+allocations. Existing arrow/function-expression captures of those views must
+retain the record, so a mixed named/anonymous closure cannot outlive its storage.
+The environment destructor releases every reference-valued slot once. Cells must
+never individually free interior storage. Closure identity remains a separate
+counted code/environment value, as the existing ABI requires.
+
+Represent the allocation as an explicit AllocateEnvironment IR construct whose
+ordered Cells are the complete frame layout. The function records that same
+layout, and the construct occurs once at entry, before hoisted declaration
+initialization and captured parameter initialization. Keep it visible through
+flow and native statement walking rather than synthesizing unrelated cell_new
+calls in emission. An empty capture layout needs no environment allocation.
+
+internal/native/region.go currently discovers allocations through statement
+walking and conservatively treats closure parameters/captures as escaping. A
+future environment escape fixed point can key a placement map by this exact IR
+statement and follow MakeClosure edges through Function.Environment. If no
+closure retaining any slot escapes, region.go may select frame stack storage
+or the enclosing call's region for the entire record at that site. If any such
+closure escapes, the single site retains heap placement. The closure records
+must also receive compatible placement/lifetime treatment before count elision.
+Reference-valued contents still need destruction at scope/region end; allocation
+placement does not prove those contents disposable. This unit does not implement
+the escape proof, stack placement, region placement, or count elision.
+
+The allocation profile at codex/tsc-allocation-profile 1e7a52b,
+docs/stage3-tsc-profile.md, observes 978.0 MiB at checkTypeRelatedTo and 763.9 MiB
+at getFlowTypeOfReference, about 48% of the 3,618.6 MiB sampled compiler allocation.
+Those functions contain nested helpers capturing scratch locals. Non-escape and
+closure/context attribution are profile inferences, not proven facts. This layout
+makes the proposed lifetime optimization one decision at one allocation site
+without relying on either inference for correctness today.
 
 Every sibling has exactly the same environment layout. A direct sibling call
 calls the sibling's code with the current environment carrier. Neither function
@@ -32,9 +66,11 @@ Every invocation of the enclosing function creates new cells. Three lexical
 levels forward the same ancestor cells through the intermediate closure.
 
 Initially accept declarations directly in a function body. Block-scoped
-function declarations, generic nested declarations, dynamic this, rebinding a
-nested declaration, first-class sibling references inside another sibling, and
+function declarations, generic nested declarations, dynamic this, first-class sibling references inside another sibling, and
 calls to a declaration in a different ancestor group remain loud NotYet cases.
+Optional/default/rest parameters retain existing closure ABI gaps. Plain
+destructured parameters retain the existing lowering support. Rebinding is rejected
+by the TypeScript checker (TS2630), with a defensive lowering guard.
 These are implementation gaps, not permanent language refusals. A sibling call
 is supported; returning a sibling value from inside another sibling is not yet
 supported, because preserving declaration identity needs a separate binding
@@ -118,3 +154,109 @@ runs reaching NotYet. The corpus stops at checking. Rerun the inventory and
 actual minimal probes separately; never describe a removed diagnostic branch
 as proof that tsc compiles. Count files clearing this specific source-form gap
 only after classifying retained NotYet cases, rather than claiming all 57 clear.
+
+## Implementation observations
+
+The design was published as b2034215240ebaf36b6ca86d2c288da82638bc7f before
+implementation began. The initial implementation used the closure ABI, hoisted
+bindings, shared captured cells, equal sibling layouts, and direct sibling code
+dispatch. No protected emitter, lowering entry point, or oracle registry file was
+edited. No cohere code was copied. Freshness, borrows, regions, and Perceus remain
+enabled. Direct calls still have CallClosure effects; there is no purity shortcut.
+
+The executable fixtures are nested_minimal (byte-identical to census r01),
+captures, hoisting, mutual, returned, array, three_levels, tdz, tdz_write, weak,
+destructured, and destructured_tdz. Their original source runs under Node;
+the oracle compares native and JavaScript backend output and exit status, runs
+ASan/UBSan, and checks native successful executions for leaks. TDZ aborts exit
+70, so their counts intentionally include allocations not freed at process abort.
+The negative cycle fixture lives outside the executable corpus, in
+internal/oracle/refusals/nested_cycle.a, and has its own refusal test.
+
+Counts are recorded in internal/oracle/counts.md. Existing fixture rows do not
+change. Minimal allocates/frees two heap values. Mutual recursion allocates/frees
+ten, retains 46 times and releases 52 times: the current carrier is retained on
+each sibling call. Returned captures allocate/free 23, with peak 13; the array
+fixture allocates/frees 19, with peak 11. These measurements include fixture
+strings and arrays, not solely environment overhead. These counts describe the initial cell-based implementation before the explicit
+environment revision requested from the profile. Final environment counts will
+replace them after revalidation.
+No optimization was disabled, so there is no disabled-optimization delta.
+
+## Refused programs and mutation evidence
+
+The cycle example above is refused by adamic/cycle-capable. Weak is independently
+tested as an accepted, leak-free alternative. These remaining gaps have named
+refusal probes in internal/lower/nested_functions_test.go:
+
+* A declaration inside an if block.
+* A generic inner<T> declaration.
+* inner(value?: number), inner(value = 1), or inner(...values: number[]).
+* Returning sibling a from b, or storing inner as a value inside inner itself.
+* A third-level function calling a declaration from its grandparent's sibling group.
+* A declaration with a dynamic this parameter or receiver use.
+
+These are conservative implementation limits. Slotless parameter/results and
+other unsupported representations also retain their existing NotYet guards.
+Nested functions in methods/classes and every possible interaction with existing
+unsupported syntax have not received dedicated fixtures.
+
+Every requested mutant was run. Production sources were restored afterward.
+
+| Mutant | Observation and catcher |
+| --- | --- |
+| Siblings capture both closure bindings instead of direct dispatch | Node output still agrees; LeakSanitizer detects 416 bytes in 10 allocations. Permanent IR mutant test. |
+| Drop numeric write-through to a captured cell | Node prints updated counters; native prints stale counters. Output comparison fails without a sanitizer or leak failure. |
+| Initialize declarations at their source line | Call-before-declaration fails: native UBSan reports a NULL closure access; JavaScript backend throws TypeError; Node prints 7. |
+| Omit captured-read readiness check | Node exits 70 with ReferenceError; native prints 0 and exits 0. |
+| Omit captured-write readiness check | Node exits 70 with ReferenceError; native prints 5 and exits 0. |
+| Omit nested closure registration in cycle finder | Refusal test fails; accepted program agrees with Node but LeakSanitizer finds 72 bytes in two allocations. |
+| Delete binder.ts:567 from the independent census inventory | Census coordinate audit throws nested census site mismatch. |
+
+Logs are /tmp/adamic-nested-mutant-lost-write.log,
+/tmp/adamic-nested-mutant-no-hoist.log, /tmp/adamic-nested-mutant-no-tdz.log,
+/tmp/adamic-nested-mutant-no-write-tdz.log,
+/tmp/adamic-nested-mutant-unregistered-cycle2.log, and
+/tmp/adamic-nested-census-mutant.log. The first call-only cycle probe did not
+produce a leak report; a surviving conservative root is a possible explanation,
+not an observation. The final global-owner probe clears that owner at exit and
+produces the leak above. This records the unsuccessful probe rather than
+pretending every source shape exposes a cycle to LeakSanitizer.
+
+## Census measurement
+
+Both runs use the pinned stage3/census/inventory.cjs at 429c117, TypeScript
+v6.0.3 sources at 050880ce59e30b356b686bd3144efe24f875ebc8, and TypeScript 6.0.3
+as the inventory parser. Before and after each report 77 files and 18,867 total
+sites. The exact old nested-function reason remains 5,574 sites on 5,574 lines
+in 57 files, first binder.ts:567: that tool hardcodes syntax counting and cannot
+measure a lowering improvement. Actual minimal/r01 now lowers and runs.
+
+Run the supplementary audit with:
+
+```sh
+CENSUS_TYPESCRIPT=/path/to/typescript node docs/nested-functions-census.cjs \
+  /path/to/TypeScript /path/to/census/before/sites.json
+```
+
+It checks all declaration coordinates against the independent inventory, then
+classifies declaration shape and references by upstream checker symbol identity.
+It excludes type-only references and checks shorthand property values. It does
+not certify representations, cycles, upstream checking, or whole-file compilation.
+Seven of the 57 files have no remaining restrictions measured by this audit:
+factory/baseNodeFactory.ts, factory/utilities.ts, performance.ts, tracing.ts,
+transformer.ts, transformers/destructuring.ts, and transformers/utilities.ts.
+The other 50 retain unsupported declarations or cross-group/value references.
+No claim that seven full tsc files compile is supported by this experiment.
+
+## Toolchain and validation
+
+cloud/setup.sh succeeded: go ready 0s, clang ready 1s, node ready 1s, submodules
+ready 1s, cache warm 98s, done 98s. nproc is 5; cgroup CPU quota is 4 cores.
+Tool versions are Go 1.27.1, clang 20.1.8, Node 24.19.0. Shell commands source
+/workspace/adamic-tools/env.sh. Test output is saved to logs, never piped.
+
+The initial full uncached go test -count=1 -timeout 30m ./... gate exposed the
+negative-fixture placement issue in flow corpus scans. Moving that source into
+refusals fixes the layout without suppressing a test or changing flow analysis.
+Final validation commands and results are recorded below after completion.
