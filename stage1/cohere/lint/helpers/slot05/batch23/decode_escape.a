@@ -1,0 +1,25 @@
+import type { Escape,EscapeContext,EscapeOps } from './types.a';
+import { escapeValue } from './types.a';
+export function decodeEscape(source: readonly number[],index: number,context: EscapeContext,ops: EscapeOps): Escape {
+ if(index>=source.length) {return escapeValue(0,0,0,false,'unsupported regexp syntax: \\ at the end of the pattern');}
+ const decoded=ops.rune(index);const rune=decoded.rune;const size=decoded.width;
+ switch(rune) {
+ case 117:return ops.unicodeEscape(index,size,context);
+ case 120:return ops.hexEscape(index,size,2,context);
+ case 110:return escapeValue(10,size,0,false,'');
+ case 114:return escapeValue(13,size,0,false,'');
+ case 116:return escapeValue(9,size,0,false,'');
+ case 102:return escapeValue(12,size,0,false,'');
+ case 118:return escapeValue(11,size,0,false,'');
+ case 99:return ops.controlEscape(index,size,context);
+ case 100:case 68:case 115:case 83:return escapeValue(0,size,1,false,'');
+ case 119:return {kind:1,set:1,rune:0,width:size,negated:false,error:''};
+ case 87:return {kind:1,set:2,rune:0,width:size,negated:false,error:''};
+ case 112:case 80:return ops.propertyEscape(index,size,context);
+ case 98:if(context.inClass) {return escapeValue(8,size,0,false,'');}return escapeValue(0,size,2,false,'');
+ case 66:if(context.inClass) {return ops.identityEscape(rune,size,context);}return escapeValue(0,size,2,true,'');
+ case 107:if(context.named) {return escapeValue(0,0,0,false,'unsupported regexp syntax: \\k naming no group');}return ops.identityEscape(rune,size,context);
+ }
+ if(rune>=48 && rune<=57) {return ops.numericEscape(index,context);}
+ return ops.identityEscape(rune,size,context);
+}

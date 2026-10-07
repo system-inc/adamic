@@ -1,0 +1,54 @@
+import { panic,readTextFile,programArguments } from 'adamic';
+import { OptionsJson } from '../../options_json.ts';
+import type { Escape,EscapeContext,DecodedRune,ClassAtom,RewriteOptions,EscapeOps,ClassOps,JoinedAtoms } from './types.a';
+import { decodeEscape } from './decode_escape.a';
+import { classAtoms } from './class_atoms.a';
+import { regExpTest } from './regexp_test.a';
+import type { MatchResult,RegExpValue } from './regexp_test.a';
+interface Op {readonly value: Escape;readonly atoms: readonly ClassAtom[] | undefined;readonly error: string;readonly matched: boolean;readonly failed: boolean;}
+const input=readTextFile(programArguments()[0] ?? panic('missing corpus'));if(input.kind === 'Error'){panic(input.message);}
+const json=new OptionsJson(input.text);const root=json.parse();if(root<0){panic(json.error);}
+function field(index: number,name: string): number {return json.field(index,name);}
+function number(index: number): number {return Number(json.node(index).text);}
+function boolean(index: number): boolean {return json.node(index).text === 'true';}
+function text(index: number): string {return json.node(index).text;}
+function vector(index: number): number[] {const values: number[]=[];for(const child of json.node(index).children){values.push(number(child));}return values;}
+function at(values: readonly number[],index: number): number {return values[index] ?? panic('missing value');}
+const sources: number[][]=[];const runes: number[][][]=[];
+for(const source of json.node(field(root,'sources')).children){sources.push(vector(field(source,'bytes')));const values: number[][]=[];for(const pair of json.node(field(source,'runes')).children){values.push(vector(pair));}runes.push(values);}
+let current: readonly number[]=[];let currentRunes: readonly (readonly number[])[]=[];let operations=new Map<string,Op>();let trace='';
+const fallback: Op={value:{kind:0,set:0,rune:0,width:1,negated:false,error:''},atoms:undefined,error:'',matched:false,failed:false};
+function dependency(key: string): Op {trace+=key+';';return operations.get(key) ?? fallback;}
+function contextKey(ctx: EscapeContext): string {return `${ctx.unicode}:${ctx.inClass}:${ctx.groups}:${ctx.named}`;}
+function optionKey(o: RewriteOptions): string {return `${o.unicode}:${o.ignoreCase}:${o.multiline}:${o.dotAll}`;}
+function atomText(atoms: readonly ClassAtom[] | undefined): string {let text='';if(atoms !== undefined){for(const atom of atoms){text+=`${atom.kind},${atom.lo},${atom.hi},${atom.text};`;}}return text;}
+function rune(index: number): DecodedRune {trace+=`rune:${index};`;const pair=currentRunes[index] ?? panic('missing rune');return {rune:at(pair,0),width:at(pair,1)};}
+function unicodeEscape(index: number,size: number,ctx: EscapeContext): Escape {return dependency(`unicode:${index}:${size}:${contextKey(ctx)}`).value;}
+function hexEscape(index: number,size: number,digits: number,ctx: EscapeContext): Escape {return dependency(`hex:${index}:${size}:${digits}:${contextKey(ctx)}`).value;}
+function controlEscape(index: number,size: number,ctx: EscapeContext): Escape {return dependency(`control:${index}:${size}:${contextKey(ctx)}`).value;}
+function propertyEscape(index: number,size: number,ctx: EscapeContext): Escape {return dependency(`property:${index}:${size}:${contextKey(ctx)}`).value;}
+function identityEscape(rune: number,size: number,ctx: EscapeContext): Escape {return dependency(`identity:${rune}:${size}:${contextKey(ctx)}`).value;}
+function numericEscape(index: number,ctx: EscapeContext): Escape {return dependency(`numeric:${index}:${contextKey(ctx)}`).value;}
+function escape(index: number,ctx: EscapeContext): Escape {return dependency(`escape:${index}:${contextKey(ctx)}`).value;}
+const emptyAtoms: readonly ClassAtom[]=[];
+function word(o: RewriteOptions): readonly ClassAtom[] {return dependency('word:'+optionKey(o)).atoms ?? emptyAtoms;}
+function nonword(o: RewriteOptions): readonly ClassAtom[] {return dependency('nonword:'+optionKey(o)).atoms ?? emptyAtoms;}
+function join(atoms: readonly ClassAtom[],o: RewriteOptions): JoinedAtoms {const result=dependency('join:'+optionKey(o)+':'+atomText(atoms));return {atoms:result.atoms,error:result.error};}
+function slice(start: number,end: number): string {let text='';for(let i=start;i<end;i++){text+=at(current,i).toString(16).padStart(2,'0');}return text;}
+function match(engine: number,subject: string): MatchResult {const op=dependency(`match:${engine}:${subject}`);return {matched:op.matched,error:op.failed};}
+const escapeOps: EscapeOps={rune:(i: number) => rune(i),unicodeEscape:(i: number,s: number,c: EscapeContext) => unicodeEscape(i,s,c),hexEscape:(i: number,s: number,d: number,c: EscapeContext) => hexEscape(i,s,d,c),controlEscape:(i: number,s: number,c: EscapeContext) => controlEscape(i,s,c),propertyEscape:(i: number,s: number,c: EscapeContext) => propertyEscape(i,s,c),identityEscape:(r: number,s: number,c: EscapeContext) => identityEscape(r,s,c),numericEscape:(i: number,c: EscapeContext) => numericEscape(i,c)};
+const classOps: ClassOps={rune:(i: number) => rune(i),escape:(i: number,c: EscapeContext) => escape(i,c),word:(o: RewriteOptions) => word(o),nonword:(o: RewriteOptions) => nonword(o),join:(a: readonly ClassAtom[],o: RewriteOptions) => join(a,o),slice:(s: number,e: number) => slice(s,e)};
+const mode=text(field(root,'mode'));
+const preparedOperations: Map<string,Op>[]=[];
+for(const set of json.node(field(root,'operationSets')).children){const prepared=new Map<string,Op>();
+ for(const op of json.node(set).children){const value=field(op,'value');const atoms: ClassAtom[]=[];for(const a of json.node(field(op,'atoms')).children){atoms.push({kind:number(field(a,'kind')),lo:number(field(a,'lo')),hi:number(field(a,'hi')),text:text(field(a,'text'))});}prepared.set(text(field(op,'key')),{value:{kind:number(field(value,'kind')),set:number(field(value,'set')),rune:number(field(value,'rune')),width:number(field(value,'width')),negated:boolean(field(value,'negated')),error:text(field(value,'error'))},atoms:boolean(field(op,'hasAtoms')) ? atoms : undefined,error:text(field(op,'error')),matched:boolean(field(op,'matched')),failed:boolean(field(op,'failed'))});}
+preparedOperations.push(prepared);}
+const operationIDs=vector(field(root,'operationIDs'));let rowIndex=0;
+for(const row of json.node(field(root,'rows')).children) {
+ const values=vector(field(row,'input'));operations=preparedOperations[at(operationIDs,rowIndex)] ?? panic('missing operation set');rowIndex++;trace='';
+ if(mode === 'test') {const state=at(values,2);let regexp: RegExpValue<number> | undefined=undefined;if(state !== 0){regexp={engine:state === 1 ? undefined : at(values,1)};}const result=regExpTest(regexp,text(field(row,'subject')),match);console.log(`${result}|${trace}`);}
+ else {current=sources[at(values,0)] ?? panic('missing source');currentRunes=runes[at(values,0)] ?? panic('missing rune data');const ctx: EscapeContext={unicode:at(values,2) === 1,inClass:at(values,3) === 1,named:at(values,4) === 1,groups:at(values,5)};
+  if(mode === 'decode') {const v=decodeEscape(current,at(values,1),ctx,escapeOps);console.log(`${v.kind},${v.set},${v.rune},${v.width},${v.negated}|${v.error}|${trace}`);}
+  else {const options: RewriteOptions={unicode:ctx.unicode,ignoreCase:at(values,6) === 1,multiline:false,dotAll:false};const v=classAtoms(current,options,ctx,classOps);console.log(`${v.atoms === undefined}|${v.exact}|${atomText(v.atoms)}|${v.error}|${trace}`);}
+ }
+}

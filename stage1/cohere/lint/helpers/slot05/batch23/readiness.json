@@ -1,0 +1,31 @@
+{
+  "helpers": {
+    "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.decodeEscape": [
+      "@next/next/no-html-link-for-pages",
+      "@typescript-eslint/no-empty-object-type",
+      "no-restricted-exports",
+      "no-restricted-imports"
+    ],
+    "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.classAtoms": [
+      "@next/next/no-html-link-for-pages",
+      "@typescript-eslint/no-empty-object-type",
+      "no-restricted-exports",
+      "no-restricted-imports"
+    ],
+    "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.*RegExp.Test": [
+      "@next/next/no-html-link-for-pages",
+      "@typescript-eslint/no-empty-object-type",
+      "no-restricted-exports",
+      "no-restricted-imports"
+    ]
+  },
+  "dependency_occurrences_removed": 12,
+  "unique_consumers": 4,
+  "newly_helper_ready_from_batch_alone": [],
+  "cumulative_slot05": {
+    "helpers": 65,
+    "dependency_occurrences_removed": 355,
+    "unique_consumers": 70,
+    "helper_ready": 50
+  }
+}

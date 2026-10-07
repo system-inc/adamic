@@ -1,0 +1,10 @@
+export interface EscapeContext { readonly unicode: boolean; readonly inClass: boolean; readonly groups: number; readonly named: boolean; }
+export interface Escape { readonly kind: number; readonly set: number; readonly rune: number; readonly width: number; readonly negated: boolean; readonly error: string; }
+export interface DecodedRune { readonly rune: number; readonly width: number; }
+export interface ClassAtom { readonly kind: number; readonly lo: number; readonly hi: number; readonly text: string; }
+export interface RewriteOptions { readonly unicode: boolean; readonly ignoreCase: boolean; readonly multiline: boolean; readonly dotAll: boolean; }
+export interface JoinedAtoms { readonly atoms: readonly ClassAtom[] | undefined; readonly error: string; }
+export interface ClassResult { readonly atoms: readonly ClassAtom[] | undefined; readonly exact: boolean; readonly error: string; }
+export interface EscapeOps { readonly rune: (index: number) => DecodedRune; readonly unicodeEscape: (index: number,size: number,context: EscapeContext) => Escape; readonly hexEscape: (index: number,size: number,digits: number,context: EscapeContext) => Escape; readonly controlEscape: (index: number,size: number,context: EscapeContext) => Escape; readonly propertyEscape: (index: number,size: number,context: EscapeContext) => Escape; readonly identityEscape: (rune: number,size: number,context: EscapeContext) => Escape; readonly numericEscape: (index: number,context: EscapeContext) => Escape; }
+export interface ClassOps { readonly rune: (index: number) => DecodedRune; readonly escape: (index: number,context: EscapeContext) => Escape; readonly word: (options: RewriteOptions) => readonly ClassAtom[]; readonly nonword: (options: RewriteOptions) => readonly ClassAtom[]; readonly join: (atoms: readonly ClassAtom[],options: RewriteOptions) => JoinedAtoms; readonly slice: (start: number,end: number) => string; }
+export function escapeValue(rune: number,width: number,kind: number,negated: boolean,error: string): Escape {return {rune,width,kind,set:0,negated,error};}

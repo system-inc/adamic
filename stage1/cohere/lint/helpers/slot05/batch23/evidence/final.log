@@ -1,0 +1,58 @@
+=== RUN   TestDecodeEscape
+    helper_test.go:82: {
+          "consumer_strings": 904,
+          "consumers": {
+            "@next/next/no-html-link-for-pages": 383,
+            "@typescript-eslint/no-empty-object-type": 65,
+            "no-restricted-exports": 480,
+            "no-restricted-imports": 1266
+          },
+          "invalid_pattern_attempts": 0,
+          "rows": 15440,
+          "sources": 930
+        }
+    helper_test.go:136: decode_escape.a mutant "case 98:if(context.inClass)" -> "case 98:if(!context.inClass)" caught at output line 4769: mutant "0,0,8,1,false||rune:1;", Go "2,0,0,1,false||rune:1;"
+    helper_test.go:136: decode_escape.a mutant "case 66:if(context.inClass)" -> "case 66:if(!context.inClass)" caught at output line 4785: mutant "0,0,0,1,false||rune:3;identity:66:1:false:false:0:false;", Go "2,0,0,1,true||rune:3;"
+    helper_test.go:136: decode_escape.a mutant "if(context.named)" -> "if(!context.named)" caught at output line 4801: mutant "0,0,0,0,false|unsupported regexp syntax: \\k naming no group|rune:5;", Go "0,0,107,1,false||rune:5;identity:107:1:false:false:0:false;"
+    helper_test.go:136: decode_escape.a mutant "rune>=48 && rune<=57" -> "rune>=49 && rune<=57" caught at output line 4689: mutant "0,0,0,1,false||rune:1;identity:48:1:false:false:0:false;", Go "0,0,0,1,false||rune:1;numeric:1:false:false:0:false;"
+    helper_test.go:130: compiled semantic mutant survived case 110:return escapeValue(10
+--- FAIL: TestDecodeEscape (22.06s)
+=== RUN   TestClassAtoms
+    helper_test.go:82: {
+          "consumer_strings": 904,
+          "consumers": {
+            "@next/next/no-html-link-for-pages": 383,
+            "@typescript-eslint/no-empty-object-type": 65,
+            "no-restricted-exports": 480,
+            "no-restricted-imports": 1266
+          },
+          "invalid_pattern_attempts": 0,
+          "rows": 29760,
+          "sources": 930
+        }
+    helper_test.go:136: class_atoms.a mutant "inClass:true" -> "inClass:false" caught at output line 9217: mutant "true|true|||rune:0;escape:1:false:false:0:false;join:false:false:false:false:0,0,0,;;", Go "true|false||unsupported regexp syntax: \\ at the end of the pattern|rune:0;escape:1:false:true:0:false;"
+    helper_test.go:136: class_atoms.a mutant "rune === 45 ? 3 : 0" -> "rune === 45 ? 0 : 3" caught at output line 33: mutant "true|true|||rune:0;join:false:false:false:false:3,10,0,;;", Go "false|true|0,10,0,;||rune:0;join:false:false:false:false:0,10,0,;;"
+    helper_test.go:136: class_atoms.a mutant "exact=false" -> "exact=true" caught at output line 9490: mutant "false|true|2,0,0,5c707b4c7d;2,0,0,5c507b477265656b7d;||rune:0;escape:1:true:true:0:false;rune:5;escape:6:true:true:0:false;join:true:true:false:false:2,0,0,5c707b4c7d;2,0,0,5c507b477265656b7d;;", Go "false|false|2,0,0,5c707b4c7d;2,0,0,5c507b477265656b7d;||rune:0;escape:1:true:true:0:false;rune:5;escape:6:true:true:0:false;join:true:true:false:false:2,0,0,5c707b4c7d;2,0,0,5c507b477265656b7d;;"
+    helper_test.go:136: class_atoms.a mutant "ops.slice(index,end)" -> "ops.slice(index+size,end)" caught at output line 9441: mutant "true|true|||rune:0;escape:1:false:true:0:false;rune:2;escape:3:false:true:0:false;rune:4;escape:5:false:true:0:false;rune:6;escape:7:false:true:0:false;rune:8;escape:9:false:true:0:false;rune:10;escape:11:false:true:0:false;join:false:false:false:false:2,0,0,64;2,0,0,44;2,0,0,73;2,0,0,53;2,0,0,77;2,0,0,57;;", Go "false|true|2,0,0,5c64;2,0,0,5c44;2,0,0,5c73;2,0,0,5c53;2,0,0,5c77;2,0,0,5c57;||rune:0;escape:1:false:true:0:false;rune:2;escape:3:false:true:0:false;rune:4;escape:5:false:true:0:false;rune:6;escape:7:false:true:0:false;rune:8;escape:9:false:true:0:false;rune:10;escape:11:false:true:0:false;join:false:false:false:false:2,0,0,5c64;2,0,0,5c44;2,0,0,5c73;2,0,0,5c53;2,0,0,5c77;2,0,0,5c57;;"
+    helper_test.go:136: class_atoms.a mutant "ops.word(options)" -> "ops.nonword(options)" caught at output line 9458: mutant "true|true|||rune:0;escape:1:true:true:0:false;rune:2;escape:3:true:true:0:false;rune:4;escape:5:true:true:0:false;rune:6;escape:7:true:true:0:false;rune:8;escape:9:true:true:0:false;nonword:true:true:false:false;rune:10;escape:11:true:true:0:false;nonword:true:true:false:false;join:true:true:false:false:2,0,0,5c64;2,0,0,5c44;2,0,0,5c73;2,0,0,5c53;1,0,47,;1,58,64,;1,91,94,;0,96,0,;1,123,382,;1,384,8489,;1,8491,1114111,;1,0,47,;1,58,64,;1,91,94,;0,96,0,;1,123,382,;1,384,8489,;1,8491,1114111,;;", Go "false|true|2,0,0,5c64;2,0,0,5c44;2,0,0,5c73;2,0,0,5c53;1,48,57,;1,65,90,;0,95,0,;1,97,122,;0,383,0,;0,8490,0,;1,0,47,;1,58,64,;1,91,94,;0,96,0,;1,123,382,;1,384,8489,;1,8491,1114111,;||rune:0;escape:1:true:true:0:false;rune:2;escape:3:true:true:0:false;rune:4;escape:5:true:true:0:false;rune:6;escape:7:true:true:0:false;rune:8;escape:9:true:true:0:false;word:true:true:false:false;rune:10;escape:11:true:true:0:false;nonword:true:true:false:false;join:true:true:false:false:2,0,0,5c64;2,0,0,5c44;2,0,0,5c73;2,0,0,5c53;1,48,57,;1,65,90,;0,95,0,;1,97,122,;0,383,0,;0,8490,0,;1,0,47,;1,58,64,;1,91,94,;0,96,0,;1,123,382,;1,384,8489,;1,8491,1114111,;;"
+--- PASS: TestClassAtoms (425.94s)
+=== RUN   TestRegExpTest
+    helper_test.go:82: {
+          "consumer_strings": 904,
+          "consumers": {
+            "@next/next/no-html-link-for-pages": 383,
+            "@typescript-eslint/no-empty-object-type": 65,
+            "no-restricted-exports": 480,
+            "no-restricted-imports": 1266
+          },
+          "invalid_pattern_attempts": 98,
+          "rows": 6549,
+          "sources": 0
+        }
+    helper_test.go:136: regexp_test.a mutant "return false" -> "return true" caught at output line 232: mutant "true|", Go "false|"
+    helper_test.go:136: regexp_test.a mutant "!result.error && result.matched" -> "result.error || result.matched" caught at output line 6548: mutant "true|match:2:61;", Go "false|match:2:61;"
+    helper_test.go:136: regexp_test.a mutant "result.matched;" -> "!result.matched;" caught at output line 1: mutant "false|match:1:;", Go "true|match:1:;"
+--- PASS: TestRegExpTest (12.43s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch23	460.435s
+FAIL

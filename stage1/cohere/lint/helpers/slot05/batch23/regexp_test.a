@@ -1,0 +1,7 @@
+export interface RegExpValue<Engine> { readonly engine: Engine | undefined; }
+export interface MatchResult { readonly matched: boolean; readonly error: boolean; }
+export function regExpTest<Engine>(regexp: RegExpValue<Engine> | undefined,subject: string,match: (engine: Engine,subject: string) => MatchResult): boolean {
+ if(regexp === undefined || regexp.engine === undefined) {return false;}
+ const result=match(regexp.engine,subject);
+ return !result.error && result.matched;
+}

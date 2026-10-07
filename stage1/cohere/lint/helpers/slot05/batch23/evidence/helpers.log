@@ -1,0 +1,48 @@
+=== RUN   TestDecodeEscape
+    helper_test.go:82: {
+          "consumer_strings": 904,
+          "consumers": {
+            "@next/next/no-html-link-for-pages": 383,
+            "@typescript-eslint/no-empty-object-type": 65,
+            "no-restricted-exports": 480,
+            "no-restricted-imports": 1266
+          },
+          "invalid_pattern_attempts": 0,
+          "rows": 15440,
+          "sources": 930
+        }
+    helper_test.go:100: /workspace/adamic/stage1/cohere/lint/helpers/slot05/batch23/main.a:39:29: stage 0 can't lower reading rune yet
+--- FAIL: TestDecodeEscape (0.73s)
+=== RUN   TestClassAtoms
+    helper_test.go:82: {
+          "consumer_strings": 904,
+          "consumers": {
+            "@next/next/no-html-link-for-pages": 383,
+            "@typescript-eslint/no-empty-object-type": 65,
+            "no-restricted-exports": 480,
+            "no-restricted-imports": 1266
+          },
+          "invalid_pattern_attempts": 0,
+          "rows": 29760,
+          "sources": 930
+        }
+    helper_test.go:100: /workspace/adamic/stage1/cohere/lint/helpers/slot05/batch23/main.a:39:29: stage 0 can't lower reading rune yet
+--- FAIL: TestClassAtoms (4.39s)
+=== RUN   TestRegExpTest
+    helper_test.go:82: {
+          "consumer_strings": 904,
+          "consumers": {
+            "@next/next/no-html-link-for-pages": 383,
+            "@typescript-eslint/no-empty-object-type": 65,
+            "no-restricted-exports": 480,
+            "no-restricted-imports": 1266
+          },
+          "invalid_pattern_attempts": 98,
+          "rows": 6451,
+          "sources": 0
+        }
+    helper_test.go:99: output line 1786: got "false|match:1849:;", Go "false|rune:-15;rune:-14;rune:-13;rune:-12;rune:-11;rune:-10;rune:-9;rune:-8;rune:-7;rune:-6;rune:-5;rune:-4;rune:-3;rune:-2;rune:-1;join:false:false:false:false:0,34,0,;0,97,0,;0,34,0,;0,44,0,;0,32,0,;0,34,0,;0,46,0,;0,46,0,;0,47,0,;0,98,0,;0,34,0,;0,44,0,;0,32,0,;0,34,0,;0,34,0,;;match:1849:;"
+--- FAIL: TestRegExpTest (0.57s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch23	5.686s
+FAIL

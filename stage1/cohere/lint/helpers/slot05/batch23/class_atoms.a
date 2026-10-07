@@ -1,0 +1,21 @@
+import type { ClassAtom,ClassOps,ClassResult,EscapeContext,RewriteOptions } from './types.a';
+export function classAtoms(body: readonly number[],options: RewriteOptions,context: EscapeContext,ops: ClassOps): ClassResult {
+ const ctx: EscapeContext={unicode:context.unicode,inClass:true,groups:context.groups,named:context.named};
+ const atoms: ClassAtom[]=[];let exact=true;
+ for(let index=0;index<body.length;) {
+  const decoded=ops.rune(index);const rune=decoded.rune;const size=decoded.width;
+  if(rune !== 92) {atoms.push({kind:rune === 45 ? 3 : 0,lo:rune,hi:0,text:''});index+=size;continue;}
+  const escape=ops.escape(index+size,ctx);
+  if(escape.error !== '') {return {atoms:undefined,exact:false,error:escape.error};}
+  const end=index+size+escape.width;
+  if(escape.kind === 1) {
+   if(escape.set === 1 && options.ignoreCase && options.unicode) {for(const atom of ops.word(options)) {atoms.push(atom);}}
+   else if(escape.set === 2 && options.ignoreCase && options.unicode) {for(const atom of ops.nonword(options)) {atoms.push(atom);}}
+   else {if(escape.set === 3 && options.ignoreCase) {exact=false;}atoms.push({kind:2,lo:0,hi:0,text:ops.slice(index,end)});}
+  } else {atoms.push({kind:0,lo:escape.rune,hi:0,text:''});}
+  index=end;
+ }
+ const joined=ops.join(atoms,options);
+ if(joined.error !== '') {return {atoms:undefined,exact:false,error:joined.error};}
+ return {atoms:joined.atoms,exact,error:''};
+}
