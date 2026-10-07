@@ -1,0 +1,34 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== RUN   TestTheOracleCatchesOneByte
+=== PAUSE TestTheOracleCatchesOneByte
+=== CONT  TestNativeAgreesWithNode
+=== CONT  TestTheOracleCatchesOneByte
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/functions.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/functions.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/maps_and_text.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/maps_and_text.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/sorting.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/sorting.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/closures.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/closures.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_closures.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_closures.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/generic_functions.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/generic_functions.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/functions.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/closures.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/sorting.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/maps_and_text.a
+--- PASS: TestTheOracleCatchesOneByte (8.76s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/generic_functions.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_closures.a
+--- PASS: TestNativeAgreesWithNode (0.02s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/maps_and_text.a (12.71s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/closures.a (12.94s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/sorting.a (13.09s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/functions.a (13.10s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/generic_functions.a (9.37s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_closures.a (7.48s)
+PASS
+ok  	github.com/system-inc/adamic/internal/oracle	20.219s

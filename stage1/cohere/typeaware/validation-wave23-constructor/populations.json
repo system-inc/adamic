@@ -1,0 +1,38 @@
+{
+  "controls": {
+    "bytes": 24979,
+    "findings": 54,
+    "rules": {
+      "no-new-func": 32,
+      "no-new-native-nonconstructor": 8,
+      "no-new-wrappers": 14
+    },
+    "fixes": 0,
+    "suggestions": 0
+  },
+  "custom-declarations": {
+    "bytes": 2289,
+    "findings": 7,
+    "rules": {
+      "no-new-func": 2,
+      "no-new-native-nonconstructor": 2,
+      "no-new-wrappers": 3
+    },
+    "fixes": 0,
+    "suggestions": 0
+  },
+  "repository": {
+    "bytes": 18485,
+    "findings": 0,
+    "rules": {},
+    "fixes": 0,
+    "suggestions": 0
+  },
+  "compiler": {
+    "bytes": 5318,
+    "findings": 0,
+    "rules": {},
+    "fixes": 0,
+    "suggestions": 0
+  }
+}

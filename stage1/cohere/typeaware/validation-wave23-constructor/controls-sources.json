@@ -1,0 +1,370 @@
+[
+  {
+    "path": "constructor-helper.a",
+    "source": "export default class Function{}export class Symbol{}export class BigInt{}export class String{}export class Number{}export class Boolean{}\n"
+  },
+  {
+    "path": "control-000.a",
+    "source": "\n            const a = new String('bar');\n            {\n                const String = CustomString;\n                const b = new String('foo');\n            }\n            \nexport {};\n"
+  },
+  {
+    "path": "control-001.a",
+    "source": "\n        /* global Boolean:off */\n        assert(new Boolean);\n        \nexport {};\n"
+  },
+  {
+    "path": "control-002.a",
+    "source": "\n        function test(Number) {\n            return new Number;\n        }\n        \nexport {};\n"
+  },
+  {
+    "path": "control-003.a",
+    "source": "\n        if (foo) {\n            result = new Boolean(bar);\n        } else {\n            var Boolean = CustomBoolean;\n        }\n        \nexport {};\n"
+  },
+  {
+    "path": "control-004.a",
+    "source": "(Function).call();\nexport {};\n"
+  },
+  {
+    "path": "control-005.a",
+    "source": "/* 世界 🌍 */\n new Function('é');\n new Symbol('é');new ((String))('é');\n\nexport {};\n"
+  },
+  {
+    "path": "control-006.a",
+    "source": "Function.Function.call(null);\n\nexport {};\n"
+  },
+  {
+    "path": "control-007.a",
+    "source": "Function.bind;\nexport {};\n"
+  },
+  {
+    "path": "control-008.a",
+    "source": "Function.call(null,'x');Function.apply(null,['x']);Function.bind(null,'x')();new Function.call(null,'x');\nexport {};\n"
+  },
+  {
+    "path": "control-009.a",
+    "source": "Function.notAMethod();\nexport {};\n"
+  },
+  {
+    "path": "control-010.a",
+    "source": "Function.toString()\nexport {};\n"
+  },
+  {
+    "path": "control-011.a",
+    "source": "Function?.();\nexport {};\n"
+  },
+  {
+    "path": "control-012.a",
+    "source": "Function?.call();\nexport {};\n"
+  },
+  {
+    "path": "control-013.a",
+    "source": "Function['call']();Function[`apply`]();Function[(('bind'))]();(Function).call();(Function?.call)?.();\nexport {};\n"
+  },
+  {
+    "path": "control-014.a",
+    "source": "Function[0]();Function[method]();Function['cal'+'l']();Function.toString();Function.bind;globalThis.Function();\nexport {};\n"
+  },
+  {
+    "path": "control-015.a",
+    "source": "Function[0](null);\nexport {};\n"
+  },
+  {
+    "path": "control-016.a",
+    "source": "Function[`bind`](null);\nexport {};\n"
+  },
+  {
+    "path": "control-017.a",
+    "source": "Function[`call`](null, \"return 1\");\nexport {};\n"
+  },
+  {
+    "path": "control-018.a",
+    "source": "Function[call]()\nexport {};\n"
+  },
+  {
+    "path": "control-019.a",
+    "source": "call(Function)\nexport {};\n"
+  },
+  {
+    "path": "control-020.a",
+    "source": "class Function {}; Function.bind(null, \"return 1\");\nexport {};\n"
+  },
+  {
+    "path": "control-021.a",
+    "source": "class Function {}; Function.call(null, \"return 1\");\nexport {};\n"
+  },
+  {
+    "path": "control-022.a",
+    "source": "class Function {}; Function[\"call\"](null);\nexport {};\n"
+  },
+  {
+    "path": "control-023.a",
+    "source": "class Function {}; new Function()\nexport {};\n"
+  },
+  {
+    "path": "control-024.a",
+    "source": "class Function{}new Function;Function();Function.call();Function.bind()();Function.apply();\nexport {};\n"
+  },
+  {
+    "path": "control-025.a",
+    "source": "class String {} new String();\nexport {};\n"
+  },
+  {
+    "path": "control-026.a",
+    "source": "const fn = () => { class Function {} }; new Function('', '')\nexport {};\n"
+  },
+  {
+    "path": "control-027.a",
+    "source": "const fn = () => { class Function {}; new Function() }\nexport {};\n"
+  },
+  {
+    "path": "control-028.a",
+    "source": "declare const Function:any;Function();new Function;Function.call();\nexport {};\n"
+  },
+  {
+    "path": "control-029.a",
+    "source": "declare const Symbol:any;declare const String:any;new Symbol;new String;\nexport {};\n"
+  },
+  {
+    "path": "control-030.a",
+    "source": "declare const a: any;\n(a, Function).call(null);\n\nexport {};\n"
+  },
+  {
+    "path": "control-031.a",
+    "source": "declare const a: any;\na().Function.call(null);\n\nexport {};\n"
+  },
+  {
+    "path": "control-032.a",
+    "source": "declare const foo: any;\nfoo.Function.call(null);\n\nexport {};\n"
+  },
+  {
+    "path": "control-033.a",
+    "source": "foo(Function.bind)\nexport {};\n"
+  },
+  {
+    "path": "control-034.a",
+    "source": "foo[Function]()\nexport {};\n"
+  },
+  {
+    "path": "control-035.a",
+    "source": "function BigInt() {} new BigInt();\nexport {};\n"
+  },
+  {
+    "path": "control-036.a",
+    "source": "function Boolean() {} new Boolean();\nexport {};\n"
+  },
+  {
+    "path": "control-037.a",
+    "source": "function Function() {}; Function()\nexport {};\n"
+  },
+  {
+    "path": "control-038.a",
+    "source": "function Function() {}; Function.apply(null, []);\nexport {};\n"
+  },
+  {
+    "path": "control-039.a",
+    "source": "function Symbol() {} new Symbol();\nexport {};\n"
+  },
+  {
+    "path": "control-040.a",
+    "source": "function bar() { return function BigInt() {}; } var baz = new BigInt(9007199254740991);\nexport {};\n"
+  },
+  {
+    "path": "control-041.a",
+    "source": "function bar() { return function Symbol() {}; } var baz = new Symbol('baz');\nexport {};\n"
+  },
+  {
+    "path": "control-042.a",
+    "source": "function bar(BigInt: any) { var baz = new BigInt(9007199254740991); }\nexport {};\n"
+  },
+  {
+    "path": "control-043.a",
+    "source": "function bar(Symbol: any) { var baz = new Symbol('baz'); }\nexport {};\n"
+  },
+  {
+    "path": "control-044.a",
+    "source": "function f(Function:any){new Function;Function();Function.call()}function g(){class Function{}new Function}new Function;\nexport {};\n"
+  },
+  {
+    "path": "control-045.a",
+    "source": "function f(Symbol:any,BigInt:any,String:any,Number:any,Boolean:any){new Symbol;new BigInt;new String;new Number;new Boolean}\nexport {};\n"
+  },
+  {
+    "path": "control-046.a",
+    "source": "import Function from './constructor-helper.a';import {Symbol,BigInt,String,Number,Boolean} from './constructor-helper.a';new Function;Function.call();new Symbol;new BigInt;new String;new Number;new Boolean;\nexport {};\n"
+  },
+  {
+    "path": "control-047.a",
+    "source": "new (Function as any)();new (Symbol as any)();new (String as any)();\nexport {};\n"
+  },
+  {
+    "path": "control-048.a",
+    "source": "new Class(Function)\nexport {};\n"
+  },
+  {
+    "path": "control-049.a",
+    "source": "new Function;\nexport {};\n"
+  },
+  {
+    "path": "control-050.a",
+    "source": "new Function;Function();(Function)();new ((Function))('x');Function?.('x');\nexport {};\n"
+  },
+  {
+    "path": "control-051.a",
+    "source": "new String('x');new ((Number))(1);new Boolean(false);String('x');Number(1);Boolean(false);new Object();\nexport {};\n"
+  },
+  {
+    "path": "control-052.a",
+    "source": "new String()\nexport {};\n"
+  },
+  {
+    "path": "control-053.a",
+    "source": "new Symbol();new BigInt(1);new (Symbol)();new ((BigInt))(1);Symbol();BigInt(1);new globalThis.Symbol();\nexport {};\n"
+  },
+  {
+    "path": "control-054.a",
+    "source": "new foo(BigInt);\nexport {};\n"
+  },
+  {
+    "path": "control-055.a",
+    "source": "new foo(Symbol);\nexport {};\n"
+  },
+  {
+    "path": "control-056.a",
+    "source": "new foo(bar, BigInt);\nexport {};\n"
+  },
+  {
+    "path": "control-057.a",
+    "source": "new foo(bar, Symbol);\nexport {};\n"
+  },
+  {
+    "path": "control-058.a",
+    "source": "var a = (Function?.call)(null, \"b\", \"c\", \"return b+c\");\nexport {};\n"
+  },
+  {
+    "path": "control-059.a",
+    "source": "var a = (new String('x'));\nexport {};\n"
+  },
+  {
+    "path": "control-060.a",
+    "source": "var a = Function(\"b\", \"c\", \"return b+c\");\nexport {};\n"
+  },
+  {
+    "path": "control-061.a",
+    "source": "var a = Function.apply(null, [\"b\", \"c\", \"return b+c\"]);\nexport {};\n"
+  },
+  {
+    "path": "control-062.a",
+    "source": "var a = Function.bind(null, \"b\", \"c\", \"return b+c\")();\nexport {};\n"
+  },
+  {
+    "path": "control-063.a",
+    "source": "var a = Function.bind(null, \"b\", \"c\", \"return b+c\");\nexport {};\n"
+  },
+  {
+    "path": "control-064.a",
+    "source": "var a = Function.call(null, \"b\", \"c\", \"return b+c\");\nexport {};\n"
+  },
+  {
+    "path": "control-065.a",
+    "source": "var a = Function[\"call\"](null, \"b\", \"c\", \"return b+c\");\nexport {};\n"
+  },
+  {
+    "path": "control-066.a",
+    "source": "var a = String('test'), b = String.fromCharCode(32);\nexport {};\n"
+  },
+  {
+    "path": "control-067.a",
+    "source": "var a = _function(\"b\", \"c\", \"return b+c\");\nexport {};\n"
+  },
+  {
+    "path": "control-068.a",
+    "source": "var a = new ((String))('x');\nexport {};\n"
+  },
+  {
+    "path": "control-069.a",
+    "source": "var a = new (String)('x');\nexport {};\n"
+  },
+  {
+    "path": "control-070.a",
+    "source": "var a = new Boolean(false);\nexport {};\n"
+  },
+  {
+    "path": "control-071.a",
+    "source": "var a = new Function(\"b\", \"c\", \"return b+c\");\nexport {};\n"
+  },
+  {
+    "path": "control-072.a",
+    "source": "var a = new Number(10);\nexport {};\n"
+  },
+  {
+    "path": "control-073.a",
+    "source": "var a = new Object();\nexport {};\n"
+  },
+  {
+    "path": "control-074.a",
+    "source": "var a = new String('hello');\nexport {};\n"
+  },
+  {
+    "path": "control-075.a",
+    "source": "var a = new String;\nexport {};\n"
+  },
+  {
+    "path": "control-076.a",
+    "source": "var a = new Symbol();\nexport {};\n"
+  },
+  {
+    "path": "control-077.a",
+    "source": "var a = new _function(\"b\", \"c\", \"return b+c\");\nexport {};\n"
+  },
+  {
+    "path": "control-078.a",
+    "source": "var a = new globalThis.String('x');\nexport {};\n"
+  },
+  {
+    "path": "control-079.a",
+    "source": "var a = new string('x');\nexport {};\n"
+  },
+  {
+    "path": "control-080.a",
+    "source": "var a = new window.String('x');\nexport {};\n"
+  },
+  {
+    "path": "control-081.a",
+    "source": "var fn = function () { function Function() {} }; Function('', '')\nexport {};\n"
+  },
+  {
+    "path": "control-082.a",
+    "source": "var fn = function () { function Function() {}; Function() }\nexport {};\n"
+  },
+  {
+    "path": "control-083.a",
+    "source": "var foo = BigInt(9007199254740991);\nexport {};\n"
+  },
+  {
+    "path": "control-084.a",
+    "source": "var foo = Symbol('foo');\nexport {};\n"
+  },
+  {
+    "path": "control-085.a",
+    "source": "var foo = new BigInt(9007199254740991);\nexport {};\n"
+  },
+  {
+    "path": "control-086.a",
+    "source": "var foo = new Symbol('foo');\nexport {};\n"
+  },
+  {
+    "path": "control-087.a",
+    "source": "var x = function Function() { Function(); }\nexport {};\n"
+  },
+  {
+    "path": "custom.a",
+    "source": "new Function;Function.call();new Symbol;new BigInt;new String;new Number;new Boolean;export {};\n"
+  },
+  {
+    "path": "prelude.d.ts",
+    "source": ""
+  },
+  {
+    "path": "custom-globals.d.ts",
+    "source": "declare const Function:any;declare const Symbol:any;declare const BigInt:any;declare const String:any;declare const Number:any;declare const Boolean:any;\n"
+  }
+]

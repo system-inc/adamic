@@ -1,0 +1,20 @@
+=== RUN   TestWave23ConstructorAgreementAndMutants
+    wave_23_constructor_test.go:138: controls: 24979 identical finding bytes; findings 54
+    wave_23_constructor_test.go:146: controls-asan: 24979 identical finding bytes; findings 54
+    wave_23_constructor_test.go:157: func mutant: exit 0, empty stderr, byte oracle catches byte 8911
+    wave_23_constructor_test.go:157: nonconstructor mutant: exit 0, empty stderr, byte oracle catches byte 1837
+    wave_23_constructor_test.go:157: wrappers mutant: exit 0, empty stderr, byte oracle catches byte 122
+    wave_23_constructor_test.go:165: custom-declarations: 2289 identical finding bytes; findings 7
+    wave_23_constructor_test.go:171: custom-declarations-asan: 2289 identical finding bytes; findings 7
+    wave_23_constructor_test.go:180: repository: 18485 identical finding bytes; findings 0
+    wave_23_constructor_test.go:181: repository-asan: 18485 identical finding bytes; findings 0
+    wave_23_constructor_test.go:189: repository timing: native 236.037816ms, Go 129.542739ms; native stderr tsgo: load_ns=85925139 query_ns=0 queries=0 first_query_ns=0 run_ns=145970756
+        ; Go stderr cohere: load_ns=61019611 rule_ns=925094 run_ns=56593576
+    wave_23_constructor_test.go:180: compiler: 5318 identical finding bytes; findings 0
+    wave_23_constructor_test.go:181: compiler-asan: 5318 identical finding bytes; findings 0
+    wave_23_constructor_test.go:189: compiler timing: native 1.791616472s, Go 367.51144ms; native stderr tsgo: load_ns=252246865 query_ns=130124890 queries=2 first_query_ns=9260581 run_ns=1512952214
+        ; Go stderr cohere: load_ns=287756766 rule_ns=4005229 run_ns=46907045
+    wave_23_constructor_test.go:209: released handle: normal exit 70; registry mutant caught by required released-handle error
+--- PASS: TestWave23ConstructorAgreementAndMutants (92.26s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	92.266s
