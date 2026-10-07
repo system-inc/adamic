@@ -1,0 +1,174 @@
+=== RUN   TestBigIntNormalizationMatchesGo
+    bigint_test.go:36: 10983 cases and 1003998 UTF-16 observation bytes match actual Go, source Node, ASan/UBSan native and emitted JavaScript
+--- PASS: TestBigIntNormalizationMatchesGo (25.94s)
+=== RUN   TestBigIntNormalizationMutants
+=== RUN   TestBigIntNormalizationMutants/hex-digit-value
+    bigint_test.go:71: backend 0 compiles and runs cleanly; Go comparison catches mutant at row 2137
+    bigint_test.go:71: backend 1 compiles and runs cleanly; Go comparison catches mutant at row 2137
+    bigint_test.go:71: backend 2 compiles and runs cleanly; Go comparison catches mutant at row 2137
+=== RUN   TestBigIntNormalizationMutants/negative-zero
+    bigint_test.go:71: backend 0 compiles and runs cleanly; Go comparison catches mutant at row 2124
+    bigint_test.go:71: backend 1 compiles and runs cleanly; Go comparison catches mutant at row 2124
+    bigint_test.go:71: backend 2 compiles and runs cleanly; Go comparison catches mutant at row 2124
+=== RUN   TestBigIntNormalizationMutants/invalid-fallback
+    bigint_test.go:71: backend 0 compiles and runs cleanly; Go comparison catches mutant at row 2152
+    bigint_test.go:71: backend 1 compiles and runs cleanly; Go comparison catches mutant at row 2152
+    bigint_test.go:71: backend 2 compiles and runs cleanly; Go comparison catches mutant at row 2152
+--- PASS: TestBigIntNormalizationMutants (46.31s)
+    --- PASS: TestBigIntNormalizationMutants/hex-digit-value (14.22s)
+    --- PASS: TestBigIntNormalizationMutants/negative-zero (23.64s)
+    --- PASS: TestBigIntNormalizationMutants/invalid-fallback (5.28s)
+=== RUN   TestControlFlowBlockAllocation
+    block_test.go:32: actual Go/source Node 26732 allocation/identity/state observations, 950119 identical bytes
+    block_test.go:58: source Node alias mutant exits cleanly; only Go comparison catches row 4
+    block_test.go:64: actual Go/source Node/emitted JavaScript/sanitized native identical
+    block_test.go:69: backend 0 compiles and exits cleanly; only Go comparison catches row 4
+    block_test.go:69: backend 1 compiles and exits cleanly; only Go comparison catches row 4
+    block_test.go:69: backend 2 compiles and exits cleanly; only Go comparison catches row 4
+--- PASS: TestControlFlowBlockAllocation (5.90s)
+=== RUN   TestBreakableStatementMatchesGo
+    breakable_test.go:36: actual Go numeric switch/while/do/for/for-in/for-of kinds: 256 248 247 249 250 251
+    breakable_test.go:44: 30267 consumer AST and kind/nil controls, 179169 identical Go/source Node/emitted JS/sanitized native bytes
+=== RUN   TestBreakableStatementMatchesGo/missing-switch
+    breakable_test.go:71: backend 0 compiles and exits cleanly; Go comparison catches mutant at row 446
+    breakable_test.go:71: backend 1 compiles and exits cleanly; Go comparison catches mutant at row 446
+    breakable_test.go:71: backend 2 compiles and exits cleanly; Go comparison catches mutant at row 446
+=== RUN   TestBreakableStatementMatchesGo/nil-loop
+    breakable_test.go:71: backend 0 compiles and exits cleanly; Go comparison catches mutant at row 1
+    breakable_test.go:71: backend 1 compiles and exits cleanly; Go comparison catches mutant at row 1
+    breakable_test.go:71: backend 2 compiles and exits cleanly; Go comparison catches mutant at row 1
+--- PASS: TestBreakableStatementMatchesGo (16.28s)
+    --- PASS: TestBreakableStatementMatchesGo/missing-switch (5.68s)
+    --- PASS: TestBreakableStatementMatchesGo/nil-loop (3.42s)
+=== RUN   TestCounterExactPrimitiveGap
+    counter_gap_test.go:21: actual Go and exact Node support probe match nine counter observations:
+        1
+        2
+        3
+        9007199254740992
+        9007199254740993
+        9007199254740994
+        9223372036854775807
+        -9223372036854775808
+        -9223372036854775807
+    counter_gap_test.go:33: exact native/emitted-IR support blocked before backend emission: /workspace/adamic/stage1/cohere/lint/helpers/wave12/gaps/atomic-counter.a:4:10: stage 0 can't lower a function returning bigint yet
+    counter_gap_test.go:39: backend 0 number-counter approximation compiles, finishes and is caught only by Go comparison at row 5
+    counter_gap_test.go:39: backend 1 number-counter approximation compiles, finishes and is caught only by Go comparison at row 5
+    counter_gap_test.go:39: backend 2 number-counter approximation compiles, finishes and is caught only by Go comparison at row 5
+--- PASS: TestCounterExactPrimitiveGap (1.10s)
+=== RUN   TestDecoratorsMatchesGo
+    decorators_test.go:72: actual Go consumer coverage [AST nodes, delegated expressions]: {"array-callback-return":[3323,0],"consistent-return":[887,0],"decorator-controls":[102,19],"no-unreachable-loop":[20964,0],"react-hooks/rules-of-hooks":[4386,0]}
+    decorators_test.go:80: 29662 consumer AST and decorator-order controls, 59369 identical Go/source Node/emitted JS/sanitized native bytes
+=== RUN   TestDecoratorsMatchesGo/drop-first-decorator
+    decorators_test.go:107: backend 0 compiles and exits cleanly; Go comparison catches mutant at row 29562
+    decorators_test.go:107: backend 1 compiles and exits cleanly; Go comparison catches mutant at row 29562
+    decorators_test.go:107: backend 2 compiles and exits cleanly; Go comparison catches mutant at row 29562
+=== RUN   TestDecoratorsMatchesGo/duplicate-expression
+    decorators_test.go:107: backend 0 compiles and exits cleanly; Go comparison catches mutant at row 29562
+    decorators_test.go:107: backend 1 compiles and exits cleanly; Go comparison catches mutant at row 29562
+    decorators_test.go:107: backend 2 compiles and exits cleanly; Go comparison catches mutant at row 29562
+--- PASS: TestDecoratorsMatchesGo (6.15s)
+    --- PASS: TestDecoratorsMatchesGo/drop-first-decorator (1.45s)
+    --- PASS: TestDecoratorsMatchesGo/duplicate-expression (1.69s)
+=== RUN   TestLabelsOfMatchesGo
+    labels_test.go:58: actual Go numeric labeled-statement kind: 257
+    labels_test.go:66: 30228 consumer AST and nested-label/identity controls, 64096 identical Go/source Node/emitted JS/sanitized native bytes
+=== RUN   TestLabelsOfMatchesGo/omit-outer-labels
+    labels_test.go:93: backend 0 compiles and exits cleanly; Go comparison catches mutant at row 29647
+    labels_test.go:93: backend 1 compiles and exits cleanly; Go comparison catches mutant at row 29647
+    labels_test.go:93: backend 2 compiles and exits cleanly; Go comparison catches mutant at row 29647
+=== RUN   TestLabelsOfMatchesGo/ignore-child-identity
+    labels_test.go:93: backend 0 compiles and exits cleanly; Go comparison catches mutant at row 24218
+    labels_test.go:93: backend 1 compiles and exits cleanly; Go comparison catches mutant at row 24218
+    labels_test.go:93: backend 2 compiles and exits cleanly; Go comparison catches mutant at row 24218
+=== RUN   TestLabelsOfMatchesGo/wrong-kind
+    labels_test.go:93: backend 0 compiles and exits cleanly; Go comparison catches mutant at row 24219
+    labels_test.go:93: backend 1 compiles and exits cleanly; Go comparison catches mutant at row 24219
+    labels_test.go:93: backend 2 compiles and exits cleanly; Go comparison catches mutant at row 24219
+--- PASS: TestLabelsOfMatchesGo (143.16s)
+    --- PASS: TestLabelsOfMatchesGo/omit-outer-labels (27.73s)
+    --- PASS: TestLabelsOfMatchesGo/ignore-child-identity (52.14s)
+    --- PASS: TestLabelsOfMatchesGo/wrong-kind (28.10s)
+=== RUN   TestLabelsNilRefused
+    labels_test.go:115: backend 0 rejects nil before any successful observation
+    labels_test.go:115: backend 1 rejects nil before any successful observation
+    labels_test.go:115: backend 2 rejects nil before any successful observation
+    labels_test.go:115: backend 3 rejects nil before any successful observation
+--- PASS: TestLabelsNilRefused (10.27s)
+=== RUN   TestNormalizationMatchesGo
+    normalization_test.go:100: 9364 cases and 309422 UTF-16 observation bytes match actual Go, source Node, ASan/UBSan native and emitted JavaScript
+--- PASS: TestNormalizationMatchesGo (4.66s)
+=== RUN   TestNormalizationMutants
+=== RUN   TestNormalizationMutants/namespace-suffix
+    normalization_test.go:135: backend 0 compiled semantic mutant caught only by Go comparison at row 8
+    normalization_test.go:135: backend 1 compiled semantic mutant caught only by Go comparison at row 8
+    normalization_test.go:135: backend 2 compiled semantic mutant caught only by Go comparison at row 8
+=== RUN   TestNormalizationMutants/newline-crossing
+    normalization_test.go:135: backend 0 compiled semantic mutant caught only by Go comparison at row 168
+    normalization_test.go:135: backend 1 compiled semantic mutant caught only by Go comparison at row 168
+    normalization_test.go:135: backend 2 compiled semantic mutant caught only by Go comparison at row 168
+=== RUN   TestNormalizationMutants/nested-key-join
+    normalization_test.go:135: backend 0 compiled semantic mutant caught only by Go comparison at row 12
+    normalization_test.go:135: backend 1 compiled semantic mutant caught only by Go comparison at row 12
+    normalization_test.go:135: backend 2 compiled semantic mutant caught only by Go comparison at row 12
+--- PASS: TestNormalizationMutants (23.54s)
+    --- PASS: TestNormalizationMutants/namespace-suffix (5.13s)
+    --- PASS: TestNormalizationMutants/newline-crossing (11.54s)
+    --- PASS: TestNormalizationMutants/nested-key-join (5.43s)
+=== RUN   TestSegmentMatchesGo
+    segment_test.go:24: 30857 cases and 855507 bytes match actual Go, Node, sanitized native and emitted JavaScript
+--- PASS: TestSegmentMatchesGo (7.58s)
+=== RUN   TestSegmentMutants
+=== RUN   TestSegmentMutants/drop-final-empty
+    segment_test.go:59: backend 0 compiled mutant caught only by comparison at row 1
+    segment_test.go:59: backend 1 compiled mutant caught only by comparison at row 1
+    segment_test.go:59: backend 2 compiled mutant caught only by comparison at row 1
+=== RUN   TestSegmentMutants/pop-unmatched-closer
+    segment_test.go:59: backend 0 compiled mutant caught only by comparison at row 4259
+    segment_test.go:59: backend 1 compiled mutant caught only by comparison at row 4259
+    segment_test.go:59: backend 2 compiled mutant caught only by comparison at row 4259
+=== RUN   TestSegmentMutants/escape-disabled
+    segment_test.go:59: backend 0 compiled mutant caught only by comparison at row 913
+    segment_test.go:59: backend 1 compiled mutant caught only by comparison at row 913
+    segment_test.go:59: backend 2 compiled mutant caught only by comparison at row 913
+--- PASS: TestSegmentMutants (30.92s)
+    --- PASS: TestSegmentMutants/drop-final-empty (5.75s)
+    --- PASS: TestSegmentMutants/pop-unmatched-closer (11.58s)
+    --- PASS: TestSegmentMutants/escape-disabled (12.66s)
+=== RUN   TestSegmentSeparatorRefusals
+    segment_test.go:93: four unsupported separator inputs refuse identically on all three backends
+    segment_test.go:119: backend 0 compiled separator-guard mutant finishes, caught only by refusal comparison
+    segment_test.go:119: backend 1 compiled separator-guard mutant finishes, caught only by refusal comparison
+    segment_test.go:119: backend 2 compiled separator-guard mutant finishes, caught only by refusal comparison
+--- PASS: TestSegmentSeparatorRefusals (6.91s)
+=== RUN   TestAlwaysTruthyTestMatchesGo
+    truthy_test.go:58: actual Go numeric parenthesized/true/regex/numeric/bigint/string kinds: 218 111 13 8 9 10
+    truthy_test.go:66: 30458 consumer AST and literal/parenthesis controls, 182218 identical Go/source Node/emitted JS/sanitized native bytes
+=== RUN   TestAlwaysTruthyTestMatchesGo/zero-bigint
+    truthy_test.go:93: backend 0 compiles and exits cleanly; Go comparison catches mutant at row 30003
+    truthy_test.go:93: backend 1 compiles and exits cleanly; Go comparison catches mutant at row 30003
+    truthy_test.go:93: backend 2 compiles and exits cleanly; Go comparison catches mutant at row 30003
+=== RUN   TestAlwaysTruthyTestMatchesGo/skip-parentheses
+    truthy_test.go:93: backend 0 compiles and exits cleanly; Go comparison catches mutant at row 29569
+    truthy_test.go:93: backend 1 compiles and exits cleanly; Go comparison catches mutant at row 29569
+    truthy_test.go:93: backend 2 compiles and exits cleanly; Go comparison catches mutant at row 29569
+=== RUN   TestAlwaysTruthyTestMatchesGo/empty-string
+    truthy_test.go:93: backend 0 compiles and exits cleanly; Go comparison catches mutant at row 57
+    truthy_test.go:93: backend 1 compiles and exits cleanly; Go comparison catches mutant at row 57
+    truthy_test.go:93: backend 2 compiles and exits cleanly; Go comparison catches mutant at row 57
+--- PASS: TestAlwaysTruthyTestMatchesGo (71.00s)
+    --- PASS: TestAlwaysTruthyTestMatchesGo/zero-bigint (28.24s)
+    --- PASS: TestAlwaysTruthyTestMatchesGo/skip-parentheses (10.20s)
+    --- PASS: TestAlwaysTruthyTestMatchesGo/empty-string (21.39s)
+=== RUN   TestAlwaysTruthyNilRefused
+    truthy_test.go:106: native: clang failed: exit status 1
+        fatal error: error in backend: IO failure on output stream: No space left on device
+        
+--- FAIL: TestAlwaysTruthyNilRefused (8.93s)
+=== RUN   TestTypeParametersMatchesGo
+    type_parameters_test.go:41: go [build -overlay=/tmp/adamic-gate/TestTypeParametersMatchesGo4027713654/002/overlay.json -o /tmp/adamic-gate/TestTypeParametersMatchesGo4027713654/003/go-oracle /workspace/adamic/cohere/adamic_wave12_type_parameters_oracle.go]: exit status 1 stderr # command-line-arguments
+        /workspace/adamic-tools/go/pkg/tool/linux_amd64/link: mapping output file failed: no space left on device
+--- FAIL: TestTypeParametersMatchesGo (1.69s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/wave12	410.423s
+FAIL
