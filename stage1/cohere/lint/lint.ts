@@ -1,5 +1,7 @@
 // Twenty syntax-only cohere rules. Node indexes keep the visitor's ancestry acyclic.
 import { panic, utf8Length } from 'adamic';
+import { RuleContext } from './context.ts';
+import { createRuleSet, registeredRuleNames, type RuleSet } from './.generated/registry.ts';
 import { Parser } from '../../typescript/parser/parser.ts';
 import type { ParseNode } from '../../typescript/parser/nodes.ts';
 import type { Scanner } from '../../typescript/scanner/scanner.ts';
@@ -206,7 +208,8 @@ export class Linter {
     readonly source: string;
     readonly parser: Parser;
     readonly scanner: Scanner;
-    readonly findings: Finding[] = [];
+    readonly findings: Finding[];
+    readonly context: RuleContext;
     readonly rejected: string[] = [];
     literalEnds: number[] = [];
     anchors: boolean[] = [];
@@ -236,10 +239,15 @@ export class Linter {
         this.mode = mode === '' ? 'Always' : mode;
         this.nullPolicy = this.mode === 'Always' ? (nullPolicy === '' ? 'Always' : nullPolicy) : 'Ignore';
         this.allowCatch = allowCatch;
+        this.context = new RuleContext(source, parser, scanner, selected, mode, nullPolicy, allowCatch, this.parents, settings);
+        this.findings = this.context.findings;
     }
     run(): void {
         this.root = this.parser.file();
-        this.parents = this.parser.nodes.map(() => -1);
+        this.parser.nodes.forEach(() => { this.parents.push(-1); });
+        this.ancestry(this.root, -1);
+        const rules = createRuleSet(this.context);
+        rules.prepare(this.root);
         this.volume = new VolumeRules(
             this.source,
             this.parser,
@@ -250,14 +258,15 @@ export class Linter {
             this.settings,
         );
         this.volume.prepare(this.root);
-        this.walk(this.root, -1);
+        this.walk(this.root, -1, rules);
+        rules.finish(this.root);
         this.findings.sort(compareFindings);
     }
     node(index: number): ParseNode {
         return this.parser.node(index);
     }
     enabled(name: string): boolean {
-        return this.selected === 'all' || this.selected === name;
+        return !registeredRuleNames.includes(name) && (this.selected === 'all' || this.selected === name);
     }
     start(index: number): number {
         const node = this.node(index);
@@ -423,7 +432,12 @@ export class Linter {
             }
         }
     }
-    walk(index: number, parent: number): void {
+    ancestry(index: number, parent: number): void {
+        this.parents[index] = parent;
+        for(const child of this.node(index).children) { this.ancestry(child, index); }
+    }
+    walk(index: number, parent: number, rules: RuleSet): void {
+        rules.visit(index, parent);
         this.parents[index] = parent;
         const node = this.node(index);
         const parentKind = parent < 0 ? '' : this.node(parent).kind;
@@ -461,7 +475,7 @@ export class Linter {
         this.additional(index, parent);
         (this.volume ?? panic('missing additional rules')).visit(index);
         for(const child of node.children) {
-            this.walk(child, index);
+            this.walk(child, index, rules);
         }
     }
     functionLike(index: number): boolean {

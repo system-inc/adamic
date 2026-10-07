@@ -1,5 +1,6 @@
 // Additional syntax rules share the parser's index table and the owning findings list.
 import { panic } from 'adamic';
+import { registeredRuleNames } from './.generated/registry.ts';
 import type { Parser } from '../../typescript/parser/parser.ts';
 import type { ParseNode } from '../../typescript/parser/nodes.ts';
 import type { Scanner } from '../../typescript/scanner/scanner.ts';
@@ -36,7 +37,7 @@ export class VolumeRules {
         return this.parser.node(index);
     }
     enabled(rule: string): boolean {
-        return this.selected === 'all' || this.selected === rule;
+        return !registeredRuleNames.includes(rule) && (this.selected === 'all' || this.selected === rule);
     }
     start(index: number): number {
         this.scanner.pos = this.node(index).pos;

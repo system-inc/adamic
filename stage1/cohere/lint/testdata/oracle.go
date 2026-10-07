@@ -112,107 +112,26 @@ func collect(path, source string, fields []string) []rule.Diagnostic {
 	if len(file.Diagnostics()) != 0 && fields[6] != "recovery" {
 		panic(fmt.Sprintf("invalid corpus %s: %v; source=%q", path, file.Diagnostics(), source))
 	}
-	selected := []rule.Rule{rules.NoDebugger, rules.NoEmpty, rules.Eqeqeq, rules.NoVar, rules.NoDuplicateCase, rules.NoContinue, rules.NoWith, rules.NoNew, rules.NoSparseArrays, rules.RequireYield, rules.NoAwaitInLoop, rules.VarsOnTop, rules.NoTemplateCurlyInString, rules.NoDivRegex, rules.NoBitwise, rules.NoLabels, rules.NoSequences, rules.UnicodeBom, rules.NoUnneededTernary, rules.NoWarningComments, rules.NoPlusplus, base.ConsistencyNoConsole, nexus.ConsistencyRequireTypeSuffix, adamic.NoTypePredicate, typescript.MethodSignatureStyle, typescript.NoWrapperObjectTypes, typescript.PreferLiteralEnumMember, nexus.ConsistencyNoEnum, rules.NoNegatedCondition, rules.NoReturnAssign}
+	legacy := []rule.Rule{rules.NoDebugger, rules.NoEmpty, rules.Eqeqeq, rules.NoVar, rules.NoDuplicateCase, rules.NoContinue, rules.NoWith, rules.NoNew, rules.NoSparseArrays, rules.RequireYield, rules.NoAwaitInLoop, rules.VarsOnTop, rules.NoTemplateCurlyInString, rules.NoDivRegex, rules.NoBitwise, rules.NoLabels, rules.NoSequences, rules.UnicodeBom, rules.NoUnneededTernary, rules.NoWarningComments, rules.NoPlusplus, base.ConsistencyNoConsole, nexus.ConsistencyRequireTypeSuffix, adamic.NoTypePredicate, typescript.MethodSignatureStyle, typescript.NoWrapperObjectTypes, typescript.PreferLiteralEnumMember, nexus.ConsistencyNoEnum, rules.NoNegatedCondition, rules.NoReturnAssign}
+	selected := registeredRules()
+	registeredNames := map[string]bool{}
+	for _, entry := range selected {
+		registeredNames[entry.subject.Name] = true
+	}
+	for _, subject := range legacy {
+		if !registeredNames[subject.Name] {
+			selected = append(selected, registeredRule{subject: subject, options: func(fields []string) any { return legacyOptions(subject.Name, fields) }})
+		}
+	}
 	var diagnostics []rule.Diagnostic
 	var listeners []rule.Listeners
-	for _, subject := range selected {
+	for _, registered := range selected {
+		subject := registered.subject
 		if fields[1] != "" && fields[1] != "all" && fields[1] != subject.Name {
 			continue
 		}
 		ctx := rule.Context{SourceFile: file, FileCache: rule.NewFileCache(), Report: func(d rule.Diagnostic) { d.RuleName = subject.Name; diagnostics = append(diagnostics, d) }}
-		var options any
-		if fields[5] != "" {
-			switch subject.Name {
-			case "@typescript-eslint/method-signature-style":
-				var decoded typescript.MethodSignatureStyleOptions
-				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
-					panic(err)
-				}
-				options = decoded
-			case "@typescript-eslint/prefer-literal-enum-member":
-				var decoded typescript.PreferLiteralEnumMemberOptions
-				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
-					panic(err)
-				}
-				options = decoded
-			case "no-return-assign":
-				if fields[5][0] != '"' {
-					break
-				}
-				var decoded rules.NoReturnAssignOptions
-				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
-					panic(err)
-				}
-				options = decoded
-			}
-		}
-		if subject.Name == "no-plusplus" && fields[5] != "" {
-			var decoded rules.NoPlusplusOptions
-			if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
-				panic(err)
-			}
-			options = decoded
-		}
-		if subject.Name == "eqeqeq" {
-			options = rules.EqeqeqOptions{Mode: rules.EqeqeqMode(fields[2]), Null: rules.EqeqeqNullPolicy(fields[3])}
-		}
-		if subject.Name == "no-bitwise" {
-			var decoded rules.NoBitwiseOptions
-			if fields[5] != "" {
-				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
-					panic(err)
-				}
-			}
-			options = decoded
-		}
-		if subject.Name == "no-labels" {
-			var decoded rules.NoLabelsOptions
-			if fields[5] != "" {
-				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
-					panic(err)
-				}
-			}
-			options = decoded
-		}
-		if subject.Name == "no-sequences" {
-			var decoded rules.NoSequencesOptions
-			if fields[5] != "" {
-				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
-					panic(err)
-				}
-			}
-			options = decoded
-		}
-		if subject.Name == "unicode-bom" {
-			var decoded rules.UnicodeBomOptions
-			if fields[5] != "" {
-				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
-					panic(err)
-				}
-			}
-			options = decoded
-		}
-		if subject.Name == "no-unneeded-ternary" {
-			var decoded rules.NoUnneededTernaryOptions
-			if fields[5] != "" {
-				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
-					panic(err)
-				}
-			}
-			options = decoded
-		}
-		if subject.Name == "no-warning-comments" {
-			var decoded rules.NoWarningCommentsOptions
-			if fields[5] != "" {
-				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
-					panic(err)
-				}
-			}
-			options = decoded
-		}
-		if subject.Name == "no-empty" {
-			options = rules.NoEmptyOptions{AllowEmptyCatch: fields[4] == "true"}
-		}
+		options := registered.options(fields)
 		listeners = append(listeners, subject.Run(ctx, options))
 	}
 	var walk func(*ast.Node)
@@ -259,4 +178,101 @@ func main() {
 	if countOnly {
 		fmt.Fprintln(out, count)
 	}
+}
+
+func legacyOptions(name string, fields []string) any {
+	var options any
+	if fields[5] != "" {
+		switch name {
+		case "@typescript-eslint/method-signature-style":
+			var decoded typescript.MethodSignatureStyleOptions
+			if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
+				panic(err)
+			}
+			options = decoded
+		case "@typescript-eslint/prefer-literal-enum-member":
+			var decoded typescript.PreferLiteralEnumMemberOptions
+			if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
+				panic(err)
+			}
+			options = decoded
+		case "no-return-assign":
+			if fields[5][0] != '"' {
+				break
+			}
+			var decoded rules.NoReturnAssignOptions
+			if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
+				panic(err)
+			}
+			options = decoded
+		}
+	}
+	if name == "no-plusplus" && fields[5] != "" {
+		var decoded rules.NoPlusplusOptions
+		if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
+			panic(err)
+		}
+		options = decoded
+	}
+	if name == "eqeqeq" {
+		options = rules.EqeqeqOptions{Mode: rules.EqeqeqMode(fields[2]), Null: rules.EqeqeqNullPolicy(fields[3])}
+	}
+	if name == "no-bitwise" {
+		var decoded rules.NoBitwiseOptions
+		if fields[5] != "" {
+			if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
+				panic(err)
+			}
+		}
+		options = decoded
+	}
+	if name == "no-labels" {
+		var decoded rules.NoLabelsOptions
+		if fields[5] != "" {
+			if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
+				panic(err)
+			}
+		}
+		options = decoded
+	}
+	if name == "no-sequences" {
+		var decoded rules.NoSequencesOptions
+		if fields[5] != "" {
+			if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
+				panic(err)
+			}
+		}
+		options = decoded
+	}
+	if name == "unicode-bom" {
+		var decoded rules.UnicodeBomOptions
+		if fields[5] != "" {
+			if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
+				panic(err)
+			}
+		}
+		options = decoded
+	}
+	if name == "no-unneeded-ternary" {
+		var decoded rules.NoUnneededTernaryOptions
+		if fields[5] != "" {
+			if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
+				panic(err)
+			}
+		}
+		options = decoded
+	}
+	if name == "no-warning-comments" {
+		var decoded rules.NoWarningCommentsOptions
+		if fields[5] != "" {
+			if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
+				panic(err)
+			}
+		}
+		options = decoded
+	}
+	if name == "no-empty" {
+		options = rules.NoEmptyOptions{AllowEmptyCatch: fields[4] == "true"}
+	}
+	return options
 }
