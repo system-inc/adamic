@@ -1,0 +1,11 @@
+==19492== Callgrind, a call-graph generating cache profiler
+==19492== Copyright (C) 2002-2017, and GNU GPL'd, by Josef Weidendorfer et al.
+==19492== Using Valgrind-3.24.0 and LibVEX; rerun with -h for copyright info
+==19492== Command: /workspace/lint-split4/profiled --manifest /workspace/lint-split4/small.txt --count
+==19492==
+==19492== For interactive control, run 'callgrind_control -h'.
+==19492==
+==19492== Events    : Ir
+==19492== Collected : 513645338
+==19492==
+==19492== I   refs:      513,645,338

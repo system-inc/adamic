@@ -2,6 +2,7 @@ package lint
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -9,30 +10,62 @@ import (
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native"
 )
 
-func TestJsxLintNode(t *testing.T) {
-	directory := batch8Snapshot(t)
-	oracle := batch8Oracle(t)
-	rows := batch8Upstream(t)
-	for i, row := range rows {
-		fields := strings.Split(row, "\t")
-		if strings.HasSuffix(fields[0], ".tsx") || strings.HasSuffix(fields[0], ".jsx") {
-			data, err := os.ReadFile(fields[0])
-			if err != nil {
-				t.Fatal(err)
-			}
-			t.Logf("case %d %s: %q", i, fields[1], data)
+// jsxSpansOracle builds testdata/jsx_spans.go inside cohere, which says whether a file holds JSX.
+func jsxSpansOracle(t *testing.T) string {
+	t.Helper()
+	root, _ := filepath.Abs(filepath.Join(repository, "cohere"))
+	side, _ := filepath.Abs("testdata/jsx_spans.go")
+	virtual := filepath.Join(root, "adamic_jsx_spans.go")
+	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{virtual: side}})
+	directory := t.TempDir()
+	path := filepath.Join(directory, "overlay.json")
+	if err := os.WriteFile(path, overlay, 0644); err != nil {
+		t.Fatal(err)
+	}
+	binary := filepath.Join(directory, "jsx-spans")
+	execute(t, root, "go", "build", "-overlay="+path, "-o", binary, virtual)
+	return binary
+}
+
+// jsxSources returns the captured upstream cases of every registry rule whose source holds JSX.
+func jsxSources(t *testing.T) []string {
+	t.Helper()
+	spans := jsxSpansOracle(t)
+	var paths []string
+	for _, row := range upstream(t) {
+		path := strings.Split(row, "\t")[0]
+		if len(bytes.TrimSpace(execute(t, "", spans, path).output)) > 0 {
+			paths = append(paths, path)
 		}
-		rows[i] = fields[0] + "\t" + fields[1]
 	}
-	path := manifest(t, rows)
-	want := execute(t, "", oracle, "--manifest", path)
-	got := batch8Node(t, directory, path, false)
-	if diff := difference(got.output, want.output); diff != "" {
-		t.Fatal(diff)
+	// Batch 8's capture held 54 JSX cases before its runner retired; a smaller count means the capture lost some.
+	if len(paths) != 54 {
+		t.Fatalf("JSX source count %d, want 54", len(paths))
 	}
-	t.Logf("%d original upstream sources parse directly; %d identical finding/fix/suggestion bytes", len(rows), len(want.output))
+	return paths
+}
+
+func buildNative(t *testing.T, entry string, sanitize bool) string {
+	t.Helper()
+	program, err := load.Load([]string{entry})
+	if err != nil {
+		t.Fatal(err)
+	}
+	lowered, err := lower.Lower(context.Background(), program)
+	if err != nil {
+		t.Fatal(err)
+	}
+	binary := filepath.Join(t.TempDir(), "native")
+	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: sanitize}); err != nil {
+		t.Fatal(err)
+	}
+	return binary
 }
 
 // Not parallel: fresh-process throughput is measured after correctness on the same sources.
@@ -40,21 +73,18 @@ func TestJsxLintReleaseAndThroughput(t *testing.T) {
 	if os.Getenv("ADAMIC_LINT_BENCH") != "1" {
 		t.Skip("set ADAMIC_LINT_BENCH=1 for JSX throughput")
 	}
-	oracle := batch8Oracle(t)
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
 	var rows []string
-	for _, row := range batch8Upstream(t) {
-		path := strings.Split(row, "\t")[0]
-		if batch8Spans(t, oracle, path) != "" {
-			rows = append(rows, path+"\tall")
-		}
+	for _, path := range jsxSources(t) {
+		rows = append(rows, path+"\tall")
 	}
-	if len(rows) != 54 {
-		t.Fatalf("JSX fixture count %d", len(rows))
-	}
-	directory := batch8Snapshot(t)
-	binary := batch8Build(t, directory, false)
-	batch8Compare(t, oracle, binary, directory, rows)
+	oracle := goOracle(t)
+	binary := buildPort(t, directory, false)
 	input := manifest(t, rows)
+	compare(t, oracle, binary, directory, input)
 	best := map[string]time.Duration{}
 	var answer []byte
 	names := []string{"Go", "native", "Node"}
@@ -68,7 +98,7 @@ func TestJsxLintReleaseAndThroughput(t *testing.T) {
 			case "native":
 				result = execute(t, "", binary, "--manifest", input, "--count")
 			case "Node":
-				result = batch8Node(t, directory, input, true)
+				result = node(t, directory, input, true)
 			}
 			if answer == nil {
 				answer = result.output
@@ -87,23 +117,13 @@ func TestJsxLintReleaseAndThroughput(t *testing.T) {
 		t.Fatalf("positive count missing: %s %v", answer, err)
 	}
 	for _, name := range names {
-		t.Logf("best of 5 JSX %s: %.6fs, %.2f findings/s (54 files, %d findings)", name, best[name].Seconds(), float64(count)/best[name].Seconds(), count)
+		t.Logf("best of 5 JSX %s: %.6fs, %.2f findings/s (%d files, %d findings)", name, best[name].Seconds(), float64(count)/best[name].Seconds(), len(rows), count)
 	}
 }
 
 // Not parallel: this replays all JSX fixture trees before native throughput.
 func TestJsxLintTrees(t *testing.T) {
-	lintOracle := batch8Oracle(t)
-	var paths []string
-	for _, row := range batch8Upstream(t) {
-		path := strings.Split(row, "\t")[0]
-		if batch8Spans(t, lintOracle, path) != "" {
-			paths = append(paths, path)
-		}
-	}
-	if len(paths) != 54 {
-		t.Fatalf("JSX fixture count %d", len(paths))
-	}
+	paths := jsxSources(t)
 	root, _ := filepath.Abs(filepath.Join(repository, "cohere/TypeScript/tsc"))
 	side, _ := filepath.Abs(filepath.Join(repository, "stage1/typescript/parser/testdata/oracle.go"))
 	virtual := filepath.Join(root, "adamic_jsx_oracle.go")
@@ -122,10 +142,10 @@ func TestJsxLintTrees(t *testing.T) {
 	if diff := difference(node.output, want.output); diff != "" {
 		t.Fatal(diff)
 	}
-	binary := batch8Build(t, directory, true)
+	binary := buildNative(t, filepath.Join(directory, "main.ts"), true)
 	got := execute(t, "", binary, "--manifest", path, "--whole")
 	if diff := difference(got.output, want.output); diff != "" {
 		t.Fatal(diff)
 	}
-	t.Logf("54 original cohere JSX sources: %d identical whole-tree bytes", len(want.output))
+	t.Logf("%d captured cohere JSX sources: %d identical whole-tree bytes", len(paths), len(want.output))
 }

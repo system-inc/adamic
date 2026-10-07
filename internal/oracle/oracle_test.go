@@ -37,6 +37,7 @@ var fixtures = []struct {
 	// the check, so the native binary is held to the JavaScript backend, which does.
 	checked bool
 }{
+	{"internal/oracle/testdata/typeof_null.a", true, false},
 	{"internal/oracle/testdata/call_targets_element.a", true, false},
 	{"internal/oracle/testdata/call_targets_region.a", true, false},
 	{"internal/oracle/testdata/call_targets_reuse.a", true, false},
@@ -134,6 +135,7 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/maybe_numbers.a", true, false},
 	{"internal/oracle/testdata/defaults.a", true, false},
 	{"internal/oracle/testdata/search_halves.a", true, false},
+	{"internal/oracle/testdata/runtime_last_index_of.a", true, false},
 	{"internal/oracle/testdata/strings_more.a", true, false},
 	{"internal/oracle/testdata/number_parsing.a", true, false},
 	{"internal/oracle/testdata/library_math_number_math.a", true, false},
