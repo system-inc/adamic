@@ -12,31 +12,7 @@ import (
 // of freed memory (the sanitizers are on); on Node, and through the JavaScript backend, the target.
 func TestWeakReadsUndefinedOnceFreed(t *testing.T) {
 	t.Parallel()
-	for _, probe := range []struct {
-		path           string
-		native, onNode run
-	}{
-		{
-			"internal/oracle/testdata/weak/freed.a",
-			run{stdout: []byte("while held: bbb\nafter: gone true\n")},
-			run{stdout: []byte("while held: bbb\nafter: bbb false\n")},
-		},
-		{
-			"internal/oracle/testdata/weak/probe_chain.a",
-			run{stdout: []byte("0\n")},
-			run{stdout: []byte("100\n")},
-		},
-		{
-			"internal/oracle/testdata/weak/reuse.a",
-			run{stdout: []byte("gone 0\n")},
-			run{stdout: []byte("t1 0\n")},
-		},
-		{
-			"internal/oracle/testdata/weak/narrowed.a",
-			run{stdout: []byte("before: cc\n"), stderr: []byte("adamic: panic: a weak reference was read after what it pointed to was freed\n"), exitCode: 70},
-			run{stdout: []byte("before: cc\nafter: cc\n")},
-		},
-	} {
+	for _, probe := range weakReadFixtures {
 		t.Run(probe.path, func(t *testing.T) {
 			t.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, probe.path))
@@ -63,4 +39,40 @@ func TestWeakReadsUndefinedOnceFreed(t *testing.T) {
 			}
 		})
 	}
+}
+
+var weakReadFixtures = []struct {
+	path           string
+	native, onNode run
+}{
+	{
+		"internal/oracle/testdata/weak/freed.a",
+		run{stdout: []byte("while held: bbb\nafter: gone true\n")},
+		run{stdout: []byte("while held: bbb\nafter: bbb false\n")},
+	},
+	{
+		"internal/oracle/testdata/weak/probe_chain.a",
+		run{stdout: []byte("0\n")},
+		run{stdout: []byte("100\n")},
+	},
+	{
+		"internal/oracle/testdata/weak/reuse.a",
+		run{stdout: []byte("gone 0\n")},
+		run{stdout: []byte("t1 0\n")},
+	},
+	{
+		"internal/oracle/testdata/weak/narrowed.a",
+		run{stdout: []byte("before: cc\n"), stderr: []byte("adamic: panic: a weak reference was read after what it pointed to was freed\n"), exitCode: 70},
+		run{stdout: []byte("before: cc\nafter: cc\n")},
+	},
+	{
+		"internal/oracle/testdata/weak/4ddd17f_weak_union_narrowed.a",
+		run{stdout: []byte("before\n"), stderr: []byte("adamic: panic: a weak reference was read after what it pointed to was freed\n"), exitCode: 70},
+		run{stdout: []byte("before\nafter: nn\n")},
+	},
+	{
+		"internal/oracle/testdata/weak/4ddd17f_weak_single_narrowed.a",
+		run{stdout: []byte("before\n"), stderr: []byte("adamic: panic: a weak reference was read after what it pointed to was freed\n"), exitCode: 70},
+		run{stdout: []byte("before\nafter: nn\n")},
+	},
 }

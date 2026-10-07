@@ -131,7 +131,7 @@ func counted(t *testing.T, path string, input bool, arguments []string, unreadab
 // Every fixture's counts are recorded, and a change to them fails until the table is updated with it.
 func TestCountsAreRecorded(t *testing.T) {
 	t.Parallel()
-	rows := make([]string, len(fixtures)+len(inputFixtures))
+	rows := make([]string, len(fixtures)+len(inputFixtures)+len(weakReadFixtures))
 	var lock sync.Mutex
 	t.Run("fixtures", func(t *testing.T) {
 		for index, fixture := range fixtures {
@@ -143,6 +143,17 @@ func TestCountsAreRecorded(t *testing.T) {
 				row := counted(t, fixture.path, false, nil, false, false)
 				lock.Lock()
 				rows[index] = row
+				lock.Unlock()
+			})
+		}
+		// Weak lifetime probes have backend-specific expectations, but their native counts
+		// are deterministic too, including the counts where a present read panics.
+		for index, fixture := range weakReadFixtures {
+			t.Run(fixture.path, func(t *testing.T) {
+				t.Parallel()
+				row := counted(t, fixture.path, false, nil, false, false)
+				lock.Lock()
+				rows[len(fixtures)+len(inputFixtures)+index] = row
 				lock.Unlock()
 			})
 		}
