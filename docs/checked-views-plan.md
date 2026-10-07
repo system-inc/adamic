@@ -745,3 +745,42 @@ Concrete integration hooks requested:
 All adapters are tested, but none certifies a corpus pair without the shared
 source-read hooks. Three new semantic mutants catch forged producer descriptors
 (native and JavaScript) and eager argument/result object-member traversal.
+
+## Lane 4b: object plus primitive unions, October 7, 2026
+
+Branch `codex/views-object-primitive-unions` starts from lane 4 tip 9ecdda53,
+which contains selector checkpoint 583d19b7. Assigned demand is 73 pairs and
+267 explicit reads. Own only new `internal/lower/view_unions_object_primitive.go`
+and its tests, `internal/native/view_unions_object_primitive.go` and its tests,
+`internal/javascript/view_unions_object_primitive.go` and its tests, runtime
+`view_unions_object_primitive.c/.h`, oracle
+`checked_views_object_primitive_unions_test.go`, and
+`stage3/interface-downcasts/lane4b/` fixtures, ranking, scripts and logs.
+This plan addition is explicitly authorized by the unit. Existing lane files,
+common dispatch, readiness and representation remain with their owners.
+
+Reuse lane 4's mixed-union selector and shared contract ids. Each read selects
+primitive membership by logical runtime kind or the reference member by its
+contract; preserve that contract on subsequent object/element reads. Unknown
+provenance retains checks, including helpers, generics, callbacks and fields.
+Unsupported members remain obligations at reachable reads, never cast failures.
+
+Required owner handoffs: lane 1 supplies a presence/readiness-aware normalized
+slot probe, a pure non-panicking reference-member matcher, selector dispatch
+and selected-member propagation; lazy admission resolves read contracts without
+eager descendant refusal. Lane 2 supplies array/Map/callable member adapters
+where required. Existing selectors are components, not evidence of source
+admission. No lane 4b helper may guess structural membership from a heap tag.
+
+Rank individual pairs by reads and aggregate identical declared shapes for
+fixtures. First shapes: JSDoc string|NodeArray comment (24 pairs, 63 reads),
+CommandLineOption literal-string|Map type (1 leading pair, 33 reads),
+true|Node|undefined, then string|DiagnosticMessageChain. Every completed shape
+needs source Node controls, both backend exit-70 field/type/found pins and
+independent skip-check, wrong-shape and dropped-nested-check mutants.
+
+Working whole-family target: October 14, 2026, 23:00 UTC, conditional on shared
+lazy admission, normalized probes and member adapters arriving by October 9.
+The initial October 9 estimate was revised after inspection of pending hooks.
+No integrated pair is complete at this territory checkpoint: 73 pairs and
+267 reads remain. Lazy-admission branch was not yet present on origin.

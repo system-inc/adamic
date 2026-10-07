@@ -118,3 +118,14 @@ TestPrepareViewCallableRead/interface_Result. Production files were not mutated.
 Focused lower/native/JavaScript, additional prepare-read adapter, full IR,
 filtered checked-view/Node oracle (same recorded baseline exclusion), and vet
 are the gates. The full repository gate remains unclaimed.
+
+## Lane 4b reconciliation
+
+Tip d11f3ae2 adds the assigned object/primitive plan and .a probes, with no
+compiler admission change. The one plan hunk keeps the existing callable
+read/producer handoff and integration checkpoint plus lane 4b's distinct scope,
+ranked shapes and conditional estimate. Probes jsdoc-good/wrong,
+option-type-good/wrong, node-indicator-good/wrong and diagnostic-good/wrong
+are frontier evidence, not newly accepted source contracts. No mutant claim
+is made for this documentation/probe-only merge. The same focused package,
+full IR, filtered checked-view/Node oracle and vet gates are rerun.
