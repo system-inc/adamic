@@ -1,0 +1,62 @@
+=== RUN   TestCompilerAndStage1Agree
+    lint_test.go:408: compiler and stage1: 222 files
+    lint_test.go:409: Go, Node, emitted JavaScript, native identical: 13038944 bytes
+--- PASS: TestCompilerAndStage1Agree (49.03s)
+=== RUN   TestThirdThroughput
+    wave08_third_test.go:127: @typescript-eslint/no-unnecessary-type-constraint round=1 native seconds=1.608832 findings=1000
+    wave08_third_test.go:127: @typescript-eslint/no-unnecessary-type-constraint round=1 Node seconds=1.181756 findings=1000
+    wave08_third_test.go:127: @typescript-eslint/no-unnecessary-type-constraint round=1 Go seconds=0.246224 findings=1000
+    wave08_third_test.go:127: @typescript-eslint/no-unnecessary-type-constraint round=2 Node seconds=0.970544 findings=1000
+    wave08_third_test.go:127: @typescript-eslint/no-unnecessary-type-constraint round=2 Go seconds=0.252032 findings=1000
+    wave08_third_test.go:127: @typescript-eslint/no-unnecessary-type-constraint round=2 native seconds=1.450785 findings=1000
+    wave08_third_test.go:127: @typescript-eslint/no-unnecessary-type-constraint round=3 Go seconds=0.278342 findings=1000
+    wave08_third_test.go:127: @typescript-eslint/no-unnecessary-type-constraint round=3 native seconds=1.810271 findings=1000
+    wave08_third_test.go:127: @typescript-eslint/no-unnecessary-type-constraint round=3 Node seconds=1.169085 findings=1000
+    wave08_third_test.go:127: @typescript-eslint/no-unnecessary-type-constraint round=4 native seconds=1.464406 findings=1000
+    wave08_third_test.go:127: @typescript-eslint/no-unnecessary-type-constraint round=4 Node seconds=1.296503 findings=1000
+    wave08_third_test.go:127: @typescript-eslint/no-unnecessary-type-constraint round=4 Go seconds=0.325808 findings=1000
+    wave08_third_test.go:127: @typescript-eslint/no-unnecessary-type-constraint round=5 Node seconds=0.973480 findings=1000
+    wave08_third_test.go:127: @typescript-eslint/no-unnecessary-type-constraint round=5 Go seconds=0.260289 findings=1000
+    wave08_third_test.go:127: @typescript-eslint/no-unnecessary-type-constraint round=5 native seconds=1.427610 findings=1000
+    wave08_third_test.go:135: @typescript-eslint/no-unnecessary-type-constraint native: 700.47 findings/s seconds=1.427610 files=78 findings=1000
+    wave08_third_test.go:135: @typescript-eslint/no-unnecessary-type-constraint Node: 1030.35 findings/s seconds=0.970544 files=78 findings=1000
+    wave08_third_test.go:135: @typescript-eslint/no-unnecessary-type-constraint Go: 4061.34 findings/s seconds=0.246224 files=78 findings=1000
+    wave08_third_test.go:127: @typescript-eslint/prefer-as-const round=1 native seconds=1.629290 findings=1000
+    wave08_third_test.go:127: @typescript-eslint/prefer-as-const round=1 Node seconds=0.997102 findings=1000
+    wave08_third_test.go:127: @typescript-eslint/prefer-as-const round=1 Go seconds=0.257713 findings=1000
+    wave08_third_test.go:127: @typescript-eslint/prefer-as-const round=2 Node seconds=1.002270 findings=1000
+    wave08_third_test.go:127: @typescript-eslint/prefer-as-const round=2 Go seconds=0.248118 findings=1000
+    wave08_third_test.go:127: @typescript-eslint/prefer-as-const round=2 native seconds=1.681463 findings=1000
+    wave08_third_test.go:127: @typescript-eslint/prefer-as-const round=3 Go seconds=0.263159 findings=1000
+    wave08_third_test.go:127: @typescript-eslint/prefer-as-const round=3 native seconds=1.764533 findings=1000
+    wave08_third_test.go:127: @typescript-eslint/prefer-as-const round=3 Node seconds=1.198307 findings=1000
+    wave08_third_test.go:127: @typescript-eslint/prefer-as-const round=4 native seconds=1.632773 findings=1000
+    wave08_third_test.go:127: @typescript-eslint/prefer-as-const round=4 Node seconds=1.214858 findings=1000
+    wave08_third_test.go:127: @typescript-eslint/prefer-as-const round=4 Go seconds=0.259909 findings=1000
+    wave08_third_test.go:127: @typescript-eslint/prefer-as-const round=5 Node seconds=1.183997 findings=1000
+    wave08_third_test.go:127: @typescript-eslint/prefer-as-const round=5 Go seconds=0.249566 findings=1000
+    wave08_third_test.go:127: @typescript-eslint/prefer-as-const round=5 native seconds=1.589561 findings=1000
+    wave08_third_test.go:135: @typescript-eslint/prefer-as-const native: 629.10 findings/s seconds=1.589561 files=78 findings=1000
+    wave08_third_test.go:135: @typescript-eslint/prefer-as-const Node: 1002.91 findings/s seconds=0.997102 files=78 findings=1000
+    wave08_third_test.go:135: @typescript-eslint/prefer-as-const Go: 4030.34 findings/s seconds=0.248118 files=78 findings=1000
+    wave08_third_test.go:127: @typescript-eslint/prefer-enum-initializers round=1 native seconds=1.547476 findings=2680
+    wave08_third_test.go:127: @typescript-eslint/prefer-enum-initializers round=1 Node seconds=1.200837 findings=2680
+    wave08_third_test.go:127: @typescript-eslint/prefer-enum-initializers round=1 Go seconds=0.290969 findings=2680
+    wave08_third_test.go:127: @typescript-eslint/prefer-enum-initializers round=2 Node seconds=1.178497 findings=2680
+    wave08_third_test.go:127: @typescript-eslint/prefer-enum-initializers round=2 Go seconds=0.252358 findings=2680
+    wave08_third_test.go:127: @typescript-eslint/prefer-enum-initializers round=2 native seconds=1.598454 findings=2680
+    wave08_third_test.go:127: @typescript-eslint/prefer-enum-initializers round=3 Go seconds=0.498286 findings=2680
+    wave08_third_test.go:127: @typescript-eslint/prefer-enum-initializers round=3 native seconds=1.618993 findings=2680
+    wave08_third_test.go:127: @typescript-eslint/prefer-enum-initializers round=3 Node seconds=1.812126 findings=2680
+    wave08_third_test.go:127: @typescript-eslint/prefer-enum-initializers round=4 native seconds=1.940649 findings=2680
+    wave08_third_test.go:127: @typescript-eslint/prefer-enum-initializers round=4 Node seconds=1.257077 findings=2680
+    wave08_third_test.go:127: @typescript-eslint/prefer-enum-initializers round=4 Go seconds=0.294868 findings=2680
+    wave08_third_test.go:127: @typescript-eslint/prefer-enum-initializers round=5 Node seconds=1.235958 findings=2680
+    wave08_third_test.go:127: @typescript-eslint/prefer-enum-initializers round=5 Go seconds=0.464522 findings=2680
+    wave08_third_test.go:127: @typescript-eslint/prefer-enum-initializers round=5 native seconds=1.682639 findings=2680
+    wave08_third_test.go:135: @typescript-eslint/prefer-enum-initializers native: 1731.85 findings/s seconds=1.547476 files=78 findings=2680
+    wave08_third_test.go:135: @typescript-eslint/prefer-enum-initializers Node: 2274.08 findings/s seconds=1.178497 files=78 findings=2680
+    wave08_third_test.go:135: @typescript-eslint/prefer-enum-initializers Go: 10619.83 findings/s seconds=0.252358 files=78 findings=2680
+--- PASS: TestThirdThroughput (54.39s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	103.432s
