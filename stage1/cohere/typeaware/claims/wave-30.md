@@ -194,3 +194,12 @@ checker program handle or checker-node mapping for their symbol-resolution facts
 Parser.path does provide source identity. Existing three React analysis claims
 remain PARKED on native HIR/SSA/capture analysis. No new rules claimed and no
 shared files edited. See ../WAVE_30_AREA_LANDING_REPORT.md for exact proof scope.
+
+Required-input follow-up: main/area remain unchanged and the unit branch is
+already rebased and pushed. The formerly skipped shared lint compiler/stage1
+comparison now runs with ADAMIC_TYPESCRIPT_SOURCE set to pinned TypeScript 6.0.3.
+It passes on 440 files and 21021585 identical Go/Node/emitted-JavaScript/sanitized
+native bytes. The clean-running emitted-JavaScript mismatch mutant is caught.
+No implementation, harness or skip condition changes, and no new rules claimed.
+Other packages' required external checks are not represented as run. See
+../WAVE_30_REQUIRED_INPUT_REPORT.md and validation-wave-30-required-input/.
