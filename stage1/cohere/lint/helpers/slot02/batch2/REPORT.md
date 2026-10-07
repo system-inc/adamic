@@ -65,8 +65,10 @@ go vet ./... > stage1/cohere/lint/helpers/slot02/batch2/evidence/vet.log 2>&1
 git diff --check > stage1/cohere/lint/helpers/slot02/batch2/evidence/format.log 2>&1
 ```
 
-Setup: Go ready 0s, clang ready 1s, Node ready 1s, submodules ready 1s, build cache warm 23s, total 23s on nproc 5. Tools: Go 1.27.1, clang 20.1.8, Node 24.19.0. Setup succeeded. The filtered uncached oracle passed all six fixtures in 1.572s, with zero result cache hits and six probe misses. Vet and whitespace checks exit zero with empty logs. first.log records the failed relative parser filename attempt; second.log records the failed malformed nil receiver control. Both were investigated and corrected in the fixture contract, not credited as successes or mutants.
+Setup: Go ready 0s, clang ready 1s, Node ready 1s, submodules ready 1s, build cache warm 23s, total 23s on nproc 5. Tools: Go 1.27.1, clang 20.1.8, Node 24.19.0. Setup succeeded. The filtered uncached oracle passed all six fixtures in 1.572s, with zero result cache hits and six probe misses. Vet and whitespace checks exit zero with empty logs. first.log.gz preserves the failed relative parser filename attempt; second.log.gz preserves the failed malformed nil receiver control. Both were investigated and corrected in the fixture contract, not credited as successes or mutants.
 
 RULES.md lists all consumers and readiness.json retains each rule's remaining dependencies after these three helpers. Observation: 30 helper dependency entries are removed across 20 distinct rules. Inference from the frozen ledger: zero rules lose their final listed blocker from this batch alone. The shared ledger and rule statuses are not rewritten. Helpers remain conditional on faithful production adapters and the other slots' prerequisite ports.
 
 The full repository test gate, all possible programs/configurations, integrated rule diagnostics/fixes/suggestions, custom settings traversal and live Tailwind designs remain outside this slice. The complete touched helper package and filtered external oracle are the bounded worker gate. Malformed ownership graphs and invalid UTF-8 byte strings are not claimed equivalent; missing/cyclic arena indices refuse explicitly.
+
+Archived early failure logs are compressed without byte changes, so Go stack-trace indentation remains intact without source diff whitespace warnings.
