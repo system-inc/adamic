@@ -23,3 +23,19 @@ No implementation was written before this claim commit.
 Completion status: the ISO-date-cut and callback-in-parse-try rules are implemented.
 The lost-update rule is unimplemented and its claim is released for reassignment.
 See ../WAVE_30_REPORT.md for evidence and limits.
+
+## Continuation claim
+
+Fetched every origin head after pushing 333b5ccd. Selected the first three in
+VOLUME_REPORT.md's combined compiler/repository checker ranking that are neither
+ported on origin/codex/tsgo-c-library or origin/main nor named in any origin
+branch's stage1/cohere/typeaware/claims files. The ranking has 197 checker rules;
+25 of the original 26 ports are checker-dependent, and claim files mention 92
+ranked rules. All higher-ranked remaining candidates are claimed.
+
+- nexus/correctness-no-collection-misuse (combined volume 0)
+- nexus/correctness-no-discarded-outcome (combined volume 0)
+- nexus/correctness-no-discarded-pure-result (combined volume 0)
+
+These three are claimed for this continuation. No implementation precedes this
+claim commit and push. The earlier released lost-update claim remains released.
