@@ -419,3 +419,14 @@ The count update adds eleven rows and changes no existing rows (12.361s,
 /tmp/adamic-real-counts-final.log). The final complete package gate and vet/format
 logs are /tmp/adamic-real-final-{gate,vet,format}.log. No complete stage1 gate,
 whole tsc compilation, placement proof, or 11/11 claim is made.
+
+
+Final follow-up gate: ADAMIC_GATE_UNCACHED=1 go test ./internal/lower
+./internal/native ./internal/flow ./internal/fresh ./internal/oracle -count=1
+-timeout 20m passed: lower 32.423s, native 175.564s, flow 116.661s,
+fresh 54.390s, and the complete oracle 174.070s. Vet of lower/oracle and
+format checks of both directories passed with no diagnostics. The final focused
+original-fixture run passed in 3.114s (/tmp/adamic-real-eight-final.log).
+Published code is 990eb119f44cfb1db1a4f6f2814cb7f9e91b2b29, with merge
+c08c41c0e023104a228e5795c24c59291bdd9297. The branch reports 8/11;
+the three language decisions above remain paused.
