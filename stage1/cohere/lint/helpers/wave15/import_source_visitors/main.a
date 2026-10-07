@@ -1,0 +1,49 @@
+import type { CallSource } from './source_visitors.a';
+import { readTextFile, programArguments, panic } from 'adamic';
+import { sourceVisitors, ImportSourceNode, CallImportSource } from './source_visitors.a';
+function decode(text: string): string {
+    let result = '';
+    for(let i = 0; i < text.length; i += 4) { result += String.fromCharCode(parseInt(text.slice(i, i + 4), 16)); }
+    return result;
+}
+function hex(text: string): string {
+    let result = '';
+    for(let i = 0; i < text.length; i++) { result += text.charCodeAt(i).toString(16).padStart(4, '0'); }
+    return result;
+}
+const input = readTextFile(programArguments()[0] ?? panic('missing cases'));
+if(input.kind === 'Error') { panic(input.message); }
+let row = 0;
+for(const line of input.text.split('\n')) {
+    if(line === '') { continue; }
+    const fields = line.split('\t');
+    const node = new ImportSourceNode();
+    node.index = fields[6] === '1' ? -1 : row;
+    node.modulePresent = fields[1] === '1';
+    node.moduleStringLike = fields[2] === '1';
+    node.moduleText = decode(fields[3] ?? '');
+    node.callMatches = fields[4] === '1';
+    node.callSource = decode(fields[5] ?? '');
+    let calls = 0;
+    let reports = 0;
+    const listeners = sourceVisitors((source: string, blamed: ImportSourceNode): void => {
+        if(blamed !== node) { panic('report changed node identity'); }
+        console.log(`${row}:report:${hex(source)}@${blamed.index}`);
+        reports++;
+    }, (supplied: ImportSourceNode): CallSource => {
+        if(supplied !== node) { panic('delegation changed node identity'); }
+        calls++;
+        const result = new CallImportSource();
+        result.matches = supplied.callMatches;
+        result.source = supplied.callSource;
+        return result;
+    });
+    if(listeners.size !== 2 || !listeners.has(273) || !listeners.has(214)) { panic('wrong listener keys'); }
+    const listener = listeners.get(Number(fields[0] ?? '0')) ?? panic('missing listener');
+    listener(node);
+    console.log(`${row}:counts:${reports}:${calls}`);
+    listeners.delete(273);
+    const independent = sourceVisitors((source: string, blamed: ImportSourceNode): void => {}, (supplied: ImportSourceNode): CallSource => new CallImportSource());
+    if(!independent.has(273)) { panic('listener map shared'); }
+    row++;
+}

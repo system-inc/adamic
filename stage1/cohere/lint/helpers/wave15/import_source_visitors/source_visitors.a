@@ -1,0 +1,31 @@
+// Facts describe the node and direct specifier link already held by the caller.
+// Go's CallExpressionSource is a separately owned dependency supplied explicitly.
+export class ImportSourceNode {
+    index: number = 0;
+    modulePresent: boolean = false;
+    moduleStringLike: boolean = false;
+    moduleText: string = '';
+    callMatches: boolean = false;
+    callSource: string = '';
+}
+export interface CallSource {
+    matches: boolean;
+    source: string;
+}
+export class CallImportSource {
+    matches: boolean = false;
+    source: string = '';
+}
+export function sourceVisitors(report: (source: string, node: ImportSourceNode) => void, callExpressionSource: (node: ImportSourceNode) => CallSource): Map<number, (node: ImportSourceNode) => void> {
+    const listeners = new Map<number, (node: ImportSourceNode) => void>();
+    listeners.set(273, (node: ImportSourceNode): void => {
+        if(!node.modulePresent || !node.moduleStringLike) { return; }
+        report(node.moduleText, node);
+    });
+    listeners.set(214, (node: ImportSourceNode): void => {
+        const result = callExpressionSource(node);
+        if(!result.matches) { return; }
+        report(result.source, node);
+    });
+    return listeners;
+}
