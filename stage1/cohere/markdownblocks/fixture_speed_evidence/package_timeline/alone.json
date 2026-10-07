@@ -1,0 +1,147 @@
+[
+  {
+    "start_seconds": 0.017155885696411133,
+    "end_seconds": 0.6088690757751465,
+    "test": "TestArrayGrowthWitness"
+  },
+  {
+    "start_seconds": 0.608989953994751,
+    "end_seconds": 21.13963794708252,
+    "test": "TestMarkdownASTPreprocessing"
+  },
+  {
+    "start_seconds": 21.13964605331421,
+    "end_seconds": 21.13965392112732,
+    "test": "TestWholeDocumentOraclePreflight"
+  },
+  {
+    "start_seconds": 21.139657974243164,
+    "end_seconds": 27.947284936904907,
+    "test": "TestMicromarkInputChunks"
+  },
+  {
+    "start_seconds": 27.947288036346436,
+    "end_seconds": 190.62706589698792,
+    "test": "TestMarkdownSourceDecoding"
+  },
+  {
+    "start_seconds": 190.62706804275513,
+    "end_seconds": 279.38853001594543,
+    "test": "TestTokenizerEvents"
+  },
+  {
+    "start_seconds": 279.3885700702667,
+    "end_seconds": 279.38858103752136,
+    "test": "TestFrontMatterStage"
+  },
+  {
+    "start_seconds": 279.38858294487,
+    "end_seconds": 279.3886139392853,
+    "test": "TestParserRepresentationProbes"
+  },
+  {
+    "start_seconds": 279.3886160850525,
+    "end_seconds": 290.2676000595093,
+    "test": "TestMdastIdentifierScalars"
+  },
+  {
+    "start_seconds": 290.2676169872284,
+    "end_seconds": 290.26773500442505,
+    "test": "TestMarkdownListLayout"
+  },
+  {
+    "start_seconds": 290.2677369117737,
+    "end_seconds": 290.26774287223816,
+    "test": "TestMarkdownQuoteLayout"
+  },
+  {
+    "start_seconds": 290.26775789260864,
+    "end_seconds": 290.2677640914917,
+    "test": "TestMarkdownTableLayout"
+  },
+  {
+    "start_seconds": 290.26778292655945,
+    "end_seconds": 290.26784801483154,
+    "test": "TestMarkdownCodeBlockLayout"
+  },
+  {
+    "start_seconds": 290.267874956131,
+    "end_seconds": 290.2678818702698,
+    "test": "TestMarkdownHTMLBlockLayout"
+  },
+  {
+    "start_seconds": 290.26789689064026,
+    "end_seconds": 290.26794600486755,
+    "test": "TestMarkdownWhitespaceLayout"
+  },
+  {
+    "start_seconds": 290.2679479122162,
+    "end_seconds": 290.26795387268066,
+    "test": "TestMarkdownLeafComposition"
+  },
+  {
+    "start_seconds": 290.26797890663147,
+    "end_seconds": 290.2680220603943,
+    "test": "TestMarkdownRootLayout"
+  },
+  {
+    "start_seconds": 290.26803708076477,
+    "end_seconds": 290.2680449485779,
+    "test": "TestMarkdownStructureLayout"
+  },
+  {
+    "start_seconds": 290.2680470943451,
+    "end_seconds": 298.42961287498474,
+    "test": "TestMdastMalformedEvents"
+  },
+  {
+    "start_seconds": 298.429673910141,
+    "end_seconds": 299.5243558883667,
+    "test": "TestMdastIdentifierWitnesses"
+  },
+  {
+    "start_seconds": 299.52436089515686,
+    "end_seconds": 338.5045340061188,
+    "test": "TestNativeMdastConstruction"
+  },
+  {
+    "start_seconds": 338.5045368671417,
+    "end_seconds": 338.90814208984375,
+    "test": "TestOptionalStringInitializationWitness"
+  },
+  {
+    "start_seconds": 338.90814900398254,
+    "end_seconds": 419.87852597236633,
+    "test": "TestMarkdownAstPath"
+  },
+  {
+    "start_seconds": 419.8785409927368,
+    "end_seconds": 419.878555059433,
+    "test": "TestMarkdownParserPrefixes"
+  },
+  {
+    "start_seconds": 419.87855792045593,
+    "end_seconds": 419.8785650730133,
+    "test": "TestNativeBuildModesAreDistinct"
+  },
+  {
+    "start_seconds": 419.8785789012909,
+    "end_seconds": 491.30362200737,
+    "test": "TestMarkdownTextSplitting"
+  },
+  {
+    "start_seconds": 491.3036239147186,
+    "end_seconds": 563.4008440971375,
+    "test": "TestMarkdownUnicodeWidths"
+  },
+  {
+    "start_seconds": 563.4008460044861,
+    "end_seconds": 563.4008650779724,
+    "test": "TestWholeDocumentOraclePreflight"
+  },
+  {
+    "start_seconds": 686.2624139785767,
+    "end_seconds": 689.0623300075531,
+    "test": "TestMarkdownWhitespaceLayout"
+  }
+]

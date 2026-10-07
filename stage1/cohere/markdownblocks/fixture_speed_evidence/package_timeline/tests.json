@@ -1,0 +1,3097 @@
+[
+  {
+    "test": "TestArrayGrowthWitness",
+    "parent": null,
+    "run_seconds": 0.017155885696411133,
+    "first_cont_seconds": null,
+    "end_seconds": 0.6088690757751465,
+    "running_intervals": [
+      [
+        0.017155885696411133,
+        0.6088690757751465
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.59,
+    "running_seconds": 0.5917131900787354,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 0.5917131900787354,
+    "event_interval_minus_go_elapsed_seconds": 0.0017131900787353826,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "array_growth_gap_test.go:9; load/lower; sanitized native build/run; Node observations; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownASTPreprocessing",
+    "parent": null,
+    "run_seconds": 0.608989953994751,
+    "first_cont_seconds": null,
+    "end_seconds": 21.13963794708252,
+    "running_intervals": [
+      [
+        0.608989953994751,
+        21.13963794708252
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 20.53,
+    "running_seconds": 20.53064799308777,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 6.962885141372681,
+    "outside_running_children_seconds": 13.567762851715088,
+    "event_interval_minus_go_elapsed_seconds": 0.0006479930877674178,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "ast_test.go:17; Go oracle build/run; load/lower; sanitized native build/run; Node observations; leak execution; synchronous child subtests; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownASTPreprocessing/raw_source",
+    "parent": "TestMarkdownASTPreprocessing",
+    "run_seconds": 14.17674994468689,
+    "first_cont_seconds": null,
+    "end_seconds": 21.139615058898926,
+    "running_intervals": [
+      [
+        14.17674994468689,
+        21.139615058898926
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.49,
+    "running_seconds": 6.962865114212036,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 6.962865114212036,
+    "event_interval_minus_go_elapsed_seconds": 6.472865114212036,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; ast_test.go:17; Go oracle build/run; load/lower; sanitized native build/run; Node observations; leak execution; synchronous child subtests; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownASTPreprocessing/wiki_risk",
+    "parent": "TestMarkdownASTPreprocessing",
+    "run_seconds": 14.662798881530762,
+    "first_cont_seconds": null,
+    "end_seconds": 21.13962697982788,
+    "running_intervals": [
+      [
+        14.662798881530762,
+        21.13962697982788
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.4,
+    "running_seconds": 6.476828098297119,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 6.476828098297119,
+    "event_interval_minus_go_elapsed_seconds": 6.076828098297119,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; ast_test.go:17; Go oracle build/run; load/lower; sanitized native build/run; Node observations; leak execution; synchronous child subtests; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownASTPreprocessing/list_alignment",
+    "parent": "TestMarkdownASTPreprocessing",
+    "run_seconds": 15.058022022247314,
+    "first_cont_seconds": null,
+    "end_seconds": 21.13963508605957,
+    "running_intervals": [
+      [
+        15.058022022247314,
+        21.13963508605957
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.46,
+    "running_seconds": 6.081613063812256,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 6.081613063812256,
+    "event_interval_minus_go_elapsed_seconds": 5.621613063812256,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; ast_test.go:17; Go oracle build/run; load/lower; sanitized native build/run; Node observations; leak execution; synchronous child subtests; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestWholeDocumentOraclePreflight",
+    "parent": null,
+    "run_seconds": 21.13964605331421,
+    "first_cont_seconds": 563.4008460044861,
+    "end_seconds": 615.209282875061,
+    "running_intervals": [
+      [
+        21.13964605331421,
+        21.13965392112732
+      ],
+      [
+        563.4008460044861,
+        615.209282875061
+      ]
+    ],
+    "paused_intervals": [
+      [
+        21.13965392112732,
+        563.4008460044861
+      ]
+    ],
+    "result": "pass",
+    "go_elapsed_seconds": 51.81,
+    "running_seconds": 51.80844473838806,
+    "paused_seconds": 542.2611920833588,
+    "running_child_overlap_seconds": 34.792996883392334,
+    "outside_running_children_seconds": 17.015447854995728,
+    "event_interval_minus_go_elapsed_seconds": -0.0015552616119407503,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "audit_test.go:117; Go build/run, original-fork Node documents, synchronous Go oracle mutation subtests; no layoutOnce; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 542.2611920833588,
+    "after_top_barrier_pause_seconds": 0.0,
+    "pause_wait": "Go testing parent barrier and/or -parallel slot; exact pause/CONT interval measured"
+  },
+  {
+    "test": "TestMicromarkInputChunks",
+    "parent": null,
+    "run_seconds": 21.139657974243164,
+    "first_cont_seconds": null,
+    "end_seconds": 27.947284936904907,
+    "running_intervals": [
+      [
+        21.139657974243164,
+        27.947284936904907
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 6.81,
+    "running_seconds": 6.807626962661743,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 2.6102330684661865,
+    "outside_running_children_seconds": 4.197393894195557,
+    "event_interval_minus_go_elapsed_seconds": -0.002373037338256445,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "chunks_test.go:16; Go oracle build/run; load/lower; sanitized native build/run; Node observations; leak execution; synchronous child subtests; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMicromarkInputChunks/initial_BOM",
+    "parent": "TestMicromarkInputChunks",
+    "run_seconds": 25.337049961090088,
+    "first_cont_seconds": null,
+    "end_seconds": 27.947269916534424,
+    "running_intervals": [
+      [
+        25.337049961090088,
+        27.947269916534424
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.26,
+    "running_seconds": 2.610219955444336,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 2.610219955444336,
+    "event_interval_minus_go_elapsed_seconds": 2.350219955444336,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; chunks_test.go:16; Go oracle build/run; load/lower; sanitized native build/run; Node observations; leak execution; synchronous child subtests; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMicromarkInputChunks/tab_stop",
+    "parent": "TestMicromarkInputChunks",
+    "run_seconds": 25.59949803352356,
+    "first_cont_seconds": null,
+    "end_seconds": 27.947278022766113,
+    "running_intervals": [
+      [
+        25.59949803352356,
+        27.947278022766113
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.26,
+    "running_seconds": 2.3477799892425537,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 2.3477799892425537,
+    "event_interval_minus_go_elapsed_seconds": 2.087779989242554,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; chunks_test.go:16; Go oracle build/run; load/lower; sanitized native build/run; Node observations; leak execution; synchronous child subtests; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMicromarkInputChunks/CRLF",
+    "parent": "TestMicromarkInputChunks",
+    "run_seconds": 25.863998889923096,
+    "first_cont_seconds": null,
+    "end_seconds": 27.947283029556274,
+    "running_intervals": [
+      [
+        25.863998889923096,
+        27.947283029556274
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.25,
+    "running_seconds": 2.0832841396331787,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 2.0832841396331787,
+    "event_interval_minus_go_elapsed_seconds": 1.8332841396331787,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; chunks_test.go:16; Go oracle build/run; load/lower; sanitized native build/run; Node observations; leak execution; synchronous child subtests; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownSourceDecoding",
+    "parent": null,
+    "run_seconds": 27.947288036346436,
+    "first_cont_seconds": null,
+    "end_seconds": 190.62706589698792,
+    "running_intervals": [
+      [
+        27.947288036346436,
+        190.62706589698792
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 162.68,
+    "running_seconds": 162.67977786064148,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 116.23866891860962,
+    "outside_running_children_seconds": 46.44110894203186,
+    "event_interval_minus_go_elapsed_seconds": -0.00022213935852732902,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "decode_test.go:20; Go oracle build/run; load/lower; sanitized native build/run; Node observations; leak execution; synchronous child subtests; release build/run; formatterOnce go build (first caller only), generator check command; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownSourceDecoding/numeric_replacement",
+    "parent": "TestMarkdownSourceDecoding",
+    "run_seconds": 74.38839197158813,
+    "first_cont_seconds": null,
+    "end_seconds": 190.62674808502197,
+    "running_intervals": [
+      [
+        74.38839197158813,
+        190.62674808502197
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.17,
+    "running_seconds": 116.23835611343384,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 116.23835611343384,
+    "event_interval_minus_go_elapsed_seconds": 116.06835611343384,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; decode_test.go:20; Go oracle build/run; load/lower; sanitized native build/run; Node observations; leak execution; synchronous child subtests; release build/run; formatterOnce go build (first caller only), generator check command; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownSourceDecoding/hex_digit_bound",
+    "parent": "TestMarkdownSourceDecoding",
+    "run_seconds": 74.55646800994873,
+    "first_cont_seconds": null,
+    "end_seconds": 190.62692308425903,
+    "running_intervals": [
+      [
+        74.55646800994873,
+        190.62692308425903
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.18,
+    "running_seconds": 116.0704550743103,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 116.0704550743103,
+    "event_interval_minus_go_elapsed_seconds": 115.8904550743103,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; decode_test.go:20; Go oracle build/run; load/lower; sanitized native build/run; Node observations; leak execution; synchronous child subtests; release build/run; formatterOnce go build (first caller only), generator check command; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownSourceDecoding/escape_punctuation",
+    "parent": "TestMarkdownSourceDecoding",
+    "run_seconds": 74.74013805389404,
+    "first_cont_seconds": null,
+    "end_seconds": 190.62706089019775,
+    "running_intervals": [
+      [
+        74.74013805389404,
+        190.62706089019775
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.18,
+    "running_seconds": 115.88692283630371,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 115.88692283630371,
+    "event_interval_minus_go_elapsed_seconds": 115.7069228363037,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; decode_test.go:20; Go oracle build/run; load/lower; sanitized native build/run; Node observations; leak execution; synchronous child subtests; release build/run; formatterOnce go build (first caller only), generator check command; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestTokenizerEvents",
+    "parent": null,
+    "run_seconds": 190.62706804275513,
+    "first_cont_seconds": null,
+    "end_seconds": 279.38853001594543,
+    "running_intervals": [
+      [
+        190.62706804275513,
+        279.38853001594543
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 88.76,
+    "running_seconds": 88.76146197319031,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 41.42769193649292,
+    "outside_running_children_seconds": 47.33377003669739,
+    "event_interval_minus_go_elapsed_seconds": 0.0014619731903025013,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "events_test.go:17; Go oracle build/run; load/lower; sanitized native build/run; Node observations; leak execution; synchronous child subtests; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestTokenizerEvents/event_rollback",
+    "parent": "TestTokenizerEvents",
+    "run_seconds": 237.960834980011,
+    "first_cont_seconds": null,
+    "end_seconds": 279.38836693763733,
+    "running_intervals": [
+      [
+        237.960834980011,
+        279.38836693763733
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 2.26,
+    "running_seconds": 41.42753195762634,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 41.42753195762634,
+    "event_interval_minus_go_elapsed_seconds": 39.167531957626345,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; events_test.go:17; Go oracle build/run; load/lower; sanitized native build/run; Node observations; leak execution; synchronous child subtests; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestTokenizerEvents/virtual_serialization",
+    "parent": "TestTokenizerEvents",
+    "run_seconds": 240.22036910057068,
+    "first_cont_seconds": null,
+    "end_seconds": 279.38848209381104,
+    "running_intervals": [
+      [
+        240.22036910057068,
+        279.38848209381104
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 1.81,
+    "running_seconds": 39.168112993240356,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 39.168112993240356,
+    "event_interval_minus_go_elapsed_seconds": 37.358112993240354,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; events_test.go:17; Go oracle build/run; load/lower; sanitized native build/run; Node observations; leak execution; synchronous child subtests; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestTokenizerEvents/restored_construct",
+    "parent": "TestTokenizerEvents",
+    "run_seconds": 242.0276448726654,
+    "first_cont_seconds": null,
+    "end_seconds": 279.3885269165039,
+    "running_intervals": [
+      [
+        242.0276448726654,
+        279.3885269165039
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 1.87,
+    "running_seconds": 37.3608820438385,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 37.3608820438385,
+    "event_interval_minus_go_elapsed_seconds": 35.4908820438385,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; events_test.go:17; Go oracle build/run; load/lower; sanitized native build/run; Node observations; leak execution; synchronous child subtests; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestFrontMatterStage",
+    "parent": null,
+    "run_seconds": 279.3885700702667,
+    "first_cont_seconds": 639.7193470001221,
+    "end_seconds": 677.797758102417,
+    "running_intervals": [
+      [
+        279.3885700702667,
+        279.38858103752136
+      ],
+      [
+        639.7193470001221,
+        677.797758102417
+      ]
+    ],
+    "paused_intervals": [
+      [
+        279.38858103752136,
+        639.7193470001221
+      ]
+    ],
+    "result": "pass",
+    "go_elapsed_seconds": 6.16,
+    "running_seconds": 38.07842206954956,
+    "paused_seconds": 360.3307659626007,
+    "running_child_overlap_seconds": 34.09595489501953,
+    "outside_running_children_seconds": 3.9824671745300293,
+    "event_interval_minus_go_elapsed_seconds": 31.91842206954956,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "frontmatter_test.go:16; Go oracle build/run; load/lower; sanitized native build/run; Node observations; leak execution; synchronous child subtests; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 284.0122649669647,
+    "after_top_barrier_pause_seconds": 76.31850099563599,
+    "pause_wait": "Go testing parent barrier and/or -parallel slot; exact pause/CONT interval measured"
+  },
+  {
+    "test": "TestParserRepresentationProbes",
+    "parent": null,
+    "run_seconds": 279.38858294487,
+    "first_cont_seconds": 637.5774149894714,
+    "end_seconds": 645.8804869651794,
+    "running_intervals": [
+      [
+        279.38858294487,
+        279.3886139392853
+      ],
+      [
+        637.5774149894714,
+        645.8804869651794
+      ]
+    ],
+    "paused_intervals": [
+      [
+        279.3886139392853,
+        637.5774149894714
+      ]
+    ],
+    "result": "pass",
+    "go_elapsed_seconds": 0,
+    "running_seconds": 8.303102970123291,
+    "paused_seconds": 358.18880105018616,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 8.303102970123291,
+    "event_interval_minus_go_elapsed_seconds": 8.303102970123291,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "gaps_test.go:14; parent waits for parallel child probes; children load/lower, Node, native checks or expected compiler refusal; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 284.0122320652008,
+    "after_top_barrier_pause_seconds": 74.17656898498535,
+    "pause_wait": "Go testing parent barrier and/or -parallel slot; exact pause/CONT interval measured"
+  },
+  {
+    "test": "TestMdastIdentifierScalars",
+    "parent": null,
+    "run_seconds": 279.3886160850525,
+    "first_cont_seconds": null,
+    "end_seconds": 290.2676000595093,
+    "running_intervals": [
+      [
+        279.3886160850525,
+        290.2676000595093
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 10.88,
+    "running_seconds": 10.878983974456787,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 10.878983974456787,
+    "event_interval_minus_go_elapsed_seconds": -0.0010160255432136722,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "identifier_test.go:13; Go oracle build/run; load/lower; sanitized native build/run; Node observations; leak execution; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownListLayout",
+    "parent": null,
+    "run_seconds": 290.2676169872284,
+    "first_cont_seconds": 637.5777928829193,
+    "end_seconds": 686.2624139785767,
+    "running_intervals": [
+      [
+        290.2676169872284,
+        290.26773500442505
+      ],
+      [
+        637.5777928829193,
+        686.2624139785767
+      ]
+    ],
+    "paused_intervals": [
+      [
+        290.26773500442505,
+        637.5777928829193
+      ]
+    ],
+    "result": "pass",
+    "go_elapsed_seconds": 42,
+    "running_seconds": 48.684739112854004,
+    "paused_seconds": 347.31005787849426,
+    "running_child_overlap_seconds": 43.771904945373535,
+    "outside_running_children_seconds": 4.912834167480469,
+    "event_interval_minus_go_elapsed_seconds": 6.684739112854004,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "lists_test.go:20; layoutOnce shared fixture; then synchronous output-mutant subtests; unordered_marker also fresh sanitized native canary; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 273.13311100006104,
+    "after_top_barrier_pause_seconds": 74.17694687843323,
+    "pause_wait": "Go testing parent barrier and/or -parallel slot; exact pause/CONT interval measured"
+  },
+  {
+    "test": "TestMarkdownQuoteLayout",
+    "parent": null,
+    "run_seconds": 290.2677369117737,
+    "first_cont_seconds": 632.9761669635773,
+    "end_seconds": 637.577409029007,
+    "running_intervals": [
+      [
+        290.2677369117737,
+        290.26774287223816
+      ],
+      [
+        632.9761669635773,
+        637.577409029007
+      ]
+    ],
+    "paused_intervals": [
+      [
+        290.26774287223816,
+        632.9761669635773
+      ]
+    ],
+    "result": "pass",
+    "go_elapsed_seconds": 4.6,
+    "running_seconds": 4.601248025894165,
+    "paused_seconds": 342.7084240913391,
+    "running_child_overlap_seconds": 2.4149107933044434,
+    "outside_running_children_seconds": 2.1863372325897217,
+    "event_interval_minus_go_elapsed_seconds": 0.0012480258941653943,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "lists_test.go:25; layoutOnce shared fixture; then synchronous output-mutant subtests; unordered_marker also fresh sanitized native canary; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 273.1331031322479,
+    "after_top_barrier_pause_seconds": 69.57532095909119,
+    "pause_wait": "Go testing parent barrier and/or -parallel slot; exact pause/CONT interval measured"
+  },
+  {
+    "test": "TestMarkdownTableLayout",
+    "parent": null,
+    "run_seconds": 290.26775789260864,
+    "first_cont_seconds": 635.1199440956116,
+    "end_seconds": 642.4901149272919,
+    "running_intervals": [
+      [
+        290.26775789260864,
+        290.2677640914917
+      ],
+      [
+        635.1199440956116,
+        642.4901149272919
+      ]
+    ],
+    "paused_intervals": [
+      [
+        290.2677640914917,
+        635.1199440956116
+      ]
+    ],
+    "result": "pass",
+    "go_elapsed_seconds": 7.37,
+    "running_seconds": 7.3701770305633545,
+    "paused_seconds": 344.8521800041199,
+    "running_child_overlap_seconds": 2.7673251628875732,
+    "outside_running_children_seconds": 4.602851867675781,
+    "event_interval_minus_go_elapsed_seconds": 0.0001770305633543856,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "lists_test.go:30; layoutOnce shared fixture; then synchronous output-mutant subtests; unordered_marker also fresh sanitized native canary; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 273.1330819129944,
+    "after_top_barrier_pause_seconds": 71.71909809112549,
+    "pause_wait": "Go testing parent barrier and/or -parallel slot; exact pause/CONT interval measured"
+  },
+  {
+    "test": "TestMarkdownCodeBlockLayout",
+    "parent": null,
+    "run_seconds": 290.26778292655945,
+    "first_cont_seconds": 633.0215010643005,
+    "end_seconds": 639.7193450927734,
+    "running_intervals": [
+      [
+        290.26778292655945,
+        290.26784801483154
+      ],
+      [
+        633.0215010643005,
+        639.7193450927734
+      ]
+    ],
+    "paused_intervals": [
+      [
+        290.26784801483154,
+        633.0215010643005
+      ]
+    ],
+    "result": "pass",
+    "go_elapsed_seconds": 6.7,
+    "running_seconds": 6.697909116744995,
+    "paused_seconds": 342.753653049469,
+    "running_child_overlap_seconds": 2.141930103302002,
+    "outside_running_children_seconds": 4.555979013442993,
+    "event_interval_minus_go_elapsed_seconds": -0.0020908832550050604,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "lists_test.go:35; layoutOnce shared fixture; then synchronous output-mutant subtests; unordered_marker also fresh sanitized native canary; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 273.13299798965454,
+    "after_top_barrier_pause_seconds": 69.62065505981445,
+    "pause_wait": "Go testing parent barrier and/or -parallel slot; exact pause/CONT interval measured"
+  },
+  {
+    "test": "TestMarkdownHTMLBlockLayout",
+    "parent": null,
+    "run_seconds": 290.267874956131,
+    "first_cont_seconds": 563.4008650779724,
+    "end_seconds": 633.021497964859,
+    "running_intervals": [
+      [
+        290.267874956131,
+        290.2678818702698
+      ],
+      [
+        563.4008650779724,
+        633.021497964859
+      ]
+    ],
+    "paused_intervals": [
+      [
+        290.2678818702698,
+        563.4008650779724
+      ]
+    ],
+    "result": "pass",
+    "go_elapsed_seconds": 69.62,
+    "running_seconds": 69.62063980102539,
+    "paused_seconds": 273.13298320770264,
+    "running_child_overlap_seconds": 2.335287094116211,
+    "outside_running_children_seconds": 67.28535270690918,
+    "event_interval_minus_go_elapsed_seconds": 0.0006398010253860775,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "lists_test.go:40; layoutOnce shared fixture; then synchronous output-mutant subtests; unordered_marker also fresh sanitized native canary; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 273.1329641342163,
+    "after_top_barrier_pause_seconds": 1.9073486328125e-05,
+    "pause_wait": "Go testing parent barrier and/or -parallel slot; exact pause/CONT interval measured"
+  },
+  {
+    "test": "TestMarkdownWhitespaceLayout",
+    "parent": null,
+    "run_seconds": 290.26789689064026,
+    "first_cont_seconds": 615.2092859745026,
+    "end_seconds": 689.0623300075531,
+    "running_intervals": [
+      [
+        290.26789689064026,
+        290.26794600486755
+      ],
+      [
+        615.2092859745026,
+        689.0623300075531
+      ]
+    ],
+    "paused_intervals": [
+      [
+        290.26794600486755,
+        615.2092859745026
+      ]
+    ],
+    "result": "pass",
+    "go_elapsed_seconds": 73.85,
+    "running_seconds": 73.85309314727783,
+    "paused_seconds": 324.941339969635,
+    "running_child_overlap_seconds": 2.79990816116333,
+    "outside_running_children_seconds": 71.0531849861145,
+    "event_interval_minus_go_elapsed_seconds": 0.0030931472778377156,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "lists_test.go:68; layoutOnce shared fixture; then synchronous output-mutant subtests; unordered_marker also fresh sanitized native canary; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 273.13289999961853,
+    "after_top_barrier_pause_seconds": 51.80843997001648,
+    "pause_wait": "Go testing parent barrier and/or -parallel slot; exact pause/CONT interval measured"
+  },
+  {
+    "test": "TestMarkdownLeafComposition",
+    "parent": null,
+    "run_seconds": 290.2679479122162,
+    "first_cont_seconds": 563.4010028839111,
+    "end_seconds": 635.1199400424957,
+    "running_intervals": [
+      [
+        290.2679479122162,
+        290.26795387268066
+      ],
+      [
+        563.4010028839111,
+        635.1199400424957
+      ]
+    ],
+    "paused_intervals": [
+      [
+        290.26795387268066,
+        563.4010028839111
+      ]
+    ],
+    "result": "pass",
+    "go_elapsed_seconds": 71.72,
+    "running_seconds": 71.71894311904907,
+    "paused_seconds": 273.13304901123047,
+    "running_child_overlap_seconds": 2.098416805267334,
+    "outside_running_children_seconds": 69.62052631378174,
+    "event_interval_minus_go_elapsed_seconds": -0.0010568809509265975,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "lists_test.go:73; layoutOnce shared fixture; then synchronous output-mutant subtests; unordered_marker also fresh sanitized native canary; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 273.1328921318054,
+    "after_top_barrier_pause_seconds": 0.00015687942504882812,
+    "pause_wait": "Go testing parent barrier and/or -parallel slot; exact pause/CONT interval measured"
+  },
+  {
+    "test": "TestMarkdownRootLayout",
+    "parent": null,
+    "run_seconds": 290.26797890663147,
+    "first_cont_seconds": 563.400899887085,
+    "end_seconds": 635.1624848842621,
+    "running_intervals": [
+      [
+        290.26797890663147,
+        290.2680220603943
+      ],
+      [
+        563.400899887085,
+        635.1624848842621
+      ]
+    ],
+    "paused_intervals": [
+      [
+        290.2680220603943,
+        563.400899887085
+      ]
+    ],
+    "result": "pass",
+    "go_elapsed_seconds": 71.76,
+    "running_seconds": 71.76162815093994,
+    "paused_seconds": 273.1328778266907,
+    "running_child_overlap_seconds": 2.186385154724121,
+    "outside_running_children_seconds": 69.57524299621582,
+    "event_interval_minus_go_elapsed_seconds": 0.0016281509399362903,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "lists_test.go:78; layoutOnce shared fixture; then synchronous output-mutant subtests; unordered_marker also fresh sanitized native canary; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 273.1328239440918,
+    "after_top_barrier_pause_seconds": 5.3882598876953125e-05,
+    "pause_wait": "Go testing parent barrier and/or -parallel slot; exact pause/CONT interval measured"
+  },
+  {
+    "test": "TestMarkdownStructureLayout",
+    "parent": null,
+    "run_seconds": 290.26803708076477,
+    "first_cont_seconds": 563.4008960723877,
+    "end_seconds": 632.9760940074921,
+    "running_intervals": [
+      [
+        290.26803708076477,
+        290.2680449485779
+      ],
+      [
+        563.4008960723877,
+        632.9760940074921
+      ]
+    ],
+    "paused_intervals": [
+      [
+        290.2680449485779,
+        563.4008960723877
+      ]
+    ],
+    "result": "pass",
+    "go_elapsed_seconds": 69.57,
+    "running_seconds": 69.57520580291748,
+    "paused_seconds": 273.1328511238098,
+    "running_child_overlap_seconds": 2.2909889221191406,
+    "outside_running_children_seconds": 67.28421688079834,
+    "event_interval_minus_go_elapsed_seconds": 0.00520580291748729,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "lists_test.go:83; layoutOnce shared fixture; then synchronous output-mutant subtests; unordered_marker also fresh sanitized native canary; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 273.1328010559082,
+    "after_top_barrier_pause_seconds": 5.0067901611328125e-05,
+    "pause_wait": "Go testing parent barrier and/or -parallel slot; exact pause/CONT interval measured"
+  },
+  {
+    "test": "TestMdastMalformedEvents",
+    "parent": null,
+    "run_seconds": 290.2680470943451,
+    "first_cont_seconds": null,
+    "end_seconds": 298.42961287498474,
+    "running_intervals": [
+      [
+        290.2680470943451,
+        298.42961287498474
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 8.16,
+    "running_seconds": 8.161565780639648,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 6.6675660610198975,
+    "outside_running_children_seconds": 1.493999719619751,
+    "event_interval_minus_go_elapsed_seconds": 0.0015657806396482954,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "mdast_errors_test.go:12; Go oracle build/run; load/lower; sanitized native build/run; Node observations; synchronous child subtests; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMdastMalformedEvents/unclosed",
+    "parent": "TestMdastMalformedEvents",
+    "run_seconds": 291.7620449066162,
+    "first_cont_seconds": null,
+    "end_seconds": 298.42957186698914,
+    "running_intervals": [
+      [
+        291.7620449066162,
+        298.42957186698914
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 5.46,
+    "running_seconds": 6.667526960372925,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 6.667526960372925,
+    "event_interval_minus_go_elapsed_seconds": 1.2075269603729248,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "mdast_errors_test.go:50: synchronous native/Node/backend diagnostic control; native artifact promise shares identical source build",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMdastMalformedEvents/not-open",
+    "parent": "TestMdastMalformedEvents",
+    "run_seconds": 297.2230520248413,
+    "first_cont_seconds": null,
+    "end_seconds": 298.42960500717163,
+    "running_intervals": [
+      [
+        297.2230520248413,
+        298.42960500717163
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.61,
+    "running_seconds": 1.2065529823303223,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 1.2065529823303223,
+    "event_interval_minus_go_elapsed_seconds": 0.5965529823303223,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "mdast_errors_test.go:50: synchronous native/Node/backend diagnostic control; native artifact promise shares identical source build",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMdastMalformedEvents/mismatch",
+    "parent": "TestMdastMalformedEvents",
+    "run_seconds": 297.83110904693604,
+    "first_cont_seconds": null,
+    "end_seconds": 298.4296109676361,
+    "running_intervals": [
+      [
+        297.83110904693604,
+        298.4296109676361
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.6,
+    "running_seconds": 0.5985019207000732,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 0.5985019207000732,
+    "event_interval_minus_go_elapsed_seconds": -0.0014980792999267356,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "mdast_errors_test.go:50: synchronous native/Node/backend diagnostic control; native artifact promise shares identical source build",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMdastIdentifierWitnesses",
+    "parent": null,
+    "run_seconds": 298.429673910141,
+    "first_cont_seconds": null,
+    "end_seconds": 299.5243558883667,
+    "running_intervals": [
+      [
+        298.429673910141,
+        299.5243558883667
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 1.09,
+    "running_seconds": 1.094681978225708,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 1.094681978225708,
+    "event_interval_minus_go_elapsed_seconds": 0.004681978225707928,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "mdast_gap_test.go:11; Go oracle build/run; load/lower; sanitized native build/run; Node observations; leak execution; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestNativeMdastConstruction",
+    "parent": null,
+    "run_seconds": 299.52436089515686,
+    "first_cont_seconds": null,
+    "end_seconds": 338.5045340061188,
+    "running_intervals": [
+      [
+        299.52436089515686,
+        338.5045340061188
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 38.98,
+    "running_seconds": 38.980173110961914,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 15.038793087005615,
+    "outside_running_children_seconds": 23.9413800239563,
+    "event_interval_minus_go_elapsed_seconds": 0.0001731109619171889,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "mdast_test.go:15; Go oracle build/run; load/lower; sanitized native build/run; Node observations; leak execution; synchronous child subtests; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestNativeMdastConstruction/text_construction",
+    "parent": "TestNativeMdastConstruction",
+    "run_seconds": 323.4657390117645,
+    "first_cont_seconds": null,
+    "end_seconds": 338.50441002845764,
+    "running_intervals": [
+      [
+        323.4657390117645,
+        338.50441002845764
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 1.04,
+    "running_seconds": 15.038671016693115,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 15.038671016693115,
+    "event_interval_minus_go_elapsed_seconds": 13.998671016693116,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; mdast_test.go:15; Go oracle build/run; load/lower; sanitized native build/run; Node observations; leak execution; synchronous child subtests; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestNativeMdastConstruction/list_spread",
+    "parent": "TestNativeMdastConstruction",
+    "run_seconds": 324.50701093673706,
+    "first_cont_seconds": null,
+    "end_seconds": 338.50452399253845,
+    "running_intervals": [
+      [
+        324.50701093673706,
+        338.50452399253845
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.94,
+    "running_seconds": 13.997513055801392,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 13.997513055801392,
+    "event_interval_minus_go_elapsed_seconds": 13.057513055801392,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; mdast_test.go:15; Go oracle build/run; load/lower; sanitized native build/run; Node observations; leak execution; synchronous child subtests; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestNativeMdastConstruction/front_matter_fallback",
+    "parent": "TestNativeMdastConstruction",
+    "run_seconds": 325.4468319416046,
+    "first_cont_seconds": null,
+    "end_seconds": 338.50453209877014,
+    "running_intervals": [
+      [
+        325.4468319416046,
+        338.50453209877014
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 1,
+    "running_seconds": 13.057700157165527,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 13.057700157165527,
+    "event_interval_minus_go_elapsed_seconds": 12.057700157165527,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; mdast_test.go:15; Go oracle build/run; load/lower; sanitized native build/run; Node observations; leak execution; synchronous child subtests; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestOptionalStringInitializationWitness",
+    "parent": null,
+    "run_seconds": 338.5045368671417,
+    "first_cont_seconds": null,
+    "end_seconds": 338.90814208984375,
+    "running_intervals": [
+      [
+        338.5045368671417,
+        338.90814208984375
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.4,
+    "running_seconds": 0.40360522270202637,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 0.40360522270202637,
+    "event_interval_minus_go_elapsed_seconds": 0.003605222702026345,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "optional_gap_test.go:9; load/lower; sanitized native build/run; Node observations; leak execution; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownAstPath",
+    "parent": null,
+    "run_seconds": 338.90814900398254,
+    "first_cont_seconds": null,
+    "end_seconds": 419.87852597236633,
+    "running_intervals": [
+      [
+        338.90814900398254,
+        419.87852597236633
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 80.97,
+    "running_seconds": 80.97037696838379,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 32.094423055648804,
+    "outside_running_children_seconds": 48.875953912734985,
+    "event_interval_minus_go_elapsed_seconds": 0.00037696838379019937,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "path_test.go:16; Go oracle build/run; load/lower; sanitized native build/run; Node observations; leak execution; synchronous child subtests; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownAstPath/map_callback_result",
+    "parent": "TestMarkdownAstPath",
+    "run_seconds": 387.7841010093689,
+    "first_cont_seconds": null,
+    "end_seconds": 419.87840509414673,
+    "running_intervals": [
+      [
+        387.7841010093689,
+        419.87840509414673
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 1.66,
+    "running_seconds": 32.09430408477783,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 32.09430408477783,
+    "event_interval_minus_go_elapsed_seconds": 30.434304084777832,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; path_test.go:16; Go oracle build/run; load/lower; sanitized native build/run; Node observations; leak execution; synchronous child subtests; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownAstPath/array_frame",
+    "parent": "TestMarkdownAstPath",
+    "run_seconds": 389.4486138820648,
+    "first_cont_seconds": null,
+    "end_seconds": 419.8785140514374,
+    "running_intervals": [
+      [
+        389.4486138820648,
+        419.8785140514374
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 1.66,
+    "running_seconds": 30.42990016937256,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 30.42990016937256,
+    "event_interval_minus_go_elapsed_seconds": 28.76990016937256,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; path_test.go:16; Go oracle build/run; load/lower; sanitized native build/run; Node observations; leak execution; synchronous child subtests; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownAstPath/ancestor_order",
+    "parent": "TestMarkdownAstPath",
+    "run_seconds": 391.1122648715973,
+    "first_cont_seconds": null,
+    "end_seconds": 419.87851905822754,
+    "running_intervals": [
+      [
+        391.1122648715973,
+        419.87851905822754
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 1.43,
+    "running_seconds": 28.76625418663025,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 28.76625418663025,
+    "event_interval_minus_go_elapsed_seconds": 27.33625418663025,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; path_test.go:16; Go oracle build/run; load/lower; sanitized native build/run; Node observations; leak execution; synchronous child subtests; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownAstPath/call_restore",
+    "parent": "TestMarkdownAstPath",
+    "run_seconds": 392.53809094429016,
+    "first_cont_seconds": null,
+    "end_seconds": 419.8785240650177,
+    "running_intervals": [
+      [
+        392.53809094429016,
+        419.8785240650177
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.4,
+    "running_seconds": 27.34043312072754,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 27.34043312072754,
+    "event_interval_minus_go_elapsed_seconds": 26.94043312072754,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; path_test.go:16; Go oracle build/run; load/lower; sanitized native build/run; Node observations; leak execution; synchronous child subtests; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownParserPrefixes",
+    "parent": null,
+    "run_seconds": 419.8785409927368,
+    "first_cont_seconds": 635.6350319385529,
+    "end_seconds": 641.4875109195709,
+    "running_intervals": [
+      [
+        419.8785409927368,
+        419.878555059433
+      ],
+      [
+        635.6350319385529,
+        641.4875109195709
+      ]
+    ],
+    "paused_intervals": [
+      [
+        419.878555059433,
+        635.6350319385529
+      ]
+    ],
+    "result": "pass",
+    "go_elapsed_seconds": 5.86,
+    "running_seconds": 5.852493047714233,
+    "paused_seconds": 215.75647687911987,
+    "running_child_overlap_seconds": 2.801246166229248,
+    "outside_running_children_seconds": 3.0512468814849854,
+    "event_interval_minus_go_elapsed_seconds": -0.007506952285766921,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "prefix_test.go:15; Go oracle build/run; load/lower; sanitized native build/run; Node observations; leak execution; synchronous child subtests; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 143.5222909450531,
+    "after_top_barrier_pause_seconds": 72.23418593406677,
+    "pause_wait": "Go testing parent barrier and/or -parallel slot; exact pause/CONT interval measured"
+  },
+  {
+    "test": "TestNativeBuildModesAreDistinct",
+    "parent": null,
+    "run_seconds": 419.87855792045593,
+    "first_cont_seconds": 635.1624879837036,
+    "end_seconds": 635.6350250244141,
+    "running_intervals": [
+      [
+        419.87855792045593,
+        419.8785650730133
+      ],
+      [
+        635.1624879837036,
+        635.6350250244141
+      ]
+    ],
+    "paused_intervals": [
+      [
+        419.8785650730133,
+        635.1624879837036
+      ]
+    ],
+    "result": "pass",
+    "go_elapsed_seconds": 0.47,
+    "running_seconds": 0.47254419326782227,
+    "paused_seconds": 215.2839229106903,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 0.47254419326782227,
+    "event_interval_minus_go_elapsed_seconds": 0.0025441932678222923,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "support_test.go:106; two native compilation modes and execution; artifact cache promise per source/sanitizer key; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 143.52228093147278,
+    "after_top_barrier_pause_seconds": 71.76164197921753,
+    "pause_wait": "Go testing parent barrier and/or -parallel slot; exact pause/CONT interval measured"
+  },
+  {
+    "test": "TestMarkdownTextSplitting",
+    "parent": null,
+    "run_seconds": 419.8785789012909,
+    "first_cont_seconds": null,
+    "end_seconds": 491.30362200737,
+    "running_intervals": [
+      [
+        419.8785789012909,
+        491.30362200737
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 71.42,
+    "running_seconds": 71.4250431060791,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 11.352406024932861,
+    "outside_running_children_seconds": 60.07263708114624,
+    "event_interval_minus_go_elapsed_seconds": 0.005043106079099857,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "text_test.go:17; Go oracle build/run; load/lower; sanitized native build/run; Node observations; leak execution; synchronous child subtests; release build/run; formatterOnce go build (first caller only), generator check command; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownTextSplitting/fake_whitespace",
+    "parent": "TestMarkdownTextSplitting",
+    "run_seconds": 479.9512140750885,
+    "first_cont_seconds": null,
+    "end_seconds": 491.3034770488739,
+    "running_intervals": [
+      [
+        479.9512140750885,
+        491.3034770488739
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 2.55,
+    "running_seconds": 11.3522629737854,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 11.3522629737854,
+    "event_interval_minus_go_elapsed_seconds": 8.8022629737854,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; text_test.go:17; Go oracle build/run; load/lower; sanitized native build/run; Node observations; leak execution; synchronous child subtests; release build/run; formatterOnce go build (first caller only), generator check command; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownTextSplitting/Hangul_kind",
+    "parent": "TestMarkdownTextSplitting",
+    "run_seconds": 482.50437092781067,
+    "first_cont_seconds": null,
+    "end_seconds": 491.3036000728607,
+    "running_intervals": [
+      [
+        482.50437092781067,
+        491.3036000728607
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 2.69,
+    "running_seconds": 8.799229145050049,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 8.799229145050049,
+    "event_interval_minus_go_elapsed_seconds": 6.109229145050049,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; text_test.go:17; Go oracle build/run; load/lower; sanitized native build/run; Node observations; leak execution; synchronous child subtests; release build/run; formatterOnce go build (first caller only), generator check command; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownTextSplitting/variation_selector",
+    "parent": "TestMarkdownTextSplitting",
+    "run_seconds": 485.19811487197876,
+    "first_cont_seconds": null,
+    "end_seconds": 491.30362010002136,
+    "running_intervals": [
+      [
+        485.19811487197876,
+        491.30362010002136
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 2.45,
+    "running_seconds": 6.1055052280426025,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 6.1055052280426025,
+    "event_interval_minus_go_elapsed_seconds": 3.6555052280426024,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; text_test.go:17; Go oracle build/run; load/lower; sanitized native build/run; Node observations; leak execution; synchronous child subtests; release build/run; formatterOnce go build (first caller only), generator check command; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownUnicodeWidths",
+    "parent": null,
+    "run_seconds": 491.3036239147186,
+    "first_cont_seconds": null,
+    "end_seconds": 563.4008440971375,
+    "running_intervals": [
+      [
+        491.3036239147186,
+        563.4008440971375
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 72.1,
+    "running_seconds": 72.09722018241882,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 16.092021942138672,
+    "outside_running_children_seconds": 56.00519824028015,
+    "event_interval_minus_go_elapsed_seconds": -0.0027798175811710735,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "width_test.go:16; Go oracle build/run; load/lower; sanitized native build/run; Node observations; leak execution; synchronous child subtests; release build/run; formatterOnce go build (first caller only), generator check command; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownUnicodeWidths/East_Asian_width",
+    "parent": "TestMarkdownUnicodeWidths",
+    "run_seconds": 547.3088200092316,
+    "first_cont_seconds": null,
+    "end_seconds": 563.4004640579224,
+    "running_intervals": [
+      [
+        547.3088200092316,
+        563.4004640579224
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 2.49,
+    "running_seconds": 16.091644048690796,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 16.091644048690796,
+    "event_interval_minus_go_elapsed_seconds": 13.601644048690796,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; width_test.go:16; Go oracle build/run; load/lower; sanitized native build/run; Node observations; leak execution; synchronous child subtests; release build/run; formatterOnce go build (first caller only), generator check command; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownUnicodeWidths/narrow_emoji",
+    "parent": "TestMarkdownUnicodeWidths",
+    "run_seconds": 549.8037428855896,
+    "first_cont_seconds": null,
+    "end_seconds": 563.4008090496063,
+    "running_intervals": [
+      [
+        549.8037428855896,
+        563.4008090496063
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 2.59,
+    "running_seconds": 13.597066164016724,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 13.597066164016724,
+    "event_interval_minus_go_elapsed_seconds": 11.007066164016724,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; width_test.go:16; Go oracle build/run; load/lower; sanitized native build/run; Node observations; leak execution; synchronous child subtests; release build/run; formatterOnce go build (first caller only), generator check command; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownUnicodeWidths/ASCII_DEL_shortcut",
+    "parent": "TestMarkdownUnicodeWidths",
+    "run_seconds": 552.3934519290924,
+    "first_cont_seconds": null,
+    "end_seconds": 563.4008419513702,
+    "running_intervals": [
+      [
+        552.3934519290924,
+        563.4008419513702
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 3.36,
+    "running_seconds": 11.007390022277832,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 11.007390022277832,
+    "event_interval_minus_go_elapsed_seconds": 7.647390022277833,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; width_test.go:16; Go oracle build/run; load/lower; sanitized native build/run; Node observations; leak execution; synchronous child subtests; release build/run; formatterOnce go build (first caller only), generator check command; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestWholeDocumentOraclePreflight/heading_prefix",
+    "parent": "TestWholeDocumentOraclePreflight",
+    "run_seconds": 580.4162840843201,
+    "first_cont_seconds": null,
+    "end_seconds": 615.2092258930206,
+    "running_intervals": [
+      [
+        580.4162840843201,
+        615.2092258930206
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 10.01,
+    "running_seconds": 34.79294180870056,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 34.79294180870056,
+    "event_interval_minus_go_elapsed_seconds": 24.782941808700564,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "audit_test.go:276: synchronous Go oracle control, Go build/run and comparison",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestWholeDocumentOraclePreflight/list_marker",
+    "parent": "TestWholeDocumentOraclePreflight",
+    "run_seconds": 590.4307940006256,
+    "first_cont_seconds": null,
+    "end_seconds": 615.2092490196228,
+    "running_intervals": [
+      [
+        590.4307940006256,
+        615.2092490196228
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 11.63,
+    "running_seconds": 24.778455018997192,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 24.778455018997192,
+    "event_interval_minus_go_elapsed_seconds": 13.148455018997192,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "audit_test.go:276: synchronous Go oracle control, Go build/run and comparison",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestWholeDocumentOraclePreflight/fence_length",
+    "parent": "TestWholeDocumentOraclePreflight",
+    "run_seconds": 602.0495419502258,
+    "first_cont_seconds": null,
+    "end_seconds": 615.2092809677124,
+    "running_intervals": [
+      [
+        602.0495419502258,
+        615.2092809677124
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 10.98,
+    "running_seconds": 13.159739017486572,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 13.159739017486572,
+    "event_interval_minus_go_elapsed_seconds": 2.179739017486572,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "audit_test.go:276: synchronous Go oracle control, Go build/run and comparison",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownStructureLayout/heading_depth",
+    "parent": "TestMarkdownStructureLayout",
+    "run_seconds": 630.6851019859314,
+    "first_cont_seconds": null,
+    "end_seconds": 632.9760069847107,
+    "running_intervals": [
+      [
+        630.6851019859314,
+        632.9760069847107
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.88,
+    "running_seconds": 2.290904998779297,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 2.290904998779297,
+    "event_interval_minus_go_elapsed_seconds": 1.410904998779297,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; lists_test.go:83; layoutOnce shared fixture; then synchronous output-mutant subtests; unordered_marker also fresh sanitized native canary; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownHTMLBlockLayout/HTML_root_trim",
+    "parent": "TestMarkdownHTMLBlockLayout",
+    "run_seconds": 630.6862099170685,
+    "first_cont_seconds": null,
+    "end_seconds": 633.0213890075684,
+    "running_intervals": [
+      [
+        630.6862099170685,
+        633.0213890075684
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.85,
+    "running_seconds": 2.335179090499878,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 2.335179090499878,
+    "event_interval_minus_go_elapsed_seconds": 1.4851790904998778,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; lists_test.go:40; layoutOnce shared fixture; then synchronous output-mutant subtests; unordered_marker also fresh sanitized native canary; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownHTMLBlockLayout/HTML_comment_line",
+    "parent": "TestMarkdownHTMLBlockLayout",
+    "run_seconds": 631.5309770107269,
+    "first_cont_seconds": null,
+    "end_seconds": 633.0214900970459,
+    "running_intervals": [
+      [
+        631.5309770107269,
+        633.0214900970459
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.64,
+    "running_seconds": 1.4905130863189697,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 1.4905130863189697,
+    "event_interval_minus_go_elapsed_seconds": 0.8505130863189697,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; lists_test.go:40; layoutOnce shared fixture; then synchronous output-mutant subtests; unordered_marker also fresh sanitized native canary; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownStructureLayout/sentence_separator",
+    "parent": "TestMarkdownStructureLayout",
+    "run_seconds": 631.562175989151,
+    "first_cont_seconds": null,
+    "end_seconds": 632.976016998291,
+    "running_intervals": [
+      [
+        631.562175989151,
+        632.976016998291
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.79,
+    "running_seconds": 1.4138410091400146,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 1.4138410091400146,
+    "event_interval_minus_go_elapsed_seconds": 0.6238410091400146,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; lists_test.go:83; layoutOnce shared fixture; then synchronous output-mutant subtests; unordered_marker also fresh sanitized native canary; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownHTMLBlockLayout/HTML_literal_root",
+    "parent": "TestMarkdownHTMLBlockLayout",
+    "run_seconds": 632.1672959327698,
+    "first_cont_seconds": null,
+    "end_seconds": 633.0214970111847,
+    "running_intervals": [
+      [
+        632.1672959327698,
+        633.0214970111847
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.83,
+    "running_seconds": 0.854201078414917,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 0.854201078414917,
+    "event_interval_minus_go_elapsed_seconds": 0.024201078414917032,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; lists_test.go:40; layoutOnce shared fixture; then synchronous output-mutant subtests; unordered_marker also fresh sanitized native canary; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownStructureLayout/paragraph_fill_tail",
+    "parent": "TestMarkdownStructureLayout",
+    "run_seconds": 632.3485350608826,
+    "first_cont_seconds": null,
+    "end_seconds": 632.9760909080505,
+    "running_intervals": [
+      [
+        632.3485350608826,
+        632.9760909080505
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.62,
+    "running_seconds": 0.6275558471679688,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 0.6275558471679688,
+    "event_interval_minus_go_elapsed_seconds": 0.0075558471679687544,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; lists_test.go:83; layoutOnce shared fixture; then synchronous output-mutant subtests; unordered_marker also fresh sanitized native canary; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownRootLayout/root_double_line",
+    "parent": "TestMarkdownRootLayout",
+    "run_seconds": 632.976096868515,
+    "first_cont_seconds": null,
+    "end_seconds": 635.1623730659485,
+    "running_intervals": [
+      [
+        632.976096868515,
+        635.1623730659485
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.68,
+    "running_seconds": 2.1862761974334717,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 2.1862761974334717,
+    "event_interval_minus_go_elapsed_seconds": 1.5062761974334715,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; lists_test.go:78; layoutOnce shared fixture; then synchronous output-mutant subtests; unordered_marker also fresh sanitized native canary; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownLeafComposition/strong_delimiter",
+    "parent": "TestMarkdownLeafComposition",
+    "run_seconds": 633.0215060710907,
+    "first_cont_seconds": null,
+    "end_seconds": 635.1191329956055,
+    "running_intervals": [
+      [
+        633.0215060710907,
+        635.1191329956055
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.78,
+    "running_seconds": 2.0976269245147705,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 2.0976269245147705,
+    "event_interval_minus_go_elapsed_seconds": 1.3176269245147705,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; lists_test.go:73; layoutOnce shared fixture; then synchronous output-mutant subtests; unordered_marker also fresh sanitized native canary; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownRootLayout/ignored_source_span",
+    "parent": "TestMarkdownRootLayout",
+    "run_seconds": 633.6556439399719,
+    "first_cont_seconds": null,
+    "end_seconds": 635.1624701023102,
+    "running_intervals": [
+      [
+        633.6556439399719,
+        635.1624701023102
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.73,
+    "running_seconds": 1.5068261623382568,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 1.5068261623382568,
+    "event_interval_minus_go_elapsed_seconds": 0.7768261623382569,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; lists_test.go:78; layoutOnce shared fixture; then synchronous output-mutant subtests; unordered_marker also fresh sanitized native canary; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownLeafComposition/reference_collapse",
+    "parent": "TestMarkdownLeafComposition",
+    "run_seconds": 633.8019459247589,
+    "first_cont_seconds": null,
+    "end_seconds": 635.1192569732666,
+    "running_intervals": [
+      [
+        633.8019459247589,
+        635.1192569732666
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.68,
+    "running_seconds": 1.3173110485076904,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 1.3173110485076904,
+    "event_interval_minus_go_elapsed_seconds": 0.6373110485076904,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; lists_test.go:73; layoutOnce shared fixture; then synchronous output-mutant subtests; unordered_marker also fresh sanitized native canary; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownRootLayout/ignore_range_closing_comment",
+    "parent": "TestMarkdownRootLayout",
+    "run_seconds": 634.3822960853577,
+    "first_cont_seconds": null,
+    "end_seconds": 635.1624820232391,
+    "running_intervals": [
+      [
+        634.3822960853577,
+        635.1624820232391
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.77,
+    "running_seconds": 0.7801859378814697,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 0.7801859378814697,
+    "event_interval_minus_go_elapsed_seconds": 0.010185937881469709,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; lists_test.go:78; layoutOnce shared fixture; then synchronous output-mutant subtests; unordered_marker also fresh sanitized native canary; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownLeafComposition/footnote_indentation",
+    "parent": "TestMarkdownLeafComposition",
+    "run_seconds": 634.4788980484009,
+    "first_cont_seconds": null,
+    "end_seconds": 635.119922876358,
+    "running_intervals": [
+      [
+        634.4788980484009,
+        635.119922876358
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.63,
+    "running_seconds": 0.6410248279571533,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 0.6410248279571533,
+    "event_interval_minus_go_elapsed_seconds": 0.011024827957153316,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; lists_test.go:73; layoutOnce shared fixture; then synchronous output-mutant subtests; unordered_marker also fresh sanitized native canary; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownQuoteLayout/quote_marker",
+    "parent": "TestMarkdownQuoteLayout",
+    "run_seconds": 635.1624960899353,
+    "first_cont_seconds": null,
+    "end_seconds": 637.5773899555206,
+    "running_intervals": [
+      [
+        635.1624960899353,
+        637.5773899555206
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.74,
+    "running_seconds": 2.414893865585327,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 2.414893865585327,
+    "event_interval_minus_go_elapsed_seconds": 1.6748938655853272,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; lists_test.go:25; layoutOnce shared fixture; then synchronous output-mutant subtests; unordered_marker also fresh sanitized native canary; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownQuoteLayout/quote_alignment",
+    "parent": "TestMarkdownQuoteLayout",
+    "run_seconds": 635.9038128852844,
+    "first_cont_seconds": null,
+    "end_seconds": 637.5774009227753,
+    "running_intervals": [
+      [
+        635.9038128852844,
+        637.5774009227753
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.99,
+    "running_seconds": 1.6735880374908447,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 1.6735880374908447,
+    "event_interval_minus_go_elapsed_seconds": 0.6835880374908447,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; lists_test.go:25; layoutOnce shared fixture; then synchronous output-mutant subtests; unordered_marker also fresh sanitized native canary; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownQuoteLayout/quote_blank_line",
+    "parent": "TestMarkdownQuoteLayout",
+    "run_seconds": 636.8938128948212,
+    "first_cont_seconds": null,
+    "end_seconds": 637.5774068832397,
+    "running_intervals": [
+      [
+        636.8938128948212,
+        637.5774068832397
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.67,
+    "running_seconds": 0.6835939884185791,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 0.6835939884185791,
+    "event_interval_minus_go_elapsed_seconds": 0.013593988418579062,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; lists_test.go:25; layoutOnce shared fixture; then synchronous output-mutant subtests; unordered_marker also fresh sanitized native canary; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownCodeBlockLayout/fence_minimum",
+    "parent": "TestMarkdownCodeBlockLayout",
+    "run_seconds": 637.5774118900299,
+    "first_cont_seconds": null,
+    "end_seconds": 639.7192480564117,
+    "running_intervals": [
+      [
+        637.5774118900299,
+        639.7192480564117
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.77,
+    "running_seconds": 2.141836166381836,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 2.141836166381836,
+    "event_interval_minus_go_elapsed_seconds": 1.371836166381836,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; lists_test.go:35; layoutOnce shared fixture; then synchronous output-mutant subtests; unordered_marker also fresh sanitized native canary; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestParserRepresentationProbes/gaps/1_recursive_state.ts",
+    "parent": "TestParserRepresentationProbes/gaps",
+    "run_seconds": 637.5774199962616,
+    "first_cont_seconds": 641.4875140190125,
+    "end_seconds": 645.7990570068359,
+    "running_intervals": [
+      [
+        637.5774199962616,
+        637.5774700641632
+      ],
+      [
+        641.4875140190125,
+        645.7990570068359
+      ]
+    ],
+    "paused_intervals": [
+      [
+        637.5774700641632,
+        641.4875140190125
+      ]
+    ],
+    "result": "pass",
+    "go_elapsed_seconds": 0.21,
+    "running_seconds": 4.311593055725098,
+    "paused_seconds": 3.910043954849243,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 4.311593055725098,
+    "event_interval_minus_go_elapsed_seconds": 4.101593055725098,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "gaps_test.go:33: parallel child; parent barrier/-parallel slot before CONT, Node/load/lower then native/leaks or expected compiler refusal",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 3.910043954849243,
+    "pause_wait": "Go testing parent barrier and/or -parallel slot; exact pause/CONT interval measured"
+  },
+  {
+    "test": "TestParserRepresentationProbes/gaps/2_state_arrow_cycle.ts",
+    "parent": "TestParserRepresentationProbes/gaps",
+    "run_seconds": 637.5774729251862,
+    "first_cont_seconds": 644.8974080085754,
+    "end_seconds": 645.7992448806763,
+    "running_intervals": [
+      [
+        637.5774729251862,
+        637.5774800777435
+      ],
+      [
+        644.8974080085754,
+        645.7992448806763
+      ]
+    ],
+    "paused_intervals": [
+      [
+        637.5774800777435,
+        644.8974080085754
+      ]
+    ],
+    "result": "pass",
+    "go_elapsed_seconds": 0.33,
+    "running_seconds": 0.9018440246582031,
+    "paused_seconds": 7.319927930831909,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 0.9018440246582031,
+    "event_interval_minus_go_elapsed_seconds": 0.571844024658203,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "gaps_test.go:33: parallel child; parent barrier/-parallel slot before CONT, Node/load/lower then native/leaks or expected compiler refusal",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 7.319927930831909,
+    "pause_wait": "Go testing parent barrier and/or -parallel slot; exact pause/CONT interval measured"
+  },
+  {
+    "test": "TestParserRepresentationProbes/gaps/3_recursive_callable.ts",
+    "parent": "TestParserRepresentationProbes/gaps",
+    "run_seconds": 637.5774810314178,
+    "first_cont_seconds": 644.2494390010834,
+    "end_seconds": 645.799241065979,
+    "running_intervals": [
+      [
+        637.5774810314178,
+        637.5775508880615
+      ],
+      [
+        644.2494390010834,
+        645.799241065979
+      ]
+    ],
+    "paused_intervals": [
+      [
+        637.5775508880615,
+        644.2494390010834
+      ]
+    ],
+    "result": "pass",
+    "go_elapsed_seconds": 0.65,
+    "running_seconds": 1.5498719215393066,
+    "paused_seconds": 6.671888113021851,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 1.5498719215393066,
+    "event_interval_minus_go_elapsed_seconds": 0.8998719215393066,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "gaps_test.go:33: parallel child; parent barrier/-parallel slot before CONT, Node/load/lower then native/leaks or expected compiler refusal",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 6.671888113021851,
+    "pause_wait": "Go testing parent barrier and/or -parallel slot; exact pause/CONT interval measured"
+  },
+  {
+    "test": "TestParserRepresentationProbes/gaps/14_missing_path_key.ts",
+    "parent": "TestParserRepresentationProbes/gaps",
+    "run_seconds": 637.5775530338287,
+    "first_cont_seconds": 644.2205789089203,
+    "end_seconds": 645.8804450035095,
+    "running_intervals": [
+      [
+        637.5775530338287,
+        637.5775718688965
+      ],
+      [
+        644.2205789089203,
+        645.8804450035095
+      ]
+    ],
+    "paused_intervals": [
+      [
+        637.5775718688965,
+        644.2205789089203
+      ]
+    ],
+    "result": "pass",
+    "go_elapsed_seconds": 1.58,
+    "running_seconds": 1.6598849296569824,
+    "paused_seconds": 6.643007040023804,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 1.6598849296569824,
+    "event_interval_minus_go_elapsed_seconds": 0.07988492965698235,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "gaps_test.go:33: parallel child; parent barrier/-parallel slot before CONT, Node/load/lower then native/leaks or expected compiler refusal",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 6.643007040023804,
+    "pause_wait": "Go testing parent barrier and/or -parallel slot; exact pause/CONT interval measured"
+  },
+  {
+    "test": "TestParserRepresentationProbes/gaps/4_structural_ranges.ts",
+    "parent": "TestParserRepresentationProbes/gaps",
+    "run_seconds": 637.577574968338,
+    "first_cont_seconds": 643.8856019973755,
+    "end_seconds": 645.7992360591888,
+    "running_intervals": [
+      [
+        637.577574968338,
+        637.5775809288025
+      ],
+      [
+        643.8856019973755,
+        645.7992360591888
+      ]
+    ],
+    "paused_intervals": [
+      [
+        637.5775809288025,
+        643.8856019973755
+      ]
+    ],
+    "result": "pass",
+    "go_elapsed_seconds": 0.36,
+    "running_seconds": 1.913640022277832,
+    "paused_seconds": 6.308021068572998,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 1.913640022277832,
+    "event_interval_minus_go_elapsed_seconds": 1.5536400222778322,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "gaps_test.go:33: parallel child; parent barrier/-parallel slot before CONT, Node/load/lower then native/leaks or expected compiler refusal",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 6.308021068572998,
+    "pause_wait": "Go testing parent barrier and/or -parallel slot; exact pause/CONT interval measured"
+  },
+  {
+    "test": "TestParserRepresentationProbes/gaps/5_conditional_panic.ts",
+    "parent": "TestParserRepresentationProbes/gaps",
+    "run_seconds": 637.5775830745697,
+    "first_cont_seconds": 643.8710129261017,
+    "end_seconds": 645.7992310523987,
+    "running_intervals": [
+      [
+        637.5775830745697,
+        637.5775880813599
+      ],
+      [
+        643.8710129261017,
+        645.7992310523987
+      ]
+    ],
+    "paused_intervals": [
+      [
+        637.5775880813599,
+        643.8710129261017
+      ]
+    ],
+    "result": "pass",
+    "go_elapsed_seconds": 0.35,
+    "running_seconds": 1.9282231330871582,
+    "paused_seconds": 6.293424844741821,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 1.9282231330871582,
+    "event_interval_minus_go_elapsed_seconds": 1.5782231330871581,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "gaps_test.go:33: parallel child; parent barrier/-parallel slot before CONT, Node/load/lower then native/leaks or expected compiler refusal",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 6.293424844741821,
+    "pause_wait": "Go testing parent barrier and/or -parallel slot; exact pause/CONT interval measured"
+  },
+  {
+    "test": "TestParserRepresentationProbes/gaps/7_postfix_property.ts",
+    "parent": "TestParserRepresentationProbes/gaps",
+    "run_seconds": 637.5775890350342,
+    "first_cont_seconds": 643.6600019931793,
+    "end_seconds": 645.7992150783539,
+    "running_intervals": [
+      [
+        637.5775890350342,
+        637.577595949173
+      ],
+      [
+        643.6600019931793,
+        645.7992150783539
+      ]
+    ],
+    "paused_intervals": [
+      [
+        637.577595949173,
+        643.6600019931793
+      ]
+    ],
+    "result": "pass",
+    "go_elapsed_seconds": 0.23,
+    "running_seconds": 2.1392199993133545,
+    "paused_seconds": 6.082406044006348,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 2.1392199993133545,
+    "event_interval_minus_go_elapsed_seconds": 1.9092199993133545,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "gaps_test.go:33: parallel child; parent barrier/-parallel slot before CONT, Node/load/lower then native/leaks or expected compiler refusal",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 6.082406044006348,
+    "pause_wait": "Go testing parent barrier and/or -parallel slot; exact pause/CONT interval measured"
+  },
+  {
+    "test": "TestParserRepresentationProbes/gaps/8_generic_callback_result.ts",
+    "parent": "TestParserRepresentationProbes/gaps",
+    "run_seconds": 637.5775980949402,
+    "first_cont_seconds": 643.5267210006714,
+    "end_seconds": 645.7992100715637,
+    "running_intervals": [
+      [
+        637.5775980949402,
+        637.5776040554047
+      ],
+      [
+        643.5267210006714,
+        645.7992100715637
+      ]
+    ],
+    "paused_intervals": [
+      [
+        637.5776040554047,
+        643.5267210006714
+      ]
+    ],
+    "result": "pass",
+    "go_elapsed_seconds": 0.34,
+    "running_seconds": 2.2724950313568115,
+    "paused_seconds": 5.949116945266724,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 2.2724950313568115,
+    "event_interval_minus_go_elapsed_seconds": 1.9324950313568114,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "gaps_test.go:33: parallel child; parent barrier/-parallel slot before CONT, Node/load/lower then native/leaks or expected compiler refusal",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 5.949116945266724,
+    "pause_wait": "Go testing parent barrier and/or -parallel slot; exact pause/CONT interval measured"
+  },
+  {
+    "test": "TestParserRepresentationProbes/gaps/9_mixed_path_names.ts",
+    "parent": "TestParserRepresentationProbes/gaps",
+    "run_seconds": 637.577605009079,
+    "first_cont_seconds": 643.1726338863373,
+    "end_seconds": 645.7991988658905,
+    "running_intervals": [
+      [
+        637.577605009079,
+        637.5776109695435
+      ],
+      [
+        643.1726338863373,
+        645.7991988658905
+      ]
+    ],
+    "paused_intervals": [
+      [
+        637.5776109695435,
+        643.1726338863373
+      ]
+    ],
+    "result": "pass",
+    "go_elapsed_seconds": 0.35,
+    "running_seconds": 2.6265709400177,
+    "paused_seconds": 5.595022916793823,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 2.6265709400177,
+    "event_interval_minus_go_elapsed_seconds": 2.2765709400177,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "gaps_test.go:33: parallel child; parent barrier/-parallel slot before CONT, Node/load/lower then native/leaks or expected compiler refusal",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 5.595022916793823,
+    "pause_wait": "Go testing parent barrier and/or -parallel slot; exact pause/CONT interval measured"
+  },
+  {
+    "test": "TestParserRepresentationProbes/gaps/10_multiple_push.ts",
+    "parent": "TestParserRepresentationProbes/gaps",
+    "run_seconds": 637.5776128768921,
+    "first_cont_seconds": 642.7718119621277,
+    "end_seconds": 645.7991950511932,
+    "running_intervals": [
+      [
+        637.5776128768921,
+        637.5776178836823
+      ],
+      [
+        642.7718119621277,
+        645.7991950511932
+      ]
+    ],
+    "paused_intervals": [
+      [
+        637.5776178836823,
+        642.7718119621277
+      ]
+    ],
+    "result": "pass",
+    "go_elapsed_seconds": 0.4,
+    "running_seconds": 3.027388095855713,
+    "paused_seconds": 5.194194078445435,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 3.027388095855713,
+    "event_interval_minus_go_elapsed_seconds": 2.627388095855713,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "gaps_test.go:33: parallel child; parent barrier/-parallel slot before CONT, Node/load/lower then native/leaks or expected compiler refusal",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 5.194194078445435,
+    "pause_wait": "Go testing parent barrier and/or -parallel slot; exact pause/CONT interval measured"
+  },
+  {
+    "test": "TestParserRepresentationProbes/gaps/11_function_expression.ts",
+    "parent": "TestParserRepresentationProbes/gaps",
+    "run_seconds": 637.5776190757751,
+    "first_cont_seconds": 642.5724520683289,
+    "end_seconds": 645.7992050647736,
+    "running_intervals": [
+      [
+        637.5776190757751,
+        637.5776259899139
+      ],
+      [
+        642.5724520683289,
+        645.7992050647736
+      ]
+    ],
+    "paused_intervals": [
+      [
+        637.5776259899139,
+        642.5724520683289
+      ]
+    ],
+    "result": "pass",
+    "go_elapsed_seconds": 1.09,
+    "running_seconds": 3.226759910583496,
+    "paused_seconds": 4.994826078414917,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 3.226759910583496,
+    "event_interval_minus_go_elapsed_seconds": 2.1367599105834962,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "gaps_test.go:33: parallel child; parent barrier/-parallel slot before CONT, Node/load/lower then native/leaks or expected compiler refusal",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 4.994826078414917,
+    "pause_wait": "Go testing parent barrier and/or -parallel slot; exact pause/CONT interval measured"
+  },
+  {
+    "test": "TestParserRepresentationProbes/gaps/12_conditional_empty_array.ts",
+    "parent": "TestParserRepresentationProbes/gaps",
+    "run_seconds": 637.5776679515839,
+    "first_cont_seconds": 642.4901180267334,
+    "end_seconds": 645.7991900444031,
+    "running_intervals": [
+      [
+        637.5776679515839,
+        637.5776748657227
+      ],
+      [
+        642.4901180267334,
+        645.7991900444031
+      ]
+    ],
+    "paused_intervals": [
+      [
+        637.5776748657227,
+        642.4901180267334
+      ]
+    ],
+    "result": "pass",
+    "go_elapsed_seconds": 0.28,
+    "running_seconds": 3.3090789318084717,
+    "paused_seconds": 4.912443161010742,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 3.3090789318084717,
+    "event_interval_minus_go_elapsed_seconds": 3.0290789318084714,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "gaps_test.go:33: parallel child; parent barrier/-parallel slot before CONT, Node/load/lower then native/leaks or expected compiler refusal",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 4.912443161010742,
+    "pause_wait": "Go testing parent barrier and/or -parallel slot; exact pause/CONT interval measured"
+  },
+  {
+    "test": "TestParserRepresentationProbes/gaps/15_string_or.ts",
+    "parent": "TestParserRepresentationProbes/gaps",
+    "run_seconds": 637.5776760578156,
+    "first_cont_seconds": 642.2828738689423,
+    "end_seconds": 645.7991700172424,
+    "running_intervals": [
+      [
+        637.5776760578156,
+        637.5777108669281
+      ],
+      [
+        642.2828738689423,
+        645.7991700172424
+      ]
+    ],
+    "paused_intervals": [
+      [
+        637.5777108669281,
+        642.2828738689423
+      ]
+    ],
+    "result": "pass",
+    "go_elapsed_seconds": 0.29,
+    "running_seconds": 3.5163309574127197,
+    "paused_seconds": 4.70516300201416,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 3.5163309574127197,
+    "event_interval_minus_go_elapsed_seconds": 3.2263309574127197,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "gaps_test.go:33: parallel child; parent barrier/-parallel slot before CONT, Node/load/lower then native/leaks or expected compiler refusal",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 4.70516300201416,
+    "pause_wait": "Go testing parent barrier and/or -parallel slot; exact pause/CONT interval measured"
+  },
+  {
+    "test": "TestParserRepresentationProbes/gaps/16_array_shift.ts",
+    "parent": "TestParserRepresentationProbes/gaps",
+    "run_seconds": 637.577712059021,
+    "first_cont_seconds": 642.0568470954895,
+    "end_seconds": 645.7991359233856,
+    "running_intervals": [
+      [
+        637.577712059021,
+        637.5777180194855
+      ],
+      [
+        642.0568470954895,
+        645.7991359233856
+      ]
+    ],
+    "paused_intervals": [
+      [
+        637.5777180194855,
+        642.0568470954895
+      ]
+    ],
+    "result": "pass",
+    "go_elapsed_seconds": 0.22,
+    "running_seconds": 3.7422947883605957,
+    "paused_seconds": 4.479129076004028,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 3.7422947883605957,
+    "event_interval_minus_go_elapsed_seconds": 3.5222947883605955,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "gaps_test.go:33: parallel child; parent barrier/-parallel slot before CONT, Node/load/lower then native/leaks or expected compiler refusal",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 4.479129076004028,
+    "pause_wait": "Go testing parent barrier and/or -parallel slot; exact pause/CONT interval measured"
+  },
+  {
+    "test": "TestParserRepresentationProbes/gaps/17_long_optional_chain.ts",
+    "parent": "TestParserRepresentationProbes/gaps",
+    "run_seconds": 637.5777199268341,
+    "first_cont_seconds": 641.6953330039978,
+    "end_seconds": 645.7991299629211,
+    "running_intervals": [
+      [
+        637.5777199268341,
+        637.5777900218964
+      ],
+      [
+        641.6953330039978,
+        645.7991299629211
+      ]
+    ],
+    "paused_intervals": [
+      [
+        637.5777900218964,
+        641.6953330039978
+      ]
+    ],
+    "result": "pass",
+    "go_elapsed_seconds": 0.36,
+    "running_seconds": 4.103867053985596,
+    "paused_seconds": 4.11754298210144,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 4.103867053985596,
+    "event_interval_minus_go_elapsed_seconds": 3.743867053985596,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "gaps_test.go:33: parallel child; parent barrier/-parallel slot before CONT, Node/load/lower then native/leaks or expected compiler refusal",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 4.11754298210144,
+    "pause_wait": "Go testing parent barrier and/or -parallel slot; exact pause/CONT interval measured"
+  },
+  {
+    "test": "TestMarkdownCodeBlockLayout/fence_longest",
+    "parent": "TestMarkdownCodeBlockLayout",
+    "run_seconds": 638.3461229801178,
+    "first_cont_seconds": null,
+    "end_seconds": 639.7192549705505,
+    "running_intervals": [
+      [
+        638.3461229801178,
+        639.7192549705505
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.68,
+    "running_seconds": 1.3731319904327393,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 1.3731319904327393,
+    "event_interval_minus_go_elapsed_seconds": 0.6931319904327392,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; lists_test.go:35; layoutOnce shared fixture; then synchronous output-mutant subtests; unordered_marker also fresh sanitized native canary; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownParserPrefixes/CRLF_chunk",
+    "parent": "TestMarkdownParserPrefixes",
+    "run_seconds": 638.6862618923187,
+    "first_cont_seconds": null,
+    "end_seconds": 641.4874680042267,
+    "running_intervals": [
+      [
+        638.6862618923187,
+        641.4874680042267
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.31,
+    "running_seconds": 2.801206111907959,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 2.801206111907959,
+    "event_interval_minus_go_elapsed_seconds": 2.491206111907959,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; prefix_test.go:15; Go oracle build/run; load/lower; sanitized native build/run; Node observations; leak execution; synchronous child subtests; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownParserPrefixes/tab_virtual_spaces",
+    "parent": "TestMarkdownParserPrefixes",
+    "run_seconds": 638.9958589076996,
+    "first_cont_seconds": null,
+    "end_seconds": 641.4874820709229,
+    "running_intervals": [
+      [
+        638.9958589076996,
+        641.4874820709229
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.21,
+    "running_seconds": 2.4916231632232666,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 2.4916231632232666,
+    "event_interval_minus_go_elapsed_seconds": 2.2816231632232666,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; prefix_test.go:15; Go oracle build/run; load/lower; sanitized native build/run; Node observations; leak execution; synchronous child subtests; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownCodeBlockLayout/code_indentation",
+    "parent": "TestMarkdownCodeBlockLayout",
+    "run_seconds": 639.0211389064789,
+    "first_cont_seconds": null,
+    "end_seconds": 639.7193419933319,
+    "running_intervals": [
+      [
+        639.0211389064789,
+        639.7193419933319
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.69,
+    "running_seconds": 0.6982030868530273,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 0.6982030868530273,
+    "event_interval_minus_go_elapsed_seconds": 0.008203086853027397,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; lists_test.go:35; layoutOnce shared fixture; then synchronous output-mutant subtests; unordered_marker also fresh sanitized native canary; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownParserPrefixes/quote_continuation_limit",
+    "parent": "TestMarkdownParserPrefixes",
+    "run_seconds": 639.2180230617523,
+    "first_cont_seconds": null,
+    "end_seconds": 641.487508058548,
+    "running_intervals": [
+      [
+        639.2180230617523,
+        641.487508058548
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.32,
+    "running_seconds": 2.2694849967956543,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 2.2694849967956543,
+    "event_interval_minus_go_elapsed_seconds": 1.9494849967956542,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; prefix_test.go:15; Go oracle build/run; load/lower; sanitized native build/run; Node observations; leak execution; synchronous child subtests; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownTableLayout/table_minimum",
+    "parent": "TestMarkdownTableLayout",
+    "run_seconds": 639.7227869033813,
+    "first_cont_seconds": null,
+    "end_seconds": 642.4899718761444,
+    "running_intervals": [
+      [
+        639.7227869033813,
+        642.4899718761444
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.76,
+    "running_seconds": 2.7671849727630615,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 2.7671849727630615,
+    "event_interval_minus_go_elapsed_seconds": 2.0071849727630617,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; lists_test.go:30; layoutOnce shared fixture; then synchronous output-mutant subtests; unordered_marker also fresh sanitized native canary; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownTableLayout/table_center",
+    "parent": "TestMarkdownTableLayout",
+    "run_seconds": 640.480712890625,
+    "first_cont_seconds": null,
+    "end_seconds": 642.4901020526886,
+    "running_intervals": [
+      [
+        640.480712890625,
+        642.4901020526886
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 1.05,
+    "running_seconds": 2.0093891620635986,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 2.0093891620635986,
+    "event_interval_minus_go_elapsed_seconds": 0.9593891620635986,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; lists_test.go:30; layoutOnce shared fixture; then synchronous output-mutant subtests; unordered_marker also fresh sanitized native canary; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownTableLayout/table_alignment",
+    "parent": "TestMarkdownTableLayout",
+    "run_seconds": 641.5281229019165,
+    "first_cont_seconds": null,
+    "end_seconds": 642.4901120662689,
+    "running_intervals": [
+      [
+        641.5281229019165,
+        642.4901120662689
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.96,
+    "running_seconds": 0.961989164352417,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 0.961989164352417,
+    "event_interval_minus_go_elapsed_seconds": 0.0019891643524170277,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; lists_test.go:30; layoutOnce shared fixture; then synchronous output-mutant subtests; unordered_marker also fresh sanitized native canary; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownListLayout/unordered_marker",
+    "parent": "TestMarkdownListLayout",
+    "run_seconds": 642.4903919696808,
+    "first_cont_seconds": null,
+    "end_seconds": 679.571809053421,
+    "running_intervals": [
+      [
+        642.4903919696808,
+        679.571809053421
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 35.31,
+    "running_seconds": 37.081417083740234,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 37.081417083740234,
+    "event_interval_minus_go_elapsed_seconds": 1.771417083740232,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "lists_test.go:397,439: synchronous Node output mutant, load/lower, fresh -O0 sanitized native canary build/run; no layoutOnce inside subtest",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestFrontMatterStage/YAML_fallback_delimiter",
+    "parent": "TestFrontMatterStage",
+    "run_seconds": 643.7008919715881,
+    "first_cont_seconds": null,
+    "end_seconds": 645.8808779716492,
+    "running_intervals": [
+      [
+        643.7008919715881,
+        645.8808779716492
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.28,
+    "running_seconds": 2.179986000061035,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 2.179986000061035,
+    "event_interval_minus_go_elapsed_seconds": 1.8999860000610351,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; frontmatter_test.go:16; Go oracle build/run; load/lower; sanitized native build/run; Node observations; leak execution; synchronous child subtests; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestFrontMatterStage/UTF-16_blank_prefix",
+    "parent": "TestFrontMatterStage",
+    "run_seconds": 643.9937980175018,
+    "first_cont_seconds": null,
+    "end_seconds": 645.8808839321136,
+    "running_intervals": [
+      [
+        643.9937980175018,
+        645.8808839321136
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.26,
+    "running_seconds": 1.8870859146118164,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 1.8870859146118164,
+    "event_interval_minus_go_elapsed_seconds": 1.6270859146118164,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; frontmatter_test.go:16; Go oracle build/run; load/lower; sanitized native build/run; Node observations; leak execution; synchronous child subtests; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestFrontMatterStage/JavaScript_BOM_trimming",
+    "parent": "TestFrontMatterStage",
+    "run_seconds": 644.248960018158,
+    "first_cont_seconds": null,
+    "end_seconds": 677.7968468666077,
+    "running_intervals": [
+      [
+        644.248960018158,
+        677.7968468666077
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.31,
+    "running_seconds": 33.54788684844971,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 33.54788684844971,
+    "event_interval_minus_go_elapsed_seconds": 33.237886848449705,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; frontmatter_test.go:16; Go oracle build/run; load/lower; sanitized native build/run; Node observations; leak execution; synchronous child subtests; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownListLayout/task_box",
+    "parent": "TestMarkdownListLayout",
+    "run_seconds": 677.8065400123596,
+    "first_cont_seconds": null,
+    "end_seconds": 679.5718400478363,
+    "running_intervals": [
+      [
+        677.8065400123596,
+        679.5718400478363
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.96,
+    "running_seconds": 1.7653000354766846,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 1.7653000354766846,
+    "event_interval_minus_go_elapsed_seconds": 0.8053000354766846,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; lists_test.go:20; layoutOnce shared fixture; then synchronous output-mutant subtests; unordered_marker also fresh sanitized native canary; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownListLayout/ordered_cap",
+    "parent": "TestMarkdownListLayout",
+    "run_seconds": 678.7628948688507,
+    "first_cont_seconds": null,
+    "end_seconds": 686.2622969150543,
+    "running_intervals": [
+      [
+        678.7628948688507,
+        686.2622969150543
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.8,
+    "running_seconds": 7.499402046203613,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 7.499402046203613,
+    "event_interval_minus_go_elapsed_seconds": 6.6994020462036135,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; lists_test.go:20; layoutOnce shared fixture; then synchronous output-mutant subtests; unordered_marker also fresh sanitized native canary; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownWhitespaceLayout/policy_CJ_spacing_tie",
+    "parent": "TestMarkdownWhitespaceLayout",
+    "run_seconds": 686.2624199390411,
+    "first_cont_seconds": null,
+    "end_seconds": 689.0622138977051,
+    "running_intervals": [
+      [
+        686.2624199390411,
+        689.0622138977051
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.48,
+    "running_seconds": 2.7997939586639404,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 2.7997939586639404,
+    "event_interval_minus_go_elapsed_seconds": 2.3197939586639404,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "whitespace_test.go:50: synchronous Node policy mutant; baseline whitespace lowering/native/leaks happened in parent before these subtests",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownWhitespaceLayout/policy_Korean_pair",
+    "parent": "TestMarkdownWhitespaceLayout",
+    "run_seconds": 686.7431359291077,
+    "first_cont_seconds": null,
+    "end_seconds": 689.0622899532318,
+    "running_intervals": [
+      [
+        686.7431359291077,
+        689.0622899532318
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.28,
+    "running_seconds": 2.3191540241241455,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 2.3191540241241455,
+    "event_interval_minus_go_elapsed_seconds": 2.0391540241241453,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "whitespace_test.go:50: synchronous Node policy mutant; baseline whitespace lowering/native/leaks happened in parent before these subtests",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownWhitespaceLayout/policy_single_line",
+    "parent": "TestMarkdownWhitespaceLayout",
+    "run_seconds": 687.0252809524536,
+    "first_cont_seconds": null,
+    "end_seconds": 689.062294960022,
+    "running_intervals": [
+      [
+        687.0252809524536,
+        689.062294960022
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.45,
+    "running_seconds": 2.0370140075683594,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 2.0370140075683594,
+    "event_interval_minus_go_elapsed_seconds": 1.5870140075683594,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "whitespace_test.go:50: synchronous Node policy mutant; baseline whitespace lowering/native/leaks happened in parent before these subtests",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownWhitespaceLayout/preserved_newline",
+    "parent": "TestMarkdownWhitespaceLayout",
+    "run_seconds": 687.4752230644226,
+    "first_cont_seconds": null,
+    "end_seconds": 689.0623140335083,
+    "running_intervals": [
+      [
+        687.4752230644226,
+        689.0623140335083
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.54,
+    "running_seconds": 1.5870909690856934,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 1.5870909690856934,
+    "event_interval_minus_go_elapsed_seconds": 1.0470909690856933,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; lists_test.go:68; layoutOnce shared fixture; then synchronous output-mutant subtests; unordered_marker also fresh sanitized native canary; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownWhitespaceLayout/space_removal",
+    "parent": "TestMarkdownWhitespaceLayout",
+    "run_seconds": 688.0136830806732,
+    "first_cont_seconds": null,
+    "end_seconds": 689.0623190402985,
+    "running_intervals": [
+      [
+        688.0136830806732,
+        689.0623190402985
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.51,
+    "running_seconds": 1.0486359596252441,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 1.0486359596252441,
+    "event_interval_minus_go_elapsed_seconds": 0.5386359596252441,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; lists_test.go:68; layoutOnce shared fixture; then synchronous output-mutant subtests; unordered_marker also fresh sanitized native canary; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  },
+  {
+    "test": "TestMarkdownWhitespaceLayout/ordered_syntax",
+    "parent": "TestMarkdownWhitespaceLayout",
+    "run_seconds": 688.5214200019836,
+    "first_cont_seconds": null,
+    "end_seconds": 689.0623281002045,
+    "running_intervals": [
+      [
+        688.5214200019836,
+        689.0623281002045
+      ]
+    ],
+    "paused_intervals": [],
+    "result": "pass",
+    "go_elapsed_seconds": 0.53,
+    "running_seconds": 0.5409080982208252,
+    "paused_seconds": 0,
+    "running_child_overlap_seconds": 0,
+    "outside_running_children_seconds": 0.5409080982208252,
+    "event_interval_minus_go_elapsed_seconds": 0.010908098220825169,
+    "elapsed_caveat": "Event completion can be buffered at parent. Go elapsed is rounded to 0.01 s and excludes parallel-child barrier wait; event interval includes that wait.",
+    "wait_evidence": "Synchronous output mutant child; parent waits in t.Run; lists_test.go:68; layoutOnce shared fixture; then synchronous output-mutant subtests; unordered_marker also fresh sanitized native canary; phase timings inside RUN/CONT intervals are not exposed by JSON events",
+    "top_serial_barrier_pause_seconds": 0,
+    "after_top_barrier_pause_seconds": 0,
+    "pause_wait": "none"
+  }
+]

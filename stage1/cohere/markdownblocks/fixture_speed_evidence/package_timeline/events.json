@@ -1,0 +1,1382 @@
+[
+  {
+    "seconds": 0.017155885696411133,
+    "action": "run",
+    "test": "TestArrayGrowthWitness"
+  },
+  {
+    "seconds": 0.6088690757751465,
+    "action": "pass",
+    "test": "TestArrayGrowthWitness"
+  },
+  {
+    "seconds": 0.608989953994751,
+    "action": "run",
+    "test": "TestMarkdownASTPreprocessing"
+  },
+  {
+    "seconds": 14.17674994468689,
+    "action": "run",
+    "test": "TestMarkdownASTPreprocessing/raw_source"
+  },
+  {
+    "seconds": 14.662798881530762,
+    "action": "run",
+    "test": "TestMarkdownASTPreprocessing/wiki_risk"
+  },
+  {
+    "seconds": 15.058022022247314,
+    "action": "run",
+    "test": "TestMarkdownASTPreprocessing/list_alignment"
+  },
+  {
+    "seconds": 21.139615058898926,
+    "action": "pass",
+    "test": "TestMarkdownASTPreprocessing/raw_source"
+  },
+  {
+    "seconds": 21.13962697982788,
+    "action": "pass",
+    "test": "TestMarkdownASTPreprocessing/wiki_risk"
+  },
+  {
+    "seconds": 21.13963508605957,
+    "action": "pass",
+    "test": "TestMarkdownASTPreprocessing/list_alignment"
+  },
+  {
+    "seconds": 21.13963794708252,
+    "action": "pass",
+    "test": "TestMarkdownASTPreprocessing"
+  },
+  {
+    "seconds": 21.13964605331421,
+    "action": "run",
+    "test": "TestWholeDocumentOraclePreflight"
+  },
+  {
+    "seconds": 21.13965392112732,
+    "action": "pause",
+    "test": "TestWholeDocumentOraclePreflight"
+  },
+  {
+    "seconds": 21.139657974243164,
+    "action": "run",
+    "test": "TestMicromarkInputChunks"
+  },
+  {
+    "seconds": 25.337049961090088,
+    "action": "run",
+    "test": "TestMicromarkInputChunks/initial_BOM"
+  },
+  {
+    "seconds": 25.59949803352356,
+    "action": "run",
+    "test": "TestMicromarkInputChunks/tab_stop"
+  },
+  {
+    "seconds": 25.863998889923096,
+    "action": "run",
+    "test": "TestMicromarkInputChunks/CRLF"
+  },
+  {
+    "seconds": 27.947269916534424,
+    "action": "pass",
+    "test": "TestMicromarkInputChunks/initial_BOM"
+  },
+  {
+    "seconds": 27.947278022766113,
+    "action": "pass",
+    "test": "TestMicromarkInputChunks/tab_stop"
+  },
+  {
+    "seconds": 27.947283029556274,
+    "action": "pass",
+    "test": "TestMicromarkInputChunks/CRLF"
+  },
+  {
+    "seconds": 27.947284936904907,
+    "action": "pass",
+    "test": "TestMicromarkInputChunks"
+  },
+  {
+    "seconds": 27.947288036346436,
+    "action": "run",
+    "test": "TestMarkdownSourceDecoding"
+  },
+  {
+    "seconds": 74.38839197158813,
+    "action": "run",
+    "test": "TestMarkdownSourceDecoding/numeric_replacement"
+  },
+  {
+    "seconds": 74.55646800994873,
+    "action": "run",
+    "test": "TestMarkdownSourceDecoding/hex_digit_bound"
+  },
+  {
+    "seconds": 74.74013805389404,
+    "action": "run",
+    "test": "TestMarkdownSourceDecoding/escape_punctuation"
+  },
+  {
+    "seconds": 190.62674808502197,
+    "action": "pass",
+    "test": "TestMarkdownSourceDecoding/numeric_replacement"
+  },
+  {
+    "seconds": 190.62692308425903,
+    "action": "pass",
+    "test": "TestMarkdownSourceDecoding/hex_digit_bound"
+  },
+  {
+    "seconds": 190.62706089019775,
+    "action": "pass",
+    "test": "TestMarkdownSourceDecoding/escape_punctuation"
+  },
+  {
+    "seconds": 190.62706589698792,
+    "action": "pass",
+    "test": "TestMarkdownSourceDecoding"
+  },
+  {
+    "seconds": 190.62706804275513,
+    "action": "run",
+    "test": "TestTokenizerEvents"
+  },
+  {
+    "seconds": 237.960834980011,
+    "action": "run",
+    "test": "TestTokenizerEvents/event_rollback"
+  },
+  {
+    "seconds": 240.22036910057068,
+    "action": "run",
+    "test": "TestTokenizerEvents/virtual_serialization"
+  },
+  {
+    "seconds": 242.0276448726654,
+    "action": "run",
+    "test": "TestTokenizerEvents/restored_construct"
+  },
+  {
+    "seconds": 279.38836693763733,
+    "action": "pass",
+    "test": "TestTokenizerEvents/event_rollback"
+  },
+  {
+    "seconds": 279.38848209381104,
+    "action": "pass",
+    "test": "TestTokenizerEvents/virtual_serialization"
+  },
+  {
+    "seconds": 279.3885269165039,
+    "action": "pass",
+    "test": "TestTokenizerEvents/restored_construct"
+  },
+  {
+    "seconds": 279.38853001594543,
+    "action": "pass",
+    "test": "TestTokenizerEvents"
+  },
+  {
+    "seconds": 279.3885700702667,
+    "action": "run",
+    "test": "TestFrontMatterStage"
+  },
+  {
+    "seconds": 279.38858103752136,
+    "action": "pause",
+    "test": "TestFrontMatterStage"
+  },
+  {
+    "seconds": 279.38858294487,
+    "action": "run",
+    "test": "TestParserRepresentationProbes"
+  },
+  {
+    "seconds": 279.3886139392853,
+    "action": "pause",
+    "test": "TestParserRepresentationProbes"
+  },
+  {
+    "seconds": 279.3886160850525,
+    "action": "run",
+    "test": "TestMdastIdentifierScalars"
+  },
+  {
+    "seconds": 290.2676000595093,
+    "action": "pass",
+    "test": "TestMdastIdentifierScalars"
+  },
+  {
+    "seconds": 290.2676169872284,
+    "action": "run",
+    "test": "TestMarkdownListLayout"
+  },
+  {
+    "seconds": 290.26773500442505,
+    "action": "pause",
+    "test": "TestMarkdownListLayout"
+  },
+  {
+    "seconds": 290.2677369117737,
+    "action": "run",
+    "test": "TestMarkdownQuoteLayout"
+  },
+  {
+    "seconds": 290.26774287223816,
+    "action": "pause",
+    "test": "TestMarkdownQuoteLayout"
+  },
+  {
+    "seconds": 290.26775789260864,
+    "action": "run",
+    "test": "TestMarkdownTableLayout"
+  },
+  {
+    "seconds": 290.2677640914917,
+    "action": "pause",
+    "test": "TestMarkdownTableLayout"
+  },
+  {
+    "seconds": 290.26778292655945,
+    "action": "run",
+    "test": "TestMarkdownCodeBlockLayout"
+  },
+  {
+    "seconds": 290.26784801483154,
+    "action": "pause",
+    "test": "TestMarkdownCodeBlockLayout"
+  },
+  {
+    "seconds": 290.267874956131,
+    "action": "run",
+    "test": "TestMarkdownHTMLBlockLayout"
+  },
+  {
+    "seconds": 290.2678818702698,
+    "action": "pause",
+    "test": "TestMarkdownHTMLBlockLayout"
+  },
+  {
+    "seconds": 290.26789689064026,
+    "action": "run",
+    "test": "TestMarkdownWhitespaceLayout"
+  },
+  {
+    "seconds": 290.26794600486755,
+    "action": "pause",
+    "test": "TestMarkdownWhitespaceLayout"
+  },
+  {
+    "seconds": 290.2679479122162,
+    "action": "run",
+    "test": "TestMarkdownLeafComposition"
+  },
+  {
+    "seconds": 290.26795387268066,
+    "action": "pause",
+    "test": "TestMarkdownLeafComposition"
+  },
+  {
+    "seconds": 290.26797890663147,
+    "action": "run",
+    "test": "TestMarkdownRootLayout"
+  },
+  {
+    "seconds": 290.2680220603943,
+    "action": "pause",
+    "test": "TestMarkdownRootLayout"
+  },
+  {
+    "seconds": 290.26803708076477,
+    "action": "run",
+    "test": "TestMarkdownStructureLayout"
+  },
+  {
+    "seconds": 290.2680449485779,
+    "action": "pause",
+    "test": "TestMarkdownStructureLayout"
+  },
+  {
+    "seconds": 290.2680470943451,
+    "action": "run",
+    "test": "TestMdastMalformedEvents"
+  },
+  {
+    "seconds": 291.7620449066162,
+    "action": "run",
+    "test": "TestMdastMalformedEvents/unclosed"
+  },
+  {
+    "seconds": 297.2230520248413,
+    "action": "run",
+    "test": "TestMdastMalformedEvents/not-open"
+  },
+  {
+    "seconds": 297.83110904693604,
+    "action": "run",
+    "test": "TestMdastMalformedEvents/mismatch"
+  },
+  {
+    "seconds": 298.42957186698914,
+    "action": "pass",
+    "test": "TestMdastMalformedEvents/unclosed"
+  },
+  {
+    "seconds": 298.42960500717163,
+    "action": "pass",
+    "test": "TestMdastMalformedEvents/not-open"
+  },
+  {
+    "seconds": 298.4296109676361,
+    "action": "pass",
+    "test": "TestMdastMalformedEvents/mismatch"
+  },
+  {
+    "seconds": 298.42961287498474,
+    "action": "pass",
+    "test": "TestMdastMalformedEvents"
+  },
+  {
+    "seconds": 298.429673910141,
+    "action": "run",
+    "test": "TestMdastIdentifierWitnesses"
+  },
+  {
+    "seconds": 299.5243558883667,
+    "action": "pass",
+    "test": "TestMdastIdentifierWitnesses"
+  },
+  {
+    "seconds": 299.52436089515686,
+    "action": "run",
+    "test": "TestNativeMdastConstruction"
+  },
+  {
+    "seconds": 323.4657390117645,
+    "action": "run",
+    "test": "TestNativeMdastConstruction/text_construction"
+  },
+  {
+    "seconds": 324.50701093673706,
+    "action": "run",
+    "test": "TestNativeMdastConstruction/list_spread"
+  },
+  {
+    "seconds": 325.4468319416046,
+    "action": "run",
+    "test": "TestNativeMdastConstruction/front_matter_fallback"
+  },
+  {
+    "seconds": 338.50441002845764,
+    "action": "pass",
+    "test": "TestNativeMdastConstruction/text_construction"
+  },
+  {
+    "seconds": 338.50452399253845,
+    "action": "pass",
+    "test": "TestNativeMdastConstruction/list_spread"
+  },
+  {
+    "seconds": 338.50453209877014,
+    "action": "pass",
+    "test": "TestNativeMdastConstruction/front_matter_fallback"
+  },
+  {
+    "seconds": 338.5045340061188,
+    "action": "pass",
+    "test": "TestNativeMdastConstruction"
+  },
+  {
+    "seconds": 338.5045368671417,
+    "action": "run",
+    "test": "TestOptionalStringInitializationWitness"
+  },
+  {
+    "seconds": 338.90814208984375,
+    "action": "pass",
+    "test": "TestOptionalStringInitializationWitness"
+  },
+  {
+    "seconds": 338.90814900398254,
+    "action": "run",
+    "test": "TestMarkdownAstPath"
+  },
+  {
+    "seconds": 387.7841010093689,
+    "action": "run",
+    "test": "TestMarkdownAstPath/map_callback_result"
+  },
+  {
+    "seconds": 389.4486138820648,
+    "action": "run",
+    "test": "TestMarkdownAstPath/array_frame"
+  },
+  {
+    "seconds": 391.1122648715973,
+    "action": "run",
+    "test": "TestMarkdownAstPath/ancestor_order"
+  },
+  {
+    "seconds": 392.53809094429016,
+    "action": "run",
+    "test": "TestMarkdownAstPath/call_restore"
+  },
+  {
+    "seconds": 419.87840509414673,
+    "action": "pass",
+    "test": "TestMarkdownAstPath/map_callback_result"
+  },
+  {
+    "seconds": 419.8785140514374,
+    "action": "pass",
+    "test": "TestMarkdownAstPath/array_frame"
+  },
+  {
+    "seconds": 419.87851905822754,
+    "action": "pass",
+    "test": "TestMarkdownAstPath/ancestor_order"
+  },
+  {
+    "seconds": 419.8785240650177,
+    "action": "pass",
+    "test": "TestMarkdownAstPath/call_restore"
+  },
+  {
+    "seconds": 419.87852597236633,
+    "action": "pass",
+    "test": "TestMarkdownAstPath"
+  },
+  {
+    "seconds": 419.8785409927368,
+    "action": "run",
+    "test": "TestMarkdownParserPrefixes"
+  },
+  {
+    "seconds": 419.878555059433,
+    "action": "pause",
+    "test": "TestMarkdownParserPrefixes"
+  },
+  {
+    "seconds": 419.87855792045593,
+    "action": "run",
+    "test": "TestNativeBuildModesAreDistinct"
+  },
+  {
+    "seconds": 419.8785650730133,
+    "action": "pause",
+    "test": "TestNativeBuildModesAreDistinct"
+  },
+  {
+    "seconds": 419.8785789012909,
+    "action": "run",
+    "test": "TestMarkdownTextSplitting"
+  },
+  {
+    "seconds": 479.9512140750885,
+    "action": "run",
+    "test": "TestMarkdownTextSplitting/fake_whitespace"
+  },
+  {
+    "seconds": 482.50437092781067,
+    "action": "run",
+    "test": "TestMarkdownTextSplitting/Hangul_kind"
+  },
+  {
+    "seconds": 485.19811487197876,
+    "action": "run",
+    "test": "TestMarkdownTextSplitting/variation_selector"
+  },
+  {
+    "seconds": 491.3034770488739,
+    "action": "pass",
+    "test": "TestMarkdownTextSplitting/fake_whitespace"
+  },
+  {
+    "seconds": 491.3036000728607,
+    "action": "pass",
+    "test": "TestMarkdownTextSplitting/Hangul_kind"
+  },
+  {
+    "seconds": 491.30362010002136,
+    "action": "pass",
+    "test": "TestMarkdownTextSplitting/variation_selector"
+  },
+  {
+    "seconds": 491.30362200737,
+    "action": "pass",
+    "test": "TestMarkdownTextSplitting"
+  },
+  {
+    "seconds": 491.3036239147186,
+    "action": "run",
+    "test": "TestMarkdownUnicodeWidths"
+  },
+  {
+    "seconds": 547.3088200092316,
+    "action": "run",
+    "test": "TestMarkdownUnicodeWidths/East_Asian_width"
+  },
+  {
+    "seconds": 549.8037428855896,
+    "action": "run",
+    "test": "TestMarkdownUnicodeWidths/narrow_emoji"
+  },
+  {
+    "seconds": 552.3934519290924,
+    "action": "run",
+    "test": "TestMarkdownUnicodeWidths/ASCII_DEL_shortcut"
+  },
+  {
+    "seconds": 563.4004640579224,
+    "action": "pass",
+    "test": "TestMarkdownUnicodeWidths/East_Asian_width"
+  },
+  {
+    "seconds": 563.4008090496063,
+    "action": "pass",
+    "test": "TestMarkdownUnicodeWidths/narrow_emoji"
+  },
+  {
+    "seconds": 563.4008419513702,
+    "action": "pass",
+    "test": "TestMarkdownUnicodeWidths/ASCII_DEL_shortcut"
+  },
+  {
+    "seconds": 563.4008440971375,
+    "action": "pass",
+    "test": "TestMarkdownUnicodeWidths"
+  },
+  {
+    "seconds": 563.4008460044861,
+    "action": "cont",
+    "test": "TestWholeDocumentOraclePreflight"
+  },
+  {
+    "seconds": 563.4008650779724,
+    "action": "cont",
+    "test": "TestMarkdownHTMLBlockLayout"
+  },
+  {
+    "seconds": 563.4008960723877,
+    "action": "cont",
+    "test": "TestMarkdownStructureLayout"
+  },
+  {
+    "seconds": 563.400899887085,
+    "action": "cont",
+    "test": "TestMarkdownRootLayout"
+  },
+  {
+    "seconds": 563.4010028839111,
+    "action": "cont",
+    "test": "TestMarkdownLeafComposition"
+  },
+  {
+    "seconds": 580.4162840843201,
+    "action": "run",
+    "test": "TestWholeDocumentOraclePreflight/heading_prefix"
+  },
+  {
+    "seconds": 590.4307940006256,
+    "action": "run",
+    "test": "TestWholeDocumentOraclePreflight/list_marker"
+  },
+  {
+    "seconds": 602.0495419502258,
+    "action": "run",
+    "test": "TestWholeDocumentOraclePreflight/fence_length"
+  },
+  {
+    "seconds": 615.2092258930206,
+    "action": "pass",
+    "test": "TestWholeDocumentOraclePreflight/heading_prefix"
+  },
+  {
+    "seconds": 615.2092490196228,
+    "action": "pass",
+    "test": "TestWholeDocumentOraclePreflight/list_marker"
+  },
+  {
+    "seconds": 615.2092809677124,
+    "action": "pass",
+    "test": "TestWholeDocumentOraclePreflight/fence_length"
+  },
+  {
+    "seconds": 615.209282875061,
+    "action": "pass",
+    "test": "TestWholeDocumentOraclePreflight"
+  },
+  {
+    "seconds": 615.2092859745026,
+    "action": "cont",
+    "test": "TestMarkdownWhitespaceLayout"
+  },
+  {
+    "seconds": 630.6851019859314,
+    "action": "run",
+    "test": "TestMarkdownStructureLayout/heading_depth"
+  },
+  {
+    "seconds": 630.6862099170685,
+    "action": "run",
+    "test": "TestMarkdownHTMLBlockLayout/HTML_root_trim"
+  },
+  {
+    "seconds": 631.5309770107269,
+    "action": "run",
+    "test": "TestMarkdownHTMLBlockLayout/HTML_comment_line"
+  },
+  {
+    "seconds": 631.562175989151,
+    "action": "run",
+    "test": "TestMarkdownStructureLayout/sentence_separator"
+  },
+  {
+    "seconds": 632.1672959327698,
+    "action": "run",
+    "test": "TestMarkdownHTMLBlockLayout/HTML_literal_root"
+  },
+  {
+    "seconds": 632.3485350608826,
+    "action": "run",
+    "test": "TestMarkdownStructureLayout/paragraph_fill_tail"
+  },
+  {
+    "seconds": 632.9760069847107,
+    "action": "pass",
+    "test": "TestMarkdownStructureLayout/heading_depth"
+  },
+  {
+    "seconds": 632.976016998291,
+    "action": "pass",
+    "test": "TestMarkdownStructureLayout/sentence_separator"
+  },
+  {
+    "seconds": 632.9760909080505,
+    "action": "pass",
+    "test": "TestMarkdownStructureLayout/paragraph_fill_tail"
+  },
+  {
+    "seconds": 632.9760940074921,
+    "action": "pass",
+    "test": "TestMarkdownStructureLayout"
+  },
+  {
+    "seconds": 632.976096868515,
+    "action": "run",
+    "test": "TestMarkdownRootLayout/root_double_line"
+  },
+  {
+    "seconds": 632.9761669635773,
+    "action": "cont",
+    "test": "TestMarkdownQuoteLayout"
+  },
+  {
+    "seconds": 633.0213890075684,
+    "action": "pass",
+    "test": "TestMarkdownHTMLBlockLayout/HTML_root_trim"
+  },
+  {
+    "seconds": 633.0214900970459,
+    "action": "pass",
+    "test": "TestMarkdownHTMLBlockLayout/HTML_comment_line"
+  },
+  {
+    "seconds": 633.0214970111847,
+    "action": "pass",
+    "test": "TestMarkdownHTMLBlockLayout/HTML_literal_root"
+  },
+  {
+    "seconds": 633.021497964859,
+    "action": "pass",
+    "test": "TestMarkdownHTMLBlockLayout"
+  },
+  {
+    "seconds": 633.0215010643005,
+    "action": "cont",
+    "test": "TestMarkdownCodeBlockLayout"
+  },
+  {
+    "seconds": 633.0215060710907,
+    "action": "run",
+    "test": "TestMarkdownLeafComposition/strong_delimiter"
+  },
+  {
+    "seconds": 633.6556439399719,
+    "action": "run",
+    "test": "TestMarkdownRootLayout/ignored_source_span"
+  },
+  {
+    "seconds": 633.8019459247589,
+    "action": "run",
+    "test": "TestMarkdownLeafComposition/reference_collapse"
+  },
+  {
+    "seconds": 634.3822960853577,
+    "action": "run",
+    "test": "TestMarkdownRootLayout/ignore_range_closing_comment"
+  },
+  {
+    "seconds": 634.4788980484009,
+    "action": "run",
+    "test": "TestMarkdownLeafComposition/footnote_indentation"
+  },
+  {
+    "seconds": 635.1191329956055,
+    "action": "pass",
+    "test": "TestMarkdownLeafComposition/strong_delimiter"
+  },
+  {
+    "seconds": 635.1192569732666,
+    "action": "pass",
+    "test": "TestMarkdownLeafComposition/reference_collapse"
+  },
+  {
+    "seconds": 635.119922876358,
+    "action": "pass",
+    "test": "TestMarkdownLeafComposition/footnote_indentation"
+  },
+  {
+    "seconds": 635.1199400424957,
+    "action": "pass",
+    "test": "TestMarkdownLeafComposition"
+  },
+  {
+    "seconds": 635.1199440956116,
+    "action": "cont",
+    "test": "TestMarkdownTableLayout"
+  },
+  {
+    "seconds": 635.1623730659485,
+    "action": "pass",
+    "test": "TestMarkdownRootLayout/root_double_line"
+  },
+  {
+    "seconds": 635.1624701023102,
+    "action": "pass",
+    "test": "TestMarkdownRootLayout/ignored_source_span"
+  },
+  {
+    "seconds": 635.1624820232391,
+    "action": "pass",
+    "test": "TestMarkdownRootLayout/ignore_range_closing_comment"
+  },
+  {
+    "seconds": 635.1624848842621,
+    "action": "pass",
+    "test": "TestMarkdownRootLayout"
+  },
+  {
+    "seconds": 635.1624879837036,
+    "action": "cont",
+    "test": "TestNativeBuildModesAreDistinct"
+  },
+  {
+    "seconds": 635.1624960899353,
+    "action": "run",
+    "test": "TestMarkdownQuoteLayout/quote_marker"
+  },
+  {
+    "seconds": 635.6350250244141,
+    "action": "pass",
+    "test": "TestNativeBuildModesAreDistinct"
+  },
+  {
+    "seconds": 635.6350319385529,
+    "action": "cont",
+    "test": "TestMarkdownParserPrefixes"
+  },
+  {
+    "seconds": 635.9038128852844,
+    "action": "run",
+    "test": "TestMarkdownQuoteLayout/quote_alignment"
+  },
+  {
+    "seconds": 636.8938128948212,
+    "action": "run",
+    "test": "TestMarkdownQuoteLayout/quote_blank_line"
+  },
+  {
+    "seconds": 637.5773899555206,
+    "action": "pass",
+    "test": "TestMarkdownQuoteLayout/quote_marker"
+  },
+  {
+    "seconds": 637.5774009227753,
+    "action": "pass",
+    "test": "TestMarkdownQuoteLayout/quote_alignment"
+  },
+  {
+    "seconds": 637.5774068832397,
+    "action": "pass",
+    "test": "TestMarkdownQuoteLayout/quote_blank_line"
+  },
+  {
+    "seconds": 637.577409029007,
+    "action": "pass",
+    "test": "TestMarkdownQuoteLayout"
+  },
+  {
+    "seconds": 637.5774118900299,
+    "action": "run",
+    "test": "TestMarkdownCodeBlockLayout/fence_minimum"
+  },
+  {
+    "seconds": 637.5774149894714,
+    "action": "cont",
+    "test": "TestParserRepresentationProbes"
+  },
+  {
+    "seconds": 637.5774199962616,
+    "action": "run",
+    "test": "TestParserRepresentationProbes/gaps/1_recursive_state.ts"
+  },
+  {
+    "seconds": 637.5774700641632,
+    "action": "pause",
+    "test": "TestParserRepresentationProbes/gaps/1_recursive_state.ts"
+  },
+  {
+    "seconds": 637.5774729251862,
+    "action": "run",
+    "test": "TestParserRepresentationProbes/gaps/2_state_arrow_cycle.ts"
+  },
+  {
+    "seconds": 637.5774800777435,
+    "action": "pause",
+    "test": "TestParserRepresentationProbes/gaps/2_state_arrow_cycle.ts"
+  },
+  {
+    "seconds": 637.5774810314178,
+    "action": "run",
+    "test": "TestParserRepresentationProbes/gaps/3_recursive_callable.ts"
+  },
+  {
+    "seconds": 637.5775508880615,
+    "action": "pause",
+    "test": "TestParserRepresentationProbes/gaps/3_recursive_callable.ts"
+  },
+  {
+    "seconds": 637.5775530338287,
+    "action": "run",
+    "test": "TestParserRepresentationProbes/gaps/14_missing_path_key.ts"
+  },
+  {
+    "seconds": 637.5775718688965,
+    "action": "pause",
+    "test": "TestParserRepresentationProbes/gaps/14_missing_path_key.ts"
+  },
+  {
+    "seconds": 637.577574968338,
+    "action": "run",
+    "test": "TestParserRepresentationProbes/gaps/4_structural_ranges.ts"
+  },
+  {
+    "seconds": 637.5775809288025,
+    "action": "pause",
+    "test": "TestParserRepresentationProbes/gaps/4_structural_ranges.ts"
+  },
+  {
+    "seconds": 637.5775830745697,
+    "action": "run",
+    "test": "TestParserRepresentationProbes/gaps/5_conditional_panic.ts"
+  },
+  {
+    "seconds": 637.5775880813599,
+    "action": "pause",
+    "test": "TestParserRepresentationProbes/gaps/5_conditional_panic.ts"
+  },
+  {
+    "seconds": 637.5775890350342,
+    "action": "run",
+    "test": "TestParserRepresentationProbes/gaps/7_postfix_property.ts"
+  },
+  {
+    "seconds": 637.577595949173,
+    "action": "pause",
+    "test": "TestParserRepresentationProbes/gaps/7_postfix_property.ts"
+  },
+  {
+    "seconds": 637.5775980949402,
+    "action": "run",
+    "test": "TestParserRepresentationProbes/gaps/8_generic_callback_result.ts"
+  },
+  {
+    "seconds": 637.5776040554047,
+    "action": "pause",
+    "test": "TestParserRepresentationProbes/gaps/8_generic_callback_result.ts"
+  },
+  {
+    "seconds": 637.577605009079,
+    "action": "run",
+    "test": "TestParserRepresentationProbes/gaps/9_mixed_path_names.ts"
+  },
+  {
+    "seconds": 637.5776109695435,
+    "action": "pause",
+    "test": "TestParserRepresentationProbes/gaps/9_mixed_path_names.ts"
+  },
+  {
+    "seconds": 637.5776128768921,
+    "action": "run",
+    "test": "TestParserRepresentationProbes/gaps/10_multiple_push.ts"
+  },
+  {
+    "seconds": 637.5776178836823,
+    "action": "pause",
+    "test": "TestParserRepresentationProbes/gaps/10_multiple_push.ts"
+  },
+  {
+    "seconds": 637.5776190757751,
+    "action": "run",
+    "test": "TestParserRepresentationProbes/gaps/11_function_expression.ts"
+  },
+  {
+    "seconds": 637.5776259899139,
+    "action": "pause",
+    "test": "TestParserRepresentationProbes/gaps/11_function_expression.ts"
+  },
+  {
+    "seconds": 637.5776679515839,
+    "action": "run",
+    "test": "TestParserRepresentationProbes/gaps/12_conditional_empty_array.ts"
+  },
+  {
+    "seconds": 637.5776748657227,
+    "action": "pause",
+    "test": "TestParserRepresentationProbes/gaps/12_conditional_empty_array.ts"
+  },
+  {
+    "seconds": 637.5776760578156,
+    "action": "run",
+    "test": "TestParserRepresentationProbes/gaps/15_string_or.ts"
+  },
+  {
+    "seconds": 637.5777108669281,
+    "action": "pause",
+    "test": "TestParserRepresentationProbes/gaps/15_string_or.ts"
+  },
+  {
+    "seconds": 637.577712059021,
+    "action": "run",
+    "test": "TestParserRepresentationProbes/gaps/16_array_shift.ts"
+  },
+  {
+    "seconds": 637.5777180194855,
+    "action": "pause",
+    "test": "TestParserRepresentationProbes/gaps/16_array_shift.ts"
+  },
+  {
+    "seconds": 637.5777199268341,
+    "action": "run",
+    "test": "TestParserRepresentationProbes/gaps/17_long_optional_chain.ts"
+  },
+  {
+    "seconds": 637.5777900218964,
+    "action": "pause",
+    "test": "TestParserRepresentationProbes/gaps/17_long_optional_chain.ts"
+  },
+  {
+    "seconds": 637.5777928829193,
+    "action": "cont",
+    "test": "TestMarkdownListLayout"
+  },
+  {
+    "seconds": 638.3461229801178,
+    "action": "run",
+    "test": "TestMarkdownCodeBlockLayout/fence_longest"
+  },
+  {
+    "seconds": 638.6862618923187,
+    "action": "run",
+    "test": "TestMarkdownParserPrefixes/CRLF_chunk"
+  },
+  {
+    "seconds": 638.9958589076996,
+    "action": "run",
+    "test": "TestMarkdownParserPrefixes/tab_virtual_spaces"
+  },
+  {
+    "seconds": 639.0211389064789,
+    "action": "run",
+    "test": "TestMarkdownCodeBlockLayout/code_indentation"
+  },
+  {
+    "seconds": 639.2180230617523,
+    "action": "run",
+    "test": "TestMarkdownParserPrefixes/quote_continuation_limit"
+  },
+  {
+    "seconds": 639.7192480564117,
+    "action": "pass",
+    "test": "TestMarkdownCodeBlockLayout/fence_minimum"
+  },
+  {
+    "seconds": 639.7192549705505,
+    "action": "pass",
+    "test": "TestMarkdownCodeBlockLayout/fence_longest"
+  },
+  {
+    "seconds": 639.7193419933319,
+    "action": "pass",
+    "test": "TestMarkdownCodeBlockLayout/code_indentation"
+  },
+  {
+    "seconds": 639.7193450927734,
+    "action": "pass",
+    "test": "TestMarkdownCodeBlockLayout"
+  },
+  {
+    "seconds": 639.7193470001221,
+    "action": "cont",
+    "test": "TestFrontMatterStage"
+  },
+  {
+    "seconds": 639.7227869033813,
+    "action": "run",
+    "test": "TestMarkdownTableLayout/table_minimum"
+  },
+  {
+    "seconds": 640.480712890625,
+    "action": "run",
+    "test": "TestMarkdownTableLayout/table_center"
+  },
+  {
+    "seconds": 641.4874680042267,
+    "action": "pass",
+    "test": "TestMarkdownParserPrefixes/CRLF_chunk"
+  },
+  {
+    "seconds": 641.4874820709229,
+    "action": "pass",
+    "test": "TestMarkdownParserPrefixes/tab_virtual_spaces"
+  },
+  {
+    "seconds": 641.487508058548,
+    "action": "pass",
+    "test": "TestMarkdownParserPrefixes/quote_continuation_limit"
+  },
+  {
+    "seconds": 641.4875109195709,
+    "action": "pass",
+    "test": "TestMarkdownParserPrefixes"
+  },
+  {
+    "seconds": 641.4875140190125,
+    "action": "cont",
+    "test": "TestParserRepresentationProbes/gaps/1_recursive_state.ts"
+  },
+  {
+    "seconds": 641.5281229019165,
+    "action": "run",
+    "test": "TestMarkdownTableLayout/table_alignment"
+  },
+  {
+    "seconds": 641.6953330039978,
+    "action": "cont",
+    "test": "TestParserRepresentationProbes/gaps/17_long_optional_chain.ts"
+  },
+  {
+    "seconds": 642.0568470954895,
+    "action": "cont",
+    "test": "TestParserRepresentationProbes/gaps/16_array_shift.ts"
+  },
+  {
+    "seconds": 642.2828738689423,
+    "action": "cont",
+    "test": "TestParserRepresentationProbes/gaps/15_string_or.ts"
+  },
+  {
+    "seconds": 642.4899718761444,
+    "action": "pass",
+    "test": "TestMarkdownTableLayout/table_minimum"
+  },
+  {
+    "seconds": 642.4901020526886,
+    "action": "pass",
+    "test": "TestMarkdownTableLayout/table_center"
+  },
+  {
+    "seconds": 642.4901120662689,
+    "action": "pass",
+    "test": "TestMarkdownTableLayout/table_alignment"
+  },
+  {
+    "seconds": 642.4901149272919,
+    "action": "pass",
+    "test": "TestMarkdownTableLayout"
+  },
+  {
+    "seconds": 642.4901180267334,
+    "action": "cont",
+    "test": "TestParserRepresentationProbes/gaps/12_conditional_empty_array.ts"
+  },
+  {
+    "seconds": 642.4903919696808,
+    "action": "run",
+    "test": "TestMarkdownListLayout/unordered_marker"
+  },
+  {
+    "seconds": 642.5724520683289,
+    "action": "cont",
+    "test": "TestParserRepresentationProbes/gaps/11_function_expression.ts"
+  },
+  {
+    "seconds": 642.7718119621277,
+    "action": "cont",
+    "test": "TestParserRepresentationProbes/gaps/10_multiple_push.ts"
+  },
+  {
+    "seconds": 643.1726338863373,
+    "action": "cont",
+    "test": "TestParserRepresentationProbes/gaps/9_mixed_path_names.ts"
+  },
+  {
+    "seconds": 643.5267210006714,
+    "action": "cont",
+    "test": "TestParserRepresentationProbes/gaps/8_generic_callback_result.ts"
+  },
+  {
+    "seconds": 643.6600019931793,
+    "action": "cont",
+    "test": "TestParserRepresentationProbes/gaps/7_postfix_property.ts"
+  },
+  {
+    "seconds": 643.7008919715881,
+    "action": "run",
+    "test": "TestFrontMatterStage/YAML_fallback_delimiter"
+  },
+  {
+    "seconds": 643.8710129261017,
+    "action": "cont",
+    "test": "TestParserRepresentationProbes/gaps/5_conditional_panic.ts"
+  },
+  {
+    "seconds": 643.8856019973755,
+    "action": "cont",
+    "test": "TestParserRepresentationProbes/gaps/4_structural_ranges.ts"
+  },
+  {
+    "seconds": 643.9937980175018,
+    "action": "run",
+    "test": "TestFrontMatterStage/UTF-16_blank_prefix"
+  },
+  {
+    "seconds": 644.2205789089203,
+    "action": "cont",
+    "test": "TestParserRepresentationProbes/gaps/14_missing_path_key.ts"
+  },
+  {
+    "seconds": 644.248960018158,
+    "action": "run",
+    "test": "TestFrontMatterStage/JavaScript_BOM_trimming"
+  },
+  {
+    "seconds": 644.2494390010834,
+    "action": "cont",
+    "test": "TestParserRepresentationProbes/gaps/3_recursive_callable.ts"
+  },
+  {
+    "seconds": 644.8974080085754,
+    "action": "cont",
+    "test": "TestParserRepresentationProbes/gaps/2_state_arrow_cycle.ts"
+  },
+  {
+    "seconds": 645.7990570068359,
+    "action": "pass",
+    "test": "TestParserRepresentationProbes/gaps/1_recursive_state.ts"
+  },
+  {
+    "seconds": 645.7991299629211,
+    "action": "pass",
+    "test": "TestParserRepresentationProbes/gaps/17_long_optional_chain.ts"
+  },
+  {
+    "seconds": 645.7991359233856,
+    "action": "pass",
+    "test": "TestParserRepresentationProbes/gaps/16_array_shift.ts"
+  },
+  {
+    "seconds": 645.7991700172424,
+    "action": "pass",
+    "test": "TestParserRepresentationProbes/gaps/15_string_or.ts"
+  },
+  {
+    "seconds": 645.7991900444031,
+    "action": "pass",
+    "test": "TestParserRepresentationProbes/gaps/12_conditional_empty_array.ts"
+  },
+  {
+    "seconds": 645.7991950511932,
+    "action": "pass",
+    "test": "TestParserRepresentationProbes/gaps/10_multiple_push.ts"
+  },
+  {
+    "seconds": 645.7991988658905,
+    "action": "pass",
+    "test": "TestParserRepresentationProbes/gaps/9_mixed_path_names.ts"
+  },
+  {
+    "seconds": 645.7992050647736,
+    "action": "pass",
+    "test": "TestParserRepresentationProbes/gaps/11_function_expression.ts"
+  },
+  {
+    "seconds": 645.7992100715637,
+    "action": "pass",
+    "test": "TestParserRepresentationProbes/gaps/8_generic_callback_result.ts"
+  },
+  {
+    "seconds": 645.7992150783539,
+    "action": "pass",
+    "test": "TestParserRepresentationProbes/gaps/7_postfix_property.ts"
+  },
+  {
+    "seconds": 645.7992310523987,
+    "action": "pass",
+    "test": "TestParserRepresentationProbes/gaps/5_conditional_panic.ts"
+  },
+  {
+    "seconds": 645.7992360591888,
+    "action": "pass",
+    "test": "TestParserRepresentationProbes/gaps/4_structural_ranges.ts"
+  },
+  {
+    "seconds": 645.799241065979,
+    "action": "pass",
+    "test": "TestParserRepresentationProbes/gaps/3_recursive_callable.ts"
+  },
+  {
+    "seconds": 645.7992448806763,
+    "action": "pass",
+    "test": "TestParserRepresentationProbes/gaps/2_state_arrow_cycle.ts"
+  },
+  {
+    "seconds": 645.8804450035095,
+    "action": "pass",
+    "test": "TestParserRepresentationProbes/gaps/14_missing_path_key.ts"
+  },
+  {
+    "seconds": 645.8804869651794,
+    "action": "pass",
+    "test": "TestParserRepresentationProbes"
+  },
+  {
+    "seconds": 645.8808779716492,
+    "action": "pass",
+    "test": "TestFrontMatterStage/YAML_fallback_delimiter"
+  },
+  {
+    "seconds": 645.8808839321136,
+    "action": "pass",
+    "test": "TestFrontMatterStage/UTF-16_blank_prefix"
+  },
+  {
+    "seconds": 677.7968468666077,
+    "action": "pass",
+    "test": "TestFrontMatterStage/JavaScript_BOM_trimming"
+  },
+  {
+    "seconds": 677.797758102417,
+    "action": "pass",
+    "test": "TestFrontMatterStage"
+  },
+  {
+    "seconds": 677.8065400123596,
+    "action": "run",
+    "test": "TestMarkdownListLayout/task_box"
+  },
+  {
+    "seconds": 678.7628948688507,
+    "action": "run",
+    "test": "TestMarkdownListLayout/ordered_cap"
+  },
+  {
+    "seconds": 679.571809053421,
+    "action": "pass",
+    "test": "TestMarkdownListLayout/unordered_marker"
+  },
+  {
+    "seconds": 679.5718400478363,
+    "action": "pass",
+    "test": "TestMarkdownListLayout/task_box"
+  },
+  {
+    "seconds": 686.2622969150543,
+    "action": "pass",
+    "test": "TestMarkdownListLayout/ordered_cap"
+  },
+  {
+    "seconds": 686.2624139785767,
+    "action": "pass",
+    "test": "TestMarkdownListLayout"
+  },
+  {
+    "seconds": 686.2624199390411,
+    "action": "run",
+    "test": "TestMarkdownWhitespaceLayout/policy_CJ_spacing_tie"
+  },
+  {
+    "seconds": 686.7431359291077,
+    "action": "run",
+    "test": "TestMarkdownWhitespaceLayout/policy_Korean_pair"
+  },
+  {
+    "seconds": 687.0252809524536,
+    "action": "run",
+    "test": "TestMarkdownWhitespaceLayout/policy_single_line"
+  },
+  {
+    "seconds": 687.4752230644226,
+    "action": "run",
+    "test": "TestMarkdownWhitespaceLayout/preserved_newline"
+  },
+  {
+    "seconds": 688.0136830806732,
+    "action": "run",
+    "test": "TestMarkdownWhitespaceLayout/space_removal"
+  },
+  {
+    "seconds": 688.5214200019836,
+    "action": "run",
+    "test": "TestMarkdownWhitespaceLayout/ordered_syntax"
+  },
+  {
+    "seconds": 689.0622138977051,
+    "action": "pass",
+    "test": "TestMarkdownWhitespaceLayout/policy_CJ_spacing_tie"
+  },
+  {
+    "seconds": 689.0622899532318,
+    "action": "pass",
+    "test": "TestMarkdownWhitespaceLayout/policy_Korean_pair"
+  },
+  {
+    "seconds": 689.062294960022,
+    "action": "pass",
+    "test": "TestMarkdownWhitespaceLayout/policy_single_line"
+  },
+  {
+    "seconds": 689.0623140335083,
+    "action": "pass",
+    "test": "TestMarkdownWhitespaceLayout/preserved_newline"
+  },
+  {
+    "seconds": 689.0623190402985,
+    "action": "pass",
+    "test": "TestMarkdownWhitespaceLayout/space_removal"
+  },
+  {
+    "seconds": 689.0623281002045,
+    "action": "pass",
+    "test": "TestMarkdownWhitespaceLayout/ordered_syntax"
+  },
+  {
+    "seconds": 689.0623300075531,
+    "action": "pass",
+    "test": "TestMarkdownWhitespaceLayout"
+  }
+]

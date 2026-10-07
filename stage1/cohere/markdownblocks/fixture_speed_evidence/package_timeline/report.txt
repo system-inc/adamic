@@ -1,0 +1,191 @@
+Markdownblocks package critical path: measurement only
+
+Branch devtools/markdown-fixture-speed, fast-forwarded to landed
+6cb92c2f7953357f500ec998d4004800739b1119. No test files changed.
+Pinned cohere=7945d102a6c18dd36adf9114a758ce646e8b2359;
+TypeScript=d92d9bfee114c80be2c375d72edae966176e3a4f.
+Single box, single uncached package run; no overlapping benchmarks/build work.
+Source /workspace/adamic-tools/env.sh; unset ADAMIC_NATIVE_SPLIT/ADAMIC_NATIVE_JOBS.
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -json -v -timeout=30m ./stage1/cohere/markdownblocks
+PASS 109/109 test events, 27 top-level tests + 82 subtests, zero skips/failures.
+68 retained catches, including inline identifier case-table control; fresh native
+unordered_marker canary passed. Package event wall 689.085037 s; Go reports
+689.082 s binary duration. Command wall 922.164022 s, including ~232 s initial
+Go dependency/test compilation. Initial build is outside the package timeline.
+
+This DOES NOT reproduce the format seat's 449.98 s. That number is the user's
+separate box/cache observation, not this measurement. This box had a first formatter
+build with newly pinned cohere dependencies. It contributes substantial serial
+cost, as shown below. No warm-cache rerun substituted; the requested one run is
+preserved. We cannot assign this run's seconds to the format seat's 450 s without
+its events/cache state. The structural barriers are directly demonstrated here.
+
+Critical chain
+0.017-563.401: thirteen non-t.Parallel top-level tests execute one after another.
+Their durations sum to ~563.38 s, 81.8% of package wall. Each blocks every paused
+parallel top-level test at Go testing's parent barrier. The largest are decoding
+162.680, tokenizer events 88.762, AstPath 80.970, Unicode widths 72.097, text
+splitting 71.425, mdast construction 38.980, AST preprocessing 20.531 seconds.
+All 13 serial intervals are listed below and in alone.json; none run concurrently
+with the paused parallel tests. Their internal lowering/native/Node phases run
+mostly serially too. Synchronous mutant children are part of their parent time.
+
+563.401: serial barrier opens; preflight + HTML/structure/root/leaves CONT.
+615.209: preflight ends, frees fifth slot; whitespace CONT, then waits for layout.
+630.685-630.686: first structure/HTML mutant RUN events prove fixture has returned.
+This is an upper bound on layoutOnce readiness, not an instrumented fixture timer.
+Those tests resumed at 563.401. Initial fixture consumers hold -parallel slots
+while blocked on layoutOnce, so independent tests behind them start later.
+632.976-635.162: first fixture consumers complete, freeing slots.
+635.635 parser prefixes CONT; 637.577 probes CONT and spawn parallel children;
+637.578 list CONT; 639.719 frontmatter CONT. These tests were registered/paused
+hundreds of seconds earlier; paused wait consists of serial barrier plus slots.
+642.490: list unordered_marker RUN, reported actual child elapsed 35.31 s. Its
+completion event appears only at 679.572 because parent buffers child PASS lines.
+677.798: frontmatter ends; 686.262: list ends; 689.062: whitespace ends.
+689.085: package final pass event (cleanup/output ~0.023 s after final test).
+
+The last test is whitespace, not the shared fixture or the list native canary.
+It includes a SEPARATE testWhitespacePolicy: whitespace_probe.ts load/lower,
+sanitized build/run, fork/source/backend checks, leaks, three policy controls,
+then the three layout mutants. See whitespace_test.go:14,34-35,50 and
+lists_test.go:322. First policy child RUN at 686.262 bounds baseline completion;
+three layout mutant RUN events begin at 687.475. Process snapshots show the
+whitespace sanitized compile active at ~651-681 s, followed by binary execution
+at ~686 s. These are five-second sampled observations, not exact phase durations.
+The baseline ends about 55.6 s after first layout consumers start their mutants;
+JSON cannot split that interval into lowering versus clang time.
+Only whitespace runs during the final 686.262-689.062 s (2.800 s). From 677.798
+until 686.262, whitespace and list are the only remaining top-level tests.
+No long solitary top-level test tail: most cost is the preceding serial chain.
+
+Other shared waits
+formatterOnce is first entered by decoding (cohereFormatter, support_test.go:59).
+The actual Go build process was observed at 79.283 and last observed 184.951 s;
+first formatter-ready log is 189.238 s. Sampling cadence is five seconds: actual
+build start lies in approximately (74.283,79.283], end in (184.951,189.238].
+This is a 105.67 s observed span, with at most ~10 s boundary uncertainty.
+It blocks the SERIAL decoding test; there are no concurrent Once followers then.
+Later text/width callers log the same formatter immediately and reuse its result.
+Warming/building it earlier can remove that cold serial cost on this box, but is
+not evidence of the same cost on the format seat. It cannot explain a warm-seat
+449.98 s without that seat's data.
+Only layoutOnce and formatterOnce exist in these package test files. artifacts
+sync.Map holds per-source/sanitizer promises (<-build.done); identical mdast error
+builds reuse their first result. No evidence that another Once/promise gates the
+terminal chain. Precise internal waits require instrumentation/profile; events
+show scheduler waits and synchronous child relationships, not goroutine stacks.
+
+Best next opportunity (no implementation proposed in this commit)
+Bounded overlap of independent nonparallel tests offers the largest measured
+wall reduction: most of the 563 s prefix uses ~1 CPU, leaving quota idle. Start
+independent heavy tests earlier with an explicit memory budget rather than
+adding unlimited t.Parallel. Moving formatter cold work earlier/prebuilding it
+addresses a secondary, cache-sensitive serial cost. Tail priority would be the
+whitespace policy baseline and the list native canary, which obtain slots late;
+preventing layoutOnce waiters from monopolizing slots could advance these. That
+can shorten the 125.68 s parallel tail, but its measured opportunity is smaller
+than the serial prefix. No counterfactual speedup number claimed: parallelizing
+changes CPU/cache/memory contention and needs a separate experiment.
+Plain CPU saturation is not the overall cause: average busy CPU equivalents
+are 1.90 across the package; most serial non-formatter bins are ~1.0-1.6. Cold
+formatter compilation saturates the four-CPU quota, and some parallel bins reach
+~3.36, but the package is not saturated throughout. Logical nproc=5 while
+cpu.max=400000 100000 caps sustained use at FOUR CPU equivalents.
+
+Top-level timeline, all seconds relative to package start:
+Test                                         RUN     CONT      END event-run    pause GoElapsed
+TestArrayGrowthWitness                      0.017        -    0.609    0.592    0.000     0.59
+TestMarkdownASTPreprocessing                0.609        -   21.140   20.531    0.000    20.53
+TestWholeDocumentOraclePreflight           21.140  563.401  615.209   51.808  542.261    51.81
+TestMicromarkInputChunks                   21.140        -   27.947    6.808    0.000     6.81
+TestMarkdownSourceDecoding                 27.947        -  190.627  162.680    0.000   162.68
+TestTokenizerEvents                       190.627        -  279.389   88.761    0.000    88.76
+TestFrontMatterStage                      279.389  639.719  677.798   38.078  360.331     6.16
+TestParserRepresentationProbes            279.389  637.577  645.880    8.303  358.189     0.00
+TestMdastIdentifierScalars                279.389        -  290.268   10.879    0.000    10.88
+TestMarkdownListLayout                    290.268  637.578  686.262   48.685  347.310    42.00
+TestMarkdownQuoteLayout                   290.268  632.976  637.577    4.601  342.708     4.60
+TestMarkdownTableLayout                   290.268  635.120  642.490    7.370  344.852     7.37
+TestMarkdownCodeBlockLayout               290.268  633.022  639.719    6.698  342.754     6.70
+TestMarkdownHTMLBlockLayout               290.268  563.401  633.021   69.621  273.133    69.62
+TestMarkdownWhitespaceLayout              290.268  615.209  689.062   73.853  324.941    73.85
+TestMarkdownLeafComposition               290.268  563.401  635.120   71.719  273.133    71.72
+TestMarkdownRootLayout                    290.268  563.401  635.162   71.762  273.133    71.76
+TestMarkdownStructureLayout               290.268  563.401  632.976   69.575  273.133    69.57
+TestMdastMalformedEvents                  290.268        -  298.430    8.162    0.000     8.16
+TestMdastIdentifierWitnesses              298.430        -  299.524    1.095    0.000     1.09
+TestNativeMdastConstruction               299.524        -  338.505   38.980    0.000    38.98
+TestOptionalStringInitializationWitness   338.505        -  338.908    0.404    0.000     0.40
+TestMarkdownAstPath                       338.908        -  419.879   80.970    0.000    80.97
+TestMarkdownParserPrefixes                419.879  635.635  641.488    5.852  215.756     5.86
+TestNativeBuildModesAreDistinct           419.879  635.162  635.635    0.473  215.284     0.47
+TestMarkdownTextSplitting                 419.879        -  491.304   71.425    0.000    71.42
+TestMarkdownUnicodeWidths                 491.304        -  563.401   72.097    0.000    72.10
+
+30-second histogram
+Interval          CPU    active-top active-leaf (event averages)
+  0- 30.000   1.49     1.00     1.57
+ 30- 60.000   1.03     1.00     1.00
+ 60- 90.000   2.14     1.00     2.02
+ 90-120.000   4.00     1.00     3.00
+120-150.000   4.00     1.00     3.00
+150-180.000   3.43     1.00     3.00
+180-210.000   1.59     1.00     1.71
+210-240.000   1.05     1.00     1.00
+240-270.000   1.67     1.00     2.93
+270-300.000   1.19     1.00     1.69
+300-330.000   1.46     1.00     1.33
+330-360.000   1.36     1.00     1.57
+360-390.000   1.09     1.00     1.02
+390-420.000   1.15     1.00     3.87
+420-450.000   1.24     1.00     1.00
+450-480.000   1.05     1.00     1.00
+480-510.000   1.18     1.00     1.50
+510-540.000   1.15     1.00     1.00
+540-570.000   1.96     1.88     2.70
+570-600.000   3.36     5.00     5.32
+600-630.000   2.08     5.00     5.95
+630-660.000   3.00     4.08     6.08
+660-689.085   2.00     2.51     2.86
+CPU column = delta cgroup cpu.stat usage_usec / bin wall, sampled every second,
+including descendants and small monitor/tool overhead. Other cgroup work can
+contribute; no other benchmark/build was started during package execution.
+Active test counts are reconstructed event intervals, NOT CPUs/runnable threads.
+Leaf event counts overstate running children because PASS output is buffered.
+The runtime quota explains the ~4 plateau; throttling is retained in histogram.json.
+
+Event timing caveats and every-test accounting
+For EVERY top-level test/subtest, tests.csv and tests.json include RUN time,
+first CONT, terminal event time, explicit running/paused intervals, total event
+running time (RUN/CONT to terminal event, minus PAUSE), Go Elapsed, paused time
+before/after the top-level serial barrier, parent and source-backed wait notes.
+Requested event running time is literal; it is not CPU or accurate body time
+for buffered subtest completions. E.g. initial_BOM reports 0.26 s but its PASS
+is delivered at parent completion. Go Elapsed is rounded to 0.01 s; parent
+reported elapsed excludes waiting for PARALLEL children (probe parent reports
+0.00 s while its event lifetime is 8.303 s). Parent intervals also include waits
+inside synchronous t.Run. Running-child overlap/outside-child fields are literal
+event geometry only, not exclusive CPU/body time. Do not double-count parent
+and child durations or sum them as package wall. Every test's internal exact
+wait is unobservable from these events; source notes identify dependencies,
+with exact PAUSE waits and sampled subprocess activity supplied separately.
+
+Evidence/reproduction
+package.jsonl.gz is the full requested -json -v log. samples.jsonl.gz contains
+one-second cgroup counters plus five-second descendant process snapshots.
+stderr.log is empty. events.json retains lifecycle events; tests.csv/json retain
+all 109 rows; alone.json all sole-top-test intervals; histogram.json all bins.
+measure.py and analyze.py are the scratch scripts used, now saved as evidence.
+To reanalyze, decompress logs into a scratch directory along with source-waits.json,
+then python3 analyze.py SCRATCH_DIRECTORY OUTPUT_DIRECTORY. No test overlay used.
+Build-flags: commit=6cb92c2f7953357f500ec998d4004800739b1119 nproc=5
+cpu.max=400000 100000 go=go1.27.1 linux/amd64 clang=20.1.8 node=v24.19.0
+CPU=Intel Xeon Platinum8573C memory.max=17179869184 (16 GiB).
+Kernel lifetime memory.peak=13838200832 bytes (12.888 GiB), sampled command
+peak=13775024128 bytes. Memory is not per-test RSS.
+Assumptions: retain normal Go action/runtime archive cache semantics while using
+ADAMIC_GATE_UNCACHED=1 and -count=1; no unsupported claim that all toolchain or
+formatter dependencies are cold/warm. Package events cannot determine CPU counts
+or exact shared-Once wait durations; direct counters/process samples supplement
+them. No test/source changes and no optimization or second package run performed.
