@@ -19,3 +19,21 @@ recorded findings on both corpora.
 Before this claim, all origin branch refs were fetched and inspected for claims
 and type-aware implementations of these names. None was claimed or ported; no
 rule was skipped. New Adamic implementation files will use `.a`.
+
+## Continuation claim
+
+After pushing all original wave 22 work, all origin heads were fetched again.
+The first three available checker-dependent rules in the same combined-volume
+ranking, excluding ports on origin/codex/tsgo-c-library and origin/main and
+active claims on any origin branch, are:
+
+1. `@typescript-eslint/no-misused-promises`
+2. `@typescript-eslint/no-misused-spread`
+3. `nexus/concurrency-no-lost-update`
+
+The first two reservations were explicitly released in origin/codex/typeaware-wave-21's
+claims/wave-21.md. The third was explicitly released in origin/codex/typeaware-wave-30's
+claims/wave-30.md. Released reservations are available for reassignment; no
+other active claims were found. All three have zero recorded corpus findings.
+These three rules are now reserved for codex/typeaware-wave-22. This continuation
+claim is pushed before writing any implementation for them.
