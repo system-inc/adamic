@@ -1,0 +1,32 @@
+// Runtime keys have no owner outside the collection when each callback starts.
+function key(index: number): string { return `key${index}`; }
+
+function probe(mode: number): void {
+	const collection = new Map<string, string>();
+	for (let index = 0; index < 8; index += 1) {
+		collection.set(key(index), `value${index}`);
+	}
+	try {
+		collection.forEach((value, current, owner) => {
+			if (mode === 0) { owner.delete(current); }
+			if (mode === 1 && current === "key0") { owner.delete(key(1)); }
+			if (mode === 2) { owner.clear(); }
+			if (mode === 3) { owner.set(current, `changed${current}`); }
+			if (mode === 4 && current === "key0") {
+				// A full buffer with a tombstone must grow without compacting the iterator's place.
+				owner.delete(current);
+				owner.set(key(8), key(9));
+			}
+			if (mode === 5) {
+				owner.delete(current);
+				throw new Error(`deleted ${current} ${value}`);
+			}
+			console.log(`${mode}: ${current} ${value} ${owner.size}`);
+		});
+	} catch (error) {
+		console.log(error instanceof Error ? error.message : "unexpected");
+	}
+	console.log(`remaining ${mode}: ${collection.size}`);
+	collection.forEach((value, current) => { console.log(`after ${current} ${value}`); });
+}
+for (let mode = 0; mode < 6; mode += 1) { probe(mode); }

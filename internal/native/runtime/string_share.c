@@ -38,12 +38,15 @@ adamic_string *adamic_string_share(const adamic_string *string, size_t offset, s
 		if (size > 0) {
 			memcpy((char *)copy->bytes, string->bytes + offset, size);
 		}
+		if (string->units == string->length + 1) {
+			copy->units = size + 1;
+		}
 		return copy;
 	}
 	adamic_string *shared = adamic_allocate(sizeof *shared, adamic_kind_string);
 	shared->length = size;
 	shared->bytes = string->bytes + offset;
-	shared->units = 0;
+	shared->units = string->units == string->length + 1 ? size + 1 : 0;
 	shared->index = NULL;
 	shared->capacity = 0;
 	// A constant's bytes last as long as the program, and need no one held for them.

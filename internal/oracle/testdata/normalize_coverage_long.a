@@ -1,0 +1,33 @@
+// Print UTF-16 length and a lossless run-length encoding of every code point.
+function show(label: string, text: string): void {
+	let runs = '';
+	let previous = -1;
+	let count = 0;
+	for (const character of text) {
+		const point = character.codePointAt(0) ?? -1;
+		if (point === previous) {
+			count++;
+		} else {
+			if (count > 0) runs = runs + `${previous.toString(16)}:${count},`;
+			previous = point;
+			count = 1;
+		}
+	}
+	if (count > 0) runs = runs + `${previous.toString(16)}:${count},`;
+	console.log(`${label} ${text.length} ${runs}`);
+}
+function check(label: string, text: string): void {
+	for (const form of ['NFC', 'NFD', 'NFKC', 'NFKD']) {
+		const result = text.normalize(form);
+		show(`${label} ${form}`, result);
+		show(`${label} ${form} again`, result.normalize(form));
+	}
+}
+
+// Million-unit unchanged input and long transformed inputs, with every point observed.
+check('million ASCII', 'a'.repeat(1000000));
+check('million starters', 'Ω'.repeat(1000000));
+check('long marks', 'A' + '̕'.repeat(4096) + '̣'.repeat(4096) + '́'.repeat(4096));
+check('long expanding', 'ﷺ'.repeat(4096));
+check('long Hangul', '각'.repeat(4096) + '각'.repeat(4096));
+check('long sliced surrogate', ('😀'.repeat(4096) + 'é').slice(1, -1));

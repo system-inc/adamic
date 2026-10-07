@@ -1,0 +1,14 @@
+interface Leaf { readonly kind: string; }
+interface Node { parent: Leaf; }
+class Reader { read(leaf: Leaf): number { return leaf.kind.length; } }
+class Keeper extends Reader {
+ saved: Leaf | undefined = undefined;
+ read(leaf: Leaf): number { this.saved = leaf; return leaf.kind.length; }
+}
+function make(n: number): Node { return { parent: { kind: `stored${n}` } }; }
+function change(node: Node): number { node.parent = { kind: `new${2}` }; return 0; }
+function listen(reader: Reader, leaf: Leaf, ignored: number): number { return reader.read(leaf) + ignored; }
+function visit(node: Node, reader: Reader): number { return listen(reader, node.parent, change(node)); }
+const keeper = new Keeper();
+console.log(`${visit(make(1), keeper)}`);
+console.log(keeper.saved?.kind ?? "missing");
