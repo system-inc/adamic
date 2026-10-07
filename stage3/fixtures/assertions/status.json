@@ -219,8 +219,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/assertions/14_structural_cache.a:11:16: stage 0 can't lower an ElementAccessExpression yet"
+      "outcome": "Refused",
+      "what": "stage3/fixtures/assertions/14_structural_cache.a:11:17: Adamic 0.1 refuses optional property iterationTypes in IterableOrIteratorType is absent from the source type Type; the value may hide an incompatible field; declare iterationTypes with a compatible type on the source type, or copy the declared fields into a new object (adamic/no-optional-widening)"
     }
   },
   {

@@ -410,8 +410,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/objects/30_host_optional_method.a:6:12: stage 0 can't lower a call through ?. (an optional call) yet"
+      "outcome": "Refused",
+      "what": "stage3/fixtures/objects/30_host_optional_method.a:8:73: Adamic 0.1 refuses optional property getCompilerHost in ResolutionCacheHost is absent from the source type { name: string; }; the value may hide an incompatible field; declare getCompilerHost with a compatible type on the source type, or copy the declared fields into a new object (adamic/no-optional-widening)"
     }
   }
 ]
