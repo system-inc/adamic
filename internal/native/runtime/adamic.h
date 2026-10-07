@@ -178,12 +178,25 @@ typedef struct adamic_shape {
 } adamic_shape;
 
 typedef void (*adamic_virtual_method)(void);
+typedef struct adamic_object adamic_object;
+typedef struct adamic_accessor {
+	const char *name;
+	adamic_value (*get)(adamic_object *);
+	void (*set)(adamic_object *, adamic_value, int);
+	int type;
+} adamic_accessor;
 typedef struct adamic_class {
 	const struct adamic_class *base;
 	size_t own_start;
 	size_t count;
 	const adamic_virtual_method *methods;
 	size_t definition;
+	const adamic_shape *public_shape;
+	const adamic_accessor *accessors;
+	size_t accessor_count;
+	bool is_static;
+	size_t static_parent;
+	const size_t *static_flags;
 } adamic_class;
 
 // adamic_object is a plain object (object.c). Its shape travels with it, so the same object can be
@@ -248,7 +261,16 @@ bool adamic_object_has(const adamic_object *object, const adamic_string *name);
 // the program last saw the same shape, the field is where it was then, which is inline, since it's
 // what nearly every read is; anything else is adamic_object_find, which searches the shape's names.
 adamic_value *adamic_object_find(const adamic_object *object, const char *name, adamic_slot_cache *cache);
+adamic_string *adamic_static_union_typeof(const adamic_heap *value);
+adamic_string *adamic_object_typeof(const adamic_object *object);
+adamic_value *adamic_static_field(const adamic_object *object, const char *name, adamic_slot_cache *cache);
+adamic_value *adamic_object_write_field(adamic_object *object, const char *name, adamic_slot_cache *cache);
+// A readonly numeric view may see a field made with the undefined-only reference representation.
+adamic_maybe_number adamic_object_maybe_number(const adamic_object *object, const char *name, adamic_slot_cache *cache);
+// Optional own fields may be absent; NULL then asks the reader to produce typed undefined.
+adamic_value *adamic_object_optional_field(const adamic_object *object, const char *name, adamic_slot_cache *cache);
 static inline adamic_value *adamic_object_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
+	if (object->class != NULL && object->class->is_static) { return adamic_static_field(object, name, cache); }
 	if (cache->shape == object->shape) {
 		return &((adamic_object *)object)->slots[cache->index];
 	}
@@ -277,6 +299,11 @@ typedef struct adamic_array {
 } adamic_array;
 
 adamic_array *adamic_array_new(size_t capacity, bool references);
+size_t adamic_public_index(const adamic_shape *shape, size_t position);
+adamic_array *adamic_class_object_keys(const adamic_object *object);
+const adamic_accessor *adamic_accessor_find(const adamic_object *object, const char *name);
+adamic_value adamic_accessor_get(adamic_object *object, const char *name);
+void adamic_accessor_set(adamic_object *object, const char *name, adamic_value value, int type);
 
 // Structured fork-join. Arguments are borrowed until the join; the result is owned.
 adamic_array *adamic_parallel_map(adamic_array *items, adamic_closure *work, bool references);

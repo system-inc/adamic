@@ -89,6 +89,7 @@ func C(program *ir.Program) string {
 	if len(program.Functions) > 0 {
 		builder.WriteString("\n")
 	}
+	emitter.prepareClassShapes()
 	// After the prototypes: a sort's comparator adapter calls one of the program's functions.
 	for _, declaration := range emitter.declarations {
 		builder.WriteString(declaration)
@@ -184,6 +185,9 @@ type emitter struct {
 	shapes map[string]string
 	// thunks are the methods whose adamic_method is declared (methodThunk).
 	thunks map[int]bool
+
+	// fieldOffsets proves uniform named slots across the program (fields.go).
+	fieldOffsets map[string]int
 
 	// initialized is every global main declares, in the order their declarations run: modules in
 	// ECMAScript's order, and each module's from the top.

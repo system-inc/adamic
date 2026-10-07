@@ -1,0 +1,158 @@
+=== RUN   TestBridge
+    bridge_test.go:72: C ABI: 100 queries, outputs survive release, stale and zero handles rejected, second handle distinct; "世界🌍"
+    bridge_test.go:77: input length off by one: ASan heap-buffer-overflow
+    bridge_test.go:90: build, C and JavaScript commands refuse unlinked checker calls
+    bridge_test.go:149: go: tsgo: load_ns=813310000 query_ns=529533933 queries=1600
+    bridge_test.go:154: oracle: 1600 positions across 4 files, 54982 bytes identical under ASan/UBSan/LSan
+    bridge_test.go:156: native-round-1: tsgo: load_ns=596542904 query_ns=172113328 queries=1600 first_query_ns=146864 run_ns=174994151
+    bridge_test.go:157: go-round-1: tsgo: load_ns=407361588 query_ns=366849780 queries=1600
+    bridge_test.go:156: native-round-2: tsgo: load_ns=390818456 query_ns=141198768 queries=1600 first_query_ns=74158 run_ns=144112612
+    bridge_test.go:157: go-round-2: tsgo: load_ns=276262155 query_ns=254656303 queries=1600
+    bridge_test.go:156: native-round-3: tsgo: load_ns=379691672 query_ns=190924375 queries=1600 first_query_ns=59301 run_ns=194014222
+    bridge_test.go:157: go-round-3: tsgo: load_ns=262329148 query_ns=276659938 queries=1600
+    bridge_test.go:197: output string length off by one: ASan heap-buffer-overflow
+    bridge_test.go:207: released handle kept live: stale-handle assertion catches it
+    bridge_test.go:217: type from source-file position: oracle mismatch at byte 6
+    bridge_test.go:224: link opt-in guard removed: refusal test catches it
+    bridge_test.go:235: C output free removed: LeakSanitizer detects the leaked buffers
+    bridge_test.go:273: region probe: Go and native answer 6; adamic: counts: allocations 9 frees 8 retains 6 releases 14 peak 8 regions 1
+    bridge_test.go:283: region entry allocates on heap: LeakSanitizer catches the unowned result
+--- PASS: TestBridge (95.36s)
+=== RUN   TestTSGoRequiresLink
+--- PASS: TestTSGoRequiresLink (0.04s)
+PASS
+ok  	github.com/system-inc/adamic/bridge/tsgo	95.403s
+=== RUN   TestFactEncoding
+=== PAUSE TestFactEncoding
+=== RUN   TestShapeAndNameFacts
+=== PAUSE TestShapeAndNameFacts
+=== CONT  TestFactEncoding
+--- PASS: TestFactEncoding (0.00s)
+=== CONT  TestShapeAndNameFacts
+--- PASS: TestShapeAndNameFacts (0.02s)
+PASS
+ok  	github.com/system-inc/adamic/bridge/tsgo/checker	0.022s
+=== RUN   TestCaseMappingMatchesNode
+=== PAUSE TestCaseMappingMatchesNode
+=== RUN   TestCaseTablesMatchNodesUnicode
+=== PAUSE TestCaseTablesMatchNodesUnicode
+=== RUN   TestArithmeticIsNeverFused
+=== PAUSE TestArithmeticIsNeverFused
+=== RUN   TestToExponentialAndToPrecisionMatchNode
+=== PAUSE TestToExponentialAndToPrecisionMatchNode
+=== RUN   TestToExponentialAndToPrecisionOutOfRangePanic
+=== PAUSE TestToExponentialAndToPrecisionOutOfRangePanic
+=== RUN   TestFreedValuesAreCaughtWithSlabs
+=== PAUSE TestFreedValuesAreCaughtWithSlabs
+=== RUN   TestSizeClassesShareTheirChunks
+=== PAUSE TestSizeClassesShareTheirChunks
+=== RUN   TestIeee754MatchesNodeBitForBit
+=== PAUSE TestIeee754MatchesNodeBitForBit
+=== RUN   TestStringLengthLimit
+=== PAUSE TestStringLengthLimit
+=== RUN   TestMathAndToFixedMatchJavaScript
+=== PAUSE TestMathAndToFixedMatchJavaScript
+=== RUN   TestMaybeNumbersPackIntoOneDouble
+=== PAUSE TestMaybeNumbersPackIntoOneDouble
+=== RUN   TestNormalizeMatchesNode
+=== PAUSE TestNormalizeMatchesNode
+=== RUN   TestNumbersFormatExactlyAsJavaScriptDoes
+=== PAUSE TestNumbersFormatExactlyAsJavaScriptDoes
+=== RUN   TestNumbersParseExactlyAsJavaScriptDoes
+=== PAUSE TestNumbersParseExactlyAsJavaScriptDoes
+=== RUN   TestPowersOfTwoFormatAsJavaScriptDoes
+=== PAUSE TestPowersOfTwoFormatAsJavaScriptDoes
+=== RUN   TestToStringWithARadixMatchesNode
+=== PAUSE TestToStringWithARadixMatchesNode
+=== RUN   TestToStringWithARadixOutOfRangePanics
+=== PAUSE TestToStringWithARadixOutOfRangePanics
+=== RUN   TestStringIndexMatchesNode
+=== PAUSE TestStringIndexMatchesNode
+=== RUN   TestStringsMatchJavaScript
+=== PAUSE TestStringsMatchJavaScript
+=== CONT  TestCaseMappingMatchesNode
+=== CONT  TestNormalizeMatchesNode
+=== CONT  TestSizeClassesShareTheirChunks
+=== CONT  TestToExponentialAndToPrecisionMatchNode
+=== CONT  TestStringsMatchJavaScript
+=== NAME  TestSizeClassesShareTheirChunks
+    heap_test.go:121: peak 152388 KB through every class, 152388 KB at one size
+--- PASS: TestSizeClassesShareTheirChunks (3.92s)
+=== CONT  TestStringIndexMatchesNode
+=== RUN   TestNormalizeMatchesNode/points
+=== PAUSE TestNormalizeMatchesNode/points
+=== RUN   TestNormalizeMatchesNode/contexts
+=== PAUSE TestNormalizeMatchesNode/contexts
+=== CONT  TestToStringWithARadixOutOfRangePanics
+=== NAME  TestStringsMatchJavaScript
+    string_test.go:207: 11460 answers, 0 mismatches
+--- PASS: TestStringsMatchJavaScript (6.28s)
+=== CONT  TestToStringWithARadixMatchesNode
+=== RUN   TestCaseMappingMatchesNode/points
+=== PAUSE TestCaseMappingMatchesNode/points
+=== RUN   TestCaseMappingMatchesNode/contexts
+=== PAUSE TestCaseMappingMatchesNode/contexts
+=== CONT  TestPowersOfTwoFormatAsJavaScriptDoes
+--- PASS: TestToStringWithARadixOutOfRangePanics (6.40s)
+=== CONT  TestNumbersParseExactlyAsJavaScriptDoes
+=== NAME  TestPowersOfTwoFormatAsJavaScriptDoes
+    power_of_two_test.go:58: 20980 values (2,098 powers of two, two neighbors each side, and their negatives), 0 mismatches
+--- PASS: TestPowersOfTwoFormatAsJavaScriptDoes (6.20s)
+=== CONT  TestNumbersFormatExactlyAsJavaScriptDoes
+=== NAME  TestToStringWithARadixMatchesNode
+    radix_test.go:100: 146452 answers (3854 values, every radix from 2 to 36), 0 mismatches
+--- PASS: TestToStringWithARadixMatchesNode (7.03s)
+=== CONT  TestToExponentialAndToPrecisionOutOfRangePanic
+=== NAME  TestToExponentialAndToPrecisionMatchNode
+    dtoa_test.go:156: 778686 answers (3690 values, every argument), 0 mismatches
+--- PASS: TestToExponentialAndToPrecisionMatchNode (16.38s)
+=== CONT  TestArithmeticIsNeverFused
+=== NAME  TestStringIndexMatchesNode
+    string_index_test.go:285: 8796 lines, 0 mismatches
+--- PASS: TestStringIndexMatchesNode (15.56s)
+=== CONT  TestMathAndToFixedMatchJavaScript
+=== NAME  TestNumbersParseExactlyAsJavaScriptDoes
+    parse_test.go:191: 108023 texts, 0 mismatches
+--- PASS: TestNumbersParseExactlyAsJavaScriptDoes (8.78s)
+=== CONT  TestMaybeNumbersPackIntoOneDouble
+=== NAME  TestNumbersFormatExactlyAsJavaScriptDoes
+    number_test.go:120: 255974 values, 0 mismatches
+--- PASS: TestNumbersFormatExactlyAsJavaScriptDoes (8.98s)
+=== CONT  TestStringLengthLimit
+--- PASS: TestToExponentialAndToPrecisionOutOfRangePanic (9.21s)
+=== CONT  TestIeee754MatchesNodeBitForBit
+=== NAME  TestMathAndToFixedMatchJavaScript
+    math_test.go:147: 69132 answers, 0 mismatches
+--- PASS: TestMathAndToFixedMatchJavaScript (6.50s)
+=== CONT  TestCaseTablesMatchNodesUnicode
+--- PASS: TestCaseTablesMatchNodesUnicode (0.04s)
+=== CONT  TestFreedValuesAreCaughtWithSlabs
+=== NAME  TestArithmeticIsNeverFused
+    contract_test.go:92: linux/amd64, -march="haswell": contraction allowed fuses, and Build never does, with or without the sanitizers
+--- PASS: TestArithmeticIsNeverFused (10.46s)
+=== CONT  TestNormalizeMatchesNode/points
+--- PASS: TestStringLengthLimit (5.47s)
+=== CONT  TestNormalizeMatchesNode/contexts
+--- PASS: TestMaybeNumbersPackIntoOneDouble (6.06s)
+=== CONT  TestCaseMappingMatchesNode/points
+=== NAME  TestNormalizeMatchesNode/contexts
+    normalize_test.go:225: 346200 lines, 0 mismatches
+=== CONT  TestCaseMappingMatchesNode/contexts
+=== NAME  TestIeee754MatchesNodeBitForBit
+    ieee754_test.go:261: 1281787 answers (61802 values through each of 19 functions, and atan2 and hypot), 0 mismatches
+--- PASS: TestIeee754MatchesNodeBitForBit (12.68s)
+=== NAME  TestCaseMappingMatchesNode/contexts
+    case_test.go:234: 245410 lines, 0 mismatches
+--- PASS: TestFreedValuesAreCaughtWithSlabs (12.23s)
+=== NAME  TestCaseMappingMatchesNode/points
+    case_test.go:234: 1114112 lines, 0 mismatches
+--- PASS: TestCaseMappingMatchesNode (6.54s)
+    --- PASS: TestCaseMappingMatchesNode/contexts (2.87s)
+    --- PASS: TestCaseMappingMatchesNode/points (22.29s)
+=== NAME  TestNormalizeMatchesNode/points
+    normalize_test.go:225: 1114112 lines, 0 mismatches
+--- PASS: TestNormalizeMatchesNode (6.09s)
+    --- PASS: TestNormalizeMatchesNode/contexts (6.24s)
+    --- PASS: TestNormalizeMatchesNode/points (39.79s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	66.643s

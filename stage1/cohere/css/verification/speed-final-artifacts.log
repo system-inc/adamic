@@ -1,0 +1,25 @@
+=== RUN   TestSharedSliceAppendGap
+    gaps_test.go:75: Node prints 1152; native ASan catches shared-slice append heap-buffer-overflow
+--- PASS: TestSharedSliceAppendGap (0.33s)
+=== RUN   TestCSSProfileArtifacts
+    profile_test.go:24: Go oracle: === RUN   TestAdamicPortCases
+            adamic_port_side_test.go:148: corpus files: map[.css:158 .less:43 .scss:90]
+            adamic_port_side_test.go:216: 24076 cases, 5021 parsed
+            adamic_port_side_test.go:234: Go: 240760 stylesheets in 2.19708267s, 109582 stylesheets/s; 50210 parsed, 95850 children
+        --- PASS: TestAdamicPortCases (2.95s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css/postcss	2.953s
+    profile_test.go:25: === RUN   TestAdamicPrinterCases
+            adamic_print_side_test.go:91: printed stylesheets: 24076 inputs, 4966 formatted, elapsed 999.048465ms
+        --- PASS: TestAdamicPrinterCases (1.00s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css	1.008s
+    profile_test.go:26: === RUN   TestAdamicPrinterCases
+            adamic_print_side_test.go:91: printed stylesheets: 24076 inputs, 4966 formatted, elapsed 952.937881ms
+        --- PASS: TestAdamicPrinterCases (0.95s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css	0.962s
+    profile_test.go:128: saved 4952 shared inputs and 341 profile inputs, 33232 output units
+--- PASS: TestCSSProfileArtifacts (37.98s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/css	38.321s

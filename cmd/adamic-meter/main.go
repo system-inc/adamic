@@ -29,16 +29,19 @@ type finding struct {
 }
 
 type report struct {
-	Root              string       `json:"root"`
-	FilesExamined     int          `json:"files_examined"`
-	JavaScriptSkipped int          `json:"javascript_files_skipped"`
-	Reasons           []*finding   `json:"reasons"`
-	Adaptations       []adaptation `json:"adaptations,omitempty"`
+	Root                  string       `json:"root"`
+	FilesExamined         int          `json:"files_examined"`
+	JavaScriptSkipped     int          `json:"javascript_files_skipped"`
+	FilesReachingLowering int          `json:"files_reaching_lowering"`
+	Reasons               []*finding   `json:"reasons"`
+	Adaptations           []adaptation `json:"adaptations,omitempty"`
 }
 
 type adaptation struct {
-	Rewrite string `json:"rewrite"`
-	Removed int    `json:"diagnostics_removed"`
+	Rewrite             string `json:"rewrite"`
+	Removed             int    `json:"diagnostics_removed"`
+	DeclarationsChanged int    `json:"declarations_changed,omitempty"`
+	FunctionsChanged    int    `json:"functions_changed,omitempty"`
 }
 
 func main() { os.Exit(run(os.Args[1:], os.Stdout, os.Stderr)) }
@@ -80,7 +83,7 @@ func run(arguments []string, stdout, stderr io.Writer) int {
 	if r.JavaScriptSkipped != 0 {
 		fmt.Fprintf(stdout, "; %d JavaScript files skipped (stage 0 accepts only .ts and .a)", r.JavaScriptSkipped)
 	}
-	fmt.Fprintln(stdout)
+	fmt.Fprintf(stdout, "; %d entries reached lowering\n", r.FilesReachingLowering)
 	return 0
 }
 
@@ -171,7 +174,11 @@ func measure(root string, adapt bool) (*report, error) {
 						if diagnosed[filepath.Clean(path)] {
 							continue
 						}
-						for _, found := range inspect(path, overlay) {
+						observations, reached := inspect(path, overlay)
+						if reached {
+							result.FilesReachingLowering++
+						}
+						for _, found := range observations {
 							if found.Kind == "Refused" || found.Kind == "NotYet" {
 								add(path, []observation{found})
 							}
@@ -183,7 +190,11 @@ func measure(root string, adapt bool) (*report, error) {
 			}
 		} else {
 			for _, path := range paths {
-				add(path, inspect(path, overlay))
+				observations, reached := inspect(path, overlay)
+				if reached {
+					result.FilesReachingLowering++
+				}
+				add(path, observations)
 			}
 		}
 	}
@@ -221,6 +232,45 @@ type sourceEdit struct {
 }
 
 func adaptations(paths []string, baselineErr error) (map[string]string, []adaptation, error) {
+	overlay, rewrites, err := importAdaptations(paths, baselineErr)
+	if err != nil {
+		return nil, nil, err
+	}
+	_, before := load.LoadOverlay(paths, overlay)
+	initial := optionalDiagnosticCount(before)
+	changed := 0
+	for {
+		var count int
+		overlay, count, err = optionalAdaptations(paths, overlay, before)
+		if err != nil {
+			return nil, nil, err
+		}
+		if count == 0 {
+			break
+		}
+		changed += count
+		_, before = load.LoadOverlay(paths, overlay)
+	}
+	if changed != 0 {
+		rewrites = append(rewrites, adaptation{Rewrite: optionalRewrite, Removed: initial - optionalDiagnosticCount(before), DeclarationsChanged: changed})
+	}
+	initialReturns := diagnosticCount(before, "7030")
+	overlay, changed, err = returnAdaptations(paths, overlay, before)
+	if err != nil {
+		return nil, nil, err
+	}
+	if changed != 0 {
+		_, after := load.LoadOverlay(paths, overlay)
+		rewrites = append(rewrites, adaptation{Rewrite: returnRewrite, Removed: initialReturns - diagnosticCount(after, "7030"), FunctionsChanged: changed})
+	}
+	return overlay, rewrites, nil
+}
+
+func optionalDiagnosticCount(err error) int {
+	return diagnosticCount(err, "2412") + diagnosticCount(err, "2375") + diagnosticCount(err, "2379")
+}
+
+func importAdaptations(paths []string, baselineErr error) (map[string]string, []adaptation, error) {
 	var checkError *load.CheckError
 	if !errors.As(baselineErr, &checkError) {
 		return nil, nil, nil
@@ -282,12 +332,12 @@ func diagnosticCount(err error, code string) int {
 	return count
 }
 
-func inspect(path string, overlay map[string]string) []observation {
+func inspect(path string, overlay map[string]string) ([]observation, bool) {
 	program, err := load.LoadOverlay([]string{path}, overlay)
 	if err != nil {
 		var checkError *load.CheckError
 		if !errors.As(err, &checkError) {
-			return []observation{{"load", normalize(err.Error()), path}}
+			return []observation{{"load", normalize(err.Error()), path}}, false
 		}
 		observations := make([]observation, 0, len(checkError.Diagnostics))
 		for _, diagnostic := range checkError.Diagnostics {
@@ -298,21 +348,21 @@ func inspect(path string, overlay map[string]string) []observation {
 				observations = append(observations, observation{typescriptCategory(match[2]), "TypeScript TS" + match[2], match[1]})
 			}
 		}
-		return observations
+		return observations, false
 	}
 	_, err = lower.Lower(context.Background(), program)
 	if err == nil {
-		return nil
+		return nil, true
 	}
 	var refused *lower.Refused
 	if errors.As(err, &refused) {
-		return []observation{{"Refused", normalize(refused.What), refused.Where}}
+		return []observation{{"Refused", normalize(refused.What), refused.Where}}, true
 	}
 	var notYet *lower.NotYet
 	if errors.As(err, &notYet) {
-		return []observation{{"NotYet", normalize(notYet.What), notYet.Where}}
+		return []observation{{"NotYet", normalize(notYet.What), notYet.Where}}, true
 	}
-	return []observation{{"lower", normalize(err.Error()), path}}
+	return []observation{{"lower", normalize(err.Error()), path}}, true
 }
 
 // TypeScript assigns its basic parser diagnostics to the low 1xxx range (and JSX parser diagnostics
