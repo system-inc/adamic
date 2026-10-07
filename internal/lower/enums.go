@@ -244,6 +244,9 @@ func (l *lowering) enumExpression(node *ast.Node) (ir.Expression, bool, error) {
 		declaration := member.Parent
 		if ast.HasSyntacticModifier(declaration, ast.ModifierFlagsConst) {
 			value, err := l.enumConstant(member)
+			if err == nil {
+				value = l.namespaceReadyValue(node, value)
+			}
 			return value, true, err
 		}
 		var receiver *ast.Node
