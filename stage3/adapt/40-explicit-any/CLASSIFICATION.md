@@ -1,12 +1,12 @@
-# Explicit any classification: 70 done, 140 remaining
+# Explicit any classification: 74 done, 136 remaining
 
 Sites 138 (filesystem entry classification) and 58 (array predicate input) are done.
 The original census remains below for traceability.
 
 
-The original disjoint classification below describes the 207-token census after the first three owner edits, not the original 210-token census. Brands (36), enum display (23), diagnostics (6), the array predicate input (1), and filesystem entry classification (1) are now done, as recorded in PROGRESS.md: 70 tokens removed in total, 140 remaining. The location sections retain original site IDs for traceability. Every token has an ID and exact file:line:column in evidence/classification.json. Multiple tokens on one line remain separate sites. The counts below are semantic patterns; erased syntax is an independent axis, not a catch-all class. All suggested types remain proposals until checked against owners and consumers. A type-only candidate is not a completed proof.
+The original disjoint classification below describes the 207-token census after the first three owner edits, not the original 210-token census. Brands (36), enum display (23), diagnostics (6), the array predicate input (1), filesystem entry classification (1), and Error host members (4) are now done, as recorded in PROGRESS.md and ERROR-HOST.md: 74 tokens removed in total, 136 remaining. The location sections retain original site IDs for traceability. Every token has an ID and exact file:line:column in evidence/classification.json. Multiple tokens on one line remain separate sites. The counts below are semantic patterns; erased syntax is an independent axis, not a catch-all class. All suggested types remain proposals until checked against owners and consumers. A type-only candidate is not a completed proof.
 
-Completed classes: brands 36, enum display 23, diagnostics 6, array predicate input 1, filesystem entry classification 1, plus the earlier three core owners: 70 of 210 tokens done.
+Completed classes: brands 36, enum display 23, diagnostics 6, array predicate input 1, filesystem entry classification 1, Error host members 4, plus the earlier three core owners: 74 of 210 tokens done.
 
 Remaining classes:
 
@@ -16,7 +16,7 @@ Remaining classes:
 | Timer handles and variadic timer forwarding | 16 | Generic parameters for the host timer handle and argument tuple, carried together through registration, storage, callback and cancellation declarations. |
 | Incomplete runtime constructors and storage initialization | 11 | Decline until constructor return and staged initialization contracts are modeled at their owners. |
 | Generic enumerable copy and metadata copy | 10 | Decline until enumerable copy results and writable key relationships have an owner contract. |
-| Standard runtime feature probes | 8 | Real type: existing Array, String and Error APIs, with optional host availability declared at their owners where older runtimes omit the API. |
+| Standard runtime feature probes | 4 | Real type: existing Array, String and Error APIs, with optional host availability declared at their owners where older runtimes omit the API. |
 | AST subtype properties and mutable manufactured nodes | 6 | Real type: the precise node union or manufactured node shape at the owning declaration. |
 | Display projections on known internal objects | 6 | Real type: declare the actual optional display fields or recursive option display value at the object owner, preserving existing control flow. |
 | Generic builder program factory escapes | 5 | Decline until the generic program type is tied to the selected factory and persisted builder result at the owner. |
@@ -41,7 +41,7 @@ Remaining classes:
 | Resolution result update | 1 | Real type: declare the mutable resolvedModule result field at its actual owner. |
 | Unused scanner reduction state | 1 | Real type: undefined, the state passed by both getLeadingCommentRanges and getTrailingCommentRanges. |
 
-Original total: 207 tokens, 28 files, 33 disjoint classes. The remaining table excludes all five completed classes: 140 tokens in 28 classes. No token remains unclassified.
+Original total: 207 tokens, 28 files, 33 disjoint classes. The remaining table excludes completed classes and the four completed Error sites: 136 tokens in 28 classes. No token remains unclassified.
 
 ## Decision
 
@@ -239,9 +239,14 @@ Locations:
 - 92: `src/compiler/factory/nodeFactory.ts:6145:22`
 - 93: `src/compiler/factory/nodeFactory.ts:6145:43`
 
-### Standard runtime feature probes (8)
+### Standard runtime feature probes (4 done, 4 remaining)
 
-Array.at, Error.captureStackTrace, String.fromCodePoint and Error.stackTraceLimit. Some are standard built-ins, others Node/V8 additions; availability is already tested. They are not parsed JSON.
+Sites 66, 67, 126 and 127 are done: `(Error as any)` becomes `Error`,
+including removal of the assertion parentheses. The compiler tsconfig already
+selects Node types; @types/node 25.3.3 declares captureStackTrace and
+stackTraceLimit on ErrorConstructor. No declaration or runtime contract is
+added. The remaining four sites are Array.at and String.fromCodePoint.
+See [ERROR-HOST.md](ERROR-HOST.md) for build, emission, API and mutant proof.
 
 Rule: Real type: existing Array, String and Error APIs, with optional host availability declared at their owners where older runtimes omit the API.
 
