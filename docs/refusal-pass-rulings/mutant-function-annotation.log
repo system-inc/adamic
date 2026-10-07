@@ -1,0 +1,18 @@
+--- FAIL: TestRefusalPassRulings (0.00s)
+    --- FAIL: TestRefusalPassRulings/function-alias.a (0.12s)
+        refusal_pass_test.go:31: got <nil>, want Refused
+    --- FAIL: TestRefusalPassRulings/function-variable.a (0.13s)
+        refusal_pass_test.go:31: got <nil>, want Refused
+    --- FAIL: TestRefusalPassRulings/function-union.a (0.12s)
+        refusal_pass_test.go:31: got <nil>, want Refused
+    --- FAIL: TestRefusalPassRulings/function-parameter.a (0.05s)
+        refusal_pass_test.go:31: got <nil>, want Refused
+    --- FAIL: TestRefusalPassRulings/function-field.a (0.06s)
+        refusal_pass_test.go:31: got <nil>, want Refused
+    --- FAIL: TestRefusalPassRulings/function-type-argument.a (0.15s)
+        refusal_pass_test.go:31: got <nil>, want Refused
+    --- FAIL: TestRefusalPassRulings/observe-function.a (0.04s)
+        refusal_pass_test.go:31: got /tmp/adamic-gate/TestRefusalPassRulingsobserve-function.a2521991525/001/main.a:1:55: stage 0 can't lower a call to an Identifier yet, want Refused
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.485s
+FAIL

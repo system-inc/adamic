@@ -1,0 +1,8 @@
+--- FAIL: TestRefusalPassRulings (0.00s)
+    --- FAIL: TestRefusalPassRulings/new-function.a (0.13s)
+        refusal_pass_test.go:31: got /tmp/adamic-gate/TestRefusalPassRulingsnew-function.a396570975/001/main.a:1:15: stage 0 can't lower new an Identifier yet, want Refused
+    --- FAIL: TestRefusalPassRulings/new-function-order.a (0.06s)
+        refusal_pass_test.go:31: got /tmp/adamic-gate/TestRefusalPassRulingsnew-function-order.a10321/001/main.a:1:26: stage 0 can't lower a function inside a function (a closure) yet, want Refused
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.401s
+FAIL

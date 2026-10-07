@@ -1,0 +1,20 @@
+--- FAIL: TestRefusalPassRulings (0.00s)
+    --- FAIL: TestRefusalPassRulings/class-namespace-first.a (0.08s)
+        refusal_pass_test.go:36: got "main.a:1:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports", want "main.a:1:1: Adamic 0.1 refuses declaration merging of class Box with namespace Box; declare and initialize members in class Box; use a separate interface for an object's checked shape, or a module for namespace exports"
+    --- FAIL: TestRefusalPassRulings/class-interface-first.a (0.05s)
+        refusal_pass_test.go:31: got <nil>, want Refused
+    --- FAIL: TestRefusalPassRulings/class-interface.a (0.05s)
+        refusal_pass_test.go:31: got <nil>, want Refused
+    --- FAIL: TestRefusalPassRulings/class-interface-extends.a (0.05s)
+        refusal_pass_test.go:31: got <nil>, want Refused
+    --- FAIL: TestRefusalPassRulings/class-call-signature.a (0.08s)
+        refusal_pass_test.go:31: got <nil>, want Refused
+    --- FAIL: TestRefusalPassRulings/class-construct-signature.a (0.08s)
+        refusal_pass_test.go:31: got <nil>, want Refused
+    --- FAIL: TestRefusalPassRulings/observe-class.a (0.06s)
+        refusal_pass_test.go:31: got <nil>, want Refused
+    --- FAIL: TestRefusalPassRulings/class-namespace.a (0.05s)
+        refusal_pass_test.go:36: got "main.a:1:22: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports", want "main.a:1:22: Adamic 0.1 refuses declaration merging of class Box with namespace Box; declare and initialize members in class Box; use a separate interface for an object's checked shape, or a module for namespace exports"
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.381s
+FAIL
