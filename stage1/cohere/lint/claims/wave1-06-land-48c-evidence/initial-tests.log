@@ -1,0 +1,334 @@
+=== RUN   TestRulesAgree
+    lint_test.go:406: cohere cases: 4182 unique source/rule/options combinations
+    lint_test.go:439: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1590010935/019/case-341/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:440: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:440: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1590010935/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree1590010935/019/case-341/repository/source/Thing.ts
+    lint_test.go:440: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree1590010935/019/case-341/repository/source/Thing.ts
+    lint_test.go:439: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1590010935/019/case-343/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:440: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:440: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1590010935/003/scanner: timeout=true: signal: killed: 
+    lint_test.go:440: explicit unsupported recovery: node: timeout=true: signal: killed: 
+    lint_test.go:439: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1590010935/019/case-347/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:440: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:440: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1590010935/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree1590010935/019/case-347/repository/source/Thing.ts
+    lint_test.go:440: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree1590010935/019/case-347/repository/source/Thing.ts
+    lint_test.go:439: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1590010935/019/case-348/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:440: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:440: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1590010935/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree1590010935/019/case-348/repository/source/Thing.ts
+    lint_test.go:440: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree1590010935/019/case-348/repository/source/Thing.ts
+    lint_test.go:439: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1590010935/019/case-357/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:440: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:440: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1590010935/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree1590010935/019/case-357/repository/source/Thing.ts
+    lint_test.go:440: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree1590010935/019/case-357/repository/source/Thing.ts
+    lint_test.go:439: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1590010935/019/case-359/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:440: Go recovered output: case 0
+        /tmp/adamic-gate/TestRulesAgree1590010935/019/case-359/repository/source/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 33 errorMethod fix	m: (a: string) => void;		14 33
+        recovery findings only
+    lint_test.go:440: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1590010935/003/scanner: timeout=true: signal: killed: 
+    lint_test.go:440: explicit unsupported recovery: node: timeout=true: signal: killed: 
+    lint_test.go:439: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1590010935/019/case-361/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:440: Go recovered output: case 0
+        /tmp/adamic-gate/TestRulesAgree1590010935/019/case-361/repository/source/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 34 errorMethod fix	m: (a: string) => void;		14 34
+        recovery findings only
+    lint_test.go:440: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1590010935/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree1590010935/019/case-361/repository/source/Thing.ts
+    lint_test.go:440: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree1590010935/019/case-361/repository/source/Thing.ts
+    lint_test.go:439: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1590010935/019/case-362/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:440: Go recovered output: case 0
+        /tmp/adamic-gate/TestRulesAgree1590010935/019/case-362/repository/source/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 27 errorMethod 			14 27
+        recovery findings only
+    lint_test.go:440: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1590010935/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree1590010935/019/case-362/repository/source/Thing.ts
+    lint_test.go:440: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree1590010935/019/case-362/repository/source/Thing.ts
+    lint_test.go:445: Go, Node, emitted JavaScript, native identical: 13871433 bytes
+--- PASS: TestRulesAgree (281.12s)
+=== RUN   TestMutants
+=== RUN   TestMutants/wrong-diagnostic-id
+=== PAUSE TestMutants/wrong-diagnostic-id
+=== RUN   TestMutants/wrong-diagnostic-id#01
+=== PAUSE TestMutants/wrong-diagnostic-id#01
+=== RUN   TestMutants/wrong-global-type-name
+=== PAUSE TestMutants/wrong-global-type-name
+=== RUN   TestMutants/omit-empty-export-fix
+=== PAUSE TestMutants/omit-empty-export-fix
+=== RUN   TestMutants/wrong-enclosing-scope
+=== PAUSE TestMutants/wrong-enclosing-scope
+=== RUN   TestMutants/configured-restriction-ignored
+=== PAUSE TestMutants/configured-restriction-ignored
+=== RUN   TestMutants/report-left-reference
+=== PAUSE TestMutants/report-left-reference
+=== CONT  TestMutants/wrong-diagnostic-id
+=== CONT  TestMutants/wrong-enclosing-scope
+=== NAME  TestMutants/wrong-diagnostic-id
+    lint_test.go:867: wrong-diagnostic-id caught on Node: case 85 line 4309: port "range 65 93 wrongStrategy \t\t\t65 93", Go "range 65 93 noBeforeInteractiveScriptOutsideDocument \t\t\t65 93"
+        Go context:
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 85
+        /tmp/adamic-gate/TestMutantswrong-diagnostic-id1842020801/016/no-before-interactive-script-outside-document-0.tsx:2:32
+          @next/next/no-before-interactive-script-outside-document  This loads a script with next/script's beforeInteractive strategy outside of pages/_document.js. That strategy only has a place to run before hydration when the framework injects it from the document, so anywhere else the script is either deferred until after hydration or evaluated twice, and code depending on it having already run sees a different order in development than in production. Move the script into pages/_document.js, or pick a strategy that does not promise to run first.
+        
+        range 65 93 noBeforeInteractiveScriptOutsideDocument 			65 93
+        fixed	import Script from "next/script";\u000aexport const C = () => <Script strategy="beforeInteractive" />;\u000a
+    lint_test.go:867: wrong-diagnostic-id caught on emitted JavaScript: case 85 line 4309: port "range 65 93 wrongStrategy \t\t\t65 93", Go "range 65 93 noBeforeInteractiveScriptOutsideDocument \t\t\t65 93"
+        Go context:
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 85
+        /tmp/adamic-gate/TestMutantswrong-diagnostic-id1842020801/016/no-before-interactive-script-outside-document-0.tsx:2:32
+          @next/next/no-before-interactive-script-outside-document  This loads a script with next/script's beforeInteractive strategy outside of pages/_document.js. That strategy only has a place to run before hydration when the framework injects it from the document, so anywhere else the script is either deferred until after hydration or evaluated twice, and code depending on it having already run sees a different order in development than in production. Move the script into pages/_document.js, or pick a strategy that does not promise to run first.
+        
+        range 65 93 noBeforeInteractiveScriptOutsideDocument 			65 93
+        fixed	import Script from "next/script";\u000aexport const C = () => <Script strategy="beforeInteractive" />;\u000a
+    lint_test.go:867: wrong-diagnostic-id caught on native: case 85 line 4309: port "range 65 93 wrongStrategy \t\t\t65 93", Go "range 65 93 noBeforeInteractiveScriptOutsideDocument \t\t\t65 93"
+        Go context:
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 85
+        /tmp/adamic-gate/TestMutantswrong-diagnostic-id1842020801/016/no-before-interactive-script-outside-document-0.tsx:2:32
+          @next/next/no-before-interactive-script-outside-document  This loads a script with next/script's beforeInteractive strategy outside of pages/_document.js. That strategy only has a place to run before hydration when the framework injects it from the document, so anywhere else the script is either deferred until after hydration or evaluated twice, and code depending on it having already run sees a different order in development than in production. Move the script into pages/_document.js, or pick a strategy that does not promise to run first.
+        
+        range 65 93 noBeforeInteractiveScriptOutsideDocument 			65 93
+        fixed	import Script from "next/script";\u000aexport const C = () => <Script strategy="beforeInteractive" />;\u000a
+=== CONT  TestMutants/report-left-reference
+=== NAME  TestMutants/wrong-enclosing-scope
+    lint_test.go:867: wrong-enclosing-scope caught on Node: case 36 line 1571: port "  no-inner-declarations  Move function declaration to function body root. A declaration written inside a block does not belong to that block: `var` reaches the whole enclosing function regardless of the braces around it, and a hoisted function binding has been three different things across engines and editions. Writing it at the root says what actually happens.", Go "  no-inner-declarations  Move function declaration to program root. A declaration written inside a block does not belong to that block: `var` reaches the whole enclosing function regardless of the braces around it, and a hoisted function binding has been three different things across engines and editions. Writing it at the root says what actually happens."
+        Go context:
+        /tmp/adamic-gate/TestMutantswrong-enclosing-scope3369637844/007/generated-6.ts:1:52
+          nexus/consistency-no-ambiguous-identifier  Single-letter identifier "f" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.
+        
+        range 51 52 noSingleLetter 			51 52
+        /tmp/adamic-gate/TestMutantswrong-enclosing-scope3369637844/007/generated-6.ts:1:57
+          no-inner-declarations  Move function declaration to program root. A declaration written inside a block does not belong to that block: `var` reaches the whole enclosing function regardless of the braces around it, and a hoisted function binding has been three different things across engines and editions. Writing it at the root says what actually happens.
+        
+        range 56 91 moveDeclToRoot 			56 91
+        /tmp/adamic-gate/TestMutantswrong-enclosing-scope3369637844/007/generated-6.ts:1:87
+          nexus/consistency-no-ambiguous-identifier  Single-letter identifier "g" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.
+    lint_test.go:867: wrong-enclosing-scope caught on emitted JavaScript: case 36 line 1571: port "  no-inner-declarations  Move function declaration to function body root. A declaration written inside a block does not belong to that block: `var` reaches the whole enclosing function regardless of the braces around it, and a hoisted function binding has been three different things across engines and editions. Writing it at the root says what actually happens.", Go "  no-inner-declarations  Move function declaration to program root. A declaration written inside a block does not belong to that block: `var` reaches the whole enclosing function regardless of the braces around it, and a hoisted function binding has been three different things across engines and editions. Writing it at the root says what actually happens."
+        Go context:
+        /tmp/adamic-gate/TestMutantswrong-enclosing-scope3369637844/007/generated-6.ts:1:52
+          nexus/consistency-no-ambiguous-identifier  Single-letter identifier "f" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.
+        
+        range 51 52 noSingleLetter 			51 52
+        /tmp/adamic-gate/TestMutantswrong-enclosing-scope3369637844/007/generated-6.ts:1:57
+          no-inner-declarations  Move function declaration to program root. A declaration written inside a block does not belong to that block: `var` reaches the whole enclosing function regardless of the braces around it, and a hoisted function binding has been three different things across engines and editions. Writing it at the root says what actually happens.
+        
+        range 56 91 moveDeclToRoot 			56 91
+        /tmp/adamic-gate/TestMutantswrong-enclosing-scope3369637844/007/generated-6.ts:1:87
+          nexus/consistency-no-ambiguous-identifier  Single-letter identifier "g" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.
+    lint_test.go:867: wrong-enclosing-scope caught on native: case 36 line 1571: port "  no-inner-declarations  Move function declaration to function body root. A declaration written inside a block does not belong to that block: `var` reaches the whole enclosing function regardless of the braces around it, and a hoisted function binding has been three different things across engines and editions. Writing it at the root says what actually happens.", Go "  no-inner-declarations  Move function declaration to program root. A declaration written inside a block does not belong to that block: `var` reaches the whole enclosing function regardless of the braces around it, and a hoisted function binding has been three different things across engines and editions. Writing it at the root says what actually happens."
+        Go context:
+        /tmp/adamic-gate/TestMutantswrong-enclosing-scope3369637844/007/generated-6.ts:1:52
+          nexus/consistency-no-ambiguous-identifier  Single-letter identifier "f" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.
+        
+        range 51 52 noSingleLetter 			51 52
+        /tmp/adamic-gate/TestMutantswrong-enclosing-scope3369637844/007/generated-6.ts:1:57
+          no-inner-declarations  Move function declaration to program root. A declaration written inside a block does not belong to that block: `var` reaches the whole enclosing function regardless of the braces around it, and a hoisted function binding has been three different things across engines and editions. Writing it at the root says what actually happens.
+        
+        range 56 91 moveDeclToRoot 			56 91
+        /tmp/adamic-gate/TestMutantswrong-enclosing-scope3369637844/007/generated-6.ts:1:87
+          nexus/consistency-no-ambiguous-identifier  Single-letter identifier "g" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.
+=== CONT  TestMutants/configured-restriction-ignored
+=== NAME  TestMutants/report-left-reference
+    lint_test.go:867: report-left-reference caught on Node: case 85 line 4306: port "/tmp/adamic-gate/TestMutantsreport-left-reference1578148607/016/no-self-assign-0.ts:1:1", Go "/tmp/adamic-gate/TestMutantsreport-left-reference1578148607/016/no-self-assign-0.ts:1:9"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 85
+        /tmp/adamic-gate/TestMutantsreport-left-reference1578148607/016/no-self-assign-0.ts:1:9
+          no-self-assign  This assigns a value to itself, so it does nothing. The statement is not merely redundant: it is almost always a typo for an assignment that was meant to happen, so the value the author intended to write is still missing and nothing reports that it is.
+        
+        range 8 13 selfAssignment 			8 13
+        fixed	value = value;\u000a
+    lint_test.go:867: report-left-reference caught on emitted JavaScript: case 85 line 4306: port "/tmp/adamic-gate/TestMutantsreport-left-reference1578148607/016/no-self-assign-0.ts:1:1", Go "/tmp/adamic-gate/TestMutantsreport-left-reference1578148607/016/no-self-assign-0.ts:1:9"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 85
+        /tmp/adamic-gate/TestMutantsreport-left-reference1578148607/016/no-self-assign-0.ts:1:9
+          no-self-assign  This assigns a value to itself, so it does nothing. The statement is not merely redundant: it is almost always a typo for an assignment that was meant to happen, so the value the author intended to write is still missing and nothing reports that it is.
+        
+        range 8 13 selfAssignment 			8 13
+        fixed	value = value;\u000a
+    lint_test.go:867: report-left-reference caught on native: case 85 line 4306: port "/tmp/adamic-gate/TestMutantsreport-left-reference1578148607/016/no-self-assign-0.ts:1:1", Go "/tmp/adamic-gate/TestMutantsreport-left-reference1578148607/016/no-self-assign-0.ts:1:9"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 85
+        /tmp/adamic-gate/TestMutantsreport-left-reference1578148607/016/no-self-assign-0.ts:1:9
+          no-self-assign  This assigns a value to itself, so it does nothing. The statement is not merely redundant: it is almost always a typo for an assignment that was meant to happen, so the value the author intended to write is still missing and nothing reports that it is.
+        
+        range 8 13 selfAssignment 			8 13
+        fixed	value = value;\u000a
+=== CONT  TestMutants/wrong-global-type-name
+=== NAME  TestMutants/configured-restriction-ignored
+    lint_test.go:867: configured-restriction-ignored caught on Node: case 85 line 4306: port "fixed\tfoo.bar;\\u000a", Go "/tmp/adamic-gate/TestMutantsconfigured-restriction-ignored4283852314/016/no-restricted-properties-0.ts:1:1"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 85
+        /tmp/adamic-gate/TestMutantsconfigured-restriction-ignored4283852314/016/no-restricted-properties-0.ts:1:1
+          no-restricted-properties  `foo.bar` is restricted from being used.
+        
+        range 0 7 restrictedObjectProperty 			0 7
+        fixed	foo.bar;\u000a
+    lint_test.go:867: configured-restriction-ignored caught on emitted JavaScript: case 85 line 4306: port "fixed\tfoo.bar;\\u000a", Go "/tmp/adamic-gate/TestMutantsconfigured-restriction-ignored4283852314/016/no-restricted-properties-0.ts:1:1"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 85
+        /tmp/adamic-gate/TestMutantsconfigured-restriction-ignored4283852314/016/no-restricted-properties-0.ts:1:1
+          no-restricted-properties  `foo.bar` is restricted from being used.
+        
+        range 0 7 restrictedObjectProperty 			0 7
+        fixed	foo.bar;\u000a
+    lint_test.go:867: configured-restriction-ignored caught on native: case 85 line 4306: port "fixed\tfoo.bar;\\u000a", Go "/tmp/adamic-gate/TestMutantsconfigured-restriction-ignored4283852314/016/no-restricted-properties-0.ts:1:1"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 85
+        /tmp/adamic-gate/TestMutantsconfigured-restriction-ignored4283852314/016/no-restricted-properties-0.ts:1:1
+          no-restricted-properties  `foo.bar` is restricted from being used.
+        
+        range 0 7 restrictedObjectProperty 			0 7
+        fixed	foo.bar;\u000a
+=== CONT  TestMutants/omit-empty-export-fix
+    lint_test.go:867: omit-empty-export-fix caught on Node: case 85 line 4309: port "range 24 34 uselessEmptyExport \t\t\t24 34", Go "range 24 34 uselessEmptyExport fix\t\t\t24 34"
+        Go context:
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 85
+        /tmp/adamic-gate/TestMutantsomit-empty-export-fix2600012566/016/no-useless-empty-export-0.ts:2:1
+          @typescript-eslint/no-useless-empty-export  An `export {}` exists to make a script into a module, and this file is already a module because something else in it imports or exports. The statement therefore changes nothing, and it reads as though it were load-bearing to anyone deciding whether they may delete it. Remove it.
+        
+        range 24 34 uselessEmptyExport fix			24 34
+        fixed	export const value = 1;\u000a\u000a
+    lint_test.go:867: omit-empty-export-fix caught on emitted JavaScript: case 85 line 4309: port "range 24 34 uselessEmptyExport \t\t\t24 34", Go "range 24 34 uselessEmptyExport fix\t\t\t24 34"
+        Go context:
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 85
+        /tmp/adamic-gate/TestMutantsomit-empty-export-fix2600012566/016/no-useless-empty-export-0.ts:2:1
+          @typescript-eslint/no-useless-empty-export  An `export {}` exists to make a script into a module, and this file is already a module because something else in it imports or exports. The statement therefore changes nothing, and it reads as though it were load-bearing to anyone deciding whether they may delete it. Remove it.
+        
+        range 24 34 uselessEmptyExport fix			24 34
+        fixed	export const value = 1;\u000a\u000a
+    lint_test.go:867: omit-empty-export-fix caught on native: case 85 line 4309: port "range 24 34 uselessEmptyExport \t\t\t24 34", Go "range 24 34 uselessEmptyExport fix\t\t\t24 34"
+        Go context:
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 85
+        /tmp/adamic-gate/TestMutantsomit-empty-export-fix2600012566/016/no-useless-empty-export-0.ts:2:1
+          @typescript-eslint/no-useless-empty-export  An `export {}` exists to make a script into a module, and this file is already a module because something else in it imports or exports. The statement therefore changes nothing, and it reads as though it were load-bearing to anyone deciding whether they may delete it. Remove it.
+        
+        range 24 34 uselessEmptyExport fix			24 34
+        fixed	export const value = 1;\u000a\u000a
+=== CONT  TestMutants/wrong-diagnostic-id#01
+=== NAME  TestMutants/wrong-global-type-name
+    lint_test.go:867: wrong-global-type-name caught on Node: case 85 line 4306: port "fixed\texport let handler: Function;\\u000a", Go "/tmp/adamic-gate/TestMutantswrong-global-type-name1799189116/016/no-unsafe-function-type-0.ts:1:21"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 85
+        /tmp/adamic-gate/TestMutantswrong-global-type-name1799189116/016/no-unsafe-function-type-0.ts:1:21
+          @typescript-eslint/no-unsafe-function-type  The `Function` type accepts any function-like value, so it constrains nothing beyond callability: it says nothing about parameters, nothing about the return type, and a value typed this way can be called with any arguments and produces `any`. That is the opposite of what a type annotation is for. Write the signature the value actually has, such as `(input: string) => number`, or `() => void` when it takes nothing and returns nothing.
+        
+        range 20 28 bannedFunctionType 			20 28
+        fixed	export let handler: Function;\u000a
+    lint_test.go:867: wrong-global-type-name caught on emitted JavaScript: case 85 line 4306: port "fixed\texport let handler: Function;\\u000a", Go "/tmp/adamic-gate/TestMutantswrong-global-type-name1799189116/016/no-unsafe-function-type-0.ts:1:21"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 85
+        /tmp/adamic-gate/TestMutantswrong-global-type-name1799189116/016/no-unsafe-function-type-0.ts:1:21
+          @typescript-eslint/no-unsafe-function-type  The `Function` type accepts any function-like value, so it constrains nothing beyond callability: it says nothing about parameters, nothing about the return type, and a value typed this way can be called with any arguments and produces `any`. That is the opposite of what a type annotation is for. Write the signature the value actually has, such as `(input: string) => number`, or `() => void` when it takes nothing and returns nothing.
+        
+        range 20 28 bannedFunctionType 			20 28
+        fixed	export let handler: Function;\u000a
+    lint_test.go:867: wrong-global-type-name caught on native: case 85 line 4306: port "fixed\texport let handler: Function;\\u000a", Go "/tmp/adamic-gate/TestMutantswrong-global-type-name1799189116/016/no-unsafe-function-type-0.ts:1:21"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 85
+        /tmp/adamic-gate/TestMutantswrong-global-type-name1799189116/016/no-unsafe-function-type-0.ts:1:21
+          @typescript-eslint/no-unsafe-function-type  The `Function` type accepts any function-like value, so it constrains nothing beyond callability: it says nothing about parameters, nothing about the return type, and a value typed this way can be called with any arguments and produces `any`. That is the opposite of what a type annotation is for. Write the signature the value actually has, such as `(input: string) => number`, or `() => void` when it takes nothing and returns nothing.
+        
+        range 20 28 bannedFunctionType 			20 28
+        fixed	export let handler: Function;\u000a
+=== NAME  TestMutants/wrong-diagnostic-id#01
+    lint_test.go:867: wrong-diagnostic-id caught on Node: case 85 line 4309: port "range 23 62 wrongCssTags \t\t\t23 62", Go "range 23 62 noCssTags \t\t\t23 62"
+        Go context:
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 85
+        /tmp/adamic-gate/TestMutantswrong-diagnostic-id#013387130018/016/no-css-tags-0.tsx:1:24
+          @next/next/no-css-tags  This is a manual stylesheet <link>. Next builds and versions its own CSS, so a hand-written link to a local stylesheet is not fingerprinted, not bundled, and will serve a stale file from cache after a deploy. Import the stylesheet instead and let the framework emit the tag.
+        
+        range 23 62 noCssTags 			23 62
+        fixed	export const C = () => <link rel="stylesheet" href="/a.css" />;\u000a
+    lint_test.go:867: wrong-diagnostic-id caught on emitted JavaScript: case 85 line 4309: port "range 23 62 wrongCssTags \t\t\t23 62", Go "range 23 62 noCssTags \t\t\t23 62"
+        Go context:
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 85
+        /tmp/adamic-gate/TestMutantswrong-diagnostic-id#013387130018/016/no-css-tags-0.tsx:1:24
+          @next/next/no-css-tags  This is a manual stylesheet <link>. Next builds and versions its own CSS, so a hand-written link to a local stylesheet is not fingerprinted, not bundled, and will serve a stale file from cache after a deploy. Import the stylesheet instead and let the framework emit the tag.
+        
+        range 23 62 noCssTags 			23 62
+        fixed	export const C = () => <link rel="stylesheet" href="/a.css" />;\u000a
+    lint_test.go:867: wrong-diagnostic-id caught on native: case 85 line 4309: port "range 23 62 wrongCssTags \t\t\t23 62", Go "range 23 62 noCssTags \t\t\t23 62"
+        Go context:
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 85
+        /tmp/adamic-gate/TestMutantswrong-diagnostic-id#013387130018/016/no-css-tags-0.tsx:1:24
+          @next/next/no-css-tags  This is a manual stylesheet <link>. Next builds and versions its own CSS, so a hand-written link to a local stylesheet is not fingerprinted, not bundled, and will serve a stale file from cache after a deploy. Import the stylesheet instead and let the framework emit the tag.
+        
+        range 23 62 noCssTags 			23 62
+        fixed	export const C = () => <link rel="stylesheet" href="/a.css" />;\u000a
+--- PASS: TestMutants (3.40s)
+    --- PASS: TestMutants/wrong-diagnostic-id (58.73s)
+    --- PASS: TestMutants/wrong-enclosing-scope (58.94s)
+    --- PASS: TestMutants/report-left-reference (49.08s)
+    --- PASS: TestMutants/configured-restriction-ignored (49.31s)
+    --- PASS: TestMutants/omit-empty-export-fix (44.46s)
+    --- PASS: TestMutants/wrong-global-type-name (45.27s)
+    --- PASS: TestMutants/wrong-diagnostic-id#01 (44.20s)
+=== RUN   TestOwnedWitnesses
+    registration_test.go:45: Node: case 134 line 1345: port "range 21 44 useSimpleComment fix\t// Unicode prose.\t\t21 44", Go "range 21 44 useSimpleComment fix\t// \\u0085Unicode prose.\\u0085\t\t21 44"
+        Go context:
+        fixed	#!/usr/bin/env node\u000a// Leading prose.\u000aconst text = '/** literal content. */';\u000aconst expression = /[/*]/;\u000aconst template = `/** template content. */`;\u000a/** @returns nothing */\u000afunction f() {\u000a    /**\u000a     * Single wrapped prose.\u000a     */\u000a    /** See // for details. */\u000a    return 1;\u000a}\u000af(/** argument */);\u000aconst [a, b /**, c */] = [1, 2];\u000a/** Two lines.\u000a * More prose.\u000a */\u000a// Trailing prose.\u000a
+        case 134
+        /tmp/adamic-gate/TestOwnedWitnesses2953899742/330/nexus-consistency-no-single-line-jsdoc-2.ts:2:1
+          nexus/consistency-no-single-line-jsdoc  A JSDoc comment carrying one line of description should be a line comment. JSDoc's delimiters exist to hold structure, so spending three lines of them on a sentence tells a reader to look for tags that are not there.
+        
+        range 21 44 useSimpleComment fix	// \u0085Unicode prose.\u0085		21 44
+        /tmp/adamic-gate/TestOwnedWitnesses2953899742/330/nexus-consistency-no-single-line-jsdoc-2.ts:4:1
+          nexus/consistency-no-single-line-jsdoc  A JSDoc comment carrying one line of description should be a line comment. JSDoc's delimiters exist to hold structure, so spending three lines of them on a sentence tells a reader to look for tags that are not there.
+        
+        range 63 87 useSimpleComment fix	// BOM retained.		63 87
+--- FAIL: TestOwnedWitnesses (49.20s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	530.676s
+FAIL

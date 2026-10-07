@@ -1,0 +1,103 @@
+=== RUN   TestRulesAgree
+    lint_test.go:406: cohere cases: 4182 unique source/rule/options combinations
+    lint_test.go:439: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1027144610/019/case-341/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:440: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:440: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1027144610/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree1027144610/019/case-341/repository/source/Thing.ts
+    lint_test.go:440: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree1027144610/019/case-341/repository/source/Thing.ts
+    lint_test.go:439: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1027144610/019/case-343/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:440: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:440: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1027144610/003/scanner: timeout=true: signal: killed: 
+    lint_test.go:440: explicit unsupported recovery: node: timeout=true: signal: killed: 
+    lint_test.go:439: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1027144610/019/case-347/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:440: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:440: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1027144610/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree1027144610/019/case-347/repository/source/Thing.ts
+    lint_test.go:440: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree1027144610/019/case-347/repository/source/Thing.ts
+    lint_test.go:439: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1027144610/019/case-348/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:440: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:440: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1027144610/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree1027144610/019/case-348/repository/source/Thing.ts
+    lint_test.go:440: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree1027144610/019/case-348/repository/source/Thing.ts
+    lint_test.go:439: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1027144610/019/case-357/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:440: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:440: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1027144610/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree1027144610/019/case-357/repository/source/Thing.ts
+    lint_test.go:440: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree1027144610/019/case-357/repository/source/Thing.ts
+    lint_test.go:439: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1027144610/019/case-359/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:440: Go recovered output: case 0
+        /tmp/adamic-gate/TestRulesAgree1027144610/019/case-359/repository/source/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 33 errorMethod fix	m: (a: string) => void;		14 33
+        recovery findings only
+    lint_test.go:440: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1027144610/003/scanner: timeout=true: signal: killed: 
+    lint_test.go:440: explicit unsupported recovery: node: timeout=true: signal: killed: 
+    lint_test.go:439: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1027144610/019/case-361/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:440: Go recovered output: case 0
+        /tmp/adamic-gate/TestRulesAgree1027144610/019/case-361/repository/source/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 34 errorMethod fix	m: (a: string) => void;		14 34
+        recovery findings only
+    lint_test.go:440: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1027144610/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree1027144610/019/case-361/repository/source/Thing.ts
+    lint_test.go:440: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree1027144610/019/case-361/repository/source/Thing.ts
+    lint_test.go:439: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1027144610/019/case-362/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:440: Go recovered output: case 0
+        /tmp/adamic-gate/TestRulesAgree1027144610/019/case-362/repository/source/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 27 errorMethod 			14 27
+        recovery findings only
+    lint_test.go:440: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1027144610/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree1027144610/019/case-362/repository/source/Thing.ts
+    lint_test.go:440: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree1027144610/019/case-362/repository/source/Thing.ts
+    lint_test.go:445: Go, Node, emitted JavaScript, native identical: 13871433 bytes
+--- PASS: TestRulesAgree (86.89s)
+=== RUN   TestMutants
+=== RUN   TestMutants/JSDoc_replacement_text_corrupted
+=== PAUSE TestMutants/JSDoc_replacement_text_corrupted
+=== CONT  TestMutants/JSDoc_replacement_text_corrupted
+    lint_test.go:867: JSDoc replacement text corrupted caught on Node: case 85 line 4309: port "range 42 64 useSimpleComment fix\t// MUTANT Trailing prose.\t\t42 64", Go "range 42 64 useSimpleComment fix\t// Trailing prose.\t\t42 64"
+        Go context:
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 85
+        /tmp/adamic-gate/TestMutantsJSDoc_replacement_text_corrupted3136296261/016/nexus-consistency-no-single-line-jsdoc-0.ts:3:1
+          nexus/consistency-no-single-line-jsdoc  A JSDoc comment carrying one line of description should be a line comment. JSDoc's delimiters exist to hold structure, so spending three lines of them on a sentence tells a reader to look for tags that are not there.
+        
+        range 42 64 useSimpleComment fix	// Trailing prose.		42 64
+        fixed	\ufeff/** Leading prose. */\u000aconst value = 1;\u000a// Trailing prose.\u000a
+        case 86
+        /tmp/adamic-gate/TestMutantsJSDoc_replacement_text_corrupted3136296261/017/nexus-consistency-no-single-line-jsdoc-1.ts:2:1
+          nexus/consistency-no-single-line-jsdoc  A JSDoc comment carrying one line of description should be a line comment. JSDoc's delimiters exist to hold structure, so spending three lines of them on a sentence tells a reader to look for tags that are not there.
+    lint_test.go:867: JSDoc replacement text corrupted caught on emitted JavaScript: case 85 line 4309: port "range 42 64 useSimpleComment fix\t// MUTANT Trailing prose.\t\t42 64", Go "range 42 64 useSimpleComment fix\t// Trailing prose.\t\t42 64"
+        Go context:
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 85
+        /tmp/adamic-gate/TestMutantsJSDoc_replacement_text_corrupted3136296261/016/nexus-consistency-no-single-line-jsdoc-0.ts:3:1
+          nexus/consistency-no-single-line-jsdoc  A JSDoc comment carrying one line of description should be a line comment. JSDoc's delimiters exist to hold structure, so spending three lines of them on a sentence tells a reader to look for tags that are not there.
+        
+        range 42 64 useSimpleComment fix	// Trailing prose.		42 64
+        fixed	\ufeff/** Leading prose. */\u000aconst value = 1;\u000a// Trailing prose.\u000a
+        case 86
+        /tmp/adamic-gate/TestMutantsJSDoc_replacement_text_corrupted3136296261/017/nexus-consistency-no-single-line-jsdoc-1.ts:2:1
+          nexus/consistency-no-single-line-jsdoc  A JSDoc comment carrying one line of description should be a line comment. JSDoc's delimiters exist to hold structure, so spending three lines of them on a sentence tells a reader to look for tags that are not there.
+    lint_test.go:867: JSDoc replacement text corrupted caught on native: case 85 line 4309: port "range 42 64 useSimpleComment fix\t// MUTANT Trailing prose.\t\t42 64", Go "range 42 64 useSimpleComment fix\t// Trailing prose.\t\t42 64"
+        Go context:
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 85
+        /tmp/adamic-gate/TestMutantsJSDoc_replacement_text_corrupted3136296261/016/nexus-consistency-no-single-line-jsdoc-0.ts:3:1
+          nexus/consistency-no-single-line-jsdoc  A JSDoc comment carrying one line of description should be a line comment. JSDoc's delimiters exist to hold structure, so spending three lines of them on a sentence tells a reader to look for tags that are not there.
+        
+        range 42 64 useSimpleComment fix	// Trailing prose.		42 64
+        fixed	\ufeff/** Leading prose. */\u000aconst value = 1;\u000a// Trailing prose.\u000a
+        case 86
+        /tmp/adamic-gate/TestMutantsJSDoc_replacement_text_corrupted3136296261/017/nexus-consistency-no-single-line-jsdoc-1.ts:2:1
+          nexus/consistency-no-single-line-jsdoc  A JSDoc comment carrying one line of description should be a line comment. JSDoc's delimiters exist to hold structure, so spending three lines of them on a sentence tells a reader to look for tags that are not there.
+--- PASS: TestMutants (3.03s)
+    --- PASS: TestMutants/JSDoc_replacement_text_corrupted (45.33s)
+=== RUN   TestOwnedWitnesses
+    registration_test.go:45: Go, Node, emitted JavaScript, native identical: 306733 bytes
+--- PASS: TestOwnedWitnesses (48.42s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	183.709s

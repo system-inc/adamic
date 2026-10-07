@@ -1,0 +1,20 @@
+v24.19.0
+go version go1.27.1 linux/amd64
+setup: go ready (0.025s)
+setup: node ready (0.025s)
+setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.014s
+setup: markdown dependencies ready (0.085s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.157s)
+From https://github.com/system-inc/cohere
+ + e7cfe4d1...f5d1934a main       -> origin/main  (forced update)
+From https://github.com/system-inc/cohere
+ * branch              7945d102a6c18dd36adf9114a758ce646e8b2359 -> FETCH_HEAD
+Submodule path 'cohere': checked out '7945d102a6c18dd36adf9114a758ce646e8b2359'
+From https://github.com/kirkouimet/TypeScript
+ * branch                d92d9bfee114c80be2c375d72edae966176e3a4f -> FETCH_HEAD
+Submodule path 'cohere/TypeScript': checked out 'd92d9bfee114c80be2c375d72edae966176e3a4f'
+setup: submodules ready (15.015s)
+github.com/system-inc/cohere/internal/lint/ecmascript/react: open /home/agent/.cache/go-build/ea/eafe0d95e4c734796e834ceb292affe44926a7dac54ef9e90c441abae32558c5-d: no space left on device
+github.com/system-inc/cohere/internal/lint/ecmascript/reference: open /home/agent/.cache/go-build/eb/ebfae7c8092fd9de61720ef08419543255ef7b524b5373e30bbe441db9f29e31-d: no space left on device
+github.com/system-inc/adamic/internal/fuzz: open /home/agent/.cache/go-build/37/377d175563b7aaad8582faf20e02c72de811959dc7800a982dbe8eb262e00ca4-a: no space left on device
