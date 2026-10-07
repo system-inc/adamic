@@ -162,3 +162,38 @@ All eight selected oracles passed again in 860.616s, including sanitizer and
 mutation checks; no source repair or new claim. The 15 numeric listener
 declarations pass verification. Exact evidence and remaining limits are in
 [the refreshed landing report](../WAVE_17_LANDING2_REPORT.md).
+
+## Parked React integration status
+
+Per the latest instruction, the already pushed JSX-dependent scope is parked
+and counts as finished for the landing-first work-in-progress cap. This status
+is not a claim of complete end-to-end parity.
+
+- `@next/next/no-async-client-component`: ordinary-parser port is green and
+  pushed; JSX-bearing components are parked on native JSX parsing.
+- `@next/next/no-duplicate-head`: native decisions and mutants are green and
+  pushed; production integration is parked on native JSX parsing.
+- `@next/next/no-script-component-in-head`: native decisions and mutants are
+  green and pushed; production integration is parked on native JSX parsing.
+- `react-hooks/unsupported-syntax`: ordinary native controls are green and
+  pushed; JSX-bearing React analysis is parked on native JSX parsing.
+- `react-hooks/use-memo`: tested ordinary-parser decisions are green and pushed;
+  JSX-bearing React analysis is parked on native JSX parsing. No complete
+  high-level IR or capture-analysis integration is claimed.
+- `react/boolean-prop-naming`: default-pattern PropTypes decisions and message
+  controls are green and pushed; complete component/props integration is
+  unwired and parked. Additional blocker: nonconstant RegExp patterns are
+  refused by stage 0, so configured-pattern parity remains incomplete.
+
+Native cohere analysis module integration is tracked by #dnv6f2c; JSX support is
+landing through area/stage1-lint. This branch does not modify those shared
+modules or push to area/stage1-lint. Prior byte-oracle, sanitizer and mutant
+results are in WAVE_17_LANDING2_REPORT.md. The numeric listener declarations are
+already pushed, but the existing implementations still need conversion to the
+shared loaded-node interface.
+
+A fresh scan inspected 529 origin refs and 33 unique Markdown claim blobs.
+Main remains f8013f0b, validated source and evidence remain e3677e31 before this
+status update. `require-atomic-updates` remains unclaimed but requires the native
+control-flow and escape analysis and is ineligible for an analysis-independent
+batch. Other rules are not claimed by this status update.
