@@ -45,3 +45,22 @@ checks pass. The earlier internal/fresh blocker is closed on this main.
 See ../wave_10_next/LANDING_REPORT.md and evidence/landing for observations,
 commands, timings and limits. No shared harness, generator or protected compiler
 file was edited. These six claims remain reserved through integration.
+
+## Second continuation claim, after landing validation
+
+All six earlier claims are ported, native-green on origin/main e8ba3d5d and
+pushed on this branch in 95d3ced8 before this selection. The next three names
+in VOLUME_REPORT.md's combined by-volume ranking that are neither ported on
+main/base nor claimed under the typeaware claims directory on any origin head:
+
+- react/forbid-elements (combined volume 0)
+- react/forbid-prop-types (combined volume 0)
+- react/iframe-missing-sandbox (combined volume 0)
+
+The post-landing fetch scanned 465 origin refs, 33 distinct claim blobs and all
+197 checker-ranked rules. The base/main implement 25 ranked rules; 151 names
+are mentioned in existing claim files, leaving 21 available. Names stored without
+the @typescript-eslint prefix by the original native suite were normalized before
+selection. Checking these three names across 129 distinct origin stage1 trees
+found only config/sets.ts inventory references, not implementations. None was
+skipped. This claim is committed and pushed before implementation work.
