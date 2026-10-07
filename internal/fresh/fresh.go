@@ -1200,6 +1200,10 @@ func (a *analysis) value(expression ir.Expression) value {
 		return a.fresh(elementKey, value{})
 	case ir.ProgramArguments:
 		return a.fresh(elementKey, value{})
+	case ir.JSONDecode:
+		a.value(expression.Text)
+		// The decoded graph is fresh, but nesting is conservatively treated as outside.
+		return outsideValue()
 	case ir.ReadTextFile:
 		a.value(expression.Path)
 		return a.fresh(anyField, value{})
