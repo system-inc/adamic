@@ -1,4 +1,9 @@
-# Classification of the remaining 207 explicit any tokens
+# Classification of explicit any tokens
+
+Current adaptation status: 69 of the original 210 tokens are done; 141 remain.
+Site 138 is done under Filesystem entry classification. The 207-token census
+below is the historical classification snapshot; brands, enum display and
+diagnostic arguments were completed earlier as recorded in PROGRESS.md.
 
 This is a disjoint classification of the 207-token adapted census, not the original 210-token census. Every token has an ID and exact file:line:column in evidence/classification.json. Multiple tokens on one line remain separate sites. The counts below are semantic patterns; erased syntax is an independent axis, not a catch-all class. All suggested types remain proposals until checked against owners and consumers. A type-only candidate is not a completed proof.
 
@@ -30,7 +35,7 @@ This is a disjoint classification of the 207-token adapted census, not the origi
 | Default string comparator escape | 1 | Decline until the string default comparer is restricted to a string element branch or a generic caller supplies its comparator. |
 | System to config-host shape | 1 | Real type: the actual ParseConfigFileHost capability subset at the host declaration, proving required optional System methods before construction. |
 | Distributive conditional type | 1 | Generic parameter: use the identity condition U extends U to preserve distribution without a top-type escape. |
-| Filesystem entry classification | 1 | Real type: fs.Stats \| fs.Dirent \| undefined, with existing !stat continue retaining narrowing. |
+| Filesystem entry classification (done) | 1 | Proven type: fs.Stats \| fs.Dirent \| undefined, with existing !stat continue retaining narrowing. |
 | Delegated generator next-input type | 1 | Generic parameter carrying the delegated iterator next-input type through flatMapIterator. |
 | Key-only mapped type | 1 | Real type: never as the unobserved mapped value, retaining the existing key remapping. |
 | Module resolution enum key | 1 | Real type: the actual ModuleResolutionKind string-key domain at the declaration producing moduleKindName. |
@@ -460,11 +465,15 @@ Rule: Generic parameter: use the identity condition U extends U to preserve dist
 Locations:
 - 176: `src/compiler/types.ts:10320:49`
 
-### Filesystem entry classification (1)
+### Filesystem entry classification (done: 1, remaining: 0)
 
 Assignments come from statSync or readdirSync dirents. This host API has real declarations and common isFile/isDirectory methods; unknown plus new checks is unnecessary.
 
-Rule: Real type: fs.Stats | fs.Dirent | undefined, with existing !stat continue retaining narrowing.
+Proven type: `import("fs").Stats | import("fs").Dirent | undefined`.
+The local statSync declaration returns Stats | undefined; readdirSync supplies
+Dirent. The existing !stat continue retains narrowing. Only the local annotation
+changes; no emitted declaration or API sanction changes. Reproduction and
+full-build wrong-type mutant are in filesystem-proof.cjs.
 
 Locations:
 - 138: `src/compiler/sys.ts:1853:31`

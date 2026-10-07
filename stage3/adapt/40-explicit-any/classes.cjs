@@ -66,6 +66,31 @@ module.exports = {plan,apply,owner};
 function planEnum(text,file,className='enum-display') {
     const selected=(rules[className]||[]).filter(r=>r.file===file);
     const source=ts.createSourceFile(file,text,ts.ScriptTarget.Latest,true), lines=text.split('\n');
+    if (className === 'filesystem') {
+        const edits = []; let found = 0;
+        function visit(node) {
+            if (ts.isVariableDeclaration(node) && node.name.getText(source) === 'stat') {
+                let enclosing = node.parent;
+                while (enclosing && !ts.isFunctionDeclaration(enclosing)) enclosing = enclosing.parent;
+                if (enclosing?.name?.text === 'getAccessibleFileSystemEntries') {
+                    const rule = selected[0];
+                    if (!rule || node.initializer || !node.type) throw Error('unreviewed filesystem owner');
+                    found++;
+                    const line = source.getLineAndCharacterOfPosition(node.getStart(source)).line;
+                    const original = rule.originalLine;
+                    const adapted = original.replace('any', rule.replacement);
+                    const current = lines[line].replace(/\r$/, '');
+                    if (current === original && node.type.kind === ts.SyntaxKind.AnyKeyword) edits.push([node.type.getStart(source), node.type.end, rule.replacement]);
+                    else if (current !== adapted || node.type.getText(source) !== rule.replacement) throw Error('unreviewed filesystem annotation');
+                }
+            }
+            ts.forEachChild(node, visit);
+        }
+        visit(source);
+        if (found !== selected.length) throw Error('missing or duplicate filesystem stat owner');
+        for (const [start, end, value] of edits.sort((a,b) => b[0]-a[0])) text = text.slice(0,start)+value+text.slice(end);
+        return {text, removed: edits.length};
+    }
     let removed=0;
     for(const r of selected) {
         const before=r.originalLine, after=before.slice(0,r.column-1)+r.replacement+before.slice(r.column+2);
