@@ -1,0 +1,13 @@
+=== RUN   TestRestrictedTypesThroughput
+    lint_test.go:809: Go 5000 findings, 35.434256ms, 141106.39 findings/s (1000 owned witnesses)
+    lint_test.go:809: native 5000 findings, 79.014931ms, 63279.18 findings/s (1000 owned witnesses)
+    lint_test.go:809: Node 5000 findings, 169.906547ms, 29427.94 findings/s (1000 owned witnesses)
+--- PASS: TestRestrictedTypesThroughput (5.94s)
+=== RUN   TestFontPolicyParity
+    lint_test.go:819: go [build -overlay=/tmp/adamic-gate/TestFontPolicyParity3486755155/001/overlay.json -o /tmp/adamic-gate/TestFontPolicyParity3486755155/002/oracle ../../../cohere/adamic_font_policy_oracle.go]: exit status 1
+        package command-line-arguments
+        	/cohere/adamic_font_policy_oracle.go:10:2: use of internal package github.com/system-inc/cohere/internal/lint/ecmascript/jsx not allowed
+--- FAIL: TestFontPolicyParity (0.02s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	5.974s
+FAIL
