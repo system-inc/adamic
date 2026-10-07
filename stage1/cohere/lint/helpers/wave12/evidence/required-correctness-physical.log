@@ -1,0 +1,786 @@
+=== RUN   TestCompilerExpressionsAgree
+    parser_test.go:290: 77 whole compiler files, 28836875 identical expression tree bytes
+--- PASS: TestCompilerExpressionsAgree (40.71s)
+=== RUN   TestWholeCompilerAgrees
+    whole_test.go:39: 77 whole compiler files, 44766682 identical whole-tree bytes
+--- PASS: TestWholeCompilerAgrees (58.50s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/typescript/parser	99.257s
+=== RUN   TestThePortParsesAsGoCohereDoes
+    css_test.go:121: Go oracle: === RUN   TestAdamicPortCases
+            adamic_port_side_test.go:116: Prettier fixtures absent; set ADAMIC_CSS_FIXTURES
+            adamic_port_side_test.go:148: corpus files: map[.css:1]
+            adamic_port_side_test.go:216: 23496 cases, 4530 parsed
+            adamic_port_side_test.go:234: Go: 234960 stylesheets in 2.471596688s, 95064 stylesheets/s; 45300 parsed, 61710 children
+        --- PASS: TestAdamicPortCases (3.41s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css/postcss	3.424s
+=== RUN   TestThePortParsesAsGoCohereDoes/Go_agreement
+    css_test.go:141: 23496 cases agree with Go, leak clean
+=== RUN   TestThePortParsesAsGoCohereDoes/PostCSS
+    css_test.go:183: PostCSS: 23494 exact agreements, 2 occurrences of the proved surrogate gap
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_custom_properties_lose_their_block_values
+    css_test.go:201: native caught: line 162, byte 396: ":\"--b\",\"raws\":{\"before\":\"\",\"between\":\":\",\"value\":{\"raw\":\" \",\"value\":\"\"}},\"source\":{\"end\":{\"column\":20,\"line\":1,\"offset\":20},\"start\":{\"column\":15,\"line\":1,\"offse", Go cohere ":\"--b\",\"raws\":{\"before\":\"\",\"between\":\":\"},\"source\":{\"end\":{\"column\":20,\"line\":1,\"offset\":20},\"start\":{\"column\":15,\"line\":1,\"offset\":14}},\"type\":\"decl\",\"value\":\""
+    css_test.go:201: Node caught: line 162, byte 396: ":\"--b\",\"raws\":{\"before\":\"\",\"between\":\":\",\"value\":{\"raw\":\" \",\"value\":\"\"}},\"source\":{\"end\":{\"column\":20,\"line\":1,\"offset\":20},\"start\":{\"column\":15,\"line\":1,\"offse", Go cohere ":\"--b\",\"raws\":{\"before\":\"\",\"between\":\":\"},\"source\":{\"end\":{\"column\":20,\"line\":1,\"offset\":20},\"start\":{\"column\":15,\"line\":1,\"offset\":14}},\"type\":\"decl\",\"value\":\""
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_comments_always_disappear_from_values
+    css_test.go:201: native caught: line 3126, byte 302: ":1,\"offset\":2}},\"type\":\"decl\",\"value\":\"cd\"},{\"keys\":[\"raws\",\"source\",\"prop\",\"value\"],\"prop\":\"e\",\"raws\":{\"before\":\" \",\"between\":\":\",\"value\":{\"raw\":\"f, /* y */ g\"", Go cohere ":1,\"offset\":2}},\"type\":\"decl\",\"value\":\"c/* x */d\"},{\"keys\":[\"raws\",\"source\",\"prop\",\"value\"],\"prop\":\"e\",\"raws\":{\"before\":\" \",\"between\":\":\",\"value\":{\"raw\":\"f, /* "
+    css_test.go:201: Node caught: line 3126, byte 302: ":1,\"offset\":2}},\"type\":\"decl\",\"value\":\"cd\"},{\"keys\":[\"raws\",\"source\",\"prop\",\"value\"],\"prop\":\"e\",\"raws\":{\"before\":\" \",\"between\":\":\",\"value\":{\"raw\":\"f, /* y */ g\"", Go cohere ":1,\"offset\":2}},\"type\":\"decl\",\"value\":\"c/* x */d\"},{\"keys\":[\"raws\",\"source\",\"prop\",\"value\"],\"prop\":\"e\",\"raws\":{\"before\":\" \",\"between\":\":\",\"value\":{\"raw\":\"f, /* "
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_closing_braces_no_longer_include_the_closing_byte
+    css_test.go:201: native caught: line 6, byte 659: ":{\"end\":{\"column\":28,\"line\":1,\"offset\":27},\"start\":{\"column\":1,\"line\":1,\"offset\":0}},\"type\":\"rule\"},{\"keys\":[\"raws\",\"nodes\",\"source\",\"selector\"],\"nodes\":[],\"raw", Go cohere ":{\"end\":{\"column\":28,\"line\":1,\"offset\":28},\"start\":{\"column\":1,\"line\":1,\"offset\":0}},\"type\":\"rule\"},{\"keys\":[\"raws\",\"nodes\",\"source\",\"selector\"],\"nodes\":[],\"raw"
+    css_test.go:201: Node caught: line 6, byte 659: ":{\"end\":{\"column\":28,\"line\":1,\"offset\":27},\"start\":{\"column\":1,\"line\":1,\"offset\":0}},\"type\":\"rule\"},{\"keys\":[\"raws\",\"nodes\",\"source\",\"selector\"],\"nodes\":[],\"raw", Go cohere ":{\"end\":{\"column\":28,\"line\":1,\"offset\":28},\"start\":{\"column\":1,\"line\":1,\"offset\":0}},\"type\":\"rule\"},{\"keys\":[\"raws\",\"nodes\",\"source\",\"selector\"],\"nodes\":[],\"raw"
+--- PASS: TestThePortParsesAsGoCohereDoes (87.15s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/Go_agreement (26.78s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/PostCSS (1.55s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_custom_properties_lose_their_block_values (18.46s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_comments_always_disappear_from_values (17.85s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_closing_braces_no_longer_include_the_closing_byte (10.18s)
+=== RUN   TestCSSPrinterAgreesWithGo
+    print_test.go:53: Go oracle: === RUN   TestAdamicPortCases
+            adamic_port_side_test.go:116: Prettier fixtures absent; set ADAMIC_CSS_FIXTURES
+            adamic_port_side_test.go:148: corpus files: map[.css:1]
+            adamic_port_side_test.go:216: 23496 cases, 4530 parsed
+            adamic_port_side_test.go:234: Go: 234960 stylesheets in 3.270035958s, 71852 stylesheets/s; 45300 parsed, 61710 children
+        --- PASS: TestAdamicPortCases (4.24s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css/postcss	4.251s
+=== RUN   TestCSSPrinterAgreesWithGo/default
+    print_test.go:58: === RUN   TestAdamicPrinterCases
+            adamic_print_side_test.go:91: printed stylesheets: 23496 inputs, 4475 formatted, elapsed 2.516482097s
+        --- PASS: TestAdamicPrinterCases (2.55s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css	2.580s
+    print_test.go:79: native ASan/UBSan, Node, JavaScript backend and separate LeakSanitizer pass
+    print_test.go:80: 23496 stylesheet formats and refusals agree byte for byte
+=== RUN   TestCSSPrinterAgreesWithGo/default/catches_declarations_lose_their_semicolons
+    print_test.go:99: native ASan/UBSan caught: line 2, byte 69: "larations,\\n  empty rules,\\n  semicolons\\n\"", Go cohere "larations,\\n  empty rules,\\n  semicolons;\\n\""
+    print_test.go:99: Node caught: line 2, byte 69: "larations,\\n  empty rules,\\n  semicolons\\n\"", Go cohere "larations,\\n  empty rules,\\n  semicolons;\\n\""
+=== RUN   TestCSSPrinterAgreesWithGo/default/catches_rule_bodies_lose_indentation
+    print_test.go:99: native ASan/UBSan caught: line 6, byte 7: "\"a {\\ncolor: red;\\nbackground: blue;\\n}\\nb {\\n}\\nc {\\ncolor: red;\\n}\\n\\nd {\\ncolor: Red;\\n}\\ne {\\nmargin: 0;\\n}\\n\"", Go cohere "\"a {\\n  color: red;\\n  background: blue;\\n}\\nb {\\n}\\nc {\\n  color: red;\\n}\\n\\nd {\\n  color: Red;\\n}\\ne {\\n  margin: 0;\\n}\\n\""
+    print_test.go:99: Node caught: line 6, byte 7: "\"a {\\ncolor: red;\\nbackground: blue;\\n}\\nb {\\n}\\nc {\\ncolor: red;\\n}\\n\\nd {\\ncolor: Red;\\n}\\ne {\\nmargin: 0;\\n}\\n\"", Go cohere "\"a {\\n  color: red;\\n  background: blue;\\n}\\nb {\\n}\\nc {\\n  color: red;\\n}\\n\\nd {\\n  color: Red;\\n}\\ne {\\n  margin: 0;\\n}\\n\""
+=== RUN   TestCSSPrinterAgreesWithGo/default/catches_groups_ignore_the_remaining_width
+    print_test.go:99: native ASan/UBSan caught: line 26, byte 12: "\"selectors: combinators, pseudo-classes, pseudo-elements, attributes, namespaces,\\n  lists;\\n\"", Go cohere "\"selectors:\\n  combinators, pseudo-classes, pseudo-elements, attributes, namespaces, lists;\\n\""
+    print_test.go:99: Node caught: line 26, byte 12: "\"selectors: combinators, pseudo-classes, pseudo-elements, attributes, namespaces,\\n  lists;\\n\"", Go cohere "\"selectors:\\n  combinators, pseudo-classes, pseudo-elements, attributes, namespaces, lists;\\n\""
+=== NAME  TestCSSPrinterAgreesWithGo/default
+    print_test.go:104: Prettier npm default: 4463 byte-identical formats, 19013 shared refusals, 20 exact recorded discrepancy occurrences: map[BOM boundary:10 CR normalization:2 whitespace fast path:2 yaml embedding:6]
+    print_test.go:106: Prettier fork default: 4463 byte-identical formats, 19013 shared refusals, 20 exact recorded discrepancy occurrences: map[BOM boundary:10 CR normalization:2 whitespace fast path:2 yaml embedding:6]
+=== RUN   TestCSSPrinterAgreesWithGo/narrow
+    print_test.go:58: === RUN   TestAdamicPrinterCases
+            adamic_print_side_test.go:91: printed stylesheets: 23496 inputs, 4475 formatted, elapsed 829.611271ms
+        --- PASS: TestAdamicPrinterCases (0.84s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css	0.849s
+    print_test.go:79: native ASan/UBSan, Node, JavaScript backend and separate LeakSanitizer pass
+    print_test.go:80: 23496 stylesheet formats and refusals agree byte for byte
+=== RUN   TestCSSPrinterAgreesWithGo/narrow/catches_declarations_lose_their_semicolons
+    print_test.go:99: native ASan/UBSan caught: line 2, byte 69: "larations,\\n\\tempty rules,\\n\\tsemicolons\\n\"", Go cohere "larations,\\n\\tempty rules,\\n\\tsemicolons;\\n\""
+    print_test.go:99: Node caught: line 2, byte 69: "larations,\\n\\tempty rules,\\n\\tsemicolons\\n\"", Go cohere "larations,\\n\\tempty rules,\\n\\tsemicolons;\\n\""
+=== RUN   TestCSSPrinterAgreesWithGo/narrow/catches_rule_bodies_lose_indentation
+    print_test.go:99: native ASan/UBSan caught: line 6, byte 7: "\"a {\\ncolor: red;\\nbackground: blue;\\n}\\nb {\\n}\\nc {\\ncolor: red;\\n}\\n\\nd {\\ncolor: Red;\\n}\\ne {\\nmargin: 0;\\n}\\n\"", Go cohere "\"a {\\n\\tcolor: red;\\n\\tbackground: blue;\\n}\\nb {\\n}\\nc {\\n\\tcolor: red;\\n}\\n\\nd {\\n\\tcolor: Red;\\n}\\ne {\\n\\tmargin: 0;\\n}\\n\""
+    print_test.go:99: Node caught: line 6, byte 7: "\"a {\\ncolor: red;\\nbackground: blue;\\n}\\nb {\\n}\\nc {\\ncolor: red;\\n}\\n\\nd {\\ncolor: Red;\\n}\\ne {\\nmargin: 0;\\n}\\n\"", Go cohere "\"a {\\n\\tcolor: red;\\n\\tbackground: blue;\\n}\\nb {\\n}\\nc {\\n\\tcolor: red;\\n}\\n\\nd {\\n\\tcolor: Red;\\n}\\ne {\\n\\tmargin: 0;\\n}\\n\""
+=== RUN   TestCSSPrinterAgreesWithGo/narrow/catches_groups_ignore_the_remaining_width
+    print_test.go:99: native ASan/UBSan caught: line 26, byte 12: "\"selectors: combinators,\\n\\tpseudo-classes,\\n\\tpseudo-elements,\\n\\tattributes,\\n\\tnamespaces, lists;\\n\"", Go cohere "\"selectors:\\n\\tcombinators,\\n\\tpseudo-classes,\\n\\tpseudo-elements,\\n\\tattributes,\\n\\tnamespaces, lists;\\n\""
+    print_test.go:99: Node caught: line 26, byte 12: "\"selectors: combinators,\\n\\tpseudo-classes,\\n\\tpseudo-elements,\\n\\tattributes,\\n\\tnamespaces, lists;\\n\"", Go cohere "\"selectors:\\n\\tcombinators,\\n\\tpseudo-classes,\\n\\tpseudo-elements,\\n\\tattributes,\\n\\tnamespaces, lists;\\n\""
+=== NAME  TestCSSPrinterAgreesWithGo/narrow
+    print_test.go:104: Prettier npm narrow: 4463 byte-identical formats, 19013 shared refusals, 20 exact recorded discrepancy occurrences: map[BOM boundary:10 CR normalization:2 whitespace fast path:2 yaml embedding:6]
+    print_test.go:106: Prettier fork narrow: 4463 byte-identical formats, 19013 shared refusals, 20 exact recorded discrepancy occurrences: map[BOM boundary:10 CR normalization:2 whitespace fast path:2 yaml embedding:6]
+--- PASS: TestCSSPrinterAgreesWithGo (465.16s)
+    --- PASS: TestCSSPrinterAgreesWithGo/default (276.77s)
+        --- PASS: TestCSSPrinterAgreesWithGo/default/catches_declarations_lose_their_semicolons (57.83s)
+        --- PASS: TestCSSPrinterAgreesWithGo/default/catches_rule_bodies_lose_indentation (57.00s)
+        --- PASS: TestCSSPrinterAgreesWithGo/default/catches_groups_ignore_the_remaining_width (30.51s)
+    --- PASS: TestCSSPrinterAgreesWithGo/narrow (177.25s)
+        --- PASS: TestCSSPrinterAgreesWithGo/narrow/catches_declarations_lose_their_semicolons (31.88s)
+        --- PASS: TestCSSPrinterAgreesWithGo/narrow/catches_rule_bodies_lose_indentation (31.68s)
+        --- PASS: TestCSSPrinterAgreesWithGo/narrow/catches_groups_ignore_the_remaining_width (30.53s)
+=== RUN   TestCSSPrinterBoundaryProofs
+    print_test.go:305: === RUN   TestAdamicPrinterCases
+            adamic_print_side_test.go:91: printed stylesheets: 4 inputs, 2 formatted, elapsed 688.111µs
+        --- PASS: TestAdamicPrinterCases (0.00s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css	0.010s
+    print_test.go:316: Go and Node direct-printer proofs:
+        "a {\n  b: c;\n}\n"
+        "// x\ra {\n}\n"
+        error {"column":1,"endColumn":2,"endLine":1,"endOffset":2,"line":1,"name":"CssSyntaxError","offset":0,"reason":"Unknown word  "}
+        error "css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach"
+    print_test.go:326: original Prettier proofs:
+        {"input":"﻿a{b:c}","output":"﻿a {\n  b: c;\n}\n"}
+        {"input":"// x\ra{}","output":"// x\na {\n}\n"}
+        {"input":" ","output":""}
+        {"input":"---\na:     b\n---\na{}","output":"---\na: b\n---\n\na {\n}\n"}
+--- PASS: TestCSSPrinterBoundaryProofs (3.73s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/css	556.058s
+=== RUN   TestThePortParsesAsGoCohereDoes
+=== PAUSE TestThePortParsesAsGoCohereDoes
+=== CONT  TestThePortParsesAsGoCohereDoes
+    graphql_test.go:55: seed 20261005, 3000 generated documents
+=== RUN   TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere
+=== PAUSE TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere
+=== RUN   TestThePortParsesAsGoCohereDoes/as_graphql-js
+=== PAUSE TestThePortParsesAsGoCohereDoes/as_graphql-js
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_a_byte_order_mark_not_ignored
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_a_byte_order_mark_not_ignored
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_a_no-break_space_ignored
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_a_no-break_space_ignored
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_a_[_in_a_name
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_a_[_in_a_name
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_a_G_in_a_hex_escape
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_a_G_in_a_hex_escape
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_the_sign_bit_not_reached
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_the_sign_bit_not_reached
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_U+DFFF_no_trailing_surrogate
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_U+DFFF_no_trailing_surrogate
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_a_lone_surrogate_written_as_itself
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_a_lone_surrogate_written_as_itself
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_a_CRLF_counted_as_two_lines
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_a_CRLF_counted_as_two_lines
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_the_first_line's_indent_common
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_the_first_line's_indent_common
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_an_escaped_triple_quote_keeping_its_backslash
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_an_escaped_triple_quote_keeping_its_backslash
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_a_leading_zero's_error_at_the_number's_start
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_a_leading_zero's_error_at_the_number's_start
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_an_invalid_escape_read_as_nothing
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_an_invalid_escape_read_as_nothing
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_the_unexpected_token_not_the_one_named
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_the_unexpected_token_not_the_one_named
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_no_directives_an_empty_list
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_no_directives_an_empty_list
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_a_spread's_absent_arguments_written
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_a_spread's_absent_arguments_written
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_FRAGMENT_VARIABLE_DEFINITION_no_location
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_FRAGMENT_VARIABLE_DEFINITION_no_location
+=== CONT  TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_a_CRLF_counted_as_two_lines
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_a_G_in_a_hex_escape
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_a_[_in_a_name
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_a_byte_order_mark_not_ignored
+    graphql_test.go:148: natively, caught: line 411: "error Syntax Error: Unexpected character: U+FEFF. (1:1)", Go cohere "Document[0,6]{definitions=(OperationDefinition[1,6]{operation=\"query\" description=undefined name=undefined variableDefinitions=undefined directives=undefined selectionSet=SelectionSet[1,6]{selections=(Field[3,4]{alias=undefined name=Name[3,4]{value=\"a\"} arguments=undefined directives=undefined selectionSet=undefined})}})}"
+    graphql_test.go:148: on Node, caught: line 411: "error Syntax Error: Unexpected character: U+FEFF. (1:1)", Go cohere "Document[0,6]{definitions=(OperationDefinition[1,6]{operation=\"query\" description=undefined name=undefined variableDefinitions=undefined directives=undefined selectionSet=SelectionSet[1,6]{selections=(Field[3,4]{alias=undefined name=Name[3,4]{value=\"a\"} arguments=undefined directives=undefined selectionSet=undefined})}})}"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_FRAGMENT_VARIABLE_DEFINITION_no_location
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_a_G_in_a_hex_escape
+    graphql_test.go:148: natively, caught: line 11045: "error Syntax Error: Invalid number, expected digit but got: \"a\". (12:2)", Go cohere "error Syntax Error: Invalid Unicode escape sequence: \"\\\\u00G0\". (6:40)"
+    graphql_test.go:148: on Node, caught: line 11045: "error Syntax Error: Invalid number, expected digit but got: \"a\". (12:2)", Go cohere "error Syntax Error: Invalid Unicode escape sequence: \"\\\\u00G0\". (6:40)"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_a_spread's_absent_arguments_written
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_a_[_in_a_name
+    graphql_test.go:148: natively, caught: line 769: "error Syntax Error: Unexpected Name \"Document[0\". (1:1)", Go cohere "error Syntax Error: Unexpected Name \"Document\". (1:1)"
+    graphql_test.go:148: on Node, caught: line 769: "error Syntax Error: Unexpected Name \"Document[0\". (1:1)", Go cohere "error Syntax Error: Unexpected Name \"Document\". (1:1)"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_no_directives_an_empty_list
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_a_CRLF_counted_as_two_lines
+    graphql_test.go:148: natively, caught: line 549: "error Syntax Error: Unexpected character: \"?\". (5:3)", Go cohere "error Syntax Error: Unexpected character: \"?\". (3:3)"
+    graphql_test.go:148: on Node, caught: line 549: "error Syntax Error: Unexpected character: \"?\". (5:3)", Go cohere "error Syntax Error: Unexpected character: \"?\". (3:3)"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_the_unexpected_token_not_the_one_named
+=== NAME  TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere
+    graphql_test.go:102: 3426 texts, 2052 parsed (119782 nodes, 4216 comments), 1374 refused: every answer the same from Go cohere, the port natively, on Node and through the JavaScript backend
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_an_invalid_escape_read_as_nothing
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_FRAGMENT_VARIABLE_DEFINITION_no_location
+    graphql_test.go:148: natively, caught: line 306: "error Syntax Error: Unexpected Name \"FRAGMENT_VARIABLE_DEFINITION\". (3:25)", Go cohere "Document[0,431]{definitions=(DirectiveDefinition[0,111]{description=StringValue[0,15]{value=\"directive\" block=true} name=Name[27,30]{value=\"dir\"} arguments=(InputValueDefinition[31,41]{description=undefined name=Name[31,32]{value=\"a\"} type=NamedType[34,37]{name=Name[34,37]{value=\"Int\"}} defaultValue=IntValue[40,41]{value=\"1\"} directives=undefined} InputValueDefinition[43,52]{description=undefined name=Name[43,44]{value=\"b\"} type=NamedType[46,52]{name=Name[46,52]{value=\"String\"}} defaultValue=undefined directives=undefined}) directives=undefined repeatable=true locations=(Name[70,75]{value=\"FIELD\"} Name[78,93]{value=\"FRAGMENT_SPREAD\"} Name[96,111]{value=\"INLINE_FRAGMENT\"})} DirectiveDefinition[112,137]{description=undefined name=Name[123,128]{value=\"plain\"} arguments=undefined directives=undefined repeatable=false locations=(Name[132,137]{value=\"QUERY\"})} DirectiveDefinition[138,431]{description=undefined name=Name[149,152]{value=\"all\"} arguments=undefined directives=(Directive[153,158]{name=Name[154,158]{value=\"meta\"} arguments=undefined}) repeatable=false locations=(Name[162,190]{value=\"FRAGMENT_VARIABLE_DEFINITION\"} Name[193,212]{value=\"VARIABLE_DEFINITION\"} Name[215,221]{value=\"SCHEMA\"} Name[224,230]{value=\"SCALAR\"} Name[233,239]{value=\"OBJECT\"} Name[242,258]{value=\"FIELD_DEFINITION\"} Name[261,280]{value=\"ARGUMENT_DEFINITION\"} Name[283,292]{value=\"INTERFACE\"} Name[295,300]{value=\"UNION\"} Name[303,307]{value=\"ENUM\"} Name[310,320]{value=\"ENUM_VALUE\"} Name[323,335]{value=\"INPUT_OBJECT\"} Name[338,360]{value=\"INPUT_FIELD_DEFINITION\"} Name[363,383]{value=\"DIRECTIVE_DEFINITION\"} Name[386,394]{value=\"MUTATION\"} Name[397,409]{value=\"SUBSCRIPTION\"} Name[412,431]{value=\"FRAGMENT_DEFINITION\"})})}"
+    graphql_test.go:148: on Node, caught: line 306: "error Syntax Error: Unexpected Name \"FRAGMENT_VARIABLE_DEFINITION\". (3:25)", Go cohere "Document[0,431]{definitions=(DirectiveDefinition[0,111]{description=StringValue[0,15]{value=\"directive\" block=true} name=Name[27,30]{value=\"dir\"} arguments=(InputValueDefinition[31,41]{description=undefined name=Name[31,32]{value=\"a\"} type=NamedType[34,37]{name=Name[34,37]{value=\"Int\"}} defaultValue=IntValue[40,41]{value=\"1\"} directives=undefined} InputValueDefinition[43,52]{description=undefined name=Name[43,44]{value=\"b\"} type=NamedType[46,52]{name=Name[46,52]{value=\"String\"}} defaultValue=undefined directives=undefined}) directives=undefined repeatable=true locations=(Name[70,75]{value=\"FIELD\"} Name[78,93]{value=\"FRAGMENT_SPREAD\"} Name[96,111]{value=\"INLINE_FRAGMENT\"})} DirectiveDefinition[112,137]{description=undefined name=Name[123,128]{value=\"plain\"} arguments=undefined directives=undefined repeatable=false locations=(Name[132,137]{value=\"QUERY\"})} DirectiveDefinition[138,431]{description=undefined name=Name[149,152]{value=\"all\"} arguments=undefined directives=(Directive[153,158]{name=Name[154,158]{value=\"meta\"} arguments=undefined}) repeatable=false locations=(Name[162,190]{value=\"FRAGMENT_VARIABLE_DEFINITION\"} Name[193,212]{value=\"VARIABLE_DEFINITION\"} Name[215,221]{value=\"SCHEMA\"} Name[224,230]{value=\"SCALAR\"} Name[233,239]{value=\"OBJECT\"} Name[242,258]{value=\"FIELD_DEFINITION\"} Name[261,280]{value=\"ARGUMENT_DEFINITION\"} Name[283,292]{value=\"INTERFACE\"} Name[295,300]{value=\"UNION\"} Name[303,307]{value=\"ENUM\"} Name[310,320]{value=\"ENUM_VALUE\"} Name[323,335]{value=\"INPUT_OBJECT\"} Name[338,360]{value=\"INPUT_FIELD_DEFINITION\"} Name[363,383]{value=\"DIRECTIVE_DEFINITION\"} Name[386,394]{value=\"MUTATION\"} Name[397,409]{value=\"SUBSCRIPTION\"} Name[412,431]{value=\"FRAGMENT_DEFINITION\"})})}"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_a_leading_zero's_error_at_the_number's_start
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_a_spread's_absent_arguments_written
+    graphql_test.go:148: natively, caught: line 26: "Document[0,193]{definitions=(OperationDefinition[0,192]{operation=\"query\" description=undefined name=undefined variableDefinitions=undefined directives=undefined selectionSet=SelectionSet[5,192]{selections=(Field[6,191]{alias=Name[6,11]{value=\"alias\"} name=Name[12,17]{value=\"field\"} arguments=(Argument[18,21]{name=Name[18,19]{value=\"a\"} value=IntValue[20,21]{value=\"1\"}} Argument[22,29]{name=Name[22,23]{value=\"b\"} value=StringValue[24,29]{value=\"two\" block=false}} Argument[30,37]{name=Name[30,31]{value=\"c\"} value=EnumValue[32,37]{value=\"THREE\"}} Argument[38,44]{name=Name[38,39]{value=\"d\"} value=NullValue[40,44]} Argument[45,51]{name=Name[45,46]{value=\"e\"} value=BooleanValue[47,51]{value=true}} Argument[52,59]{name=Name[52,53]{value=\"f\"} value=BooleanValue[54,59]{value=false}} Argument[60,67]{name=Name[60,61]{value=\"g\"} value=FloatValue[62,67]{value=\"1.5e3\"}} Argument[68,72]{name=Name[68,69]{value=\"h\"} value=Variable[70,72]{name=Name[71,72]{value=\"v\"}}} Argument[73,80]{name=Name[73,74]{value=\"i\"} value=ListValue[75,80]{values=(IntValue[76,77]{value=\"1\"} IntValue[78,79]{value=\"2\"})}} Argument[81,96]{name=Name[81,82]{value=\"j\"} value=ObjectValue[83,96]{fields=(ObjectField[84,87]{name=Name[84,85]{value=\"k\"} value=IntValue[86,87]{value=\"1\"}} ObjectField[88,95]{name=Name[88,89]{value=\"l\"} value=ObjectValue[90,95]{fields=(ObjectField[91,94]{name=Name[91,92]{value=\"m\"} value=IntValue[93,94]{value=\"2\"}})}})}}) directives=(Directive[97,112]{name=Name[98,105]{value=\"include\"} arguments=(Argument[106,111]{name=Name[106,108]{value=\"if\"} value=Variable[109,111]{name=Name[110,111]{value=\"x\"}}})} Directive[112,127]{name=Name[113,117]{value=\"skip\"} arguments=(Argument[118,126]{name=Name[118,120]{value=\"if\"} value=BooleanValue[121,126]{value=false}})}) selectionSet=SelectionSet[127,191]{selections=(FragmentSpread[128,144]{name=Name[131,137]{value=\"Spread\"} arguments=undefined directives=(Directive[138,144]{name=Name[139,144]{value=\"defer\"} arguments=undefined})} InlineFragment[145,158]{typeCondition=NamedType[151,155]{name=Name[151,155]{value=\"Type\"}} directives=undefined selectionSet=SelectionSet[155,158]{selections=(Field[156,157]{alias=undefined name=Name[156,157]{value=\"x\"} arguments=undefined directives=undefined selectionSet=undefined})}} InlineFragment[159,183]{typeCondition=undefined directives=(Directive[163,180]{name=Name[164,171]{value=\"include\"} arguments=(Argument[172,179]{name=Name[172,174]{value=\"if\"} value=BooleanValue[175,179]{value=true}})}) selectionSet=SelectionSet[180,183]{selections=(Field[181,182]{alias=undefined name=Name[181,182]{value=\"y\"} arguments=undefined directives=undefined selectionSet=undefined})}} InlineFragment[184,190]{typeCondition=undefined directives=undefined selectionSet=SelectionSet[187,190]{selections=(Field[188,189]{alias=undefined name=Name[188,189]{value=\"z\"} arguments=undefined directives=undefined selectionSet=undefined})}})}})}})}", Go cohere "Document[0,193]{definitions=(OperationDefinition[0,192]{operation=\"query\" description=undefined name=undefined variableDefinitions=undefined directives=undefined selectionSet=SelectionSet[5,192]{selections=(Field[6,191]{alias=Name[6,11]{value=\"alias\"} name=Name[12,17]{value=\"field\"} arguments=(Argument[18,21]{name=Name[18,19]{value=\"a\"} value=IntValue[20,21]{value=\"1\"}} Argument[22,29]{name=Name[22,23]{value=\"b\"} value=StringValue[24,29]{value=\"two\" block=false}} Argument[30,37]{name=Name[30,31]{value=\"c\"} value=EnumValue[32,37]{value=\"THREE\"}} Argument[38,44]{name=Name[38,39]{value=\"d\"} value=NullValue[40,44]} Argument[45,51]{name=Name[45,46]{value=\"e\"} value=BooleanValue[47,51]{value=true}} Argument[52,59]{name=Name[52,53]{value=\"f\"} value=BooleanValue[54,59]{value=false}} Argument[60,67]{name=Name[60,61]{value=\"g\"} value=FloatValue[62,67]{value=\"1.5e3\"}} Argument[68,72]{name=Name[68,69]{value=\"h\"} value=Variable[70,72]{name=Name[71,72]{value=\"v\"}}} Argument[73,80]{name=Name[73,74]{value=\"i\"} value=ListValue[75,80]{values=(IntValue[76,77]{value=\"1\"} IntValue[78,79]{value=\"2\"})}} Argument[81,96]{name=Name[81,82]{value=\"j\"} value=ObjectValue[83,96]{fields=(ObjectField[84,87]{name=Name[84,85]{value=\"k\"} value=IntValue[86,87]{value=\"1\"}} ObjectField[88,95]{name=Name[88,89]{value=\"l\"} value=ObjectValue[90,95]{fields=(ObjectField[91,94]{name=Name[91,92]{value=\"m\"} value=IntValue[93,94]{value=\"2\"}})}})}}) directives=(Directive[97,112]{name=Name[98,105]{value=\"include\"} arguments=(Argument[106,111]{name=Name[106,108]{value=\"if\"} value=Variable[109,111]{name=Name[110,111]{value=\"x\"}}})} Directive[112,127]{name=Name[113,117]{value=\"skip\"} arguments=(Argument[118,126]{name=Name[118,120]{value=\"if\"} value=BooleanValue[121,126]{value=false}})}) selectionSet=SelectionSet[127,191]{selections=(FragmentSpread[128,144]{name=Name[131,137]{value=\"Spread\"} directives=(Directive[138,144]{name=Name[139,144]{value=\"defer\"} arguments=undefined})} InlineFragment[145,158]{typeCondition=NamedType[151,155]{name=Name[151,155]{value=\"Type\"}} directives=undefined selectionSet=SelectionSet[155,158]{selections=(Field[156,157]{alias=undefined name=Name[156,157]{value=\"x\"} arguments=undefined directives=undefined selectionSet=undefined})}} InlineFragment[159,183]{typeCondition=undefined directives=(Directive[163,180]{name=Name[164,171]{value=\"include\"} arguments=(Argument[172,179]{name=Name[172,174]{value=\"if\"} value=BooleanValue[175,179]{value=true}})}) selectionSet=SelectionSet[180,183]{selections=(Field[181,182]{alias=undefined name=Name[181,182]{value=\"y\"} arguments=undefined directives=undefined selectionSet=undefined})}} InlineFragment[184,190]{typeCondition=undefined directives=undefined selectionSet=SelectionSet[187,190]{selections=(Field[188,189]{alias=undefined name=Name[188,189]{value=\"z\"} arguments=undefined directives=undefined selectionSet=undefined})}})}})}})}"
+    graphql_test.go:148: on Node, caught: line 26: "Document[0,193]{definitions=(OperationDefinition[0,192]{operation=\"query\" description=undefined name=undefined variableDefinitions=undefined directives=undefined selectionSet=SelectionSet[5,192]{selections=(Field[6,191]{alias=Name[6,11]{value=\"alias\"} name=Name[12,17]{value=\"field\"} arguments=(Argument[18,21]{name=Name[18,19]{value=\"a\"} value=IntValue[20,21]{value=\"1\"}} Argument[22,29]{name=Name[22,23]{value=\"b\"} value=StringValue[24,29]{value=\"two\" block=false}} Argument[30,37]{name=Name[30,31]{value=\"c\"} value=EnumValue[32,37]{value=\"THREE\"}} Argument[38,44]{name=Name[38,39]{value=\"d\"} value=NullValue[40,44]} Argument[45,51]{name=Name[45,46]{value=\"e\"} value=BooleanValue[47,51]{value=true}} Argument[52,59]{name=Name[52,53]{value=\"f\"} value=BooleanValue[54,59]{value=false}} Argument[60,67]{name=Name[60,61]{value=\"g\"} value=FloatValue[62,67]{value=\"1.5e3\"}} Argument[68,72]{name=Name[68,69]{value=\"h\"} value=Variable[70,72]{name=Name[71,72]{value=\"v\"}}} Argument[73,80]{name=Name[73,74]{value=\"i\"} value=ListValue[75,80]{values=(IntValue[76,77]{value=\"1\"} IntValue[78,79]{value=\"2\"})}} Argument[81,96]{name=Name[81,82]{value=\"j\"} value=ObjectValue[83,96]{fields=(ObjectField[84,87]{name=Name[84,85]{value=\"k\"} value=IntValue[86,87]{value=\"1\"}} ObjectField[88,95]{name=Name[88,89]{value=\"l\"} value=ObjectValue[90,95]{fields=(ObjectField[91,94]{name=Name[91,92]{value=\"m\"} value=IntValue[93,94]{value=\"2\"}})}})}}) directives=(Directive[97,112]{name=Name[98,105]{value=\"include\"} arguments=(Argument[106,111]{name=Name[106,108]{value=\"if\"} value=Variable[109,111]{name=Name[110,111]{value=\"x\"}}})} Directive[112,127]{name=Name[113,117]{value=\"skip\"} arguments=(Argument[118,126]{name=Name[118,120]{value=\"if\"} value=BooleanValue[121,126]{value=false}})}) selectionSet=SelectionSet[127,191]{selections=(FragmentSpread[128,144]{name=Name[131,137]{value=\"Spread\"} arguments=undefined directives=(Directive[138,144]{name=Name[139,144]{value=\"defer\"} arguments=undefined})} InlineFragment[145,158]{typeCondition=NamedType[151,155]{name=Name[151,155]{value=\"Type\"}} directives=undefined selectionSet=SelectionSet[155,158]{selections=(Field[156,157]{alias=undefined name=Name[156,157]{value=\"x\"} arguments=undefined directives=undefined selectionSet=undefined})}} InlineFragment[159,183]{typeCondition=undefined directives=(Directive[163,180]{name=Name[164,171]{value=\"include\"} arguments=(Argument[172,179]{name=Name[172,174]{value=\"if\"} value=BooleanValue[175,179]{value=true}})}) selectionSet=SelectionSet[180,183]{selections=(Field[181,182]{alias=undefined name=Name[181,182]{value=\"y\"} arguments=undefined directives=undefined selectionSet=undefined})}} InlineFragment[184,190]{typeCondition=undefined directives=undefined selectionSet=SelectionSet[187,190]{selections=(Field[188,189]{alias=undefined name=Name[188,189]{value=\"z\"} arguments=undefined directives=undefined selectionSet=undefined})}})}})}})}", Go cohere "Document[0,193]{definitions=(OperationDefinition[0,192]{operation=\"query\" description=undefined name=undefined variableDefinitions=undefined directives=undefined selectionSet=SelectionSet[5,192]{selections=(Field[6,191]{alias=Name[6,11]{value=\"alias\"} name=Name[12,17]{value=\"field\"} arguments=(Argument[18,21]{name=Name[18,19]{value=\"a\"} value=IntValue[20,21]{value=\"1\"}} Argument[22,29]{name=Name[22,23]{value=\"b\"} value=StringValue[24,29]{value=\"two\" block=false}} Argument[30,37]{name=Name[30,31]{value=\"c\"} value=EnumValue[32,37]{value=\"THREE\"}} Argument[38,44]{name=Name[38,39]{value=\"d\"} value=NullValue[40,44]} Argument[45,51]{name=Name[45,46]{value=\"e\"} value=BooleanValue[47,51]{value=true}} Argument[52,59]{name=Name[52,53]{value=\"f\"} value=BooleanValue[54,59]{value=false}} Argument[60,67]{name=Name[60,61]{value=\"g\"} value=FloatValue[62,67]{value=\"1.5e3\"}} Argument[68,72]{name=Name[68,69]{value=\"h\"} value=Variable[70,72]{name=Name[71,72]{value=\"v\"}}} Argument[73,80]{name=Name[73,74]{value=\"i\"} value=ListValue[75,80]{values=(IntValue[76,77]{value=\"1\"} IntValue[78,79]{value=\"2\"})}} Argument[81,96]{name=Name[81,82]{value=\"j\"} value=ObjectValue[83,96]{fields=(ObjectField[84,87]{name=Name[84,85]{value=\"k\"} value=IntValue[86,87]{value=\"1\"}} ObjectField[88,95]{name=Name[88,89]{value=\"l\"} value=ObjectValue[90,95]{fields=(ObjectField[91,94]{name=Name[91,92]{value=\"m\"} value=IntValue[93,94]{value=\"2\"}})}})}}) directives=(Directive[97,112]{name=Name[98,105]{value=\"include\"} arguments=(Argument[106,111]{name=Name[106,108]{value=\"if\"} value=Variable[109,111]{name=Name[110,111]{value=\"x\"}}})} Directive[112,127]{name=Name[113,117]{value=\"skip\"} arguments=(Argument[118,126]{name=Name[118,120]{value=\"if\"} value=BooleanValue[121,126]{value=false}})}) selectionSet=SelectionSet[127,191]{selections=(FragmentSpread[128,144]{name=Name[131,137]{value=\"Spread\"} directives=(Directive[138,144]{name=Name[139,144]{value=\"defer\"} arguments=undefined})} InlineFragment[145,158]{typeCondition=NamedType[151,155]{name=Name[151,155]{value=\"Type\"}} directives=undefined selectionSet=SelectionSet[155,158]{selections=(Field[156,157]{alias=undefined name=Name[156,157]{value=\"x\"} arguments=undefined directives=undefined selectionSet=undefined})}} InlineFragment[159,183]{typeCondition=undefined directives=(Directive[163,180]{name=Name[164,171]{value=\"include\"} arguments=(Argument[172,179]{name=Name[172,174]{value=\"if\"} value=BooleanValue[175,179]{value=true}})}) selectionSet=SelectionSet[180,183]{selections=(Field[181,182]{alias=undefined name=Name[181,182]{value=\"y\"} arguments=undefined directives=undefined selectionSet=undefined})}} InlineFragment[184,190]{typeCondition=undefined directives=undefined selectionSet=SelectionSet[187,190]{selections=(Field[188,189]{alias=undefined name=Name[188,189]{value=\"z\"} arguments=undefined directives=undefined selectionSet=undefined})}})}})}})}"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_an_escaped_triple_quote_keeping_its_backslash
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_no_directives_an_empty_list
+    graphql_test.go:148: natively, caught: line 4: "Document[0,171]{definitions=(OperationDefinition[0,66]{operation=\"query\" description=undefined name=Name[8,13]{value=\"Named\"} variableDefinitions=(VariableDefinition[14,21]{description=undefined variable=Variable[14,17]{name=Name[15,17]{value=\"id\"}} type=NonNullType[18,21]{type=NamedType[18,20]{name=Name[18,20]{value=\"ID\"}}} defaultValue=undefined directives=()} VariableDefinition[22,47]{description=undefined variable=Variable[22,28]{name=Name[23,28]{value=\"first\"}} type=NamedType[29,32]{name=Name[29,32]{value=\"Int\"}} defaultValue=IntValue[33,35]{value=\"10\"} directives=(Directive[36,47]{name=Name[37,47]{value=\"deprecated\"} arguments=undefined})}) directives=() selectionSet=SelectionSet[48,66]{selections=(Field[49,65]{alias=undefined name=Name[49,53]{value=\"user\"} arguments=(Argument[54,60]{name=Name[54,56]{value=\"id\"} value=Variable[57,60]{name=Name[58,60]{value=\"id\"}}}) directives=() selectionSet=SelectionSet[61,65]{selections=(Field[62,64]{alias=undefined name=Name[62,64]{value=\"id\"} arguments=undefined directives=() selectionSet=undefined})}})}} OperationDefinition[67,84]{operation=\"query\" description=undefined name=undefined variableDefinitions=(VariableDefinition[74,80]{description=undefined variable=Variable[74,76]{name=Name[75,76]{value=\"a\"}} type=NamedType[77,80]{name=Name[77,80]{value=\"Int\"}} defaultValue=undefined directives=()}) directives=() selectionSet=SelectionSet[81,84]{selections=(Field[82,83]{alias=undefined name=Name[82,83]{value=\"a\"} arguments=undefined directives=() selectionSet=undefined})}} OperationDefinition[85,93]{operation=\"query\" description=undefined name=undefined variableDefinitions=undefined directives=() selectionSet=SelectionSet[90,93]{selections=(Field[91,92]{alias=undefined name=Name[91,92]{value=\"b\"} arguments=undefined directives=() selectionSet=undefined})}} OperationDefinition[94,97]{operation=\"query\" description=undefined name=undefined variableDefinitions=undefined directives=undefined selectionSet=SelectionSet[94,97]{selections=(Field[95,96]{alias=undefined name=Name[95,96]{value=\"c\"} arguments=undefined directives=() selectionSet=undefined})}} OperationDefinition[98,113]{operation=\"mutation\" description=undefined name=Name[109,110]{value=\"M\"} variableDefinitions=undefined directives=() selectionSet=SelectionSet[110,113]{selections=(Field[111,112]{alias=undefined name=Name[111,112]{value=\"d\"} arguments=undefined directives=() selectionSet=undefined})}} OperationDefinition[114,137]{operation=\"subscription\" description=undefined name=Name[127,128]{value=\"S\"} variableDefinitions=undefined directives=(Directive[129,134]{name=Name[130,134]{value=\"live\"} arguments=undefined}) selectionSet=SelectionSet[134,137]{selections=(Field[135,136]{alias=undefined name=Name[135,136]{value=\"e\"} arguments=undefined directives=() selectionSet=undefined})}} OperationDefinition[138,170]{operation=\"mutation\" description=undefined name=undefined variableDefinitions=(VariableDefinition[147,166]{description=undefined variable=Variable[147,149]{name=Name[148,149]{value=\"b\"}} type=NonNullType[150,160]{type=ListType[150,159]{type=NonNullType[151,158]{type=NamedType[151,157]{name=Name[151,157]{value=\"String\"}}}}} defaultValue=ListValue[161,166]{values=(StringValue[162,165]{value=\"x\" block=false})} directives=()}) directives=() selectionSet=SelectionSet[167,170]{selections=(Field[168,169]{alias=undefined name=Name[168,169]{value=\"f\"} arguments=undefined directives=() selectionSet=undefined})}})}", Go cohere "Document[0,171]{definitions=(OperationDefinition[0,66]{operation=\"query\" description=undefined name=Name[8,13]{value=\"Named\"} variableDefinitions=(VariableDefinition[14,21]{description=undefined variable=Variable[14,17]{name=Name[15,17]{value=\"id\"}} type=NonNullType[18,21]{type=NamedType[18,20]{name=Name[18,20]{value=\"ID\"}}} defaultValue=undefined directives=undefined} VariableDefinition[22,47]{description=undefined variable=Variable[22,28]{name=Name[23,28]{value=\"first\"}} type=NamedType[29,32]{name=Name[29,32]{value=\"Int\"}} defaultValue=IntValue[33,35]{value=\"10\"} directives=(Directive[36,47]{name=Name[37,47]{value=\"deprecated\"} arguments=undefined})}) directives=undefined selectionSet=SelectionSet[48,66]{selections=(Field[49,65]{alias=undefined name=Name[49,53]{value=\"user\"} arguments=(Argument[54,60]{name=Name[54,56]{value=\"id\"} value=Variable[57,60]{name=Name[58,60]{value=\"id\"}}}) directives=undefined selectionSet=SelectionSet[61,65]{selections=(Field[62,64]{alias=undefined name=Name[62,64]{value=\"id\"} arguments=undefined directives=undefined selectionSet=undefined})}})}} OperationDefinition[67,84]{operation=\"query\" description=undefined name=undefined variableDefinitions=(VariableDefinition[74,80]{description=undefined variable=Variable[74,76]{name=Name[75,76]{value=\"a\"}} type=NamedType[77,80]{name=Name[77,80]{value=\"Int\"}} defaultValue=undefined directives=undefined}) directives=undefined selectionSet=SelectionSet[81,84]{selections=(Field[82,83]{alias=undefined name=Name[82,83]{value=\"a\"} arguments=undefined directives=undefined selectionSet=undefined})}} OperationDefinition[85,93]{operation=\"query\" description=undefined name=undefined variableDefinitions=undefined directives=undefined selectionSet=SelectionSet[90,93]{selections=(Field[91,92]{alias=undefined name=Name[91,92]{value=\"b\"} arguments=undefined directives=undefined selectionSet=undefined})}} OperationDefinition[94,97]{operation=\"query\" description=undefined name=undefined variableDefinitions=undefined directives=undefined selectionSet=SelectionSet[94,97]{selections=(Field[95,96]{alias=undefined name=Name[95,96]{value=\"c\"} arguments=undefined directives=undefined selectionSet=undefined})}} OperationDefinition[98,113]{operation=\"mutation\" description=undefined name=Name[109,110]{value=\"M\"} variableDefinitions=undefined directives=undefined selectionSet=SelectionSet[110,113]{selections=(Field[111,112]{alias=undefined name=Name[111,112]{value=\"d\"} arguments=undefined directives=undefined selectionSet=undefined})}} OperationDefinition[114,137]{operation=\"subscription\" description=undefined name=Name[127,128]{value=\"S\"} variableDefinitions=undefined directives=(Directive[129,134]{name=Name[130,134]{value=\"live\"} arguments=undefined}) selectionSet=SelectionSet[134,137]{selections=(Field[135,136]{alias=undefined name=Name[135,136]{value=\"e\"} arguments=undefined directives=undefined selectionSet=undefined})}} OperationDefinition[138,170]{operation=\"mutation\" description=undefined name=undefined variableDefinitions=(VariableDefinition[147,166]{description=undefined variable=Variable[147,149]{name=Name[148,149]{value=\"b\"}} type=NonNullType[150,160]{type=ListType[150,159]{type=NonNullType[151,158]{type=NamedType[151,157]{name=Name[151,157]{value=\"String\"}}}}} defaultValue=ListValue[161,166]{values=(StringValue[162,165]{value=\"x\" block=false})} directives=undefined}) directives=undefined selectionSet=SelectionSet[167,170]{selections=(Field[168,169]{alias=undefined name=Name[168,169]{value=\"f\"} arguments=undefined directives=undefined selectionSet=undefined})}})}"
+    graphql_test.go:148: on Node, caught: line 4: "Document[0,171]{definitions=(OperationDefinition[0,66]{operation=\"query\" description=undefined name=Name[8,13]{value=\"Named\"} variableDefinitions=(VariableDefinition[14,21]{description=undefined variable=Variable[14,17]{name=Name[15,17]{value=\"id\"}} type=NonNullType[18,21]{type=NamedType[18,20]{name=Name[18,20]{value=\"ID\"}}} defaultValue=undefined directives=()} VariableDefinition[22,47]{description=undefined variable=Variable[22,28]{name=Name[23,28]{value=\"first\"}} type=NamedType[29,32]{name=Name[29,32]{value=\"Int\"}} defaultValue=IntValue[33,35]{value=\"10\"} directives=(Directive[36,47]{name=Name[37,47]{value=\"deprecated\"} arguments=undefined})}) directives=() selectionSet=SelectionSet[48,66]{selections=(Field[49,65]{alias=undefined name=Name[49,53]{value=\"user\"} arguments=(Argument[54,60]{name=Name[54,56]{value=\"id\"} value=Variable[57,60]{name=Name[58,60]{value=\"id\"}}}) directives=() selectionSet=SelectionSet[61,65]{selections=(Field[62,64]{alias=undefined name=Name[62,64]{value=\"id\"} arguments=undefined directives=() selectionSet=undefined})}})}} OperationDefinition[67,84]{operation=\"query\" description=undefined name=undefined variableDefinitions=(VariableDefinition[74,80]{description=undefined variable=Variable[74,76]{name=Name[75,76]{value=\"a\"}} type=NamedType[77,80]{name=Name[77,80]{value=\"Int\"}} defaultValue=undefined directives=()}) directives=() selectionSet=SelectionSet[81,84]{selections=(Field[82,83]{alias=undefined name=Name[82,83]{value=\"a\"} arguments=undefined directives=() selectionSet=undefined})}} OperationDefinition[85,93]{operation=\"query\" description=undefined name=undefined variableDefinitions=undefined directives=() selectionSet=SelectionSet[90,93]{selections=(Field[91,92]{alias=undefined name=Name[91,92]{value=\"b\"} arguments=undefined directives=() selectionSet=undefined})}} OperationDefinition[94,97]{operation=\"query\" description=undefined name=undefined variableDefinitions=undefined directives=undefined selectionSet=SelectionSet[94,97]{selections=(Field[95,96]{alias=undefined name=Name[95,96]{value=\"c\"} arguments=undefined directives=() selectionSet=undefined})}} OperationDefinition[98,113]{operation=\"mutation\" description=undefined name=Name[109,110]{value=\"M\"} variableDefinitions=undefined directives=() selectionSet=SelectionSet[110,113]{selections=(Field[111,112]{alias=undefined name=Name[111,112]{value=\"d\"} arguments=undefined directives=() selectionSet=undefined})}} OperationDefinition[114,137]{operation=\"subscription\" description=undefined name=Name[127,128]{value=\"S\"} variableDefinitions=undefined directives=(Directive[129,134]{name=Name[130,134]{value=\"live\"} arguments=undefined}) selectionSet=SelectionSet[134,137]{selections=(Field[135,136]{alias=undefined name=Name[135,136]{value=\"e\"} arguments=undefined directives=() selectionSet=undefined})}} OperationDefinition[138,170]{operation=\"mutation\" description=undefined name=undefined variableDefinitions=(VariableDefinition[147,166]{description=undefined variable=Variable[147,149]{name=Name[148,149]{value=\"b\"}} type=NonNullType[150,160]{type=ListType[150,159]{type=NonNullType[151,158]{type=NamedType[151,157]{name=Name[151,157]{value=\"String\"}}}}} defaultValue=ListValue[161,166]{values=(StringValue[162,165]{value=\"x\" block=false})} directives=()}) directives=() selectionSet=SelectionSet[167,170]{selections=(Field[168,169]{alias=undefined name=Name[168,169]{value=\"f\"} arguments=undefined directives=() selectionSet=undefined})}})}", Go cohere "Document[0,171]{definitions=(OperationDefinition[0,66]{operation=\"query\" description=undefined name=Name[8,13]{value=\"Named\"} variableDefinitions=(VariableDefinition[14,21]{description=undefined variable=Variable[14,17]{name=Name[15,17]{value=\"id\"}} type=NonNullType[18,21]{type=NamedType[18,20]{name=Name[18,20]{value=\"ID\"}}} defaultValue=undefined directives=undefined} VariableDefinition[22,47]{description=undefined variable=Variable[22,28]{name=Name[23,28]{value=\"first\"}} type=NamedType[29,32]{name=Name[29,32]{value=\"Int\"}} defaultValue=IntValue[33,35]{value=\"10\"} directives=(Directive[36,47]{name=Name[37,47]{value=\"deprecated\"} arguments=undefined})}) directives=undefined selectionSet=SelectionSet[48,66]{selections=(Field[49,65]{alias=undefined name=Name[49,53]{value=\"user\"} arguments=(Argument[54,60]{name=Name[54,56]{value=\"id\"} value=Variable[57,60]{name=Name[58,60]{value=\"id\"}}}) directives=undefined selectionSet=SelectionSet[61,65]{selections=(Field[62,64]{alias=undefined name=Name[62,64]{value=\"id\"} arguments=undefined directives=undefined selectionSet=undefined})}})}} OperationDefinition[67,84]{operation=\"query\" description=undefined name=undefined variableDefinitions=(VariableDefinition[74,80]{description=undefined variable=Variable[74,76]{name=Name[75,76]{value=\"a\"}} type=NamedType[77,80]{name=Name[77,80]{value=\"Int\"}} defaultValue=undefined directives=undefined}) directives=undefined selectionSet=SelectionSet[81,84]{selections=(Field[82,83]{alias=undefined name=Name[82,83]{value=\"a\"} arguments=undefined directives=undefined selectionSet=undefined})}} OperationDefinition[85,93]{operation=\"query\" description=undefined name=undefined variableDefinitions=undefined directives=undefined selectionSet=SelectionSet[90,93]{selections=(Field[91,92]{alias=undefined name=Name[91,92]{value=\"b\"} arguments=undefined directives=undefined selectionSet=undefined})}} OperationDefinition[94,97]{operation=\"query\" description=undefined name=undefined variableDefinitions=undefined directives=undefined selectionSet=SelectionSet[94,97]{selections=(Field[95,96]{alias=undefined name=Name[95,96]{value=\"c\"} arguments=undefined directives=undefined selectionSet=undefined})}} OperationDefinition[98,113]{operation=\"mutation\" description=undefined name=Name[109,110]{value=\"M\"} variableDefinitions=undefined directives=undefined selectionSet=SelectionSet[110,113]{selections=(Field[111,112]{alias=undefined name=Name[111,112]{value=\"d\"} arguments=undefined directives=undefined selectionSet=undefined})}} OperationDefinition[114,137]{operation=\"subscription\" description=undefined name=Name[127,128]{value=\"S\"} variableDefinitions=undefined directives=(Directive[129,134]{name=Name[130,134]{value=\"live\"} arguments=undefined}) selectionSet=SelectionSet[134,137]{selections=(Field[135,136]{alias=undefined name=Name[135,136]{value=\"e\"} arguments=undefined directives=undefined selectionSet=undefined})}} OperationDefinition[138,170]{operation=\"mutation\" description=undefined name=undefined variableDefinitions=(VariableDefinition[147,166]{description=undefined variable=Variable[147,149]{name=Name[148,149]{value=\"b\"}} type=NonNullType[150,160]{type=ListType[150,159]{type=NonNullType[151,158]{type=NamedType[151,157]{name=Name[151,157]{value=\"String\"}}}}} defaultValue=ListValue[161,166]{values=(StringValue[162,165]{value=\"x\" block=false})} directives=undefined}) directives=undefined selectionSet=SelectionSet[167,170]{selections=(Field[168,169]{alias=undefined name=Name[168,169]{value=\"f\"} arguments=undefined directives=undefined selectionSet=undefined})}})}"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_the_first_line's_indent_common
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_the_unexpected_token_not_the_one_named
+    graphql_test.go:148: natively, caught: line 567: "error Syntax Error: Unexpected Name \"extend\". (1:1)", Go cohere "error Syntax Error: Unexpected Name \"an\". (1:8)"
+    graphql_test.go:148: on Node, caught: line 567: "error Syntax Error: Unexpected Name \"extend\". (1:1)", Go cohere "error Syntax Error: Unexpected Name \"an\". (1:8)"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_a_lone_surrogate_written_as_itself
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_a_leading_zero's_error_at_the_number's_start
+    graphql_test.go:148: natively, caught: line 505: "error Syntax Error: Invalid number, unexpected digit after 0: \"0\". (1:8)", Go cohere "error Syntax Error: Invalid number, unexpected digit after 0: \"0\". (1:9)"
+    graphql_test.go:148: on Node, caught: line 505: "error Syntax Error: Invalid number, unexpected digit after 0: \"0\". (1:8)", Go cohere "error Syntax Error: Invalid number, unexpected digit after 0: \"0\". (1:9)"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_U+DFFF_no_trailing_surrogate
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_an_escaped_triple_quote_keeping_its_backslash
+    graphql_test.go:148: natively, caught: line 42: "Document[0,166]{definitions=(OperationDefinition[0,165]{operation=\"query\" description=undefined name=undefined variableDefinitions=undefined directives=undefined selectionSet=SelectionSet[5,165]{selections=(Field[6,164]{alias=undefined name=Name[6,7]{value=\"a\"} arguments=(Argument[8,69]{name=Name[8,9]{value=\"s\"} value=StringValue[10,69]{value=\"quote\" backslash\\\\ newline\\u{A} tab\\u{9} unicode\\u{E9} slash/\" block=false}} Argument[70,92]{name=Name[70,71]{value=\"t\"} value=StringValue[72,92]{value=\"   one line   \" block=true}} Argument[93,103]{name=Name[93,94]{value=\"u\"} value=StringValue[95,103]{value=\"\" block=true}} Argument[104,158]{name=Name[104,105]{value=\"v\"} value=StringValue[106,158]{value=\"first\\u{A}  indented\\u{A}has \\\\\"\"\" triple\" block=true}} Argument[159,163]{name=Name[159,160]{value=\"w\"} value=StringValue[161,163]{value=\"\" block=false}}) directives=undefined selectionSet=undefined})}})}", Go cohere "Document[0,166]{definitions=(OperationDefinition[0,165]{operation=\"query\" description=undefined name=undefined variableDefinitions=undefined directives=undefined selectionSet=SelectionSet[5,165]{selections=(Field[6,164]{alias=undefined name=Name[6,7]{value=\"a\"} arguments=(Argument[8,69]{name=Name[8,9]{value=\"s\"} value=StringValue[10,69]{value=\"quote\" backslash\\\\ newline\\u{A} tab\\u{9} unicode\\u{E9} slash/\" block=false}} Argument[70,92]{name=Name[70,71]{value=\"t\"} value=StringValue[72,92]{value=\"   one line   \" block=true}} Argument[93,103]{name=Name[93,94]{value=\"u\"} value=StringValue[95,103]{value=\"\" block=true}} Argument[104,158]{name=Name[104,105]{value=\"v\"} value=StringValue[106,158]{value=\"first\\u{A}  indented\\u{A}has \"\"\" triple\" block=true}} Argument[159,163]{name=Name[159,160]{value=\"w\"} value=StringValue[161,163]{value=\"\" block=false}}) directives=undefined selectionSet=undefined})}})}"
+    graphql_test.go:148: on Node, caught: line 42: "Document[0,166]{definitions=(OperationDefinition[0,165]{operation=\"query\" description=undefined name=undefined variableDefinitions=undefined directives=undefined selectionSet=SelectionSet[5,165]{selections=(Field[6,164]{alias=undefined name=Name[6,7]{value=\"a\"} arguments=(Argument[8,69]{name=Name[8,9]{value=\"s\"} value=StringValue[10,69]{value=\"quote\" backslash\\\\ newline\\u{A} tab\\u{9} unicode\\u{E9} slash/\" block=false}} Argument[70,92]{name=Name[70,71]{value=\"t\"} value=StringValue[72,92]{value=\"   one line   \" block=true}} Argument[93,103]{name=Name[93,94]{value=\"u\"} value=StringValue[95,103]{value=\"\" block=true}} Argument[104,158]{name=Name[104,105]{value=\"v\"} value=StringValue[106,158]{value=\"first\\u{A}  indented\\u{A}has \\\\\"\"\" triple\" block=true}} Argument[159,163]{name=Name[159,160]{value=\"w\"} value=StringValue[161,163]{value=\"\" block=false}}) directives=undefined selectionSet=undefined})}})}", Go cohere "Document[0,166]{definitions=(OperationDefinition[0,165]{operation=\"query\" description=undefined name=undefined variableDefinitions=undefined directives=undefined selectionSet=SelectionSet[5,165]{selections=(Field[6,164]{alias=undefined name=Name[6,7]{value=\"a\"} arguments=(Argument[8,69]{name=Name[8,9]{value=\"s\"} value=StringValue[10,69]{value=\"quote\" backslash\\\\ newline\\u{A} tab\\u{9} unicode\\u{E9} slash/\" block=false}} Argument[70,92]{name=Name[70,71]{value=\"t\"} value=StringValue[72,92]{value=\"   one line   \" block=true}} Argument[93,103]{name=Name[93,94]{value=\"u\"} value=StringValue[95,103]{value=\"\" block=true}} Argument[104,158]{name=Name[104,105]{value=\"v\"} value=StringValue[106,158]{value=\"first\\u{A}  indented\\u{A}has \"\"\" triple\" block=true}} Argument[159,163]{name=Name[159,160]{value=\"w\"} value=StringValue[161,163]{value=\"\" block=false}}) directives=undefined selectionSet=undefined})}})}"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_the_sign_bit_not_reached
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_an_invalid_escape_read_as_nothing
+    graphql_test.go:148: natively, caught: line 489: "Document[0,14]{definitions=(OperationDefinition[0,14]{operation=\"query\" description=undefined name=undefined variableDefinitions=undefined directives=undefined selectionSet=SelectionSet[0,14]{selections=(Field[2,12]{alias=undefined name=Name[2,3]{value=\"a\"} arguments=(Argument[4,11]{name=Name[4,5]{value=\"s\"} value=StringValue[7,11]{value=\"\" block=false}}) directives=undefined selectionSet=undefined})}})}", Go cohere "error Syntax Error: Invalid character escape sequence: \"\\\\x\". (1:9)"
+    graphql_test.go:148: on Node, caught: line 489: "Document[0,14]{definitions=(OperationDefinition[0,14]{operation=\"query\" description=undefined name=undefined variableDefinitions=undefined directives=undefined selectionSet=SelectionSet[0,14]{selections=(Field[2,12]{alias=undefined name=Name[2,3]{value=\"a\"} arguments=(Argument[4,11]{name=Name[4,5]{value=\"s\"} value=StringValue[7,11]{value=\"\" block=false}}) directives=undefined selectionSet=undefined})}})}", Go cohere "error Syntax Error: Invalid character escape sequence: \"\\\\x\". (1:9)"
+=== CONT  TestThePortParsesAsGoCohereDoes/as_graphql-js
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_a_no-break_space_ignored
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_the_first_line's_indent_common
+    graphql_test.go:148: natively, caught: line 335: "Document[0,54]{definitions=(OperationDefinition[0,54]{operation=\"query\" description=undefined name=undefined variableDefinitions=undefined directives=undefined selectionSet=SelectionSet[0,54]{selections=(Field[2,52]{alias=undefined name=Name[2,3]{value=\"a\"} arguments=(Argument[4,51]{name=Name[4,5]{value=\"s\"} value=StringValue[7,51]{value=\"  first line\\u{A}    second\\u{A}  third\" block=true}}) directives=undefined selectionSet=undefined})}})}", Go cohere "Document[0,54]{definitions=(OperationDefinition[0,54]{operation=\"query\" description=undefined name=undefined variableDefinitions=undefined directives=undefined selectionSet=SelectionSet[0,54]{selections=(Field[2,52]{alias=undefined name=Name[2,3]{value=\"a\"} arguments=(Argument[4,51]{name=Name[4,5]{value=\"s\"} value=StringValue[7,51]{value=\"  first line\\u{A}  second\\u{A}third\" block=true}}) directives=undefined selectionSet=undefined})}})}"
+    graphql_test.go:148: on Node, caught: line 335: "Document[0,54]{definitions=(OperationDefinition[0,54]{operation=\"query\" description=undefined name=undefined variableDefinitions=undefined directives=undefined selectionSet=SelectionSet[0,54]{selections=(Field[2,52]{alias=undefined name=Name[2,3]{value=\"a\"} arguments=(Argument[4,51]{name=Name[4,5]{value=\"s\"} value=StringValue[7,51]{value=\"  first line\\u{A}    second\\u{A}  third\" block=true}}) directives=undefined selectionSet=undefined})}})}", Go cohere "Document[0,54]{definitions=(OperationDefinition[0,54]{operation=\"query\" description=undefined name=undefined variableDefinitions=undefined directives=undefined selectionSet=SelectionSet[0,54]{selections=(Field[2,52]{alias=undefined name=Name[2,3]{value=\"a\"} arguments=(Argument[4,51]{name=Name[4,5]{value=\"s\"} value=StringValue[7,51]{value=\"  first line\\u{A}  second\\u{A}third\" block=true}}) directives=undefined selectionSet=undefined})}})}"
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_a_lone_surrogate_written_as_itself
+    graphql_test.go:148: natively, caught: line 485: "error Syntax Error: Invalid Unicode escape sequence: \"\\\\u{1\\u{D83D}\". (1:9)", Go cohere "error Syntax Error: Invalid Unicode escape sequence: \"\\\\u{1\\u{FFFD}\". (1:9)"
+    graphql_test.go:148: on Node, caught: line 485: "error Syntax Error: Invalid Unicode escape sequence: \"\\\\u{1\\u{D83D}\". (1:9)", Go cohere "error Syntax Error: Invalid Unicode escape sequence: \"\\\\u{1\\u{FFFD}\". (1:9)"
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_U+DFFF_no_trailing_surrogate
+    graphql_test.go:148: natively, caught: line 1008: "error Syntax Error: Invalid character within String: U+10FFFF. (3:2)", Go cohere "Document[0,190]{definitions=(UnionTypeDefinition[2,66]{description=StringValue[2,7]{value=\"\\u{10FFFF}\\u{D7FF}\" block=false} name=Name[14,17]{value=\"x_y\"} directives=(Directive[18,46]{name=Name[20,21]{value=\"a\"} arguments=(Argument[23,29]{name=Name[23,24]{value=\"A\"} value=ListValue[27,29]{values=()}} Argument[30,36]{name=Name[30,32]{value=\"__\"} value=EnumValue[35,36]{value=\"Z\"}} Argument[37,44]{name=Name[37,39]{value=\"a0\"} value=IntValue[43,44]{value=\"9\"}})}) types=(NamedType[51,53]{name=Name[51,53]{value=\"_9\"}} NamedType[57,60]{name=Name[57,60]{value=\"x_y\"}} NamedType[64,66]{name=Name[64,66]{value=\"a0\"}})} SchemaDefinition[67,124]{description=StringValue[67,83]{value=\"\\u{D}\\u{1F600}\" block=false} directives=(Directive[91,106]{name=Name[93,95]{value=\"a9\"} arguments=(Argument[98,104]{name=Name[98,100]{value=\"Za\"} value=EnumValue[102,104]{value=\"aZ\"}})}) operationTypes=(OperationTypeDefinition[113,122]{operation=\"query\" type=NamedType[120,122]{name=Name[120,122]{value=\"a9\"}}})} OperationDefinition[125,189]{operation=\"subscription\" description=StringValue[125,135]{value=\"x\\u{9}  \" block=true} name=Name[149,157]{value=\"fragment\"} variableDefinitions=undefined directives=undefined selectionSet=SelectionSet[158,189]{selections=(InlineFragment[164,187]{typeCondition=undefined directives=undefined selectionSet=SelectionSet[168,187]{selections=(Field[170,185]{alias=undefined name=Name[170,172]{value=\"a9\"} arguments=undefined directives=(Directive[173,185]{name=Name[175,176]{value=\"A\"} arguments=(Argument[179,184]{name=Name[179,180]{value=\"z\"} value=EnumValue[183,184]{value=\"_\"}})}) selectionSet=undefined})}})}})}"
+    graphql_test.go:148: on Node, caught: line 1008: "error Syntax Error: Invalid character within String: U+10FFFF. (3:2)", Go cohere "Document[0,190]{definitions=(UnionTypeDefinition[2,66]{description=StringValue[2,7]{value=\"\\u{10FFFF}\\u{D7FF}\" block=false} name=Name[14,17]{value=\"x_y\"} directives=(Directive[18,46]{name=Name[20,21]{value=\"a\"} arguments=(Argument[23,29]{name=Name[23,24]{value=\"A\"} value=ListValue[27,29]{values=()}} Argument[30,36]{name=Name[30,32]{value=\"__\"} value=EnumValue[35,36]{value=\"Z\"}} Argument[37,44]{name=Name[37,39]{value=\"a0\"} value=IntValue[43,44]{value=\"9\"}})}) types=(NamedType[51,53]{name=Name[51,53]{value=\"_9\"}} NamedType[57,60]{name=Name[57,60]{value=\"x_y\"}} NamedType[64,66]{name=Name[64,66]{value=\"a0\"}})} SchemaDefinition[67,124]{description=StringValue[67,83]{value=\"\\u{D}\\u{1F600}\" block=false} directives=(Directive[91,106]{name=Name[93,95]{value=\"a9\"} arguments=(Argument[98,104]{name=Name[98,100]{value=\"Za\"} value=EnumValue[102,104]{value=\"aZ\"}})}) operationTypes=(OperationTypeDefinition[113,122]{operation=\"query\" type=NamedType[120,122]{name=Name[120,122]{value=\"a9\"}}})} OperationDefinition[125,189]{operation=\"subscription\" description=StringValue[125,135]{value=\"x\\u{9}  \" block=true} name=Name[149,157]{value=\"fragment\"} variableDefinitions=undefined directives=undefined selectionSet=SelectionSet[158,189]{selections=(InlineFragment[164,187]{typeCondition=undefined directives=undefined selectionSet=SelectionSet[168,187]{selections=(Field[170,185]{alias=undefined name=Name[170,172]{value=\"a9\"} arguments=undefined directives=(Directive[173,185]{name=Name[175,176]{value=\"A\"} arguments=(Argument[179,184]{name=Name[179,180]{value=\"z\"} value=EnumValue[183,184]{value=\"_\"}})}) selectionSet=undefined})}})}})}"
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_the_sign_bit_not_reached
+    graphql_test.go:148: natively, caught: line 449: "error Syntax Error: Invalid Unicode escape sequence: \"\\\\u{FFFFFFFFF\". (1:9)", Go cohere "error Syntax Error: Invalid Unicode escape sequence: \"\\\\u{FFFFFFFF\". (1:9)"
+    graphql_test.go:148: on Node, caught: line 449: "error Syntax Error: Invalid Unicode escape sequence: \"\\\\u{FFFFFFFFF\". (1:9)", Go cohere "error Syntax Error: Invalid Unicode escape sequence: \"\\\\u{FFFFFFFF\". (1:9)"
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_a_no-break_space_ignored
+    graphql_test.go:148: natively, caught: line 1119: "error Syntax Error: Expected \"on\", found <EOF>. (2:75)", Go cohere "error Syntax Error: Unexpected character: U+00A0. (2:58)"
+    graphql_test.go:148: on Node, caught: line 1119: "error Syntax Error: Expected \"on\", found <EOF>. (2:75)", Go cohere "error Syntax Error: Unexpected character: U+00A0. (2:58)"
+--- PASS: TestThePortParsesAsGoCohereDoes (8.20s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_a_byte_order_mark_not_ignored (5.54s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_a_G_in_a_hex_escape (10.17s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_a_[_in_a_name (10.34s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_a_CRLF_counted_as_two_lines (14.91s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere (19.01s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_FRAGMENT_VARIABLE_DEFINITION_no_location (14.27s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_a_spread's_absent_arguments_written (10.39s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_no_directives_an_empty_list (15.57s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_the_unexpected_token_not_the_one_named (14.02s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_a_leading_zero's_error_at_the_number's_start (12.84s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_an_escaped_triple_quote_keeping_its_backslash (12.16s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_an_invalid_escape_read_as_nothing (14.12s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/as_graphql-js (2.57s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_the_first_line's_indent_common (12.22s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_a_lone_surrogate_written_as_itself (10.84s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_U+DFFF_no_trailing_surrogate (8.91s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_the_sign_bit_not_reached (9.31s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_a_no-break_space_ignored (7.44s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/graphql	51.393s
+=== RUN   TestThePortParsesAsGoCohereDoes
+=== PAUSE TestThePortParsesAsGoCohereDoes
+=== CONT  TestThePortParsesAsGoCohereDoes
+    mediaquery_test.go:52: Go cohere without the fix to parsers.go answers 27 cases differently; the port is held to the fixed Go
+    mediaquery_test.go:52: seed 20261005, 4000 generated params
+=== RUN   TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere
+=== PAUSE TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere
+=== RUN   TestThePortParsesAsGoCohereDoes/as_postcss-media-query-parser
+=== PAUSE TestThePortParsesAsGoCohereDoes/as_postcss-media-query-parser
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_a_feature_value's_sourceIndex_not_counting_the_colon
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_a_feature_value's_sourceIndex_not_counting_the_colon
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_an_escaped_quote_closing_a_string
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_an_escaped_quote_closing_a_string
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_any_closing_quote_ending_a_string
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_any_closing_quote_ending_a_string
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_the_word_after_an_expression_typed_as_a_media_type
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_the_word_after_an_expression_typed_as_a_media_type
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_U+FEFF_not_whitespace
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_U+FEFF_not_whitespace
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_U+2029_not_whitespace
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_U+2029_not_whitespace
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_U+2000_not_whitespace
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_U+2000_not_whitespace
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_DEL_written_unescaped
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_DEL_written_unescaped
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_U+001F_written_unescaped
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_U+001F_written_unescaped
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_trim_as_trimStart
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_trim_as_trimStart
+=== CONT  TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_an_escaped_quote_closing_a_string
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_a_feature_value's_sourceIndex_not_counting_the_colon
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_U+FEFF_not_whitespace
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_DEL_written_unescaped
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_a_feature_value's_sourceIndex_not_counting_the_colon
+    mediaquery_test.go:131: natively, caught: line 9: "      value \"768px\" @22 before=\" \" after=\"\"", Go cohere "      value \"768px\" @23 before=\" \" after=\"\""
+    mediaquery_test.go:131: on Node, caught: line 9: "      value \"768px\" @22 before=\" \" after=\"\"", Go cohere "      value \"768px\" @23 before=\" \" after=\"\""
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_U+2000_not_whitespace
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_U+FEFF_not_whitespace
+    mediaquery_test.go:131: natively, caught: line 611: "media-query-list \"screen\" @0 before=\"\" after=\"\" nodes=1", Go cohere "media-query-list \"screen\" @1 before=\"\ufeff\" after=\"\" nodes=1"
+    mediaquery_test.go:131: on Node, caught: line 611: "media-query-list \"screen\" @0 before=\"\" after=\"\" nodes=1", Go cohere "media-query-list \"screen\" @1 before=\"\ufeff\" after=\"\" nodes=1"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_U+2029_not_whitespace
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_an_escaped_quote_closing_a_string
+    mediaquery_test.go:131: natively, caught: line 470: "    media-feature-expression \"({'a\\\\'b'}: c)\" @0 before=\"\" after=\"\" nodes=1", Go cohere "    media-feature-expression \"({'a\\\\'b'}: c)\" @0 before=\"\" after=\"\" nodes=3"
+    mediaquery_test.go:131: on Node, caught: line 470: "    media-feature-expression \"({'a\\\\'b'}: c)\" @0 before=\"\" after=\"\" nodes=1", Go cohere "    media-feature-expression \"({'a\\\\'b'}: c)\" @0 before=\"\" after=\"\" nodes=3"
+=== CONT  TestThePortParsesAsGoCohereDoes/as_postcss-media-query-parser
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_DEL_written_unescaped
+    mediaquery_test.go:131: natively, caught: line 967: "media-query-list \"\x7fscreen\x7fand\x7f(\x7fmin-width\x7f:\x7f1px\x7f)\x7f,\x7fprint\x7f\" @0 before=\"\" after=\"\" nodes=2", Go cohere "media-query-list \"\\u007fscreen\\u007fand\\u007f(\\u007fmin-width\\u007f:\\u007f1px\\u007f)\\u007f,\\u007fprint\\u007f\" @0 before=\"\" after=\"\" nodes=2"
+    mediaquery_test.go:131: on Node, caught: line 967: "media-query-list \"\x7fscreen\x7fand\x7f(\x7fmin-width\x7f:\x7f1px\x7f)\x7f,\x7fprint\x7f\" @0 before=\"\" after=\"\" nodes=2", Go cohere "media-query-list \"\\u007fscreen\\u007fand\\u007f(\\u007fmin-width\\u007f:\\u007f1px\\u007f)\\u007f,\\u007fprint\\u007f\" @0 before=\"\" after=\"\" nodes=2"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_trim_as_trimStart
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_the_word_after_an_expression_typed_as_a_media_type
+=== NAME  TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere
+    mediaquery_test.go:83: 4134 cases (3981 parsed, 153 refused; 2479 nodes left of undecided type): every tree the same from Go cohere, the port natively, on Node and through the JavaScript backend
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_U+001F_written_unescaped
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_U+2000_not_whitespace
+    mediaquery_test.go:131: natively, caught: line 759: "media-query-list \"screen\u2000and\u2000(\u2000min-width\u2000:\u20001px\u2000)\u2000,\u2000print\" @0 before=\"\" after=\"\" nodes=2", Go cohere "media-query-list \"screen\u2000and\u2000(\u2000min-width\u2000:\u20001px\u2000)\u2000,\u2000print\" @1 before=\"\u2000\" after=\"\u2000\" nodes=2"
+    mediaquery_test.go:131: on Node, caught: line 759: "media-query-list \"screen\u2000and\u2000(\u2000min-width\u2000:\u20001px\u2000)\u2000,\u2000print\" @0 before=\"\" after=\"\" nodes=2", Go cohere "media-query-list \"screen\u2000and\u2000(\u2000min-width\u2000:\u20001px\u2000)\u2000,\u2000print\" @1 before=\"\u2000\" after=\"\u2000\" nodes=2"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_any_closing_quote_ending_a_string
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_the_word_after_an_expression_typed_as_a_media_type
+    mediaquery_test.go:131: natively, caught: line 231: "    media-type \"b\" @3 before=\"\" after=\"\"", Go cohere "    keyword \"b\" @3 before=\"\" after=\"\""
+    mediaquery_test.go:131: on Node, caught: line 231: "    media-type \"b\" @3 before=\"\" after=\"\"", Go cohere "    keyword \"b\" @3 before=\"\" after=\"\""
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_U+2029_not_whitespace
+    mediaquery_test.go:131: natively, caught: line 891: "media-query-list \"screen\u2029and\u2029(\u2029min-width\u2029:\u20291px\u2029)\u2029,\u2029print\" @0 before=\"\" after=\"\" nodes=2", Go cohere "media-query-list \"screen\u2029and\u2029(\u2029min-width\u2029:\u20291px\u2029)\u2029,\u2029print\" @1 before=\"\u2029\" after=\"\u2029\" nodes=2"
+    mediaquery_test.go:131: on Node, caught: line 891: "media-query-list \"screen\u2029and\u2029(\u2029min-width\u2029:\u20291px\u2029)\u2029,\u2029print\" @0 before=\"\" after=\"\" nodes=2", Go cohere "media-query-list \"screen\u2029and\u2029(\u2029min-width\u2029:\u20291px\u2029)\u2029,\u2029print\" @1 before=\"\u2029\" after=\"\u2029\" nodes=2"
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_U+001F_written_unescaped
+    mediaquery_test.go:131: natively, caught: line 974: "media-query-list \"\x1fscreen\x1fand\x1f(\x1fmin-width\x1f:\x1f1px\x1f)\x1f,\x1fprint\x1f\" @0 before=\"\" after=\"\" nodes=2", Go cohere "media-query-list \"\\u001fscreen\\u001fand\\u001f(\\u001fmin-width\\u001f:\\u001f1px\\u001f)\\u001f,\\u001fprint\\u001f\" @0 before=\"\" after=\"\" nodes=2"
+    mediaquery_test.go:131: on Node, caught: line 974: "media-query-list \"\x1fscreen\x1fand\x1f(\x1fmin-width\x1f:\x1f1px\x1f)\x1f,\x1fprint\x1f\" @0 before=\"\" after=\"\" nodes=2", Go cohere "media-query-list \"\\u001fscreen\\u001fand\\u001f(\\u001fmin-width\\u001f:\\u001f1px\\u001f)\\u001f,\\u001fprint\\u001f\" @0 before=\"\" after=\"\" nodes=2"
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_trim_as_trimStart
+    mediaquery_test.go:131: natively, caught: line 128: "  media-query \"screen \" @0 before=\"\" after=\" \" nodes=1", Go cohere "  media-query \"screen\" @0 before=\"\" after=\" \" nodes=1"
+    mediaquery_test.go:131: on Node, caught: line 128: "  media-query \"screen \" @0 before=\"\" after=\" \" nodes=1", Go cohere "  media-query \"screen\" @0 before=\"\" after=\" \" nodes=1"
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_any_closing_quote_ending_a_string
+    mediaquery_test.go:131: natively, caught: line 666: "    media-feature-expression \"({'a\\\"b'}:x)\" @0 before=\"\" after=\"\" nodes=1", Go cohere "    media-feature-expression \"({'a\\\"b'}:x)\" @0 before=\"\" after=\"\" nodes=3"
+    mediaquery_test.go:131: on Node, caught: line 666: "    media-feature-expression \"({'a\\\"b'}:x)\" @0 before=\"\" after=\"\" nodes=1", Go cohere "    media-feature-expression \"({'a\\\"b'}:x)\" @0 before=\"\" after=\"\" nodes=3"
+--- PASS: TestThePortParsesAsGoCohereDoes (2.33s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_a_feature_value's_sourceIndex_not_counting_the_colon (3.38s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_U+FEFF_not_whitespace (3.92s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_an_escaped_quote_closing_a_string (4.01s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_DEL_written_unescaped (5.20s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/as_postcss-media-query-parser (1.23s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere (5.31s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_U+2000_not_whitespace (3.37s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_the_word_after_an_expression_typed_as_a_media_type (3.86s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_U+2029_not_whitespace (5.27s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_U+001F_written_unescaped (4.26s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_trim_as_trimStart (4.52s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_any_closing_quote_ending_a_string (3.68s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/mediaquery	12.779s
+=== RUN   TestThePortParsesAsGoCohereDoes
+=== PAUSE TestThePortParsesAsGoCohereDoes
+=== RUN   TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars
+=== PAUSE TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars
+=== CONT  TestThePortParsesAsGoCohereDoes
+=== CONT  TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars
+=== RUN   TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|_b
+=== PAUSE TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|_b
+=== RUN   TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/:is(a|)
+=== PAUSE TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/:is(a|)
+=== RUN   TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|@x
+=== PAUSE TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|@x
+=== RUN   TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/*|)
+=== PAUSE TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/*|)
+=== CONT  TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|_b
+=== CONT  TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|@x
+=== CONT  TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/*|)
+=== CONT  TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/:is(a|)
+=== NAME  TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|_b
+    selector_test.go:472: entered parser, no return within 1s, killed at deadline
+=== NAME  TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/*|)
+    selector_test.go:472: entered parser, no return within 1s, killed at deadline
+=== NAME  TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|@x
+    selector_test.go:472: entered parser, no return within 1s, killed at deadline
+=== NAME  TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/:is(a|)
+    selector_test.go:472: entered parser, no return within 1s, killed at deadline
+--- PASS: TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars (0.00s)
+    --- PASS: TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|_b (1.03s)
+    --- PASS: TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/*|) (1.04s)
+    --- PASS: TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|@x (1.04s)
+    --- PASS: TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/:is(a|) (1.04s)
+=== NAME  TestThePortParsesAsGoCohereDoes
+    selector_test.go:49: Go oracle: === RUN   TestAdamicPortCases
+            adamic_port_side_test.go:157: cohere PCG(2,3) corpus: 20330 unique inputs, 20000 terminating
+            adamic_port_side_test.go:197: 1940 CSS test constants plus fixtures and generated selectors; total 26773
+            adamic_port_side_test.go:214: Go: 267730 selectors in 8.575429624s, 31221 selectors/s; 95460 parsed, 101900 root children
+        --- PASS: TestAdamicPortCases (11.04s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css/selector	11.049s
+    selector_test.go:49: 389 brace-containing CSS test constants, 129 not valid stylesheets, 387 extracted test selectors
+        1 CSS files, 387 selectors (including repeats)
+    selector_test.go:49: Go oracle: === RUN   TestAdamicPortCases
+            adamic_port_side_test.go:157: cohere PCG(2,3) corpus: 20330 unique inputs, 20000 terminating
+            adamic_port_side_test.go:197: 1940 CSS test constants plus fixtures and generated selectors; total 27160
+            adamic_port_side_test.go:214: Go: 271600 selectors in 6.047274825s, 44913 selectors/s; 99100 parsed, 105840 root children
+        --- PASS: TestAdamicPortCases (7.41s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css/selector	7.424s
+    selector_test.go:49: seed 20261005, 4000 generated selectors
+=== RUN   TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere
+=== PAUSE TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere
+=== RUN   TestThePortParsesAsGoCohereDoes/as_postcss-selector-parser
+=== PAUSE TestThePortParsesAsGoCohereDoes/as_postcss-selector-parser
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_the_suffix_operator_loses_|=
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_the_suffix_operator_loses_|=
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_a_quote_ignores_escape_parity
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_a_quote_ignores_escape_parity
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_a_merged_word_uses_its_first_token_position
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_a_merged_word_uses_its_first_token_position
+=== CONT  TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_a_quote_ignores_escape_parity
+=== CONT  TestThePortParsesAsGoCohereDoes/as_postcss-selector-parser
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_the_suffix_operator_loses_|=
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_a_merged_word_uses_its_first_token_position
+=== NAME  TestThePortParsesAsGoCohereDoes/as_postcss-selector-parser
+    selector_test.go:99: 401 nonterminating inputs excluded from JS oracle
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_the_suffix_operator_loses_|=
+    selector_test.go:126: natively, caught: line 2728, byte 258: ":\"attribute\",\"value\":\"b\"},{\"attribute\":\"\",\"namespace\":\"a\",\"operator\":\"=\",\"quoted\":false,\"raws\":{\"unquoted\":\"b\"},\"source\":{\"end\":{\"column\":12,\"line\":1},\"start\":{", Go cohere ":\"attribute\",\"value\":\"b\"},{\"attribute\":\"a\",\"operator\":\"|=\",\"quoted\":false,\"raws\":{\"unquoted\":\"b\"},\"source\":{\"end\":{\"column\":12,\"line\":1},\"start\":{\"column\":7,\"li"
+    selector_test.go:126: on Node, caught: line 2728, byte 258: ":\"attribute\",\"value\":\"b\"},{\"attribute\":\"\",\"namespace\":\"a\",\"operator\":\"=\",\"quoted\":false,\"raws\":{\"unquoted\":\"b\"},\"source\":{\"end\":{\"column\":12,\"line\":1},\"start\":{", Go cohere ":\"attribute\",\"value\":\"b\"},{\"attribute\":\"a\",\"operator\":\"|=\",\"quoted\":false,\"raws\":{\"unquoted\":\"b\"},\"source\":{\"end\":{\"column\":12,\"line\":1},\"start\":{\"column\":7,\"li"
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_a_merged_word_uses_its_first_token_position
+    selector_test.go:126: natively, caught: line 16, byte 1408: "},{\"nodes\":[],\"source\":{\"end\":{\"column\":\"<undefined>\",\"line\":13},\"start\":{\"column\":14,\"line\":1}},\"sourceIndex\":13,\"spaces\":{\"after\":\"\",\"before\":\"\"},\"type\":\"pseu", Go cohere "},{\"nodes\":[],\"source\":{\"end\":{\"column\":16,\"line\":1},\"start\":{\"column\":14,\"line\":1}},\"sourceIndex\":13,\"spaces\":{\"after\":\"\",\"before\":\"\"},\"type\":\"pseudo\",\"value\":"
+    selector_test.go:126: on Node, caught: line 16, byte 1408: "},{\"nodes\":[],\"source\":{\"end\":{\"column\":\"<undefined>\",\"line\":13},\"start\":{\"column\":14,\"line\":1}},\"sourceIndex\":13,\"spaces\":{\"after\":\"\",\"before\":\"\"},\"type\":\"pseu", Go cohere "},{\"nodes\":[],\"source\":{\"end\":{\"column\":16,\"line\":1},\"start\":{\"column\":14,\"line\":1}},\"sourceIndex\":13,\"spaces\":{\"after\":\"\",\"before\":\"\"},\"type\":\"pseudo\",\"value\":"
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_a_quote_ignores_escape_parity
+    selector_test.go:126: natively, caught: line 152, byte 9: "error Unclosed quote", Go cohere "error Unexpected \"string\" found."
+    selector_test.go:126: on Node, caught: line 152, byte 9: "error Unclosed quote", Go cohere "error Unexpected \"string\" found."
+=== NAME  TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere
+    selector_test.go:75: 27160 selectors: every answer agrees on Node, native, and the JavaScript backend
+--- PASS: TestThePortParsesAsGoCohereDoes (24.33s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/as_postcss-selector-parser (3.71s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_the_suffix_operator_loses_|= (14.91s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_a_merged_word_uses_its_first_token_position (16.98s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_a_quote_ignores_escape_parity (18.04s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere (27.08s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/selector	51.437s
+=== RUN   TestThePortParsesAsGoCohereDoes
+=== PAUSE TestThePortParsesAsGoCohereDoes
+=== CONT  TestThePortParsesAsGoCohereDoes
+    values_test.go:52: seed 20261005, 4000 generated values
+=== RUN   TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere
+=== PAUSE TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere
+=== RUN   TestThePortParsesAsGoCohereDoes/as_postcss-values-parser
+=== PAUSE TestThePortParsesAsGoCohereDoes/as_postcss-values-parser
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_next_starting_at_0,_not_NaN
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_next_starting_at_0,_not_NaN
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_an_operator's_sourceIndex_its_index
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_an_operator's_sourceIndex_its_index
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_a_space_compared_with_the_comma_token's_kind
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_a_space_compared_with_the_comma_token's_kind
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_a_number's_unit_taken_off_its_end
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_a_number's_unit_taken_off_its_end
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_DEL_written_unescaped
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_DEL_written_unescaped
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_U+001F_written_unescaped
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_U+001F_written_unescaped
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_alphaNum's_digits_stopping_at_8
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_alphaNum's_digits_stopping_at_8
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_isColor's_digits_stopping_at_8
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_isColor's_digits_stopping_at_8
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_alphaNum's_lowercase_stopping_at_y
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_alphaNum's_lowercase_stopping_at_y
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_alphaNum's_uppercase_stopping_at_Y
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_alphaNum's_uppercase_stopping_at_Y
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_alphaNum_taking__
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_alphaNum_taking__
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_a_word_ending_at_=
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_a_word_ending_at_=
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_the_strict_calc_check_ignoring_case
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_the_strict_calc_check_ignoring_case
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_the_url_argument_check_ignoring_case
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_the_url_argument_check_ignoring_case
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_the_tokenizer's_url_argument_ignoring_case
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_the_tokenizer's_url_argument_ignoring_case
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_unicodeRange's_digits_stopping_at_8
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_unicodeRange's_digits_stopping_at_8
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_--_a_word_only_before_more_text
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_--_a_word_only_before_more_text
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_?_not_in_a_unicode_range
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_?_not_in_a_unicode_range
+=== CONT  TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_alphaNum's_lowercase_stopping_at_y
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_a_space_compared_with_the_comma_token's_kind
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_the_url_argument_check_ignoring_case
+=== CONT  TestThePortParsesAsGoCohereDoes/as_postcss-values-parser
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_next_starting_at_0,_not_NaN
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_a_space_compared_with_the_comma_token's_kind
+    values_test.go:139: natively, caught: line 256: "      word isColor=false isHex=false raws={after:\" \",before:\" \"} source={end:{column:10,line:1},start:{column:8,line:1}} sourceIndex=7 value=\"--x\"", Go cohere "      word isColor=false isHex=false raws={after:\"\",before:\" \"} source={end:{column:10,line:1},start:{column:8,line:1}} sourceIndex=7 value=\"--x\""
+    values_test.go:139: on Node, caught: line 256: "      word isColor=false isHex=false raws={after:\" \",before:\" \"} source={end:{column:10,line:1},start:{column:8,line:1}} sourceIndex=7 value=\"--x\"", Go cohere "      word isColor=false isHex=false raws={after:\"\",before:\" \"} source={end:{column:10,line:1},start:{column:8,line:1}} sourceIndex=7 value=\"--x\""
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_an_operator's_sourceIndex_its_index
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_the_url_argument_check_ignoring_case
+    values_test.go:139: natively, caught: line 1398: "    func raws={after:\"\",before:\"\"} source={end:{column:3,line:1},start:{column:1,line:1}} sourceIndex=0 unbalanced=0 value=\"URL\" nodes=3", Go cohere "    func raws={after:\"\",before:\"\"} source={end:{column:3,line:1},start:{column:1,line:1}} sourceIndex=0 unbalanced=0 value=\"URL\" nodes=4"
+    values_test.go:139: on Node, caught: line 1398: "    func raws={after:\"\",before:\"\"} source={end:{column:3,line:1},start:{column:1,line:1}} sourceIndex=0 unbalanced=0 value=\"URL\" nodes=3", Go cohere "    func raws={after:\"\",before:\"\"} source={end:{column:3,line:1},start:{column:1,line:1}} sourceIndex=0 unbalanced=0 value=\"URL\" nodes=4"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_a_word_ending_at_=
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_alphaNum's_lowercase_stopping_at_y
+    values_test.go:139: natively, caught: line 1338: "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=2", Go cohere "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=1"
+    values_test.go:139: on Node, caught: line 1338: "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=2", Go cohere "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=1"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_the_strict_calc_check_ignoring_case
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_next_starting_at_0,_not_NaN
+    values_test.go:139: natively, caught: line 180: "    paren parenType=\"\" raws={after:\"\",before:\"\"} source={end:{column:1,line:1},start:{column:1,line:1}} sourceIndex=0 value=\"(\"", Go cohere "    paren parenType=\"\" raws={after:\"\",before:\"\"} source={end:{column:NaN,line:1},start:{column:1,line:1}} sourceIndex=0 value=\"(\""
+    values_test.go:139: on Node, caught: line 180: "    paren parenType=\"\" raws={after:\"\",before:\"\"} source={end:{column:1,line:1},start:{column:1,line:1}} sourceIndex=0 value=\"(\"", Go cohere "    paren parenType=\"\" raws={after:\"\",before:\"\"} source={end:{column:NaN,line:1},start:{column:1,line:1}} sourceIndex=0 value=\"(\""
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_alphaNum_taking__
+=== NAME  TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere
+    values_test.go:91: 8208 parses (5598 trees, 2610 refusals): every answer the same from Go cohere, the port natively, on Node and through the JavaScript backend
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_alphaNum's_uppercase_stopping_at_Y
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_an_operator's_sourceIndex_its_index
+    values_test.go:139: natively, caught: line 7: "      operator raws={after:\"\",before:\" \"} source={end:{column:11,line:1},start:{column:11,line:1}} sourceIndex=10 value=\"-\"", Go cohere "      operator raws={after:\"\",before:\" \"} source={end:{column:11,line:1},start:{column:11,line:1}} sourceIndex=1 value=\"-\""
+    values_test.go:139: on Node, caught: line 7: "      operator raws={after:\"\",before:\" \"} source={end:{column:11,line:1},start:{column:11,line:1}} sourceIndex=10 value=\"-\"", Go cohere "      operator raws={after:\"\",before:\" \"} source={end:{column:11,line:1},start:{column:11,line:1}} sourceIndex=1 value=\"-\""
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_U+001F_written_unescaped
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_a_word_ending_at_=
+    values_test.go:139: natively, caught: line 1365: "    word isColor=false isHex=false raws={after:\"\",before:\"\"} source={end:{column:4,line:1},start:{column:2,line:1}} sourceIndex=1 value=\"a=b\"", Go cohere "    word isColor=false isHex=false raws={after:\"\",before:\"\"} source={end:{column:3,line:1},start:{column:1,line:1}} sourceIndex=0 value=\"a=b\""
+    values_test.go:139: on Node, caught: line 1365: "    word isColor=false isHex=false raws={after:\"\",before:\"\"} source={end:{column:4,line:1},start:{column:2,line:1}} sourceIndex=1 value=\"a=b\"", Go cohere "    word isColor=false isHex=false raws={after:\"\",before:\"\"} source={end:{column:3,line:1},start:{column:1,line:1}} sourceIndex=0 value=\"a=b\""
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_isColor's_digits_stopping_at_8
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_the_strict_calc_check_ignoring_case
+    values_test.go:139: natively, caught: line 1380: "error ParserError: Syntax Error at line: 1, column 8", Go cohere "root raws={after:\"\",before:\"\"} nodes=1"
+    values_test.go:139: on Node, caught: line 1380: "error ParserError: Syntax Error at line: 1, column 8", Go cohere "root raws={after:\"\",before:\"\"} nodes=1"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_alphaNum's_digits_stopping_at_8
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_alphaNum_taking__
+    values_test.go:139: natively, caught: line 1354: "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=1", Go cohere "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=2"
+    values_test.go:139: on Node, caught: line 1354: "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=1", Go cohere "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=2"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_DEL_written_unescaped
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_alphaNum's_uppercase_stopping_at_Y
+    values_test.go:139: natively, caught: line 1346: "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=2", Go cohere "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=1"
+    values_test.go:139: on Node, caught: line 1346: "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=2", Go cohere "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=1"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_--_a_word_only_before_more_text
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_isColor's_digits_stopping_at_8
+    values_test.go:139: natively, caught: line 1331: "    word isColor=false isHex=true raws={after:\"\",before:\"\"} source={end:{column:4,line:1},start:{column:1,line:1}} sourceIndex=0 value=\"#999\"", Go cohere "    word isColor=true isHex=true raws={after:\"\",before:\"\"} source={end:{column:4,line:1},start:{column:1,line:1}} sourceIndex=0 value=\"#999\""
+    values_test.go:139: on Node, caught: line 1331: "    word isColor=false isHex=true raws={after:\"\",before:\"\"} source={end:{column:4,line:1},start:{column:1,line:1}} sourceIndex=0 value=\"#999\"", Go cohere "    word isColor=true isHex=true raws={after:\"\",before:\"\"} source={end:{column:4,line:1},start:{column:1,line:1}} sourceIndex=0 value=\"#999\""
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_?_not_in_a_unicode_range
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_U+001F_written_unescaped
+    values_test.go:139: natively, caught: line 1454: "    word isColor=false isHex=false raws={after:\"\",before:\" \"} source={end:{column:17,line:1},start:{column:15,line:1}} sourceIndex=14 value=\"a\x1fb\"", Go cohere "    word isColor=false isHex=false raws={after:\"\",before:\" \"} source={end:{column:17,line:1},start:{column:15,line:1}} sourceIndex=14 value=\"a\\u001fb\""
+    values_test.go:139: on Node, caught: line 1454: "    word isColor=false isHex=false raws={after:\"\",before:\" \"} source={end:{column:17,line:1},start:{column:15,line:1}} sourceIndex=14 value=\"a\x1fb\"", Go cohere "    word isColor=false isHex=false raws={after:\"\",before:\" \"} source={end:{column:17,line:1},start:{column:15,line:1}} sourceIndex=14 value=\"a\\u001fb\""
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_unicodeRange's_digits_stopping_at_8
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_alphaNum's_digits_stopping_at_8
+    values_test.go:139: natively, caught: line 1330: "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=2", Go cohere "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=1"
+    values_test.go:139: on Node, caught: line 1330: "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=2", Go cohere "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=1"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_a_number's_unit_taken_off_its_end
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_DEL_written_unescaped
+    values_test.go:139: natively, caught: line 1451: "    word isColor=false isHex=false raws={after:\"\",before:\"\"} source={end:{column:3,line:1},start:{column:1,line:1}} sourceIndex=0 value=\"a\x7fb\"", Go cohere "    word isColor=false isHex=false raws={after:\"\",before:\"\"} source={end:{column:3,line:1},start:{column:1,line:1}} sourceIndex=0 value=\"a\\u007fb\""
+    values_test.go:139: on Node, caught: line 1451: "    word isColor=false isHex=false raws={after:\"\",before:\"\"} source={end:{column:3,line:1},start:{column:1,line:1}} sourceIndex=0 value=\"a\x7fb\"", Go cohere "    word isColor=false isHex=false raws={after:\"\",before:\"\"} source={end:{column:3,line:1},start:{column:1,line:1}} sourceIndex=0 value=\"a\\u007fb\""
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_the_tokenizer's_url_argument_ignoring_case
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_--_a_word_only_before_more_text
+    values_test.go:139: natively, caught: line 1423: "error TypeError: Cannot read properties of undefined (reading '0')", Go cohere "root raws={after:\"\",before:\"\"} nodes=1"
+    values_test.go:139: on Node, caught: line 1423: "error TypeError: Cannot read properties of undefined (reading '0')", Go cohere "root raws={after:\"\",before:\"\"} nodes=1"
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_?_not_in_a_unicode_range
+    values_test.go:139: natively, caught: line 888: "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=8", Go cohere "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=7"
+    values_test.go:139: on Node, caught: line 888: "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=8", Go cohere "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=7"
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_unicodeRange's_digits_stopping_at_8
+    values_test.go:139: natively, caught: line 1416: "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=2", Go cohere "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=1"
+    values_test.go:139: on Node, caught: line 1416: "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=2", Go cohere "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=1"
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_a_number's_unit_taken_off_its_end
+    values_test.go:139: natively, caught: line 347: "    number raws={after:\"\",before:\"\"} source={end:{column:4,line:1},start:{column:1,line:1}} sourceIndex=0 unit=\"e\" value=\"1e1\"", Go cohere "    number raws={after:\"\",before:\"\"} source={end:{column:4,line:1},start:{column:1,line:1}} sourceIndex=0 unit=\"e\" value=\"11e\""
+    values_test.go:139: on Node, caught: line 347: "    number raws={after:\"\",before:\"\"} source={end:{column:4,line:1},start:{column:1,line:1}} sourceIndex=0 unit=\"e\" value=\"1e1\"", Go cohere "    number raws={after:\"\",before:\"\"} source={end:{column:4,line:1},start:{column:1,line:1}} sourceIndex=0 unit=\"e\" value=\"11e\""
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_the_tokenizer's_url_argument_ignoring_case
+    values_test.go:139: natively, caught: line 1404: "root raws={after:\"\",before:\"\"} nodes=1", Go cohere "error ParserError: Expected closing parenthesis at line: 1, column 4"
+    values_test.go:139: on Node, caught: line 1404: "root raws={after:\"\",before:\"\"} nodes=1", Go cohere "error ParserError: Expected closing parenthesis at line: 1, column 4"
+--- PASS: TestThePortParsesAsGoCohereDoes (2.47s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/as_postcss-values-parser (3.13s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_a_space_compared_with_the_comma_token's_kind (7.88s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_the_url_argument_check_ignoring_case (8.69s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_alphaNum's_lowercase_stopping_at_y (9.53s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_next_starting_at_0,_not_NaN (9.12s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere (13.74s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_an_operator's_sourceIndex_its_index (7.71s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_a_word_ending_at_= (8.54s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_the_strict_calc_check_ignoring_case (9.49s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_alphaNum_taking__ (8.99s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_alphaNum's_uppercase_stopping_at_Y (9.95s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_isColor's_digits_stopping_at_8 (7.35s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_U+001F_written_unescaped (9.65s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_alphaNum's_digits_stopping_at_8 (8.69s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_DEL_written_unescaped (8.98s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_--_a_word_only_before_more_text (7.83s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_?_not_in_a_unicode_range (7.98s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_unicodeRange's_digits_stopping_at_8 (9.05s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_a_number's_unit_taken_off_its_end (6.98s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_the_tokenizer's_url_argument_ignoring_case (5.46s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/values	38.178s
+=== RUN   TestUpstreamNumericSeparatorGap
+=== PAUSE TestUpstreamNumericSeparatorGap
+=== RUN   TestUpstreamRepositoryCorpusParity
+=== PAUSE TestUpstreamRepositoryCorpusParity
+=== RUN   TestExternalComparisonCatchesThreePrinterMutants
+=== PAUSE TestExternalComparisonCatchesThreePrinterMutants
+=== RUN   TestPortMatchesGoCohere
+=== PAUSE TestPortMatchesGoCohere
+=== RUN   TestAdditionalJSONBoundaries
+=== PAUSE TestAdditionalJSONBoundaries
+=== CONT  TestUpstreamNumericSeparatorGap
+=== CONT  TestPortMatchesGoCohere
+=== CONT  TestAdditionalJSONBoundaries
+=== CONT  TestExternalComparisonCatchesThreePrinterMutants
+=== CONT  TestUpstreamRepositoryCorpusParity
+=== NAME  TestPortMatchesGoCohere
+    port_test.go:200: repository groups: map[Adamic:599 TypeScript:202 cohere:835]; generated 34; total 1670
+=== NAME  TestUpstreamRepositoryCorpusParity
+    audit_test.go:138: repository groups: map[Adamic:599 TypeScript:202 cohere:835]; generated 34; total 1670
+=== NAME  TestUpstreamNumericSeparatorGap
+    audit_test.go:176: Go cohere: === RUN   TestAdamicJSONAudit
+            adamic_json_audit_test.go:43: 6 texts in 0.000s
+        --- PASS: TestAdamicJSONAudit (0.00s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	0.017s
+=== NAME  TestExternalComparisonCatchesThreePrinterMutants
+    audit_test.go:176: Go cohere: === RUN   TestAdamicJSONAudit
+            adamic_json_audit_test.go:43: 4 texts in 0.001s
+        --- PASS: TestAdamicJSONAudit (0.00s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	0.036s
+=== NAME  TestAdditionalJSONBoundaries
+    port_test.go:331: Go cohere: === RUN   TestAdamicJSONAudit
+            adamic_json_audit_test.go:43: 72 texts in 0.007s
+        --- PASS: TestAdamicJSONAudit (0.01s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	0.030s
+=== NAME  TestUpstreamNumericSeparatorGap
+    audit_test.go:176: Prettier: 6 texts in 0.111s
+    audit_test.go:61: probe.json [1__0]: Go formats "[1__0]\n"; Prettier refuses: A numeric separator is only allowed between two digits. (1:3)
+    audit_test.go:61: package.json [1__0]: Go formats "[\n  1__0\n]\n"; Prettier refuses: A numeric separator is only allowed between two digits. (1:3)
+    audit_test.go:61: probe.json [1_]: Go formats "[1_]\n"; Prettier refuses: A numeric separator is only allowed between two digits. (1:3)
+    audit_test.go:61: package.json [1_]: Go formats "[\n  1_\n]\n"; Prettier refuses: A numeric separator is only allowed between two digits. (1:3)
+    audit_test.go:61: probe.json [0x_1]: Go formats "[0x_1]\n"; Prettier refuses: A numeric separator is only allowed between two digits. (1:4)
+    audit_test.go:61: package.json [0x_1]: Go formats "[\n  0x_1\n]\n"; Prettier refuses: A numeric separator is only allowed between two digits. (1:4)
+--- PASS: TestUpstreamNumericSeparatorGap (13.89s)
+=== NAME  TestExternalComparisonCatchesThreePrinterMutants
+    audit_test.go:176: Prettier: 4 texts in 0.135s
+=== RUN   TestExternalComparisonCatchesThreePrinterMutants/missing_final_newline
+=== PAUSE TestExternalComparisonCatchesThreePrinterMutants/missing_final_newline
+=== RUN   TestExternalComparisonCatchesThreePrinterMutants/missing_property_space
+=== PAUSE TestExternalComparisonCatchesThreePrinterMutants/missing_property_space
+=== RUN   TestExternalComparisonCatchesThreePrinterMutants/wrong_filename_parser
+=== PAUSE TestExternalComparisonCatchesThreePrinterMutants/wrong_filename_parser
+=== CONT  TestExternalComparisonCatchesThreePrinterMutants/missing_final_newline
+=== CONT  TestExternalComparisonCatchesThreePrinterMutants/wrong_filename_parser
+=== NAME  TestExternalComparisonCatchesThreePrinterMutants/missing_final_newline
+    audit_test.go:176: Go cohere: === RUN   TestAdamicJSONAudit
+            adamic_json_audit_test.go:43: 4 texts in 0.000s
+        --- PASS: TestAdamicJSONAudit (0.00s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	0.023s
+    audit_test.go:176: Prettier: 4 texts in 0.084s
+    audit_test.go:310: caught on package.json: Go "{\n  \"a\": 1,\n  \"b\": [\n    2,\n    3\n  ]\n}", Prettier "{\n  \"a\": 1,\n  \"b\": [\n    2,\n    3\n  ]\n}\n"
+    audit_test.go:310: caught on package.json: Go "{\n  \"text\": \"é😀\",\n  \"escaped\": \"\\u0041\",\n  \"empty\": []\n}", Prettier "{\n  \"text\": \"é😀\",\n  \"escaped\": \"\\u0041\",\n  \"empty\": []\n}\n"
+=== CONT  TestExternalComparisonCatchesThreePrinterMutants/missing_property_space
+=== NAME  TestExternalComparisonCatchesThreePrinterMutants/wrong_filename_parser
+    audit_test.go:176: Go cohere: === RUN   TestAdamicJSONAudit
+            adamic_json_audit_test.go:43: 4 texts in 0.001s
+        --- PASS: TestAdamicJSONAudit (0.00s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	0.044s
+    audit_test.go:176: Prettier: 4 texts in 0.224s
+    audit_test.go:310: caught on package.json: Go "{ \"a\": 1, \"b\": [2, 3] }\n", Prettier "{\n  \"a\": 1,\n  \"b\": [\n    2,\n    3\n  ]\n}\n"
+    audit_test.go:310: caught on package.json: Go "{ \"text\": \"é😀\", \"escaped\": \"\\u0041\", \"empty\": [] }\n", Prettier "{\n  \"text\": \"é😀\",\n  \"escaped\": \"\\u0041\",\n  \"empty\": []\n}\n"
+=== NAME  TestExternalComparisonCatchesThreePrinterMutants/missing_property_space
+    audit_test.go:176: Go cohere: === RUN   TestAdamicJSONAudit
+            adamic_json_audit_test.go:43: 4 texts in 0.001s
+        --- PASS: TestAdamicJSONAudit (0.00s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	0.019s
+    audit_test.go:176: Prettier: 4 texts in 0.088s
+    audit_test.go:310: caught on package.json: Go "{\n  \"a\":1,\n  \"b\":[\n    2,\n    3\n  ]\n}\n", Prettier "{\n  \"a\": 1,\n  \"b\": [\n    2,\n    3\n  ]\n}\n"
+    audit_test.go:310: caught on package.json: Go "{\n  \"text\":\"é😀\",\n  \"escaped\":\"\\u0041\",\n  \"empty\":[]\n}\n", Prettier "{\n  \"text\": \"é😀\",\n  \"escaped\": \"\\u0041\",\n  \"empty\": []\n}\n"
+--- PASS: TestExternalComparisonCatchesThreePrinterMutants (14.00s)
+    --- PASS: TestExternalComparisonCatchesThreePrinterMutants/missing_final_newline (16.41s)
+    --- PASS: TestExternalComparisonCatchesThreePrinterMutants/wrong_filename_parser (16.97s)
+    --- PASS: TestExternalComparisonCatchesThreePrinterMutants/missing_property_space (8.85s)
+--- PASS: TestAdditionalJSONBoundaries (40.65s)
+=== NAME  TestPortMatchesGoCohere
+    port_test.go:202: Go cohere: === RUN   TestAdamicJSONAudit
+            adamic_json_audit_test.go:43: 1670 texts in 41.037s
+        --- PASS: TestAdamicJSONAudit (44.17s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	44.301s
+=== NAME  TestUpstreamRepositoryCorpusParity
+    audit_test.go:176: Go cohere: === RUN   TestAdamicJSONAudit
+            adamic_json_audit_test.go:43: 1670 texts in 43.460s
+        --- PASS: TestAdamicJSONAudit (46.63s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	47.218s
+    audit_test.go:176: Prettier: 1670 texts in 73.920s
+    audit_test.go:154: difference: stage1/cohere/json/gaps/numeric-separators.json (Go error="", Prettier error="A numeric separator is only allowed between two digits. (1:3)")
+    audit_test.go:154: difference: generated/12/probe.json (Go error="", Prettier error="A numeric separator is only allowed between two digits. (1:3)")
+    audit_test.go:154: difference: generated/12/package.json (Go error="", Prettier error="A numeric separator is only allowed between two digits. (1:3)")
+    audit_test.go:154: difference: generated/13/probe.json (Go error="", Prettier error="A numeric separator is only allowed between two digits. (1:3)")
+    audit_test.go:154: difference: generated/13/package.json (Go error="", Prettier error="A numeric separator is only allowed between two digits. (1:3)")
+    audit_test.go:154: difference: generated/14/probe.json (Go error="", Prettier error="A numeric separator is only allowed between two digits. (1:4)")
+    audit_test.go:154: difference: generated/14/package.json (Go error="", Prettier error="A numeric separator is only allowed between two digits. (1:4)")
+    audit_test.go:154: difference: generated/16/probe.json (Go error="json: empty input", Prettier error="")
+    audit_test.go:154: difference: generated/16/package.json (Go error="json: empty input", Prettier error="")
+    audit_test.go:172: exactly nine known upstream differences in 1670 texts
+--- PASS: TestUpstreamRepositoryCorpusParity (139.26s)
+=== NAME  TestPortMatchesGoCohere
+    port_test.go:242: round 0 native 1670 texts in 27.131s: 61.55 texts/s
+    port_test.go:247: round 0 Node 1670 texts in 20.718s: 80.61 texts/s
+    port_test.go:252: round 0 Go 1670 texts in 25.618s: 65.19 texts/s
+    port_test.go:242: round 1 native 1670 texts in 30.975s: 53.91 texts/s
+    port_test.go:247: round 1 Node 1670 texts in 25.697s: 64.99 texts/s
+    port_test.go:252: round 1 Go 1670 texts in 23.865s: 69.98 texts/s
+    port_test.go:242: round 2 native 1670 texts in 26.440s: 63.16 texts/s
+    port_test.go:247: round 2 Node 1670 texts in 17.271s: 96.70 texts/s
+    port_test.go:252: round 2 Go 1670 texts in 28.197s: 59.23 texts/s
+    port_test.go:254: initial Node 36.024s; 1670 texts identical on Go, Node, native and JS backend
+--- PASS: TestPortMatchesGoCohere (1000.38s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/json	1000.455s
+=== RUN   TestThePortAnswersAsGoCohereAndGitDo
+=== PAUSE TestThePortAnswersAsGoCohereAndGitDo
+=== CONT  TestThePortAnswersAsGoCohereAndGitDo
+    gitignore_test.go:100: seed 20261005, 40 generated trees
+=== RUN   TestThePortAnswersAsGoCohereAndGitDo/natively_and_on_Node,_as_Go_cohere
+=== PAUSE TestThePortAnswersAsGoCohereAndGitDo/natively_and_on_Node,_as_Go_cohere
+=== RUN   TestThePortAnswersAsGoCohereAndGitDo/catches_**_matching_one_segment_too_few
+=== PAUSE TestThePortAnswersAsGoCohereAndGitDo/catches_**_matching_one_segment_too_few
+=== RUN   TestThePortAnswersAsGoCohereAndGitDo/catches_entering_from_below_the_root_forgetting_the_files_above
+=== PAUSE TestThePortAnswersAsGoCohereAndGitDo/catches_entering_from_below_the_root_forgetting_the_files_above
+=== RUN   TestThePortAnswersAsGoCohereAndGitDo/catches_precedence_read_from_the_root_down
+=== PAUSE TestThePortAnswersAsGoCohereAndGitDo/catches_precedence_read_from_the_root_down
+=== RUN   TestThePortAnswersAsGoCohereAndGitDo/catches_a_linked_exclude_file_refused
+=== PAUSE TestThePortAnswersAsGoCohereAndGitDo/catches_a_linked_exclude_file_refused
+=== RUN   TestThePortAnswersAsGoCohereAndGitDo/catches_%q_in_uppercase_hexadecimal
+=== PAUSE TestThePortAnswersAsGoCohereAndGitDo/catches_%q_in_uppercase_hexadecimal
+=== RUN   TestThePortAnswersAsGoCohereAndGitDo/catches_R2_[[:upper:]]_one_letter_short
+=== PAUSE TestThePortAnswersAsGoCohereAndGitDo/catches_R2_[[:upper:]]_one_letter_short
+=== RUN   TestThePortAnswersAsGoCohereAndGitDo/catches_R2_[[:xdigit:]]_taking_G
+=== PAUSE TestThePortAnswersAsGoCohereAndGitDo/catches_R2_[[:xdigit:]]_taking_G
+=== RUN   TestThePortAnswersAsGoCohereAndGitDo/catches_R2_an_escaped_range_end_read_as_the_backslash
+=== PAUSE TestThePortAnswersAsGoCohereAndGitDo/catches_R2_an_escaped_range_end_read_as_the_backslash
+=== RUN   TestThePortAnswersAsGoCohereAndGitDo/catches_R2_a_trailing_tab_trimmed_as_a_space
+=== PAUSE TestThePortAnswersAsGoCohereAndGitDo/catches_R2_a_trailing_tab_trimmed_as_a_space
+=== RUN   TestThePortAnswersAsGoCohereAndGitDo/catches_R2_a_path_never_cleaned
+=== PAUSE TestThePortAnswersAsGoCohereAndGitDo/catches_R2_a_path_never_cleaned
+=== RUN   TestThePortAnswersAsGoCohereAndGitDo/catches_R2_the_size_limit_one_byte_lower
+=== PAUSE TestThePortAnswersAsGoCohereAndGitDo/catches_R2_the_size_limit_one_byte_lower
+=== CONT  TestThePortAnswersAsGoCohereAndGitDo/natively_and_on_Node,_as_Go_cohere
+=== CONT  TestThePortAnswersAsGoCohereAndGitDo/catches_R2_[[:upper:]]_one_letter_short
+=== CONT  TestThePortAnswersAsGoCohereAndGitDo/catches_precedence_read_from_the_root_down
+=== CONT  TestThePortAnswersAsGoCohereAndGitDo/catches_%q_in_uppercase_hexadecimal
+=== CONT  TestThePortAnswersAsGoCohereAndGitDo/catches_a_linked_exclude_file_refused
+=== NAME  TestThePortAnswersAsGoCohereAndGitDo/catches_precedence_read_from_the_root_down
+    gitignore_test.go:175: natively, caught: line 4: "1 .gitignore:1:*.log\tsub/app.log", Go cohere "0 sub/.gitignore:1:!*.log\tsub/app.log"
+    gitignore_test.go:175: on Node, caught: line 4: "1 .gitignore:1:*.log\tsub/app.log", Go cohere "0 sub/.gitignore:1:!*.log\tsub/app.log"
+    gitignore_test.go:182: and by git: semantics: the port says "1 .gitignore:1:*.log\tsub/app.log", git "0 sub/.gitignore:1:!*.log\tsub/app.log" (40 differences)
+=== CONT  TestThePortAnswersAsGoCohereAndGitDo/catches_entering_from_below_the_root_forgetting_the_files_above
+=== NAME  TestThePortAnswersAsGoCohereAndGitDo/catches_R2_[[:upper:]]_one_letter_short
+    gitignore_test.go:175: natively, caught: line 28352: "glob 1229 0", Go cohere "glob 1229 1"
+    gitignore_test.go:175: on Node, caught: line 28352: "glob 1229 0", Go cohere "glob 1229 1"
+=== CONT  TestThePortAnswersAsGoCohereAndGitDo/catches_**_matching_one_segment_too_few
+=== NAME  TestThePortAnswersAsGoCohereAndGitDo/catches_%q_in_uppercase_hexadecimal
+    gitignore_test.go:175: natively, caught: line 27122: "error gitignore: quoted entry 1, \"\\\"q\\\" \\\\ \\a\\b\\f\\r\\v\\x01\\x1F\\x7F é 🌍\\n\", holds a newline or a NUL byte, which no ignore-file line can", Go cohere "error gitignore: quoted entry 1, \"\\\"q\\\" \\\\ \\a\\b\\f\\r\\v\\x01\\x1f\\x7f é 🌍\\n\", holds a newline or a NUL byte, which no ignore-file line can"
+    gitignore_test.go:175: on Node, caught: line 27122: "error gitignore: quoted entry 1, \"\\\"q\\\" \\\\ \\a\\b\\f\\r\\v\\x01\\x1F\\x7F é 🌍\\n\", holds a newline or a NUL byte, which no ignore-file line can", Go cohere "error gitignore: quoted entry 1, \"\\\"q\\\" \\\\ \\a\\b\\f\\r\\v\\x01\\x1f\\x7f é 🌍\\n\", holds a newline or a NUL byte, which no ignore-file line can"
+=== CONT  TestThePortAnswersAsGoCohereAndGitDo/catches_R2_a_trailing_tab_trimmed_as_a_space
+=== NAME  TestThePortAnswersAsGoCohereAndGitDo/catches_a_linked_exclude_file_refused
+    gitignore_test.go:175: natively, caught: line 126: "error gitignore: /repository/.git/info/exclude is a symbolic link, which git does not follow inside a working tree, so its patterns would not apply; replace it with the file it points to", Go cohere "1 .git/info/exclude:1:*.tmp\ta.tmp"
+    gitignore_test.go:175: on Node, caught: line 126: "error gitignore: /repository/.git/info/exclude is a symbolic link, which git does not follow inside a working tree, so its patterns would not apply; replace it with the file it points to", Go cohere "1 .git/info/exclude:1:*.tmp\ta.tmp"
+    gitignore_test.go:182: and by git: a linked exclude file: the port answered 1 paths, git 3 (2 differences)
+=== CONT  TestThePortAnswersAsGoCohereAndGitDo/catches_R2_the_size_limit_one_byte_lower
+=== NAME  TestThePortAnswersAsGoCohereAndGitDo/catches_entering_from_below_the_root_forgetting_the_files_above
+    gitignore_test.go:175: natively, caught: line 45: "0 ::\tsub/inner/local\t0 ::", Go cohere "1 sub/.gitignore:2:local\tsub/inner/local\t0 ::"
+    gitignore_test.go:175: on Node, caught: line 45: "0 ::\tsub/inner/local\t0 ::", Go cohere "1 sub/.gitignore:2:local\tsub/inner/local\t0 ::"
+=== CONT  TestThePortAnswersAsGoCohereAndGitDo/catches_R2_a_path_never_cleaned
+=== NAME  TestThePortAnswersAsGoCohereAndGitDo/catches_R2_a_trailing_tab_trimmed_as_a_space
+    gitignore_test.go:175: natively, caught: line 76: "0 ::\ttabbed\t", Go cohere "1 .gitignore:1:tabbed\t\ttabbed\t"
+    gitignore_test.go:175: on Node, caught: line 76: "0 ::\ttabbed\t", Go cohere "1 .gitignore:1:tabbed\t\ttabbed\t"
+    gitignore_test.go:182: and by git: trailing tabs: the port says "0 ::\ttabbed\t", git "1 .gitignore:1:tabbed\t\ttabbed\t" (4 differences)
+=== CONT  TestThePortAnswersAsGoCohereAndGitDo/catches_R2_an_escaped_range_end_read_as_the_backslash
+=== NAME  TestThePortAnswersAsGoCohereAndGitDo/natively_and_on_Node,_as_Go_cohere
+    gitignore_test.go:141: 55 trees, 21 pattern lists, 1445 globs: every answer the same from Go cohere, the port natively, on Node and through the JavaScript backend
+    gitignore_test.go:143: git: 13334 paths compared (869 ignored, 47 re-included by a negation; 0 of them as git's t0008 states), 41 globs as git's corpus and cohere's rules state
+    gitignore_test.go:146: not asked: git's t0008 and t3070 corpora, since COHERE_GIT_SOURCE names no git source checkout
+=== CONT  TestThePortAnswersAsGoCohereAndGitDo/catches_R2_[[:xdigit:]]_taking_G
+=== NAME  TestThePortAnswersAsGoCohereAndGitDo/catches_**_matching_one_segment_too_few
+    gitignore_test.go:175: natively, caught: line 16: "0 ::\ta/b/deep/x", Go cohere "1 .gitignore:10:**/deep/x\ta/b/deep/x"
+    gitignore_test.go:175: on Node, caught: line 16: "0 ::\ta/b/deep/x", Go cohere "1 .gitignore:10:**/deep/x\ta/b/deep/x"
+    gitignore_test.go:182: and by git: semantics: the port says "0 ::\ta/b/deep/x", git "1 .gitignore:10:**/deep/x\ta/b/deep/x" (3 differences)
+=== NAME  TestThePortAnswersAsGoCohereAndGitDo/catches_R2_the_size_limit_one_byte_lower
+    gitignore_test.go:175: natively, caught: line 106: "error gitignore: /repository/.gitignore is larger than 100 MiB, which git skips with a warning, leaving its patterns unapplied; cohere refuses it rather than skip it", Go cohere "1 .gitignore:1:big\tbig"
+    gitignore_test.go:175: on Node, caught: line 106: "error gitignore: /repository/.gitignore is larger than 100 MiB, which git skips with a warning, leaving its patterns unapplied; cohere refuses it rather than skip it", Go cohere "1 .gitignore:1:big\tbig"
+=== NAME  TestThePortAnswersAsGoCohereAndGitDo/catches_R2_a_path_never_cleaned
+    gitignore_test.go:175: natively, caught: line 91: "0 ::\tsub/./x.tmp", Go cohere "1 .gitignore:3:sub/*.tmp\tsub/./x.tmp"
+    gitignore_test.go:175: on Node, caught: line 91: "0 ::\tsub/./x.tmp", Go cohere "1 .gitignore:3:sub/*.tmp\tsub/./x.tmp"
+=== NAME  TestThePortAnswersAsGoCohereAndGitDo/catches_R2_[[:xdigit:]]_taking_G
+    gitignore_test.go:175: natively, caught: line 28460: "glob 1337 1", Go cohere "glob 1337 0"
+    gitignore_test.go:175: on Node, caught: line 28460: "glob 1337 1", Go cohere "glob 1337 0"
+=== NAME  TestThePortAnswersAsGoCohereAndGitDo/catches_R2_an_escaped_range_end_read_as_the_backslash
+    gitignore_test.go:175: natively, caught: line 28509: "glob 1386 0", Go cohere "glob 1386 1"
+    gitignore_test.go:175: on Node, caught: line 28509: "glob 1386 0", Go cohere "glob 1386 1"
+--- PASS: TestThePortAnswersAsGoCohereAndGitDo (8.20s)
+    --- PASS: TestThePortAnswersAsGoCohereAndGitDo/catches_precedence_read_from_the_root_down (20.91s)
+    --- PASS: TestThePortAnswersAsGoCohereAndGitDo/catches_R2_[[:upper:]]_one_letter_short (31.19s)
+    --- PASS: TestThePortAnswersAsGoCohereAndGitDo/catches_%q_in_uppercase_hexadecimal (34.55s)
+    --- PASS: TestThePortAnswersAsGoCohereAndGitDo/catches_a_linked_exclude_file_refused (41.71s)
+    --- PASS: TestThePortAnswersAsGoCohereAndGitDo/catches_entering_from_below_the_root_forgetting_the_files_above (37.35s)
+    --- PASS: TestThePortAnswersAsGoCohereAndGitDo/catches_R2_a_trailing_tab_trimmed_as_a_space (30.00s)
+    --- PASS: TestThePortAnswersAsGoCohereAndGitDo/natively_and_on_Node,_as_Go_cohere (65.90s)
+    --- PASS: TestThePortAnswersAsGoCohereAndGitDo/catches_**_matching_one_segment_too_few (35.16s)
+    --- PASS: TestThePortAnswersAsGoCohereAndGitDo/catches_R2_the_size_limit_one_byte_lower (34.15s)
+    --- PASS: TestThePortAnswersAsGoCohereAndGitDo/catches_R2_a_path_never_cleaned (24.37s)
+    --- PASS: TestThePortAnswersAsGoCohereAndGitDo/catches_R2_[[:xdigit:]]_taking_G (23.41s)
+    --- PASS: TestThePortAnswersAsGoCohereAndGitDo/catches_R2_an_escaped_range_end_read_as_the_backslash (25.59s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/gitignore	98.466s
+=== RUN   TestCompilerAndStage1Agree
+    lint_test.go:466: compiler and stage1: 399 files
+    lint_test.go:467: Go, Node, emitted JavaScript, native identical: 20820793 bytes
+--- PASS: TestCompilerAndStage1Agree (196.35s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	196.387s
