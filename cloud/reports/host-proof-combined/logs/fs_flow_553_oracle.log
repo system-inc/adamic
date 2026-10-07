@@ -1,0 +1,141 @@
+=== RUN   TestDeinitializingStatementsStopOnReadiness
+=== PAUSE TestDeinitializingStatementsStopOnReadiness
+=== RUN   TestImpossibleNonNullFixturesAreRefused
+=== PAUSE TestImpossibleNonNullFixturesAreRefused
+=== RUN   TestPossibleNonNullStopsAtAssertion
+=== PAUSE TestPossibleNonNullStopsAtAssertion
+=== CONT  TestDeinitializingStatementsStopOnReadiness
+=== RUN   TestDeinitializingStatementsStopOnReadiness/read
+=== PAUSE TestDeinitializingStatementsStopOnReadiness/read
+=== RUN   TestDeinitializingStatementsStopOnReadiness/field
+=== PAUSE TestDeinitializingStatementsStopOnReadiness/field
+=== RUN   TestDeinitializingStatementsStopOnReadiness/alias
+=== PAUSE TestDeinitializingStatementsStopOnReadiness/alias
+=== CONT  TestDeinitializingStatementsStopOnReadiness/read
+=== CONT  TestImpossibleNonNullFixturesAreRefused
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_scanner_initialized.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_scanner_initialized.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_static_uninitialized.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_static_uninitialized.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_catch.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_catch.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_field.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_field.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_map_entry.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_map_entry.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_initialized.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_initialized.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_literal_statement.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_literal_statement.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_static_initialized.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_static_initialized.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_literal_return.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_literal_return.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_append.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_append.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_default.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_default.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_iteration.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_iteration.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_spread.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_spread.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_const.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_const.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_interface.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_interface.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_optional.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_optional.a
+=== CONT  TestPossibleNonNullStopsAtAssertion
+=== CONT  TestDeinitializingStatementsStopOnReadiness/field
+=== CONT  TestDeinitializingStatementsStopOnReadiness/alias
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_refuse_undefined.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_refuse_undefined.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_refuse_null.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_refuse_null.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_refuse_undefined.ts
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_refuse_undefined.ts
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_refuse_null.ts
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_refuse_null.ts
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_refuse_argument.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_refuse_argument.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_refuse_return.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_refuse_return.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_refuse_expression.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_refuse_expression.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_refuse_comparison.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_refuse_comparison.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_scanner_initialized.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_spread.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_comparison.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_expression.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_return.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_argument.a
+=== NAME  TestDeinitializingStatementsStopOnReadiness/read
+    non_null_deinitializing_test.go:27: gate cache node miss
+=== NAME  TestDeinitializingStatementsStopOnReadiness/field
+    non_null_deinitializing_test.go:27: gate cache node miss
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_null.ts
+=== NAME  TestDeinitializingStatementsStopOnReadiness/alias
+    non_null_deinitializing_test.go:27: gate cache node miss
+=== NAME  TestDeinitializingStatementsStopOnReadiness/read
+    non_null_deinitializing_test.go:32: gate cache node miss
+=== NAME  TestPossibleNonNullStopsAtAssertion
+    non_null_impossible_test.go:106: gate cache node miss
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_undefined.ts
+=== NAME  TestDeinitializingStatementsStopOnReadiness/field
+    non_null_deinitializing_test.go:32: gate cache node miss
+=== NAME  TestDeinitializingStatementsStopOnReadiness/alias
+    non_null_deinitializing_test.go:32: gate cache node miss
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_null.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_undefined.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_optional.a
+--- PASS: TestDeinitializingStatementsStopOnReadiness (0.00s)
+    --- PASS: TestDeinitializingStatementsStopOnReadiness/alias (1.15s)
+    --- PASS: TestDeinitializingStatementsStopOnReadiness/field (1.19s)
+    --- PASS: TestDeinitializingStatementsStopOnReadiness/read (1.25s)
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_interface.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_const.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_literal_statement.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_iteration.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_default.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_append.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_static_initialized.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_field.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_literal_return.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_initialized.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_map_entry.a
+=== NAME  TestPossibleNonNullStopsAtAssertion
+    non_null_impossible_test.go:123: gate cache node miss
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_catch.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_static_uninitialized.a
+--- PASS: TestImpossibleNonNullFixturesAreRefused (0.01s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_scanner_initialized.a (0.33s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_spread.a (0.12s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_refuse_comparison.a (0.09s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_refuse_expression.a (0.10s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_refuse_return.a (0.10s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_refuse_argument.a (0.11s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_refuse_null.ts (0.12s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_refuse_undefined.ts (0.18s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_refuse_null.a (0.18s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_refuse_undefined.a (0.18s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_optional.a (0.28s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_interface.a (0.23s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_const.a (0.21s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_default.a (0.08s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_literal_statement.a (0.23s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_iteration.a (0.11s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_literal_return.a (0.15s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_field.a (0.17s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_append.a (0.21s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_static_initialized.a (0.25s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_map_entry.a (0.19s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_initialized.a (0.20s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_static_uninitialized.a (0.13s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_catch.a (0.18s)
+--- PASS: TestPossibleNonNullStopsAtAssertion (1.99s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=8
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	2.013s

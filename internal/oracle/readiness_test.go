@@ -56,6 +56,14 @@ func init() {
 func TestReadinessMutants(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, fixture, stdout, stderr string }{
+		{"deinitialization-values", "deinitialize_values", "before\n", "read before assignment: field 'value' in Object.values(box)"},
+		{"deinitialization-entries", "deinitialize_entries", "before\n", "read before assignment: field 'value' in Object.entries(box)"},
+		{"deinitialization-assign-source", "deinitialize_assign_read", "before\n", "read before assignment: field 'value' in Object.assign(target, source)"},
+		{"deinitialization-field-alias", "deinitialize_alias", "before\n", "read before assignment: field 'value' in box.value"},
+		{"deinitialization-field-method", "deinitialize_field", "before\n", "read before assignment: field 'value' in this.value"},
+		{"keep-slot-proven-after-deinitialization", "deinitialize_read", "before\n", "read before assignment: variable 'value' in value"},
+		{"deinitialization-through-capture", "deinitialize_capture", "before\n", "read before assignment: variable 'value' in value"},
+		{"deinitialization-exception-path", "deinitialize_exception", "caught\n", "read before assignment: variable 'value' in value"},
 		{"scanner-var-capture", "scanner_var_uninitialized", "before\n", "read before assignment: variable 'tokenValue' in tokenValue"},
 		{"drop-check", "uninitialized", "before\n", "read before assignment: variable 'value' in value"},
 		{"erase-without-proof", "uninitialized_loop", "", "read before assignment: variable 'value' in value"},

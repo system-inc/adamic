@@ -1,0 +1,52 @@
+--- FAIL: TestStandaloneDeinitializationUsesReadiness (0.00s)
+    --- FAIL: TestStandaloneDeinitializationUsesReadiness/ts/null/const_box={value:4};_box.value!_=_null!;_console.log(`${box.value}`); (0.18s)
+        non_null_impossible_test.go:87: /tmp/adamic-gate/TestStandaloneDeinitializationUsesReadinesstsnullconst_box={v677106261/001/main.ts:1:35: Adamic 0.1 refuses a non-null assertion whose operand is exactly null; declare the variable optional and assign undefined
+    --- FAIL: TestStandaloneDeinitializationUsesReadiness/a/null/let_value=4;_value=null!;_console.log(`${value}`); (0.25s)
+        non_null_impossible_test.go:87: /tmp/adamic-gate/TestStandaloneDeinitializationUsesReadinessanulllet_value=4_1007608532/001/main.a:1:20: Adamic 0.1 refuses a non-null assertion whose operand is exactly null; declare the variable optional and assign undefined
+    --- FAIL: TestStandaloneDeinitializationUsesReadiness/a/undefined/let_value=4;_value=undefined!;_console.log(`${value}`); (0.25s)
+        non_null_impossible_test.go:87: /tmp/adamic-gate/TestStandaloneDeinitializationUsesReadinessaundefinedlet_valu1817512198/001/main.a:1:20: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined
+    --- FAIL: TestStandaloneDeinitializationUsesReadiness/ts/undefined/let_value=4;_value=undefined!;_console.log(`${value}`); (0.28s)
+        non_null_impossible_test.go:87: /tmp/adamic-gate/TestStandaloneDeinitializationUsesReadinesstsundefinedlet_val2895142178/001/main.ts:1:20: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined
+    --- FAIL: TestStandaloneDeinitializationUsesReadiness/ts/null/let_value=4;_value!_=_null!;_console.log(`${value}`); (0.07s)
+        non_null_impossible_test.go:87: /tmp/adamic-gate/TestStandaloneDeinitializationUsesReadinesstsnulllet_value=43044309116/001/main.ts:1:23: Adamic 0.1 refuses a non-null assertion whose operand is exactly null; declare the variable optional and assign undefined
+    --- FAIL: TestStandaloneDeinitializationUsesReadiness/ts/null/let_value=4;_(value=(null!));_console.log(`${value}`); (0.08s)
+        non_null_impossible_test.go:87: /tmp/adamic-gate/TestStandaloneDeinitializationUsesReadinesstsnulllet_value=4567835831/001/main.ts:1:22: Adamic 0.1 refuses a non-null assertion whose operand is exactly null; declare the variable optional and assign undefined
+    --- FAIL: TestStandaloneDeinitializationUsesReadiness/ts/null/const_box={value:4};_if(true)_{_(box.value=(null!));_}_console.log(`${box.value}`); (0.35s)
+        non_null_impossible_test.go:87: /tmp/adamic-gate/TestStandaloneDeinitializationUsesReadinesstsnullconst_box={v456633768/001/main.ts:1:45: Adamic 0.1 refuses a non-null assertion whose operand is exactly null; declare the variable optional and assign undefined
+    --- FAIL: TestStandaloneDeinitializationUsesReadiness/ts/null/const_box={value:4};_box.value=null!;_console.log(`${box.value}`); (0.23s)
+        non_null_impossible_test.go:87: /tmp/adamic-gate/TestStandaloneDeinitializationUsesReadinesstsnullconst_box={v4234794486/001/main.ts:1:32: Adamic 0.1 refuses a non-null assertion whose operand is exactly null; declare the variable optional and assign undefined
+    --- FAIL: TestStandaloneDeinitializationUsesReadiness/ts/undefined/const_box={value:4};_box.value!_=_undefined!;_console.log(`${box.value}`); (0.12s)
+        non_null_impossible_test.go:87: /tmp/adamic-gate/TestStandaloneDeinitializationUsesReadinesstsundefinedconst_b291258324/001/main.ts:1:35: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined
+    --- FAIL: TestStandaloneDeinitializationUsesReadiness/ts/null/let_value=4;_value=null!;_console.log(`${value}`); (0.18s)
+        non_null_impossible_test.go:87: /tmp/adamic-gate/TestStandaloneDeinitializationUsesReadinesstsnulllet_value=43431029284/001/main.ts:1:20: Adamic 0.1 refuses a non-null assertion whose operand is exactly null; declare the variable optional and assign undefined
+    --- FAIL: TestStandaloneDeinitializationUsesReadiness/ts/undefined/let_value=4;_value!_=_undefined!;_console.log(`${value}`); (0.08s)
+        non_null_impossible_test.go:87: /tmp/adamic-gate/TestStandaloneDeinitializationUsesReadinesstsundefinedlet_val3640838076/001/main.ts:1:23: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined
+    --- FAIL: TestStandaloneDeinitializationUsesReadiness/ts/undefined/const_box={value:4};_if(true)_{_(box.value=(undefined!));_}_console.log(`${box.value}`); (0.23s)
+        non_null_impossible_test.go:87: /tmp/adamic-gate/TestStandaloneDeinitializationUsesReadinesstsundefinedconst_b1896658531/001/main.ts:1:45: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined
+    --- FAIL: TestStandaloneDeinitializationUsesReadiness/ts/undefined/const_box={value:4};_box.value=undefined!;_console.log(`${box.value}`); (0.19s)
+        non_null_impossible_test.go:87: /tmp/adamic-gate/TestStandaloneDeinitializationUsesReadinesstsundefinedconst_b2817227115/001/main.ts:1:32: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined
+    --- FAIL: TestStandaloneDeinitializationUsesReadiness/ts/undefined/let_value=4;_(value=(undefined!));_console.log(`${value}`); (0.14s)
+        non_null_impossible_test.go:87: /tmp/adamic-gate/TestStandaloneDeinitializationUsesReadinesstsundefinedlet_val3791649830/001/main.ts:1:22: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined
+    --- FAIL: TestStandaloneDeinitializationUsesReadiness/a/null/const_box={value:4};_box.value=null!;_console.log(`${box.value}`); (0.14s)
+        non_null_impossible_test.go:87: /tmp/adamic-gate/TestStandaloneDeinitializationUsesReadinessanullconst_box={va1245938143/001/main.a:1:32: Adamic 0.1 refuses a non-null assertion whose operand is exactly null; declare the variable optional and assign undefined
+    --- FAIL: TestStandaloneDeinitializationUsesReadiness/a/undefined/const_box={value:4};_if(true)_{_(box.value=(undefined!));_}_console.log(`${box.value}`); (0.10s)
+        non_null_impossible_test.go:87: /tmp/adamic-gate/TestStandaloneDeinitializationUsesReadinessaundefinedconst_bo3537435810/001/main.a:1:45: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined
+    --- FAIL: TestStandaloneDeinitializationUsesReadiness/a/null/const_box={value:4};_box.value!_=_null!;_console.log(`${box.value}`); (0.14s)
+        non_null_impossible_test.go:87: /tmp/adamic-gate/TestStandaloneDeinitializationUsesReadinessanullconst_box={va3161138378/001/main.a:1:35: Adamic 0.1 refuses a non-null assertion whose operand is exactly null; declare the variable optional and assign undefined
+    --- FAIL: TestStandaloneDeinitializationUsesReadiness/a/undefined/const_box={value:4};_box.value=undefined!;_console.log(`${box.value}`); (0.14s)
+        non_null_impossible_test.go:87: /tmp/adamic-gate/TestStandaloneDeinitializationUsesReadinessaundefinedconst_bo3881051746/001/main.a:1:32: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined
+    --- FAIL: TestStandaloneDeinitializationUsesReadiness/a/null/const_box={value:4};_if(true)_{_(box.value=(null!));_}_console.log(`${box.value}`); (0.17s)
+        non_null_impossible_test.go:87: /tmp/adamic-gate/TestStandaloneDeinitializationUsesReadinessanullconst_box={va147901914/001/main.a:1:45: Adamic 0.1 refuses a non-null assertion whose operand is exactly null; declare the variable optional and assign undefined
+    --- FAIL: TestStandaloneDeinitializationUsesReadiness/a/undefined/const_box={value:4};_box.value!_=_undefined!;_console.log(`${box.value}`); (0.11s)
+        non_null_impossible_test.go:87: /tmp/adamic-gate/TestStandaloneDeinitializationUsesReadinessaundefinedconst_bo584502690/001/main.a:1:35: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined
+    --- FAIL: TestStandaloneDeinitializationUsesReadiness/a/null/let_value=4;_value!_=_null!;_console.log(`${value}`); (0.06s)
+        non_null_impossible_test.go:87: /tmp/adamic-gate/TestStandaloneDeinitializationUsesReadinessanulllet_value=4_2374847197/001/main.a:1:23: Adamic 0.1 refuses a non-null assertion whose operand is exactly null; declare the variable optional and assign undefined
+    --- FAIL: TestStandaloneDeinitializationUsesReadiness/a/null/let_value=4;_(value=(null!));_console.log(`${value}`); (0.09s)
+        non_null_impossible_test.go:87: /tmp/adamic-gate/TestStandaloneDeinitializationUsesReadinessanulllet_value=4_3349857613/001/main.a:1:22: Adamic 0.1 refuses a non-null assertion whose operand is exactly null; declare the variable optional and assign undefined
+    --- FAIL: TestStandaloneDeinitializationUsesReadiness/a/undefined/let_value=4;_value!_=_undefined!;_console.log(`${value}`); (0.09s)
+        non_null_impossible_test.go:87: /tmp/adamic-gate/TestStandaloneDeinitializationUsesReadinessaundefinedlet_valu2337731335/001/main.a:1:23: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined
+    --- FAIL: TestStandaloneDeinitializationUsesReadiness/a/undefined/let_value=4;_(value=(undefined!));_console.log(`${value}`); (0.10s)
+        non_null_impossible_test.go:87: /tmp/adamic-gate/TestStandaloneDeinitializationUsesReadinessaundefinedlet_valu3085263162/001/main.a:1:22: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.817s
+FAIL

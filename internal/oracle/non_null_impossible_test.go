@@ -12,7 +12,7 @@ import (
 
 // These formerly runnable marker controls are now rejected by the later ruling.
 var impossibleAssertionFixtures = []string{
-	"deinitialize_capture", "deinitialize_field", "deinitialize_parameter", "deinitialize_store", "scanner_initialized", "static_uninitialized", "uninitialized_catch", "uninitialized_field", "uninitialized_map_entry", "deinitialize_assign_read", "deinitialize_exception", "deinitialize_loop", "deinitialize_static", "initialized", "literal_statement", "static_initialized", "deinitialize_assign", "deinitialize_entries", "deinitialize_initialized", "literal_return", "uninitialized_append", "uninitialized_default", "uninitialized_iteration", "uninitialized_spread", "deinitialize_alias", "deinitialize_field_initialized", "deinitialize_read", "deinitialize_values", "literal_assignment", "uninitialized_const", "uninitialized_interface", "uninitialized_optional",
+	"scanner_initialized", "static_uninitialized", "uninitialized_catch", "uninitialized_field", "uninitialized_map_entry", "initialized", "literal_statement", "static_initialized", "literal_return", "uninitialized_append", "uninitialized_default", "uninitialized_iteration", "uninitialized_spread", "uninitialized_const", "uninitialized_interface", "uninitialized_optional",
 }
 
 func impossibleAssertionFixture(name string) bool {
@@ -41,6 +41,9 @@ func TestImpossibleNonNullFixturesAreRefused(t *testing.T) {
 		for _, operand := range []string{"undefined", "null"} {
 			paths = append(paths, "non_null_refuse_"+operand+"."+extension)
 		}
+	}
+	for _, form := range []string{"argument", "return", "expression", "comparison"} {
+		paths = append(paths, "non_null_refuse_"+form+".a")
 	}
 	for _, name := range paths {
 		t.Run(name, func(t *testing.T) {

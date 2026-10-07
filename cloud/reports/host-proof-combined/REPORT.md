@@ -195,3 +195,18 @@ adamic: /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:12:28: A
 ```
 
 Verified one-line reproduction in probes/14_adapted_capture_cycle.a on both backends (1:28, same diagnostic). verify-14.cjs passed: fresh Node output equals the historical golden; omitting callback clearing changes stdout to true/false and is caught by exact comparison. This proves the source adaptation keeps memoization; it does not claim native execution of 14. Test logs fs_recount_0d_*.log; no full gate, flow rerun or WASI rerun for this source-only recount. Prior four flow tests remain failed as recorded in the previous recount. Only the proof branch is pushed; no main/area push, force-push or rebase.
+
+## Whole-statement deinitialization recount
+
+Merged compiler 553cbfe9 with a merge commit; b788e96e retained. Merge resolution preserves the existing explicit regex/process refused-fixture exclusions plus incoming refusedNonNullFixture, which omits intentionally rejected non-null forms from flow tracing while keeping standalone deinitializations eligible. No further compiler implementation. Audited fixture tree remains exactly 0d11046e.
+
+Command: `go test ./internal/flow -run '^(TestEveryFunctionIsInSingleAssignment|TestEveryPathNodeTakesIsInTheGraph|TestEveryMutationIsInItsRange|TestLivenessHoldsOnEveryPath)$' -count=1 -timeout 15m -v`. All four FAIL; package time 116.968s. The only remaining lowering diagnostic is `stage 0 can't lower a logical assignment to this target yet`. No exactly-nullish or array-only-unknown lowering refusal remains. First diagnostics:
+
+- TestEveryFunctionIsInSingleAssignment: `flow_test.go:95: Lower: /workspace/adamic/internal/oracle/testdata/non_null_write_array.a:39:1: stage 0 can't lower a logical assignment to this target yet`
+- TestEveryPathNodeTakesIsInTheGraph: `trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/non_null_write_union_logical.a:2:2: stage 0 can't lower a logical assignment to this target yet`
+- TestEveryMutationIsInItsRange: `ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/non_null_write_union_logical.a:2:2: stage 0 can't lower a logical assignment to this target yet`
+- TestLivenessHoldsOnEveryPath: `trace_test.go:390: Lower: /workspace/adamic/internal/oracle/testdata/non_null_write_union_logical.a:2:2: stage 0 can't lower a logical assignment to this target yet`
+
+Distinct failing fixtures: non_null_write_array.a, non_null_write_field.a, non_null_write_local.a, non_null_write_logical.a, non_null_write_typed_array.a, non_null_write_union_logical.a. Owner: compiler. Verified one-line reproduction on both backends (1:71): `function update(value: number | string | boolean | undefined): void { value! ||= 7; console.log(`${value}`); } update(0);`.
+
+Targeted lower tests PASS 1.428s; incoming deinitialization readiness and impossible-assertion oracle tests PASS 2.013s. Executed mutant dropping the standalone exemption: TestStandaloneDeinitializationUsesReadiness fails with the exact-nullish refusal; restored the source. All 25 adapted host fixtures rerun on both backends: 22/25 agree with Node; 05/13 remain green, 14 still capture-cycle Refused, 08 and 25 unchanged. Pristine count 16/25 is the immediately preceding recount, not rerun in this step. No full gate, WASI rerun, macOS run or full Linux counts regeneration. No runtime implementation changes.

@@ -85,7 +85,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
 			return true
 		}
-		if node.Kind == ast.KindNonNullExpression {
+		if node.Kind == ast.KindNonNullExpression && !l.deinitializingStatement(node) {
 			flags := l.checker.GetTypeAtLocation(node.AsNonNullExpression().Expression).Flags()
 			if flags == checker.TypeFlagsUndefined || flags == checker.TypeFlagsNull {
 				operand := "undefined"
@@ -226,4 +226,34 @@ func scannedText(node *ast.Node) string {
 		return "this"
 	}
 	return node.Text()
+}
+
+// Only a literal marker occupying the whole RHS of a standalone store clears
+// readiness. A use of that assertion or assignment as a value is still refused.
+func (l *lowering) deinitializingStatement(node *ast.Node) bool {
+	if !l.uninitializedInitializer(node) {
+		return false
+	}
+	for node.Parent != nil && node.Parent.Kind == ast.KindParenthesizedExpression {
+		node = node.Parent
+	}
+	assignment := node.Parent
+	if assignment == nil || assignment.Kind != ast.KindBinaryExpression {
+		return false
+	}
+	binary := assignment.AsBinaryExpression()
+	if binary.OperatorToken.Kind != ast.KindEqualsToken || binary.Right != node {
+		return false
+	}
+	target := ast.SkipParentheses(binary.Left)
+	for target.Kind == ast.KindNonNullExpression {
+		target = ast.SkipParentheses(target.AsNonNullExpression().Expression)
+	}
+	if target.Kind != ast.KindIdentifier && target.Kind != ast.KindPropertyAccessExpression {
+		return false
+	}
+	for assignment.Parent != nil && assignment.Parent.Kind == ast.KindParenthesizedExpression {
+		assignment = assignment.Parent
+	}
+	return assignment.Parent != nil && assignment.Parent.Kind == ast.KindExpressionStatement
 }
