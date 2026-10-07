@@ -3,7 +3,10 @@ package naming
 import (
 	"encoding/json"
 	"os"
+	"path/filepath"
 	"reflect"
+	"regexp"
+	"sort"
 	"strings"
 	"testing"
 )
@@ -347,5 +350,95 @@ func TestPortSafeguards(t *testing.T) {
 	out, err = Name(d)
 	if err != nil || out.Module != "apple/appkit/window" || out.Name != "Geometry" {
 		t.Fatal(out, err)
+	}
+}
+
+func TestGlobalNameBijection(t *testing.T) {
+	t.Parallel()
+	pairs := map[string]string{"NSError": "FoundationError", "NSDate": "FoundationDate", "NSString": "FoundationString", "NSNumber": "FoundationNumber", "NSArray": "FoundationArray", "NSSet": "FoundationSet", "NSDictionary": "FoundationDictionary", "NSObject": "FoundationObject", "NSProxy": "FoundationProxy"}
+	var declarations []Declaration
+	for original, want := range pairs {
+		d := Declaration{Kind: Class, Name: original, Framework: "Foundation"}
+		o, err := Name(d)
+		if err != nil || o.Name != want || !strings.HasSuffix(o.Module, "/"+kebab(want)) {
+			t.Fatalf("%s: %#v %v", original, o, err)
+		}
+		declarations = append(declarations, d)
+	}
+	surface, err := Build(declarations)
+	if err != nil || len(surface.Reverse) != len(pairs) {
+		t.Fatal("global surface is not bijective", err)
+	}
+	for _, d := range declarations {
+		o := surface.Forward[Identity(d)]
+		if surface.Reverse[ExportKey(d, o)] != Identity(d) {
+			t.Fatal("global reverse lookup lost", d)
+		}
+	}
+	if _, err := Build([]Declaration{{Kind: Class, Name: "NSError", Framework: "Foundation"}, {Kind: Class, Name: "FoundationError", Framework: "Foundation"}}); err == nil {
+		t.Fatal("prefixed global collision accepted")
+	}
+	data, err := os.ReadFile("testdata/es2024-globals.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	var globals []string
+	if err := json.Unmarshal(data, &globals); err != nil {
+		t.Fatal(err)
+	}
+	if len(globals) != 194 {
+		t.Fatal("global audit incomplete")
+	}
+	for _, global := range globals {
+		if got := typeName(global, "Foundation"); got != "Foundation"+normalize(global, true) {
+			t.Errorf("unreserved global %s: %s", global, got)
+		}
+	}
+	got, err := MapType(Type{Spelling: "NSError *", Object: true, Nullability: Nonnull, Framework: "Foundation"})
+	if err != nil || got != "FoundationError" {
+		t.Fatal(got, err)
+	}
+}
+
+func TestES2024GlobalAudit(t *testing.T) {
+	t.Parallel()
+	libraries := filepath.Join("..", "..", "..", "cohere", "TypeScript", "tsc", "internal", "bundled", "libs")
+	reference := regexp.MustCompile(`<reference lib="([^"]+)"`)
+	declaration := regexp.MustCompile(`(?m)^(?:declare\s+)?(?:var|const|function|class|interface|type|namespace)\s+([A-Za-z_$][\w$]*)`)
+	seen := map[string]bool{}
+	names := map[string]bool{}
+	var visit func(string)
+	visit = func(name string) {
+		if seen[name] {
+			return
+		}
+		seen[name] = true
+		source, err := os.ReadFile(filepath.Join(libraries, "lib."+name+".d.ts"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		for _, match := range reference.FindAllSubmatch(source, -1) {
+			visit(string(match[1]))
+		}
+		for _, match := range declaration.FindAllSubmatch(source, -1) {
+			names[string(match[1])] = true
+		}
+	}
+	visit("es2024")
+	actual := []string{}
+	for name := range names {
+		actual = append(actual, name)
+	}
+	sort.Strings(actual)
+	source, err := os.ReadFile("testdata/es2024-globals.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	var expected []string
+	if err := json.Unmarshal(source, &expected); err != nil {
+		t.Fatal(err)
+	}
+	if !reflect.DeepEqual(actual, expected) {
+		t.Fatalf("pinned ECMAScript globals changed: got %v want %v", actual, expected)
 	}
 }

@@ -13,6 +13,7 @@ it exists for each accepted, qualified export surface.
 | --- | --- | --- |
 | 1 | Literal `SwiftName` (`NS_SWIFT_NAME`) wins, then effective `APIName`, then the synchronous Swift 3 importer transformations. Keep the original spelling and the computed Swift spelling. | `dismissViewControllerAnimated:completion:` becomes `dismiss(animated:completion:)`. |
 | 2 | Remove the listed namespace prefix at an uppercase boundary. Export through `apple/<lowercase framework>/<kebab type>`. Members and nested types share their owning type's module. | `NSWindow` becomes `Window` in `apple/appkit/window`. |
+| 2a | A type hiding an ECMAScript global retains its framework as a prefix, including its module and references. | `NSError` becomes `FoundationError` in `apple/foundation/foundation-error`. |
 | 3 | Normalize acronym words; also split adjacent recognized acronyms inside an uppercase run. Types and literal cases use PascalCase; members use camelCase. Expand a terminal `ID` word to `Identifier`. | `HTTPURLResponse` becomes `HttpUrlResponse`; `taskID` becomes `taskIdentifier`. |
 | 4 | Expand only the explicit full-word table: `Rect` to `Rectangle`, and the identifier suffix above. | `contentRect` becomes `contentRectangle`; `max`, `min`, and `index` stay. |
 | 5 | Enum and option cases become PascalCase string literal names. A type supplied with `OptionCases` maps to a readonly array of their literal union. | `'Titled'`; `readonly ('Titled' \| 'Closable')[]`. |
@@ -218,3 +219,20 @@ package has no compiler callers yet. Apple documentation is this package's
 external naming oracle; Node's smoke gate checks that the existing compiler
 still runs its selected programs. Neither demonstrates equivalence to a Mac's
 SDK importer over declarations absent from the fixture table.
+
+## ECMAScript global names
+
+The global audit follows all 69 library references from the pinned
+`lib.es2024.d.ts` and records 194 type and value names in
+`testdata/es2024-globals.json`. Names are compared after acronym normalization.
+The required Apple hits are NSError/Error, NSDate/Date, NSString/String,
+NSNumber/Number, NSArray/Array, NSSet/Set and NSObject/Object. NSDictionary
+also becomes FoundationDictionary by explicit policy; Dictionary is not an
+ECMAScript global. NSProxy/Proxy also hits. The existing documentation fixture table contains
+NSObject, NSProxy, NSNumber and NSError; the synthetic bijection test holds
+all eight requested names plus NSProxy. Every listed
+global is reserved, including globals not present in the documentation fixtures.
+Type.Framework supplies the owning framework for references; legacy standalone
+MapType calls infer known namespace ownership when this fact is absent.
+Members retain their ordinary camelCase names. Primitive NSString conversion
+remains string; its exported class is FoundationString.

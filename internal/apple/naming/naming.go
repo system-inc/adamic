@@ -40,6 +40,7 @@ const (
 // supplies a lightweight generic collection's element type for word omission.
 // OptionCases supplies the option set's complete literal domain.
 type Type struct {
+	Framework   string // declaring framework for reserved global type names
 	Spelling    string
 	Nullability Nullability
 	Element     string
@@ -153,6 +154,9 @@ func Name(d Declaration) (Output, error) {
 	}
 	result := Output{Original: d.Name, SwiftName: swift, RefinedForSwift: d.RefinedForSwift, Getter: d.Getter, Setter: d.Setter}
 	result.Name = normalize(base, isType(d.Kind) || isCase(d.Kind))
+	if isType(d.Kind) {
+		result.Name = typeName(base, d.Framework)
+	}
 	if result.Name == "" {
 		return Output{}, fmt.Errorf("empty imported name for %q", d.Name)
 	}
@@ -166,7 +170,7 @@ func Name(d Declaration) (Output, error) {
 	// Nested types live in their lexical owner's module; their exported name is
 	// still the terminal component. The enclosing type owns its members too.
 	owner = strings.Split(owner, ".")[0]
-	result.Module = "apple/" + strings.ToLower(d.Framework) + "/" + kebab(normalize(dropPrefix(owner), true))
+	result.Module = "apple/" + strings.ToLower(d.Framework) + "/" + kebab(typeName(owner, d.Framework))
 	if isCallable(d.Kind) && d.AccessorProperty == "" {
 		layout := &Layout{Constructor: strings.TrimPrefix(base, "__") == "init"}
 		if layout.Constructor {
@@ -207,6 +211,7 @@ func Name(d Declaration) (Output, error) {
 		if resultType.Spelling == "instancetype" {
 			resultType.Spelling = d.Parent + " *"
 			resultType.Object = true
+			resultType.Framework = d.Framework
 		}
 		result.Type, err = MapType(resultType)
 		if err != nil {
@@ -273,7 +278,7 @@ func MapType(t Type) (string, error) {
 		if pointer && !t.Object {
 			return "", fmt.Errorf("unknown object pointer %q", t.Spelling)
 		}
-		name = normalize(dropPrefix(base), true)
+		name = typeName(base, t.Framework)
 	}
 	if pointer && (name == "number" || name == "boolean" || name == "void") {
 		return "", fmt.Errorf("unsupported scalar pointer %q", t.Spelling)
@@ -326,7 +331,7 @@ func Identity(d Declaration) string {
 func ExportKey(d Declaration, o Output) string {
 	scope := ""
 	if !isType(d.Kind) && exportContext(d) != "" {
-		scope = normalize(dropPrefix(exportContext(d)), true) + "."
+		scope = typeName(exportContext(d), d.Framework) + "."
 	}
 	return o.Module + "#" + scope + o.Name
 }
