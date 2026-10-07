@@ -1,0 +1,2 @@
+const mask = flags & 4;
+const inverted = ~mask;

@@ -1,0 +1,32 @@
+// Static constructors must remain functions when boxed into the general union path.
+class Example {
+	static readonly label = 'example';
+	readonly value = 1;
+}
+function inspect(value: typeof Example | string | undefined): void {
+	console.log(`union: ${typeof value} ${typeof value === 'function'}`);
+	switch (typeof value) {
+		case 'function':
+			console.log('constructor');
+			break;
+		case 'string':
+			console.log('string');
+			break;
+		case 'undefined':
+			console.log('undefined');
+			break;
+		default:
+			console.log('wrong');
+			break;
+	}
+}
+console.log(`direct: ${typeof Example} ${typeof new Example()}`);
+inspect(Example);
+inspect('text');
+inspect(undefined);
+function maybeScalars(number: number | undefined, boolean: boolean | undefined): void {
+	console.log(`scalars: ${typeof number} ${typeof boolean}`);
+}
+maybeScalars(42, true);
+maybeScalars(undefined, undefined);
+console.log(`identities: ${typeof JSON} ${typeof Object}`);

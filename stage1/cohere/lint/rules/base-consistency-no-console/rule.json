@@ -1,0 +1,14 @@
+{
+  "name": "base/consistency-no-console",
+  "kinds": [
+    "ElementAccessExpression",
+    "PropertyAccessExpression"
+  ],
+  "visit": "visit",
+  "node": true,
+  "oracle": "oracleConsistencyNoConsole",
+  "upstreamPackage": "base",
+  "upstreamTest": "TestNoConsole",
+  "factory": "create",
+  "class": "Rule"
+}

@@ -1,0 +1,5 @@
+{
+  "name": "int32 hint option ignored",
+  "from": "this.context.settings.read('int32hint', 'false') === 'true'",
+  "to": "this.context.settings.read('int32hint', 'false') === 'false'"
+}

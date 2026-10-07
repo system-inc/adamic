@@ -1,0 +1,250 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { matches, quote, selfDirective } from '../../comments.ts';
+import { isLineBreak, isSpace } from '../../../../typescript/scanner/characters.ts';
+import { messageWarningComment } from './messages.ts';
+
+// These hot kind tests use switches instead of allocating lookup arrays.
+function isParameterListKind(kind: string): boolean {
+    switch(kind) {
+        case 'FunctionDeclaration':
+        case 'FunctionExpression':
+        case 'ArrowFunction':
+        case 'MethodDeclaration':
+        case 'Constructor':
+        case 'GetAccessor':
+        case 'SetAccessor':
+        case 'FunctionType':
+        case 'ConstructorType':
+        case 'CallSignature':
+        case 'ConstructSignature':
+        case 'MethodSignature':
+        case 'IndexSignature':
+            return true;
+        default:
+            return false;
+    }
+}
+function isBracedListKind(kind: string): boolean {
+    switch(kind) {
+        case 'ClassDeclaration':
+        case 'ClassExpression':
+        case 'Block':
+        case 'CaseBlock':
+        case 'ModuleBlock':
+        case 'InterfaceDeclaration':
+        case 'EnumDeclaration':
+        case 'TypeLiteral':
+        case 'ObjectLiteralExpression':
+        case 'ObjectBindingPattern':
+        case 'NamedImports':
+        case 'NamedExports':
+            return true;
+        default:
+            return false;
+    }
+}
+
+export class Rule {
+    readonly context: RuleContext;
+    // anchors marks the positions a comment can be reached from: list interiors and node boundaries.
+    anchors: boolean[] = [];
+    constructor(context: RuleContext) {
+        this.context = context;
+    }
+    visit(node: ParseNode, index: number): void {
+        const terms = this.context.settings.list('terms', ['todo', 'fixme', 'xxx']);
+        if(terms.length === 0) {
+            return;
+        }
+        const literalEnds = this.context.literalEnds();
+        this.anchors = new Array<boolean>(this.context.source.length + 1).fill(false);
+        this.commentAnchors(index);
+        this.anchors[0] = true;
+        // Only parser owners named by cohere's collectListInteriors contribute
+        // empty or trailing-comma list anchors; arbitrary punctuation is not an anchor.
+        const reachable = this.reachableComments(this.anchors);
+        this.scanWarnings(literalEnds, reachable, terms);
+    }
+    commentAnchors(index: number): void {
+        const node = this.context.node(index);
+        this.anchors[node.pos] = true;
+        this.anchors[node.end] = true;
+        const parameterList = isParameterListKind(node.kind);
+        const argumentsList = node.kind === 'CallExpression' || node.kind === 'NewExpression';
+        const bracedList = isBracedListKind(node.kind);
+        const arrayList = node.kind === 'ArrayLiteralExpression' || node.kind === 'ArrayBindingPattern';
+        const caseList = node.kind === 'CaseClause' || node.kind === 'DefaultClause';
+        if(parameterList || argumentsList || bracedList || arrayList || caseList) {
+            const children = new Map<number, number>();
+            const start = this.context.start(index);
+            for(const child of node.children) {
+                const childStart = Math.max(start, this.context.node(child).pos);
+                children.set(childStart, Math.max(children.get(childStart) ?? 0, this.context.node(child).end));
+            }
+            let depth = 0;
+            for(let position = start; position < node.end; position++) {
+                const childEnd = children.get(position);
+                if(childEnd !== undefined && childEnd > position) {
+                    position = childEnd - 1;
+                    continue;
+                }
+                const code = this.context.source.charCodeAt(position);
+                if(code === 47) {
+                    const next = this.context.source.charCodeAt(position + 1);
+                    if(next === 47) {
+                        while(position < node.end && !isLineBreak(this.context.source.charCodeAt(position))) {
+                            position++;
+                        }
+                        continue;
+                    }
+                    if(next === 42) {
+                        const close = this.context.source.indexOf('*/', position + 2);
+                        position = close < 0 ? node.end : close + 1;
+                        continue;
+                    }
+                }
+                const opening =
+                    parameterList || argumentsList ? (node.kind === 'IndexSignature' ? 91 : 40) : arrayList ? 91 : 123;
+                const closing = opening === 40 ? 41 : opening === 91 ? 93 : 125;
+                if(code === opening) {
+                    depth++;
+                    if(depth === 1) {
+                        this.anchors[position + 1] = true;
+                    }
+                }
+                if(code === closing) {
+                    depth--;
+                }
+                if(code === 44 && depth === 1) {
+                    this.anchors[position + 1] = true;
+                }
+                if(caseList && code === 58) {
+                    this.anchors[position + 1] = true;
+                }
+            }
+        }
+        for(const child of node.children) {
+            this.commentAnchors(child);
+        }
+    }
+    reachableComments(anchors: readonly boolean[]): boolean[] {
+        const reachable = new Array<boolean>(this.context.source.length + 1).fill(false);
+        for(let anchor = 0; anchor < anchors.length; anchor++) {
+            if(anchors[anchor] !== true) {
+                continue;
+            }
+            let position = anchor;
+            while(
+                position < this.context.source.length &&
+                (this.context.source.charCodeAt(position) === 32 ||
+                    (this.context.source.charCodeAt(position) >= 9 && this.context.source.charCodeAt(position) <= 13))
+            ) {
+                position++;
+            }
+            if(anchor === 0 && this.context.source.startsWith('#!')) {
+                while(position < this.context.source.length && !isLineBreak(this.context.source.charCodeAt(position))) {
+                    position++;
+                }
+            }
+            if(this.context.source.charCodeAt(position) !== 47) {
+                continue;
+            }
+            for(;;) {
+                while(
+                    position < this.context.source.length &&
+                    (isSpace(this.context.source.charCodeAt(position)) ||
+                        isLineBreak(this.context.source.charCodeAt(position)))
+                ) {
+                    position++;
+                }
+                const opening =
+                    this.context.source.charCodeAt(position) === 47
+                        ? this.context.source.slice(position, position + 2)
+                        : '';
+                if(opening !== '//' && opening !== '/*') {
+                    break;
+                }
+                reachable[position] = true;
+                if(opening === '//') {
+                    while(
+                        position < this.context.source.length &&
+                        !isLineBreak(this.context.source.charCodeAt(position))
+                    ) {
+                        position++;
+                    }
+                }
+                else {
+                    const close = this.context.source.indexOf('*/', position + 2);
+                    position = close < 0 ? this.context.source.length : close + 2;
+                }
+            }
+        }
+        return reachable;
+    }
+    scanWarnings(literalEnds: readonly number[], reachable: readonly boolean[], terms: readonly string[]): void {
+        for(let cursor = 0; cursor < this.context.source.length;) {
+            const end = literalEnds[cursor] ?? -1;
+            if(end >= 0) {
+                cursor = end;
+                continue;
+            }
+            if(cursor === 0 && this.context.source.startsWith('#!')) {
+                while(cursor < this.context.source.length && !isLineBreak(this.context.source.charCodeAt(cursor))) {
+                    cursor++;
+                }
+                continue;
+            }
+            const opening =
+                this.context.source.charCodeAt(cursor) === 47 ? this.context.source.slice(cursor, cursor + 2) : '';
+            if(opening !== '//' && opening !== '/*') {
+                cursor++;
+                continue;
+            }
+            const start = cursor;
+            cursor += 2;
+            const bodyStart = cursor;
+            let bodyEnd: number;
+            if(opening === '//') {
+                while(cursor < this.context.source.length && !isLineBreak(this.context.source.charCodeAt(cursor))) {
+                    cursor++;
+                }
+                bodyEnd = cursor;
+            }
+            else {
+                const closing = this.context.source.indexOf('*/', cursor);
+                bodyEnd = closing < 0 ? this.context.source.length : closing;
+                cursor = closing < 0 ? this.context.source.length : closing + 2;
+            }
+            if(reachable[start] !== true) {
+                continue;
+            }
+            const value = this.context.source.slice(bodyStart, bodyEnd);
+            if(selfDirective(value)) {
+                continue;
+            }
+            for(const term of terms) {
+                if(
+                    matches(
+                        value,
+                        term,
+                        this.context.settings.read('location', 'start'),
+                        this.context.settings.list('decoration', []),
+                    )
+                ) {
+                    this.context.reportRange(
+                        start,
+                        cursor,
+                        'no-warning-comments',
+                        'unexpectedComment',
+                        messageWarningComment(term, quote(value)),
+                    );
+                }
+            }
+        }
+    }
+}
+
+export function create(context: RuleContext): Rule {
+    return new Rule(context);
+}

@@ -1,0 +1,13 @@
+{
+  "name": "no-template-curly-in-string",
+  "kinds": [
+    "StringLiteral"
+  ],
+  "visit": "visit",
+  "node": true,
+  "oracle": "oracleNoTemplateCurlyInString",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoTemplateCurlyInString",
+  "factory": "create",
+  "class": "Rule"
+}

@@ -1,0 +1,14 @@
+{
+  "name": "no-plusplus",
+  "kinds": [
+    "PostfixUnaryExpression",
+    "PrefixUnaryExpression"
+  ],
+  "visit": "visit",
+  "node": true,
+  "oracle": "oracleNoPlusplus",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoPlusplus",
+  "factory": "create",
+  "class": "Rule"
+}

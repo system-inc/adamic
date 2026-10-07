@@ -1,0 +1,2 @@
+export const messageNoEnum =
+    "TypeScript enum is banned. Use `as const` with the Kind and KindType pattern instead: `export const FooKind = { A: 'A' } as const; export type FooKindType = (typeof FooKind)[keyof typeof FooKind];`";
