@@ -1,0 +1,13 @@
+{
+  "name": "@typescript-eslint/triple-slash-reference",
+  "kinds": [
+    "SourceFile"
+  ],
+  "visit": "visit",
+  "parent": true,
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleTripleSlashReference",
+  "upstreamPackage": "typescript",
+  "upstreamTest": "TestTripleSlashReference"
+}
