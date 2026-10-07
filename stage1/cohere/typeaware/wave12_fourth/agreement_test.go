@@ -95,6 +95,7 @@ func TestAgreement(t *testing.T) {
 		{"prefer_regex_literals.a", "!this.comments(at)", "this.comments(at)"},
 		{"prefer_rest_params.a", "symbol.declarations.length !== 0", "symbol.declarations.length === 0"},
 		{"exhaustive_deps.a", "read.optional.includes(prefix)", "!read.optional.includes(prefix)"},
+		{"effect_hook_name.a", "Effect((", "EffectX(("},
 	} {
 		own := filepath.Join(directory, mutant.file+"-source")
 		if err := os.MkdirAll(own, 0755); err != nil {

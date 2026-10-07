@@ -1,3 +1,4 @@
+import { effectHookName } from './effect_hook_name.a';
 import { Bindings } from '../bindings.ts';
 import { Diagnostic } from '../diagnostic.ts';
 import { Suggestion } from '../suggestion.ts';
@@ -151,7 +152,7 @@ export class ExhaustiveDeps {
         if(arguments_.length <= offset) { this.report('MissingCallback', call); return; }
         const callbackArgument = arguments_[offset] ?? -1; let array = arguments_[offset + 1] ?? -1;
         if(array >= 0 && this.syntax.kind(array) === 'Identifier' && this.syntax.text(array) === 'undefined') { array = -1; }
-        const effect = hook === 'useEffect' || hook === 'useLayoutEffect';
+        const effect = effectHookName(hook);
         if(array < 0 && !effect) { if(hook === 'useMemo' || hook === 'useCallback') { this.report('UselessWithoutDependencies', call); } return; }
         let callback = this.syntax.unwrap(callbackArgument); const kind = this.syntax.kind(callback);
         if(kind === 'Identifier') {

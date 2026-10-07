@@ -1,0 +1,4 @@
+// Shared regex table row react/exhaustive_deps.go:451, cohere 715ba94f.
+export function effectHookName(name: string): boolean {
+    return /Effect((?![\s\S])|[^a-z])/gu.test(name);
+}
