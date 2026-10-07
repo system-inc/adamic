@@ -5,6 +5,8 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
+	"strconv"
+	"strings"
 )
 
 // functionBody lowers a module function declaration's parameters and body.
@@ -56,6 +58,15 @@ func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) err
 // its body, so a call to it lowers whether or not its body has been. this is as for lowerFunction.
 func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 	function := l.result.Functions[index]
+	where := l.program.Where(declaration)
+	columnAt := strings.LastIndex(where, ":")
+	lineAt := strings.LastIndex(where[:columnAt], ":")
+	function.Position.File = where[:lineAt]
+	function.Position.Line, _ = strconv.Atoi(where[lineAt+1 : columnAt])
+	function.Position.Column, _ = strconv.Atoi(where[columnAt+1:])
+	if this >= 0 {
+		function.Boundary.Parameters = append(function.Boundary.Parameters, nil)
+	}
 	if this >= 0 && declaration.Kind != ast.KindConstructor {
 		// A method receives this; a constructor makes it.
 		function.Parameters = append(function.Parameters, this)
@@ -63,6 +74,7 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 	if declaration.Kind != ast.KindConstructor {
 		signature := l.checker.GetSignatureFromDeclaration(declaration)
 		returns := l.checker.GetReturnTypeOfSignature(signature)
+		function.Boundary.Return = l.boundarySchema(declaration, returns)
 		// A function that never returns (it panics on every path, as (why) => panic(why) does) has no
 		// result to hold, as one returning void hasn't. An arrow whose expression is never for another
 		// reason, a variable the checker narrowed to nothing, isn't one.
@@ -91,6 +103,7 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 	patterns := []patterned{}
 	for _, parameter := range declaration.Parameters() {
 		declared := parameter.AsParameterDeclaration()
+		function.Boundary.Parameters = append(function.Boundary.Parameters, l.boundarySchema(parameter, l.checker.GetTypeAtLocation(parameter)))
 		if name := parameter.Name(); (name.Kind == ast.KindArrayBindingPattern || name.Kind == ast.KindObjectBindingPattern) && declared.DotDotDotToken == nil && declared.Initializer == nil && declared.QuestionToken == nil {
 			incoming := len(l.result.Locals)
 			l.result.Locals = append(l.result.Locals, ir.Local{Name: "destructured", Type: ir.Object, Function: index})
@@ -135,6 +148,13 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		return l.notYet(declaration, "a function without a body")
 	}
 	l.result.Functions[index] = function
+	// A declared constructor also supplies the public allocator's signature.
+	// The initializer's receiver is internal and the class result is not data.
+	if declaration.Kind == ast.KindConstructor && l.instance != nil && l.instance.constructor >= 0 {
+		allocator := &l.result.Functions[l.instance.constructor]
+		allocator.Position = function.Position
+		allocator.Boundary.Parameters = append([]*ir.JSONDecodeSchema(nil), function.Boundary.Parameters[1:]...)
+	}
 	if l.signed == nil {
 		l.signed = map[int]signed{}
 	}
@@ -222,4 +242,22 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 	function.Body = append(function.Body, lowered...)
 	l.result.Functions[index] = function
 	return nil
+}
+
+// Descriptor construction must not intern boundary-only literals into codegen's
+// string table. The same builder runs against a private table and reports no errors.
+func (l *lowering) boundarySchema(node *ast.Node, proven *checker.Type) *ir.JSONDecodeSchema {
+	scratch := *l
+	program := *l.result
+	program.Strings = append([]string(nil), program.Strings...)
+	scratch.result = &program
+	scratch.strings = make(map[string]int, len(l.strings))
+	for text, index := range l.strings {
+		scratch.strings[text] = index
+	}
+	schema, err := scratch.jsonDecodeSchema(node, proven, true)
+	if err != nil {
+		return nil
+	}
+	return &schema
 }

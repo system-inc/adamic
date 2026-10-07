@@ -65,7 +65,9 @@ type Accessor struct {
 
 // Function is a function declaration.
 type Function struct {
-	Name string
+	Name     string
+	Position SourcePosition
+	Boundary FunctionBoundary
 
 	// Parameters are locals, in order.
 	Parameters []int
