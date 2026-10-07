@@ -1,0 +1,372 @@
+import { Scope } from './scope.a';
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { Settings } from '../../settings.ts';
+import { Finding } from '../../finding.ts';
+import { SuggestionEdit as RepairEdit } from '../../suggestions.a';
+import { initializer } from './initializer.a';
+import { first, parent } from './helpers.a';
+import { oneVarMessage } from './messages.a';
+
+function kindOf(context: RuleContext, index: number): string {
+    switch(context.node(index).semantic) {
+        case '1':
+            return 'let';
+        case '2':
+            return 'const';
+        case '4':
+            return 'using';
+        case '6':
+            return 'awaitUsing';
+        default:
+            return 'var';
+    }
+}
+function kindText(kind: string): string {
+    return kind === 'awaitUsing' ? 'await using' : kind;
+}
+function whitespace(character: string): boolean {
+    return [' ', '\t', '\r', '\n'].includes(character);
+}
+function nextText(source: string, from: number): number {
+    let cursor = from;
+    while(cursor < source.length && whitespace(source[cursor] ?? '')) {
+        cursor++;
+    }
+    return cursor < source.length ? cursor : -1;
+}
+function previousTokenEnd(source: string, from: number, floor: number): number {
+    let cursor = from;
+    while(cursor > floor) {
+        while(cursor > floor && whitespace(source[cursor - 1] ?? '')) {
+            cursor--;
+        }
+        if(cursor <= floor) {
+            return -1;
+        }
+        if(cursor - 2 >= floor && source.slice(cursor - 2, cursor) === '*/') {
+            let opening = cursor - 2;
+            while(
+                opening - 1 > floor &&
+                !(source[opening - 1] === '*' && opening - 2 >= floor && source[opening - 2] === '/')
+            ) {
+                opening--;
+            }
+            if(opening - 2 >= floor && source[opening - 2] === '/') {
+                cursor = opening - 2;
+                continue;
+            }
+            return cursor;
+        }
+        let lineStart = cursor;
+        while(lineStart > floor && source[lineStart - 1] !== '\n') {
+            lineStart--;
+        }
+        const comment = source.indexOf('//', lineStart);
+        if(comment >= 0 && comment + 1 < cursor) {
+            cursor = comment;
+            continue;
+        }
+        return cursor;
+    }
+    return -1;
+}
+function afterComments(source: string, from: number): number {
+    let cursor = from;
+    while(cursor < source.length) {
+        while(cursor < source.length && whitespace(source[cursor] ?? '')) {
+            cursor++;
+        }
+        if(source.slice(cursor, cursor + 2) === '//') {
+            while(cursor < source.length && source[cursor] !== '\n') {
+                cursor++;
+            }
+            continue;
+        }
+        if(source.slice(cursor, cursor + 2) === '/*') {
+            const close = source.indexOf('*/', cursor + 2);
+            cursor = close < 0 ? source.length : close + 2;
+            continue;
+        }
+        return cursor;
+    }
+    return cursor;
+}
+export class Rule {
+    readonly context: RuleContext;
+    readonly scopes = new Map<string, Scope>();
+    constructor(context: RuleContext) {
+        this.context = context;
+    }
+    mode(kind: string, state: string): string {
+        const settings = this.context.settings;
+        if(settings.text === '' || settings.text === 'null') { return 'Always'; }
+        const direct = settings.read('option', '');
+        if(direct !== '') { return direct === 'always' ? 'Always' : direct === 'never' ? 'Never' : direct === 'consecutive' ? 'Consecutive' : direct; }
+        const group = settings.read(kind.toLowerCase(), '');
+        if(group === '') { return ''; }
+        if(group[0] !== '{') { return group === 'always' ? 'Always' : group === 'never' ? 'Never' : group === 'consecutive' ? 'Consecutive' : group; }
+        const decoded = new Settings();
+        decoded.load(group);
+        return decoded.read(state, '');
+    }
+    scopeOf(list: number, kind: string): Scope {
+        let index = this.context.parent(list);
+        while(index >= 0) {
+            const nodeKind = this.context.kind(index);
+            if(this.context.functionLike(index) || nodeKind === 'SourceFile' || nodeKind === 'ClassStaticBlockDeclaration' ||
+                (kind !== 'var' && ((nodeKind === 'Block' && this.context.kind(this.context.parent(index)) !== 'ClassStaticBlockDeclaration') || ['ForStatement', 'ForInStatement', 'ForOfStatement', 'SwitchStatement'].includes(nodeKind)))) {
+                break;
+            }
+            index = this.context.parent(index);
+        }
+        const key = `${index}:${kind}`;
+        const old = this.scopes.get(key);
+        if(old !== undefined) { return old; }
+        const scope = new Scope();
+        this.scopes.set(key, scope);
+        return scope;
+    }
+    requires(index: number): boolean {
+        const initial = initializer(this.context, index);
+        if(initial < 0 || this.context.node(initial).kind !== 'CallExpression') {
+            return false;
+        }
+        const callee = this.context.node(first(this.context, initial));
+        return callee.kind === 'Identifier' && callee.text === 'require';
+    }
+    listOf(index: number): number {
+        if(
+            index < 0 ||
+            this.context.node(index).kind !== 'VariableStatement' ||
+            this.context.has(index, 'ExportKeyword')
+        ) {
+            return -1;
+        }
+        for(const child of this.context.node(index).children) {
+            if(this.context.node(child).kind === 'VariableDeclarationList') {
+                return child;
+            }
+        }
+        return -1;
+    }
+    emit(statement: number, id: string, kind: string, edits: RepairEdit[]): void {
+        const edit = edits[0];
+        const finding = new Finding(
+            'one-var',
+            id,
+            oneVarMessage(id, kindText(kind)),
+            this.context.start(statement),
+            this.context.node(statement).end,
+            edit === undefined ? '' : 'fix',
+            edit?.text ?? '',
+            '',
+        );
+        if(edit !== undefined) {
+            finding.editStart = edit.start;
+            finding.editEnd = edit.end;
+        }
+        if(edits.length > 1) {
+            panic('one-var needs unified multi-edit fixes');
+        }
+        this.context.findings.push(finding);
+    }
+    join(
+        statement: number,
+        list: number,
+        id: string,
+        kind: string,
+        siblings: readonly number[],
+        position: number,
+    ): void {
+        const edits: RepairEdit[] = [];
+        const previous = siblings[position - 1] ?? -1;
+        const previousList = this.listOf(previous);
+        if(
+            position > 0 &&
+            previousList >= 0 &&
+            kindOf(this.context, previousList) === kind &&
+            !this.context.has(statement, 'DeclareKeyword') &&
+            !this.context.has(previous, 'DeclareKeyword')
+        ) {
+            const start = this.context.start(list);
+            const end = this.context.scanner.pos;
+            const before = previousTokenEnd(this.context.source, start, this.context.node(previous).pos);
+            if(before >= 0) {
+                edits.push(new RepairEdit(this.context.source[before - 1] === ';' ? before - 1 : before, before, ','));
+                if(kind === 'awaitUsing') {
+                    this.context.scanner.pos = end;
+                    this.context.scanner.scan();
+                    edits.push(new RepairEdit(this.context.scanner.start, this.context.scanner.pos, ''));
+                }
+                edits.push(new RepairEdit(start, end, ''));
+            }
+        }
+        this.emit(statement, id, kind, edits);
+    }
+    split(statement: number, list: number, id: string, kind: string): void {
+        const owner = parent(this.context, statement);
+        const edits: RepairEdit[] = [];
+        if(
+            owner >= 0 &&
+            ['SourceFile', 'Block', 'ModuleBlock', 'CaseClause', 'DefaultClause'].includes(
+                this.context.node(owner).kind,
+            )
+        ) {
+            const prefix =
+                (this.context.has(statement, 'ExportKeyword') ? 'export ' : '') +
+                (this.context.has(statement, 'DeclareKeyword') ? 'declare ' : '');
+            for(const declaration of this.context.node(list).children) {
+                this.context.scanAt(this.context.node(declaration).end);
+                const token = { start: this.context.scanStart(), end: this.context.scanEnd() };
+                if(this.context.source[token.start] !== ',') {
+                    continue;
+                }
+                const after = nextText(this.context.source, token.end);
+                if(after < 0) {
+                    continue;
+                }
+                if(after === token.end) {
+                    edits.push(new RepairEdit(token.start, token.end, `; ${prefix}${kindText(kind)} `));
+                }
+                else if(
+                    this.context.source.slice(token.end, after).includes('\n') ||
+                    ['//', '/*'].includes(this.context.source.slice(after, after + 2))
+                ) {
+                    const next = afterComments(this.context.source, token.end);
+                    edits.push(
+                        new RepairEdit(
+                            token.start,
+                            next,
+                            `;${this.context.source.slice(token.end, next)}${prefix}${kindText(kind)} `,
+                        ),
+                    );
+                }
+                else {
+                    edits.push(new RepairEdit(token.start, token.end, `; ${prefix}${kindText(kind)}`));
+                }
+            }
+        }
+        this.emit(statement, id, kind, edits);
+    }
+    check(node: ParseNode, list: number): void {
+        const kind = node.semantic === '1' ? 'let' : node.semantic === '2' ? 'const' : node.semantic === '4' ? 'using' : node.semantic === '6' ? 'awaitUsing' : 'var';
+        const initializedMode = this.mode(kind, 'initialized');
+        const uninitializedMode = this.mode(kind, 'uninitialized');
+        if(initializedMode === '' && uninitializedMode === '') {
+            return;
+        }
+        const owner = parent(this.context, list);
+        const statement = owner >= 0 && this.context.node(owner).kind === 'VariableStatement' ? owner : list;
+        const container = parent(this.context, statement);
+        const declarations = node.children;
+        let initialized = 0;
+        let required = 0;
+        for(const declaration of declarations) {
+            if(initializer(this.context, declaration) >= 0) {
+                initialized++;
+            }
+            if(this.requires(declaration)) {
+                required++;
+            }
+        }
+        const uninitialized = declarations.length - initialized;
+        const separate = this.context.settings.read('separaterequires', 'false') === 'true';
+        if(initializedMode === 'Always' && separate && required > 0 && required < declarations.length) {
+            this.emit(statement, 'splitRequires', kind, []);
+        }
+        const empty: number[] = [];
+        const siblings =
+            container >= 0 &&
+            ['SourceFile', 'Block', 'ModuleBlock'].includes(this.context.node(container).kind) &&
+            !this.context.has(statement, 'ExportKeyword')
+                ? this.context.node(container).children
+                : empty;
+        const position = siblings.indexOf(statement);
+        const previousList = this.listOf(siblings[position - 1] ?? -1);
+        if(position > 0 && previousList >= 0 && kindOf(this.context, previousList) === kind) {
+            let previousInitialized = 0;
+            let previousRequires = 0;
+            const previous = this.context.node(previousList).children;
+            for(const declaration of previous) {
+                if(initializer(this.context, declaration) >= 0) {
+                    previousInitialized++;
+                }
+                if(this.requires(declaration)) {
+                    previousRequires++;
+                }
+            }
+            const totalRequires = required + previousRequires;
+            if(totalRequires === 0 || totalRequires === declarations.length + previous.length) {
+                if(initializedMode === 'Consecutive' && uninitializedMode === 'Consecutive') {
+                    this.join(statement, list, 'combine', kind, siblings, position);
+                }
+                else if(initializedMode === 'Consecutive' && initialized > 0 && previousInitialized > 0) {
+                    this.join(statement, list, 'combineInitialized', kind, siblings, position);
+                }
+                else if(
+                    uninitializedMode === 'Consecutive' &&
+                    uninitialized > 0 &&
+                    previous.length - previousInitialized > 0
+                ) {
+                    this.join(statement, list, 'combineUninitialized', kind, siblings, position);
+                }
+            }
+        }
+        const scope = this.scopeOf(list, kind);
+        const duplicate =
+            (initializedMode === 'Always' &&
+                uninitializedMode === 'Always' &&
+                (scope.initialized || scope.uninitialized) &&
+                required === 0) ||
+            (uninitialized > 0 && uninitializedMode === 'Always' && scope.uninitialized) ||
+            (initialized > 0 && initializedMode === 'Always' && scope.initialized && required === 0) ||
+            (scope.required && required > 0);
+        if(duplicate) {
+            if(initializedMode === 'Always' && uninitializedMode === 'Always') {
+                this.join(statement, list, 'combine', kind, siblings, position);
+            }
+            else {
+                if(initializedMode === 'Always' && initialized > 0) {
+                    this.join(statement, list, 'combineInitialized', kind, siblings, position);
+                }
+                if(
+                    uninitializedMode === 'Always' &&
+                    uninitialized > 0 &&
+                    !(owner >= 0 && ['ForInStatement', 'ForOfStatement'].includes(this.context.node(owner).kind))
+                ) {
+                    this.join(statement, list, 'combineUninitialized', kind, siblings, position);
+                }
+            }
+        }
+        else {
+            if(uninitialized > 0 && uninitializedMode === 'Always') {
+                scope.uninitialized = true;
+            }
+            if(initializedMode === 'Always') {
+                if(separate && required > 0) {
+                    scope.required = true;
+                }
+                if(initialized - (separate ? required : 0) > 0) {
+                    scope.initialized = true;
+                }
+            }
+        }
+        if(!(owner >= 0 && this.context.node(owner).kind === 'ForStatement') && declarations.length > 1) {
+            if(initializedMode === 'Never' && uninitializedMode === 'Never') {
+                this.split(statement, list, 'split', kind);
+            }
+            else if(initializedMode === 'Never' && initialized > 0) {
+                this.split(statement, list, 'splitInitialized', kind);
+            }
+            else if(uninitializedMode === 'Never' && uninitialized > 0) {
+                this.split(statement, list, 'splitUninitialized', kind);
+            }
+        }
+    }
+    visit(node: ParseNode, index: number): void {
+        this.check(node, index);
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

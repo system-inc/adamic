@@ -1,0 +1,13 @@
+{
+  "name": "one-var",
+  "kinds": [
+    "VariableDeclarationList"
+  ],
+  "node": true,
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleOneVar",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestOneVar"
+}
