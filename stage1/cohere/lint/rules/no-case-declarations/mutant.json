@@ -1,0 +1,6 @@
+{
+  "name": "closing_brace_missing",
+  "file": "rule.a",
+  "from": "new Edit(closing, closing, ' }')",
+  "to": "new Edit(closing, closing, '')"
+}
