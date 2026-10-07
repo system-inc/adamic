@@ -1,5 +1,53 @@
 # Scanner blockers
 
+## October 7: adaptation 57 validated; native still blocked
+
+Actual text initialization rewrite: upstream scanner.ts:1034 becomes
+`var text: string = undefined!;`; upstream:1058 becomes
+`setText(textInitial, start, length);`. The intervening executable statements
+only declare locals; comments mentioning text do not read it. setText assigns
+`newText || ""` before scanner use. The later reset setText call is untouched.
+The proof guard rejects a planted intervening read. Two optional languageVersion
+comparisons now explicitly guard undefined. The shebang regex ! remains a
+required check: the preceding test guarantees this non-global regex matches.
+Census reason: non-null assertions. non-null-check 6ae58a0 closes required !
+expressions, but not the uninitialized literal initializer semantics.
+
+Refreshed unpushed scratch compiler includes main e8ba3d5, the four feature
+tips, fallthrough, import cycles and non-null-check (integration c56dae76).
+Checker gate has no slice diagnostics. Next actual syntax refusal, in order:
+`scanner.ts:498:19: Adamic 0.1 refuses a definite assignment assertion !; remove ! and initialize it where it is declared or in the constructor, or type it T | undefined`.
+This is tokenValue, census reason: definite assignment assertions. No available
+branch for that syntax or initialization was found; only non-null-check exists.
+
+Independent minimal initializer probe, on non-null-check alone and integration:
+`let text: string = undefined!; text = "assigned before read"; console.log(text);`
+returns `stage 0 can't lower a value of type never yet`. Node prints the assigned
+value. Removing the initializer in a control compiles and prints the same
+line; removing the assignment instead is caught by TS2454. The compiler needs
+to treat literal undefined!/null! initializers as uninitialized declarations,
+rather than lower them as ordinary never-valued expressions. The requested
+exact scanner rewrite is retained. I did not replace it with the compiling
+control spelling. I stopped here; definite-assignment admission, subsequent
+lowering, ownership and native token comparison remain unfinished. Adaptations
+58-59 were not made. No native/Node equivalence is claimed.
+
+Validated actual 55-57 edits: full upstream suite 106,367 pass, zero failures,
+pending or baseline differences (336.493 seconds, two workers); Node 509,014
+tokens and SHA-256 c1a9f239790e158cc4471aa6c9273ff678cb32e5890b3d4c95e077ee90c61b0f.
+The first adaptation-57 guard rejected comment text, so that attempt made no
+edits; the corrected implementation and subsequent full retry are the evidence.
+Logs: native57-{next-blocker,initializer-minimal,initializer-node,
+initializer-control,early-read-mutant,intervening-read-mutant}.log;
+feature refs: native57-feature-refs.json. Reproducers are in probes/.
+
+Commands: scanner/run.sh OUT --tree SLICE --inputs FIXED --node-only;
+stock upstream oracle/run.sh TREE OUT --workers 2; scratch adamic build
+DRIVER -o OUT; oracle/node.mjs probes/uninitialized-non-null.a. Every test
+writes a separate log. No compiler implementation was edited on this branch.
+Toolchain remains prepared (setup total 96 seconds), nproc 5; the environment
+file is /workspace/adamic-tools/env.sh. Pushes use only the own scanner branch.
+
 ## October 7: adaptation 56 closes the assertion predicate
 
 Census reason: type predicates. Compiler feature: proven-predicates, admission
