@@ -1,0 +1,47 @@
+=== RUN   TestViewIntersectionContracts
+=== PAUSE TestViewIntersectionContracts
+=== CONT  TestViewIntersectionContracts
+=== RUN   TestViewIntersectionContracts/interfaces
+=== RUN   TestViewIntersectionContracts/nested
+=== RUN   TestViewIntersectionContracts/brand
+=== RUN   TestViewIntersectionContracts/runtime_member
+=== RUN   TestViewIntersectionContracts/optional_brand
+=== RUN   TestViewIntersectionContracts/primitive_brand_lane
+--- PASS: TestViewIntersectionContracts (0.23s)
+    --- PASS: TestViewIntersectionContracts/interfaces (0.04s)
+    --- PASS: TestViewIntersectionContracts/nested (0.04s)
+    --- PASS: TestViewIntersectionContracts/brand (0.03s)
+    --- PASS: TestViewIntersectionContracts/runtime_member (0.04s)
+    --- PASS: TestViewIntersectionContracts/optional_brand (0.04s)
+    --- PASS: TestViewIntersectionContracts/primitive_brand_lane (0.03s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.241s
+=== RUN   TestCheckedViewIntersectionConjunction
+=== RUN   TestCheckedViewIntersectionConjunction/good
+=== RUN   TestCheckedViewIntersectionConjunction/wrong
+=== RUN   TestCheckedViewIntersectionConjunction/nested
+=== RUN   TestCheckedViewIntersectionConjunction/absent
+--- PASS: TestCheckedViewIntersectionConjunction (0.66s)
+    --- PASS: TestCheckedViewIntersectionConjunction/good (0.19s)
+    --- PASS: TestCheckedViewIntersectionConjunction/wrong (0.13s)
+    --- PASS: TestCheckedViewIntersectionConjunction/nested (0.13s)
+    --- PASS: TestCheckedViewIntersectionConjunction/absent (0.13s)
+=== RUN   TestCheckedViewIntersectionComponentMutants
+=== RUN   TestCheckedViewIntersectionComponentMutants/skip_check
+    checked_views_intersections_test.go:79: component refusal pin catches mutant: exit 0, stdout "name:true\n"
+    checked_views_intersections_test.go:79: component refusal pin catches mutant: exit 0, stdout "name:true\n"
+=== RUN   TestCheckedViewIntersectionComponentMutants/accept_wrong_shape
+    checked_views_intersections_test.go:79: component refusal pin catches mutant: exit 0, stdout "name:true\n"
+    checked_views_intersections_test.go:79: component refusal pin catches mutant: exit 0, stdout "name:true\n"
+=== RUN   TestCheckedViewIntersectionComponentMutants/drop_nested_adapter
+    checked_views_intersections_test.go:79: component refusal pin catches mutant: exit 0, stdout "name:bad\n"
+    checked_views_intersections_test.go:79: component refusal pin catches mutant: exit 0, stdout "name:bad\n"
+--- PASS: TestCheckedViewIntersectionComponentMutants (0.30s)
+    --- PASS: TestCheckedViewIntersectionComponentMutants/skip_check (0.10s)
+    --- PASS: TestCheckedViewIntersectionComponentMutants/accept_wrong_shape (0.10s)
+    --- PASS: TestCheckedViewIntersectionComponentMutants/drop_nested_adapter (0.10s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=11
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.969s

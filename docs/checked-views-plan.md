@@ -536,3 +536,13 @@ and accept a pure member matcher from shared dispatch. Production source admissi
 is not enabled. Four source Node controls and six C/JS adapter mutations pass;
 these do not prove frontend transitive propagation or optional/readiness behavior.
 The ranked frozen ledger still has zero completed pairs and zero completed reads.
+
+Lane 7 coordination update: the user now assigns all cross-lane merges/conflict
+resolution to `codex/views-integration` (worker 01a11882-3830). Lane 7's lazy,
+callable and shape merge attempts were aborted without editing conflict hunks.
+No individual lane is merged after this ruling. The integration branch was not
+published during this checkpoint. Source c/js compilation of lane7/good.a still
+refuses Named & Counted at value, so zero pairs/reads are complete. Native and
+JavaScript package tests pass; lower retains the documented mixed-array adapter
+failure. The lane-owned component work, six executable mutants and exact blocker
+handoff are recorded in lane7/REPORT.txt. Rest pending integrated lazy admission.
