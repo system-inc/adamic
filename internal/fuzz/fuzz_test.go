@@ -113,3 +113,52 @@ func TestShrinkKeepsOnlyWhatFails(t *testing.T) {
 		t.Error("shrinking changed the original program instead of a copy")
 	}
 }
+
+// Every shared-slice scene the probe can write really does share, by the runtime's rule, and the
+// generator puts one in a program: a long owner, a slice, and an append to a local.
+func TestSharedSliceCutsShare(t *testing.T) {
+	t.Parallel()
+	cuts := allShareCuts()
+	if len(cuts) < 12 {
+		t.Fatalf("got %d shared-slice scenes, want at least a repeat, a literal, a template, a join and a nested slice", len(cuts))
+	}
+	sawNested, sawConstant, sawEnd := false, false, false
+	for index, cut := range cuts {
+		cut.check()
+		if cut.pieceEnd == cut.ownerUnits {
+			sawEnd = true
+		}
+		if cut.nested {
+			sawNested = true
+		}
+		if cut.constant {
+			sawConstant = true
+		}
+		if cut.pieceEnd-cut.pieceStart < 48 {
+			t.Errorf("cut %d's slice is only %d units, too short to reach a position-index checkpoint", index, cut.pieceEnd-cut.pieceStart)
+		}
+	}
+	if !sawNested || !sawConstant || !sawEnd {
+		t.Errorf("scenes missing a kind: nested %v constant %v to-the-end %v", sawNested, sawConstant, sawEnd)
+	}
+	var sawProbe, sawLong, sawSlice bool
+	for seed := uint64(1); seed <= 24; seed++ {
+		source := Generate(seed).Source()
+		if strings.Contains(source, "function share") && strings.Contains(source, " += ") && strings.Contains(source, ".slice(") && strings.Contains(source, ".indexOf(") && strings.Contains(source, ".charCodeAt(") {
+			sawProbe = true
+		}
+		if strings.Contains(source, ".repeat(") || strings.Count(source, "é") > 40 || strings.Count(source, "a") > 70 {
+			sawLong = true
+		}
+		if strings.Contains(source, ".slice(16, 112)") || strings.Contains(source, ".slice(8)") || strings.Contains(source, ".slice(16, 176)") {
+			sawSlice = true
+		}
+	}
+	if !sawProbe || !sawLong || !sawSlice {
+		t.Fatalf("vocabulary missing: probe %v long string %v sharing slice %v", sawProbe, sawLong, sawSlice)
+	}
+	without := GenerateWithout(1, []string{"shared-slices"}).Source()
+	if strings.Contains(without, "function share") {
+		t.Fatal("leaving shared slices out still wrote the probe")
+	}
+}
