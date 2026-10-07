@@ -1,0 +1,98 @@
+[
+  {
+    "label": "go",
+    "exit": 0,
+    "stdout_bytes": 142,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "build-normal",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "run-normal",
+    "exit": 0,
+    "stdout_bytes": 10151,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "build-asan",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "run-asan",
+    "exit": 0,
+    "stdout_bytes": 10151,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "node",
+    "exit": 0,
+    "stdout_bytes": 10151,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "emit",
+    "exit": 0,
+    "stdout_bytes": 16937,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "js",
+    "exit": 0,
+    "stdout_bytes": 10151,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "identity-build",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "identity-run",
+    "exit": 0,
+    "stdout_bytes": 10163,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "guard-build",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "guard-run",
+    "exit": 0,
+    "stdout_bytes": 10149,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "span-build",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "span-run",
+    "exit": 0,
+    "stdout_bytes": 10147,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "name-build",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "name-run",
+    "exit": 0,
+    "stdout_bytes": 10150,
+    "stderr_bytes": 0
+  }
+]

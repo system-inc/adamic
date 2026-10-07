@@ -1,0 +1,52 @@
+// Partial refs kernel. Arena indices avoid owning recursive value graphs.
+import { panic } from 'adamic';
+export class RefValue {
+    readonly kind: number;
+    refId = 0;
+    hasRefId = false;
+    span = 0;
+    hasSpan = false;
+    value = -1;
+    fn = -1;
+    constructor(kind: number) { this.kind = kind; }
+}
+export class RefFunction {
+    readRefEffect = false;
+    returnType = -1;
+}
+export class RefValues {
+    readonly values: RefValue[] = [];
+    readonly functions: RefFunction[] = [];
+    equal(a: number, b: number): boolean {
+        if(a < 0 || b < 0) { return a < 0 && b < 0; }
+        const left = this.values[a] ?? panic('missing ref value');
+        const right = this.values[b] ?? panic('missing ref value');
+        if(left.kind !== right.kind) { return false; }
+        switch(left.kind) {
+            case 0: case 1: return true;
+            case 2: return left.refId === right.refId && left.hasRefId === right.hasRefId;
+            // Identity changes when joining refs; comparing it would prevent convergence.
+            case 3: return true;
+            case 4: return left.span === right.span && left.hasSpan === right.hasSpan;
+            case 5: return this.equal(left.value, right.value) && this.functionEqual(left.fn, right.fn);
+            default: return false;
+        }
+    }
+    functionEqual(a: number, b: number): boolean {
+        if(a < 0 || b < 0) { return a < 0 && b < 0; }
+        const left = this.functions[a] ?? panic('missing ref function');
+        const right = this.functions[b] ?? panic('missing ref function');
+        return left.readRefEffect === right.readRefEffect && this.equal(left.returnType, right.returnType);
+    }
+    hookName(name: string): boolean {
+        if(!name.startsWith('use') || name.length < 4) { return false; }
+        const initial = name.charCodeAt(3);
+        return initial >= 65 && initial <= 90;
+    }
+    refName(name: string): boolean {
+        if(name === 'ref') { return true; }
+        if(name.length <= 3 || !name.endsWith('Ref')) { return false; }
+        const initial = name.charCodeAt(0);
+        return (initial >= 97 && initial <= 122) || (initial >= 65 && initial <= 90) || initial === 36 || initial === 95;
+    }
+}

@@ -147,3 +147,55 @@ No further rules were claimed. The exact remaining prerequisite is native
 React HIR lowering and SSA/capture propagation, plus memoization's reactive-scope
 passes. The user instruction to stop on prerequisites outside the owned rule
 directories still applies. The prior completed six rule ports remain pushed.
+
+## Refs convergence kernel continuation
+
+`refs_value.a` now ports `refsTypeEqual`, `refsFunctionEqual`, `refsIsHookName`
+and `refsIsRefLikeName` from production Go. Values and functions use arena
+indices rather than owning recursive graphs. This is a partial analysis kernel,
+not a source lint entry point: `Refs.analyze()` still refuses the missing HIR
+pipeline. No new claims, shared harness edits or bridge verdict queries were added.
+
+The six lattice kinds retain Go's exact convergence equality: none/nullable
+ignore metadata; guards compare ID and presence; refs ignore identity; ref values
+compare access span and presence; structures recursively compare held values
+and function effect/return types. The ref-name predicate preserves Go's actual
+implementation, including accepting `a-Ref`; it does not substitute the stricter
+regex described in the upstream comment. Hook names require an ASCII uppercase
+letter after `use`, excluding `use9`.
+
+An owned Go test overlay calls the unmodified private production functions.
+Its 23 value descriptors include distinct ref IDs, zero/present guard identity,
+span presence, nested structures, nil links, function effects and function return
+types. All pairs, plus 16 naming controls including Unicode and punctuation,
+produce 592 records / 10,151 bytes. Native, ASan/UBSan/leaks, source Node and
+emitted JavaScript match that stream byte for byte with empty stderr. Four
+sanitized kernel mutants compile and exit zero with empty stderr and are caught
+only by the Go byte comparison:
+
+- Comparing ref identity during convergence.
+- Dropping the guard ID presence bit.
+- Dropping the access-span presence bit.
+- Accepting a bare `Ref` binding name.
+
+The first attempt omitted the guard ID-zero/presence witness, so its mutant
+survived. That failure is retained in evidence. Adding the witness killed the
+mutant in the final run; the initial run is not counted as a pass.
+
+```sh
+source /workspace/adamic-tools/env.sh
+python3 stage1/cohere/typeaware/wave_04_react/validate_refs_kernel.py /workspace/typeaware-wave-04-react/refs-kernel-final > /workspace/typeaware-wave-04-react/refs-kernel-final.log 2>&1
+```
+
+The final command prints `PASS partial refs kernel: 592 records, 10151 bytes`.
+Inputs, outputs, build logs, source hashes, initial failure and fetched reference
+SHAs are in [evidence/refs-kernel](evidence/refs-kernel). The bridge branch's new
+`eb6df00e` tip changes build-profile evidence, not the missing React HIR.
+
+Uncovered: refs joins and transfer/sweep, source lowering, SSA, checker ref-type
+questions, manual-memoization reactive scopes and purity alias/capture analysis.
+No full React rule mutant, corpus verdict comparison, released-checker-handle
+check or native/Go rule timing is claimed for this kernel. The earlier six full
+ports and their measurements remain unchanged. The full repository gate was
+not rerun; this continuation checks the owned kernel through its Go overlay
+and both Adamic backends.
