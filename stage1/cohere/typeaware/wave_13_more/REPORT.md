@@ -172,3 +172,12 @@ The dedicated Go command is `go test ./bridge/tsgo/checker -count=1 -v`.
 No test output was piped. The full repository Go test gate and emitted-JavaScript
 comparison were not run. Pinned cohere CLI does not discover .a sources, so no
 whole-source cohere lint pass is claimed. No PR was opened.
+
+## Resumed blocker verification
+
+A subsequent keep-cooking request fetched current origin branches and replayed
+all three blocked inputs. Each still has Go exit 0 versus native parser exit 70.
+Main's parser source is unchanged; the separate JSX branch activates JSX for
+.tsx/JavaScript paths and does not repair these .ts inputs or the yield label.
+See BLOCKED.md and validation/resume/ for exact refs and output. No new code,
+claims or timing measurements were made in this recheck.

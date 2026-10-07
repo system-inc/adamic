@@ -1,0 +1,29 @@
+[
+  {
+    "case": "53d1c0a9ffc2fefa",
+    "go_exit": 0,
+    "go_stderr": "cohere: load_ns=41662827 rule_ns=53299 run_ns=303308\n",
+    "go_bytes": 699,
+    "native_exit": 70,
+    "native_stderr": "adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 5 in /workspace/wave13-more-upstream/controls/53d1c0a9ffc2fefa/repository/source/ObjectConstructor.ts\n",
+    "native_bytes": 0
+  },
+  {
+    "case": "aff6ced2ca61fe89",
+    "go_exit": 0,
+    "go_stderr": "cohere: load_ns=31074595 rule_ns=13109 run_ns=129811\n",
+    "go_bytes": 699,
+    "native_exit": 70,
+    "native_stderr": "adamic: panic: parser slice expected GreaterThanToken, got Identifier at 7 in /workspace/wave13-more-upstream/controls/aff6ced2ca61fe89/repository/source/ObjectConstructor.ts\n",
+    "native_bytes": 0
+  },
+  {
+    "case": "defcb4c4ce6a2921",
+    "go_exit": 0,
+    "go_stderr": "cohere: load_ns=29488121 rule_ns=35563 run_ns=108595\n",
+    "go_bytes": 611,
+    "native_exit": 70,
+    "native_stderr": "adamic: panic: parser slice expected semicolon at 37 in /workspace/wave13-more-upstream/controls/defcb4c4ce6a2921/repository/source/ObjectConstructor.ts\n",
+    "native_bytes": 0
+  }
+]

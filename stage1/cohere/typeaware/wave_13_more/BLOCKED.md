@@ -19,3 +19,19 @@ blockers rather than edit shared files. No parser edit, special source rewrite,
 spelling-only fallback or silent empty result was added. The rule implementations
 and all supported controls are retained for integration. No further rules will
 be claimed while this claim remains partially blocked.
+
+## Recheck after the next keep-cooking request
+
+Fetched all origin heads again. Main at e011f8f6 retains byte-identical parser.ts
+and statements.ts at the three refusal sites. origin/codex/stage1-jsx-lint has
+JSX support at e715ef4a, but its constructor enables JSX only for .tsx and
+JavaScript paths, so it does not cover the two exported .ts inputs. Its label
+statement condition still requires an Identifier and does not cover YieldKeyword.
+The shared harness branch is now present; it does not close these parser gaps.
+
+Replayed the exact three frozen controls: Go exits 0 and emits 699, 699 and
+611 bytes; native exits 70 on each with the same parser refusal and zero stdout
+bytes. Raw outputs and fetched ref SHAs are retained in validation/resume/.
+No rule or parser source changed, so prior parity, mutant, sanitizer and timing
+evidence remains unchanged. Stopped under Ahra's shared-file restriction and
+took no further claims. nproc remains 5; the existing toolchain was reused.
