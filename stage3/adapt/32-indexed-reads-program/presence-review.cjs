@@ -8,7 +8,7 @@ const roots=ts.sys.readDirectory(path.join(tree,"src"),[".ts"],undefined,undefin
 const program=ts.createProgram(roots,{target:ts.ScriptTarget.ESNext,module:ts.ModuleKind.NodeNext,moduleResolution:ts.ModuleResolutionKind.NodeNext,skipLibCheck:true});
 const checker=program.getTypeChecker();
 const names=new Set(["createProgramHost","createCompilerHostFromProgramHost","createWatchCompilerHost","createWatchCompilerHostOfConfigFile","createWatchCompilerHostOfFilesAndCompilerOptions","createSolutionBuilderHostBase","createSolutionBuilderHost","createSolutionBuilderWithWatchHost"]);
-const symbols=new Map(), references=[], locals=new Set(), localReferences=[];
+const symbols=new Map(), references=[], locals=new Set(), localReferences=[], observers=[];
 function owner(n){while(n&&!ts.isFunctionLike(n))n=n.parent;return n?.name?.getText()||"<module>";}
 function symbol(n){let s=checker.getSymbolAtLocation(n);if(s&&(s.flags&ts.SymbolFlags.Alias))s=checker.getAliasedSymbol(s);return s;}
 function visit(n,fn){fn(n);ts.forEachChild(n,c=>visit(c,fn));}
@@ -21,9 +21,17 @@ for(const sf of sources)visit(sf,n=>{
  }
 });
 function entry(n){const sf=n.getSourceFile();const lc=sf.getLineAndCharacterOfPosition(n.getStart(sf));let context=n.parent;while(context.parent&&!ts.isStatement(context)&&!ts.isVariableDeclaration(context))context=context.parent;return {file:path.relative(tree,sf.fileName),line:lc.line+1,scope:owner(n),kind:ts.SyntaxKind[n.parent.kind],context:context.getText(sf)};}
-for(const sf of sources)visit(sf,n=>{if(ts.isIdentifier(n)){const s=symbol(n);if(symbols.has(s))references.push({symbol:symbols.get(s),...entry(n)});if(locals.has(s))localReferences.push(entry(n));}});
+for(const sf of sources)visit(sf,n=>{if(ts.isIdentifier(n)){const s=symbol(n);if(symbols.has(s))references.push({symbol:symbols.get(s),...entry(n)});if(locals.has(s)){
+ const row=entry(n);localReferences.push(row);
+ let p=n.parent;
+ while(p && !ts.isFunctionLike(p)){
+  if((ts.isBinaryExpression(p)&&p.operatorToken.kind===ts.SyntaxKind.InKeyword)||ts.isForInStatement(p)||ts.isSpreadAssignment(p)||ts.isSpreadElement(p))observers.push({...row,observer:ts.SyntaxKind[p.kind]});
+  if(ts.isCallExpression(p)&&ts.isPropertyAccessExpression(p.expression)&&["hasOwnProperty","hasOwn","keys","assign"].includes(p.expression.name.text))observers.push({...row,observer:p.expression.getText()});
+  p=p.parent;
+ }
+}}});
 // Scan every reference's enclosing statement for all requested presence observers.
-const observers=localReferences.filter(r=>/\bin\b|hasOwn|Object\.(keys|assign)|\.\.\.|\bfor\s*\(/.test(r.context));
+// Presence observer candidates above use parsed operations, not text matching.
 const stock=require(path.join(tree,"built/local/typescript.js"));
 const system={...stock.sys};delete system.createHash;delete system.realpath;delete system.getEnvironmentVariable;
 let captured;

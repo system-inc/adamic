@@ -1,5 +1,10 @@
 # Required indexed reads in the program partition
 
+Current ruling: the ten public method conversions are revoked and restored.
+**watch.ts is 0 -> 2 and honestly leaves zero**; both omission rewrites are
+declined by public key-presence counterexamples. The method-restoration section
+and [current frontier](closure-frontier.md) supersede historical watch-zero proofs.
+
 ## Whole-file closure unit (October 7)
 
 The new unit starts from integration 634ef061fc72c061e2de1606d5c8faebec4411f6.
@@ -868,3 +873,9 @@ API owners, including adaptation 75's sole JsonSourceFile property. It validates
 all ten restored source methods against their original signatures; none is an
 allowed API edit. Proof results and the lane verdict are recorded in
 proof/method-restoration/.
+
+Method-restoration proof: [full report](proof/method-restoration/README.md).
+Default oracle passes 106,367 tests with an empty baseline diff. The explicit
+three-property lane manifest passes; the supplied default lane manifest still
+rejects exactly those retained sanctioned owners. watch.ts is 0 -> 2, the only
+file leaving zero; original zero files are 55 -> 54 of 78. All 13 mutants pass.

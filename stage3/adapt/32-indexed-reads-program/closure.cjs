@@ -1,5 +1,8 @@
 "use strict";
 const sites = [...require("./closure-sites.json"), ...require("./public-host-sites.json")];
+const restored = sites.filter(s => s.kind === "restored-public-method");
+const restoredKeys = ["CompilerHost.getDefaultLibLocation", "CompilerHost.createHash", "CompilerHost.readDirectory", "ModuleResolutionHost.trace", "ModuleResolutionHost.directoryExists", "ModuleResolutionHost.getDirectories", "ModuleResolutionHost.realpath", "ProgramHost.createHash", "ProgramHost.realpath", "ProgramHost.getEnvironmentVariable"];
+if (JSON.stringify(restored.map(s => s.interface + "." + s.name).sort()) !== JSON.stringify(restoredKeys.sort())) throw new Error("ten restored public owner census drift");
 function plan(ts, file, text, check) {
     const sf = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true);
     if (sf.parseDiagnostics.length) throw new Error(`closure parse failure: ${file}`);
