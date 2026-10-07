@@ -4,3 +4,7 @@ package tailwind
 func AdamicStaticNodes(input []StaticDeclaration) []*Node {
 	return nodesFromStaticDeclarations(input)
 }
+
+func AdamicPropertySort(nodes []*Node) (Sort, []string) {
+	return propertySort(nodes)
+}

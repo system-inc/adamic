@@ -1,11 +1,14 @@
 {
-  "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.nodesFromStaticDeclarations",
-  "removed_dependency_occurrences": 6,
+  "helpers": [
+    "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.nodesFromStaticDeclarations",
+    "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.propertySort"
+  ],
+  "removed_dependency_occurrences": 12,
   "fully_unblocked_rules": [],
   "consumers": [
     {
       "rule": "better-tailwindcss/enforce-canonical-classes",
-      "remaining_after_this_helper": [
+      "remaining_after_these_helpers": [
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassLiteralsIn",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.attributeValues",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.calleeValues",
@@ -119,7 +122,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.parseModifier",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.parseThemeOptions",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.peekByte",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.propertySort",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.recursivelyDecodeArbitraryValues",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.registerThemeBreakpointVariants",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.resolveBreakpointWidth",
@@ -134,7 +136,7 @@
     },
     {
       "rule": "better-tailwindcss/enforce-consistent-class-order",
-      "remaining_after_this_helper": [
+      "remaining_after_these_helpers": [
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassLiteralsIn",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassTemplateSegmentsIn",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.attributeValues",
@@ -371,7 +373,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.printArbitraryValue",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.printModifier",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.printNodesCss",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.propertySort",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.recursivelyDecodeArbitraryValues",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.registerThemeBreakpointVariants",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.removeNodes",
@@ -402,7 +403,7 @@
     },
     {
       "rule": "better-tailwindcss/enforce-consistent-variant-order",
-      "remaining_after_this_helper": [
+      "remaining_after_these_helpers": [
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassLiteralsIn",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.attributeValues",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.calleeValues",
@@ -518,7 +519,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.parseModifier",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.parseThemeOptions",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.peekByte",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.propertySort",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.recursivelyDecodeArbitraryValues",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.registerThemeBreakpointVariants",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.resolveBreakpointWidth",
@@ -534,7 +534,7 @@
     },
     {
       "rule": "better-tailwindcss/enforce-shorthand-classes",
-      "remaining_after_this_helper": [
+      "remaining_after_these_helpers": [
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassLiteralsIn",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.attributeValues",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.calleeValues",
@@ -712,7 +712,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.parseModifier",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.parseThemeOptions",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.peekByte",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.propertySort",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.recursivelyDecodeArbitraryValues",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.registerThemeBreakpointVariants",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.removeNodes",
@@ -739,7 +738,7 @@
     },
     {
       "rule": "better-tailwindcss/no-conflicting-classes",
-      "remaining_after_this_helper": [
+      "remaining_after_these_helpers": [
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassLiteralsIn",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.attributeValues",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.calleeValues",
@@ -937,7 +936,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.parseModifier",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.parseThemeOptions",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.peekByte",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.propertySort",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.recursivelyDecodeArbitraryValues",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.registerThemeBreakpointVariants",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.removeNodes",
@@ -964,7 +962,7 @@
     },
     {
       "rule": "better-tailwindcss/no-unknown-classes",
-      "remaining_after_this_helper": [
+      "remaining_after_these_helpers": [
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassLiteralsIn",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.attributeValues",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.calleeValues",
@@ -1145,7 +1143,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.parseModifier",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.parseThemeOptions",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.peekByte",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.propertySort",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.recursivelyDecodeArbitraryValues",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.registerThemeBreakpointVariants",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.removeNodes",
