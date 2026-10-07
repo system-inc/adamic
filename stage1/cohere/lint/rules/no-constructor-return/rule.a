@@ -1,0 +1,44 @@
+import type { RuleContext } from '../../context.ts';
+import { message } from './messages.a';
+
+const functionKinds = ['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction',
+    'MethodDeclaration', 'GetAccessor', 'SetAccessor', 'MethodSignature', 'CallSignature',
+    'ConstructSignature', 'IndexSignature', 'FunctionType', 'ConstructorType'];
+
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    enclosingConstructor(index: number): boolean {
+        const context = this.context;
+        let parent = context.parents[index] ?? -1;
+        while(parent >= 0) {
+            const ancestor = context.node(parent);
+            let constructor = ancestor.kind === 'Constructor';
+            // The stage1 parser retains a quoted constructor key as a method declaration.
+            if(ancestor.kind === 'MethodDeclaration') {
+                const owner = context.parents[parent] ?? -1;
+                if(owner >= 0 && ['ClassDeclaration', 'ClassExpression'].includes(context.node(owner).kind)) {
+                    for(const child of ancestor.children) {
+                        const key = context.node(child);
+                        if(key.kind === 'StringLiteral' && key.text === 'constructor') constructor = true;
+                    }
+                }
+            }
+            if(constructor) {
+                for(const child of ancestor.children) {
+                    if(['StaticKeyword', 'AsteriskToken'].includes(context.node(child).kind)) return false;
+                }
+                return true;
+            }
+            if(functionKinds.includes(ancestor.kind)) return false;
+            parent = context.parents[parent] ?? -1;
+        }
+        return false;
+    }
+    visit(index: number): void {
+        const node = this.context.node(index);
+        if(node.kind !== 'ReturnStatement' || node.children.length === 0) return;
+        if(this.enclosingConstructor(index)) this.context.report(index, 'no-constructor-return', 'noConstructorReturn', message, '', '', '');
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

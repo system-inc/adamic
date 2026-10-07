@@ -1,0 +1,12 @@
+{
+  "name": "no-constructor-return",
+  "kinds": [
+    "ReturnStatement"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoConstructorReturn",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoConstructorReturn"
+}
