@@ -152,6 +152,7 @@
   },
   {
     "file": "09_realpath.a",
+    "platform": "linux",
     "tsc": [
       "src/compiler/sys.ts:1913",
       "src/compiler/sys.ts:1917",
@@ -241,6 +242,7 @@
   },
   {
     "file": "14_getCurrentDirectory.a",
+    "platform": "linux",
     "tsc": [
       "src/compiler/core.ts:1891",
       "src/compiler/sys.ts:1501"
@@ -409,6 +411,7 @@
   },
   {
     "file": "24_useCaseSensitiveFileNames.a",
+    "platform": "linux",
     "tsc": [
       "src/compiler/sys.ts:1629",
       "src/compiler/sys.ts:1886",

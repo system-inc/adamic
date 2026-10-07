@@ -98,3 +98,26 @@ and filtered oracle gate passed (fixtures 2.115s, oracle 0.671s), log
 /tmp/stage3-runner-final-gate.log. It selected TestFixtures, the dormant hook,
 and functions.a, generic_functions.a and library_object_order.a. No full gate
 was attempted for this harness-only change.
+
+
+## Landing runner follow-up
+
+The all-bucket Linux gate on origin/land/stage3 d9fc3df passes 173 fixtures
+in the supplied 11 status buckets: 0 fail, 0 skip, six native checks, 41.717s.
+The per-bucket table and complete commands are in ../fixtures/README.md;
+JSON counts are in runs/20261007T025701Z.runner-landing/fixtures.json.
+Setup completed in 271s: Go ready 0s, clang/Node ready 0s, submodules ready 19s,
+build cache warm 271s; nproc 5, cgroup quota 400000/100000, 17.6 GB.
+Setup log: /tmp/stage3-landing-setup.log. Vet passes in
+/tmp/stage3-landing-vet.log. The transform/path/platform audit passes in
+/tmp/stage3-landing-audit.log, with each mutant returning exit 1 at its intended
+check and the foreign-platform skip probe returning exit 0 with its reason.
+Only the requested platform fields on three host entries were added; no
+recorded behavior, stage0 diagnostic, fixture source, compiler or oracle source
+was edited. macOS and the complete repository integration gate were not run.
+
+The filtered oracle gate also passes functions.a, generic_functions.a and
+library_object_order.a in 0.657s, log /tmp/stage3-landing-oracle.log. Commands
+used -count=1 and redirected test output to files. Ordinary fixtures still use
+the unmodified oracle/node.mjs; the temporary transform runner follows the
+mode used by codex/flag-enums and codex/namespaces-tsc.

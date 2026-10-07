@@ -8,9 +8,12 @@ import (
 	"flag"
 	"fmt"
 	"io"
+	"io/fs"
+	"net/url"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"sync"
 	"syscall"
@@ -34,11 +37,12 @@ type stage0 struct {
 	What    string `json:"what"`
 }
 type fixture struct {
-	File   string   `json:"file"`
-	TSC    []string `json:"tsc"`
-	Reason string   `json:"reason"`
-	Node   behavior `json:"node"`
-	Stage0 stage0   `json:"stage0"`
+	File     string   `json:"file"`
+	Platform string   `json:"platform,omitempty"`
+	TSC      []string `json:"tsc"`
+	Reason   string   `json:"reason"`
+	Node     behavior `json:"node"`
+	Stage0   stage0   `json:"stage0"`
 }
 
 func execute(t *testing.T, directory string, environment []string, name string, arguments ...string) behavior {
@@ -103,6 +107,36 @@ func replaceStage0(raw json.RawMessage, value stage0) (json.RawMessage, error) {
 	return nil, errors.New("fixture has no stage0 field")
 }
 
+// Fixture paths use portable slash-separated components. ValidPath rejects
+// absolute paths, empty components, and both . and .. components before joining.
+func validFixturePath(name string) bool {
+	return fs.ValidPath(name) && !strings.ContainsAny(name, "\\:") && filepath.Ext(name) == ".a"
+}
+
+// The enum and namespace branches use Node's transform mode. Derive that runner
+// from the current source oracle, preserving its runtime and import hooks while
+// leaving the ordinary erasable runner untouched.
+func transformedNodeRunner(t *testing.T, repository string) string {
+	t.Helper()
+	path := filepath.Join(repository, "oracle/node.mjs")
+	source, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	text := string(source)
+	if strings.Count(text, "stripTypeScriptTypes(source)") != 1 || strings.Count(text, "new URL('./adamic.mjs', import.meta.url)") != 1 {
+		t.Fatal("source Node runner changed: review the transform-mode hook")
+	}
+	text = strings.Replace(text, "stripTypeScriptTypes(source)", "stripTypeScriptTypes(source, { mode: 'transform' })", 1)
+	oracleURL := (&url.URL{Scheme: "file", Path: filepath.ToSlash(path)}).String()
+	text = strings.Replace(text, "new URL('./adamic.mjs', import.meta.url)", fmt.Sprintf("new URL('./adamic.mjs', %q)", oracleURL), 1)
+	transformed := filepath.Join(t.TempDir(), "node-transform.mjs")
+	if err := os.WriteFile(transformed, []byte(text), 0600); err != nil {
+		t.Fatal(err)
+	}
+	return transformed
+}
+
 func TestFixtures(t *testing.T) {
 	t.Parallel()
 	repository, err := filepath.Abs("../..")
@@ -127,6 +161,7 @@ func TestFixtures(t *testing.T) {
 	if built.Exit != 0 {
 		t.Fatalf("building oracle hook: %s%s", built.Stdout, built.Stderr)
 	}
+	transformedRunner := transformedNodeRunner(t, repository)
 	for _, status := range statuses {
 		t.Run(filepath.Base(filepath.Dir(status)), func(t *testing.T) {
 			t.Parallel()
@@ -204,7 +239,7 @@ func TestFixtures(t *testing.T) {
 				if err := decoder.Decode(new(any)); err != io.EOF {
 					t.Fatal("unexpected trailing fixture JSON")
 				}
-				if filepath.Base(entry.File) != entry.File || filepath.Ext(entry.File) != ".a" || seen[entry.File] {
+				if !validFixturePath(entry.File) || seen[entry.File] {
 					t.Fatalf("invalid or duplicate file: %q", entry.File)
 				}
 				seen[entry.File] = true
@@ -218,8 +253,16 @@ func TestFixtures(t *testing.T) {
 				}
 				t.Run(entry.File, func(t *testing.T) {
 					t.Parallel()
+					if entry.Platform != "" && entry.Platform != runtime.GOOS {
+						t.Skipf("fixture records platform %s; current platform is %s", entry.Platform, runtime.GOOS)
+					}
 					path := filepath.Join(filepath.Dir(status), entry.File)
-					node := execute(t, repository, nil, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle/node.mjs"), path)
+					nodeRunner := filepath.Join(repository, "oracle/node.mjs")
+					bucket := filepath.Base(filepath.Dir(status))
+					if bucket == "enums" || bucket == "namespaces" {
+						nodeRunner = transformedRunner
+					}
+					node := execute(t, repository, nil, "node", "--disable-warning=ExperimentalWarning", nodeRunner, path)
 					recordedNodeAgrees := t.Run("node", func(t *testing.T) { equal(t, "recorded Node", node, entry.Node) })
 					program, err := load.Load([]string{path})
 					actual := stage0{Outcome: "Compiles"}
@@ -291,6 +334,27 @@ func TestFixtures(t *testing.T) {
 						}
 					})
 				})
+			}
+		})
+	}
+}
+
+func TestFixturePaths(t *testing.T) {
+	t.Parallel()
+	for _, test := range []struct {
+		name  string
+		valid bool
+	}{
+		{"01_value.a", true}, {"01_call_time/main.a", true},
+		{"01_call_time/_namespaces/main.a", true},
+		{"../main.a", false}, {"01_case/../main.a", false},
+		{"/tmp/main.a", false}, {"C:/main.a", false}, {`01_case\main.a`, false},
+		{"./main.a", false}, {"01_case//main.a", false}, {"main.ts", false}, {"", false},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			t.Parallel()
+			if got := validFixturePath(test.name); got != test.valid {
+				t.Errorf("validFixturePath(%q) = %v, want %v", test.name, got, test.valid)
 			}
 		})
 	}
