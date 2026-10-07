@@ -32,14 +32,18 @@ func TestCheckedViewLazyUnread(t *testing.T) {
 }
 
 func TestCheckedViewLazyHelperMutant(t *testing.T) {
-	path := filepath.Join(repository, "stage3/interface-downcasts/lazy/helper-mutant.a")
-	_, err := lowered(t, path)
-	if err == nil {
-		t.Fatal("unsupported helper read ran on")
+	for _, name := range []string{"helper", "generic", "callback", "field"} {
+		t.Run(name, func(t *testing.T) {
+			path := filepath.Join(repository, "stage3/interface-downcasts/lazy/"+name+"-mutant.a")
+			_, err := lowered(t, path)
+			if err == nil {
+				t.Fatal("unsupported helper read ran on")
+			}
+			message := err.Error()
+			if !strings.Contains(message, name+"-mutant.a:9:") || !strings.Contains(message, "field opaque") || !strings.Contains(message, "callable") {
+				t.Fatalf("want callable refusal at helper read, got %v", err)
+			}
+			t.Logf("caught helper mutant: %v", err)
+		})
 	}
-	message := err.Error()
-	if !strings.Contains(message, "helper-mutant.a:9:") || !strings.Contains(message, "field opaque") || !strings.Contains(message, "callable") {
-		t.Fatalf("want callable refusal at helper read, got %v", err)
-	}
-	t.Logf("caught helper mutant: %v", err)
 }

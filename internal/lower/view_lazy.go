@@ -117,30 +117,73 @@ func (l *lowering) checkLazyViewReads() error {
 			}
 		}
 	}
+	// Wider interfaces and instantiated helpers can give the same member a
+	// different checker type id. Field-name fallback retains the refusal until
+	// the receiver flow proves it cannot receive a viewed allocation.
+	unsupportedFields := map[string]string{}
+	for _, descriptor := range program.ViewContracts {
+		for _, field := range descriptor.Fields {
+			if family := program.ViewContracts[field.Contract-1].Unsupported; family != "" {
+				unsupportedFields[field.Name] = family
+			}
+		}
+	}
 	var refused error
 	inspect := func(node any) bool {
 		if refused != nil {
 			return false
 		}
-		read, ok := node.(ir.Property)
-		if !ok || !program.CheckedFields[read.Name] {
+		var receiver ir.Expression
+		var typeID, receiverTypeID int
+		var field, where string
+		arrayRead := func(array ir.Expression, read ir.ArrayViewRead) {
+			receiver, typeID, field, where = array, read.ViewTypeID, "[element]", read.View
+		}
+		switch read := node.(type) {
+		case ir.Property:
+			if !program.CheckedFields[read.Name] {
+				return true
+			}
+			receiver, typeID, field, where = read.Object, read.ViewTypeID, read.Name, read.ViewWhere
+			receiverTypeID = read.ViewReceiverTypeID
+		case ir.ArrayIndex:
+			receiver, typeID, field, where = read.Array, read.ViewTypeID, "[element]", read.View
+		case ir.ArrayMap:
+			arrayRead(read.Array, read.ViewRead)
+		case ir.ArrayVisit:
+			arrayRead(read.Array, read.ViewRead)
+		case ir.ArrayReduce:
+			arrayRead(read.Array, read.ViewRead)
+		case ir.ArrayPop:
+			arrayRead(read.Array, read.ViewRead)
+		case ir.ArrayJoin:
+			arrayRead(read.Array, read.ViewRead)
+		case ir.ForOf:
+			arrayRead(read.Iterable, read.ViewRead)
+		default:
 			return true
 		}
-		contract := program.ViewContractTypes[read.ViewTypeID]
-		if contract == 0 {
-			return true
+		contract := program.ViewContractTypes[typeID]
+		family := ""
+		if contract != 0 {
+			family = program.ViewContracts[contract-1].Unsupported
 		}
-		family := program.ViewContracts[contract-1].Unsupported
+		if receiverContract := program.ViewContractTypes[receiverTypeID]; family == "" && receiverContract != 0 {
+			family = program.ViewContracts[receiverContract-1].Unsupported
+		}
+		if family == "" {
+			family = unsupportedFields[field]
+		}
 		if family == "" {
 			return true
 		}
-		reaches := graph.ReachingAllocations(read.Object)
+		reaches := graph.ReachingAllocations(receiver)
 		demanded := unknown || reaches.Unknown
 		for _, site := range reaches.Sites {
 			demanded = demanded || viewed[site]
 		}
 		if demanded {
-			refused = &Refused{Where: read.ViewWhere, What: "checked view read of field " + read.Name + " with unsupported " + family + " contract", Fix: "prove or implement the " + family + " contract before reading this field"}
+			refused = &Refused{Where: where, What: "checked view read of field " + field + " with unsupported " + family + " contract", Fix: "prove or implement the " + family + " contract before reading this field"}
 		}
 		return true
 	}
@@ -160,4 +203,8 @@ func viewAggregate(value ir.Expression) bool {
 		return true
 	}
 	return false
+}
+
+func (l *lowering) lazyReadRefusal(node *ast.Node, field, family string) error {
+	return &Refused{Where: l.program.Where(node), What: "checked view read of field " + field + " with unsupported " + family + " contract", Fix: "prove or implement the " + family + " contract before reading this field"}
 }

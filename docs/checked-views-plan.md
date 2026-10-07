@@ -366,3 +366,21 @@ Focused lower and oracle tests passed; array consumer coverage and the full view
 suite are still pending. The earlier lane 2 and lane 3 merges preceded the new
 integrator-only coordination rule. Future dependency merges use views-integration.
 No integration branch was advertised by origin at this checkpoint.
+
+### Lazy admission coverage checkpoint, October 7, 2026
+
+The shared-flow demanded-read guard now covers wired array element consumers and
+retains unsupported member families across wider helper interface type ids.
+Untagged object unions without a finite discriminant retain an unsupported
+descriptor and refuse at a demanded read. Existing representation/accessor
+preflight refusals name their read field and family. Array consumers without
+lowering adapters still fail closed. Unsupported contracts cannot certify writes.
+
+The focused lower and checked-view oracle suite passed. Direct, generic, callback,
+and stored-field helper mutants all refuse at line 9, the opaque member read.
+Deleting the read-demand guard made all four oracle controls fail, along with
+shared-flow helper and Unknown controls; the deletion was restored. Complete
+lower package tests still report failures in the merged pre-lazy baseline.
+Phantom-array, predicate marker, overload diagnostic, and nested-function failures
+were reproduced against c01ae313 using a Go source overlay. Those are not claimed
+as a green gate; reconciliation belongs with the integration branch.

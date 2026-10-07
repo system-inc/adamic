@@ -60,7 +60,7 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 					declared := l.checker.GetTypeAtLocation(binding.Name())
 					of, known := l.representation(declared)
 					if !known || of < ir.Number || of > ir.Array || !viewDataType(declared) {
-						found = l.notYet(binding, "a checked destructured alias requiring a representation conversion")
+						found = l.lazyReadRefusal(binding, name.Text(), "destructuring representation conversion")
 					}
 				}
 			}
@@ -71,7 +71,7 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 				field := l.checker.GetSymbolAtLocation(part.Name())
 				if field != nil && len(l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(field), checker.SignatureKindCall)) == 0 {
 					if l.includesNull(l.checker.GetTypeOfSymbol(field)) {
-						found = l.notYet(part, "a nullable checked field requiring a distinct null runtime tag")
+						found = l.lazyReadRefusal(part, part.Name().Text(), "nullish")
 					}
 					of, known := l.representation(l.checker.GetTypeOfSymbol(field))
 					if of == ir.Object && ast.IsAssignmentTarget(part) && !l.result.OptionalViewFields[l.fieldName(part.Name())] {
@@ -79,7 +79,14 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 					}
 
 					if !viewDataType(l.checker.GetTypeOfSymbol(field)) || !known || (of < ir.Number || of > ir.Array) && of != ir.MaybeNumber && of != ir.MaybeBoolean || accessorSymbol(field) {
-						found = l.notYet(part, "a checked field alias requiring an optional, accessor, or representation conversion")
+						family := "representation conversion"
+						if accessorSymbol(field) {
+							family = "accessor"
+						}
+						if of == ir.Union {
+							family = "mixed representation union"
+						}
+						found = l.lazyReadRefusal(part, part.Name().Text(), family)
 					}
 				}
 			}
@@ -349,5 +356,10 @@ func (l *lowering) viewSchema(node *ast.Node, target *checker.Type) (map[string]
 		visit(contract.Element)
 	}
 	visit(id)
+	if ir.HasArrayViews(l.result) {
+		if err := l.viewArrayUnsupportedUses(node); err != nil {
+			return nil, err
+		}
+	}
 	return fields, nil
 }

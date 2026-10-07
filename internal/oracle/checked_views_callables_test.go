@@ -44,7 +44,7 @@ func TestCheckedViewOpaqueSignature(t *testing.T) {
 		t.Fatal(err)
 	}
 	_, err = lower.Lower(context.Background(), program)
-	if err == nil || !strings.Contains(err.Error(), "Adamic 0.1 refuses a checked view call to member Runner.run; its signature cannot be checked at runtime and no compatible implementation is proven;") {
+	if err == nil || !strings.Contains(err.Error(), "checked view read of field run with unsupported callable contract") {
 		t.Fatalf("want pinned signature refusal, got %v", err)
 	}
 }

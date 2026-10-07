@@ -109,6 +109,16 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 			contract.Fields = append(contract.Fields, ir.ViewFieldContract{Name: property.Name, Contract: child, Optional: property.Flags&ast.SymbolFlagsOptional != 0, Readonly: l.checker.IsReadonlySymbol(property)})
 		}
 	}
+	if contract.Kind == ir.ViewUnion && contract.Of == ir.Object {
+		tagged := false
+		for _, field := range contract.Fields {
+			child := l.result.ViewContracts[field.Contract-1]
+			tagged = tagged || !field.Optional && child.Kind == ir.ViewScalar && len(child.Allowed) != 0
+		}
+		if !tagged {
+			contract.Unsupported = "untagged object union"
+		}
+	}
 	l.result.ViewContracts[int(id)-1] = contract
 	return id, nil
 }

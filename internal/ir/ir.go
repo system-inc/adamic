@@ -341,12 +341,13 @@ type (
 	// number field read that way is number | undefined.
 	Property struct {
 		// View names a required field read whose presence, readiness and representation are checked.
-		ViewWhere    string
-		View         string
-		ViewType     string
-		ViewAllowed  []Expression
-		ViewContract ViewContractID
-		ViewTypeID   int
+		ViewReceiverTypeID int
+		ViewWhere          string
+		View               string
+		ViewType           string
+		ViewAllowed        []Expression
+		ViewContract       ViewContractID
+		ViewTypeID         int
 		// Readiness is the source expression for a checked field read, empty when proven ready.
 		Readiness string
 		Object    Expression
