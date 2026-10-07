@@ -171,3 +171,5 @@ Final logs: [lower/load](enums-open-packages-final.log),
 [mutant replay](enums-open-mutants.log),
 [stage3 matrix](enums-open-matrix.log).
 Individual mutant logs use the basenames recorded in mutants.json.
+
+The compiler implementation commit is 287a5ec543b10b51d7944b3855815f0fa8d96445. A follow-up trims three trailing spaces from the matrix summary log; source comparisons and JSON observations are unchanged.
