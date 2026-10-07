@@ -360,3 +360,12 @@ Final signal/exit, two new mutants, scanner and coverage checks passed together 
 | `string_slice_impl.h:characters:1` | 128 one-unit immortal string headers, C aggregate initializer only | Written only before pool starts by static initialization. Counts are zero, units are known, and indexes carry the literal marker; retain/release and string caches never mutate them |
 
 Whole slices retain their input without writing its units field, including immortal character headers. Shared input cache construction uses string_index.c's existing release/acquire CAS publication; new view metadata is filled before the view escapes. All owner count queries use adamic_reference_count and retention uses the shared atomic path. Region storage with no retainable count copies rather than becoming an immortal byte owner.
+
+## Record runtime storage
+
+- `runtime-file:record.c`: all static storage is const, initialized at compile time.
+  The record/iteration field-name arrays have const pointers, the reference masks
+  and shapes are const, and the missing-member and assignment diagnostics are
+  const byte arrays. There are no lazy writes or runtime static caches. Mutable
+  records and iterators are counted heap objects using the existing Map/Object
+  ownership and concurrency rules.
