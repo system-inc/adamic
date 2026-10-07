@@ -1,0 +1,29 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { Parser } from '../../../../typescript/parser/parser.ts';
+import { all } from '../../helpers/comments/all.ts';
+import { OptionsJson } from '../../helpers/options_json.ts';
+const args = programArguments();
+const input = readTextFile(args[0] ?? panic('corpus path'));
+if(input.kind === 'Error') { panic(input.message); }
+const corpus = new OptionsJson(input.text);
+const root = corpus.parse();
+let ordinal = 0;
+for(const row of corpus.node(root).children) {
+    const source = corpus.node(corpus.field(row, 'source')).text;
+    const file = corpus.node(corpus.field(row, 'file')).text;
+    console.log(`case ${ordinal}`);
+    const parser = new Parser(source, file);
+    const tree = parser.file();
+    let strings = 0;
+    let jsx = 0;
+    const pending = [tree];
+    while(pending.length > 0) {
+        const node = parser.node(pending.pop() ?? panic('missing node'));
+        if(node.kind === 'StringLiteral') { strings++; }
+        if(node.kind === 'JsxOpeningElement' || node.kind === 'JsxSelfClosingElement') { jsx++; }
+        for(const child of node.children) { pending.push(child); }
+    }
+    const comments = all(parser, tree);
+    console.log(`strings ${strings} jsx ${jsx} comments ${comments.length}`);
+    ordinal++;
+}

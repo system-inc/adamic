@@ -1,0 +1,8 @@
+[
+ {"rule":"structure/tailwind-no-physical-direction","file":"control.ts","source":"export const c = 'flex ml-4';\n"},
+ {"rule":"structure/tailwind-no-physical-direction","file":"Thing.tsx","source":"export const c = <div className=\"flex ml-4\" />;\n"},
+ {"rule":"@eslint-community/eslint-comments/require-description","file":"control.ts","source":"const a = 1;\n/* eslint-disable */\nconst b = 2;"},
+ {"rule":"@eslint-community/eslint-comments/require-description","file":"RequireDescription.tsx","source":"const a = <div>{/* eslint-disable-line */}</div>;"},
+ {"rule":"@next/next/google-font-display","file":"control.ts","source":"export const Test = () => 'https://fonts.googleapis.com/css2?family=Krona+One';"},
+ {"rule":"@next/next/google-font-display","file":"Component.tsx","source":"export const Test = () => <link href=\"https://fonts.googleapis.com/css2?family=Krona+One\" />;"}
+]

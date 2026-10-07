@@ -1,0 +1,44 @@
+// Built as a virtual main file inside the unmodified cohere module.
+package main
+import (
+ "encoding/json"
+ "fmt"
+ "os"
+ "strings"
+ "github.com/microsoft/TypeScript/tsc/shim/ast"
+ "github.com/microsoft/TypeScript/tsc/shim/core"
+ "github.com/microsoft/TypeScript/tsc/shim/parser"
+ "github.com/microsoft/TypeScript/tsc/shim/tspath"
+ "github.com/system-inc/cohere/internal/lint/ecmascript/comments"
+ "github.com/system-inc/cohere/internal/lint/rule"
+ corerules "github.com/system-inc/cohere/internal/lint/rules/core"
+ "github.com/system-inc/cohere/internal/lint/rules/next"
+ "github.com/system-inc/cohere/internal/lint/rules/tailwind"
+)
+type row struct { Rule, File, Source string; Options json.RawMessage }
+func main() {
+ data,err:=os.ReadFile(os.Args[1]);if err!=nil {panic(err)}
+ var rows []row;if err=json.Unmarshal(data,&rows);err!=nil {panic(err)}
+ facts:=len(os.Args)>2 && os.Args[2]=="--facts"
+ for i,r:=range rows {
+  filename:=r.File;if !strings.HasPrefix(filename,"/"){filename="/"+filename}
+  kind:=core.ScriptKindTS;if strings.HasSuffix(filename,".tsx"){kind=core.ScriptKindTSX}
+  f:=parser.ParseSourceFile(ast.SourceFileParseOptions{FileName:filename,Path:tspath.Path(filename)},r.Source,kind)
+  stringsCount,jsx:=0,0
+  var walk func(*ast.Node)
+  walk=func(n *ast.Node){if n.Kind==ast.KindStringLiteral{stringsCount++};if n.Kind==ast.KindJsxOpeningElement||n.Kind==ast.KindJsxSelfClosingElement{jsx++};n.ForEachChild(func(c *ast.Node)bool{walk(c);return false})}
+  walk(f.AsNode())
+  if !facts {fmt.Printf("case %d\nstrings %d jsx %d comments %d\n",i,stringsCount,jsx,len(comments.All(f)));continue}
+  subject:=tailwind.NoPhysicalDirection
+  if r.Rule=="@next/next/google-font-display"{subject=next.GoogleFontDisplay}
+  if r.Rule=="@eslint-community/eslint-comments/require-description"{subject=corerules.RequireDescription}
+  var diagnostics []rule.Diagnostic
+  var options any
+  if r.Rule=="@eslint-community/eslint-comments/require-description" { options,err=corerules.DecodeRequireDescriptionOptions(r.Options);if err!=nil{panic(err)} }
+  listeners:=subject.Run(rule.Context{SourceFile:f,FileCache:rule.NewFileCache(),Report:func(d rule.Diagnostic){diagnostics=append(diagnostics,d)}},options)
+  var visit func(*ast.Node);visit=func(n *ast.Node){if l:=listeners[n.Kind];l!=nil{l(n)};n.ForEachChild(func(c *ast.Node)bool{visit(c);return false})};visit(f.AsNode())
+  ids:=[]string{};for _,d:=range diagnostics{ids=append(ids,d.Message.Id)}
+  record:=map[string]any{"rule":r.Rule,"file":r.File,"source":r.Source,"parseDiagnostics":len(f.Diagnostics()),"jsx":jsx,"strings":stringsCount,"comments":len(comments.All(f)),"findingIDs":ids}
+  encoded,_:=json.Marshal(record);fmt.Println(string(encoded))
+ }
+}

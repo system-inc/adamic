@@ -1,0 +1,40 @@
+=== RUN   TestSelectedRuleParserSubstrate
+    probe_test.go:68: row 0 Go facts: {"comments":0,"file":"control.ts","findingIDs":["useLogicalClass"],"jsx":0,"parseDiagnostics":0,"rule":"structure/tailwind-no-physical-direction","source":"export const c = 'flex ml-4';\n","strings":1}
+    probe_test.go:73: Node source control 0 agrees: case 0
+        strings 1 jsx 0 comments 0
+    probe_test.go:73: emitted JavaScript control 0 agrees: case 0
+        strings 1 jsx 0 comments 0
+    probe_test.go:73: ASan UBSan native control 0 agrees: case 0
+        strings 1 jsx 0 comments 0
+    probe_test.go:68: row 1 Go facts: {"comments":0,"file":"Thing.tsx","findingIDs":["useLogicalClass"],"jsx":1,"parseDiagnostics":0,"rule":"structure/tailwind-no-physical-direction","source":"export const c = \u003cdiv className=\"flex ml-4\" /\u003e;\n","strings":1}
+    probe_test.go:76: Node source gap 1: exit=exit status 70 stderr="adamic: panic: parser slice expected GreaterThanToken, got Identifier at 22 in Thing.tsx\n" port="case 0\n" Go="case 0\nstrings 1 jsx 1 comments 0\n"
+    probe_test.go:76: emitted JavaScript gap 1: exit=exit status 70 stderr="adamic: panic: parser slice expected GreaterThanToken, got Identifier at 22 in Thing.tsx\n" port="case 0\n" Go="case 0\nstrings 1 jsx 1 comments 0\n"
+    probe_test.go:76: ASan UBSan native gap 1: exit=exit status 70 stderr="adamic: panic: parser slice expected GreaterThanToken, got Identifier at 22 in Thing.tsx\n" port="case 0\n" Go="case 0\nstrings 1 jsx 1 comments 0\n"
+    probe_test.go:68: row 2 Go facts: {"comments":1,"file":"control.ts","findingIDs":["missingDescription"],"jsx":0,"parseDiagnostics":0,"rule":"@eslint-community/eslint-comments/require-description","source":"const a = 1;\n/* eslint-disable */\nconst b = 2;","strings":0}
+    probe_test.go:73: Node source control 2 agrees: case 0
+        strings 0 jsx 0 comments 1
+    probe_test.go:73: emitted JavaScript control 2 agrees: case 0
+        strings 0 jsx 0 comments 1
+    probe_test.go:73: ASan UBSan native control 2 agrees: case 0
+        strings 0 jsx 0 comments 1
+    probe_test.go:68: row 3 Go facts: {"comments":1,"file":"RequireDescription.tsx","findingIDs":["missingDescription"],"jsx":1,"parseDiagnostics":0,"rule":"@eslint-community/eslint-comments/require-description","source":"const a = \u003cdiv\u003e{/* eslint-disable-line */}\u003c/div\u003e;","strings":0}
+    probe_test.go:76: Node source gap 3: exit=<nil> stderr="" port="case 0\nstrings 0 jsx 0 comments 1\n" Go="case 0\nstrings 0 jsx 1 comments 1\n"
+    probe_test.go:76: emitted JavaScript gap 3: exit=<nil> stderr="" port="case 0\nstrings 0 jsx 0 comments 1\n" Go="case 0\nstrings 0 jsx 1 comments 1\n"
+    probe_test.go:76: ASan UBSan native gap 3: exit=<nil> stderr="" port="case 0\nstrings 0 jsx 0 comments 1\n" Go="case 0\nstrings 0 jsx 1 comments 1\n"
+    probe_test.go:68: row 4 Go facts: {"comments":0,"file":"control.ts","findingIDs":[],"jsx":0,"parseDiagnostics":0,"rule":"@next/next/google-font-display","source":"export const Test = () =\u003e 'https://fonts.googleapis.com/css2?family=Krona+One';","strings":1}
+    probe_test.go:73: Node source control 4 agrees: case 0
+        strings 1 jsx 0 comments 0
+    probe_test.go:73: emitted JavaScript control 4 agrees: case 0
+        strings 1 jsx 0 comments 0
+    probe_test.go:73: ASan UBSan native control 4 agrees: case 0
+        strings 1 jsx 0 comments 0
+    probe_test.go:68: row 5 Go facts: {"comments":0,"file":"Component.tsx","findingIDs":["googleFontDisplayMissing"],"jsx":1,"parseDiagnostics":0,"rule":"@next/next/google-font-display","source":"export const Test = () =\u003e \u003clink href=\"https://fonts.googleapis.com/css2?family=Krona+One\" /\u003e;","strings":1}
+    probe_test.go:76: Node source gap 5: exit=exit status 70 stderr="adamic: panic: parser slice expected GreaterThanToken, got Identifier at 32 in Component.tsx\n" port="case 0\n" Go="case 0\nstrings 1 jsx 1 comments 0\n"
+    probe_test.go:76: emitted JavaScript gap 5: exit=exit status 70 stderr="adamic: panic: parser slice expected GreaterThanToken, got Identifier at 32 in Component.tsx\n" port="case 0\n" Go="case 0\nstrings 1 jsx 1 comments 0\n"
+    probe_test.go:76: ASan UBSan native gap 5: exit=exit status 70 stderr="adamic: panic: parser slice expected GreaterThanToken, got Identifier at 32 in Component.tsx\n" port="case 0\n" Go="case 0\nstrings 1 jsx 1 comments 0\n"
+    probe_test.go:95: Node source compiling instrumentation mutant caught by Go comparison: port="case 0\nstrings 2 jsx 0 comments 0\ncase 1\nstrings 0 jsx 0 comments 1\ncase 2\nstrings 2 jsx 0 comments 0\n" Go="case 0\nstrings 1 jsx 0 comments 0\ncase 1\nstrings 0 jsx 0 comments 1\ncase 2\nstrings 1 jsx 0 comments 0\n"
+    probe_test.go:95: emitted JavaScript compiling instrumentation mutant caught by Go comparison: port="case 0\nstrings 2 jsx 0 comments 0\ncase 1\nstrings 0 jsx 0 comments 1\ncase 2\nstrings 2 jsx 0 comments 0\n" Go="case 0\nstrings 1 jsx 0 comments 0\ncase 1\nstrings 0 jsx 0 comments 1\ncase 2\nstrings 1 jsx 0 comments 0\n"
+    probe_test.go:95: ASan UBSan native compiling instrumentation mutant caught by Go comparison: port="case 0\nstrings 2 jsx 0 comments 0\ncase 1\nstrings 0 jsx 0 comments 1\ncase 2\nstrings 2 jsx 0 comments 0\n" Go="case 0\nstrings 1 jsx 0 comments 0\ncase 1\nstrings 0 jsx 0 comments 1\ncase 2\nstrings 1 jsx 0 comments 0\n"
+--- PASS: TestSelectedRuleParserSubstrate (51.46s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/claims/wave1-04-probes	51.467s
