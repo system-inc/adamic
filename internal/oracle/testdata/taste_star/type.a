@@ -1,0 +1,4 @@
+import type { Label } from './barrel.a';
+import './barrel.a';
+const label: Label = {text: "typed"};
+console.log(label.text);

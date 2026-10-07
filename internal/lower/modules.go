@@ -96,6 +96,18 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 					l.result.Locals[local].Global = true
 				}
 			}
+		case ast.KindEnumDeclaration:
+			symbol := l.symbol(statement.Name())
+			if symbol == nil || len(symbol.Declarations) != 1 {
+				return l.notYet(statement, "a merged enum")
+			}
+			if l.locals == nil {
+				l.locals = map[*ast.Symbol]int{}
+			}
+			local := len(l.result.Locals)
+			l.locals[symbol] = local
+			l.result.Locals = append(l.result.Locals, ir.Local{Name: statement.Name().Text(), Type: ir.Object, Global: true, Function: -1})
+			l.noteLocal(local, l.checker.GetTypeOfSymbol(symbol), statement.Name())
 		case ast.KindClassDeclaration:
 			if l.classes == nil {
 				l.classes = map[*ast.Symbol]*ast.Node{}
