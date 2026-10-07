@@ -1,0 +1,112 @@
+{
+  "rounds": [
+    {
+      "corpus": "compiler",
+      "round": 1,
+      "native": {
+        "seconds": 13.511903710001206,
+        "sha256": "334cbb81535b85256bf2b394576cda3f60775bd586c26929f31782f849b0482d",
+        "bytes": 7087,
+        "timing": "tsgo: load_ns=2266667177 query_ns=1839096253 queries=54960 first_query_ns=721284 run_ns=11168474262\n"
+      },
+      "go": {
+        "seconds": 3.494368273000873,
+        "sha256": "334cbb81535b85256bf2b394576cda3f60775bd586c26929f31782f849b0482d",
+        "bytes": 7087,
+        "timing": "cohere: load_ns=658588759 rule_ns=2714214888 run_ns=2781739463\n"
+      }
+    },
+    {
+      "corpus": "compiler",
+      "round": 2,
+      "go": {
+        "seconds": 3.257336973998463,
+        "sha256": "334cbb81535b85256bf2b394576cda3f60775bd586c26929f31782f849b0482d",
+        "bytes": 7087,
+        "timing": "cohere: load_ns=835829159 rule_ns=2327652717 run_ns=2381186176\n"
+      },
+      "native": {
+        "seconds": 8.37673494199771,
+        "sha256": "334cbb81535b85256bf2b394576cda3f60775bd586c26929f31782f849b0482d",
+        "bytes": 7087,
+        "timing": "tsgo: load_ns=414678476 query_ns=1344394823 queries=54960 first_query_ns=103637 run_ns=7931237032\n"
+      }
+    },
+    {
+      "corpus": "compiler",
+      "round": 3,
+      "native": {
+        "seconds": 7.595591600998887,
+        "sha256": "334cbb81535b85256bf2b394576cda3f60775bd586c26929f31782f849b0482d",
+        "bytes": 7087,
+        "timing": "tsgo: load_ns=457494330 query_ns=1099736569 queries=54960 first_query_ns=119046 run_ns=7094178349\n"
+      },
+      "go": {
+        "seconds": 2.333041788999253,
+        "sha256": "334cbb81535b85256bf2b394576cda3f60775bd586c26929f31782f849b0482d",
+        "bytes": 7087,
+        "timing": "cohere: load_ns=412290520 rule_ns=1854072979 run_ns=1894773587\n"
+      }
+    },
+    {
+      "corpus": "repository",
+      "round": 1,
+      "native": {
+        "seconds": 0.5061278220018721,
+        "sha256": "01f4d00a360e901cb87c8fd43da9141dfdc6c1474764464f3d610b84493e79cb",
+        "bytes": 19144,
+        "timing": "tsgo: load_ns=138788040 query_ns=18936150 queries=49 first_query_ns=670794 run_ns=358256772\n"
+      },
+      "go": {
+        "seconds": 0.13755442700130516,
+        "sha256": "01f4d00a360e901cb87c8fd43da9141dfdc6c1474764464f3d610b84493e79cb",
+        "bytes": 19144,
+        "timing": "cohere: load_ns=111190333 rule_ns=1065102 run_ns=13213542\n"
+      }
+    },
+    {
+      "corpus": "repository",
+      "round": 2,
+      "go": {
+        "seconds": 0.12369145299817319,
+        "sha256": "01f4d00a360e901cb87c8fd43da9141dfdc6c1474764464f3d610b84493e79cb",
+        "bytes": 19144,
+        "timing": "cohere: load_ns=100052007 rule_ns=1030550 run_ns=11581685\n"
+      },
+      "native": {
+        "seconds": 0.4024457240011543,
+        "sha256": "01f4d00a360e901cb87c8fd43da9141dfdc6c1474764464f3d610b84493e79cb",
+        "bytes": 19144,
+        "timing": "tsgo: load_ns=113457020 query_ns=13951323 queries=49 first_query_ns=516453 run_ns=281729475\n"
+      }
+    },
+    {
+      "corpus": "repository",
+      "round": 3,
+      "native": {
+        "seconds": 0.4739930680007092,
+        "sha256": "01f4d00a360e901cb87c8fd43da9141dfdc6c1474764464f3d610b84493e79cb",
+        "bytes": 19144,
+        "timing": "tsgo: load_ns=116650848 query_ns=15378737 queries=49 first_query_ns=841216 run_ns=346296317\n"
+      },
+      "go": {
+        "seconds": 0.1928124799997022,
+        "sha256": "01f4d00a360e901cb87c8fd43da9141dfdc6c1474764464f3d610b84493e79cb",
+        "bytes": 19144,
+        "timing": "cohere: load_ns=163633289 rule_ns=1023812 run_ns=10864809\n"
+      }
+    }
+  ],
+  "summary": {
+    "compiler": {
+      "native_median_seconds": 8.37673494199771,
+      "go_median_seconds": 3.257336973998463,
+      "ratio": 2.571651324030826
+    },
+    "repository": {
+      "native_median_seconds": 0.4739930680007092,
+      "go_median_seconds": 0.13755442700130516,
+      "ratio": 3.4458583291994795
+    }
+  }
+}
