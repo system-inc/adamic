@@ -128,6 +128,32 @@
     liveness_fields_test.go:56: seed 36: stage 0 didn't lower it: /workspace/q3-tmp/TestLivenessAndFieldShapes2317088976/001/program.a:9:3: Adamic 0.1 refuses cannot move items1[0]: element is not a fresh object literal with only scalar literal fields; return it through the results
 --- FAIL: TestLivenessAndFieldShapes (42.05s)
 
+== github.com/system-inc/adamic/internal/fuzz TestOperatorsShapes
+=== RUN   TestOperatorsShapes
+=== PAUSE TestOperatorsShapes
+=== CONT  TestOperatorsShapes
+    operators_test.go:71: seed 10: stage 0 didn't lower it: /workspace/q3-tmp/TestOperatorsShapes1592813126/001/program.a:942:31: Adamic 0.1 refuses parallelMap items are not shareable: Bag36.tags is a mutable string[]; make the whole reachable value readonly and bind captures with const; moving mutable values into tasks belongs to concurrency part 2 (#p286ycm)
+    operators_test.go:71: seed 11: stage 0 didn't lower it: /workspace/q3-tmp/TestOperatorsShapes1592813126/001/program.a:860:43: Adamic 0.1 refuses parallelMap work writes state another task can reach: record25 writes the global 'total24'; keep work and everything it calls pure; write only task locals and fresh objects
+    operators_test.go:71: seed 16: stage 0 didn't lower it: /workspace/q3-tmp/TestOperatorsShapes1592813126/001/program.a:826:31: Adamic 0.1 refuses parallelMap items are not shareable: Bag39.tags is a mutable string[]; make the whole reachable value readonly and bind captures with const; moving mutable values into tasks belongs to concurrency part 2 (#p286ycm)
+    operators_test.go:71: seed 25: stage 0 didn't lower it: /workspace/q3-tmp/TestOperatorsShapes1592813126/001/program.a:868:57: Adamic 0.1 refuses task capture 'step57' is not shareable: step57 is not an immutable binding; make the whole reachable value readonly and bind captures with const; moving mutable values into tasks belongs to concurrency part 2 (#p286ycm)
+    operators_test.go:71: seed 27: stage 0 didn't lower it: /workspace/q3-tmp/TestOperatorsShapes1592813126/001/program.a:802:57: Adamic 0.1 refuses task capture 'step24' is not shareable: step24 is not an immutable binding; make the whole reachable value readonly and bind captures with const; moving mutable values into tasks belongs to concurrency part 2 (#p286ycm)
+    operators_test.go:71: seed 32: stage 0 didn't lower it: /workspace/q3-tmp/TestOperatorsShapes1592813126/001/program.a:857:57: Adamic 0.1 refuses task capture 'step24' is not shareable: step24 is not an immutable binding; make the whole reachable value readonly and bind captures with const; moving mutable values into tasks belongs to concurrency part 2 (#p286ycm)
+    operators_test.go:71: seed 33: stage 0 didn't lower it: /workspace/q3-tmp/TestOperatorsShapes1592813126/001/program.a:955:43: Adamic 0.1 refuses parallelMap work writes state another task can reach: record42 writes the global 'total41'; keep work and everything it calls pure; write only task locals and fresh objects
+    operators_test.go:71: seed 36: stage 0 didn't lower it: /workspace/q3-tmp/TestOperatorsShapes1592813126/001/program.a:884:43: Adamic 0.1 refuses parallelMap work writes state another task can reach: record34 writes the global 'total33'; keep work and everything it calls pure; write only task locals and fresh objects
+--- FAIL: TestOperatorsShapes (44.93s)
+
+== github.com/system-inc/adamic/internal/native TestWASI
+=== RUN   TestWASI
+    wasm_test.go:41: WASI toolchain missing or unusable (sysroot, linker, builtins): exit status 1
+        wasm-ld: error: cannot open /workspace/adamic-tools/llvm/lib/clang/20/lib/wasm32-unknown-wasi/libclang_rt.builtins.a: No such file or directory
+        clang: error: linker command failed with exit code 1 (use -v to see invocation)
+--- FAIL: TestWASI (0.16s)
+
+== github.com/system-inc/adamic/internal/refusalprobe TestCatalogCoverage
+=== RUN   TestCatalogCoverage
+    probe_test.go:15: refusal catalog is incomplete: helper parallelPreflight, helper typedArrayUnsupported, helper enumRefusal, helper refuseOptionalWidening
+--- FAIL: TestCatalogCoverage (0.00s)
+
 == github.com/system-inc/adamic/stage1/cohere/lint (failed outside a test)
 FAIL	github.com/system-inc/adamic/stage1/cohere/lint	3600.142s
 
