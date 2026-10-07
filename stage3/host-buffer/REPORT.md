@@ -1,8 +1,18 @@
 Catchable crypto finalization still needs runtime integration; owned full fixtures stop at Checker (02/03), non-null refusal (21), or undefined lowering (22).
 Merged area/library 53f44e05 with fs-file and macOS fixes, retaining both units through named Buffer hooks.
 Merge parents: a38287b and 53f44e05; codex/host-buffer-crypto-land. Merge commit, no rebase, force-push or push to main.
-Linux counts PASS 115.024s; packages including full flow PASS; whole oracle PASS 356.494s; byte-index mutant caught by Node on both backends.
+Linux counts and full merge gates PASS; added fs decoder source fixture PASS on both backends; byte-index and fs byte-swap mutants caught by Node.
 All 25 Node observations agree; 11_setModifiedTime executes and agrees on both backends. Other full fixtures remain frontend-blocked; macOS and native tsc are untested.
+
+Continued unit coverage after the merge
+
+Added internal/oracle/testdata/node_buffer_fs_decode.a through the unit-owned fixture registration, leaving oracle_test.go unchanged. It performs real mkdtempSync, writeFileSync(Buffer), readFileSync(Buffer), BOM decoding, BE byte swaps and rmSync on both backends. Its cases include empty files, LE/BE BOM-only files, lone high/low surrogates, valid surrogate pairs, odd byte lengths, malformed UTF-8 and a UTF-8 BOM. This is additional checked source coverage; it does not rewrite or claim to close the four upstream acceptance fixtures.
+
+The first filtered invocation preceded registration and printed "no tests to run"; it is not counted as evidence. After registration, ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_fs_decode.a$' -count=1 -v -timeout 30m ran the named subtest and passed in 0.779s, with zero cache hits. The new fs_byte_swap_store mutant suppresses actual native byte stores while preserving compilation and cleanup. Source Node stdout comparison caught it. Exact runtime restored; the named uncached baseline passed in 0.673s.
+
+Follow-up gates: full Linux counts regenerated (29.654s); TestCountsAreRecorded plus all owned node_buffer native/source/JavaScript fixtures passed (32.554s). go vet ./internal/oracle and git diff --check passed without output. One new fixture row and the directory-system row that observes the added fixture changed. No compiler or runtime implementation changed after the complete merge package/oracle gates.
+
+The remaining crypto error integration needs both normal cleanup paths and Node's custom error rendering. Observed independently on Node v24.19.0 for update and digest after finalization: name="Error", code="ERR_CRYPTO_HASH_FINALIZED", message="Digest already called", but String(error)="Error [ERR_CRYPTO_HASH_FINALIZED]: Digest already called". The landed general error runtime now carries .code, so this is an implementation gap rather than a claim that the language cannot ever represent that field. The existing named NotYet guard remains until all paths can be held to Node.
 
 Library area fs-file merge, October 7
 
