@@ -16,9 +16,9 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 )
 
-// These pairs require opposite split decisions but currently lower to identical
-// programs. Preserve the witness until lowering carries the missing proof facts.
-func TestRequiredSplitFactsAreErased(t *testing.T) {
+// The relaxed rules intentionally treat unwritten let globals and mutable arrays
+// like their const and readonly twins. Element types must now remain distinguishable.
+func TestBoundaryPreservesErasedFacts(t *testing.T) {
 	path, err := filepath.Abs("testdata/erased.a")
 	if err != nil {
 		t.Fatal(err)
@@ -79,16 +79,24 @@ func TestRequiredSplitFactsAreErased(t *testing.T) {
 			}
 			other := compile(changed)
 			// The boolean caller needs different literals; compare the analyzed
-			// function and its parameter, whose signature proof is still lost.
+			// function boundary, which must retain the different element type.
 			if name == "boolean array" {
-				if !reflect.DeepEqual(baseline.Functions, other.Functions) ||
-					!reflect.DeepEqual(baseline.Locals, other.Locals) {
-					t.Fatal("signature erasure witness changed")
+				if reflect.DeepEqual(baseline.Functions[0].Boundary, other.Functions[0].Boundary) {
+					t.Fatal("boundary lost array element type")
 				}
-			} else if !reflect.DeepEqual(baseline, other) {
-				t.Fatal("IR now distinguishes this pair; update the split prerequisite")
+			} else {
+				baseCopy, otherCopy := *baseline, *other
+				baseCopy.Functions = append([]ir.Function(nil), baseline.Functions...)
+				otherCopy.Functions = append([]ir.Function(nil), other.Functions...)
+				for i := range baseCopy.Functions {
+					baseCopy.Functions[i].Boundary = ir.FunctionBoundary{}
+					otherCopy.Functions[i].Boundary = ir.FunctionBoundary{}
+				}
+				if !reflect.DeepEqual(baseCopy, otherCopy) {
+					t.Fatal("relaxed-equivalent programs have different runtime IR")
+				}
 			}
-			t.Log("different required eligibility, identical analysis input")
+			t.Log("boundary retains the facts required by the relaxed rules")
 		})
 	}
 }
