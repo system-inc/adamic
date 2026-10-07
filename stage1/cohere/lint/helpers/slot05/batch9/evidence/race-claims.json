@@ -1,0 +1,22 @@
+{
+  "branches_scanned": 18,
+  "matches": [
+    {
+      "branch": "refs/remotes/origin/codex/lint-helpers-02",
+      "file": "stage1/cohere/lint/helpers/claims/02.md",
+      "matches": [
+        "imports.CallExpressionSource",
+        "jsx.HasAttributeNamed"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/lint-helpers-05",
+      "file": "stage1/cohere/lint/helpers/claims/05.md",
+      "matches": [
+        "imports.CallExpressionSource",
+        "jsx.HasAttributeNamed",
+        "imports.ImportedNameOf"
+      ]
+    }
+  ]
+}

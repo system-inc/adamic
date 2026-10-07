@@ -1,0 +1,87 @@
+{
+  "base_helper_ready": 46,
+  "newly_helper_ready_from_batch_alone": [],
+  "dependency_occurrences_removed": 4,
+  "unique_consumers": 4,
+  "helpers": {
+    "github.com/system-inc/cohere/internal/lint/ecmascript/imports.ImportedNameOf": [
+      "react-hooks/config",
+      "react-hooks/incompatible-library",
+      "structure/network-no-forbidden-import",
+      "structure/react-component-no-forward-ref"
+    ]
+  },
+  "remaining_after_this_batch_alone": [
+    {
+      "rule": "react-hooks/config",
+      "removed_helpers": [
+        "github.com/system-inc/cohere/internal/lint/ecmascript/imports.ImportedNameOf"
+      ],
+      "remaining_helpers": [
+        "github.com/system-inc/cohere/internal/lint/ecmascript/imports.BindingsOf",
+        "github.com/system-inc/cohere/internal/lint/rules/react.DecodeCompilerRuleOptions"
+      ]
+    },
+    {
+      "rule": "react-hooks/incompatible-library",
+      "removed_helpers": [
+        "github.com/system-inc/cohere/internal/lint/ecmascript/imports.ImportedNameOf"
+      ],
+      "remaining_helpers": [
+        "github.com/system-inc/cohere/internal/lint/ecmascript/imports.BindingsOf",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/react.FunctionBody",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/react.FunctionParameters",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/react.IsCompilerComponentName",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/react.IsCompilerHookName",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/react.IsComponentOrHookLike",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/react.IsReachableRootPosition",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/react.SkipParenthesesUpward",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/react.callsHooksOrCreatesJsx",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/react.containsRef",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/react.containsSubstring",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/react.hasComponentOrHookName",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/react.hasComponentShapedParameters",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/react.hasPrimitiveTypeAnnotation",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/react.inferredFunctionName",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/react.isCompilerHookCallee",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/react.isJsxNode",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/react.isSkippedNestedFunction",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/react.isSpreadParameter",
+        "github.com/system-inc/cohere/internal/lint/rules/react.DecodeCompilerRuleOptions"
+      ]
+    },
+    {
+      "rule": "structure/network-no-forbidden-import",
+      "removed_helpers": [
+        "github.com/system-inc/cohere/internal/lint/ecmascript/imports.ImportedNameOf"
+      ],
+      "remaining_helpers": [
+        "github.com/system-inc/cohere/internal/lint/ecmascript/imports.BindingsOf",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.FileContextFor"
+      ]
+    },
+    {
+      "rule": "structure/react-component-no-forward-ref",
+      "removed_helpers": [
+        "github.com/system-inc/cohere/internal/lint/ecmascript/imports.ImportedNameOf"
+      ],
+      "remaining_helpers": [
+        "github.com/system-inc/cohere/internal/lint/ecmascript/imports.BindingsOf",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/react.IsNamespacedMember",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/react.isIdentifierNamed"
+      ]
+    }
+  ],
+  "cumulative_slot05": {
+    "helpers": 24,
+    "dependency_occurrences_removed": 191,
+    "unique_consumers": 64,
+    "newly_helper_ready": [
+      "@next/next/no-location-assign-relative-destination",
+      "@typescript-eslint/no-import-type-side-effects",
+      "base/consistency-no-bare-throw",
+      "structure/import-require-react-namespace"
+    ],
+    "helper_ready": 50
+  }
+}

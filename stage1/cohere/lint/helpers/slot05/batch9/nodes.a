@@ -1,0 +1,14 @@
+// Named fields are exact parser projections. Negative indexes represent nil.
+export interface HelperNode {
+    readonly kind: string;
+    readonly text: string;
+    readonly expression: number;
+    readonly name: number;
+    readonly propertyName: number;
+    readonly keywordToken: string;
+    readonly argumentsPresent: boolean;
+    readonly arguments: readonly number[];
+    readonly propertiesPresent: boolean;
+    readonly properties: readonly number[];
+}
+export interface NamedAttribute { readonly text: string; readonly named: boolean; }
