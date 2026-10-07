@@ -128,3 +128,17 @@ See from_wave1_04/SUFFIX_REPORT.md. No further helper is claimed yet.
    Require compiling semantic mutants; one helper per .a file. Claim pushed first.
 
 Delivery 6: isVector implemented and tested. 170,369 cases, 4,378,863 exact Go result/scanner bytes, four compiling mutants caught on three targets. Complete six-helper gate PASS 125.376s, all sixteen mutants; vet PASS. See from_wave1_04/VECTOR_REPORT.md.
+
+7. github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isFraction
+   File: helpers/from_wave1_04/is_fraction.a.
+   Four consumers: class-order, shorthand, conflicting and unknown Tailwind rules
+   listed in claim 6. Highest unclaimed named reach after fetching 596 origin refs
+   and reading twenty distinct helper claim blobs plus HELPERS.md. Both branches
+   remain landing-ready on main b8fb957a: rules 77e7562fc, helpers 3de855b78.
+   Preserve the math-function short circuit, anchored numeric numerator and
+   denominator, JavaScript whitespace around slash, and lazy dependency calls.
+   Math recognition is an explicit dependency observed from actual Go; scanner
+   and trim dependencies use the already held ports. Compare real Go across all
+   four consumer fixture domains, Unicode and numeric grammar boundaries on Node,
+   emitted JavaScript and sanitized native, with compiling semantic mutants.
+   One helper per .a file. This claim is pushed before code.
