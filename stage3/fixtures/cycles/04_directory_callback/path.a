@@ -1,0 +1,9 @@
+// From TypeScript 6.0.3, src/compiler/path.ts:1002
+// Census reason: an import cycle
+import { endsWith, startsWith, identity } from './_namespaces/ts.a';
+type GetCanonicalFileName = (fileName: string) => string;
+export function startsWithDirectory(fileName: string, directoryName: string, getCanonicalFileName: GetCanonicalFileName): boolean {
+    const canonicalFileName = getCanonicalFileName(fileName);
+    const canonicalDirectoryName = getCanonicalFileName(directoryName);
+    return startsWith(canonicalFileName, canonicalDirectoryName + "/") || startsWith(canonicalFileName, canonicalDirectoryName + "\\");
+}

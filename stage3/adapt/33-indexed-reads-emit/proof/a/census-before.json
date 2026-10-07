@@ -1,0 +1,67 @@
+{
+  "roots": 78,
+  "codes": [
+    2345,
+    18048,
+    2532,
+    2322,
+    2538
+  ],
+  "counts": {
+    "emitter.ts": {
+      "TS2345": 21,
+      "TS18048": 6,
+      "TS2532": 3,
+      "TS2322": 1,
+      "TS2538": 0
+    },
+    "sourcemap.ts": {
+      "TS2345": 4,
+      "TS18048": 0,
+      "TS2532": 1,
+      "TS2322": 2,
+      "TS2538": 0
+    }
+  },
+  "total": 38,
+  "diagnostics": [
+    "src/compiler/emitter.ts:1000:46: error TS2345: Argument of type 'Bundle | SourceFile | undefined' is not assignable to parameter of type 'Bundle | SourceFile'.\n  Type 'undefined' is not assignable to type 'Bundle | SourceFile'.",
+    "src/compiler/emitter.ts:1005:63: error TS2345: Argument of type 'Bundle | SourceFile | undefined' is not assignable to parameter of type 'SourceFile | undefined'.\n  Type 'Bundle' is missing the following properties from type 'SourceFile': statements, endOfFileToken, fileName, path, and 27 more.",
+    "src/compiler/emitter.ts:1031:17: error TS2345: Argument of type 'Bundle | SourceFile | undefined' is not assignable to parameter of type 'SourceFile | undefined'.\n  Type 'Bundle' is missing the following properties from type 'SourceFile': statements, endOfFileToken, fileName, path, and 27 more.",
+    "src/compiler/emitter.ts:1138:5: error TS2322: Type 'string | undefined' is not assignable to type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+    "src/compiler/emitter.ts:2057:45: error TS2345: Argument of type 'Node | undefined' is not assignable to parameter of type 'Node'.\n  Type 'undefined' is not assignable to type 'Node'.",
+    "src/compiler/emitter.ts:2059:47: error TS2345: Argument of type 'Node | undefined' is not assignable to parameter of type 'Node'.\n  Type 'undefined' is not assignable to type 'Node'.",
+    "src/compiler/emitter.ts:2060:50: error TS2345: Argument of type 'Node | undefined' is not assignable to parameter of type 'Node'.\n  Type 'undefined' is not assignable to type 'Node'.",
+    "src/compiler/emitter.ts:2912:69: error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.\n  Type 'undefined' is not assignable to type 'number'.",
+    "src/compiler/emitter.ts:4013:35: error TS2345: Argument of type 'Statement | undefined' is not assignable to parameter of type 'TextRange'.\n  Type 'undefined' is not assignable to type 'TextRange'.",
+    "src/compiler/emitter.ts:4014:62: error TS2345: Argument of type 'Statement | undefined' is not assignable to parameter of type 'TextRange'.\n  Type 'undefined' is not assignable to type 'TextRange'.",
+    "src/compiler/emitter.ts:4111:27: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+    "src/compiler/emitter.ts:4116:43: error TS2532: Object is possibly 'undefined'.",
+    "src/compiler/emitter.ts:4296:34: error TS2345: Argument of type 'Statement | undefined' is not assignable to parameter of type 'Node'.\n  Type 'undefined' is not assignable to type 'Node'.",
+    "src/compiler/emitter.ts:4382:37: error TS2345: Argument of type 'Node | undefined' is not assignable to parameter of type 'Node'.\n  Type 'undefined' is not assignable to type 'Node'.",
+    "src/compiler/emitter.ts:4475:40: error TS2345: Argument of type 'ModifierLike | undefined' is not assignable to parameter of type 'Node'.\n  Type 'undefined' is not assignable to type 'Node'.",
+    "src/compiler/emitter.ts:4693:30: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+    "src/compiler/emitter.ts:4720:30: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+    "src/compiler/emitter.ts:4779:105: error TS2345: Argument of type 'Child | undefined' is not assignable to parameter of type 'Node'.\n  Type 'undefined' is not assignable to type 'Node'.",
+    "src/compiler/emitter.ts:4788:119: error TS18048: 'child' is possibly 'undefined'.",
+    "src/compiler/emitter.ts:4789:62: error TS2345: Argument of type 'Child | undefined' is not assignable to parameter of type 'Node'.\n  Type 'undefined' is not assignable to type 'Node'.",
+    "src/compiler/emitter.ts:4803:54: error TS2345: Argument of type 'Child | undefined' is not assignable to parameter of type 'Node'.\n  Type 'undefined' is not assignable to type 'Node'.",
+    "src/compiler/emitter.ts:4810:34: error TS18048: 'child' is possibly 'undefined'.",
+    "src/compiler/emitter.ts:4811:26: error TS2345: Argument of type 'Child | undefined' is not assignable to parameter of type 'Node'.\n  Type 'undefined' is not assignable to type 'Node'.",
+    "src/compiler/emitter.ts:4977:46: error TS2345: Argument of type '(string | undefined)[]' is not assignable to parameter of type 'string[]'.\n  Type 'string | undefined' is not assignable to type 'string'.\n    Type 'undefined' is not assignable to type 'string'.",
+    "src/compiler/emitter.ts:4979:40: error TS18048: 'lineText' is possibly 'undefined'.",
+    "src/compiler/emitter.ts:4980:17: error TS18048: 'line' is possibly 'undefined'.",
+    "src/compiler/emitter.ts:4982:23: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+    "src/compiler/emitter.ts:6337:12: error TS2532: Object is possibly 'undefined'.",
+    "src/compiler/emitter.ts:6341:12: error TS2532: Object is possibly 'undefined'.",
+    "src/compiler/emitter.ts:995:24: error TS18048: 'sourceFileOrBundle' is possibly 'undefined'.",
+    "src/compiler/emitter.ts:996:28: error TS18048: 'sourceFileOrBundle' is possibly 'undefined'.",
+    "src/compiler/sourcemap.ts:216:58: error TS2345: Argument of type 'string | null | undefined' is not assignable to parameter of type 'string | null'.\n  Type 'undefined' is not assignable to type 'string | null'.",
+    "src/compiler/sourcemap.ts:226:92: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+    "src/compiler/sourcemap.ts:380:45: error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.\n  Type 'undefined' is not assignable to type 'number'.",
+    "src/compiler/sourcemap.ts:394:20: error TS2532: Object is possibly 'undefined'.",
+    "src/compiler/sourcemap.ts:722:55: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+    "src/compiler/sourcemap.ts:815:18: error TS2322: Type 'string | undefined' is not assignable to type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+    "src/compiler/sourcemap.ts:83:25: error TS2322: Type 'string | undefined' is not assignable to type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+  ]
+}
