@@ -1,4 +1,4 @@
-Built: the three retained helpers rebased cleanly onto landed area/stage1-lint b84a9d931; no new claims.
+Built: the three retained helpers rebased cleanly onto landed area/stage1-lint b46914832; no new claims.
 Commits: this area validation follows previously pushed helper c88a20178; the owned rule rebase also completed cleanly.
 Commands: all three owned helper packages and vet PASS after the area rebase; 4,470 cases and 820,676 Go bytes match again.
 Mutants: all twelve helper semantic mutants compiled and were caught on source Node, emitted JavaScript and sanitized native.
@@ -68,3 +68,11 @@ Fetched all origin heads; main advanced to c7991b900362796aefd111474e65eb5398e91
 All three owned direct-helper packages passed again with -count=1 -v -timeout=10m: 4,470 cases, 820,676 matching Go bytes and twelve compiling semantic mutants caught across source Node, emitted JavaScript and sanitized native. Owned helper vet passed with empty output. Full fresh logs are evidence/b84-helper-tests.log and evidence/b84-helper-vet.log. No correctness test in this selected suite skipped. The three helper contracts and six consuming Tailwind rule families are unchanged: eighteen dependency occurrences removed, zero final blockers removed. Full consuming-rule parity and the other required stage1 correctness packages are not claimed.
 
 No new helper is claimed while the real shared rule gate is being revalidated with ADAMIC_TYPESCRIPT_SOURCE pointing to the actual pinned TypeScript checkout. The existing top-level-await and JSX fixed-source reparsing blockers remain documented in the owned rule AREA_REPORT.md. Earlier sections above describe earlier measured bases.
+
+## Directory-only legacy dispatcher landing
+
+Area advanced to b46914832d70e00847d82d5d221ab7bb24040c53, migrating the remaining legacy and volume rules into their own registered directories. Main remains c7991b900. The complete dedup ledger is unchanged. Both owned branches rebased cleanly; incoming shared context, dispatcher, oracle, registry-driven rules and tests were retained without edits.
+
+All three owned helper packages passed again: 4,470 cases, 820,676 matching Go bytes and twelve compiling semantic mutants caught separately on source Node, emitted JavaScript and sanitized native. Owned helper vet passed with empty output. Logs are evidence/b469-helper-tests.log and evidence/b469-helper-vet.log. No selected correctness test skipped. These remain direct-helper contracts across the same six Tailwind consumer families, removing eighteen dependency occurrences and zero final blockers; complete consuming-rule parity is not asserted.
+
+The owned rule checks are rerunning through the new shared dispatcher with the real pinned compiler inputs supplied. A fresh JSX fixed-source reproduction still exits 70 after emitting the valid return-void fix. No new helper claim follows the recorded frontend and fix-reparse blockers. Historical sections above describe earlier bases.
