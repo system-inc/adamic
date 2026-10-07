@@ -27,7 +27,6 @@ var refusals = map[ast.Kind]refusal{
 	ast.KindDeleteExpression:  {"delete", "an object's shape is fixed; use a Map for keys that come and go"},
 	ast.KindDebuggerStatement: {"debugger", "remove it"},
 	ast.KindEnumDeclaration:   {"enum", "use a union of string literals, like 'Circle' | 'Square'"},
-	ast.KindModuleDeclaration: {"a namespace", "use a module: a file of its own, with named exports"},
 	ast.KindVoidExpression:    {"the void operator", "evaluate the expression as a statement"},
 	ast.KindIndexSignature:    {"an index signature", "use a Map, which keeps keys in the order they were added"},
 	ast.KindExportAssignment:  {"export default", "export by name: one name for one thing"},
@@ -92,6 +91,10 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		}
 		if assertion != nil {
 			found = &Refused{Where: l.program.Where(assertion), What: "a definite assignment assertion !", Fix: "remove ! and initialize it where it is declared or in the constructor, or type it T | undefined"}
+			return true
+		}
+		if err := l.namespaceRefusal(node); err != nil {
+			found = err
 			return true
 		}
 		if node.Kind == ast.KindBinaryExpression {
