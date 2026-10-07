@@ -1213,7 +1213,12 @@ func (g *generator) regexStatement() *Statement {
 	case 0:
 		return statement("console.log(@e);", compose(String, "@e.replace("+g.pick("/a/g", "/(a)/g", "/a/i")+", "+g.pick("'[$&]'", "'$1'", "'$$'", "'-'")+")", g.bounded(g.expression(String, 2))))
 	case 1:
-		return statement("console.log(@e);", compose(String, "@e.replaceAll(/a/g, '$&$`')", g.bounded(g.expression(String, 2))))
+		// The overrides scene's try reaches every function and closure, and stage 0 doesn't lower a try
+		// that can reach replaceAll with a regular expression, so with that scene it's top-level only.
+		if topLevel := g.returns == "" && g.inClosure == 0; topLevel || !g.allowed("overrides") {
+			return statement("console.log(@e);", compose(String, "@e.replaceAll(/a/g, '$&$`')", g.bounded(g.expression(String, 2))))
+		}
+		return statement("console.log(@e);", compose(String, "@e.replace(/a/g, '$&$`')", g.bounded(g.expression(String, 2))))
 	case 2:
 		return statement("console.log(@e);", compose(String, "@e.split("+g.pick("/a/", "/(?:)/", "/,/")+").join('|')", g.bounded(g.expression(String, 2))))
 	case 3:
