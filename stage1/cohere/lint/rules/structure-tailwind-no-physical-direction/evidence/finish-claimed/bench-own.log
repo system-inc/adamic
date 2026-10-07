@@ -1,0 +1,116 @@
+[
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "cases": 200,
+    "source": "// eslint-disable-line\n",
+    "scope": "startup-inclusive, raw-source input and own parsing; sanitized native",
+    "samples": [
+      {
+        "backend": "Go",
+        "findings": 200,
+        "seconds": [
+          0.010480857999937143,
+          0.01316467200012994,
+          0.010635687999638321
+        ],
+        "findingsPerSecond": 18804.613298810687
+      },
+      {
+        "backend": "Node",
+        "findings": 200,
+        "seconds": [
+          0.12142810899968026,
+          0.11696182399919053,
+          0.13772744199923181
+        ],
+        "findingsPerSecond": 1647.0650959451789
+      },
+      {
+        "backend": "native",
+        "findings": 200,
+        "seconds": [
+          0.058634402000279806,
+          0.058593857000232674,
+          0.06138119200022629
+        ],
+        "findingsPerSecond": 3410.9668245451808
+      }
+    ]
+  },
+  {
+    "rule": "adamic/no-definite-assignment",
+    "cases": 200,
+    "source": "let total!: number; function read(): number { return total; }\n",
+    "scope": "startup-inclusive, raw-source input and own parsing; sanitized native",
+    "samples": [
+      {
+        "backend": "Go",
+        "findings": 200,
+        "seconds": [
+          0.016559359999519074,
+          0.010513555000216002,
+          0.016384997999921325
+        ],
+        "findingsPerSecond": 12206.287727405297
+      },
+      {
+        "backend": "Node",
+        "findings": 200,
+        "seconds": [
+          0.12346220099971106,
+          0.16992434799976763,
+          0.13698546399973566
+        ],
+        "findingsPerSecond": 1460.0089247453725
+      },
+      {
+        "backend": "native",
+        "findings": 200,
+        "seconds": [
+          0.0623689670001113,
+          0.06977654300044378,
+          0.07776810299947101
+        ],
+        "findingsPerSecond": 2866.2927597133607
+      }
+    ]
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "cases": 200,
+    "source": "export const c = 'flex scroll-pl-4';\n",
+    "scope": "startup-inclusive, raw-source input and own parsing; sanitized native",
+    "samples": [
+      {
+        "backend": "Go",
+        "findings": 200,
+        "seconds": [
+          0.009062647000064317,
+          0.011304223000479396,
+          0.009609507999812195
+        ],
+        "findingsPerSecond": 20812.720068905583
+      },
+      {
+        "backend": "Node",
+        "findings": 200,
+        "seconds": [
+          0.14840565600025002,
+          0.14308804600022995,
+          0.18161413800044102
+        ],
+        "findingsPerSecond": 1347.6575313252417
+      },
+      {
+        "backend": "native",
+        "findings": 200,
+        "seconds": [
+          0.06722736899973825,
+          0.07084999500057165,
+          0.08737137199932477
+        ],
+        "findingsPerSecond": 2822.8654073777466
+      }
+    ]
+  }
+]

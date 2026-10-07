@@ -41,3 +41,15 @@ non-JSX upstream cases through Adamic parsing. Production .a registration, 18 na
 JSX upstream cases, malformed options and suppression integration remain uncompleted.
 See ../rules/structure-tailwind-no-physical-direction/REPORT.md. These names remain
 reserved; this is not a declaration that the full requested port bar is met.
+
+## Next three after finishing the claimed work
+
+All owned implementation and validation for the four earlier claims was pushed at 2ec28ca6. The remaining shared JSX and suppression gaps are recorded in the owned report.
+
+A fresh fetch covers 335 origin refs and 52 claim documents; main is ef3d907ecdc4c771b016f7d9c52372def057a340. All 46 helper-ready names are already claimed. The earlier tentative TypeScript-rule selection was taken by wave1-05 before this fetch and is skipped. The first three eligible syntax-only inventory names are now reserved here:
+
+1. `base/security-require-context-access`
+2. `better-tailwindcss/enforce-canonical-classes`
+3. `better-tailwindcss/enforce-consistent-class-order`
+
+This claim update is pushed before any implementation of these three rules. No additional rules are claimed.

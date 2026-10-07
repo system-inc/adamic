@@ -1,0 +1,17 @@
+compiler files 77
+compiler processed 4
+compiler processed 44
+stage1 files 140
+stage1 processed 4
+stage1 processed 44
+stage1 processed 84
+stage1 processed 124
+mutant physical_direction_exemption_lost caught by all three comparisons
+mutant description_ignored caught by all three comparisons
+mutant fallback_display_ignored caught by all three comparisons
+mutant definite_assignment_subscription_lost caught by all three comparisons
+benchmark {'rule': 'adamic/no-definite-assignment', 'scope': 'startup-inclusive; Go parses source; Adamic loads projected AST; sanitized native', 'samples': [{'backend': 'Go', 'findings': 200, 'seconds': [0.010356280999985756, 0.01067593100015074, 0.01738250699963828], 'findingsPerSecond': 18733.729170521623}, {'backend': 'Node', 'findings': 200, 'seconds': [0.1602546350004559, 0.14654943300047307, 0.13774076099980448], 'findingsPerSecond': 1364.7272180121938}, {'backend': 'native', 'findings': 200, 'seconds': [0.5856243970001742, 0.37990902599995025, 0.3838819530001274], 'findingsPerSecond': 520.9934940597054}]}
+benchmark {'rule': 'structure/tailwind-no-physical-direction', 'scope': 'startup-inclusive; Go parses source; Adamic loads projected AST; sanitized native', 'samples': [{'backend': 'Go', 'findings': 200, 'seconds': [0.01463714900000923, 0.009675670999968133, 0.01394694000009622], 'findingsPerSecond': 14340.063124858945}, {'backend': 'Node', 'findings': 200, 'seconds': [0.12982727200051158, 0.1265989849998732, 0.18613914600064163], 'findingsPerSecond': 1540.5083763849857}, {'backend': 'native', 'findings': 200, 'seconds': [0.3850394060000326, 0.24778322299971478, 0.23745187499935128], 'findingsPerSecond': 807.1571496195697}]}
+benchmark {'rule': '@eslint-community/eslint-comments/require-description', 'scope': 'startup-inclusive; Go parses source; Adamic loads projected AST; sanitized native', 'samples': [{'backend': 'Go', 'findings': 200, 'seconds': [0.012790769000275759, 0.009857015000307001, 0.013639619999594288], 'findingsPerSecond': 15636.276442463166}, {'backend': 'Node', 'findings': 200, 'seconds': [0.1323034450006162, 0.11475459199937177, 0.1380373009997129], 'findingsPerSecond': 1511.6764344198937}, {'backend': 'native', 'findings': 200, 'seconds': [0.1740072289994714, 0.10680023200075084, 0.11221096400004171], 'findingsPerSecond': 1782.3570252896648}]}
+benchmark {'rule': '@next/next/google-font-display', 'scope': 'startup-inclusive; Go parses source; Adamic loads projected AST; sanitized native', 'samples': [{'backend': 'Go', 'findings': 200, 'seconds': [0.014502799999718263, 0.01103249199968559, 0.010676251999939268], 'findingsPerSecond': 18128.27056713023}, {'backend': 'Node', 'findings': 200, 'seconds': [0.2269693879998158, 0.20023466400016332, 0.16516196399970795], 'findingsPerSecond': 998.8280550656148}, {'backend': 'native', 'findings': 200, 'seconds': [0.6775063820005016, 0.44257659600043553, 0.405108561999441], 'findingsPerSecond': 451.89917814769217}]}
+post validation complete
