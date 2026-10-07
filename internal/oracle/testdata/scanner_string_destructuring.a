@@ -1,0 +1,20 @@
+let calls = 0;
+function text(): string {
+	calls += 1;
+	return ['a', '🌍', 'z'].join('');
+}
+function fallback(): string {
+	calls += 10;
+	return 'missing';
+}
+const { length, 0: first = fallback(), '1': high, 2: low, 99: absent = fallback() } = text();
+console.log(`${length}|${first}|${(high ?? '').charCodeAt(0)}|${(low ?? '').charCodeAt(0)}|${absent}|${calls}`);
+const { length: emptyLength = 99, 0: empty = 'empty' } = '';
+console.log(`${emptyLength}|${empty}`);
+let held = ['old', 'value'].join('');
+function replace(): string {
+	held = 'new';
+	return 'default';
+}
+const { 99: missing = replace(), 0: saved } = held;
+console.log(`${missing}|${saved}|${held}`);
