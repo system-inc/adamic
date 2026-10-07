@@ -16,7 +16,7 @@ import (
 )
 
 // Not parallel: native archives, corpus comparisons and timings share this machine.
-func TestWave17AgreementMutantAndJSXBoundary(t *testing.T) {
+func TestWave17AgreementMutantAndNativeJSX(t *testing.T) {
 	repository, err := filepath.Abs("../../..")
 	if err != nil {
 		t.Fatal(err)
@@ -113,8 +113,8 @@ func TestWave17AgreementMutantAndJSXBoundary(t *testing.T) {
 		t.Fatal("range mutant survived or sanitizer caught it")
 	}
 	t.Logf("async end+1 mutant: exit 0, empty stderr; Go byte oracle catches byte %d", firstDifference(got.stdout, truth.stdout))
-	// Positive JSX witnesses are deliberately outside the agreement population.
-	// A parser refusal is a measured missing port, never zero-finding agreement.
+	// The integrated shared parser now holds these positive JSX witnesses.
+	// Require complete Go bytes rather than the historical parser refusal.
 	for _, probe := range []struct{ name, rule, source string }{
 		{"duplicate-head", "no-duplicate-head", "import Head from 'next/head';export const value=<div><Head/><Head/></div>;"},
 		{"script-in-head", "no-script-component-in-head", "import Head from 'next/head';export const value=<Head><Script/></Head>;"},
@@ -126,12 +126,11 @@ func TestWave17AgreementMutantAndJSXBoundary(t *testing.T) {
 		if !bytes.Contains(want.stdout, []byte("\t@next/next/"+probe.rule+"\t")) {
 			t.Fatalf("%s witness has no Go finding", probe.name)
 		}
-		got := h.run(probe.name+"-native", exec.Command(asan, config, list))
-		exit, ok := got.err.(*exec.ExitError)
-		if !ok || exit.ExitCode() != 70 || !bytes.Contains(got.stderr, []byte("parser slice")) {
-			t.Fatalf("unexpected JSX boundary: %v %s", got.err, got.stderr)
+		got := h.must(probe.name+"-native", exec.Command(asan, config, list))
+		if len(got.stderr) != 0 || !bytes.Equal(got.stdout, want.stdout) {
+			t.Fatalf("%s native JSX differs at byte %d: %s", probe.name, firstDifference(got.stdout, want.stdout), got.stderr)
 		}
-		t.Logf("%s: Go %s; native explicitly refuses JSX with exit 70: %s", probe.name, summary(want.stdout), strings.TrimSpace(string(got.stderr)))
+		t.Logf("%s: native JSX agrees on %d complete Go finding bytes; %s", probe.name, len(got.stdout), summary(want.stdout))
 	}
 	// The question used by this rule must reject a released program.
 	released := h.write("released.a", `import {programArguments,tsgoProgram,tsgoRelease,tsgoInspect} from 'adamic';

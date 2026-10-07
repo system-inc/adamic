@@ -1,3 +1,10 @@
+Current contract correction: listener kinds are now registry-valid ast.Kind names
+such as SourceFile and CallExpression, without the Kind prefix. The verifier
+compares those names directly with production Go listeners, and substitutes
+Unknown in memory to prove the comparison fails. This supersedes the historical
+numeric declarations described below. Rule source/driver integration limits
+remain explicit; these metadata files do not claim an executable adapter.
+
 Built: numeric rule.json listener declarations for the 15 existing wave-17 claims; no new claims.
 Commits: base and validated source remain b825c83b on main e8ba3d5d; this commit changes metadata only.
 Commands and outputs: python3 wave_17_listeners/verify.py PASS for all 15 declarations; git diff --check clean.

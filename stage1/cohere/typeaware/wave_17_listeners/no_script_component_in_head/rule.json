@@ -1,7 +1,7 @@
 {
   "name": "@next/next/no-script-component-in-head",
   "kinds": [
-    273,
-    285
+    "ImportDeclaration",
+    "JsxElement"
   ]
 }

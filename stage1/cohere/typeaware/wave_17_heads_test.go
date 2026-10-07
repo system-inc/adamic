@@ -16,7 +16,7 @@ import (
 )
 
 // Not parallel: native and sanitizer builds share this machine.
-func TestWave17HeadJudgmentsAndParserBoundary(t *testing.T) {
+func TestWave17HeadJudgmentsAndNativeJSX(t *testing.T) {
 	repository, err := filepath.Abs("../../..")
 	if err != nil {
 		t.Fatal(err)
@@ -30,8 +30,8 @@ func TestWave17HeadJudgmentsAndParserBoundary(t *testing.T) {
 	stage0 := filepath.Join(directory, "adamic")
 	h.must("stage0", exec.Command("go", "build", "-o", stage0, "./cmd/adamic"))
 	archive := h.archive("checker", "", false)
-	entry := filepath.Join(repository, "stage1/cohere/typeaware/wave_17_projected_suite.a")
-	native := h.build(stage0, "head-projected", entry, archive, false)
+	entry := filepath.Join(repository, "stage1/cohere/typeaware/wave_17_suite.a")
+	native := h.build(stage0, "head-native", entry, archive, false)
 	oracle := volumeOracle(h, "head-oracle", "oracle_wave_17.go")
 	h.write("root.d.ts", "export {};\n")
 	config := h.write("tsconfig.json", `{"compilerOptions":{"strict":true,"target":"ES2022","module":"NodeNext","jsx":"preserve","lib":["ES2022"]},"files":["root.d.ts"]}`)
@@ -92,23 +92,17 @@ func TestWave17HeadJudgmentsAndParserBoundary(t *testing.T) {
 		t.Fatal("empty controls")
 	}
 	manifest = h.write("controls.manifest", strings.Join(paths, "\n")+"\n")
-	for i, path := range paths {
-		one := h.write("projection.manifest", path+"\n")
-		r := h.must(fmt.Sprintf("tree-%03d", i), exec.Command(oracle, config, one, "--tree"))
-		if err := os.WriteFile(path+".tree", r.stdout, 0644); err != nil {
-			t.Fatal(err)
-		}
-	}
-	truth := h.compare("projected-controls", oracle, native, config, manifest)
+
+	truth := h.compare("native-controls", oracle, native, config, manifest)
 	for _, name := range []string{"no-duplicate-head", "no-script-component-in-head", "no-async-client-component"} {
 		if !bytes.Contains(truth.stdout, []byte("\t@next/next/"+name+"\t")) {
 			t.Fatal("no positive " + name)
 		}
 	}
-	t.Logf("%d projected JSX controls; decisions are native, parser is explicitly bypassed", len(paths))
+	t.Logf("%d JSX controls use the native parser and rule decisions", len(paths))
 	sanitized := h.archive("checker-asan", "", true)
-	asan := h.build(stage0, "head-projected-asan", entry, sanitized, true)
-	h.compare("projected-controls-asan", oracle, asan, config, manifest)
+	asan := h.build(stage0, "head-native-asan", entry, sanitized, true)
+	h.compare("native-controls-asan", oracle, asan, config, manifest)
 	for _, m := range []struct{ name, file, from, to string }{
 		{"duplicate", "no_duplicate_head.a", "this.occurrences > 1", "this.occurrences > 2"},
 		{"script", "no_script_component_in_head.a", "rules.parser.node(tag).text === 'Script'", "rules.parser.node(tag).text === 'S'"},
@@ -137,12 +131,4 @@ func TestWave17HeadJudgmentsAndParserBoundary(t *testing.T) {
 		}
 		t.Logf("%s mutant exits 0, empty stderr; Go bytes catch byte %d", m.name, firstDifference(got.stdout, truth.stdout))
 	}
-	real := h.build(stage0, "real-parser", filepath.Join(repository, "stage1/cohere/typeaware/wave_17_suite.a"), sanitized, true)
-	one := h.write("boundary.manifest", paths[0]+"\n")
-	got := h.run("parser-boundary", exec.Command(real, config, one))
-	exit, ok := got.err.(*exec.ExitError)
-	if !ok || exit.ExitCode() != 70 || !bytes.Contains(got.stderr, []byte("parser slice")) {
-		t.Fatalf("unexpected parser boundary: %v %s", got.err, got.stderr)
-	}
-	t.Log("end-to-end JSX remains blocked: shared parser slice refusal, panic 70")
 }
