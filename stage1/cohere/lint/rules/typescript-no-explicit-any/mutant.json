@@ -1,0 +1,6 @@
+{
+  "name": "typescript-no-explicit-any-message",
+  "file": "rule.a",
+  "from": "'unexpectedAny', messageNoExplicitAny",
+  "to": "'unexpectedAny', messageNoExplicitAny + '!'"
+}

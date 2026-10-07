@@ -1,0 +1,3 @@
+let value: /* Ω */ any;
+function nested(...args: Map<any, any>): any { return value; }
+const any = 1;
