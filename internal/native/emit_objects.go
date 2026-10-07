@@ -136,7 +136,10 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		}
 		for index, field := range literal.Fields {
 			slot := e.temporary()
-			e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), e.cache())
+			cache := e.cache()
+			e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), cache)
+			e.line("adamic_object_field_types(%s)[%s.index] = %d;", object, cache, field.Value.Type())
+			e.line("adamic_object_initialized(%s)[%s.index] = %d;", object, cache, map[bool]int{true: 0, false: 1}[field.Uninitialized])
 			if field.Value.Type().IsReference() {
 				e.line("adamic_release(%s->reference);", slot)
 				e.line("%s->reference = %s;", slot, e.kept(values[index]))
@@ -171,6 +174,7 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		e.line("%s->class = &adamic_class_%d;", object, literal.Class)
 	}
 	for index, field := range literal.Fields {
+		e.line("adamic_object_field_types(%s)[%d] = %d;", object, index, field.Value.Type())
 		if field.Uninitialized {
 			e.line("adamic_object_initialized(%s)[%d] = 0;", object, index)
 		}

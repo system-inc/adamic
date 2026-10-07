@@ -194,6 +194,7 @@ func TestCountsAreRecorded(t *testing.T) {
 	if t.Failed() {
 		return
 	}
+	rows = append(rows, interfaceCastCounts(t)...)
 	var table strings.Builder
 	table.WriteString(countsHeader)
 	for _, row := range rows {

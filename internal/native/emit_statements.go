@@ -183,7 +183,27 @@ func (e *emitter) statement(statement ir.Statement) {
 		e.line("}")
 		e.line("adamic_object_check_data_write(%s, %s);", object, cString(statement.Name))
 		slot := e.temporary()
-		e.line("adamic_value *%s = %s;", slot, e.writeFieldSlot(object, statement.Name, statement.Class))
+		cache := e.cache()
+		if e.program.CheckedFields[statement.Name] {
+			e.line("adamic_object_view_write(%s, %s, &%s, %d, %s, %s);", object, cString(statement.Name), cache, statement.Value.Type(), cString(map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string"}[statement.Value.Type()]), cString("<write>."+statement.Name))
+		}
+		if e.program.CheckedFields[statement.Name] {
+			e.line("adamic_value *%s = adamic_object_write_field(%s, %s, &%s);", slot, object, cString(statement.Name), cache)
+		} else {
+			e.line("adamic_value *%s = %s;", slot, e.writeFieldSlot(object, statement.Name, statement.Class))
+		}
+		converted := e.program.CheckedFields[statement.Name] && statement.Value.Type() <= ir.Boolean
+		if converted {
+			e.line("if (adamic_object_field_types(%s)[%s.index] == 10) {", object, cache)
+			boxed := fmt.Sprintf("adamic_box_number(%s)", value)
+			if statement.Value.Type() == ir.Boolean {
+				boxed = fmt.Sprintf("(%s ? &adamic_box_true : &adamic_box_false)", value)
+			}
+			e.line("adamic_heap *view_new_value = (adamic_heap *)%s;", boxed)
+			e.line("adamic_release(%s->reference);", slot)
+			e.line("%s->reference = view_new_value;", slot)
+			e.line("} else {")
+		}
 		if statement.Value.Type().IsReference() {
 			// The new reference is taken before the old is let go: they may be the same.
 			old := e.temporary()
@@ -192,6 +212,10 @@ func (e *emitter) statement(statement ir.Statement) {
 			e.line("if (%s != NULL) adamic_release(%s);", old, old)
 		} else {
 			e.line("%s->%s = %s;", slot, member(statement.Value.Type()), slotted(statement.Value.Type(), value))
+		}
+		e.line("adamic_object_field_types(%s)[%s.index] = %d;", object, cache, statement.Value.Type())
+		if converted {
+			e.line("}")
 		}
 		if statement.Uninitialized {
 			e.line("adamic_object_set_initialized(%s, %s, false);", object, cString(statement.Name))

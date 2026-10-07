@@ -10,6 +10,9 @@ import "fmt"
 
 // Program is one compiled Adamic program.
 type Program struct {
+	// CheckedFields conservatively checks these field names at every object read.
+	CheckedFields map[string]bool
+
 	// Source is the entry file's base name, as written, for the header of what the backends emit.
 	Source string
 
@@ -308,6 +311,10 @@ type (
 	// Property reads a field. Of is its type. Optional is ?., which is undefined when Object is: a
 	// number field read that way is number | undefined.
 	Property struct {
+		// View names a required field read whose presence, readiness and representation are checked.
+		View        string
+		ViewType    string
+		ViewAllowed []Expression
 		// Readiness is the source expression for a checked field read, empty when proven ready.
 		Readiness string
 		Object    Expression
@@ -503,11 +510,12 @@ type (
 	// members: the discriminant Field must hold one of Allowed, or the program panics with Message,
 	// in both backends (docs/0.1.md, decision 5).
 	CheckedCast struct {
-		Value     Expression
-		Field     string
-		FieldType Type
-		Allowed   []Expression
-		Message   string
+		CheckedFields bool
+		Value         Expression
+		Field         string
+		FieldType     Type
+		Allowed       []Expression
+		Message       string
 	}
 
 	// ArrayIndex is array[index]: the element, or undefined when index isn't one of the array's (a

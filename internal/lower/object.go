@@ -59,6 +59,21 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if property.Kind == ast.KindPropertyAssignment && fieldName == "__proto__" {
 				return nil, &Refused{Where: l.program.Where(property), What: "__proto__ in an object literal", Fix: "JavaScript changes the prototype instead of making an own field; Adamic objects have fixed shapes and no prototype mutation"}
 			}
+			if property.Kind == ast.KindPropertyAssignment && l.uninitializedInitializer(property.AsPropertyAssignment().Initializer) {
+				declared := l.declaredField(node, fieldName)
+				if declared == 0 || declared == ir.MaybeBoolean {
+					return nil, l.notYet(property, "an uninitialized object field without a supported declared slot type")
+				}
+				if literal.Spread != nil && !l.hasProperty(node.AsObjectLiteralExpression().Properties.Nodes[0].AsSpreadAssignment().Expression, fieldName) {
+					return nil, l.notYet(property, "a spread that adds a field the source doesn't have")
+				}
+				value := ir.Expression(zeroValue(declared))
+				if declared.IsReference() {
+					value = ir.Undefined{Of: declared}
+				}
+				literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value, Uninitialized: true})
+				continue
+			}
 			var value ir.Expression
 			var err error
 			if property.Kind == ast.KindPropertyAssignment {
@@ -507,6 +522,12 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 // the shape that was actually made. A narrowed number checks the declared optional representation.
 func (l *lowering) readObjectField(node *ast.Node, property ir.Property) ir.Expression {
 	property.Readiness = sourceExpression(node)
+	property.View = sourceExpression(node)
+	if symbol := l.checker.GetSymbolAtLocation(node.Name()); symbol != nil {
+		declared := l.checker.GetTypeOfSymbol(symbol)
+		property.ViewType = l.checker.TypeToString(declared)
+		property.ViewAllowed = l.viewLiterals(declared)
+	}
 	field := l.checker.GetSymbolAtLocation(node.Name())
 	if field != nil {
 		for _, declaration := range field.Declarations {

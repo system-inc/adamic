@@ -6,6 +6,7 @@ import (
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/microsoft/TypeScript/tsc/shim/scanner"
 )
 
 // As in instantiate.go, this calls the pinned checker's own implementation until its shim
@@ -15,7 +16,7 @@ import (
 //go:linkname predicateFlowType github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getFlowTypeOfReferenceEx
 func predicateFlowType(receiver *checker.Checker, reference *ast.Node, declared, initial *checker.Type, container *ast.Node, flow *ast.FlowNode) *checker.Type
 
-type predicateProof struct {
+type predicateFlowProof struct {
 	l          *lowering
 	function   *ast.Node
 	parameter  *ast.Node
@@ -26,20 +27,20 @@ type predicateProof struct {
 	lastReturn *ast.Node
 }
 
-type predicatePath struct {
+type predicateFlowPath struct {
 	flow    *ast.FlowNode
 	checked bool
 }
 
-func (p *predicateProof) refused(node *ast.Node, reason string) error {
+func (p *predicateFlowProof) refused(node *ast.Node, reason string) error {
 	return &Refused{Where: p.l.program.Where(node), What: "a type predicate whose return is not proven (" + reason + ")", Fix: "inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"}
 }
 
-func (l *lowering) provePredicate(node *ast.Node) error {
+func (l *lowering) proveFlowPredicate(node *ast.Node) error {
 	annotation := node.AsTypePredicateNode()
 	function := node.Parent
 	if !ast.IsFunctionLike(function) || function.Body() == nil || annotation.ParameterName.Kind != ast.KindIdentifier {
-		return (&predicateProof{l: l}).refused(node, "there is no body proving this parameter")
+		return (&predicateFlowProof{l: l}).refused(node, "there is no body proving this parameter")
 	}
 	var parameter *ast.Node
 	for _, candidate := range function.Parameters() {
@@ -48,7 +49,7 @@ func (l *lowering) provePredicate(node *ast.Node) error {
 			break
 		}
 	}
-	p := &predicateProof{l: l, function: function, parameter: parameter, assertion: annotation.AssertsModifier != nil}
+	p := &predicateFlowProof{l: l, function: function, parameter: parameter, assertion: annotation.AssertsModifier != nil}
 	if parameter == nil || parameter.AsParameterDeclaration().Initializer != nil || parameter.AsParameterDeclaration().DotDotDotToken != nil {
 		return p.refused(node, "the predicate must name an unchanged plain parameter")
 	}
@@ -77,8 +78,8 @@ func (l *lowering) provePredicate(node *ast.Node) error {
 	if changed != nil {
 		return p.refused(changed, "the predicate parameter is assigned")
 	}
-	paths := []predicatePath{{flow: &ast.FlowNode{Flags: ast.FlowFlagsStart}}}
-	var remaining []predicatePath
+	paths := []predicateFlowPath{{flow: &ast.FlowNode{Flags: ast.FlowFlagsStart}}}
+	var remaining []predicateFlowPath
 	var err error
 	if function.Body().Kind == ast.KindBlock {
 		remaining, err = p.statement(function.Body(), paths)
@@ -102,19 +103,19 @@ func (l *lowering) provePredicate(node *ast.Node) error {
 	return nil
 }
 
-func (p *predicateProof) narrowed(path predicatePath, initial *checker.Type) *checker.Type {
+func (p *predicateFlowProof) narrowed(path predicateFlowPath, initial *checker.Type) *checker.Type {
 	return predicateFlowType(p.l.checker, p.parameter.Name(), p.declared, initial, p.function, path.flow)
 }
 
-func predicateBranch(path predicatePath, expression *ast.Node, truth bool) predicatePath {
+func predicateBranch(path predicateFlowPath, expression *ast.Node, truth bool) predicateFlowPath {
 	flags := ast.FlowFlagsFalseCondition
 	if truth {
 		flags = ast.FlowFlagsTrueCondition
 	}
-	return predicatePath{flow: &ast.FlowNode{Flags: flags, Node: expression, Antecedent: path.flow}, checked: true}
+	return predicateFlowPath{flow: &ast.FlowNode{Flags: flags, Node: expression, Antecedent: path.flow}, checked: true}
 }
 
-func (p *predicateProof) normalReturn(node *ast.Node, path predicatePath) error {
+func (p *predicateFlowProof) normalReturn(node *ast.Node, path predicateFlowPath) error {
 	narrowed := p.narrowed(path, p.declared)
 	if !path.checked || !checker.Checker_isTypeIdenticalTo(p.l.checker, narrowed, p.target) || p.l.nominalMismatch(narrowed, p.target, map[[2]*checker.Type]bool{}) != nil {
 		return p.refused(node, "normal return has not narrowed "+p.parameter.Name().Text()+" to "+p.l.checker.TypeToString(p.target))
@@ -122,7 +123,7 @@ func (p *predicateProof) normalReturn(node *ast.Node, path predicatePath) error 
 	return nil
 }
 
-func (p *predicateProof) returned(node, expression *ast.Node, paths []predicatePath) error {
+func (p *predicateFlowProof) returned(node, expression *ast.Node, paths []predicateFlowPath) error {
 	p.lastReturn = node
 	if p.assertion {
 		if expression != nil {
@@ -169,7 +170,7 @@ func (p *predicateProof) returned(node, expression *ast.Node, paths []predicateP
 	return nil
 }
 
-func (p *predicateProof) statement(node *ast.Node, paths []predicatePath) ([]predicatePath, error) {
+func (p *predicateFlowProof) statement(node *ast.Node, paths []predicateFlowPath) ([]predicateFlowPath, error) {
 	if len(paths) == 0 {
 		return nil, nil
 	}
@@ -191,7 +192,7 @@ func (p *predicateProof) statement(node *ast.Node, paths []predicatePath) ([]pre
 		if !p.check(statement.Expression) {
 			return nil, p.refused(node, "branch is not a trusted parameter check")
 		}
-		var then, otherwise []predicatePath
+		var then, otherwise []predicateFlowPath
 		for _, path := range paths {
 			then = append(then, predicateBranch(path, statement.Expression, true))
 			otherwise = append(otherwise, predicateBranch(path, statement.Expression, false))
@@ -221,7 +222,7 @@ func (p *predicateProof) statement(node *ast.Node, paths []predicatePath) ([]pre
 			// Unknown calls and all writes can invalidate discriminants through an alias. Starting
 			// over also prevents the checker from retaining stale readonly-property facts.
 			for index := range paths {
-				paths[index] = predicatePath{flow: &ast.FlowNode{Flags: ast.FlowFlagsStart}}
+				paths[index] = predicateFlowPath{flow: &ast.FlowNode{Flags: ast.FlowFlagsStart}}
 			}
 		}
 		return paths, nil
@@ -232,7 +233,7 @@ func (p *predicateProof) statement(node *ast.Node, paths []predicatePath) ([]pre
 
 // check recognizes only independently trusted narrowing expressions, with no calls, aliases,
 // casts or computed property accesses. The checker still decides what each branch proves.
-func (p *predicateProof) check(node *ast.Node) bool {
+func (p *predicateFlowProof) check(node *ast.Node) bool {
 	node = ast.SkipParentheses(node)
 	if node.Kind == ast.KindPrefixUnaryExpression && node.AsPrefixUnaryExpression().Operator == ast.KindExclamationToken {
 		return p.check(node.AsPrefixUnaryExpression().Operand)
@@ -262,11 +263,11 @@ func (p *predicateProof) check(node *ast.Node) bool {
 	return false
 }
 
-func (p *predicateProof) reference(node *ast.Node) bool {
+func (p *predicateFlowProof) reference(node *ast.Node) bool {
 	return node.Kind == ast.KindIdentifier && p.l.checker.GetSymbolAtLocation(node) == p.l.checker.GetSymbolAtLocation(p.parameter.Name())
 }
 
-func (p *predicateProof) checkedValue(node *ast.Node) bool {
+func (p *predicateFlowProof) checkedValue(node *ast.Node) bool {
 	node = ast.SkipParentheses(node)
 	if p.reference(node) {
 		return true
@@ -277,7 +278,7 @@ func (p *predicateProof) checkedValue(node *ast.Node) bool {
 	return node.Kind == ast.KindPropertyAccessExpression && p.reference(ast.SkipParentheses(node.AsPropertyAccessExpression().Expression)) && node.Flags&ast.NodeFlagsOptionalChain == 0
 }
 
-func (p *predicateProof) literal(node *ast.Node) bool {
+func (p *predicateFlowProof) literal(node *ast.Node) bool {
 	node = ast.SkipParentheses(node)
 	switch node.Kind {
 	case ast.KindStringLiteral, ast.KindNumericLiteral, ast.KindNullKeyword, ast.KindTrueKeyword, ast.KindFalseKeyword:
@@ -315,4 +316,141 @@ func predicateTrueType(c *checker.Checker) *checker.Type {
 		}
 	}
 	panic("checker boolean type has no true member")
+}
+
+// The flow verifier keeps main's literal and nominal proofs. Body summaries add
+// verified helpers and truthiness assertions; tag-only facts use checked views.
+func (l *lowering) predicateRefusal(node *ast.Node) error {
+	if l.predicateParameter(node) != nil {
+		return nil
+	}
+	original := l.proveFlowPredicate(node)
+	if original == nil {
+		return nil
+	}
+	proof, err := l.provePredicate(node)
+	if err != nil {
+		return original
+	}
+	if proof.TaggedView {
+		target := l.checker.GetTypeAtLocation(node.AsTypePredicateNode().Type)
+		members := []*checker.Type{target}
+		if target.Flags()&checker.TypeFlagsUnion != 0 {
+			members = target.Types()
+		}
+		for _, member := range members {
+			for _, property := range l.checker.GetPropertiesOfType(member) {
+				if property.Flags&ast.SymbolFlagsOptional != 0 {
+					return original
+				}
+			}
+			if _, err := l.view(node, nil, member); err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}
+
+// A signature on a plain function parameter is an argument contract. The call
+// visitor proves the actual function body before admitting any invocation.
+func (l *lowering) predicateParameter(node *ast.Node) *ast.Node {
+	signature := node.Parent
+	if signature == nil || signature.Kind != ast.KindFunctionType || signature.Parent == nil || signature.Parent.Kind != ast.KindParameter {
+		return nil
+	}
+	parameter := signature.Parent
+	if parameter.AsParameterDeclaration().Initializer != nil || parameter.AsParameterDeclaration().DotDotDotToken != nil {
+		return nil
+	}
+	function := parameter.Parent
+	if !ast.IsFunctionLike(function) || function.Body() == nil {
+		return nil
+	}
+	symbol := l.checker.GetSymbolAtLocation(parameter.Name())
+	changed := false
+	var visit ast.Visitor
+	visit = func(n *ast.Node) bool {
+		if n.Kind == ast.KindIdentifier && l.checker.GetSymbolAtLocation(n) == symbol && ast.IsAssignmentTarget(n) {
+			changed = true
+		}
+		n.ForEachChild(visit)
+		return false
+	}
+	function.Body().ForEachChild(visit)
+	if changed {
+		return nil
+	}
+	return parameter
+}
+
+func (l *lowering) predicateArguments(node *ast.Node) error {
+	signature := l.checker.GetResolvedSignature(node)
+	if signature == nil {
+		return nil
+	}
+	for index, parameter := range signature.Parameters() {
+		if index >= len(node.AsCallExpression().Arguments.Nodes) {
+			continue
+		}
+		var contract *ast.Node
+		for _, declaration := range parameter.Declarations {
+			if declaration.Kind == ast.KindParameter && declaration.Type() != nil && declaration.Type().Kind == ast.KindFunctionType && declaration.Type().Type() != nil && declaration.Type().Type().Kind == ast.KindTypePredicate {
+				contract = declaration.Type().Type()
+			}
+		}
+		if contract == nil {
+			continue
+		}
+		argument := ast.SkipParentheses(node.AsCallExpression().Arguments.Nodes[index])
+		implementation := argument
+		if argument.Kind == ast.KindIdentifier {
+			symbol := l.symbol(argument)
+			if symbol != nil {
+				for _, declaration := range symbol.Declarations {
+					if ast.IsFunctionLike(declaration) && declaration.Body() != nil {
+						implementation = declaration
+					}
+					if declaration.Kind == ast.KindVariableDeclaration && declaration.AsVariableDeclaration().Initializer != nil {
+						implementation = ast.SkipParentheses(declaration.AsVariableDeclaration().Initializer)
+					}
+				}
+			}
+		}
+		failure := func() error {
+			file := ast.GetSourceFileOfNode(argument)
+			text := file.Text()[scanner.GetTokenPosOfNode(argument, file, false):argument.End()]
+			return &Refused{Where: l.program.Where(argument), What: "an unproven predicate argument for parameter " + parameter.Name + " (argument " + fmt.Sprintf("%q", text) + ")", Fix: "pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)"}
+		}
+		if !ast.IsFunctionLike(implementation) || implementation.Body() == nil || implementation.Type() == nil || implementation.Type().Kind != ast.KindTypePredicate {
+			return failure()
+		}
+		if argument.Kind == ast.KindIdentifier {
+			symbol := l.symbol(argument)
+			changed := false
+			var writes ast.Visitor
+			writes = func(n *ast.Node) bool {
+				if n.Kind == ast.KindIdentifier && l.symbol(n) == symbol && ast.IsAssignmentTarget(n) {
+					changed = true
+				}
+				n.ForEachChild(writes)
+				return false
+			}
+			for _, file := range l.program.Files() {
+				file.AsNode().ForEachChild(writes)
+			}
+			if changed {
+				return failure()
+			}
+		}
+		annotation := implementation.Type().AsTypePredicateNode()
+		wanted := contract.AsTypePredicateNode()
+		if annotation.Type == nil || wanted.Type == nil || !checker.Checker_isTypeIdenticalTo(l.checker, l.checker.GetTypeAtLocation(annotation.Type), l.checker.GetTypeAtLocation(wanted.Type)) {
+			return failure()
+		}
+		if err := l.predicateRefusal(implementation.Type()); err != nil {
+			return failure()
+		}
+	}
+	return nil
 }

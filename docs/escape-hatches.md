@@ -4,7 +4,7 @@
 
 Accepted by @system_adamic on October 6, 2026. These are language decisions; the observations below remain measurements of the recorded main commit, not claims that these changes have landed.
 
-1. **Downcasts:** runtime tag checks on tagged members; refuse casts that cannot be checked.
+1. **Downcasts:** runtime tag checks on tagged members plus checked field reads; untagged interface downcasts create transitive checked views. The October 7 ruling below supersedes the construction-or-refusal proposal.
 2. **Non-null !:** a runtime nullish check that panics loudly and includes the expression's text.
 3. **As written:** any, as unknown as, expando additions, Object.defineProperty and Function are refused. Upcasts and satisfies require proof. Type predicates and assertion functions require proof from their bodies or are refused. Bivariant methods require a proven contravariant relation or are refused.
 4. **Definite assignment:** field!: and let x!: are refused for now; another branch lands that refusal. The target is proven initialization where flow establishes it, otherwise a loud read-before-assignment check like Adamic's temporal dead zone. This is a temporary refusal.
