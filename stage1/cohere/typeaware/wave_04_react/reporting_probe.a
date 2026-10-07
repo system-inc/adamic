@@ -1,0 +1,14 @@
+import { PreserveManualMemoization } from './preserve_manual_memoization.a';
+import { Purity } from './purity.a';
+import { Refs } from './refs.a';
+console.log(new PreserveManualMemoization().render(true, 307, 308).written());
+console.log(new PreserveManualMemoization().render(false, 418, 427).written());
+console.log(new Purity().render("Date.now", 77, 87).written());
+console.log(new Purity().render("performance.now", 103, 120).written());
+console.log(new Purity().render("Math.random", 137, 150).written());
+console.log(new Refs().render("refValueAccess", 191, 202).written());
+console.log(new Refs().render("refValueAccess", 0, 1).written());
+console.log(new Refs().render("refPassedToFunction", 0, 1).written());
+console.log(new Refs().render("refUpdate", 0, 1).written());
+console.log(new Refs().render("functionAccessesRef", 0, 1).written());
+console.log(new Refs().render("refTypeEnvironmentDidNotConverge", 0, 1).written());

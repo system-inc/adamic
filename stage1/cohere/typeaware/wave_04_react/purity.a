@@ -1,0 +1,11 @@
+import { panic } from 'adamic';
+import { Diagnostic } from '../diagnostic.ts';
+
+// Reporting portion only. Analysis requires the native React compiler IR.
+export class Purity {
+    render(canonicalName: string, start: number, end: number): Diagnostic {
+        const reason = "Calling an impure function during render makes the component's output depend on when it happened to render rather than only on its props and state. React may render a component more than once for a single update, and under Strict Mode it deliberately does, so the value changes between renders that should have been identical and the interface flickers or resets. Move the call into an event handler or an effect, or lift the value into state so it is computed once.";
+        return new Diagnostic('react-hooks/purity', 'impureFunctionCall', `\`${canonicalName}\` is an impure function. ${reason}`, start, end, '');
+    }
+    analyze(): void { panic('NotYet: purity needs native React HIR, phi values and closure capture analysis'); }
+}

@@ -1,0 +1,12 @@
+import { panic } from 'adamic';
+import { Diagnostic } from '../diagnostic.ts';
+
+// Reporting portion only. Analysis requires the native React compiler IR.
+export class PreserveManualMemoization {
+    render(mutable: boolean, start: number, end: number): Diagnostic {
+        const id = mutable ? 'preserveManualMemoizationDependencyMutable' : 'preserveManualMemoizationValueUnmemoized';
+        const message = mutable ? "This dependency may be modified after the memo block that reads it, so the memoized value cannot be trusted. A dependency array is a claim that the cached value stays correct until one of these entries changes; a later mutation of the entry itself changes what the value should be without changing what the array compares, so the stale value survives. Finish mutating the value before the memo block reads it, or depend on something that is not mutated afterwards." : "This value was memoized in source but not in the compiled output, so the stability the `useMemo` or `useCallback` promised is gone. Code downstream that compares this value by identity, a dependency array, a `memo` boundary, or an effect that should not re-run, will now see a fresh value on renders where it used to see the same one. React Compiler reports this rather than compiling the component, because quietly weakening a guarantee the code already relies on is worse than not optimizing it. Simplify what the callback captures so the memoization can be preserved.";
+        return new Diagnostic('react-hooks/preserve-manual-memoization', id, message, start, end, '');
+    }
+    analyze(): void { panic('NotYet: preserve-manual-memoization needs native React HIR and its reactive memoization pipeline'); }
+}

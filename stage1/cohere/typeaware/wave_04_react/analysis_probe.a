@@ -1,0 +1,9 @@
+import { panic, programArguments } from 'adamic';
+import { PreserveManualMemoization } from './preserve_manual_memoization.a';
+import { Purity } from './purity.a';
+import { Refs } from './refs.a';
+const rule = programArguments()[0] ?? panic('missing rule');
+if(rule === 'memo') { new PreserveManualMemoization().analyze(); }
+else if(rule === 'purity') { new Purity().analyze(); }
+else if(rule === 'refs') { new Refs().analyze(); }
+else { panic('unknown rule'); }
