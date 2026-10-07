@@ -8,9 +8,9 @@ import (
 func TestNodeBufferRefusals(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source, reason string }{
-		{"buffer alloc", "import { Buffer } from 'node:buffer'; Buffer.alloc(2);", "Buffer.alloc"},
+		{"buffer alloc", "import { Buffer } from 'node:buffer'; Buffer.alloc(2);", "node:buffer.BufferConstructor.alloc"},
 		{"buffer read", "import { Buffer } from 'node:buffer'; console.log(Buffer.from('abc').byteOffset);", "Buffer.byteOffset"},
-		{"hash inherited read", "import { createHash } from 'node:crypto'; console.log(createHash('sha256').writable);", "Hash.writable"},
+		{"hash inherited read", "import { createHash } from 'node:crypto'; console.log(createHash('sha256').writable);", "node:stream.Writable.writable"},
 		{"hash copy", "import { createHash } from 'node:crypto'; createHash('sha256').copy();", "Hash.copy"},
 		{"crypto random", "import { randomBytes } from 'node:crypto'; randomBytes(2);", "node:crypto.randomBytes"},
 		{"crypto constructor", "import { Hash } from 'node:crypto'; const ctor = Hash;", "node:crypto.Hash"},

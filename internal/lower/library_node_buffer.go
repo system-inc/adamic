@@ -2,12 +2,24 @@ package lower
 
 import (
 	"math"
-	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
 )
+
+// Keep the shared default refusal in place for every other Node member.
+func init() {
+	RegisterNodeLibraryMembers(
+		"node:buffer.Buffer",
+		"node:buffer.BufferConstructor.from",
+		"node:buffer.Buffer.toString",
+		"node:crypto.createHash",
+		"node:crypto.Hash.update",
+		"node:crypto.Hash.digest",
+	)
+}
 
 // The shared loader supplies the pinned @types/node tree. Ambient modules in
 // application files are not host declarations, even when their names match.
@@ -17,7 +29,7 @@ func nodeBufferModule(symbol *ast.Symbol) string {
 	}
 	for _, declaration := range symbol.Declarations {
 		source := ast.GetSourceFileOfNode(declaration)
-		if source == nil || !strings.Contains(strings.ReplaceAll(source.FileName(), "\\", "/"), "/@types/node/") {
+		if !load.IsNodeLibrary(source) {
 			continue
 		}
 		for parent := declaration; parent != nil; parent = parent.Parent {
