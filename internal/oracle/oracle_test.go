@@ -402,6 +402,12 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/regexp_search.a", true, false},
 	{"internal/oracle/testdata/regexp_unicode.a", true, false},
 	{"internal/oracle/testdata/regexp_split_pair_pattern.a", true, false},
+	// Integer fast paths through calls, arithmetic, loops and numeric slots.
+	{"internal/oracle/testdata/integer_coverage_calls.a", true, false},
+	{"internal/oracle/testdata/integer_coverage_loops.a", true, false},
+	{"internal/oracle/testdata/integer_coverage_nested.a", true, false},
+	{"internal/oracle/testdata/integer_coverage_remainder.a", true, false},
+	{"internal/oracle/testdata/integer_coverage_slots.a", true, false},
 }
 
 // run is one execution's observable behavior: what the oracle compares.

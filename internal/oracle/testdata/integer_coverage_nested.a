@@ -1,0 +1,11 @@
+// Right operands are nested bits too; arithmetic barriers must regain signed or unsigned doubles.
+for (const value of [2147483647, -2147483648, -0, NaN, Infinity, -Infinity, 1.5, -1.5, 9007199254740992, 9007199254740994]) {
+	for (const count of [0, 1, 31, 32, 33, -1, 0.5, NaN, Infinity, 9007199254740992]) {
+		console.log(`${~~value} ${~(value >>> count)} ${(value ^ ~count) & (count | ~value)}`);
+		console.log(`${value << (count ^ 32)} ${value >> (count | 32)} ${value >>> (~count & 63)}`);
+		console.log(`${((value >>> 0) + 0.5) | 0} ${((value | 0) - 0.5) >>> 0}`);
+		console.log(`${((value << count) / 2) & -1} ${((value >>> count) * 1.5) ^ count}`);
+		console.log(`${((value >> count) % 3) | 0} ${(value >>> 0) + (value >> 0) + 0.25}`);
+		console.log(`${(value > 0 ? value >>> count : value >> count) ^ ~count}`);
+	}
+}
