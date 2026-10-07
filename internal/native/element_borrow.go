@@ -61,7 +61,7 @@ func borrowedArray(declare ir.Declare) int {
 // function names, never assigned and not captured, directly or as the left of ??.
 func borrowable(program *ir.Program, function int, declare ir.Declare, assigned map[int]bool) bool {
 	local := program.Locals[declare.Local]
-	if local.Global || local.Captured || local.Function != function || !lendable(local.Type) || assigned[declare.Local] {
+	if local.Global || local.Captured || local.ExpressionAssigned || local.Function != function || !lendable(local.Type) || assigned[declare.Local] {
 		return false
 	}
 	value := declare.Value
@@ -80,7 +80,7 @@ func borrowable(program *ir.Program, function int, declare ir.Declare, assigned 
 		return false
 	}
 	held := program.Locals[array.Local]
-	return !held.Global && !held.Captured && held.Function == function && !assigned[array.Local]
+	return !held.Global && !held.Captured && !held.ExpressionAssigned && held.Function == function && !assigned[array.Local]
 }
 
 // assignedLocals is every variable an assignment in a function's body writes.

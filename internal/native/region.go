@@ -48,7 +48,7 @@ func planRegions(program *ir.Program) *regionPlan {
 		plan.escapes[index] = map[int]bool{}
 		for position, parameter := range function.Parameters {
 			local := program.Locals[parameter]
-			plan.escapes[index][position] = function.Closure || local.Captured || local.Type != ir.Object
+			plan.escapes[index][position] = function.Closure || local.Captured || local.ExpressionAssigned || local.Type != ir.Object
 		}
 	}
 	for changed := true; changed; {

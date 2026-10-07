@@ -305,6 +305,16 @@ func (n *inference) value(expression ir.Expression) shape {
 			return shape{}
 		}
 		return shape{same: []Place{{Identifier: value}}}
+	case ir.Void:
+		n.value(expression.Value)
+		return shape{}
+	case ir.Comma:
+		n.value(expression.Left)
+		return n.value(expression.Right)
+	case ir.Logical:
+		result := n.value(expression.Left)
+		result.merge(n.value(expression.Right))
+		return result
 	case ir.Conditional:
 		n.value(expression.Condition)
 		result := n.value(expression.WhenTrue)

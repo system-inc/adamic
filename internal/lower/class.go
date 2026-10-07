@@ -422,6 +422,11 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 	if member := l.checker.GetSymbolAtLocation(target); member != nil && member.Flags&ast.SymbolFlagsMethod != 0 {
 		return nil, l.notYet(target, "replacing a represented method at runtime")
 	}
+	if member := l.checker.GetSymbolAtLocation(target); member != nil && member.Flags&ast.SymbolFlagsOptional != 0 && !isClassInstance(l.checker.GetTypeAtLocation(target.AsPropertyAccessExpression().Expression)) {
+		if stored, _ := l.representation(l.checker.GetTypeOfSymbol(member)); stored == ir.MaybeBoolean || stored == ir.Union {
+			return nil, l.notYet(target, "writing a possibly absent optional own field")
+		}
+	}
 	object, err := l.expression(target.AsPropertyAccessExpression().Expression)
 	if err != nil {
 		return nil, err
@@ -434,7 +439,7 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 		// What the field is declared to keep, not what the checker narrowed this write to.
 		of, err = l.typeOfSymbol(target, field)
 	}
-	if err != nil || slotless(of) {
+	if err != nil || (slotless(of) && of != ir.MaybeBoolean && of != ir.Union) {
 		return nil, l.notYet(target, "storing "+l.checker.TypeToString(l.checker.GetTypeAtLocation(target))+" in a field")
 	}
 	value := uninitializedValue(of)
@@ -444,7 +449,7 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 			return nil, err
 		}
 	}
-	if slotless(value.Type()) {
+	if slotless(value.Type()) && value.Type() != ir.MaybeBoolean && value.Type() != ir.Union {
 		return nil, l.notYet(target, "storing "+l.checker.TypeToString(l.checker.GetTypeAtLocation(target))+" in a field")
 	}
 	// A field of number | undefined is given a packed word, whatever it's assigned.

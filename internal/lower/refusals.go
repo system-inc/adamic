@@ -22,25 +22,19 @@ var refusals = map[ast.Kind]refusal{
 	ast.KindAwaitExpression:   {"await", "0.1 has no async; it arrives with the concurrency model"},
 	ast.KindYieldExpression:   {"yield (generators)", "build an array, or call a function per item"},
 	ast.KindDecorator:         {"a decorator", "write the behavior where it applies; 0.1 doesn't rewrite classes at runtime"},
-	ast.KindLabeledStatement:  {"a label", "move the loop into a function and return from it"},
 	ast.KindWithStatement:     {"with", "name the object you mean"},
 	ast.KindDeleteExpression:  {"delete", "an object's shape is fixed; use a Map for keys that come and go"},
 	ast.KindDebuggerStatement: {"debugger", "remove it"},
-	ast.KindEnumDeclaration:   {"enum", "use a union of string literals, like 'Circle' | 'Square'"},
 	ast.KindModuleDeclaration: {"a namespace", "use a module: a file of its own, with named exports"},
-	ast.KindVoidExpression:    {"the void operator", "evaluate the expression as a statement"},
 	ast.KindIndexSignature:    {"an index signature", "use a Map, which keeps keys in the order they were added"},
 	ast.KindExportAssignment:  {"export default", "export by name: one name for one thing"},
 }
 
 // refusedOperators are binary operators 0.1 refuses.
 var refusedOperators = map[ast.Kind]refusal{
-	ast.KindEqualsEqualsToken:             {"==", "use ===, which doesn't coerce"},
-	ast.KindExclamationEqualsToken:        {"!=", "use !==, which doesn't coerce"},
-	ast.KindInKeyword:                     {"in", "an object's shape is known; use a discriminant, or a Map"},
-	ast.KindCommaToken:                    {"the comma operator", "write each expression as its own statement"},
-	ast.KindAmpersandAmpersandEqualsToken: {"&&=", "write the if"},
-	ast.KindBarBarEqualsToken:             {"||=", "write the if"},
+	ast.KindEqualsEqualsToken:      {"==", "use ===, which doesn't coerce"},
+	ast.KindExclamationEqualsToken: {"!=", "use !==, which doesn't coerce"},
+	ast.KindInKeyword:              {"in", "an object's shape is known; use a discriminant, or a Map"},
 }
 
 // refuse walks a module for what 0.1 refuses and returns the first, with where it is and the fix.
@@ -83,6 +77,10 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				found = err
 				return true
 			}
+		}
+		if node.Kind == ast.KindParameter && ast.IsParameterPropertyDeclaration(node, node.Parent) {
+			found = &Refused{Where: l.program.Where(node), What: "a parameter property", Fix: "declare a field and assign it in the constructor"}
+			return true
 		}
 		var assertion *ast.Node
 		if node.Kind == ast.KindPropertyDeclaration {

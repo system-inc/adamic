@@ -5,7 +5,6 @@ import (
 	"errors"
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/system-inc/adamic/internal/ir"
-	"strings"
 )
 
 // statements lowers a list of statements.
@@ -31,14 +30,22 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 		// What an import brings in is resolved through the checker at each use, and the module it
 		// names runs first (moduleOrder).
 		return nil, nil
-	case ast.KindExportDeclaration, ast.KindExportAssignment:
-		return nil, &Refused{Where: l.program.Where(node), What: describe(node), Fix: "export where you declare: export function, export const (one name for one thing)"}
+	case ast.KindExportDeclaration:
+		if clause := node.AsExportDeclaration().ExportClause; clause == nil || clause.Kind == ast.KindNamedExports {
+			// The checker resolves each live binding, and moduleOrder runs re-export dependencies.
+			return nil, nil
+		}
+		return nil, &Refused{Where: l.program.Where(node), What: "a namespace export", Fix: "export named bindings"}
+	case ast.KindExportAssignment:
+		return nil, &Refused{Where: l.program.Where(node), What: describe(node), Fix: "export named bindings"}
 	case ast.KindFunctionDeclaration:
 		if l.function != nil {
 			return nil, l.notYet(node, "a function inside a function (a closure)")
 		}
 		// Lowered already, by declareModule.
 		return nil, nil
+	case ast.KindEnumDeclaration:
+		return l.enumDeclaration(node)
 	case ast.KindClassDeclaration:
 		if l.function != nil {
 			return nil, l.notYet(node, "a class inside a function")
@@ -68,14 +75,17 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 		return l.forOf(node)
 	case ast.KindSwitchStatement:
 		return l.switchStatement(node)
+	case ast.KindLabeledStatement:
+		return l.labeled(node)
 	case ast.KindBreakStatement, ast.KindContinueStatement:
+		label := ""
 		if node.Label() != nil {
-			return nil, l.notYet(node, "a labeled "+strings.ToLower(strings.TrimSuffix(strings.TrimPrefix(node.Kind.String(), "Kind"), "Statement")))
+			label = node.Label().Text()
 		}
 		if node.Kind == ast.KindBreakStatement {
-			return []ir.Statement{ir.Break{}}, nil
+			return []ir.Statement{ir.Break{Label: label}}, nil
 		}
-		return []ir.Statement{ir.Continue{}}, nil
+		return []ir.Statement{ir.Continue{Label: label}}, nil
 	case ast.KindThrowStatement:
 		return l.throwStatement(node)
 	case ast.KindTryStatement:
@@ -98,7 +108,7 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 		return statements, err
 	}
 	switch expression.Kind {
-	case ast.KindNonNullExpression:
+	case ast.KindNonNullExpression, ast.KindVoidExpression:
 		value, err := l.expression(expression)
 		if err != nil {
 			return nil, err
@@ -143,6 +153,20 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 		}
 		return []ir.Statement{ir.Evaluate{Value: call}}, nil
 	case ast.KindBinaryExpression:
+		if expression.AsBinaryExpression().OperatorToken.Kind == ast.KindCommaToken {
+			value, err := l.comma(expression)
+			if err != nil {
+				return nil, err
+			}
+			return []ir.Statement{ir.Evaluate{Value: value}}, nil
+		}
+		if logicalAssignment(expression.AsBinaryExpression().OperatorToken.Kind) {
+			value, err := l.logicalAssignment(expression)
+			if err != nil {
+				return nil, err
+			}
+			return []ir.Statement{ir.Evaluate{Value: value}}, nil
+		}
 		return l.assignment(expression)
 	case ast.KindPrefixUnaryExpression, ast.KindPostfixUnaryExpression:
 		return l.increment(expression)

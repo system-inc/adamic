@@ -109,7 +109,7 @@ func (e *emitter) read(read ir.Read) string {
 		e.line("%s %s = %s;", cType(read.Of), snapshot, value)
 		return snapshot
 	}
-	if !e.program.Locals[read.Local].Global {
+	if !e.program.Locals[read.Local].Global && !e.program.Locals[read.Local].ExpressionAssigned {
 		return name
 	}
 	if read.Checked {
