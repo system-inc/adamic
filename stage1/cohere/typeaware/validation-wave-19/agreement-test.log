@@ -1,0 +1,29 @@
+=== RUN   TestWave19AgreementAndMutants
+    wave_19_test.go:149: 212 targeted and production-table inputs before independent parse filtering
+    wave_19_test.go:159: 212 parse-valid controls; 0 excluded by independent Go parser
+    wave_19_test.go:171: one production input excluded from agreement: let.if(); is refused by the existing Adamic parser with panic 70, semicolon at 4; Go defaults report zero
+    wave_19_test.go:173: controls: 78044 identical finding bytes; findings 171
+    wave_19_test.go:181: controls-asan: 78044 identical finding bytes; findings 171
+    wave_19_test.go:192: generic mutant: exit 0, empty stderr, byte oracle catches byte 46
+    wave_19_test.go:192: dot mutant: exit 0, empty stderr, byte oracle catches byte 6410
+    wave_19_test.go:192: array mutant: exit 0, empty stderr, byte oracle catches byte 10801
+    wave_19_test.go:203: isolated: 70633 identical finding bytes; findings 133
+    wave_19_test.go:204: isolated-asan: 70633 identical finding bytes; findings 133
+    wave_19_test.go:203: index: 1765 identical finding bytes; findings 4
+    wave_19_test.go:204: index-asan: 1765 identical finding bytes; findings 4
+    wave_19_test.go:220: isolated-option checker mutant: exit 0, empty stderr, byte oracle catches byte 46
+    wave_19_test.go:220: index-key checker mutant: exit 0, empty stderr, byte oracle catches byte 1327
+    wave_19_test.go:220: symbol-origin checker mutant: exit 0, empty stderr, byte oracle catches byte 2260
+    wave_19_test.go:252: repository: 18485 identical finding bytes; findings 0
+    wave_19_test.go:253: repository-asan: 18485 identical finding bytes; findings 0
+    wave_19_test.go:258: repository Go whole process 0.174827s; findings 0; cohere: load_ns=84335088 rule_ns=1689122 run_ns=63727120
+    wave_19_test.go:258: repository native whole process 0.319410s; findings 0; tsgo: load_ns=98688927 query_ns=3613582 queries=574 first_query_ns=16227 run_ns=213305290
+    wave_19_test.go:252: compiler: 5241 identical finding bytes; findings 0
+    wave_19_test.go:253: compiler-asan: 5241 identical finding bytes; findings 0
+    wave_19_test.go:258: compiler Go whole process 0.398841s; findings 0; cohere: load_ns=307542998 rule_ns=9237305 run_ns=66756479
+    wave_19_test.go:258: compiler native whole process 1.862607s; findings 0; tsgo: load_ns=335305562 query_ns=4911179 queries=154 first_query_ns=25358 run_ns=1514698668
+    wave_19_test.go:270: released handle: panic 70, invalid or released checker handle
+    wave_19_test.go:278: released-registry mutant: exit 0 caught by required panic 70
+--- PASS: TestWave19AgreementAndMutants (165.43s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	165.432s
