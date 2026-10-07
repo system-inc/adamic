@@ -127,3 +127,14 @@ semantic comparison mutants, released-handle checks and sanitizer corpus checks.
 The complete bridge packages and filtered uncached Node oracle also pass.
 No new rules are claimed. Native pattern validation, undefined labels and real
 JSX remain incomplete. See ../WAVE_14_LANDING_REPORT.md for current evidence.
+
+## Numeric listener declarations, October 7, 2026
+
+All nine owned rule classes now declare numeric syntaxKinds arrays matching
+production Go's actual listener maps. The owned verifier catches a wrong-kind
+declaration mutant for each rule. All four native oracle suites pass again with
+nineteen semantic comparison mutants, sanitizer corpus checks and released-handle
+checks. Current shared ParseNode has only kind: string, so numeric handed-node
+dispatch remains blocked on the shared parser/driver work; no shared file changed.
+Native pattern validation, undefined labels and real JSX remain incomplete.
+No additional rules are claimed. See ../WAVE_14_LISTENERS_REPORT.md.

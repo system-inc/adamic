@@ -6,6 +6,7 @@ import { Diagnostic } from './diagnostic.ts';
 // Constructor selection and the flag walk are native. Pattern validation needs
 // cohere's ECMAScript rewrite and regexp2 syntax parser; it is an explicit gap.
 export class NoInvalidRegexp {
+    readonly syntaxKinds: readonly number[] = [214, 215];
     readonly rules: Rules;
     constructor(rules: Rules) {
         this.rules = rules;
