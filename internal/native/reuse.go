@@ -353,6 +353,9 @@ func variableRead(expression ir.Expression) (ir.Read, bool) {
 // (a global's read retains one).
 func (e *emitter) variable(expression ir.Expression, read ir.Read) string {
 	name := e.localName(read.Local)
+	if read.Readiness != "" {
+		e.checkReadyRead(read.Local, read.Readiness)
+	}
 	if defined, ok := expression.(ir.Defined); ok {
 		e.checkDefined(name, defined.Message)
 	}
