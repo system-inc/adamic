@@ -59,6 +59,7 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 	if this >= 0 && declaration.Kind != ast.KindConstructor {
 		// A method receives this; a constructor makes it.
 		function.Parameters = append(function.Parameters, this)
+		function.Receiver = true
 	}
 	if declaration.Kind != ast.KindConstructor {
 		signature := l.checker.GetSignatureFromDeclaration(declaration)
@@ -98,16 +99,24 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 			patterns = append(patterns, patterned{pattern: name, parameter: parameter, incoming: incoming})
 			continue
 		}
-		if !ast.IsIdentifier(parameter.Name()) || declared.DotDotDotToken != nil {
+		if !ast.IsIdentifier(parameter.Name()) {
 			return l.notYet(parameter, "a parameter that isn't a plain name")
 		}
 		local, err := l.declareLocal(parameter.Name())
 		if err != nil {
 			return err
 		}
-		if function.Closure && (declared.Initializer != nil || declared.QuestionToken != nil) {
-			// A function value is called with the arguments its caller has, and no more.
-			return l.notYet(parameter, "a function value with an optional parameter")
+		if declared.DotDotDotToken != nil {
+			proven := l.concrete(l.checker.GetTypeAtLocation(parameter.Name()))
+			elements := l.checker.GetTypeArguments(proven)
+			if !l.checker.IsArrayType(proven) || len(elements) != 1 {
+				return l.notYet(parameter, "a rest parameter that isn't an array")
+			}
+			element, known := l.representation(elements[0])
+			if !known || slotless(element) {
+				return l.notYet(parameter, "a rest parameter whose elements cannot be packed")
+			}
+			function.RestElement = element
 		}
 		if function.Closure && slotless(l.result.Locals[local].Type) {
 			// Its arguments are each one adamic_value.
@@ -135,6 +144,9 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		return l.notYet(declaration, "a function without a body")
 	}
 	l.result.Functions[index] = function
+	if !function.Closure && declaration.Kind != ast.KindConstructor && declaration.Name() != nil {
+		l.closureRecords = append(l.closureRecords, closureRecord{proven: l.concrete(l.checker.GetTypeAtLocation(declaration.Name())), function: index, node: declaration})
+	}
 	if l.signed == nil {
 		l.signed = map[int]signed{}
 	}

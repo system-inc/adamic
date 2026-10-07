@@ -29,6 +29,9 @@ type Program struct {
 	Classes       []Class
 	MethodTargets map[int][]int
 
+	// FunctionTypeTargets is the closed-world set for each checker function type.
+	FunctionTypeTargets map[int][]int
+
 	// Main is what the program does, in order.
 	Main []Statement
 
@@ -69,6 +72,15 @@ type Function struct {
 
 	// Parameters are locals, in order.
 	Parameters []int
+
+	// ArgumentsCount is the one-based local for the hidden actual argument count.
+	ArgumentsCount int
+	// ForwardsArguments is the one-based target of an implementation-only adapter.
+	ForwardsArguments int
+	// Receiver excludes the leading implementation-only this from that count.
+	Receiver bool
+	// RestElement identifies the final parameter as a rest array.
+	RestElement Type
 
 	// Returns is the result's type, or 0 for void.
 	Returns Type
@@ -213,7 +225,13 @@ type (
 	Call struct {
 		Function  int
 		Arguments []Expression
-		Returns   Type
+		// Spread marks array arguments expanded at the call, in evaluation order.
+		Spread []bool
+		// ArgumentCount forwards a caller count through a compiler-generated adapter.
+		ArgumentCount Expression
+		RestPacked    bool
+		ForwardCount  bool
+		Returns       Type
 
 		// Virtual is a one-based method slot. Function supplies its static signature.
 		Virtual  int
@@ -578,9 +596,11 @@ type (
 
 	// CallClosure calls a function value. Returns is its result type, 0 for void.
 	CallClosure struct {
-		Closure   Expression
-		Arguments []Expression
-		Returns   Type
+		Closure      Expression
+		Arguments    []Expression
+		Spread       []bool
+		FunctionType int
+		Returns      Type
 	}
 
 	// ArrayMap is array.map(callback): a new array of the callback's results, each called with the

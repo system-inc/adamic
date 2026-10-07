@@ -142,7 +142,7 @@ func planReuse(program *ir.Program, lending map[int]bool) *reusePlan {
 		forEachInstruction(each.graph, func(instruction *flow.Instruction) {
 			walk(evaluated(instruction), func(expression ir.Expression) {
 				call, ok := expression.(ir.Call)
-				if !ok {
+				if !ok || program.CallExpandsArguments(call) {
 					return
 				}
 				for index, argument := range call.Arguments {
@@ -698,7 +698,7 @@ func (e *emitter) mapped(expression ir.ArrayMap) (string, bool) {
 	e.line("\t\tstatic const char message[] = \"map: the array shrank while it was being mapped\";")
 	e.line("\t\tadamic_panic(message, sizeof message - 1);")
 	e.line("\t}")
-	e.line("\tadamic_value %s = %s->code(%s, (adamic_value[]){%s->elements[%s], {.number = (double)%s}, {.reference = %s}});", result, callback, callback, source, index, index, source)
+	e.line("\tadamic_value %s = %s->code(%s, (adamic_value[]){%s->elements[%s], {.number = (double)%s}, {.reference = %s}}, 3);", result, callback, callback, source, index, index, source)
 	e.line("\tif (%s) {", unique)
 	// The callback is done with the element it was handed: the result takes its place.
 	if expression.Element.IsReference() {

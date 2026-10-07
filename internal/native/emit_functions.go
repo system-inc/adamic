@@ -16,7 +16,7 @@ func (e *emitter) signature(function int) string {
 	if declared.Closure {
 		// Every closure's code is called the same way (adamic_code): its arguments and result as
 		// adamic_value, whatever their types.
-		return fmt.Sprintf("adamic_value %s(adamic_closure *self, adamic_value *arguments)", e.functionName(function))
+		return fmt.Sprintf("adamic_value %s(adamic_closure *self, adamic_value *arguments, size_t argument_count)", e.functionName(function))
 	}
 	returns := "void"
 	if declared.Returns != 0 {
@@ -32,6 +32,9 @@ func (e *emitter) signature(function int) string {
 	for _, parameter := range declared.Parameters {
 		parameters = append(parameters, cType(e.program.Locals[parameter].Type)+" "+e.localName(parameter))
 	}
+	if declared.ArgumentsCount != 0 {
+		parameters = append(parameters, "double "+e.localName(declared.ArgumentsCount-1))
+	}
 	if len(parameters) == 0 {
 		parameters = append(parameters, "void")
 	}
@@ -46,20 +49,40 @@ func (e *emitter) functionBody(function ir.Function) {
 	e.scopes = append(e.scopes, nil)
 	// Recursion that runs out of stack panics, as Node's does, rather than crashing (stack.c).
 	e.line("ADAMIC_CHECK_STACK();")
+	if function.ArgumentsCount != 0 && !function.Closure {
+		e.line("(void)%s;", e.localName(function.ArgumentsCount-1))
+	}
 	if function.Closure {
 		e.line("(void)self;")
 		e.line("(void)arguments;")
+		e.line("(void)argument_count;")
+		if function.ArgumentsCount != 0 {
+			count := "(double)argument_count"
+			if function.Receiver {
+				count += " - 1"
+			}
+			e.line("double %s = %s;", e.localName(function.ArgumentsCount-1), count)
+			e.line("(void)%s;", e.localName(function.ArgumentsCount-1))
+		}
 		for index, parameter := range function.Parameters {
 			local := e.program.Locals[parameter]
+			if function.RestElement != 0 && index == len(function.Parameters)-1 {
+				e.restParameter(parameter, function.RestElement, index)
+				continue
+			}
 			value := unslotted(local.Type, fmt.Sprintf("arguments[%d].%s", index, member(local.Type)))
 			if local.Type.IsReference() {
 				value = fmt.Sprintf("(%s)%s", cType(local.Type), value)
 			}
+			value = fmt.Sprintf("argument_count > %d ? %s : %s", index, value, missingArgument(local.Type))
 			e.line("%s %s = %s;", cType(local.Type), e.localName(parameter), value)
 		}
 	}
-	for _, parameter := range function.Parameters {
+	for position, parameter := range function.Parameters {
 		switch {
+		case function.Closure && function.RestElement != 0 && position == len(function.Parameters)-1:
+			// The rest array was made here and already owns its count.
+			e.hold(e.localName(parameter))
 		case e.reuse.consumed[parameter]:
 			// Its caller handed over a reference (reuse.go): it's the callee's to let go of.
 			e.hold(e.localName(parameter))
@@ -155,6 +178,31 @@ func (e *emitter) returnStatement(statement ir.Return) {
 // is done here, not in lowering, since only here is every function's signature known: lowering may
 // meet a call before the function it calls.
 func (e *emitter) arguments(call ir.Call) []string {
+	function := e.program.Functions[call.Function]
+	if len(call.Spread) != 0 {
+		return e.spreadArguments(call)
+	}
+	if function.RestElement != 0 && !call.RestPacked {
+		actual := len(call.Arguments)
+		if function.Receiver {
+			actual--
+		}
+		fixed := len(function.Parameters) - 1
+		tail := []ir.Expression{}
+		if len(call.Arguments) > fixed {
+			tail = call.Arguments[fixed:]
+		}
+		rest := ir.ArrayLiteral{Element: function.RestElement, Elements: tail}
+		copy := call
+		copy.Arguments = append([]ir.Expression{}, call.Arguments[:min(fixed, len(call.Arguments))]...)
+		for len(copy.Arguments) < fixed {
+			copy.Arguments = append(copy.Arguments, ir.Undefined{})
+		}
+		copy.Arguments = append(copy.Arguments, rest)
+		copy.RestPacked = true
+		copy.ArgumentCount = ir.NumberConstant{Value: float64(actual)}
+		return e.arguments(copy)
+	}
 	parameters := e.program.Functions[call.Function].Parameters
 	arguments := make([]string, 0, len(parameters))
 	handed := []string{}
@@ -193,7 +241,11 @@ func (e *emitter) arguments(call ir.Call) []string {
 			}
 			value = boxed
 		}
-		arguments = append(arguments, value)
+		if index < len(parameters) {
+			arguments = append(arguments, value)
+		} else {
+			e.line("(void)%s;", value)
+		}
 	}
 	for _, parameter := range parameters[min(len(call.Arguments), len(parameters)):] {
 		if of := e.program.Locals[parameter].Type; of.IsMaybe() {
@@ -201,6 +253,19 @@ func (e *emitter) arguments(call ir.Call) []string {
 		} else {
 			arguments = append(arguments, "NULL")
 		}
+	}
+	if function.ArgumentsCount != 0 {
+		count := fmt.Sprint(len(call.Arguments))
+		if function.Receiver {
+			count = fmt.Sprint(len(call.Arguments) - 1)
+		}
+		if call.ArgumentCount != nil {
+			count = e.value(call.ArgumentCount)
+		}
+		if call.ForwardCount {
+			count = e.localName(e.function.ArgumentsCount - 1)
+		}
+		arguments = append(arguments, count)
 	}
 	return arguments
 }
@@ -224,18 +289,30 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 	}
 	arguments := []string{}
 	for _, argument := range expression.Arguments {
+		if len(expression.Spread) != 0 {
+			break
+		}
 		arguments = append(arguments, fmt.Sprintf("{.%s = %s}", member(argument.Type()), slotted(argument.Type(), e.value(argument))))
 	}
 	packed := "NULL"
 	if len(arguments) > 0 {
 		packed = "(adamic_value[]){" + strings.Join(arguments, ", ") + "}"
 	}
-	call := fmt.Sprintf("%s->code(%s, %s)", closure, closure, packed)
+	count := fmt.Sprint(len(expression.Arguments))
+	if len(expression.Spread) != 0 {
+		expanded := e.packCallArguments(expression.Arguments, expression.Spread)
+		packed = expanded + "->elements"
+		count = expanded + "->length"
+	}
+	if !e.program.ClosureReadsArgumentsCount(expression) && !e.program.ClosureNeedsArgumentSlots(expression) {
+		count = "0"
+	}
+	call := fmt.Sprintf("%s->code(%s, %s, %s)", closure, closure, packed, count)
 	if receiver != "" {
 		if closure == "" {
-			call = fmt.Sprintf("%s(%s, %s)", method, receiver, packed)
+			call = fmt.Sprintf("%s(%s, %s, %s)", method, receiver, packed, count)
 		} else {
-			call = fmt.Sprintf("(%s != NULL ? %s : %s(%s, %s))", closure, call, method, receiver, packed)
+			call = fmt.Sprintf("(%s != NULL ? %s : %s(%s, %s, %s))", closure, call, method, receiver, packed, count)
 		}
 	}
 	if expression.Returns == 0 {

@@ -293,7 +293,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		e.line("\t}")
 		e.indent++
 		element := e.temporary()
-		e.line("adamic_value %s = %s->code(%s, (adamic_value[]){%s->elements[%s], {.number = (double)%s}, {.reference = %s}});", element, callback, callback, source, index, index, source)
+		e.line("adamic_value %s = %s->code(%s, (adamic_value[]){%s->elements[%s], {.number = (double)%s}, {.reference = %s}}, 3);", element, callback, callback, source, index, index, source)
 		// What's mapped so far is the statement's, let go with its temporaries.
 		e.closureThrown()
 		e.line("adamic_array_push(%s, %s);", mapped, element)

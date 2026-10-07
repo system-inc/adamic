@@ -507,7 +507,7 @@ func (l *lowering) staticConstruct(node, declaration *ast.Node, constructor int,
 	index := len(l.result.Functions)
 	self := len(l.result.Locals)
 	l.result.Locals = append(l.result.Locals, ir.Local{Name: "class", Type: ir.Object, Function: index})
-	function := ir.Function{Name: "class_ready_new", Parameters: []int{self}, Returns: ir.Object}
+	function := ir.Function{Name: "class_ready_new", Parameters: []int{self}, Returns: ir.Object, Receiver: true, ForwardsArguments: constructor + 1, RestElement: l.result.Functions[constructor].RestElement}
 	forwarded := []ir.Expression{}
 	for _, parameter := range l.result.Functions[constructor].Parameters {
 		local := len(l.result.Locals)
@@ -517,7 +517,7 @@ func (l *lowering) staticConstruct(node, declaration *ast.Node, constructor int,
 		function.Parameters = append(function.Parameters, local)
 		forwarded = append(forwarded, ir.Read{Local: local, Of: incoming.Type})
 	}
-	function.Body = []ir.Statement{ir.Return{Value: ir.Call{Function: constructor, Arguments: forwarded, Returns: ir.Object}}}
+	function.Body = []ir.Statement{ir.Return{Value: ir.Call{Function: constructor, Arguments: forwarded, Returns: ir.Object, ForwardCount: true, RestPacked: true}}}
 	l.result.Functions = append(l.result.Functions, function)
 	return ir.Call{Function: index, Arguments: append([]ir.Expression{receiver}, arguments...), Returns: ir.Object}
 }

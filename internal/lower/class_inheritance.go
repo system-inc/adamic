@@ -223,6 +223,11 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
 			}
 		}
 	}
+	l.result.Functions[initializer].Receiver = true
+	if constructor == nil && instance.base != nil {
+		l.result.Functions[initializer].RestElement = l.result.Functions[instance.base.initializer].RestElement
+		l.result.Functions[initializer].ForwardsArguments = instance.base.initializer + 1
+	}
 	// The layout contains inherited fields first, but only this class's initializers run here.
 	fields := append([]ir.Field{}, l.result.Classes[instance.class-1].Fields...)
 	for _, member := range declaration.Members() {
@@ -313,7 +318,7 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
 		for _, parameter := range l.result.Functions[initializer].Parameters {
 			arguments = append(arguments, ir.Read{Local: parameter, Of: l.result.Locals[parameter].Type})
 		}
-		l.result.Functions[initializer].Body = []ir.Statement{ir.Evaluate{Value: ir.Call{Function: instance.base.initializer, Arguments: arguments}}}
+		l.result.Functions[initializer].Body = []ir.Statement{ir.Evaluate{Value: ir.Call{Function: instance.base.initializer, Arguments: arguments, ForwardCount: true, RestPacked: true}}}
 		initialized, err := l.fieldInitializers(declaration, this)
 		if err != nil {
 			return err
@@ -331,6 +336,9 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
 		}
 		wrapper := l.result.Functions[index]
 		wrapper.Parameters = append([]int{}, body.Parameters[1:]...)
+		wrapper.ArgumentsCount = body.ArgumentsCount
+		wrapper.ForwardsArguments = body.ForwardsArguments
+		wrapper.RestElement = body.RestElement
 		wrapper.Body = append([]ir.Statement{ir.Declare{Local: this, Value: ir.ObjectLiteral{Fields: fields, Class: instance.class, Methods: instance.methodList()}}}, body.Body...)
 		wrapper.Body = append(wrapper.Body, ir.Return{Value: ir.Read{Local: this, Of: ir.Object}})
 		l.result.Functions[index] = wrapper
@@ -339,6 +347,8 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
 	}
 	// The public constructor owns its object, including when an initializer throws.
 	wrapper := l.result.Functions[index]
+	wrapper.ForwardsArguments = initializer + 1
+	wrapper.RestElement = l.result.Functions[initializer].RestElement
 	arguments := []ir.Expression{}
 	object := len(l.result.Locals)
 	l.result.Locals = append(l.result.Locals, ir.Local{Name: "this", Type: ir.Object, Function: index})
@@ -354,7 +364,7 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
 	}
 	wrapper.Body = []ir.Statement{
 		ir.Declare{Local: object, Value: ir.ObjectLiteral{Fields: fields, Class: instance.class, Methods: instance.methodList()}},
-		ir.Evaluate{Value: ir.Call{Function: initializer, Arguments: arguments}},
+		ir.Evaluate{Value: ir.Call{Function: initializer, Arguments: arguments, ForwardCount: true, RestPacked: true}},
 		ir.Return{Value: ir.Read{Local: object, Of: ir.Object}},
 	}
 	l.result.Functions[index] = wrapper

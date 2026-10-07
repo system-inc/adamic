@@ -56,6 +56,9 @@ func (e *emitter) callCode(call ir.Call, arguments []string) string {
 	for _, parameter := range signature.Parameters {
 		parameters = append(parameters, cType(e.program.Locals[parameter].Type))
 	}
+	if signature.ArgumentsCount != 0 {
+		parameters = append(parameters, "double")
+	}
 	result := "void"
 	if signature.Returns != 0 {
 		result = cType(signature.Returns)
