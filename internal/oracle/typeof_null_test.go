@@ -15,6 +15,7 @@ var typeofNullFixtures = []string{
 	"internal/oracle/testdata/typeof_null_compare.a",
 	"internal/oracle/testdata/typeof_null_switch.a",
 	"internal/oracle/testdata/typeof_null_slots.a",
+	"internal/oracle/testdata/typeof_null_roll.a",
 }
 
 func init() {
