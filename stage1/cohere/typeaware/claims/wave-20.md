@@ -179,3 +179,13 @@ remains blocked; older HIR claims remain parked. No new claims: the fresh
 650-ref audit finds no unclaimed rule. Full gate and its seventeen mandatory
 input checks were not run or claimed green. See the owned constructed-context
 LANDING_B46914832_REPORT.md and validation/landing-b46914832 evidence.
+
+Typeof main landing: clean rebase onto area d3a37422c, including main
+b6b1538b0. Validated source 4c9aa73b463f2774e8cd0fea5047c22f6f68979c.
+All twelve private analyses green again: 1,132 controls/870 findings, both
+corpora, sanitizers, every mutant and released handle. New typeof fixtures
+and eight runtime mutant observations also pass Node. Shared typed registration
+and field-5 transport remain blocked; older HIR claims remain parked. Fresh
+665-ref audit finds no unclaimed rule; no new claims. Full gate and its seventeen
+mandatory checks were not run or claimed green. See the owned constructed-context
+LANDING_D3A37422C_REPORT.md and validation/landing-d3a37422c evidence.
