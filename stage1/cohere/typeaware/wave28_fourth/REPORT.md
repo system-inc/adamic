@@ -57,3 +57,23 @@ There IS now a published JSX implementation on `origin/codex/stage1-jsx-lint` at
 A native-source search across all 117 distinct stage1 trees found no occurrences of `UnconditionalBlocks`, `ControlDominators`, `AsCompilationUnit`, `ForFunctionWithoutManualMemoization`, post-dominator spellings, or Phi/HIR class declarations, and no native HIR/SSA/post-dominator shelf paths. This is a source inventory observation, not an executed proof that no differently named equivalent could exist. The inspected JSX change supplies syntax trees, not the required native SSA/closure/control-flow substrate. All three ports therefore remain blocked and unported; none was silently registered as producing zero findings.
 
 The exact owned blocker command above was repeated with artifacts at `/workspace/wave-28-fourth-resume-validation` and log `/tmp/wave-28-fourth-resume-blocker.log`. It passed in 15.659s: each Go control again emits one finding; each native parser run exits 70 at the same byte; the non-JSX control passes; the parser-bypass mutant exits normally with empty stderr on all three controls and is distinguished by the rejection check. The retained log is `validation/resume-blocker.log`. No native rule mutants, corpus parity, sanitizer/released-handle gates or native rule timings are claimed for this blocked batch. No further rules were claimed. Work stops under the instruction to report other blockers rather than edit shared files.
+
+## Numeric listener resumption audit
+
+The explicit all-heads fetch still places main at `e8ba3d5d81de4d3773c723914fccd4c76248b965` and the own remote branch at `f6cb0d06388799c23d67dc81877786834c58faf1`. Main is already an ancestor of this branch. The previous full nine-rule oracle gates therefore remain against current main; no rebase is necessary. Only this own branch is a push destination.
+
+The newly required numeric dispatch contract is not available from the integrated parser. `stage1/typescript/parser/nodes.ts` declares `readonly kind: string` and accepts a string in its constructor, with no numeric kind field. Its main blob is `1e964ea7a66e8d6a09ce7d772ecd673caa2cc68c`; parser.ts remains `bc0ee72ab6fa5cdf6b2dcca1e096d9c7f50fae8d`. The named dot-a harness branch also exposes the same string-only node API. Searching the integrated stage1 TypeScript/typeaware sources found no SyntaxKind, kindId or kindCode API. This is a source inventory observation.
+
+The nine existing ports still use string kinds and per-rule walks. Their prior correctness results do not establish compliance with the new speed rule. No numeric listener declarations or performance improvement are claimed. A local string-to-number adapter would still read a node kind as a string, contrary to the instruction. Adding numeric fields requires changing shared parser files, outside the explicit own-directory boundary. Work stops at that dependency rather than claiming a compliant listener.
+
+The three React rules remain blocked by the same JSX and native SSA/control-flow requirements documented above. Published JSX support is still on its separate branch. No further rules were claimed, no placeholder verdicts were registered, and no shared files were edited.
+
+The fresh `TestSharedParserBlocker` run passed in 61.462s. Go again reports one finding per rule, and native JSX parsing exits 70 at bytes 101, 75 and 62. The parser-bypass mutant exits 0 with empty stderr on all three controls and is caught by the expected-rejection comparison; the ordinary non-JSX control passes. This is one probe mutant exercised three times, not three native rule mutants. `go vet ./stage1/cohere/typeaware/wave28_fourth` and `git diff --check` pass. The exact logs are retained as `validation/numeric-resume-*.log`. Setup completed successfully; its timing lines and nproc=5 are retained in the setup log.
+
+```sh
+source /workspace/adamic-tools/env.sh
+ADAMIC_WAVE28_STAGE0=/workspace/wave-28-latest-third/adamic ADAMIC_WAVE28_FOURTH_ARTIFACTS=/workspace/wave-28-speed-blocker go test ./stage1/cohere/typeaware/wave28_fourth -count=1 -timeout=10m -v > /tmp/wave28-speed-blocker.log 2>&1
+go vet ./stage1/cohere/typeaware/wave28_fourth > /tmp/wave28-speed-vet.log 2>&1
+```
+
+No completed rule code changed, so the nine full gates on this same main were not repeated. Full repository tests, numeric listeners, new performance measurements and completed React ports remain uncovered.
