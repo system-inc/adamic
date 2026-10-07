@@ -1,0 +1,25 @@
+import { Bindings } from '../bindings.ts';
+import { Diagnostic } from '../diagnostic.ts';
+export class Syntax {
+    readonly bindings: Bindings;
+    constructor(bindings: Bindings) { this.bindings = bindings; }
+    kind(index: number): string { return index < 0 ? '' : this.bindings.rules.parser.node(index).kind; }
+    text(index: number): string { return index < 0 ? '' : this.bindings.rules.parser.node(index).text; }
+    child(index: number, offset: number): number { return this.bindings.rules.parser.node(index).children[offset] ?? -1; }
+    last(index: number): number { const children = this.bindings.rules.parser.node(index).children; return children[children.length - 1] ?? -1; }
+    transparent(kind: string): boolean { return ['ParenthesizedExpression', 'NonNullExpression', 'AsExpression', 'SatisfiesExpression', 'TypeAssertionExpression'].includes(kind); }
+    unwrap(index: number): number { let at = index; while(at >= 0 && this.transparent(this.kind(at))) { at = this.child(at, this.kind(at) === 'TypeAssertionExpression' ? 1 : 0); } return at; }
+    contains(outer: number, inner: number): boolean { if(outer < 0 || inner < 0) { return false; } let at = inner; while(at >= 0) { if(at === outer) { return true; } at = this.bindings.parent(at); } return false; }
+    hook(index: number): string { const at = this.unwrap(index); if(at < 0) { return ''; } if(this.kind(at) === 'Identifier') { return this.text(at); } if(this.kind(at) === 'PropertyAccessExpression') { const object = this.unwrap(this.child(at, 0)); if(this.kind(object) === 'Identifier' && this.text(object) === 'React') { return this.text(this.last(at)); } } return ''; }
+    arguments(index: number): number[] { const node = this.bindings.rules.parser.node(index); return node.list < 1 ? [] : node.children.slice(node.children.length - node.list); }
+    nonRead(index: number): boolean {
+        let at = this.bindings.parent(index);
+        while(at >= 0) { const kind = this.kind(at); if((kind.endsWith('Type') || ['TypeReference', 'TypeQuery', 'TypeLiteral', 'TypePredicate', 'TypeOperator', 'TypeParameter', 'ExpressionWithTypeArguments'].includes(kind))) { return true; } if(this.bindings.functionKind(kind) || kind === 'SourceFile') { break; } at = this.bindings.parent(at); }
+        const parent = this.bindings.parent(index); if(parent < 0) { return false; } const kind = this.kind(parent);
+        if(kind === 'PropertyAccessExpression') { return this.last(parent) === index; }
+        if(kind === 'PropertyAssignment') { return this.child(parent, 0) === index; }
+        if(['QualifiedName', 'MethodDeclaration', 'PropertyDeclaration', 'PropertySignature', 'MethodSignature', 'GetAccessor', 'SetAccessor', 'EnumMember', 'ImportSpecifier', 'ImportClause', 'NamespaceImport', 'TypeParameter', 'TypeReference', 'TypeQuery', 'JsxAttribute'].includes(kind)) { return this.bindings.shape.name(parent) === index; }
+        return false;
+    }
+    report(rule: string, id: string, message: string, index: number): Diagnostic { const rules = this.bindings.rules; const node = rules.parser.node(index); const result = new Diagnostic(rule, id, message, rules.byte(rules.start(node)), rules.byte(node.end), ''); rules.findings.push(result); return result; }
+}

@@ -1,0 +1,18 @@
+import { Bindings } from '../bindings.ts';
+import { Diagnostic } from '../diagnostic.ts';
+import { IdentifierBinding } from './identifier_binding.a';
+export class PreferRestParams {
+    readonly bindings: Bindings; readonly symbols: IdentifierBinding;
+    constructor(bindings: Bindings) { this.bindings = bindings; this.symbols = new IdentifierBinding(bindings); }
+    run(): void {
+        const rules = this.bindings.rules;
+        for(let at = 0; at < rules.parser.nodes.length; at++) {
+            const node = rules.parser.node(at); if(node.kind !== 'Identifier' || node.text !== 'arguments') { continue; }
+            const symbol = this.symbols.symbol(at); if(symbol.identity === 0 || symbol.declarations.length !== 0) { continue; }
+            const parent = this.bindings.parent(at);
+            if(parent >= 0 && rules.parser.node(parent).kind === 'PropertyAccessExpression' && rules.parser.node(parent).children[0] === at) { continue; }
+            rules.findings.push(new Diagnostic('prefer-rest-params', 'preferRestParams', MESSAGE, rules.byte(rules.start(node)), rules.byte(node.end), ''));
+        }
+    }
+}
+const MESSAGE = 'This reads the implicit `arguments` object, which is array-like rather than an array and carries none of `Array.prototype`, so iterating or slicing it needs a conversion first. Declare a rest parameter (`...args`) and use that instead.';

@@ -1,0 +1,42 @@
+export class DependencyRead {
+    readonly path: string; readonly stable: boolean; readonly optional: readonly string[];
+    constructor(path: string, stable: boolean, optional: readonly string[]) { this.path = path; this.stable = stable; this.optional = optional; }
+}
+export class DeclaredDependency {
+    readonly key: string; readonly node: number; readonly external: boolean;
+    constructor(key: string, node: number, external: boolean) { this.key = key; this.node = node; this.external = external; }
+}
+class TreeNode {
+    readonly path: string; readonly children: number[] = []; used = false; satisfied = false; subtree = false;
+    constructor(path: string) { this.path = path; }
+}
+export class Recommendations {
+    readonly nodes: TreeNode[] = []; readonly indexes = new Map<string, number>(); readonly missing: string[] = []; readonly satisfying: string[] = []; readonly suggested: string[] = []; readonly unnecessary: string[] = []; readonly duplicate: string[] = [];
+    constructor(reads: readonly DependencyRead[], declared: readonly DeclaredDependency[], effect: boolean) {
+        this.nodes.push(new TreeNode('')); this.indexes.set('', 0);
+        for(const read of reads) { if(!read.stable) { const at = this.path(read.path, true); const node = this.nodes[at]; if(node !== undefined) { node.used = true; } } }
+        for(const dependency of declared) { const node = this.nodes[this.path(dependency.key, false)]; if(node !== undefined) { node.satisfied = true; } }
+        for(const read of reads) { if(read.stable) { const node = this.nodes[this.path(read.path, true)]; if(node !== undefined) { node.satisfied = true; } } }
+        this.scan(0);
+        for(const dependency of declared) {
+            if(this.satisfying.includes(dependency.key)) { if(!this.suggested.includes(dependency.key)) { this.suggested.push(dependency.key); } else if(!this.duplicate.includes(dependency.key)) { this.duplicate.push(dependency.key); } }
+            else if(effect && !dependency.key.endsWith('.current') && !dependency.external) { if(!this.suggested.includes(dependency.key)) { this.suggested.push(dependency.key); } }
+            else if(!this.unnecessary.includes(dependency.key)) { this.unnecessary.push(dependency.key); }
+        }
+        for(const path of this.missing) { this.suggested.push(path); }
+    }
+    path(path: string, used: boolean): number {
+        let parent = 0; let prefix = '';
+        for(const segment of path.split('.')) {
+            prefix = prefix === '' ? segment : prefix + '.' + segment;
+            let at = this.indexes.get(prefix);
+            if(at === undefined) { at = this.nodes.length; this.nodes.push(new TreeNode(prefix)); this.indexes.set(prefix, at); const node = this.nodes[parent]; if(node !== undefined) { node.children.push(at); } }
+            const node = this.nodes[at]; if(node !== undefined && used) { node.subtree = true; } parent = at;
+        }
+        return parent;
+    }
+    scan(index: number): void {
+        const node = this.nodes[index]; if(node === undefined) { return; }
+        for(const at of node.children) { const child = this.nodes[at]; if(child === undefined) { continue; } if(child.satisfied) { if(child.subtree) { this.satisfying.push(child.path); } } else if(child.used) { if(!this.missing.includes(child.path)) { this.missing.push(child.path); } } else { this.scan(at); } }
+    }
+}

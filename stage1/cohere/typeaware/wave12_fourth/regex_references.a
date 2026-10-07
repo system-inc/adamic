@@ -1,0 +1,71 @@
+import { Bindings } from '../bindings.ts';
+import { IdentifierBinding } from './identifier_binding.a';
+import { Syntax } from './syntax.a';
+export class RegexReferences {
+    readonly bindings: Bindings; readonly symbols: IdentifierBinding; readonly syntax: Syntax; readonly references: number[] = []; readonly following: string[] = []; readonly calls: number[] = [];
+    constructor(bindings: Bindings) { this.bindings = bindings; this.symbols = new IdentifierBinding(bindings); this.syntax = new Syntax(bindings); }
+    value(index: number): boolean {
+        const parent = this.bindings.parent(index); if(parent < 0 || this.bindings.declaring(index)) { return false; }
+        return !['TypeReference', 'TypeQuery', 'QualifiedName', 'LabeledStatement', 'BreakStatement', 'ContinueStatement', 'ImportSpecifier', 'JsxAttribute'].includes(this.syntax.kind(parent));
+    }
+    writes(index: number): boolean {
+        let at = index; let parent = this.bindings.parent(at);
+        while(parent >= 0) {
+            const kind = this.syntax.kind(parent);
+            if(['ParenthesizedExpression', 'SpreadElement', 'SpreadAssignment', 'ArrayLiteralExpression', 'ObjectLiteralExpression', 'ShorthandPropertyAssignment'].includes(kind) || (kind === 'PropertyAssignment' && this.syntax.last(parent) === at)) { at = parent; parent = this.bindings.parent(at); continue; }
+            if(kind === 'BinaryExpression') { return this.syntax.child(parent, 0) === at && this.syntax.kind(this.syntax.child(parent, 1)).endsWith('EqualsToken') && !['EqualsEqualsToken', 'EqualsEqualsEqualsToken', 'ExclamationEqualsToken', 'ExclamationEqualsEqualsToken', 'LessThanEqualsToken', 'GreaterThanEqualsToken'].includes(this.syntax.kind(this.syntax.child(parent, 1))); }
+            if(kind === 'PrefixUnaryExpression' || kind === 'PostfixUnaryExpression') { return ['PlusPlusToken', 'MinusMinusToken'].includes(this.bindings.rules.parser.node(parent).operator); }
+            if(kind === 'ForOfStatement' || kind === 'ForInStatement') { return this.syntax.child(parent, 0) === at; } return false;
+        }
+        return false;
+    }
+    constant(index: number): string | undefined {
+        const at = this.bindings.rules.skip(index); const node = this.bindings.rules.parser.node(at);
+        if(['StringLiteral', 'NoSubstitutionTemplateLiteral', 'NumericLiteral'].includes(node.kind)) { return node.text; }
+        if(['TrueKeyword', 'FalseKeyword', 'NullKeyword'].includes(node.kind)) { return node.kind === 'TrueKeyword' ? 'true' : node.kind === 'FalseKeyword' ? 'false' : 'null'; }
+        if(node.kind === 'BinaryExpression' && this.syntax.kind(this.syntax.child(at, 1)) === 'PlusToken') { const left = this.constant(this.syntax.child(at, 0)); const right = this.constant(this.syntax.child(at, 2)); if(left !== undefined && right !== undefined && ['StringLiteral', 'NoSubstitutionTemplateLiteral', 'BinaryExpression', 'TemplateExpression'].some((kind) => this.syntax.kind(this.syntax.child(at, 0)) === kind || this.syntax.kind(this.syntax.child(at, 2)) === kind)) { return left + right; } }
+        if(node.kind === 'TemplateExpression') { let result = this.syntax.text(this.syntax.child(at, 0)); for(const span of node.children.slice(1)) { const value = this.constant(this.syntax.child(span, 0)); if(value === undefined) { return undefined; } result += value + this.syntax.text(this.syntax.last(span)); } return result; }
+        return undefined;
+    }
+    member(index: number): string | undefined { return this.syntax.kind(index) === 'PropertyAccessExpression' ? this.syntax.text(this.syntax.last(index)) : this.constant(this.syntax.last(index)); }
+    target(index: number, object: boolean): void {
+        const at = this.bindings.rules.skip(index); const node = this.bindings.rules.parser.node(at);
+        if(node.kind === 'Identifier') { const identity = this.symbols.symbol(at).identity; if(identity === 0) { return; } this.follow(`${identity}:${object}`, this.references.filter((ref) => this.syntax.text(ref) === node.text && this.symbols.symbol(ref).identity === identity), object); }
+        else if(object && ['ObjectBindingPattern', 'ObjectLiteralExpression'].includes(node.kind)) {
+            for(const child of node.children) {
+                const kind = this.syntax.kind(child); let key = this.bindings.shape.name(child); let value = key;
+                if(kind === 'BindingElement') { const n = this.bindings.rules.parser.node(child); if(n.children.some((c) => this.syntax.kind(c) === 'DotDotDotToken')) { continue; } if(n.children.length > 1 && n.children[0] !== key) { key = n.children[0] ?? key; } }
+                else if(kind === 'PropertyAssignment') { key = this.syntax.child(child, 0); value = this.syntax.last(child); }
+                else if(kind !== 'ShorthandPropertyAssignment') { continue; }
+                const name = this.syntax.kind(key) === 'ComputedPropertyName' ? this.constant(this.syntax.child(key, 0)) : this.syntax.text(key);
+                if(name === 'RegExp') { this.target(value, false); }
+            }
+        } else if(node.kind === 'BinaryExpression' && this.syntax.kind(this.syntax.child(at, 1)) === 'EqualsToken') { this.target(this.syntax.child(at, 0), object); }
+    }
+    follow(key: string, references: readonly number[], object: boolean): void {
+        if(this.following.includes(key)) { return; } this.following.push(key); for(const reference of references) { this.climb(reference, object); } this.following.pop();
+    }
+    climb(index: number, object: boolean): void {
+        let at = index; let parent = this.bindings.parent(at);
+        while(parent >= 0) {
+            const kind = this.syntax.kind(parent); const operator = kind === 'BinaryExpression' ? this.syntax.kind(this.syntax.child(parent, 1)) : '';
+            if(this.syntax.transparent(kind) || kind === 'ExpressionWithTypeArguments' || (kind === 'ConditionalExpression' && this.syntax.child(parent, 0) !== at) || (kind === 'BinaryExpression' && (['AmpersandAmpersandToken', 'BarBarToken', 'QuestionQuestionToken'].includes(operator) || (operator === 'CommaToken' && this.syntax.child(parent, 2) === at)))) { at = parent; parent = this.bindings.parent(at); } else { break; }
+        }
+        if(parent < 0) { return; } const kind = this.syntax.kind(parent);
+        if(['PropertyAccessExpression', 'ElementAccessExpression'].includes(kind) && this.syntax.child(parent, 0) === at && object && this.member(parent) === 'RegExp') { this.climb(parent, false); }
+        else if(['CallExpression', 'NewExpression'].includes(kind) && this.syntax.child(parent, 0) === at && !object) { this.calls.push(parent); }
+        else if(kind === 'BinaryExpression' && this.syntax.child(parent, 2) === at && ['EqualsToken', 'BarBarEqualsToken', 'AmpersandAmpersandEqualsToken', 'QuestionQuestionEqualsToken'].includes(this.syntax.kind(this.syntax.child(parent, 1)))) { this.target(this.syntax.child(parent, 0), object); this.climb(parent, object); }
+        else if(['VariableDeclaration', 'Parameter', 'BindingElement'].includes(kind) && this.bindings.shape.initializer(parent) === at) { this.target(this.bindings.shape.name(parent), object); }
+        else if(kind === 'ShorthandPropertyAssignment' && this.syntax.last(parent) === at) { this.target(this.bindings.shape.name(parent), object); }
+    }
+    run(): readonly number[] {
+        if(!this.bindings.rules.scanner.text.includes('RegExp')) { return this.calls; }
+        const root = this.bindings.rules.parser.nodes.length - 1; this.index(root);
+        for(const name of ['RegExp', 'global', 'globalThis', 'self', 'window']) {
+            const references = this.references.filter((at) => this.syntax.text(at) === name && this.symbols.symbol(at).declarations.every((declaration) => declaration.declarationFile));
+            if(references.length > 0 && !references.some((at) => this.writes(at))) { this.follow(`global:${name}`, references, name !== 'RegExp'); }
+        }
+        return this.calls;
+    }
+    index(at: number): void { if(this.syntax.kind(at) === 'Identifier' && this.value(at)) { this.references.push(at); } for(const child of this.bindings.rules.parser.node(at).children) { this.index(child); } }
+}

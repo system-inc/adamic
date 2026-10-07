@@ -1,0 +1,83 @@
+export class RegexPattern {
+    readonly pattern: string; readonly flags: string; readonly unicode: boolean; readonly sets: boolean;
+    constructor(pattern: string, flags: string) { this.pattern = pattern; this.flags = flags; this.unicode = flags.includes('u') || flags.includes('v'); this.sets = flags.includes('v'); }
+    hex(text: string): boolean { return text.length > 0 && text.split('').every((c) => '0123456789abcdefABCDEF'.includes(c)); }
+    width(index: number): number { return (this.pattern.codePointAt(index) ?? 0) > 65535 ? 2 : 1; }
+    escape(index: number): number {
+        const text = this.pattern; if(index + 1 >= text.length) { return -1; } const next = text[index + 1] ?? '';
+        if(next === 'x' && index + 3 < text.length && this.hex(text.slice(index + 2, index + 4))) { return index + 4; }
+        if(next === 'u' && index + 5 < text.length && this.hex(text.slice(index + 2, index + 6))) { return index + 6; }
+        if(['u', 'p', 'P', 'q'].includes(next) && this.unicode && text[index + 2] === '{') { const end = text.indexOf('}', index + 3); if(end >= 0) { return end + 1; } }
+        if(next === 'c' && index + 2 < text.length) { return index + 3; }
+        return index + 1 + this.width(index + 1);
+    }
+    classEnd(start: number): number {
+        let depth = 1; let at = start + 1;
+        while(at < this.pattern.length) { const c = this.pattern[at]; if(c === '\\') { at = this.escape(at); if(at < 0) { return -1; } } else if(c === '[' && this.sets) { depth++; at++; } else if(c === ']') { depth--; at++; if(depth === 0) { return at; } } else { at += this.width(at); } }
+        return -1;
+    }
+    brace(start: number): number {
+        let at = start + 1; const first = at;
+        while(at < this.pattern.length && '0123456789'.includes(this.pattern[at] ?? '!')) { at++; }
+        if(at === first) { return -1; } if(this.pattern[at] === ',') { at++; while(at < this.pattern.length && '0123456789'.includes(this.pattern[at] ?? '!')) { at++; } }
+        return this.pattern[at] === '}' ? at + 1 : -1;
+    }
+    valid(): boolean {
+        const seen: string[] = []; for(const flag of this.flags.split('')) { if(!'dgimsuvy'.includes(flag) || seen.includes(flag)) { return false; } seen.push(flag); }
+        if(this.flags.includes('u') && this.flags.includes('v')) { return false; }
+        let depth = 0; let repeatable = false;
+        for(let at = 0; at < this.pattern.length;) {
+            const c = this.pattern[at];
+            if(c === '\\') { at = this.escape(at); if(at < 0) { return false; } repeatable = true; continue; }
+            if(c === '[') { const end = this.classEnd(at); if(end < 0 || !this.classValid(at, end)) { return false; } at = end; repeatable = true; continue; }
+            if(c === '(') { depth++; repeatable = false; }
+            else if(c === ')') { depth--; if(depth < 0) { return false; } repeatable = true; }
+            else if(c === '*' || c === '+' || c === '?') { if(!repeatable) { return false; } repeatable = false; }
+            else if(c === '{') { const end = this.brace(at); if(end >= 0) { if(!repeatable) { return false; } at = end; repeatable = false; continue; } if(this.unicode) { return false; } repeatable = true; }
+            else if(c === '|') { repeatable = false; } else { repeatable = true; }
+            at += this.width(at);
+        }
+        return depth === 0;
+    }
+    classValid(start: number, end: number): boolean {
+        let at = start + 1; if(this.pattern[at] === '^') { at++; } let pending = false;
+        while(at < end - 1) {
+            const c = this.pattern[at];
+            if(c === '[' && this.sets) { at = this.classEnd(at); pending = false; continue; }
+            if(this.sets && (c === '-' || c === '&') && this.pattern[at + 1] === c) { at += 2; pending = false; continue; }
+            if(c === '-' && pending && at + 1 < end - 1) { at++; if(this.pattern[at] === '\\' && 'dDwWsSpPq'.includes(this.pattern[at + 1] ?? '') && (this.unicode || 'dDwWsS'.includes(this.pattern[at + 1] ?? ''))) { return false; } pending = false; }
+            if(this.pattern[at] === '\\') {
+                const n = this.pattern[at + 1] ?? ''; if(n === 'B' && this.unicode) { return false; }
+                if(['u', 'p', 'P', 'q'].includes(n) && this.unicode && this.pattern[at + 2] === '{') { const close = this.pattern.indexOf('}', at + 3); if(close < 0 || (n === 'u' && !this.hex(this.pattern.slice(at + 3, close)))) { return false; } }
+                if(n === 'c' && at + 2 >= this.pattern.length) { return false; }
+                at = this.escape(at); if(at < 0) { return false; } pending = !'dDwWsS'.includes(n) && !(this.unicode && ['p', 'P', 'q'].includes(n));
+            } else { at += this.width(at); pending = true; }
+        }
+        return true;
+    }
+    spelling(text: string): string {
+        const bare = text.startsWith('\\') ? text.slice(1) : text;
+        if(bare === '\n') { return '\\n'; } if(bare === '\r') { return '\\r'; } if(bare === '\t') { return '\\t'; } if(bare === '\v') { return '\\v'; } if(bare === '\f') { return '\\f'; }
+        return text === '/' ? '\\/' : text;
+    }
+    rewrite(): string {
+        let out = ''; const text = this.pattern;
+        // Range source spans are emitted as one character by the pinned walker.
+        for(let at = 0; at < text.length;) {
+            if(text[at] === '[') {
+                const end = this.classEnd(at); let next = at + 1; out += '['; if(text[next] === '^') { out += '^'; next++; }
+                while(next < end - 1) {
+                    if(text[next] === '[' && this.sets) { const stop = this.classEnd(next); out += text.slice(next, stop); next = stop; continue; }
+                    const start = next; next = text[next] === '\\' ? this.escape(next) : next + this.width(next);
+                    if(text[next] === '-' && next + 1 < end - 1 && !(this.sets && text[next + 1] === '-')) { next++; next = text[next] === '\\' ? this.escape(next) : next + this.width(next); }
+                    out += this.spelling(text.slice(start, next));
+                }
+                out += ']'; at = end;
+            } else {
+                const next = text[at] === '\\' ? this.escape(at) : at + this.width(at);
+                out += this.spelling(text.slice(at, next)); at = next;
+            }
+        }
+        return out;
+    }
+}

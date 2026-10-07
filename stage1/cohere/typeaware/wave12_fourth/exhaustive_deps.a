@@ -1,0 +1,172 @@
+import { Bindings } from '../bindings.ts';
+import { Diagnostic } from '../diagnostic.ts';
+import { Suggestion } from '../suggestion.ts';
+import { IdentifierBinding } from './identifier_binding.a';
+import { Syntax } from './syntax.a';
+import { DependencyRead, DeclaredDependency, Recommendations } from './dependency_tree.a';
+import { dependencyMessages } from './dependency_messages.a';
+export class ExhaustiveDeps {
+    readonly bindings: Bindings; readonly syntax: Syntax; readonly symbols: IdentifierBinding;
+    constructor(bindings: Bindings) { this.bindings = bindings; this.syntax = new Syntax(bindings); this.symbols = new IdentifierBinding(bindings); }
+    report(kind: string, index: number): Diagnostic {
+        const id = `exhaustiveDeps${kind}`; const row = dependencyMessages.find((message) => message[0] === id);
+        return this.syntax.report('react-hooks/exhaustive-deps', id, row === undefined ? '' : row[1] ?? '', index);
+    }
+    primitive(index: number): boolean { return ['StringLiteral', 'NumericLiteral', 'NullKeyword', 'NoSubstitutionTemplateLiteral'].includes(this.syntax.kind(index)); }
+    literal(index: number): boolean { return this.primitive(index) || ['BigIntLiteral', 'TrueKeyword', 'FalseKeyword', 'RegularExpressionLiteral'].includes(this.syntax.kind(index)); }
+    initializer(index: number): number { return this.syntax.unwrap(this.bindings.shape.initializer(index)); }
+    bindingHook(declaration: number): string {
+        const pattern = this.bindings.parent(declaration); if(pattern < 0 || this.syntax.kind(pattern) !== 'ArrayBindingPattern') { return ''; }
+        const elements = this.bindings.rules.parser.node(pattern).children;
+        if(elements.length !== 2 || elements[1] !== declaration) { return ''; }
+        const variable = this.bindings.parent(pattern); if(variable < 0 || this.syntax.kind(variable) !== 'VariableDeclaration') { return ''; }
+        const init = this.initializer(variable); return init >= 0 && this.syntax.kind(init) === 'CallExpression' ? this.syntax.hook(this.syntax.child(init, 0)) : '';
+    }
+    reassigned(declaration: number, component: number): boolean {
+        const name = this.bindings.shape.name(declaration); if(name < 0) { return false; } const identity = this.symbols.symbol(name).identity;
+        return this.assignments(component, identity);
+    }
+    assignments(index: number, identity: number): boolean {
+        if(this.syntax.kind(index) === 'BinaryExpression' && this.syntax.kind(this.syntax.child(index, 1)) === 'EqualsToken') { const written = this.syntax.unwrap(this.syntax.child(index, 0)); if(this.syntax.kind(written) === 'Identifier' && this.symbols.symbol(written).identity === identity) { return true; } }
+        return this.bindings.rules.parser.node(index).children.some((child) => this.assignments(child, identity));
+    }
+    stable(index: number, component: number, visiting: readonly number[]): boolean {
+        const symbol = this.symbols.symbol(index); if(visiting.includes(symbol.identity)) { return false; }
+        const declaration = this.symbols.earliest(index); if(declaration < 0) { return false; } const kind = this.syntax.kind(declaration);
+        if(kind === 'BindingElement') { return ['useState', 'useReducer', 'useActionState', 'useTransition'].includes(this.bindingHook(declaration)) && !this.reassigned(declaration, component); }
+        let function_ = kind === 'FunctionDeclaration' ? declaration : -1;
+        if(kind === 'VariableDeclaration') {
+            const init = this.initializer(declaration); if(init < 0) { return false; }
+            if(['ArrowFunction', 'FunctionExpression'].includes(this.syntax.kind(init))) { function_ = init; }
+            else {
+                const list = this.bindings.parent(declaration);
+                if(list >= 0 && this.bindings.rules.parser.node(list).semantic === '2' && this.primitive(init)) { return true; }
+                return this.syntax.kind(init) === 'CallExpression' && ['useRef', 'useEffectEvent'].includes(this.syntax.hook(this.syntax.child(init, 0)));
+            }
+        }
+        if(function_ < 0) { return false; }
+        const next = visiting.slice(); next.push(symbol.identity); return this.stableWalk(function_, function_, component, next);
+    }
+    stableWalk(index: number, function_: number, component: number, visiting: readonly number[]): boolean {
+        if(this.syntax.kind(index) === 'Identifier' && !this.syntax.nonRead(index)) {
+            const declarations = this.symbols.indexes(index);
+            if(!declarations.some((decl) => this.syntax.contains(function_, decl)) && declarations.some((decl) => this.syntax.contains(component, decl)) && !this.stable(index, component, visiting)) { return false; }
+        }
+        return this.bindings.rules.parser.node(index).children.every((child) => this.stableWalk(child, function_, component, visiting));
+    }
+    outer(index: number): number {
+        let at = index;
+        while(true) {
+            const parent = this.bindings.parent(at); if(parent < 0) { return at; }
+            const kind = this.syntax.kind(parent);
+            if(this.syntax.transparent(kind)) { at = parent; continue; }
+            if(kind !== 'PropertyAccessExpression' || this.syntax.child(parent, 0) !== at || this.syntax.kind(this.syntax.last(parent)) !== 'Identifier' || this.syntax.text(this.syntax.last(parent)) === 'current') { return this.target(at); }
+            const grandparent = this.bindings.parent(parent);
+            if(grandparent >= 0 && this.syntax.kind(grandparent) === 'CallExpression' && this.syntax.child(grandparent, 0) === parent) { return at; }
+            at = parent;
+        }
+    }
+    target(index: number): number {
+        const parent = this.bindings.parent(index);
+        return this.syntax.kind(index) === 'PropertyAccessExpression' && parent >= 0 && this.syntax.kind(parent) === 'BinaryExpression' && this.syntax.child(parent, 0) === index && this.syntax.kind(this.syntax.child(parent, 1)) === 'EqualsToken' ? this.syntax.child(index, 0) : index;
+    }
+    chain(index: number, optional: string[]): string {
+        const at = this.syntax.unwrap(index); if(at < 0) { return ''; }
+        if(this.syntax.kind(at) === 'Identifier') { return this.syntax.text(at); }
+        if(this.syntax.kind(at) !== 'PropertyAccessExpression' || this.syntax.kind(this.syntax.last(at)) !== 'Identifier') { return ''; }
+        const prefix = this.chain(this.syntax.child(at, 0), optional); if(prefix === '') { return ''; }
+        const path = prefix + '.' + this.syntax.text(this.syntax.last(at)); if(this.bindings.rules.parser.node(at).children.some((child) => this.syntax.kind(child) === 'QuestionDotToken')) { optional.push(path); } return path;
+    }
+    gather(index: number, callback: number, component: number, reads: DependencyRead[]): void {
+        if(this.syntax.kind(index) === 'Identifier' && !this.syntax.nonRead(index)) {
+            const declarations = this.symbols.indexes(index); const hook = this.bindings.parent(callback);
+            const self = hook >= 0 && this.syntax.kind(hook) === 'CallExpression' && declarations.some((decl) => this.syntax.kind(decl) === 'VariableDeclaration' && this.initializer(decl) === hook);
+            if(!self && !declarations.some((decl) => this.syntax.contains(callback, decl)) && declarations.some((decl) => this.syntax.contains(component, decl))) {
+                const optional: string[] = []; const path = this.chain(this.outer(index), optional);
+                if(path !== '' && !reads.some((read) => read.path === path)) { const visiting: number[] = []; reads.push(new DependencyRead(path, this.stable(index, component, visiting), optional)); }
+            }
+        }
+        for(const child of this.bindings.rules.parser.node(index).children) { this.gather(child, callback, component, reads); }
+    }
+    root(index: number): number { let at = this.syntax.unwrap(index); while(at >= 0 && this.syntax.kind(at) === 'PropertyAccessExpression') { at = this.syntax.unwrap(this.syntax.child(at, 0)); } return at; }
+    construction(index: number): boolean {
+        const at = this.syntax.unwrap(index); const kind = this.syntax.kind(at);
+        if(['ObjectLiteralExpression', 'ArrayLiteralExpression', 'ArrowFunction', 'FunctionExpression', 'ClassExpression', 'NewExpression', 'RegularExpressionLiteral', 'JsxElement', 'JsxFragment', 'JsxSelfClosingElement'].includes(kind)) { return true; }
+        if(kind === 'ConditionalExpression') { return this.construction(this.syntax.child(at, 1)) || this.construction(this.syntax.child(at, 2)); }
+        if(kind === 'BinaryExpression') { const operator = this.syntax.kind(this.syntax.child(at, 1)); if(['AmpersandAmpersandToken', 'BarBarToken', 'QuestionQuestionToken'].includes(operator)) { return this.construction(this.syntax.child(at, 0)) || this.construction(this.syntax.child(at, 2)); } if(operator === 'EqualsToken') { return this.construction(this.syntax.child(at, 2)); } } return false;
+    }
+    setters(index: number, callback: number, component: number): boolean {
+        if(index !== callback && this.bindings.functionKind(this.syntax.kind(index))) { return false; }
+        if(this.syntax.kind(index) === 'Identifier' && !this.syntax.nonRead(index)) { const declaration = this.symbols.earliest(index); if(declaration >= 0 && this.syntax.contains(component, declaration) && !this.syntax.contains(callback, declaration) && this.bindingHook(declaration) === 'useState') { return true; } }
+        return this.bindings.rules.parser.node(index).children.some((child) => this.setters(child, callback, component));
+    }
+    callback(callback: number, array: number, call: number, component: number, effect: boolean): void {
+        const node = this.bindings.rules.parser.node(callback);
+        if(effect && node.children.some((child) => this.syntax.kind(child) === 'AsyncKeyword')) { this.report('AsyncEffect', callback); }
+        const reads: DependencyRead[] = []; this.gather(callback, callback, component, reads);
+        if(array < 0) { if(this.setters(callback, callback, component)) { this.report('SetStateNoDependencies', call); } return; }
+        const declared: DeclaredDependency[] = []; const entries: number[] = []; const messages: string[] = []; const written = this.syntax.unwrap(array);
+        if(this.syntax.kind(written) !== 'ArrayLiteralExpression') { entries.push(array); messages.push('NotArrayLiteral'); }
+        else {
+            for(const element of this.bindings.rules.parser.node(written).children) {
+                if(this.syntax.kind(element) === 'OmittedExpression') { continue; }
+                let message = '';
+                if(this.syntax.kind(element) === 'SpreadElement') { message = 'Spread'; }
+                else {
+                    const at = this.syntax.unwrap(element); const decl = this.syntax.kind(at) === 'Identifier' ? this.symbols.earliest(at) : -1; const init = decl >= 0 && this.syntax.kind(decl) === 'VariableDeclaration' ? this.initializer(decl) : -1;
+                    if(decl >= 0 && this.syntax.contains(component, decl) && init >= 0 && this.syntax.kind(init) === 'CallExpression' && this.syntax.hook(this.syntax.child(init, 0)) === 'useEffectEvent') { message = 'EffectEvent'; }
+                    else {
+                        const optional: string[] = []; const key = this.chain(element, optional);
+                        if(key === '') { message = this.literal(this.syntax.unwrap(element)) ? 'Literal' : 'ComplexExpression'; }
+                        else { const root = this.root(element); const external = this.syntax.kind(root) !== 'Identifier' || !this.symbols.indexes(root).some((declaration) => this.syntax.contains(component, declaration)); declared.push(new DeclaredDependency(key, element, external)); }
+                    }
+                }
+                if(message !== '') { entries.push(element); messages.push(message); }
+            }
+        }
+        const recommendation = new Recommendations(reads, declared, effect);
+        if(recommendation.missing.length === 0 && recommendation.unnecessary.length === 0 && recommendation.duplicate.length === 0) {
+            for(const dependency of declared) {
+                if(dependency.key.includes('.')) { continue; } const root = this.syntax.unwrap(dependency.node); if(this.syntax.kind(root) !== 'Identifier') { continue; }
+                const declaration = this.symbols.earliest(root); if(declaration < 0 || !this.syntax.contains(component, declaration) || this.syntax.contains(callback, declaration)) { continue; }
+                const kind = this.syntax.kind(declaration);
+                if(['FunctionDeclaration', 'ClassDeclaration'].includes(kind) || (kind === 'VariableDeclaration' && this.syntax.kind(this.bindings.shape.name(declaration)) === 'Identifier' && this.construction(this.initializer(declaration)))) { this.report('Construction', declaration); }
+            }
+        } else {
+            let suggested = recommendation.suggested;
+            if(!effect && recommendation.missing.length > 0) { const none: DeclaredDependency[] = []; suggested = new Recommendations(reads, none, effect).suggested; }
+            let sorted = true; for(let at = 1; at < declared.length; at++) { if((declared[at - 1]?.key ?? '') > (declared[at]?.key ?? '')) { sorted = false; } }
+            if(sorted) { suggested.sort((a, b) => a < b ? -1 : a > b ? 1 : 0); }
+            const formatted: string[] = [];
+            for(const path of suggested) { const segments = path.split('.'); let text = segments[0] ?? ''; let prefix = text; for(const segment of segments.slice(1)) { prefix += '.' + segment; text += (reads.some((read) => read.optional.includes(prefix)) ? '?.' : '.') + segment; } formatted.push(text); }
+            const message = recommendation.missing.length > 0 ? 'Missing' : recommendation.unnecessary.length > 0 ? 'Unnecessary' : 'Duplicate';
+            const finding = this.report(message, array); finding.suggestions.push(new Suggestion('exhaustiveDepsUpdateArray', `Update the dependency array to [${formatted.join(', ')}].`, []));
+        }
+        for(let at = 0; at < entries.length; at++) { this.report(messages[at] ?? '', entries[at] ?? -1); }
+    }
+    visit(call: number): void {
+        const hook = this.syntax.hook(this.syntax.child(call, 0)); if(!['useEffect', 'useLayoutEffect', 'useCallback', 'useMemo', 'useImperativeHandle'].includes(hook)) { return; }
+        let component = this.bindings.parent(call); while(component >= 0 && !this.bindings.functionKind(this.syntax.kind(component))) { component = this.bindings.parent(component); } if(component < 0) { return; }
+        const arguments_ = this.syntax.arguments(call); const offset = hook === 'useImperativeHandle' ? 1 : 0;
+        if(arguments_.length <= offset) { this.report('MissingCallback', call); return; }
+        const callbackArgument = arguments_[offset] ?? -1; let array = arguments_[offset + 1] ?? -1;
+        if(array >= 0 && this.syntax.kind(array) === 'Identifier' && this.syntax.text(array) === 'undefined') { array = -1; }
+        const effect = hook === 'useEffect' || hook === 'useLayoutEffect';
+        if(array < 0 && !effect) { if(hook === 'useMemo' || hook === 'useCallback') { this.report('UselessWithoutDependencies', call); } return; }
+        let callback = this.syntax.unwrap(callbackArgument); const kind = this.syntax.kind(callback);
+        if(kind === 'Identifier') {
+            if(array < 0) { return; }
+            const at = this.syntax.unwrap(array);
+            if(this.syntax.kind(at) === 'ArrayLiteralExpression' && this.bindings.rules.parser.node(at).children.some((entry) => this.syntax.kind(this.syntax.unwrap(entry)) === 'Identifier' && this.syntax.text(this.syntax.unwrap(entry)) === this.syntax.text(callback))) { return; }
+            const declaration = this.symbols.earliest(callback);
+            if(declaration < 0 || !['FunctionDeclaration', 'VariableDeclaration'].includes(this.syntax.kind(declaration))) { this.report('UnknownDependencies', call); return; }
+            if(this.syntax.kind(declaration) === 'FunctionDeclaration') { callback = declaration; }
+            else {
+                const init = this.initializer(declaration); if(init < 0) { this.report('UnknownDependencies', call); return; }
+                if(!['ArrowFunction', 'FunctionExpression'].includes(this.syntax.kind(init))) { this.report('Missing', array); return; } callback = init;
+            }
+        } else if(!['ArrowFunction', 'FunctionExpression'].includes(kind)) { this.report('UnknownDependencies', call); return; }
+        this.callback(callback, array, call, component, effect);
+    }
+    run(): void { for(let at = 0; at < this.bindings.rules.parser.nodes.length; at++) { if(this.syntax.kind(at) === 'CallExpression') { this.visit(at); } } }
+}

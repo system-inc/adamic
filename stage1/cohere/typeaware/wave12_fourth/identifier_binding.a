@@ -1,0 +1,28 @@
+import { panic } from 'adamic';
+import { Bindings } from '../bindings.ts';
+import { Frames, header } from '../frames.ts';
+export class Declaration {
+    readonly file: string; readonly declarationFile: boolean; readonly kind: string; readonly start: number; readonly end: number;
+    constructor(file: string, declarationFile: boolean, kind: string, start: number, end: number) { this.file = file; this.declarationFile = declarationFile; this.kind = kind; this.start = start; this.end = end; }
+}
+export class Binding {
+    readonly identity: number; readonly declarations: readonly Declaration[];
+    constructor(identity: number, declarations: readonly Declaration[]) { this.identity = identity; this.declarations = declarations; }
+}
+export class IdentifierBinding {
+    readonly bindings: Bindings; readonly cache = new Map<number, Binding>();
+    constructor(bindings: Bindings) { this.bindings = bindings; }
+    symbol(index: number): Binding {
+        const cached = this.cache.get(index); if(cached !== undefined) { return cached; }
+        const frames = new Frames(this.bindings.rules.ask(index, 'identifier-binding')); header(frames, 'identifier-binding');
+        let identity = 0; const declarations: Declaration[] = [];
+        if(frames.yes()) { identity = frames.natural(); const count = frames.natural(); for(let at = 0; at < count; at++) { declarations.push(new Declaration(frames.field(), frames.yes(), frames.field(), frames.natural(), frames.natural())); } }
+        frames.end(); const result = new Binding(identity, declarations); this.cache.set(index, result); return result;
+    }
+    indexes(index: number): number[] {
+        const result: number[] = [];
+        for(const declaration of this.symbol(index).declarations) { if(declaration.file === this.bindings.rules.path) { result.push(this.bindings.spans.get(`${declaration.kind}:${declaration.start}:${declaration.end}`) ?? panic('binding declaration absent from native tree')); } }
+        return result;
+    }
+    earliest(index: number): number { let first = -1; for(const declaration of this.indexes(index)) { if(first < 0 || this.bindings.rules.parser.node(declaration).pos < this.bindings.rules.parser.node(first).pos) { first = declaration; } } return first; }
+}

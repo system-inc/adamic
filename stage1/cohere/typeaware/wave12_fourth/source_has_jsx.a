@@ -1,0 +1,9 @@
+import { panic, tsgoInspect } from 'adamic';
+import { Bindings } from '../bindings.ts';
+import { Frames, header } from '../frames.ts';
+import { byteOffsets } from '../unary_minus.ts';
+export function sourceHasJsx(program: number, path: string, text: string): boolean {
+    const offsets = byteOffsets(text); const end = offsets[text.length] ?? panic('missing source byte bound');
+    const frames = new Frames(tsgoInspect(program, path, 0, end, 'SourceFile', 'source-has-jsx')); header(frames, 'source-has-jsx');
+    const result = frames.yes(); frames.end(); return result;
+}

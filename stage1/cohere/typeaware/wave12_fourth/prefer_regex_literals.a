@@ -1,0 +1,64 @@
+import { Bindings } from '../bindings.ts';
+import { Suggestion } from '../suggestion.ts';
+import { Repair } from '../repair.ts';
+import { Scanner } from '../../../typescript/scanner/scanner.ts';
+import { Syntax } from './syntax.a';
+import { IdentifierBinding } from './identifier_binding.a';
+import { RegexReferences } from './regex_references.a';
+import { RegexPattern } from './regex_pattern.a';
+export class PreferRegexLiterals {
+    readonly bindings: Bindings; readonly syntax: Syntax; readonly symbols: IdentifierBinding;
+    constructor(bindings: Bindings) { this.bindings = bindings; this.syntax = new Syntax(bindings); this.symbols = new IdentifierBinding(bindings); }
+    string(index: number): string | undefined {
+        const node = this.bindings.rules.parser.node(index);
+        if(['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(node.kind)) { return node.text; }
+        if(node.kind !== 'TaggedTemplateExpression') { return undefined; }
+        const template = this.syntax.last(index); if(this.syntax.kind(template) !== 'NoSubstitutionTemplateLiteral') { return undefined; }
+        const tag = this.bindings.rules.skip(this.syntax.child(index, 0)); const kind = this.syntax.kind(tag);
+        if(!['PropertyAccessExpression', 'ElementAccessExpression'].includes(kind)) { return undefined; }
+        const member = this.syntax.last(tag); if(kind === 'ElementAccessExpression' && !['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(this.syntax.kind(member))) { return undefined; }
+        const receiver = this.syntax.child(tag, 0); if(this.syntax.text(member) !== 'raw' || this.syntax.kind(receiver) !== 'Identifier' || this.syntax.text(receiver) !== 'String') { return undefined; }
+        const symbol = this.symbols.symbol(receiver); if(symbol.declarations.length === 0 || !(symbol.declarations[0]?.declarationFile ?? false)) { return undefined; }
+        const rules = this.bindings.rules; const written = rules.text(rules.parser.node(template)); return written.slice(written.startsWith('`') ? 1 : 0, written.endsWith('`') ? written.length - 1 : written.length);
+    }
+    previous(start: number): number {
+        const text = this.bindings.rules.scanner.text; let at = start - 1;
+        while(at >= 0) {
+            if(' \t\r\n\v\f'.includes(text[at] ?? '!')) { at--; continue; }
+            if(text.slice(at - 1, at + 1) === '*/') { let open = -1; for(let scan = at - 2; scan >= 0; scan--) { if(text.slice(scan, scan + 2) === '/*') { open = scan; break; } } if(open < 0) { return -1; } at = open - 1; continue; }
+            let line = at; while(line >= 0 && text[line] !== '\n') { line--; } let quote = ''; let comment = -1;
+            for(let scan = line + 1; scan <= at; scan++) { const c = text[scan]; if(c === '\\') { scan++; continue; } if(quote !== '') { if(c === quote) { quote = ''; } } else if(c === '"' || c === "'" || c === '`') { quote = c; } else if(text.slice(scan, scan + 2) === '//') { comment = scan; break; } }
+            if(comment >= 0) { at = comment - 1; continue; } return at;
+        }
+        return -1;
+    }
+    word(c: string): boolean { return c !== '' && ('_$0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.includes(c)); }
+    before(start: number): boolean {
+        const text = this.bindings.rules.scanner.text; const at = this.previous(start); if(at < 0) { return true; }
+        const newline = text.indexOf('\n'); if(text.startsWith('#!') && newline >= 0 && start > newline && text.slice(newline + 1, start).trim() === '') { return true; }
+        if(this.word(text[at] ?? '')) { let first = at; while(first >= 0 && this.word(text[first] ?? '')) { first--; } return PRECEDING.includes(text.slice(first + 1, at + 1)); }
+        for(let length = 4; length > 0; length--) { if(at - length + 1 >= 0 && PRECEDING.includes(text.slice(at - length + 1, at + 1))) { return true; } } return false;
+    }
+    comments(index: number): boolean {
+        const rules = this.bindings.rules; const node = rules.parser.node(index); const scanner = new Scanner(rules.scanner.text); scanner.pos = rules.start(node);
+        while(scanner.pos < node.end) { const before = scanner.pos; scanner.scan(); const trivia = scanner.text.slice(before, scanner.start); if(trivia.includes('/*') || trivia.includes('//')) { return true; } if(scanner.pos <= before) { break; } }
+        return false;
+    }
+    printable(pattern: string): boolean { return pattern.split('').every((c) => ' \t\r\n\v\f-\\[](){}!@#$%^&*+=/~`.><?,\'"|:;_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'.includes(c)); }
+    run(): void {
+        const rules = this.bindings.rules; const references = new RegexReferences(this.bindings);
+        for(const at of references.run()) {
+            const arguments_ = this.syntax.arguments(at); if(arguments_.length !== 1 && arguments_.length !== 2) { continue; }
+            const pattern = this.string(arguments_[0] ?? -1); const flags = arguments_.length === 2 ? this.string(arguments_[1] ?? -1) : ''; if(pattern === undefined || flags === undefined) { continue; }
+            const finding = this.syntax.report('prefer-regex-literals', 'unexpectedRegExp', MESSAGE, at);
+            const syntax = new RegexPattern(pattern, flags); const node = rules.parser.node(at); const start = rules.start(node);
+            if(!this.comments(at) && this.before(start) && syntax.valid() && this.printable(pattern)) {
+                let text = `/${pattern === '' ? '(?:)' : syntax.rewrite()}/${flags}`;
+                const source = rules.scanner.text; if(start > 0 && source[start - 1] === '/') { text = ' ' + text; } if(this.word(source[node.end] ?? '')) { text += ' '; }
+                finding.suggestions.push(new Suggestion('replaceWithLiteral', 'Replace with an equivalent regular expression literal.', [new Repair(rules.byte(start), rules.byte(node.end), text)]));
+            }
+        }
+    }
+}
+const MESSAGE = 'This builds a regular expression by handing constant strings to the `RegExp` constructor, which does at runtime what a literal does at parse time. The constructor form costs a parse on every evaluation, hides syntax errors until the line is reached rather than surfacing them when the file is read, and doubles every backslash so the pattern stops looking like the pattern. Write the regular expression literal.';
+const PRECEDING = ['(', ';', '[', ',', '=', '+', '*', '-', '?', '~', '%', '**', '!', 'typeof', 'instanceof', '&&', '||', '??', 'return', '...', 'delete', 'void', 'in', '<', '>', '<=', '>=', '==', '===', '!=', '!==', '<<', '>>', '>>>', '&', '|', '^', ':', '{', '=>', '*=', '<<=', '>>=', '>>>=', '^=', '|=', '&=', '??=', '||=', '&&=', '**=', '+=', '-=', '/=', '%=', '/', 'do', 'break', 'continue', 'debugger', 'case', 'throw'];
