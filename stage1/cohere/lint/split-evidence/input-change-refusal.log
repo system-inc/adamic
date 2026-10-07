@@ -1,0 +1,11 @@
+rule no-var phase timing (seconds)
+| phase | seconds |
+|---|---:|
+| validate and snapshot | 0.070 |
+| Go oracle | 6.643 |
+| total | 6.714 |
+--- FAIL: TestRule (6.72s)
+    cache_test.go:307: oracle inputs changed during build; retry
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	6.726s
+FAIL

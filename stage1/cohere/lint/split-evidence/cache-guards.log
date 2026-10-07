@@ -1,0 +1,102 @@
+=== RUN   TestLintCacheInvalidation
+=== RUN   TestLintCacheInvalidation/oracle
+    cache_mutants_test.go:107: oracle changed real input and invalidated its observation
+=== RUN   TestLintCacheInvalidation/capture
+    lint_test.go:380: cohere cases: 9 unique source/rule/options combinations
+    lint_test.go:380: cohere cases: 11 unique source/rule/options combinations
+    lint_test.go:380: cohere cases: 11 unique source/rule/options combinations
+    cache_mutants_test.go:107: capture changed real input and invalidated its observation
+=== RUN   TestLintCacheInvalidation/go-output
+    cache_mutants_test.go:107: go-output changed real input and invalidated its observation
+=== RUN   TestLintCacheInvalidation/port
+    cache_test.go:459: clang build: 6.710s; split=true jobs=4 flags=[-std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all]
+    cache_test.go:459: clang build: 6.564s; split=true jobs=4 flags=[-std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all]
+    lint_test.go:137: clang build: 15.946s; split=false jobs=0 flags=[-std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all]
+    cache_mutants_test.go:107: port changed real input and invalidated its observation
+=== RUN   TestLintCacheInvalidation/node
+    cache_mutants_test.go:107: node changed real input and invalidated its observation
+=== RUN   TestLintCacheInvalidation/javascript
+    cache_mutants_test.go:107: javascript changed real input and invalidated its observation
+=== RUN   TestLintCacheInvalidation/javascript-build
+    cache_mutants_test.go:107: javascript-build changed real input and invalidated its observation
+--- PASS: TestLintCacheInvalidation (73.38s)
+    --- PASS: TestLintCacheInvalidation/oracle (12.43s)
+    --- PASS: TestLintCacheInvalidation/capture (8.21s)
+    --- PASS: TestLintCacheInvalidation/go-output (0.64s)
+    --- PASS: TestLintCacheInvalidation/port (45.21s)
+    --- PASS: TestLintCacheInvalidation/node (0.68s)
+    --- PASS: TestLintCacheInvalidation/javascript (2.23s)
+    --- PASS: TestLintCacheInvalidation/javascript-build (3.95s)
+=== RUN   TestLintCacheMutants
+=== RUN   TestLintCacheMutants/oracle
+    cache_mutants_test.go:133: dropped oracle/adapter/no-var; real input changed; invalidation test rejected stale answer:
+        === RUN   TestLintCacheInvalidation
+        === RUN   TestLintCacheInvalidation/oracle
+            cache_mutants_test.go:105: stale oracle answer after guarded input changed; cached_matches_before=true; before=670 cached=670 fresh=34 bytes
+        --- FAIL: TestLintCacheInvalidation (12.42s)
+            --- FAIL: TestLintCacheInvalidation/oracle (12.42s)
+        FAIL
+=== RUN   TestLintCacheMutants/capture
+    cache_mutants_test.go:133: dropped capture/filter; real input changed; invalidation test rejected stale answer:
+        === RUN   TestLintCacheInvalidation
+        === RUN   TestLintCacheInvalidation/capture
+            lint_test.go:380: cohere cases: 9 unique source/rule/options combinations
+            lint_test.go:380: cohere cases: 11 unique source/rule/options combinations
+            cache_mutants_test.go:105: stale capture answer after guarded input changed; cached_matches_before=true; before=1280 cached=1280 fresh=1506 bytes
+        --- FAIL: TestLintCacheInvalidation (7.16s)
+            --- FAIL: TestLintCacheInvalidation/capture (7.16s)
+        FAIL
+=== RUN   TestLintCacheMutants/go-output
+    cache_mutants_test.go:133: dropped go-output/manifest; real input changed; invalidation test rejected stale answer:
+        === RUN   TestLintCacheInvalidation
+        === RUN   TestLintCacheInvalidation/go-output
+            cache_mutants_test.go:105: stale go-output answer after guarded input changed; cached_matches_before=true; before=673 cached=673 fresh=34 bytes
+        --- FAIL: TestLintCacheInvalidation (3.82s)
+            --- FAIL: TestLintCacheInvalidation/go-output (3.81s)
+        FAIL
+=== RUN   TestLintCacheMutants/port
+    cache_mutants_test.go:133: dropped port/modules; real input changed; invalidation test rejected stale answer:
+        === RUN   TestLintCacheInvalidation
+        === RUN   TestLintCacheInvalidation/port
+            cache_test.go:459: clang build: 5.889s; split=true jobs=4 flags=[-std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all]
+            lint_test.go:137: clang build: 18.664s; split=false jobs=0 flags=[-std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all]
+            cache_mutants_test.go:105: stale port answer after guarded input changed; cached_matches_before=true; before=668 cached=668 fresh=682 bytes
+        --- FAIL: TestLintCacheInvalidation (38.19s)
+            --- FAIL: TestLintCacheInvalidation/port (38.18s)
+        FAIL
+=== RUN   TestLintCacheMutants/node
+    cache_mutants_test.go:133: dropped node/modules; real input changed; invalidation test rejected stale answer:
+        === RUN   TestLintCacheInvalidation
+        === RUN   TestLintCacheInvalidation/node
+            cache_mutants_test.go:105: stale node answer after guarded input changed; cached_matches_before=true; before=668 cached=668 fresh=682 bytes
+        --- FAIL: TestLintCacheInvalidation (2.34s)
+            --- FAIL: TestLintCacheInvalidation/node (2.33s)
+        FAIL
+=== RUN   TestLintCacheMutants/javascript
+    cache_mutants_test.go:133: dropped javascript/modules; real input changed; invalidation test rejected stale answer:
+        === RUN   TestLintCacheInvalidation
+        === RUN   TestLintCacheInvalidation/javascript
+            cache_mutants_test.go:105: stale javascript answer after guarded input changed; cached_matches_before=true; before=674 cached=674 fresh=688 bytes
+        --- FAIL: TestLintCacheInvalidation (5.15s)
+            --- FAIL: TestLintCacheInvalidation/javascript (5.14s)
+        FAIL
+=== RUN   TestLintCacheMutants/javascript-build
+    cache_mutants_test.go:133: dropped javascript-build/modules; real input changed; invalidation test rejected stale answer:
+        === RUN   TestLintCacheInvalidation
+        === RUN   TestLintCacheInvalidation/javascript-build
+            cache_mutants_test.go:105: stale javascript-build answer after guarded input changed; cached_matches_before=true; before=521561 cached=521561 fresh=521591 bytes
+        --- FAIL: TestLintCacheInvalidation (8.43s)
+            --- FAIL: TestLintCacheInvalidation/javascript-build (8.43s)
+        FAIL
+--- PASS: TestLintCacheMutants (77.62s)
+    --- PASS: TestLintCacheMutants/oracle (12.44s)
+    --- PASS: TestLintCacheMutants/capture (7.17s)
+    --- PASS: TestLintCacheMutants/go-output (3.84s)
+    --- PASS: TestLintCacheMutants/port (38.20s)
+    --- PASS: TestLintCacheMutants/node (2.36s)
+    --- PASS: TestLintCacheMutants/javascript (5.16s)
+    --- PASS: TestLintCacheMutants/javascript-build (8.45s)
+=== RUN   TestLintCacheBypassAndIntegrity
+--- PASS: TestLintCacheBypassAndIntegrity (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	151.012s

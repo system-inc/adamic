@@ -1,0 +1,110 @@
+[
+  {
+    "argv": [
+      "--version"
+    ],
+    "cwd": "/workspace/adamic/stage1/cohere/lint",
+    "time": 1791350672.7029934
+  },
+  {
+    "argv": [
+      "--version"
+    ],
+    "cwd": "/workspace/adamic/stage1/cohere/lint",
+    "time": 1791350676.377633
+  },
+  {
+    "argv": [
+      "-std=c11",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-pedantic",
+      "-Wno-unused-variable",
+      "-Wno-unused-but-set-variable",
+      "-Wno-unused-function",
+      "-Wno-unused-parameter",
+      "-Wno-self-assign",
+      "-ffp-contract=off",
+      "-fno-optimize-sibling-calls",
+      "-O1",
+      "-g",
+      "-fsanitize=address,undefined",
+      "-fno-sanitize-recover=all",
+      "-I",
+      "/tmp/adamic-lint-split-measure/cache-119977-3-no-var-whole/adamic/runtime/ac68a70c53e9515feacd3222d3b1974575a827b03735e374aa2762bb1d566094",
+      "-o",
+      "/tmp/adamic-gate/TestRule3803574476/054/scanner",
+      "/tmp/adamic-gate/adamic-build-2797032339/main.c",
+      "-Xlinker",
+      "--whole-archive",
+      "/tmp/adamic-lint-split-measure/cache-119977-3-no-var-whole/adamic/runtime/ac68a70c53e9515feacd3222d3b1974575a827b03735e374aa2762bb1d566094/runtime.a",
+      "-Xlinker",
+      "--no-whole-archive",
+      "-lm"
+    ],
+    "cwd": "/workspace/adamic/stage1/cohere/lint",
+    "time": 1791350676.4256415
+  },
+  {
+    "argv": [
+      "--version"
+    ],
+    "cwd": "/workspace/adamic/stage1/cohere/lint",
+    "time": 1791350694.9920204
+  },
+  {
+    "argv": [
+      "--version"
+    ],
+    "cwd": "/workspace/adamic/stage1/cohere/lint",
+    "time": 1791350695.5976686
+  },
+  {
+    "argv": [
+      "--version"
+    ],
+    "cwd": "/workspace/adamic/stage1/cohere/lint",
+    "time": 1791350697.5730052
+  },
+  {
+    "argv": [
+      "-std=c11",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-pedantic",
+      "-Wno-unused-variable",
+      "-Wno-unused-but-set-variable",
+      "-Wno-unused-function",
+      "-Wno-unused-parameter",
+      "-Wno-self-assign",
+      "-ffp-contract=off",
+      "-fno-optimize-sibling-calls",
+      "-O1",
+      "-g",
+      "-fsanitize=address,undefined",
+      "-fno-sanitize-recover=all",
+      "-I",
+      "/tmp/adamic-lint-split-measure/cache-119977-3-no-var-whole/adamic/runtime/ac68a70c53e9515feacd3222d3b1974575a827b03735e374aa2762bb1d566094",
+      "-o",
+      "/tmp/adamic-gate/TestRule3803574476/077/scanner",
+      "/tmp/adamic-gate/adamic-build-2470452092/main.c",
+      "-Xlinker",
+      "--whole-archive",
+      "/tmp/adamic-lint-split-measure/cache-119977-3-no-var-whole/adamic/runtime/ac68a70c53e9515feacd3222d3b1974575a827b03735e374aa2762bb1d566094/runtime.a",
+      "-Xlinker",
+      "--no-whole-archive",
+      "-lm"
+    ],
+    "cwd": "/workspace/adamic/stage1/cohere/lint",
+    "time": 1791350697.6391535
+  },
+  {
+    "argv": [
+      "--version"
+    ],
+    "cwd": "/workspace/adamic/stage1/cohere/lint",
+    "time": 1791350715.8464406
+  }
+]

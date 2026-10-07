@@ -1,0 +1,11 @@
+=== RUN   TestSplitWholeParity
+=== RUN   TestSplitWholeParity/no-var
+    cache_test.go:459: clang build: 1.142s; split=true jobs=4 flags=[-std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all]
+    lint_test.go:137: clang build: 17.060s; split=false jobs=0 flags=[-std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all]
+    split_test.go:30: Go, Node, emitted JavaScript, native identical: 427484 bytes
+    split_test.go:32: split and whole-file outputs differ
+--- FAIL: TestSplitWholeParity (28.20s)
+    --- FAIL: TestSplitWholeParity/no-var (28.20s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	28.218s
+FAIL

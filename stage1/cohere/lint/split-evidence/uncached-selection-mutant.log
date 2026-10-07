@@ -1,0 +1,6 @@
+=== RUN   TestWholeBuildSelection
+    split_test.go:54: uncached build options: {Split:true Jobs:4 Sanitize:true Count:false cpu: slabs:false}
+--- FAIL: TestWholeBuildSelection (0.02s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	0.032s
+FAIL

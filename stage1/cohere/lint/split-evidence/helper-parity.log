@@ -1,0 +1,22 @@
+=== RUN   TestSplitWholeParity
+=== RUN   TestSplitWholeParity/no-var
+    cache_test.go:459: clang build: 7.090s; split=true jobs=4 flags=[-std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all]
+    lint_test.go:137: clang build: 12.929s; split=false jobs=0 flags=[-std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all]
+    split_test.go:30: Go, Node, emitted JavaScript, native identical: 427484 bytes
+    split_test.go:34: split and whole-file outputs byte-identical: 427484 bytes
+=== RUN   TestSplitWholeParity/no-empty
+    cache_test.go:459: clang build: 5.580s; split=true jobs=4 flags=[-std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all]
+    lint_test.go:137: clang build: 17.381s; split=false jobs=0 flags=[-std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all]
+    split_test.go:30: Go, Node, emitted JavaScript, native identical: 427760 bytes
+    split_test.go:34: split and whole-file outputs byte-identical: 427760 bytes
+=== RUN   TestSplitWholeParity/eqeqeq
+    cache_test.go:459: clang build: 5.567s; split=true jobs=4 flags=[-std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all]
+    lint_test.go:137: clang build: 13.826s; split=false jobs=0 flags=[-std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all]
+    split_test.go:30: Go, Node, emitted JavaScript, native identical: 437914 bytes
+    split_test.go:34: split and whole-file outputs byte-identical: 437914 bytes
+--- PASS: TestSplitWholeParity (89.94s)
+    --- PASS: TestSplitWholeParity/no-var (30.11s)
+    --- PASS: TestSplitWholeParity/no-empty (32.33s)
+    --- PASS: TestSplitWholeParity/eqeqeq (27.51s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	89.959s

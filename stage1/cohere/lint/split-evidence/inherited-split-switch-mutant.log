@@ -1,0 +1,6 @@
+=== RUN   TestWholeBuildSelection
+    split_test.go:41: inherited split switch can replace the whole-file witness
+--- FAIL: TestWholeBuildSelection (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	0.010s
+FAIL

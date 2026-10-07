@@ -1,0 +1,58 @@
+=== RUN   TestRule
+    lint_test.go:380: cohere cases: 20 unique source/rule/options combinations
+    cache_test.go:459: clang build: 7.980s; split=true jobs=4 flags=[-std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all]
+    cache_test.go:459: clang build: 1.218s; split=true jobs=4 flags=[-std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all]
+    rule_check_test.go:199: Go, Node, emitted JavaScript, native identical: 427484 bytes
+    rule_check_test.go:211: var declaration suppressed caught on Node: case 30 line 502: port "/home/agent/.cache/adamic/lint/inputs/9caa093ccde2c6332d32d4dc8281b04f88d51ce9363ea615c40357eab77d4bdc/generated-3.ts:1:12", Go "/home/agent/.cache/adamic/lint/inputs/9caa093ccde2c6332d32d4dc8281b04f88d51ce9363ea615c40357eab77d4bdc/generated-3.ts:1:1"
+        Go context:
+        case 28
+        fixed	a == b; 1 == 2; 1 == 1n; (typeof a) != 'number'; (null) === null; /a/ == null; `a` != 'b';
+        case 29
+        fixed	a == b; 1 == 2; 1 == 1n; (typeof a) != 'number'; (null) === null; /a/ == null; `a` != 'b';
+        case 30
+        /home/agent/.cache/adamic/lint/inputs/9caa093ccde2c6332d32d4dc8281b04f88d51ce9363ea615c40357eab77d4bdc/generated-3.ts:1:1
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 0 5 unexpectedVar 			0 5
+        /home/agent/.cache/adamic/lint/inputs/9caa093ccde2c6332d32d4dc8281b04f88d51ce9363ea615c40357eab77d4bdc/generated-3.ts:1:12
+    rule_check_test.go:211: var declaration suppressed caught on emitted JavaScript: case 30 line 502: port "/home/agent/.cache/adamic/lint/inputs/9caa093ccde2c6332d32d4dc8281b04f88d51ce9363ea615c40357eab77d4bdc/generated-3.ts:1:12", Go "/home/agent/.cache/adamic/lint/inputs/9caa093ccde2c6332d32d4dc8281b04f88d51ce9363ea615c40357eab77d4bdc/generated-3.ts:1:1"
+        Go context:
+        case 28
+        fixed	a == b; 1 == 2; 1 == 1n; (typeof a) != 'number'; (null) === null; /a/ == null; `a` != 'b';
+        case 29
+        fixed	a == b; 1 == 2; 1 == 1n; (typeof a) != 'number'; (null) === null; /a/ == null; `a` != 'b';
+        case 30
+        /home/agent/.cache/adamic/lint/inputs/9caa093ccde2c6332d32d4dc8281b04f88d51ce9363ea615c40357eab77d4bdc/generated-3.ts:1:1
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 0 5 unexpectedVar 			0 5
+        /home/agent/.cache/adamic/lint/inputs/9caa093ccde2c6332d32d4dc8281b04f88d51ce9363ea615c40357eab77d4bdc/generated-3.ts:1:12
+    rule_check_test.go:211: var declaration suppressed caught on sanitized native: case 30 line 502: port "/home/agent/.cache/adamic/lint/inputs/9caa093ccde2c6332d32d4dc8281b04f88d51ce9363ea615c40357eab77d4bdc/generated-3.ts:1:12", Go "/home/agent/.cache/adamic/lint/inputs/9caa093ccde2c6332d32d4dc8281b04f88d51ce9363ea615c40357eab77d4bdc/generated-3.ts:1:1"
+        Go context:
+        case 28
+        fixed	a == b; 1 == 2; 1 == 1n; (typeof a) != 'number'; (null) === null; /a/ == null; `a` != 'b';
+        case 29
+        fixed	a == b; 1 == 2; 1 == 1n; (typeof a) != 'number'; (null) === null; /a/ == null; `a` != 'b';
+        case 30
+        /home/agent/.cache/adamic/lint/inputs/9caa093ccde2c6332d32d4dc8281b04f88d51ce9363ea615c40357eab77d4bdc/generated-3.ts:1:1
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 0 5 unexpectedVar 			0 5
+        /home/agent/.cache/adamic/lint/inputs/9caa093ccde2c6332d32d4dc8281b04f88d51ce9363ea615c40357eab77d4bdc/generated-3.ts:1:12
+rule no-var phase timing (seconds)
+| phase | seconds |
+|---|---:|
+| validate and snapshot | 0.077 |
+| Go oracle | 6.046 |
+| upstream capture | 3.407 |
+| owned witnesses | 0.010 |
+| sanitized correct and mutant port builds | 23.039 |
+| explicit recovery refusals | 0.000 |
+| emitted JavaScript build | 2.470 |
+| Go Node JavaScript native comparison | 0.898 |
+| owned mutant | 2.825 |
+| total | 38.771 |
+--- PASS: TestRule (38.78s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	38.796s
+EXPECTED TRACE TEST FAILURE: correct and mutant compilation windows do not overlap

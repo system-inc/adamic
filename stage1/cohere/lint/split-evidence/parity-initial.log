@@ -1,0 +1,23 @@
+=== RUN   TestSplitWholeParity
+=== RUN   TestSplitWholeParity/no-var
+    lint_test.go:380: cohere cases: 20 unique source/rule/options combinations
+    cache_test.go:459: clang build: 7.101s; split=true jobs=5 flags=[-std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all]
+    lint_test.go:137: clang build: 17.701s; split=false jobs=0 flags=[-std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all]
+    split_test.go:29: Go, Node, emitted JavaScript, native identical: 427484 bytes
+    split_test.go:33: split and whole-file outputs byte-identical: 427484 bytes
+=== RUN   TestSplitWholeParity/no-empty
+    lint_test.go:380: cohere cases: 57 unique source/rule/options combinations
+    lint_test.go:137: clang build: 19.934s; split=false jobs=0 flags=[-std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all]
+    split_test.go:29: Go, Node, emitted JavaScript, native identical: 427760 bytes
+    split_test.go:33: split and whole-file outputs byte-identical: 427760 bytes
+=== RUN   TestSplitWholeParity/eqeqeq
+    lint_test.go:380: cohere cases: 92 unique source/rule/options combinations
+    lint_test.go:137: clang build: 44.660s; split=false jobs=0 flags=[-std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all]
+    split_test.go:29: Go, Node, emitted JavaScript, native identical: 437914 bytes
+    split_test.go:33: split and whole-file outputs byte-identical: 437914 bytes
+--- PASS: TestSplitWholeParity (137.47s)
+    --- PASS: TestSplitWholeParity/no-var (50.22s)
+    --- PASS: TestSplitWholeParity/no-empty (32.46s)
+    --- PASS: TestSplitWholeParity/eqeqeq (54.78s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	137.482s

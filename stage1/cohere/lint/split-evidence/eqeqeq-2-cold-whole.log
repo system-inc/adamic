@@ -1,0 +1,57 @@
+=== RUN   TestRule
+    lint_test.go:380: cohere cases: 92 unique source/rule/options combinations
+    cache_test.go:459: clang build: 17.699s; split=false jobs=0 flags=[-std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all]
+    cache_test.go:459: clang build: 17.634s; split=false jobs=0 flags=[-std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all]
+    rule_check_test.go:199: Go, Node, emitted JavaScript, native identical: 466554 bytes
+    rule_check_test.go:211: suggestion applied as fix caught on Node: case 20 line 357: port "range 2 4 unexpected fix\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.\t2 4", Go "range 2 4 unexpected suggestion\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.\t2 4"
+        Go context:
+        fixed	if(x){} else { /* intent */ } try{}catch(e){}finally{}; switch('/*'){}; switch(x){/* intent */}; class C{static{}}
+        case 20
+        /tmp/adamic-lint-split-measure/cache-119977-2-eqeqeq-whole/adamic/lint/inputs/81ba7696d26cb20c83d16f8f1defcc91b9baafe7de56e20967bf78e3b341cada/generated-2.ts:1:3
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 2 4 unexpected suggestion	===	Use `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.	2 4
+        /tmp/adamic-lint-split-measure/cache-119977-2-eqeqeq-whole/adamic/lint/inputs/81ba7696d26cb20c83d16f8f1defcc91b9baafe7de56e20967bf78e3b341cada/generated-2.ts:1:11
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 10 12 unexpected fix	===		10 12
+    rule_check_test.go:211: suggestion applied as fix caught on emitted JavaScript: case 20 line 357: port "range 2 4 unexpected fix\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.\t2 4", Go "range 2 4 unexpected suggestion\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.\t2 4"
+        Go context:
+        fixed	if(x){} else { /* intent */ } try{}catch(e){}finally{}; switch('/*'){}; switch(x){/* intent */}; class C{static{}}
+        case 20
+        /tmp/adamic-lint-split-measure/cache-119977-2-eqeqeq-whole/adamic/lint/inputs/81ba7696d26cb20c83d16f8f1defcc91b9baafe7de56e20967bf78e3b341cada/generated-2.ts:1:3
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 2 4 unexpected suggestion	===	Use `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.	2 4
+        /tmp/adamic-lint-split-measure/cache-119977-2-eqeqeq-whole/adamic/lint/inputs/81ba7696d26cb20c83d16f8f1defcc91b9baafe7de56e20967bf78e3b341cada/generated-2.ts:1:11
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 10 12 unexpected fix	===		10 12
+    rule_check_test.go:211: suggestion applied as fix caught on sanitized native: case 20 line 357: port "range 2 4 unexpected fix\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.\t2 4", Go "range 2 4 unexpected suggestion\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.\t2 4"
+        Go context:
+        fixed	if(x){} else { /* intent */ } try{}catch(e){}finally{}; switch('/*'){}; switch(x){/* intent */}; class C{static{}}
+        case 20
+        /tmp/adamic-lint-split-measure/cache-119977-2-eqeqeq-whole/adamic/lint/inputs/81ba7696d26cb20c83d16f8f1defcc91b9baafe7de56e20967bf78e3b341cada/generated-2.ts:1:3
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 2 4 unexpected suggestion	===	Use `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.	2 4
+        /tmp/adamic-lint-split-measure/cache-119977-2-eqeqeq-whole/adamic/lint/inputs/81ba7696d26cb20c83d16f8f1defcc91b9baafe7de56e20967bf78e3b341cada/generated-2.ts:1:11
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 10 12 unexpected fix	===		10 12
+rule eqeqeq phase timing (seconds)
+| phase | seconds |
+|---|---:|
+| validate and snapshot | 0.031 |
+| Go oracle | 5.927 |
+| upstream capture | 4.845 |
+| owned witnesses | 0.012 |
+| sanitized correct and mutant port builds | 50.847 |
+| explicit recovery refusals | 0.000 |
+| emitted JavaScript build | 2.174 |
+| Go Node JavaScript native comparison | 0.907 |
+| owned mutant | 3.454 |
+| total | 68.197 |
+--- PASS: TestRule (68.21s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	68.225s
