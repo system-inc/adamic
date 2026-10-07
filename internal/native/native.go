@@ -85,13 +85,15 @@ func Flags(options Options) []string {
 	// JavaScript rounds every operation on its own. clang otherwise fuses a * b + c into one
 	// multiply-add wherever the processor has one (every arm64, so every Apple silicon Mac), and
 	// 0.1 * 10 - 1 is then 5.551115123125783e-17 instead of 0. V8 builds itself the same way.
-	flags = append(flags, "-ffp-contract=off", "-pthread")
+	flags = append(flags, "-ffp-contract=off")
 	// Every function checks its frame against the stack's limit (stack.c), and a call in tail position
 	// that clang turns into a jump never makes a frame: a self tail call becomes a loop, and recursion
 	// with no end runs forever where Node's runs out of stack. Every call keeps its frame, as V8's do.
 	flags = append(flags, "-fno-optimize-sibling-calls")
 	if options.Target == "wasm32-wasi" {
 		flags = append(flags, "--target=wasm32-wasi", "--sysroot="+os.Getenv("WASI_SYSROOT"), "-DADAMIC_TARGET_WASI=1", "-mno-atomics")
+	} else {
+		flags = append(flags, "-pthread")
 	}
 	if options.Count {
 		flags = append(flags, "-DADAMIC_COUNT")
