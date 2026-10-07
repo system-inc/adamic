@@ -20,7 +20,7 @@ All nineteen helper packages passed, rerunning every retained semantic mutant an
 
 Shared harness tests passed in 203.061s. Rename-only .a/.ts execution matched Go across source Node, emitted JavaScript and native, 646 output bytes. An ordinary comparison rejected the clean-running emitted-JavaScript mismatch mutant. The second suggestion-edit mutant was caught on Node, emitted JavaScript and native. The indented failure in harness.log is the intentional mismatch subprocess, followed by its passing parent test.
 
-The uncached string-search oracle passed in 22.477s: Node, emitted JavaScript, release native and sanitized native agree on 758 output bytes, with three native misses, two Node misses and zero cache hits. Runtime release-path and string-equality tests passed in 19.725s. Registry generation passed and printed fifteen registered rules. Vet passed with an empty log. Whitespace checks passed. nproc printed 5. Inherited setup timing remains Go 0s, clang 1s, Node 1s, submodules 2s, warm 165s and total 165s.
+The uncached string-search oracle passed in 22.477s: Node, emitted JavaScript, release native and sanitized native agree on 758 output bytes, with three native misses, two Node misses and zero cache hits. Runtime release-path and string-equality tests passed in 19.725s. Registry generation passed and printed fifteen registered rules. Vet passed with an empty log. Raw harness logs preserve significant trailing tabs for empty suggestion-edit text. Their local .gitattributes uses the existing evidence convention, *.log -whitespace; source and report whitespace checks pass with those raw bytes preserved. nproc printed 5. Inherited setup timing remains Go 0s, clang 1s, Node 1s, submodules 2s, warm 165s and total 165s.
 
 Helper package results:
 
