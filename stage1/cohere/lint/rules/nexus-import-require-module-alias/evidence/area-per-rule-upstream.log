@@ -2,52 +2,52 @@
     lint_test.go:399: cohere cases: 2588 unique source/rule/options combinations
 === RUN   TestWave14IntegratedUpstream/nexus/import-require-module-alias
     slot14_landing_test.go:43: original upstream cases: 28
-    slot14_landing_test.go:44: Go, Node, emitted JavaScript, native identical: 5885 bytes
+    slot14_landing_test.go:44: Go, Node, emitted JavaScript, native identical: 5897 bytes
 === RUN   TestWave14IntegratedUpstream/@typescript-eslint/no-duplicate-enum-values
     slot14_landing_test.go:43: original upstream cases: 57
-    slot14_landing_test.go:44: Go, Node, emitted JavaScript, native identical: 21387 bytes
+    slot14_landing_test.go:44: Go, Node, emitted JavaScript, native identical: 21418 bytes
 === RUN   TestWave14IntegratedUpstream/@typescript-eslint/no-dynamic-delete
     slot14_landing_test.go:43: original upstream cases: 42
-    slot14_landing_test.go:44: Go, Node, emitted JavaScript, native identical: 8567 bytes
+    slot14_landing_test.go:44: Go, Node, emitted JavaScript, native identical: 8590 bytes
 === RUN   TestWave14IntegratedUpstream/@typescript-eslint/no-misused-new
     slot14_landing_test.go:43: original upstream cases: 45
-    slot14_landing_test.go:44: Go, Node, emitted JavaScript, native identical: 7648 bytes
+    slot14_landing_test.go:44: Go, Node, emitted JavaScript, native identical: 7661 bytes
 === RUN   TestWave14IntegratedUpstream/@typescript-eslint/no-extra-non-null-assertion
     slot14_landing_test.go:43: original upstream cases: 19
-    slot14_landing_test.go:44: Go, Node, emitted JavaScript, native identical: 6106 bytes
+    slot14_landing_test.go:44: Go, Node, emitted JavaScript, native identical: 6116 bytes
 === RUN   TestWave14IntegratedUpstream/@typescript-eslint/no-confusing-non-null-assertion
     slot14_landing_test.go:43: original upstream cases: 28
-    slot14_landing_test.go:44: Go, Node, emitted JavaScript, native identical: 5831 bytes
+    slot14_landing_test.go:44: Go, Node, emitted JavaScript, native identical: 5842 bytes
 === RUN   TestWave14IntegratedUpstream/@typescript-eslint/no-unnecessary-parameter-property-assignment
     slot14_landing_test.go:43: original upstream cases: 92
-    slot14_landing_test.go:44: node [--disable-warning=ExperimentalWarning /workspace/adamic-landing-wave14/oracle/node.mjs /workspace/adamic-landing-wave14/stage1/cohere/lint/main.ts --manifest /tmp/adamic-gate/TestWave14IntegratedUpstream@typescript-eslintno-unnecessary-p1681500617/003/manifest.txt]: exit status 70
-        adamic: panic: parser slice expected CloseParenToken, got OpenBraceToken at 33 in /tmp/adamic-gate/TestWave14IntegratedUpstream415038908/005/case-381/ParameterProperty.ts
+    slot14_landing_test.go:44: node [--disable-warning=ExperimentalWarning /workspace/adamic-landing-wave14/oracle/node.mjs /workspace/adamic-landing-wave14/stage1/cohere/lint/main.ts --manifest /tmp/adamic-gate/TestWave14IntegratedUpstream@typescript-eslintno-unnecessary-p868409182/003/manifest.txt]: exit status 70
+        adamic: panic: parser slice expected CloseParenToken, got OpenBraceToken at 33 in /tmp/adamic-gate/TestWave14IntegratedUpstream1173764098/005/case-381/ParameterProperty.ts
 === RUN   TestWave14IntegratedUpstream/no-lone-blocks
     slot14_landing_test.go:43: original upstream cases: 77
-    slot14_landing_test.go:44: Go, Node, emitted JavaScript, native identical: 29550 bytes
+    slot14_landing_test.go:44: Go, Node, emitted JavaScript, native identical: 29595 bytes
 === RUN   TestWave14IntegratedUpstream/no-lonely-if
     slot14_landing_test.go:43: original upstream cases: 32
-    slot14_landing_test.go:44: Go, Node, emitted JavaScript, native identical: 12335 bytes
+    slot14_landing_test.go:44: Go, Node, emitted JavaScript, native identical: 12358 bytes
 === RUN   TestWave14IntegratedUpstream/no-loss-of-precision
     slot14_landing_test.go:43: original upstream cases: 151
-    slot14_landing_test.go:44: Go, Node, emitted JavaScript, native identical: 40728 bytes
---- FAIL: TestWave14IntegratedUpstream (50.74s)
-    --- PASS: TestWave14IntegratedUpstream/nexus/import-require-module-alias (0.47s)
-    --- PASS: TestWave14IntegratedUpstream/@typescript-eslint/no-duplicate-enum-values (0.47s)
-    --- PASS: TestWave14IntegratedUpstream/@typescript-eslint/no-dynamic-delete (0.36s)
-    --- PASS: TestWave14IntegratedUpstream/@typescript-eslint/no-misused-new (0.53s)
-    --- PASS: TestWave14IntegratedUpstream/@typescript-eslint/no-extra-non-null-assertion (0.46s)
-    --- PASS: TestWave14IntegratedUpstream/@typescript-eslint/no-confusing-non-null-assertion (0.43s)
-    --- FAIL: TestWave14IntegratedUpstream/@typescript-eslint/no-unnecessary-parameter-property-assignment (0.32s)
-    --- PASS: TestWave14IntegratedUpstream/no-lone-blocks (0.49s)
-    --- PASS: TestWave14IntegratedUpstream/no-lonely-if (0.46s)
-    --- PASS: TestWave14IntegratedUpstream/no-loss-of-precision (0.60s)
+    slot14_landing_test.go:44: Go, Node, emitted JavaScript, native identical: 40784 bytes
+--- FAIL: TestWave14IntegratedUpstream (40.23s)
+    --- PASS: TestWave14IntegratedUpstream/nexus/import-require-module-alias (0.32s)
+    --- PASS: TestWave14IntegratedUpstream/@typescript-eslint/no-duplicate-enum-values (0.35s)
+    --- PASS: TestWave14IntegratedUpstream/@typescript-eslint/no-dynamic-delete (0.33s)
+    --- PASS: TestWave14IntegratedUpstream/@typescript-eslint/no-misused-new (0.37s)
+    --- PASS: TestWave14IntegratedUpstream/@typescript-eslint/no-extra-non-null-assertion (0.36s)
+    --- PASS: TestWave14IntegratedUpstream/@typescript-eslint/no-confusing-non-null-assertion (0.35s)
+    --- FAIL: TestWave14IntegratedUpstream/@typescript-eslint/no-unnecessary-parameter-property-assignment (0.26s)
+    --- PASS: TestWave14IntegratedUpstream/no-lone-blocks (0.41s)
+    --- PASS: TestWave14IntegratedUpstream/no-lonely-if (0.38s)
+    --- PASS: TestWave14IntegratedUpstream/no-loss-of-precision (0.48s)
 === RUN   TestWave14LonelyIfMutant
     lint_test.go:399: cohere cases: 2588 unique source/rule/options combinations
     slot14_landing_test.go:83: replacement carries an extra space caught only by Go comparison on Node over 32 original cases
     slot14_landing_test.go:83: replacement carries an extra space caught only by Go comparison on emitted JavaScript over 32 original cases
     slot14_landing_test.go:83: replacement carries an extra space caught only by Go comparison on native over 32 original cases
---- PASS: TestWave14LonelyIfMutant (38.24s)
+--- PASS: TestWave14LonelyIfMutant (36.15s)
 FAIL
-FAIL	github.com/system-inc/adamic/stage1/cohere/lint	89.025s
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	76.394s
 FAIL

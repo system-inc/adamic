@@ -1,7 +1,7 @@
 # Integrated lint area landing
 
-Current compiler landing: c7991b900; area base b46914832. See the final
-registry-refresh section for rebuilt results. Earlier sections preserve their
+Current compiler landing: b6b1538b0; area base d3a37422c. See the final
+compiler-refresh section for rebuilt results. Earlier sections preserve their
 original observations and bases. The branch remains blocked for landing.
 
 Rebased codex/lint-wave1-14 onto area/stage1-lint
@@ -278,3 +278,63 @@ after ten passes and the shared oracle's fix-failed panic before comparison.
 The branch is explicitly not green or landing-ready. Resolving the constructor
 parser and shared oracle contract requires their owners; no shared fix, skipped
 check, relaxed assertion or new claim is used. Raw failures are committed.
+
+## Typeof compiler landing refresh
+
+Fetched all origin refs and rebased onto area/stage1-lint
+d3a37422c6c2c3dd4a90b8721a2067a4ba0d8898, containing current main
+b6b1538b0cebc4ba6741ac34f1aedb60293c1d06. The ledger is unchanged, and
+the same ten winning directories are retained while the three losing copies
+stay dropped. No shared harness or compiler implementation was edited.
+Compiler changes were accepted without reverting them. No implementation
+change was needed in the owned rules.
+
+All comparisons were rebuilt; none reuse b46914832 results. Commands source
+/workspace/adamic-tools/env.sh, and output goes to regular evidence/d3-* logs:
+
+- TestCompilerAndStage1Agree with the pinned TypeScript input PASS (179.17s):
+  415 files, 20,751,296 identical bytes on actual Go, source Node, emitted
+  JavaScript and ASan/UBSan native.
+- validate_landing.py exits 1 (76.394s): nine original-rule groups match on all
+  four sides over all 579 cases. The 92-case constructor group fails again on
+  original ParameterProperty.ts: expected CloseParenToken, got OpenBraceToken
+  at 33. No fixture is removed or skipped.
+- The no-lonely-if extra-space mutant PASSes its control (36.15s): clean
+  compiling exit-zero runs differ only under actual Go byte comparison on all
+  three backends over 32 original cases.
+- The duplicate-module-options refusal probe compiles to JavaScript and
+  sanitized native. Source Node, emitted JavaScript through oracle/node.mjs
+  and native each exit 70 with the expected repeated-key refusal.
+- The filtered inherited-static-field compiler fixture and one-byte failure
+  control PASS (6.564s), with three native misses and one cache hit.
+  go vet ./... PASS.
+- Both actual private Go helper comparisons and their width mutants are
+  freshly rebuilt and PASS on Node, emitted JavaScript and ASan/UBSan native:
+  fixed hex 68,844 records / 2,149,768 bytes; Unicode 12,935 records / 834,966
+  bytes. All four original consumer suites and every targeted actual leaf
+  assertion PASS. The helper branch is pushed at
+  7b6a7c28bdf9b9e715a8403cf27703a69afeeb74.
+
+Setup tools ready 0s each, submodules 0s, cache warm 151s, total 151s; nproc 5,
+CPU quota 4 cores. The seventeen broader repository required-input checks
+were not run by this filtered gate. No full gate, fresh findings-per-second
+measurement, full regexp integration or arbitrary-input parameter-property
+parity is claimed. Eight prerequisites for four helper consumers still remove
+zero complete blocker sets. No new rule or helper is claimed.
+
+The nine selected default TestMutants subtests were rerun with the exact filter
+in the c7991b900 section: PASS (285.29s). Each retained mutation in the table
+above is freshly caught only by actual Go comparison on source Node, emitted
+JavaScript and sanitized native after clean compilation, exit zero and clean
+stderr. The tenth uses the separate 32-case no-lonely-if control.
+
+TestOwnedWitnesses was rerun unchanged: FAIL (23.70s), panic 'fix failed',
+Passes:10 and Converged:false on the preserved eleven-level no-lonely-if
+witness. This failure occurs in Go before port comparison. The options-adapter
+guard remains unchanged; no owned adapter guard failure was observed.
+
+The branch is not green or landing-ready. The constructor-parser failure and
+shared Go fix-budget contract remain outside owned directories, and their exact
+checked-in reproducers are preserved. No assertion was relaxed, fixture removed
+or check skipped. Remote main/area tips were checked before pushing. No main
+or area branch is pushed, and no new claim is taken under the landing cap.
