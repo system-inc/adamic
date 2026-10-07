@@ -1,0 +1,13 @@
+{
+  "name": "consistent-this",
+  "kinds": [
+    "SourceFile"
+  ],
+  "visit": "visit",
+  "parent": true,
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleConsistentThis",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestConsistentThis"
+}

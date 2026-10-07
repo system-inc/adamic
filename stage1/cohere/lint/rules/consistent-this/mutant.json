@@ -1,0 +1,6 @@
+{
+  "name": "reverse consistent-this judgement",
+  "file": "rule.ts",
+  "from": "operator !== 'EqualsToken'",
+  "to": "operator === 'EqualsToken'"
+}
