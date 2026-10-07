@@ -601,3 +601,36 @@ still incomplete. Full rule corpus agreement/throughput, complete stage-1 gate
 and the 17 external correctness comparisons were not run for this isolated
 helper. No check was weakened or skipped and called green. Existing full-rule
 gates were unchanged and not repeated.
+
+## Contextual type step lookup
+
+Landing bases remain main c7991b900 and area b84a9d931, both ancestors of
+this branch. No rebase was needed and no new claims were made.
+
+Added require_await/context_step.a for property, tuple/array element and
+call-signature return lookup. Named properties take precedence over string
+index signatures; tuples do not fall through to their numeric index type,
+including when the requested element is outside the tuple. Input order and
+return-signature order are preserved. Facts are supplied per type and no
+syntax kind dispatch or current-node refetch was added.
+
+Ran after sourcing /workspace/adamic-tools/env.sh:
+python3 stage1/cohere/typeaware/wave_01_fourth/testdata/verify_await_context.py
+/workspace/wave01-await-context /workspace/wave-01-fourth-adamic, with output
+recorded in /tmp/wave01-await-context.log and validation/await-context.
+Result: PASS 12 real-type contextual lookup cases; sanitizer-clean
+property-priority mutant caught by bytes. The oracle overlay calls unchanged
+requireAwaitApplyContextStep with actual checker types from six declarations:
+named plus indexed object, string-indexed object, tuple, array, overloaded
+callable and plain object. Three step kinds and four element indices are
+compared, including the out-of-bounds tuple case. Normal and mutant native
+executables both exit zero with empty sanitizer stderr; removing the named
+property preference changes the output and only byte comparison rejects it.
+
+These are helper comparisons with raw checker lookup facts captured by Go.
+They do not prove native fact delivery, generic ancestor-step collection,
+stand-in discovery, heritage lookup or full-rule findings on the corpora.
+All three fourth-batch claims remain partial. No checker bridge question was
+added, so this step adds no new handle-release check. The full gate, the 17
+required external correctness comparisons and new native/Go timings were not
+run for this isolated helper; no skipped check is represented as green.

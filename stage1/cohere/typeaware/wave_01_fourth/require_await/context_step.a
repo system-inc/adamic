@@ -1,0 +1,42 @@
+export interface AwaitContextFacts {
+    property: number;
+    stringIndex: number;
+    tuple: boolean;
+    elements: readonly number[];
+    numberIndex: number;
+    returns: readonly number[];
+}
+
+// Facts describe one requested lookup on each supplied type, in input order.
+export function applyAwaitContextStep(kind: number, index: number, facts: readonly AwaitContextFacts[]): number[] {
+    const next: number[] = [];
+    for(const part of facts) {
+        if(kind === 0) {
+            if(part.property !== 0) {
+                next.push(part.property);
+                continue;
+            }
+            if(part.stringIndex !== 0) {
+                next.push(part.stringIndex);
+            }
+        } else if(kind === 1) {
+            if(part.tuple) {
+                if(index < part.elements.length) {
+                    const element = part.elements[index];
+                    if(element !== undefined) {
+                        next.push(element);
+                    }
+                }
+                continue;
+            }
+            if(part.numberIndex !== 0) {
+                next.push(part.numberIndex);
+            }
+        } else if(kind === 2) {
+            for(const result of part.returns) {
+                next.push(result);
+            }
+        }
+    }
+    return next;
+}
