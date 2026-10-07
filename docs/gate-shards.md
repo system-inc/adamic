@@ -1260,3 +1260,34 @@ focused provenance race suite passed. The three provenance mutants were killed
 by the expected behavioral assertions, with no compilation failure. The final
 branch contains the requested base's setup and stage1 changes; measurements
 above remain attributed to their exact historical source and frozen runner.
+
+### Four-slot follow-up: memory guard stops the experiment
+
+The requested kill test was checked at 18:31 UTC on October 7 before changing
+`layoutSlots`. The current execution cgroup reports `memory.peak=17179873280`
+bytes against `memory.max=17179869184` bytes: approximately 16.00 GiB peak and
+16.00 GiB limit. `memory.events` records `max=6618`, `oom=0`, and `oom_kill=0`.
+The CPU quota remains `400000 100000` (four CPUs).
+
+This is the cgroup's lifetime peak, not an isolated peak of the layout rerun.
+The previous rerun did not reset/read the peak at its boundaries or measure max
+RSS, so attributing this peak to layout would be unsupported. Assumption: the
+instruction to stop near the box limit takes precedence over the subsequent
+four-slot/split experiments; insufficient attributable headroom is not evidence
+that increasing the memory guard is safe. The lifetime peak is already at the
+limit, so the experiment stops here. No stage1 test-file change was made and no
+separate stage1 commit is needed.
+
+| Loop | Before | After | Instrument |
+| --- | ---: | --- | --- |
+| Joint layout group, two slots | 2421.176 s | Four slots not run: memory guard | Existing exact shard command and build-flags line above |
+| Current cgroup lifetime memory peak | Not captured at rerun boundaries | 16.00 GiB / 16.00 GiB limit | Read `/sys/fs/cgroup/memory.peak`, `memory.max`, `memory.events` |
+
+The 15-shard table above remains unchanged: layout shard 0 predicts 3456.456
+seconds and measured 2421.176 seconds. It does not establish a sub-20-minute
+gate. No four-slot wall drop or two-half budget is claimed. The four-slot claim
+remains untested; a fresh isolated cgroup or attributable process-tree RSS
+measurement is needed to establish headroom. Even the other shard predictions
+are above 1200 seconds, so fitting layout alone would not certify the whole
+gate under that budget. Raw readings are committed in
+`cmd/adamic-gate/evidence/layout-memory-guard.json`.
