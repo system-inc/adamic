@@ -1,0 +1,7 @@
+=== RUN   TestWave19StreamReleasedHandles
+    wave_19_stream_test.go:352: all three questions refuse released handles in normal and ASan/UBSan/LSan builds
+    wave_19_stream_test.go:385: retained-registry mutant exits 0 with empty stderr; all three required-panic checks kill it
+    wave_19_stream_test.go:401: unmodified production archive refuses all three unregistered questions with panic 70
+--- PASS: TestWave19StreamReleasedHandles (34.22s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	34.229s

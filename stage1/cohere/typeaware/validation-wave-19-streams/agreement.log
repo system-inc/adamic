@@ -1,0 +1,26 @@
+=== RUN   TestWave19ProcessPendingRegistration
+    wave_19_stream_test.go:128: 58 controls
+    wave_19_stream_test.go:129: process-controls: 19664 identical finding bytes; findings 32
+    wave_19_stream_test.go:136: no_process_exit_after_output.a mutant exit 0, empty stderr, only Go bytes catch byte 48
+    wave_19_stream_test.go:139: process-controls-asan: 19664 identical finding bytes; findings 32
+    wave_19_stream_test.go:157: compiler: 5241 identical finding bytes; findings 0
+    wave_19_stream_test.go:158: compiler-asan: 5241 identical finding bytes; findings 0
+    wave_19_stream_test.go:157: repository: 18485 identical finding bytes; findings 0
+    wave_19_stream_test.go:158: repository-asan: 18485 identical finding bytes; findings 0
+--- PASS: TestWave19ProcessPendingRegistration (70.46s)
+=== RUN   TestWave19BlockingPendingRegistration
+    wave_19_stream_test.go:248: 41 controls
+    wave_19_stream_test.go:249: blocking-controls: 16481 identical finding bytes; findings 23
+    wave_19_stream_test.go:256: require_blocking_standard_streams.a mutant exit 0, empty stderr, only Go bytes catch byte 49
+    wave_19_stream_test.go:259: blocking-controls-asan: 16481 identical finding bytes; findings 23
+    wave_19_stream_test.go:277: compiler: 5241 identical finding bytes; findings 0
+    wave_19_stream_test.go:278: compiler-asan: 5241 identical finding bytes; findings 0
+    wave_19_stream_test.go:277: repository: 18485 identical finding bytes; findings 0
+    wave_19_stream_test.go:278: repository-asan: 18485 identical finding bytes; findings 0
+--- PASS: TestWave19BlockingPendingRegistration (73.10s)
+=== RUN   TestWave19StreamReleasedHandles
+    wave_19_stream_test.go:352: all three questions refuse released handles in normal and ASan/UBSan/LSan builds
+    wave_19_stream_test.go:385: retained-registry mutant exits 0 with empty stderr; all three required-panic checks kill it
+--- PASS: TestWave19StreamReleasedHandles (29.74s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	173.316s

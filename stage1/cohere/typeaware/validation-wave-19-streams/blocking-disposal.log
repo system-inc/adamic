@@ -1,0 +1,13 @@
+=== RUN   TestWave19BlockingPendingRegistration
+    wave_19_stream_test.go:249: 43 controls
+    wave_19_stream_test.go:250: blocking-controls: 17206 identical finding bytes; findings 24
+    wave_19_stream_test.go:257: require_blocking_standard_streams.a mutant exit 0, empty stderr, only Go bytes catch byte 49
+    wave_19_stream_test.go:258: require_blocking_standard_streams.a mutant exit 0, empty stderr, only Go bytes catch byte 14262
+    wave_19_stream_test.go:261: blocking-controls-asan: 17206 identical finding bytes; findings 24
+    wave_19_stream_test.go:279: compiler: 5241 identical finding bytes; findings 0
+    wave_19_stream_test.go:280: compiler-asan: 5241 identical finding bytes; findings 0
+    wave_19_stream_test.go:279: repository: 18485 identical finding bytes; findings 0
+    wave_19_stream_test.go:280: repository-asan: 18485 identical finding bytes; findings 0
+--- PASS: TestWave19BlockingPendingRegistration (74.76s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	74.771s
