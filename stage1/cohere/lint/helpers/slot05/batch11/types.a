@@ -1,0 +1,2 @@
+export interface ClassAtom { readonly kind: number; lo: number; hi: number; text: string; }
+export interface RewriteOptions { readonly unicode: boolean; ignoreCase: boolean; multiline: boolean; dotAll: boolean; }

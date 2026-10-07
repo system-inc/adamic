@@ -1,0 +1,6 @@
+export function expandsOnUppercase(rune: number): boolean {
+    return rune >= 0x1f80 && rune <= 0x1f87 ||
+        rune >= 0x1f90 && rune <= 0x1f97 ||
+        rune >= 0x1fa0 && rune <= 0x1fa7 ||
+        rune === 0x1fb3 || rune === 0x1fc3 || rune === 0x1ff3;
+}

@@ -1,0 +1,6 @@
+import type { ClassAtom } from './types.a';
+export function classAtomWrite(atom: ClassAtom, literalRune: (rune: number) => string): string {
+    if(atom.kind === 2) { return atom.text; }
+    if(atom.kind === 1) { return literalRune(atom.lo) + '-' + literalRune(atom.hi); }
+    return literalRune(atom.lo);
+}

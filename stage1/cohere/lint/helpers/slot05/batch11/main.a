@@ -1,0 +1,32 @@
+import { panic, readTextFile, programArguments } from 'adamic';
+import { OptionsJson } from '../../options_json.ts';
+import type { ClassAtom, RewriteOptions } from './types.a';
+import { classAtomWrite } from './class_atom_write.a';
+import { wordCharacters } from './word_characters.a';
+import { expandsOnUppercase } from './expands_on_uppercase.a';
+const input = readTextFile(programArguments()[0] ?? panic('missing corpus'));
+if(input.kind === 'Error') { panic(input.message); }
+const json = new OptionsJson(input.text); const root = json.parse();
+if(root < 0) { panic(json.error); }
+function text(index: number, field: string): string { return json.node(json.field(index, field)).text; }
+function number(index: number, field: string): number { return Number(text(index, field)); }
+function options(row: number): RewriteOptions { return {unicode: text(row,'unicode') === 'true', ignoreCase: text(row,'ignoreCase') === 'true', multiline: text(row,'multiline') === 'true', dotAll: text(row,'dotAll') === 'true'}; }
+function flags(o: RewriteOptions): string { return `${o.unicode}:${o.ignoreCase}:${o.multiline}:${o.dotAll}`; }
+for(const row of json.node(root).children) {
+ const mode = text(row,'mode');
+ if(mode === 'expand') { console.log(`${expandsOnUppercase(number(row,'lo'))}`); continue; }
+ if(mode === 'sweep') { for(let rune=0;rune<=0x10ffff;rune++) { console.log(`${expandsOnUppercase(rune)}`); } continue; }
+ if(mode === 'atom') {
+  const lo=number(row,'lo'); const hi=number(row,'hi'); let trace='';
+  const result=classAtomWrite({kind:number(row,'kind'),lo,hi,text:text(row,'source')}, (rune: number): string => { trace += `${rune}:`; return rune === lo ? text(row,'loText') : text(row,'hiText'); });
+  console.log(result);console.log(trace);continue;
+ }
+ if(mode === 'word') {
+  const atoms: ClassAtom[]=[];
+  for(const a of json.node(json.field(row,'atoms')).children) { atoms.push({kind:number(a,'kind'),lo:number(a,'lo'),hi:number(a,'hi'),text:text(a,'text')}); }
+  let trace='';
+  const result=wordCharacters(options(row), (o: RewriteOptions): ClassAtom[] => { trace += `atoms:${flags(o)};`; return atoms; }, (a: ClassAtom[], negated: boolean, o: RewriteOptions): string => { trace += `write:${flags(o)}:${negated}:${a === atoms};`; return text(row,'result'); });
+  console.log(result);console.log(trace);continue;
+ }
+ panic('unsupported mode');
+}

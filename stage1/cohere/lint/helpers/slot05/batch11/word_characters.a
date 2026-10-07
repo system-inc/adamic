@@ -1,0 +1,4 @@
+import type { ClassAtom, RewriteOptions } from './types.a';
+export function wordCharacters(options: RewriteOptions, wordClassAtoms: (options: RewriteOptions) => ClassAtom[], writeClass: (atoms: ClassAtom[], negated: boolean, options: RewriteOptions) => string): string {
+    return writeClass(wordClassAtoms(options), false, {unicode: false, ignoreCase: false, multiline: false, dotAll: false});
+}

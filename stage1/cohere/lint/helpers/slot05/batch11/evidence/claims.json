@@ -1,0 +1,17 @@
+{
+  "branches_scanned": 20,
+  "main": "f8013f0baac41ddc340d76f83bddde38536a8f07",
+  "main_is_ancestor": true,
+  "matches": [
+    {
+      "branch": "refs/remotes/origin/codex/lint-helpers-05",
+      "file": "stage1/cohere/lint/helpers/claims/05.md",
+      "helpers": [
+        "regexp.classAtom.write",
+        "regexp.wordCharacters",
+        "regexp.expandsOnUppercase"
+      ]
+    }
+  ],
+  "claim": "3d6341d2d223b80b962422d77d5010fa851f5a29"
+}

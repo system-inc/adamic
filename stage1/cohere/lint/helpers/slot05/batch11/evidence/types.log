@@ -1,0 +1,29 @@
+stage1/cohere/lint/helpers/slot05/batch11/main.a:7:7: variable input: { readonly kind: "Ok"; readonly text: string; } | { readonly kind: "Error"; readonly message: string; }
+stage1/cohere/lint/helpers/slot05/batch11/main.a:9:7: variable json: OptionsJson
+stage1/cohere/lint/helpers/slot05/batch11/main.a:9:49: variable root: number
+stage1/cohere/lint/helpers/slot05/batch11/main.a:11:10: function text: (index: number, field: string) => string
+stage1/cohere/lint/helpers/slot05/batch11/main.a:11:15: parameter index: number
+stage1/cohere/lint/helpers/slot05/batch11/main.a:11:30: parameter field: string
+stage1/cohere/lint/helpers/slot05/batch11/main.a:12:10: function number: (index: number, field: string) => number
+stage1/cohere/lint/helpers/slot05/batch11/main.a:12:17: parameter index: number
+stage1/cohere/lint/helpers/slot05/batch11/main.a:12:32: parameter field: string
+stage1/cohere/lint/helpers/slot05/batch11/main.a:13:10: function options: (row: number) => RewriteOptions
+stage1/cohere/lint/helpers/slot05/batch11/main.a:13:18: parameter row: number
+stage1/cohere/lint/helpers/slot05/batch11/main.a:14:10: function flags: (o: RewriteOptions) => string
+stage1/cohere/lint/helpers/slot05/batch11/main.a:14:16: parameter o: RewriteOptions
+stage1/cohere/lint/helpers/slot05/batch11/main.a:15:11: variable row: number
+stage1/cohere/lint/helpers/slot05/batch11/main.a:16:8: variable mode: string
+stage1/cohere/lint/helpers/slot05/batch11/main.a:18:33: variable rune: number
+stage1/cohere/lint/helpers/slot05/batch11/main.a:20:9: variable lo: number
+stage1/cohere/lint/helpers/slot05/batch11/main.a:20:36: variable hi: number
+stage1/cohere/lint/helpers/slot05/batch11/main.a:20:61: variable trace: string
+stage1/cohere/lint/helpers/slot05/batch11/main.a:21:9: variable result: string
+stage1/cohere/lint/helpers/slot05/batch11/main.a:21:89: parameter rune: number
+stage1/cohere/lint/helpers/slot05/batch11/main.a:25:9: variable atoms: ClassAtom[]
+stage1/cohere/lint/helpers/slot05/batch11/main.a:26:13: variable a: number
+stage1/cohere/lint/helpers/slot05/batch11/main.a:27:7: variable trace: string
+stage1/cohere/lint/helpers/slot05/batch11/main.a:28:9: variable result: string
+stage1/cohere/lint/helpers/slot05/batch11/main.a:28:46: parameter o: RewriteOptions
+stage1/cohere/lint/helpers/slot05/batch11/main.a:28:132: parameter a: ClassAtom[]
+stage1/cohere/lint/helpers/slot05/batch11/main.a:28:148: parameter negated: boolean
+stage1/cohere/lint/helpers/slot05/batch11/main.a:28:166: parameter o: RewriteOptions
