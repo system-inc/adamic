@@ -1388,6 +1388,37 @@ pass, the single graphTypes integration call, and IR ownership-ID comments.
 No emission file or runtime function changed for flow classification. The
 area release repair remains the separate pushed 850a35e commit.
 
+
+Before delivery, merged current origin/main b6b1538 in 615503e and regenerated
+counts. All existing flow/graph rows remain unchanged. Seven typeof fixtures
+from main are added in canonical order; three have fewer retains/releases
+with the area borrow optimizations (dispatch 9/19 to 6/16, null_compare 11/22
+to 10/21, null_slots 28/38 to 26/36). No numeric count rises.
+The final fetched main still names b6b1538 and is an ancestor of this branch.
+
+Final merged-tree commands and observations (all output redirected to logs):
+
+```text
+ADAMIC_GATE_UNCACHED=1 go test ./internal/lower ./internal/fresh -count=1 -timeout 30m > /tmp/graph-regions-flow-main-packages.log 2>&1
+# lower 35.574s, fresh 80.135s, both PASS
+ADAMIC_GATE_UNCACHED=1 go test ./internal/native -run '^TestGraph' -count=1 -v > /tmp/graph-regions-flow-main-native-graph.log 2>&1
+# all five PASS, 15.878s
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 30m -args -update-counts > /tmp/graph-regions-flow-main-counts-update.log 2>&1
+# PASS, 103.150s
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/.*(regions|weak|fresh|nested|string_views|typeof)|TestFreshWriteProbesUseRegions|TestGraphRegions|TestGraphAllocationFlow|TestWeakRegionReview|TestNested.*|TestCountsAreRecorded|TestTypeof' -count=1 -v -timeout 30m > /tmp/graph-regions-flow-main-oracle-final.log 2>&1
+# PASS, 117.147s; native misses 967, Node misses 268, cache hits zero
+python3 /tmp/graph-regions-flow-return-mutant.py > /tmp/graph-regions-flow-return-mutant-results.log 2>&1
+python3 /tmp/graph-regions-flow-conditional-mutant.py > /tmp/graph-regions-flow-conditional-mutant-results.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/lower ./internal/oracle -run '^TestGraphAllocationFlow' -count=1 -v > /tmp/graph-regions-flow-main-restored.log 2>&1
+gofmt -l cmd internal > /tmp/graph-regions-flow-main-format.log 2>&1
+go vet ./... > /tmp/graph-regions-flow-main-vet.log 2>&1
+```
+
+Format and vet logs are empty. Both flow mutants were rerun after this merge;
+each fails both classification and leak-clean tests, and the restored sources
+pass. The full repository gate was not run in this continuation. Concurrency
+and the flow frontiers described above remain outside this change.
+
 ## Arenas
 
 Some work allocates a lot and frees it all at once: one request, one file checked by cohere. For that, an arena: allocations bump a pointer, and the arena frees everything in one go at the end. A value allocated in an arena must not outlive it, and proving that is escape analysis. The lowering IR's aliasing analysis (#5jck546) is where that comes from. Arenas are for stage 1 (cohere in Adamic), where cohere's own measurements already show that with the collector off, fresh allocation is the cost.
