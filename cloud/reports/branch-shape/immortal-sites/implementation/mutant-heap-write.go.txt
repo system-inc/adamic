@@ -1,0 +1,86 @@
+package lower
+
+import "github.com/system-inc/adamic/internal/ir"
+
+// FieldWrites records the expressions that can reach a named data slot. Names
+// are shared across classes, inherited layouts and structural aliases: without
+// an allocation identity proof, distinguishing those views would miss writes.
+// Complete is false when a writer cannot be represented by an IR expression.
+// Consumers must require Complete and prove their property for every Expression.
+type FieldWrites = ir.FieldWrites
+
+// CollectFieldWrites exposes the common write inventory to backend properties.
+// It does not mutate the program or assume that any particular value is constant.
+func CollectFieldWrites(program *ir.Program) map[string]FieldWrites {
+	return collectFieldWrites(program)
+}
+
+func collectFieldWrites(program *ir.Program) map[string]FieldWrites {
+	writes := make(map[string]FieldWrites)
+	ensure := func(name string) FieldWrites {
+		if found, ok := writes[name]; ok {
+			return found
+		}
+		return FieldWrites{Complete: true}
+	}
+	record := func(name string, expression ir.Expression) {
+		found := ensure(name)
+		found.Expressions = append(found.Expressions, expression)
+		writes[name] = found
+	}
+	unknown := func(name string) {
+		found := ensure(name)
+		found.Complete = false
+		writes[name] = found
+	}
+	// Runtime-produced fields have writers outside this IR. Include them even
+	// when the runtime operation is unused; a same-named class field then loses
+	// an optimization, never its ownership. Regex named groups are unbounded.
+	for _, name := range []string{"0", "1", "name", "message", "kind", "text", "names", "type", "size", "symbolicLink", "next", "iterator", "part", "key", "value", "set", "done", "__program", "lastIndex", "source", "flags", "global", "ignoreCase", "multiline", "unicode", "sticky", "hasIndices", "unicodeSets", "dotAll", "index", "input", "groups", "indices", "regex", "nodeKind", "symbolName"} {
+		unknown(name)
+	}
+	for _, class := range program.Classes {
+		for _, field := range class.Fields {
+			if _, ok := writes[field.Name]; !ok {
+				writes[field.Name] = ensure(field.Name)
+			}
+		}
+		for _, accessor := range class.Accessors {
+			unknown(accessor.Name)
+		}
+	}
+	unbounded := len(program.Regexps) != 0
+	visit := func(node any) bool {
+		switch node := node.(type) {
+		case ir.ObjectLiteral:
+			for _, field := range node.Fields {
+				record(field.Name, field.Value)
+			}
+			for _, field := range node.Empty {
+				record(field.Name, field.Value)
+			}
+			// A spread can copy an arbitrary runtime or accessor result. Until
+			// its source layout is proven, it is an unmodelled writer.
+			if node.Spread != nil {
+				unbounded = true
+			}
+		case ir.SetProperty:
+			// Mutant omits writes outside initialization.
+		case ir.ObjectCall:
+			if node.Method == "assign" || node.Method == "fromEntries" || node.Method == "defineProperty" || node.Method == "defineProperties" {
+				unbounded = true
+			}
+		}
+		return true
+	}
+	walk(program.Main, visit)
+	for _, function := range program.Functions {
+		walk(function.Body, visit)
+	}
+	if unbounded {
+		for name := range writes {
+			unknown(name)
+		}
+	}
+	return writes
+}

@@ -1,0 +1,120 @@
+--- a/internal/ir/ir.go
++++ b/internal/ir/ir.go
+@@ -16,6 +16,9 @@
+ 
+ 	// Source is the entry file's base name, as written, for the header of what the backends emit.
+ 	Source string
++
++// FieldWrites is the complete lowering-time data-slot write inventory.
++FieldWrites map[string]FieldWrites
+ 
+ 	// Strings are the program's string constants, as UTF-8, in first-use order.
+ 	Strings []string
+@@ -1193,3 +1196,6 @@
+ 	}
+ 	return false
+ }
++
++// FieldWrites records known writes; incomplete inventories cannot elide ownership.
++type FieldWrites struct { Expressions []Expression; Complete bool }
+--- a/internal/lower/field_writes.go
++++ b/internal/lower/field_writes.go
+@@ -7,10 +7,7 @@
+ // an allocation identity proof, distinguishing those views would miss writes.
+ // Complete is false when a writer cannot be represented by an IR expression.
+ // Consumers must require Complete and prove their property for every Expression.
+-type FieldWrites struct {
+-	Expressions []ir.Expression
+-	Complete    bool
+-}
++type FieldWrites = ir.FieldWrites
+ 
+ // CollectFieldWrites exposes the common write inventory to backend properties.
+ // It does not mutate the program or assume that any particular value is constant.
+--- a/internal/lower/lower.go
++++ b/internal/lower/lower.go
+@@ -72,6 +72,7 @@
+ 	}
+ 	borrow(lowering.result)
+ 	counters(lowering.result)
++	lowering.result.FieldWrites = collectFieldWrites(lowering.result)
+ 	return lowering.result, nil
+ }
+ 
+--- a/internal/native/branch_shape.go
++++ b/internal/native/branch_shape.go
+@@ -2,6 +2,7 @@
+ 
+ import (
+ 	"math"
++
+ 
+ 	"github.com/system-inc/adamic/internal/ir"
+ )
+@@ -67,3 +68,33 @@
+ 	e.line("}")
+ 	return true
+ }
++
++// immortalField requires every write, across nominal and structural views, to
++// yield an immortal constant. One unknown writer keeps the old-value release.
++func (e *emitter) immortalField(name string) bool {
++	writes, found := e.program.FieldWrites[name]
++	if !found || !writes.Complete || len(writes.Expressions) == 0 {
++		return false
++	}
++	for _, value := range writes.Expressions {
++		if !immortalExpression(value) {
++			return false
++		}
++	}
++	return true
++}
++
++func immortalExpression(value ir.Expression) bool {
++	switch value := value.(type) {
++	case ir.StringConstant, ir.Undefined, ir.Null, ir.BooleanToString:
++		return true
++	case ir.Box:
++		if _, boolean := value.Value.(ir.BooleanConstant); boolean {
++			return true
++		}
++		return value.Value.Type().IsReference() && immortalExpression(value.Value)
++	case ir.Conditional:
++		return immortalExpression(value.WhenTrue) && immortalExpression(value.WhenNot)
++	}
++	return false
++}
+--- a/internal/native/emit_statements.go
++++ b/internal/native/emit_statements.go
+@@ -166,7 +166,10 @@
+ 		e.line("adamic_object_check_data_write(%s, %s);", object, cString(statement.Name))
+ 		slot := e.temporary()
+ 		e.line("adamic_value *%s = %s;", slot, e.writeFieldSlot(object, statement.Name, statement.Class))
+-		if statement.Value.Type().IsReference() {
++		if statement.Value.Type().IsReference() && e.immortalField(statement.Name) {
++			// The complete write inventory proves the old slot is immortal too.
++			e.line("%s->reference = %s;", slot, e.keptIn(object, value))
++		} else if statement.Value.Type().IsReference() {
+ 			// The new reference is taken before the old is let go: they may be the same.
+ 			old := e.temporary()
+ 			e.line("void *%s = %s->reference;", old, slot)
+--- a/internal/native/immortal_fields_test.go
++++ b/internal/native/immortal_fields_test.go
+@@ -88,3 +88,16 @@
+ 		}
+ 	}
+ }
++
++func TestImmortalFieldProof(t *testing.T) {
++	t.Parallel()
++	e := &emitter{program: immortalFieldsProgram(t)}
++	if !e.immortalField("spelling") {
++		t.Fatal("literal-only writes not proven")
++	}
++	if e.immortalField("heapLabel") {
++		t.Fatal("heap write accepted as immortal")
++	}
++}
++
++

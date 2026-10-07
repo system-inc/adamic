@@ -1,0 +1,418 @@
+{
+  "cpu": 3,
+  "samples": {
+    "before": [
+      {
+        "wall": 1.051957935000246,
+        "user": 1.000789,
+        "system": 0.050218,
+        "command": [
+          "/workspace/scratch/immortal-sites/before",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.32 3.08 3.00 1/218 98221",
+        "load_after": "1.32 3.08 3.00 1/218 98222"
+      },
+      {
+        "wall": 0.9780519180003466,
+        "user": 0.9311189999999999,
+        "system": 0.045812,
+        "command": [
+          "/workspace/scratch/immortal-sites/before",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.29 3.04 2.99 1/218 98224",
+        "load_after": "1.29 3.04 2.99 1/219 98225"
+      },
+      {
+        "wall": 0.9426526269999158,
+        "user": 0.9141819999999999,
+        "system": 0.027739,
+        "command": [
+          "/workspace/scratch/immortal-sites/before",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.29 3.04 2.99 1/219 98228",
+        "load_after": "1.27 3.01 2.98 1/219 98229"
+      },
+      {
+        "wall": 0.9248127699993347,
+        "user": 0.8994479999999999,
+        "system": 0.024318,
+        "command": [
+          "/workspace/scratch/immortal-sites/before",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.27 3.01 2.98 1/219 98232",
+        "load_after": "1.27 3.01 2.98 1/219 98233"
+      },
+      {
+        "wall": 0.8895549709995976,
+        "user": 0.8451949999999999,
+        "system": 0.043472,
+        "command": [
+          "/workspace/scratch/immortal-sites/before",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.25 2.97 2.97 1/219 98235",
+        "load_after": "1.25 2.97 2.97 1/217 98236"
+      },
+      {
+        "wall": 0.8931790789993101,
+        "user": 0.844557,
+        "system": 0.04795,
+        "command": [
+          "/workspace/scratch/immortal-sites/before",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.25 2.97 2.97 1/217 98237",
+        "load_after": "1.25 2.97 2.97 1/217 98238"
+      },
+      {
+        "wall": 0.8922719249985676,
+        "user": 0.8672059999999999,
+        "system": 0.024295999999999998,
+        "command": [
+          "/workspace/scratch/immortal-sites/before",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.25 2.97 2.97 1/217 98239",
+        "load_after": "1.23 2.94 2.96 1/216 98240"
+      },
+      {
+        "wall": 0.8796167700002115,
+        "user": 0.846796,
+        "system": 0.032101,
+        "command": [
+          "/workspace/scratch/immortal-sites/before",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.23 2.94 2.96 1/216 98242",
+        "load_after": "1.23 2.94 2.96 1/216 98243"
+      },
+      {
+        "wall": 0.888007714998821,
+        "user": 0.850883,
+        "system": 0.036334,
+        "command": [
+          "/workspace/scratch/immortal-sites/before",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.21 2.91 2.95 1/216 98246",
+        "load_after": "1.21 2.91 2.95 1/216 98247"
+      },
+      {
+        "wall": 0.8752937669996754,
+        "user": 0.8304779999999999,
+        "system": 0.044055,
+        "command": [
+          "/workspace/scratch/immortal-sites/before",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.21 2.91 2.95 1/216 98250",
+        "load_after": "1.19 2.88 2.94 1/216 98251"
+      }
+    ],
+    "static": [
+      {
+        "wall": 0.9633526010002242,
+        "user": 0.9217249999999999,
+        "system": 0.04084,
+        "command": [
+          "/workspace/scratch/immortal-sites/static",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.32 3.08 3.00 1/218 98222",
+        "load_after": "1.32 3.08 3.00 1/218 98223"
+      },
+      {
+        "wall": 0.9800630999998248,
+        "user": 0.922663,
+        "system": 0.056671,
+        "command": [
+          "/workspace/scratch/immortal-sites/static",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.29 3.04 2.99 1/219 98226",
+        "load_after": "1.29 3.04 2.99 1/219 98227"
+      },
+      {
+        "wall": 0.9193908219986042,
+        "user": 0.8902059999999999,
+        "system": 0.028235999999999997,
+        "command": [
+          "/workspace/scratch/immortal-sites/static",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.27 3.01 2.98 1/219 98229",
+        "load_after": "1.27 3.01 2.98 1/219 98230"
+      },
+      {
+        "wall": 0.9398262729991984,
+        "user": 0.8859349999999999,
+        "system": 0.053146,
+        "command": [
+          "/workspace/scratch/immortal-sites/static",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.27 3.01 2.98 1/219 98231",
+        "load_after": "1.27 3.01 2.98 1/219 98232"
+      },
+      {
+        "wall": 0.9276914910005871,
+        "user": 0.890308,
+        "system": 0.036152,
+        "command": [
+          "/workspace/scratch/immortal-sites/static",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.27 3.01 2.98 1/219 98233",
+        "load_after": "1.25 2.97 2.97 1/219 98234"
+      },
+      {
+        "wall": 0.8840039219994651,
+        "user": 0.8427359999999999,
+        "system": 0.040459999999999996,
+        "command": [
+          "/workspace/scratch/immortal-sites/static",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.25 2.97 2.97 1/217 98236",
+        "load_after": "1.25 2.97 2.97 1/217 98237"
+      },
+      {
+        "wall": 0.8799030120007956,
+        "user": 0.8548509999999999,
+        "system": 0.024354999999999998,
+        "command": [
+          "/workspace/scratch/immortal-sites/static",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.23 2.94 2.96 1/216 98240",
+        "load_after": "1.23 2.94 2.96 1/216 98241"
+      },
+      {
+        "wall": 0.9020639869995648,
+        "user": 0.87288,
+        "system": 0.028409999999999998,
+        "command": [
+          "/workspace/scratch/immortal-sites/static",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.23 2.94 2.96 1/216 98244",
+        "load_after": "1.23 2.94 2.96 1/216 98245"
+      },
+      {
+        "wall": 0.8988764780006022,
+        "user": 0.862096,
+        "system": 0.035865,
+        "command": [
+          "/workspace/scratch/immortal-sites/static",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.21 2.91 2.95 1/216 98247",
+        "load_after": "1.21 2.91 2.95 1/216 98248"
+      },
+      {
+        "wall": 0.8533533919999172,
+        "user": 0.8249219999999999,
+        "system": 0.027639,
+        "command": [
+          "/workspace/scratch/immortal-sites/static",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.21 2.91 2.95 1/216 98249",
+        "load_after": "1.21 2.91 2.95 1/216 98250"
+      }
+    ],
+    "fields": [
+      {
+        "wall": 1.033335681000608,
+        "user": 0.9738129999999999,
+        "system": 0.058724,
+        "command": [
+          "/workspace/scratch/immortal-sites/fields",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.32 3.08 3.00 1/218 98223",
+        "load_after": "1.29 3.04 2.99 1/218 98224"
+      },
+      {
+        "wall": 1.0241265749991726,
+        "user": 1.00573,
+        "system": 0.017307,
+        "command": [
+          "/workspace/scratch/immortal-sites/fields",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.29 3.04 2.99 1/219 98225",
+        "load_after": "1.29 3.04 2.99 1/219 98226"
+      },
+      {
+        "wall": 1.0188294170002337,
+        "user": 0.97148,
+        "system": 0.046624,
+        "command": [
+          "/workspace/scratch/immortal-sites/fields",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.29 3.04 2.99 1/219 98227",
+        "load_after": "1.29 3.04 2.99 1/219 98228"
+      },
+      {
+        "wall": 0.932907354001145,
+        "user": 0.880853,
+        "system": 0.051188,
+        "command": [
+          "/workspace/scratch/immortal-sites/fields",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.27 3.01 2.98 1/219 98230",
+        "load_after": "1.27 3.01 2.98 1/219 98231"
+      },
+      {
+        "wall": 0.903191515000799,
+        "user": 0.8665309999999999,
+        "system": 0.035636,
+        "command": [
+          "/workspace/scratch/immortal-sites/fields",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.25 2.97 2.97 1/219 98234",
+        "load_after": "1.25 2.97 2.97 1/219 98235"
+      },
+      {
+        "wall": 0.8981120790012938,
+        "user": 0.8376969999999999,
+        "system": 0.059696,
+        "command": [
+          "/workspace/scratch/immortal-sites/fields",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.25 2.97 2.97 1/217 98238",
+        "load_after": "1.25 2.97 2.97 1/217 98239"
+      },
+      {
+        "wall": 0.8731894339998689,
+        "user": 0.83246,
+        "system": 0.040059,
+        "command": [
+          "/workspace/scratch/immortal-sites/fields",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.23 2.94 2.96 1/216 98241",
+        "load_after": "1.23 2.94 2.96 1/216 98242"
+      },
+      {
+        "wall": 0.9736582879995694,
+        "user": 0.92318,
+        "system": 0.049602999999999994,
+        "command": [
+          "/workspace/scratch/immortal-sites/fields",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.23 2.94 2.96 1/216 98243",
+        "load_after": "1.23 2.94 2.96 1/216 98244"
+      },
+      {
+        "wall": 0.8857454030003282,
+        "user": 0.8165589999999999,
+        "system": 0.068396,
+        "command": [
+          "/workspace/scratch/immortal-sites/fields",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.23 2.94 2.96 1/216 98245",
+        "load_after": "1.21 2.91 2.95 1/216 98246"
+      },
+      {
+        "wall": 0.883958350001194,
+        "user": 0.843237,
+        "system": 0.040042,
+        "command": [
+          "/workspace/scratch/immortal-sites/fields",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.21 2.91 2.95 1/216 98248",
+        "load_after": "1.21 2.91 2.95 1/216 98249"
+      }
+    ]
+  },
+  "best": {
+    "before": {
+      "user": 0.8304779999999999,
+      "wall": 0.8752937669996754,
+      "system": 0.024295999999999998
+    },
+    "static": {
+      "user": 0.8249219999999999,
+      "wall": 0.8533533919999172,
+      "system": 0.024354999999999998
+    },
+    "fields": {
+      "user": 0.8165589999999999,
+      "wall": 0.8731894339998689,
+      "system": 0.017307
+    }
+  }
+}

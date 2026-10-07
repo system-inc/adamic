@@ -1,0 +1,100 @@
+package native
+
+import (
+	"math"
+
+
+	"github.com/system-inc/adamic/internal/ir"
+)
+
+// numericSwitch keeps numeric equality exact while giving clang an integer switch.
+// Only constant int32 cases qualify. The value need not be integral: NaN, infinities,
+// fractions and values outside the case range go to an unused int64 sentinel.
+// Testing the range before conversion avoids C's undefined floating-to-integer cast.
+func (e *emitter) numericSwitch(statement ir.Switch, value string) bool {
+	if statement.Value.Type() != ir.Number {
+		return false
+	}
+	labels := make([][]int64, len(statement.Cases))
+	seen := make(map[int64]bool)
+	minimum, maximum := int64(math.MaxInt32), int64(math.MinInt32)
+	for index, matched := range statement.Cases {
+		for _, test := range matched.Tests {
+			constant, ok := test.(ir.NumberConstant)
+			if !ok || math.IsNaN(constant.Value) || constant.Value < math.MinInt32 || constant.Value > math.MaxInt32 || math.Trunc(constant.Value) != constant.Value {
+				return false
+			}
+			label := int64(constant.Value)
+			// JavaScript selects the first matching case, including duplicate zeros.
+			if seen[label] {
+				continue
+			}
+			seen[label] = true
+			labels[index] = append(labels[index], label)
+			minimum = min(minimum, label)
+			maximum = max(maximum, label)
+		}
+	}
+	if len(seen) < 4 {
+		return false
+	}
+	dispatch, integral := e.temporary(), e.temporary()
+	e.line("int64_t %s = INT64_C(2147483648);", dispatch)
+	e.line("if (%s >= %s && %s <= %s) {", value, cNumber(float64(minimum)), value, cNumber(float64(maximum)))
+	e.line("\tint64_t %s = (int64_t)%s;", integral, value)
+	e.line("\tif ((double)%s == %s) %s = %s;", integral, value, dispatch, integral)
+	e.line("}")
+	e.line("switch (%s) {", dispatch)
+	e.indent++
+	e.breakables = append(e.breakables, len(e.scopes))
+	for index, matched := range statement.Cases {
+		if len(labels[index]) == 0 {
+			continue
+		}
+		for _, label := range labels[index] {
+			e.line("case %d:", label)
+		}
+		e.line("{")
+		e.nested(matched.Body, nil)
+		e.line("\tbreak;")
+		e.line("}")
+	}
+	e.line("default: {")
+	e.nested(statement.Default, nil)
+	e.line("\tbreak;")
+	e.line("}")
+	e.breakables = e.breakables[:len(e.breakables)-1]
+	e.indent--
+	e.line("}")
+	return true
+}
+
+// immortalField requires every write, across nominal and structural views, to
+// yield an immortal constant. One unknown writer keeps the old-value release.
+func (e *emitter) immortalField(name string) bool {
+	writes, found := e.program.FieldWrites[name]
+	if !found || !writes.Complete || len(writes.Expressions) == 0 {
+		return false
+	}
+	for _, value := range writes.Expressions {
+		if !immortalExpression(value) {
+			return false
+		}
+	}
+	return true
+}
+
+func immortalExpression(value ir.Expression) bool {
+	switch value := value.(type) {
+	case ir.StringConstant, ir.Undefined, ir.Null, ir.BooleanToString:
+		return true
+	case ir.Box:
+		if _, boolean := value.Value.(ir.BooleanConstant); boolean {
+			return true
+		}
+		return value.Value.Type().IsReference() && immortalExpression(value.Value)
+	case ir.Conditional:
+		return immortalExpression(value.WhenTrue) && immortalExpression(value.WhenNot)
+	}
+	return false
+}
