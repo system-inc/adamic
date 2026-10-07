@@ -1,0 +1,56 @@
+=== RUN   TestSharedParserReadiness
+    blocker_test.go:118: react/jsx-fragments: Go 1 finding, native parser accepts JSX
+    blocker_test.go:123: react/jsx-fragments: parser refusal mutant is caught by expected-success comparison
+    blocker_test.go:118: react/jsx-no-constructed-context-values: Go 1 finding, native parser accepts JSX
+    blocker_test.go:123: react/jsx-no-constructed-context-values: parser refusal mutant is caught by expected-success comparison
+    blocker_test.go:118: react/jsx-no-undef: Go 1 finding, native parser accepts JSX
+    blocker_test.go:123: react/jsx-no-undef: parser refusal mutant is caught by expected-success comparison
+    blocker_test.go:154: react/jsx-fragments listener kinds [JsxElement JsxFragment JsxSelfClosingElement] agree with production Go; wrong-kind mutant caught
+    blocker_test.go:154: react/jsx-no-constructed-context-values listener kinds [JsxOpeningElement JsxSelfClosingElement] agree with production Go; wrong-kind mutant caught
+    blocker_test.go:154: react/jsx-no-undef listener kinds [JsxOpeningElement JsxSelfClosingElement] agree with production Go; wrong-kind mutant caught
+    blocker_test.go:161: ordinary non-JSX parser control passes
+--- PASS: TestSharedParserReadiness (36.10s)
+=== RUN   TestContextAgreement
+    context_test.go:84: captured 137 JSX-containing literals, retained 133 Go syntax-valid controls
+    context_test.go:103: controls: 33952 bytes, findings 64, native 196.376182ms Go 174.350476ms
+    context_test.go:110: 137 control inputs
+    context_test.go:143: component-relevance mutant exits zero, empty stderr; Go bytes catch byte 15139
+    context_test.go:103: controls-asan: 33952 bytes, findings 64, native 392.268443ms Go 238.448555ms
+    context_test.go:170: released: required panic 70, no sanitizer findings
+    context_test.go:170: released-asan: required panic 70, no sanitizer findings
+    context_test.go:103: repository: 18485 bytes, findings 0, native 704.952502ms Go 324.967817ms
+    context_test.go:103: repository-asan: 18485 bytes, findings 0, native 3.25919781s Go 369.150995ms
+    context_test.go:103: compiler: 5010 bytes, findings 0, native 4.037179643s Go 761.245975ms
+    context_test.go:103: compiler-asan: 5010 bytes, findings 0, native 15.456797037s Go 708.506569ms
+--- PASS: TestContextAgreement (133.27s)
+=== RUN   TestFragmentsAgreement
+    fragments_test.go:81: captured 39 JSX-containing literals, retained 38 Go syntax-valid controls
+    fragments_test.go:100: controls: 7036 bytes, findings 23, native 180.619687ms Go 174.78688ms
+    fragments_test.go:107: 39 control inputs
+    fragments_test.go:100: element: 2835 bytes, findings 5, native 123.82801ms Go 257.912778ms
+    fragments_test.go:139: pragma-name mutant exits zero, empty stderr; Go bytes catch byte 96
+    fragments_test.go:100: controls-asan: 7036 bytes, findings 23, native 151.388612ms Go 166.015581ms
+    fragments_test.go:100: element-asan: 2835 bytes, findings 5, native 235.079238ms Go 164.315594ms
+    fragments_test.go:166: released: required panic 70, no sanitizer findings
+    fragments_test.go:166: released-asan: required panic 70, no sanitizer findings
+    fragments_test.go:100: repository: 18485 bytes, findings 0, native 412.239791ms Go 187.479319ms
+    fragments_test.go:100: repository-asan: 18485 bytes, findings 0, native 1.563866072s Go 251.527866ms
+    fragments_test.go:100: compiler: 5010 bytes, findings 0, native 2.651070118s Go 430.5269ms
+    fragments_test.go:100: compiler-asan: 5010 bytes, findings 0, native 12.618643154s Go 772.670357ms
+--- PASS: TestFragmentsAgreement (105.02s)
+=== RUN   TestUndefAgreement
+    undef_test.go:96: controls: 10200 bytes, findings 24, native 88.114884ms Go 112.223899ms
+    undef_test.go:103: 45 control inputs
+    undef_test.go:96: globals: 9174 bytes, findings 21, native 71.612834ms Go 81.099599ms
+    undef_test.go:132: intrinsic-classification mutant exits zero, empty stderr; Go bytes catch byte 44
+    undef_test.go:96: controls-asan: 10200 bytes, findings 24, native 131.266599ms Go 112.422632ms
+    undef_test.go:96: globals-asan: 9174 bytes, findings 21, native 110.069514ms Go 84.921733ms
+    undef_test.go:159: released: required panic 70, no sanitizer findings
+    undef_test.go:159: released-asan: required panic 70, no sanitizer findings
+    undef_test.go:96: repository: 18485 bytes, findings 0, native 784.917482ms Go 316.864763ms
+    undef_test.go:96: repository-asan: 18485 bytes, findings 0, native 1.792726578s Go 258.653552ms
+    undef_test.go:96: compiler: 5010 bytes, findings 0, native 2.495949895s Go 424.31591ms
+    undef_test.go:96: compiler-asan: 5010 bytes, findings 0, native 8.85869594s Go 414.344567ms
+--- PASS: TestUndefAgreement (82.09s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware/wave28_fifth	356.486s
