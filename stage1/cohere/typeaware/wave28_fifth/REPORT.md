@@ -1,6 +1,6 @@
-Published the parked React status, claimed the next three AST/checker rules, and added numeric listener declarations plus JSX blocker evidence.
+Published the parked React status, claimed the next three AST/checker rules, and added named listener declarations plus JSX blocker evidence.
 Commits: parking f7b44295d; fifth-batch claim 0eba71324; completed nine-rule landing 786d33d3c on main f8013f0b.
-Commands/output: owned JSX/listener test PASS 16.156s; three Go positive findings and native parser exits 70; vet PASS.
+Commands/output: owned named-kind JSX/listener test PASS 19.846s; three Go positive findings and native parser exits 70; vet PASS.
 Mutants: parser bypass exits zero and is caught on three controls; three wrong-kind metadata mutants are caught by production Go listener comparison.
 Not covered: all three new native ports, rule parity/mutants, corpus/sanitizer/released-handle gates and native/Go rule timings; stopped at shared JSX parsing.
 
@@ -8,7 +8,7 @@ Not covered: all three new native ports, rule parity/mutants, corpus/sanitizer/r
 
 The explicit all-heads audit covers 529 origin refs, 33 unique claim blobs naming 154 ranked rules, 25 ranked base/main ports, and 34 unique typeaware trees. The first three of 18 remaining candidates are react/jsx-fragments, react/jsx-no-constructed-context-values and react/jsx-no-undef; all have zero findings on both volume populations. No matching implementation was found in those trees. selection.json retains the exact candidate/count inventory. Their Go rules use JSX node listeners and syntax/checker walks, without the parked HIR/SSA/capture lowering. The constructed-context rule has its own AST/checker dependency-stability walk; this must be ported too, including cohere's memo divergence, when the parser dependency is available.
 
-Each owned rule directory now contains rule.json with numeric kinds. The private independent oracle calls the unmodified production subject.Run with a real source file and checker, reads its actual listener keys and compares them with these declarations: fragments [285,286,289] (JsxElement, JsxSelfClosingElement, JsxFragment); context and undef [286,287] (JsxSelfClosingElement, JsxOpeningElement). These are pinned typescript-go AST enum values, not invented rule IDs or strings compared inside a rule. Replacing the first numeric kind with zero is rejected for each declaration. No handler is registered yet: metadata is preparation, not completed native rule logic. The current native ParseNode still has only a string kind, so the declarations await its integrated numeric API. This also corrects the earlier implication that declarations themselves must wait for a numeric node field: declarations can be written and verified now.
+Each owned rule directory contains rule.json with typescript-go ast.Kind names, as clarified by the user's corrected contract. The independent oracle calls unmodified production subject.Run with a real source file/checker, reads its actual listener keys, strips the Kind prefix from their names and compares sorted lists: fragments [JsxElement, JsxFragment, JsxSelfClosingElement]; context and undef [JsxOpeningElement, JsxSelfClosingElement]. Replacing the first kind with Identifier is rejected for each declaration. There is no numeric-node API dependency: the earlier numeric declarations and logs are historical and superseded. No handler is registered yet; JSX parsing remains the actual blocker, and metadata is not completed native rule logic.
 
 ## Executed JSX blocker
 
@@ -27,3 +27,15 @@ go vet ./stage1/cohere/typeaware/wave28_fifth > /tmp/wave28-fifth-vet.log 2>&1
 ```
 
 Without ADAMIC_WAVE28_STAGE0 the blocker test explicitly skips. Toolchain setup remains the recorded 165-second successful setup, nproc 5. The complete prior nine-rule gates remain green against the same main; no completed implementation changed here. No full repository gate or new native-rule performance/corpus/parity claim is made. Work stops at the shared parser dependency rather than editing outside owned directories.
+
+## Named-kind contract correction
+
+The explicit user correction supersedes all earlier numeric-kind metadata and numeric-API blocker descriptions. Current rule.json kinds are names as required by the registry; no numeric parser field is needed. The updated oracle compares those names to the actual unmodified Go listener maps, and an Identifier substitution is caught for each declaration. The fresh blocker/listener test passes in 19.846s; vet is clean. The JSX findings/rejections and parser-bypass mutant observations are unchanged. Evidence is validation/named-kinds.log, named-kinds-vet.log and named-listener-kinds.stdout.
+
+Main remains c01907a7036a22c2ea7ee686ed5fe4c6cd4bbc06, already an ancestor of own pushed landing 27e2ba2d3. No completed native rule implementation changed, so its nine full gates remain applicable. The named harness ab70f38d4 still has not landed on main or area/stage1-lint; shared JSX parsing is the remaining active-claim blocker. The separate-history rebase previously rejected by automatic review was not retried. No new rules were claimed and no shared source changed.
+
+```sh
+source /workspace/adamic-tools/env.sh
+ADAMIC_WAVE28_STAGE0=/workspace/wave28-c019-third/adamic ADAMIC_WAVE28_FIFTH_ARTIFACTS=/workspace/wave28-named-probe go test ./stage1/cohere/typeaware/wave28_fifth -count=1 -timeout=10m -v > /tmp/wave28-named-test.log 2>&1
+go vet ./stage1/cohere/typeaware/wave28_fifth > /tmp/wave28-named-vet.log 2>&1
+```

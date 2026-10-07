@@ -124,13 +124,13 @@ func main() {
 			}
 		}
 		if len(args) > 2 && args[2] == "--listener-kinds" {
-			kinds := map[string][]int{}
+			kinds := map[string][]string{}
 			for _, subject := range subjects {
 				listeners := subject.Run(rule.Context{SourceFile: file, TypeChecker: typeChecker, Program: rule.ViewProgram(program, file, subject), FileCache: rule.NewFileCache(), Report: func(rule.Diagnostic) {}}, nil)
 				for kind := range listeners {
-					kinds[subject.Name] = append(kinds[subject.Name], int(kind))
+					kinds[subject.Name] = append(kinds[subject.Name], strings.TrimPrefix(kind.String(), "Kind"))
 				}
-				sort.Ints(kinds[subject.Name])
+				sort.Strings(kinds[subject.Name])
 			}
 			encoded, err := json.Marshal(kinds)
 			if err != nil {

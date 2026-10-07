@@ -123,7 +123,7 @@ declare const Ctx: any;
 	if err != nil {
 		t.Fatalf("listener kinds: %v %s", err, stderr)
 	}
-	var expected map[string][]int
+	var expected map[string][]string
 	if err := json.Unmarshal(stdout, &expected); err != nil {
 		t.Fatal(err)
 	}
@@ -133,18 +133,18 @@ declare const Ctx: any;
 			t.Fatal(err)
 		}
 		var declaration struct {
-			Name  string `json:"name"`
-			Kinds []int  `json:"kinds"`
+			Name  string   `json:"name"`
+			Kinds []string `json:"kinds"`
 		}
 		if err := json.Unmarshal(data, &declaration); err != nil {
 			t.Fatal(err)
 		}
-		matches := func(kinds []int) bool { return declaration.Name == name && slices.Equal(kinds, expected[name]) }
+		matches := func(kinds []string) bool { return declaration.Name == name && slices.Equal(kinds, expected[name]) }
 		if !matches(declaration.Kinds) {
-			t.Fatalf("%s numeric listener mismatch: %v versus %v", name, declaration.Kinds, expected[name])
+			t.Fatalf("%s named listener mismatch: %v versus %v", name, declaration.Kinds, expected[name])
 		}
 		mutant := slices.Clone(declaration.Kinds)
-		mutant[0] = 0
+		mutant[0] = "Identifier"
 		if matches(mutant) {
 			t.Fatalf("%s listener mutant survived", name)
 		}
