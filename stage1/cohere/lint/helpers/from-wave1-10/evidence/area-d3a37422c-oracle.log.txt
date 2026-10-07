@@ -1,0 +1,48 @@
+=== RUN   TestSimpleFold
+    fold_test.go:99: 1195698 queries, four consumer families, go1.27.1 Unicode 17.0.0, 2994 transitions
+    fold_test.go:106: runtime 0 matched 8047532 bytes
+    fold_test.go:106: runtime 1 matched 8047532 bytes
+    fold_test.go:106: runtime 2 matched 8047532 bytes
+--- PASS: TestSimpleFold (10.98s)
+=== RUN   TestSimpleFoldMutant
+    fold_test.go:110: 1195698 queries, four consumer families, go1.27.1 Unicode 17.0.0, 2994 transitions
+    fold_test.go:133: runtime 0 maximum_fold_selected compiled, exited with empty stderr, caught only by Go byte comparison
+    fold_test.go:133: runtime 1 maximum_fold_selected compiled, exited with empty stderr, caught only by Go byte comparison
+    fold_test.go:133: runtime 2 maximum_fold_selected compiled, exited with empty stderr, caught only by Go byte comparison
+--- PASS: TestSimpleFoldMutant (5.06s)
+=== RUN   TestMathWhitespace
+    helper_test.go:159: runtime 0 matched 873758 bytes
+    helper_test.go:159: runtime 1 matched 873758 bytes
+    helper_test.go:159: runtime 2 matched 873758 bytes
+    helper_test.go:161: all six consumers covered; 49162 scanner inputs
+--- PASS: TestMathWhitespace (3.34s)
+=== RUN   TestMathWhitespaceMutant
+    helper_test.go:190: runtime 0 compiling comma_spacing_disabled mutant caught only by output comparison
+    helper_test.go:190: runtime 1 compiling comma_spacing_disabled mutant caught only by output comparison
+    helper_test.go:190: runtime 2 compiling comma_spacing_disabled mutant caught only by output comparison
+--- PASS: TestMathWhitespaceMutant (3.55s)
+=== RUN   TestModifierGroup
+    modifier_test.go:98: 66666 sources / 1066656 queries, all four consumer fixture families
+    modifier_test.go:105: runtime 0 matched 6799954 bytes
+    modifier_test.go:105: runtime 1 matched 6799954 bytes
+    modifier_test.go:105: runtime 2 matched 6799954 bytes
+--- PASS: TestModifierGroup (7.44s)
+=== RUN   TestModifierGroupMutant
+    modifier_test.go:109: 66666 sources / 1066656 queries, all four consumer fixture families
+    modifier_test.go:132: runtime 0 duplicate_guard_disabled compiled, exited with empty stderr, caught only by Go byte comparison
+    modifier_test.go:132: runtime 1 duplicate_guard_disabled compiled, exited with empty stderr, caught only by Go byte comparison
+    modifier_test.go:132: runtime 2 duplicate_guard_disabled compiled, exited with empty stderr, caught only by Go byte comparison
+--- PASS: TestModifierGroupMutant (7.48s)
+=== RUN   TestCSSIdentifierUnescape
+    unescape_test.go:63: runtime 0 matched 5608876 bytes
+    unescape_test.go:63: runtime 1 matched 5608876 bytes
+    unescape_test.go:63: runtime 2 matched 5608876 bytes
+    unescape_test.go:65: 1116695 cases, every scalar through 0x110000 plus six consumers' literals and CSS boundary controls
+--- PASS: TestCSSIdentifierUnescape (22.96s)
+=== RUN   TestCSSIdentifierUnescapeMutant
+    unescape_test.go:107: runtime 0 compiling scalar_one_replaced mutant caught only by output comparison
+    unescape_test.go:107: runtime 1 compiling scalar_one_replaced mutant caught only by output comparison
+    unescape_test.go:107: runtime 2 compiling scalar_one_replaced mutant caught only by output comparison
+--- PASS: TestCSSIdentifierUnescapeMutant (0.96s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from-wave1-10	61.767s
