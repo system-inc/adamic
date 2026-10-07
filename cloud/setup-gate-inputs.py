@@ -87,11 +87,34 @@ def artifact_digest(directory):
     return cache_key(root_mode=directory.stat().st_mode & 0o777, entries=entries)
 
 
+def stamp_path(directory):
+    # Cache metadata cannot itself make a source checkout untracked or ignored.
+    return directory / '.git' / 'adamic-stamp' if (directory / '.git').is_dir() else directory / '.adamic-stamp'
+
+
+def checkout_pristine(directory, generated=()):
+    if not (directory / '.git').is_dir():
+        return False
+    data = subprocess.check_output(['git', '-C', str(directory), 'status', '--porcelain',
+                                    '--ignored', '--untracked-files=all', '-z'], timeout=60)
+    entries = data.split(b'\0')[:-1]
+    expected = set(generated)
+    observed = set()
+    for entry in entries:
+        if entry[:2] not in {b'??', b'!!'}:
+            return False
+        name = os.fsdecode(entry[3:])
+        if name not in expected:
+            return False
+        observed.add(name)
+    return observed == expected
+
+
 def hit(destination, key):
     if os.environ.get('ADAMIC_GATE_UNCACHED') == '1':
         return False
     try:
-        saved = json.loads((destination / '.adamic-stamp').read_text())
+        saved = json.loads(stamp_path(destination).read_text())
         return saved['key'] == key and saved['tree'] == artifact_digest(destination)
     except (OSError, ValueError, KeyError):
         return False
@@ -99,7 +122,7 @@ def hit(destination, key):
 
 def publish(install, destination, key):
     install.chmod(0o755)
-    (install / '.adamic-stamp').write_text(json.dumps(dict(key=key, tree=artifact_digest(install))))
+    stamp_path(install).write_text(json.dumps(dict(key=key, tree=artifact_digest(install))))
     backup = install.parent / 'previous'
     if destination.exists():
         destination.rename(backup)
@@ -114,7 +137,10 @@ def publish(install, destination, key):
 def typescript(root):
     destination = root / 'typescript'
     key = cache_key(kind='typescript', commit=TS_COMMIT, url=TS_URL, helper=source_hash())
-    if hit(destination, key) and command(['git', '-C', str(destination), 'rev-parse', 'HEAD']) == TS_COMMIT:
+    dirty = destination.exists() and not checkout_pristine(destination)
+    if dirty:
+        print('setup: TypeScript source checkout dirty (tracked, untracked or ignored files); reinstalling', flush=True)
+    if not dirty and hit(destination, key) and command(['git', '-C', str(destination), 'rev-parse', 'HEAD']) == TS_COMMIT:
         return 'skipped (validated exact commit and checkout bytes)'
     with tempfile.TemporaryDirectory(prefix='typescript-', dir=root) as temporary:
         install = Path(temporary) / 'checkout'
@@ -124,8 +150,10 @@ def typescript(root):
         if command(['git', '-C', str(install), 'rev-parse', 'HEAD']) != TS_COMMIT:
             raise ValueError('TypeScript commit integrity mismatch')
         subprocess.run(['git', '-C', str(install), 'fsck', '--full', '--no-reflogs'], check=True, timeout=120)
+        if not checkout_pristine(install):
+            raise ValueError('fresh TypeScript checkout is not pristine')
         publish(install, destination, key)
-    return 'installed (depth-one exact commit, git object integrity checked)'
+    return ('reinstalled dirty checkout' if dirty else 'installed') + ' (depth-one exact commit, Git integrity and pristine status checked)'
 
 
 
@@ -151,6 +179,8 @@ def validate_ledger(checkout):
         file = checkout / name
         if not file.is_file() or file.is_symlink() or not file.stat().st_size:
             raise ValueError('cycle ledger missing generated diagnostics: ' + name)
+    if not checkout_pristine(checkout, LEDGER_GENERATED):
+        raise ValueError('cycle ledger checkout is not pristine except its two generated diagnostics')
 
 
 def cycle_ledger(root, node):
@@ -167,11 +197,14 @@ def cycle_ledger(root, node):
         pass
     if not output.is_file() or not os.access(output, os.W_OK):
         raise ValueError('cycle ledger output is not writable: ' + str(output))
+    dirty = destination.exists() and not checkout_pristine(destination, LEDGER_GENERATED)
+    if dirty:
+        print('setup: cycle ledger checkout dirty (only the two generated diagnostics are allowed); reinstalling', flush=True)
     try:
         key = ledger_key(destination, node_version)
     except OSError:
         key = None
-    if key is not None and hit(destination, key):
+    if not dirty and key is not None and hit(destination, key):
         validate_ledger(destination)
         return 'skipped (validated pristine commit, generator, Node and diagnostic bytes)'
     with tempfile.TemporaryDirectory(prefix='cycle-ledger-', dir=root) as temporary:
@@ -199,7 +232,7 @@ def cycle_ledger(root, node):
         if ledger_key(install, command([node, '--version'])) != key:
             raise ValueError('cycle ledger generator inputs changed; rerun setup')
         publish(install, destination, key)
-    return 'installed (pristine exact commit and both generated diagnostics verified)'
+    return ('reinstalled dirty checkout' if dirty else 'installed') + ' (pristine exact commit and both generated diagnostics verified)'
 
 
 def css_fixture_key():

@@ -14,6 +14,7 @@ text = (source / 'setup-gate-inputs.py').read_text()
 variants = {'drop-' + name: text.replace('def cache_key(**inputs):',
             'def cache_key(**inputs):\n    inputs.pop(' + repr(name) + ', None)')
             for name in ['kind', 'commit', 'url', 'script', 'diagnostics', 'node', 'helper', 'sparse']}
+variants['drop-checkout-status'] = text.replace('def checkout_pristine(directory, generated=()):', 'def checkout_pristine(directory, generated=()):\n    return True')
 variants['drop-generated-validation'] = text.replace('for name in LEDGER_GENERATED:', 'for name in []:')
 variants['drop-head-validation'] = text.replace('if actual != TS_COMMIT:', 'if False:')
 variants['drop-node-pin'] = text.replace('if node_version != expected:', 'if False:')
@@ -25,6 +26,8 @@ for name, variant in variants.items():
     environment = dict(os.environ, ADAMIC_GATE_INPUTS_MODULE=str(module), PYTHONDONTWRITEBYTECODE='1')
     log = scratch / (name + '.log')
     tests = ['Ledger.test_every_ledger_key_component'] if name.startswith('drop-') and name[5:] in ['commit', 'url', 'script', 'diagnostics', 'node', 'helper', 'sparse'] else ['Ledger.test_missing_generated_file_and_wrong_head_refused']
+    if name == 'drop-checkout-status':
+        tests = ['Ledger.test_ignored_and_untracked_files_force_pristine_reinstall']
     if name == 'drop-kind':
         command = ['python3', str(source / 'test_gate_inputs.py'), 'Inputs.test_every_key_component']
     else:

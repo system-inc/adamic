@@ -26,6 +26,7 @@ class Ledger(unittest.TestCase):
         upstream = root / 'upstream'
         (upstream / 'scripts').mkdir(parents=True)
         (upstream / 'src/compiler').mkdir(parents=True)
+        (upstream / '.gitignore').write_text('src/compiler/stray.ts\nsrc/compiler/*.generated.ts\nsrc/compiler/*.generated.json\n')
         (upstream / gate.LEDGER_SCRIPT).write_text('upstream-generator-v1')
         (upstream / gate.LEDGER_DIAGNOSTICS).write_text('{"input":1}')
         with (root / 'git.log').open('wb') as log:
@@ -101,6 +102,29 @@ class Ledger(unittest.TestCase):
             with patch.object(gate, 'command', return_value='v24.21.0'):
                 with self.assertRaisesRegex(ValueError, 'expected v24.19.0, got v24.21.0'):
                     gate.cycle_ledger(inputs, node)
+
+    def test_ignored_and_untracked_files_force_pristine_reinstall(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            upstream, pin, node, inputs = self.fixture(Path(temporary))
+            with patch.object(gate, 'TS_URL', str(upstream)), patch.object(gate, 'TS_COMMIT', pin), patch.dict(os.environ, ADAMIC_GATE_UNCACHED='0'):
+                for name, action, expected in [('typescript', lambda: gate.typescript(inputs), ()),
+                                               ('cycle-ledger', lambda: gate.cycle_ledger(inputs, node), gate.LEDGER_GENERATED)]:
+                    action()
+                    checkout = inputs / name
+                    self.assertTrue(gate.checkout_pristine(checkout, expected))
+                    for relative in ['src/compiler/stray.ts', 'unexpected.ts']:
+                        stray = checkout / relative
+                        stray.write_text('export const stray = true;')
+                        # Bless the dirty bytes to isolate Git status from the separate
+                        # content check. A status-check mutant must still be caught.
+                        stamp = gate.stamp_path(checkout)
+                        saved = json.loads(stamp.read_text())
+                        saved['tree'] = gate.artifact_digest(checkout)
+                        stamp.write_text(json.dumps(saved))
+                        self.assertIn('reinstalled dirty checkout', action())
+                        self.assertFalse(stray.exists())
+                        self.assertTrue(gate.checkout_pristine(checkout, expected))
+                    self.assertIn('skipped', action())
 
     def test_flag_exports_and_ordinary_unset(self):
         for phase, exported in [('env', True), ('env-no-archive', True), ('env-archive', False)]:
