@@ -1,0 +1,33 @@
+{
+  "cases": 75,
+  "bytes": 24599,
+  "corpus_files": 247,
+  "rates": {
+    "Go": {
+      "seconds": 0.1635006919996158,
+      "findings": 0,
+      "findings_per_second": 0.0
+    },
+    "Node": {
+      "seconds": 0.7829178649999449,
+      "findings": 0,
+      "findings_per_second": 0.0
+    },
+    "native": {
+      "seconds": 4.473704646999977,
+      "findings": 0,
+      "findings_per_second": 0.0
+    }
+  },
+  "typescript_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "setup_seconds": 16,
+  "nproc": 5,
+  "comparison_backends": [
+    "Go",
+    "Node",
+    "JavaScript",
+    "sanitized native"
+  ],
+  "jsx_dependency": "a8a62d62ca49db7415e14c3887dd305022b17309",
+  "dependency_checkout": "isolated checkout plus current context.ts, settings.ts and finding.ts"
+}
