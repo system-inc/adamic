@@ -495,3 +495,38 @@ Atomic full integration and symbol shared-driver integration remain unfinished.
 No full-rule timing, new checker-handle coverage, complete stage-1 gate or the
 17 external correctness comparisons are claimed. No check was relaxed or skipped
 and called green. Existing completed-rule gates were unchanged and not repeated.
+
+## Await contextual promise-demand predicate continuation
+
+Added require_await/demand.a. Over supplied signature-return thenability facts,
+Adamic requires at least one signature and requires every expanded return
+branch of every signature to be thenable. This is the core promise-demand
+predicate; contextual/generic/heritage position selection is separate.
+
+The independent Go overlay loads its own real typescript-go checker and
+contextual types from 14 controls. It records union call signatures and their
+return branches' intrinsic IsThenableType answers, then invokes unchanged
+requireAwaitTypesDemandPromise with no substitutions. No expected demand
+verdict is supplied to native. Controls cover pure/mixed promise returns,
+void/unknown/any, absent context, overloads, function unions, structural
+thenables, function expressions and object methods. All byte results match
+under ASan/UBSan/LSan. The mixed-return mutant ignores non-thenable branches;
+it compiles and exits zero with empty sanitizer stderr, then fails only the
+Go comparison. Exact captures and streams are in validation/await-demand.
+
+```sh
+source /workspace/adamic-tools/env.sh
+python3 stage1/cohere/typeaware/wave_01_fourth/testdata/verify_await_demand.py /workspace/wave01-await-demand /workspace/wave-01-fourth-adamic > /tmp/wave01-await-demand.log 2>&1
+```
+
+Output: PASS 14 real-checker promise-demand controls; sanitizer-clean mixed-return
+mutant caught by bytes. gofmt and git diff --check pass. Fetched main/area bases
+remain unchanged, so no rebase was needed. No shared edits or new claims.
+
+These facts are captured by the independent checker test, not a new production
+bridge question. Generic substitutions, declared generic-call context replay,
+heritage demand and native checker-fact delivery remain unfinished. Native
+rule integration for all three latest claims remains incomplete. No full-rule
+throughput, new released-bridge-handle checks, full stage-1 gate or the 17
+external correctness comparisons are claimed. No check was weakened or skipped
+and called green. Existing completed-rule gates were unchanged and not repeated.

@@ -1,0 +1,13 @@
+// Each row is one supplied call signature's expanded return branches.
+export function awaitDemandsPromise(signatures: readonly (readonly boolean[])[]): boolean {
+    let sawSignature = false;
+    for(const returns of signatures) {
+        sawSignature = true;
+        for(const thenable of returns) {
+            if(!thenable) {
+                return false;
+            }
+        }
+    }
+    return sawSignature;
+}
