@@ -36,3 +36,23 @@ fails generation with exit 1 and a missing rule.ts error. The copied-port
 harness also discovers only .ts files. Supporting .a rule modules requires
 shared registration and harness changes outside these three rule directories.
 See wave1-03-evidence/extension.log and merge.log for observed failures.
+
+## Continuation batch 2, October 7
+
+All preceding work was pushed before fetching origin. Fetched main:
+ef3d907e. Helpers: 6769b88e. Inventory: 73ac2eb0.
+
+The first 45 helper-ready names are mentioned in claims under
+stage1/cohere/lint/claims on fetched origin branches. Position 46 is available.
+After it, use inventory.json's syntax ready for AST/API adaptation queue in
+its published rule order. The next two available names in that queue follow.
+
+1. structure/tailwind-no-physical-direction
+2. @next/next/no-assign-module-variable
+3. @typescript-eslint/default-param-last
+
+None is named in any fetched origin claim Markdown or implemented on fetched
+main. The claim search includes report Markdown under claims conservatively.
+Availability follows the user's current main-plus-claims criterion; older ports
+on other branches are not silently substituted for main ports. This update is
+committed and pushed before writing these three rule implementations.
