@@ -18,3 +18,11 @@ oracle, unchanged scanner token bytes on Node, a semantic fallthrough mutant
 caught by token comparison or an upstream baseline, and idempotence. This is a
 README-only plan. No fallthrough source edit has been made or validated here.
 Results and any stopping point are recorded in stage3/drivers/scanner/BLOCKERS.md.
+
+## Stopping point
+
+This plan remains deferred. adapt.cjs is an explicit no-change placeholder so
+apply.sh can enumerate the published plan without failing on a missing script.
+It logs status deferred and the reason. No fallthrough rewrite was made, so no
+fallthrough semantic mutant or completed repair is claimed. All 13 scanner-local
+TS7029 findings remain in the ordered scanner blocker ledger.

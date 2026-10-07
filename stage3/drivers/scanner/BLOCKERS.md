@@ -1,0 +1,286 @@
+# Scanner blockers
+
+## October 7: full baseline complete, latest result
+
+Temporary 50 passes the unfiltered stage 3 baseline: **106,367 passing, zero
+failing, zero pending, zero baseline differences**, total 347.707 seconds.
+Install, build and tests all exited 0; tests took 318.641 seconds. See
+[baseline50-report.json](evidence/baseline50-report.json) and the adjacent phase
+logs. The fresh-tree driver path also ran apply (excluding adaptation 20), Node,
+the comparison control, the end mutant and the native build. Node and the
+mutant check passed; native build exited 1 with the same 2,652 diagnostics.
+[fresh-report.json](evidence/fresh-report.json) records that failure explicitly.
+
+Harness syntax and evidence ordering/count audits pass. `git diff --check`
+passes. No native scanner execution occurred.
+
+## October 7: after temporary 50, newest observation
+
+**Stopped at the checker gate. This is not an exhaustive ordered Refused/NotYet
+list.** The integrated scratch compiler returns 2,652 checker diagnostics after
+temporary 50, down from 2,654 before it. No scanner corpus entry reaches lowering.
+All diagnostics, their complete message chains, locations, census code, and
+feature attribution are in [after50-checker.json](evidence/after50-checker.json),
+numbered in the exact returned order. The first remains:
+
+`src/compiler/binder.ts:1109:17: TS2412: Type 'undefined' is not assignable to type 'FlowNode' with 'exactOptionalPropertyTypes: true'.`
+
+I did not successively repair the remaining 2,652 checker findings, and therefore
+did not discover the complete lowering/ownership blocker sequence. Safely
+repairing optionality, indexed-read density, generic contracts, and all other
+compiler files is beyond this run. These are not interchangeable mechanical
+edits. No checker option was weakened, no checker-rejected program was passed
+to lowering, and no production compiler change is on the deliverable branch.
+
+Temporary 50 inserts only explicit `return undefined;` into getShebang and
+scanIdentifier in scanner.ts. Both original scanner TS7030 findings disappear.
+The same scanner outputs 509,014 token lines on the fixed pre-edit corpus,
+byte for byte identical to the Node control. Removing only getShebang's added
+return in scratch brings back scanner.ts:966:43 TS7030. Reapplying the adapter
+reports zero files and zero returns changed.
+
+The required README-only plan was committed and pushed as
+`586caf413c8235facd82c9aa63d8c19314fd1029` before either adapter script was written.
+Temporary 51 is **deferred**: its runnable placeholder edits no source and reports
+that all 13 scanner fallthroughs still require review. It is not a completed
+adaptation or a claim of baseline validation for a fallthrough rewrite.
+
+The completed unfiltered stage 3 oracle result is recorded at the top.
+
+## October 7: adaptation 10 and integrated features
+
+[before50-checker.json](evidence/before50-checker.json) retains the 2,654 diagnostics
+from the same driver with adaptation 10 only and regenerated diagnostics. An
+earlier direct scanner entry saw 2,655 because apply generates diagnostics before
+adaptation 10 edits its generator. The runner now regenerates that owned output,
+removing the generated-file TS1484; this is upstream generation, not a temporary
+source rewrite. Adaptation 20 was excluded after the user's instruction; the
+initial adaptation-20 experiment is not used as the delivered proof.
+
+The Node oracle passed on all 81 files: 78 TypeScript sources, including generated
+diagnostics, plus diagnosticMessages.json, diagnosticMessages.generated.json and
+tsconfig.json. It printed 509,014 token lines. Native compilation exited 1 at the
+checker gate. The copied comparison control passed diff (exit 0). Incrementing
+only the first Node token's end from 76 to 77 failed that same diff (exit 1):
+
+```text
+-ExportKeyword  0  70  76  1  "export"
++ExportKeyword  0  70  77  1  "export"
+```
+
+The actual output uses tabs. Full catch:
+[end-mutant.diff](evidence/end-mutant.diff). This is comparison sensitivity,
+not a native correctness claim. Token output byte counts and SHA256s are in
+[token-equivalence.json](evidence/token-equivalence.json).
+
+## Scratch compiler and feature coverage
+
+Started from origin/main `ef3d907ecdc4c771b016f7d9c52372def057a340` on
+codex/stage3-scanner-proof. Feature changes were merged only into
+`scratch/scanner-proof`, never pushed. The four fetched feature tips were:
+
+| Feature | Fetched commit |
+|---|---|
+| codex/taste-not-soundness | `aa896b5d5ccc82210184fd01b8fe4d0ce0730a50` |
+| codex/flag-enums | `f7d62772fa8e52fcfae754e047ceb66dba88b782` |
+| codex/namespaces-tsc | `ce8a2acf14e420a9c82345236845a377cd4c7a50` |
+| codex/nested-functions | `b15216dabf65ffaa7152f6e64709b7b062ea01a9` |
+
+Scratch merged them in that order. Enum conflicts retained main's nominal and
+accessor checks plus enum checks. Namespace conflicts retained flag-enum
+validation and added namespace traversal/parameter properties. Nested-function
+conflicts retained namespace-qualified calls and added recursive sibling calls
+and captured-binding checks. Scratch head after merges:
+`606698b` (these resolutions are not proposed compiler patches).
+
+The shared cohere submodule required `go build -buildvcs=false`. The integrated
+compiler build passed. No full feature-integration gate was run; its scanner
+checker observations establish only the measured gate.
+
+These are **source candidates**, not encountered Refused/NotYet observations.
+The locations remain in stage3/census/data/sites.json, read in full and filtered
+by the resolved closure. The feature column identifies the intended owner,
+not proof that every real usage already compiles:
+
+| Census reason | Closure sites | Intended closing feature |
+|---|---:|---|
+| an ExportDeclaration | 77 | codex/taste-not-soundness; export-star barrels still need module integration |
+| enum | 164 | codex/flag-enums; individual enum shapes may still block |
+| non-boolean control condition | 6697 | codex/taste-not-soundness |
+| type assertion sites | 6231 | No closing feature established in this run |
+| a function inside a function (a closure) | 5574 | codex/nested-functions; capture/generic cases remain to be encountered |
+| the non-null assertion ! | 1123 | No closing feature established in this run |
+| ||= | 110 | codex/taste-not-soundness |
+| a type predicate | 651 | No closing feature established in this run |
+| explicit any | 210 | No closing feature established in this run |
+| a namespace | 11 | codex/namespaces-tsc; its documented unsupported shapes remain |
+| in | 10 | No closing feature established in this run |
+| the void operator | 15 | codex/taste-not-soundness |
+| the comma operator | 47 | codex/taste-not-soundness |
+| yield (generators) | 16 | No closing feature established in this run |
+| a label | 10 | codex/taste-not-soundness |
+| an index signature | 11 | records feature, not one of the four merged branches |
+| a spread after the first field | 17 | No closing feature established in this run |
+| Record<string, T> | 5 | records feature, not one of the four merged branches |
+| delete | 2 | No closing feature established in this run |
+| debugger | 1 | No closing feature established in this run |
+| a definite assignment assertion ! | 12 | No closing feature established in this run |
+| &&= | 1 | codex/taste-not-soundness |
+
+Module cycles are a separate unresolved integration requirement. The merged
+`internal/lower/modules.go` still returns Refused "an import cycle" at its DFS
+back edge. That is an inspected implementation fact, not an observed scanner
+lowering result. None of the four fetched branches closes it. The Node direct
+scanner-root experiment also observed a real ESM load-time value read in
+parser.ts (`textToKeywordObj`), so simply dropping cycle refusal would not prove
+initialization correct.
+
+## TS7030 and TS7029 while both options stay on
+
+Before temporary 50 there are 252 TS7030 and 83 TS7029 findings in this closure.
+After it there are 250 and 83. Intended closing feature for both:
+`codex/fallthrough-and-implicit-returns`. It was not part of the requested four
+feature merges. NoImplicitReturns and NoFallthroughCasesInSwitch remained true.
+The scanner-local observations before edits, in returned diagnostic order:
+
+| Location | Census reason | Temporary plan |
+|---|---|---|
+| src/compiler/scanner.ts:1553:13 | TS7029 | 51, deferred |
+| src/compiler/scanner.ts:1563:13 | TS7029 | 51, deferred |
+| src/compiler/scanner.ts:1686:13 | TS7029 | 51, deferred |
+| src/compiler/scanner.ts:2133:17 | TS7029 | 51, deferred |
+| src/compiler/scanner.ts:2425:14 | TS7030 | 50, implemented |
+| src/compiler/scanner.ts:2765:21 | TS7029 | 51, deferred |
+| src/compiler/scanner.ts:2838:21 | TS7029 | 51, deferred |
+| src/compiler/scanner.ts:2907:17 | TS7029 | 51, deferred |
+| src/compiler/scanner.ts:3300:17 | TS7029 | 51, deferred |
+| src/compiler/scanner.ts:3480:17 | TS7029 | 51, deferred |
+| src/compiler/scanner.ts:3861:13 | TS7029 | 51, deferred |
+| src/compiler/scanner.ts:444:13 | TS7029 | 51, deferred |
+| src/compiler/scanner.ts:651:13 | TS7029 | 51, deferred |
+| src/compiler/scanner.ts:845:13 | TS7029 | 51, deferred |
+| src/compiler/scanner.ts:966:43 | TS7030 | 50, implemented |
+
+Every remaining location across the closure is retained in the ordered checker
+JSON, including all full chains and the closing-feature field. Optional-property
+codes point at the excluded adaptation-20 branch as a partial prerequisite;
+other code buckets have no closing feature established by this run.
+
+## Whole source import closure
+
+Resolved from the adapted scanner.ts with stock TypeScript 6.0.3's resolver.
+Includes source imports and re-exports, including type-only module requests;
+excludes ambient standard-library and Node declaration files from the source
+ownership list. There are 78 source files and 164 edges, all retained with
+locations in [adaptation10-closure.json](evidence/adaptation10-closure.json).
+The graph reaches all compiler sources through `_namespaces/ts.ts`, so the
+scanner and parser source closures overlap. This run edits scanner.ts only.
+There is no disjoint "rest of compiler" source closure for the parser worker.
+
+- src/compiler/_namespaces/ts.moduleSpecifiers.ts
+- src/compiler/_namespaces/ts.performance.ts
+- src/compiler/_namespaces/ts.ts
+- src/compiler/binder.ts
+- src/compiler/builder.ts
+- src/compiler/builderPublic.ts
+- src/compiler/builderState.ts
+- src/compiler/builderStatePublic.ts
+- src/compiler/checker.ts
+- src/compiler/commandLineParser.ts
+- src/compiler/core.ts
+- src/compiler/corePublic.ts
+- src/compiler/debug.ts
+- src/compiler/diagnosticInformationMap.generated.ts
+- src/compiler/emitter.ts
+- src/compiler/executeCommandLine.ts
+- src/compiler/expressionToTypeNode.ts
+- src/compiler/factory/baseNodeFactory.ts
+- src/compiler/factory/emitHelpers.ts
+- src/compiler/factory/emitNode.ts
+- src/compiler/factory/nodeChildren.ts
+- src/compiler/factory/nodeConverters.ts
+- src/compiler/factory/nodeFactory.ts
+- src/compiler/factory/nodeTests.ts
+- src/compiler/factory/parenthesizerRules.ts
+- src/compiler/factory/utilities.ts
+- src/compiler/factory/utilitiesPublic.ts
+- src/compiler/moduleNameResolver.ts
+- src/compiler/moduleSpecifiers.ts
+- src/compiler/parser.ts
+- src/compiler/path.ts
+- src/compiler/performance.ts
+- src/compiler/performanceCore.ts
+- src/compiler/program.ts
+- src/compiler/programDiagnostics.ts
+- src/compiler/resolutionCache.ts
+- src/compiler/scanner.ts
+- src/compiler/semver.ts
+- src/compiler/sourcemap.ts
+- src/compiler/symbolWalker.ts
+- src/compiler/sys.ts
+- src/compiler/tracing.ts
+- src/compiler/transformer.ts
+- src/compiler/transformers/classFields.ts
+- src/compiler/transformers/classThis.ts
+- src/compiler/transformers/declarations.ts
+- src/compiler/transformers/declarations/diagnostics.ts
+- src/compiler/transformers/destructuring.ts
+- src/compiler/transformers/es2015.ts
+- src/compiler/transformers/es2016.ts
+- src/compiler/transformers/es2017.ts
+- src/compiler/transformers/es2018.ts
+- src/compiler/transformers/es2019.ts
+- src/compiler/transformers/es2020.ts
+- src/compiler/transformers/es2021.ts
+- src/compiler/transformers/esDecorators.ts
+- src/compiler/transformers/esnext.ts
+- src/compiler/transformers/generators.ts
+- src/compiler/transformers/jsx.ts
+- src/compiler/transformers/legacyDecorators.ts
+- src/compiler/transformers/module/esnextAnd2015.ts
+- src/compiler/transformers/module/impliedNodeFormatDependent.ts
+- src/compiler/transformers/module/module.ts
+- src/compiler/transformers/module/system.ts
+- src/compiler/transformers/namedEvaluation.ts
+- src/compiler/transformers/taggedTemplate.ts
+- src/compiler/transformers/ts.ts
+- src/compiler/transformers/typeSerializer.ts
+- src/compiler/transformers/utilities.ts
+- src/compiler/tsbuild.ts
+- src/compiler/tsbuildPublic.ts
+- src/compiler/types.ts
+- src/compiler/utilities.ts
+- src/compiler/utilitiesPublic.ts
+- src/compiler/visitorPublic.ts
+- src/compiler/watch.ts
+- src/compiler/watchPublic.ts
+- src/compiler/watchUtilities.ts
+
+## Reproduction and limits
+
+Read CLAUDE.md, README.md, docs/0.1.md, docs/memory.md, the complete census REPORT
+and stage3 README before edits. Read the census module edges/cycles, sites,
+diagnostics, file inventories, string lookups and shape additions in full.
+Setup log is retained; Go 1.27.1, clang 20.1.8, Node 24.19.0, all tool readiness
+phases 0 seconds, build cache warmup/total 96 seconds, nproc 5, cgroup quota 4.
+
+All command output was saved to files. Main measurements:
+
+```sh
+# From the integrated scratch checkout; compiler changes remain unpushed.
+source /workspace/adamic-tools/env.sh
+go build -buildvcs=false -o /workspace/scratch/scanner-adamic ./cmd/adamic
+# From the deliverable checkout; --tree came from apply with adaptation 20 excluded.
+stage3/drivers/scanner/run.sh /workspace/scratch/scanner-run10-final --tree /workspace/scratch/scanner-adapted10 --compiler /workspace/scratch/scanner-adamic
+stage3/drivers/scanner/run.sh /workspace/scratch/scanner-run50 --tree /workspace/scratch/scanner-adapted50 --inputs /workspace/scratch/scanner-adapted10 --node-only
+# From the scratch checkout; no filter, default runners, four workers.
+stage3/oracle/run.sh /workspace/scratch/scanner-adapted50 /workspace/scratch/scanner-baseline50
+```
+
+The fixed input tree was still pre-edit when scanner-run50 ran. It was modified
+only afterward for the native checker and return-removal mutant probes.
+
+Not covered: a native scanner execution, native/Node equality, parser-driven
+rescanning, the exhaustive ordered Refused/NotYet traversal, all 13 intentional
+fallthrough source rewrites, or the complete uncached Adamic gate. No silent
+miscompile was observed; checking prevented native compilation.

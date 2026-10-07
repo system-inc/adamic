@@ -18,3 +18,18 @@ baseline oracle with no test filter, unchanged scanner token bytes on Node,
 a scratch removal of one added return caught by TS7030, and an idempotence run.
 This README-only commit announces the edit; it does not claim it was made or
 validated. Results are recorded in stage3/drivers/scanner/BLOCKERS.md.
+
+## Completed validation
+
+The README-only announcement was pushed in 586caf4 before adapt.cjs was written.
+The adapter now adds exactly two explicit undefined returns in scanner.ts and
+changes no other source file. Reapplication reports zero files and zero returns
+changed. Removing only getShebang's added return in scratch is caught by
+scanner.ts:966:43 TS7030. Neither strict checker option was disabled.
+
+The unfiltered stage 3 baseline passes: 106,367 tests, zero failures, zero baseline
+differences, 347.707 seconds total. The scanner's 509,014 token lines on a fixed
+pre-edit compiler corpus match Node's control byte for byte (27,879,197 bytes).
+Native checking loses the two scanner TS7030 findings and still stops on 2,652
+other diagnostics. Full logs, ordered gate results and the stopping point are in
+../../drivers/scanner/BLOCKERS.md and its evidence directory.
