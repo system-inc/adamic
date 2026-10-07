@@ -11,21 +11,62 @@
 === RUN   TestRulesOfHooksAdditionalHooksChangesNothing
 === PAUSE TestRulesOfHooksAdditionalHooksChangesNothing
 === CONT  TestRulesOfHooksStaysSilent
+=== CONT  TestRulesOfHooksMessages
+=== CONT  TestRulesOfHooksFires
+=== RUN   TestRulesOfHooksFires/upstream068
+=== PAUSE TestRulesOfHooksFires/upstream068
+--- PASS: TestRulesOfHooksMessages (0.00s)
+=== CONT  TestRulesOfHooksBeyondTheCorpus
+=== RUN   TestRulesOfHooksFires/upstream069
+=== PAUSE TestRulesOfHooksFires/upstream069
 === RUN   TestRulesOfHooksStaysSilent/upstream000
 === PAUSE TestRulesOfHooksStaysSilent/upstream000
 === RUN   TestRulesOfHooksStaysSilent/upstream001
 === PAUSE TestRulesOfHooksStaysSilent/upstream001
 === RUN   TestRulesOfHooksStaysSilent/upstream002
 === PAUSE TestRulesOfHooksStaysSilent/upstream002
+=== CONT  TestRulesOfHooksAdditionalHooksChangesNothing
+=== RUN   TestRulesOfHooksBeyondTheCorpus/hookInAFinallyThatCertainlyRuns
+=== PAUSE TestRulesOfHooksBeyondTheCorpus/hookInAFinallyThatCertainlyRuns
 === RUN   TestRulesOfHooksStaysSilent/upstream003
+=== RUN   TestRulesOfHooksBeyondTheCorpus/bareUseIsAHook
+=== PAUSE TestRulesOfHooksBeyondTheCorpus/bareUseIsAHook
 === PAUSE TestRulesOfHooksStaysSilent/upstream003
+=== CONT  TestRulesOfHooksSpans
+=== RUN   TestRulesOfHooksBeyondTheCorpus/digitAfterThePrefixIsAHook
+=== RUN   TestRulesOfHooksSpans/conditionalCoversTheWholeCall
+=== RUN   TestRulesOfHooksFires/upstream070
+=== PAUSE TestRulesOfHooksBeyondTheCorpus/digitAfterThePrefixIsAHook
+=== PAUSE TestRulesOfHooksFires/upstream070
+WAVE02_FINAL:1,true,false,,true,1,true,1,1
+WAVE02_FINAL:1,true,false,,true,1,true,1,1
+=== RUN   TestRulesOfHooksFires/upstream071
+=== PAUSE TestRulesOfHooksFires/upstream071
+=== RUN   TestRulesOfHooksFires/upstream072
+=== PAUSE TestRulesOfHooksFires/upstream072
+=== RUN   TestRulesOfHooksFires/upstream073
+=== RUN   TestRulesOfHooksBeyondTheCorpus/objectLiteralMethodIsNotAClass
+=== PAUSE TestRulesOfHooksFires/upstream073
+=== RUN   TestRulesOfHooksFires/upstream074
+=== PAUSE TestRulesOfHooksFires/upstream074
+=== RUN   TestRulesOfHooksFires/upstream075
+=== PAUSE TestRulesOfHooksFires/upstream075
 === RUN   TestRulesOfHooksStaysSilent/upstream004
+=== RUN   TestRulesOfHooksFires/upstream076
 === PAUSE TestRulesOfHooksStaysSilent/upstream004
 === RUN   TestRulesOfHooksStaysSilent/upstream005
+=== PAUSE TestRulesOfHooksFires/upstream076
 === PAUSE TestRulesOfHooksStaysSilent/upstream005
 === RUN   TestRulesOfHooksStaysSilent/upstream006
+--- PASS: TestRulesOfHooksAdditionalHooksChangesNothing (0.00s)
+=== RUN   TestRulesOfHooksFires/upstream077
 === PAUSE TestRulesOfHooksStaysSilent/upstream006
+=== PAUSE TestRulesOfHooksFires/upstream077
+=== RUN   TestRulesOfHooksFires/upstream078
+=== PAUSE TestRulesOfHooksFires/upstream078
 === RUN   TestRulesOfHooksStaysSilent/upstream007
+=== RUN   TestRulesOfHooksFires/upstream079
+=== PAUSE TestRulesOfHooksFires/upstream079
 === PAUSE TestRulesOfHooksStaysSilent/upstream007
 === RUN   TestRulesOfHooksStaysSilent/upstream008
 === PAUSE TestRulesOfHooksStaysSilent/upstream008
@@ -36,152 +77,174 @@
 === RUN   TestRulesOfHooksStaysSilent/upstream011
 === PAUSE TestRulesOfHooksStaysSilent/upstream011
 === RUN   TestRulesOfHooksStaysSilent/upstream012
-=== CONT  TestRulesOfHooksMessages
---- PASS: TestRulesOfHooksMessages (0.00s)
-=== CONT  TestRulesOfHooksSpans
-=== RUN   TestRulesOfHooksSpans/conditionalCoversTheWholeCall
+=== PAUSE TestRulesOfHooksStaysSilent/upstream012
+=== RUN   TestRulesOfHooksStaysSilent/upstream013
+=== PAUSE TestRulesOfHooksStaysSilent/upstream013
+=== RUN   TestRulesOfHooksFires/upstream080
+=== RUN   TestRulesOfHooksStaysSilent/upstream014
+=== PAUSE TestRulesOfHooksFires/upstream080
+=== PAUSE TestRulesOfHooksStaysSilent/upstream014
+=== RUN   TestRulesOfHooksFires/upstream081
+=== PAUSE TestRulesOfHooksFires/upstream081
+=== RUN   TestRulesOfHooksStaysSilent/upstream015
+=== RUN   TestRulesOfHooksFires/upstream082
+=== PAUSE TestRulesOfHooksStaysSilent/upstream015
+=== PAUSE TestRulesOfHooksFires/upstream082
+=== RUN   TestRulesOfHooksStaysSilent/upstream016
+=== RUN   TestRulesOfHooksFires/upstream083
+=== PAUSE TestRulesOfHooksStaysSilent/upstream016
+=== PAUSE TestRulesOfHooksFires/upstream083
+=== PAUSE TestRulesOfHooksBeyondTheCorpus/objectLiteralMethodIsNotAClass
+=== RUN   TestRulesOfHooksStaysSilent/upstream017
+=== RUN   TestRulesOfHooksFires/upstream084
+=== PAUSE TestRulesOfHooksStaysSilent/upstream017
+=== RUN   TestRulesOfHooksStaysSilent/upstream018
+=== PAUSE TestRulesOfHooksStaysSilent/upstream018
+=== RUN   TestRulesOfHooksStaysSilent/upstream019
+=== PAUSE TestRulesOfHooksStaysSilent/upstream019
+=== RUN   TestRulesOfHooksStaysSilent/upstream020
+=== PAUSE TestRulesOfHooksStaysSilent/upstream020
+=== RUN   TestRulesOfHooksStaysSilent/upstream021
+=== PAUSE TestRulesOfHooksStaysSilent/upstream021
+=== RUN   TestRulesOfHooksStaysSilent/upstream022
+=== PAUSE TestRulesOfHooksStaysSilent/upstream022
+=== RUN   TestRulesOfHooksStaysSilent/upstream023
+=== PAUSE TestRulesOfHooksStaysSilent/upstream023
+=== RUN   TestRulesOfHooksStaysSilent/upstream024
+=== PAUSE TestRulesOfHooksStaysSilent/upstream024
+=== PAUSE TestRulesOfHooksFires/upstream084
+=== RUN   TestRulesOfHooksStaysSilent/upstream025
+=== RUN   TestRulesOfHooksFires/upstream085
+=== PAUSE TestRulesOfHooksFires/upstream085
+=== PAUSE TestRulesOfHooksStaysSilent/upstream025
+=== RUN   TestRulesOfHooksFires/upstream086
+=== PAUSE TestRulesOfHooksFires/upstream086
+=== RUN   TestRulesOfHooksFires/upstream087
+=== PAUSE TestRulesOfHooksFires/upstream087
+=== RUN   TestRulesOfHooksFires/upstream088
+=== PAUSE TestRulesOfHooksFires/upstream088
+=== RUN   TestRulesOfHooksFires/upstream089
+=== PAUSE TestRulesOfHooksFires/upstream089
+=== RUN   TestRulesOfHooksFires/upstream090
+=== PAUSE TestRulesOfHooksFires/upstream090
+=== RUN   TestRulesOfHooksStaysSilent/upstream026
+=== PAUSE TestRulesOfHooksStaysSilent/upstream026
+=== RUN   TestRulesOfHooksStaysSilent/upstream027
+=== PAUSE TestRulesOfHooksStaysSilent/upstream027
+=== RUN   TestRulesOfHooksStaysSilent/upstream028
+=== PAUSE TestRulesOfHooksStaysSilent/upstream028
+=== RUN   TestRulesOfHooksStaysSilent/upstream029
+=== PAUSE TestRulesOfHooksStaysSilent/upstream029
+=== RUN   TestRulesOfHooksStaysSilent/upstream030
+=== PAUSE TestRulesOfHooksStaysSilent/upstream030
+=== RUN   TestRulesOfHooksStaysSilent/upstream031
+=== PAUSE TestRulesOfHooksStaysSilent/upstream031
+=== RUN   TestRulesOfHooksStaysSilent/upstream032
+=== PAUSE TestRulesOfHooksStaysSilent/upstream032
+=== RUN   TestRulesOfHooksStaysSilent/upstream033
+=== PAUSE TestRulesOfHooksStaysSilent/upstream033
+=== RUN   TestRulesOfHooksStaysSilent/upstream034
+=== PAUSE TestRulesOfHooksStaysSilent/upstream034
+=== RUN   TestRulesOfHooksStaysSilent/upstream035
+=== RUN   TestRulesOfHooksBeyondTheCorpus/unreachableHookIsNotThisRulesProblem
+=== PAUSE TestRulesOfHooksStaysSilent/upstream035
+=== PAUSE TestRulesOfHooksBeyondTheCorpus/unreachableHookIsNotThisRulesProblem
+=== RUN   TestRulesOfHooksStaysSilent/upstream036
+=== PAUSE TestRulesOfHooksStaysSilent/upstream036
 === PAUSE TestRulesOfHooksSpans/conditionalCoversTheWholeCall
+=== RUN   TestRulesOfHooksBeyondTheCorpus/unreachableHookInsideATryStillReports
 === RUN   TestRulesOfHooksSpans/notComponentCoversTheCalleeAlone
+=== PAUSE TestRulesOfHooksBeyondTheCorpus/unreachableHookInsideATryStillReports
 === PAUSE TestRulesOfHooksSpans/notComponentCoversTheCalleeAlone
+=== RUN   TestRulesOfHooksBeyondTheCorpus/memoCallbackIsAComponent
 === RUN   TestRulesOfHooksSpans/topLevelCoversTheWholeCall
+=== PAUSE TestRulesOfHooksBeyondTheCorpus/memoCallbackIsAComponent
 === PAUSE TestRulesOfHooksSpans/topLevelCoversTheWholeCall
+=== RUN   TestRulesOfHooksBeyondTheCorpus/destructuringAssignmentDefaultSuppliesNoName
 === RUN   TestRulesOfHooksSpans/loopCoversTheWholeCall
+=== PAUSE TestRulesOfHooksBeyondTheCorpus/destructuringAssignmentDefaultSuppliesNoName
+=== RUN   TestRulesOfHooksStaysSilent/upstream037
+=== RUN   TestRulesOfHooksBeyondTheCorpus/destructuringDeclarationDefaultSuppliesAName
+=== PAUSE TestRulesOfHooksStaysSilent/upstream037
+=== RUN   TestRulesOfHooksFires/upstream091
+=== RUN   TestRulesOfHooksStaysSilent/upstream038
+=== PAUSE TestRulesOfHooksFires/upstream091
+=== RUN   TestRulesOfHooksFires/upstream092
+=== PAUSE TestRulesOfHooksFires/upstream092
+=== RUN   TestRulesOfHooksFires/upstream093
+=== PAUSE TestRulesOfHooksFires/upstream093
 === PAUSE TestRulesOfHooksSpans/loopCoversTheWholeCall
+=== RUN   TestRulesOfHooksFires/upstream094
 === RUN   TestRulesOfHooksSpans/classComponentCoversTheWholeCall
+=== PAUSE TestRulesOfHooksFires/upstream094
 === PAUSE TestRulesOfHooksSpans/classComponentCoversTheWholeCall
 === RUN   TestRulesOfHooksSpans/asyncCoversTheWholeCall
 === PAUSE TestRulesOfHooksSpans/asyncCoversTheWholeCall
 === RUN   TestRulesOfHooksSpans/callbackCoversTheWholeCall
 === PAUSE TestRulesOfHooksSpans/callbackCoversTheWholeCall
 === RUN   TestRulesOfHooksSpans/tryCatchUseCoversTheWholeCall
-=== CONT  TestRulesOfHooksFires
 === PAUSE TestRulesOfHooksSpans/tryCatchUseCoversTheWholeCall
 === CONT  TestRulesOfHooksSpans/conditionalCoversTheWholeCall
-=== RUN   TestRulesOfHooksFires/upstream068
-=== PAUSE TestRulesOfHooksFires/upstream068
-=== RUN   TestRulesOfHooksFires/upstream069
-=== PAUSE TestRulesOfHooksFires/upstream069
-=== CONT  TestRulesOfHooksAdditionalHooksChangesNothing
-=== RUN   TestRulesOfHooksFires/upstream070
-=== PAUSE TestRulesOfHooksFires/upstream070
-=== RUN   TestRulesOfHooksFires/upstream071
-=== PAUSE TestRulesOfHooksFires/upstream071
-=== RUN   TestRulesOfHooksFires/upstream072
-=== PAUSE TestRulesOfHooksFires/upstream072
-=== RUN   TestRulesOfHooksFires/upstream073
-=== PAUSE TestRulesOfHooksFires/upstream073
-=== RUN   TestRulesOfHooksFires/upstream074
-=== PAUSE TestRulesOfHooksFires/upstream074
-=== RUN   TestRulesOfHooksFires/upstream075
-=== PAUSE TestRulesOfHooksFires/upstream075
-=== RUN   TestRulesOfHooksFires/upstream076
-=== PAUSE TestRulesOfHooksFires/upstream076
-=== RUN   TestRulesOfHooksFires/upstream077
-=== PAUSE TestRulesOfHooksFires/upstream077
-=== RUN   TestRulesOfHooksFires/upstream078
-=== PAUSE TestRulesOfHooksFires/upstream078
-=== RUN   TestRulesOfHooksFires/upstream079
-=== PAUSE TestRulesOfHooksFires/upstream079
-=== RUN   TestRulesOfHooksFires/upstream080
-=== PAUSE TestRulesOfHooksFires/upstream080
-=== RUN   TestRulesOfHooksFires/upstream081
-=== PAUSE TestRulesOfHooksFires/upstream081
-=== RUN   TestRulesOfHooksFires/upstream082
-=== PAUSE TestRulesOfHooksFires/upstream082
-=== RUN   TestRulesOfHooksFires/upstream083
-=== PAUSE TestRulesOfHooksFires/upstream083
-=== RUN   TestRulesOfHooksFires/upstream084
-WAVE02_FINAL:1,true,false,,true,1,true,1,1
-=== PAUSE TestRulesOfHooksFires/upstream084
-=== RUN   TestRulesOfHooksFires/upstream085
-=== PAUSE TestRulesOfHooksFires/upstream085
-=== RUN   TestRulesOfHooksFires/upstream086
-WAVE02_FINAL:1,true,false,,true,1,true,1,1
-=== PAUSE TestRulesOfHooksFires/upstream086
-WAVE02_FINAL:1,true,false,,true,1,true,1,1
-=== RUN   TestRulesOfHooksFires/upstream087
-=== PAUSE TestRulesOfHooksFires/upstream087
-=== RUN   TestRulesOfHooksFires/upstream088
-=== PAUSE TestRulesOfHooksFires/upstream088
 === CONT  TestRulesOfHooksSpans/asyncCoversTheWholeCall
---- PASS: TestRulesOfHooksAdditionalHooksChangesNothing (0.00s)
-=== RUN   TestRulesOfHooksFires/upstream089
-=== CONT  TestRulesOfHooksSpans/tryCatchUseCoversTheWholeCall
-=== PAUSE TestRulesOfHooksFires/upstream089
-=== RUN   TestRulesOfHooksFires/upstream090
-=== PAUSE TestRulesOfHooksFires/upstream090
-=== RUN   TestRulesOfHooksFires/upstream091
-=== PAUSE TestRulesOfHooksFires/upstream091
-=== CONT  TestRulesOfHooksSpans/callbackCoversTheWholeCall
-=== PAUSE TestRulesOfHooksStaysSilent/upstream012
-=== RUN   TestRulesOfHooksFires/upstream092
-=== PAUSE TestRulesOfHooksFires/upstream092
-=== RUN   TestRulesOfHooksStaysSilent/upstream013
-=== CONT  TestRulesOfHooksBeyondTheCorpus
-=== PAUSE TestRulesOfHooksStaysSilent/upstream013
-=== RUN   TestRulesOfHooksFires/upstream093
-=== PAUSE TestRulesOfHooksFires/upstream093
-=== RUN   TestRulesOfHooksBeyondTheCorpus/hookInAFinallyThatCertainlyRuns
-=== RUN   TestRulesOfHooksFires/upstream094
-=== PAUSE TestRulesOfHooksBeyondTheCorpus/hookInAFinallyThatCertainlyRuns
-=== PAUSE TestRulesOfHooksFires/upstream094
-=== RUN   TestRulesOfHooksStaysSilent/upstream014
-=== RUN   TestRulesOfHooksFires/upstream095
-=== PAUSE TestRulesOfHooksStaysSilent/upstream014
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-=== PAUSE TestRulesOfHooksFires/upstream095
-=== RUN   TestRulesOfHooksStaysSilent/upstream015
-=== RUN   TestRulesOfHooksFires/upstream096
-=== RUN   TestRulesOfHooksBeyondTheCorpus/bareUseIsAHook
-=== CONT  TestRulesOfHooksSpans/loopCoversTheWholeCall
-=== PAUSE TestRulesOfHooksBeyondTheCorpus/bareUseIsAHook
-=== PAUSE TestRulesOfHooksStaysSilent/upstream015
-=== RUN   TestRulesOfHooksBeyondTheCorpus/digitAfterThePrefixIsAHook
-=== PAUSE TestRulesOfHooksBeyondTheCorpus/digitAfterThePrefixIsAHook
-=== RUN   TestRulesOfHooksStaysSilent/upstream016
-=== PAUSE TestRulesOfHooksStaysSilent/upstream016
-=== RUN   TestRulesOfHooksBeyondTheCorpus/objectLiteralMethodIsNotAClass
-=== PAUSE TestRulesOfHooksBeyondTheCorpus/objectLiteralMethodIsNotAClass
-=== RUN   TestRulesOfHooksBeyondTheCorpus/unreachableHookIsNotThisRulesProblem
-=== RUN   TestRulesOfHooksStaysSilent/upstream017
-=== PAUSE TestRulesOfHooksBeyondTheCorpus/unreachableHookIsNotThisRulesProblem
-=== PAUSE TestRulesOfHooksStaysSilent/upstream017
-=== RUN   TestRulesOfHooksBeyondTheCorpus/unreachableHookInsideATryStillReports
-=== PAUSE TestRulesOfHooksBeyondTheCorpus/unreachableHookInsideATryStillReports
-=== RUN   TestRulesOfHooksStaysSilent/upstream018
-=== RUN   TestRulesOfHooksBeyondTheCorpus/memoCallbackIsAComponent
-=== CONT  TestRulesOfHooksSpans/classComponentCoversTheWholeCall
-WAVE02_FINAL:2,true,false,,true,2,true,2,2
-=== PAUSE TestRulesOfHooksBeyondTheCorpus/memoCallbackIsAComponent
-=== CONT  TestRulesOfHooksSpans/topLevelCoversTheWholeCall
-=== RUN   TestRulesOfHooksBeyondTheCorpus/destructuringAssignmentDefaultSuppliesNoName
-=== CONT  TestRulesOfHooksSpans/notComponentCoversTheCalleeAlone
-=== PAUSE TestRulesOfHooksBeyondTheCorpus/destructuringAssignmentDefaultSuppliesNoName
-=== RUN   TestRulesOfHooksBeyondTheCorpus/destructuringDeclarationDefaultSuppliesAName
 === PAUSE TestRulesOfHooksBeyondTheCorpus/destructuringDeclarationDefaultSuppliesAName
-=== PAUSE TestRulesOfHooksFires/upstream096
 === RUN   TestRulesOfHooksBeyondTheCorpus/lowercaseNamespaceIsNotAHookCall
-=== RUN   TestRulesOfHooksFires/upstream097
 === PAUSE TestRulesOfHooksBeyondTheCorpus/lowercaseNamespaceIsNotAHookCall
+WAVE02_FINAL:1,true,false,,true,1,true,1,1
+=== PAUSE TestRulesOfHooksStaysSilent/upstream038
+=== RUN   TestRulesOfHooksStaysSilent/upstream039
+=== PAUSE TestRulesOfHooksStaysSilent/upstream039
+=== RUN   TestRulesOfHooksStaysSilent/upstream040
+=== PAUSE TestRulesOfHooksStaysSilent/upstream040
+=== RUN   TestRulesOfHooksStaysSilent/upstream041
+=== PAUSE TestRulesOfHooksStaysSilent/upstream041
+=== CONT  TestRulesOfHooksSpans/callbackCoversTheWholeCall
+=== RUN   TestRulesOfHooksStaysSilent/upstream042
+=== PAUSE TestRulesOfHooksStaysSilent/upstream042
+=== CONT  TestRulesOfHooksSpans/tryCatchUseCoversTheWholeCall
+=== RUN   TestRulesOfHooksStaysSilent/upstream043
+=== PAUSE TestRulesOfHooksStaysSilent/upstream043
+=== RUN   TestRulesOfHooksStaysSilent/upstream044
+=== PAUSE TestRulesOfHooksStaysSilent/upstream044
+=== RUN   TestRulesOfHooksFires/upstream095
+=== RUN   TestRulesOfHooksStaysSilent/upstream045
+=== PAUSE TestRulesOfHooksStaysSilent/upstream045
+=== PAUSE TestRulesOfHooksFires/upstream095
+=== RUN   TestRulesOfHooksFires/upstream096
+=== PAUSE TestRulesOfHooksFires/upstream096
+=== CONT  TestRulesOfHooksSpans/classComponentCoversTheWholeCall
+=== RUN   TestRulesOfHooksFires/upstream097
 === PAUSE TestRulesOfHooksFires/upstream097
-=== RUN   TestRulesOfHooksBeyondTheCorpus/doWhileBodyIsALoopThoughTheGraphSaysOtherwise
 === RUN   TestRulesOfHooksFires/upstream098
---- PASS: TestRulesOfHooksSpans (0.00s)
-    --- PASS: TestRulesOfHooksSpans/conditionalCoversTheWholeCall (0.00s)
-    --- PASS: TestRulesOfHooksSpans/asyncCoversTheWholeCall (0.00s)
-    --- PASS: TestRulesOfHooksSpans/tryCatchUseCoversTheWholeCall (0.00s)
-    --- PASS: TestRulesOfHooksSpans/callbackCoversTheWholeCall (0.00s)
-    --- PASS: TestRulesOfHooksSpans/loopCoversTheWholeCall (0.00s)
-    --- PASS: TestRulesOfHooksSpans/classComponentCoversTheWholeCall (0.00s)
-    --- PASS: TestRulesOfHooksSpans/notComponentCoversTheCalleeAlone (0.00s)
-    --- PASS: TestRulesOfHooksSpans/topLevelCoversTheWholeCall (0.00s)
 === PAUSE TestRulesOfHooksFires/upstream098
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
 === RUN   TestRulesOfHooksFires/upstream099
+=== CONT  TestRulesOfHooksSpans/topLevelCoversTheWholeCall
+=== CONT  TestRulesOfHooksSpans/notComponentCoversTheCalleeAlone
 === PAUSE TestRulesOfHooksFires/upstream099
 === RUN   TestRulesOfHooksFires/upstream100
+=== RUN   TestRulesOfHooksStaysSilent/upstream046
 === PAUSE TestRulesOfHooksFires/upstream100
 === RUN   TestRulesOfHooksFires/upstream101
+=== CONT  TestRulesOfHooksSpans/loopCoversTheWholeCall
+=== PAUSE TestRulesOfHooksStaysSilent/upstream046
 === PAUSE TestRulesOfHooksFires/upstream101
+=== RUN   TestRulesOfHooksStaysSilent/upstream047
+=== PAUSE TestRulesOfHooksStaysSilent/upstream047
+WAVE02_FINAL:2,true,false,,true,2,true,2,2
+=== RUN   TestRulesOfHooksStaysSilent/upstream048
+=== PAUSE TestRulesOfHooksStaysSilent/upstream048
+=== RUN   TestRulesOfHooksStaysSilent/upstream049
+=== PAUSE TestRulesOfHooksStaysSilent/upstream049
+=== RUN   TestRulesOfHooksStaysSilent/upstream050
+--- PASS: TestRulesOfHooksSpans (0.00s)
+    --- PASS: TestRulesOfHooksSpans/asyncCoversTheWholeCall (0.00s)
+    --- PASS: TestRulesOfHooksSpans/conditionalCoversTheWholeCall (0.00s)
+    --- PASS: TestRulesOfHooksSpans/tryCatchUseCoversTheWholeCall (0.00s)
+    --- PASS: TestRulesOfHooksSpans/callbackCoversTheWholeCall (0.00s)
+    --- PASS: TestRulesOfHooksSpans/classComponentCoversTheWholeCall (0.00s)
+    --- PASS: TestRulesOfHooksSpans/topLevelCoversTheWholeCall (0.00s)
+    --- PASS: TestRulesOfHooksSpans/notComponentCoversTheCalleeAlone (0.00s)
+    --- PASS: TestRulesOfHooksSpans/loopCoversTheWholeCall (0.00s)
 === RUN   TestRulesOfHooksFires/upstream102
 === PAUSE TestRulesOfHooksFires/upstream102
 === RUN   TestRulesOfHooksFires/upstream103
@@ -234,42 +297,20 @@ WAVE02_FINAL:2,true,false,,true,2,true,2,2
 === PAUSE TestRulesOfHooksFires/upstream126
 === RUN   TestRulesOfHooksFires/upstream127
 === PAUSE TestRulesOfHooksFires/upstream127
-=== PAUSE TestRulesOfHooksStaysSilent/upstream018
-=== PAUSE TestRulesOfHooksBeyondTheCorpus/doWhileBodyIsALoopThoughTheGraphSaysOtherwise
-=== CONT  TestRulesOfHooksBeyondTheCorpus/hookInAFinallyThatCertainlyRuns
-=== CONT  TestRulesOfHooksBeyondTheCorpus/memoCallbackIsAComponent
-=== RUN   TestRulesOfHooksStaysSilent/upstream019
-WAVE02_FINAL:3,true,false,,true,3,true,3,3
-=== PAUSE TestRulesOfHooksStaysSilent/upstream019
-=== CONT  TestRulesOfHooksBeyondTheCorpus/unreachableHookIsNotThisRulesProblem
-=== RUN   TestRulesOfHooksStaysSilent/upstream020
-=== PAUSE TestRulesOfHooksStaysSilent/upstream020
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:1,true,false,,true,1,true,1,1
-=== RUN   TestRulesOfHooksStaysSilent/upstream021
-=== PAUSE TestRulesOfHooksStaysSilent/upstream021
-=== RUN   TestRulesOfHooksStaysSilent/upstream022
-=== CONT  TestRulesOfHooksBeyondTheCorpus/objectLiteralMethodIsNotAClass
 === RUN   TestRulesOfHooksFires/upstream128
 === PAUSE TestRulesOfHooksFires/upstream128
-=== CONT  TestRulesOfHooksBeyondTheCorpus/digitAfterThePrefixIsAHook
 === RUN   TestRulesOfHooksFires/upstream129
 === PAUSE TestRulesOfHooksFires/upstream129
 === RUN   TestRulesOfHooksFires/upstream130
-=== CONT  TestRulesOfHooksBeyondTheCorpus/bareUseIsAHook
 === PAUSE TestRulesOfHooksFires/upstream130
 === RUN   TestRulesOfHooksFires/upstream131
 === PAUSE TestRulesOfHooksFires/upstream131
-=== PAUSE TestRulesOfHooksStaysSilent/upstream022
 === RUN   TestRulesOfHooksFires/upstream132
-=== RUN   TestRulesOfHooksStaysSilent/upstream023
 === PAUSE TestRulesOfHooksFires/upstream132
-=== CONT  TestRulesOfHooksBeyondTheCorpus/destructuringDeclarationDefaultSuppliesAName
 === RUN   TestRulesOfHooksFires/upstream133
 === PAUSE TestRulesOfHooksFires/upstream133
 === RUN   TestRulesOfHooksFires/upstream134
 === PAUSE TestRulesOfHooksFires/upstream134
-=== CONT  TestRulesOfHooksBeyondTheCorpus/destructuringAssignmentDefaultSuppliesNoName
 === RUN   TestRulesOfHooksFires/upstream135
 === PAUSE TestRulesOfHooksFires/upstream135
 === RUN   TestRulesOfHooksFires/upstream136
@@ -279,26 +320,21 @@ WAVE02_FINAL:1,true,false,,true,1,true,1,1
 === RUN   TestRulesOfHooksFires/upstream138
 === PAUSE TestRulesOfHooksFires/upstream138
 === RUN   TestRulesOfHooksFires/upstream139
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
 === PAUSE TestRulesOfHooksFires/upstream139
-=== CONT  TestRulesOfHooksBeyondTheCorpus/doWhileBodyIsALoopThoughTheGraphSaysOtherwise
 === RUN   TestRulesOfHooksFires/upstream140
 === PAUSE TestRulesOfHooksFires/upstream140
 === RUN   TestRulesOfHooksFires/upstream141
 === PAUSE TestRulesOfHooksFires/upstream141
 === RUN   TestRulesOfHooksFires/upstream142
-WAVE02_FINAL:3,true,false,,true,3,true,3,3
 === PAUSE TestRulesOfHooksFires/upstream142
 === RUN   TestRulesOfHooksFires/upstream143
 === PAUSE TestRulesOfHooksFires/upstream143
 === RUN   TestRulesOfHooksFires/upstream144
-=== CONT  TestRulesOfHooksBeyondTheCorpus/unreachableHookInsideATryStillReports
 === PAUSE TestRulesOfHooksFires/upstream144
 === RUN   TestRulesOfHooksFires/upstream145
 === PAUSE TestRulesOfHooksFires/upstream145
 === RUN   TestRulesOfHooksFires/upstream146
 === PAUSE TestRulesOfHooksFires/upstream146
-WAVE02_FINAL:4,true,false,,true,4,true,4,4
 === RUN   TestRulesOfHooksFires/upstream147
 === PAUSE TestRulesOfHooksFires/upstream147
 === RUN   TestRulesOfHooksFires/upstream150
@@ -307,290 +343,6 @@ WAVE02_FINAL:4,true,false,,true,4,true,4,4
 === PAUSE TestRulesOfHooksFires/upstream157
 === CONT  TestRulesOfHooksFires/upstream068
 WAVE02_FINAL:1,true,false,,true,1,true,1,1
-=== CONT  TestRulesOfHooksBeyondTheCorpus/lowercaseNamespaceIsNotAHookCall
---- PASS: TestRulesOfHooksBeyondTheCorpus (0.00s)
-    --- PASS: TestRulesOfHooksBeyondTheCorpus/hookInAFinallyThatCertainlyRuns (0.00s)
-    --- PASS: TestRulesOfHooksBeyondTheCorpus/unreachableHookIsNotThisRulesProblem (0.00s)
-    --- PASS: TestRulesOfHooksBeyondTheCorpus/memoCallbackIsAComponent (0.00s)
-    --- PASS: TestRulesOfHooksBeyondTheCorpus/digitAfterThePrefixIsAHook (0.00s)
-    --- PASS: TestRulesOfHooksBeyondTheCorpus/objectLiteralMethodIsNotAClass (0.00s)
-    --- PASS: TestRulesOfHooksBeyondTheCorpus/bareUseIsAHook (0.00s)
-    --- PASS: TestRulesOfHooksBeyondTheCorpus/destructuringDeclarationDefaultSuppliesAName (0.00s)
-    --- PASS: TestRulesOfHooksBeyondTheCorpus/destructuringAssignmentDefaultSuppliesNoName (0.00s)
-    --- PASS: TestRulesOfHooksBeyondTheCorpus/doWhileBodyIsALoopThoughTheGraphSaysOtherwise (0.00s)
-    --- PASS: TestRulesOfHooksBeyondTheCorpus/unreachableHookInsideATryStillReports (0.00s)
-    --- PASS: TestRulesOfHooksBeyondTheCorpus/lowercaseNamespaceIsNotAHookCall (0.00s)
-=== CONT  TestRulesOfHooksFires/upstream157
-=== CONT  TestRulesOfHooksFires/upstream150
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-=== CONT  TestRulesOfHooksFires/upstream147
-WAVE02_FINAL:1,true,false,,true,1,true,1,1
-=== CONT  TestRulesOfHooksFires/upstream146
-=== CONT  TestRulesOfHooksFires/upstream145
-=== CONT  TestRulesOfHooksFires/upstream144
-=== CONT  TestRulesOfHooksFires/upstream143
-=== CONT  TestRulesOfHooksFires/upstream142
-=== CONT  TestRulesOfHooksFires/upstream141
-=== CONT  TestRulesOfHooksFires/upstream140
-WAVE02_FINAL:1,true,false,,true,1,true,1,1
-=== CONT  TestRulesOfHooksFires/upstream139
-WAVE02_FINAL:1,true,false,,true,1,true,1,1
-=== CONT  TestRulesOfHooksFires/upstream138
-=== CONT  TestRulesOfHooksFires/upstream137
-=== CONT  TestRulesOfHooksFires/upstream136
-=== CONT  TestRulesOfHooksFires/upstream135
-=== CONT  TestRulesOfHooksFires/upstream134
-=== CONT  TestRulesOfHooksFires/upstream133
-=== CONT  TestRulesOfHooksFires/upstream132
-=== CONT  TestRulesOfHooksFires/upstream131
-=== CONT  TestRulesOfHooksFires/upstream130
-=== CONT  TestRulesOfHooksFires/upstream129
-=== CONT  TestRulesOfHooksFires/upstream128
-=== CONT  TestRulesOfHooksFires/upstream127
-=== CONT  TestRulesOfHooksFires/upstream126
-=== CONT  TestRulesOfHooksFires/upstream125
-=== CONT  TestRulesOfHooksFires/upstream124
-=== CONT  TestRulesOfHooksFires/upstream123
-=== CONT  TestRulesOfHooksFires/upstream122
-=== CONT  TestRulesOfHooksFires/upstream121
-=== CONT  TestRulesOfHooksFires/upstream120
-=== CONT  TestRulesOfHooksFires/upstream119
-=== CONT  TestRulesOfHooksFires/upstream118
-WAVE02_FINAL:1,true,false,,true,1,true,1,1
-=== CONT  TestRulesOfHooksFires/upstream117
-WAVE02_FINAL:1,true,false,,true,1,true,1,1
-=== CONT  TestRulesOfHooksFires/upstream116
-WAVE02_FINAL:1,true,false,,true,1,true,1,1
-=== CONT  TestRulesOfHooksFires/upstream115
-WAVE02_FINAL:5,true,false,,true,5,true,5,5
-=== CONT  TestRulesOfHooksFires/upstream114
-=== CONT  TestRulesOfHooksFires/upstream113
-=== CONT  TestRulesOfHooksFires/upstream112
-WAVE02_FINAL:4,true,false,,true,4,true,4,4
-=== CONT  TestRulesOfHooksFires/upstream111
-WAVE02_FINAL:3,true,false,,true,3,true,3,3
-=== CONT  TestRulesOfHooksFires/upstream110
-WAVE02_FINAL:3,true,false,,true,3,true,3,3
-=== CONT  TestRulesOfHooksFires/upstream109
-WAVE02_FINAL:3,true,false,,true,3,true,3,3
-=== CONT  TestRulesOfHooksFires/upstream108
-WAVE02_FINAL:6,true,false,,true,6,true,6,6
-=== CONT  TestRulesOfHooksFires/upstream107
-WAVE02_FINAL:2,true,false,,true,2,true,2,2
-WAVE02_FINAL:1,true,false,2,true,2:1,true,1,1
-=== CONT  TestRulesOfHooksFires/upstream106
-WAVE02_FINAL:3,true,false,,true,3,true,3,3
-=== CONT  TestRulesOfHooksFires/upstream105
-WAVE02_FINAL:3,true,false,,true,3,true,3,3
-=== CONT  TestRulesOfHooksFires/upstream104
-WAVE02_FINAL:5,true,false,,true,5,true,5,5
-WAVE02_FINAL:4,true,false,5,true,5:4,true,4,4
-=== CONT  TestRulesOfHooksFires/upstream103
-WAVE02_FINAL:2,true,false,,true,2,true,2,2
-WAVE02_FINAL:4,true,false,2,true,2:4,true,4,4
-=== CONT  TestRulesOfHooksFires/upstream102
-WAVE02_FINAL:2,true,false,,true,2,true,2,2
-WAVE02_FINAL:1,true,false,2,true,2:1,true,1,1
-=== CONT  TestRulesOfHooksFires/upstream101
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-=== CONT  TestRulesOfHooksFires/upstream100
-WAVE02_FINAL:1,true,false,,true,1,true,1,1
-=== CONT  TestRulesOfHooksFires/upstream099
-WAVE02_FINAL:3,true,false,,true,3,true,3,3
-=== CONT  TestRulesOfHooksFires/upstream098
-WAVE02_FINAL:5,true,false,,true,5,true,5,5
-WAVE02_FINAL:11,true,false,5,true,5:11,true,11,11
-WAVE02_FINAL:9,true,false,5:11,true,5:11:9,true,9,9
-=== CONT  TestRulesOfHooksFires/upstream097
-WAVE02_FINAL:2,true,false,,true,2,true,2,2
-=== CONT  TestRulesOfHooksFires/upstream096
-WAVE02_FINAL:5,true,false,,true,5,true,5,5
-WAVE02_FINAL:11,true,false,5,true,5:11,true,11,11
-WAVE02_FINAL:8,true,false,5:11,true,5:11:8,true,8,8
-=== CONT  TestRulesOfHooksFires/upstream095
-=== CONT  TestRulesOfHooksFires/upstream094
-=== CONT  TestRulesOfHooksFires/upstream093
-=== CONT  TestRulesOfHooksFires/upstream092
-=== CONT  TestRulesOfHooksFires/upstream091
-WAVE02_FINAL:3,true,false,,true,3,true,3,3
-=== CONT  TestRulesOfHooksFires/upstream090
-WAVE02_FINAL:3,true,false,,true,3,true,3,3
-=== CONT  TestRulesOfHooksFires/upstream089
-WAVE02_FINAL:2,true,false,,true,2,true,2,2
-=== CONT  TestRulesOfHooksFires/upstream088
-=== CONT  TestRulesOfHooksFires/upstream087
-=== CONT  TestRulesOfHooksFires/upstream086
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-=== CONT  TestRulesOfHooksFires/upstream085
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-=== CONT  TestRulesOfHooksFires/upstream084
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-=== CONT  TestRulesOfHooksFires/upstream083
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-=== CONT  TestRulesOfHooksFires/upstream082
-WAVE02_FINAL:1,true,false,,true,1,true,1,1
-=== CONT  TestRulesOfHooksFires/upstream081
-WAVE02_FINAL:1,true,false,,true,1,true,1,1
-=== CONT  TestRulesOfHooksFires/upstream080
-WAVE02_FINAL:1,true,false,,true,1,true,1,1
-=== CONT  TestRulesOfHooksFires/upstream079
-WAVE02_FINAL:1,true,false,,true,1,true,1,1
-=== CONT  TestRulesOfHooksFires/upstream078
-WAVE02_FINAL:1,true,false,,true,1,true,1,1
-=== CONT  TestRulesOfHooksFires/upstream077
-=== CONT  TestRulesOfHooksFires/upstream076
-=== CONT  TestRulesOfHooksFires/upstream075
-=== CONT  TestRulesOfHooksFires/upstream074
-WAVE02_FINAL:1,true,false,,true,1,true,1,1
-=== CONT  TestRulesOfHooksFires/upstream073
-WAVE02_FINAL:1,true,false,,true,1,true,1,1
-=== CONT  TestRulesOfHooksFires/upstream072
-WAVE02_FINAL:2,true,false,,true,2,true,2,2
-WAVE02_FINAL:6,true,false,2,true,2:6,true,6,6
-WAVE02_FINAL:1,true,false,2:6,true,2:6:1,true,1,1
-=== CONT  TestRulesOfHooksFires/upstream071
-WAVE02_FINAL:1,true,false,,true,1,true,1,1
-=== CONT  TestRulesOfHooksFires/upstream070
-WAVE02_FINAL:1,true,false,,true,1,true,1,1
-=== CONT  TestRulesOfHooksFires/upstream069
-WAVE02_FINAL:3,true,false,,true,3,true,3,3
---- PASS: TestRulesOfHooksFires (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream068 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream157 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream150 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream147 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream146 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream145 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream144 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream143 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream142 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream141 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream140 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream139 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream138 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream137 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream136 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream135 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream134 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream133 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream132 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream131 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream130 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream129 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream128 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream127 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream126 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream125 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream124 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream123 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream122 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream121 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream120 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream119 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream118 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream117 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream116 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream115 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream114 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream113 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream112 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream111 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream110 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream109 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream108 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream107 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream106 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream105 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream104 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream103 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream102 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream101 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream100 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream099 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream098 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream097 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream096 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream095 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream094 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream093 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream092 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream091 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream090 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream089 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream088 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream087 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream086 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream085 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream084 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream083 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream082 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream081 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream080 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream079 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream078 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream077 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream076 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream075 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream074 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream073 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream072 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream071 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream070 (0.00s)
-    --- PASS: TestRulesOfHooksFires/upstream069 (0.00s)
-=== PAUSE TestRulesOfHooksStaysSilent/upstream023
-=== RUN   TestRulesOfHooksStaysSilent/upstream024
-=== PAUSE TestRulesOfHooksStaysSilent/upstream024
-=== RUN   TestRulesOfHooksStaysSilent/upstream025
-=== PAUSE TestRulesOfHooksStaysSilent/upstream025
-=== RUN   TestRulesOfHooksStaysSilent/upstream026
-=== PAUSE TestRulesOfHooksStaysSilent/upstream026
-=== RUN   TestRulesOfHooksStaysSilent/upstream027
-=== PAUSE TestRulesOfHooksStaysSilent/upstream027
-=== RUN   TestRulesOfHooksStaysSilent/upstream028
-=== PAUSE TestRulesOfHooksStaysSilent/upstream028
-=== RUN   TestRulesOfHooksStaysSilent/upstream029
-=== PAUSE TestRulesOfHooksStaysSilent/upstream029
-=== RUN   TestRulesOfHooksStaysSilent/upstream030
-=== PAUSE TestRulesOfHooksStaysSilent/upstream030
-=== RUN   TestRulesOfHooksStaysSilent/upstream031
-=== PAUSE TestRulesOfHooksStaysSilent/upstream031
-=== RUN   TestRulesOfHooksStaysSilent/upstream032
-=== PAUSE TestRulesOfHooksStaysSilent/upstream032
-=== RUN   TestRulesOfHooksStaysSilent/upstream033
-=== PAUSE TestRulesOfHooksStaysSilent/upstream033
-=== RUN   TestRulesOfHooksStaysSilent/upstream034
-=== PAUSE TestRulesOfHooksStaysSilent/upstream034
-=== RUN   TestRulesOfHooksStaysSilent/upstream035
-=== PAUSE TestRulesOfHooksStaysSilent/upstream035
-=== RUN   TestRulesOfHooksStaysSilent/upstream036
-=== PAUSE TestRulesOfHooksStaysSilent/upstream036
-=== RUN   TestRulesOfHooksStaysSilent/upstream037
-=== PAUSE TestRulesOfHooksStaysSilent/upstream037
-=== RUN   TestRulesOfHooksStaysSilent/upstream038
-=== PAUSE TestRulesOfHooksStaysSilent/upstream038
-=== RUN   TestRulesOfHooksStaysSilent/upstream039
-=== PAUSE TestRulesOfHooksStaysSilent/upstream039
-=== RUN   TestRulesOfHooksStaysSilent/upstream040
-=== PAUSE TestRulesOfHooksStaysSilent/upstream040
-=== RUN   TestRulesOfHooksStaysSilent/upstream041
-=== PAUSE TestRulesOfHooksStaysSilent/upstream041
-=== RUN   TestRulesOfHooksStaysSilent/upstream042
-=== PAUSE TestRulesOfHooksStaysSilent/upstream042
-=== RUN   TestRulesOfHooksStaysSilent/upstream043
-=== PAUSE TestRulesOfHooksStaysSilent/upstream043
-=== RUN   TestRulesOfHooksStaysSilent/upstream044
-=== PAUSE TestRulesOfHooksStaysSilent/upstream044
-=== RUN   TestRulesOfHooksStaysSilent/upstream045
-=== PAUSE TestRulesOfHooksStaysSilent/upstream045
-=== RUN   TestRulesOfHooksStaysSilent/upstream046
-=== PAUSE TestRulesOfHooksStaysSilent/upstream046
-=== RUN   TestRulesOfHooksStaysSilent/upstream047
-=== PAUSE TestRulesOfHooksStaysSilent/upstream047
-=== RUN   TestRulesOfHooksStaysSilent/upstream048
-=== PAUSE TestRulesOfHooksStaysSilent/upstream048
-=== RUN   TestRulesOfHooksStaysSilent/upstream049
-=== PAUSE TestRulesOfHooksStaysSilent/upstream049
-=== RUN   TestRulesOfHooksStaysSilent/upstream050
 === PAUSE TestRulesOfHooksStaysSilent/upstream050
 === RUN   TestRulesOfHooksStaysSilent/upstream051
 === PAUSE TestRulesOfHooksStaysSilent/upstream051
@@ -627,203 +379,451 @@ WAVE02_FINAL:3,true,false,,true,3,true,3,3
 === RUN   TestRulesOfHooksStaysSilent/upstream067
 === PAUSE TestRulesOfHooksStaysSilent/upstream067
 === CONT  TestRulesOfHooksStaysSilent/upstream000
-=== CONT  TestRulesOfHooksStaysSilent/upstream034
-=== CONT  TestRulesOfHooksStaysSilent/upstream051
-=== CONT  TestRulesOfHooksStaysSilent/upstream050
-=== CONT  TestRulesOfHooksStaysSilent/upstream059
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+=== CONT  TestRulesOfHooksFires/upstream157
+=== CONT  TestRulesOfHooksFires/upstream150
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+=== CONT  TestRulesOfHooksFires/upstream147
+WAVE02_FINAL:1,true,false,,true,1,true,1,1
+=== CONT  TestRulesOfHooksFires/upstream146
+=== CONT  TestRulesOfHooksFires/upstream145
+=== CONT  TestRulesOfHooksFires/upstream144
+=== CONT  TestRulesOfHooksFires/upstream143
+=== CONT  TestRulesOfHooksFires/upstream142
+=== CONT  TestRulesOfHooksFires/upstream141
+=== CONT  TestRulesOfHooksFires/upstream140
+WAVE02_FINAL:1,true,false,,true,1,true,1,1
+=== CONT  TestRulesOfHooksFires/upstream139
+WAVE02_FINAL:1,true,false,,true,1,true,1,1
+=== CONT  TestRulesOfHooksFires/upstream138
+=== CONT  TestRulesOfHooksFires/upstream137
+=== CONT  TestRulesOfHooksFires/upstream136
+=== CONT  TestRulesOfHooksFires/upstream135
+=== CONT  TestRulesOfHooksFires/upstream134
+=== CONT  TestRulesOfHooksFires/upstream133
+=== CONT  TestRulesOfHooksFires/upstream132
+=== CONT  TestRulesOfHooksFires/upstream131
+=== CONT  TestRulesOfHooksFires/upstream130
+=== CONT  TestRulesOfHooksFires/upstream129
+=== CONT  TestRulesOfHooksFires/upstream128
+=== CONT  TestRulesOfHooksFires/upstream127
+=== CONT  TestRulesOfHooksFires/upstream126
+=== CONT  TestRulesOfHooksFires/upstream125
+=== CONT  TestRulesOfHooksStaysSilent/upstream063
+=== CONT  TestRulesOfHooksFires/upstream094
+=== CONT  TestRulesOfHooksStaysSilent/upstream062
+=== CONT  TestRulesOfHooksFires/upstream079
+=== CONT  TestRulesOfHooksFires/upstream124
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+=== CONT  TestRulesOfHooksStaysSilent/upstream061
+=== CONT  TestRulesOfHooksFires/upstream078
+WAVE02_FINAL:1,true,false,,true,1,true,1,1
+=== CONT  TestRulesOfHooksFires/upstream077
+=== CONT  TestRulesOfHooksFires/upstream123
+=== CONT  TestRulesOfHooksFires/upstream076
+=== CONT  TestRulesOfHooksFires/upstream075
+=== CONT  TestRulesOfHooksFires/upstream122
+=== CONT  TestRulesOfHooksFires/upstream074
+WAVE02_FINAL:1,true,false,,true,1,true,1,1
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:1,true,false,,true,1,true,1,1
+=== CONT  TestRulesOfHooksStaysSilent/upstream060
+=== CONT  TestRulesOfHooksFires/upstream073
+=== CONT  TestRulesOfHooksFires/upstream120
+=== RUN   TestRulesOfHooksBeyondTheCorpus/doWhileBodyIsALoopThoughTheGraphSaysOtherwise
+=== PAUSE TestRulesOfHooksBeyondTheCorpus/doWhileBodyIsALoopThoughTheGraphSaysOtherwise
+=== CONT  TestRulesOfHooksFires/upstream119
+WAVE02_FINAL:1,true,false,,true,1,true,1,1
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+=== CONT  TestRulesOfHooksFires/upstream118
+=== CONT  TestRulesOfHooksFires/upstream117
+=== CONT  TestRulesOfHooksFires/upstream116
+=== CONT  TestRulesOfHooksFires/upstream115
+WAVE02_FINAL:1,true,false,,true,1,true,1,1
+=== CONT  TestRulesOfHooksFires/upstream114
+WAVE02_FINAL:1,true,false,,true,1,true,1,1
+WAVE02_FINAL:5,true,false,,true,5,true,5,5
+=== CONT  TestRulesOfHooksFires/upstream113
+=== CONT  TestRulesOfHooksFires/upstream112
+=== CONT  TestRulesOfHooksFires/upstream110
+WAVE02_FINAL:1,true,false,,true,1,true,1,1
 WAVE02_FINAL:3,true,false,,true,3,true,3,3
+WAVE02_FINAL:4,true,false,,true,4,true,4,4
+=== CONT  TestRulesOfHooksFires/upstream109
+=== CONT  TestRulesOfHooksFires/upstream107
+=== CONT  TestRulesOfHooksFires/upstream111
+WAVE02_FINAL:3,true,false,,true,3,true,3,3
+WAVE02_FINAL:3,true,false,,true,3,true,3,3
+=== CONT  TestRulesOfHooksFires/upstream106
+=== CONT  TestRulesOfHooksFires/upstream105
+WAVE02_FINAL:2,true,false,,true,2,true,2,2
+WAVE02_FINAL:1,true,false,2,true,2:1,true,1,1
+=== CONT  TestRulesOfHooksFires/upstream104
+=== CONT  TestRulesOfHooksFires/upstream108
+WAVE02_FINAL:3,true,false,,true,3,true,3,3
+WAVE02_FINAL:3,true,false,,true,3,true,3,3
+=== CONT  TestRulesOfHooksFires/upstream103
+WAVE02_FINAL:5,true,false,,true,5,true,5,5
+WAVE02_FINAL:4,true,false,5,true,5:4,true,4,4
+WAVE02_FINAL:6,true,false,,true,6,true,6,6
+=== CONT  TestRulesOfHooksFires/upstream102
+=== CONT  TestRulesOfHooksFires/upstream100
+WAVE02_FINAL:2,true,false,,true,2,true,2,2
+WAVE02_FINAL:1,true,false,2,true,2:1,true,1,1
+WAVE02_FINAL:2,true,false,,true,2,true,2,2
+WAVE02_FINAL:4,true,false,2,true,2:4,true,4,4
+WAVE02_FINAL:1,true,false,,true,1,true,1,1
+=== CONT  TestRulesOfHooksFires/upstream099
+=== CONT  TestRulesOfHooksFires/upstream097
+WAVE02_FINAL:2,true,false,,true,2,true,2,2
+=== CONT  TestRulesOfHooksFires/upstream121
+=== CONT  TestRulesOfHooksFires/upstream096
+=== CONT  TestRulesOfHooksFires/upstream095
+=== CONT  TestRulesOfHooksFires/upstream101
+=== CONT  TestRulesOfHooksBeyondTheCorpus/hookInAFinallyThatCertainlyRuns
+WAVE02_FINAL:3,true,false,,true,3,true,3,3
+WAVE02_FINAL:5,true,false,,true,5,true,5,5
+WAVE02_FINAL:11,true,false,5,true,5:11,true,11,11
+WAVE02_FINAL:8,true,false,5:11,true,5:11:8,true,8,8
+=== CONT  TestRulesOfHooksFires/upstream072
+=== CONT  TestRulesOfHooksFires/upstream071
+WAVE02_FINAL:1,true,false,,true,1,true,1,1
+=== CONT  TestRulesOfHooksFires/upstream070
+=== CONT  TestRulesOfHooksFires/upstream098
+WAVE02_FINAL:1,true,false,,true,1,true,1,1
+=== CONT  TestRulesOfHooksFires/upstream069
+WAVE02_FINAL:2,true,false,,true,2,true,2,2
+WAVE02_FINAL:6,true,false,2,true,2:6,true,6,6
+WAVE02_FINAL:1,true,false,2:6,true,2:6:1,true,1,1
+WAVE02_FINAL:3,true,false,,true,3,true,3,3
+WAVE02_FINAL:3,true,false,,true,3,true,3,3
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
 === CONT  TestRulesOfHooksStaysSilent/upstream058
-=== CONT  TestRulesOfHooksStaysSilent/upstream057
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-=== CONT  TestRulesOfHooksStaysSilent/upstream049
+WAVE02_FINAL:5,true,false,,true,5,true,5,5
 === CONT  TestRulesOfHooksStaysSilent/upstream056
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:11,true,false,5,true,5:11,true,11,11
+=== CONT  TestRulesOfHooksStaysSilent/upstream057
+WAVE02_FINAL:9,true,false,5:11,true,5:11:9,true,9,9
 === CONT  TestRulesOfHooksStaysSilent/upstream055
 WAVE02_FINAL:0,true,false,,true,0,true,0,0
-=== CONT  TestRulesOfHooksStaysSilent/upstream048
 === CONT  TestRulesOfHooksStaysSilent/upstream054
 === CONT  TestRulesOfHooksStaysSilent/upstream053
-=== CONT  TestRulesOfHooksStaysSilent/upstream060
-WAVE02_FINAL:7,true,false,,true,7,true,7,7
+=== CONT  TestRulesOfHooksStaysSilent/upstream059
 === CONT  TestRulesOfHooksStaysSilent/upstream052
-WAVE02_FINAL:1,true,false,,true,1,true,1,1
+WAVE02_FINAL:3,true,false,,true,3,true,3,3
+=== CONT  TestRulesOfHooksStaysSilent/upstream051
+=== CONT  TestRulesOfHooksStaysSilent/upstream050
+=== CONT  TestRulesOfHooksStaysSilent/upstream049
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+=== CONT  TestRulesOfHooksStaysSilent/upstream048
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
 WAVE02_FINAL:0,true,false,,true,0,true,0,0
 === CONT  TestRulesOfHooksStaysSilent/upstream047
-=== CONT  TestRulesOfHooksStaysSilent/upstream062
 WAVE02_FINAL:1,true,false,,true,1,true,1,1
 === CONT  TestRulesOfHooksStaysSilent/upstream046
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-=== CONT  TestRulesOfHooksStaysSilent/upstream067
-=== CONT  TestRulesOfHooksStaysSilent/upstream066
-=== CONT  TestRulesOfHooksStaysSilent/upstream065
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-=== CONT  TestRulesOfHooksStaysSilent/upstream064
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-=== CONT  TestRulesOfHooksStaysSilent/upstream063
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-=== CONT  TestRulesOfHooksStaysSilent/upstream040
-=== CONT  TestRulesOfHooksStaysSilent/upstream061
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-=== CONT  TestRulesOfHooksStaysSilent/upstream045
-=== CONT  TestRulesOfHooksStaysSilent/upstream043
-=== CONT  TestRulesOfHooksStaysSilent/upstream042
-WAVE02_FINAL:2,true,false,,true,2,true,2,2
-=== CONT  TestRulesOfHooksStaysSilent/upstream037
-=== CONT  TestRulesOfHooksStaysSilent/upstream041
-WAVE02_FINAL:1,true,false,,true,1,true,1,1
-=== CONT  TestRulesOfHooksStaysSilent/upstream039
 === CONT  TestRulesOfHooksStaysSilent/upstream044
+WAVE02_FINAL:1,true,false,,true,1,true,1,1
+=== CONT  TestRulesOfHooksStaysSilent/upstream045
+=== CONT  TestRulesOfHooksStaysSilent/upstream042
+=== CONT  TestRulesOfHooksStaysSilent/upstream041
 WAVE02_FINAL:2,true,false,,true,2,true,2,2
+=== CONT  TestRulesOfHooksStaysSilent/upstream040
+=== CONT  TestRulesOfHooksStaysSilent/upstream043
+=== CONT  TestRulesOfHooksStaysSilent/upstream039
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
 === CONT  TestRulesOfHooksStaysSilent/upstream038
 WAVE02_FINAL:2,true,false,,true,2,true,2,2
 WAVE02_FINAL:118,true,false,,true,118,true,118,118
-=== CONT  TestRulesOfHooksStaysSilent/upstream036
-=== CONT  TestRulesOfHooksStaysSilent/upstream035
+=== CONT  TestRulesOfHooksStaysSilent/upstream037
 WAVE02_FINAL:1,true,false,,true,1,true,1,1
-=== CONT  TestRulesOfHooksStaysSilent/upstream017
-=== CONT  TestRulesOfHooksStaysSilent/upstream033
+=== CONT  TestRulesOfHooksStaysSilent/upstream036
+WAVE02_FINAL:7,true,false,,true,7,true,7,7
+WAVE02_FINAL:1,true,false,,true,1,true,1,1
+=== CONT  TestRulesOfHooksStaysSilent/upstream035
+WAVE02_FINAL:2,true,false,,true,2,true,2,2
 === CONT  TestRulesOfHooksStaysSilent/upstream032
-=== CONT  TestRulesOfHooksStaysSilent/upstream030
+=== CONT  TestRulesOfHooksStaysSilent/upstream033
 === CONT  TestRulesOfHooksStaysSilent/upstream031
+WAVE02_FINAL:34,true,false,,true,34,true,34,34
+=== CONT  TestRulesOfHooksStaysSilent/upstream030
 === CONT  TestRulesOfHooksStaysSilent/upstream029
 === CONT  TestRulesOfHooksStaysSilent/upstream028
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-=== CONT  TestRulesOfHooksStaysSilent/upstream026
 === CONT  TestRulesOfHooksStaysSilent/upstream027
 WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+=== CONT  TestRulesOfHooksStaysSilent/upstream026
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
 === CONT  TestRulesOfHooksStaysSilent/upstream025
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
 === CONT  TestRulesOfHooksStaysSilent/upstream024
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:159,true,false,34,true,34:159,true,159,159
 WAVE02_FINAL:0,true,false,,true,0,true,0,0
 === CONT  TestRulesOfHooksStaysSilent/upstream023
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
 === CONT  TestRulesOfHooksStaysSilent/upstream022
 WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:1,true,false,,true,1,true,1,1
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
 === CONT  TestRulesOfHooksStaysSilent/upstream021
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:1,true,false,,true,1,true,1,1
 === CONT  TestRulesOfHooksStaysSilent/upstream020
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
 === CONT  TestRulesOfHooksStaysSilent/upstream019
-WAVE02_FINAL:34,true,false,,true,34,true,34,34
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
 WAVE02_FINAL:0,true,false,,true,0,true,0,0
 === CONT  TestRulesOfHooksStaysSilent/upstream018
 WAVE02_FINAL:0,true,false,,true,0,true,0,0
-=== CONT  TestRulesOfHooksStaysSilent/upstream009
-WAVE02_FINAL:159,true,false,34,true,34:159,true,159,159
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-=== CONT  TestRulesOfHooksStaysSilent/upstream016
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
 WAVE02_FINAL:0,true,false,,true,0,true,0,0
 === CONT  TestRulesOfHooksStaysSilent/upstream015
+=== CONT  TestRulesOfHooksStaysSilent/upstream017
+=== CONT  TestRulesOfHooksStaysSilent/upstream016
 === CONT  TestRulesOfHooksStaysSilent/upstream014
+=== CONT  TestRulesOfHooksStaysSilent/upstream013
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
 === CONT  TestRulesOfHooksStaysSilent/upstream012
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
 === CONT  TestRulesOfHooksStaysSilent/upstream011
 WAVE02_FINAL:0,true,false,,true,0,true,0,0
-=== CONT  TestRulesOfHooksStaysSilent/upstream010
 WAVE02_FINAL:0,true,false,,true,0,true,0,0
-=== CONT  TestRulesOfHooksStaysSilent/upstream005
+=== CONT  TestRulesOfHooksStaysSilent/upstream034
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+=== CONT  TestRulesOfHooksStaysSilent/upstream009
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
 === CONT  TestRulesOfHooksStaysSilent/upstream008
-WAVE02_FINAL:2,true,false,,true,2,true,2,2
-WAVE02_FINAL:1,true,false,2,true,2:1,true,1,1
+=== CONT  TestRulesOfHooksStaysSilent/upstream010
 WAVE02_FINAL:0,true,false,,true,0,true,0,0
 === CONT  TestRulesOfHooksStaysSilent/upstream007
 WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:3,true,false,,true,3,true,3,3
-=== CONT  TestRulesOfHooksStaysSilent/upstream003
-=== CONT  TestRulesOfHooksStaysSilent/upstream004
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:1,true,false,,true,1,true,1,1
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:1,true,false,,true,1,true,1,1
-=== CONT  TestRulesOfHooksStaysSilent/upstream001
-=== CONT  TestRulesOfHooksStaysSilent/upstream013
-WAVE02_FINAL:1,true,false,,true,1,true,1,1
-=== CONT  TestRulesOfHooksStaysSilent/upstream002
-WAVE02_FINAL:2,true,false,,true,2,true,2,2
-WAVE02_FINAL:1,true,false,2,true,2:1,true,1,1
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
 === CONT  TestRulesOfHooksStaysSilent/upstream006
+=== CONT  TestRulesOfHooksStaysSilent/upstream005
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
 WAVE02_FINAL:2,true,false,,true,2,true,2,2
 WAVE02_FINAL:1,true,false,2,true,2:1,true,1,1
+WAVE02_FINAL:2,true,false,,true,2,true,2,2
+WAVE02_FINAL:1,true,false,2,true,2:1,true,1,1
+=== CONT  TestRulesOfHooksStaysSilent/upstream004
+=== CONT  TestRulesOfHooksStaysSilent/upstream002
+WAVE02_FINAL:3,true,false,,true,3,true,3,3
+=== CONT  TestRulesOfHooksStaysSilent/upstream001
+WAVE02_FINAL:2,true,false,,true,2,true,2,2
+WAVE02_FINAL:1,true,false,2,true,2:1,true,1,1
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+=== CONT  TestRulesOfHooksStaysSilent/upstream065
+WAVE02_FINAL:1,true,false,,true,1,true,1,1
+=== CONT  TestRulesOfHooksStaysSilent/upstream067
+=== CONT  TestRulesOfHooksStaysSilent/upstream066
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+=== CONT  TestRulesOfHooksBeyondTheCorpus/memoCallbackIsAComponent
+=== CONT  TestRulesOfHooksBeyondTheCorpus/doWhileBodyIsALoopThoughTheGraphSaysOtherwise
+WAVE02_FINAL:1,true,false,,true,1,true,1,1
+WAVE02_FINAL:3,true,false,,true,3,true,3,3
+=== CONT  TestRulesOfHooksBeyondTheCorpus/lowercaseNamespaceIsNotAHookCall
+=== CONT  TestRulesOfHooksBeyondTheCorpus/destructuringAssignmentDefaultSuppliesNoName
+=== CONT  TestRulesOfHooksBeyondTheCorpus/destructuringDeclarationDefaultSuppliesAName
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+=== CONT  TestRulesOfHooksFires/upstream093
+=== CONT  TestRulesOfHooksFires/upstream087
+WAVE02_FINAL:1,true,false,,true,1,true,1,1
+=== CONT  TestRulesOfHooksFires/upstream092
+=== CONT  TestRulesOfHooksFires/upstream091
+=== CONT  TestRulesOfHooksFires/upstream086
+WAVE02_FINAL:3,true,false,,true,3,true,3,3
+=== CONT  TestRulesOfHooksFires/upstream085
+=== CONT  TestRulesOfHooksFires/upstream090
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+=== CONT  TestRulesOfHooksStaysSilent/upstream003
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:1,true,false,,true,1,true,1,1
+=== CONT  TestRulesOfHooksFires/upstream089
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:2,true,false,,true,2,true,2,2
+WAVE02_FINAL:3,true,false,,true,3,true,3,3
+=== CONT  TestRulesOfHooksFires/upstream088
+=== CONT  TestRulesOfHooksBeyondTheCorpus/unreachableHookInsideATryStillReports
+=== CONT  TestRulesOfHooksFires/upstream084
+WAVE02_FINAL:4,true,false,,true,4,true,4,4
+=== CONT  TestRulesOfHooksFires/upstream081
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:1,true,false,,true,1,true,1,1
+=== CONT  TestRulesOfHooksBeyondTheCorpus/unreachableHookIsNotThisRulesProblem
+=== CONT  TestRulesOfHooksBeyondTheCorpus/digitAfterThePrefixIsAHook
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+=== CONT  TestRulesOfHooksFires/upstream080
+=== CONT  TestRulesOfHooksBeyondTheCorpus/bareUseIsAHook
+WAVE02_FINAL:1,true,false,,true,1,true,1,1
+=== CONT  TestRulesOfHooksFires/upstream083
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+=== CONT  TestRulesOfHooksFires/upstream082
+WAVE02_FINAL:1,true,false,,true,1,true,1,1
+--- PASS: TestRulesOfHooksFires (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream068 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream157 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream150 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream147 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream146 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream145 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream144 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream143 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream142 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream141 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream140 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream139 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream138 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream137 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream136 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream135 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream134 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream133 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream132 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream131 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream130 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream129 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream128 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream127 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream126 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream125 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream094 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream078 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream124 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream077 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream076 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream123 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream075 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream122 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream074 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream079 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream073 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream119 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream120 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream117 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream118 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream115 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream114 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream113 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream116 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream112 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream110 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream111 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream109 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream107 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream106 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream105 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream104 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream108 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream102 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream103 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream100 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream097 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream121 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream095 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream096 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream071 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream070 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream069 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream099 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream072 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream101 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream098 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream087 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream092 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream093 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream091 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream086 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream085 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream089 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream090 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream088 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream084 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream081 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream080 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream083 (0.00s)
+    --- PASS: TestRulesOfHooksFires/upstream082 (0.00s)
+=== CONT  TestRulesOfHooksBeyondTheCorpus/objectLiteralMethodIsNotAClass
+--- PASS: TestRulesOfHooksBeyondTheCorpus (0.00s)
+    --- PASS: TestRulesOfHooksBeyondTheCorpus/hookInAFinallyThatCertainlyRuns (0.00s)
+    --- PASS: TestRulesOfHooksBeyondTheCorpus/memoCallbackIsAComponent (0.00s)
+    --- PASS: TestRulesOfHooksBeyondTheCorpus/doWhileBodyIsALoopThoughTheGraphSaysOtherwise (0.00s)
+    --- PASS: TestRulesOfHooksBeyondTheCorpus/lowercaseNamespaceIsNotAHookCall (0.00s)
+    --- PASS: TestRulesOfHooksBeyondTheCorpus/destructuringDeclarationDefaultSuppliesAName (0.00s)
+    --- PASS: TestRulesOfHooksBeyondTheCorpus/destructuringAssignmentDefaultSuppliesNoName (0.00s)
+    --- PASS: TestRulesOfHooksBeyondTheCorpus/unreachableHookInsideATryStillReports (0.00s)
+    --- PASS: TestRulesOfHooksBeyondTheCorpus/unreachableHookIsNotThisRulesProblem (0.00s)
+    --- PASS: TestRulesOfHooksBeyondTheCorpus/digitAfterThePrefixIsAHook (0.00s)
+    --- PASS: TestRulesOfHooksBeyondTheCorpus/bareUseIsAHook (0.00s)
+    --- PASS: TestRulesOfHooksBeyondTheCorpus/objectLiteralMethodIsNotAClass (0.00s)
+=== CONT  TestRulesOfHooksStaysSilent/upstream064
 WAVE02_FINAL:0,true,false,,true,0,true,0,0
 --- PASS: TestRulesOfHooksStaysSilent (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream034 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream051 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream059 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream000 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream062 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream063 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream061 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream060 (0.00s)
     --- PASS: TestRulesOfHooksStaysSilent/upstream058 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream050 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream057 (0.00s)
     --- PASS: TestRulesOfHooksStaysSilent/upstream056 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream049 (0.00s)
     --- PASS: TestRulesOfHooksStaysSilent/upstream055 (0.00s)
     --- PASS: TestRulesOfHooksStaysSilent/upstream054 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream053 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream052 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream048 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream059 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream051 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream049 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream050 (0.00s)
     --- PASS: TestRulesOfHooksStaysSilent/upstream047 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream057 (0.00s)
     --- PASS: TestRulesOfHooksStaysSilent/upstream046 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream060 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream067 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream062 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream000 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream063 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream066 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream065 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream064 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream043 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream048 (0.00s)
     --- PASS: TestRulesOfHooksStaysSilent/upstream045 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream042 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream037 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream039 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream038 (0.00s)
     --- PASS: TestRulesOfHooksStaysSilent/upstream044 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream036 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream017 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream042 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream043 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream052 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream039 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream037 (0.00s)
     --- PASS: TestRulesOfHooksStaysSilent/upstream040 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream035 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream033 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream030 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream053 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream036 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream038 (0.00s)
     --- PASS: TestRulesOfHooksStaysSilent/upstream032 (0.00s)
     --- PASS: TestRulesOfHooksStaysSilent/upstream031 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream033 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream035 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream030 (0.00s)
     --- PASS: TestRulesOfHooksStaysSilent/upstream029 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream028 (0.00s)
     --- PASS: TestRulesOfHooksStaysSilent/upstream027 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream025 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream028 (0.00s)
     --- PASS: TestRulesOfHooksStaysSilent/upstream024 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream061 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream025 (0.00s)
     --- PASS: TestRulesOfHooksStaysSilent/upstream023 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream020 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream022 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream018 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream021 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream016 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream041 (0.00s)
     --- PASS: TestRulesOfHooksStaysSilent/upstream026 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream009 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream022 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream021 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream041 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream018 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream020 (0.00s)
     --- PASS: TestRulesOfHooksStaysSilent/upstream015 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream012 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream010 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream016 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream017 (0.00s)
     --- PASS: TestRulesOfHooksStaysSilent/upstream014 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream005 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream008 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream007 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream013 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream012 (0.00s)
     --- PASS: TestRulesOfHooksStaysSilent/upstream011 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream009 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream019 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream034 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream010 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream006 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream005 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream007 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream002 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream008 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream001 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream065 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream067 (0.00s)
     --- PASS: TestRulesOfHooksStaysSilent/upstream004 (0.00s)
     --- PASS: TestRulesOfHooksStaysSilent/upstream003 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream001 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream002 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream013 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream006 (0.00s)
-    --- PASS: TestRulesOfHooksStaysSilent/upstream019 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream066 (0.00s)
+    --- PASS: TestRulesOfHooksStaysSilent/upstream064 (0.00s)
 PASS
-ok  	github.com/system-inc/cohere/internal/lint/rules/react	0.013s
+ok  	github.com/system-inc/cohere/internal/lint/rules/react	0.012s
