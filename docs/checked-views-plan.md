@@ -1010,3 +1010,23 @@ refuses Named & Counted at value, so zero pairs/reads are complete. Native and
 JavaScript package tests pass; lower retains the documented mixed-array adapter
 failure. The lane-owned component work, six executable mutants and exact blocker
 handoff are recorded in lane7/REPORT.txt. Rest pending integrated lazy admission.
+
+### Lane 4 named primitive read hooks under the direct-hook ruling
+
+The user now authorizes minimal named shared hooks per lane, reconciled by the
+integrator. Lane 4 adds viewStringUndefined(property) in its native and JavaScript
+view_unions_mixed.go files. Shared native viewField calls it to select the existing
+optional payload reader while retaining the required-field presence flags.
+Shared JavaScript Property dispatch supplies its result as undefinedMember to
+adamicViewField; the readiness helper accepts undefined payloads independently
+of optional absence and retains null rejection. Tagged object-union dispatch is
+restricted to object-valued fields. These are executable source-read hooks,
+not flow erasure or a second readiness state.
+
+Shared strictViewContract classifies phantomUndefined as ViewUndefined;
+unsupportedViewFamily permits that approved phantom erasure, and viewDataType
+recognizes it in read preflight. No other intersection, brand member, nominal,
+callable or dictionary contract is enabled by these hooks. The two leading
+candidate pairs are pinned by TestCheckedViewCompleteBrand and both backend
+undefined-admission overlay mutants. Integration consumes this lane tip through
+the user; no individual lane branch is merged.

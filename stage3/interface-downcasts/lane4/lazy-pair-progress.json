@@ -7,14 +7,14 @@
     "__String": {
       "total_pairs": 14,
       "total_reads": 511,
-      "remaining_pairs": 14,
-      "remaining_reads": 511
+      "remaining_pairs": 12,
+      "remaining_reads": 64
     },
     "mixed primitive union": {
       "total_pairs": 23,
       "total_reads": 538,
-      "remaining_pairs": 23,
-      "remaining_reads": 538
+      "remaining_pairs": 21,
+      "remaining_reads": 91
     }
   },
   "pairs": [
@@ -1835,8 +1835,12 @@
         }
       ],
       "pair_id": "6997:escapedText",
-      "state": "pending source integration",
-      "evidence": []
+      "state": "complete source fixture group",
+      "evidence": [
+        "TestCheckedViewCompleteBrand",
+        "brand-complete-*.a",
+        "brand-mutants.json"
+      ]
     },
     {
       "type_id": 4329,
@@ -3656,8 +3660,12 @@
         }
       ],
       "pair_id": "4329:escapedName",
-      "state": "pending source integration",
-      "evidence": []
+      "state": "complete source fixture group",
+      "evidence": [
+        "TestCheckedViewCompleteBrand",
+        "brand-symbol-*.a",
+        "brand-mutants.json"
+      ]
     },
     {
       "type_id": 7618,

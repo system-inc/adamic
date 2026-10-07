@@ -60,7 +60,7 @@ func (l *lowering) viewObjectFields(node *ast.Node, target *checker.Type, fields
 
 func (l *lowering) viewDataType(target *checker.Type) bool {
 	if base := l.phantomBase(target); base != nil {
-		return interfaceScalar(base)
+		return interfaceScalar(base) || l.phantomUndefined(target)
 	}
 	if target.Flags()&checker.TypeFlagsUnion != 0 {
 		for _, member := range target.Types() {

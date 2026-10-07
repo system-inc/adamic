@@ -22,7 +22,7 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 	if id := l.result.ViewContractTypes[int(target.Id())]; id != 0 {
 		return id, nil
 	}
-	if target.Flags()&checker.TypeFlagsUndefined != 0 {
+	if target.Flags()&checker.TypeFlagsUndefined != 0 || l.phantomUndefined(target) {
 		id := ir.ViewContractID(len(l.result.ViewContracts) + 1)
 		l.result.ViewContracts = append(l.result.ViewContracts, ir.ViewContract{Kind: ir.ViewUndefined, Name: "undefined", Undefined: true, Of: ir.Object})
 		l.result.ViewContractTypes[int(target.Id())] = id
@@ -72,7 +72,7 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 	if base := l.phantomBase(target); base != nil {
 		scalar = base
 	}
-	if target.Flags()&checker.TypeFlagsUndefined != 0 {
+	if target.Flags()&checker.TypeFlagsUndefined != 0 || l.phantomUndefined(target) {
 		contract.Kind = ir.ViewUndefined
 	} else if interfaceScalar(scalar) && of != ir.Union {
 		contract.Kind = ir.ViewScalar
