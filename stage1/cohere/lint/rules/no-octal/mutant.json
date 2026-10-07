@@ -1,0 +1,6 @@
+{
+  "name": "octal_suppressed",
+  "file": "rule.a",
+  "from": "raw[0] === '0'",
+  "to": "raw[0] === '1'"
+}

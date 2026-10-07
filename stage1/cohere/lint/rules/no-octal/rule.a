@@ -1,0 +1,14 @@
+import type { RuleContext } from '../../context.ts';
+import { description } from './messages.a';
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    visit(index: number): void {
+        const raw = this.context.source.slice(this.context.start(index), this.context.node(index).end);
+        const second = raw.charCodeAt(1);
+        if(raw.length >= 2 && raw[0] === '0' && second >= 48 && second <= 57) {
+            this.context.report(index, 'no-octal', 'noOctal', description, '', '', '');
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
