@@ -56,3 +56,13 @@ claimed but blocked on the shared serializer and independent repair-range contra
 Valid one-finding Go probes exit 2 with unexpected fix shape and unexpected
 suggestion shape respectively. Reproduction and measured throughput are in
 ../rules/typescript-eslint-no-misused-new/REPORT.md.
+
+## Fourth batch
+
+After pushing all prior work and fetching all origin heads, helper-ready rules
+remain claimed. The first three unported and unclaimed syntax-ready entries are
+claimed here before implementation:
+
+- @typescript-eslint/no-unnecessary-type-constraint
+- @typescript-eslint/prefer-as-const
+- @typescript-eslint/prefer-enum-initializers
