@@ -129,3 +129,14 @@ supersedes the earlier observation that the branch was absent; the dynamic
 RegExp and numeric handed-node blockers remain. No further matcher was added,
 no React parking exception was used and no new rules were claimed. See
 ../wave09_core/LANDING_C019_REPORT.md for fresh verification evidence.
+
+## Named harness review
+
+ab70f38d4 on origin/lint-rules/harness adds the handed-node callback via
+"node": true, along with reportNode/reportRange. It is not yet on current
+main c01907a7. Its registry still requires string kinds and its parser exposes
+string kinds, so the requested numeric rule.json declarations cannot be
+decoded by that registry. The remaining speed blocker is the numeric contract
+and type-aware checker-context integration, not an absent handed-node hook
+on the named harness branch. The separate dynamic RegExp refusal remains.
+No new claims or React parking. See ../wave09_core/HARNESS_AB70_REPORT.md.
