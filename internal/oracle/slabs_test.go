@@ -3,6 +3,7 @@ package oracle
 import (
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 
@@ -13,6 +14,12 @@ import (
 // Native observations are always fresh. The existing malloc lane still checks leaks:
 // slab chunks stay reachable, so LeakSanitizer cannot account for individual slots.
 func TestNativeSlabsAgreeWithNode(t *testing.T) {
+	if runtime.GOOS == "darwin" {
+		t.Skip("Linux is the gate of record: Node on arm64 macOS fuses multiply-adds for atanh in navigation.a (#myatdyv)")
+	}
+	if runtime.GOOS != "linux" {
+		t.Skip("the slab lane has its own Linux gate shard")
+	}
 	t.Parallel()
 	allocatorAgreesWithNode(t, true)
 }
