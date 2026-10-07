@@ -21,3 +21,11 @@ python3 stage1/cohere/lint/rules/typescript-no-this-alias/validate.py --scratch 
 
 Redirect wrapper output to logs. Raw test logs live in evidence/*.txt.
 The report at ../../claims/wave1-07-third-report.md states counts and limitations.
+
+
+## Owner harness completion
+
+Default .a discovery is now available through the owner handoff merged at f22d2aa1.
+The earlier scratch-overlay instructions are historical. Fresh validation uses
+validate-owned.py --scratch <directory> --compiler /tmp/wave07-typescript;
+see evidence-completion and ../typescript-no-non-null-assertion/COMPLETION.md.
