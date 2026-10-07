@@ -1,0 +1,24 @@
+--- FAIL: TestRefusalPassRulings (0.00s)
+    --- FAIL: TestRefusalPassRulings/function-type-argument.a (0.09s)
+        refusal_pass_test.go:40: got <nil>, want Refused
+    --- FAIL: TestRefusalPassRulings/function-passed-closure.a (0.11s)
+        refusal_pass_test.go:40: got <nil>, want Refused
+    --- FAIL: TestRefusalPassRulings/record-operation-permanent-priority.a (0.12s)
+        refusal_pass_test.go:40: got /tmp/adamic-gate/TestRefusalPassRulingsrecord-operation-permanent-priority.a2500726454/001/main.a:3:20: stage 0 can't lower dynamic record reads (own-key lookup returning T | undefined is not implemented; use Map.get) yet, want Refused
+    --- FAIL: TestRefusalPassRulings/function-field.a (0.08s)
+        refusal_pass_test.go:40: got <nil>, want Refused
+    --- FAIL: TestRefusalPassRulings/function-parameter.a (0.08s)
+        refusal_pass_test.go:40: got <nil>, want Refused
+    --- FAIL: TestRefusalPassRulings/function-alias.a (0.06s)
+        refusal_pass_test.go:40: got <nil>, want Refused
+    --- FAIL: TestRefusalPassRulings/function-variable.a (0.05s)
+        refusal_pass_test.go:40: got <nil>, want Refused
+    --- FAIL: TestRefusalPassRulings/function-union.a (0.06s)
+        refusal_pass_test.go:40: got <nil>, want Refused
+    --- FAIL: TestRefusalPassRulings/observe-function.a (0.04s)
+        refusal_pass_test.go:40: got /tmp/adamic-gate/TestRefusalPassRulingsobserve-function.a2888942134/001/main.a:1:55: stage 0 can't lower a call to an Identifier yet, want Refused
+    --- FAIL: TestRefusalPassRulings/function-type-length.a (0.08s)
+        refusal_pass_test.go:40: got <nil>, want Refused
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.516s
+FAIL

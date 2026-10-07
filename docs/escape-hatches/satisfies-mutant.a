@@ -1,0 +1,2 @@
+const x = { n: 'wrong' } satisfies { readonly n: number };
+console.log(x.n);

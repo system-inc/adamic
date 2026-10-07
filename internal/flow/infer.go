@@ -29,7 +29,7 @@ import (
 // Strings, numbers and booleans can't be mutated (Adamic's strings are immutable values), so a
 // value of those types is created primitive and takes part in nothing.
 func InferAliasingEffects(function *Function) *AliasingEffects {
-	inference := &inference{function: function, escaped: map[IdentifierId]bool{}, iterated: map[*ir.Statement][]Place{}, parts: map[[2]uint32]IdentifierId{}}
+	inference := &inference{function: function, escaped: map[IdentifierId]bool{}, iterated: map[*ir.Statement]shape{}, parts: map[[2]uint32]IdentifierId{}}
 	// Escape grows as effects are made (a value handed to a call escapes), and every call has to
 	// mutate every value escaped by then, wherever in the function it escaped. So the effects are
 	// made again until the escaped set stops growing; it only grows, and it's bounded by the
@@ -54,7 +54,7 @@ type inference struct {
 
 	// iterated is what each for...of iterates, as its first part found it, for the elements its
 	// second part binds.
-	iterated map[*ir.Statement][]Place
+	iterated map[*ir.Statement]shape
 
 	// list is the effects of the instruction being made, and instruction its id.
 	list        []AliasingEffect
@@ -76,6 +76,13 @@ type shape struct {
 
 func (s shape) roots() []Place {
 	return append(append(append([]Place{}, s.same...), s.part...), s.holds...)
+}
+
+// element preserves outside reachability when reading a container's contents. Captured
+// variables have no place in this graph, but a local read from one can still be written
+// through that capture by any later call. Dropping unknown here closes its range too early.
+func (s shape) element() shape {
+	return shape{part: s.roots(), unknown: s.unknown}
 }
 
 func (s *shape) merge(other shape) {
@@ -145,13 +152,13 @@ func (n *inference) run1(instruction *Instruction) {
 		n.store(array, value)
 	case ir.ForOf:
 		if instruction.Part == 0 {
-			n.iterated[instruction.At] = n.value(statement.Iterable).roots()
+			n.iterated[instruction.At] = n.value(statement.Iterable)
 			break
 		}
 		// Each element is read out of what the loop iterates, as its first part found it (reverse
 		// postorder walks that part first): a mutation through the element is one of that too.
 		for _, define := range instruction.Defines {
-			n.define(define, shape{part: n.iterated[instruction.At]})
+			n.define(define, n.iterated[instruction.At].element())
 		}
 	default:
 		var defined shape
@@ -329,6 +336,16 @@ func (n *inference) value(expression ir.Expression) shape {
 			return shape{}
 		}
 		return shape{same: []Place{{Identifier: value}}}
+	case ir.Void:
+		n.value(expression.Value)
+		return shape{}
+	case ir.Comma:
+		n.value(expression.Left)
+		return n.value(expression.Right)
+	case ir.Logical:
+		result := n.value(expression.Left)
+		result.merge(n.value(expression.Right))
+		return result
 	case ir.Conditional:
 		n.value(expression.Condition)
 		result := n.value(expression.WhenTrue)
@@ -351,6 +368,40 @@ func (n *inference) value(expression ir.Expression) shape {
 			n.value(allowed)
 		}
 		return result
+	case ir.RecordCoalesce:
+		holder := n.value(expression.Record)
+		n.value(expression.Key)
+		result := n.value(expression.Value)
+		n.store(holder, result)
+		result.part = append(result.part, holder.roots()...)
+		return result
+	case ir.RecordCall:
+		operands := n.operands(expression)
+		switch expression.Method {
+		case "set":
+			n.store(operands[0], operands[2])
+			return operands[2]
+		case "delete":
+			n.store(operands[0], shape{})
+			return shape{}
+		case "get":
+			return shape{part: operands[0].roots()}
+		case "values", "entries":
+			return shape{fresh: true, holds: operands[0].roots()}
+		case "keys":
+			return shape{fresh: true}
+		}
+		return shape{}
+	case ir.RecordLiteral:
+		result := shape{fresh: true}
+		if expression.Spread != nil {
+			result.holds = append(result.holds, n.value(expression.Spread).roots()...)
+		}
+		for _, entry := range expression.Entries {
+			n.value(entry.Key)
+			result.holds = append(result.holds, n.value(entry.Value).roots()...)
+		}
+		return result
 	case ir.ObjectLiteral:
 		result := shape{fresh: true}
 		if expression.Spread != nil {
@@ -368,11 +419,11 @@ func (n *inference) value(expression ir.Expression) shape {
 		}
 		return result
 	case ir.Property:
-		return shape{part: n.value(expression.Object).roots()}
+		return n.value(expression.Object).element()
 	case ir.ArrayIndex:
 		array := n.value(expression.Array)
 		n.value(expression.Index)
-		return shape{part: array.roots()}
+		return array.element()
 	case ir.ArrayPush:
 		array := n.value(expression.Array)
 		value := n.value(expression.Value)
@@ -381,7 +432,7 @@ func (n *inference) value(expression ir.Expression) shape {
 	case ir.ArrayPop:
 		array := n.value(expression.Array)
 		n.store(array, shape{})
-		return shape{part: array.roots()}
+		return array.element()
 	case ir.ArrayReverse:
 		array := n.value(expression.Array)
 		n.store(array, shape{})
@@ -443,7 +494,9 @@ func (n *inference) operands(expression ir.Expression) []shape {
 
 // writes reports whether an IR node writes into a container it's handed.
 func writes(expression ir.Expression) bool {
-	switch expression.(type) {
+	switch call := expression.(type) {
+	case ir.NodeBufferCall:
+		return call.Function == "buffer_set" || call.Function == "hash_update" || call.Function == "hash_digest"
 	case ir.ArraySplice, ir.ArrayFill, ir.ArraySort, ir.MapSet, ir.MapDelete:
 		return true
 	}

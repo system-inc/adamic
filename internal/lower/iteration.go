@@ -209,7 +209,7 @@ func (l *lowering) planIteration(where *ast.Node) (*iterationPlan, error) {
 	}
 	// A view which omits return must not hide a runtime close method. Method signatures themselves
 	// are refused above, but a concrete literal can also be viewed as another concrete literal type.
-	modules, err := l.moduleOrder(l.program.Files()[0])
+	modules, err := l.moduleOrder(l.program.Entries()[0])
 	if err != nil {
 		return nil, err
 	}

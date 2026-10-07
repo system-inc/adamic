@@ -9,7 +9,9 @@ func (a *analysis) libraryLanguage(expression ir.Expression) (value, bool) {
 	if value, known := a.typedArray(expression); known {
 		return value, true
 	}
-	switch expression.(type) {
+	switch expression := expression.(type) {
+	case ir.NodeBufferCall:
+		return a.nodeBufferCall(expression), true
 	case ir.ObjectKeys, ir.ClosureSelf, ir.LibraryGlobal:
 		return a.call(a.operands(expression), expression.Type()), true
 	}

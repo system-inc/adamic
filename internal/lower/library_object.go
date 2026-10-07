@@ -9,12 +9,15 @@ import (
 )
 
 func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool, error) {
+	if value, handled, err := l.recordObjectCall(node, name); handled {
+		return value, true, err
+	}
 	return l.objectCallArguments(node, name, node.AsCallExpression().Arguments.Nodes)
 }
 
 func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {
 	refused := func(reason string) (ir.Expression, bool, error) {
-		return nil, true, &Refused{Where: l.program.Where(node), What: "Object." + name, Fix: reason}
+		return nil, true, &Refused{Where: l.program.Where(node), What: "Object." + name, Fix: reason + " (adamic/object-shape)"}
 	}
 	switch name {
 	case "defineProperty", "defineProperties", "getOwnPropertyDescriptor", "getOwnPropertyDescriptors":
@@ -32,7 +35,7 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 	}
 	if name == "assign" {
 		if len(written) < 1 {
-			return nil, true, l.notYet(node, "Object.assign without a target")
+			return nil, true, l.notYet(node, "Object.assign without a target (pass a present plain-object target as the first argument)")
 		}
 	} else if len(written) != count {
 		return nil, true, l.notYet(node, "Object."+name+" with these arguments")
@@ -44,7 +47,7 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 			return value, true, err
 		}
 	}
-	call := ir.ObjectCall{Method: name, Returns: ir.Boolean}
+	call := ir.ObjectCall{Method: name, Returns: ir.Boolean, Readiness: sourceExpression(node)}
 	switch name {
 	case "is":
 		for _, argument := range written {
@@ -107,6 +110,17 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 			if call.Element != ir.Number && call.Element != ir.String && call.Element != ir.Boolean {
 				return refused("tsc's result must have one homogeneous number, string or boolean value type; any and widened field views are unsound")
 			}
+			if declaration := l.enumObject(written[0]); declaration != nil {
+				fields, err := l.enumFields(declaration)
+				if err != nil {
+					return nil, true, err
+				}
+				for _, field := range fields {
+					if field.Value.Type() != call.Element {
+						return refused("numeric enum reverse mappings add string values; use Object.keys or read members individually")
+					}
+				}
+			}
 			for _, field := range l.checker.GetPropertiesOfType(l.checker.GetTypeAtLocation(written[0])) {
 				of, known := l.representation(l.checker.GetTypeOfSymbol(field))
 				if !known || of != call.Element || field.Flags&ast.SymbolFlagsOptional != 0 {
@@ -127,11 +141,11 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 				for _, field := range l.checker.GetPropertiesOfType(source) {
 					into := l.checker.GetPropertyOfType(target, field.Name)
 					if into == nil {
-						return nil, true, l.notYet(argument, "Object.assign adding a field to its target's fixed shape")
+						return nil, true, l.notYet(argument, "Object.assign adding a field to its target's fixed shape (construct a new literal with every destination field declared explicitly)")
 					}
 					fromType, toType := l.checker.GetTypeOfSymbol(field), l.checker.GetTypeOfSymbol(into)
 					of, known := l.representation(fromType)
-					if !known || (of != ir.Number && of != ir.Boolean && of != ir.String) || !l.checker.IsTypeAssignableTo(fromType, toType) || !l.checker.IsTypeAssignableTo(toType, fromType) {
+					if !known || (of != ir.Number && of != ir.Boolean && of != ir.String) || !l.enumAssignable(fromType, toType) || !l.enumAssignable(toType, fromType) || !l.checker.IsTypeAssignableTo(fromType, toType) || !l.checker.IsTypeAssignableTo(toType, fromType) {
 						return refused("source and target field types must agree in both directions with tsc's intersection result; widening, conflicting fields and reference cycles are refused")
 					}
 				}
@@ -156,6 +170,9 @@ func (l *lowering) exactObject(node *ast.Node, depth int) bool {
 		return false
 	}
 	node = ast.SkipParentheses(node)
+	if l.enumObject(node) != nil {
+		return true
+	}
 	if node.Kind == ast.KindObjectLiteralExpression {
 		for _, field := range node.AsObjectLiteralExpression().Properties.Nodes {
 			if field.Kind != ast.KindPropertyAssignment && field.Kind != ast.KindShorthandPropertyAssignment {

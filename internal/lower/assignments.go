@@ -16,6 +16,10 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 		return nil, l.notYet(node, describe(node)+" as a statement")
 	}
 	target := ast.SkipParentheses(binary.Left)
+	if isCompound && l.enumNeverIdentity(target, map[*ast.Node]bool{}) != nil {
+		value, err := l.expression(target)
+		return []ir.Statement{ir.Evaluate{Value: value}}, err
+	}
 	if target.Kind == ast.KindPropertyAccessExpression {
 		if isCompound {
 			return l.updateProperty(node, target, operator, binary.Right)
@@ -40,12 +44,19 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 	if !ast.IsIdentifier(target) || !isLocal {
 		return nil, l.notYet(target, "assigning to "+describe(target))
 	}
+	if l.result.Locals[local].NestedFunction != 0 {
+		return nil, l.notYet(target, "rebinding a nested function declaration")
+	}
 	if l.caught[l.symbol(target)] {
 		return nil, l.notYet(target, "assigning to what a catch caught")
 	}
 	if l.alwaysUndefined[l.symbol(target)] {
 		// Its type is unknown, so anything could be written to it, and it holds only undefined.
 		return nil, l.notYet(target, "assigning to a parameter that only ever receives undefined")
+	}
+	if !isCompound && l.uninitializedInitializer(binary.Right) {
+		l.result.Locals[local].Uninitialized = true
+		return []ir.Statement{ir.Assign{Local: local, Value: uninitializedValue(l.result.Locals[local].Type), Uninitialized: true}}, nil
 	}
 	value, err := l.expression(binary.Right)
 	if err != nil {
@@ -107,6 +118,9 @@ func (l *lowering) destructuringAssignment(pattern *ast.Node, valueNode *ast.Nod
 		if !ast.IsIdentifier(element) || !isLocal || l.alwaysUndefined[l.symbol(element)] {
 			return nil, l.notYet(element, "assigning to "+describe(element)+" in a destructuring assignment")
 		}
+		if l.result.Locals[local].NestedFunction != 0 {
+			return nil, l.notYet(element, "rebinding a nested function declaration")
+		}
 		field, err := l.tupleField(element, held, elements, index, l.result.Locals[local].Type)
 		if err != nil {
 			return nil, err
@@ -147,6 +161,10 @@ func (l *lowering) increment(node *ast.Node) ([]ir.Statement, error) {
 		return nil, l.notYet(node, describe(node)+" as a statement")
 	}
 	operand = ast.SkipParentheses(operand)
+	if l.enumNeverIdentity(operand, map[*ast.Node]bool{}) != nil {
+		value, err := l.expression(operand)
+		return []ir.Statement{ir.Evaluate{Value: value}}, err
+	}
 	if operand.Kind == ast.KindPropertyAccessExpression {
 		step := ast.KindPlusToken
 		if operator == ast.KindMinusMinusToken {

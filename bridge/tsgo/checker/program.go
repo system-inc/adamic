@@ -16,6 +16,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/core"
 	"github.com/microsoft/TypeScript/tsc/shim/locale"
 	"github.com/microsoft/TypeScript/tsc/shim/tsoptions"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 	"github.com/microsoft/TypeScript/tsc/shim/vfs/cachedvfs"
 	"github.com/microsoft/TypeScript/tsc/shim/vfs/osvfs"
 )
@@ -48,8 +49,8 @@ func Open(configPath string, files []string) (*Program, error) {
 	}
 	directory := filepath.ToSlash(filepath.Dir(configPath))
 	fs := cachedvfs.From(bundled.WrapFS(osvfs.FS()))
-	host := compiler.NewCachedFSCompilerHost(directory, fs, bundled.LibPath(), nil, nil, nil)
-	config, diagnostics := tsoptions.GetParsedCommandLineOfConfigFile(configPath, nil, nil, host, nil)
+	host := compiler.NewCachedFSCompilerHost(fs, bundled.LibPath(), nil, nil, nil)
+	config, diagnostics := tsoptions.GetParsedCommandLineOfConfigFile(tspath.RootedFilePathFromAbsolute(configPath), nil, nil, fs, nil)
 	if config == nil {
 		return nil, fmt.Errorf("cannot parse %s: %s", configPath, diagnosticText(diagnostics))
 	}
@@ -60,26 +61,27 @@ func Open(configPath string, files []string) (*Program, error) {
 		return nil, fmt.Errorf("invalid config: %s", diagnosticText(diagnostics))
 	}
 	if len(files) > 0 {
-		roots := make([]string, len(files))
+		roots := make([]tspath.RootedFilePath, len(files))
 		for index, file := range files {
 			if !filepath.IsAbs(file) {
 				file = filepath.Join(directory, file)
 			}
-			roots[index], err = Path(file)
+			path, err := Path(file)
 			if err != nil {
 				return nil, err
 			}
+			roots[index] = tspath.RootedFilePathFromAbsolute(path)
 			if !fs.FileExists(roots[index]) {
 				return nil, fmt.Errorf("no file at %s", roots[index])
 			}
 		}
 		for _, root := range roots {
-			if strings.HasSuffix(root, ".a") {
+			if strings.HasSuffix(root.AsString(), ".a") {
 				config.CompilerOptions().AllowNonTsExtensions = core.TSTrue
 			}
 		}
 		for _, declaration := range config.FileNames() {
-			if strings.HasSuffix(declaration, ".d.ts") {
+			if strings.HasSuffix(declaration.AsString(), ".d.ts") {
 				found := false
 				for _, root := range roots {
 					if root == declaration {
@@ -130,7 +132,7 @@ func (p *Program) Query(file string, position uint64) (Result, error) {
 	if err != nil {
 		return Result{}, err
 	}
-	source := p.Compiler.GetSourceFile(file)
+	source := p.Compiler.GetSourceFile(tspath.RootedFilePathFromAbsolute(file))
 	if source == nil {
 		return Result{}, fmt.Errorf("file is not in this program: %s", file)
 	}
@@ -155,7 +157,7 @@ func (p *Program) TypeParts(file string, start, end uint64, kind string) (string
 	if err != nil {
 		return "", err
 	}
-	source := p.Compiler.GetSourceFile(file)
+	source := p.Compiler.GetSourceFile(tspath.RootedFilePathFromAbsolute(file))
 	if source == nil {
 		return "", fmt.Errorf("file is not in this program: %s", file)
 	}

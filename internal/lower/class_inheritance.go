@@ -3,7 +3,6 @@ package lower
 import (
 	"slices"
 	"strconv"
-	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -22,12 +21,12 @@ func (l *lowering) baseInstance(declaration *ast.Node, classType *checker.Type) 
 		}
 		bases := l.classBases(classType)
 		if len(bases) != 1 {
-			return nil, l.notYet(clause, "a class base whose type isn't known")
+			return nil, l.notYet(clause, "a class base whose type isn't known (name a class declared in this program as the base)")
 		}
 		baseType := bases[0]
 		symbol := baseType.Symbol()
 		if symbol == nil || len(symbol.Declarations) != 1 || symbol.Declarations[0].Kind != ast.KindClassDeclaration {
-			return nil, l.notYet(clause, "a base that isn't a declared class")
+			return nil, l.notYet(clause, "a base that isn't a declared class (extend a declared class; use implements for an interface)")
 		}
 		base := symbol.Declarations[0]
 		return l.instantiate(base, baseType, clause)
@@ -62,10 +61,10 @@ func (l *lowering) checkMemberOverrides(declaration *ast.Node, classType, base *
 		previous := l.checker.GetTypeOfSymbol(inherited)
 		refuse := func(what, fix string) error { return &Refused{Where: l.program.Where(member), What: what, Fix: fix} }
 		if (member.Kind == ast.KindMethodDeclaration) != (inherited.Flags&ast.SymbolFlagsMethod != 0) {
-			return refuse("an inherited method replaced by a field, or a field replaced by a method", "keep the inherited member kind; use a different name for the new member")
+			return refuse("an inherited method replaced by a field, or a field replaced by a method", "keep the inherited member kind; use a different name for the new member (adamic/override-member-kind)")
 		}
 		if accessorMember(member) != accessorSymbol(inherited) {
-			return refuse("an inherited data property replaced by an accessor, or an accessor replaced by data", "keep the inherited member kind; use another name for the new property")
+			return refuse("an inherited data property replaced by an accessor, or an accessor replaced by data", "keep the inherited member kind; use another name for the new property (adamic/override-member-kind)")
 		}
 		if accessorMember(member) {
 			ownGet, ownSet, baseGet, baseSet := false, false, false, false
@@ -80,7 +79,7 @@ func (l *lowering) checkMemberOverrides(declaration *ast.Node, classType, base *
 				baseSet = baseSet || candidate.Kind == ast.KindSetAccessor
 			}
 			if (baseGet && !ownGet) || (baseSet && !ownSet) {
-				return refuse("an accessor override that hides the inherited getter or setter", "override both halves of the inherited descriptor; delegate an unchanged half to super")
+				return refuse("an accessor override that hides the inherited getter or setter", "override both halves of the inherited descriptor; delegate an unchanged half to super (adamic/override-accessor-pair)")
 			}
 			if member.Kind == ast.KindSetAccessor {
 				for _, candidate := range inherited.Declarations {
@@ -112,12 +111,12 @@ func (l *lowering) checkMemberOverrides(declaration *ast.Node, classType, base *
 				return refuse("an inherited readonly field whose mutable contents are narrowed (adamic/invariant-mutable)", "keep mutable contents at the base type, or make the contents readonly in the base too")
 			}
 			if l.checker.IsReadonlySymbol(inherited) && !ast.HasSyntacticModifier(member, ast.ModifierFlagsReadonly) {
-				return refuse("a readonly inherited field redeclared mutable", "keep the inherited field readonly")
+				return refuse("a readonly inherited field redeclared mutable", "keep the inherited field readonly (adamic/readonly-override)")
 			}
 			from, okFrom := l.representation(previous)
 			to, okTo := l.representation(own)
 			if checkABI && (!okFrom || !okTo || from != to) {
-				return l.notYet(member, "an inherited field override with a different native representation")
+				return l.notYet(member, "an inherited field override with a different native representation (keep the inherited field type unchanged and narrow a local after reading it)")
 			}
 		}
 		if member.Kind != ast.KindMethodDeclaration {
@@ -126,7 +125,7 @@ func (l *lowering) checkMemberOverrides(declaration *ast.Node, classType, base *
 		oldSignatures := l.checker.GetSignaturesOfType(previous, checker.SignatureKindCall)
 		newSignatures := l.checker.GetSignaturesOfType(own, checker.SignatureKindCall)
 		if len(oldSignatures) != 1 || len(newSignatures) != 1 {
-			return l.notYet(member, "an overloaded override")
+			return l.notYet(member, "an overloaded override (use one override signature with union parameters and narrow them inside the method)")
 		}
 		old, next := oldSignatures[0], newSignatures[0]
 		if len(old.Parameters()) != len(next.Parameters()) {
@@ -152,7 +151,7 @@ func (l *lowering) checkMemberOverrides(declaration *ast.Node, classType, base *
 			return l.notYet(member, "an override with a different native result representation; keep the base method's result form")
 		}
 		if !l.classAssignable(newResult, oldResult) || l.widened(newResult, oldResult, map[[2]*checker.Type]bool{}) != nil {
-			return refuse("an override that widens its return type", "return the base method's result type or a subtype")
+			return refuse("an override that widens its return type", "return the base method's result type or a subtype (adamic/covariant-override)")
 		}
 	}
 	return nil
@@ -236,7 +235,7 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
 			continue
 		}
 		if !ast.IsIdentifier(member.Name()) && member.Name().Kind != ast.KindPrivateIdentifier {
-			return l.notYet(member, "a field with a computed name")
+			return l.notYet(member, "a field with a computed name (declare the field with a fixed identifier name)")
 		}
 		of, err := l.typeOf(member.Name())
 		if err != nil {
@@ -245,7 +244,7 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
 		if slotless(of) {
 			return l.notYet(member, "a field of type "+l.checker.TypeToString(l.checker.GetTypeAtLocation(member.Name())))
 		}
-		field := ir.Field{Name: l.fieldName(member.Name()), Value: zeroValue(of), Private: member.Name().Kind == ast.KindPrivateIdentifier}
+		field := ir.Field{Name: l.fieldName(member.Name()), Value: zeroValue(of), Private: member.Name().Kind == ast.KindPrivateIdentifier, Uninitialized: l.uninitializedDeclaration(member) || (member.Kind == ast.KindPropertyDeclaration && assertionInitializer(member.AsPropertyDeclaration().Initializer))}
 		// An uninitialized reference still has its declared representation for the shape bitmap.
 		if of.IsReference() {
 			field.Value = ir.Undefined{Of: of}
@@ -287,7 +286,7 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
 		}
 		constructor.Body().ForEachChild(returns)
 		if returnValue != nil {
-			return l.notYet(returnValue, "a constructor returning a replacement value")
+			return l.notYet(returnValue, "a constructor returning a replacement value (use a module-level factory function when construction must return a different object)")
 		}
 		state := uint8(0)
 		if instance.base != nil {
@@ -382,6 +381,33 @@ func (l *lowering) fieldInitializers(declaration *ast.Node, this int) ([]ir.Stat
 		if err != nil {
 			return nil, err
 		}
+		if l.uninitializedDeclaration(member) {
+			value := zeroValue(of)
+			if of.IsReference() {
+				value = ir.Undefined{Of: of}
+			}
+			statements = append(statements, ir.SetProperty{Object: ir.Read{Local: this, Of: ir.Object}, Name: l.fieldName(member.Name()), Value: value, Uninitialized: true, Site: l.writeSite(declaration.Name())})
+			available[l.fieldName(member.Name())] = true
+			continue
+		}
+
+		if initializer := member.AsPropertyDeclaration().Initializer; assertionInitializer(initializer) {
+			if err := l.initializerReads(initializer, available); err != nil {
+				return nil, err
+			}
+			prefix, present, value, err := l.lazyAssertion(initializer, of)
+			if err != nil {
+				return nil, err
+			}
+			empty := ir.Expression(zeroValue(of))
+			if of.IsReference() {
+				empty = ir.Undefined{Of: of}
+			}
+			statements = append(statements, prefix...)
+			statements = append(statements, ir.SetProperty{Object: ir.Read{Local: this, Of: ir.Object}, Name: l.fieldName(member.Name()), Value: empty, Uninitialized: true, Site: l.writeSite(declaration.Name())}, ir.If{Condition: present, Then: []ir.Statement{ir.SetProperty{Object: ir.Read{Local: this, Of: ir.Object}, Name: l.fieldName(member.Name()), Value: value, Site: l.writeSite(declaration.Name())}}})
+			available[l.fieldName(member.Name())] = true
+			continue
+		}
 		value := zeroValue(of)
 		if member.AsPropertyDeclaration().Initializer != nil {
 			if err := l.initializerReads(member.AsPropertyDeclaration().Initializer, available); err != nil {
@@ -445,7 +471,7 @@ func (l *lowering) classInstanceOf(node *ast.Node) (ir.Expression, error) {
 	binary := node.AsBinaryExpression()
 	declaration := l.classes[l.symbol(ast.SkipParentheses(binary.Right))]
 	if declaration == nil {
-		return nil, l.notYet(node, "instanceof against a value that isn't a declared class")
+		return nil, l.notYet(node, "instanceof against a value that isn't a declared class (test against a declared class name, or use an explicit discriminant)")
 	}
 	identity := 0
 	if len(declaration.TypeParameters()) > 0 {
@@ -553,11 +579,11 @@ func (l *lowering) nominalAncestor(source, target *checker.Type, seen map[[2]*ch
 	}
 	if source.Symbol() == target.Symbol() {
 		from, to := l.checker.GetTypeArguments(source), l.checker.GetTypeArguments(target)
-		if len(from) != len(to) {
+		if !l.sameClassArguments(from, to) {
 			return false
 		}
 		for index := range from {
-			if !l.checker.IsTypeAssignableTo(from[index], to[index]) || !l.checker.IsTypeAssignableTo(to[index], from[index]) || l.nominalMismatch(from[index], to[index], seen) != nil || l.nominalMismatch(to[index], from[index], seen) != nil {
+			if !l.enumAssignable(from[index], to[index]) || !l.enumAssignable(to[index], from[index]) || l.nominalMismatch(from[index], to[index], seen) != nil || l.nominalMismatch(to[index], from[index], seen) != nil {
 				return false
 			}
 		}
@@ -583,7 +609,7 @@ func (l *lowering) initializerReads(node *ast.Node, available map[string]bool) e
 		if node.Kind == ast.KindThisKeyword {
 			parent := node.Parent
 			if parent == nil || parent.Kind != ast.KindPropertyAccessExpression || !available[l.fieldName(parent.Name())] {
-				refused = &Refused{Where: l.program.Where(node), What: "this in a field initializer before the fields it reads are initialized", Fix: "declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set"}
+				refused = &Refused{Where: l.program.Where(node), What: "this in a field initializer before the fields it reads are initialized", Fix: "declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set (adamic/initialized-this)"}
 				return true
 			}
 		}
@@ -792,9 +818,8 @@ func (l *lowering) cycleFieldName(field *ast.Symbol) string {
 // All monomorphizations of a source class have one erased identity. An identity-only
 // descriptor lets instanceof name a generic class before any concrete instance is made.
 func (l *lowering) classDefinition(declaration *ast.Node) int {
-	prefix := l.program.Where(declaration) + ":" + declaration.Name().Text()
 	for key, instance := range l.instances {
-		if key == prefix || strings.HasPrefix(key, prefix+",") {
+		if l.classKeyMatches(key, declaration) {
 			return l.result.Classes[instance.class-1].Definition
 		}
 	}
@@ -813,7 +838,7 @@ func (l *lowering) classIdentity(declaration *ast.Node) int {
 	if l.instances == nil {
 		l.instances = map[string]*instance{}
 	}
-	key := l.program.Where(declaration) + ":" + declaration.Name().Text() + ",identity"
+	key := l.classKeyPrefix(declaration) + ",identity"
 	l.instances[key] = &instance{class: identity, constructor: -1, initializer: -1}
 	return identity
 }

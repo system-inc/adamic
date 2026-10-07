@@ -304,8 +304,8 @@ with captured mutable frames. These are additional prerequisites for a direct
 Adamic port, not evidence that Markdown cannot ever be implemented in Adamic:
 
 - `gaps/1_recursive_state.ts` prints `35` twice on Node. Stage 0 returns exactly
-  `lower.NotYet("a function inside a function (a closure)")` for the nested
-  function declaration corresponding to a state with its captured frame.
+  `lower.NotYet("a first-class nested function reference from another nested function")`
+  for returning the captured state as a first-class recursive callback.
 - `gaps/2_state_arrow_cycle.ts` prints `35` twice on Node. Rewriting the nested
   declaration as a mutable arrow slot is refused by Adamic 0.1 as a closure/cell
   reference-counting cycle. This is a `Refused`, not a `NotYet`.

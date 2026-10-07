@@ -1,0 +1,2 @@
+const ages: Record<string, number> = {};
+console.log(`${Object.entries(ages).length}`);

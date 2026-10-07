@@ -16,11 +16,16 @@ import (
 	"path/filepath"
 )
 
-// Lower lowers a checked program, entry file first.
+// Lower lowers a checked program from its explicit execution entries in the order supplied.
 func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
-	files := program.Files()
-	if len(files) != 1 {
-		return nil, fmt.Errorf("lower: stage 0 compiles a program from one entry file, got %d", len(files))
+	files := []*ast.SourceFile{}
+	for _, file := range program.Entries() {
+		if !file.IsDeclarationFile {
+			files = append(files, file)
+		}
+	}
+	if len(files) == 0 {
+		return nil, fmt.Errorf("lower: no executable root files, got %d", len(files))
 	}
 	entry := files[0]
 	// Stage 0 checks single-threaded, so one checker answers for every file.
@@ -30,11 +35,14 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 	lowering := &lowering{program: program, checker: typeChecker, result: &ir.Program{}, this: -1, functionIndex: -1}
 	// The base name only, so the same program emits the same C on every machine.
 	lowering.result.Source = filepath.Base(program.FileName(entry))
-	modules, err := lowering.moduleOrder(entry)
+	modules, err := lowering.rootOrder(files)
 	if err != nil {
 		return nil, err
 	}
 	lowering.noteInheritance(modules)
+	if err := lowering.enumInitialization(modules); err != nil {
+		return nil, err
+	}
 	lowering.noteAccessorNames(modules)
 	if err := lowering.namespaceInitialization(modules); err != nil {
 		return nil, err
@@ -44,10 +52,13 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 			return nil, err
 		}
 	}
+	// Link every declaration before lowering any function body, including across back edges.
+	var declarations []*ast.Node
 	for _, module := range modules {
-		if err := lowering.declareModule(module.Statements.Nodes); err != nil {
-			return nil, err
-		}
+		declarations = append(declarations, module.Statements.Nodes...)
+	}
+	if err := lowering.declareModule(declarations); err != nil {
+		return nil, err
 	}
 	for _, module := range modules {
 		body, err := lowering.statements(module.Statements.Nodes)
@@ -73,6 +84,7 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 	if err := lowering.findCycles(modules); err != nil {
 		return nil, err
 	}
+	readiness(lowering.result)
 	borrow(lowering.result)
 	counters(lowering.result)
 	return lowering.result, nil
@@ -82,6 +94,11 @@ type lowering struct {
 	program *load.Program
 	checker *checker.Checker
 	result  *ir.Program
+
+	// cyclicModules keeps unresolved reads checked throughout a cyclic graph.
+	cyclicModules     bool
+	provenModuleReads map[*ast.Node]bool
+	cycleReadFindings []Finding
 
 	// strings indexes result.Strings, so a constant used twice is stored once.
 	strings map[string]int

@@ -1,6 +1,7 @@
 package oracle
 
 import (
+	"context"
 	"flag"
 	"fmt"
 	"os"
@@ -11,6 +12,8 @@ import (
 	"syscall"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -96,6 +99,9 @@ func counted(t *testing.T, path string, input bool, arguments []string, unreadab
 			if writes {
 				how.arguments = append([]string{writable(t, shared, "counted")}, how.arguments...)
 			}
+			if strings.HasPrefix(path, "internal/oracle/testdata/node_fs_file_") {
+				how = fsFilePrepare(t, shared, "counted")
+			}
 			binary := filepath.Join(shared, "program")
 			if err := native.Build(native.C(program), binary, native.Options{Count: true}); err != nil {
 				t.Fatal(err)
@@ -131,7 +137,7 @@ func counted(t *testing.T, path string, input bool, arguments []string, unreadab
 // Every fixture's counts are recorded, and a change to them fails until the table is updated with it.
 func TestCountsAreRecorded(t *testing.T) {
 	t.Parallel()
-	rows := make([]string, len(fixtures)+len(inputFixtures))
+	rows := make([]string, len(fixtures)+len(inputFixtures)+len(weakReadFixtures)+len(fsFileFixtures)+2)
 	var lock sync.Mutex
 	t.Run("fixtures", func(t *testing.T) {
 		for index, fixture := range fixtures {
@@ -146,12 +152,85 @@ func TestCountsAreRecorded(t *testing.T) {
 				lock.Unlock()
 			})
 		}
+		// Weak lifetime probes have backend-specific expectations, but their native counts
+		// are deterministic too, including the counts where a present read panics.
+		for index, fixture := range weakReadFixtures {
+			t.Run(fixture.path, func(t *testing.T) {
+				t.Parallel()
+				row := counted(t, fixture.path, false, nil, false, false)
+				lock.Lock()
+				rows[len(fixtures)+len(inputFixtures)+index] = row
+				lock.Unlock()
+			})
+		}
 		for index, fixture := range inputFixtures {
 			t.Run(fixture.path, func(t *testing.T) {
 				t.Parallel()
 				row := counted(t, fixture.path, true, fixture.arguments, fixture.unreadable, fixture.writes)
 				lock.Lock()
 				rows[len(fixtures)+index] = row
+				lock.Unlock()
+			})
+		}
+		t.Run("explicit multi-root", func(t *testing.T) {
+			t.Parallel()
+			const fixture = "internal/lower/testdata/multi_root/tsconfig.json"
+			directory := filepath.Dir(filepath.Join(repository, fixture))
+			program, err := load.Load([]string{filepath.Join(directory, "third.a"), filepath.Join(directory, "first.a"), filepath.Join(directory, "second.a")})
+			if err != nil {
+				t.Fatal(err)
+			}
+			lowered, err := lower.Lower(context.Background(), program)
+			if err != nil {
+				t.Fatal(err)
+			}
+			binary := filepath.Join(t.TempDir(), "program")
+			if err := native.Build(native.C(lowered), binary, native.Options{Count: true}); err != nil {
+				t.Fatal(err)
+			}
+			name, arguments := pinnedStack(binary)
+			result := execute(t, name, arguments...)
+			match := countsLine.FindSubmatch(result.stderr)
+			if result.exitCode != 0 || match == nil {
+				t.Fatalf("counted roots: exit %d, stderr %q", result.exitCode, result.stderr)
+			}
+			lock.Lock()
+			rows[len(rows)-2] = fmt.Sprintf("| %s | %s | %s | %s | %s | %s | %s |", fixture, match[1], match[2], match[3], match[4], match[5], match[6])
+			lock.Unlock()
+		})
+		t.Run("project entry", func(t *testing.T) {
+			t.Parallel()
+			const fixture = "internal/lower/testdata/project_entry/tsconfig.json"
+			directory := filepath.Dir(filepath.Join(repository, fixture))
+			program, err := load.LoadProjectEntry(filepath.Join(repository, fixture), filepath.Join(directory, "entry.a"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			lowered, err := lower.Lower(context.Background(), program)
+			if err != nil {
+				t.Fatal(err)
+			}
+			binary := filepath.Join(t.TempDir(), "program")
+			if err := native.Build(native.C(lowered), binary, native.Options{Count: true}); err != nil {
+				t.Fatal(err)
+			}
+			name, arguments := pinnedStack(binary)
+			result := execute(t, name, arguments...)
+			match := countsLine.FindSubmatch(result.stderr)
+			if result.exitCode != 0 || match == nil {
+				t.Fatalf("counted roots: exit %d, stderr %q", result.exitCode, result.stderr)
+			}
+			lock.Lock()
+			rows[len(rows)-1] = fmt.Sprintf("| %s | %s | %s | %s | %s | %s | %s |", fixture, match[1], match[2], match[3], match[4], match[5], match[6])
+			lock.Unlock()
+		})
+		for index, fixture := range fsFileFixtures {
+			path := "internal/oracle/testdata/node_fs_file_" + fixture + ".a"
+			t.Run(path, func(t *testing.T) {
+				t.Parallel()
+				row := counted(t, path, true, nil, false, false)
+				lock.Lock()
+				rows[len(fixtures)+len(inputFixtures)+len(weakReadFixtures)+index] = row
 				lock.Unlock()
 			})
 		}

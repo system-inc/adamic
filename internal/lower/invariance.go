@@ -34,6 +34,10 @@ type widening struct {
 
 	// readonlyField names a readonly field seen as a writable one, when that's the slot.
 	readonlyField string
+	enum          bool
+
+	// optionalField names a field the view claims that the source type does not declare.
+	optionalField string
 
 	// parameter is a function's parameter of type source seen as taking target, which it can't.
 	parameter bool
@@ -47,6 +51,17 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 		return nil
 	}
 	visited[[2]*checker.Type{from, to}] = true
+	if l.openNumericEnumType(to) {
+		for _, member := range l.definedMembers(from) {
+			if !l.enumAssignable(member, to) {
+				return &widening{source: from, target: to, enum: true}
+			}
+		}
+		return nil
+	}
+	if to.Flags()&checker.TypeFlagsNumberLiteral != 0 && l.openNumericEnumType(from) {
+		return &widening{source: from, target: to, enum: true}
+	}
 	if members := l.definedMembers(from); len(members) > 1 {
 		// A union is any one of its members, each seen as the target.
 		for _, member := range members {
@@ -86,10 +101,19 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 		}
 		return l.widened(constraint, to, visited)
 	}
+	if !l.enumAssignable(from, to) {
+		return &widening{source: from, target: to, enum: true}
+	}
 	if !l.structured(from) || !l.structured(to) {
 		// A class instance target is walked as any object is: its fields are slots as a literal's
 		// are, so Box<Dog> seen as Box<Animal>, or a plain object seen as a class, is judged by them.
 		return nil
+	}
+	if source, target := l.recordElement(from), l.recordElement(to); source != nil && target != nil {
+		if !l.checker.IsTypeAssignableTo(target, source) {
+			return &widening{source: source, target: target}
+		}
+		return l.widened(source, target, visited)
 	}
 	fromSignatures := l.checker.GetSignaturesOfType(from, checker.SignatureKindCall)
 	toSignatures := l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
@@ -107,7 +131,7 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 		fromParameters, toParameters := fromSignatures[0].Parameters(), toSignatures[0].Parameters()
 		for index := 0; index < len(fromParameters) && index < len(toParameters); index++ {
 			takes, given := l.censusCallableParameterType(fromParameters[index]), l.censusCallableParameterType(toParameters[index])
-			if !l.checker.IsTypeAssignableTo(given, takes) {
+			if !l.enumAssignable(given, takes) || !l.checker.IsTypeAssignableTo(given, takes) {
 				// tsc relates a method's parameters both ways (method bivariance), so a method taking
 				// a Dog can be seen as one taking any Animal, and handed a Cat.
 				return &widening{source: takes, target: given, parameter: true}
@@ -141,6 +165,7 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 // widenedProperties walks to's properties against from's, but those skip names: each field a slot
 // to can write unless it's readonly, and each method a function view of its own. A copy's fields
 // (fresh) are slots of their own, which nothing else writes, so only what they hold is walked.
+// Missing optional fields are judged separately by optionalView, before this mutable-slot walk.
 func (l *lowering) widenedProperties(from *checker.Type, to *checker.Type, skip map[string]bool, fresh bool, visited map[[2]*checker.Type]bool) *widening {
 	for _, viewed := range l.checker.GetPropertiesOfType(to) {
 		inside := l.checker.GetPropertyOfType(from, viewed.Name)
@@ -167,7 +192,7 @@ func (l *lowering) widenedProperties(from *checker.Type, to *checker.Type, skip 
 			// enters, is the same field.
 			return &widening{source: source, target: target, readonlyField: viewed.Name}
 		}
-		if !fresh && !l.checker.IsReadonlySymbol(viewed) && !l.checker.IsTypeAssignableTo(target, source) {
+		if !fresh && !l.checker.IsReadonlySymbol(viewed) && (!l.enumAssignable(target, source) || !l.checker.IsTypeAssignableTo(target, source)) {
 			return &widening{source: source, target: target}
 		}
 		if found := l.widened(source, target, visited); found != nil {
@@ -175,6 +200,145 @@ func (l *lowering) widenedProperties(from *checker.Type, to *checker.Type, skip 
 		}
 	}
 	return nil
+}
+
+// optionalView matches cohere/internal/lint/rules/adamic/no_optional_widening.go.
+// Width subtyping hides fields without removing them. An optional field must therefore be
+// declared by the source's apparent type, even through a readonly view or an index signature.
+// Exact keys exempt only this object; the values it holds remain views of their own.
+func (l *lowering) optionalView(from, to *checker.Type, exact bool, visited map[[2]*checker.Type]bool) *widening {
+	if from == nil || to == nil || from == to || visited[[2]*checker.Type{from, to}] || isClassInstance(to) {
+		return nil
+	}
+	visited[[2]*checker.Type{from, to}] = true
+	if from.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range from.Types() {
+			if found := l.optionalView(member, to, exact, visited); found != nil {
+				return found
+			}
+		}
+		return nil
+	}
+	if to.Flags()&checker.TypeFlagsUnion != 0 {
+		// A target union is safe when one assignable member admits the view without inventing
+		// fields. Mutable invariance separately judges every writable alternative.
+		var first *widening
+		for _, member := range to.Types() {
+			if !l.checker.IsTypeAssignableTo(from, member) {
+				continue
+			}
+			found := l.optionalView(from, member, exact, visited)
+			if found == nil {
+				return nil
+			}
+			if first == nil {
+				first = found
+			}
+		}
+		return first
+	}
+	if to.Flags()&checker.TypeFlagsObject == 0 {
+		return nil
+	}
+	apparent := l.checker.GetApparentType(from)
+	if apparent == nil || !l.structured(apparent) {
+		return nil
+	}
+	array := l.checker.IsArrayType(to) || checker.IsTupleType(to)
+	if !exact && !array {
+		for _, property := range l.checker.GetPropertiesOfType(to) {
+			if property.Flags&ast.SymbolFlagsOptional != 0 && l.checker.GetPropertyOfType(apparent, property.Name) == nil {
+				return &widening{source: from, target: to, optionalField: property.Name}
+			}
+		}
+	}
+	for _, viewed := range l.containers(to) {
+		for _, inside := range l.containers(apparent) {
+			if !l.sameContainer(inside, viewed) {
+				continue
+			}
+			source, target := l.checker.GetTypeArguments(inside), l.checker.GetTypeArguments(viewed)
+			for index, element := range source {
+				other := index
+				if checker.IsTupleType(inside) && !checker.IsTupleType(viewed) && len(target) == 1 {
+					other = 0
+				}
+				if other < len(target) {
+					if found := l.optionalView(element, target[other], false, visited); found != nil {
+						return found
+					}
+				}
+			}
+			break
+		}
+	}
+	if len(l.containers(to)) > 0 {
+		return nil
+	}
+	sourceCalls := l.checker.GetSignaturesOfType(apparent, checker.SignatureKindCall)
+	targetCalls := l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
+	if len(sourceCalls) == 1 && len(targetCalls) == 1 {
+		if found := l.optionalView(l.checker.GetReturnTypeOfSignature(sourceCalls[0]), l.checker.GetReturnTypeOfSignature(targetCalls[0]), false, visited); found != nil {
+			return found
+		}
+		source, target := sourceCalls[0].Parameters(), targetCalls[0].Parameters()
+		for index := 0; index < len(source) && index < len(target); index++ {
+			// A rest parameter is a container of arguments, not a single positional slot.
+			if (source[index].ValueDeclaration != nil && source[index].ValueDeclaration.Kind == ast.KindParameter && source[index].ValueDeclaration.AsParameterDeclaration().DotDotDotToken != nil) ||
+				(target[index].ValueDeclaration != nil && target[index].ValueDeclaration.Kind == ast.KindParameter && target[index].ValueDeclaration.AsParameterDeclaration().DotDotDotToken != nil) {
+				break
+			}
+			if found := l.optionalView(l.checker.GetTypeOfSymbol(target[index]), l.checker.GetTypeOfSymbol(source[index]), false, visited); found != nil {
+				return found
+			}
+		}
+	}
+	for _, property := range l.checker.GetPropertiesOfType(to) {
+		inside := l.checker.GetPropertyOfType(apparent, property.Name)
+		if inside == nil || property.Flags&ast.SymbolFlagsMethod != 0 {
+			continue
+		}
+		if found := l.optionalView(l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(property), false, visited); found != nil {
+			return found
+		}
+	}
+	return nil
+}
+
+// freshOptionalValue knows the keys of a literal, including a choice of freshly made literals.
+func freshOptionalValue(node *ast.Node) bool {
+	node = ast.SkipParentheses(node)
+	if node.Kind == ast.KindObjectLiteralExpression || node.Kind == ast.KindArrayLiteralExpression || node.Kind == ast.KindNullKeyword || (node.Kind == ast.KindIdentifier && node.Text() == "undefined") {
+		return true
+	}
+	if node.Kind == ast.KindConditionalExpression {
+		choice := node.AsConditionalExpression()
+		return freshOptionalValue(choice.WhenTrue) && freshOptionalValue(choice.WhenFalse)
+	}
+	return false
+}
+
+// exactObjectAlias proves keys only for an unannotated const initialized by an object literal.
+// An annotation can have already hidden fields, and a let can later hold a different shape.
+func (l *lowering) exactObjectAlias(node *ast.Node) bool {
+	node = ast.SkipParentheses(node)
+	if node.Kind != ast.KindIdentifier {
+		return false
+	}
+	symbol := l.checker.GetSymbolAtLocation(node)
+	if symbol == nil || len(symbol.Declarations) != 1 {
+		return false
+	}
+	declaration := symbol.Declarations[0]
+	if declaration.Kind != ast.KindVariableDeclaration || declaration.Parent == nil || declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
+		return false
+	}
+	variable := declaration.AsVariableDeclaration()
+	return variable.Type == nil && variable.Initializer != nil && ast.SkipParentheses(variable.Initializer).Kind == ast.KindObjectLiteralExpression
+}
+
+func (l *lowering) optionalRefusal(node *ast.Node, found *widening) error {
+	return &Refused{Where: l.program.Where(node), What: "optional property " + found.optionalField + " in " + l.checker.TypeToString(found.target) + " is absent from the source type " + l.checker.TypeToString(found.source) + "; the value may hide an incompatible field", Fix: "declare " + found.optionalField + " with a compatible type on the source type, or copy the declared fields into a new object (adamic/no-optional-widening)"}
 }
 
 // generic reports whether a function type has a type parameter of its own.
@@ -208,7 +372,7 @@ func (l *lowering) widenedArguments(from *checker.Type, to *checker.Type, mutabl
 	}
 	for index := 0; index < len(fromArguments) && index < len(toArguments); index++ {
 		source, target := fromArguments[index], toArguments[index]
-		if mutable && !l.checker.IsTypeAssignableTo(target, source) {
+		if mutable && (!l.enumAssignable(target, source) || !l.checker.IsTypeAssignableTo(target, source)) {
 			return &widening{source: source, target: target}
 		}
 		if found := l.widened(source, target, visited); found != nil {
@@ -257,6 +421,9 @@ func (l *lowering) canWrite(proven *checker.Type, visited map[*checker.Type]bool
 		return false
 	}
 	visited[proven] = true
+	if l.recordElement(proven) != nil {
+		return true
+	}
 	containers := l.containers(proven)
 	for _, container := range containers {
 		if !l.isLibraryType(container, "ReadonlyArray", "ReadonlyMap", "ReadonlySet") && !(checker.IsTupleType(container) && container.TargetTupleType().IsReadonly()) {
@@ -377,13 +544,17 @@ func viewSite(node *ast.Node) bool {
 	case ast.KindPropertyDeclaration:
 		return parent.AsPropertyDeclaration().Initializer == node
 	case ast.KindArrowFunction:
-		return parent.AsArrowFunction().Body == node
+		// A block has no value type; its return expressions are separate view sites.
+		return node.Kind != ast.KindBlock && parent.AsArrowFunction().Body == node
 	}
 	return false
 }
 
 // refuseWidening refuses a value seen through a type that can write what it can't hold.
 func (l *lowering) refuseWidening(node *ast.Node) error {
+	if l.nodeFSFileReadOnlyArgument(node) {
+		return nil
+	}
 	var own, contextual *checker.Type
 	var found *widening
 	switch {
@@ -413,7 +584,7 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 			return nil
 		}
 		own, contextual = l.checker.GetTypeAtLocation(node.Name()), l.checker.GetTypeOfSymbol(property)
-		found = l.widened(own, contextual, map[[2]*checker.Type]bool{})
+		found = l.freshOrWidened(node.Name(), own, contextual)
 	case node.Kind == ast.KindSpreadAssignment:
 		// { ...kennel } copies kennel's fields, not what they hold: each field not written again after
 		// it is kennel's value seen as the literal's field.
@@ -431,6 +602,15 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 			}
 		}
 		own, contextual = l.checker.GetTypeAtLocation(node.AsSpreadAssignment().Expression), literal
+		for _, property := range l.checker.GetPropertiesOfType(literal) {
+			inside := l.checker.GetPropertyOfType(own, property.Name)
+			if inside == nil || skip[property.Name] {
+				continue
+			}
+			if optional := l.optionalView(l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(property), false, map[[2]*checker.Type]bool{}); optional != nil {
+				return l.optionalRefusal(node, optional)
+			}
+		}
 		found = l.widenedProperties(own, literal, skip, true, map[[2]*checker.Type]bool{})
 	default:
 		if node.Kind == ast.KindParenthesizedExpression || !l.isExpression(node) {
@@ -468,6 +648,21 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 }
 
 func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type, found *widening) error {
+	if found.enum {
+		if enumObjectSymbol(found.target) != nil {
+			return &Refused{Where: l.program.Where(node), What: "a structural object seen as " + l.checker.TypeToString(found.target) + "; the complete enum shape is unproven", Fix: "use the enum's runtime object or a typeof alias, or give the ordinary object an explicit interface"}
+		}
+		if l.flagEnum(l.enumIdentity(found.target)) && !l.numericEnum(l.enumIdentity(found.target)) {
+			return l.flagWriteRefusal(node, found.target)
+		}
+		if l.numericEnum(l.enumIdentity(found.target)) || l.numericEnum(l.enumIdentity(found.source)) {
+			return &Refused{Where: l.program.Where(node), What: "an unproven value assigned to a numeric literal or enum member slot " + l.checker.TypeToString(found.target), Fix: "compare with this literal and return that constant, or widen the slot to the whole numeric enum or number (adamic/enum-literal)"}
+		}
+		return &Refused{Where: l.program.Where(node), What: "an arbitrary number or a value from another enum assigned to " + l.checker.TypeToString(found.target) + "; its members are a closed union", Fix: "use a declared member of this enum, or compare the number with its members and return the matching member (adamic/enum-members)"}
+	}
+	if found.optionalField != "" {
+		return l.optionalRefusal(node, found)
+	}
 	what := "a value of type " + l.checker.TypeToString(own) + " seen as " + l.checker.TypeToString(contextual) + ", which can write " + l.checker.TypeToString(found.target) + " where " + l.checker.TypeToString(found.source) + " is read"
 	fix := "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
 	if found.parameter {
@@ -490,11 +685,37 @@ func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type
 // covariant, and only what's inside it, held elsewhere too, is walked as a view.
 func (l *lowering) freshOrWidened(node *ast.Node, own *checker.Type, contextual *checker.Type) *widening {
 	node = ast.SkipParentheses(node)
+	// A numeric enum read narrowed to never has a non-returning IR check at this exact site.
+	// It cannot write a value into the contextual slot, including a closed string-enum slot.
+	if own.Flags()&checker.TypeFlagsNever != 0 && l.enumNeverIdentity(node, map[*ast.Node]bool{}) != nil {
+		return nil
+	}
+	targetLiteral := (contextual.Flags()&checker.TypeFlagsNumberLiteral != 0 || l.numericEnum(l.enumIdentity(contextual))) && !l.openNumericEnumType(contextual)
+	if targetLiteral {
+		if declared := l.enumStoredType(node); declared != nil {
+			if l.openNumericEnumType(declared) && !l.enumMemberOrigin(node, l.enumIdentity(declared), map[*ast.Node]bool{}) {
+				return &widening{source: declared, target: contextual, enum: true}
+			}
+		}
+	}
+	if found := l.flagMemberWidened(node, contextual); found != nil && !l.numericEnum(l.enumIdentity(found.target)) {
+		return found
+	}
+	if target := l.flagTarget(contextual); target != nil && l.flagDomain(node, target) {
+		return nil
+	}
 	switch node.Kind {
 	case ast.KindObjectLiteralExpression, ast.KindArrayLiteralExpression:
 		// Made as the type it's written into, held by nothing else: its own parts are sites.
 		return nil
 	case ast.KindConditionalExpression:
+		// A conditional is fresh only when every possible value is made here (or is nothing).
+		// Const literal aliases exempt their own sites, not the conditional that chooses them.
+		if !freshOptionalValue(node) {
+			if optional := l.optionalView(own, contextual, false, map[[2]*checker.Type]bool{}); optional != nil {
+				return optional
+			}
+		}
 		// Either branch is the value: each judged as it is.
 		conditional := node.AsConditionalExpression()
 		for _, branch := range []*ast.Node{conditional.WhenTrue, conditional.WhenFalse} {
@@ -503,6 +724,9 @@ func (l *lowering) freshOrWidened(node *ast.Node, own *checker.Type, contextual 
 			}
 		}
 		return nil
+	}
+	if optional := l.optionalView(own, contextual, l.exactObjectAlias(node), map[[2]*checker.Type]bool{}); optional != nil {
+		return optional
 	}
 	visited := map[[2]*checker.Type]bool{}
 	if !l.freshValue(node) {
@@ -619,6 +843,9 @@ func (l *lowering) refuseElementWidening(node *ast.Node, pattern *ast.Node) erro
 		if contextual == nil {
 			return nil
 		}
+		if optional := l.optionalView(own, contextual, false, map[[2]*checker.Type]bool{}); optional != nil {
+			return l.optionalRefusal(node, optional)
+		}
 		if found := l.widened(own, contextual, map[[2]*checker.Type]bool{}); found != nil {
 			return &Refused{Where: l.program.Where(node), What: "a value of type " + l.checker.TypeToString(own) + " seen as " + l.checker.TypeToString(contextual) + ", which can write " + l.checker.TypeToString(found.target) + " where " + l.checker.TypeToString(found.source) + " is read", Fix: "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"}
 		}
@@ -630,6 +857,9 @@ func (l *lowering) refuseElementWidening(node *ast.Node, pattern *ast.Node) erro
 			continue
 		}
 		to := l.checker.GetTypeAtLocation(target)
+		if optional := l.optionalView(elements[index], to, false, map[[2]*checker.Type]bool{}); optional != nil {
+			return l.optionalRefusal(target, optional)
+		}
 		if found := l.widened(elements[index], to, map[[2]*checker.Type]bool{}); found != nil {
 			return &Refused{Where: l.program.Where(target), What: "a value of type " + l.checker.TypeToString(elements[index]) + " seen as " + l.checker.TypeToString(to) + ", which can write " + l.checker.TypeToString(found.target) + " where " + l.checker.TypeToString(found.source) + " is read", Fix: "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"}
 		}

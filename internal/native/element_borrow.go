@@ -22,7 +22,9 @@ import (
 // Every possible call target must preserve the elements for the borrow to stand.
 // Reuse never moves an array that lends (reusePlan.movable).
 func planElementBorrows(program *ir.Program) (map[*ir.Statement]bool, map[int]bool) {
+	inferParameterBorrows(program)
 	changing := changingFunctions(program)
+	preserving := preservingFunctions(program)
 	borrows := map[*ir.Statement]bool{}
 	lending := map[int]bool{}
 	for index := range program.Functions {
@@ -34,6 +36,19 @@ func planElementBorrows(program *ir.Program) (map[*ir.Statement]bool, map[int]bo
 		var statements func([]ir.Statement)
 		statements = func(list []ir.Statement) {
 			for position := range list {
+				if loop, ok := list[position].(ir.ForOf); ok && borrowableLoop(program, index, loop, assigned, changing) {
+					borrows[&list[position]] = true
+					program.Locals[loop.Local].Borrowed = true
+					source, _ := variableRead(loop.Iterable)
+					lending[source.Local] = true
+				}
+				if declare, ok := list[position].(ir.Declare); ok {
+					if receiver, ok := borrowableReturn(program, index, declare, assigned, list[position+1:], preserving); ok {
+						borrows[&list[position]] = true
+						program.Locals[declare.Local].Borrowed = true
+						lending[receiver] = true
+					}
+				}
 				declare, declaration := list[position].(ir.Declare)
 				element := declaration && borrowable(program, index, declare, assigned) && !changes(program, changing, list[position+1:])
 				chain := declaration && borrowableChain(program, index, declare, assigned)
@@ -74,7 +89,7 @@ func borrowedArray(declare ir.Declare) int {
 // function names, never assigned and not captured, directly or as the left of ??.
 func borrowable(program *ir.Program, function int, declare ir.Declare, assigned map[int]bool) bool {
 	local := program.Locals[declare.Local]
-	if local.Global || local.Captured || local.Function != function || !lendable(local.Type) || assigned[declare.Local] {
+	if local.Global || local.Captured || local.ExpressionAssigned || local.Function != function || !lendable(local.Type) || assigned[declare.Local] {
 		return false
 	}
 	value := declare.Value
@@ -93,7 +108,7 @@ func borrowable(program *ir.Program, function int, declare ir.Declare, assigned 
 		return false
 	}
 	held := program.Locals[array.Local]
-	return !held.Global && !held.Captured && held.Function == function && !assigned[array.Local]
+	return !held.Global && !held.Captured && !held.ExpressionAssigned && held.Function == function && !assigned[array.Local]
 }
 
 // assignedLocals is every variable an assignment in a function's body writes.
@@ -190,6 +205,10 @@ func unchanging(program *ir.Program, changing map[int]bool, expression ir.Expres
 // a ?? fallback, a missing element gives the fallback, which is fresh: a hidden owner holds it (NULL
 // when the element was there), and the scope lets go of the owner.
 func (e *emitter) borrowElement(declare ir.Declare) {
+	if _, ok := declare.Value.(ir.Call); ok {
+		e.borrowReturnedField(declare)
+		return
+	}
 	local := e.program.Locals[declare.Local]
 	if _, chain := declare.Value.(ir.Property); chain {
 		outer := e.lendAt
@@ -242,6 +261,26 @@ func (e *emitter) borrowElement(declare ir.Declare) {
 		e.hold(owner)
 	}
 	e.end()
+}
+
+// borrowableLoop requires a stable array local and a body that cannot keep the
+// element or remove elements through any alias. Lending prevents reuse from
+// moving the array's owner into a consuming call while its elements borrow.
+func borrowableLoop(program *ir.Program, function int, loop ir.ForOf, assigned, changing map[int]bool) bool {
+	if loop.Iterable.Type() != ir.Array || loop.Pattern != nil || loop.RegexIterator || loop.MapPart != "" || !lendable(loop.Element) {
+		return false
+	}
+	element := program.Locals[loop.Local]
+	if element.Global || element.Captured || element.Function != function || assigned[loop.Local] {
+		return false
+	}
+	source, ok := variableRead(loop.Iterable)
+	if !ok {
+		return false
+	}
+	array := program.Locals[source.Local]
+	return !array.Global && !array.Captured && array.Function == function && !assigned[source.Local] &&
+		!changes(program, changing, loop.Body) && parameterOnlyRead(program, loop.Body, loop.Local)
 }
 
 // loopBorrowable uses the same local and lending facts as indexed element declarations.

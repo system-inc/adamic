@@ -168,8 +168,7 @@ func adamicGenerated(random *rand.Rand) string {
 				"cohere-disable", "cohere-disable-next-line", "cohere-enable", "verify-disable-line", "oxlint-disable-next-line",
 				"oxlint-enable", "eslint-disabled", "eslint-disable-lines", "eslint-disable-next-line,", "eslint-enabled", "not a directive", "Eslint-disable",
 				"ESLINT-DISABLE-LINE", "eslint-DISABLE", "eslint-disable-NEXT-LINE", "Cohere-enable"))
-			// What follows the directive word: only a space or a tab ends it, so other whitespace makes it
-			// a longer word.
+			// JavaScript whitespace ends the directive word; U+0085 does not.
 			if random.Intn(4) == 0 {
 				line.WriteString(pick("\v", "\f", "\u00a0", "\u2003", "\u3000", "\u0085"))
 			}

@@ -49,8 +49,11 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	// object that happens to have fields of those names.
 	builder.WriteString("class AdamicClosure {\n\tconstructor(code, cells, receiver = false) {\n\t\tthis.code = code;\n\t\tthis.cells = cells;\n\t\tthis.receiver = receiver;\n\t}\n}\n")
 	builder.WriteString("const adamicTypeOf = (value) => value instanceof AdamicClosure ? 'function' : typeof value;\n")
+	builder.WriteString(fieldReadinessRuntime)
+	builder.WriteString("import { createHash as adamicNodeCreateHash } from 'node:crypto';\n")
 	builder.WriteString(collectionIteratorRuntime)
 	builder.WriteString(jsonStringifyRuntime)
+	builder.WriteString(recordRuntime)
 	builder.WriteString("const adamicCall = (closure, values) => closure.code(closure, values);\n")
 	// object.name(...) through an interface: the object's own function value, or else its class's
 	// method (on the prototype its constructor gave it), called with the object as this.
@@ -121,6 +124,9 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	for index, local := range program.Locals {
 		if local.Global {
 			fmt.Fprintf(&builder, "let %s;\nlet %s = false;\n", emitter.name(index), readyName(index))
+			if local.Uninitialized {
+				fmt.Fprintf(&builder, "let %s_declared = false;\n", readyName(index))
+			}
 		}
 	}
 	for index, function := range program.Functions {
@@ -140,9 +146,16 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 				emitter.line("let %s = values[%d];", emitter.name(parameter), position)
 			}
 		}
+		emitter.allocateEnvironment(function.FrameEnvironment)
 		for _, parameter := range function.Parameters {
-			if program.Locals[parameter].Captured {
-				emitter.line("const %s = { value: %s };", emitter.cellName(parameter), emitter.name(parameter))
+			if program.Locals[parameter].Uninitialized && !program.Locals[parameter].Captured {
+				emitter.line("let %s = true;", readyName(parameter))
+			}
+			if program.Locals[parameter].EnvironmentCell {
+				emitter.line("%s.value = %s;", emitter.cellName(parameter), emitter.name(parameter))
+				emitter.line("%s.ready = true;", emitter.cellName(parameter))
+			} else if program.Locals[parameter].Captured {
+				emitter.line("const %s = { value: %s, ready: true };", emitter.cellName(parameter), emitter.name(parameter))
 			}
 		}
 		if options.Enter != nil {
@@ -171,7 +184,11 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	}
 	emitter.statements(program.Main)
 	builder.WriteString(emitter.out.String())
-	return builder.String()
+	code := builder.String()
+	if strings.Contains(code, "adamicNodeFSFile.") {
+		code = "import * as adamicNodeFSFile from 'node:fs';\n" + code
+	}
+	return code
 }
 
 type emitter struct {
@@ -188,7 +205,8 @@ type emitter struct {
 	prototypeNames map[string]string
 
 	// continues holds, innermost last, each open loop's continue label.
-	continues []string
+	continues  []string
+	breakables []string
 }
 
 func (e *emitter) line(format string, arguments ...any) {
@@ -307,8 +325,13 @@ func (e *emitter) nested(statements []ir.Statement) {
 
 func (e *emitter) declare(local int, value string) {
 	declared := e.program.Locals[local]
+	if declared.Captured && declared.Preallocated {
+		e.line("%s.value = %s;", e.cell(local), value)
+		e.line("%s.ready = true;", e.cell(local))
+		return
+	}
 	if declared.Captured {
-		e.line("let %s = { value: %s };", e.cellName(local), value)
+		e.line("let %s = { value: %s, ready: true };", e.cellName(local), value)
 		return
 	}
 	e.line("let %s = %s;", e.name(local), value)
@@ -316,7 +339,7 @@ func (e *emitter) declare(local int, value string) {
 
 func (e *emitter) statement(at *ir.Statement) {
 	switch (*at).(type) {
-	case ir.Block, ir.Loop, ir.ForOf, ir.Switch, ir.Break, ir.Continue, ir.Try:
+	case ir.Labeled, ir.Block, ir.Loop, ir.ForOf, ir.Switch, ir.Break, ir.Continue, ir.Try:
 		// Marked inside, where their parts run, or not at all: a block, a break and a continue run
 		// nothing of their own.
 	default:
@@ -329,7 +352,18 @@ func (e *emitter) statement(at *ir.Statement) {
 			stream = "error"
 		}
 		e.line("console.%s(%s);", stream, e.value(statement.Value))
+	case ir.AllocateEnvironment:
+		// Emitted at function entry before parameter cells are initialized.
 	case ir.Declare:
+		if statement.Uninitialized && !e.program.Locals[statement.Local].Uninitialized {
+			if e.program.Locals[statement.Local].EnvironmentCell {
+				return
+			}
+			if e.program.Locals[statement.Local].Captured {
+				e.line("let %s = { value: undefined, ready: false };", e.cellName(statement.Local))
+			}
+			return
+		}
 		value := "undefined"
 		if statement.Value != nil {
 			value = e.value(statement.Value)
@@ -338,29 +372,48 @@ func (e *emitter) statement(at *ir.Statement) {
 		}
 		if e.program.Locals[statement.Local].Global {
 			e.line("%s = %s;", e.name(statement.Local), value)
-			e.line("%s = true;", readyName(statement.Local))
+			e.line("%s = %t;", readyName(statement.Local), !statement.Uninitialized)
+			if e.program.Locals[statement.Local].Uninitialized {
+				e.line("%s_declared = true;", readyName(statement.Local))
+			}
 			return
 		}
 		e.declare(statement.Local, value)
+		if e.program.Locals[statement.Local].Uninitialized {
+			if e.program.Locals[statement.Local].Captured {
+				e.line("%s = %t;", e.localReady(statement.Local), !statement.Uninitialized)
+			} else {
+				e.line("let %s = %t;", readyName(statement.Local), !statement.Uninitialized)
+			}
+		}
 	case ir.Assign:
 		value := e.value(statement.Value)
+		if e.program.Locals[statement.Local].Uninitialized && e.program.Locals[statement.Local].Global && !e.program.Locals[statement.Local].Hoisted {
+			temporary := e.temporary()
+			e.line("const %s = %s;", temporary, value)
+			e.line("if (!%s_declared) adamicUnready(%s);", readyName(statement.Local), quote(e.program.Locals[statement.Local].Name))
+			value = temporary
+		}
 		if statement.Checked {
 			// After the value, as JavaScript does: the right side runs, then the write throws.
 			temporary := e.temporary()
 			e.line("const %s = %s;", temporary, value)
-			e.line("if (!%s) adamicUnready(%s);", readyName(statement.Local), quote(e.program.Locals[statement.Local].Name))
+			e.line("if (!%s) adamicUnready(%s);", e.ready(statement.Local), quote(e.program.Locals[statement.Local].Name))
 			value = temporary
 		}
 		e.line("%s = %s;", e.variable(statement.Local), value)
+		if e.program.Locals[statement.Local].Uninitialized {
+			e.line("%s = %t;", e.localReady(statement.Local), !statement.Uninitialized)
+		}
 	case ir.Evaluate:
 		e.line("%s;", e.value(statement.Value))
 	case ir.Panic:
 		e.line("panic(%s);", e.value(statement.Message))
 	case ir.SetProperty:
-		if statement.Define {
-			e.line("Object.defineProperty(%s, %s, {value: %s, writable: true, enumerable: %t, configurable: true});", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), !strings.HasPrefix(statement.Name, "#"))
+		if statement.Define || statement.Uninitialized {
+			e.line("adamicDefineField(%s, %s, %s, %t, %t);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), !strings.HasPrefix(statement.Name, "#"), !statement.Uninitialized)
 		} else {
-			e.line("%s[%s] = %s;", e.value(statement.Object), quote(statement.Name), e.value(statement.Value))
+			e.line("adamicWriteField(%s, %s, %s);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value))
 		}
 	case ir.SetIndex:
 		e.line("adamicSetIndex(%s, %s, %s);", e.value(statement.Array), e.value(statement.Index), e.value(statement.Value))
@@ -378,6 +431,10 @@ func (e *emitter) statement(at *ir.Statement) {
 			e.nested(statement.Else)
 		}
 		e.line("}")
+	case ir.Labeled:
+		e.line("source_%s: {", statement.Name)
+		e.nested(statement.Body)
+		e.line("}")
 	case ir.Block:
 		e.line("{")
 		e.nested(statement.Body)
@@ -387,7 +444,9 @@ func (e *emitter) statement(at *ir.Statement) {
 	case ir.ForOf:
 		e.forOf(at, statement)
 	case ir.Switch:
-		e.line("do {")
+		label := e.temporary()
+		e.breakables = append(e.breakables, label)
+		e.line("%s: do {", label)
 		e.indent++
 		value := e.temporary()
 		e.markLine(at, 0)
@@ -415,10 +474,19 @@ func (e *emitter) statement(at *ir.Statement) {
 		}
 		e.indent--
 		e.line("} while (false);")
+		e.breakables = e.breakables[:len(e.breakables)-1]
 	case ir.Break:
-		e.line("break;")
+		if statement.Label != "" {
+			e.line("break source_%s;", statement.Label)
+		} else {
+			e.line("break %s;", e.breakables[len(e.breakables)-1-statement.Depth])
+		}
 	case ir.Continue:
-		e.line("break %s;", e.continues[len(e.continues)-1])
+		if statement.Label != "" {
+			e.line("break source_continue_%s;", statement.Label)
+		} else {
+			e.line("break %s;", e.continues[len(e.continues)-1])
+		}
 	case ir.Throw:
 		e.line("throw %s;", e.value(statement.Value))
 	case ir.Try:
@@ -456,19 +524,29 @@ func (e *emitter) temporary() string {
 func (e *emitter) loop(at *ir.Statement, statement ir.Loop) {
 	e.labels++
 	label := fmt.Sprintf("continue_%d", e.labels)
-	e.line("for (;;) {")
+	breakLabel := e.temporary()
+	e.breakables = append(e.breakables, breakLabel)
+	e.line("%s: for (;;) {", breakLabel)
 	e.indent++
 	if !statement.CheckAfter {
 		e.line("if (!%s) break;", e.marked(at, 0, "("+e.value(statement.Condition)+")"))
+	}
+	for _, name := range statement.Labels {
+		e.line("source_continue_%s: {", name)
+		e.indent++
 	}
 	e.continues = append(e.continues, label)
 	e.line("%s: {", label)
 	e.nested(statement.Body)
 	e.line("}")
 	e.continues = e.continues[:len(e.continues)-1]
+	for range statement.Labels {
+		e.indent--
+		e.line("}")
+	}
 	for _, local := range statement.PerIteration {
 		if e.program.Locals[local].Captured {
-			e.line("%s = { value: %s.value };", e.cellName(local), e.cellName(local))
+			e.line("%s = { value: %s.value, ready: %s.ready };", e.cellName(local), e.cellName(local), e.cellName(local))
 		}
 	}
 	e.statements(statement.Update)
@@ -477,6 +555,7 @@ func (e *emitter) loop(at *ir.Statement, statement ir.Loop) {
 	}
 	e.indent--
 	e.line("}")
+	e.breakables = e.breakables[:len(e.breakables)-1]
 }
 
 func (e *emitter) forOf(at *ir.Statement, statement ir.ForOf) {
@@ -487,6 +566,9 @@ func (e *emitter) forOf(at *ir.Statement, statement ir.ForOf) {
 	e.indent++
 	e.markLine(at, 0)
 	e.line("const %s = %s;", held, e.value(statement.Iterable))
+	breakLabel := e.temporary()
+	e.breakables = append(e.breakables, breakLabel)
+	e.line("%s:", breakLabel)
 	switch {
 	case statement.MapPart == "keys" || statement.MapPart == "values":
 		e.line("for (const %s of %s.%s()) {", index, held, statement.MapPart)
@@ -498,6 +580,10 @@ func (e *emitter) forOf(at *ir.Statement, statement ir.ForOf) {
 		e.line("\tconst %s = %s[%s_index];", index, held, index)
 	}
 	e.indent++
+	for _, name := range statement.Labels {
+		e.line("source_continue_%s: {", name)
+		e.indent++
+	}
 	e.continues = append(e.continues, label)
 	e.line("%s: {", label)
 	e.indent++
@@ -513,10 +599,15 @@ func (e *emitter) forOf(at *ir.Statement, statement ir.ForOf) {
 	e.indent--
 	e.line("}")
 	e.continues = e.continues[:len(e.continues)-1]
+	for range statement.Labels {
+		e.indent--
+		e.line("}")
+	}
 	e.indent--
 	e.line("}")
 	e.indent--
 	e.line("}")
+	e.breakables = e.breakables[:len(e.breakables)-1]
 }
 
 var operators = map[ir.Operator]string{
@@ -538,6 +629,8 @@ func (e *emitter) value(expression ir.Expression) string {
 		return e.value(expression.Array) + ".set(" + e.values(expression.Arguments) + ")"
 	case ir.TypedArraySubarray:
 		return e.value(expression.Array) + ".subarray(" + e.values(expression.Arguments) + ")"
+	case ir.NodeFSFile:
+		return e.nodeFSFile(expression)
 	case ir.RegExpNew:
 		if expression.Arguments != nil {
 			return "new RegExp(" + e.values(expression.Arguments) + ")"
@@ -560,6 +653,10 @@ func (e *emitter) value(expression ir.Expression) string {
 			return e.value(expression.Array) + "?.[" + quote(expression.Name) + "]"
 		}
 		return e.value(expression.Array) + "[" + quote(expression.Name) + "]"
+	case ir.HasProperty:
+		return "(" + quote(expression.Name) + " in " + e.value(expression.Object) + ")"
+	case ir.DynamicProperty:
+		return "(" + e.value(expression.Object) + ")[" + quote(expression.Name) + "]"
 	case ir.Null:
 		return "null"
 	case ir.IsNull:
@@ -574,10 +671,30 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.StringConstant:
 		return quote(e.program.Strings[expression.Index])
 	case ir.Read:
+		if expression.Readiness != "" {
+			message := fmt.Sprintf("read before assignment: variable '%s' in %s", e.program.Locals[expression.Local].Name, expression.Readiness)
+			return fmt.Sprintf("(%s ? %s : panic(%s))", e.localReady(expression.Local), e.variable(expression.Local), quote(message))
+		}
 		if expression.Checked {
-			return fmt.Sprintf("(%s ? %s : adamicUnready(%s))", readyName(expression.Local), e.variable(expression.Local), quote(e.program.Locals[expression.Local].Name))
+			return fmt.Sprintf("(%s ? %s : adamicUnready(%s))", e.ready(expression.Local), e.variable(expression.Local), quote(e.program.Locals[expression.Local].Name))
 		}
 		return e.variable(expression.Local)
+	case ir.Truthy:
+		return "!!(" + e.value(expression.Value) + ")"
+	case ir.Void:
+		return "(void " + e.value(expression.Value) + ")"
+	case ir.Comma:
+		return "(" + e.value(expression.Left) + ", " + e.value(expression.Right) + ")"
+	case ir.Effects:
+		return e.effects(expression)
+	case ir.LogicalAssignment:
+		return e.logicalAssignment(expression)
+	case ir.Logical:
+		operator := "&&"
+		if expression.KeepTruthy {
+			operator = "||"
+		}
+		return "(" + e.value(expression.Left) + " " + operator + " " + e.value(expression.Right) + ")"
 	case ir.Unary:
 		operator := map[ir.Operator]string{ir.Negate: "-", ir.Plus: "+", ir.Not: "!", ir.BitNot: "~"}[expression.Operator]
 		return "(" + operator + e.value(expression.Operand) + ")"
@@ -634,17 +751,33 @@ func (e *emitter) value(expression ir.Expression) string {
 			fields = append(fields, "__proto__: "+e.prototype(expression.Methods))
 		}
 		if expression.Spread != nil {
-			fields = append(fields, "..."+e.value(expression.Spread))
+			spread := e.value(expression.Spread)
+			if expression.SpreadReadiness != "" {
+				spread = "adamicSpreadFields(" + spread + ", " + quote(expression.SpreadReadiness) + ")"
+			}
+			fields = append(fields, "..."+spread)
 		}
 		for _, field := range expression.Fields {
 			fields = append(fields, quote(field.Name)+": "+e.value(field.Value))
 		}
 		object := "({" + strings.Join(fields, ", ") + "})"
 		if expression.Class != 0 {
-			return fmt.Sprintf("adamicClass(%s, %d)", object, expression.Class)
+			object = fmt.Sprintf("adamicClass(%s, %d)", object, expression.Class)
+		}
+		unready := []string{}
+		for _, field := range expression.Fields {
+			if field.Uninitialized {
+				unready = append(unready, quote(field.Name))
+			}
+		}
+		if len(unready) > 0 {
+			object = "adamicUninitializedFields(" + object + ", [" + strings.Join(unready, ", ") + "])"
 		}
 		return object
 	case ir.Property:
+		if expression.Readiness != "" {
+			return fmt.Sprintf("adamicReadField(%s, %s, %s, %t, %t)", e.value(expression.Object), quote(expression.Name), quote(expression.Readiness), expression.Optional, expression.Absent)
+		}
 		if expression.Optional {
 			return e.value(expression.Object) + "?.[" + quote(expression.Name) + "]"
 		}
@@ -695,7 +828,18 @@ func (e *emitter) value(expression ir.Expression) string {
 			return "String.fromCodePoint(" + codes + ")"
 		}
 		return "String.fromCharCode(" + codes + ")"
+	case ir.RecordCoalesce:
+		return "((r,k,make) => adamicRecordGet(r,k) ?? adamicRecordSet(r,k,make()))(" + e.value(expression.Record) + ", " + e.value(expression.Key) + ", () => " + e.value(expression.Value) + ")"
+	case ir.RecordCall:
+		return e.recordCall(expression)
+	case ir.RecordLiteral:
+		return e.recordLiteral(expression)
+	case ir.NodeBufferCall:
+		return e.nodeBufferCall(expression)
 	case ir.ObjectCall:
+		if expression.Readiness != "" {
+			return "adamicObjectReadCall(" + quote(expression.Method) + ", " + quote(expression.Readiness) + ", " + e.values(expression.Arguments) + ")"
+		}
 		return "Object." + expression.Method + "(" + e.values(expression.Arguments) + ")"
 	case ir.NumberCall:
 		if expression.Function == "toBoolean" {
@@ -724,6 +868,13 @@ func (e *emitter) value(expression ir.Expression) string {
 		// Checked as native checks it: the checker narrowed undefined away, but a call may have put it back.
 		return "adamicDefined(" + e.value(expression.Value) + ", " + quote(narrowedAwayMessage) + ")"
 	case ir.Defined:
+		if expression.Throws() {
+			absent := "undefined"
+			if expression.Null {
+				absent = "null"
+			}
+			return "((value) => { if (value === " + absent + ") throw new TypeError(" + quote(strings.TrimPrefix(expression.Message, "TypeError: ")) + "); return value; })(" + e.value(expression.Value) + ")"
+		}
 		if expression.Null {
 			return "adamicDefinedNull(" + e.value(expression.Value) + ", " + quote(expression.Message) + ")"
 		}
@@ -835,6 +986,9 @@ func (e *emitter) value(expression ir.Expression) string {
 		}
 		return fmt.Sprintf("new AdamicClosure(%s, [%s], %t)", functionName(e.program, expression.Function), strings.Join(cells, ", "), e.program.Functions[expression.Function].Receiver)
 	case ir.CallClosure:
+		if expression.Direct > 0 {
+			return fmt.Sprintf("%s(%s, [%s])", functionName(e.program, expression.Direct-1), e.value(expression.Closure), e.values(expression.Arguments))
+		}
 		if property, isProperty := expression.Closure.(ir.Property); isProperty && property.Method {
 			if property.Optional {
 				// object?.name(...): undefined, with nothing looked up or evaluated, where the object is.
@@ -991,3 +1145,21 @@ func quote(text string) string {
 
 // narrowedAwayMessage is native's (internal/native), word for word: the checks are the same on both sides.
 const narrowedAwayMessage = "undefined where the checker narrowed it away: a call since the narrowing put it back"
+
+func (e *emitter) ready(local int) string {
+	if e.program.Locals[local].Captured && !e.program.Locals[local].Global {
+		return e.cell(local) + ".ready"
+	}
+	return readyName(local)
+}
+
+func (e *emitter) allocateEnvironment(cells []int) {
+	if len(cells) == 0 {
+		return
+	}
+	environment := e.temporary()
+	e.line("const %s = Array.from({length: %d}, () => ({value: undefined, ready: false}));", environment, len(cells))
+	for position, local := range cells {
+		e.line("const %s = %s[%d];", e.cellName(local), environment, position)
+	}
+}

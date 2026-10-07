@@ -24,6 +24,9 @@ func (l *lowering) libraryArrayMethodArguments(node, receiver *ast.Node, name st
 	if err != nil {
 		return nil, true, err
 	}
+	if element == ir.Union && (name == "includes" || name == "indexOf" || name == "lastIndexOf") {
+		return nil, true, l.notYet(node, "searching boxed union array elements")
+	}
 	if name == "join" && element != ir.Array {
 		return l.arrayMethod(node, receiver, name)
 	}

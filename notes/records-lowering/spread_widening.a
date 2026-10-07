@@ -1,0 +1,5 @@
+interface Narrow {name: 'dog'}
+interface Wide {name: string}
+const dogs: Record<string, Narrow> = {x: {name: 'dog'}};
+const animals: Record<string, Wide> = {...dogs};
+console.log(Object.keys(animals).join(','));

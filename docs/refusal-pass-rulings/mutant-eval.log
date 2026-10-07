@@ -1,0 +1,8 @@
+--- FAIL: TestRefusalPassRulings (0.00s)
+    --- FAIL: TestRefusalPassRulings/eval.a (0.04s)
+        refusal_pass_test.go:31: got /tmp/adamic-gate/TestRefusalPassRulingseval.a2487304090/001/main.a:1:1: stage 0 can't lower reading eval yet, want Refused
+    --- FAIL: TestRefusalPassRulings/eval-order.a (0.06s)
+        refusal_pass_test.go:31: got /tmp/adamic-gate/TestRefusalPassRulingseval-order.a1916984413/001/main.a:1:26: stage 0 can't lower a function inside a function (a closure) yet, want Refused
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.357s
+FAIL

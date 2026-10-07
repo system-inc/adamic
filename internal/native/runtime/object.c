@@ -3,30 +3,38 @@
 #include "adamic.h"
 
 #include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 adamic_object *adamic_object_new(const adamic_shape *shape) {
-	adamic_object *object = adamic_allocate(sizeof *object + shape->count * sizeof object->slots[0], adamic_kind_object);
+	adamic_object *object = adamic_allocate(sizeof *object + shape->count * (sizeof object->slots[0] + 1), adamic_kind_object);
 	object->shape = shape;
 	object->class = NULL;
 	object->frozen = false;
 	memset(object->slots, 0, shape->count * sizeof object->slots[0]);
+	memset(adamic_object_initialized(object), 1, shape->count);
 	return object;
 }
 
-adamic_object *adamic_object_copy(const adamic_object *source) {
+adamic_object *adamic_object_copy_checked(const adamic_object *source, const char *expression) {
 	const adamic_shape *shape = source->class == NULL ? source->shape : source->class->public_shape;
 	adamic_object *object = adamic_object_new(shape);
 	for (size_t position = 0; position < shape->count; position++) {
 		size_t index = adamic_public_index(shape, position);
 		adamic_slot_cache cache = {NULL, 0};
 		const adamic_accessor *accessor = adamic_accessor_find(source, shape->names[index]);
-		object->slots[index] = accessor == NULL ? *adamic_object_field(source, shape->names[index], &cache) : adamic_accessor_get((adamic_object *)source, shape->names[index]);
+		object->slots[index] = accessor == NULL ? *(expression == NULL ? adamic_object_field(source, shape->names[index], &cache) : adamic_object_read(source, shape->names[index], &cache, expression)) : adamic_accessor_get((adamic_object *)source, shape->names[index]);
+		if (accessor == NULL) {
+			adamic_object_initialized(object)[index] = adamic_object_initialized(source)[cache.index];
+		}
 		if (shape->references[index] && accessor == NULL) {
 			adamic_retain(object->slots[index].reference);
 		}
 	}
 	return object;
 }
+
+adamic_object *adamic_object_copy(const adamic_object *source) { return adamic_object_copy_checked(source, NULL); }
 
 // adamic_object_has is object.hasOwnProperty(name): one of the shape's own names, not a method on a
 // prototype. A shape's names are C strings, so the lengths have to agree before the bytes do.
@@ -124,4 +132,32 @@ adamic_maybe_boolean adamic_object_maybe_boolean(const adamic_object *object, co
 		return (adamic_maybe_boolean){false, false};
 	}
 	return adamic_maybe_boolean_unpack(slot->maybe_boolean);
+}
+
+// The caller supplies the source expression, so both backends name the same failed read.
+adamic_value *adamic_object_read(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *expression) {
+	adamic_value *slot = adamic_object_optional_field(object, name, cache);
+	if (slot != NULL && object->class != NULL && object->class->is_static) {
+		size_t flag = object->class->static_flags[cache->index];
+		if (flag != 0 && object->slots[flag - 1].number == 0 && object->class->static_parent != 0) {
+			return adamic_object_read(object->slots[object->class->static_parent - 1].reference, name, cache, expression);
+		}
+	}
+	if (slot == NULL || !adamic_object_initialized(object)[cache->index]) {
+		size_t capacity = strlen(name) + strlen(expression) + sizeof "read before assignment: field '' in ";
+		char *message = malloc(capacity);
+		if (message == NULL) {
+			static const char failure[] = "out of memory";
+			adamic_panic(failure, sizeof failure - 1);
+		}
+		int length = snprintf(message, capacity, "read before assignment: field '%s' in %s", name, expression);
+		adamic_panic(message, (size_t)length);
+	}
+	return slot;
+}
+
+void adamic_object_set_initialized(adamic_object *object, const char *name, bool initialized) {
+	adamic_slot_cache cache = {NULL, 0};
+	(void)adamic_object_field(object, name, &cache);
+	adamic_object_initialized(object)[cache.index] = initialized;
 }

@@ -92,13 +92,20 @@ func (l *lowering) whileStatement(node *ast.Node) ([]ir.Statement, error) {
 	return []ir.Statement{ir.Loop{Condition: condition, Body: loweredBody, CheckAfter: checkAfter}}, nil
 }
 
-// condition applies JavaScript ToBoolean to one evaluation of its operand.
+// condition applies JavaScript's ToBoolean, with one evaluation of the operand.
 func (l *lowering) condition(node *ast.Node) (ir.Expression, error) {
 	value, err := l.expression(node)
 	if err != nil {
 		return nil, err
 	}
-	return censusCondition(value), nil
+	return truthy(value), nil
+}
+
+func truthy(value ir.Expression) ir.Expression {
+	if value.Type() == ir.Boolean {
+		return value
+	}
+	return ir.Truthy{Value: value}
 }
 
 // initializerIsLet reports whether a for loop declares its variables with let, which JavaScript gives

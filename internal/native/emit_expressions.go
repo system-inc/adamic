@@ -14,6 +14,16 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	switch expression := expression.(type) {
 	case ir.TypedArrayNew, ir.TypedArrayFill, ir.TypedArraySet, ir.TypedArraySubarray:
 		return e.typedArrayValue(expression)
+	case ir.HasProperty:
+		value := e.value(expression.Object)
+		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_has_property(%s, %s)", value, cString(expression.Name)))
+	case ir.DynamicProperty:
+		value := e.value(expression.Object)
+		return e.own(ir.Union, fmt.Sprintf("adamic_dynamic_property(%s, %s)", value, cString(expression.Name)))
+	case ir.NodeFSFile:
+		return e.nodeFSFile(expression)
+	case ir.NodeBufferCall:
+		return e.nodeBufferCall(expression)
 	case ir.RegExpNew:
 		for _, argument := range expression.Arguments {
 			e.value(argument)
@@ -34,6 +44,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			e.value(expression.Value)
 			return "false"
 		}
+		if expression.Value.Type() == ir.Union {
+			return fmt.Sprintf("(%s == &adamic_null)", e.value(expression.Value))
+		}
 		return fmt.Sprintf("(%s == NULL)", e.value(expression.Value))
 	case ir.NumberConstant:
 		return cNumber(expression.Value)
@@ -43,7 +56,27 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return fmt.Sprintf("&adamic_string_%d", expression.Index)
 	case ir.Read:
 		return e.read(expression)
+	case ir.Truthy:
+		return e.toBoolean(expression.Value.Type(), e.value(expression.Value))
+	case ir.Void:
+		e.line("(void)%s;", e.value(expression.Value))
+		if expression.Type().IsMaybe() {
+			return zero(expression.Type())
+		}
+		return "NULL"
+	case ir.Comma:
+		e.line("(void)%s;", e.value(expression.Left))
+		return e.value(expression.Right)
+	case ir.Effects:
+		return e.effects(expression)
+	case ir.LogicalAssignment:
+		return e.logicalAssignment(expression)
+	case ir.Logical:
+		return e.logicalValue(expression)
 	case ir.Unary:
+		if expression.Operator == ir.BitNot && pure(expression) {
+			return "adamic_signed_bits(" + e.integerBits(expression) + ")"
+		}
 		operand := e.value(expression.Operand)
 		switch expression.Operator {
 		case ir.Negate:
@@ -56,6 +89,13 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			return "adamic_bitwise_not(" + operand + ")"
 		}
 	case ir.Binary:
+		if cBitwise[expression.Operator] != "" && pure(expression) {
+			bits := e.integerBits(expression)
+			if expression.Operator == ir.ShiftRightUnsigned {
+				return "((double)" + bits + ")"
+			}
+			return "adamic_signed_bits(" + bits + ")"
+		}
 		if expression.Operator == ir.And || expression.Operator == ir.Or {
 			return e.logical(expression)
 		}
@@ -114,13 +154,25 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.ObjectLiteral:
 		return e.objectLiteral(expression)
 	case ir.Property:
-		if taken, ok := e.take(expression); ok {
-			return taken
+		if expression.Readiness == "" {
+			if taken, ok := e.take(expression); ok {
+				return taken
+			}
 		}
 		lent := e.lendable && lendable(expression.Of) && !expression.Optional
 		object := e.value(expression.Object)
-		field := unslotted(expression.Of, fmt.Sprintf("%s->%s", e.fieldSlot(object, expression.Name, expression.Class), member(expression.Of)))
+		slot := e.fieldSlot(object, expression.Name, expression.Class)
+		if expression.Readiness != "" {
+			slot = fmt.Sprintf("adamic_object_read(%s, %s, &%s, %s)", object, cString(expression.Name), e.cache(), cString(expression.Readiness))
+			if expression.Optional {
+				slot = fmt.Sprintf("(%s == NULL ? NULL : %s)", object, slot)
+			}
+		}
+		field := unslotted(expression.Of, fmt.Sprintf("%s->%s", slot, member(expression.Of)))
 		if expression.Of.IsMaybe() {
+			if expression.Readiness != "" && !expression.Absent {
+				e.line("(void)%s;", slot)
+			}
 			field = fmt.Sprintf("adamic_object_maybe_number(%s, %s, &%s)", object, cString(expression.Name), e.cache())
 			if expression.Of == ir.MaybeBoolean {
 				field = fmt.Sprintf("adamic_object_maybe_boolean(%s, %s, &%s)", object, cString(expression.Name), e.cache())
@@ -133,6 +185,11 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 				lookup = fmt.Sprintf("(%s == NULL ? NULL : %s)", object, lookup)
 			}
 			e.line("adamic_value *%s = %s;", slot, lookup)
+			if expression.Readiness != "" {
+				e.line("if (%s != NULL) {", slot)
+				e.line("\t(void)adamic_object_read(%s, %s, &%s, %s);", object, cString(expression.Name), e.cache(), cString(expression.Readiness))
+				e.line("}")
+			}
 			undefined := "NULL"
 			if expression.Of.IsMaybe() {
 				undefined = zero(expression.Of)
@@ -301,7 +358,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		e.line("\t}")
 		e.indent++
 		element := e.temporary()
-		e.line("adamic_value %s = %s->code(%s, (adamic_value[]){%s->elements[%s], {.number = (double)%s}, {.reference = %s}}, 3);", element, callback, callback, source, index, index, source)
+		e.line("adamic_value %s = %s->code(%s, 3, (adamic_value[]){%s->elements[%s], {.number = (double)%s}, {.reference = %s}});", element, callback, callback, source, index, index, source)
 		// What's mapped so far is the statement's, let go with its temporaries.
 		e.closureThrown()
 		e.line("adamic_array_push(%s, %s);", mapped, element)
@@ -601,6 +658,12 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			return e.own(ir.String, function+"(0, NULL)")
 		}
 		return e.own(ir.String, fmt.Sprintf("%s(%d, (const double[]){%s})", function, len(codes), strings.Join(codes, ", ")))
+	case ir.RecordCoalesce:
+		return e.recordCoalesce(expression)
+	case ir.RecordCall:
+		return e.recordCall(expression)
+	case ir.RecordLiteral:
+		return e.recordLiteral(expression)
 	case ir.ObjectCall:
 		return e.objectCall(expression)
 	case ir.NumberCall:
@@ -654,8 +717,8 @@ var cOperators = map[ir.Operator]string{
 func (e *emitter) binary(operator ir.Operator, operandType ir.Type, left string, right string) string {
 	switch {
 	case operator == ir.Remainder:
-		// JavaScript's % is C's fmod: truncated, with the sign of the dividend.
-		return fmt.Sprintf("fmod(%s, %s)", left, right)
+		// Whole operands use integer remainder; the runtime preserves signed zero.
+		return fmt.Sprintf("adamic_remainder(%s, %s)", left, right)
 	case operator == ir.Power:
 		return fmt.Sprintf("adamic_power(%s, %s)", left, right)
 	case cBitwise[operator] != "":

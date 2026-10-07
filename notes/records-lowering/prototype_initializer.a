@@ -1,0 +1,2 @@
+const r: Record<string, number> = {__proto__: 1};
+console.log(Object.keys(r).join(','));

@@ -1,0 +1,571 @@
+{
+  "metadata": {
+    "date": "2026-10-06T22:13:28.564437+00:00",
+    "nproc": "5",
+    "cpu_max": "400000 100000",
+    "machine": "x86_64",
+    "node": "v24.19.0",
+    "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+    "load_before": [
+      1.7109375,
+      6.5,
+      6.31689453125
+    ],
+    "native_flags": "adamic build: clang -O2, -ffp-contract=off, no sanitizers",
+    "load_after": [
+      1.06982421875,
+      4.33447265625,
+      5.52197265625
+    ],
+    "baseline_commit": "50045bd797650a34aa40b55ad751b6a667a6ab31",
+    "implementation_commit": "4cc9a5992748c3d30111f8cb5815d524dc8ae04c"
+  },
+  "medians": {
+    "integer_bitwise": {
+      "before": 21.18540896699983,
+      "after": 7.363530057999924,
+      "node": 5.947168192999925
+    },
+    "integer_remainder": {
+      "before": 2.955096614000013,
+      "after": 2.404072418999931,
+      "node": 1.1704455639999196
+    },
+    "nbody": {
+      "before": 0.36103067300018665,
+      "after": 0.34809989400014274,
+      "node": 0.7264321440000003
+    },
+    "sort": {
+      "before": 0.2159123069998259,
+      "after": 0.22489786500000264,
+      "node": 0.6430139320000308
+    },
+    "spectral_norm": {
+      "before": 0.1681338460000461,
+      "after": 0.17537712600005761,
+      "node": 0.2295256759998665
+    },
+    "tokenizer": {
+      "before": 0.15825785400011227,
+      "after": 0.15533592599990698,
+      "node": 0.27647075799995946
+    },
+    "trees": {
+      "before": 1.7123449870000513,
+      "after": 1.6711437379999552,
+      "node": 1.4771587430000181
+    },
+    "word_count": {
+      "before": 0.158764648999977,
+      "after": 0.15245793199983382,
+      "node": 0.26407703000018046
+    }
+  },
+  "runs": [
+    {
+      "round": 1,
+      "case": "integer_bitwise",
+      "backend": "before",
+      "seconds": 21.343090576999884,
+      "stdout": "449408"
+    },
+    {
+      "round": 1,
+      "case": "integer_bitwise",
+      "backend": "after",
+      "seconds": 7.363530057999924,
+      "stdout": "449408"
+    },
+    {
+      "round": 1,
+      "case": "integer_bitwise",
+      "backend": "node",
+      "seconds": 5.852837419000025,
+      "stdout": "449408"
+    },
+    {
+      "round": 1,
+      "case": "integer_remainder",
+      "backend": "before",
+      "seconds": 2.8650774259999707,
+      "stdout": "587207"
+    },
+    {
+      "round": 1,
+      "case": "integer_remainder",
+      "backend": "after",
+      "seconds": 2.3514219770002,
+      "stdout": "587207"
+    },
+    {
+      "round": 1,
+      "case": "integer_remainder",
+      "backend": "node",
+      "seconds": 1.1704455639999196,
+      "stdout": "587207"
+    },
+    {
+      "round": 1,
+      "case": "nbody",
+      "backend": "before",
+      "seconds": 0.32964490700010174,
+      "stdout": "-0.169075164\n-0.169086185"
+    },
+    {
+      "round": 1,
+      "case": "nbody",
+      "backend": "after",
+      "seconds": 0.3464812049999182,
+      "stdout": "-0.169075164\n-0.169086185"
+    },
+    {
+      "round": 1,
+      "case": "nbody",
+      "backend": "node",
+      "seconds": 0.7421094460000859,
+      "stdout": "-0.169075164\n-0.169086185"
+    },
+    {
+      "round": 1,
+      "case": "sort",
+      "backend": "before",
+      "seconds": 0.21170463700013897,
+      "stdout": "true 994240694.875"
+    },
+    {
+      "round": 1,
+      "case": "sort",
+      "backend": "after",
+      "seconds": 0.223971881000125,
+      "stdout": "true 994240694.875"
+    },
+    {
+      "round": 1,
+      "case": "sort",
+      "backend": "node",
+      "seconds": 0.6762297170000693,
+      "stdout": "true 994240694.875"
+    },
+    {
+      "round": 1,
+      "case": "spectral_norm",
+      "backend": "before",
+      "seconds": 0.1681338460000461,
+      "stdout": "1.274224151"
+    },
+    {
+      "round": 1,
+      "case": "spectral_norm",
+      "backend": "after",
+      "seconds": 0.1952525480000986,
+      "stdout": "1.274224151"
+    },
+    {
+      "round": 1,
+      "case": "spectral_norm",
+      "backend": "node",
+      "seconds": 0.22725738199983425,
+      "stdout": "1.274224151"
+    },
+    {
+      "round": 1,
+      "case": "tokenizer",
+      "backend": "before",
+      "seconds": 0.16784664700003304,
+      "stdout": "3522747 code units, 597479 lines: 1 identifiers, 597482 numbers summing to 29882003030, 2517 symbols, longest na\u00efve"
+    },
+    {
+      "round": 1,
+      "case": "tokenizer",
+      "backend": "after",
+      "seconds": 0.16551511600005142,
+      "stdout": "3522747 code units, 597479 lines: 1 identifiers, 597482 numbers summing to 29882003030, 2517 symbols, longest na\u00efve"
+    },
+    {
+      "round": 1,
+      "case": "tokenizer",
+      "backend": "node",
+      "seconds": 0.27647075799995946,
+      "stdout": "3522747 code units, 597479 lines: 1 identifiers, 597482 numbers summing to 29882003030, 2517 symbols, longest na\u00efve"
+    },
+    {
+      "round": 1,
+      "case": "trees",
+      "backend": "before",
+      "seconds": 1.6815557919999264,
+      "stdout": "stretch tree of depth 19\t check: 1048575\n262144\t trees of depth 4\t check: 8126464\n65536\t trees of depth 6\t check: 8323072\n16384\t trees of depth 8\t check: 8372224\n4096\t trees of depth 10\t check: 8384512\n1024\t trees of depth 12\t check: 8387584\n256\t trees of depth 14\t check: 8388352\n64\t trees of depth 16\t check: 8388544\n16\t trees of depth 18\t check: 8388592\nlong lived tree of depth 18\t check: 524287"
+    },
+    {
+      "round": 1,
+      "case": "trees",
+      "backend": "after",
+      "seconds": 1.6711437379999552,
+      "stdout": "stretch tree of depth 19\t check: 1048575\n262144\t trees of depth 4\t check: 8126464\n65536\t trees of depth 6\t check: 8323072\n16384\t trees of depth 8\t check: 8372224\n4096\t trees of depth 10\t check: 8384512\n1024\t trees of depth 12\t check: 8387584\n256\t trees of depth 14\t check: 8388352\n64\t trees of depth 16\t check: 8388544\n16\t trees of depth 18\t check: 8388592\nlong lived tree of depth 18\t check: 524287"
+    },
+    {
+      "round": 1,
+      "case": "trees",
+      "backend": "node",
+      "seconds": 1.5106527340001321,
+      "stdout": "stretch tree of depth 19\t check: 1048575\n262144\t trees of depth 4\t check: 8126464\n65536\t trees of depth 6\t check: 8323072\n16384\t trees of depth 8\t check: 8372224\n4096\t trees of depth 10\t check: 8384512\n1024\t trees of depth 12\t check: 8387584\n256\t trees of depth 14\t check: 8388352\n64\t trees of depth 16\t check: 8388544\n16\t trees of depth 18\t check: 8388592\nlong lived tree of depth 18\t check: 524287"
+    },
+    {
+      "round": 1,
+      "case": "word_count",
+      "backend": "before",
+      "seconds": 0.16742652800007818,
+      "stdout": "21 distinct words\nvi 204856\nka 201599\nsu 198355\nto 197411\nze 191090"
+    },
+    {
+      "round": 1,
+      "case": "word_count",
+      "backend": "after",
+      "seconds": 0.1524696189999304,
+      "stdout": "21 distinct words\nvi 204856\nka 201599\nsu 198355\nto 197411\nze 191090"
+    },
+    {
+      "round": 1,
+      "case": "word_count",
+      "backend": "node",
+      "seconds": 0.2611266540000088,
+      "stdout": "21 distinct words\nvi 204856\nka 201599\nsu 198355\nto 197411\nze 191090"
+    },
+    {
+      "round": 2,
+      "case": "integer_bitwise",
+      "backend": "before",
+      "seconds": 21.159529077000116,
+      "stdout": "449408"
+    },
+    {
+      "round": 2,
+      "case": "integer_bitwise",
+      "backend": "after",
+      "seconds": 7.590808831000004,
+      "stdout": "449408"
+    },
+    {
+      "round": 2,
+      "case": "integer_bitwise",
+      "backend": "node",
+      "seconds": 6.415330504000167,
+      "stdout": "449408"
+    },
+    {
+      "round": 2,
+      "case": "integer_remainder",
+      "backend": "before",
+      "seconds": 3.0297805430000153,
+      "stdout": "587207"
+    },
+    {
+      "round": 2,
+      "case": "integer_remainder",
+      "backend": "after",
+      "seconds": 2.4276183169999968,
+      "stdout": "587207"
+    },
+    {
+      "round": 2,
+      "case": "integer_remainder",
+      "backend": "node",
+      "seconds": 1.2178903469998659,
+      "stdout": "587207"
+    },
+    {
+      "round": 2,
+      "case": "nbody",
+      "backend": "before",
+      "seconds": 0.36103067300018665,
+      "stdout": "-0.169075164\n-0.169086185"
+    },
+    {
+      "round": 2,
+      "case": "nbody",
+      "backend": "after",
+      "seconds": 0.34809989400014274,
+      "stdout": "-0.169075164\n-0.169086185"
+    },
+    {
+      "round": 2,
+      "case": "nbody",
+      "backend": "node",
+      "seconds": 0.6839928639999471,
+      "stdout": "-0.169075164\n-0.169086185"
+    },
+    {
+      "round": 2,
+      "case": "sort",
+      "backend": "before",
+      "seconds": 0.23649273900014123,
+      "stdout": "true 994240694.875"
+    },
+    {
+      "round": 2,
+      "case": "sort",
+      "backend": "after",
+      "seconds": 0.23994857899992894,
+      "stdout": "true 994240694.875"
+    },
+    {
+      "round": 2,
+      "case": "sort",
+      "backend": "node",
+      "seconds": 0.6347583069998564,
+      "stdout": "true 994240694.875"
+    },
+    {
+      "round": 2,
+      "case": "spectral_norm",
+      "backend": "before",
+      "seconds": 0.16987211100013155,
+      "stdout": "1.274224151"
+    },
+    {
+      "round": 2,
+      "case": "spectral_norm",
+      "backend": "after",
+      "seconds": 0.16905533899989678,
+      "stdout": "1.274224151"
+    },
+    {
+      "round": 2,
+      "case": "spectral_norm",
+      "backend": "node",
+      "seconds": 0.2295256759998665,
+      "stdout": "1.274224151"
+    },
+    {
+      "round": 2,
+      "case": "tokenizer",
+      "backend": "before",
+      "seconds": 0.15825785400011227,
+      "stdout": "3522747 code units, 597479 lines: 1 identifiers, 597482 numbers summing to 29882003030, 2517 symbols, longest na\u00efve"
+    },
+    {
+      "round": 2,
+      "case": "tokenizer",
+      "backend": "after",
+      "seconds": 0.15533592599990698,
+      "stdout": "3522747 code units, 597479 lines: 1 identifiers, 597482 numbers summing to 29882003030, 2517 symbols, longest na\u00efve"
+    },
+    {
+      "round": 2,
+      "case": "tokenizer",
+      "backend": "node",
+      "seconds": 0.2710820629999944,
+      "stdout": "3522747 code units, 597479 lines: 1 identifiers, 597482 numbers summing to 29882003030, 2517 symbols, longest na\u00efve"
+    },
+    {
+      "round": 2,
+      "case": "trees",
+      "backend": "before",
+      "seconds": 1.7992193430000043,
+      "stdout": "stretch tree of depth 19\t check: 1048575\n262144\t trees of depth 4\t check: 8126464\n65536\t trees of depth 6\t check: 8323072\n16384\t trees of depth 8\t check: 8372224\n4096\t trees of depth 10\t check: 8384512\n1024\t trees of depth 12\t check: 8387584\n256\t trees of depth 14\t check: 8388352\n64\t trees of depth 16\t check: 8388544\n16\t trees of depth 18\t check: 8388592\nlong lived tree of depth 18\t check: 524287"
+    },
+    {
+      "round": 2,
+      "case": "trees",
+      "backend": "after",
+      "seconds": 1.8400004700001773,
+      "stdout": "stretch tree of depth 19\t check: 1048575\n262144\t trees of depth 4\t check: 8126464\n65536\t trees of depth 6\t check: 8323072\n16384\t trees of depth 8\t check: 8372224\n4096\t trees of depth 10\t check: 8384512\n1024\t trees of depth 12\t check: 8387584\n256\t trees of depth 14\t check: 8388352\n64\t trees of depth 16\t check: 8388544\n16\t trees of depth 18\t check: 8388592\nlong lived tree of depth 18\t check: 524287"
+    },
+    {
+      "round": 2,
+      "case": "trees",
+      "backend": "node",
+      "seconds": 1.4538019600001917,
+      "stdout": "stretch tree of depth 19\t check: 1048575\n262144\t trees of depth 4\t check: 8126464\n65536\t trees of depth 6\t check: 8323072\n16384\t trees of depth 8\t check: 8372224\n4096\t trees of depth 10\t check: 8384512\n1024\t trees of depth 12\t check: 8387584\n256\t trees of depth 14\t check: 8388352\n64\t trees of depth 16\t check: 8388544\n16\t trees of depth 18\t check: 8388592\nlong lived tree of depth 18\t check: 524287"
+    },
+    {
+      "round": 2,
+      "case": "word_count",
+      "backend": "before",
+      "seconds": 0.14762520700014647,
+      "stdout": "21 distinct words\nvi 204856\nka 201599\nsu 198355\nto 197411\nze 191090"
+    },
+    {
+      "round": 2,
+      "case": "word_count",
+      "backend": "after",
+      "seconds": 0.14400731799992172,
+      "stdout": "21 distinct words\nvi 204856\nka 201599\nsu 198355\nto 197411\nze 191090"
+    },
+    {
+      "round": 2,
+      "case": "word_count",
+      "backend": "node",
+      "seconds": 0.26407703000018046,
+      "stdout": "21 distinct words\nvi 204856\nka 201599\nsu 198355\nto 197411\nze 191090"
+    },
+    {
+      "round": 3,
+      "case": "integer_bitwise",
+      "backend": "before",
+      "seconds": 21.18540896699983,
+      "stdout": "449408"
+    },
+    {
+      "round": 3,
+      "case": "integer_bitwise",
+      "backend": "after",
+      "seconds": 7.333696256999929,
+      "stdout": "449408"
+    },
+    {
+      "round": 3,
+      "case": "integer_bitwise",
+      "backend": "node",
+      "seconds": 5.947168192999925,
+      "stdout": "449408"
+    },
+    {
+      "round": 3,
+      "case": "integer_remainder",
+      "backend": "before",
+      "seconds": 2.955096614000013,
+      "stdout": "587207"
+    },
+    {
+      "round": 3,
+      "case": "integer_remainder",
+      "backend": "after",
+      "seconds": 2.404072418999931,
+      "stdout": "587207"
+    },
+    {
+      "round": 3,
+      "case": "integer_remainder",
+      "backend": "node",
+      "seconds": 1.1395322979999492,
+      "stdout": "587207"
+    },
+    {
+      "round": 3,
+      "case": "nbody",
+      "backend": "before",
+      "seconds": 0.36390587400001095,
+      "stdout": "-0.169075164\n-0.169086185"
+    },
+    {
+      "round": 3,
+      "case": "nbody",
+      "backend": "after",
+      "seconds": 0.3569052240000019,
+      "stdout": "-0.169075164\n-0.169086185"
+    },
+    {
+      "round": 3,
+      "case": "nbody",
+      "backend": "node",
+      "seconds": 0.7264321440000003,
+      "stdout": "-0.169075164\n-0.169086185"
+    },
+    {
+      "round": 3,
+      "case": "sort",
+      "backend": "before",
+      "seconds": 0.2159123069998259,
+      "stdout": "true 994240694.875"
+    },
+    {
+      "round": 3,
+      "case": "sort",
+      "backend": "after",
+      "seconds": 0.22489786500000264,
+      "stdout": "true 994240694.875"
+    },
+    {
+      "round": 3,
+      "case": "sort",
+      "backend": "node",
+      "seconds": 0.6430139320000308,
+      "stdout": "true 994240694.875"
+    },
+    {
+      "round": 3,
+      "case": "spectral_norm",
+      "backend": "before",
+      "seconds": 0.16034418799995365,
+      "stdout": "1.274224151"
+    },
+    {
+      "round": 3,
+      "case": "spectral_norm",
+      "backend": "after",
+      "seconds": 0.17537712600005761,
+      "stdout": "1.274224151"
+    },
+    {
+      "round": 3,
+      "case": "spectral_norm",
+      "backend": "node",
+      "seconds": 0.23277862499980984,
+      "stdout": "1.274224151"
+    },
+    {
+      "round": 3,
+      "case": "tokenizer",
+      "backend": "before",
+      "seconds": 0.15824740199991538,
+      "stdout": "3522747 code units, 597479 lines: 1 identifiers, 597482 numbers summing to 29882003030, 2517 symbols, longest na\u00efve"
+    },
+    {
+      "round": 3,
+      "case": "tokenizer",
+      "backend": "after",
+      "seconds": 0.1535907640000005,
+      "stdout": "3522747 code units, 597479 lines: 1 identifiers, 597482 numbers summing to 29882003030, 2517 symbols, longest na\u00efve"
+    },
+    {
+      "round": 3,
+      "case": "tokenizer",
+      "backend": "node",
+      "seconds": 0.2858367649998854,
+      "stdout": "3522747 code units, 597479 lines: 1 identifiers, 597482 numbers summing to 29882003030, 2517 symbols, longest na\u00efve"
+    },
+    {
+      "round": 3,
+      "case": "trees",
+      "backend": "before",
+      "seconds": 1.7123449870000513,
+      "stdout": "stretch tree of depth 19\t check: 1048575\n262144\t trees of depth 4\t check: 8126464\n65536\t trees of depth 6\t check: 8323072\n16384\t trees of depth 8\t check: 8372224\n4096\t trees of depth 10\t check: 8384512\n1024\t trees of depth 12\t check: 8387584\n256\t trees of depth 14\t check: 8388352\n64\t trees of depth 16\t check: 8388544\n16\t trees of depth 18\t check: 8388592\nlong lived tree of depth 18\t check: 524287"
+    },
+    {
+      "round": 3,
+      "case": "trees",
+      "backend": "after",
+      "seconds": 1.6495427699999254,
+      "stdout": "stretch tree of depth 19\t check: 1048575\n262144\t trees of depth 4\t check: 8126464\n65536\t trees of depth 6\t check: 8323072\n16384\t trees of depth 8\t check: 8372224\n4096\t trees of depth 10\t check: 8384512\n1024\t trees of depth 12\t check: 8387584\n256\t trees of depth 14\t check: 8388352\n64\t trees of depth 16\t check: 8388544\n16\t trees of depth 18\t check: 8388592\nlong lived tree of depth 18\t check: 524287"
+    },
+    {
+      "round": 3,
+      "case": "trees",
+      "backend": "node",
+      "seconds": 1.4771587430000181,
+      "stdout": "stretch tree of depth 19\t check: 1048575\n262144\t trees of depth 4\t check: 8126464\n65536\t trees of depth 6\t check: 8323072\n16384\t trees of depth 8\t check: 8372224\n4096\t trees of depth 10\t check: 8384512\n1024\t trees of depth 12\t check: 8387584\n256\t trees of depth 14\t check: 8388352\n64\t trees of depth 16\t check: 8388544\n16\t trees of depth 18\t check: 8388592\nlong lived tree of depth 18\t check: 524287"
+    },
+    {
+      "round": 3,
+      "case": "word_count",
+      "backend": "before",
+      "seconds": 0.158764648999977,
+      "stdout": "21 distinct words\nvi 204856\nka 201599\nsu 198355\nto 197411\nze 191090"
+    },
+    {
+      "round": 3,
+      "case": "word_count",
+      "backend": "after",
+      "seconds": 0.15245793199983382,
+      "stdout": "21 distinct words\nvi 204856\nka 201599\nsu 198355\nto 197411\nze 191090"
+    },
+    {
+      "round": 3,
+      "case": "word_count",
+      "backend": "node",
+      "seconds": 0.27411067700018066,
+      "stdout": "21 distinct words\nvi 204856\nka 201599\nsu 198355\nto 197411\nze 191090"
+    }
+  ]
+}

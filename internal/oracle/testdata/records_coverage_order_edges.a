@@ -1,0 +1,14 @@
+const r: Record<string, string> = {};
+for (const key of ['', '-0', '1.0', '000', '99999999999', '1e2', '0', '3', '1', '4294967294', '4294967295']) r[key] = key;
+r['1'] = 'one';
+delete r['3']; r['3'] = 'three';
+delete r['-0']; r['-0'] = 'minus';
+console.log(Object.keys(r).join('|'));
+console.log(Object.values(r).join('|'));
+console.log(Object.entries(r).map(e => e[0] + ':' + e[1]).join('|'));
+console.log(String(JSON.stringify(r)));
+const empty: Record<string, string> = {};
+console.log(String(Object.keys(empty).length));
+console.log(String(Object.values(empty).length));
+console.log(String(Object.entries(empty).length));
+console.log(String(JSON.stringify(empty)));

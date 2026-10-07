@@ -313,6 +313,13 @@ func (m *MutableRanges) set(id IdentifierId, r MutableRange) {
 // the identifier tables are per-function, which the brief names as a trap that has already cost an
 // agent a silent drop. `RangesForNested` walks them explicitly and returns one table each.
 //
+// A call's effects must include writes through aliases the callee can reach, even when
+// the value itself is not an operand. In particular, a local read from a captured
+// container is escaped: the container has no place here, but callbacks and later
+// closure calls may still write its contents. InferAliasingEffects preserves that
+// reachability and emits a transitive conditional mutation at every such call.
+// TestEveryMutationIsInItsRange checks these calls against Node in range_alias_*.a.
+//
 // Infers effects for itself. Stage 2.5 closed the widening gap this comment previously declined:
 // `InferAliasingEffects` runs first, its mutations widen ranges through the alias graph, and the
 // definition half then opens every range that the widening left without a start. A caller holding an

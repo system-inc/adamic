@@ -1,0 +1,3 @@
+const fixed = {x: 1};
+const r: Record<string, number> = {...fixed};
+console.log(String(r['x']));

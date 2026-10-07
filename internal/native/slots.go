@@ -8,8 +8,8 @@ import (
 
 // slotted is a value as an adamic_value holds it, in a field, an element, a cell, or a function
 // value's argument or result. number | undefined is packed into the one double (maybe.c): undefined
-// as the reserved NaN, any other NaN made the ordinary one. Boolean | undefined uses a tagged byte
-// (false 0, true 1, undefined 2) for object fields. Everything else is held as it is.
+// as the reserved NaN, any other NaN made the ordinary one. Optional booleans use
+// a three-state byte: false, true, absent. References use NULL for absence.
 func slotted(valueType ir.Type, value string) string {
 	if valueType == ir.MaybeNumber {
 		return fmt.Sprintf("adamic_maybe_number_pack(%s)", value)

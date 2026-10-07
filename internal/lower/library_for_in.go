@@ -19,33 +19,40 @@ func (l *lowering) forIn(node *ast.Node) ([]ir.Statement, error) {
 	// Structural types can hide an array, and synthetic undefined spread fields are not real keys.
 	// Require a plain literal origin, including aliases. This deliberately refuses parameters and
 	// calls until their possible shapes and property presence can be proved.
-	if !l.plainEnumerableObject(statement.Expression, map[*ast.Symbol]bool{}) {
+	isRecord := l.recordElement(proven) != nil
+	if !isRecord && !l.plainEnumerableObject(statement.Expression, map[*ast.Symbol]bool{}) {
 		return nil, l.notYet(statement.Expression, "for...in without a proven fixed plain-object origin (arrays, prototypes and absent synthetic fields cannot be enumerated soundly)")
 	}
 	object, err := l.expression(statement.Expression)
 	if err != nil {
 		return nil, err
 	}
-	if object.Type() != ir.Object {
+	if object.Type() != ir.Object && object.Type() != ir.Record {
 		return nil, l.notYet(statement.Expression, "for...in over a value that is not a plain object")
 	}
 	loop := ir.ForOf{Iterable: ir.ObjectKeys{Object: object}, Element: ir.String}
+	var recordLocal int
+	if isRecord {
+		recordLocal = len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: "record", Type: ir.Record, Function: l.functionIndex})
+		loop.Iterable = ir.RecordCall{Method: "keys", Arguments: []ir.Expression{ir.Read{Local: recordLocal, Of: ir.Record}}, Returns: ir.Array}
+	}
 	initializer := statement.Initializer
 	var assignment ir.Statement
 	if initializer.Kind == ast.KindVariableDeclarationList {
 		if initializer.Flags&ast.NodeFlagsBlockScoped == 0 {
-			return nil, &Refused{Where: l.program.Where(initializer), What: "var", Fix: "use const or let"}
+			return nil, &Refused{Where: l.program.Where(initializer), What: "var", Fix: "use const or let (adamic/no-var)"}
 		}
 		declarations := initializer.AsVariableDeclarationList().Declarations.Nodes
 		if len(declarations) != 1 || !ast.IsIdentifier(declarations[0].Name()) {
-			return nil, l.notYet(initializer, "a for...in binding that is not one plain name")
+			return nil, l.notYet(initializer, "a for...in binding that is not one plain name (write for (const key in object))")
 		}
 		loop.Local, err = l.declareLocal(declarations[0].Name())
 	} else {
 		target := ast.SkipParentheses(initializer)
 		local, found := l.local(target)
 		if !ast.IsIdentifier(target) || !found || l.result.Locals[local].Type != ir.String {
-			return nil, l.notYet(initializer, "a for...in assignment that is not a string variable")
+			return nil, l.notYet(initializer, "a for...in assignment that is not a string variable (declare a fresh string binding with for (const key in object), then assign it in the body)")
 		}
 		loop.Local = len(l.result.Locals)
 		l.result.Locals = append(l.result.Locals, ir.Local{Name: "key", Type: ir.String, Function: l.functionIndex})
@@ -62,11 +69,19 @@ func (l *lowering) forIn(node *ast.Node) ([]ir.Statement, error) {
 		loop.Body = append(loop.Body, assignment)
 	}
 	loop.Body = append(loop.Body, body...)
+	if isRecord {
+		loop.Body = []ir.Statement{ir.If{Condition: ir.RecordCall{Method: "hasOwn", Arguments: []ir.Expression{ir.Read{Local: recordLocal, Of: ir.Record}, ir.Read{Local: loop.Local, Of: ir.String}}, Returns: ir.Boolean}, Then: loop.Body}}
+		return []ir.Statement{ir.Declare{Local: recordLocal, Value: object}, loop}, nil
+	}
 	return []ir.Statement{loop}, nil
 }
 
 func (l *lowering) plainEnumerableObject(node *ast.Node, visiting map[*ast.Symbol]bool) bool {
 	node = ast.SkipParentheses(node)
+	// Enum objects have a complete fixed shape, including numeric reverse keys.
+	if l.enumObject(node) != nil {
+		return true
+	}
 	if node.Kind == ast.KindAsExpression {
 		return l.plainEnumerableObject(node.AsAsExpression().Expression, visiting)
 	}

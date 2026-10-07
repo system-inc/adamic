@@ -1,0 +1,2 @@
+const value: Record<string, number> = {};
+console.log(typeof value.missing);
