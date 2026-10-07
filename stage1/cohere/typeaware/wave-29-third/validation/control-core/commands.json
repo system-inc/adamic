@@ -1,0 +1,145 @@
+[
+  {
+    "name": "go-build",
+    "args": [
+      "go",
+      "build",
+      "-overlay",
+      "/workspace/wave29-control-final/overlay.json",
+      "-o",
+      "/workspace/wave29-control-final/oracle",
+      "/workspace/adamic/cohere/adamic_wave29_control_oracle.go"
+    ],
+    "exit": 0,
+    "elapsed_ns": 4911775309
+  },
+  {
+    "name": "go",
+    "args": [
+      "/workspace/wave29-control-final/oracle",
+      "/workspace/wave29-control-final",
+      "/workspace/adamic/cohere/internal/lint/ecmascript/high_level_intermediate_representation/postdominator_test.go"
+    ],
+    "exit": 0,
+    "elapsed_ns": 183838823
+  },
+  {
+    "name": "native-build",
+    "args": [
+      "/workspace/wave29-regex-controls/adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-third/control_core.a",
+      "-o",
+      "/workspace/wave29-control-final/native"
+    ],
+    "exit": 0,
+    "elapsed_ns": 224824084
+  },
+  {
+    "name": "native",
+    "args": [
+      "/workspace/wave29-control-final/native",
+      "/workspace/wave29-control-final/graphs.frames"
+    ],
+    "exit": 0,
+    "elapsed_ns": 113135747
+  },
+  {
+    "name": "node",
+    "args": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-third/control_core.a",
+      "/workspace/wave29-control-final/graphs.frames"
+    ],
+    "exit": 0,
+    "elapsed_ns": 167921773
+  },
+  {
+    "name": "javascript",
+    "args": [
+      "/workspace/wave29-regex-controls/adamic",
+      "js",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-third/control_core.a"
+    ],
+    "exit": 0,
+    "elapsed_ns": 43054414
+  },
+  {
+    "name": "javascript-node",
+    "args": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/wave29-control-final/control_core.mjs",
+      "/workspace/wave29-control-final/graphs.frames"
+    ],
+    "exit": 0,
+    "elapsed_ns": 191090077
+  },
+  {
+    "name": "asan-build",
+    "args": [
+      "/workspace/wave29-regex-controls/adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-third/control_core.a",
+      "-o",
+      "/workspace/wave29-control-final/asan",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "elapsed_ns": 552870414
+  },
+  {
+    "name": "asan",
+    "args": [
+      "/workspace/wave29-control-final/asan",
+      "/workspace/wave29-control-final/graphs.frames"
+    ],
+    "exit": 0,
+    "elapsed_ns": 813773566
+  },
+  {
+    "name": "throw-exit-build",
+    "args": [
+      "/workspace/wave29-regex-controls/adamic",
+      "build",
+      "/workspace/wave29-control-final/mutant-throw-exit/control_core.a",
+      "-o",
+      "/workspace/wave29-control-final/mutant-throw-exit/native"
+    ],
+    "exit": 0,
+    "elapsed_ns": 225341350
+  },
+  {
+    "name": "throw-exit",
+    "args": [
+      "/workspace/wave29-control-final/mutant-throw-exit/native",
+      "/workspace/wave29-control-final/graphs.frames"
+    ],
+    "exit": 0,
+    "elapsed_ns": 106069150
+  },
+  {
+    "name": "switch-case-build",
+    "args": [
+      "/workspace/wave29-regex-controls/adamic",
+      "build",
+      "/workspace/wave29-control-final/mutant-switch-case/control_core.a",
+      "-o",
+      "/workspace/wave29-control-final/mutant-switch-case/native"
+    ],
+    "exit": 0,
+    "elapsed_ns": 202851223
+  },
+  {
+    "name": "switch-case",
+    "args": [
+      "/workspace/wave29-control-final/mutant-switch-case/native",
+      "/workspace/wave29-control-final/graphs.frames"
+    ],
+    "exit": 0,
+    "elapsed_ns": 102532216
+  }
+]

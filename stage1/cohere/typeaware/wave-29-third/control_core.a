@@ -1,0 +1,23 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { Frames } from '../frames.ts';
+import { ControlBlock, ControlGraph, PostDominators } from './post_dominators.a';
+const text = readTextFile(programArguments()[0] ?? panic('missing graph frames'));
+if(text.kind === 'Error') { panic(text.message); }
+const frames = new Frames(text.text);
+const count = frames.natural();
+for(let index = 0; index < count; index++) {
+    const entry = frames.natural();
+    const blocks: ControlBlock[] = [];
+    const length = frames.natural();
+    for(let at = 0; at < length; at++) { blocks.push(new ControlBlock(frames.natural(), frames.field(), frames.ids(), frames.ids())); }
+    const values = new Set<number>(frames.ids());
+    const query = frames.ids();
+    const graph = new ControlGraph(entry, blocks);
+    const tree = new PostDominators(graph);
+    let unconditional = '';
+    for(const id of tree.unconditional().sort((a, b) => (a ?? panic('missing first block')) - (b ?? panic('missing second block')))) { unconditional += `${id},`; }
+    let controlled = '';
+    for(const id of query) { controlled += tree.controlled(id, values) ? '1' : '0'; }
+    console.log(`${index}\t${unconditional}\t${controlled}`);
+}
+frames.end();

@@ -1,0 +1,169 @@
+// Native control analysis over supplied HIR structure, not source-to-SSA lowering.
+import { panic } from 'adamic';
+export class ControlBlock {
+    readonly id: number;
+    readonly terminal: string;
+    readonly predecessors: number[];
+    readonly tests: number[];
+    constructor(id: number, terminal: string, predecessors: number[], tests: number[]) {
+        this.id = id; this.terminal = terminal; this.predecessors = predecessors; this.tests = tests;
+    }
+}
+export class ControlGraph {
+    readonly entry: number;
+    readonly blocks: ControlBlock[];
+    constructor(entry: number, blocks: ControlBlock[]) { this.entry = entry; this.blocks = blocks; }
+}
+class WalkFrame {
+    readonly id: number;
+    next = 0;
+    constructor(id: number) { this.id = id; }
+}
+export class PostDominators {
+    readonly graph: ControlGraph;
+    readonly immediate = new Map<number, number>();
+    readonly blocks = new Map<number, ControlBlock>();
+    constructor(graph: ControlGraph) {
+        this.graph = graph;
+        for(const block of graph.blocks) { this.blocks.set(block.id, block); }
+        this.compute();
+    }
+    empty(): number[] { const result: number[] = []; return result; }
+    append(edges: Map<number, number[]>, from: number, to: number): void {
+        const targets = edges.get(from) ?? this.empty();
+        targets.push(to);
+        edges.set(from, targets);
+    }
+    order(edges: Map<number, number[]>): number[] {
+        const visited = new Set<number>();
+        const postorder: number[] = [];
+        const stack: WalkFrame[] = [new WalkFrame(0)];
+        visited.add(0);
+        while(stack.length > 0) {
+            const top = stack[stack.length - 1] ?? panic('missing post-dominator frame');
+            const children = edges.get(top.id) ?? this.empty();
+            if(top.next < children.length) {
+                const child = children[top.next] ?? panic('missing reverse edge');
+                top.next++;
+                if(!visited.has(child)) { visited.add(child); stack.push(new WalkFrame(child)); }
+                continue;
+            }
+            postorder.push(top.id);
+            stack.pop();
+        }
+        postorder.reverse();
+        return postorder;
+    }
+    intersect(immediate: number[], first: number, second: number): number {
+        let a = first;
+        let b = second;
+        while(a !== b) {
+            while(a > b) {
+                const next = immediate[a] ?? panic('missing immediate post-dominator');
+                if(next === -1 || next === a) { return b; }
+                a = next;
+            }
+            while(b > a) {
+                const next = immediate[b] ?? panic('missing immediate post-dominator');
+                if(next === -1 || next === b) { return a; }
+                b = next;
+            }
+        }
+        return a;
+    }
+    compute(): void {
+        const successors = new Map<number, number[]>();
+        for(const block of this.graph.blocks) {
+            if(block.terminal === 'Return') { this.append(successors, 0, block.id); }
+            for(const predecessor of block.predecessors) { this.append(successors, block.id, predecessor); }
+        }
+        const order = this.order(successors);
+        const position = new Map<number, number>();
+        const immediate: number[] = [];
+        for(let index = 0; index < order.length; index++) {
+            position.set(order[index] ?? panic('missing reverse position'), index);
+            immediate.push(-1);
+        }
+        if(order.length === 0) { return; }
+        immediate[0] = 0;
+        const predecessors = new Map<number, number[]>();
+        for(const from of successors.keys()) {
+            for(const to of successors.get(from) ?? this.empty()) { this.append(predecessors, to, from); }
+        }
+        let changed = true;
+        while(changed) {
+            changed = false;
+            for(let index = 1; index < order.length; index++) {
+                let next = -1;
+                const id = order[index] ?? panic('missing reverse node');
+                for(const predecessor of predecessors.get(id) ?? this.empty()) {
+                    const known = position.get(predecessor);
+                    if(known === undefined || immediate[known] === -1) { continue; }
+                    next = next === -1 ? known : this.intersect(immediate, known, next);
+                }
+                if(next !== -1 && immediate[index] !== next) { immediate[index] = next; changed = true; }
+            }
+        }
+        for(let index = 1; index < order.length; index++) {
+            const parent = immediate[index] ?? panic('missing post-dominator parent');
+            if(parent === -1) { continue; }
+            this.immediate.set(order[index] ?? panic('missing post-dominator node'), order[parent] ?? panic('missing post-dominator root'));
+        }
+    }
+    unconditional(): number[] {
+        const result: number[] = [];
+        if(this.graph.blocks.length === 0) { return result; }
+        let current = this.graph.entry;
+        for(let step = 0; step <= this.graph.blocks.length; step++) {
+            if(current === 0 || result.includes(current)) { break; }
+            result.push(current);
+            const next = this.immediate.get(current);
+            if(next === undefined) { break; }
+            current = next;
+        }
+        return result;
+    }
+    dominated(target: number): number[] {
+        const result: number[] = [];
+        const visited = new Set<number>();
+        const queue: number[] = [target];
+        for(let at = 0; at < queue.length; at++) {
+            const current = queue[at] ?? panic('missing post-dominator work item');
+            if(visited.has(current)) { continue; }
+            visited.add(current);
+            const block = this.blocks.get(current);
+            if(block === undefined) { continue; }
+            for(const predecessor of block.predecessors) {
+                const immediate = this.immediate.get(predecessor) ?? predecessor;
+                if(immediate === target || result.includes(immediate)) { if(!result.includes(predecessor)) { result.push(predecessor); } }
+                queue.push(predecessor);
+            }
+        }
+        return result;
+    }
+    frontier(target: number): number[] {
+        const dominated = this.dominated(target);
+        const frontier: number[] = [];
+        const visited = new Set<number>();
+        const walk = dominated.slice();
+        walk.push(target);
+        for(const id of walk) {
+            if(visited.has(id)) { continue; }
+            visited.add(id);
+            const block = this.blocks.get(id);
+            if(block === undefined) { continue; }
+            for(const predecessor of block.predecessors) {
+                if(!dominated.includes(predecessor)) { if(!frontier.includes(predecessor)) { frontier.push(predecessor); } }
+            }
+        }
+        return frontier;
+    }
+    controlled(target: number, values: Set<number>): boolean {
+        for(const id of this.frontier(target)) {
+            const block = this.blocks.get(id);
+            if(block === undefined || !['If', 'Branch', 'Switch'].includes(block.terminal)) { continue; }
+            for(const test of block.tests) { if(values.has(test)) { return true; } }
+        }
+        return false;
+    }
+}

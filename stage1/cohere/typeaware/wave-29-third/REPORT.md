@@ -174,3 +174,5 @@ complete. Set-state-in-effect and set-state-in-render have no new native
 validator here; their blocker controls remain the executable evidence.
 
 The branch was subsequently rebased onto current main and its available oracles rechecked. See [LANDING_REPORT.md](LANDING_REPORT.md) for current results and the remaining React dependency boundary.
+
+A further partial control-analysis port is tested in [CONTROL_REPORT.md](CONTROL_REPORT.md). It does not mark any full React rule complete.
