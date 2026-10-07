@@ -269,3 +269,6 @@ func (p *Program) lineAndColumn(sourceFile *ast.SourceFile, position int) (int, 
 	prefix := sourceFile.Text()[int(lineStarts[line]):position]
 	return line + 1, len(utf16.Encode([]rune(prefix))) + 1
 }
+
+// CompilerProgram exposes the checked program to public checker and lint adapters.
+func (p *Program) CompilerProgram() *compiler.Program { return p.compiler }

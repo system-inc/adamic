@@ -24,6 +24,11 @@ func (l *lowering) staticBase(declaration *ast.Node) *ast.Node {
 	return nil
 }
 func (l *lowering) needsStatics(declaration *ast.Node) bool {
+	// A class is in the temporal dead zone even when it has no static members.
+	// Cyclic graphs need the same ready storage for construction and extends.
+	if l.cyclicModules {
+		return true
+	}
 	for _, member := range declaration.Members() {
 		if member.Kind == ast.KindClassStaticBlockDeclaration || ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
 			return true
@@ -227,7 +232,9 @@ func (l *lowering) staticDeclaration(declaration *ast.Node) ([]ir.Statement, err
 	if lowered.base != nil {
 		parent := l.staticBase(declaration)
 		slot := l.result.Classes[lowered.class-1].StaticParent - 1
-		fields[slot].Value = ir.Read{Local: l.staticGlobals[l.symbol(parent.Name())], Of: ir.Object, Checked: true}
+		// Extends reads the public binding, whose name and ready point belong to
+		// the source class, rather than the internal storage initialized earlier.
+		fields[slot].Value = ir.Read{Local: l.locals[l.symbol(parent.Name())], Of: ir.Object, Checked: true}
 	}
 	object := ir.Read{Local: l.staticGlobals[l.symbol(declaration.Name())], Of: ir.Object}
 	statements := []ir.Statement{ir.Declare{Local: object.Local, Value: ir.ObjectLiteral{Fields: fields, Class: lowered.class}}}

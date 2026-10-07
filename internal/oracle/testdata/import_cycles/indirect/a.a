@@ -1,0 +1,4 @@
+import { value } from './b.a';
+function read(): number { return value; }
+console.log(`${read()}`);
+export const first = 1;
