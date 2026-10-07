@@ -1,7 +1,6 @@
 package checker
 
 import (
-	"fmt"
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 )
@@ -11,6 +10,6 @@ func (p *Program) inspectWave03More(out *fields, c *checker.Checker, node *ast.N
 	case "source-access-context":
 		return p.sourceAccessContext(out, node, question)
 	default:
-		return "", fmt.Errorf("unsupported checker question: %s", question)
+		return p.inspectWave03React(out, c, node, mode, question)
 	}
 }

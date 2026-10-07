@@ -1,0 +1,48 @@
+export class SourceSyntaxNode {
+    readonly kind: string;
+    readonly pos: number;
+    readonly end: number;
+    readonly start: number;
+    readonly text: string;
+    readonly parent: number;
+    readonly children: readonly number[];
+    readonly name: number;
+    readonly type: number;
+    readonly initializer: number;
+    readonly body: number;
+    readonly flags: number;
+    readonly functionFlags: number;
+    readonly expression: number;
+    readonly left: number;
+    readonly right: number;
+    readonly yes: number;
+    readonly no: number;
+    readonly operator: string;
+    readonly rest: boolean;
+    readonly callArguments: readonly number[];
+    readonly parameters: readonly number[];
+    constructor(kind: string, pos: number, end: number, start: number, text: string, parent: number, children: readonly number[], name: number, type: number, initializer: number, body: number, flags: number, functionFlags: number, expression: number, left: number, right: number, yes: number, no: number, operator: string, rest: boolean, callArguments: readonly number[], parameters: readonly number[]) {
+        this.kind = kind;
+        this.pos = pos;
+        this.end = end;
+        this.start = start;
+        this.text = text;
+        this.parent = parent;
+        this.children = children;
+        this.name = name;
+        this.type = type;
+        this.initializer = initializer;
+        this.body = body;
+        this.flags = flags;
+        this.functionFlags = functionFlags;
+        this.expression = expression;
+        this.left = left;
+        this.right = right;
+        this.yes = yes;
+        this.no = no;
+        this.operator = operator;
+        this.rest = rest;
+        this.callArguments = callArguments;
+        this.parameters = parameters;
+    }
+}

@@ -1,0 +1,28 @@
+import type { Frames } from '../frames.ts';
+import { SourceSyntaxNode } from './source_syntax_node.a';
+function list(frames: Frames): readonly number[] { const count = frames.natural(); const result: number[] = []; for(let at = 0; at < count; at++) { result.push(frames.natural()); } return result; }
+export function sourceSyntaxNode(frames: Frames): SourceSyntaxNode {
+    const kind = frames.field();
+    const pos = frames.natural();
+    const end = frames.natural();
+    const start = frames.natural();
+    const text = frames.field();
+    const parent = frames.natural();
+    const children = list(frames);
+    const name = frames.natural();
+    const type = frames.natural();
+    const initializer = frames.natural();
+    const body = frames.natural();
+    const flags = frames.natural();
+    const functionFlags = frames.natural();
+    const expression = frames.natural();
+    const left = frames.natural();
+    const right = frames.natural();
+    const yes = frames.natural();
+    const no = frames.natural();
+    const operator = frames.field();
+    const rest = frames.yes();
+    const callArguments = list(frames);
+    const parameters = list(frames);
+    return new SourceSyntaxNode(kind, pos, end, start, text, parent, children, name, type, initializer, body, flags, functionFlags, expression, left, right, yes, no, operator, rest, callArguments, parameters);
+}

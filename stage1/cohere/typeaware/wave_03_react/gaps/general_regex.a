@@ -1,0 +1,3 @@
+import { programArguments } from 'adamic';
+const args = programArguments();
+console.log(new RegExp(args[0] ?? '^is[A-Z]').test(args[1] ?? 'enabled') ? 'match' : 'mismatch');

@@ -1,0 +1,97 @@
+import type { SourceSyntaxTree } from './source_syntax_tree.a';
+export class ComponentDetection {
+    readonly tree: SourceSyntaxTree;
+    readonly names = new Set<string>();
+    readonly components = new Set<number>();
+    constructor(tree: SourceSyntaxTree) { this.tree = tree; }
+    capital(name: string): boolean { let start = 0; while(name[start] === '_') { start++; } const code = name.charCodeAt(start);
+        // Full uppercase expands these Greek vowels plus iota, but Go's simple uppercase changes the scalar.
+        if((code >= 8064 && code <= 8071) || (code >= 8080 && code <= 8087) || (code >= 8096 && code <= 8103) || [8115, 8131, 8179].includes(code)) { return false; }
+         const first = name.slice(start, start + (code >= 55296 && code <= 56319 ? 2 : 1)); return first !== '' && (first.toUpperCase() === first || first.toUpperCase().length > first.length); }
+    reactValue(index: number): boolean {
+        const current = this.tree.skip(index); if(this.tree.kind(current) === 'Identifier') { return this.tree.text(current) === 'React'; }
+        if(this.tree.kind(current) !== 'CallExpression') { return false; } const call = this.tree.node(current); const first = call.callArguments[0];
+        return this.tree.kind(call.expression) === 'Identifier' && this.tree.text(call.expression) === 'require' && call.callArguments.length === 1 && first !== undefined && ['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(this.tree.kind(first)) && this.tree.text(first) === 'react';
+    }
+    importReact(index: number): boolean {
+        for(let current = index; current !== 0; current = this.tree.parent(current)) { if(this.tree.kind(current) === 'ImportDeclaration') { for(const child of this.tree.node(current).children) { if(['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(this.tree.kind(child))) { return this.tree.text(child) === 'react'; } } return false; } } return false;
+    }
+    fromReact(name: string): boolean {
+        for(let index = 1; index <= this.tree.nodes.length; index++) {
+            const node = this.tree.node(index);
+            if(node.kind === 'ImportSpecifier' && this.tree.text(node.name) === name && this.importReact(index)) { return true; }
+            if(node.kind !== 'VariableDeclaration' || node.initializer === 0) { continue; }
+            if(this.tree.kind(node.name) === 'Identifier' && this.tree.text(node.name) === name && this.tree.kind(node.initializer) === 'PropertyAccessExpression') { const access = this.tree.node(node.initializer); if(this.tree.text(access.name) === name && this.reactValue(access.expression)) { return true; } }
+            if(this.tree.kind(node.name) === 'ObjectBindingPattern' && this.reactValue(node.initializer)) { for(const child of this.tree.node(node.name).children) { if(this.tree.text(this.tree.node(child).name) === name) { return true; } } }
+        } return false;
+    }
+    local(start: number, end: number, kind: string): number { for(let index = 1; index <= this.tree.nodes.length; index++) { const node = this.tree.node(index); if(node.pos === start && node.end === end && node.kind === kind) { return index; } } return 0; }
+    createElement(index: number): boolean {
+        if(this.tree.kind(index) !== 'CallExpression') { return false; } const callee = this.tree.skip(this.tree.node(index).expression);
+        if(this.tree.kind(callee) === 'PropertyAccessExpression') { const access = this.tree.node(callee); return this.tree.text(access.name) === 'createElement' && this.tree.kind(this.tree.skip(access.expression)) === 'Identifier' && this.tree.text(this.tree.skip(access.expression)) === 'React'; }
+        if(this.tree.kind(callee) !== 'Identifier' || this.tree.text(callee) !== 'createElement') { return false; }
+        for(const declaration of this.tree.context(callee).ownDeclarations) {
+            if(declaration.path !== this.tree.path) { continue; } const local = this.local(declaration.start(), declaration.end(), declaration.kind()); if(local === 0) { continue; }
+            if(declaration.kind() === 'ImportSpecifier' && this.importReact(local)) { return true; }
+            if(declaration.kind() === 'VariableDeclaration') { const value = this.tree.node(local).initializer; if(this.tree.kind(value) === 'PropertyAccessExpression' && this.tree.text(this.tree.node(value).name) === 'createElement' && this.reactValue(this.tree.node(value).expression)) { return true; } }
+            if(declaration.kind() === 'BindingElement') { const parent = this.tree.parent(local); const variable = this.tree.parent(parent); if(this.tree.kind(parent) === 'ObjectBindingPattern' && this.tree.kind(variable) === 'VariableDeclaration' && this.reactValue(this.tree.node(variable).initializer)) { return true; } }
+        } return false;
+    }
+    jsx(index: number, acceptNull: boolean): boolean {
+        const current = this.tree.skip(index); if(current === 0) { return false; } const node = this.tree.node(current);
+        if(['JsxElement', 'JsxSelfClosingElement', 'JsxFragment'].includes(node.kind)) { return true; }
+        if(node.kind === 'NullKeyword') { return acceptNull; }
+        if(node.kind === 'ConditionalExpression') { return this.jsx(node.yes, acceptNull) || this.jsx(node.no, acceptNull); }
+        if(node.kind === 'BinaryExpression') { if(node.operator === 'CommaToken') { return this.jsx(node.right, acceptNull); } if(['AmpersandAmpersandToken', 'BarBarToken', 'QuestionQuestionToken'].includes(node.operator)) { return this.jsx(node.left, acceptNull) || this.jsx(node.right, acceptNull); } }
+        return node.kind === 'CallExpression' && this.createElement(current);
+    }
+    statements(index: number, acceptNull: boolean): boolean {
+        if(index === 0) { return false; } const node = this.tree.node(index); if(node.kind === 'ReturnStatement') { return this.jsx(node.expression, acceptNull); }
+        if(!['Block', 'IfStatement', 'ForStatement', 'WhileStatement', 'SwitchStatement', 'CaseBlock', 'CaseClause', 'DefaultClause'].includes(node.kind)) { return false; }
+        for(const child of node.children) { if(this.statements(child, acceptNull)) { return true; } } return false;
+    }
+    returns(index: number, acceptNull: boolean): boolean { const body = this.tree.node(index).body; if(this.tree.kind(index) === 'ArrowFunction' && body !== 0 && this.tree.kind(body) !== 'Block') { return this.jsx(body, acceptNull); } return this.statements(body, acceptNull); }
+    tag(index: number): string {
+        if(!['ArrowFunction', 'FunctionExpression'].includes(this.tree.kind(index))) { return ''; } let body = this.tree.node(index).body;
+        if(this.tree.kind(body) === 'Block') { let found = 0; for(const child of this.tree.node(body).children) { if(this.tree.kind(child) === 'ReturnStatement') { found = this.tree.node(child).expression; break; } } body = found; }
+        body = this.tree.skip(body); if(this.tree.kind(body) === 'JsxElement') { body = this.tree.node(body).children[0] ?? 0; }
+        if(!['JsxOpeningElement', 'JsxSelfClosingElement'].includes(this.tree.kind(body))) { return ''; } const tag = this.tree.node(body).children[0] ?? 0; return this.tree.kind(tag) === 'Identifier' ? this.tree.text(tag) : '';
+    }
+    wrapper(index: number): boolean {
+        if(this.tree.kind(index) !== 'CallExpression') { return false; } const call = this.tree.node(index); if(call.callArguments.length === 0) { return false; } const callee = call.expression;
+        if(this.tree.kind(callee) === 'Identifier') { const name = this.tree.text(callee); return ['memo', 'forwardRef'].includes(name) && this.fromReact(name); }
+        if(this.tree.kind(callee) !== 'PropertyAccessExpression') { return false; } const access = this.tree.node(callee);
+        return this.tree.kind(this.tree.skip(access.expression)) === 'Identifier' && this.tree.text(this.tree.skip(access.expression)) === 'React' && ['memo', 'forwardRef'].includes(this.tree.text(access.name)) && !this.names.has(this.tag(call.callArguments[0] ?? 0));
+    }
+    allowed(index: number): boolean {
+        const parent = this.tree.semanticParent(index); if(parent === 0) { return false; } const node = this.tree.node(parent);
+        if(node.kind === 'BinaryExpression') { if(node.operator === 'EqualsToken') { return true; } return node.operator === 'CommaToken' && this.tree.skip(node.right) === index && this.allowed(parent); }
+        return ['VariableDeclaration', 'PropertyAssignment', 'ReturnStatement', 'ExportAssignment', 'ArrowFunction'].includes(node.kind);
+    }
+    stateless(index: number): number {
+        const node = this.tree.node(index);
+        if(node.kind === 'FunctionDeclaration') { return (node.functionFlags & 3) !== 3 && (node.name === 0 || this.capital(this.tree.text(node.name))) && this.returns(index, true) ? index : 0; }
+        if(!['FunctionExpression', 'ArrowFunction'].includes(node.kind) || (node.kind === 'FunctionExpression' && (node.functionFlags & 3) === 3)) { return 0; }
+        const parent = this.tree.semanticParent(index); if(parent === 0) { return 0; } const outer = this.tree.node(parent);
+        if((outer.kind === 'ReturnStatement' || (outer.kind === 'ArrowFunction' && outer.body === index)) && !this.returns(index, false)) { return 0; }
+        if(outer.kind === 'ExportAssignment') { return this.returns(index, false) ? index : 0; }
+        if(outer.kind === 'VariableDeclaration' && this.returns(index, true)) { return this.tree.kind(outer.name) === 'Identifier' && this.capital(this.tree.text(outer.name)) ? index : 0; }
+        if(outer.kind === 'PropertyAssignment' && !(node.kind === 'FunctionExpression' && node.name !== 0)) { return this.tree.kind(outer.name) === 'Identifier' && this.capital(this.tree.text(outer.name)) && this.returns(index, false) ? index : 0; }
+        let wrapper = 0; for(let current = this.tree.parent(index); current !== 0 && this.wrapper(current); current = this.tree.parent(current)) { wrapper = current; }
+        if(wrapper !== 0 && this.returns(index, true)) { return wrapper; }
+        if(outer.kind === 'MethodDeclaration') { return this.tree.kind(outer.name) === 'Identifier' && this.capital(this.tree.text(outer.name)) && this.returns(index, false) ? index : 0; }
+        if(!this.allowed(index) || !this.returns(index, true)) { return 0; }
+        if(node.kind === 'FunctionExpression' && node.name !== 0) { return this.capital(this.tree.text(node.name)) ? index : 0; }
+        if(outer.kind === 'BinaryExpression' && outer.operator === 'EqualsToken') { const target = this.tree.skip(outer.left); if(this.tree.kind(target) === 'Identifier') { return this.capital(this.tree.text(target)) ? index : 0; } if(this.tree.kind(target) === 'PropertyAccessExpression') { const access = this.tree.node(target); return this.capital(this.tree.text(access.name)) || (this.tree.text(access.name) === 'exports' && this.tree.text(this.tree.skip(access.expression)) === 'module') ? index : 0; } }
+        return index;
+    }
+    add(index: number): void { if(index === 0 || this.components.has(index)) { return; } this.components.add(index); if(this.tree.kind(index) === 'ClassDeclaration' && this.tree.node(index).name !== 0) { this.names.add(this.tree.text(this.tree.node(index).name)); } if(this.tree.kind(index) === 'ArrowFunction') { const parent = this.tree.semanticParent(index); if(this.tree.kind(parent) === 'VariableDeclaration' && this.tree.kind(this.tree.node(parent).name) === 'Identifier') { this.names.add(this.tree.text(this.tree.node(parent).name)); } } }
+    run(): void {
+        for(let index = 1; index <= this.tree.nodes.length; index++) {
+            const node = this.tree.node(index); if(this.tree.function(index)) { this.add(this.stateless(index)); }
+            if(node.kind === 'MethodDeclaration' && this.tree.kind(node.parent) === 'ObjectLiteralExpression' && this.tree.kind(node.name) === 'Identifier' && this.capital(this.tree.text(node.name)) && this.returns(index, false)) { this.add(index); }
+            if(node.kind === 'CallExpression' && this.wrapper(index)) { const argument = this.tree.skip(node.callArguments[0] ?? 0); if(['FunctionExpression', 'ArrowFunction'].includes(this.tree.kind(argument))) { this.add(index); } }
+            if(['ClassDeclaration', 'ClassExpression'].includes(node.kind)) { for(const clause of node.children) { if(this.tree.kind(clause) !== 'HeritageClause' || this.tree.node(clause).operator !== 'ExtendsKeyword') { continue; } for(const heritage of this.tree.node(clause).children) { const base = this.tree.skip(this.tree.node(heritage).expression); if(this.tree.kind(base) === 'Identifier' && ['Component', 'PureComponent'].includes(this.tree.text(base))) { this.add(index); } if(this.tree.kind(base) === 'PropertyAccessExpression') { const access = this.tree.node(base); if(this.tree.text(this.tree.skip(access.expression)) === 'React' && ['Component', 'PureComponent'].includes(this.tree.text(access.name))) { this.add(index); } } } } }
+        }
+    }
+}

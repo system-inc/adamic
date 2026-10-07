@@ -1,0 +1,22 @@
+[
+  {
+    "corpus": "repository",
+    "config": "/workspace/adamic/tsconfig.json",
+    "manifest": "/workspace/wave-03/repository.manifest",
+    "go_seconds": 0.428424306,
+    "go_phases": "cohere: load_ns=202770383 rule_ns=6007912 run_ns=109665723\n",
+    "native_seconds": 2.611470305,
+    "native_phases": "tsgo: load_ns=315845993 query_ns=844324207 queries=287 first_query_ns=12337779 run_ns=1910283571\n",
+    "native_over_go": 6.0955232194505795
+  },
+  {
+    "corpus": "compiler",
+    "config": "/workspace/wave-03/typescript-corpus/src/compiler/tsconfig.json",
+    "manifest": "/workspace/wave-03/compiler.manifest",
+    "go_seconds": 1.684246362,
+    "go_phases": "cohere: load_ns=965649294 rule_ns=239591733 run_ns=637917855\n",
+    "native_seconds": 7.273282214,
+    "native_phases": "tsgo: load_ns=916962837 query_ns=2872568193 queries=77 first_query_ns=45460 run_ns=6146751402\n",
+    "native_over_go": 4.3184194296629865
+  }
+]

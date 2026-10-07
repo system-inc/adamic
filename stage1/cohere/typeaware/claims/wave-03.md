@@ -97,3 +97,9 @@ Higher-ranked names are ported or claimed. Exact origin tips, claim blobs and
 port evidence are in ../validation-wave-03/continuation-3-selection.json.
 Continue on this branch; new native files use .a. Shared harness and generator
 files remain untouched.
+
+### Continuation 3 status
+
+Native implementations and comparison evidence are in `wave_03_react/`. Unsupported syntax and use memo pass the full owned comparison. Boolean prop naming passes the default, all five configured patterns from Go's fixture table, nested props, custom prop types, message interpolation, foreign declarations and bundled-library aliases. Arbitrary configured regular expressions remain explicitly refused because stage 0 cannot lower `new RegExp`; this rule is partial until general native regex support is available. Emitted-JavaScript checker execution also remains a shared integration gap. These three claims remain reserved; no additional rules were claimed.
+
+New isolated questions: `source-syntax-tree`, `source-token-start`, `foreign-source-syntax-tree` and `foreign-node-symbol-context`. No shared registration generator, harness or protected compiler implementation was edited.

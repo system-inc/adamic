@@ -1,0 +1,24 @@
+import { panic, readTextFile } from 'adamic';
+import { byteOffsets } from '../unary_minus.ts';
+import type { SourceSyntaxTree } from './source_syntax_tree.a';
+import { sourceSyntaxTree } from './source_syntax_tree.a';
+import { foreignSourceSyntaxTree } from './foreign_source_syntax_tree.a';
+export class SourceSyntaxForest {
+    readonly program: number;
+    readonly trees = new Map<string, SourceSyntaxTree>();
+    constructor(program: number) { this.program = program; }
+    loaded(path: string, length: number): SourceSyntaxTree {
+        const cached = this.trees.get(path); if(cached !== undefined) { return cached; }
+        const tree = sourceSyntaxTree(this.program, path, length); this.trees.set(path, tree); return tree;
+    }
+    foreign(path: string, length: number, anchor: SourceSyntaxTree): SourceSyntaxTree {
+        const cached = this.trees.get(path); if(cached !== undefined) { return cached; }
+        if(!path.startsWith('bundled:')) { return this.loaded(path, length); }
+        const tree = foreignSourceSyntaxTree(anchor, path); this.trees.set(path, tree); return tree;
+    }
+    file(path: string): SourceSyntaxTree {
+        const cached = this.trees.get(path); if(cached !== undefined) { return cached; }
+        const source = readTextFile(path); if(source.kind === 'Error') { panic(source.message); }
+        const offsets = byteOffsets(source.text); return this.loaded(path, offsets[offsets.length - 1] ?? 0);
+    }
+}

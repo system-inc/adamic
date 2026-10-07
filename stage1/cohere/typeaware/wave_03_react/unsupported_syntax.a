@@ -1,0 +1,21 @@
+import type { SourceSyntaxTree } from './source_syntax_tree.a';
+import type { ComponentInference } from './component_inference.a';
+import { reactMessage } from './messages.a';
+export class UnsupportedSyntax {
+    readonly tree: SourceSyntaxTree;
+    readonly inference: ComponentInference;
+    constructor(tree: SourceSyntaxTree, inference: ComponentInference) { this.tree = tree; this.inference = inference; }
+    run(): void {
+        for(let index = 1; index <= this.tree.nodes.length; index++) {
+            const node = this.tree.node(index); let id = '';
+            if(node.kind === 'WithStatement') { id = 'unsupportedWith'; }
+            if(node.kind === 'ClassDeclaration') { id = 'unsupportedInlineClass'; }
+            if(node.kind === 'Identifier' && node.text === 'eval') {
+                if(!this.inference.inside(index)) { continue; }
+                const declarations = this.tree.context(index).ownDeclarations;
+                if(declarations.length === 0 || !declarations.some(declaration => declaration.library)) { continue; } id = 'unsupportedEval';
+            }
+            if(id !== '' && this.inference.inside(index)) { this.tree.report(index, 'react-hooks/unsupported-syntax', id, reactMessage(id)); }
+        }
+    }
+}

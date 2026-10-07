@@ -1,0 +1,56 @@
+import type { SourceSyntaxTree } from './source_syntax_tree.a';
+export class ComponentInference {
+    readonly tree: SourceSyntaxTree;
+    readonly insideCache = new Map<number, boolean>();
+    readonly likeCache = new Map<number, boolean>();
+    constructor(tree: SourceSyntaxTree) { this.tree = tree; }
+    componentName(name: string): boolean { return name !== '' && (name[0] ?? '') >= 'A' && (name[0] ?? '') <= 'Z'; }
+    hookName(name: string): boolean { const fourth = name[3] ?? ''; return name.startsWith('use') && fourth !== '' && ((fourth >= 'A' && fourth <= 'Z') || (fourth >= '0' && fourth <= '9')); }
+    name(index: number): string {
+        if(this.tree.kind(index) === 'FunctionDeclaration') { const name = this.tree.node(index).name; return this.tree.kind(name) === 'Identifier' ? this.tree.text(name) : ''; }
+        if(!['FunctionExpression', 'ArrowFunction'].includes(this.tree.kind(index))) { return ''; }
+        const parent = this.tree.semanticParent(index); if(this.tree.kind(parent) !== 'VariableDeclaration') { return ''; }
+        const declaration = this.tree.node(parent); return this.tree.skip(declaration.initializer) === index && this.tree.kind(declaration.name) === 'Identifier' ? this.tree.text(declaration.name) : '';
+    }
+    named(index: number): boolean { const name = this.name(index); return this.componentName(name) || this.hookName(name); }
+    hookCallee(index: number): boolean {
+        if(this.tree.kind(index) === 'Identifier') { return this.hookName(this.tree.text(index)); }
+        if(this.tree.kind(index) !== 'PropertyAccessExpression') { return false; }
+        const node = this.tree.node(index); return this.tree.kind(node.name) === 'Identifier' && this.hookName(this.tree.text(node.name)) && this.tree.kind(node.expression) === 'Identifier' && this.componentName(this.tree.text(node.expression));
+    }
+    evidence(index: number): boolean {
+        if(index === 0) { return false; }
+        const node = this.tree.node(index);
+        if(['JsxElement', 'JsxSelfClosingElement', 'JsxFragment', 'JsxOpeningElement', 'JsxOpeningFragment', 'JsxExpression', 'JsxText', 'JsxAttribute', 'JsxAttributes', 'JsxSpreadAttribute'].includes(node.kind)) { return true; }
+        if(node.kind === 'CallExpression' && this.hookCallee(node.expression)) { return true; }
+        if(this.tree.function(index)) { return false; }
+        for(const child of node.children) { if(this.evidence(child)) { return true; } } return false;
+    }
+    shaped(index: number): boolean {
+        const parameters = this.tree.node(index).parameters; if(parameters.length === 0) { return true; } if(parameters.length > 2) { return false; }
+        const first = this.tree.node(parameters[0] ?? 0); if(first.rest || ['ArrayType', 'BigIntKeyword', 'BooleanKeyword', 'ConstructorType', 'FunctionType', 'LiteralType', 'NeverKeyword', 'NumberKeyword', 'StringKeyword', 'SymbolKeyword', 'TupleType'].includes(this.tree.kind(first.type))) { return false; }
+        if(parameters.length === 1) { return true; }
+        const second = this.tree.node(parameters[1] ?? 0).name; return this.tree.kind(second) === 'Identifier' && (this.tree.text(second).includes('ref') || this.tree.text(second).includes('Ref'));
+    }
+    like(index: number): boolean {
+        const cached = this.likeCache.get(index); if(cached !== undefined) { return cached; }
+        const name = this.name(index); if(!this.hookName(name) && !this.componentName(name)) { this.likeCache.set(index, false); return false; }
+        const body = this.tree.node(index).body; let evidence = false;
+        if(body !== 0) { for(const child of this.tree.node(body).children) { if(this.evidence(child)) { evidence = true; break; } } if(!evidence && this.tree.kind(body) !== 'Block') { evidence = this.evidence(body); } }
+        const result = evidence && (this.hookName(name) || this.shaped(index)); this.likeCache.set(index, result); return result;
+    }
+    reachable(index: number): boolean {
+        for(let current = this.tree.parent(index); current !== 0; current = this.tree.parent(current)) {
+            const kind = this.tree.kind(current); if(kind === 'SourceFile') { return true; }
+            if(['VariableDeclaration', 'VariableDeclarationList', 'VariableStatement', 'ExportAssignment', 'ExportDeclaration', 'ParenthesizedExpression'].includes(kind)) { continue; }
+            if(this.tree.function(current)) { if(!this.named(current)) { return false; } continue; }
+            if(kind === 'Block' && this.tree.function(this.tree.parent(current))) { continue; } return false;
+        }
+        return false;
+    }
+    inside(index: number): boolean {
+        const found = this.insideCache.get(index); if(found !== undefined) { return found; }
+        for(let current = this.tree.parent(index); current !== 0; current = this.tree.parent(current)) { if(this.like(current) && this.reachable(current)) { this.insideCache.set(index, true); return true; } }
+        this.insideCache.set(index, false); return false;
+    }
+}

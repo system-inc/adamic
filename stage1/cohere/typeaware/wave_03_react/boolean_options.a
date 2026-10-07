@@ -1,0 +1,18 @@
+import { booleanPattern } from './boolean_pattern.a';
+export class ReactBooleanOptions {
+    readonly enabled: boolean;
+    readonly nested: boolean;
+    readonly pattern: string;
+    readonly typeNames: readonly string[];
+    readonly message: string;
+    constructor(enabled: boolean, nested: boolean, pattern: string, typeNames: readonly string[], message: string) { this.enabled = enabled; this.nested = nested; this.pattern = pattern; this.typeNames = typeNames; this.message = message; }
+}
+function value(args: readonly string[], prefix: string, fallback: string): string { for(const argument of args) { if(argument.startsWith(prefix)) { return argument.slice(prefix.length); } } return fallback; }
+export function reactBooleanOptions(args: readonly string[]): ReactBooleanOptions {
+    const enabled = args.includes('--boolean-props'); const nested = args.includes('--nested');
+    const pattern = value(args, '--pattern=', args.includes('--is-only') ? '^is[A-Z]([A-Za-z0-9]?)+' : '^(is|has)[A-Z]([A-Za-z0-9]?)+');
+    const names = value(args, '--type-names=', 'bool').split(',').filter(name => name !== '');
+    const message = value(args, '--message=', '');
+    if(enabled) { booleanPattern('', pattern); }
+    return new ReactBooleanOptions(enabled, nested, pattern, names.length === 0 ? ['bool'] : names, message);
+}

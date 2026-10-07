@@ -1,0 +1,6 @@
+import { tsgoInspect } from 'adamic';
+import type { SourceSyntaxTree } from './source_syntax_tree.a';
+import { decodeSourceSyntaxTree } from './source_syntax_tree.a';
+export function foreignSourceSyntaxTree(anchor: SourceSyntaxTree, path: string): SourceSyntaxTree {
+    return decodeSourceSyntaxTree(anchor.program, path, anchor.anchorPath, anchor.anchorEnd, 'foreign-source-syntax-tree', tsgoInspect(anchor.program, anchor.anchorPath, 0, anchor.anchorEnd, 'SourceFile', `foreign-source-syntax-tree\n${path}`));
+}

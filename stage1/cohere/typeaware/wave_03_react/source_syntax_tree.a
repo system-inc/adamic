@@ -1,0 +1,43 @@
+import { foreignNodeSymbolContext } from './foreign_node_symbol_context.a';
+import { panic, tsgoInspect } from 'adamic';
+import { Frames, header } from '../frames.ts';
+import type { ContextDeclaration } from '../wave_03_next/context_declaration.a';
+import { contextDeclaration } from '../wave_03_next/context_declaration.a';
+import { SymbolContext } from '../wave_03_next/symbol_context.a';
+import type { SourceSyntaxNode } from './source_syntax_node.a';
+import { sourceSyntaxNode } from './source_syntax_node_decode.a';
+import { Diagnostic } from '../diagnostic.ts';
+export class SourceSyntaxTree {
+    readonly program: number;
+    readonly anchorPath: string;
+    readonly anchorEnd: number;
+    readonly path: string;
+    readonly nodes: readonly SourceSyntaxNode[];
+    readonly symbols = new Map<number, SymbolContext>();
+    readonly findings: Diagnostic[] = [];
+    constructor(program: number, path: string, nodes: readonly SourceSyntaxNode[], anchorPath: string, anchorEnd: number) { this.program = program; this.path = path; this.nodes = nodes; this.anchorPath = anchorPath; this.anchorEnd = anchorEnd; }
+    node(index: number): SourceSyntaxNode { return this.nodes[index - 1] ?? panic('syntax node index outside graph'); }
+    kind(index: number): string { return index === 0 ? '' : this.node(index).kind; }
+    text(index: number): string { return index === 0 ? '' : this.node(index).text; }
+    skip(index: number): number { let current = index; while(this.kind(current) === 'ParenthesizedExpression') { current = this.node(current).expression; } return current; }
+    parent(index: number): number { return index === 0 ? 0 : this.node(index).parent; }
+    semanticParent(index: number): number { let current = this.parent(index); while(this.kind(current) === 'ParenthesizedExpression') { current = this.parent(current); } return current; }
+    function(index: number): boolean { return ['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction'].includes(this.kind(index)); }
+    report(index: number, rule: string, id: string, message: string): void { const node = this.node(index); this.findings.push(new Diagnostic(rule, id, message, node.start, node.end, '')); }
+    context(index: number): SymbolContext {
+        const found = this.symbols.get(index); if(found !== undefined) { return found; }
+        const node = this.node(index); const foreign = this.path.startsWith('bundled:'); const frames = new Frames(foreign ? foreignNodeSymbolContext(this.program, this.anchorPath, this.anchorEnd, this.path, node) : tsgoInspect(this.program, this.path, node.pos, node.end, node.kind, 'symbol-context')); header(frames, foreign ? 'foreign-node-symbol-context' : 'symbol-context');
+        const own = frames.natural(); const ownFlags = frames.natural(); const ownCount = frames.natural(); const ownDeclarations: ContextDeclaration[] = [];
+        for(let at = 0; at < ownCount; at++) { ownDeclarations.push(contextDeclaration(frames)); }
+        const identity = frames.natural(); const flags = frames.natural(); const count = frames.natural(); const declarations: ContextDeclaration[] = [];
+        for(let at = 0; at < count; at++) { declarations.push(contextDeclaration(frames)); }
+        const shorthand = frames.natural(); frames.end(); const result = new SymbolContext(own, ownFlags, ownDeclarations, identity, flags, declarations, shorthand); this.symbols.set(index, result); return result;
+    }
+}
+export function decodeSourceSyntaxTree(program: number, path: string, anchorPath: string, anchorEnd: number, mode: string, payload: string): SourceSyntaxTree {
+    const frames = new Frames(payload); header(frames, mode); const count = frames.natural(); const nodes: SourceSyntaxNode[] = [];
+    for(let at = 0; at < count; at++) { nodes.push(sourceSyntaxNode(frames)); } frames.end(); return new SourceSyntaxTree(program, path, nodes, anchorPath, anchorEnd);
+}
+export function sourceSyntaxTree(program: number, path: string, length: number): SourceSyntaxTree {
+    return decodeSourceSyntaxTree(program, path, path, length, 'source-syntax-tree', tsgoInspect(program, path, 0, length, 'SourceFile', 'source-syntax-tree'));
+}

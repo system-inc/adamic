@@ -1,0 +1,218 @@
+[
+  {
+    "name": "arguments",
+    "file": "bridge/tsgo/checker/source_syntax_tree.go",
+    "from": "",
+    "to": "[:0]",
+    "exit": 1,
+    "log": "/workspace/wave-03/react-query-mutants/arguments.log"
+  },
+  {
+    "name": "body",
+    "file": "bridge/tsgo/checker/source_syntax_tree.go",
+    "from": "",
+    "to": "+1",
+    "exit": 1,
+    "log": "/workspace/wave-03/react-query-mutants/body.log"
+  },
+  {
+    "name": "children",
+    "file": "bridge/tsgo/checker/source_syntax_tree.go",
+    "from": "children[current]",
+    "to": "nil",
+    "exit": 1,
+    "log": "/workspace/wave-03/react-query-mutants/children.log"
+  },
+  {
+    "name": "condition",
+    "file": "bridge/tsgo/checker/source_syntax_tree.go",
+    "from": "",
+    "to": "+1",
+    "exit": 1,
+    "log": "/workspace/wave-03/react-query-mutants/condition.log"
+  },
+  {
+    "name": "end",
+    "file": "bridge/tsgo/checker/source_syntax_tree.go",
+    "from": "",
+    "to": "+1",
+    "exit": 1,
+    "log": "/workspace/wave-03/react-query-mutants/end.log"
+  },
+  {
+    "name": "flags",
+    "file": "bridge/tsgo/checker/source_syntax_tree.go",
+    "from": "",
+    "to": "+1",
+    "exit": 1,
+    "log": "/workspace/wave-03/react-query-mutants/flags.log"
+  },
+  {
+    "name": "function-flags",
+    "file": "bridge/tsgo/checker/source_syntax_tree.go",
+    "from": "",
+    "to": "+1",
+    "exit": 1,
+    "log": "/workspace/wave-03/react-query-mutants/function-flags.log"
+  },
+  {
+    "name": "initializer",
+    "file": "bridge/tsgo/checker/source_syntax_tree.go",
+    "from": "",
+    "to": "+1",
+    "exit": 1,
+    "log": "/workspace/wave-03/react-query-mutants/initializer.log"
+  },
+  {
+    "name": "left",
+    "file": "bridge/tsgo/checker/source_syntax_tree.go",
+    "from": "",
+    "to": "+1",
+    "exit": 1,
+    "log": "/workspace/wave-03/react-query-mutants/left.log"
+  },
+  {
+    "name": "name",
+    "file": "bridge/tsgo/checker/source_syntax_tree.go",
+    "from": "",
+    "to": "+1",
+    "exit": 1,
+    "log": "/workspace/wave-03/react-query-mutants/name.log"
+  },
+  {
+    "name": "no",
+    "file": "bridge/tsgo/checker/source_syntax_tree.go",
+    "from": "",
+    "to": "+1",
+    "exit": 1,
+    "log": "/workspace/wave-03/react-query-mutants/no.log"
+  },
+  {
+    "name": "operator",
+    "file": "bridge/tsgo/checker/source_syntax_tree.go",
+    "from": "",
+    "to": "+\"x\"",
+    "exit": 1,
+    "log": "/workspace/wave-03/react-query-mutants/operator.log"
+  },
+  {
+    "name": "parameters",
+    "file": "bridge/tsgo/checker/source_syntax_tree.go",
+    "from": "",
+    "to": "[:0]",
+    "exit": 1,
+    "log": "/workspace/wave-03/react-query-mutants/parameters.log"
+  },
+  {
+    "name": "parent",
+    "file": "bridge/tsgo/checker/source_syntax_tree.go",
+    "from": "",
+    "to": "+1",
+    "exit": 1,
+    "log": "/workspace/wave-03/react-query-mutants/parent.log"
+  },
+  {
+    "name": "position",
+    "file": "bridge/tsgo/checker/source_syntax_tree.go",
+    "from": "",
+    "to": "+1",
+    "exit": 1,
+    "log": "/workspace/wave-03/react-query-mutants/position.log"
+  },
+  {
+    "name": "rest",
+    "file": "bridge/tsgo/checker/source_syntax_tree.go",
+    "from": "",
+    "to": "!",
+    "exit": 1,
+    "log": "/workspace/wave-03/react-query-mutants/rest.log"
+  },
+  {
+    "name": "right",
+    "file": "bridge/tsgo/checker/source_syntax_tree.go",
+    "from": "",
+    "to": "+1",
+    "exit": 1,
+    "log": "/workspace/wave-03/react-query-mutants/right.log"
+  },
+  {
+    "name": "start",
+    "file": "bridge/tsgo/checker/source_syntax_tree.go",
+    "from": "",
+    "to": "+1",
+    "exit": 1,
+    "log": "/workspace/wave-03/react-query-mutants/start.log"
+  },
+  {
+    "name": "text",
+    "file": "bridge/tsgo/checker/source_syntax_tree.go",
+    "from": "",
+    "to": "+\"x\"",
+    "exit": 1,
+    "log": "/workspace/wave-03/react-query-mutants/text.log"
+  },
+  {
+    "name": "token-canonical",
+    "file": "bridge/tsgo/checker/source_token_start.go",
+    "from": "strconv.FormatUint(position, 10) != valu",
+    "to": "fals",
+    "exit": 1,
+    "log": "/workspace/wave-03/react-query-mutants/token-canonical.log"
+  },
+  {
+    "name": "token-position",
+    "file": "bridge/tsgo/checker/source_token_start.go",
+    "from": "",
+    "to": "+1",
+    "exit": 1,
+    "log": "/workspace/wave-03/react-query-mutants/token-position.log"
+  },
+  {
+    "name": "tree-guard",
+    "file": "bridge/tsgo/checker/source_syntax_tree.go",
+    "from": "question != \"source-syntax-tree\"",
+    "to": "false",
+    "exit": 1,
+    "log": "/workspace/wave-03/react-query-mutants/tree-guard.log"
+  },
+  {
+    "name": "type",
+    "file": "bridge/tsgo/checker/source_syntax_tree.go",
+    "from": "",
+    "to": "+1",
+    "exit": 1,
+    "log": "/workspace/wave-03/react-query-mutants/type.log"
+  },
+  {
+    "name": "yes",
+    "file": "bridge/tsgo/checker/source_syntax_tree.go",
+    "from": "",
+    "to": "+1",
+    "exit": 1,
+    "log": "/workspace/wave-03/react-query-mutants/yes.log"
+  },
+  {
+    "name": "foreign-tree-source",
+    "file": "bridge/tsgo/checker/foreign_source_syntax_tree.go",
+    "from": "p.sourceSyntaxTree(out, source.AsNode(),",
+    "to": "p.sourceSyntaxTree(out, node,",
+    "exit": 1,
+    "log": "/workspace/wave-03/react-foreign-mutants/foreign-tree-source.log"
+  },
+  {
+    "name": "foreign-symbol-source",
+    "file": "bridge/tsgo/checker/foreign_node_symbol_context.go",
+    "from": "p.symbolContext(out, c, found,",
+    "to": "p.symbolContext(out, c, anchor,",
+    "exit": 1,
+    "log": "/workspace/wave-03/react-foreign-mutants/foreign-symbol-source.log"
+  },
+  {
+    "name": "foreign-canonical",
+    "file": "bridge/tsgo/checker/foreign_node_symbol_context.go",
+    "from": "strconv.FormatUint(start, 10) != parts[2]",
+    "to": "false",
+    "exit": 1,
+    "log": "/workspace/wave-03/react-foreign-mutants/foreign-canonical.log"
+  }
+]

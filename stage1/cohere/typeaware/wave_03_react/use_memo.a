@@ -1,0 +1,91 @@
+import type { SourceSyntaxTree } from './source_syntax_tree.a';
+import type { ComponentInference } from './component_inference.a';
+import { reactMessage } from './messages.a';
+export class UseMemo {
+    readonly tree: SourceSyntaxTree;
+    readonly inference: ComponentInference;
+    readonly names: Set<string>;
+    constructor(tree: SourceSyntaxTree, inference: ComponentInference, names: Set<string>) { this.tree = tree; this.inference = inference; this.names = names; }
+    local(index: number, start: number, end: number, kind: string): number {
+        for(let current = 1; current <= this.tree.nodes.length; current++) { const node = this.tree.node(current); if(node.kind === kind && node.pos === start && node.end === end) { return current; } } return 0;
+    }
+    binding(index: number, receiver: boolean): string {
+        const symbol = this.tree.context(index); if(symbol.own === 0) { return this.tree.text(index); }
+        for(const declaration of symbol.ownDeclarations) {
+            const kind = declaration.kind(); if(receiver) { if(kind === 'ImportClause' || kind === 'NamespaceImport') { return this.tree.text(index); } continue; }
+            if(kind !== 'ImportSpecifier' || declaration.path !== this.tree.path) { continue; }
+            const specifier = this.local(index, declaration.start(), declaration.end(), kind); if(specifier === 0) { continue; }
+            let module = 0; let current = specifier;
+            for(let steps = 0; current !== 0 && steps < 5; steps++) {
+                if(this.tree.kind(current) === 'ImportDeclaration') { for(const child of this.tree.node(current).children) { if(this.tree.kind(child) === 'StringLiteral') { module = child; } } break; } current = this.tree.parent(current);
+            }
+            if(!['react', 'react-dom'].includes(this.tree.text(module).toLowerCase())) { return ''; }
+            for(const child of this.tree.node(specifier).children) { if(this.tree.kind(child) === 'Identifier') { return this.tree.text(child); } }
+        }
+        return '';
+    }
+    memoKind(index: number): string {
+        if(index === 0) { return ''; }
+        const node = this.tree.node(index);
+        if(node.kind === 'Identifier') { if(!this.names.has(node.text)) { return ''; } const name = this.binding(index, false); return name === 'useMemo' || name === 'useCallback' ? name : ''; }
+        if(node.kind !== 'PropertyAccessExpression' || this.tree.kind(node.name) !== 'Identifier' || this.tree.kind(node.expression) !== 'Identifier') { return ''; }
+        const name = this.tree.text(node.name); return (name === 'useMemo' || name === 'useCallback') && this.binding(node.expression, true) === 'React' ? name : '';
+    }
+    report(index: number, id: string): void { this.tree.report(index, 'react-hooks/use-memo', id, reactMessage(id)); }
+    simple(index: number): boolean {
+        let current = index;
+        while(current !== 0) {
+            const node = this.tree.node(current);
+            if(node.kind === 'Identifier') { return true; }
+            if(node.kind === 'PropertyAccessExpression' || node.kind === 'NonNullExpression') { current = node.expression; continue; }
+            if(node.kind === 'ElementAccessExpression' && this.tree.kind(node.right) === 'NumericLiteral') { current = node.expression; continue; }
+            return false;
+        }
+        return false;
+    }
+    dependencies(index: number): void {
+        const node = this.tree.node(index);
+        if(node.kind !== 'ArrayLiteralExpression' || node.children.some(child => ['SpreadElement', 'OmittedExpression'].includes(this.tree.kind(child)))) { this.report(index, 'useMemoDependencyListNotArrayLiteral'); return; }
+        for(const child of node.children) { if(!this.simple(child)) { this.report(child, 'useMemoDependencyNotSimple'); } }
+    }
+    assignment(operator: string): boolean { return ['EqualsToken', 'PlusEqualsToken', 'MinusEqualsToken', 'AsteriskEqualsToken', 'AsteriskAsteriskEqualsToken', 'SlashEqualsToken', 'PercentEqualsToken', 'LessThanLessThanEqualsToken', 'GreaterThanGreaterThanEqualsToken', 'GreaterThanGreaterThanGreaterThanEqualsToken', 'AmpersandEqualsToken', 'BarEqualsToken', 'CaretEqualsToken', 'AmpersandAmpersandEqualsToken', 'BarBarEqualsToken', 'QuestionQuestionEqualsToken'].includes(operator); }
+    within(index: number, ancestor: number): boolean { for(let current = index; current !== 0; current = this.tree.parent(current)) { if(current === ancestor) { return true; } } return false; }
+    outer(index: number, callback: number): void {
+        if(index === 0 || ['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction', 'MethodDeclaration', 'GetAccessor', 'SetAccessor', 'Constructor'].includes(this.tree.kind(index))) { return; }
+        const node = this.tree.node(index);
+        if(node.kind === 'BinaryExpression' && this.assignment(node.operator) && this.tree.kind(node.left) === 'Identifier') {
+            const declarations = this.tree.context(node.left).ownDeclarations; let inside = false;
+            for(const declaration of declarations) {
+                if(declaration.path !== this.tree.path) { continue; } const local = this.local(node.left, declaration.start(), declaration.end(), declaration.kind()); if(local !== 0 && this.within(local, callback)) { inside = true; break; }
+            }
+            if(declarations.length > 0 && !inside) { this.report(node.left, 'useMemoCallbackReassignsOuterVariable'); }
+        }
+        for(const child of node.children) { this.outer(child, callback); }
+    }
+    callback(index: number): void {
+        const node = this.tree.node(index); const parameter = node.parameters[0]; if(parameter !== undefined) { this.report(parameter, 'useMemoCallbackHasParameters'); }
+        if((node.functionFlags & 3) !== 0) { this.report(index, 'useMemoCallbackAsyncOrGenerator'); }
+        if(node.body !== 0) { for(const child of this.tree.node(node.body).children) { this.outer(child, index); } }
+    }
+    run(): void {
+        for(let index = 1; index <= this.tree.nodes.length; index++) {
+            const node = this.tree.node(index); if(node.kind !== 'CallExpression') { continue; }
+            const kind = this.memoKind(node.expression); if(kind === '' || !this.inference.inside(index)) { continue; }
+            const argument = node.callArguments[0]; if(argument === undefined) { this.report(index, 'useMemoMissingCallback'); continue; }
+            const inline = ['ArrowFunction', 'FunctionExpression'].includes(this.tree.kind(argument));
+            if(!inline) { if(this.tree.kind(argument) === 'SpreadElement') { continue; } this.report(argument, 'useMemoCallbackNotInline'); }
+            const dependencies = node.callArguments[1]; if(dependencies !== undefined) { this.dependencies(dependencies); }
+            if(inline && kind === 'useMemo') { this.callback(argument); }
+        }
+    }
+}
+
+export function useMemo(tree: SourceSyntaxTree, inference: ComponentInference): UseMemo {
+    const names = new Set<string>(); names.add('useMemo'); names.add('useCallback');
+    for(let index = 1; index <= tree.nodes.length; index++) {
+        const node = tree.node(index); if(node.kind !== 'ImportSpecifier') { continue; }
+        const imported = node.children[0] ?? 0;
+        if(tree.kind(imported) === 'Identifier' && ['useMemo', 'useCallback'].includes(tree.text(imported))) { names.add(tree.text(node.name)); }
+    }
+    return new UseMemo(tree, inference, names);
+}

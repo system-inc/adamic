@@ -1,0 +1,6 @@
+import { tsgoInspect } from 'adamic';
+import type { SourceSyntaxTree } from './source_syntax_tree.a';
+import { Frames, header } from '../frames.ts';
+export function sourceTokenStart(tree: SourceSyntaxTree, position: number): number {
+    const root = tree.node(1); const frames = new Frames(tsgoInspect(tree.program, tree.path, root.pos, root.end, root.kind, `source-token-start\n${position}`)); header(frames, 'source-token-start'); const start = frames.natural(); frames.end(); return start;
+}

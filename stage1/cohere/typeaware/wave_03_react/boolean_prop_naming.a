@@ -1,0 +1,83 @@
+import type { SourceSyntaxTree } from './source_syntax_tree.a';
+import type { ComponentDetection } from './component_detection.a';
+import type { SourceSyntaxForest } from './source_syntax_forest.a';
+import { sourceTokenStart } from './source_token_start.a';
+import { Diagnostic } from '../diagnostic.ts';
+import { booleanPattern } from './boolean_pattern.a';
+export class BooleanPropNaming {
+    readonly tree: SourceSyntaxTree;
+    readonly detection: ComponentDetection;
+    readonly pattern: string;
+    readonly typeNames: readonly string[];
+    readonly nested: boolean;
+    readonly message: string;
+    readonly forest: SourceSyntaxForest;
+    readonly reported = new Set<string>();
+    readonly visited = new Set<string>();
+    constructor(tree: SourceSyntaxTree, forest: SourceSyntaxForest, detection: ComponentDetection, pattern: string, typeNames: readonly string[], nested: boolean, message: string) { this.tree = tree; this.forest = forest; this.detection = detection; this.pattern = pattern; this.typeNames = typeNames; this.nested = nested; this.message = message; }
+    key(tree: SourceSyntaxTree, index: number): string { if(tree.kind(index) === 'Identifier') { return tree.text(index); } if(tree.kind(index) === 'ComputedPropertyName') { const inner = tree.skip(tree.node(index).expression); if(tree.kind(inner) === 'Identifier') { return tree.text(inner); } } return 'undefined'; }
+    named(tree: SourceSyntaxTree, index: number): boolean { return tree.kind(index) === 'Identifier' || (tree.kind(index) === 'ComputedPropertyName' && tree.kind(tree.skip(tree.node(index).expression)) === 'Identifier'); }
+    whitespace(character: string): boolean { return [' ', '\t', '\n', '\r', '\f'].includes(character); }
+    interpolate(name: string): string {
+        let result = ''; let start = 0;
+        while(start < this.message.length) {
+            if(this.message.slice(start, start + 2) !== '{{') { result += this.message[start] ?? ''; start++; continue; }
+            let cursor = start + 2; while(this.whitespace(this.message[cursor] ?? '')) { cursor++; }
+            const begin = cursor; while(cursor < this.message.length) { const character = this.message[cursor] ?? ''; if(!((character >= 'A' && character <= 'Z') || (character >= 'a' && character <= 'z') || character === '_' || (cursor > begin && character >= '0' && character <= '9'))) { break; } cursor++; }
+            const key = this.message.slice(begin, cursor); while(this.whitespace(this.message[cursor] ?? '')) { cursor++; }
+            if(key === '' || this.message.slice(cursor, cursor + 2) !== '}}') { result += this.message[start] ?? ''; start++; continue; }
+            result += key === 'pattern' ? this.pattern : key === 'propName' || key === 'component' ? name : this.message.slice(start, cursor + 2); start = cursor + 2;
+        } return result;
+    }
+    report(tree: SourceSyntaxTree, index: number): void {
+        const identity = `${tree.path}:${index}`;
+        if(this.reported.has(identity)) { return; } const property = tree.node(index);
+        if(booleanPattern(this.key(tree, property.name), this.pattern) && this.named(tree, property.name)) { return; }
+        this.reported.add(identity); this.tree.findings.push(new Diagnostic('react/boolean-prop-naming', 'patternMismatch', this.message !== '' ? this.interpolate(this.key(tree, property.name)) : `Prop name \`${this.key(tree, property.name)}\` doesn\u2019t match rule \`${this.pattern}\``, tree.path === this.tree.path ? property.start : sourceTokenStart(this.tree, property.pos), property.end, ''));
+    }
+    isPropTypes(index: number): boolean { return ['Identifier', 'StringLiteral'].includes(this.tree.kind(index)) && this.tree.text(index) === 'propTypes'; }
+    booleanValue(index: number): boolean {
+        const current = this.tree.skip(index); if(current === 0) { return false; } const node = this.tree.node(current); let name: string;
+        if(node.kind === 'Identifier') { name = node.text; }
+        else if(node.kind === 'PropertyAccessExpression' && this.tree.kind(node.name) === 'Identifier') { if(this.tree.text(node.name) === 'isRequired') { const inner = this.tree.skip(node.expression); if(this.tree.kind(inner) !== 'PropertyAccessExpression' || this.tree.kind(this.tree.node(inner).name) !== 'Identifier') { return false; } name = this.tree.text(this.tree.node(inner).name); } else { name = this.tree.text(node.name); } }
+        else { return false; }
+        return this.typeNames.includes(name);
+    }
+    props(index: number): void {
+        const current = this.tree.skip(index); if(this.tree.kind(current) !== 'ObjectLiteralExpression') { return; }
+        for(const child of this.tree.node(current).children) {
+            const property = this.tree.node(child); if(property.kind !== 'PropertyAssignment') { continue; } const value = this.tree.skip(property.initializer);
+            if(this.nested && this.tree.kind(value) === 'CallExpression') { const argument = this.tree.node(value).callArguments[0]; if(argument !== undefined) { this.props(argument); } continue; }
+            if(this.booleanValue(value)) { this.report(this.tree, child); }
+        }
+    }
+    members(tree: SourceSyntaxTree, index: number): void {
+        const identity = `${tree.path}:${index}`;
+        if(index === 0 || this.visited.has(identity)) { return; } this.visited.add(identity); const node = tree.node(index);
+        if(node.kind === 'ParenthesizedType') { this.members(tree, node.expression); return; }
+        if(['InterfaceDeclaration', 'TypeLiteral'].includes(node.kind)) { for(const child of node.children) { const member = tree.node(child); if(member.kind === 'PropertySignature' && tree.kind(member.type) === 'BooleanKeyword') { this.report(tree, child); } } return; }
+        if(['IntersectionType', 'UnionType'].includes(node.kind)) { for(const child of node.children) { this.members(tree, child); } return; }
+        if(node.kind !== 'TypeReference' || tree.kind(node.expression) !== 'Identifier') { return; }
+        for(const declaration of tree.context(node.expression).ownDeclarations) {
+            if(!['InterfaceDeclaration', 'TypeAliasDeclaration'].includes(declaration.kind())) { continue; }
+            let length = -1; for(const ancestor of declaration.ancestry) { if(ancestor.kind === 'SourceFile') { length = ancestor.end; break; } }
+            const source = length >= 0 ? this.forest.foreign(declaration.path, length, this.tree) : this.forest.file(declaration.path); let local = 0;
+            for(let current = 1; current <= source.nodes.length; current++) { const candidate = source.node(current); if(candidate.pos === declaration.start() && candidate.end === declaration.end() && candidate.kind === declaration.kind()) { local = current; break; } }
+            if(local === 0) { continue; }
+            this.members(source, declaration.kind() === 'TypeAliasDeclaration' ? source.node(local).type : local); return;
+        }
+    }
+    propsType(index: number): number {
+        const node = this.tree.node(index); const first = node.parameters[0]; if(first !== undefined && this.tree.node(first).type !== 0) { return this.tree.node(first).type; }
+        const parent = this.tree.semanticParent(index); if(this.tree.kind(parent) !== 'VariableDeclaration') { return 0; } const type = this.tree.node(parent).type; if(this.tree.kind(type) !== 'TypeReference') { return 0; }
+        for(const child of this.tree.node(type).children) { if(child !== this.tree.node(type).expression && ['TypeReference', 'TypeLiteral'].includes(this.tree.kind(child))) { return child; } } return 0;
+    }
+    run(): void {
+        for(let index = 1; index <= this.tree.nodes.length; index++) {
+            const node = this.tree.node(index);
+            if(['PropertyDeclaration', 'PropertyAssignment'].includes(node.kind) && this.isPropTypes(node.name)) { this.props(node.initializer); }
+            if(node.kind === 'BinaryExpression' && node.operator === 'EqualsToken') { const target = this.tree.skip(node.left); if(this.tree.kind(target) === 'PropertyAccessExpression' && this.isPropTypes(this.tree.node(target).name)) { this.props(node.right); } }
+        }
+        this.detection.run(); for(const component of this.detection.components) { this.members(this.tree, this.propsType(component)); }
+    }
+}

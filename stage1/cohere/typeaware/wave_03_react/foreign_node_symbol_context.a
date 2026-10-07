@@ -1,0 +1,5 @@
+import { tsgoInspect } from 'adamic';
+import type { SourceSyntaxNode } from './source_syntax_node.a';
+export function foreignNodeSymbolContext(program: number, anchorPath: string, anchorEnd: number, path: string, node: SourceSyntaxNode): string {
+    return tsgoInspect(program, anchorPath, 0, anchorEnd, 'SourceFile', `foreign-node-symbol-context\n${path}\n${node.pos}\n${node.end}\n${node.kind}`);
+}
