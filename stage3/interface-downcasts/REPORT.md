@@ -315,3 +315,18 @@ NODE_PATH=/tmp/interface-downcasts-api/node_modules node stage3/interface-downca
 ```
 
 Restored-source final oracle/count check: PASS 20.667s. No additional count row changed.
+
+
+## Lane 1 prerequisite main merge
+
+The three-lane plan is 4dbf3b6a. I keep objects/interfaces/unions with readiness,
+due 00:00 UTC October 9. Merged origin/main 71d7e491 into this feature branch.
+Checked writes retain runtime validation; ordinary writes retain main's exact-layout
+optimization, with readiness and representation metadata updated by the actual slot
+index. No main/area branch was written. The full ordinary uncached Node oracle plus
+view/readiness regressions and regenerated counts PASS 206.009s. Touched packages
+PASS: lower 23.586s, IR 23.991s, native 209.228s, JS no local tests. Logs and every
+changed count row are preserved in lane1-main-*.log. Main's borrowing changes account
+for the retain/release reductions, including visitor 33/41 to 32/40 and staged
+identifier 5/6 to 4/5; no allocation count change is introduced by the write merge.
+This merge is the prerequisite for lane 1, not a new unlocked tsc site family.
