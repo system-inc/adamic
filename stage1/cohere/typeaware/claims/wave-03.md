@@ -148,3 +148,7 @@ Rebased onto lint area d65a8f931 after its runtime optimizations landed. Twelve 
 ### Required correctness failure status
 
 The owned React oracle now FAILS with Go exit 1 on the native new RegExp(pattern, 'u') constructor blocker; its Skipf was replaced by Fatalf. There are no owned wave_03 Skip calls. Bases remain lint area d65a8f931 and main 39638d9e2. The previous twelve-rule green remains same-baseline evidence, while the full branch is explicitly not oracle-green. A compiled overlay-only skip mutant is rejected by the required-failure output check. No new claims. Exact reproducer and failed check: wave_03_react/REQUIRED_FAILURE.md.
+
+### Strict landing on b84a9d931
+
+Rebased onto lint area b84a9d931, including main c7991b900. All five owned suites ran: twelve rules pass four full suites, while React FAILS on the native runtime RegExp constructor; overall Go exit 1 after 641.942s. No skip and no new claims. The literal helper repeats all 15 comparison/sanitizer controls and its compiled mutant. Exact failed gate and reproducer: wave_03_react/STRICT_LANDING_B84.md and REQUIRED_FAILURE.md. The branch is not described as oracle-green.
