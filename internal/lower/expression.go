@@ -13,6 +13,13 @@ import (
 // typeOf is what's left at runtime of the type the checker proved for a node: a number, a boolean or
 // a string. A union counts when every member is the same one ('Fizz' | 'Buzz' is a string).
 func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
+	if node.Kind == ast.KindPropertyAccessExpression && l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined != 0 {
+		// A field narrowed to undefined still occupies its declared slot, which may hold a packed
+		// optional number or a different reference kind. Read that representation, not an object.
+		if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil {
+			return l.typeOfSymbol(node, field)
+		}
+	}
 	if valueType, isKnown := l.representation(l.checker.GetTypeAtLocation(node)); isKnown {
 		return valueType, nil
 	}
@@ -35,6 +42,10 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		return l.objectIntersection(proven)
 	}
 	switch {
+	case flags&checker.TypeFlagsUndefined != 0:
+		// The singleton undefined uses the existing missing-reference representation. The checker
+		// still proves that its bindings, parameters and results can hold no present object.
+		return ir.Object, true
 	case flags&checker.TypeFlagsNumberLike != 0:
 		return ir.Number, true
 	case flags&checker.TypeFlagsStringLike != 0:
@@ -153,6 +164,17 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		return nil, err
 	}
 	value, err := l.value(node)
+	if err == nil && value.Type() == ir.Object && l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined != 0 {
+		if _, constant := value.(ir.Undefined); !constant {
+			if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
+				if to, known := l.representation(contextual); known && to != ir.Object && to != ir.Union && (to.IsMaybe() || to.IsReference()) {
+					// Keep the read or call's effects while converting its only possible value to the
+					// destination's missing representation, including packed optional scalars.
+					value = ir.Narrow{Value: ir.Box{Value: value}, To: to}
+				}
+			}
+		}
+	}
 	if literal := ast.SkipParentheses(node).Kind; err == nil && value.Type().IsReference() && literal != ast.KindArrayLiteralExpression && literal != ast.KindObjectLiteralExpression {
 		// The checker lets { v: Box } be seen as { v: Weak<Box> } and back, an array of Box as one of
 		// Weak<Box>, and (x: Weak<Box>) => ... as (x: Box) => ...; but one keeps a handle where the
@@ -179,7 +201,7 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	}
 	read := l.checker.GetTypeAtLocation(node)
 	to, present := ir.Object, false
-	if target, isKnown := l.representation(read); isKnown && target != ir.Weak {
+	if target, isKnown := l.representation(read); isKnown && target != ir.Weak && read.Flags()&checker.TypeFlagsUndefined == 0 {
 		// The checker narrowed it to present (Target & WeakBrand).
 		to, present = target, true
 	} else if read.Flags()&checker.TypeFlagsUnion != 0 {
@@ -410,7 +432,7 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 		read := ir.Expression(ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checked(local)})
 		if l.result.Locals[local].Type == ir.Union {
 			// Where the checker has narrowed it to fewer members held one way, it's read as that.
-			if narrowed, isKnown := l.representation(l.checker.GetTypeAtLocation(node)); isKnown && narrowed != ir.Union {
+			if narrowed, isKnown := l.representation(l.checker.GetTypeAtLocation(node)); isKnown && narrowed != ir.Union && l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined == 0 {
 				read = ir.Narrow{Value: read, To: narrowed}
 			}
 		}

@@ -1,0 +1,17 @@
+const c: undefined = undefined;
+let vacant: undefined;
+function pass(value: undefined): undefined { return value; }
+function make(): undefined { console.log("make"); return undefined; }
+const read: undefined = pass(c);
+console.log(`${c === undefined} ${read === c} ${vacant === undefined}`);
+console.log(`${make() === undefined} ${pass(read) !== undefined}`);
+const captured = (): undefined => c;
+console.log(`${captured() === undefined} ${typeof read}`);
+const object = { value: c, read(): undefined { return this.value; } };
+console.log(`${object.read() === undefined}`);
+function number(value: number | undefined): boolean { return value === undefined; }
+function text(value: string | undefined): boolean { return value === undefined; }
+console.log(`${number(c)} ${text(pass(c))} ${number(make())}`);
+const missingNumber: number | undefined = c;
+const missingText: string | undefined = pass(c);
+console.log(`${missingNumber === undefined} ${missingText === undefined}`);
