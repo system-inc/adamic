@@ -177,3 +177,11 @@ Untyped object methods, getters and setters compose with the existing expression
 simple bodies. Keys reuse the existing Unicode and quoted-key rules; async/generator prefixes and
 computed names retain their own syntax. Computed short keys now follow Go's cleaned-doc overlap
 rule for long values. Typed method signatures remain an explicit proving gap.
+
+## Tagged-template increment
+
+Ordinary tagged templates compose with supported tags, multiline raw quasis, interpolation,
+assignments, arrows, calls, member chains and constructors. Required tag parentheses and optional
+chain stopping boundaries are retained. Tagged assignment values follow Go's rule that avoids a
+break after the operator. Jest `each` tables and type arguments are explicit proving gaps.
+Syntax classification is now pure code in `syntax.ts`; document state remains on the concrete printer.

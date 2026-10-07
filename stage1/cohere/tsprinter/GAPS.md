@@ -16,7 +16,7 @@ recorded below. The composed driver, natively with leak detection, on Node and t
 | `(x: number) => x` | `function-types` | Typed signatures belong to the type-printing slice |
 | `({method(x:number){return x;}})` | `function-types` | Typed method signatures |
 | `[a,b]=items` | `assignment-pattern` | Destructuring target patterns and their assignment layout |
-| `` tag`a${b}` `` | `TaggedTemplateExpression` | Tag layout, Jest tables and embedded language reporting |
+| `` test.each`a\|b\n${1}\|${2}` `` | `jest-template-table` | Jest column layout |
 | `(function () {return 1;})` | `FunctionExpression` | Function parameters and statement bodies |
 | `f<T>(x)` | `type-arguments` | Type printing and type-argument layout |
 | `a as T` | `AsExpression` | Cast/type composition |
@@ -251,3 +251,15 @@ The preview now copies both sets. The generated corpus adds 48 combinations of f
 chains, three raw-line layouts and four expression contexts. A mutant removes that copy and must
 finish normally on Node and native, then fail the byte comparison. This is a port correction,
 not a compiler or runtime change.
+
+## Tagged-template family
+
+Ordinary tag layout is implemented. The generator adds 504 combinations of 12 tag shapes,
+six template bodies and seven contexts. Source-driven template indentation uses the tag's start;
+the quasi preserves its bytes. `test.each` and related `describe`/`it`, `only`/`skip` forms have a
+separate column printer in Go and return `NotYet: jest-template-table` here. Its proving program
+is in `testdata/notyet.json`. Typed tag arguments likewise remain a precise `tag-type-arguments` gap.
+
+Embedded-language formatting is outside this printer. Go's template printer explicitly has no
+embed hook; CSS, HTML, GraphQL and Markdown embedding would need independent upstream reports.
+The accepted ordinary-tag corpus has no upstream exceptions.

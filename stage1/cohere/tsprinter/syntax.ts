@@ -287,3 +287,222 @@ export function hasBlankLine(source: string): boolean {
     }
     return false;
 }
+
+function syntaxAssignment(parser: Parser, index: number): boolean {
+    return (
+        index >= 0 &&
+        syntaxNode(parser, index).kind === 'BinaryExpression' &&
+        assignmentOperators.includes(syntaxOperator(parser, index))
+    );
+}
+
+export function jestTag(parser: Parser, index: number): boolean {
+    const node = syntaxNode(parser, unwrapped(parser, index));
+    if(!['PropertyAccessExpression', 'ElementAccessExpression'].includes(node.kind)) return false;
+    const property = syntaxNode(parser, syntaxChild(parser, index, node.children.length - 1));
+    if(property.kind !== 'Identifier' || property.text !== 'each') return false;
+    let object = syntaxChild(parser, index, 0);
+    const receiver = syntaxNode(parser, object);
+    if(['PropertyAccessExpression', 'ElementAccessExpression'].includes(receiver.kind)) {
+        const modifier = syntaxNode(parser, syntaxChild(parser, object, receiver.children.length - 1));
+        if(modifier.kind !== 'Identifier' || !['only', 'skip'].includes(modifier.text)) return false;
+        object = syntaxChild(parser, object, 0);
+    }
+    const root = syntaxNode(parser, object);
+    return (
+        root.kind === 'Identifier' &&
+        ['describe', 'it', 'test', 'fdescribe', 'fit', 'ftest', 'xdescribe', 'xit', 'xtest'].includes(root.text)
+    );
+}
+
+export function unsupported(parser: Parser, source: string, index: number): string {
+    const id = unwrapped(parser, index);
+    const node = syntaxNode(parser, id);
+    switch(node.kind) {
+        case 'Identifier':
+        case 'PrivateIdentifier':
+        case 'NumericLiteral':
+        case 'BigIntLiteral':
+        case 'RegularExpressionLiteral':
+        case 'ThisKeyword':
+        case 'SuperKeyword':
+        case 'NullKeyword':
+        case 'TrueKeyword':
+        case 'FalseKeyword':
+        case 'OmittedExpression':
+            return '';
+        case 'NoSubstitutionTemplateLiteral':
+            return '';
+        case 'StringLiteral':
+            if(source.slice(node.pos, node.end).trim().includes('\n')) return 'string-literal-layout';
+            return '';
+        case 'ArrowFunction':
+        case 'FunctionExpression':
+        case 'MethodDeclaration':
+        case 'GetAccessor':
+        case 'SetAccessor':
+            return functionUnsupported(parser, source, id);
+        case 'TaggedTemplateExpression':
+            if(node.children.length !== 2) return 'tag-type-arguments';
+            if(jestTag(parser, syntaxChild(parser, id, 0))) return 'jest-template-table';
+            break;
+        case 'TemplateExpression':
+            for(let position = 1; position < node.children.length; position++) {
+                const span = syntaxNode(parser, node.children[position] ?? panic('missing template span'));
+                const reason = unsupported(parser, source, span.children[0] ?? panic('missing template expression'));
+                if(reason !== '') return reason;
+            }
+            return '';
+        case 'PrefixUnaryExpression':
+        case 'PostfixUnaryExpression':
+        case 'DeleteExpression':
+        case 'VoidExpression':
+        case 'TypeOfExpression':
+        case 'ArrayLiteralExpression':
+        case 'ObjectLiteralExpression':
+        case 'PropertyAssignment':
+        case 'SpreadAssignment':
+        case 'ComputedPropertyName':
+        case 'SpreadElement':
+        case 'NonNullExpression':
+            break;
+        case 'ShorthandPropertyAssignment':
+            if(node.children.length !== 1) return 'object-pattern';
+            break;
+        case 'ConditionalExpression': {
+            for(const offset of [0, 2, 4]) {
+                const reason = unsupported(
+                    parser,
+                    source,
+                    node.children[offset] ?? panic('missing conditional operand'),
+                );
+                if(reason !== '') return reason;
+            }
+            return '';
+        }
+        case 'BinaryExpression': {
+            if(syntaxOperator(parser, id) === '')
+                return syntaxNode(parser, node.children[1] ?? panic('missing binary token')).kind;
+            if(
+                syntaxAssignment(parser, id) &&
+                !['Identifier', 'PropertyAccessExpression', 'ElementAccessExpression', 'NonNullExpression'].includes(
+                    syntaxNode(parser, syntaxChild(parser, id, 0)).kind,
+                )
+            )
+                return 'assignment-pattern';
+            const left = unsupported(parser, source, node.children[0] ?? panic('missing left'));
+            return left !== '' ? left : unsupported(parser, source, node.children[2] ?? panic('missing right'));
+        }
+        case 'PropertyAccessExpression':
+        case 'ElementAccessExpression': {
+            const left = unsupported(parser, source, node.children[0] ?? panic('missing object'));
+            return left !== ''
+                ? left
+                : unsupported(parser, source, node.children[node.children.length - 1] ?? panic('missing property'));
+        }
+        case 'CallExpression':
+        case 'NewExpression': {
+            const calleeReason = unsupported(parser, source, node.children[0] ?? panic('missing callee'));
+            if(calleeReason !== '') return calleeReason;
+            const count = Math.max(node.list, 0);
+            const first = node.children.length - count;
+            if(
+                first !== 1 &&
+                !(
+                    first === 2 &&
+                    syntaxNode(parser, node.children[1] ?? panic('missing optional token')).kind === 'QuestionDotToken'
+                )
+            )
+                return 'type-arguments';
+            for(let position = first; position < node.children.length; position++) {
+                const reason = unsupported(parser, source, node.children[position] ?? panic('missing argument'));
+                if(reason !== '') return reason;
+            }
+            return '';
+        }
+        default:
+            return node.kind;
+    }
+    for(const child of node.children) {
+        const reason = unsupported(parser, source, child);
+        if(reason !== '') return reason;
+    }
+    return '';
+}
+
+export function statementUnsupported(parser: Parser, source: string, index: number): string {
+    const node = syntaxNode(parser, index);
+    switch(node.kind) {
+        case 'Block':
+            for(const child of node.children) {
+                const reason = statementUnsupported(parser, source, child);
+                if(reason !== '') return reason;
+            }
+            return '';
+        case 'ExpressionStatement':
+        case 'ReturnStatement':
+        case 'ThrowStatement':
+            for(const child of node.children) {
+                const reason = unsupported(parser, source, child);
+                if(reason !== '') return reason;
+            }
+            return '';
+        case 'EmptyStatement':
+        case 'DebuggerStatement':
+            return '';
+        case 'BreakStatement':
+        case 'ContinueStatement':
+            return node.children.length === 0 ||
+                syntaxNode(parser, node.children[0] ?? panic('missing label')).kind === 'Identifier'
+                ? ''
+                : 'statement-label';
+        default:
+            return node.kind;
+    }
+}
+
+export function functionUnsupported(parser: Parser, source: string, index: number): string {
+    const node = syntaxNode(parser, index);
+    let named = false;
+    for(let position = 0; position < node.children.length - 1; position++) {
+        const child = node.children[position] ?? panic('missing function child');
+        const item = syntaxNode(parser, child);
+        if(
+            ['MethodDeclaration', 'GetAccessor', 'SetAccessor'].includes(node.kind) &&
+            !named &&
+            !['AsyncKeyword', 'AsteriskToken'].includes(item.kind)
+        ) {
+            if(!['Identifier', 'StringLiteral', 'NumericLiteral', 'ComputedPropertyName'].includes(item.kind))
+                return 'method-key';
+            const reason = unsupported(parser, source, child);
+            if(reason !== '') return reason;
+            named = true;
+            continue;
+        }
+        if(item.kind === 'Identifier') {
+            if(node.kind === 'ArrowFunction' || source.slice(node.pos, item.pos).includes('(')) return 'function-types';
+            named = true;
+        }
+        if(['AsyncKeyword', 'AsteriskToken', 'EqualsGreaterThanToken', 'Identifier'].includes(item.kind)) continue;
+        if(item.kind !== 'Parameter') return 'function-types';
+        let offset =
+            syntaxNode(parser, item.children[0] ?? panic('missing parameter')).kind === 'DotDotDotToken' ? 1 : 0;
+        const name = syntaxNode(parser, item.children[offset] ?? panic('missing parameter name'));
+        if(name.kind !== 'Identifier') return 'parameter-pattern';
+        offset++;
+        if(item.children.length > offset) {
+            const initializer = item.children[offset] ?? panic('missing initializer');
+            const preceding = source.slice(name.end, syntaxNode(parser, initializer).pos);
+            if(!preceding.includes('=')) return 'function-types';
+            const reason = unsupported(parser, source, initializer);
+            if(reason !== '') return reason;
+            offset++;
+        }
+        if(item.children.length > offset) return 'function-types';
+    }
+    if(node.kind === 'FunctionExpression' && !named) return 'FunctionExpression';
+    const body = node.children[node.children.length - 1] ?? panic('missing function body');
+    return syntaxNode(parser, body).kind === 'Block'
+        ? statementUnsupported(parser, source, body)
+        : unsupported(parser, source, body);
+}

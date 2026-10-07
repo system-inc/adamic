@@ -8,6 +8,9 @@ import { isKeyName } from './keys.ts';
 import { stringWidth } from './width.ts';
 import {
     assignmentOperators,
+    unsupported,
+    statementUnsupported,
+    functionUnsupported,
     hasBlankLine,
     syntaxOperator,
     rank,
@@ -70,112 +73,7 @@ export class Expressions {
         return false;
     }
     unsupported(index: number): string {
-        const id = this.unwrapped(index);
-        const node = this.node(id);
-        switch(node.kind) {
-            case 'Identifier':
-            case 'PrivateIdentifier':
-            case 'NumericLiteral':
-            case 'BigIntLiteral':
-            case 'RegularExpressionLiteral':
-            case 'ThisKeyword':
-            case 'SuperKeyword':
-            case 'NullKeyword':
-            case 'TrueKeyword':
-            case 'FalseKeyword':
-            case 'OmittedExpression':
-                return '';
-            case 'NoSubstitutionTemplateLiteral':
-                return '';
-            case 'StringLiteral':
-                if(this.source.slice(node.pos, node.end).trim().includes('\n')) return 'string-literal-layout';
-                return '';
-            case 'ArrowFunction':
-            case 'FunctionExpression':
-            case 'MethodDeclaration':
-            case 'GetAccessor':
-            case 'SetAccessor':
-                return this.functionUnsupported(id);
-            case 'TemplateExpression':
-                for(let position = 1; position < node.children.length; position++) {
-                    const span = this.node(node.children[position] ?? panic('missing template span'));
-                    const reason = this.unsupported(span.children[0] ?? panic('missing template expression'));
-                    if(reason !== '') return reason;
-                }
-                return '';
-            case 'PrefixUnaryExpression':
-            case 'PostfixUnaryExpression':
-            case 'DeleteExpression':
-            case 'VoidExpression':
-            case 'TypeOfExpression':
-            case 'ArrayLiteralExpression':
-            case 'ObjectLiteralExpression':
-            case 'PropertyAssignment':
-            case 'SpreadAssignment':
-            case 'ComputedPropertyName':
-            case 'SpreadElement':
-            case 'NonNullExpression':
-                break;
-            case 'ShorthandPropertyAssignment':
-                if(node.children.length !== 1) return 'object-pattern';
-                break;
-            case 'ConditionalExpression': {
-                for(const offset of [0, 2, 4]) {
-                    const reason = this.unsupported(node.children[offset] ?? panic('missing conditional operand'));
-                    if(reason !== '') return reason;
-                }
-                return '';
-            }
-            case 'BinaryExpression': {
-                if(this.operator(id) === '') return this.node(node.children[1] ?? panic('missing binary token')).kind;
-                if(
-                    this.isAssignment(id) &&
-                    ![
-                        'Identifier',
-                        'PropertyAccessExpression',
-                        'ElementAccessExpression',
-                        'NonNullExpression',
-                    ].includes(this.node(this.child(id, 0)).kind)
-                )
-                    return 'assignment-pattern';
-                const left = this.unsupported(node.children[0] ?? panic('missing left'));
-                return left !== '' ? left : this.unsupported(node.children[2] ?? panic('missing right'));
-            }
-            case 'PropertyAccessExpression':
-            case 'ElementAccessExpression': {
-                const left = this.unsupported(node.children[0] ?? panic('missing object'));
-                return left !== ''
-                    ? left
-                    : this.unsupported(node.children[node.children.length - 1] ?? panic('missing property'));
-            }
-            case 'CallExpression':
-            case 'NewExpression': {
-                const calleeReason = this.unsupported(node.children[0] ?? panic('missing callee'));
-                if(calleeReason !== '') return calleeReason;
-                const count = Math.max(node.list, 0);
-                const first = node.children.length - count;
-                if(
-                    first !== 1 &&
-                    !(
-                        first === 2 &&
-                        this.node(node.children[1] ?? panic('missing optional token')).kind === 'QuestionDotToken'
-                    )
-                )
-                    return 'type-arguments';
-                for(let position = first; position < node.children.length; position++) {
-                    const reason = this.unsupported(node.children[position] ?? panic('missing argument'));
-                    if(reason !== '') return reason;
-                }
-                return '';
-            }
-            default:
-                return node.kind;
-        }
-        for(const child of node.children) {
-            const reason = this.unsupported(child);
-            if(reason !== '') return reason;
-        }
-        return '';
+        return unsupported(this.parser, this.source, index);
     }
     normalize(index: number): number {
         const id = this.unwrapped(index);
@@ -319,12 +217,13 @@ export class Expressions {
                     (this.operator(parent) === '**' ||
                         (!update && ['in', 'instanceof'].includes(this.operator(parent))))
                 );
-            return role === 'object' || role === 'callee' || outer.kind === 'NonNullExpression';
+            return role === 'object' || role === 'callee' || role === 'tag' || outer.kind === 'NonNullExpression';
         }
         if(node.kind === 'ConditionalExpression')
             return (
                 role === 'object' ||
                 role === 'callee' ||
+                role === 'tag' ||
                 (outer.kind === 'ConditionalExpression' && role === 'test') ||
                 (outer.kind === 'BinaryExpression' && !this.isAssignment(parent) && this.operator(parent) !== ',') ||
                 [
@@ -356,6 +255,7 @@ export class Expressions {
             return (
                 role === 'object' ||
                 role === 'callee' ||
+                role === 'tag' ||
                 [
                     'PrefixUnaryExpression',
                     'PostfixUnaryExpression',
@@ -661,6 +561,7 @@ export class Expressions {
                     'NumericLiteral',
                     'NoSubstitutionTemplateLiteral',
                     'TemplateExpression',
+                    'TaggedTemplateExpression',
                 ].includes(rightNode.kind))
         )
             return this.docs.group(this.docs.concat([this.docs.group(left), operator, this.docs.text(' '), right]));
@@ -822,34 +723,7 @@ export class Expressions {
         );
     }
     statementUnsupported(index: number): string {
-        const node = this.node(index);
-        switch(node.kind) {
-            case 'Block':
-                for(const child of node.children) {
-                    const reason = this.statementUnsupported(child);
-                    if(reason !== '') return reason;
-                }
-                return '';
-            case 'ExpressionStatement':
-            case 'ReturnStatement':
-            case 'ThrowStatement':
-                for(const child of node.children) {
-                    const reason = this.unsupported(child);
-                    if(reason !== '') return reason;
-                }
-                return '';
-            case 'EmptyStatement':
-            case 'DebuggerStatement':
-                return '';
-            case 'BreakStatement':
-            case 'ContinueStatement':
-                return node.children.length === 0 ||
-                    this.node(node.children[0] ?? panic('missing label')).kind === 'Identifier'
-                    ? ''
-                    : 'statement-label';
-            default:
-                return node.kind;
-        }
+        return statementUnsupported(this.parser, this.source, index);
     }
     statementDoc(index: number, parent: number): number {
         const pushed = this.ancestors[this.ancestors.length - 1] !== index;
@@ -968,47 +842,7 @@ export class Expressions {
         }
     }
     functionUnsupported(index: number): string {
-        const node = this.node(index);
-        let named = false;
-        for(let position = 0; position < node.children.length - 1; position++) {
-            const child = node.children[position] ?? panic('missing function child');
-            const item = this.node(child);
-            if(
-                ['MethodDeclaration', 'GetAccessor', 'SetAccessor'].includes(node.kind) &&
-                !named &&
-                !['AsyncKeyword', 'AsteriskToken'].includes(item.kind)
-            ) {
-                if(!['Identifier', 'StringLiteral', 'NumericLiteral', 'ComputedPropertyName'].includes(item.kind))
-                    return 'method-key';
-                const reason = this.unsupported(child);
-                if(reason !== '') return reason;
-                named = true;
-                continue;
-            }
-            if(item.kind === 'Identifier') {
-                if(node.kind === 'ArrowFunction' || this.source.slice(node.pos, item.pos).includes('('))
-                    return 'function-types';
-                named = true;
-            }
-            if(['AsyncKeyword', 'AsteriskToken', 'EqualsGreaterThanToken', 'Identifier'].includes(item.kind)) continue;
-            if(item.kind !== 'Parameter') return 'function-types';
-            let offset = this.node(item.children[0] ?? panic('missing parameter')).kind === 'DotDotDotToken' ? 1 : 0;
-            const name = this.node(item.children[offset] ?? panic('missing parameter name'));
-            if(name.kind !== 'Identifier') return 'parameter-pattern';
-            offset++;
-            if(item.children.length > offset) {
-                const initializer = item.children[offset] ?? panic('missing initializer');
-                const preceding = this.source.slice(name.end, this.node(initializer).pos);
-                if(!preceding.includes('=')) return 'function-types';
-                const reason = this.unsupported(initializer);
-                if(reason !== '') return reason;
-                offset++;
-            }
-            if(item.children.length > offset) return 'function-types';
-        }
-        if(node.kind === 'FunctionExpression' && !named) return 'FunctionExpression';
-        const body = node.children[node.children.length - 1] ?? panic('missing function body');
-        return this.node(body).kind === 'Block' ? this.statementUnsupported(body) : this.unsupported(body);
+        return functionUnsupported(this.parser, this.source, index);
     }
     functionDoc(index: number): number {
         const node = this.node(index);
@@ -1049,6 +883,8 @@ export class Expressions {
     }
     templateHasLines(index: number): boolean {
         const node = this.node(index);
+        if(node.kind === 'TaggedTemplateExpression')
+            return this.templateHasLines(this.child(index, node.children.length - 1));
         if(node.kind === 'NoSubstitutionTemplateLiteral') return this.source.slice(node.pos, node.end).includes('\n');
         if(node.kind !== 'TemplateExpression') return false;
         if(this.node(node.children[0] ?? panic('missing quasi head')).raw.includes('\n')) return true;
@@ -1916,6 +1752,13 @@ export class Expressions {
                 }
                 break;
             }
+            case 'TaggedTemplateExpression':
+                result = this.docs.concat([
+                    this.print(this.child(id, 0), id, 'tag'),
+                    this.docs.add('lineSuffixBoundary', []),
+                    this.print(this.child(id, 1), id, 'quasi'),
+                ]);
+                break;
             case 'CallExpression':
             case 'NewExpression': {
                 const callee = this.child(id, 0);

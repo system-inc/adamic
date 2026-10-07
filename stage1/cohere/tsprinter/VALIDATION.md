@@ -891,3 +891,43 @@ The intermediate 144,858-text benchmark is retained in `results/method-timing.js
 marked as preceding the preview correction. Three complete-process runs each produced Go's exact
 bytes: medians native **33,956**, Node **62,494**, Go **50,703**, npm Prettier **3,080** texts/s.
 Native is slower than Go and Node on this expanded workload. No full-repository gate was run.
+
+## Ordinary tagged-template increment
+
+The independent selector and generator add 504 tag/template/context combinations. Ordinary tags
+reuse raw template and interpolation layout. Tag precedence, optional-chain stopping parentheses,
+constructor callees, member chains and assignment values compose. A preliminary scratch probe
+caught seven long assignment values breaking after the operator; Go's tagged-value exception fixes
+those layouts. Jest `each` tables replace the ordinary-tag proving gap, still 13 exact NotYet inputs.
+Pure unsupported-shape classification moved to `syntax.ts`, without callback or interface dispatch.
+
+An initial mutant fixture had incorrectly quoted Go text and failed to build; that is a harness
+failure, not a mutant catch. The first complete gate passes **436.142 s**, but two declaration-order
+lint findings remained. Moving those pure declarations before their uses fixes lint. The final
+source has its own complete gate below, superseding that run:
+
+```sh
+source /workspace/adamic-tools/env.sh
+ADAMIC_TS_PRETTIER=/tmp/graphql-printer-prettier \
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/adamic-tsc-strictness/typescript \
+ADAMIC_TS_PRINTER_KEEP=/tmp/ts-printer-tag-final-corpus \
+ADAMIC_TS_PRINTER_ARTIFACTS=/tmp/ts-printer-tag-final-artifacts \
+go test -v -count=1 -timeout 30m ./stage1/cohere/tsprinter \
+  -run '^TestExpressionsAgainstGoAndPrettier$' > /tmp/ts-printer-tag-final-test.log 2>&1
+ADAMIC_TS_PRETTIER=/tmp/graphql-printer-prettier \
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/adamic-tsc-strictness/typescript \
+go test -v -count=1 -timeout 30m ./stage1/cohere/tsprinter \
+  -run '^TestMutants$/tagged' > /tmp/ts-printer-tag-mutant.log 2>&1
+```
+
+Final gate exit 0, **423.897 s: 145,440 / 145,440** maximal fragments from 199 files, zero full-file
+parse failures, strict Go, npm Prettier 3.9.6 and embedded-fork equality. Source Node, ASan/UBSan
+native, JavaScript backend, release native and the separate leak run pass. All 13 gap reasons match.
+Coverage is in `results/tag-coverage.json`. The source cohere check prints 276 rules, ten checked,
+100% Adamic-ready; package vet and whitespace checks pass. No internal or parser file changed.
+
+The tag-removal mutant compiles and finishes normally, exit 0 and empty stderr on both Node and
+native, then mismatches at line 114199: `` `raw`; `` instead of `` tag`raw`; ``. Its subtest passes
+in **271.19 s**, complete command **277.182 s**. This was on the semantically identical source before
+moving the two pure declarations; the tag printer and mutation anchor are unchanged by that move.
+No full-repository gate was run.

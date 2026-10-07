@@ -31,7 +31,7 @@ func supportedExpression(node *estree.Node) bool {
 		return true
 	case "ObjectExpression", "Property", "ConditionalExpression", "AssignmentExpression", "SequenceExpression", "UnaryExpression", "UpdateExpression", "BinaryExpression", "LogicalExpression", "MemberExpression", "ArrayExpression", "SpreadElement", "TSNonNullExpression", "ChainExpression":
 	case "TemplateLiteral", "FunctionExpression", "ArrowFunctionExpression", "AssignmentPattern", "RestElement", "BlockStatement", "ExpressionStatement", "ReturnStatement", "ThrowStatement", "EmptyStatement", "DebuggerStatement", "BreakStatement", "ContinueStatement":
-	case "CallExpression", "NewExpression":
+	case "CallExpression", "NewExpression", "TaggedTemplateExpression":
 		if node.Child("typeArguments") != nil {
 			return false
 		}
@@ -118,6 +118,14 @@ func TestAdamicExpressionCorpus(t *testing.T) {
 	for _, value := range []string{"f?.()", "f?.(x)", "f()", "f(veryLongIdentifierAlpha)", "obj?.x", "obj!.x", "!!x", "++x"} {
 		for _, right := range []string{"g(" + value + ")", "g(" + value + ").x"} {
 			add("assignment-short-argument-boundary", "veryLongIdentifierAlphaVeryLongIdentifierBetaVeryLongIdentifierGamma="+right)
+		}
+	}
+	for _, tag := range []string{"tag", "veryLongTagIdentifierAlphaVeryLongTagIdentifierBeta", "object.tag", "factory().tag", "object[key]", "(a+b)", "(!x)", "(a?b:c)", "(x=>x)", "(function named(){})", "(obj?.tag)", "f()"} {
+		for _, template := range []string{"`raw`", "`a${x}b`", "`a\n    ${a+b}\nb`", "`a${(x?.y).z}b`", "`a${veryLongIdentifierAlpha+veryLongIdentifierBeta+veryLongIdentifierGamma}b`", "`a${({method(){return x;}})}b`"} {
+			value := tag + template
+			for _, context := range []string{value, "x=" + value, "f(" + value + ")", "[" + value + "]", "x=>" + value, "(" + value + ").first().second()", "new (" + value + ")(x)"} {
+				add("tagged-template-composition", context)
+			}
 		}
 	}
 	for _, expression := range []string{"(x?.y).z", "(fn?.()).x", "(obj?.x)!.y", "(obj?.[key]).value"} {
@@ -548,6 +556,9 @@ func supportedSyntax(node *ast.Node) bool {
 		return valid
 	case ast.KindEmptyStatement, ast.KindDebuggerStatement:
 		return true
+	case ast.KindTaggedTemplateExpression:
+		item := node.AsTaggedTemplateExpression()
+		return item.TypeArguments == nil && !jestSyntaxTag(item.Tag) && supportedSyntax(item.Tag) && supportedSyntax(item.Template)
 	case ast.KindTemplateExpression:
 		for _, span := range node.AsTemplateExpression().TemplateSpans.Nodes {
 			if !supportedSyntax(span.AsTemplateSpan().Expression) {
@@ -664,4 +675,42 @@ func TestAdamicExpressionBenchmark(t *testing.T) {
 	if err := os.WriteFile(os.Getenv("ADAMIC_TS_BENCH_OUTPUT"), []byte(output.String()), 0644); err != nil {
 		t.Fatal(err)
 	}
+}
+
+func jestSyntaxTag(tag *ast.Node) bool {
+	for tag.Kind == ast.KindParenthesizedExpression {
+		tag = tag.Expression()
+	}
+	property := func(node *ast.Node) *ast.Node {
+		switch node.Kind {
+		case ast.KindPropertyAccessExpression:
+			return node.Name()
+		case ast.KindElementAccessExpression:
+			return node.AsElementAccessExpression().ArgumentExpression
+		default:
+			return nil
+		}
+	}
+	key := property(tag)
+	if key == nil || key.Kind != ast.KindIdentifier || key.Text() != "each" {
+		return false
+	}
+	object := tag.Expression()
+	for object.Kind == ast.KindParenthesizedExpression {
+		object = object.Expression()
+	}
+	if key := property(object); key != nil {
+		if key.Kind != ast.KindIdentifier || (key.Text() != "only" && key.Text() != "skip") {
+			return false
+		}
+		object = object.Expression()
+	}
+	if object.Kind != ast.KindIdentifier {
+		return false
+	}
+	switch object.Text() {
+	case "describe", "it", "test", "fdescribe", "fit", "ftest", "xdescribe", "xit", "xtest":
+		return true
+	}
+	return false
 }

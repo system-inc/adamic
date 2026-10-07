@@ -44,8 +44,8 @@
     "Reason": "function-types"
   },
   {
-    "Source": "tag`a${b}`",
-    "Reason": "TaggedTemplateExpression"
+    "Source": "test.each`a|b\n${1}|${2}`",
+    "Reason": "jest-template-table"
   },
   {
     "Source": "(x: number) => x",
