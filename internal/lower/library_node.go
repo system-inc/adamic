@@ -64,6 +64,9 @@ func (l *lowering) nodeLibraryRefusal(node *ast.Node) error {
 	if !ast.IsExpressionNode(node) || ast.IsPartOfTypeNode(node) {
 		return nil
 	}
+	if err := l.nodeFSDirectorySignature(node); err != nil {
+		return err
+	}
 	name := l.nodeLibraryMember(node)
 	if ast.IsIdentifier(node) && node.Parent != nil && node.Parent.Kind == ast.KindPropertyAccessExpression && node.Parent.Name() == node {
 		node = node.Parent

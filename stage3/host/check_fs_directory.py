@@ -7,6 +7,7 @@ backends run. No recorded stage0 diagnostic or fixture source is rewritten.
 import argparse
 import json
 import os
+import sys
 from pathlib import Path
 import subprocess
 import tempfile
@@ -81,7 +82,9 @@ def main():
                 detail = dict(stage=outcome)
                 if outcome == "Compiles":
                     if backend == "native":
-                        environment = dict(os.environ, ASAN_OPTIONS="detect_leaks=1")
+                        environment = dict(os.environ)
+                        if sys.platform == "linux":
+                            environment["ASAN_OPTIONS"] = "detect_leaks=1"
                         observed = run([str(binary)], label + ".run", environment)
                     else:
                         module = scratch / (name + ".mjs")

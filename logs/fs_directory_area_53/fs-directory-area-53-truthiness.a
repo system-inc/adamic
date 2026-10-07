@@ -1,0 +1,1 @@
+import { statSync } from 'node:fs'; console.log(String(!statSync('missing', {throwIfNoEntry:false})));
