@@ -98,3 +98,17 @@ finished include checker load and native parsing:
 
 Toolchain setup was reused: Go 0s, clang 1s, Node 1s, submodules 1s, cache 85s,
 done 85s. nproc reports 5 (four effective cores). No new setup run is claimed.
+
+Latest landing check: fetched all origin heads again. Main remains b8fb957aa,
+and pushed commit 06d773130 is its descendant with a clean worktree. The new
+shared harness tip is 41eb6eab2b6de45ede0a40250765be295ee25fbd, still not on
+main. No compiler or rule source changed, so the green oracle and mutant
+results above were not redundantly rerun.
+
+An isolated scratch probe renamed the owned JSX parser class to Wave16JsxParser
+while retaining the complete foreign-arena rule graph. After correcting the
+probe's special adamic import, compilation still exits 1 with the identical
+shared parser.ts:34:20 constructor-escape refusal. This rules out that specific
+rename as a workaround; it does not establish the underlying cause. The final
+probe stdout/stderr and fetch log are retained under evidence/landing-b8fb.
+The context-value rule remains incomplete, and no new rule was claimed.
