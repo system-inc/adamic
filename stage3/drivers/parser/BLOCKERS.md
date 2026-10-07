@@ -17,7 +17,7 @@ accepted semantics-preserving repair.
 | Measurement | Result |
 | --- | --- |
 | Full slice, **found behind a stub** | debug.ts:333:29: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet |
-| Minimal probe, **found behind a stub**, moving emptyMap after Pending | native-enum-map-after.a:4:52: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet |
+| Minimal probe, **found behind a stub**, moving emptyMap after Pending | /tmp/parser-enum-map-after.a:4:52: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet |
 
 The exact statement is `const enumMemberCache = new Map<Record<string, string | number>, SortedReadonlyArray<[number, string]>>();`.
 
