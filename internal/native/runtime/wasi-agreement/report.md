@@ -1,17 +1,22 @@
-Built: three runtime fixes make the five named fixtures agree with source Node on WASI.
-Commits: runtime 7f6d7d2, merged base 6844656 (driver 446b300 plus runtime 52959fc).
-Results: five WASI and native fixtures pass; native package passes; TestWASI overlay passes 35/35; checked-in TestWASI has three stale-assertion failures.
-Mutants: old sort panic, old frame check and old stream open are independently caught by the source oracle.
-Not covered: full repository gate, all WASI fixtures, other engines, Workers, and regular-file aliases without preopens.
+Built: three runtime fixes and the approved checked-in TestWASI assertions make all 35 fixtures agree with Node.
+Commits: runtime 7f6d7d2, approved test patch d2946c8, main merge 24f45a7 (origin/main e8ba3d5).
+Results: TestWASI 35/35 without overlay; five fixtures natively and as Wasm pass uncached; native package passes.
+Mutants: old sort panic, old frame check and old stream open are independently caught again after merging main.
+Not covered: full repository gate, full WASI oracle, other engines, Workers and regular-file aliases without preopens.
 
-The files changed are adamic.h, sort.c and input.c. All persistent edits are under
-internal/native/runtime. The independent verification tool and compressed logs
+The files changed are adamic.h, sort.c and input.c. The initial runtime implementation edits are under
+internal/native/runtime; the approved landing follow-up also changes
+internal/native/wasm_test.go. The independent verification tool and compressed logs
 are in this directory; observations.json preserves exact stdout, stderr and exit
 status for Node, the fixed Wasm artifact and each isolated mutant.
 
 The base branch did not actually contain the runtime commit, so merge 6844656
 combines origin/codex/wasm32-driver at 446b300 with
 origin/codex/wasm32-runtime at 52959fc before the fixes.
+
+The original runtime-only verification below is historical. Its overlay-only
+TestWASI status and test ownership restriction were superseded by the approved
+landing follow-up at the end of this report.
 
 Observed behavior before the fixes:
 
@@ -192,3 +197,50 @@ log remains beside the overlay success log so these results cannot be confused.
 The full repository gate, full WASI oracle, other Node/Wasm engines, Wasm sanitizers,
 Wasm counted lifetime checks specifically for throwing sort callbacks, and deployed
 Workers are not covered. No native byte-identical claim is made for sort.c.
+
+Approved landing follow-up, October 7, 2026:
+
+The compiler owner approved applying test-expectations.patch to TestWASI on this
+branch. Commit d2946c8 applies that patch exactly. Commit 24f45a7 merges current
+origin/main e8ba3d5d81de4d3773c723914fccd4c76248b965 into codex/wasi-agreement,
+without conflicts. A remote check after testing still reported that main tip.
+No main or area/ branch is pushed or merged into; only codex/wasi-agreement is
+pushed for the user's area/runtime integration.
+
+All requested gates now run against the merged tree with the real checked-in
+TestWASI assertions. There is no Go overlay or alternate runtime in these gates:
+
+```sh
+bash cloud/setup.sh --wasi-sdk > /tmp/wasi-landing-setup.log 2>&1
+source /workspace/adamic-tools/env.sh
+PATH=/workspace/adamic-tools/wasi-sdk/bin:$PATH ADAMIC_TEST_WASI=1 go test ./internal/native -run '^TestWASI$' -v -count=1 -timeout 15m > /tmp/wasi-landing-integration.log 2>&1
+ADAMIC_ORACLE_WASI=1 ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestWASIAgreesWithNode$/internal/oracle/testdata/(closures_throw|stack_forever|stack_tail_call|write_stdout_order|write_stderr_order)[.]a$' -v -count=1 -timeout 15m > /tmp/wasi-landing-wasm-five.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestNativeAgreesWithNode$/internal/oracle/testdata/(closures_throw|stack_forever|stack_tail_call|write_stdout_order|write_stderr_order)[.]a$' -v -count=1 -timeout 15m > /tmp/wasi-landing-native-five.log 2>&1
+go test ./internal/native/... -count=1 -timeout 15m > /tmp/wasi-landing-native-package.log 2>&1
+python3 internal/native/runtime/wasi-agreement/check.py > /tmp/wasi-landing-mutants.log 2>&1
+go vet ./internal/native/... > /tmp/wasi-landing-vet.log 2>&1
+gofmt -l cmd internal > /tmp/wasi-landing-format.log
+git diff --check > /tmp/wasi-landing-diff.log
+```
+
+Observed results:
+
+| Gate | Result |
+| --- | --- |
+| TestWASI, no overlay | PASS, 35/35 equivalent, 124.646 s. |
+| Five named fixtures as Wasm | PASS, 5/5, uncached, 14.354 s. |
+| Five named fixtures in the ordinary native oracle | PASS, 5/5, uncached, 10.036 s; includes release, sanitizers, leaks and recorded counts. |
+| Native package | PASS, 200.761 s. |
+| Independent runtime mutants | PASS: all three reverted mechanisms caught again; five separate-stream and two combined-stream comparisons also pass. |
+| Native vet, formatting, whitespace | PASS, empty logs. |
+
+TestWASI strictly compiles all 48 runtime translation units, passes the linear
+stack canary, and checks 100,000 request responses with zero live values between
+requests, memory fixed at 393,216 bytes and 6,300,000 region objects ended.
+landing-observations.json records exact observations for the merged compiler.
+The wasi-landing-*.log.gz files contain this follow-up's complete gate logs.
+
+Setup timings: Go, native clang, Node and WASI SDK ready at 0 s; submodules ready
+at 1 s; build cache warm at 181 s; done in 181 s. nproc = 5, cgroup quota four CPUs,
+reported memory 17.6 GB. Setup and all requested gates completed successfully.
+The full repository gate and full WASI oracle were not run in this follow-up.
