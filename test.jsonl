@@ -4,3 +4,48 @@
 {"Time":"2026-10-07T21:01:04.874675157Z","Action":"start","Package":"github.com/system-inc/adamic/bench/regex"}
 {"Time":"2026-10-07T21:01:04.874712068Z","Action":"output","Package":"github.com/system-inc/adamic/bench/regex","Output":"?   \tgithub.com/system-inc/adamic/bench/regex\t[no test files]\n"}
 {"Time":"2026-10-07T21:01:04.874723163Z","Action":"skip","Package":"github.com/system-inc/adamic/bench/regex","Elapsed":0}
+{"Time":"2026-10-07T21:01:36.812376191Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-07T21:01:36.85169551Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridge"}
+{"Time":"2026-10-07T21:01:36.851964746Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridge","Output":"=== RUN   TestBridge\n","OutputType":"frame"}
+{"Time":"2026-10-07T21:01:38.729279062Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo/archive"}
+{"Time":"2026-10-07T21:01:38.729324595Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo/archive","Output":"?   \tgithub.com/system-inc/adamic/bridge/tsgo/archive\t[no test files]\n"}
+{"Time":"2026-10-07T21:01:38.729334927Z","Action":"skip","Package":"github.com/system-inc/adamic/bridge/tsgo/archive","Elapsed":0}
+{"Time":"2026-10-07T21:01:38.72934796Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo/checker"}
+{"Time":"2026-10-07T21:01:38.745797253Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Test":"TestFactEncoding"}
+{"Time":"2026-10-07T21:01:38.745875031Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Test":"TestFactEncoding","Output":"=== RUN   TestFactEncoding\n","OutputType":"frame"}
+{"Time":"2026-10-07T21:01:38.751514728Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Test":"TestFactEncoding","Output":"=== PAUSE TestFactEncoding\n","OutputType":"frame"}
+{"Time":"2026-10-07T21:01:38.75154279Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Test":"TestFactEncoding"}
+{"Time":"2026-10-07T21:01:38.751709595Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Test":"TestShapeAndNameFacts"}
+{"Time":"2026-10-07T21:01:38.751716982Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Test":"TestShapeAndNameFacts","Output":"=== RUN   TestShapeAndNameFacts\n","OutputType":"frame"}
+{"Time":"2026-10-07T21:01:38.751784817Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Test":"TestShapeAndNameFacts","Output":"=== PAUSE TestShapeAndNameFacts\n","OutputType":"frame"}
+{"Time":"2026-10-07T21:01:38.751789877Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Test":"TestShapeAndNameFacts"}
+{"Time":"2026-10-07T21:01:38.751817647Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Test":"TestExactIndexMatchesCompilerNodes"}
+{"Time":"2026-10-07T21:01:38.751821823Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Test":"TestExactIndexMatchesCompilerNodes","Output":"=== RUN   TestExactIndexMatchesCompilerNodes\n","OutputType":"frame"}
+{"Time":"2026-10-07T21:01:38.751885711Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Test":"TestExactIndexMatchesCompilerNodes","Output":"=== PAUSE TestExactIndexMatchesCompilerNodes\n","OutputType":"frame"}
+{"Time":"2026-10-07T21:01:38.751889981Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Test":"TestExactIndexMatchesCompilerNodes"}
+{"Time":"2026-10-07T21:01:38.751912043Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Test":"TestAdamicRootKeepsConfigDeclarations"}
+{"Time":"2026-10-07T21:01:38.751921776Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Test":"TestAdamicRootKeepsConfigDeclarations","Output":"=== RUN   TestAdamicRootKeepsConfigDeclarations\n","OutputType":"frame"}
+{"Time":"2026-10-07T21:01:38.75198357Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Test":"TestAdamicRootKeepsConfigDeclarations","Output":"=== PAUSE TestAdamicRootKeepsConfigDeclarations\n","OutputType":"frame"}
+{"Time":"2026-10-07T21:01:38.75198774Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Test":"TestAdamicRootKeepsConfigDeclarations"}
+{"Time":"2026-10-07T21:01:38.752011015Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Test":"TestFactEncoding"}
+{"Time":"2026-10-07T21:01:38.75201501Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Test":"TestFactEncoding","Output":"=== CONT  TestFactEncoding\n","OutputType":"frame"}
+{"Time":"2026-10-07T21:01:38.752156375Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Test":"TestFactEncoding","Output":"--- PASS: TestFactEncoding (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-07T21:01:38.752188113Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Test":"TestFactEncoding","Elapsed":0}
+{"Time":"2026-10-07T21:01:38.752194641Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Test":"TestAdamicRootKeepsConfigDeclarations"}
+{"Time":"2026-10-07T21:01:38.752197955Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Test":"TestAdamicRootKeepsConfigDeclarations","Output":"=== CONT  TestAdamicRootKeepsConfigDeclarations\n","OutputType":"frame"}
+{"Time":"2026-10-07T21:01:38.754912312Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Test":"TestExactIndexMatchesCompilerNodes"}
+{"Time":"2026-10-07T21:01:38.754932699Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Test":"TestExactIndexMatchesCompilerNodes","Output":"=== CONT  TestExactIndexMatchesCompilerNodes\n","OutputType":"frame"}
+{"Time":"2026-10-07T21:01:38.775378427Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Test":"TestShapeAndNameFacts"}
+{"Time":"2026-10-07T21:01:38.775432371Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Test":"TestShapeAndNameFacts","Output":"=== CONT  TestShapeAndNameFacts\n","OutputType":"frame"}
+{"Time":"2026-10-07T21:01:39.000905204Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Test":"TestShapeAndNameFacts","Output":"--- PASS: TestShapeAndNameFacts (0.20s)\n","OutputType":"frame"}
+{"Time":"2026-10-07T21:01:39.473222869Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Test":"TestShapeAndNameFacts","Elapsed":0.2}
+{"Time":"2026-10-07T21:01:39.473269113Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Test":"TestExactIndexMatchesCompilerNodes","Output":"--- PASS: TestExactIndexMatchesCompilerNodes (0.72s)\n","OutputType":"frame"}
+{"Time":"2026-10-07T21:01:39.515356221Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Test":"TestExactIndexMatchesCompilerNodes","Elapsed":0.72}
+{"Time":"2026-10-07T21:01:39.515413791Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Test":"TestAdamicRootKeepsConfigDeclarations","Output":"--- PASS: TestAdamicRootKeepsConfigDeclarations (0.76s)\n","OutputType":"frame"}
+{"Time":"2026-10-07T21:01:39.515426831Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Test":"TestAdamicRootKeepsConfigDeclarations","Elapsed":0.76}
+{"Time":"2026-10-07T21:01:39.515430351Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-07T21:01:39.574198787Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Output":"ok  \tgithub.com/system-inc/adamic/bridge/tsgo/checker\t0.845s\n"}
+{"Time":"2026-10-07T21:01:39.574278951Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Elapsed":0.845}
+{"Time":"2026-10-07T21:01:39.576706565Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo/cost"}
+{"Time":"2026-10-07T21:01:39.576724384Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo/cost","Output":"?   \tgithub.com/system-inc/adamic/bridge/tsgo/cost\t[no test files]\n"}
+{"Time":"2026-10-07T21:01:39.576730963Z","Action":"skip","Package":"github.com/system-inc/adamic/bridge/tsgo/cost","Elapsed":0}
