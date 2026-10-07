@@ -1,9 +1,0 @@
-// From TypeScript 6.0.3, src/compiler/checker.ts:54236
-// From TypeScript 6.0.3, src/compiler/types.ts:6196
-// Census reason: a namespace
-// Keep the string arm of the upstream escaped-name type.
-type __String = string & { __escapedIdentifier: void; };
-namespace ReactNames {
-    export const Fragment = "Fragment" as __String;
-}
-console.log(ReactNames.Fragment);

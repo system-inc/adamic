@@ -1,9 +1,0 @@
-{
-  "file": "debug.ts",
-  "roots": 78,
-  "code_filter": null,
-  "total": 1,
-  "diagnostics": [
-    "src/compiler/debug.ts:171:21: error TS2322: Type 'undefined' is not assignable to type '{ level: AssertionLevel; assertion: AnyFunction; }'."
-  ]
-}

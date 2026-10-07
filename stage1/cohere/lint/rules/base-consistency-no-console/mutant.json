@@ -1,5 +1,0 @@
-{
-  "name": "console receiver widened",
-  "from": "this.context.node(receiver).text === 'console'",
-  "to": "this.context.node(receiver).text !== 'console'"
-}

@@ -1,1 +1,0 @@
-{"seconds": 9.421253595999588, "load_before": "3.28 4.11 3.84 1/264 145160", "load_after": "2.93 4.01 3.81 1/264 145267", "command": ["go", "test", "-count=1", "./internal/oracle", "-run", "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^reuse_spread_method_alias[.]a$"]}

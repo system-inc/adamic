@@ -1,8 +1,0 @@
-const target = { a: 1, b: 'built' + '-old', c: false };
-const first = { b: 'built' + '-first', a: 2 };
-const last = { a: 3, c: true };
-const result = Object.assign(target, first, last);
-console.log(`${Object.is(result, target)} ${target.a} ${target.b} ${target.c}`);
-console.log(Object.keys(target).join('|'));
-const itself = Object.assign(target, target);
-console.log(`${Object.is(itself, target)} ${target.b}`);

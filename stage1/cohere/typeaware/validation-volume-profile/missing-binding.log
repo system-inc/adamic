@@ -1,5 +1,0 @@
-=== RUN   TestShadowIndexMissingBinding
-    profile_test.go:151: omitted binding key: compiled mutant panics 70, missing binding index
---- PASS: TestShadowIndexMissingBinding (11.53s)
-PASS
-ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	11.535s

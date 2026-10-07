@@ -1,7 +1,0 @@
-=== RUN   TestWave05DefaultHarness
-    lint_test.go:359: cohere cases: 1333 unique source/rule/options combinations
-    wave05_shared_test.go:16: Go, Node, emitted JavaScript, native identical: 52752 bytes
-    wave05_shared_test.go:17: wave-05 default harness: all 60 upstream non-null cases, no exclusions
---- PASS: TestWave05DefaultHarness (135.46s)
-PASS
-ok  	github.com/system-inc/adamic/stage1/cohere/lint	135.478s

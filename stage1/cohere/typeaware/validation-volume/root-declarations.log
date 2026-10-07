@@ -1,8 +1,0 @@
-=== RUN   TestAdamicRootKeepsConfigDeclarations
-=== PAUSE TestAdamicRootKeepsConfigDeclarations
-=== CONT  TestAdamicRootKeepsConfigDeclarations
-    roots_test.go:30: explicit .a root lost its configured declaration: ["1" "raw-type" "1" "1" "1" "1" "0" "1" "1" "1" "any" "1" "0" "0" "-1" "0" "0" "0" "0"]
---- FAIL: TestAdamicRootKeepsConfigDeclarations (0.05s)
-FAIL
-FAIL	github.com/system-inc/adamic/bridge/tsgo/checker	0.063s
-FAIL

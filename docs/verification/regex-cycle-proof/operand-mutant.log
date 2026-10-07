@@ -1,9 +1,0 @@
-=== RUN   TestRegexOperandsStillJudgeCycleWrites
-=== PAUSE TestRegexOperandsStillJudgeCycleWrites
-=== CONT  TestRegexOperandsStillJudgeCycleWrites
-    regexp_test.go:68: ir.RegExpCall lost the cycle-closing operand write
---- FAIL: TestRegexOperandsStillJudgeCycleWrites (0.00s)
-FAIL
-FAIL	github.com/system-inc/adamic/internal/fresh	0.005s
-FAIL
-mutant exit=1

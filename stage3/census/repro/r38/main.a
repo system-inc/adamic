@@ -1,1 +1,0 @@
-let value = true; value &&= false; console.log(String(value));

@@ -1,6 +1,0 @@
-=== RUN   TestNodeCountCheckCatchesMutant
-    performance_test.go:148: native count mutant finished with identical AST bytes; count "0\n" differs from Go "18\n"
-    performance_test.go:148: Node count mutant finished with identical AST bytes; count "0\n" differs from Go "18\n"
---- PASS: TestNodeCountCheckCatchesMutant (24.79s)
-PASS
-ok  	github.com/system-inc/adamic/stage1/typescript/parser	24.807s

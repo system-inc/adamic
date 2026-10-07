@@ -1,7 +1,0 @@
-PASS: 19 fixture observations and exact status schema
-CAUGHT by stdout: remove own-property guard
-CAUGHT by stdout: reverse key enumeration
-CAUGHT by stdout: replace missing object key with own key
-CAUGHT by stdout: replace missing scalar key with own key
-CAUGHT by stdout: check ownership before the empty-object comparison
-Runtime panic and ownership mutants are not claimed: stage 0 does not compile these inputs.

@@ -1,8 +1,0 @@
-=== RUN   TestJsxParserGapIsExplicit
-    comments_test.go:204: 4 valid Go JSX inputs explicitly refuse in the independent-parser adapter; AST-adapter helper comparisons cover them separately
---- PASS: TestJsxParserGapIsExplicit (19.10s)
-=== RUN   TestJsxAdapterGuardMutant
-    comments_test.go:255: compiled adapter-guard mutant finishes the unsupported JSX input with exit 0; the explicit-refusal check requires exit 70 and catches it
---- PASS: TestJsxAdapterGuardMutant (16.75s)
-PASS
-ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments	35.857s

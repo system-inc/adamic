@@ -1,1 +1,0 @@
-{"seconds": 10.780785051999374, "load_before": "4.95 4.54 3.95 1/257 144195", "load_after": "4.27 4.40 3.91 2/259 144305", "command": ["go", "test", "-count=1", "./internal/oracle", "-run", "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^shared_slice_append[.]a$"]}

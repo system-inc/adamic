@@ -1,5 +1,0 @@
-{
-  "name": "parentheses around a discarded construction not seen through",
-  "from": "this.context.unwrap(expression)",
-  "to": "expression"
-}

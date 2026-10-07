@@ -1,9 +1,0 @@
-// Recursion that runs out of stack is a panic, never a crash. Node stops at about ten thousand frames
-// and native much deeper, so this one goes far past both: what has to match is how it ends, with
-// RangeError: Maximum call stack size exceeded and exit 70, after everything printed before it.
-function depth(count: number, label: string): number {
-	return count === 0 ? label.length : 1 + depth(count - 1, `${label}`);
-}
-console.log(`${depth(1000, 'shallow'.repeat(2))}`);
-console.log(`${depth(1e9, 'deep'.repeat(2))}`);
-console.log('never');

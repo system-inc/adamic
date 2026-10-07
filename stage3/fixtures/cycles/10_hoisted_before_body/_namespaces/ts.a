@@ -1,6 +1,0 @@
-// From TypeScript 6.0.3, src/compiler/_namespaces/ts.ts:4
-// Census reason: an import cycle
-export * from '../performance.a';
-export * from '../core.a';
-import * as performance from './ts.performance.a';
-export { performance };

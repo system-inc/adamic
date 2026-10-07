@@ -1,1 +1,0 @@
-{"seconds": 8.605197048000264, "load_before": "2.26 3.61 3.68 1/270 146417", "load_after": "2.08 3.55 3.66 1/270 146485", "command": ["go", "test", "-count=1", "./internal/lower", "-run", "^TestDefiniteAssignmentIsRefused$"]}

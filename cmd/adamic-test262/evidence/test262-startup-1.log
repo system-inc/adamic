@@ -1,5 +1,0 @@
-=== RUN   TestCompilerStartupMeasurement
-    performance_test.go:58: 30 interleaved compiles: subprocess=1.128499439s in-process=995.475071ms startup-only=102.575631ms
---- PASS: TestCompilerStartupMeasurement (3.82s)
-PASS
-ok  	github.com/system-inc/adamic/cmd/adamic-test262	3.827s

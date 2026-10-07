@@ -1,6 +1,0 @@
-baseline main.c gzip exactly matches raw bytes 63d374a3b81db6b2c467a61a81d64397b38cff469fa9f0eb509f3dfdd73326e1
-baseline callgrind.out gzip exactly matches raw bytes 6d24f40d1c4ec759d16d7f1baa59919bcbf2d24956bd2198ff96d8d1a09c3d82
-final main.c gzip exactly matches raw bytes e4985037efe72282754d4925f2c521a5f4a3ea8d81d0ad364bdf3620b279a1c2
-final callgrind.out gzip exactly matches raw bytes 21f6e6171dbdcb43c3fb76466d6e8c2a032828468c09b99157248cf3c3546c16
-all self instructions reconcile; both raw archives exact
-baseline and final samples and manifests exactly match

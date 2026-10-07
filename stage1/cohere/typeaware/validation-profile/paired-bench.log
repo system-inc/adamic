@@ -1,9 +1,0 @@
-round=1 name=before process_s=19.158033623 tsgo: load_ns=354025675 query_ns=11587581373 queries=131755 first_query_ns=83046 run_ns=18727193447
-round=1 name=after process_s=7.256271274 tsgo: load_ns=310176689 query_ns=3462178691 queries=133565 first_query_ns=18124 run_ns=6922244312
-round=1 name=oracle process_s=2.063640864 cohere: load_ns=286081016 rule_ns=1682053584 run_ns=1756077051
-round=2 name=oracle process_s=2.069595423 cohere: load_ns=276520671 rule_ns=1703632247 run_ns=1775663369
-round=2 name=after process_s=7.226527645 tsgo: load_ns=289469663 query_ns=3457083851 queries=133565 first_query_ns=15049 run_ns=6914391686
-round=2 name=before process_s=18.708858110 tsgo: load_ns=290095640 query_ns=11240360329 queries=131755 first_query_ns=24636 run_ns=18359974306
-round=3 name=after process_s=7.247286324 tsgo: load_ns=303876552 query_ns=3450870410 queries=133565 first_query_ns=14637 run_ns=6921509919
-round=3 name=before process_s=18.253283538 tsgo: load_ns=298642966 query_ns=10899262123 queries=131755 first_query_ns=27882 run_ns=17899643489
-round=3 name=oracle process_s=2.096407065 cohere: load_ns=285708513 rule_ns=1716608180 run_ns=1788911147

@@ -1,8 +1,0 @@
-=== RUN   TestCacheKeyDimensions
-=== PAUSE TestCacheKeyDimensions
-=== CONT  TestCacheKeyDimensions
-    cache_test.go:73: node dimension 1 changed but served "old"
---- FAIL: TestCacheKeyDimensions (0.00s)
-FAIL
-FAIL	github.com/system-inc/adamic/cmd/adamic-test262	0.005s
-FAIL

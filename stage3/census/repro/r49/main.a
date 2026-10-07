@@ -1,1 +1,0 @@
-function read({count}) { return count; } console.log(String(read({count: 1})));

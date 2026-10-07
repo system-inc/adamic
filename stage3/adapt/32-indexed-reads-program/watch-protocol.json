@@ -1,5 +1,0 @@
-{
-  "function": "getWatchFactory",
-  "runtimeSha256": "81cd8886b44464625de4fc71ad3c21559f1582101f8f0169b4b71be91fee688f",
-  "proof": "All four private wrapper constructors receive the matching literal key for their object field. Their immutable key selects only the corresponding watcher, preserving callback/flags correlation; the host watcher invokes its callback under that same key. The factories are local and cannot be mutated externally. The entire reviewed function is guarded after stock type erasure."
-}

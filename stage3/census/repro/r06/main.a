@@ -1,1 +1,0 @@
-function take(value: number): number { return value; } const values: number[] = []; console.log(String(take(values[0])));

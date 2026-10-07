@@ -1,6 +1,0 @@
-// From TypeScript 6.0.3, src/compiler/performance.ts:59
-// Census reason: an import cycle
-import { performance, noop } from './_namespaces/ts.a';
-performance.nullTimer.enter();
-performance.nullTimer.exit();
-console.log(`${performance.nullTimer.enter === noop} ${performance.nullTimer.exit === noop}`);

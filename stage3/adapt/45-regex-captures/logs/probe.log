@@ -1,8 +1,0 @@
-" path='x'": group2="x", group3=undefined, value="x"
-" path=\"\"": group2=undefined, group3="", value=""
-" path=''": group2="", group3=undefined, value=undefined
-single-quoted empty capture: value.length throws TypeError
-alternative mutant: successful match has group1=undefined; mandatory-capture rule declines
-counterexample observation mutant: wrong expected group value caught by assertion
-semver plain comparator: operator absent; upstream has case undefined
-PASS: review probes only; no census, oracle, or idempotence claim

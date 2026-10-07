@@ -1,9 +1,0 @@
-{
-  "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./internal/lower",
-  "exit_code": 0,
-  "elapsed_seconds": 14.316,
-  "load_before": "4.55 3.92 3.99 1/219 123161",
-  "load_after": "4.60 3.96 4.00 1/219 123243",
-  "log": "logs/named-whole-lower-control.log",
-  "failed_tests": []
-}

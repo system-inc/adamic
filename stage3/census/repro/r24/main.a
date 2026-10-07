@@ -1,1 +1,0 @@
-interface Values { [key: string]: number; } const values: Values = {}; console.log(String(values));

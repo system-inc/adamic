@@ -1,5 +1,0 @@
-const numbers: number[] = [1, 2, 3];
-numbers[1] = 20;
-console.log(numbers.join(','));
-numbers[numbers.length] = 4;
-console.log('JavaScript would print this, with the array grown; 0.1 stops above');

@@ -1,8 +1,0 @@
-// From TypeScript 6.0.3, src/compiler/utilities.ts:10312
-// Census reason: an import cycle
-import { emptyArray } from './_namespaces/ts.a';
-interface FileSystemEntries { readonly files: readonly string[]; readonly directories: readonly string[]; }
-export const emptyFileSystemEntries: FileSystemEntries = {
-    files: emptyArray,
-    directories: emptyArray,
-};

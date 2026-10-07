@@ -1,8 +1,0 @@
-build flags: {"after_flags": "go test -trimpath -count=1; jobs default nproc; one worktree per active entry", "before_flags": "go test -count=1; first entry control also -x for build profiling", "clang_version": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)", "commit_sha": "e8ba3d5d81de4d3773c723914fccd4c76248b965", "cpu_max": "400000 100000", "go_flags": "", "go_version": "go version go1.27.1 linux/amd64", "node_version": "v24.19.0", "nproc": "5", "oracle_cache": "ADAMIC_GATE_UNCACHED=1"}
-07 borrowed-element-reads: applies-and-fails-as-recorded
-07 borrowed-element-reads: error (worktree was not restored:  M internal/native/element_borrow.go
-)
-07 made against=e8ba3d5d81de4d3773c723914fccd4c76248b965
-07 wall=17.889s setup=10.810s check=5.251s cleanup=0.397s load=5.19 4.76 4.13 1/326 150739 -> 4.00 4.52 4.06 1/334 151084
-Omitted restoration mutant: rejected after the actual fault was detected; own worktree removed
-Measured output-order and per-entry-worktree audits pass; reversed order and shared-path mutants rejected
