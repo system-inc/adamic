@@ -1,0 +1,21 @@
+{
+  "pins": {
+    "origin/area/stage3": "03ccf222dfeedef4bfe5cc3e219e4586d14a5c13",
+    "origin/compiler/stage3-front-2": "391b3e9c378c0f5aea5ec34aec89a22eb3b59e73",
+    "origin/codex/library-array-holes": "0140eed836a7080095cfe0ffe30c7469fcd19e9e",
+    "origin/codex/proven-predicates": "746af2f2df96c044b62f7ee939f1ca4fa00fcd71",
+    "origin/codex/census-small-families": "33a90f4b0763d797d33ed41eb9db79ef12ff6609",
+    "origin/codex/module-init-order": "28e366fa9ffa8ad5a44e2ee8a0d97a38faf2c916",
+    "origin/codex/phantom-brands": "d2d3c77e308cc26d4af196dedeba92d7d38c4cda",
+    "origin/codex/require-builtins-2": "6439f4cf6a7f2d1d9de86bfc8f941d6f2d9087b3",
+    "origin/codex/non-null-check": "a02613eff851e07f567ab9934adfc8a2dc98eeca",
+    "origin/library/qualified-as-const": "8280fd0873a3d5c425f8a1a342b44af20cf883d9"
+  },
+  "scratch_commit": "de67b19844d2ee79856604a6d2c6884087df0794",
+  "array_probe_build_exit": 0,
+  "array_probe_native_stdout": "4\n",
+  "scanner_C_exit": 1,
+  "scanner_C_diagnostic": "adamic: /workspace/scratch/scanner-three-fixes-on-run/adapted/src/compiler/core.ts:113:9: stage 0 can't lower an array of any yet\n",
+  "focused_lower_tests": "ok  \tgithub.com/system-inc/adamic/internal/lower\t1.074s\n",
+  "assumption": "Retain the pinned full-tree reference and fixed corpus used for the 1,369,432 token dump."
+}

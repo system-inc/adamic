@@ -1,5 +1,16 @@
 # Scanner blockers
 
+## October 7: newest tips close Array construction; numeric scratch storage is next
+
+Library-array-holes 0140eed builds the unchanged length-constructor probe,
+native stdout `4`. The merged compiler passes focused predicate, overload,
+phantom and array-hole lowering tests. Next C-emission stop is core.ts:113:9,
+`stage 0 can't lower an array of any yet`, at `previous[i] = i` in
+levenshteinWithMax (upstream core.ts:2205). Adaptation 89 is planned and pushed
+before implementation: erased numeric element typing and, where required,
+erased assertions on reads proved initialized by the original banded loops.
+Evidence and all latest pins: evidence/latest-tips-preflight.json.
+
 ## October 7: checked overloads and direct Debug.fail pass; Array constructor is next
 
 Scratch includes census-small-families 33a90f4, module-init-order 28e366f,
