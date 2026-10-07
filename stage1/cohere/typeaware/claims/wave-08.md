@@ -14,3 +14,22 @@ All fetched origin stage1 trees were checked for corresponding implementation
 filenames and claim Markdown containing these names. No match was found.
 No rule is skipped. This claim is committed and pushed before implementation.
 New Adamic files use .a.
+
+## Continuation claim
+
+The original three rules are complete and pushed in d0d6310f. After fetching all
+origin heads, checked all 33 claim documents across 325 refs and native rule
+registrations on origin/main and origin/codex/tsgo-c-library. The combined
+compiler/repository ranking has 197 checker-dependent entries; 25 of the base
+ports appear in that ranking and 96 entries are named in origin claim files.
+
+The first three neither ported on those two branches nor claimed on any origin
+branch are, with lexical ordering for equal combined volume:
+
+- nexus/correctness-no-process-exit-after-output (0)
+- nexus/correctness-no-uncleared-race-timeout (0)
+- nexus/correctness-require-blocking-standard-streams (0)
+
+Claimed for wave 08 continuation. This update is committed and pushed before
+implementation. New Adamic files remain .a; existing shared harness and generator
+files will not be edited.
