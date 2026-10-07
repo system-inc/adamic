@@ -90,3 +90,19 @@ both new questions' released-handle controls pass. The native/Go timings and
 complete evidence are in [the third report](../WAVE_17_THIRD_REPORT.md). No shared
 harness, parser or registration generator was changed. Original JSX parsing and
 the existing shared unknown-request mutant anchor remain integration gaps.
+
+## Fourth batch claim
+
+The prior batch and evidence are pushed at 101aff2f. A fresh October 7 fetch
+inspected 348 origin refs, 33 unique Markdown claim blobs, and native stage1
+source on origin/main and origin/codex/tsgo-c-library. The first eligible
+checker-dependent entries in the combined by-volume ranking are:
+
+- `no-throw-literal` (global rank 152, 0 findings)
+- `no-useless-backreference` (global rank 153, 0 findings)
+- `prefer-arrow-callback` (global rank 154, 0 findings)
+
+Earlier entries were skipped because they are ported or claimed elsewhere.
+These three are neither ported on the requested bases nor named in an origin
+claim. The complete scan is in validation-wave-17-fourth/selection.json.
+This claim is pushed before implementation, on codex/typeaware-wave-17.
