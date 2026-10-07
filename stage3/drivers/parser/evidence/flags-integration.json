@@ -1,0 +1,41 @@
+{
+  "base": "ef3d907ecdc4c771b016f7d9c52372def057a340",
+  "features": [
+    {
+      "branch": "origin/codex/flag-enums",
+      "sha": "f7d62772fa8e52fcfae754e047ceb66dba88b782"
+    }
+  ],
+  "conflicts": [
+    {
+      "feature": "flag-enums",
+      "files": [
+        "internal/lower/class_inheritance.go",
+        "internal/lower/lower.go",
+        "internal/lower/refusals.go",
+        "internal/oracle/counts.md"
+      ],
+      "resolution": "incoming feature version for conflict files; automatic merge for the rest"
+    }
+  ],
+  "entryResults": {
+    "parser.ts": {
+      "exit": 0,
+      "result": "/tmp/parser-profiles/flags-parser.ts.json"
+    },
+    "scanner.ts": {
+      "exit": 0,
+      "result": "/tmp/parser-profiles/flags-scanner.ts.json"
+    }
+  },
+  "buildExit": 0,
+  "repair": "reconstructed three-way hunks; retain main fields, accessor/nominal/definite checks plus feature enum/namespace and parameter-property handling",
+  "repairedFiles": [
+    "internal/lower/class_inheritance.go",
+    "internal/lower/lower.go",
+    "internal/lower/refusals.go"
+  ],
+  "head": "5f6bac196de708ad9cba866e07b3be508e49fee4",
+  "scratchResolutionPatchSha256": "f985695ab6a8ad370461a6ec82b6048ee17ca8e3f845547840bcf6bcfc91eb37",
+  "cohereGitlink": "160000 commit 715ba94f3608a6500086b1076ce5cb7e51b836db\tcohere"
+}

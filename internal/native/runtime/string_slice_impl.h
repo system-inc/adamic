@@ -15,13 +15,16 @@ adamic_string *adamic_string_slice(const adamic_string *string, double start, do
 	double from = clamp_index(start, length);
 	double to = has_end ? clamp_index(end, length) : length;
 	if (!(from < to)) {
-		return allocate(0);
+		return adamic_retain(&adamic_string_empty);
 	}
 	// Whole code points are their bytes, in one piece, shared with the string where that's worth it
 	// (string_share.c). A slice that starts on the low half of a pair begins with that half, and one
 	// that ends between the halves ends with the high one, each a lone surrogate, which isn't in the
 	// string's bytes, so that slice is built.
 	size_t first = (size_t)from, last = (size_t)to;
+	if (string->units == string->length + 1) {
+		return adamic_string_share(string, first, last - first);
+	}
 	bool low;
 	size_t offset = adamic_string_locate(string, first, &low);
 	if (low) {
@@ -31,7 +34,9 @@ adamic_string *adamic_string_slice(const adamic_string *string, double start, do
 	size_t stop = last < (size_t)length ? adamic_string_locate(string, last, &ends_low) : string->length;
 	size_t middle = stop > offset ? stop - offset : 0;
 	if (!low && !ends_low) {
-		return adamic_string_share(string, offset, middle);
+		adamic_string *slice = adamic_string_share(string, offset, middle);
+		slice->units = last - first + 1;
+		return slice;
 	}
 	builder build = {NULL, 0, 0};
 	if (low) {
@@ -43,7 +48,23 @@ adamic_string *adamic_string_slice(const adamic_string *string, double start, do
 	if (ends_low) {
 		builder_unit(&build, unit_at(string, stop, false));
 	}
-	return builder_finish(&build);
+	adamic_string *slice = builder_finish(&build);
+	slice->units = last - first + 1;
+	return slice;
+}
+
+// One ASCII unit has only 128 possible values. Its immutable bytes and header can live
+// with the runtime, so indexing does not mint a header or pin a source for one byte.
+// Like the other string caches, initialization follows the single-threaded counting model.
+static adamic_string *ascii_character(unsigned char value) {
+	static char bytes[128];
+	static adamic_string characters[128];
+	adamic_string *character = &characters[value];
+	if (character->units == 0) {
+		bytes[value] = (char)value;
+		*character = (adamic_string){{0, adamic_kind_string, 0}, 1, &bytes[value], 2, ADAMIC_LITERAL_INDEX, NULL, 0};
+	}
+	return character;
 }
 
 adamic_string *adamic_string_at(const adamic_string *string, double index) {
@@ -52,6 +73,15 @@ adamic_string *adamic_string_at(const adamic_string *string, double index) {
 	// supplementary character is a lone surrogate, as slice makes it.
 	if (!(index >= 0) || index != trunc(index) || index >= adamic_string_length(string)) {
 		return NULL;
+	}
+	if (string->units == string->length + 1) {
+		return ascii_character((unsigned char)string->bytes[(size_t)index]);
+	}
+	// An ASCII unit of a non-ASCII source is the same immutable character. Long sources
+	// already carry a direct UTF-16 view; short ones keep the existing bounded walk.
+	double unit = adamic_string_char_code_at(string, index);
+	if (unit < 128) {
+		return ascii_character((unsigned char)unit);
 	}
 	return adamic_string_slice(string, index, index + 1, true);
 }

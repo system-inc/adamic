@@ -96,18 +96,44 @@ static size_t encoded_size(unsigned point) {
 	return point < 0x80 ? 1 : point < 0x800 ? 2 : point < 0x10000 ? 3 : 4;
 }
 
+// ascii_prefix scans only complete words inside the input. memcpy permits unaligned
+// pointers without aliasing violations; the repeated high-bit mask is endian independent.
+static size_t ascii_prefix(const unsigned char *bytes, size_t length) {
+	size_t offset = 0;
+	while (length - offset >= sizeof(uint64_t)) {
+		uint64_t word;
+		memcpy(&word, bytes + offset, sizeof word);
+		if ((word & UINT64_C(0x8080808080808080)) != 0) {
+			break;
+		}
+		offset += sizeof word;
+	}
+	while (offset < length && bytes[offset] < 0x80) {
+		offset++;
+	}
+	return offset;
+}
+
 // decode makes a string of bytes decoded as WHATWG UTF-8, which the caller owns. What it makes is
 // always valid UTF-8, so no lone surrogate can come in from outside.
 static adamic_string *decode(const unsigned char *bytes, size_t length) {
-	size_t size = 0;
+	size_t ascii = ascii_prefix(bytes, length);
+	size_t size = ascii;
 	unsigned point;
-	for (size_t offset = 0; offset < length;) {
+	for (size_t offset = ascii; offset < length;) {
 		offset += decode_step(bytes, length, offset, &point);
 		size += encoded_size(point);
 	}
 	adamic_string *string = new_string(size);
+	if (ascii == length) {
+		string->units = length + 1;
+	}
 	unsigned char *cursor = (unsigned char *)string->bytes;
-	for (size_t offset = 0; offset < length;) {
+	if (ascii != 0) {
+		memcpy(cursor, bytes, ascii);
+		cursor += ascii;
+	}
+	for (size_t offset = ascii; offset < length;) {
 		offset += decode_step(bytes, length, offset, &point);
 		switch (encoded_size(point)) {
 		case 1:
