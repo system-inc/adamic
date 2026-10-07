@@ -21,6 +21,19 @@
         clang: error: linker command failed with exit code 1 (use -v to see invocation)
 --- FAIL: TestWASI (0.30s)
 
+== github.com/system-inc/adamic/stage1/cohere/selector TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|@x
+=== RUN   TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|@x
+=== PAUSE TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|@x
+=== CONT  TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|@x
+    selector_test.go:513: expected the entered parser still running at deadline, got signal: killed, context context deadline exceeded, output ""
+--- FAIL: TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|@x (1.05s)
+
+== github.com/system-inc/adamic/stage1/cohere/selector TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars
+=== RUN   TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars
+=== PAUSE TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars
+=== CONT  TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars
+--- FAIL: TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars (0.00s)
+
 == github.com/system-inc/adamic/stage1/cohere/lint (failed outside a test)
 FAIL	github.com/system-inc/adamic/stage1/cohere/lint	3600.077s
 
