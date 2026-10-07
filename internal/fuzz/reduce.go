@@ -15,12 +15,17 @@ import (
 // Signature is how a program fails, as precisely as reducing it has to keep: the kind of failure and
 // the text that names it.
 //
+//   - crash: the program crashed, the Crash verdict, and its Key contains Text: native died by a
+//     signal or a sanitizer reported, or the JavaScript backend died by a signal ("native
+//     AddressSanitizer: SEGV", "native signal: segmentation fault"). The program's own crash, not
+//     the compiler's.
 //   - panic: native or the JavaScript backend panicked with a line containing Text, where Node
 //     didn't.
 //   - mismatch: the first output Node and an Adamic backend differ on, as the oracle compares them
 //     (stdout line by line, then the exit code, then stderr), rendered as a line containing Text.
 //   - refusal: the compiler's NotYet or Refused diagnostic contains Text, its location left out.
-//   - crash: the compiler itself panicked, and its first panic line contains Text.
+//   - compiler-panic: the compiler itself panicked, and its first panic line contains Text. This
+//     was named crash until crash came to mean the program's.
 //   - cc: the compiler emitted C that clang refused, and what clang said contains Text.
 //
 // An exact signature, the one derived from a program, matches only its whole line: for cc, clang's
@@ -33,7 +38,7 @@ type Signature struct {
 }
 
 // SignatureKinds are the kinds a signature can have.
-var SignatureKinds = []string{"panic", "mismatch", "refusal", "crash", "cc"}
+var SignatureKinds = []string{"crash", "panic", "mismatch", "refusal", "compiler-panic", "cc"}
 
 // ParseSignature reads kind:text.
 func ParseSignature(written string) (Signature, error) {
@@ -84,8 +89,8 @@ func (o Observation) Has(signature Signature) bool {
 }
 
 // Observe runs a program in directory as the kind of signature needs: the compiler alone for a
-// refusal or a crash, the compiler and clang for cc, all three ways for a panic or a mismatch. kind
-// "" runs it all three ways.
+// refusal or a compiler panic, the compiler and clang for cc, all three ways for a crash, a panic or
+// a mismatch. kind "" runs it all three ways.
 func (c *Checkout) Observe(source string, name string, directory string, kind string) Observation {
 	if err := os.MkdirAll(directory, 0o755); err != nil {
 		return Observation{Verdict: Finding, Lines: map[string]string{}}
@@ -98,11 +103,11 @@ func (c *Checkout) Observe(source string, name string, directory string, kind st
 	observation := Observation{Lines: map[string]string{}, Checker: checkerCodes(string(lowered.Stderr))}
 	if lowered.ExitCode != 0 || lowered.TimedOut {
 		observation.Verdict = compilerRefusal(lowered).Verdict
-		observation.Lines["crash"] = crashLine(string(lowered.Stderr))
+		observation.Lines["compiler-panic"] = compilerPanicLine(string(lowered.Stderr))
 		observation.Lines["refusal"] = refusalLine(string(lowered.Stderr))
 		return observation
 	}
-	if kind == "refusal" || kind == "crash" {
+	if kind == "refusal" || kind == "compiler-panic" {
 		observation.Verdict = Agreed
 		return observation
 	}
@@ -117,6 +122,9 @@ func (c *Checkout) Observe(source string, name string, directory string, kind st
 	outcome := c.TryFile(path, directory)
 	observation.Verdict = outcome.Verdict
 	observation.Lines["cc"] = outcome.Clang
+	if outcome.Verdict == Crash {
+		observation.Lines["crash"] = outcome.Key
+	}
 	observation.Lines["panic"] = panicLine(outcome)
 	observation.Lines["mismatch"] = mismatchLine(outcome)
 	return observation
@@ -133,8 +141,8 @@ func checkerCodes(stderr string) []string {
 	return codes
 }
 
-// crashLine is the compiler's first panic line, the Go runtime's "panic: ...".
-func crashLine(stderr string) string {
+// compilerPanicLine is the compiler's first panic line, the Go runtime's "panic: ...".
+func compilerPanicLine(stderr string) string {
 	for line := range strings.SplitSeq(stderr, "\n") {
 		if strings.HasPrefix(line, "panic: ") {
 			return strings.TrimSpace(line)
@@ -229,20 +237,22 @@ func firstDifference(node Run, other Run, name string) string {
 // Derive is the signature of a program's first failure, read from how it was observed.
 func Derive(observation Observation) (Signature, error) {
 	switch {
-	case observation.Lines["crash"] != "":
-		return Signature{Kind: "crash", Text: observation.Lines["crash"], Exact: true}, nil
+	case observation.Lines["compiler-panic"] != "":
+		return Signature{Kind: "compiler-panic", Text: observation.Lines["compiler-panic"], Exact: true}, nil
 	case observation.Lines["refusal"] != "":
 		return Signature{Kind: "refusal", Text: observation.Lines["refusal"], Exact: true}, nil
 	case len(observation.Checker) > 0:
 		return Signature{}, fmt.Errorf("the checker refuses it (%s): it isn't Adamic, so there is nothing to reduce", strings.Join(observation.Checker, ", "))
 	case clangError(observation.Lines["cc"]) != "":
 		return Signature{Kind: "cc", Text: clangError(observation.Lines["cc"]), Exact: true}, nil
+	case observation.Lines["crash"] != "":
+		return Signature{Kind: "crash", Text: observation.Lines["crash"], Exact: true}, nil
 	case observation.Lines["panic"] != "":
 		return Signature{Kind: "panic", Text: observation.Lines["panic"], Exact: true}, nil
 	case observation.Lines["mismatch"] != "":
 		return Signature{Kind: "mismatch", Text: observation.Lines["mismatch"], Exact: true}, nil
 	case observation.Verdict == Finding:
-		return Signature{}, errors.New("it fails in a way no signature names (a sanitizer report or a leak)")
+		return Signature{}, errors.New("it fails in a way no signature names: a leak without a sanitizer report, or a compiler failure that isn't a panic, a refusal or clang's")
 	}
 	return Signature{}, fmt.Errorf("it doesn't fail: %s", observation.Verdict)
 }
