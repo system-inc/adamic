@@ -1,0 +1,22 @@
+{
+  "parser": {
+    "go": 0.015521213999818428,
+    "bytes": 219914,
+    "sha256": "099d150a7ab7da48e8aabc4d42819cd99af30274424da7533f8ba9030b1a2d5f",
+    "normal": 0.009581934000379988,
+    "sanitized": 0.06984348900004989,
+    "mutant": 0.009471127999859164,
+    "mutant_difference": 2888,
+    "javascript": 0.11335953500019968
+  },
+  "pattern": {
+    "go": 0.012675111998760258,
+    "bytes": 242484,
+    "sha256": "a5dd04d240b9c0bb46c67b72385cebbc2c897f4e2c6ee36e9c10e39cfaf8035d",
+    "normal": 0.021205544000622467,
+    "sanitized": 0.13248764100171684,
+    "mutant": 0.020117993000894785,
+    "mutant_difference": 238,
+    "javascript": 0.0960089619984501
+  }
+}

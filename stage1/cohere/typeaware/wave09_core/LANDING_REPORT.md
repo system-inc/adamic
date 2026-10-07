@@ -1,5 +1,5 @@
 Built: rebased the entire wave-09 branch onto current main and repaired the flag-driver callback annotation.
-Commits: main e011f8f6; old tip aa38a538 rebased to ebb4bf95; the subsequent landing commit contains this repair and new evidence.
+Commits: final base main e8ba3d5d; old tip aa38a538; the landing commits contain the callback repair and new evidence.
 Commands/output: reran the original wave suite, checker/bridge and Node oracles, label suite and every owned regex component verifier.
 Mutants: compiling semantic mutants and released-handle checks were rerun; individual results are retained in validation-landing.
 Not covered: full constructor tracking, the exact native pattern engine, all options/upstream fixtures and the repository-wide gate.
@@ -9,6 +9,10 @@ Not covered: full constructor tracking, the exact native pattern engine, all opt
 The only branch pushed by this unit is codex/typeaware-wave-09. Fetch completed
 and its twelve commits rebased without conflicts onto origin/main
 e011f8f60899586d6373a5ccb07335ad82cfbf3c. No further rules were claimed.
+Main then advanced during the first validation pass. A second explicit all-heads
+fetch found e8ba3d5d81de4d3773c723914fccd4c76248b965. The branch rebased again,
+without conflicts, and every native component verifier, original suite, label
+suite, bridge and filtered Node oracle was repeated against that final base.
 The old remote tip was aa38a538d7af5d1d933ab9a43e066b1e4c75c127.
 The rebase preserves prior ownership and withdrawals, rule sources and evidence.
 The exact remote old tip is the lease for publishing the requested rewritten
@@ -37,7 +41,7 @@ The clean-running native suggestion-range mutant differs at byte 1426.
 This certifies the literal slice, not constructor handling or regex flag
 overrides through constructor calls.
 
-Single whole-process literal-slice native/Go timings: compiler 1.588440 /
+First-pass single whole-process literal-slice native/Go timings: compiler 1.588440 /
 0.595793 seconds; repository 0.218745 / 0.364848 seconds; default positive
 controls 0.007812 / 0.118360 seconds. These are single runs during concurrent
 validation, not isolated throughput medians. The label suite's three-round
@@ -66,7 +70,7 @@ go test ./internal/oracle -run '^TestTheOracleCatchesOneByte$|^TestNativeAgreesW
 go vet ./bridge/tsgo/checker ./stage1/cohere/typeaware > /workspace/wave-09-landing-vet.log 2>&1
 ```
 
-The original wave suite passes in 181.375 seconds, checker in 0.400 seconds,
+First-pass original wave suite passes in 181.375 seconds, checker in 0.400 seconds,
 bridge in 126.030 seconds and filtered Node oracle in 14.059 seconds. Vet passes
 with an empty log. Every component verifier above passes. The original three rules still match
 production Go on all controls and both corpora, normal and sanitized. The
@@ -77,9 +81,8 @@ and constructor/reference/constant-expression adapter are still work remaining.
 The independent cooked/raw mapper is held, but not yet wired to constructors.
 No additional batch is landing-ready merely because these slices are green.
 
-The component token verifier's old success text says the combined native parser
-is still blocked. Its scope remains token-only, but that boundary statement is
-superseded by the successful full verify_literals.py run documented here.
+The component token verifier's success text now names its token-only scope and
+points to verify_literals.py for the successful full source-parsing comparison.
 
 Rerun mutant coverage: prefer-const write eligibility, radix base-36 judgment,
 assertion fix end, type-parameter flag, declaration-file fact, label scope-name
@@ -93,3 +96,12 @@ panic expectation. Bridge input/output length mutations trigger ASan; leaked
 output and heap/region ownership mutations trigger LSan; wrong positions fail
 Go bytes and removed link opt-in fails its refusal expectation. Exact outputs,
 first differing bytes and run timings are saved in validation-landing.
+Final-pass logs and measurements in that directory supersede first-pass times.
+bridge-final.log combines the checker and bridge package reruns on e8ba3d5d.
+
+Final-base package results: original wave oracle PASS 154.484 seconds; checker
+PASS 0.303 seconds; bridge PASS 132.076 seconds; filtered Node oracle PASS
+2.349 seconds; targeted vet exit 0. Final literal-slice native/Go process times:
+compiler 1.938217 / 0.746896 seconds; repository 0.471877 / 0.380221 seconds.
+Final label-suite medians: compiler 2.589294 / 0.433964 seconds; repository
+0.255425 / 0.158272 seconds. Concurrency caveats above apply to all these times.

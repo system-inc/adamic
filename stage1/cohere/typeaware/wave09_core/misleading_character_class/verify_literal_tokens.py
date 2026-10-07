@@ -40,4 +40,4 @@ for mode in ['normal','sanitized','mutant']:
 emitted=run('js-build',['/workspace/wave-09-core/adamic','js',path]);js=write('main.mjs',emitted.decode())
 for name,p in [('source',path),('emitted',js)]:assert run(name,['node','--disable-warning=ExperimentalWarning',repo/'oracle/node.mjs',p])==truth
 write('result.json',json.dumps({'files':len(rows),'bytes':len(truth),'mutant_difference':diff,'actual_native_source_parser_tested':False},indent=2)+'\n')
-print('PASS native literal token judgments and suggestion edits; combined native parser is still blocked',flush=True)
+print('PASS native literal token judgments and suggestion edits; source parsing is verified separately by verify_literals.py',flush=True)

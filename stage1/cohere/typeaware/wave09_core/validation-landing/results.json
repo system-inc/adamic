@@ -1,0 +1,148 @@
+{
+  "base": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+  "rebased_code_commit": "65c000795eb839d01b84fd37862251958c74dddb",
+  "old_remote_tip": "aa38a538d7af5d1d933ab9a43e066b1e4c75c127",
+  "archived_files": 495,
+  "results": {
+    "original": {
+      "sha256": "3087ab1e3627bd573fb70a4f1f30ac714a43f564d098386b53c847fb8df5832e",
+      "last_lines": [
+        "--- PASS: TestWave09PinnedTypeParameterFlag (0.00s)",
+        "PASS",
+        "ok  \tgithub.com/system-inc/adamic/stage1/cohere/typeaware\t154.484s"
+      ]
+    },
+    "label": {
+      "sha256": "b5cba50532e835bb97156f28a5adb50fd8424fe967235b38d0c1dad074e6394a",
+      "last_lines": [
+        "repository-bench-2 identical bytes 18485 b'findings 0'",
+        "repository medians 0.25542516899986367 0.15827168800024083",
+        "PASS label-var independent full bytes, mutants, stale handles, sanitizers"
+      ]
+    },
+    "helpers": {
+      "sha256": "380894a4c445354f49508654b985b2485549d591703238c5584d9dc2c1daf15e",
+      "last_lines": [
+        "sequences-mutant 0 0.015688",
+        "sequences production helper bytes 240112 mutant caught",
+        "PASS partial helpers only; full rule adapters remain blocked"
+      ]
+    },
+    "patterns": {
+      "sha256": "73416886188e02750650fd4cb7bc248e801760040c5d30c792b65e0c710b30bc",
+      "last_lines": [
+        "pattern-js exit 0 seconds 0.096009",
+        "pattern-source-node exit 0 seconds 0.123523",
+        "PASS native parser and whole-pattern helpers, Go bytes, Node, mutants, sanitizers"
+      ]
+    },
+    "tokens": {
+      "sha256": "8eec9f8d180faa66ece318aef616474eadef090d3698cd2350d35ccc641bd7b9",
+      "last_lines": [
+        "source exit 0 seconds 0.114263",
+        "emitted exit 0 seconds 0.064152",
+        "PASS native literal token judgments and suggestion edits; source parsing is verified separately by verify_literals.py"
+      ]
+    },
+    "offsets": {
+      "sha256": "4ef3d1bdd6ce61569aa1c4ea58aaf4b224e8c5dbac01020f9e9bca166e6714c3",
+      "last_lines": [
+        "source 0 0.117641",
+        "emitted 0 0.063878",
+        "PASS cooked/raw Go byte maps, native, sanitizers, source Node, emitted JS"
+      ]
+    },
+    "quotes": {
+      "sha256": "02a32d459297b1690ffd860f2dae71a0e98f6ec9c260420f4cbc9e07dd0a4737",
+      "last_lines": [
+        "source exit 0 seconds 0.2946",
+        "emitted exit 0 seconds 0.166344",
+        "PASS rune quoting against Go, source Node, emitted JS, mutant and sanitizers"
+      ]
+    },
+    "format": {
+      "sha256": "3bc243cfa1803c5d5b4955173dc8ae8ec024149558c731a0f2282ca32fc8aa61",
+      "last_lines": [
+        "source 0 0.19726",
+        "emitted 0 0.0786",
+        "PASS canonical flags and message formatting only; this is not a native pattern compiler"
+      ]
+    },
+    "frontend": {
+      "sha256": "868b243b802d2fb3aef014f20293a1c1829cc437ac1d53dc00ae288a029d43ab",
+      "last_lines": [
+        "native-asan 0 0.078617",
+        "native-asan identical 6020 b'findings 35'",
+        "PASS flag-only full finding/fix/suggestion bytes; compiler adapter not exercised"
+      ]
+    },
+    "literal-boundary": {
+      "sha256": "7b8d65e2f23cc6741d7b1898158f843aeaf8dea5e01303199f173b3cd597e434",
+      "last_lines": [
+        "repository-emitted-js exit 0 seconds 1.101971",
+        "repository emitted-js identical bytes 18485",
+        "PASS literal slice full diagnostics and suggestions; constructor tracking remains incomplete"
+      ]
+    },
+    "bridge-final": {
+      "sha256": "889cad0a102752766d154980e56815daa741a47209e5fec46595aa5449a1319c",
+      "last_lines": [
+        "--- PASS: TestTSGoRequiresLink (0.04s)",
+        "PASS",
+        "ok  \tgithub.com/system-inc/adamic/bridge/tsgo\t132.076s"
+      ]
+    },
+    "node": {
+      "sha256": "7a3ccb3322515d9b2d3061b0a82aa0cae5eaae9bc9134f2051ac77e20f3a4e89",
+      "last_lines": [
+        "gate cache: node hits=0 misses=19",
+        "gate cache: probe hits=0 misses=0",
+        "ok  \tgithub.com/system-inc/adamic/internal/oracle\t2.349s"
+      ]
+    },
+    "vet": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "last_lines": []
+    }
+  },
+  "source_sha256": {
+    "stage1/cohere/typeaware/wave09_core/verify_helpers.py": "40cd58b12b9f468020e7a4661599e90b726d49170d79209c32f6c0b1f72088da",
+    "stage1/cohere/typeaware/wave09_core/misleading_character_class/cooked_to_raw.a": "41a4bbf4e77f2b2d9af3f5e8f08782e54f94addd8ce5a2ad413787978a906116",
+    "stage1/cohere/typeaware/wave09_core/misleading_character_class/verify_offsets.py": "3877ad601e6ef580e4996869720d040f4be6eba38da02f4adaa2f51e73495b84",
+    "stage1/cohere/typeaware/wave09_core/misleading_character_class/verify_patterns.py": "c032dc6204cf0523be00fc12065b724b538678c962e0ca2769a212c99260cc8b",
+    "stage1/cohere/typeaware/wave09_core/misleading_character_class/literal_rule.a": "fb414081f1d6d92d7a13bf6bedb562cb7b8ea8951a7883fa6895b22b5995691b",
+    "stage1/cohere/typeaware/wave09_core/misleading_character_class/no_misleading_character_class.a": "e6f084e203d77901e7b51632ffdd97cc8d7c9af1b923e81860a0fb96e7978c6b",
+    "stage1/cohere/typeaware/wave09_core/misleading_character_class/verify_literal_tokens.py": "e690fb043c621d3ef5886cefe04e36b53f5dd17b6417e19782fed9dbfae50a7b",
+    "stage1/cohere/typeaware/wave09_core/misleading_character_class/literal_main.a": "8ca873385d485ee243c89ec45a45a547b7131d3b80b1422e861d59a1d617b7a2",
+    "stage1/cohere/typeaware/wave09_core/misleading_character_class/pattern_findings.a": "95669b50451a5e8e576f848abdc67022bda496ef7d174b00f4300eefbc416535",
+    "stage1/cohere/typeaware/wave09_core/misleading_character_class/character_class.a": "61b8d552a6532f0ac2752accdaae5f950c6cb9ea3f77d40300794d8578ab31ac",
+    "stage1/cohere/typeaware/wave09_core/misleading_character_class/verify_literals.py": "50a5ec1e6cfa61efd9d64a0c951bae4b7dbed64fadd161a3338ff7345ce20d93",
+    "stage1/cohere/typeaware/wave09_core/invalid_regexp/verify_format.py": "1dcccd40111a11b24b77e6e3e4fe1ba9d1513277184ffd7f00febf2c0e804041",
+    "stage1/cohere/typeaware/wave09_core/invalid_regexp/verify_quotes.py": "ac70e696f5779aa849bb8fefa0bbc0d397bd5dd5c59604d14f1549143cebf02e",
+    "stage1/cohere/typeaware/wave09_core/invalid_regexp/main.a": "f0c80c4745afc5341415694906e82151e3ababbd5117835b5843158ecac10b21",
+    "stage1/cohere/typeaware/wave09_core/invalid_regexp/no_invalid_regexp.a": "e73ed4c5a3fc643804f1a836b6f27a3c26d89409aa2e6e678aa09879e860b8ad",
+    "stage1/cohere/typeaware/wave09_core/invalid_regexp/verify_frontend.py": "0276d73bd32b9cf96e7cfdff1be5a87dfe7b9fa3ca0ce0f76afaab6f62c762ac",
+    "stage1/cohere/typeaware/wave09_core/invalid_regexp/rune_quote.a": "5bb9d486222d114ece849b508a8a33fac7f210a7fd8b2d64f45d51945f20e68f",
+    "stage1/cohere/typeaware/wave09_core/invalid_regexp/printable_ranges.a": "439c70252b47cc5b93ea44031a05beff5a9cfbcd3f4b1eec03e5c9e5afaa0460",
+    "stage1/cohere/typeaware/wave09_core/label_var/main.a": "1e10c00e5d603a367dcfba0165e1d8ceff7ba9839f8e8c41e276d8a91335343a",
+    "stage1/cohere/typeaware/wave09_core/label_var/no_label_var.a": "e81b8625c01e2da9dfa349689ec7ce58cb2d5b2634827ef05605be3cac6bf1b3",
+    "stage1/cohere/typeaware/wave09_core/label_var/scope_value_symbols.a": "55235c02f03d8e2e124fe4645d2bac7eeea8ed7321425c93958be3093cbb3490",
+    "stage1/cohere/typeaware/wave09_core/label_var/verify.py": "a256cbd62d8dcc4760d3d98ea1d20bdf003e39f0de5906c4d94c6b1031880c2a",
+    "stage1/cohere/typeaware/wave09_core/misleading_character_class/testdata/literal_oracle.go": "65ebc6184b768cda5e4954cbfb03d124ec9225464751c25306e6f975d45f0b62",
+    "stage1/cohere/typeaware/wave09_core/misleading_character_class/testdata/sequence_shim.go": "7f69e977212d2472d7d86bf13ac94ce47500a1d58ec5050bcda6ab5b2b514d40",
+    "stage1/cohere/typeaware/wave09_core/misleading_character_class/testdata/pattern_oracle.go": "dcd15af83a5d9de0f2284860694d9791798df13aea39b2667ad0acd41024678b",
+    "stage1/cohere/typeaware/wave09_core/misleading_character_class/testdata/sequence_oracle.go": "1fe15972cf14ce1f45f71e1c7a7e902278ea27e9b98461def2066ba1ef170af1",
+    "stage1/cohere/typeaware/wave09_core/misleading_character_class/testdata/offsets_oracle.go": "e1799ffea4ffa114e8c30143cff6df8943bb423d4826284ecd751bf1c740d071",
+    "stage1/cohere/typeaware/wave09_core/misleading_character_class/testdata/pattern_shim.go": "6b6b0092e58b20c0844a3fe5892b899f42896dbceddf46f2bea9c869e5a1d47e",
+    "stage1/cohere/typeaware/wave09_core/misleading_character_class/testdata/parser_oracle.go": "3d111cc70caf631e312b91d499ee8634e73ac8b9d566caf047d4374af436448d",
+    "stage1/cohere/typeaware/wave09_core/invalid_regexp/testdata/flags_oracle.go": "f571134e3ad284f7191a352446afaa9372950483fafb702e8c1077c4ebe06ae0",
+    "stage1/cohere/typeaware/wave09_core/invalid_regexp/testdata/rune_oracle.go": "d78749bad3e5d183b0d1051c15c42048154c6930397768e6e95144cd4e973e2f",
+    "stage1/cohere/typeaware/wave09_core/invalid_regexp/testdata/pattern_format_oracle.go": "482202aeb3e37f7fe1fff0bbaefe9c90e539d49b2bd8d7eab8b51ce738259545",
+    "stage1/cohere/typeaware/wave09_core/invalid_regexp/testdata/pattern_format_shim.go": "d9f5fbbf4563b1e708f22a6fb33ccb5daabcd6779e7e9731724a9a089584e786",
+    "stage1/cohere/typeaware/wave09_core/invalid_regexp/testdata/oracle.go": "9fe195125aaee9d20109b06a9cfb48ae74f10b12c38e843bbc184376779f2bb5",
+    "stage1/cohere/typeaware/wave09_core/invalid_regexp/testdata/flags_shim.go": "0a29d4fa290e679482485e730ba58d927cf732e7f115beb21fbfdf96c913ce2a",
+    "stage1/cohere/typeaware/wave09_core/label_var/testdata/fixtures.go": "dc860bc424940780821981e15e0d799052442534f766bc7004b2ca1fad8d8776",
+    "stage1/cohere/typeaware/wave09_core/label_var/testdata/scope_value_symbols.go": "a36fe7e059b85226ea4d2e8cf019cd1443d7dd3dad641a88bf6936fb56ed6f98",
+    "stage1/cohere/typeaware/wave09_core/label_var/testdata/oracle.go": "8c491c4c9b6bd540aa044ecf4455085e21743e47a8b7474d7f23a296f4e86a1b"
+  }
+}

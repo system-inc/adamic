@@ -4,6 +4,12 @@ Commands/output: verify_patterns.py, verify_quotes.py, verify_format.py, verify_
 Mutants: surrogate folding, malformed-pattern rejection, rune escaping, error-prefix trimming and suggestion-edit range mutants all differ from production Go bytes.
 Not covered: complete regex rules; the combined native literal driver times out in shared freshness analysis, and pattern compilation, constructor tracking and cooked/raw mapping remain unfinished.
 
+Later landing validation supersedes the compiler-timeout boundary below: the
+combined native literal driver now passes on rebased main. See LANDING_REPORT.md.
+Cooked/raw mapping was subsequently ported and held in OFFSETS_REPORT.md; its
+constructor integration remains incomplete. The original measurements below
+are retained as historical observations.
+
 ## What changed
 
 The original wave-09 rules and no-label-var remain pushed and unchanged. No new
