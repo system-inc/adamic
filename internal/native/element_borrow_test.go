@@ -11,8 +11,8 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 )
 
-// Keep the actual benchmark's indexed declarations borrowed. Its remaining counted reads are
-// for...of bindings and the global argument, which this declaration pass doesn't emit.
+// Keep the actual benchmark's indexed declarations borrowed. The loop plan may also borrow
+// bindings; count only the indexed declarations here.
 func TestNbodyIndexedElementsBorrow(t *testing.T) {
 	t.Parallel()
 	path, err := filepath.Abs("../../bench/nbody.ts")
@@ -28,12 +28,21 @@ func TestNbodyIndexedElementsBorrow(t *testing.T) {
 		t.Fatal(err)
 	}
 	borrows, _ := planElementBorrows(program)
-	if len(borrows) != 5 {
-		t.Fatalf("want sun and both body/other pairs borrowed, got %d declarations", len(borrows))
+	declarations := 0
+	for statement := range borrows {
+		if _, ok := (*statement).(ir.Declare); ok {
+			declarations++
+		}
+	}
+	if declarations != 5 {
+		t.Fatalf("want sun and both body/other pairs borrowed, got %d declarations", declarations)
 	}
 	generated := C(program)
 	for statement := range borrows {
-		declare := (*statement).(ir.Declare)
+		declare, ok := (*statement).(ir.Declare)
+		if !ok {
+			continue
+		}
 		name := (&emitter{program: program}).localName(declare.Local)
 		if !strings.Contains(generated, name+"_owner = NULL;") {
 			t.Errorf("%s lost its borrowed element declaration", name)
@@ -63,7 +72,10 @@ func TestThrowElementBorrowPlan(t *testing.T) {
 	borrows, _ := planElementBorrows(program)
 	got := map[string]bool{}
 	for statement := range borrows {
-		declare := (*statement).(ir.Declare)
+		declare, ok := (*statement).(ir.Declare)
+		if !ok {
+			continue
+		}
 		local := program.Locals[declare.Local]
 		got[program.Functions[local.Function].Name] = true
 	}

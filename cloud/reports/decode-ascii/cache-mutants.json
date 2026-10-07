@@ -1,0 +1,44 @@
+[
+  {
+    "mutant": "byte-80-ascii",
+    "exit": 1,
+    "catcher": "decode cache mismatch",
+    "log": "/tmp/decode-ascii/mutants/byte-80-ascii/run.log",
+    "outputExcerpt": "decode cache mismatch record=130 run=0 offset=0 ascii=0 units=3 bytes=2\n"
+  },
+  {
+    "mutant": "boundary-one-late",
+    "exit": 1,
+    "catcher": "decode cache mismatch",
+    "log": "/tmp/decode-ascii/mutants/boundary-one-late/run.log",
+    "outputExcerpt": "decode cache mismatch record=130 run=0 offset=0 ascii=0 units=3 bytes=2\n"
+  },
+  {
+    "mutant": "drop-run-last-byte",
+    "exit": 1,
+    "catcher": "decode cache mismatch",
+    "log": "/tmp/decode-ascii/mutants/drop-run-last-byte/run.log",
+    "outputExcerpt": "decode cache mismatch record=0 run=1 offset=0 ascii=1 units=2 bytes=0\n"
+  },
+  {
+    "mutant": "omit-ascii-flag",
+    "exit": 1,
+    "catcher": "decode cache mismatch",
+    "log": "/tmp/decode-ascii/mutants/omit-ascii-flag/run.log",
+    "outputExcerpt": "decode cache mismatch record=0 run=0 offset=0 ascii=1 units=0 bytes=0\n"
+  },
+  {
+    "mutant": "false-ascii-flag",
+    "exit": 1,
+    "catcher": "decode indexing mismatch",
+    "log": "/tmp/decode-ascii/mutants/false-ascii-flag/run.log",
+    "outputExcerpt": "decode indexing mismatch index=0 actual=195 expected=233\n"
+  },
+  {
+    "mutant": "word-past-end",
+    "exit": 1,
+    "catcher": "AddressSanitizer: heap-buffer-overflow",
+    "log": "/tmp/decode-ascii/mutants/word-past-end/run.log",
+    "outputExcerpt": "=================================================================\n==75407==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7b77449e0017 at pc 0x55c148566c92 bp 0x7fffa8600d10 sp 0x7fffa8600d08\nREAD of size 8 at 0x7b77449e0017 thread T0\n    #0 0x55c148566c91 in ascii_prefix /tmp/decode-ascii/mutants/word-past-end/input.c:105:3\n    #1 0x55c148566c91 in decode /tmp/decode-ascii/mutants/word-past-end/input.c:120:17\n    #2 0x55c14854cd38 in main /tmp/decode-ascii/mutants/word-past-end/probe.c:39:27\n    #3 0x7f57455edca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #4 0x7f57455edd64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #5 0x55c148466440 in _start (/tmp/decode-ascii/mutants/word-past-end/probe+0x4b440)\n\n0x7b77449e0017 is located 6 bytes after 1-byte region [0x7b77449e0010,0x7b77449e0011)\nallocated by thread T0 here:\n    #0 0x55c148509254 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3\n    #1 0x55c14854ccb7 in main /tmp/decode-ascii/mutants/word-past-end/probe.c:36:30\n    #2 0x7f57455edca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n\nSUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/decode-ascii/mutants/word-past-end/input.c:105:3 in ascii_prefix\nShadow bytes around the buggy address:\n  0x7b77449dfd80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7b77449dfe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7b77449dfe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7b77449dff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7b77449dff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n=>0x7b77449e0000: fa fa[01]fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7b77449e0080: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7b77449e0100: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7b77449e0180: fa "
+  }
+]

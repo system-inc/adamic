@@ -1,0 +1,57 @@
+// Array keys and values are identity references, kept by the callback after delete and replace.
+function row(tag: string): string[] {
+	return [`${tag}-a`, `${tag}-b`];
+}
+
+function show(items: readonly string[]): string {
+	return items.join("|");
+}
+
+function showAll(items: readonly (readonly string[])[]): string {
+	return items.map((item) => show(item)).join(",");
+}
+
+function probe(mode: number): void {
+	const keys: string[][] = [];
+	const values: string[][] = [];
+	const collection = new Map<string[], string[]>();
+	for (let index = 0; index < 8; index += 1) {
+		const madeKey = row(`k${index}`);
+		const madeValue = row(`v${index}`);
+		keys.push(madeKey);
+		values.push(madeValue);
+		collection.set(madeKey, madeValue);
+	}
+	const first = keys[0] ?? row("missing-key");
+	const second = keys[1] ?? row("missing-later");
+	const keptKeys: string[][] = [];
+	const keptValues: string[][] = [];
+	try {
+		collection.forEach((item, current, owner) => {
+			if (mode === 0) { owner.delete(current); }
+			if (mode === 1 && current === first) { owner.delete(second); }
+			if (mode === 2) { owner.clear(); }
+			if (mode === 3) { owner.set(current, row(`changed${current[0] ?? ""}`)); }
+			if (mode === 4 && current === first) {
+				owner.delete(current);
+				owner.set(row("k8"), row("v8"));
+			}
+			if (mode === 5) {
+				owner.delete(current);
+				keptKeys.push(current);
+				keptValues.push(item);
+				throw new Error(`deleted ${show(current)} ${show(item)}`);
+			}
+			keptKeys.push(current);
+			keptValues.push(item);
+			console.log(`${mode}: ${show(current)} ${show(item)} ${owner.size}`);
+		});
+	} catch (error) {
+		console.log(error instanceof Error ? error.message : "unexpected");
+	}
+	console.log(`kept ${mode}: ${showAll(keptKeys)} ${showAll(keptValues)}`);
+	console.log(`remaining ${mode}: ${collection.size}`);
+	collection.forEach((item, current) => { console.log(`after ${show(current)} ${show(item)}`); });
+}
+
+for (let mode = 0; mode < 6; mode += 1) { probe(mode); }

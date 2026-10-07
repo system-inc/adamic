@@ -182,3 +182,50 @@ compiler files were restored after each mutant; the final uncached oracle and
 package runs use the restored files. The deliberate write-stop fixture has its
 own assertion, and separately pins Node's silent drop, so agreement between
 two broken backends cannot validate the exception.
+
+## Full runtime-tip merge
+
+At the compiler owner's request, the complete runtime branch tip
+`86769a34ae57226a44722c14704796ebc3860440` was merged after the initial
+compiler push. This includes harness `f0f5836`, report `86769a3`, and the
+runtime-area ancestry of that branch, in addition to the previously imported
+interface and implementation. The merge resolves runtime's document by taking
+its exact version, combines both branches' flow trace exclusions, and
+regenerates the count table for the combined tree.
+
+There is no header/lowering mismatch. The merged `adamic.h`, runtime contract
+and `typed_array.c` exactly match runtime's tip; the compiler makes no local
+changes to those files. Native emission continues using the published functions
+above. `runtime-tip-views.c.gz` in the proof directory is C emitted by the
+merged compiler from `typed_arrays_views.a`, including MaybeNumber reads,
+checked writes, borrowed fill, shared subarray and counted iterator calls.
+
+Post-merge commands, with the setup environment sourced and outputs logged:
+
+```sh
+go test ./internal/native -run '^TestTypedArrayRuntime$' -count=1 -timeout 10m
+go run ./cmd/adamic c internal/oracle/testdata/typed_arrays_views.a
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m -args -update-counts
+go test ./internal/lower ./internal/ir ./internal/flow ./internal/fresh ./internal/javascript -count=1 -timeout 30m
+ADAMIC_GATE_UNCACHED=1 go test ./internal/native ./internal/oracle -count=1 -timeout 30m
+gofmt -l cmd internal
+go vet ./...
+```
+
+The runtime harness passed in 7.968s; C emission exited 0. Count recording
+passed in 52.510s. Lowering, IR, flow and freshness passed in 35.361s,
+27.315s, 74.087s and 38.305s. Formatting and vet exited 0 with no output.
+The ancestry's borrowing changes remove one retain/release from each sieve
+fixture and from stats; allocations and frees remain balanced. Prior mutation
+proofs remain applicable: the typed-array runtime implementation is identical.
+Post-merge logs use the `runtime-tip-` prefix in the proof directory.
+
+The complete diff against the prior compiler tip reports whitespace in
+historical runtime-area logs and saved patch artifacts. Those imported artifacts
+were preserved. `git diff --check MERGE_HEAD`, checking the compiler changes
+against runtime's actual tip, exited 0 with no diagnostics.
+
+The complete post-merge uncached native package passed in 286.469s and the
+complete oracle package in 129.188s, including the normal recorded-counts
+comparison and all compiler typed-array fixtures. Current origin/main remains
+`39638d9e278d38bb5aeae887f46d55a70e47aaad`, already in both merge parents.

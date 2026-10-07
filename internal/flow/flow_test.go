@@ -45,8 +45,11 @@ func programs(t *testing.T) []string {
 	// and operator shapes here, and the oracle still runs the full sweep. The large typed-array
 	// sieve prints a 100,001-element buffer at every traced point and exceeds that limit;
 	// typed_arrays_primes.a traces the same sieve through limit 100, and the oracle runs both.
+	// normalize_coverage_long.a observes every point of million-unit normalized strings.
+	// Its trace would record hundreds of millions of instructions; the smaller normalization
+	// fixtures cover the same loop shapes here, and the oracle still runs the long program.
 	paths = slices.DeleteFunc(paths, func(path string) bool {
-		return filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a" || filepath.Base(path) == "typed_arrays_primes_large.a"
+		return filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a" || filepath.Base(path) == "typed_arrays_primes_large.a" || filepath.Base(path) == "normalize_coverage_long.a"
 	})
 	if len(paths) < 60 {
 		t.Fatalf("found only %d programs: the globs no longer find the fixtures", len(paths))
