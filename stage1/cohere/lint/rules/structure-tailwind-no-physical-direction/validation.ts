@@ -54,7 +54,7 @@ for(const row of corpus.node(root).children) {
     settings.load(field(row, 'options'));
     const context = new RuleContext(source, parser, new Scanner(source), selected, '', '', false, parents, settings);
     const a = physical(context);
-    const b = description(context);
+    const b = description(context, field(row, 'options'));
     const c = font(context);
     const d = definite(context);
     const stack = [tree];

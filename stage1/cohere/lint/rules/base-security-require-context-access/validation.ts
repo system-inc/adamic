@@ -50,7 +50,7 @@ for(const row of corpus.node(root).children) {
     const settings = new Settings();
     settings.load(field(row, 'options'));
     const context = new RuleContext(source, parser, new Scanner(source), selected, '', '', false, parents, settings);
-    const rule = access(context);
+    const rule = access(context, field(row, 'options'));
     const stack = [tree];
     while(stack.length > 0) {
         const index = stack.pop() ?? panic("missing traversal node");

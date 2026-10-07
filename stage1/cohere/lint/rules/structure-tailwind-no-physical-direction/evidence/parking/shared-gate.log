@@ -1,0 +1,5 @@
+# github.com/system-inc/adamic/stage1/cohere/lint [github.com/system-inc/adamic/stage1/cohere/lint.test]
+stage1/cohere/lint/registration_test.go:33:20: undefined: prepareRegistry
+stage1/cohere/lint/registration_test.go:169:12: undefined: rewritePortImports
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL

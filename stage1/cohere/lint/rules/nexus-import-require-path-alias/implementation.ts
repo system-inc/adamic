@@ -6,9 +6,10 @@ import { Alias, ordered, relative, normalizePath, normalizeDirectory, resolvePat
 import { message } from './messages.ts';
 export class Rule {
     readonly context: RuleContext; readonly filename: string; readonly root: string; readonly aliases: readonly Alias[]; readonly strict: string[] = [];
-    constructor(context: RuleContext, filename: string, compilerAliases: readonly Alias[] | undefined) {
+    constructor(context: RuleContext, filename: string, compilerAliases: readonly Alias[] | undefined, rawOptions: string = '') {
         this.context = context; this.filename = filename.split('\\').join('/');
-        const options = new OptionsJson(!context.enabled('nexus/import-require-path-alias') || context.settings.text === '' ? 'null' : context.settings.text); const object = options.parse();
+        if(context.enabled('nexus/import-require-path-alias') && rawOptions === '' && context.settings.values.size > 0) { panic('NotYet: shared factory must supply raw alias options'); }
+        const options = new OptionsJson(!context.enabled('nexus/import-require-path-alias') || rawOptions === '' ? 'null' : rawOptions); const object = options.parse();
         const configured: Alias[] = [];
         const root = options.field(object, 'repositoryRoot');
         let rootText = root < 0 ? '' : options.node(root).text;

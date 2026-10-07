@@ -6,7 +6,7 @@ const modifierKinds = ['PublicKeyword', 'PrivateKeyword', 'ProtectedKeyword', 'R
 export class Rule {
     readonly context: RuleContext;
     readonly required: Map<string, string[]>;
-    constructor(context: RuleContext) { this.context = context; this.required = context.enabled('base/security-require-context-access') ? checked(context.settings.text).requirements : new Map<string, string[]>(); }
+    constructor(context: RuleContext, rawOptions: string = '') { this.context = context; if(context.enabled('base/security-require-context-access') && rawOptions === '' && context.settings.values.size > 0) { panic('NotYet: shared factory must supply raw context-access options'); } this.required = context.enabled('base/security-require-context-access') ? checked(rawOptions).requirements : new Map<string, string[]>(); }
     first(index: number): number { return this.context.node(index).children[0] ?? -1; }
     name(index: number): number {
         for(const child of this.context.node(index).children) {
@@ -127,4 +127,4 @@ export class Rule {
         }
     }
 }
-export function create(context: RuleContext): Rule { return new Rule(context); }
+export function create(context: RuleContext, rawOptions: string = ''): Rule { return new Rule(context, rawOptions); }

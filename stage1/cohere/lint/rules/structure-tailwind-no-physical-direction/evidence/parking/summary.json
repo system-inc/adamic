@@ -1,0 +1,80 @@
+[
+  {
+    "suite": "base-security-require-context-access",
+    "cases": 54,
+    "bytes": 15596,
+    "mutants": [
+      "context_access_alias_lost"
+    ],
+    "backends": [
+      "Node",
+      "emitted",
+      "sanitized native"
+    ],
+    "byteOnly": true,
+    "outputSha256": "919b6d657aab59c3742f37f2a4e7272d8c44128823dc54ac98ed4e940202d1c4"
+  },
+  {
+    "suite": "nexus-consistency-no-screaming-snake-case",
+    "cases": 23,
+    "bytes": 7274,
+    "mutants": [
+      "screaming_environment_exemption_lost"
+    ],
+    "backends": [
+      "Node",
+      "emitted",
+      "sanitized native"
+    ],
+    "byteOnly": true,
+    "outputSha256": "aefd22094206f55ce7e2a9d900471b82f45ba7f04fe6dc9167d6a0d22b68a1e9"
+  },
+  {
+    "suite": "nexus-import-no-forbidden-source",
+    "cases": 24,
+    "bytes": 4756,
+    "mutants": [
+      "forbidden_exact_match_widened"
+    ],
+    "backends": [
+      "Node",
+      "emitted",
+      "sanitized native"
+    ],
+    "byteOnly": true,
+    "outputSha256": "8362d65369378c4ed6272de22c9581d1b149cbdf95127457285a31a856de1294"
+  },
+  {
+    "suite": "structure-tailwind-no-physical-direction",
+    "cases": 197,
+    "bytes": 57743,
+    "mutants": [
+      "physical_direction_exemption_lost",
+      "description_ignored",
+      "fallback_display_ignored",
+      "definite_assignment_subscription_lost"
+    ],
+    "backends": [
+      "Node",
+      "emitted",
+      "sanitized native"
+    ],
+    "byteOnly": true,
+    "outputSha256": "f496b77ea31ce7cce4df46a91f829b7cb3b14aac389c7bcf9f269514541a4501"
+  },
+  {
+    "suite": "nexus-import-require-path-alias",
+    "cases": 30,
+    "bytes": 6880,
+    "mutants": [
+      "path_alias_longest_directory_reversed"
+    ],
+    "backends": [
+      "Node",
+      "emitted",
+      "sanitized native"
+    ],
+    "byteOnly": true,
+    "outputSha256": "33c89dfa33d737effdffbb228ca6aaf7d5556d37c01d40358888e0da30433c22"
+  }
+]

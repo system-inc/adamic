@@ -1,4 +1,4 @@
-import { utf8Length } from 'adamic';
+import { panic, utf8Length } from 'adamic';
 import type { RuleContext } from '../../context.ts';
 import { Finding } from '../../finding.ts';
 import { all } from '../../helpers/comments/all.ts';
@@ -54,10 +54,12 @@ function recognized(raw: string, block: boolean): string {
 }
 export class Rule {
     readonly context: RuleContext;
-    constructor(context: RuleContext) { this.context = context; }
+    readonly rawOptions: string;
+    constructor(context: RuleContext, rawOptions: string = '') { this.context = context; this.rawOptions = rawOptions; }
     visit(root: number): void {
         const context = this.context;
-        const options = checked(context.settings.text);
+        if(this.rawOptions === '' && context.settings.values.size > 0) { panic('NotYet: shared factory must supply raw description options'); }
+        const options = checked(this.rawOptions);
         const ignored = options.ignored;
         const additional = options.additional;
         // Helpers expose UTF-8 bytes; findings expose UTF-16 units.
@@ -92,4 +94,4 @@ export class Rule {
         }
     }
 }
-export function create(context: RuleContext): Rule { return new Rule(context); }
+export function create(context: RuleContext, rawOptions: string = ''): Rule { return new Rule(context, rawOptions); }

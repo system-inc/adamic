@@ -1,0 +1,56 @@
+case 0
+fixed	const orderColumns = [];\u000a
+case 1
+fixed	const DATABASE_URL = process.env.DATABASE_URL ?? 'local';\u000a
+case 2
+nexus/consistency-no-screaming-snake-case	noScreamingSnakeCaseLocal	6 27	Constant "STRIPE_WEBHOOK_SECRET" is file-local and should be camelCase ("stripeWebhookSecret"). `const` already tells the reader and the compiler the value is immutable, so shouting adds no information. The casing is free to signal scope instead, the way Go does it: PascalCase means the value came from somewhere else, camelCase means it lives in this file. Reserve the shouting form for values that mirror an external system's grammar, where matching the upstream spelling keeps the value greppable across a boundary you do not control.
+fixed	const STRIPE_WEBHOOK_SECRET = readSecret();\u000a
+case 3
+nexus/consistency-no-screaming-snake-case	noScreamingSnakeCaseLocal	6 21	Constant "MAX_RETRY_COUNT" is file-local and should be camelCase ("maxRetryCount"). `const` already tells the reader and the compiler the value is immutable, so shouting adds no information. The casing is free to signal scope instead, the way Go does it: PascalCase means the value came from somewhere else, camelCase means it lives in this file. Reserve the shouting form for values that mirror an external system's grammar, where matching the upstream spelling keeps the value greppable across a boundary you do not control.
+fixed	const MAX_RETRY_COUNT = 3;\u000a
+case 4
+fixed	var MAX_RETRY_COUNT = 3;\u000a
+case 5
+fixed	let MAX_RETRY_COUNT = 3;\u000a
+case 6
+fixed	const RED = '#ff0000';\u000a
+case 7
+fixed	export const RED = '#ff0000';\u000a
+case 8
+fixed	const DATABASE_URL = process.env.DATABASE_URL;\u000a
+case 9
+fixed	const max_retry = 3;\u000a
+case 10
+fixed	export const OrderColumns = [];\u000a
+case 11
+nexus/consistency-no-screaming-snake-case	noScreamingSnakeCaseExported	13 28	Constant "MAX_RETRY_COUNT" is exported and should be PascalCase ("MaxRetryCount"). `const` already tells the reader and the compiler the value is immutable, so shouting adds no information. The casing is free to signal scope instead, the way Go does it: PascalCase means the value came from somewhere else, camelCase means it lives in this file. Reserve the shouting form for values that mirror an external system's grammar, where matching the upstream spelling keeps the value greppable across a boundary you do not control.
+fixed	export const MAX_RETRY_COUNT = 3;\u000a
+case 12
+fixed	export function run() {\u000a    return 1;\u000a}\u000a
+case 13
+fixed	const DATABASE_URL = process.env.DATABASE_URL || 'local';\u000a
+case 14
+fixed	const Max_Retry = 3;\u000a
+case 15
+fixed	const STRIPE_WEBHOOK_SECRET = readSecret();\u000a
+case 16
+nexus/consistency-no-screaming-snake-case	noScreamingSnakeCaseLocal	6 19	Constant "SOME_PLATFORM" is file-local and should be camelCase ("somePlatform"). `const` already tells the reader and the compiler the value is immutable, so shouting adds no information. The casing is free to signal scope instead, the way Go does it: PascalCase means the value came from somewhere else, camelCase means it lives in this file. Reserve the shouting form for values that mirror an external system's grammar, where matching the upstream spelling keeps the value greppable across a boundary you do not control.
+fixed	const SOME_PLATFORM = process.platform;\u000a
+case 17
+nexus/consistency-no-screaming-snake-case	noScreamingSnakeCaseLocal	6 31	Constant "STRIPE_WEBHOOK_SECRET_OLD" is file-local and should be camelCase ("stripeWebhookSecretOld"). `const` already tells the reader and the compiler the value is immutable, so shouting adds no information. The casing is free to signal scope instead, the way Go does it: PascalCase means the value came from somewhere else, camelCase means it lives in this file. Reserve the shouting form for values that mirror an external system's grammar, where matching the upstream spelling keeps the value greppable across a boundary you do not control.
+fixed	const STRIPE_WEBHOOK_SECRET_OLD = readSecret();\u000a
+case 18
+nexus/consistency-no-screaming-snake-case	noScreamingSnakeCaseLocal	6 19	Constant "SOME_ARGUMENT" is file-local and should be camelCase ("someArgument"). `const` already tells the reader and the compiler the value is immutable, so shouting adds no information. The casing is free to signal scope instead, the way Go does it: PascalCase means the value came from somewhere else, camelCase means it lives in this file. Reserve the shouting form for values that mirror an external system's grammar, where matching the upstream spelling keeps the value greppable across a boundary you do not control.
+fixed	const SOME_ARGUMENT = process.argv[2];\u000a
+case 19
+nexus/consistency-no-screaming-snake-case	noScreamingSnakeCaseLocal	6 16	Constant "API_V2_URL" is file-local and should be camelCase ("apiV2Url"). `const` already tells the reader and the compiler the value is immutable, so shouting adds no information. The casing is free to signal scope instead, the way Go does it: PascalCase means the value came from somewhere else, camelCase means it lives in this file. Reserve the shouting form for values that mirror an external system's grammar, where matching the upstream spelling keeps the value greppable across a boundary you do not control.
+fixed	const API_V2_URL = 'x';\u000a
+case 20
+nexus/consistency-no-screaming-snake-case	noScreamingSnakeCaseExported	13 25	Constant "HTTP_TIMEOUT" is exported and should be PascalCase ("HttpTimeout"). `const` already tells the reader and the compiler the value is immutable, so shouting adds no information. The casing is free to signal scope instead, the way Go does it: PascalCase means the value came from somewhere else, camelCase means it lives in this file. Reserve the shouting form for values that mirror an external system's grammar, where matching the upstream spelling keeps the value greppable across a boundary you do not control.
+fixed	export const HTTP_TIMEOUT = 5000;\u000a
+case 21
+nexus/consistency-no-screaming-snake-case	noScreamingSnakeCaseLocal	6 18	Constant "DATABASE_URL" is file-local and should be camelCase ("databaseUrl"). `const` already tells the reader and the compiler the value is immutable, so shouting adds no information. The casing is free to signal scope instead, the way Go does it: PascalCase means the value came from somewhere else, camelCase means it lives in this file. Reserve the shouting form for values that mirror an external system's grammar, where matching the upstream spelling keeps the value greppable across a boundary you do not control.
+fixed	const DATABASE_URL = 'postgres://local';\u000a
+case 22
+nexus/consistency-no-screaming-snake-case	noScreamingSnakeCaseLocal	6 19	Constant "ORDER_COLUMNS" is file-local and should be camelCase ("orderColumns"). `const` already tells the reader and the compiler the value is immutable, so shouting adds no information. The casing is free to signal scope instead, the way Go does it: PascalCase means the value came from somewhere else, camelCase means it lives in this file. Reserve the shouting form for values that mirror an external system's grammar, where matching the upstream spelling keeps the value greppable across a boundary you do not control.
+fixed	const ORDER_COLUMNS = [];\u000a
