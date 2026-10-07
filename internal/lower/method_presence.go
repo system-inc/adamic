@@ -56,6 +56,11 @@ func (l *lowering) methodRead(node *ast.Node) bool {
 
 func (l *lowering) methodObservation(node *ast.Node) (ir.Expression, bool, error) {
 	node = ast.SkipParentheses(node)
+	if truthinessUse(node) {
+		if value, known := l.nodeProcessMethodPresence(node); known {
+			return value, true, nil
+		}
+	}
 	if l.methodRead(node) && truthinessUse(node) {
 		value, err := l.methodPresence(node)
 		return value, true, err
@@ -130,6 +135,9 @@ func (l *lowering) hasMethodRead(node *ast.Node) bool {
 }
 
 func (l *lowering) methodPresence(node *ast.Node) (ir.Expression, error) {
+	if value, known := l.nodeProcessMethodPresence(node); known {
+		return value, nil
+	}
 	access := node.AsPropertyAccessExpression()
 	symbol := l.checker.GetSymbolAtLocation(node)
 	if len(symbol.Declarations) == 0 || load.IsLibrary(ast.GetSourceFileOfNode(symbol.Declarations[0])) {
