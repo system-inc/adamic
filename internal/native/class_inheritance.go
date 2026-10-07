@@ -44,8 +44,12 @@ func (e *emitter) classDeclarations(builder *strings.Builder) {
 }
 
 func (e *emitter) callCode(call ir.Call, arguments []string) string {
-	if call.Virtual == 0 {
-		return fmt.Sprintf("%s(%s)", e.functionName(call.Function), strings.Join(arguments, ", "))
+	targets := e.program.CallTargets(call)
+	if len(targets) == 1 {
+		return e.directVirtualCode(call, targets[0], arguments)
+	}
+	if class := e.exactReceiverClass(call.Arguments[0]); class != 0 {
+		return e.directVirtualCode(call, e.program.Classes[class-1].Methods[call.Virtual-1], arguments)
 	}
 	signature := e.program.Functions[call.Function]
 	parameters := []string{}
@@ -94,4 +98,18 @@ func (e *emitter) virtualAdapter(builder *strings.Builder, function int) string 
 	}
 	fmt.Fprintf(builder, "\t%s%s(%s);\n}\n", prefix, e.functionName(function), strings.Join(arguments, ", "))
 	return name
+}
+
+// A devirtualized call still enters the virtual borrowing ABI. Replacing the
+// table lookup must not hand a caller's count to a consuming implementation.
+func (e *emitter) directVirtualCode(call ir.Call, function int, arguments []string) string {
+	if call.Virtual != 0 && e.reuse != nil {
+		arguments = append([]string(nil), arguments...)
+		for position, parameter := range e.program.Functions[function].Parameters {
+			if position < len(arguments) && e.reuse.consumed[parameter] {
+				arguments[position] = retained(arguments[position])
+			}
+		}
+	}
+	return fmt.Sprintf("%s(%s)", e.functionName(function), strings.Join(arguments, ", "))
 }

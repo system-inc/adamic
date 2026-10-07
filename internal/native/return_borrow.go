@@ -185,7 +185,7 @@ func preservesFields(program *ir.Program, preserving map[int]bool, body []ir.Sta
 						safe = false
 					}
 				case ir.ArrayLiteral, ir.MakeError, ir.HasAccessor:
-					// Fresh containers cannot invalidate an existing field.
+					// Fresh containers and accessor lookup cannot invalidate an existing field.
 				default:
 					if !pureKind(expression) {
 						safe = false

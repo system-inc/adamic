@@ -22,4 +22,9 @@ func init() {
 		lowers  bool
 		checked bool
 	}{"internal/oracle/testdata/borrow_return.a", true, false})
+	fixtures = append(fixtures, struct {
+		path    string
+		lowers  bool
+		checked bool
+	}{"internal/oracle/testdata/borrow_devirtualized.a", true, false})
 }

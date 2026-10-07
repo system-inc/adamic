@@ -210,14 +210,19 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 	method := ""
 	if receiver != "" {
 		property := expression.Closure.(ir.Property)
-		method = e.temporary()
-		e.line("adamic_method %s = NULL;", method)
-		callee := e.snapshot(ir.Closure, fmt.Sprintf("adamic_object_callee(%s, %s, &%s, &%s)", receiver, cString(property.Name), e.cache(), method))
-		closure = e.own(ir.Closure, fmt.Sprintf("(%s == NULL ? NULL : adamic_retain(%s))", callee, callee))
-		if e.mostlyNull == nil {
-			e.mostlyNull = map[string]bool{}
+		if function, known := e.exactReceiverMethod(property.Object, property.Name); known {
+			// The method thunk keeps the borrowing adapter boundary.
+			method = e.methodThunk(function)
+		} else {
+			method = e.temporary()
+			e.line("adamic_method %s = NULL;", method)
+			callee := e.snapshot(ir.Closure, fmt.Sprintf("adamic_object_callee(%s, %s, &%s, &%s)", receiver, cString(property.Name), e.cache(), method))
+			closure = e.own(ir.Closure, fmt.Sprintf("(%s == NULL ? NULL : adamic_retain(%s))", callee, callee))
+			if e.mostlyNull == nil {
+				e.mostlyNull = map[string]bool{}
+			}
+			e.mostlyNull[closure] = true
 		}
-		e.mostlyNull[closure] = true
 	}
 	arguments := []string{}
 	for _, argument := range expression.Arguments {
@@ -229,7 +234,11 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 	}
 	call := fmt.Sprintf("%s->code(%s, %s)", closure, closure, packed)
 	if receiver != "" {
-		call = fmt.Sprintf("(%s != NULL ? %s : %s(%s, %s))", closure, call, method, receiver, packed)
+		if closure == "" {
+			call = fmt.Sprintf("%s(%s, %s)", method, receiver, packed)
+		} else {
+			call = fmt.Sprintf("(%s != NULL ? %s : %s(%s, %s))", closure, call, method, receiver, packed)
+		}
 	}
 	if expression.Returns == 0 {
 		e.line("%s;", call)

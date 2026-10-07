@@ -95,11 +95,9 @@ func parameterOnlyRead(program *ir.Program, body []ir.Statement, parameter int) 
 			case ir.Return:
 				// Returning a direct field takes an independent count on the field, not
 				// the receiver. The return can later be lent within the receiver's lifetime.
-				{
-					if field, ok := statement.Value.(ir.Property); ok {
-						if receiver, ok := field.Object.(ir.Read); ok && receiver.Local == parameter && !field.Method && !field.Optional {
-							continue
-						}
+				if field, ok := statement.Value.(ir.Property); ok {
+					if receiver, ok := field.Object.(ir.Read); ok && receiver.Local == parameter && !field.Method && !field.Optional {
+						continue
 					}
 				}
 				if derived(statement.Value) {

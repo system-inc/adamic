@@ -100,12 +100,12 @@ func TestFieldReturnBorrowPlans(t *testing.T) {
 		if local.Name == "node" && local.Function >= 0 {
 			name := program.Functions[local.Function].Name
 			found[name] = true
-			if local.Borrowed != (name == "onlyRead") {
+			if local.Borrowed != (name == "onlyRead" || name == "readsView") {
 				t.Errorf("%s: borrowed=%v", name, local.Borrowed)
 			}
 		}
 	}
-	for _, name := range []string{"onlyRead", "writesField", "keepsResult"} {
+	for _, name := range []string{"onlyRead", "writesField", "keepsResult", "readsView"} {
 		if !found[name] {
 			t.Errorf("missing %s", name)
 		}

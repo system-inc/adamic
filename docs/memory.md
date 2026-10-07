@@ -430,6 +430,9 @@ fixture passes Node, release, ASan/UBSan and leak checks. General computed
 returns, effectful getters, mutable receiver bindings and unknown targets remain
 owned. Borrowing arbitrary inline call expressions is not covered.
 
+The integrated-main validation, all changed count rows, and merge-boundary
+mutants are recorded in [borrowing conventions](borrow-conventions.md).
+
 ## Cycles: found by the compiler, broken by Weak
 
 Reference counting can't free a cycle, and a garbage collector is refused (no cycle collector, ever: decided by @system_adamic, task #gsz351g). What's known:

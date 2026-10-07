@@ -1,0 +1,13 @@
+interface Value { readonly label: string; }
+class Replacer {
+ replace(value: Value): Value {
+  return { ...value, label: `${value.label}!` };
+ }
+}
+function check(): void {
+ const replacer = new Replacer();
+ const value: Value = { label: 'value' + String(1) };
+ const next = replacer.replace(value);
+ console.log(`${value.label}/${next.label}`);
+}
+check();
