@@ -14,9 +14,9 @@ import (
 )
 
 var printerMutants = []mutant{
-	{"declarations lose their semicolons", "print.ts", "let ending = d.text(';');\n        if(n.truth('nodes')) ending", "let ending = d.text('');\n        if(n.truth('nodes')) ending"},
+	{"declarations lose their semicolons", "print.ts", "let ending = d.text(';');\n        if(n.truth('nodes'))\n            ending", "let ending = d.text('');\n        if(n.truth('nodes')) ending"},
 	{"rule bodies lose indentation", "print.ts", "d.indent(d.concat([d.hard(), this.sequence(path)]))", "d.concat([d.hard(), this.sequence(path)])"},
-	{"groups ignore the remaining width", "print_doc.ts", "flat = !n.broken && this.fits(command(n.parts[0] ?? 0, c.indent, true), stack, width - column, suffix.length > 0, false);", "flat = !n.broken;"},
+	{"groups ignore the remaining width", "print_doc.ts", "flat =\n                        !n.broken &&\n                        this.fits(\n                            command(n.parts[0] ?? 0, c.indent, true),\n                            stack,\n                            width - column,\n                            suffix.length > 0,\n                            false,\n                        );", "flat = !n.broken;"},
 }
 
 func printerAnswers(t *testing.T, cases, mode string) string {
