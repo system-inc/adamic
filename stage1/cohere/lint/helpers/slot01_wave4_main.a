@@ -1,0 +1,44 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from './options_json.ts';
+import { jsxStringAttributeValue } from './jsx_string_attribute_value.a';
+import type { JsxValueNode } from './jsx_string_attribute_value.a';
+const args = programArguments();
+const file = readTextFile(args[0] ?? panic('fixture path'));
+if (file.kind === 'Error') { panic(file.message); }
+for (const line of file.text.split('\n')) {
+    if (line === '') { continue; }
+    const json = new OptionsJson(line);
+    const root = json.parse();
+    if (root < 0) { panic(json.error); }
+    const fields = json.node(root).children;
+    const kind = json.node(fields[0] ?? panic('kind')).text;
+    const wanted = json.node(fields[2] ?? panic('target')).text;
+    const nodes: JsxValueNode[] = [];
+    const properties: number[] = [];
+    const names: { readonly text: string; readonly named: boolean; readonly match: boolean }[] = [];
+    const decoded = new Map<string, string>();
+    for (const item of json.node(fields[1] ?? panic('properties')).children) {
+        const row = json.node(item).children;
+        const propertyKind = json.node(row[0] ?? panic('property kind')).text;
+        const named = json.node(row[1] ?? panic('named')).text === 'true';
+        const text = json.node(row[2] ?? panic('name')).text;
+        const initializerKind = json.node(row[3] ?? panic('initializer kind')).text;
+        const raw = json.node(row[4] ?? panic('raw')).text;
+        decoded.set(raw, json.node(row[5] ?? panic('decoded')).text);
+        const match = json.node(row[6] ?? panic('match')).text === 'true';
+        const index = nodes.length;
+        properties.push(index);
+        nodes.push({ kind: propertyKind, text: '', initializer: initializerKind === 'Missing' ? -1 : index + 1, properties: [] });
+        names.push({ text, named, match });
+        nodes.push({ kind: initializerKind, text: raw, initializer: -1, properties: [] });
+        names.push({ text: '', named: false, match: false });
+    }
+    const index = nodes.length;
+    nodes.push({ kind, text: '', initializer: -1, properties });
+    const result = jsxStringAttributeValue(nodes, index, wanted, id => names[id] ?? panic('name missing'), (candidate, target) => {
+        if (target !== wanted) { panic('target changed'); }
+        for (const name of names) { if (name.text === candidate && name.named) { return name.match; } }
+        panic('unexpected name');
+    }, text => decoded.get(text) ?? panic('decode input changed'));
+    console.log(`${result.found}`); console.log(result.value);
+}

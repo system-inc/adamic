@@ -1,0 +1,20 @@
+import { panic } from 'adamic';
+export interface JsxValueNode { readonly kind: string; readonly text: string; readonly initializer: number; readonly properties: readonly number[]; }
+export interface JsxStringValue { readonly value: string; readonly found: boolean; }
+export function jsxStringAttributeValue(nodes: readonly JsxValueNode[], attributes: number, wanted: string, attributeName: (node: number) => { readonly text: string; readonly named: boolean }, matches: (candidate: string, wanted: string) => boolean, unescape: (text: string) => string): JsxStringValue {
+    if (attributes < 0) { return { value: '', found: false }; }
+    const container = nodes[attributes] ?? panic('JSX attributes missing');
+    if (container.kind !== 'JsxAttributes') { return { value: '', found: false }; }
+    for (const index of container.properties) {
+        const property = nodes[index] ?? panic('JSX property missing');
+        if (property.kind !== 'JsxAttribute') { continue; }
+        const name = attributeName(index);
+        if (!name.named || !matches(name.text, wanted)) { continue; }
+        const initializer = property.initializer < 0 ? -1 : property.initializer;
+        if (initializer < 0) { return { value: '', found: false }; }
+        const value = nodes[initializer] ?? panic('JSX initializer missing');
+        if (value.kind !== 'StringLiteral') { return { value: '', found: false }; }
+        return { value: unescape(value.text), found: true };
+    }
+    return { value: '', found: false };
+}
