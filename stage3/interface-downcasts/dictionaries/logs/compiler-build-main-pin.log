@@ -1,0 +1,20 @@
+# github.com/system-inc/adamic/internal/load
+internal/load/declarations.go:70:28: cannot use sourceFile.FileName() (value of string type "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedFilePath) as string value in argument to p.fs.displayName
+internal/load/load.go:124:31: cannot use &regexpLibraryFS{…} (value of type *regexpLibraryFS) as "github.com/microsoft/TypeScript/tsc/internal/vfs".FS value in argument to cachedvfs.From: *regexpLibraryFS does not implement "github.com/microsoft/TypeScript/tsc/internal/vfs".FS (wrong type for method ReadFile)
+		have ReadFile(string) (string, bool)
+		want ReadFile("github.com/microsoft/TypeScript/tsc/internal/tspath".RootedFilePath) (string, bool)
+internal/load/load.go:124:67: cannot use fs (variable of type *sourceFS) as "github.com/microsoft/TypeScript/tsc/internal/vfs".FS value in argument to bundled.WrapFS: *sourceFS does not implement "github.com/microsoft/TypeScript/tsc/internal/vfs".FS (wrong type for method AppendFile)
+		have AppendFile(string, string) error
+		want AppendFile("github.com/microsoft/TypeScript/tsc/internal/tspath".RootedFilePath, string) error
+internal/load/load.go:125:74: not enough arguments in call to tsoptions.NewParsedCommandLine
+	have (*"github.com/microsoft/TypeScript/tsc/shim/core".CompilerOptions, []string, nil, unknown type)
+	want (*"github.com/microsoft/TypeScript/tsc/internal/core".CompilerOptions, []"github.com/microsoft/TypeScript/tsc/internal/tspath".RootedFilePath, []*"github.com/microsoft/TypeScript/tsc/internal/core".ProjectReference, "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedDirectoryPath, "github.com/microsoft/TypeScript/tsc/internal/tspath".CaseSensitivity)
+internal/load/load.go:125:81: undefined: tspath.ComparePathsOptions
+internal/load/load.go:126:41: fileSystem.UseCaseSensitiveFileNames undefined (type *"github.com/microsoft/TypeScript/tsc/internal/vfs/cachedvfs".FS has no field or method UseCaseSensitiveFileNames)
+internal/load/load.go:129:102: too many arguments in call to compiler.NewCachedFSCompilerHost
+	have (string, *"github.com/microsoft/TypeScript/tsc/internal/vfs/cachedvfs".FS, "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedDirectoryPath, nil, nil, nil)
+	want ("github.com/microsoft/TypeScript/tsc/internal/vfs".FS, "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedDirectoryPath, "github.com/microsoft/TypeScript/tsc/internal/tsoptions".ExtendedConfigCache, func(msg *diagnostics.Message, args ...any), contentmapper.Project)
+internal/load/load.go:145:28: undefined: tspath.Path
+internal/load/load.go:147:21: sourceFile.Path undefined (type *"github.com/microsoft/TypeScript/tsc/internal/ast".SourceFile has no field or method Path)
+internal/load/load.go:150:41: undefined: tspath.ToPath
+internal/load/load.go:150:41: too many errors
