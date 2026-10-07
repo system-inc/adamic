@@ -98,8 +98,13 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 			patterns = append(patterns, patterned{pattern: name, parameter: parameter, incoming: incoming})
 			continue
 		}
-		if !ast.IsIdentifier(parameter.Name()) || declared.DotDotDotToken != nil {
+		if !ast.IsIdentifier(parameter.Name()) {
 			return l.notYet(parameter, "a parameter that isn't a plain name")
+		}
+		if declared.DotDotDotToken != nil {
+			if err := l.censusRestParameter(declaration, parameter); err != nil {
+				return err
+			}
 		}
 		local, err := l.declareLocal(parameter.Name())
 		if err != nil {
