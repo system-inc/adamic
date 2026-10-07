@@ -1,10 +1,12 @@
 // Run from the adapted tree root. run.sh stages this driver there.
+// Activate the loader's pinned Node declarations; erased on Node.
+import type {} from 'node:fs';
 import { panic, programArguments, readTextFile } from 'adamic';
 import { createSourceFile, forEachChild } from './src/compiler/parser.ts';
 import { flattenDiagnosticMessageText } from './src/compiler/program.ts';
 import { unescapeLeadingUnderscores } from './src/compiler/utilitiesPublic.ts';
 import { ScriptKind, ScriptTarget, SyntaxKind } from './src/compiler/types.ts';
-import type { Identifier, LiteralLikeNode, Node, PrivateIdentifier } from './src/compiler/types.ts';
+import type { Identifier, JSDoc, JSDocComment, JSDocContainer, JSDocTag, LiteralLikeNode, Node, NodeArray, PrivateIdentifier } from './src/compiler/types.ts';
 import { kindNames } from './kinds.a';
 
 function written(text: string): string {
@@ -33,13 +35,40 @@ function nodeText(node: Node): string {
         case SyntaxKind.TemplateMiddle:
         case SyntaxKind.TemplateTail:
             return (node as LiteralLikeNode).text;
+        case SyntaxKind.JSDocText:
+        case SyntaxKind.JSDocLink:
+        case SyntaxKind.JSDocLinkCode:
+        case SyntaxKind.JSDocLinkPlain:
+            return (node as JSDocComment).text;
         default:
             return '';
     }
 }
 
+function commentDetails(comment: string | NodeArray<JSDocComment> | undefined): string {
+    if (comment === undefined) { return 'absent'; }
+    if (typeof comment === 'string') { return `text ${written(comment)}`; }
+    let result = `parts ${comment.length}`;
+    for (const part of comment) {
+        result += `\t${kindNames[part.kind] ?? panic('unknown comment kind')}:${written(part.text)}`;
+    }
+    return result;
+}
+
+function jsDocDetails(node: Node): string {
+    if (node.kind === SyntaxKind.JSDoc) {
+        return `\tcomment ${commentDetails((node as JSDoc).comment)}`;
+    }
+    if (node.kind >= SyntaxKind.FirstJSDocTagNode && node.kind <= SyntaxKind.LastJSDocTagNode) {
+        const tag = node as JSDocTag;
+        return `\ttagName ${written(unescapeLeadingUnderscores(tag.tagName.escapedText))}\tcomment ${commentDetails(tag.comment)}`;
+    }
+    return '';
+}
+
 function dump(node: Node): void {
-    console.log(`${kindNames[node.kind] ?? panic('unknown node kind')} ${node.pos} ${node.end} ${node.flags}\t${written(nodeText(node))}`);
+    console.log(`${kindNames[node.kind] ?? panic('unknown node kind')} ${node.pos} ${node.end} ${node.flags}\t${written(nodeText(node))}${jsDocDetails(node)}`);
+    for (const doc of (node as JSDocContainer).jsDoc ?? []) { dump(doc); }
     forEachChild(node, child => { dump(child); });
 }
 
@@ -51,11 +80,16 @@ for(const name of manifest.text.split('\n')) {
     if(name === '') { continue; }
     const input = readTextFile(`${tree}/src/compiler/${name}`);
     if(input.kind === 'Error') { panic(input.message); }
-    const file = createSourceFile(name, input.text, ScriptTarget.Latest, false, ScriptKind.TS);
+    const kind = name.endsWith('.js') ? ScriptKind.JS : ScriptKind.TS;
+    const file = createSourceFile(name, input.text, ScriptTarget.Latest, false, kind);
     console.log(`file\t${written(name)}`);
     dump(file);
     console.log(`diagnostics ${file.parseDiagnostics.length}`);
     for(const diagnostic of file.parseDiagnostics) {
         console.log(`diagnostic ${diagnostic.category} ${diagnostic.code} ${diagnostic.start ?? -1} ${diagnostic.length ?? -1}\t${written(flattenDiagnosticMessageText(diagnostic.messageText, '\n'))}`);
+    }
+    console.log(`jsDocDiagnostics ${file.jsDocDiagnostics?.length ?? 0}`);
+    for (const diagnostic of file.jsDocDiagnostics ?? []) {
+        console.log(`jsDocDiagnostic ${diagnostic.category} ${diagnostic.code} ${diagnostic.start ?? -1} ${diagnostic.length ?? -1}\t${written(flattenDiagnosticMessageText(diagnostic.messageText, '\n'))}`);
     }
 }
