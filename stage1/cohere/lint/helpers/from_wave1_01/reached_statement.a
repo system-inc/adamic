@@ -1,0 +1,20 @@
+import type { State } from './enter.a';
+
+// The caller supplies this exact node object; the helper does not inspect its kind.
+export class StatementNode {
+    readonly kind: number;
+    readonly pos: number;
+    readonly end: number;
+    constructor(kind: number, pos: number, end: number) {
+        this.kind = kind;
+        this.pos = pos;
+        this.end = end;
+    }
+}
+export type StatementHook = (state: State, node: StatementNode | undefined) => void;
+
+export function reachedStatement(node: StatementNode | undefined, state: State, hook: StatementHook | undefined): void {
+    if(hook !== undefined) {
+        hook(state, node);
+    }
+}

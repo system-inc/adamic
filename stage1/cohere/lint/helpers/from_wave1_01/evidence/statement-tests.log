@@ -1,0 +1,15 @@
+=== RUN   TestStatementHandoffMatchesGo
+    reached_statement_test.go:49: array-callback-return: 337 actual Go calls, 6066 bytes per backend
+    reached_statement_test.go:49: consistent-return: 201 actual Go calls, 3618 bytes per backend
+    reached_statement_test.go:49: no-unreachable-loop: 7597 actual Go calls, 135085 bytes per backend
+    reached_statement_test.go:49: react-hooks_rules-of-hooks: 596 actual Go calls, 10728 bytes per backend
+    reached_statement_test.go:49: controls: 72 actual Go calls, 1284 bytes per backend
+    reached_statement_test.go:91: statement hook called twice compiles and runs; comparison alone catches side 0
+    reached_statement_test.go:91: statement hook called twice compiles and runs; comparison alone catches side 1
+    reached_statement_test.go:91: statement hook called twice compiles and runs; comparison alone catches side 2
+    reached_statement_test.go:91: handed node discarded compiles and runs; comparison alone catches side 0
+    reached_statement_test.go:91: handed node discarded compiles and runs; comparison alone catches side 1
+    reached_statement_test.go:91: handed node discarded compiles and runs; comparison alone catches side 2
+--- PASS: TestStatementHandoffMatchesGo (35.62s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from_wave1_01	35.620s

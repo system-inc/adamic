@@ -1,0 +1,41 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { Block, State } from './enter.a';
+import { StatementNode, reachedStatement } from './reached_statement.a';
+import type { StatementHook } from './reached_statement.a';
+
+const args = programArguments();
+const input = readTextFile(args[0] ?? panic('missing input'));
+if(input.kind === 'Error') { panic(input.message); }
+for(const line of input.text.split('\n')) {
+    if(line === '') { continue; }
+    const fields = line.split('\t');
+    const kind = Number(fields[0]);
+    const node = kind < 0 ? undefined : new StatementNode(kind, Number(fields[1]), Number(fields[2]));
+    const state = new State();
+    const currentIndex = Number(fields[3]);
+    if(currentIndex >= 0) { state.current = new Block(currentIndex, fields[4] === '1', fields[5] === '1'); }
+    let calls = 0;
+    let seenKind = -1;
+    let seenPos = -1;
+    let seenEnd = -1;
+    let seenCurrent = -1;
+    let sameState = false;
+    let sameNode = false;
+    let hook: StatementHook | undefined = undefined;
+    if(fields[6] === '1') {
+        hook = (actualState: State, actualNode: StatementNode | undefined): void => {
+            calls++;
+            if(actualNode !== undefined) {
+                seenKind = actualNode.kind;
+                seenPos = actualNode.pos;
+                seenEnd = actualNode.end;
+            }
+            const current = actualState.current;
+            if(current !== undefined) { seenCurrent = current.index; }
+            sameState = actualState === state;
+            sameNode = actualNode === node;
+        };
+    }
+    reachedStatement(node, state, hook);
+    console.log(`${calls}\t${seenKind}\t${seenPos}\t${seenEnd}\t${seenCurrent}\t${sameState ? 1 : 0}\t${sameNode ? 1 : 0}`);
+}
