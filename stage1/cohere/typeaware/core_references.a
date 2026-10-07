@@ -1,0 +1,43 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+
+// Existing raw declaration metadata, not a default-library shortcut: production
+// core rules accept a first declaration in any declaration file.
+export class CoreReferences {
+    readonly rules: Rules;
+    constructor(rules: Rules) { this.rules = rules; }
+    global(index: number): boolean {
+        const frames = new Frames(this.rules.ask(index, 'node-symbol-details'));
+        header(frames, 'node-symbol-details'); let result = false;
+        if(frames.yes()) {
+            frames.natural(); frames.natural(); frames.field(); const count = frames.natural();
+            for(let at = 0; at < count; at++) {
+                frames.field(); frames.field(); frames.natural(); frames.natural();
+                const declaration = frames.yes();
+                if(at === 0) { result = declaration; }
+                frames.yes(); frames.field(); frames.field(); frames.natural(); frames.natural();
+                const tags = frames.natural();
+                for(let tag = 0; tag < tags; tag++) { frames.field(); frames.field(); frames.natural(); frames.natural(); frames.field(); }
+                const parameters = frames.natural();
+                for(let parameter = 0; parameter < parameters; parameter++) { frames.field(); }
+            }
+        }
+        frames.end(); return result;
+    }
+    member(index: number): string {
+        if(index < 0) { return ''; }
+        const node = this.rules.parser.node(index);
+        if(!['PropertyAccessExpression', 'ElementAccessExpression'].includes(node.kind)) { return ''; }
+        let key = node.children[node.children.length - 1] ?? -1;
+        if(key < 0) { return ''; }
+        if(node.kind === 'ElementAccessExpression') { key = this.rules.skip(key); }
+        const name = this.rules.parser.node(key);
+        if(node.kind === 'PropertyAccessExpression') { return ['Identifier', 'PrivateIdentifier', 'StringLiteral', 'NumericLiteral'].includes(name.kind) ? name.text : ''; }
+        return ['StringLiteral', 'NumericLiteral', 'NoSubstitutionTemplateLiteral'].includes(name.kind) ? name.text : '';
+    }
+    object(index: number): number {
+        if(index < 0) { return -1; }
+        const node = this.rules.parser.node(index);
+        return ['PropertyAccessExpression', 'ElementAccessExpression'].includes(node.kind) ? node.children[0] ?? -1 : -1;
+    }
+}
