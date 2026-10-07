@@ -1,0 +1,3 @@
+package main
+import("os";"strings";"github.com/system-inc/cohere/internal/format/prettier";"github.com/system-inc/cohere/internal/format/formatoptions")
+func main(){e,err:=prettier.New(formatoptions.Default());if err!=nil{panic(err)};for _,p:=range os.Args[1:]{b,err:=os.ReadFile(p);if err!=nil{panic(err)};s,err:=e.Format(strings.TrimSuffix(p,".a")+".ts",string(b));if err!=nil{panic(err)};if err=os.WriteFile(p,[]byte(s),0644);err!=nil{panic(err)}}}
