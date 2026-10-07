@@ -837,7 +837,7 @@ Base: area/runtime 915b9e05, merged in a64243ca. The regenerated Linux table has
 |---|---|---|---|
 | async_plain.a | 21 / 21 / 32 / 36 / 13 / 0 | 21 / 21 / 39 / 61 / 15 / 0 | Ordinary snapshots and owned frame slots replace the unit 1 straight-line grammar; extra NULL releases are counted too |
 | async_coverage_unions.a | 27 / 27 / 60 / 49 / 12 / 0 | 27 / 27 / 81 / 120 / 12 / 0 | Ordinary snapshots and owned frame slots replace the unit 1 straight-line grammar; extra NULL releases are counted too |
-| async_coverage_reject_empty.a | 5 / 4 / 9 / 7 / 4 / 0 | 6 / 4 / 15 / 18 / 5 / 0 | Ordinary snapshots and owned frame slots replace the unit 1 straight-line grammar; extra NULL releases are counted too; ordinary Error construction retains its message snapshot on the fatal path; fatal exit leaves live values, as before |
+| async_coverage_reject_empty.a | 5 / 4 / 9 / 7 / 4 / 0 | 6 / 4 / 15 / 18 / 5 / 0 | Ordinary snapshots and owned frame slots replace the unit 1 straight-line grammar; extra NULL releases are counted too; ordinary throwing constructs an Error object where unit 1 rejected with the message string; fatal exit leaves live values, as before |
 | async_coverage_parameters.a | 17 / 17 / 18 / 22 / 12 / 0 | 17 / 17 / 24 / 46 / 12 / 0 | Ordinary snapshots and owned frame slots replace the unit 1 straight-line grammar; extra NULL releases are counted too |
 | async_coverage_typeof.a | 15 / 15 / 24 / 26 / 9 / 0 | 16 / 16 / 28 / 49 / 10 / 0 | Ordinary snapshots and owned frame slots replace the unit 1 straight-line grammar; extra NULL releases are counted too; ordinary function-value forwarder adds one closure allocation |
 | async_coverage_values.a | 66 / 66 / 126 / 121 / 16 / 0 | 66 / 66 / 157 / 238 / 19 / 0 | Ordinary snapshots and owned frame slots replace the unit 1 straight-line grammar; extra NULL releases are counted too |
@@ -1052,3 +1052,184 @@ Relative to async-ordinary 0bb0fab, the following existing numeric rows change b
 | internal/oracle/testdata/arguments.a | 77 / 77 / 15 / 69 / 27 / 0 | 77 / 77 / 14 / 68 / 27 / 0 | Imported area baseline; merged counts equal 915b9e05 |
 | internal/oracle/testdata/read_arguments.a | 15 / 15 / 12 / 19 / 9 / 0 | 15 / 15 / 11 / 18 / 9 / 0 | Imported area baseline; merged counts equal 915b9e05 |
 | internal/oracle/testdata/walk.a | 222 / 222 / 123 / 294 / 36 / 0 | 222 / 222 / 117 / 288 / 36 / 0 | Imported area baseline; merged counts equal 915b9e05 |
+
+### The parameter fixture's 17 to 18 retain
+
+This is a short-slice owner retain, not a newly retained async parameter.
+The original area compiler already retained its string parameter. In isolated
+area 915b9e05 and merged compiler probes, changing only string_share.c to copy
+proper slices shorter than 64 bytes produces these counts:
+
+| Compiler | Real short views | Forced short copies |
+|---|---|---|
+| Area unit 1 | 17 / 17 / 18 / 22 / 12 / 0 | 17 / 17 / 17 / 22 / 12 / 0 |
+| Merged unit 2 | 17 / 17 / 24 / 46 / 12 / 0 | 17 / 17 / 23 / 46 / 12 / 0 |
+
+Both stdout and stderr excluding the count line agree byte for byte in each
+pair. The fixture's held.slice(1) now reads its parent's bytes and retains that
+owner; the previous minimum-slice policy copied them. Its destruction releases
+the owner through the internal child-drop path, which is not a counted call to
+adamic_release, explaining why the retain changes without a release-count
+change. This corrects the earlier unverified parameter-ownership inference.
+Unit 2 does not remove this owner retain. Probe log:
+/tmp/async-area-parameter-causality.log; source and binaries:
+/tmp/async-area-parameter-unit1 and /tmp/async-area-parameter-current.
+The forced-copy runtime archives are isolated artifacts, not production edits.
+
+The 153 rows added relative to async-ordinary 0bb0fab are imported area fixtures. Synchronous tuples equal the area baseline; the imported async fixtures have the ordinary-lowering deltas listed above:
+
+| Fixture | Counts | Cause |
+|---|---|---|
+| internal/oracle/testdata/release_fma.a | 4 / 4 / 10 / 15 / 2 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/string_views_lifetime.a | 19 / 19 / 21 / 34 / 6 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/string_views_holders.a | 45 / 45 / 72 / 79 / 13 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/string_views_throw.a | 55 / 55 / 62 / 76 / 14 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/string_views_loops.a | 159 / 159 / 45 / 167 / 21 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/string_views_policy.a | 344 / 344 / 73 / 371 / 11 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/string_views_methods.a | 5253 / 5253 / 2022 / 6546 / 15 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/string_views_characters.a | 281 / 281 / 1542 / 1825 / 8 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/string_views_calls.a | 85 / 85 / 61 / 116 / 11 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/string_views_surrogates.a | 188 / 188 / 83 / 255 / 13 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/typeof_null.a | 4 / 4 / 1 / 9 / 1 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/route_targets_callbacks.a | 35 / 35 / 43 / 65 / 12 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/route_targets_virtual_fresh.a | 54 / 50 / 20 / 64 / 10 / 4 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/route_targets_unknown.a | 36 / 36 / 18 / 49 / 7 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/route_targets_bound_method.a | 37 / 37 / 27 / 52 / 9 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/route_targets_recursive.a | 19 / 18 / 6 / 23 / 7 / 1 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/route_targets_try_loop.a | 68 / 66 / 41 / 85 / 9 / 2 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/route_targets_accessor.a | 14 / 14 / 13 / 22 / 7 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/route_targets_sort_values.a | 84 / 84 / 92 / 142 / 17 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/map_foreach_named_keys.a | 92 / 92 / 60 / 144 / 15 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/set_foreach_named_keys.a | 84 / 84 / 68 / 144 / 15 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/map_foreach_keys.a | 391 / 391 / 363 / 674 / 25 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/set_foreach_keys.a | 285 / 285 / 242 / 477 / 16 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/map_foreach_keep.a | 516 / 516 / 625 / 931 / 35 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/set_foreach_keep.a | 290 / 290 / 385 / 520 / 18 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/map_foreach_objects.a | 732 / 732 / 834 / 1076 / 63 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/set_foreach_objects.a | 368 / 368 / 515 / 586 / 30 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/map_foreach_closures.a | 816 / 816 / 1044 / 1277 / 87 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/set_foreach_closures.a | 411 / 411 / 634 / 705 / 39 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/map_foreach_numbers.a | 373 / 373 / 155 / 478 / 14 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/set_foreach_numbers.a | 214 / 214 / 140 / 317 / 11 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/map_foreach_arrays.a | 995 / 995 / 932 / 1355 / 95 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/set_foreach_arrays.a | 516 / 516 / 524 / 713 / 58 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/map_foreach_named_more.a | 395 / 395 / 569 / 819 / 36 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/set_foreach_named_more.a | 179 / 179 / 297 / 378 / 26 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/map_foreach_named_objects.a | 165 / 165 / 207 / 278 / 31 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/set_foreach_named_objects.a | 87 / 87 / 110 / 149 / 22 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/map_foreach_named_closures.a | 117 / 117 / 179 / 219 / 29 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/set_foreach_named_closures.a | 95 / 95 / 155 / 187 / 28 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/map_foreach_fnexpr.a | 44 / 44 / 64 / 100 / 15 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/set_foreach_fnexpr.a | 32 / 32 / 51 / 76 / 10 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/map_foreach_named_numbers.a | 117 / 117 / 73 / 177 / 12 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/borrow_chain_coverage_guards.a | 24 / 24 / 9 / 21 / 11 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/borrow_chain_coverage_callbacks.a | 28 / 28 / 14 / 28 / 11 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/borrow_chain_coverage_exclusions.a | 21 / 21 / 12 / 23 / 10 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/borrow_chain_coverage_spread.a | 12 / 12 / 3 / 10 / 7 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/borrow_chain_coverage_scope.a | 10 / 10 / 2 / 8 / 7 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/borrow_chain_coverage_depths.a | 7 / 7 / 0 / 4 / 5 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/borrow_chain_coverage_values.a | 16 / 16 / 9 / 18 / 12 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/borrow_chain_coverage_return.a | 16 / 16 / 7 / 13 / 5 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/borrow_chain_coverage_method.a | 9 / 9 / 2 / 7 / 7 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/borrow_chain_coverage_finally.a | 13 / 13 / 9 / 13 / 6 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/borrow_chain_coverage_parents.a | 15 / 15 / 20 / 29 / 12 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/borrow_chain_coverage_bounded.a | 11 / 11 / 3 / 10 / 9 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/borrow_chain_override.a | 15 / 13 / 4 / 12 / 7 / 2 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/borrow_chain_unknown.a | 8 / 8 / 3 / 8 / 7 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/borrow_chain_argument.a | 6 / 6 / 0 / 4 / 5 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/borrow_chain_walk.a | 16 / 16 / 7 / 16 / 12 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/borrow_chain_listener.a | 7 / 7 / 3 / 8 / 6 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/borrow_chain_write.a | 7 / 7 / 1 / 5 / 6 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/borrow_chain_reassigned.a | 8 / 8 / 1 / 5 / 7 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/borrow_chain_capture.a | 6 / 6 / 4 / 7 / 5 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/borrow_chain_store.a | 10 / 10 / 4 / 11 / 8 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/moves/accepted/objects.a | 2056 / 2056 / 6145 / 4104 / 2053 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/async_coverage_unions.a | 27 / 27 / 81 / 120 / 12 / 0 | Imported async fixture executed through ordinary snapshots and owned frame slots; delta above |
+| internal/oracle/testdata/async_coverage_reject_empty.a | 6 / 4 / 15 / 18 / 5 / 0 | Imported async fixture executed through ordinary snapshots and owned frame slots; delta above |
+| internal/oracle/testdata/async_coverage_parameters.a | 17 / 17 / 24 / 46 / 12 / 0 | Imported async fixture executed through ordinary snapshots and owned frame slots; delta above |
+| internal/oracle/testdata/async_coverage_typeof.a | 16 / 16 / 28 / 49 / 10 / 0 | Imported async fixture executed through ordinary snapshots and owned frame slots; delta above |
+| internal/oracle/testdata/async_coverage_values.a | 66 / 66 / 157 / 238 / 19 / 0 | Imported async fixture executed through ordinary snapshots and owned frame slots; delta above |
+| internal/oracle/testdata/async_coverage_discard.a | 25 / 25 / 55 / 83 / 15 / 0 | Imported async fixture executed through ordinary snapshots and owned frame slots; delta above |
+| internal/oracle/testdata/async_coverage_reject_eager.a | 12 / 9 / 27 / 36 / 10 / 0 | Imported async fixture executed through ordinary snapshots and owned frame slots; delta above |
+| internal/oracle/testdata/async_coverage_reject_nested.a | 18 / 15 / 45 / 64 / 17 / 0 | Imported async fixture executed through ordinary snapshots and owned frame slots; delta above |
+| internal/oracle/testdata/async_typeof.a | 16 / 16 / 29 / 50 / 10 / 0 | Imported async fixture executed through ordinary snapshots and owned frame slots; delta above |
+| internal/oracle/testdata/memory_examples/list.a | 7 / 7 / 6 / 16 / 5 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/memory_examples/tree.a | 12 / 12 / 28 / 31 / 12 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/memory_examples/closures.a | 9 / 9 / 2 / 9 / 7 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/memory_examples/regions.a | 14 / 8 / 0 / 5 / 2 / 6 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/memory_examples/strings.a | 14 / 14 / 2 / 17 / 5 / 0 | Imported area fixture and measured area baseline |
+| cmd/adamic/testdata/wasi/request.a | 4 / 4 / 5 / 7 / 3 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/string_build_caches.a | 26 / 26 / 2 / 26 / 7 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/string_build_padding.a | 759 / 759 / 126 / 877 / 7 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/string_build_join.a | 161 / 161 / 81 / 193 / 10 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/string_build_repeat.a | 240 / 240 / 32 / 264 / 8 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/string_build_cached_reads.a | 2684 / 2684 / 333 / 2974 / 9 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/string_build_boundaries.a | 2229 / 2229 / 342 / 2347 / 11 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/string_build_calls.a | 47 / 47 / 4 / 52 / 7 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/runtime_last_index_of.a | 679 / 679 / 120 / 730 / 6 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/lint_runtime_release_chain.a | 405034 / 405034 / 505776 / 303790 / 300003 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/lint_runtime_release_shared.a | 1008 / 1008 / 8478 / 6396 / 263 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/lint_runtime_search_boundaries.a | 568 / 568 / 161 / 647 / 18 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/lint_runtime_search_calls.a | 48 / 48 / 25 / 68 / 6 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/lint_runtime_equal_headers.a | 100 / 100 / 22 / 113 / 8 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/pad_infinity.a | 0 / 0 / 0 / 0 / 0 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/repeat_huge.a | 0 / 0 / 0 / 0 / 0 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/normalize_long.a | 10 / 10 / 0 / 11 / 10 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/field_access_paths.a | 47 / 47 / 14 / 65 / 12 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/nbody_field_values.a | 22 / 22 / 33 / 45 / 10 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/nbody_slot_kinds.a | 30 / 30 / 11 / 37 / 6 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/nbody_runtime_fields.a | 8 / 8 / 8 / 15 / 4 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/nbody_narrowed_receiver.a | 13 / 13 / 5 / 16 / 5 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/nbody_base_writes.a | 23 / 23 / 6 / 30 / 7 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/nbody_collection_fields.a | 39 / 39 / 35 / 61 / 17 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/nbody_write_read_order.a | 15 / 15 / 10 / 24 / 6 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/nbody_static_collision.a | 43 / 43 / 17 / 57 / 19 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/nbody_optional_references.a | 34 / 34 / 52 / 67 / 12 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/nbody_spread_fields.a | 23 / 23 / 9 / 32 / 13 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/field_write_paths.a | 46 / 46 / 11 / 60 / 8 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/inherited_static_field_read.a | 6 / 6 / 4 / 13 / 4 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/region_end.a | 116 / 19 / 99 / 22 / 65 / 97 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/reuse_comparator_spread.a | 20 / 20 / 13 / 32 / 9 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/reuse_move_before_ready.a | 0 / 0 / 0 / 0 / 0 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/regions_escapes.a | 78 / 78 / 27 / 75 / 38 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/regions_spread_fresh.a | 23 / 23 / 9 / 22 / 10 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/regions_big.a | 20 / 14 / 0 / 14 / 5 / 6 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/regions_paths.a | 453588 / 383864 / 122122 / 383714 / 278521 / 69724 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/reduce_undefined_initial.a | 8 / 8 / 12 / 19 / 7 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/borrow_loop.a | 128 / 126 / 110 / 181 / 14 / 2 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/borrow_loop_calls.a | 263 / 261 / 176 / 342 / 25 / 2 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/borrow_global_call.a | 18 / 16 / 7 / 20 / 6 / 2 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/normalize_coverage_quick.a | 80082 / 80082 / 9324 / 80505 / 22 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/normalize_coverage_repeat.a | 97540 / 97540 / 23496 / 99162 / 19 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/normalize_coverage_stream.a | 522657 / 522657 / 27071 / 523649 / 19 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/normalize_coverage_long.a | 17704541 / 17704541 / 180 / 17704697 / 16 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/normalize_coverage_cache.a | 171614 / 171614 / 3330 / 174233 / 14 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/normalize_coverage_limit.a | 3 / 2 / 0 / 3 / 3 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/long_field_name.a | 8 / 8 / 4 / 14 / 4 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/reuse_handover_throw.a | 44 / 44 / 21 / 57 / 5 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/aside_throw.a | 23 / 23 / 22 / 41 / 6 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/uncaught_names.a | 3 / 1 / 5 / 4 / 3 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/uncaught_names_empty.a | 1 / 0 / 5 / 2 / 1 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/coverage_plain_view.a | 6 / 6 / 10 / 10 / 3 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/coverage_uncaught_default_empty.a | 1 / 0 / 3 / 1 / 1 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/coverage_uncaught_custom_empty.a | 1 / 0 / 6 / 3 / 1 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/coverage_uncaught_custom_message.a | 5 / 2 / 4 / 5 / 4 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/coverage_uncaught_empty_changed.a | 3 / 1 / 5 / 4 / 3 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/coverage_uncaught_no_argument.a | 1 / 0 / 3 / 1 / 1 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/output_edges/fsize.a | 8 / 8 / 3 / 12 / 5 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/output_edges/fsize_out.a | 60000 / 60000 / 0 / 60000 / 3 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/output_edges/closed.a | 0 / 0 / 0 / 0 / 0 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/output_edges/panic_surrogate.a | 3 / 1 / 0 / 2 / 2 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/output_edges/usr1.a | 2 / 2 / 0 / 2 / 2 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/proven_guards.a | 42 / 42 / 40 / 69 / 12 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/proven_class_guards.a | 5 / 3 / 3 / 5 / 3 / 2 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/proven_assertions.a | 11 / 11 / 12 / 14 / 3 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/proven_satisfies.a | 28 / 28 / 30 / 57 / 13 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/proven_upcasts.a | 15 / 15 / 23 / 43 / 8 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/typeof_dispatch.a | 9 / 9 / 6 / 16 / 3 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/typeof_string_literal.a | 1 / 1 / 0 / 1 / 1 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/typeof_null_compare.a | 17 / 17 / 10 / 21 / 5 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/typeof_null_switch.a | 4 / 4 / 11 / 11 / 3 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/typeof_null_slots.a | 14 / 14 / 26 / 36 / 5 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/typeof_null_roll.a | 1 / 1 / 0 / 1 / 1 / 0 | Imported area fixture and measured area baseline |
+| internal/oracle/testdata/empty-path.a | 4 / 4 / 4 / 8 / 4 / 0 | Imported area fixture and measured area baseline |
