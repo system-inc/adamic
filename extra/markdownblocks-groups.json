@@ -1,0 +1,46 @@
+{
+  "layoutOnce": [
+    "TestMarkdownListLayout",
+    "TestMarkdownQuoteLayout",
+    "TestMarkdownTableLayout",
+    "TestMarkdownCodeBlockLayout",
+    "TestMarkdownHTMLBlockLayout",
+    "TestMarkdownWhitespaceLayout",
+    "TestMarkdownLeafComposition",
+    "TestMarkdownRootLayout",
+    "TestMarkdownStructureLayout"
+  ],
+  "TestMarkdownASTPreprocessing": [
+    "TestMarkdownASTPreprocessing"
+  ],
+  "TestWholeDocumentOraclePreflight": [
+    "TestWholeDocumentOraclePreflight"
+  ],
+  "TestMicromarkInputChunks": [
+    "TestMicromarkInputChunks"
+  ],
+  "TestMarkdownSourceDecoding": [
+    "TestMarkdownSourceDecoding"
+  ],
+  "TestFrontMatterStage": [
+    "TestFrontMatterStage"
+  ],
+  "TestParserRepresentationProbes": [
+    "TestParserRepresentationProbes"
+  ],
+  "TestOptionalStringInitializationWitness": [
+    "TestOptionalStringInitializationWitness"
+  ],
+  "TestMarkdownParserPrefixes": [
+    "TestMarkdownParserPrefixes"
+  ],
+  "TestNativeBuildModesAreDistinct": [
+    "TestNativeBuildModesAreDistinct"
+  ],
+  "TestMarkdownTextSplitting": [
+    "TestMarkdownTextSplitting"
+  ],
+  "TestMarkdownUnicodeWidths": [
+    "TestMarkdownUnicodeWidths"
+  ]
+}
