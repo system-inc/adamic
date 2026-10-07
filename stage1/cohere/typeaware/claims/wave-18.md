@@ -298,3 +298,15 @@ claims remain parked. No selected check skipped; full gate and 17 external
 checks unrun. Audit of 575 live heads finds zero unclaimed ranked rules.
 No new claim. See wave_18_component_props/LANDING_STAGE3_MAIN_REPORT.md
 and validation-stage3-main for complete logs.
+
+## Landing with lint witness area b28757f33
+
+Retained main 71d7e491b and took area b28757f33 with a clean merge after
+aborting an unrelated compiler replay conflict. Tested fe8dc475: nine
+affected shared lint tests pass in 396.738s, including full rule agreement,
+link-only node rows, owned witnesses and decoded options. Bridge/registry
+and vet pass. Owned rule/compiler/runtime source is unchanged; previous
+wave oracle/sanitizer/mutant evidence retained, not rerun. Four analysis
+claims remain parked; full gate and 17 external checks unrun. 580-head
+audit finds zero unclaimed ranked rules. No new claim. See
+wave_18_component_props/LANDING_WITNESS_AREA_REPORT.md and its logs.
