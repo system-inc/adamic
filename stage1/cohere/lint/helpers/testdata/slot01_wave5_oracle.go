@@ -10,6 +10,7 @@ import (
 	"go/token"
 	"os"
 	"strconv"
+	"unicode/utf16"
 )
 
 func must(err error) {
@@ -100,7 +101,19 @@ func main() {
 		sources = append(sources, character, "a"+character+"z", character+"12.5px", "x"+character+"(1)")
 	}
 	sources = append(sources, "(", "[", "{", "}", ";", "(])", "([)]", "[])", "(a;b)", "a;b", "\\;", "\\)", "\\", "'unfinished", "\";])\"", "'a\\';b'", "𝒜(;)", "\\𝒜;", "'\\𝒜;'")
+	sources = append(sources, "reference inline default static", "reference reference", "prefix(first) prefix(second)", "prefix(first) prefix()", "prefix(a b)", "prefix(a(b))", "reference\tinline", "\u00a0reference\u00a0", "static unknown INLINE", "prefix(é𝒜)", "prefix(unclosed", "prefix()", "'reference'", "prefix(\"a b\") inline")
 	for _, value := range sources {
+		if os.Args[4] == "theme" {
+			must(encode.Encode([]any{value, collapse.AdamicWave5ThemeSegments(value)}))
+			options, prefix := collapse.AdamicWave5Theme(value)
+			units := utf16.Encode([]rune(prefix))
+			fmt.Fprintf(expected, "%d %d:", options, len(units))
+			for _, unit := range units {
+				fmt.Fprintf(expected, "%d,", unit)
+			}
+			fmt.Fprintln(expected)
+			continue
+		}
 		must(encode.Encode(value))
 		if os.Args[4] == "arbitrary" {
 			fmt.Fprintln(expected, collapse.AdamicWave5Arbitrary(value))

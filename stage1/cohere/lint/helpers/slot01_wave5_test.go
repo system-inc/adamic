@@ -109,7 +109,7 @@ func slot01Wave5Check(t *testing.T, dependency, mode, file, old, replacement str
 	compare(t, run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, slot01Wave3JavaScript(t, entry), cases, mode), want)
 	t.Logf("%d Go output lines matched source Node, native and emitted JavaScript", bytes.Count(want, []byte("\n")))
 	dir := t.TempDir()
-	for _, name := range []string{"slot01_wave5_main.a", "collapse_valid_named_value.a", "collapse_valid_arbitrary.a", "options_json.ts"} {
+	for _, name := range []string{"slot01_wave5_main.a", "collapse_valid_named_value.a", "collapse_valid_arbitrary.a", "collapse_parse_theme_options.a", "options_json.ts"} {
 		data, err := os.ReadFile(name)
 		if err != nil {
 			t.Fatal(err)
@@ -154,4 +154,12 @@ func TestSlot01Wave5ArbitraryFinalMutant(t *testing.T) {
 }
 func TestSlot01Wave5ArbitraryEscapeMutant(t *testing.T) {
 	slot01Wave5Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValidArbitrary", "arbitrary", "collapse_valid_arbitrary.a", "if (character === 92) { index++; continue; }", "")
+}
+
+// Not parallel: bounded external captures and sanitizer compilation.
+func TestSlot01Wave5ThemeMatchesCohere(t *testing.T) {
+	slot01Wave5Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.parseThemeOptions", "theme", "collapse_parse_theme_options.a", "options |= 2", "options |= 1")
+}
+func TestSlot01Wave5ThemeLastPrefixMutant(t *testing.T) {
+	slot01Wave5Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.parseThemeOptions", "theme", "collapse_parse_theme_options.a", "prefix = option.slice(7, -1);", "if (prefix === '') { prefix = option.slice(7, -1); }")
 }
