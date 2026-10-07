@@ -13,6 +13,7 @@ def run(label,args):
     if result.returncode:raise RuntimeError(label+': '+(WORK/(label+'.stderr')).read_text())
 truth=(WORK/'controls-go.stdout').read_bytes()
 for name,relative,before,after in [
+    ('computed-trivia','no-object-type-as-default-prop/rule.a','this.trim(c.fullRaw(inner))','c.raw(inner).trim()'),
     ('jsx-attribute-flag','common/context.a','this.hasJsxAttributes=true;','this.hasJsxAttributes=false;'),
     ('class-fallback-flag','no-unstable-nested-components/rule.a','if(!this.components.hasReactClass){return false;}','if(!this.components.hasReactClass){return true;}')]:
     target=ENTRY.parent/relative;original=target.read_text();assert original.count(before)==1;target.write_text(original.replace(before,after))
