@@ -37,6 +37,19 @@ var fixtures = []struct {
 	// the check, so the native binary is held to the JavaScript backend, which does.
 	checked bool
 }{
+	{"internal/oracle/testdata/records_coverage_fresh.a", true, false},
+	{"internal/oracle/testdata/records_coverage_calls.a", true, false},
+	{"internal/oracle/testdata/records_coverage_key_forms.a", true, false},
+	{"internal/oracle/testdata/records_coverage_order_edges.a", true, false},
+	{"internal/oracle/testdata/records_coverage_evaluation.a", true, false},
+	{"internal/oracle/testdata/records_coverage_nested_arrays.a", true, false},
+	{"internal/oracle/testdata/records_coverage_coalesce_scalars.a", true, false},
+	{"internal/oracle/testdata/records_coverage_iteration_edges.a", true, false},
+	{"internal/oracle/testdata/records_coverage_prototype_own.a", true, false},
+	{"internal/oracle/testdata/records_coverage_values.a", true, false},
+	{"internal/oracle/testdata/records_coverage_growth.a", true, false},
+	{"internal/oracle/testdata/records_coverage_json_options.a", true, false},
+	{"internal/oracle/testdata/records_coverage_inherited_signature.a", true, false},
 	{"internal/oracle/testdata/call_targets_element.a", true, false},
 	{"internal/oracle/testdata/call_targets_region.a", true, false},
 	{"internal/oracle/testdata/call_targets_reuse.a", true, false},

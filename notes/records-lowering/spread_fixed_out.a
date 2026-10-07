@@ -1,0 +1,4 @@
+const r: Record<string, number> = {x: 1};
+const fixed = {...r, named: 2};
+console.log(String(fixed.named));
+console.log(Object.keys(fixed).join(','));

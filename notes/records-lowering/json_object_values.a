@@ -1,0 +1,2 @@
+const r: Record<string, {name: string}> = {x: {name: 'item'}};
+console.log(String(JSON.stringify(r)));
