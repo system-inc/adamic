@@ -1,0 +1,43 @@
+import { panic,readTextFile,programArguments } from 'adamic';
+import { OptionsJson } from '../../options_json.ts';
+import type { ClassAtom,CaseRange } from './types.a';
+import { joinRanges } from './join_ranges.a';
+import { caseExtras } from './case_extras.a';
+import { buildCaseTables } from './build_case_tables.a';
+const input=readTextFile(programArguments()[0] ?? panic('missing corpus'));if(input.kind === 'Error'){panic(input.message);}
+const json=new OptionsJson(input.text);const root=json.parse();if(root<0){panic(json.error);}
+function field(index: number,name: string): number {return json.field(index,name);}
+function number(index: number): number {return Number(json.node(index).text);}
+function children(index: number): readonly number[] {return json.node(index).children;}
+function at(index: number,offset: number): number {return children(index)[offset] ?? panic('missing field');}
+function groups(index: number): number[][] {const out: number[][]=[];for(const group of children(index)){const members: number[]=[];for(const r of children(group)){members.push(number(r));}out.push(members);}return out;}
+const dependency=field(root,'dependencies');const upperGroups=groups(field(dependency,'upperGroups'));const foldGroups=groups(field(dependency,'foldGroups'));
+const ranges: CaseRange[]=[];for(const r of children(field(dependency,'ranges'))){ranges.push({lo:number(at(r,0)),hi:number(at(r,1))});}
+const canonical=new Map<string,number>();for(const row of children(field(dependency,'canonical'))){canonical.set(`${number(at(row,0))}:${number(at(row,1))}`,number(at(row,2)));}
+const folds=new Map<number,number>();for(const row of children(field(dependency,'fold'))){folds.set(number(at(row,0)),number(at(row,1)));}
+const escapes=new Map<number,string>();for(const row of children(field(dependency,'escapes'))){escapes.set(number(at(row,0)),json.node(at(row,1)).text);}
+let trace='';
+function canonicalize(rune: number,u: boolean): number {trace+=`c:${rune}:${u};`;return canonical.get(`${rune}:${u ? 1 : 0}`) ?? panic('missing canonical dependency');}
+function simpleFold(rune: number): number {trace+=`f:${rune};`;return folds.get(rune) ?? panic('missing fold dependency');}
+function lookupGroups(u: boolean): readonly (readonly number[])[] {trace+=`groups:${u};`;return u ? foldGroups : upperGroups;}
+function literalRune(rune: number): string {trace+=`literal:${rune};`;return escapes.get(rune) ?? panic('missing literal dependency');}
+// Adapter projection of the externally owned atom.covers dependency.
+function atomCovers(atom: ClassAtom,rune: number): boolean {if(atom.kind === 0 || atom.kind === 3){return rune === atom.lo;}if(atom.kind === 1){return rune>=atom.lo && rune<=atom.hi;}return false;}
+const mode=json.node(field(root,'mode')).text;
+if(mode === 'build') {
+ for(const flag of children(field(root,'flags'))) {
+  const u=json.node(flag).text === 'true';trace='';const result=buildCaseTables(u,ranges,canonicalize,simpleFold);
+  const sorted=result.groups.slice();sorted.sort((a,b) => (a[0] ?? panic('missing member'))-(b[0] ?? panic('missing member')));
+  let text='';for(const group of sorted){for(const rune of group){text+=`${rune},`;}text+=';';}text+='|';
+  const keys: number[]=[];for(const key of result.byMember.keys()){keys.push(key ?? panic('missing map key'));}keys.sort((a,b) => a-b);
+  for(const key of keys){const members=result.byMember.get(key) ?? panic('missing members');text+=`${key}:${sorted.indexOf(members)};`;}
+  console.log(text+'|'+trace);
+ }
+} else {
+ for(const row of children(field(root,'samples'))) {
+  const u=json.node(field(row,'unicode')).text === 'true';const atoms: ClassAtom[]=[];
+  for(const atom of children(field(row,'atoms'))){atoms.push({kind:number(field(atom,'kind')),lo:number(field(atom,'lo')),hi:number(field(atom,'hi')),text:json.node(field(atom,'text')).text});}
+  if(mode === 'join') {const result=joinRanges(atoms,u);let text=result.error+'|';for(const atom of result.atoms){text+=`${atom.kind},${atom.lo},${atom.hi},${atom.text};`;}console.log(text);}
+  else {trace='';const text=caseExtras(atoms,u,lookupGroups,atomCovers,literalRune);console.log(text+'|'+trace);}
+ }
+}

@@ -1,0 +1,16 @@
+import type { ClassAtom } from './types.a';
+function covers(atoms: readonly ClassAtom[],rune: number,atomCovers: (atom: ClassAtom,rune: number) => boolean): boolean {
+ for(const atom of atoms) {if(atomCovers(atom,rune)) {return true;}}
+ return false;
+}
+export function caseExtras(atoms: readonly ClassAtom[], unicodeMode: boolean, groups: (unicodeMode: boolean) => readonly (readonly number[])[], atomCovers: (atom: ClassAtom,rune: number) => boolean, literalRune: (rune: number) => string): string {
+ let extras='';
+ for(const members of groups(unicodeMode)) {
+  let reaches=false;for(const member of members) {if(covers(atoms,member,atomCovers)) {reaches=true;break;}}
+  if(!reaches) {continue;}
+  for(const member of members) {
+   if(!covers(atoms,member,atomCovers)) {extras+=literalRune(member);}
+  }
+ }
+ return extras;
+}

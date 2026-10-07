@@ -1,0 +1,29 @@
+=== RUN   TestCaseExtras
+    helper_test.go:80: {
+          "build_flags": [
+            false,
+            true,
+            true,
+            false
+          ],
+          "canonical_dependencies": 5991,
+          "consumers": {
+            "@next/next/no-html-link-for-pages": 383,
+            "@typescript-eslint/no-empty-object-type": 65,
+            "no-restricted-exports": 480,
+            "no-restricted-imports": 1266
+          },
+          "fold_dependencies": 2990,
+          "parsed_class_bodies": 1723,
+          "sample_rows": 7379,
+          "unicode_ranges": 336,
+          "unique_strings": 904
+        }
+    helper_test.go:139: case_extras.a mutant "if(!reaches)" -> "if(false)" caught at output line 1 byte 0: mutant "\\uff38\\uff58\\ua76a\\ua76b\\u01d7\\u01d8\\u021e\\u021f\\u13e7\\uabb7\\u1d8e\\ua7c6\\u0402\\u0452\\ua766\\ua767\\u1e30\\u1e31\\u1ea6\\u1ea7", Go "|groups:false;"
+    helper_test.go:139: case_extras.a mutant "if(!covers(atoms,member,atomCovers))" -> "if(true)" caught at output line 3 byte 1: mutant "EeGgXxDdPpYyRrUuNnMmLlHhBbSsTtAaOoCcIiFf|groups:false;literal:69;literal:101;literal:71;literal:103;literal:88;literal:1", Go "EGXDPYRUNMLHSTAOCI|groups:false;literal:69;literal:71;literal:88;literal:68;literal:80;literal:89;literal:82;literal:85;"
+    helper_test.go:139: case_extras.a mutant "groups(unicodeMode)" -> "groups(!unicodeMode)" caught at output line 1 byte 8: mutant "|groups:true;", Go "|groups:false;"
+    helper_test.go:139: case_extras.a mutant "extras+=literalRune(member)" -> "extras=literalRune(member)" caught at output line 3 byte 0: mutant "I|groups:false;literal:69;literal:71;literal:88;literal:68;literal:80;literal:89;literal:82;literal:85;literal:78;litera", Go "EGXDPYRUNMLHSTAOCI|groups:false;literal:69;literal:71;literal:88;literal:68;literal:80;literal:89;literal:82;literal:85;"
+    helper_test.go:139: case_extras.a mutant "for(const members of groups(unicodeMode))" -> "for(const members of groups(unicodeMode).slice().reverse())" caught at output line 3 byte 0: mutant "ICOATSHLMNURYPDXGE|groups:false;literal:73;literal:67;literal:79;literal:65;literal:84;literal:83;literal:72;literal:76;", Go "EGXDPYRUNMLHSTAOCI|groups:false;literal:69;literal:71;literal:88;literal:68;literal:80;literal:89;literal:82;literal:85;"
+--- PASS: TestCaseExtras (146.09s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch21	146.120s

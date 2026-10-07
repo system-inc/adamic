@@ -1,0 +1,82 @@
+=== RUN   TestJoinRanges
+    helper_test.go:80: {
+          "build_flags": [
+            false,
+            true,
+            true,
+            false
+          ],
+          "canonical_dependencies": 5991,
+          "consumers": {
+            "@next/next/no-html-link-for-pages": 383,
+            "@typescript-eslint/no-empty-object-type": 65,
+            "no-restricted-exports": 480,
+            "no-restricted-imports": 1266
+          },
+          "fold_dependencies": 2990,
+          "parsed_class_bodies": 1723,
+          "sample_rows": 7379,
+          "unicode_ranges": 336,
+          "unique_strings": 904
+        }
+    helper_test.go:139: join_ranges.a mutant "atom.lo>hi.lo" -> "atom.lo<hi.lo" caught at output line 3 byte 0: mutant "unsupported regexp syntax: a character range running backwards|", Go "|0,10,0,;0,9,0,;0,9,0,;0,9,0,;0,32,0,;0,32,0,;0,47,0,;0,47,0,;0,32,0,;0,66,0,;0,111,0,;0,116,0,;0,104,0,;0,32,0,;0,114,0"
+    helper_test.go:139: join_ranges.a mutant "i+=2" -> "i+=1" caught at output line 3 byte 881: mutant "101,0,;1,100,112,;0,112,0,;0,97,0,;0,116,0,;0,104,0,;0,39,0,;0,59,0,;0,10,0,;0,9,0,;0,9,0,;0,9,0,;0,32,0,;0,32,0,;0,101,", Go "101,0,;1,100,112,;0,97,0,;0,116,0,;0,104,0,;0,39,0,;0,59,0,;0,10,0,;0,9,0,;0,9,0,;0,9,0,;0,32,0,;0,32,0,;0,101,0,;0,120,"
+    helper_test.go:139: join_ranges.a mutant "if(unicodeMode)" -> "if(false)" caught at output line 82 byte 0: mutant "|0,42,0,;0,42,0,;0,47,0,;1,42,42,;3,45,0,;0,98,0,;0,97,0,;0,122,0,;", Go "unsupported regexp syntax: a set at the end of a character range|"
+    helper_test.go:139: join_ranges.a mutant "hi:hi.lo" -> "hi:atom.lo" caught at output line 3 byte 875: mutant ",0,;0,101,0,;1,100,100,;0,97,0,;0,116,0,;0,104,0,;0,39,0,;0,59,0,;0,10,0,;0,9,0,;0,9,0,;0,9,0,;0,32,0,;0,32,0,;0,101,0,;", Go ",0,;0,101,0,;1,100,112,;0,97,0,;0,116,0,;0,104,0,;0,39,0,;0,59,0,;0,10,0,;0,9,0,;0,9,0,;0,9,0,;0,32,0,;0,32,0,;0,101,0,;"
+--- PASS: TestJoinRanges (25.32s)
+=== RUN   TestCaseExtras
+    helper_test.go:80: {
+          "build_flags": [
+            false,
+            true,
+            true,
+            false
+          ],
+          "canonical_dependencies": 5991,
+          "consumers": {
+            "@next/next/no-html-link-for-pages": 383,
+            "@typescript-eslint/no-empty-object-type": 65,
+            "no-restricted-exports": 480,
+            "no-restricted-imports": 1266
+          },
+          "fold_dependencies": 2990,
+          "parsed_class_bodies": 1723,
+          "sample_rows": 7379,
+          "unicode_ranges": 336,
+          "unique_strings": 904
+        }
+    helper_test.go:139: case_extras.a mutant "if(!reaches)" -> "if(false)" caught at output line 1 byte 0: mutant "\\u10bf\\u2d1f\\u2c1b\\u2c4b\\ua668\\ua669\\u0429\\u0449\\u047e\\u047f\\u10b9\\u2d19\\u01ca\\u01cb\\u01cc\\u04f4\\u04f5\\u1e68\\u1e69\\u1f00", Go "|groups:false;"
+    helper_test.go:139: case_extras.a mutant "if(!covers(atoms,member,atomCovers))" -> "if(true)" caught at output line 3 byte 1: mutant "AaFfXxDdTtIiSsYyEeNnUuMmGgHhBbOoCcLlRrPp|groups:false;literal:65;literal:97;literal:70;literal:102;literal:88;literal:12", Go "AXDTISYENUMGHOCLRP|groups:false;literal:65;literal:88;literal:68;literal:84;literal:73;literal:83;literal:89;literal:69;"
+    helper_test.go:139: case_extras.a mutant "groups(unicodeMode)" -> "groups(!unicodeMode)" caught at output line 1 byte 8: mutant "|groups:true;", Go "|groups:false;"
+    helper_test.go:139: case_extras.a mutant "extras+=literalRune(member)" -> "extras=literalRune(member)" caught at output line 3 byte 0: mutant "P|groups:false;literal:65;literal:88;literal:68;literal:84;literal:73;literal:83;literal:89;literal:69;literal:78;litera", Go "AXDTISYENUMGHOCLRP|groups:false;literal:65;literal:88;literal:68;literal:84;literal:73;literal:83;literal:89;literal:69;"
+--- PASS: TestCaseExtras (136.83s)
+=== RUN   TestBuildCaseTables
+    helper_test.go:80: {
+          "build_flags": [
+            false,
+            true,
+            true,
+            false
+          ],
+          "canonical_dependencies": 5991,
+          "consumers": {
+            "@next/next/no-html-link-for-pages": 383,
+            "@typescript-eslint/no-empty-object-type": 65,
+            "no-restricted-exports": 480,
+            "no-restricted-imports": 1266
+          },
+          "fold_dependencies": 2990,
+          "parsed_class_bodies": 1723,
+          "sample_rows": 7379,
+          "unicode_ranges": 336,
+          "unique_strings": 904
+        }
+    helper_test.go:139: build_case_tables.a mutant "if(!members.includes(rune))" -> "if(true)" caught at output line 1 byte 3: mutant "65,65,65,97,;66,66,66,98,;67,67,67,99,;68,68,68,100,;69,69,69,101,;70,70,70,102,;71,71,71,103,;72,72,72,104,;73,73,73,10", Go "65,97,;66,98,;67,99,;68,100,;69,101,;70,102,;71,103,;72,104,;73,105,;74,106,;75,107,;76,108,;77,109,;78,110,;79,111,;80,"
+    helper_test.go:139: build_case_tables.a mutant "if(unicodeMode)" -> "if(false)" caught at output line 2 byte 45628: mutant "c:65:true;c:65:true;c:66:true;c:66:true;c:66:true;c:67:true;c:67:true;c:67:true;c:68:true;c:68:true;c:68:true;c:69:true;", Go "c:65:true;c:65:true;f:65;c:97:true;f:97;c:66:true;c:66:true;c:66:true;f:66;c:98:true;f:98;c:67:true;c:67:true;c:67:true;"
+    helper_test.go:139: build_case_tables.a mutant "members.length<2" -> "members.length<3" caught at output line 1 byte 0: mutant "181,924,956,;452,453,454,;455,456,457,;458,459,460,;497,498,499,;837,921,953,8126,;914,946,976,;917,949,1013,;920,952,97", Go "65,97,;66,98,;67,99,;68,100,;69,101,;70,102,;71,103,;72,104,;73,105,;74,106,;75,107,;76,108,;77,109,;78,110,;79,111,;80,"
+    helper_test.go:139: build_case_tables.a mutant "[0x0390,0x1fd3],[0x03b0,0x1fe3],[0xfb05,0xfb06]" -> "[0x0390,0x0390],[0x03b0,0x03b0],[0xfb05,0xfb05]" caught at output line 1 byte 152357: mutant "false;c:912:false;c:912:false;c:944:false;c:944:false;c:64261:false;c:64261:false;", Go "false;c:912:false;c:8147:false;c:944:false;c:8163:false;c:64261:false;c:64262:false;"
+    helper_test.go:139: build_case_tables.a mutant "members.sort((a,b) => a-b)" -> "members.sort((a,b) => b-a)" caught at output line 1 byte 0: mutant "97,65,;98,66,;99,67,;100,68,;101,69,;102,70,;103,71,;104,72,;105,73,;106,74,;107,75,;108,76,;109,77,;110,78,;111,79,;112", Go "65,97,;66,98,;67,99,;68,100,;69,101,;70,102,;71,103,;72,104,;73,105,;74,106,;75,107,;76,108,;77,109,;78,110,;79,111,;80,"
+    helper_test.go:139: build_case_tables.a mutant "byMember.set(member,members)" -> "byMember.set(member,members.slice())" caught at output line 1 byte 12762: mutant "9,;65338,65370,;|65:-1;66:-1;67:-1;68:-1;69:-1;70:-1;71:-1;72:-1;73:-1;74:-1;75:-1;76:-1;77:-1;78:-1;79:-1;80:-1;81:-1;8", Go "9,;65338,65370,;|65:0;66:1;67:2;68:3;69:4;70:5;71:6;72:7;73:8;74:9;75:10;76:11;77:12;78:13;79:14;80:15;81:16;82:17;83:18"
+--- PASS: TestBuildCaseTables (18.79s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch21	180.971s

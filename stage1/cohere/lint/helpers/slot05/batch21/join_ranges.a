@@ -1,0 +1,19 @@
+import { panic } from 'adamic';
+import type { ClassAtom } from './types.a';
+export interface JoinedRanges { readonly atoms: readonly ClassAtom[]; readonly error: string; }
+export function joinRanges(atoms: readonly ClassAtom[], unicodeMode: boolean): JoinedRanges {
+ const joined: ClassAtom[]=[];
+ for(let i=0;i<atoms.length;i++) {
+  const atom=atoms[i] ?? panic('missing atom');
+  if(i+2<atoms.length && (atoms[i+1] ?? panic('missing dash')).kind === 3) {
+   const hi=atoms[i+2] ?? panic('missing endpoint');
+   if(atom.kind === 0 && hi.kind === 0) {
+    if(atom.lo>hi.lo) {return {atoms:[],error:'unsupported regexp syntax: a character range running backwards'};}
+    joined.push({kind:1,lo:atom.lo,hi:hi.lo,text:''});i+=2;continue;
+   }
+   if(unicodeMode) {return {atoms:[],error:'unsupported regexp syntax: a set at the end of a character range'};}
+  }
+  joined.push(atom);
+ }
+ return {atoms:joined,error:''};
+}

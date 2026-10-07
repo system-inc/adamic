@@ -1,0 +1,29 @@
+import type { CaseRange,CaseTables } from './types.a';
+function record(grouped: Map<number,number[]>,rune: number,unicodeMode: boolean,canonicalize: (rune: number,unicodeMode: boolean) => number): void {
+ const canonical=canonicalize(rune,unicodeMode);
+ let members=grouped.get(canonical);
+ if(members === undefined) {const fresh: number[]=[];members=fresh;grouped.set(canonical,members);}
+ if(!members.includes(rune)) {members.push(rune);}
+}
+export function buildCaseTables(unicodeMode: boolean, caseRanges: readonly CaseRange[], canonicalize: (rune: number,unicodeMode: boolean) => number, simpleFold: (rune: number) => number): CaseTables {
+ const grouped=new Map<number,number[]>();
+
+ for(const range of caseRanges) {
+  for(let rune=range.lo;rune<=range.hi;rune++) {
+   record(grouped,rune,unicodeMode,canonicalize);record(grouped,canonicalize(rune,unicodeMode),unicodeMode,canonicalize);
+   if(unicodeMode) {
+    for(let folded=simpleFold(rune);folded !== rune;folded=simpleFold(folded)) {record(grouped,folded,unicodeMode,canonicalize);}
+   }
+  }
+ }
+ for(const pair of [[0x0390,0x1fd3],[0x03b0,0x1fe3],[0xfb05,0xfb06]]) {
+  for(const rune of pair) {record(grouped,rune,unicodeMode,canonicalize);}
+ }
+ const byMember=new Map<number,readonly number[]>();const groups: number[][]=[];
+ for(const members of grouped.values()) {
+  if(members.length<2) {continue;}
+  members.sort((a,b) => a-b);groups.push(members);
+  for(const member of members) {byMember.set(member,members);}
+ }
+ return {byMember,groups};
+}
