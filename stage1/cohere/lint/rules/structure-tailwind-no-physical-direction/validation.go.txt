@@ -1,0 +1,142 @@
+
+func wave02Rows(t *testing.T, oracle string, rows []string) []string {
+ path := manifest(t, rows)
+ excluded := map[int]bool{}
+ diagnostics := execute(t, "", oracle, "--classify", path).output
+ for _, line := range strings.Split(strings.TrimSpace(string(diagnostics)), "\n") {
+  if line == "" { continue }
+  fields := strings.SplitN(line, "\t", 2)
+  var index int
+  if _, err := fmt.Sscan(fields[0], &index); err != nil { t.Fatal(err) }
+  excluded[index] = true
+  t.Logf("Go parse exclusion %d %s: %s", index, rows[index], fields[1])
+ }
+ classifier, err := filepath.Abs("rules/structure-tailwind-no-physical-direction/classify.mjs")
+ if err != nil { t.Fatal(err) }
+ output := execute(t, "", "node", "--disable-warning=ExperimentalWarning", classifier, path).output
+ var failures []struct { Index int; Error string }
+ if err := json.Unmarshal(output, &failures); err != nil { t.Fatal(err) }
+ for _, failure := range failures {
+  excluded[failure.Index] = true
+  t.Logf("Adamic parse exclusion %d %s: %s", failure.Index, rows[failure.Index], failure.Error)
+ }
+ var accepted []string
+ for index, row := range rows { if !excluded[index] { accepted = append(accepted, row) } }
+ t.Logf("coverage: %d accepted, %d excluded, %d total", len(accepted), len(excluded), len(rows))
+ return accepted
+}
+func TestWave02UpstreamSubset(t *testing.T) {
+ oracle := goOracle(t)
+ var selected []string
+ for _, row := range upstream(t) {
+  name := strings.Split(row, "\t")[1]
+  if name == "structure/tailwind-no-physical-direction" || name == "@eslint-community/eslint-comments/require-description" { selected = append(selected,row) }
+ }
+ accepted := wave02Rows(t, oracle, selected)
+ directory, err := filepath.Abs("."); if err != nil { t.Fatal(err) }
+ compare(t, oracle, buildPort(t, directory, true), directory, manifest(t, accepted))
+}
+func TestWave02CompilerSubset(t *testing.T) {
+ source := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE"); if source == "" { t.Fatal("missing compiler checkout") }
+ pin := execute(t,"","git","-C",source,"rev-parse","HEAD")
+ if strings.TrimSpace(string(pin.output)) != compilerCommit { t.Fatal("compiler pin differs") }
+ var rows []string
+ for _, root := range []string{filepath.Join(source,"src/compiler"),filepath.Join(repository,"stage1")} {
+  err := filepath.WalkDir(root,func(path string, entry fs.DirEntry, err error) error {
+   if err != nil { return err }
+   if !entry.IsDir() && (strings.HasSuffix(path,".ts") || strings.HasSuffix(path,".a")) {
+    absolute, err := filepath.Abs(path); if err != nil { return err }
+    rows=append(rows,absolute)
+   }
+   return nil
+  }); if err != nil { t.Fatal(err) }
+ }
+ oracle := goOracle(t)
+ accepted := wave02Rows(t,oracle,rows)
+ directory, err := filepath.Abs("."); if err != nil { t.Fatal(err) }
+ compare(t,oracle,buildPort(t,directory,true),directory,manifest(t,accepted))
+}
+func TestWave02Throughput(t *testing.T) {
+ directory, err := filepath.Abs("."); if err != nil { t.Fatal(err) }
+ oracle := goOracle(t)
+ binary := buildPort(t,directory,false)
+ for _, slug := range []string{"structure-tailwind-no-physical-direction","eslint-comments-require-description"} {
+  name := "structure/tailwind-no-physical-direction"
+  if slug == "eslint-comments-require-description" { name = "@eslint-community/eslint-comments/require-description" }
+  source := ownedWitnesses(t,".",slug)[0]
+  var rows []string
+  for index:=0; index<1000; index++ { rows=append(rows,source+"\t"+name) }
+  path:=manifest(t,rows)
+  var want []byte
+  for _, side := range []struct {name string; run execution}{
+   {"Go",execute(t,"",oracle,"--manifest",path,"--count")},
+   {"native",execute(t,"",binary,"--manifest",path,"--count")},
+   {"Node",node(t,directory,path,true)},
+  } {
+   if want == nil { want=side.run.output }
+   if !bytes.Equal(want,side.run.output) { t.Fatal("benchmark counts differ") }
+   var count int
+   if _,err:=fmt.Sscan(string(want),&count);err!=nil {t.Fatal(err)}
+   t.Logf("%s %s: %d findings, %s, %.2f findings/s (1000 repeated owned witnesses, one run)",name,side.name,count,side.run.duration,float64(count)/side.run.duration.Seconds())
+  }
+ }
+}
+
+func TestWave02JSXBlocker(t *testing.T) {
+ probe, err := filepath.Abs("gaps/wave1-02-next-google-font-display/jsx-probe.a"); if err != nil { t.Fatal(err) }
+ program, err := load.Load([]string{probe}); if err != nil { t.Fatal(err) }
+ lowered, err := lower.Lower(context.Background(), program); if err != nil { t.Fatal(err) }
+ js:=filepath.Join(t.TempDir(),"probe.mjs")
+ if err:=os.WriteFile(js,[]byte(javascript.JavaScript(lowered)),0644);err!=nil {t.Fatal(err)}
+ binary:=filepath.Join(t.TempDir(),"probe")
+ if err:=native.Build(native.C(lowered),binary,native.Options{Sanitize:true});err!=nil {t.Fatal(err)}
+ runner,err:=filepath.Abs(filepath.Join(repository,"oracle/node.mjs"));if err!=nil {t.Fatal(err)}
+ for _,side:=range []struct{name,command string;args []string}{
+  {"Node","node",[]string{"--disable-warning=ExperimentalWarning",runner,probe}},
+  {"emitted JavaScript","node",[]string{"--disable-warning=ExperimentalWarning",runner,js}},
+  {"sanitized native",binary,nil},
+ } {
+  output,err:=os.CreateTemp(t.TempDir(),"blocker-");if err!=nil {t.Fatal(err)}
+  command:=exec.Command(side.command,side.args...);command.Stdout=output;command.Stderr=output
+  runError:=command.Run();if err:=output.Close();err!=nil {t.Fatal(err)}
+  data,err:=os.ReadFile(output.Name());if err!=nil {t.Fatal(err)}
+  exit,ok:=runError.(*exec.ExitError)
+  expected:="adamic: panic: parser slice expected GreaterThanToken, got Identifier at 32 in Component.tsx\n"
+  if !ok || exit.ExitCode()!=70 || string(data)!=expected {t.Fatalf("%s blocker: %v %s",side.name,runError,data)}
+  t.Logf("%s: exit 70, %s",side.name,strings.TrimSpace(string(data)))
+ }
+}
+
+func TestWave02SourceThroughput(t *testing.T) {
+ source:=os.Getenv("ADAMIC_TYPESCRIPT_SOURCE");if source=="" {t.Fatal("missing compiler checkout")}
+ pin:=execute(t,"","git","-C",source,"rev-parse","HEAD")
+ if strings.TrimSpace(string(pin.output))!=compilerCommit {t.Fatal("compiler pin differs")}
+ var files []string
+ for _,root:=range []string{filepath.Join(source,"src/compiler"),filepath.Join(repository,"stage1")} {
+  err:=filepath.WalkDir(root,func(path string,entry fs.DirEntry,err error)error {
+   if err!=nil {return err}
+   if !entry.IsDir() && (strings.HasSuffix(path,".ts") || strings.HasSuffix(path,".a")) {
+    absolute,err:=filepath.Abs(path);if err!=nil {return err};files=append(files,absolute)
+   }
+   return nil
+  });if err!=nil {t.Fatal(err)}
+ }
+ directory,err:=filepath.Abs(".");if err!=nil {t.Fatal(err)}
+ oracle:=goOracle(t);binary:=buildPort(t,directory,false)
+ for _,name:=range []string{"structure/tailwind-no-physical-direction","@eslint-community/eslint-comments/require-description"} {
+  var rows []string
+  for _,path:=range files {rows=append(rows,path+"\t"+name)}
+  path:=manifest(t,rows)
+  var want []byte
+  for _,side:=range []struct{name string;run execution}{
+   {"Go",execute(t,"",oracle,"--manifest",path,"--count")},
+   {"native",execute(t,"",binary,"--manifest",path,"--count")},
+   {"Node",node(t,directory,path,true)},
+  } {
+   if want==nil {want=side.run.output}
+   if !bytes.Equal(want,side.run.output) {t.Fatal("benchmark counts differ")}
+   var count int;if _,err:=fmt.Sscan(string(want),&count);err!=nil {t.Fatal(err)}
+   t.Logf("%s %s: %d findings, %s, %.2f findings/s (%d compiler and stage1 files, one run)",name,side.name,count,side.run.duration,float64(count)/side.run.duration.Seconds(),len(files))
+  }
+ }
+}

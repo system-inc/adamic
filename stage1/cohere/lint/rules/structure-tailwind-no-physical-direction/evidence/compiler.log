@@ -1,0 +1,18 @@
+=== RUN   TestWave02CompilerSubset
+    lint_test.go:625: coverage: 199 accepted, 0 excluded, 199 total
+    lint_test.go:657: Node: case 8 line 1277: port "range 104137 104181 missingDescription \t\t", Go "range 104137 104180 missingDescription \t\t"
+        Go context:
+        
+        range 95660 95686 missingDescription 		
+        /tmp/lint-wave1-02-typescript/src/compiler/checker.ts:2575:176
+          @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+        
+        range 104137 104180 missingDescription 		
+        /tmp/lint-wave1-02-typescript/src/compiler/checker.ts:2578:208
+          @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+        
+        range 104421 104464 missingDescription 		
+--- FAIL: TestWave02CompilerSubset (36.57s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	36.579s
+FAIL

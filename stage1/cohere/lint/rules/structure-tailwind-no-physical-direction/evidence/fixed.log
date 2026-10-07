@@ -1,0 +1,16 @@
+=== RUN   TestWave02UpstreamSubset
+    lint_test.go:324: cohere cases: 379 unique source/rule/options combinations
+    lint_test.go:612: Go parse exclusion 105 /tmp/adamic-gate/TestWave02UpstreamSubset3298860917/003/case-105.tsx	@eslint-community/eslint-comments/require-description			false	{"ignore":null,"additionalDirectives":null}: ['*/' expected.]
+    lint_test.go:621: Adamic parse exclusion 148 /tmp/adamic-gate/TestWave02UpstreamSubset3298860917/003/case-365.tsx	structure/tailwind-no-physical-direction			false	null: Error: parser slice expected GreaterThanToken, got Identifier at 22 in /tmp/adamic-gate/TestWave02UpstreamSubset3298860917/003/case-365.tsx
+    lint_test.go:625: coverage: 160 accepted, 2 excluded, 162 total
+    lint_test.go:637: Go, Node, emitted JavaScript, native identical: 49808 bytes
+--- PASS: TestWave02UpstreamSubset (17.19s)
+=== RUN   TestWave02CompilerSubset
+    lint_test.go:640: missing compiler checkout
+--- FAIL: TestWave02CompilerSubset (0.00s)
+=== RUN   TestOwnedWitnesses
+    registration_test.go:45: Go, Node, emitted JavaScript, native identical: 11066 bytes
+--- PASS: TestOwnedWitnesses (14.41s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	31.613s
+FAIL

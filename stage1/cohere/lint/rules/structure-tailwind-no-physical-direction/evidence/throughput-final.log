@@ -1,0 +1,10 @@
+=== RUN   TestWave02Throughput
+    lint_test.go:681: structure/tailwind-no-physical-direction Go: 2000 findings, 21.337224ms, 93732.91 findings/s (1000 repeated owned witnesses, one run)
+    lint_test.go:681: structure/tailwind-no-physical-direction native: 2000 findings, 19.644491ms, 101809.71 findings/s (1000 repeated owned witnesses, one run)
+    lint_test.go:681: structure/tailwind-no-physical-direction Node: 2000 findings, 139.542283ms, 14332.57 findings/s (1000 repeated owned witnesses, one run)
+    lint_test.go:681: @eslint-community/eslint-comments/require-description Go: 2000 findings, 29.582184ms, 67608.26 findings/s (1000 repeated owned witnesses, one run)
+    lint_test.go:681: @eslint-community/eslint-comments/require-description native: 2000 findings, 27.989518ms, 71455.32 findings/s (1000 repeated owned witnesses, one run)
+    lint_test.go:681: @eslint-community/eslint-comments/require-description Node: 2000 findings, 150.336772ms, 13303.47 findings/s (1000 repeated owned witnesses, one run)
+--- PASS: TestWave02Throughput (5.96s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	5.967s
