@@ -1,0 +1,17 @@
+Built the decoded boundary element/policy engine; full rule integration is blocked by resolver and project facts.
+Claim: b293c569; implementation commit contains this report.
+Comparison: 7,742 decisions including nine decoded upstream configurations; Node, emitted JavaScript and sanitized native identical to actual Go helpers, 1,941,874 bytes.
+Mutant: stop at the first disallowing policy rather than let later policy win; all three successful executions are caught by comparison.
+Uncovered: full dependency findings/fixes, compiler/stage1 corpus, path anchoring, raw configuration validation and findings/s (unavailable).
+
+Run `source /workspace/adamic-tools/env.sh` then `python3 stage1/cohere/lint/rules/boundaries-dependencies/validate.py > /tmp/w05-fourth-boundaries.log 2>&1`. The upstream `^TestDependencies` tests pass. A rule-owned scratch Go bridge calls the unchanged private describeElement, decide and messageFor functions. It does not reimplement the oracle. Captured typed settings serialize nil slices as null; the validator omits null fields before invoking the Go custom decoder, preserving absent/nil semantics rather than treating null as a selector entry.
+
+Implemented Unicode-aware Go path.Match segment behavior, slash globs with ** and dot exclusions, descriptor order and shortest suffix/path selection, selector Cartesian pairs and shallow entry overrides, type/anyOf matching, default policy, disallow precedence within a policy, last matching policy across policies, custom and exact default messages. Cases cross 14 paths, default policies, overrides, messages and extra glob patterns, plus nine configurations captured from Go's own tests. Successful builds/runs exit zero with empty stderr.
+
+Shared RuleContext exposes no Program/module resolution or config/project root. The registered wrapper explicitly panics NotYet for configured analysis rather than claim dependency findings without those facts. The engine accepts decoded options and normalized relative paths; config anchoring, symlink resolution and strict raw decoding are not implemented. No full-rule compiler/stage1 comparison or zero-finding certificate is claimed. Rule findings/s on native, Node and Go is unavailable until resolver integration; decision throughput is deliberately not mislabeled as findings throughput.
+
+Toolchain: `bash cloud/setup.sh` logged Go, clang, Node and submodules ready at 0s each; cache warming failed at `stage1/cohere/lint/profile_test.go:32` (cannot range over the `portFiles` function). Continued with `source /workspace/adamic-tools/env.sh`. Go 1.27.1, clang 20.1.8, Node 24.19.0; nproc 5.
+
+Shared checks: filtered `go test ./internal/oracle -run '^TestTheOracleCatchesOneByte$' -count=1` passed. Registry tests fail because the current generator requires owned TS mutant modules, rejecting the `.a` mutants in this batch. The lint package fails to compile at the profile test above. No shared files changed; no full gate claimed. Logs, corpus hashes and output hashes are under `validation/`. Source-only `.ts` registration wrappers remain for the local discovery protocol, as Ahra authorized. Helpers and independent drivers are `.a`.
+
+Claim b293c569 was pushed before implementation. Selection explicitly fetched all origin branches (341 refs, 52 unique claim blobs); the helper-ready pool was exhausted. These were the first three available syntax inventory entries. No next claim was taken while finishing this batch.

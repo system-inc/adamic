@@ -1,0 +1,129 @@
+import { panic } from 'adamic';
+import { OptionsJson } from '../../helpers/options_json.ts';
+
+export class Element {
+    readonly type: string;
+    readonly path: string;
+    constructor(type: string, path: string) { this.type = type; this.path = path; }
+}
+export class Decision {
+    readonly refused: boolean;
+    readonly policy: number;
+    readonly id: string;
+    readonly message: string;
+    constructor(refused: boolean, policy: number, id: string, message: string) { this.refused = refused; this.policy = policy; this.id = id; this.message = message; }
+}
+function next(text: string, position: number): number { return position + ((text.codePointAt(position) ?? 0) > 65535 ? 2 : 1); }
+export function segment(pattern: string, text: string, p = 0, t = 0): boolean {
+    if(p === pattern.length) { return t === text.length; }
+    const char = pattern[p] ?? '';
+    if(char === '*') {
+        if(segment(pattern, text, p + 1, t)) { return true; }
+        return t < text.length && text[t] !== '/' && segment(pattern, text, p, next(text, t));
+    }
+    if(t === text.length || text[t] === '/') { return false; }
+    if(char === '?') { return segment(pattern, text, p + 1, next(text, t)); }
+    if(char === '[') {
+        let cursor = p + 1; const negated = pattern[cursor] === '^'; if(negated) { cursor++; }
+        let matched = false; let count = 0;
+        const value = text.codePointAt(t) ?? 0;
+        while(cursor < pattern.length && pattern[cursor] !== ']') {
+            if(pattern[cursor] === '\\') { cursor++; }
+            if(cursor >= pattern.length) { return false; }
+            const lo = pattern.codePointAt(cursor) ?? 0; cursor = next(pattern, cursor); let hi = lo;
+            if(pattern[cursor] === '-') {
+                cursor++; if(pattern[cursor] === '\\') { cursor++; }
+                if(cursor >= pattern.length || pattern[cursor] === ']') { return false; }
+                hi = pattern.codePointAt(cursor) ?? 0; cursor = next(pattern, cursor);
+            }
+            matched = matched || lo <= value && value <= hi; count++;
+        }
+        if(cursor >= pattern.length || count === 0 || matched === negated) { return false; }
+        return segment(pattern, text, cursor + 1, next(text, t));
+    }
+    const literal = char === '\\' ? p + 1 : p;
+    if(literal >= pattern.length || pattern.codePointAt(literal) !== text.codePointAt(t)) { return false; }
+    return segment(pattern, text, next(pattern, literal), next(text, t));
+}
+function matchSegments(pattern: readonly string[], path: readonly string[], p: number, t: number): boolean {
+    if(p === pattern.length) { return t === path.length; }
+    const head = pattern[p] ?? panic('missing glob segment');
+    if(head === '**') {
+        if(matchSegments(pattern, path, p + 1, t)) { return true; }
+        return t < path.length && !(path[t] ?? '').startsWith('.') && matchSegments(pattern, path, p, t + 1);
+    }
+    if(t === path.length) { return false; }
+    const value = path[t] ?? panic('missing path segment');
+    if(value.startsWith('.') && !head.startsWith('.')) { return false; }
+    return segment(head, value) && matchSegments(pattern, path, p + 1, t + 1);
+}
+export function glob(pattern: string, path: readonly string[]): boolean { return matchSegments(pattern.replace(/^\/+|\/+$/g, '').split('/'), path, 0, 0); }
+export class Engine {
+    readonly json: OptionsJson;
+    root = -1;
+    constructor(json: OptionsJson) {
+        this.json = json;
+    }
+    prepare(): void {
+        this.root = this.json.parse();
+        if(this.root < 0) { panic('boundaries/dependencies: invalid decoded JSON options'); }
+        if(this.json.node(this.root).kind !== 'object') { panic('boundaries/dependencies: decoded options must be an object'); }
+    }
+    field(index: number, key: string): number { return index < 0 ? -1 : this.json.field(index, key); }
+    text(index: number): string { return index < 0 || this.json.node(index).kind === 'null' ? '' : this.json.node(index).text; }
+    items(index: number): number[] {
+        if(index < 0 || this.json.node(index).kind === 'null') { return []; }
+        const node = this.json.node(index); return node.kind === 'array' ? node.children.slice() : [index];
+    }
+    describe(path: string): Element {
+        const parts = path.split('/'); const descriptors = this.items(this.field(this.root, 'elements'));
+        for(let start = parts.length - 1; start >= 0; start--) {
+            const suffix = parts.slice(start);
+            for(const descriptor of descriptors) {
+                for(const patternValue of this.items(this.field(descriptor, 'pattern'))) {
+                    const pattern = this.text(patternValue);
+                    if(!glob(pattern + '/**/*', suffix)) { continue; }
+                    let elementPath = path;
+                    for(let length = 1; length <= suffix.length; length++) {
+                        if(glob(pattern, suffix.slice(0, length))) { const matched = suffix.slice(0, length).join('/'); elementPath = path.slice(0, path.indexOf(matched)) + matched; break; }
+                    }
+                    return new Element(this.text(this.field(descriptor, 'type')), elementPath);
+                }
+            }
+        }
+        return new Element('', '');
+    }
+    pair(outer: number, entry: number, subject: string): boolean {
+        const a = this.field(outer, 'element'); const b = this.field(entry, 'element');
+        const entryType = this.text(this.field(b, 'type'));
+        const type = entryType !== '' ? entryType : this.text(this.field(a, 'type'));
+        if(type !== '' && type !== subject) { return false; }
+        const own = this.field(b, 'types');
+        const types = own >= 0 && this.json.node(own).kind !== 'null' ? own : this.field(a, 'types');
+        if(types >= 0 && this.json.node(types).kind !== 'null') { return this.items(this.field(types, 'anyOf')).some(name => this.text(name) === subject); }
+        return true;
+    }
+    matches(outer: number, entry: number, subject: string): boolean {
+        const a = this.items(outer); const b = this.items(entry);
+        if(b.length === 0) { return a.length === 0 || a.some(selector => this.pair(selector, -1, subject)); }
+        if(a.length === 0) { return b.some(selector => this.pair(-1, selector, subject)); }
+        return a.some(left => b.some(right => this.pair(left, right, subject)));
+    }
+    entry(policy: number, entry: number, from: Element, to: Element): boolean {
+        return this.matches(this.field(policy, 'from'), this.field(entry, 'from'), from.type) && this.matches(this.field(policy, 'to'), this.field(entry, 'to'), to.type);
+    }
+    decide(from: Element, to: Element): Decision {
+        const policies = this.items(this.field(this.root, 'policies')); let allowed = false; let matched = -1;
+        for(let index = 0; index < policies.length; index++) {
+            const policy = policies[index] ?? panic('missing policy');
+            if(this.items(this.field(policy, 'disallow')).some(entry => this.entry(policy, entry, from, to))) { allowed = false; matched = index; continue; }
+            if(this.items(this.field(policy, 'allow')).some(entry => this.entry(policy, entry, from, to))) { allowed = true; matched = index; }
+        }
+        const refused = matched < 0 ? this.text(this.field(this.root, 'default')) !== 'allow' : !allowed;
+        let message = matched >= 0 ? this.text(this.field(policies[matched] ?? panic('missing matched policy'), 'message')) : '';
+        if(message === '') { message = this.text(this.field(this.root, 'message')); }
+        if(message !== '') { return new Decision(refused, matched, 'policyMessage', message); }
+        if(matched < 0) { return new Decision(refused, matched, 'noPolicyAllows', 'Nothing in this boundary lets a file in the "' + from.type + '" layer import from the "' + to.type + '" layer, and the boundary refuses what it does not allow. A layer that reaches a layer it was not given is how the direction the layering promises stops being true. Move the shared code where both may reach it, or change the policy.'); }
+        return new Decision(refused, matched, 'policyDisallows', 'A policy in this boundary forbids a file in the "' + from.type + '" layer from importing the "' + to.type + '" layer. Move the shared code where both may reach it, or change the policy.');
+    }
+}

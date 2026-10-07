@@ -1,0 +1,6 @@
+{
+  "name": "first policy rather than last wins",
+  "file": "decision.a",
+  "from": "matched = index; continue;",
+  "to": "matched = index; break;"
+}

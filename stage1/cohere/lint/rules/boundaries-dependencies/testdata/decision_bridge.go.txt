@@ -1,0 +1,31 @@
+package boundaries
+import (
+ "encoding/json"
+ "crypto/sha256"
+ "os"
+ "path/filepath"
+ "fmt"
+ "strings"
+ "unicode/utf16"
+)
+func ownedWritten(text string) string {
+ var result strings.Builder
+ for _,r:=range text {if r>=32 && r<=126 && r!='\\' {result.WriteRune(r)} else if r<=65535 {fmt.Fprintf(&result,`\u%04x`,r)} else {h,l:=utf16.EncodeRune(r);fmt.Fprintf(&result,`\u%04x\u%04x`,h,l)}}
+ return result.String()
+}
+func OwnedBoundaryDecision(raw,fromPath,toPath string) (string,bool) {
+ var settings DependenciesOptions
+ if err:=json.Unmarshal([]byte(raw),&settings);err!=nil {panic(err)}
+ from,_:=describeElement(fromPath,settings.Elements);to,_:=describeElement(toPath,settings.Elements)
+ refused,index:=settings.decide(from,to);message:=settings.messageFor(index,from,to)
+ flag:=0;if refused {flag=1}
+ return fmt.Sprintf("%s\t%s\t%s\t%s\t%d\t%d\t%s\t%s\n",ownedWritten(from.Type),ownedWritten(from.Path),ownedWritten(to.Type),ownedWritten(to.Path),flag,index,message.Id,ownedWritten(message.Description)),refused
+}
+
+func ownedCapture(options DependenciesOptions) {
+ directory:=os.Getenv("ADAMIC_BOUNDARY_CAPTURE");if directory=="" {return}
+ data,err:=json.Marshal(options);if err!=nil {panic(err)}
+ if err:=os.MkdirAll(directory,0755);err!=nil {panic(err)}
+ path:=filepath.Join(directory,fmt.Sprintf("%x.json",sha256.Sum256(data)))
+ if err:=os.WriteFile(path,data,0644);err!=nil {panic(err)}
+}

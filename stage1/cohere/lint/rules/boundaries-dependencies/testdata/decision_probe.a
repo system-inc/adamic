@@ -1,0 +1,19 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { Engine } from '../decision.a';
+import { OptionsJson } from '../../../helpers/options_json.ts';
+import { written } from '../../../../../typescript/parser/nodes.ts';
+const args = programArguments();
+const input = readTextFile(args[0] ?? panic('missing boundary decision corpus'));
+if(input.kind === 'Error') { panic(input.message); }
+let count = 0;
+for(const row of input.text.split('\n')) {
+    if(row === '') { continue; }
+    const fields = row.split('\t');
+    const json = new OptionsJson(fields[0] ?? panic('missing options'));
+    const engine = new Engine(json); engine.prepare();
+    const from = engine.describe(fields[1] ?? panic('missing from path')); const to = engine.describe(fields[2] ?? panic('missing to path'));
+    const decision = engine.decide(from, to); count += decision.refused ? 1 : 0;
+    if(args.includes('--count')) { continue; }
+    console.log(`${written(from.type)}\t${written(from.path)}\t${written(to.type)}\t${written(to.path)}\t${decision.refused ? 1 : 0}\t${decision.policy}\t${decision.id}\t${written(decision.message)}`);
+}
+if(args.includes('--count')) { console.log(`${count}`); }

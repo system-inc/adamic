@@ -1,0 +1,13 @@
+package main
+import (
+ "fmt"
+ "os"
+ "strings"
+ "github.com/system-inc/cohere/internal/lint/rules/boundaries"
+)
+func main() {
+ data,err:=os.ReadFile(os.Args[1]);if err!=nil {panic(err)}
+ count:=0
+ for _,row:=range strings.Split(string(data),"\n") {if row=="" {continue};fields:=strings.Split(row,"\t");output,refused:=boundaries.OwnedBoundaryDecision(fields[0],fields[1],fields[2]);if refused {count++};if len(os.Args)<3 {fmt.Print(output)}}
+ if len(os.Args)>2 {fmt.Println(count)}
+}

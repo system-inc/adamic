@@ -1,0 +1,13 @@
+{
+  "name": "boundaries/dependencies",
+  "kinds": [
+    "SourceFile"
+  ],
+  "parent": true,
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleDependencies",
+  "upstreamPackage": "boundaries",
+  "upstreamTest": "TestDependencies"
+}
