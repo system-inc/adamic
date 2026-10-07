@@ -1,0 +1,13 @@
+// Runtime operands prevent the C frontend from folding away the rounding boundary.
+import { programArguments } from 'adamic';
+
+const args = programArguments();
+const tenth = Number.parseFloat(args[0] ?? '0.1');
+const ten = Number.parseFloat(args[1] ?? '10');
+const one = Number.parseFloat(args[2] ?? '1');
+const third = Number.parseFloat(args[3] ?? '0.3333333333333333');
+const square = Number.parseFloat(args[4] ?? '0.010000000000000002');
+
+console.log((tenth * ten - one).toString());
+console.log((third * 3 - one).toString());
+console.log((tenth * tenth - square).toString());
