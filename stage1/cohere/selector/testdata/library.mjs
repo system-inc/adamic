@@ -2,6 +2,8 @@
 import { createRequire } from 'node:module';
 import { readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { join, relative } from 'node:path';
+import vm from 'node:vm';
+import { fileURLToPath } from 'node:url';
 const [directory, mode, root, destination, testTexts] = process.argv.slice(2);
 const require = createRequire(join(directory, 'package.json'));
 if(require('postcss-selector-parser/package.json').version !== '2.2.3') {
@@ -36,28 +38,37 @@ function dump(value, text) {
     return out;
 }
 const loops = 'postcss-selector-parser 2.2.3 never returns on this selector: a namespace bar it does not consume';
-// cohere f46be797 vendored these fixtures. Go's selector oracle and PostCSS both reject them.
-// Exact paths keep every other file in the comparison; a newly parseable exclusion must fail.
+// Circle #cr45gcp: the fork's src/main/front-matter runs before parser-postcss.
+// Expose its original bundled function in memory, without copying or changing its implementation.
+function frontMatterParser() {
+    const fork = process.env.ADAMIC_MARKDOWNBLOCKS_FORK ?? fileURLToPath(new URL('../../../../cohere/internal/format/prettier/bundles/', import.meta.url));
+    if(require(join(fork, 'standalone.js')).version !== '3.9.6') throw new Error('expected pinned Prettier 3.9.6');
+    const source = readFileSync(join(fork, 'plugins/postcss.js'), 'utf8');
+    const anchor = 'get content(){let{raw:';
+    const offset = source.indexOf(anchor);
+    if(offset < 0 || source.indexOf(anchor, offset + 1) >= 0) throw new Error('parseFrontMatter anchor changed');
+    const start = source.lastIndexOf('function ', offset);
+    const declaration = /^function ([A-Za-z_$][\w$]*)\(/.exec(source.slice(start));
+    if(!declaration) throw new Error('parseFrontMatter function declaration changed');
+    const context = { module: { exports: {} }, exports: {} };
+    vm.runInNewContext(source.slice(0, start) + `globalThis.__adamicParseFrontMatter = ${declaration[1]};` + source.slice(start), context);
+    if(typeof context.__adamicParseFrontMatter !== 'function') throw new Error('missing original parseFrontMatter');
+    return context.__adamicParseFrontMatter;
+}
+// These three remain refused after front-matter parsing. The range marker belongs to
+// Prettier's test harness. A refusal elsewhere or a newly parseable named file must fail.
 const expectedCSSErrors = new Set([
     'internal/format/css/testdata/prettier/css/_errors_/less-syntax.css',
     'internal/format/css/testdata/prettier/css/_errors_/scss-syntax.css',
-    'internal/format/css/testdata/prettier/css/front-matter/custom-parser.css',
-    'internal/format/css/testdata/prettier/css/front-matter/embedded-language-formatting/yaml.css',
     'internal/format/css/testdata/prettier/css/range/issue2267.css',
-    'internal/format/css/testdata/prettier/css/yaml/comment_after.css',
-    'internal/format/css/testdata/prettier/css/yaml/dirty.css',
-    'internal/format/css/testdata/prettier/css/yaml/ignore.css',
-    'internal/format/css/testdata/prettier/css/yaml/malformed-2.css',
-    'internal/format/css/testdata/prettier/css/yaml/with_comments.css',
-    'internal/format/css/testdata/prettier/css/yaml/without-newline-after.css',
-    'internal/format/css/testdata/prettier/css/yaml/yaml.css',
 ]);
 if(mode === 'corpus') {
+    const parseFrontMatter = frontMatterParser();
     let files = 0,
         expectedErrors = 0;
     const selectors = [];
     function extract(text, file) {
-        postcss.parse(text, { from: file }).walk((node) => {
+        postcss.parse(parseFrontMatter(text).content, { from: file }).walk((node) => {
             if(typeof node.selector === 'string') {
                 let selector = node.raws.selector?.scss ?? node.raws.selector?.raw ?? node.selector;
                 if(node.raws.between?.trim()) selector += node.raws.between;

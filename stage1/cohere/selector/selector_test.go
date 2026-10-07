@@ -453,8 +453,8 @@ func TestSelectorThroughput(t *testing.T) {
 }
 
 // The vendored error fixtures may fail CSS parsing, but a parseable file must still contribute
-// every selector, including one inside _errors_. Unexpected malformed files and exclusions that
-// become parseable remain corpus failures.
+// every selector, including front matter and one inside _errors_. Unexpected malformed files
+// and exclusions that become parseable remain corpus failures.
 func TestCorpusKeepsEveryParseableFile(t *testing.T) {
 	t.Parallel()
 	library := os.Getenv("ADAMIC_SELECTOR_LIBRARY")
@@ -464,7 +464,8 @@ func TestCorpusKeepsEveryParseableFile(t *testing.T) {
 	root := t.TempDir()
 	excluded := "internal/format/css/testdata/prettier/css/_errors_/less-syntax.css"
 	for name, source := range map[string]string{
-		"valid.css":          ".required { color: red; }",
+		"valid.css": ".required { color: red; }",
+		"internal/format/css/testdata/prettier/css/front-matter/custom-parser.css": "---mycustomparser\ntitle: Title\n---\n.front-matter-required {}",
 		"_errors_/valid.css": ".also-required { color: blue; }",
 		excluded:             "a {.bordered();}",
 	} {
@@ -489,10 +490,10 @@ func TestCorpusKeepsEveryParseableFile(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if string(selectors) != "\".also-required\"\n\".required\"\n" {
+	if string(selectors) != "\".also-required\"\n\".front-matter-required\"\n\".required\"\n" {
 		t.Fatalf("parseable files lost selectors: %q", selectors)
 	}
-	if !strings.Contains(string(result.stdout), "3 CSS files, 1 expected CSS errors, 2 selectors") {
+	if !strings.Contains(string(result.stdout), "4 CSS files, 1 expected CSS errors, 3 selectors") {
 		t.Fatalf("expected CSS error was not counted: %s", result.stdout)
 	}
 	if err := os.WriteFile(filepath.Join(root, excluded), []byte(".newly-parseable {}"), 0644); err != nil {
