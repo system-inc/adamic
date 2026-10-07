@@ -1,0 +1,30 @@
+[
+  {
+    "rule": "process",
+    "corpus": "compiler",
+    "go": 0.453433103,
+    "native": 1.885205378,
+    "native_over_go": 4.157626264000403
+  },
+  {
+    "rule": "process",
+    "corpus": "repository",
+    "go": 0.168813263,
+    "native": 0.277867322,
+    "native_over_go": 1.6460040938844955
+  },
+  {
+    "rule": "blocking",
+    "corpus": "compiler",
+    "go": 0.385727858,
+    "native": 1.801388097,
+    "native_over_go": 4.670101107916349
+  },
+  {
+    "rule": "blocking",
+    "corpus": "repository",
+    "go": 0.224026679,
+    "native": 0.311736454,
+    "native_over_go": 1.3915148650665843
+  }
+]
