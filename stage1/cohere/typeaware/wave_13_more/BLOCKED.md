@@ -35,3 +35,9 @@ bytes. Raw outputs and fetched ref SHAs are retained in validation/resume/.
 No rule or parser source changed, so prior parity, mutant, sanitizer and timing
 evidence remains unchanged. Stopped under Ahra's shared-file restriction and
 took no further claims. nproc remains 5; the existing toolchain was reused.
+
+## Landing-cap verification
+
+Rebased onto main e8ba3d5d and repeated all supported oracle, mutant, sanitizer
+and lifetime checks. The same three controls still refuse parsing. See
+LANDING_REPORT.md and validation/landing/ for current evidence. No new claims.

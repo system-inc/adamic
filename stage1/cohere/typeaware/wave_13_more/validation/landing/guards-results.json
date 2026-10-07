@@ -1,0 +1,37 @@
+[
+  {
+    "family": "next",
+    "mutant": "platform_symbol",
+    "exit": 1
+  },
+  {
+    "family": "next",
+    "mutant": "call_declaration",
+    "exit": 1
+  },
+  {
+    "family": "next",
+    "mutant": "program_modules",
+    "exit": 1
+  },
+  {
+    "family": "next",
+    "mutant": "output_flow",
+    "exit": 1
+  },
+  {
+    "family": "next",
+    "mutant": "source_context",
+    "exit": 1
+  },
+  {
+    "family": "more",
+    "mutant": "suffix",
+    "exit": 1
+  },
+  {
+    "family": "more",
+    "mutant": "kind",
+    "exit": 1
+  }
+]

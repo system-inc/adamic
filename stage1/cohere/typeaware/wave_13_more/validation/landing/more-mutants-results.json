@@ -1,0 +1,26 @@
+[
+  {
+    "mutant": "namespace-alias",
+    "test": "TestNoObjCallsAgreesWithESLint",
+    "case": "15ed2ae55b6ded46",
+    "exit": 0,
+    "stderr_bytes": 0,
+    "first_difference": 72
+  },
+  {
+    "mutant": "literal-parentheses",
+    "test": "TestNoObjectConstructorFires/Object()",
+    "case": "0741b4d4821fe4db",
+    "exit": 0,
+    "stderr_bytes": 0,
+    "first_difference": 587
+  },
+  {
+    "mutant": "executor-span",
+    "test": "TestNoPromiseExecutorReturnSpans/new_Promise(()_=>_({}))",
+    "case": "01a8b5f32591f310",
+    "exit": 0,
+    "stderr_bytes": 0,
+    "first_difference": 101
+  }
+]

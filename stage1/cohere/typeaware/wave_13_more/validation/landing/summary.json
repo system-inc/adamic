@@ -1,0 +1,58 @@
+{
+  "next": {
+    "programs": 129,
+    "equal": 129,
+    "bytes": 120897,
+    "failures": [],
+    "timing": {
+      "compiler": {
+        "native_median_seconds": 3.0343787759993575,
+        "go_median_seconds": 0.5478753229999711,
+        "ratio": 5.538447615023387
+      },
+      "repository": {
+        "native_median_seconds": 0.47246462799921574,
+        "go_median_seconds": 0.2106294280001748,
+        "ratio": 2.2431083466590604
+      }
+    }
+  },
+  "more": {
+    "programs": 433,
+    "equal": 430,
+    "bytes": 162621,
+    "failures": [
+      "53d1c0a9ffc2fefa",
+      "aff6ced2ca61fe89",
+      "defcb4c4ce6a2921"
+    ],
+    "timing": {
+      "compiler": {
+        "native_median_seconds": 3.478860010000062,
+        "go_median_seconds": 0.4219881310000346,
+        "ratio": 8.24397596623346
+      },
+      "repository": {
+        "native_median_seconds": 0.477145605998885,
+        "go_median_seconds": 0.1227490149994992,
+        "ratio": 3.887164438760113
+      }
+    }
+  },
+  "original": {
+    "timing": {
+      "compiler": {
+        "native_median_seconds": 8.503341755000292,
+        "go_median_seconds": 2.363764851999804,
+        "ratio": 3.5973721107690784
+      },
+      "repository": {
+        "native_median_seconds": 0.4200085410011525,
+        "go_median_seconds": 0.13234260999888647,
+        "ratio": 3.1736455930911927
+      }
+    }
+  },
+  "base": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+  "code_tip": "81cecbedaff20e75d79ba3686aca200371670d2d"
+}
