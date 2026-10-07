@@ -410,47 +410,8 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 		read := ir.Expression(ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checked(local)})
 		if l.result.Locals[local].Type == ir.Union {
 			// Where the checker has narrowed it to fewer members held one way, it's read as that.
-			parent := node.Parent
-			for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
-				parent = parent.Parent
-			}
-			observing := comparedWithUndefined(node) || (parent != nil && parent.Kind == ast.KindTypeOfExpression)
-			if narrowed, isKnown := l.representation(l.checker.GetTypeAtLocation(node)); isKnown && narrowed != ir.Union && !observing {
-				// Calls and captured writes can invalidate the checker's narrowing. Check the
-				// held member before casting it, with ordinary IR shared by both backends.
-				name := "object"
-				switch narrowed.Present() {
-				case ir.Number:
-					name = "number"
-				case ir.Boolean:
-					name = "boolean"
-				case ir.String:
-					name = "string"
-				case ir.Closure:
-					name = "function"
-				}
-				if name == "object" {
-					// typeof cannot distinguish differently held object members.
-					declared := l.concrete(l.checker.GetTypeOfSymbol(l.symbol(node)))
-					members := []*checker.Type{declared}
-					if declared.Flags()&checker.TypeFlagsUnion != 0 {
-						members = declared.Types()
-					}
-					for _, member := range members {
-						if held, known := l.representation(member); known && held != narrowed && (held == ir.Object || held == ir.Array || held == ir.Map) {
-							return nil, l.notYet(node, "a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables")
-						}
-					}
-				}
-				b := l.libraryArrayBuilder([]ir.Expression{read})
-				held := b.read(b.parameters[0])
-				matches := ir.Expression(ir.Binary{Operator: ir.Equal, Left: ir.TypeOf{Value: held}, Right: ir.StringConstant{Index: l.constant(name)}})
-				if l.includesUndefined(l.checker.GetTypeAtLocation(node)) {
-					matches = ir.Binary{Operator: ir.Or, Left: matches, Right: ir.IsUndefined{Value: held}}
-				}
-				message := "union member where the checker narrowed it away: a call since the narrowing put it back"
-				b.body = append(b.body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: matches}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}})
-				read = b.finish("narrowed_union_member", ir.Narrow{Value: held, To: narrowed})
+			if narrowed, isKnown := l.representation(l.checker.GetTypeAtLocation(node)); isKnown && narrowed != ir.Union {
+				read = ir.Narrow{Value: read, To: narrowed}
 			}
 		}
 		if declared := l.result.Locals[local].Type; declared.IsMaybe() {
