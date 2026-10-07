@@ -1,6 +1,55 @@
 # Required indexed reads in the program partition
 
-## Current coverage after final wave 7
+## Whole-file closure unit (October 7)
+
+The new unit starts from integration 634ef061fc72c061e2de1606d5c8faebec4411f6.
+Only builderState.ts has been started. Its two remaining iterator-inference
+findings are addressed by explicit erased generic arguments, not new runtime
+reads: `mapDefinedIterator<Path, string>` and `arrayFrom<Path>`.
+[closure-sites.json](closure-sites.json) records each exact call, owning function,
+argument shape and invariant. The adapter parses current stock 6.0.3 syntax,
+requires one occurrence per owner, rejects changed arguments or type arguments,
+and plans every file before writing. Insertion preserves CRLF and evaluation.
+
+Cumulative compatibility guards also recognize adaptation 40's erased
+`FileIncludeKind as Record<number, string>` cast, and adaptation 45's two
+`const major = match[1]!` reads in `tryParseComponents` and `parsePartial`.
+Those mandatory regex captures remain owned by adaptation 45; both reads must
+be present together, asserted, and initialize the named local. They are excluded
+from this partition's original occurrence inventory rather than asserted again.
+
+The isolated 78-root census measures **builderState.ts at zero: 2 to 0**;
+whole-tree diagnostics are 382 to 380. All 78 input hashes and baseline per-file
+counts match run 0 of latent report 176a496. Only builderState.ts changes.
+The first auxiliary census retained main's stricter style checks; the primary
+census uses the recorded feature commit's configuration on both sides.
+Upstream's build regenerates its diagnostic map, so the primary census uses a
+source-only snapshot and does not credit that regeneration to this unit.
+See [closure proof](closure-builderState/proof.json).
+Removing the first generic argument restores TS2345; replacing a ledgered `!`
+with `?? 0` fails both emitted-byte and site-contract checks. An unexpected
+indexed read in the last planned file fails before any source write. An extra
+API declaration fails the composed API allowlist. All 26 files have
+byte-identical stock JavaScript, unchanged CRLF, and zero second-run edits.
+The default oracle is **106,367 passing, zero failing, zero pending**, with an
+empty baseline diff. Install 5.248s, build 3.27s, tests 423.501s, total 432.082s.
+Older proof totals below describe the previous unit.
+The October 7 22:32 ruling sanctions adaptation 40's exact 28 API lines
+(27 brands and ErrorCallback.arg0), alongside adaptation 20's 189 lines and any
+mechanically proven adaptation 70 readonly lines. Adaptation 70 is not present
+in this integration. [api-exceptions.cjs](api-exceptions.cjs) composes adaptation
+20's parsed-owner reconstruction with [api40-sites.json](api40-sites.json),
+requires the exact 27/1 owner counts, and rejects all other API edits or
+reference baseline edits. Adaptation 40's pre-applied 28-line reference is also
+verified. No additional baseline is accepted. The initial default oracle had
+106,360 passes, an API mismatch for 20's lines and one 40-second timeout in
+relationComplexityError.ts while Go builds competed for CPU. The default rerun
+with only the proven API reference changes passed.
+
+Setup: Go 0s, clang 1s, Node 1s, submodules 1s, build cache 203s, total 203s;
+`nproc` is 5 (4 effective CPUs).
+
+## Previous unit: coverage after final wave 7
 
 All 26 assigned compiler files are reviewed. This wave reviews corePublic.ts,
 performanceCore.ts and types.ts in full and adds one U-typed required-read

@@ -884,7 +884,9 @@
     "total": 1,
     "action": "decline",
     "class": "U-table",
-    "invariant": "The existing any cast is a tracing enum-name lookup, not a required indexed-absence finding."
+    "invariant": "The existing any cast is a tracing enum-name lookup, not a required indexed-absence finding.",
+    "laterExpression": "(FileIncludeKind as Record<number, string>)[reason.kind]",
+    "laterExpressionProof": "Adaptation 40 replaces only the enum display cast type; Record<number, string> erases to the same enum reverse lookup."
   },
   {
     "file": "program.ts",

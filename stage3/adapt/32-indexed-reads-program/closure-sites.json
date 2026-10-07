@@ -1,0 +1,28 @@
+[
+  {
+    "file": "builderState.ts",
+    "function": "getAllDependencies",
+    "call": "mapDefinedIterator",
+    "typeArguments": [
+      "Path",
+      "string"
+    ],
+    "proof": "seenMap is a Set<Path>; Set.keys yields only stored Path values. The mapper returns an existing fileName or the same Path, both strings; the generator filters undefined results.",
+    "arguments": [
+      "seenMap.keys()",
+      "path => programOfThisState.getSourceFileByPath(path)?.fileName ?? path"
+    ]
+  },
+  {
+    "file": "builderState.ts",
+    "function": "getReferencedByPaths",
+    "call": "arrayFrom",
+    "typeArguments": [
+      "Path"
+    ],
+    "proof": "getKeys returns a ReadonlySet<Path>; its keys iterator yields only stored Path values. Completion is not a yielded value.",
+    "arguments": [
+      "keys.keys()"
+    ]
+  }
+]
