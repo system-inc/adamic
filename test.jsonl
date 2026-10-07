@@ -31,3 +31,30 @@
 {"Time":"2026-10-07T22:06:31.792266063Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"PASS\n","OutputType":"frame"}
 {"Time":"2026-10-07T22:06:31.792382098Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-test262\t0.013s\n"}
 {"Time":"2026-10-07T22:06:31.79240311Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Elapsed":0.013}
+{"Time":"2026-10-07T22:06:43.261128294Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-07T22:06:43.273922278Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOriginalCycleLedger"}
+{"Time":"2026-10-07T22:06:43.274013115Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOriginalCycleLedger","Output":"=== RUN   TestOriginalCycleLedger\n","OutputType":"frame"}
+{"Time":"2026-10-07T22:06:46.810737797Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOriginalCycleLedger","Output":"    import_cycle_ledger_test.go:217: statements=map[checked:3 proven:55 refused:0] reads=map[checked:9 proven:905 refused:0] findings=10\n"}
+{"Time":"2026-10-07T22:06:46.812228645Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOriginalCycleLedger","Output":"--- PASS: TestOriginalCycleLedger (3.54s)\n","OutputType":"frame"}
+{"Time":"2026-10-07T22:06:46.81224532Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOriginalCycleLedger","Elapsed":3.54}
+{"Time":"2026-10-07T22:06:46.812267824Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-07T22:06:46.837989791Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t3.576s\n"}
+{"Time":"2026-10-07T22:06:46.838202071Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":3.577}
+{"Time":"2026-10-07T22:06:56.267110088Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-07T22:06:56.278746201Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNormalizeLongMeasurements"}
+{"Time":"2026-10-07T22:06:56.278955477Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNormalizeLongMeasurements","Output":"=== RUN   TestNormalizeLongMeasurements\n","OutputType":"frame"}
+{"Time":"2026-10-07T22:06:56.27901764Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNormalizeLongMeasurements","Output":"    normalize_benchmark_test.go:19: set ADAMIC_NORMALIZE_BENCH_LOG to run the long-string measurements\n"}
+{"Time":"2026-10-07T22:06:56.279033554Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNormalizeLongMeasurements","Output":"--- SKIP: TestNormalizeLongMeasurements (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-07T22:06:56.27903748Z","Action":"skip","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNormalizeLongMeasurements","Elapsed":0}
+{"Time":"2026-10-07T22:06:56.279055908Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordBenchmark"}
+{"Time":"2026-10-07T22:06:56.279059734Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordBenchmark","Output":"=== RUN   TestRecordBenchmark\n","OutputType":"frame"}
+{"Time":"2026-10-07T22:06:56.27906397Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordBenchmark","Output":"    record_test.go:271: set ADAMIC_RECORD_BENCH=1 for five-round Node comparisons\n"}
+{"Time":"2026-10-07T22:06:56.279070079Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordBenchmark","Output":"--- SKIP: TestRecordBenchmark (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-07T22:06:56.279073735Z","Action":"skip","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordBenchmark","Elapsed":0}
+{"Time":"2026-10-07T22:06:56.279076689Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestMeasureClangUnits"}
+{"Time":"2026-10-07T22:06:56.279080405Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestMeasureClangUnits","Output":"=== RUN   TestMeasureClangUnits\n","OutputType":"frame"}
+{"Time":"2026-10-07T22:06:56.2790837Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestMeasureClangUnits","Output":"    units_measure_test.go:17: set ADAMIC_CLANG_MEASURE to emitted C evidence directory\n"}
+{"Time":"2026-10-07T22:06:56.279088067Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestMeasureClangUnits","Output":"--- SKIP: TestMeasureClangUnits (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-07T22:06:56.279091041Z","Action":"skip","Package":"github.com/system-inc/adamic/internal/native","Test":"TestMeasureClangUnits","Elapsed":0}
+{"Time":"2026-10-07T22:06:56.279093815Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitTSGoAgrees"}
+{"Time":"2026-10-07T22:06:56.279096059Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitTSGoAgrees","Output":"=== RUN   TestSplitTSGoAgrees\n","OutputType":"frame"}
