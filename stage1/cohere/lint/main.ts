@@ -5,6 +5,9 @@ import { Scanner } from '../../typescript/scanner/scanner.ts';
 import { Linter } from './lint.ts';
 import { Settings } from './settings.ts';
 
+// Test only: see Linter.junkRows.
+const junkRows = programArguments().includes('--junk-rows');
+
 function run(row: string, countOnly: boolean): number {
     const fields = row.split('\t');
     const path = fields[0] ?? panic('missing path');
@@ -26,6 +29,7 @@ function run(row: string, countOnly: boolean): number {
         settings.read('allowemptycatch', fields[4] === 'true' ? 'true' : 'false') === 'true',
         settings,
     );
+    linter.junkRows = junkRows;
     linter.run();
     if(countOnly) {
         return linter.findings.length;
