@@ -1,1 +1,4 @@
 20 tests; exact union; each occurs once; empty coverage diff. layoutOnce group: TestMarkdownListLayout, TestMarkdownQuoteLayout, TestMarkdownTableLayout, TestMarkdownCodeBlockLayout, TestMarkdownHTMLBlockLayout, TestMarkdownWhitespaceLayout, TestMarkdownLeafComposition, TestMarkdownRootLayout, TestMarkdownStructureLayout
+No nohup used. Original launch shell PID 4670: SigIgn:	0000000000000004
+Running go test PID 4739: SigIgn:	0000000000000000
+Python subprocess restore_signals=True resets SIGPIPE/SIGXFSZ before exec; no ignored signals reach go test; SIGHUP is default throughout.
