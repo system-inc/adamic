@@ -39,6 +39,7 @@ var OptIn = []string{
 	typeofStringLiteral,      // typeof 'a', whose C clang refuses
 	breadthStatics,           // with breadth: static members, which stop stage 0 lowering structural method calls and spreads (breadth.go)
 	breadthFrozen,            // with breadth: a try around a write to a frozen object (breadth.go)
+	breadthDarwinMath,        // with breadth on darwin: transcendental Math on edge inputs, off there for #myatdyv (breadth.go)
 }
 
 // maybeShape is one way a number | undefined crosses a boundary. call writes it around its argument;

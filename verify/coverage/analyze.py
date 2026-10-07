@@ -385,7 +385,7 @@ def go_only_by_function(repository, reached, other):
         if count > 0 and other.get(key, [0, 0])[1] == 0 and go_blind_scope(key[0]):
             name, start, end = enclosing_go_function(repository, key[0], key[1])
             totals[(key[0], start, end, name)] += statements
-    ranked = sorted(totals.items(), key=lambda item: -item[1])
+    ranked = sorted(totals.items(), key=lambda item: (-item[1], item[0]))
     return [{"file": file, "start": start, "end": end, "function": name, "statements": statements} for (file, start, end, name), statements in ranked]
 
 
@@ -416,7 +416,7 @@ def compare_c(generator, fixtures):
                 if record["file"] == file and record["start"] <= number <= record["end"]:
                     totals[key] += 1
                     break
-        ranked = sorted(totals.items(), key=lambda item: -item[1])
+        ranked = sorted(totals.items(), key=lambda item: (-item[1], item[0]))
         return [{"file": key[0], "start": c["functions"][key]["start"], "end": c["functions"][key]["end"], "function": c["functions"][key]["name"], "lines": count} for key, count in ranked]
 
     return {

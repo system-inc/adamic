@@ -4,6 +4,7 @@ import (
 	"context"
 	"os"
 	"path/filepath"
+	goruntime "runtime"
 	"slices"
 	"strings"
 	"testing"
@@ -27,7 +28,7 @@ func TestBreadthWritesEveryConstruct(t *testing.T) {
 	seen := map[string]bool{}
 	directory := t.TempDir()
 	for seed := uint64(1); seed <= 250; seed++ {
-		program, chosen := GenerateWeighted(seed, without, []string{breadthStatics}, uniform)
+		program, chosen := GenerateWeighted(seed, without, []string{breadthStatics, breadthDarwinMath}, uniform)
 		for _, name := range chosen {
 			seen[name] = true
 		}
@@ -38,7 +39,7 @@ func TestBreadthWritesEveryConstruct(t *testing.T) {
 	}
 	statics := map[string]float64{"static": 1e9, "math": 1e6, "long-sort": 1e6}
 	for seed := uint64(1); seed <= 12; seed++ {
-		program, chosen := GenerateWeighted(seed, without, []string{breadthStatics}, statics)
+		program, chosen := GenerateWeighted(seed, without, []string{breadthStatics, breadthDarwinMath}, statics)
 		if slices.Contains(chosen, "static") && slices.Contains(chosen, "math") && slices.Contains(chosen, "long-sort") {
 			checkAndLower(t, directory, seed, chosen, program)
 		}
@@ -70,12 +71,12 @@ func checkAndLower(t *testing.T, directory string, seed uint64, chosen []string,
 // always chooses the same.
 func TestBreadthWeightsSteer(t *testing.T) {
 	t.Parallel()
-	weights := map[string]float64{"math": 1000, "json": 0.0001}
+	weights := map[string]float64{"long-sort": 1000, "json": 0.0001}
 	jsons := 0
 	for seed := uint64(1); seed <= 100; seed++ {
 		_, chosen := GenerateWeighted(seed, nil, nil, weights)
-		if !slices.Contains(chosen, "math") {
-			t.Fatalf("seed %d didn't choose math, weighted 1000: %v", seed, chosen)
+		if !slices.Contains(chosen, "long-sort") {
+			t.Fatalf("seed %d didn't choose long-sort, weighted 1000: %v", seed, chosen)
 		}
 		if slices.Contains(chosen, "json") {
 			jsons++
@@ -92,6 +93,19 @@ func TestBreadthWeightsSteer(t *testing.T) {
 	}
 	if strings.Contains(GenerateWithout(1, []string{breadthFeature}).Source(), "breadth") {
 		t.Error("the breadth scene was written with breadth left out")
+	}
+}
+
+// Math is off on darwin unless forced, and on everywhere else (#myatdyv).
+func TestBreadthMathOnDarwin(t *testing.T) {
+	t.Parallel()
+	heavy := map[string]float64{"math": 1e9}
+	_, chosen := GenerateWeighted(1, nil, nil, heavy)
+	if got, want := slices.Contains(chosen, "math"), goruntime.GOOS != "darwin"; got != want {
+		t.Errorf("on %s, math chosen: %v, want %v", goruntime.GOOS, got, want)
+	}
+	if _, forced := GenerateWeighted(1, nil, []string{breadthDarwinMath}, heavy); !slices.Contains(forced, "math") {
+		t.Errorf("math not chosen with %s", breadthDarwinMath)
 	}
 }
 

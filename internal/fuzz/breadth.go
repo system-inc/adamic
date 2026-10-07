@@ -4,6 +4,7 @@ import (
 	_ "embed"
 	"fmt"
 	"math/rand/v2"
+	goruntime "runtime"
 	"slices"
 	"sort"
 	"strconv"
@@ -121,7 +122,26 @@ const (
 	// breadthFrozen: a try around a write to a frozen object, which panics natively but throws a
 	// catchable TypeError on Node.
 	breadthFrozen = "breadth-frozen"
+	// breadthDarwinMath forces the math construct on darwin, where it's off by default. Node's arm64
+	// build fuses multiply-adds and Adamic deliberately doesn't (#myatdyv), so on an arm64 Mac a
+	// transcendental result can differ from Node's in its last bit for that reason alone:
+	// Math.tan(1e22) is -1.628778225606899 natively and on Node for linux/amd64, and
+	// -1.6287782256068988 on Node for arm64. Linux x86 is the gate of record, where they agree, so
+	// the construct stays on there. Coverage measurements turn it on everywhere (measure.sh).
+	breadthDarwinMath = "breadth-darwin-math"
 )
+
+// constructAllowed says whether a program may get a construct: its opt-in asked for, and math off on
+// darwin unless forced (breadthDarwinMath).
+func (g *generator) constructAllowed(construct construct) bool {
+	if construct.optIn != "" && !g.with[construct.optIn] {
+		return false
+	}
+	if construct.name == "math" && goruntime.GOOS == "darwin" && !g.with[breadthDarwinMath] {
+		return false
+	}
+	return true
+}
 
 // breadth is the scene while it writes one program.
 type breadth struct {
@@ -175,7 +195,7 @@ func (g *generator) breadthProgram() []*Statement {
 	}
 	var constructs []construct
 	for _, construct := range breadthConstructs() {
-		if construct.optIn == "" || g.with[construct.optIn] {
+		if g.constructAllowed(construct) {
 			constructs = append(constructs, construct)
 		}
 	}

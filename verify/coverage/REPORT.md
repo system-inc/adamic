@@ -97,17 +97,17 @@ What one side reaches and the other doesn't:
 | 21 | `adamic_math_acos` | internal/native/runtime/ieee754.c:877-936 |
 | 20 | `adamic_math_expm1` | internal/native/runtime/ieee754.c:2237-2355 |
 | 20 | `failure` | internal/native/runtime/input.c:168-194 |
-| 18 | `adamic_math_log1p` | internal/native/runtime/ieee754.c:1804-1901 |
 | 18 | `failure` | internal/native/runtime/directory.c:37-61 |
+| 18 | `adamic_math_log1p` | internal/native/runtime/ieee754.c:1804-1901 |
 | 15 | `adamic_math_atan` | internal/native/runtime/ieee754.c:1135-1219 |
 | 14 | `adamic_math_asin` | internal/native/runtime/ieee754.c:1008-1073 |
 | 14 | `adamic_math_cosh` | internal/native/runtime/ieee754.c:2578-2619 |
 | 13 | `adamic_math_exp` | internal/native/runtime/ieee754.c:1465-1556 |
 | 8 | `adamic_math_sinh` | internal/native/runtime/ieee754.c:2642-2673 |
 | 8 | `read_all` | internal/native/runtime/input.c:227-260 |
-| 7 | `adamic_math_tanh` | internal/native/runtime/ieee754.c:2699-2733 |
 | 7 | `adamic_math_acosh` | internal/native/runtime/ieee754.c:952-977 |
 | 7 | `adamic_math_log` | internal/native/runtime/ieee754.c:1658-1737 |
+| 7 | `adamic_math_tanh` | internal/native/runtime/ieee754.c:2699-2733 |
 | 6 | `adamic_math_log2` | internal/native/runtime/ieee754.c:1995-2073 |
 | 6 | `adamic_math_log10` | internal/native/runtime/ieee754.c:2102-2140 |
 
@@ -128,13 +128,13 @@ What one side reaches and the other doesn't:
 | 22 | `adamic_map_clear` | internal/native/runtime/map.c:293-315 |
 | 22 | `composite` | internal/native/runtime/normalize.c:79-100 |
 | 22 | `encode` | internal/native/runtime/normalize.c:214-235 |
-| 21 | `adamic_regex_iterator_step` | internal/native/runtime/regexp.c:719-739 |
 | 21 | `adamic_math_atanh` | internal/native/runtime/ieee754.c:1576-1605 |
+| 21 | `adamic_regex_iterator_step` | internal/native/runtime/regexp.c:719-739 |
 | 20 | `adamic_map_entries` | internal/native/runtime/map.c:271-291 |
 | 19 | `adamic_write_text_file` | internal/native/runtime/input.c:322-349 |
-| 19 | `reorder` | internal/native/runtime/normalize.c:145-163 |
 | 19 | `decompose` | internal/native/runtime/normalize.c:124-142 |
-| 17 | `adamic_union_typeof` | internal/native/runtime/union.c:62-78 |
+| 19 | `reorder` | internal/native/runtime/normalize.c:145-163 |
+| 17 | `give` | internal/native/runtime/heap.c:164-186 |
 
 ## (a) The blind map: what no generated program executes
 
@@ -298,7 +298,7 @@ go build -trimpath -o adamic-fuzz ./cmd/adamic-fuzz
 # the generator: seeds 1 to 2000, every default family
 ADAMIC_C_COVERAGE=1 ADAMIC_C_COVERAGE_DIRECTORY=generator/c GOCOVERDIR=generator/go \
   GOFLAGS="-trimpath -cover -coverpkg=./cmd/adamic,./internal/lower/...,./internal/native/...,./internal/ir/...,./internal/flow/..." \
-  adamic-fuzz -root . -seed 1 -count 2000 -parallel 6 -shrink=false -v -work generator/work
+  adamic-fuzz -root . -seed 1 -count 2000 -parallel 6 -shrink=false -v -with breadth-darwin-math -work generator/work
 
 # the oracle fixtures, uncached so every binary really runs
 ADAMIC_GATE_UNCACHED=1 ADAMIC_C_COVERAGE=1 LLVM_PROFILE_FILE=fixtures/c/oracle-%p-%m.profraw \
@@ -328,3 +328,10 @@ Caveats, as measured:
 - adamic.h's five static inline functions are counted only for calls from inside the runtime; their
   copies inlined into each program's main.c aren't read.
 - A run that ends in a signal (an ASan abort, a deadline kill) writes no C profile.
+- The generator runs with -with breadth-darwin-math, so the breadth scene's transcendental Math runs
+  on darwin as it does by default on Linux and coverage is the same on both. On an arm64 Mac a
+  finding that is only the last bit of a transcendental result is a platform difference, not a bug:
+  Node's arm64 build fuses multiply-adds and Adamic deliberately doesn't (#myatdyv). Math.tan(1e22)
+  is the one these seeds reach, -1.628778225606899 natively and on Node for linux/amd64 (the gate
+  of record) and -1.6287782256068988 on Node for arm64; it is every finding of the 2,000-seed run
+  of 2026-10-07 on darwin/arm64 (46).

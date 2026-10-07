@@ -151,7 +151,8 @@ func run() int {
 						return
 					}
 					programSeed := first + uint64(mine)
-					program, choices := fuzz.GenerateWeighted(programSeed, nil, nil, weights)
+					// Steered as coverage is measured: the math construct on, on darwin too (#myatdyv).
+					program, choices := fuzz.GenerateWeighted(programSeed, nil, []string{"breadth-darwin-math"}, weights)
 					chosen[mine] = choices
 					directory := filepath.Join(*work, "programs", strconv.FormatUint(programSeed, 10))
 					_ = os.RemoveAll(directory)

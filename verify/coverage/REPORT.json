@@ -851,17 +851,17 @@
      "lines": 20
     },
     {
-     "file": "internal/native/runtime/ieee754.c",
-     "start": 1804,
-     "end": 1901,
-     "function": "adamic_math_log1p",
-     "lines": 18
-    },
-    {
      "file": "internal/native/runtime/directory.c",
      "start": 37,
      "end": 61,
      "function": "failure",
+     "lines": 18
+    },
+    {
+     "file": "internal/native/runtime/ieee754.c",
+     "start": 1804,
+     "end": 1901,
+     "function": "adamic_math_log1p",
      "lines": 18
     },
     {
@@ -908,13 +908,6 @@
     },
     {
      "file": "internal/native/runtime/ieee754.c",
-     "start": 2699,
-     "end": 2733,
-     "function": "adamic_math_tanh",
-     "lines": 7
-    },
-    {
-     "file": "internal/native/runtime/ieee754.c",
      "start": 952,
      "end": 977,
      "function": "adamic_math_acosh",
@@ -925,6 +918,13 @@
      "start": 1658,
      "end": 1737,
      "function": "adamic_math_log",
+     "lines": 7
+    },
+    {
+     "file": "internal/native/runtime/ieee754.c",
+     "start": 2699,
+     "end": 2733,
+     "function": "adamic_math_tanh",
      "lines": 7
     },
     {
@@ -949,6 +949,13 @@
      "lines": 5
     },
     {
+     "file": "internal/native/runtime/ieee754.c",
+     "start": 133,
+     "end": 285,
+     "function": "ieee754_rem_pio2",
+     "lines": 4
+    },
+    {
      "file": "internal/native/runtime/math.c",
      "start": 7,
      "end": 21,
@@ -956,11 +963,11 @@
      "lines": 4
     },
     {
-     "file": "internal/native/runtime/ieee754.c",
-     "start": 133,
-     "end": 285,
-     "function": "ieee754_rem_pio2",
-     "lines": 4
+     "file": "internal/native/runtime/input.c",
+     "start": 92,
+     "end": 94,
+     "function": "encoded_size",
+     "lines": 3
     },
     {
      "file": "internal/native/runtime/input.c",
@@ -985,10 +992,10 @@
     },
     {
      "file": "internal/native/runtime/input.c",
-     "start": 92,
-     "end": 94,
-     "function": "encoded_size",
-     "lines": 3
+     "start": 262,
+     "end": 297,
+     "function": "adamic_read_text_file",
+     "lines": 2
     },
     {
      "file": "internal/native/runtime/math.c",
@@ -1002,27 +1009,6 @@
      "start": 40,
      "end": 48,
      "function": "adamic_math_min",
-     "lines": 2
-    },
-    {
-     "file": "internal/native/runtime/sort.c",
-     "start": 221,
-     "end": 311,
-     "function": "merge_low",
-     "lines": 2
-    },
-    {
-     "file": "internal/native/runtime/input.c",
-     "start": 262,
-     "end": 297,
-     "function": "adamic_read_text_file",
-     "lines": 2
-    },
-    {
-     "file": "internal/native/runtime/sort.c",
-     "start": 89,
-     "end": 115,
-     "function": "count_run",
      "lines": 2
     },
     {
@@ -1040,17 +1026,24 @@
      "lines": 2
     },
     {
-     "file": "internal/native/runtime/ieee754.c",
-     "start": 2473,
-     "end": 2501,
-     "function": "adamic_math_sin",
-     "lines": 1
+     "file": "internal/native/runtime/sort.c",
+     "start": 89,
+     "end": 115,
+     "function": "count_run",
+     "lines": 2
+    },
+    {
+     "file": "internal/native/runtime/sort.c",
+     "start": 221,
+     "end": 311,
+     "function": "merge_low",
+     "lines": 2
     },
     {
      "file": "internal/native/runtime/ieee754.c",
-     "start": 2533,
-     "end": 2553,
-     "function": "adamic_math_tan",
+     "start": 1372,
+     "end": 1400,
+     "function": "adamic_math_cos",
      "lines": 1
     },
     {
@@ -1062,9 +1055,16 @@
     },
     {
      "file": "internal/native/runtime/ieee754.c",
-     "start": 1372,
-     "end": 1400,
-     "function": "adamic_math_cos",
+     "start": 2473,
+     "end": 2501,
+     "function": "adamic_math_sin",
+     "lines": 1
+    },
+    {
+     "file": "internal/native/runtime/ieee754.c",
+     "start": 2533,
+     "end": 2553,
+     "function": "adamic_math_tan",
      "lines": 1
     }
    ],
@@ -1161,17 +1161,17 @@
      "lines": 22
     },
     {
-     "file": "internal/native/runtime/regexp.c",
-     "start": 719,
-     "end": 739,
-     "function": "adamic_regex_iterator_step",
-     "lines": 21
-    },
-    {
      "file": "internal/native/runtime/ieee754.c",
      "start": 1576,
      "end": 1605,
      "function": "adamic_math_atanh",
+     "lines": 21
+    },
+    {
+     "file": "internal/native/runtime/regexp.c",
+     "start": 719,
+     "end": 739,
+     "function": "adamic_regex_iterator_step",
      "lines": 21
     },
     {
@@ -1190,24 +1190,17 @@
     },
     {
      "file": "internal/native/runtime/normalize.c",
-     "start": 145,
-     "end": 163,
-     "function": "reorder",
-     "lines": 19
-    },
-    {
-     "file": "internal/native/runtime/normalize.c",
      "start": 124,
      "end": 142,
      "function": "decompose",
      "lines": 19
     },
     {
-     "file": "internal/native/runtime/union.c",
-     "start": 62,
-     "end": 78,
-     "function": "adamic_union_typeof",
-     "lines": 17
+     "file": "internal/native/runtime/normalize.c",
+     "start": 145,
+     "end": 163,
+     "function": "reorder",
+     "lines": 19
     },
     {
      "file": "internal/native/runtime/heap.c",
@@ -1224,17 +1217,24 @@
      "lines": 17
     },
     {
-     "file": "internal/native/runtime/string_split_impl.h",
-     "start": 13,
-     "end": 56,
-     "function": "adamic_string_split",
-     "lines": 16
+     "file": "internal/native/runtime/union.c",
+     "start": 62,
+     "end": 78,
+     "function": "adamic_union_typeof",
+     "lines": 17
     },
     {
      "file": "internal/native/runtime/library_array.c",
      "start": 34,
      "end": 49,
      "function": "adamic_array_join_nested",
+     "lines": 16
+    },
+    {
+     "file": "internal/native/runtime/string_split_impl.h",
+     "start": 13,
+     "end": 56,
+     "function": "adamic_string_split",
      "lines": 16
     },
     {
@@ -1266,24 +1266,17 @@
      "lines": 15
     },
     {
+     "file": "internal/native/runtime/array.c",
+     "start": 215,
+     "end": 246,
+     "function": "adamic_array_index_of",
+     "lines": 14
+    },
+    {
      "file": "internal/native/runtime/json_stringify.c",
      "start": 103,
      "end": 128,
      "function": "scalar",
-     "lines": 14
-    },
-    {
-     "file": "internal/native/runtime/set.c",
-     "start": 16,
-     "end": 29,
-     "function": "adamic_set_values",
-     "lines": 14
-    },
-    {
-     "file": "internal/native/runtime/regexp.c",
-     "start": 545,
-     "end": 574,
-     "function": "regex_result",
      "lines": 14
     },
     {
@@ -1294,17 +1287,24 @@
      "lines": 14
     },
     {
+     "file": "internal/native/runtime/regexp.c",
+     "start": 545,
+     "end": 574,
+     "function": "regex_result",
+     "lines": 14
+    },
+    {
+     "file": "internal/native/runtime/set.c",
+     "start": 16,
+     "end": 29,
+     "function": "adamic_set_values",
+     "lines": 14
+    },
+    {
      "file": "internal/native/runtime/weak.c",
      "start": 52,
      "end": 65,
      "function": "find",
-     "lines": 14
-    },
-    {
-     "file": "internal/native/runtime/array.c",
-     "start": 215,
-     "end": 246,
-     "function": "adamic_array_index_of",
      "lines": 14
     },
     {
@@ -1315,6 +1315,13 @@
      "lines": 13
     },
     {
+     "file": "internal/native/runtime/union.c",
+     "start": 42,
+     "end": 60,
+     "function": "adamic_union_to_string",
+     "lines": 13
+    },
+    {
      "file": "internal/native/runtime/weak.c",
      "start": 115,
      "end": 127,
@@ -1322,11 +1329,11 @@
      "lines": 13
     },
     {
-     "file": "internal/native/runtime/union.c",
-     "start": 42,
-     "end": 60,
-     "function": "adamic_union_to_string",
-     "lines": 13
+     "file": "internal/native/runtime/case.c",
+     "start": 73,
+     "end": 84,
+     "function": "within",
+     "lines": 12
     },
     {
      "file": "internal/native/runtime/json_stringify.c",
@@ -1343,13 +1350,6 @@
      "lines": 12
     },
     {
-     "file": "internal/native/runtime/case.c",
-     "start": 73,
-     "end": 84,
-     "function": "within",
-     "lines": 12
-    },
-    {
      "file": "internal/native/runtime/normalize.c",
      "start": 65,
      "end": 76,
@@ -1357,10 +1357,10 @@
      "lines": 12
     },
     {
-     "file": "internal/native/runtime/normalize.c",
-     "start": 200,
-     "end": 210,
-     "function": "decode_at",
+     "file": "internal/native/runtime/array.c",
+     "start": 257,
+     "end": 271,
+     "function": "adamic_array_filled",
      "lines": 11
     },
     {
@@ -1371,24 +1371,17 @@
      "lines": 11
     },
     {
-     "file": "internal/native/runtime/heap.c",
-     "start": 94,
-     "end": 104,
-     "function": "unlist_chunk",
-     "lines": 11
-    },
-    {
-     "file": "internal/native/runtime/parse.c",
-     "start": 155,
-     "end": 221,
-     "function": "adamic_number_parse_int",
-     "lines": 11
-    },
-    {
      "file": "internal/native/runtime/from_codes.c",
      "start": 39,
      "end": 60,
      "function": "codes_point",
+     "lines": 11
+    },
+    {
+     "file": "internal/native/runtime/heap.c",
+     "start": 94,
+     "end": 104,
+     "function": "unlist_chunk",
      "lines": 11
     },
     {
@@ -1399,10 +1392,17 @@
      "lines": 11
     },
     {
-     "file": "internal/native/runtime/regexp.c",
-     "start": 708,
-     "end": 718,
-     "function": "adamic_regex_match_all",
+     "file": "internal/native/runtime/normalize.c",
+     "start": 200,
+     "end": 210,
+     "function": "decode_at",
+     "lines": 11
+    },
+    {
+     "file": "internal/native/runtime/parse.c",
+     "start": 155,
+     "end": 221,
+     "function": "adamic_number_parse_int",
      "lines": 11
     },
     {
@@ -1413,11 +1413,18 @@
      "lines": 11
     },
     {
-     "file": "internal/native/runtime/array.c",
-     "start": 257,
-     "end": 271,
-     "function": "adamic_array_filled",
+     "file": "internal/native/runtime/regexp.c",
+     "start": 708,
+     "end": 718,
+     "function": "adamic_regex_match_all",
      "lines": 11
+    },
+    {
+     "file": "internal/native/runtime/normalize.c",
+     "start": 109,
+     "end": 121,
+     "function": "points_add",
+     "lines": 10
     },
     {
      "file": "internal/native/runtime/object.c",
@@ -1431,13 +1438,6 @@
      "start": 103,
      "end": 113,
      "function": "remove_entry",
-     "lines": 10
-    },
-    {
-     "file": "internal/native/runtime/normalize.c",
-     "start": 109,
-     "end": 121,
-     "function": "points_add",
      "lines": 10
     },
     {
@@ -1455,24 +1455,10 @@
      "lines": 9
     },
     {
-     "file": "internal/native/runtime/spread.c",
-     "start": 39,
-     "end": 47,
-     "function": "adamic_math_hypot_of",
-     "lines": 9
-    },
-    {
      "file": "internal/native/runtime/input.c",
      "start": 305,
      "end": 318,
      "function": "write_all",
-     "lines": 9
-    },
-    {
-     "file": "internal/native/runtime/string_split_impl.h",
-     "start": 3,
-     "end": 11,
-     "function": "adamic_string_code_points",
      "lines": 9
     },
     {
@@ -1487,6 +1473,20 @@
      "start": 59,
      "end": 86,
      "function": "hash_key",
+     "lines": 9
+    },
+    {
+     "file": "internal/native/runtime/spread.c",
+     "start": 39,
+     "end": 47,
+     "function": "adamic_math_hypot_of",
+     "lines": 9
+    },
+    {
+     "file": "internal/native/runtime/string_split_impl.h",
+     "start": 3,
+     "end": 11,
+     "function": "adamic_string_code_points",
      "lines": 9
     }
    ]

@@ -66,6 +66,12 @@ commit="$(git rev-parse HEAD)"
 if ! git diff --quiet HEAD; then
 	commit="$commit+dirty"
 fi
+# What a run measured is what an analysis of it reports, whatever is checked out later.
+if [ "$analyze_only" = 1 ] && [ -f "$output/commit" ]; then
+	commit="$(cat "$output/commit")"
+else
+	echo "$commit" > "$output/commit"
+fi
 
 # The runtime the coverage builds link, sanitized as the fuzzer and the oracle compile it. Its objects
 # carry the coverage mapping llvm-cov reads.
@@ -79,7 +85,7 @@ started=$(date +%s)
 set +e
 ADAMIC_C_COVERAGE=1 ADAMIC_C_COVERAGE_DIRECTORY="$output/generator/c" GOCOVERDIR="$output/generator/go" \
 	GOFLAGS="-trimpath -cover -coverpkg=./cmd/adamic,$coverpkg" \
-	"$output/adamic-fuzz" -root "$repository" -seed "$seed" -count "$count" -parallel "$parallel" -shrink=false -v \
+	"$output/adamic-fuzz" -root "$repository" -seed "$seed" -count "$count" -parallel "$parallel" -shrink=false -v -with breadth-darwin-math \
 	-work "$output/generator/work" > "$output/generator/run.log" 2>&1
 generator_exit=$?
 set -e
@@ -155,7 +161,7 @@ go build -trimpath -o adamic-fuzz ./cmd/adamic-fuzz
 # the generator: seeds $seed to $((seed + count - 1)), every default family
 ADAMIC_C_COVERAGE=1 ADAMIC_C_COVERAGE_DIRECTORY=generator/c GOCOVERDIR=generator/go \\
   GOFLAGS="-trimpath -cover -coverpkg=./cmd/adamic,$coverpkg" \\
-  adamic-fuzz -root . -seed $seed -count $count -parallel $parallel -shrink=false -v -work generator/work
+  adamic-fuzz -root . -seed $seed -count $count -parallel $parallel -shrink=false -v -with breadth-darwin-math -work generator/work
 
 # the oracle fixtures, uncached so every binary really runs
 ADAMIC_GATE_UNCACHED=1 ADAMIC_C_COVERAGE=1 LLVM_PROFILE_FILE=fixtures/c/oracle-%p-%m.profraw \\
@@ -185,6 +191,13 @@ Caveats, as measured:
 - adamic.h's five static inline functions are counted only for calls from inside the runtime; their
   copies inlined into each program's main.c aren't read.
 - A run that ends in a signal (an ASan abort, a deadline kill) writes no C profile.
+- The generator runs with -with breadth-darwin-math, so the breadth scene's transcendental Math runs
+  on darwin as it does by default on Linux and coverage is the same on both. On an arm64 Mac a
+  finding that is only the last bit of a transcendental result is a platform difference, not a bug:
+  Node's arm64 build fuses multiply-adds and Adamic deliberately doesn't (#myatdyv). Math.tan(1e22)
+  is the one these seeds reach, -1.628778225606899 natively and on Node for linux/amd64 (the gate
+  of record) and -1.6287782256068988 on Node for arm64; it is every finding of the 2,000-seed run
+  of 2026-10-07 on darwin/arm64 (46).
 EOF
 
 python3 "$repository/verify/coverage/analyze.py" "$output" "$repository" "$repository/verify/coverage/REPORT.md" "$repository/verify/coverage/REPORT.json" "$commands"
