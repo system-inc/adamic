@@ -1,8 +1,8 @@
-Built: ESM cycle ordering, graph-wide linking, runtime TDZ fallback for undecided globals/classes, .a fixtures, and a public-runner adapter draft; integration is blocked.
-Commits: implementation checkpoint 56b95a9; branch codex/import-cycles starts at origin/main ef3d907ecdc4c771b016f7d9c52372def057a340.
-Checks: available-pin build, full load/lower tests, uncached cycle/class oracle, seven no-finding TDZ probes, counts, formatting and vet passed; no new-pin build was possible.
-Mutants: all eight caught, five cycle/interim mutants and three runtime-ready-check mutants.
-Not covered: unavailable public runner and shim bump, unpublished tsc fixture ledger, multi-entry; this checkpoint still uses the superseded interim until the real package is fetchable.
+Built: ESM cycle ordering, graph-wide linking, runtime TDZ fallback, and merged all ten tsc cycle fixtures; public-runner integration remains blocked.
+Commits: implementation 56b95a9, original report 650a221, fixture merge a852810 (bucket a4ec90d).
+Checks: prior build/load/lower/oracles passed; latest lowering refused 10/10 fixtures, fresh Node observations matched 10/10 records, ledger audit passed.
+Mutants: prior eight caught; merged ledger audit caught a removed row and a late provider-end event.
+Not covered: real runner/new-pin shims and original tsc lowering; 58 ledger statements and 914 observed reads remain unassessed, not proven safe.
 
 The latest instruction supersedes the interim implementation. The working tree still holds that earlier, tested checkpoint; it is not a completed public-runner integration. No cohere source was copied. The replacement adapter is drafted at /tmp/import-cycles-public-adapter.go, with the exact new error return, Finding type, rule name, and a mutex protecting calls across programs. I have not installed an unavailable dependency or claimed it builds.
 
@@ -120,3 +120,21 @@ go vet ./... > /tmp/import-cycles-ready-vet.log 2>&1
 ```
 
 The latest cohere main retry still exposes no rule_runner directory. `git fetch origin codex/stage3-fixtures-cycles:refs/remotes/origin/codex/stage3-fixtures-cycles` returned `fatal: couldn't find remote ref codex/stage3-fixtures-cycles`. The ledger has not been read, so its total/refused/checked/proven-safe counts are pending, not zero. Once published, run its actual fixtures from the declared entry and tally the ledger against observed rule findings and emitted ready checks. A separate lowering gap must be reported as such, never counted as proven safe.
+
+## Published fixture bucket, October 7 follow-up
+
+Merged origin/codex/stage3-fixtures-cycles at a4ec90d, with merge commit a852810. Read its README and LEDGER whole. Ran `go run ./cmd/adamic js stage3/fixtures/cycles/<fixture>/main.a` for every one of the ten entries, capturing complete output in `ledger-run/*.lower.log`. All ten reached the interim rule and were refused; no JavaScript or native artifact was emitted. These are interim messages, despite carrying the configured nexus rule id; they are not cohere findings.
+
+Ran fresh `node --disable-warning=ExperimentalWarning oracle/node.mjs <entry>` for each entry. All ten stdout/stderr/exit triples equal the bucket records: nine exit 0; fixture 06 exits 70 with `adamic: panic: ReferenceError: Cannot access 'emptyArray' before initialization`. The source bucket's import-order mutant is therefore still distinguished by Node. Our current refusal of both fixtures 05 and 06 does not demonstrate that Adamic distinguishes safe scheduling.
+
+| Population | Refused | Checked | Proven safe | Unassessed |
+| --- | ---: | ---: | ---: | ---: |
+| Ten reduced fixture programs | 10 | 0 | 0 | 0 |
+| 58 original tsc ledger statements | 0 | 0 | 0 | 58 |
+| 914 observed original read occurrences | 0 | 0 | 0 | 914 |
+
+The original-read zeros mean no compiler classification was obtained, not acceptance. The bucket states that fixture 05 is a scheduling witness for all ledger rows, not a reproduction of their initializers. It explicitly omits the complete factory initializer and many type/allocator dependencies. Consequently refusing that witness cannot establish that 58 original statements or 914 original reads were refused. Nor can the observed Node ordering be promoted to a certificate for branches not executed. Runtime-check coverage for those original sites requires actual lowered original code and source-site mapping; neither is present in this run. The conditional static read is also unassessed.
+
+`python3 stage3/fixtures/cycles/audit.py > /tmp/import-cycles-ledger-audit.log 2>&1` passed and printed `removed ledger row: caught`, `late provider end: caught`, and `Trace, ledger, ten fixture records and chronology: pass`. The fixture/Node reconciliation asserted ten entries and exact equality for each observation. Detailed results and machine-readable counts are in `ledger-run/results.json` and `ledger-run/summary.json`.
+
+Retried cohere main with `git -C cohere fetch --no-recurse-submodules origin main`: FETCH_HEAD remains e7cfe4d1aceb524bc6f5936564284d54ca63d771 and `git -C cohere ls-tree FETCH_HEAD rule_runner` prints nothing. Thus the requested real-rule replacement is still blocked. No compiler code changed in this follow-up and the full compiler gate was not repeated. No code was copied from cohere.
