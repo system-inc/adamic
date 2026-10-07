@@ -11,7 +11,7 @@ import (
 )
 
 func init() {
-	for _, name := range []string{"direct", "callbacks", "loop", "siblings", "returned", "field", "array", "map", "set", "global", "capture", "keeping_call", "unknown_call", "local_call", "callback_escape", "virtual_call", "unknown_callback", "exits", "large"} {
+	for _, name := range []string{"direct", "callbacks", "loop", "siblings", "returned", "field", "array", "map", "set", "global", "capture", "keeping_call", "unknown_call", "local_call", "callback_escape", "virtual_call", "unknown_callback", "exits", "large", "captured_parameters"} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
@@ -97,4 +97,51 @@ func TestEnvironmentThrowReleaseMutant(t *testing.T) {
 		t.Fatalf("want leaked reference slot, got %s", report)
 	}
 	t.Logf("throw-path slot mutant caught only by leak check:\n%s", report)
+}
+
+// Reintroduce the old borrowing decision on the actual reader's program. This
+// must reach the owned-cell store assertion, rather than clang or the runtime.
+func TestEnvironmentCapturedParameterBorrowMutant(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/environment_captured_parameters.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	captured := 0
+	for _, function := range program.Functions {
+		for _, parameter := range function.Parameters {
+			local := &program.Locals[parameter]
+			if local.Captured && local.Type.IsReference() {
+				if local.Borrowed {
+					t.Fatalf("captured parameter %s is borrowed", local.Name)
+				}
+				captured++
+			}
+		}
+	}
+	if captured != 3 {
+		t.Fatalf("want three captured reference parameters, got %d", captured)
+	}
+	// The healthy program must emit before we mutate its ownership metadata.
+	native.C(program)
+	for _, function := range program.Functions {
+		for _, parameter := range function.Parameters {
+			local := &program.Locals[parameter]
+			if local.Captured && local.Type.IsReference() {
+				local.Borrowed = true
+			}
+		}
+	}
+	defer func() {
+		failure := recover()
+		if failure != "native: a store into the borrowed parameter text" {
+			t.Fatalf("want the original borrowed-cell panic, got %v", failure)
+		}
+		t.Logf("borrow mutant caught by owned-cell store assertion: %v", failure)
+	}()
+	native.C(program)
 }

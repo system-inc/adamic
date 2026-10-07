@@ -254,3 +254,93 @@ and the complete count-table check. Log:
 A final fetch still resolved origin/main to e8ba3d5. The required package gate
 and complete oracle are green on that synchronized feature branch. Only this
 feature branch is submitted for landing; integration remains with the owner.
+
+## Captured reference parameter correction
+
+Reader coverage branch 066c2be was merged into this feature branch, bringing its
+15 registered oracle programs and original review notes. The reader's previously
+unregistered captured_reference_parameters.a is copied unchanged to
+internal/oracle/testdata/environment_captured_parameters.a and registered.
+The review notes describe the pre-fix failure; this section records its resolution.
+
+The bug was an interaction between parameter borrowing and the named-helper
+cell initialization path. lower.borrow marked unassigned reference parameters
+borrowed even when Captured. makeCell then initialized an EnvironmentCell through
+store, whose assertion correctly rejects stores into borrowed parameters.
+The independent-cell initializer did not pass through that assertion.
+
+The chosen fix makes every captured reference parameter ineligible for borrowing.
+The callee keeps its entry reference, and cell initialization independently retains
+for the environment. Both owners release their references on every exit path.
+This preserves the owned-cell store assertion and existing cell initialization
+and destruction, rather than giving initialization an exception to borrowed
+ownership. It also covers escaping captures and ordinary independent cells.
+The conservative cost is extra matched retain/release pairs for captured
+parameters; uncaptured parameters keep their existing borrowing rule.
+
+Original Node, generated JavaScript, sanitized native and release native agree:
+
+```text
+value0:value0:value0!:value0:true
+value1:value1:value1!:value1:true
+```
+
+The reader's exact normal/throw program uses runtime strings, an array and an
+object as captured parameters. It records 22 allocations, 22 frees, 51 retains,
+62 releases, peak 10 and 0 region allocations. There was no pre-fix executable
+count: C emission panicked.
+
+The regenerated complete count table changes eight existing rows only by equal
+retain/release increments: coverage_captured_parameter +1,
+library_function_expressions +1, closures +1, method_closures +3,
+class_as_interface +3, generic_values +1, class_features_distinct +5,
+regexp_cycle_closures +1. These are all numeric changes. All existing allocations, frees, peaks and region counts
+are unchanged. The new regression row is the only added row.
+
+TestEnvironmentCapturedParameterBorrowMutant first asserts that all three
+captured reference parameters are owned and healthy C emission succeeds. It
+then sets their Borrowed metadata back to true, recreating the old decision.
+The test requires the exact original panic from native.C:
+`native: a store into the borrowed parameter text`. This mutant is caught at
+cell initialization, before clang or runtime execution, and remains a permanent
+test in the complete oracle.
+
+Setup: Go ready 0s, clang ready 0s, Node ready 0s, submodules ready 0s, cache
+warm 74s, total 74s. nproc reports 5, cgroup quota 4 CPUs. Every build/test shell
+sources /workspace/adamic-tools/env.sh.
+
+Focused uncached fixture and mutant command:
+`ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run
+'TestEnvironmentCapturedParameterBorrowMutant|TestNativeAgreesWithNode/internal/oracle/testdata/environment_captured_parameters.a'
+-count=1 -v -timeout 10m`, passing in 0.486s. Log:
+/tmp/environment-parameter-focused.log.
+Count refresh: `go test ./internal/oracle -run '^TestCountsAreRecorded$'
+-count=1 -timeout 10m -args -update-counts`, passing in 26.559s.
+Log: /tmp/environment-parameter-counts.log.
+
+The source mutant removed exactly `&& !local.Captured` from lower.borrow and
+ran `ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run
+'TestNativeAgreesWithNode/internal/oracle/testdata/environment_captured_parameters.a'
+-count=1 -timeout 10m`. It failed (exit 1, 0.174s) with the exact reported panic
+while generating C. Production source was restored in a finally block. The
+focused fixture and permanent mutant were rerun uncached and passed in 0.477s.
+Logs: /tmp/environment-parameter-source-mutant.log and
+/tmp/environment-parameter-restored.log.
+
+Final gates:
+
+- `ADAMIC_GATE_UNCACHED=1 go test ./internal/native ./internal/ir ./internal/lower
+  -count=1 -timeout 15m`: pass, native 115.767s, ir 19.099s, lower 19.708s.
+  Log: /tmp/environment-parameter-packages.log.
+- `ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -count=1 -timeout 15m`:
+  complete oracle pass, 116.606s. Includes all 15 reader fixtures, the new
+  regression, permanent environment mutants, leak checks and all count rows.
+  Log: /tmp/environment-parameter-oracle.log.
+- `go vet ./...`: pass, no diagnostics. /tmp/environment-parameter-vet.log.
+- `gofmt -l cmd internal` and `git diff --check`: pass, empty output.
+  /tmp/environment-parameter-format-final.log and
+  /tmp/environment-parameter-diff-final.log.
+
+A fresh fetch confirmed current origin/main remains e8ba3d5 and is an ancestor
+of this feature branch. No full repository/stage1 gate or macOS run was performed
+for this follow-up. Only codex/environment-placement is pushed.
