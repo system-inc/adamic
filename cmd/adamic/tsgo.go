@@ -12,6 +12,13 @@ func build(path, output string, arguments []string) int {
 	archive := ""
 	for index := 0; index < len(arguments); index++ {
 		switch arguments[index] {
+		case "--target":
+			index++
+			if index >= len(arguments) || options.Target != "" || arguments[index] != "wasm32-wasi" {
+				fmt.Fprintln(os.Stderr, usage)
+				return 2
+			}
+			options.Target = arguments[index]
 		case "--count":
 			options.Count = true
 		case "--sanitize":
@@ -27,6 +34,14 @@ func build(path, output string, arguments []string) int {
 			fmt.Fprintln(os.Stderr, usage)
 			return 2
 		}
+	}
+	if err := native.ValidateOptions(options); err != nil {
+		fmt.Fprintf(os.Stderr, "adamic: %v\n", err)
+		return 1
+	}
+	if options.Target != "" && archive != "" {
+		fmt.Fprintln(os.Stderr, "adamic: --tsgo is not supported for wasm32-wasi")
+		return 1
 	}
 	program, code := compileLibrary(path, archive != "")
 	if program == nil {
