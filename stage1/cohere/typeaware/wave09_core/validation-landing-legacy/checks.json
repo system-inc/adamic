@@ -1,0 +1,37 @@
+[
+  {
+    "check": "label_var/verify.py",
+    "exit": 0,
+    "log": "/workspace/wave-09-legacy-label_var-verify.log"
+  },
+  {
+    "check": "label_var/verify_handed.py",
+    "exit": 0,
+    "log": "/workspace/wave-09-legacy-label_var-verify_handed.log"
+  },
+  {
+    "check": "invalid_regexp/verify_frontend.py",
+    "exit": 0,
+    "log": "/workspace/wave-09-legacy-invalid_regexp-verify_frontend.log"
+  },
+  {
+    "check": "invalid_regexp/verify_handed.py",
+    "exit": 0,
+    "log": "/workspace/wave-09-legacy-invalid_regexp-verify_handed.log"
+  },
+  {
+    "check": "misleading_character_class/verify_literals.py",
+    "exit": 0,
+    "log": "/workspace/wave-09-legacy-misleading_character_class-verify_literals.log"
+  },
+  {
+    "check": "listeners/verify.py",
+    "exit": 0,
+    "log": "/workspace/wave-09-legacy-listeners-verify.log"
+  },
+  {
+    "check": "invalid_regexp/verify_dynamic_gap.py",
+    "exit": 0,
+    "log": "/workspace/wave-09-legacy-invalid_regexp-verify_dynamic_gap.log"
+  }
+]

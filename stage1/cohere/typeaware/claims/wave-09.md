@@ -199,3 +199,12 @@ bridge/checker, registry, filtered Node, pinned compiler-expression and
 whole-AST checks, and vet pass again. Dynamic RegExp remains refused; both
 regex claims remain incomplete and no new claims were taken. See
 ../wave09_core/LANDING_C799_REPORT.md.
+
+## Legacy registry area landing
+
+Rebased onto area b46914832 with current main c7991b900. Original rules and
+both frozen corpora, seven owned rule/contract verifiers, registry and vet
+pass again, including mutants and sanitizers. Unchanged required parser,
+bridge and pure-helper evidence remains in the preceding landing report.
+Dynamic RegExp still blocks completion; no new claims. See
+../wave09_core/LANDING_LEGACY_REPORT.md.

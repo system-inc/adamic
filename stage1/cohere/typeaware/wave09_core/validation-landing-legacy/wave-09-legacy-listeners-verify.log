@@ -1,0 +1,13 @@
+go-build 0 0.322549
+go 0 0.03193
+maps 0 0.015896
+normal-build 0 0.164499
+normal 0 0.001547
+sanitized-build 0 0.266873
+sanitized 0 0.016303
+mutant-build 0 0.266421
+mutant 0 0.001847
+js-build 0 0.063943
+source 0 0.11456
+emitted 0 0.064228
+PASS six named listener declarations, production Go maps, native, sanitizers, both Node modes and wrong-kind mutant; shared dispatch is not exercised
