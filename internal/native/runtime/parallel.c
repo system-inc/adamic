@@ -29,6 +29,7 @@ typedef struct scope {
 	adamic_array *items;
 	adamic_closure *work;
 	adamic_array *results;
+	bool moved;
 	size_t completed;
 	size_t grain;
 	size_t exception_index;
@@ -202,7 +203,7 @@ static void execute_range(scope *scope, size_t from, size_t end) {
 			pthread_mutex_unlock(&scheduler);
 			adamic_release(error);
 		} else {
-			if (scope->results->references) { adamic_share(result.reference); }
+			if (scope->results->references && !scope->moved) { adamic_share(result.reference); }
 			scope->results->elements[index] = result;
 		}
 	}
@@ -271,9 +272,9 @@ static void start(void) {
 size_t adamic_parallel_threads(void) { pthread_once(&started, start); return thread_count; }
 size_t adamic_parallel_workers(void) { pthread_once(&started, start); return created; }
 
-adamic_array *adamic_parallel_map(adamic_array *items, adamic_closure *work, bool references) {
+static adamic_array *parallel_map(adamic_array *items, adamic_closure *work, bool references, bool moved) {
 	pthread_once(&started, start);
-	adamic_share(items);
+	if (!moved) { adamic_share(items); }
 	adamic_share(work);
 	ADAMIC_TSAN_PAUSE(adamic_tsan_publication);
 	adamic_array *results = adamic_array_new(items->length, references);
@@ -287,12 +288,12 @@ adamic_array *adamic_parallel_map(adamic_array *items, adamic_closure *work, boo
 				if (results->references) { adamic_release(result.reference); }
 				adamic_release(results); return NULL;
 			}
-			if (results->references) { adamic_share(result.reference); }
+			if (results->references && !moved) { adamic_share(result.reference); }
 			results->elements[index] = result;
 		}
 		return results;
 	}
-	scope state = {.items = items, .work = work, .results = results, .exception_index = SIZE_MAX, .grain = adamic_parallel_grain(items->length, thread_count)};
+	scope state = {.moved = moved, .items = items, .work = work, .results = results, .exception_index = SIZE_MAX, .grain = adamic_parallel_grain(items->length, thread_count)};
 	pthread_mutex_lock(&scheduler);
 	if (items->length != 0) {
 		append(&workers[worker_index], new_range(&state, 0, items->length));
@@ -315,4 +316,14 @@ adamic_array *adamic_parallel_map(adamic_array *items, adamic_closure *work, boo
 		return NULL;
 	}
 	return results;
+}
+
+// Lowering alone selects this path after proving disjoint exclusive item graphs.
+// The caller cannot access them until join; callback and result counts stay plain.
+adamic_array *adamic_parallel_map_move(adamic_array *items, adamic_closure *work, bool references) {
+	return parallel_map(items, work, references, true);
+}
+
+adamic_array *adamic_parallel_map(adamic_array *items, adamic_closure *work, bool references) {
+	return parallel_map(items, work, references, false);
 }
