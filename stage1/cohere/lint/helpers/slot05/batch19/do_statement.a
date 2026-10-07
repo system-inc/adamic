@@ -1,0 +1,19 @@
+import type {FlowState,FlowOps,LoopStatement} from './types.a';
+export function doStatement<N,B>(state:FlowState<N,B>,node:N,project:(node:N)=>LoopStatement<N>,ops:FlowOps<N,B>):void {
+ const stmt=project(node);
+ const body=ops.newBlock();
+ ops.link(state.cur,body);
+ const test=ops.newBlock();
+ const after=ops.newBlock();
+ ops.pushJump(node,after,test,undefined);
+ ops.enter(body);
+ ops.statement(stmt.statement);
+ ops.link(state.cur,test);
+ ops.popJump();
+ ops.enter(test);
+ ops.expr(stmt.expression);
+ ops.loop(node);
+ ops.link(state.cur,body);
+ if(!ops.truthy(stmt.expression)) {ops.link(state.cur,after);}
+ ops.enter(after);
+}

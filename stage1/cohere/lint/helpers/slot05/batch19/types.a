@@ -1,0 +1,18 @@
+export interface FlowJump<N,B> {readonly labels:readonly string[];readonly breakTo:B;readonly continueTo:B | undefined;readonly loop:N | undefined;readonly breakable:boolean;broken:boolean;}
+export interface FlowState<N,B> {cur:B;readonly jumps:FlowJump<N,B>[];}
+export interface LoopStatement<N> {readonly expression:N;readonly statement:N;}
+export interface LabelStatement<N> {readonly label:N;readonly statement:N;}
+export interface FlowOps<N,B> {
+ readonly newBlock:()=>B;
+ readonly link:(from:B,to:B)=>void;
+ readonly enter:(block:B)=>void;
+ readonly condition:(node:N,yes:B,no:B | undefined)=>void;
+ readonly statement:(node:N)=>void;
+ readonly expr:(node:N)=>void;
+ readonly loop:(node:N)=>void;
+ readonly pushJump:(node:N,after:B,test:B,loop:N | undefined)=>void;
+ readonly popJump:()=>void;
+ readonly truthy:(node:N)=>boolean;
+ readonly breakable:(node:N)=>boolean;
+ readonly text:(node:N)=>string;
+}

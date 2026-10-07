@@ -1,0 +1,19 @@
+import type {FlowState,FlowOps,LoopStatement} from './types.a';
+export function whileStatement<N,B>(state:FlowState<N,B>,node:N,project:(node:N)=>LoopStatement<N>,ops:FlowOps<N,B>):void {
+ const stmt=project(node);
+ const test=ops.newBlock();
+ ops.link(state.cur,test);
+ ops.enter(test);
+ const after=ops.newBlock();
+ const body=ops.newBlock();
+ let falseEntry:B | undefined=after;
+ if(ops.truthy(stmt.expression)) {falseEntry=undefined;}
+ ops.condition(stmt.expression,body,falseEntry);
+ ops.pushJump(node,after,test,node);
+ ops.enter(body);
+ ops.statement(stmt.statement);
+ ops.loop(node);
+ ops.link(state.cur,test);
+ ops.popJump();
+ ops.enter(after);
+}

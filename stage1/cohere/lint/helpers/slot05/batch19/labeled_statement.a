@@ -1,0 +1,11 @@
+import type {FlowState,FlowOps,LabelStatement} from './types.a';
+export function labeledStatement<N,B>(state:FlowState<N,B>,node:N,project:(node:N)=>LabelStatement<N>,ops:FlowOps<N,B>):void {
+ const stmt=project(node);
+ if(ops.breakable(stmt.statement)) {ops.statement(stmt.statement);return;}
+ const after=ops.newBlock();
+ state.jumps.push({labels:[ops.text(stmt.label)],breakTo:after,continueTo:undefined,loop:undefined,breakable:false,broken:false});
+ ops.statement(stmt.statement);
+ ops.popJump();
+ ops.link(state.cur,after);
+ ops.enter(after);
+}
