@@ -1,0 +1,21 @@
+// From TypeScript 6.0.3, src/compiler/scanner.ts:1891
+// From TypeScript 6.0.3, src/compiler/scanner.ts:1964
+// Census reason: the comma operator
+const CharacterCodes = {exclamation: 33, equals: 61};
+type SyntaxKind = number;
+const SyntaxKind = {ExclamationEqualsEqualsToken: 38, ExclamationEqualsToken: 36, ExclamationToken: 54};
+let pos = 0;
+let token = 0;
+let text = "";
+function charCodeUnchecked(index: number): number {return text.charCodeAt(index);}
+function scan(): SyntaxKind {
+if (charCodeUnchecked(pos + 1) === CharacterCodes.equals) {
+                        if (charCodeUnchecked(pos + 2) === CharacterCodes.equals) {
+                            return pos += 3, token = SyntaxKind.ExclamationEqualsEqualsToken;
+                        }
+                        return pos += 2, token = SyntaxKind.ExclamationEqualsToken;
+                    }
+pos++;
+return token = SyntaxKind.ExclamationToken;
+}
+for (const input of ["!", "!=", "!=="]) {text = input; pos = 0; token = 0; console.log(String(scan()) + ":" + String(pos) + ":" + String(token));}
