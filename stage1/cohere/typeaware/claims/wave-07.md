@@ -51,3 +51,21 @@ Go byte comparisons, per-rule mutants, raw-fact mutants, released-handle checks 
 ASan/UBSan/LSan gates. See ../wave07_continuation/REPORT.md. Production dispatcher
 registration remains pending under the shared-file restriction; no further rules
 are claimed. Earlier blocked status above records the initial capability diagnosis.
+
+## Second continuation claim
+
+All prior claimed ports and their private-overlay validation are pushed through
+158557b6; production registration of the first continuation remains pending.
+A fresh fetch on October 7, 2026 inspected 356 origin refs and 33 distinct
+Markdown claim blobs, covering 132 ranked names. Excluding the original 26
+production ports on origin/codex/tsgo-c-library (including abbreviated native
+filenames and oracle registry aliases), ports on origin/main, and claims on all
+origin heads, the first eligible rules in the combined 197-row volume ranking are:
+
+1. prefer-promise-reject-errors (0 compiler, 0 repository).
+2. prefer-regex-literals (0 compiler, 0 repository).
+3. prefer-rest-params (0 compiler, 0 repository).
+
+This claim is pushed before implementation. New native files use .a and remain
+in the worker-owned wave07_next directory; shared harness and generators are
+not edited.
