@@ -4,6 +4,8 @@ import type { Rules } from './rules.ts';
 import { NexusFacts } from './nexus_facts.a';
 import { Bindings } from './bindings.ts';
 import { FourthFacts } from './fourth_facts.a';
+// Shared regex table row react/boolean_prop_naming.go:621.
+const booleanPropMessagePattern = /\{\{[ \t\n\f\r]*([A-Za-z_][A-Za-z0-9_]*)[ \t\n\f\r]*\}\}/gu;
 export class BooleanPropNamingOptions {
     readonly booleanPropOptionsTag = true;
     readonly pattern: string;
@@ -60,47 +62,25 @@ export class ReactBooleanPropNaming {
                 this.rules.parser.node(this.rules.skip(n.children[0] ?? -1)).kind === 'Identifier')
         );
     }
-    messageSpace(code: number): boolean {
-        return [9, 10, 12, 13, 32].includes(code);
-    }
-    messageLetter(code: number): boolean {
-        return code === 95 || (code >= 65 && code <= 90) || (code >= 97 && code <= 122);
-    }
     interpolate(template: string, name: string): string {
+        booleanPropMessagePattern.lastIndex = 0;
         let out = '';
         let at = 0;
-        while(at < template.length) {
-            const first = template.indexOf('{{', at);
-            if(first < 0) return out + template.slice(at);
-            out += template.slice(at, first);
-            let cursor = first + 2;
-            while(cursor < template.length && this.messageSpace(template.charCodeAt(cursor))) cursor++;
-            const keyStart = cursor;
-            if(this.messageLetter(template.charCodeAt(cursor))) {
-                cursor++;
-                while(
-                    cursor < template.length &&
-                    (this.messageLetter(template.charCodeAt(cursor)) ||
-                        (template.charCodeAt(cursor) >= 48 && template.charCodeAt(cursor) <= 57))
-                )
-                    cursor++;
-                const key = template.slice(keyStart, cursor);
-                while(cursor < template.length && this.messageSpace(template.charCodeAt(cursor))) cursor++;
-                if(template.slice(cursor, cursor + 2) === '}}') {
-                    out +=
-                        key === 'propName' || key === 'component'
-                            ? name
-                            : key === 'pattern'
-                              ? this.options.pattern
-                              : template.slice(first, cursor + 2);
-                    at = cursor + 2;
-                    continue;
-                }
-            }
-            out += template.slice(first, first + 1);
-            at = first + 1;
+        let match = booleanPropMessagePattern.exec(template);
+        while(match !== null) {
+            const whole = match[0] ?? '';
+            const key = match[1] ?? '';
+            out += template.slice(at, match.index);
+            out +=
+                key === 'propName' || key === 'component'
+                    ? name
+                    : key === 'pattern'
+                      ? this.options.pattern
+                      : whole;
+            at = match.index + whole.length;
+            match = booleanPropMessagePattern.exec(template);
         }
-        return out;
+        return out + template.slice(at);
     }
     report(index: number, key: number): void {
         if(this.reported.includes(index)) return;
