@@ -67,3 +67,15 @@ first three unported and unclaimed syntax-ready entries, positions 13-15:
 
 All original 46 helper-ready entries are reserved. Main sources and all origin
 claim documents were checked. This update is pushed before implementation.
+
+## Fifth claim, October 7
+
+After verifying 9aec1797 pushed and fetching 335 origin refs, claim the first
+three available syntax-ready inventory entries: positions 21, 24 and 26.
+
+1. no-constructor-return
+2. no-delete-var
+3. no-eq-null
+
+All 46 original helper-ready rules are reserved. Main sources and claim documents
+on every origin branch were checked. This claim is pushed before implementation.
