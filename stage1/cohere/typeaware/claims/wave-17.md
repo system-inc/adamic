@@ -81,3 +81,12 @@ The first eligible checker-dependent rules in the combined by-volume ranking are
 None is already ported on either requested base or claimed on any origin branch.
 The complete scan is preserved in validation-wave-17-third/selection.json.
 This claim is pushed before implementation, on the same branch.
+
+## Third batch validated status
+
+All three global-rule ports are implemented in a7306edb. Default and option
+controls, both frozen corpora, ASan/UBSan, per-rule and bridge-fact mutants, and
+both new questions' released-handle controls pass. The native/Go timings and
+complete evidence are in [the third report](../WAVE_17_THIRD_REPORT.md). No shared
+harness, parser or registration generator was changed. Original JSX parsing and
+the existing shared unknown-request mutant anchor remain integration gaps.
