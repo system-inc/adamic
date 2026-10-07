@@ -214,3 +214,34 @@ Atomic and await have unfinished implementation beyond this integration gap.
 No shared files were changed and no additional claims were taken. This metadata
 change does not alter rule execution, so full corpus/sanitizer/handle gates were
 not repeated; their prior observations remain recorded separately.
+
+## Landing refresh onto b8fb957aa839
+
+Fetched origin and rebased without conflicts onto origin/main
+b8fb957aa839a9e8cb0b54279dd9864fa317bd30. Tested rebased code at
+b2d36db8b4c89973ab024cd9bc3d7497f9534640. No shared changes were reverted.
+
+Original TestWave01AgreementAndMutants passed in 148.649 seconds: compiler
+691 findings / 276439 bytes, repository zero findings, all controls, normal
+and sanitized comparison, three logic mutants, released handles and retention
+mutants. Continuation verify.py passed its three rules, all corpora, sanitized
+comparison, three logic mutants, four released questions/retention mutants
+and package tests. Symbol verify_symbol.py passed captured-syntax corpora,
+sanitation, argument mutant and released question; full native-driver integration
+is still not claimed.
+
+Atomic and await kernel comparisons passed with sanitizer-clean refresh and mask
+mutants caught by Go bytes. Atomic solver passed 16 graphs / 96 block boundaries
+and its sanitizer-clean one-sweep mutant. Deferred placement passed 32 cases
+and its sanitizer-clean lost-floor mutant. All nine named-kind manifests passed
+production registration comparison and valid-but-wrong-kind mutants.
+
+Commands were the recorded original go test gate with -count=1 and -timeout 30m,
+continuation verify.py with compiler corpus /workspace/wave-01-typescript,
+verify_symbol.py, verify_atomic_solver.py, verify_atomic_deferrals.py and
+verify_named_kinds.py, after sourcing /workspace/adamic-tools/env.sh. Kernel
+Go overlays and sanitized native entries were rebuilt and compared. Exact logs
+and streams are in validation/landing-b8fb.
+
+This turn handles landing readiness. The three latest claims remain incomplete
+as described above. No new claim was taken and no main or area branch was pushed.

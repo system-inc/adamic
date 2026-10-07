@@ -1,0 +1,15 @@
+controls bytes 49285 findings 64
+relaxed bytes 49285 findings 64
+controls-asan bytes 49285 findings 64
+mutant child caught only by byte comparison at 1874
+mutant response caught only by byte comparison at 13987
+mutant independent caught only by byte comparison at 17580
+compiler bytes 5318 findings 0
+compiler-asan bytes 5318 findings 0
+repository bytes 18485 findings 0
+repository-asan bytes 18485 findings 0
+released declaration-context:node panic 70; retained mutant exits 0
+released syntax-flow-graph panic 70; retained mutant exits 0
+released reference-access panic 70; retained mutant exits 0
+released loop-header panic 70; retained mutant exits 0
+PASS all three claimed rules
