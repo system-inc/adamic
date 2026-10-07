@@ -1,0 +1,28 @@
+=== RUN   TestThemeAddMatchesCohere
+    helpers_test.go:31: MUTANT default-precedence node caught by output comparison at line 1
+        MUTANT default-precedence emitted caught by output comparison at line 1
+        MUTANT default-precedence native caught by output comparison at line 1
+        MUTANT overwrite-order node caught by output comparison at line 1
+        MUTANT overwrite-order emitted caught by output comparison at line 1
+        MUTANT overwrite-order native caught by output comparison at line 1
+        MUTANT directive-message node caught by output comparison at line 1
+        MUTANT directive-message emitted caught by output comparison at line 1
+        MUTANT directive-message native caught by output comparison at line 1
+        PASS {"cases": 14780, "bytes": 7180060, "sha256": "d16e841e7a37980b06e02de098b49b09b634ba45b78e2c99db6af712c43383ba", "consumers": [{"rule": "better-tailwindcss/enforce-canonical-classes", "distinct_actual_Add_inputs": 419, "state_cases": 2095}, {"rule": "better-tailwindcss/enforce-consistent-class-order", "distinct_actual_Add_inputs": 419, "state_cases": 2095}, {"rule": "better-tailwindcss/enforce-consistent-variant-order", "distinct_actual_Add_inputs": 419, "state_cases": 2095}, {"rule": "better-tailwindcss/enforce-shorthand-classes", "distinct_actual_Add_inputs": 419, "state_cases": 2095}, {"rule": "better-tailwindcss/no-conflicting-classes", "distinct_actual_Add_inputs": 419, "state_cases": 2095}, {"rule": "better-tailwindcss/no-unknown-classes", "distinct_actual_Add_inputs": 421, "state_cases": 2105}], "control_cases": 2200}
+        
+--- PASS: TestThemeAddMatchesCohere (32.35s)
+=== RUN   TestFrameworkStaticReadingMatchesCohere
+    helpers_test.go:56: MUTANT missing-found node caught only by comparison at line 6231
+        MUTANT missing-found emitted caught only by comparison at line 6231
+        MUTANT missing-found native caught only by comparison at line 6231
+        MUTANT reading-count node caught only by comparison at line 1
+        MUTANT reading-count emitted caught only by comparison at line 1
+        MUTANT reading-count native caught only by comparison at line 1
+        MUTANT reading-order node caught only by comparison at line 1
+        MUTANT reading-order emitted caught only by comparison at line 1
+        MUTANT reading-order native caught only by comparison at line 1
+        PASS {"cases": 6239, "bytes": 1085222, "sha256": "b43aeb430c3870f1b237fc4022b6fb61a12721ac10ec8d93dc38cb13c3d86440", "consumers": [{"rule": "better-tailwindcss/enforce-canonical-classes", "distinct_actual_FrameworkStaticReading_inputs": 890}, {"rule": "better-tailwindcss/enforce-consistent-class-order", "distinct_actual_FrameworkStaticReading_inputs": 890}, {"rule": "better-tailwindcss/enforce-consistent-variant-order", "distinct_actual_FrameworkStaticReading_inputs": 890}, {"rule": "better-tailwindcss/enforce-shorthand-classes", "distinct_actual_FrameworkStaticReading_inputs": 890}, {"rule": "better-tailwindcss/no-conflicting-classes", "distinct_actual_FrameworkStaticReading_inputs": 890}, {"rule": "better-tailwindcss/no-unknown-classes", "distinct_actual_FrameworkStaticReading_inputs": 890}], "registered_utilities": 890, "control_cases": 899}
+        
+--- PASS: TestFrameworkStaticReadingMatchesCohere (25.71s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot_wave1_03	58.059s

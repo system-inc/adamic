@@ -22,3 +22,5 @@ The complete repository gate was not run. No main or area branch is pushed.
 ## Current main f8013f0b validation
 
 Rebased cleanly onto f8013f0baac41ddc340d76f83bddde38536a8f07. The uncached owned helper package passed in 75.906s: 21,019 cases, unchanged canonical output hashes, all six semantic mutants caught solely by comparison on Node, emitted JavaScript and sanitized native. go vet passed with empty output. nproc is 5. No new helper claim; the rule foundation remains absent on main. Full repository gate was not run.
+
+Current main c01907a7036a22c2ea7ee686ed5fe4c6cd4bbc06: clean rebase, uncached helper oracle PASS 58.059s, all 21,019 cases and six output-only mutants on all three paths. Rule branch c74d385b6 is explicitly parked unrebased for #zmh9v36.
