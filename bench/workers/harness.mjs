@@ -38,6 +38,10 @@ export async function loadSuite(filename) {
   }
   if (new Set(suite.variants.map(v => v.name)).size !== suite.variants.length) throw new Error('duplicate variant name');
   if (new Set(suite.workloads.map(w => w.name)).size !== suite.workloads.length) throw new Error('duplicate workload name');
+  for (const workload of suite.workloads) {
+    if (workload.requestCount !== undefined && (!Number.isSafeInteger(workload.requestCount) || workload.requestCount < 1)) throw new Error('requestCount must be a positive integer');
+    if (workload.warmupCount !== undefined && (!Number.isSafeInteger(workload.warmupCount) || workload.warmupCount < 0)) throw new Error('warmupCount must be a nonnegative integer');
+  }
   for (const request of [...suite.checks, ...suite.workloads.flatMap(w => w.requests ?? [w])]) {
     if (typeof request.url !== 'string' || !request.url.startsWith('/') || request.url.startsWith('//')) {
       throw new Error('request url must be a local absolute path');
@@ -148,24 +152,58 @@ export async function start(variant, options) {
   };
 }
 
-export function request(server, spec, timeoutMs) {
-  return new Promise((resolve, reject) => {
-    const began = performance.now();
-    const method = spec.method ?? 'GET';
-    const body = spec.body === undefined ? undefined : Buffer.from(spec.body);
-    const req = http.request({ host: '127.0.0.1', port: server.port, path: spec.url,
-      method, agent: server.agent, headers: { host: 'bench.invalid', ...spec.headers, ...(body ? { 'content-length': body.length } : {}) } }, res => {
-      const chunks = [];
-      res.on('data', chunk => chunks.push(chunk));
-      res.on('error', reject);
-      res.on('end', () => resolve({ latencyMs: performance.now() - began, status: res.statusCode,
-        headers: res.headers, bodyBase64: Buffer.concat(chunks).toString('base64') }));
-    });
-    const timer = setTimeout(() => req.destroy(new Error(`request timeout: ${spec.url}`)), timeoutMs);
-    req.on('close', () => clearTimeout(timer));
-    req.on('error', reject);
-    req.end(body);
-  });
+// A peer can close an idle keep-alive connection before Node observes its FIN.
+// Retry only before receiving any bytes, and retain the original latency/deadline.
+export async function request(server, spec, timeoutMs) {
+  const began = performance.now();
+  const method = spec.method ?? 'GET';
+  const body = spec.body === undefined ? undefined : Buffer.from(spec.body);
+  let retryCount = 0;
+  const attempts = [];
+  for (;;) {
+    const freshAgent = retryCount ? new http.Agent({ keepAlive: true, maxSockets: 1 }) : null;
+    try {
+      const response = await new Promise((resolve, reject) => {
+        let responseStarted = false;
+        let socket;
+        let bytesAtSend = 0;
+        let settled = false;
+        let timer;
+        const fail = error => {
+          if (settled) return;
+          settled = true; clearTimeout(timer);
+          const receivedBytes = socket ? Math.max(0, socket.bytesRead - bytesAtSend) : 0;
+          const attempt = { code: error.code ?? null, reusedSocket: req.reusedSocket === true, responseStarted, receivedBytes };
+          attempts.push(attempt);
+          reject(Object.assign(error, { requestFailure: true, attempt }));
+        };
+        const req = http.request({ host: '127.0.0.1', port: server.port, path: spec.url,
+          method, agent: freshAgent ?? server.agent, headers: { host: 'bench.invalid', ...spec.headers, ...(body ? { 'content-length': body.length } : {}) } }, res => {
+          responseStarted = true;
+          const chunks = [];
+          res.on('data', chunk => chunks.push(chunk));
+          res.on('error', fail);
+          res.on('aborted', () => fail(Object.assign(new Error('response aborted'), { code: 'ECONNRESET' })));
+          res.on('end', () => {
+            if (settled) return;
+            settled = true; clearTimeout(timer);
+            resolve({ status: res.statusCode, headers: res.headers, bodyBase64: Buffer.concat(chunks).toString('base64') });
+          });
+        });
+        req.on('socket', assigned => { socket = assigned; bytesAtSend = assigned.bytesRead; });
+        timer = setTimeout(() => req.destroy(new Error(`request timeout: ${spec.url}`)), Math.max(1, timeoutMs - (performance.now() - began)));
+        req.on('error', fail);
+        req.end(body);
+      });
+      return { ...response, latencyMs: performance.now() - began, retryCount, attempts };
+    } catch (error) {
+      const attempt = error.attempt;
+      const eligible = retryCount === 0 && attempt?.reusedSocket && !attempt.responseStarted && attempt.receivedBytes === 0
+        && ['ECONNRESET', 'EPIPE'].includes(attempt.code) && performance.now() - began < timeoutMs;
+      if (!eligible) throw Object.assign(error, { requestFailure: true, retryCount, attempts, latencyMs: performance.now() - began });
+      retryCount++;
+    } finally { freshAgent?.destroy(); }
+  }
 }
 
 export async function ready(server, coldPath, options) {
@@ -214,17 +252,43 @@ function choose(workload, index) {
 
 export async function phase(server, workload, count, concurrency, options) {
   let next = 0;
+  let firstError;
+  let retryCount = 0;
   const responses = new Array(count);
   const began = performance.now();
-  // Each lane sends the next request only after consuming the previous response.
+  // Stop dispatch after failure, but drain all in-flight lanes before closing the server.
   await Promise.all(Array.from({ length: Math.min(concurrency, count) }, async () => {
-    while (next < count) {
+    while (next < count && !firstError) {
       const index = next++;
-      const response = await request(server, choose(workload, index), options.timeoutMs);
-      responses[index] = { index, latencyMs: response.latencyMs, status: response.status };
+      const spec = choose(workload, index);
+      try {
+        const response = await request(server, spec, options.timeoutMs);
+        retryCount += response.retryCount;
+        if (spec.expectedStatus !== undefined && response.status !== spec.expectedStatus) {
+          throw new Error(`unexpected status for ${workload.name} request ${index}: ${response.status}, expected ${spec.expectedStatus}`);
+        }
+        responses[index] = { index, latencyMs: response.latencyMs, status: response.status, retryCount: response.retryCount, attempts: response.attempts };
+      } catch (error) {
+        retryCount += error.retryCount ?? 0;
+        responses[index] = { index, error: error.message, latencyMs: error.latencyMs ?? null, retryCount: error.retryCount ?? 0, attempts: error.attempts ?? [] };
+        firstError ??= error;
+      }
     }
   }));
-  return { wallMs: performance.now() - began, responses };
+  const result = { wallMs: performance.now() - began, responses, retryCount, startedRequests: next,
+    completedRequests: responses.filter(r => r && !r.error).length };
+  if (firstError) throw Object.assign(firstError, { phase: result });
+  return result;
+}
+
+export function retryValidity(warmup, measured, requestCount, warmupCount) {
+  const measuredRetryCount = measured?.retryCount ?? 0;
+  const warmupRetryCount = warmup?.retryCount ?? 0;
+  const retryCount = measuredRetryCount + warmupRetryCount;
+  const retryRate = retryCount / (requestCount + warmupCount);
+  const measuredRetryRate = measuredRetryCount / requestCount;
+  return { retryCount, measuredRetryCount, warmupRetryCount, retryRate, measuredRetryRate,
+    valid: retryRate <= 0.01 && measuredRetryRate <= 0.01 };
 }
 
 export async function sample(variant, workload, concurrency, round, suite, options, meter) {
@@ -233,11 +297,16 @@ export async function sample(variant, workload, concurrency, round, suite, optio
   let pollError;
   let stopped = false;
   let peak = 0;
+  let warmup, measured;
+  let stage = "startup";
   try {
     await ready(server, suite.coldPath, options);
     await delay(options.idleSettleMs);
     const idle = await meter.read(server.child.pid);
-    const warmup = await phase(server, workload, options.warmup, concurrency, options);
+    stage = "warmup";
+    warmup = await phase(server, workload, options.warmup, concurrency, options);
+    const warmupRetries = retryValidity(warmup, null, options.requests, options.warmup);
+    if (!warmupRetries.valid) return { variant: variant.name, workload: workload.name, concurrency, round, valid: false, error: "whole-cell retry rate exceeds 1% during warmup", stage, ...warmupRetries, warmup };
     peak = idle.peakBytes;
     polling = (async () => {
       while (!stopped) {
@@ -248,7 +317,8 @@ export async function sample(variant, workload, concurrency, round, suite, optio
     })().catch(error => { pollError = error; });
     const cpuPid = options.cpuPid ?? server.child.pid;
     const before = await meter.read(cpuPid);
-    const measured = await phase(server, workload, options.requests, concurrency, options);
+    stage = "measured";
+    measured = await phase(server, workload, options.requests, concurrency, options);
     const after = await meter.read(cpuPid);
     stopped = true;
     await polling;
@@ -261,12 +331,19 @@ export async function sample(variant, workload, concurrency, round, suite, optio
     const baselineWallMs = performance.now() - baselineBegan;
     const cpuMs = after.cpuMs - before.cpuMs;
     const idleCpuMs = baselineAfter.cpuMs - baselineBefore.cpuMs;
+    const retries = retryValidity(warmup, measured, options.requests, options.warmup);
     return { variant: variant.name, workload: workload.name, concurrency, round, pid: server.child.pid,
+      ...retries, ...(retries.valid ? {} : { error: "retry rate exceeds 1%; measurements excluded" }),
       cpuPid, counters: { before, after, baselineBefore, baselineAfter, idle }, modules: server.modules, warmupRequests: warmup.responses.length,
       wallMs: measured.wallMs, cpuMs, cpuMsPerRequest: cpuMs / options.requests,
       idleCpuMs, baselineWallMs, idleCpuMsPerRequest: idleCpuMs / baselineWallMs * measured.wallMs / options.requests,
       idleRssBytes: idle.rssBytes, peakRssBytes: peak,
       latencyMs: stats(measured.responses.map(r => r.latencyMs)), requests: measured.responses };
+  } catch (error) {
+    if (!error.requestFailure) throw error;
+    const phases = { warmup, measured, [stage]: error.phase };
+    const retries = retryValidity(phases.warmup, phases.measured, options.requests, options.warmup);
+    return { variant: variant.name, workload: workload.name, concurrency, round, ...retries, valid: false, error: error.message, stage, phases };
   } finally { stopped = true; if (polling) await polling; await server.close(); }
 }
 
@@ -288,19 +365,37 @@ export function markdown(report) {
     `Runner: ${report.header.runnerDescription}. Version: ${report.header.version}; npm package: ${report.header.npmVersion ?? 'not used'}.`,
     `Instruments: ${report.header.instruments}.`,
     `Flags (effective): ${JSON.stringify(report.header.options)}`,
+    `Retry policy: ${report.header.retryPolicy ?? "none"}`,
     `Machine: ${JSON.stringify(report.header.machine)}`,
     `Load before: ${report.header.loadBefore}; after: ${report.header.loadAfter ?? 'pending'}.`,
+    `Round loads: ${JSON.stringify(report.rounds ?? [])}`,
+    `Workload count overrides: ${JSON.stringify(report.suite.workloads.map(w => ({ name: w.name, requests: w.requestCount ?? report.header.options.requests, warmup: w.warmupCount ?? report.header.options.warmup })))}`,
     `Cold path: ${report.suite.coldPath}. Default HTTP Host: ${report.header.requestHost}. Weighted selection: deterministic index modulo total weight.`,
     '', '| variant | workload | c | statistic across rounds | p50 ms | p90 ms | p99 ms | mean ms | CPU ms/req | idle drift ms/req | idle RSS MiB | peak RSS MiB |',
     '|---|---|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|',
   ];
   for (const variant of report.suite.variants) for (const workload of report.suite.workloads) for (const c of report.header.options.concurrency) {
-    const rows = report.samples.filter(s => s.variant === variant.name && s.workload === workload.name && s.concurrency === c);
-    if (!rows.length) continue;
+    const cells = report.samples.filter(s => s.variant === variant.name && s.workload === workload.name && s.concurrency === c);
+    const rows = cells.filter(s => s.valid !== false);
+    if (!rows.length) {
+      if (cells.length) lines.push(`| ${variant.name} | ${workload.name} | ${c} | FAILED ${cells.length}/${cells.length} | - | - | - | - | - | - | - | - |`);
+      continue;
+    }
     for (const statistic of ['best', 'median']) {
       const value = get => stats(rows.map(get))[statistic];
-      lines.push(`| ${variant.name} | ${workload.name} | ${c} | ${statistic} of ${rows.length} | ${['p50', 'p90', 'p99', 'mean'].map(k => f(value(s => s.latencyMs[k]))).join(' | ')} | ${f(value(s => s.cpuMsPerRequest))} | ${f(value(s => s.idleCpuMsPerRequest))} | ${f(value(s => s.idleRssBytes / 1048576))} | ${f(value(s => s.peakRssBytes / 1048576))} |`);
+      lines.push(`| ${variant.name} | ${workload.name} | ${c} | ${statistic} of ${rows.length}; failed ${cells.length - rows.length}/${cells.length} | ${['p50', 'p90', 'p99', 'mean'].map(k => f(value(s => s.latencyMs[k]))).join(' | ')} | ${f(value(s => s.cpuMsPerRequest))} | ${f(value(s => s.idleCpuMsPerRequest))} | ${f(value(s => s.idleRssBytes / 1048576))} | ${f(value(s => s.peakRssBytes / 1048576))} |`);
     }
+  }
+  lines.push('', 'Per-cell retries: measured/warmup, with FAILED cells excluded above.',
+    '| variant | workload | c | ' + Array.from({ length: report.header.options.rounds }, (_, r) => `round ${r + 1}`).join(' | ') + ' |',
+    '|---|---|---:|' + Array.from({ length: report.header.options.rounds }, () => '---:').join('|') + '|');
+  for (const variant of report.suite.variants) for (const workload of report.suite.workloads) for (const c of report.header.options.concurrency) {
+    const cells = report.samples.filter(s => s.variant === variant.name && s.workload === workload.name && s.concurrency === c);
+    if (!cells.length) continue;
+    lines.push(`| ${variant.name} | ${workload.name} | ${c} | ` + Array.from({ length: report.header.options.rounds }, (_, round) => {
+      const cell = cells.find(s => s.round === round);
+      return cell ? `${cell.measuredRetryCount ?? 0}/${cell.warmupRetryCount ?? 0}${cell.valid === false ? ' FAILED' : ''}` : '-';
+    }).join(' | ') + ' |');
   }
   lines.push('', '| variant | cold spawns | best ms | median ms |', '|---|---:|---:|---:|');
   for (const variant of report.suite.variants) {
@@ -334,17 +429,24 @@ export async function run(options = {}, hooks = {}) {
   }
   const report = { header: { options, version, npmVersion, workerdNpmPin: WORKERD_PIN,
     runnerDescription: options.runner === 'node' ? 'Node HTTP adapter, NOT workerd' : 'workerd directly, no wrangler or proxy in request path',
+    retryPolicy: "one fresh-socket retry for ECONNRESET/EPIPE on reused socket before any response bytes; original timer/deadline; cell total and measured retry rates <=1%; double failure invalid",
     requestHost: 'bench.invalid', instruments: meter.name, cpuResolutionMs: meter.cpuResolutionMs,
     machine: { platform: process.platform, arch: process.arch, node: process.version, release: os.release(), cpus: os.cpus().length, cpuModel: os.cpus()[0]?.model },
-    loadBefore: execFileSync('uptime', { encoding: 'utf8' }).trim() }, suite, checks: [], samples: [], cold: [] };
+    loadBefore: execFileSync('uptime', { encoding: 'utf8' }).trim() }, suite, checks: [], samples: [], cold: [], rounds: [] };
   try {
     await correctness(suite, options, report);
-    hooks.onCorrectness?.(report);
+    await hooks.onCorrectness?.(report);
     for (let round = 0; round < options.rounds; round++) {
+      const roundLoad = { round, loadBefore: execFileSync('uptime', { encoding: 'utf8' }).trim() };
+      report.rounds.push(roundLoad);
       const order = suite.variants.slice(round % suite.variants.length).concat(suite.variants.slice(0, round % suite.variants.length));
       for (const workload of suite.workloads) for (const c of options.concurrency) for (const variant of order) {
-        report.samples.push(await sample(variant, workload, c, round, suite, options, meter));
+        const cellOptions = { ...options, requests: workload.requestCount ?? options.requests, warmup: workload.warmupCount ?? options.warmup };
+        report.samples.push(await sample(variant, workload, c, round, suite, cellOptions, meter));
+        await hooks.onSample?.(report.samples.at(-1), report);
       }
+      roundLoad.loadAfter = execFileSync('uptime', { encoding: 'utf8' }).trim();
+      await hooks.onRound?.(roundLoad, report);
     }
     for (let round = 0; round < options.coldSpawns; round++) {
       const order = suite.variants.slice(round % suite.variants.length).concat(suite.variants.slice(0, round % suite.variants.length));
