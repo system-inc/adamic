@@ -1,0 +1,18 @@
+go version go1.27.1 linux/amd64
+setup: go ready (0.023s)
+v24.19.0
+setup: node ready (0.031s)
+setup: submodules ready (0.066s)
+setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.007s
+setup: markdown dependencies ready (0.076s)
+setup: stage3 API dependencies skipped (validated API lock and installed bytes); step-duration=0.054s
+setup: stage3 API dependencies checked (0.169s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.173s)
+setup: go build ready (5.974s)
+setup: test binaries deferred (use --warm-tests) (6.120s)
+setup: build cache warm (6.122s)
+setup: build-flags commit=ac92bf0abf36b0fa442929b4e9a434445cb15a17 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false load-before=0.22 1.11 1.06 3/340 93384 load-after=0.68 1.19 1.09 2/336 93855
+setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (6.151s)
+setup: source /workspace/adamic-tools/env.sh
+setup: logs /tmp/adamic-gate/setup.skxmRU

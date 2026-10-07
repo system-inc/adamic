@@ -1,0 +1,13 @@
+mutant logs: /tmp/adamic-gate/stage3-mutants-jn375km1
+drop-lock killed at intended assertion
+drop-lock also killed by real installation
+drop-manifest killed at intended assertion
+drop-bootstrap killed at intended assertion
+drop-helper killed at intended assertion
+drop-node killed at intended assertion
+drop-tree-bytes killed at intended assertion
+drop-tree-modes killed at intended assertion
+drop-link-target killed at intended assertion
+omit-go-setup-stage3-api.py killed by collected manifest assertion
+omit-go-package.json killed by collected manifest assertion
+omit-go-package-lock.json killed by collected manifest assertion

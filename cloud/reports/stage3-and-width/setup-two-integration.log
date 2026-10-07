@@ -1,0 +1,14 @@
+integration logs: /tmp/adamic-gate/setup-proof-yw58q57d
+F....
+======================================================================
+FAIL: test_reruns_and_identical_uncached_answer (__main__.SetupIntegration.test_reruns_and_identical_uncached_answer)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_setup.py", line 175, in test_reruns_and_identical_uncached_answer
+    self.assertIn("go build skipped", warm)
+AssertionError: 'go build skipped' not found in 'v24.19.0\ngo version go1.27.1 linux/amd64\nsetup: go ready (7.157s)\nsetup: node ready (7.157s)\nsetup: submodules ready (7.181s)\nsetup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.006s\nsetup: markdown dependencies ready (7.196s)\nsetup: stage3 API dependencies skipped (stage3/api/package-lock.json absent); step-duration=0.000s\nsetup: stage3 API dependencies checked (7.229s)\nclang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)\nsetup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (7.302s)\nsetup: go build ready (7.441s)\nsetup: test binaries deferred (use --warm-tests) (7.494s)\nsetup: build cache warm (7.495s)\nsetup: build-flags commit=bc0ecfaf4a35a86c8ac29034e62feb5f479004a2 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false load-before=1.19 1.29 1.12 5/345 94730 load-after=1.09 1.26 1.11 1/339 95350\nsetup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (7.523s)\nsetup: source /workspace/adamic-tools/env.sh\nsetup: logs /tmp/adamic-gate/setup.LlnZc3\n'
+
+----------------------------------------------------------------------
+Ran 5 tests in 16.927s
+
+FAILED (failures=1)

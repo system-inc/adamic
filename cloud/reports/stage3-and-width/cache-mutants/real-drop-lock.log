@@ -1,0 +1,14 @@
+integration logs: /tmp/adamic-gate/stage3-setup-proof-nec2yea9
+F
+======================================================================
+FAIL: test_lock_mutation_and_uncached_bytes (__main__.Stage3Integration.test_lock_mutation_and_uncached_bytes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_stage3_setup.py", line 98, in test_lock_mutation_and_uncached_bytes
+    self.assertIn('installed (npm ci', run())
+AssertionError: 'installed (npm ci' not found in 'setup: stage3 API dependencies skipped (validated API lock and installed bytes); step-duration=0.052s\n'
+
+----------------------------------------------------------------------
+Ran 1 test in 1.645s
+
+FAILED (failures=1)

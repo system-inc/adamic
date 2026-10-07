@@ -1,0 +1,13 @@
+s.F.
+======================================================================
+FAIL: test_each_component_invalidates (__main__.Stage3Key.test_each_component_invalidates) (component='node')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_stage3_setup.py", line 28, in test_each_component_invalidates
+    self.assertNotEqual(before, helper.stamp_key(**changed), name)
+AssertionError: '09dd9845e47d8c93c5ea8ab12476dcee307b81f801fcce8dcba9665e646a6550' == '09dd9845e47d8c93c5ea8ab12476dcee307b81f801fcce8dcba9665e646a6550' : node
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.003s
+
+FAILED (failures=1, skipped=1)

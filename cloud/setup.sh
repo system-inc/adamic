@@ -121,6 +121,9 @@ step "node ready"
 python3 "$repository/cloud/setup-markdown-width.py" "$repository/cloud/markdown-width" "$markdownDependencies" "$tools/bin/node" > "$run/markdown.log" 2>&1 || { cat "$run/markdown.log"; return 1; }
 cat "$run/markdown.log"
 step "markdown dependencies ready"
+python3 "$repository/cloud/setup-stage3-api.py" "$repository" "$tools" "$tools/bin/node" > "$run/stage3.log" 2>&1 || { cat "$run/stage3.log"; return 1; }
+cat "$run/stage3.log"
+step "stage3 API dependencies checked"
 }
 
 prepareSubmodules() {

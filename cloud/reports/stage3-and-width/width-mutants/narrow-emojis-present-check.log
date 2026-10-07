@@ -1,0 +1,4 @@
+=== RUN   TestMarkdownUnicodeWidths
+    width_test.go:25: missing Markdown width oracle module narrow-emojis at /tmp/adamic-gate/width-preflight-1jzep0us/narrow-emojis/node_modules/narrow-emojis/index.js: stat /tmp/adamic-gate/width-preflight-1jzep0us/narrow-emojis/node_modules/narrow-emojis/index.js: no such file or directory; run bash cloud/setup.sh and source its env.sh
+--- FAIL: TestMarkdownUnicodeWidths (0.00s)
+FAIL

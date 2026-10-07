@@ -1,0 +1,13 @@
+s.F.
+======================================================================
+FAIL: test_each_component_invalidates (__main__.Stage3Key.test_each_component_invalidates) (component='bootstrap')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_stage3_setup.py", line 28, in test_each_component_invalidates
+    self.assertNotEqual(before, helper.stamp_key(**changed), name)
+AssertionError: '01b02e89e10419274b658fe6c4b4307b3552175b26d679c9d5821228acc962b1' == '01b02e89e10419274b658fe6c4b4307b3552175b26d679c9d5821228acc962b1' : bootstrap
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.003s
+
+FAILED (failures=1, skipped=1)

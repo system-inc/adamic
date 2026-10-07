@@ -1,0 +1,4 @@
+=== RUN   TestMarkdownUnicodeWidths
+    width_test.go:25: missing Markdown width oracle module emoji-regex at /tmp/adamic-gate/width-preflight-1jzep0us/emoji-regex/node_modules/emoji-regex/index.js: stat /tmp/adamic-gate/width-preflight-1jzep0us/emoji-regex/node_modules/emoji-regex/index.js: no such file or directory; run bash cloud/setup.sh and source its env.sh
+--- FAIL: TestMarkdownUnicodeWidths (0.00s)
+FAIL

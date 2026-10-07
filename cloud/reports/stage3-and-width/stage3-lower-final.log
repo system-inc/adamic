@@ -1,0 +1,26 @@
+=== RUN   TestNodeLibraryNamesUnimplementedMembers
+=== RUN   TestNodeLibraryNamesUnimplementedMembers/node:fs.copyFileSync
+=== RUN   TestNodeLibraryNamesUnimplementedMembers/node:fs.readFile
+=== RUN   TestNodeLibraryNamesUnimplementedMembers/node:path.toNamespacedPath
+=== RUN   TestNodeLibraryNamesUnimplementedMembers/node:os.userInfo
+=== RUN   TestNodeLibraryNamesUnimplementedMembers/node:crypto.randomUUID
+=== RUN   TestNodeLibraryNamesUnimplementedMembers/node:buffer.BufferConstructor.byteLength
+=== RUN   TestNodeLibraryNamesUnimplementedMembers/node:path.sep
+=== RUN   TestNodeLibraryNamesUnimplementedMembers/node:fs.readFile#01
+--- PASS: TestNodeLibraryNamesUnimplementedMembers (1.80s)
+    --- PASS: TestNodeLibraryNamesUnimplementedMembers/node:fs.copyFileSync (0.26s)
+    --- PASS: TestNodeLibraryNamesUnimplementedMembers/node:fs.readFile (0.23s)
+    --- PASS: TestNodeLibraryNamesUnimplementedMembers/node:path.toNamespacedPath (0.22s)
+    --- PASS: TestNodeLibraryNamesUnimplementedMembers/node:os.userInfo (0.22s)
+    --- PASS: TestNodeLibraryNamesUnimplementedMembers/node:crypto.randomUUID (0.22s)
+    --- PASS: TestNodeLibraryNamesUnimplementedMembers/node:buffer.BufferConstructor.byteLength (0.24s)
+    --- PASS: TestNodeLibraryNamesUnimplementedMembers/node:path.sep (0.22s)
+    --- PASS: TestNodeLibraryNamesUnimplementedMembers/node:fs.readFile#01 (0.21s)
+=== RUN   TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames
+--- PASS: TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames (0.42s)
+=== RUN   TestNodeLibraryDistinguishesReceiverOwners
+--- PASS: TestNodeLibraryDistinguishesReceiverOwners (0.21s)
+=== RUN   TestNodeLibraryQualifiedTypeAssertion
+--- PASS: TestNodeLibraryQualifiedTypeAssertion (0.22s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	2.657s
