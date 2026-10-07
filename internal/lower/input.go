@@ -33,6 +33,11 @@ func (l *lowering) input(node *ast.Node) (ir.Expression, bool, error) {
 		}
 		return ir.ReadTextFile{Path: path}, true, nil
 	case l.isPreludeFunction(callee, "writeTextFile"):
+		for _, argument := range arguments {
+			if argument.Kind == ast.KindSpreadElement {
+				return nil, true, l.notYet(argument, describe(argument))
+			}
+		}
 		if len(arguments) != 2 {
 			return nil, true, errors.New("lower: " + l.program.Where(node) + ": writeTextFile takes a path and a text, and the checker let another count through")
 		}

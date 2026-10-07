@@ -79,7 +79,7 @@ func TestRuntimeStaticsSignalAndExit(t *testing.T) {
 	library, root := staticsRaceLibrary(t, "", "", "")
 	binary := staticsRaceFixture(t, root, library, "signal_output")
 	for _, worker := range []bool{false, true} {
-		for _, signal := range []syscall.Signal{0, syscall.SIGTERM, syscall.SIGINT, syscall.SIGHUP} {
+		for _, signal := range []syscall.Signal{0, syscall.SIGTERM, syscall.SIGINT, syscall.SIGHUP, syscall.SIGQUIT, syscall.SIGUSR2, syscall.SIGALRM, syscall.SIGXCPU, syscall.SIGVTALRM, syscall.SIGPROF, syscall.SIGIO, 30, 34, 64} {
 			if worker && signal == 0 {
 				continue
 			} // Normal exit belongs to the loop thread.
@@ -88,8 +88,10 @@ func TestRuntimeStaticsSignalAndExit(t *testing.T) {
 			})
 		}
 	}
+	// Repeat the unsafe access to expose overlap before forwarding terminates the process.
+	// No extra synchronization is added: every iteration is the same unlocked flush.
 	t.Run("handler_buffer_mutant", func(t *testing.T) {
-		library, root := staticsRaceLibrary(t, "adamic.c", "int saved_errno = errno;", "int saved_errno = errno;\n flush();")
+		library, root := staticsRaceLibrary(t, "adamic.c", "int saved_errno = errno;", "int saved_errno = errno;\n for (size_t attempt = 0; attempt < 16384; attempt++) { flush(); }")
 		binary := staticsRaceFixture(t, root, library, "signal_output")
 		staticsSignalRun(t, binary, true, syscall.SIGTERM, true)
 	})
@@ -98,6 +100,49 @@ func TestRuntimeStaticsSignalAndExit(t *testing.T) {
 		binary := staticsRaceFixture(t, root, library, "signal_output")
 		staticsSignalRun(t, binary, false, 0, true)
 	})
+}
+
+// Not parallel: each build occupies the same runtime/TSan budget as the pool proofs.
+func TestRuntimeStopWholeLines(t *testing.T) {
+	if goruntime.GOOS != "linux" {
+		t.Skip("requires Linux signals and ThreadSanitizer")
+	}
+	node := exec.Command("node", "-e", "console.log('first whole line'); console.log('second whole line'); process.kill(process.pid, 'SIGUSR2');")
+	expected, err := node.Output()
+	if err == nil || string(expected) != "first whole line\nsecond whole line\n" || node.ProcessState.Sys().(syscall.WaitStatus).Signal() != syscall.SIGUSR2 {
+		t.Fatalf("unexpected Node observation: %v %q", err, expected)
+	}
+	for _, mutant := range []bool{false, true} {
+		t.Run(fmt.Sprintf("drop_flush_%t", mutant), func(t *testing.T) {
+			file, old, changed := "", "", ""
+			if mutant {
+				file, old, changed = "adamic.c", "\t\tflush();\n\t\t// Keep writers out", "\t\t/* mutant: drop whole-line stop flush */\n\t\t// Keep writers out"
+			}
+			library, root := staticsRaceLibrary(t, file, old, changed)
+			binary := staticsRaceFixture(t, root, library, "stop_whole_lines")
+			for attempt := 0; attempt < 3; attempt++ {
+				ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+				command := exec.CommandContext(ctx, binary)
+				var errors strings.Builder
+				command.Stderr = &errors
+				command.Env = append(os.Environ(), "TSAN_OPTIONS=halt_on_error=1")
+				actual, err := command.Output()
+				timedOut := ctx.Err() != nil
+				cancel()
+				if err == nil || timedOut || command.ProcessState.Sys().(syscall.WaitStatus).Signal() != syscall.SIGUSR2 || errors.Len() != 0 {
+					t.Fatalf("unexpected stop: %v %s", err, errors.String())
+				}
+				if mutant {
+					if len(actual) != 0 {
+						t.Fatalf("drop-flush mutant survived: %q", actual)
+					}
+					t.Logf("caught drop-flush mutant by stdout mismatch: Node %q, mutant %q", expected, actual)
+				} else if string(actual) != string(expected) {
+					t.Fatalf("whole-line output differs: Node %q, native %q", expected, actual)
+				}
+			}
+		})
+	}
 }
 
 func staticsSignalRun(t *testing.T, binary string, worker bool, signal syscall.Signal, mutant bool) {

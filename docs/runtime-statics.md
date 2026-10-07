@@ -273,20 +273,20 @@ Final guard validation after adding the audited-file manifest: exit 0 in 0.215s.
 
 Merged concurrency-area `b9479aa4beb65409312eaae5f406e94d3a6d7dfb` in `5e19080`. The historical stack classifications now apply, except normalization caches remain C TLS, regex/checker counters are atomic, and output is protected on every path as recorded below. Historical unsafe classifications describe the original snapshots, not the integrated runtime. `output_whole` was removed: volatile and signal fences cannot protect bytes that other threads write.
 
-The only installed handlers are stopped for SIGTERM, SIGINT and SIGHUP; SIGPIPE is ignored. stopped may execute on any unblocked thread. It only reads an immutable nonblocking pipe descriptor, saves/restores thread-local errno, and performs async-signal-safe write of a signal byte. It never touches output, locks, counters or the heap. The normal signal thread inherits stop signals blocked, takes output_lock to flush complete lines, installs the default action, unblocks that signal on itself and raises it. Inherited ignored signals stay ignored. A full pipe already contains a pending termination event.
+The installed handlers forward SIGTERM, SIGINT, SIGHUP, SIGQUIT, SIGUSR2, SIGALRM, SIGXCPU, SIGVTALRM, SIGPROF, optional SIGIO/SIGPWR, and public realtime signals through stopped. SIGPIPE, SIGXFSZ and SIGUSR1 are ignored. Fault and abort handlers, including sanitizer handlers, are preserved. stopped may execute on any unblocked thread. It only reads an immutable nonblocking pipe descriptor, saves/restores thread-local errno, and performs async-signal-safe write of a signal byte. It never touches output, locks, counters or the heap. The normal signal thread inherits stop signals blocked, takes output_lock to flush complete lines, installs the default action, unblocks that signal on itself and raises it. Inherited ignored SIGINT/SIGHUP/SIGTERM are reset to stop handlers, matching Node; other inherited ignored stop signals remain ignored. A full pipe already contains a pending termination event.
 
 stop_start initializes descriptors before installing handlers or publishing work. Descriptors remain open and unchanged until process death; OS cleanup deliberately avoids close/reuse races with handlers. stop_end sends zero and joins the signal thread at ordinary exit. Panic uses _exit, so it runs no exit hooks. SIGKILL/default fatal actions run no teardown.
 
 | File, current line, storage | Handler or exit access / writers | Current safety |
 |---|---|---|
-| `adamic.c:stop_pipe:1`, 116 | Startup initializes; stopped reads write descriptor; stop_loop reads read descriptor; stop_end sends shutdown | Written only before pool starts and handler installation; never closed/changed. Handler uses async-signal-safe nonblocking write |
-| `adamic.c:stop_thread:1`, 117 | Startup pthread_create writes identity; stop_end joins | Written only before pool starts; no handler access |
-| `adamic.c:output:1`, 52 | buffer/write_line writes; signal-thread, finish and panic flush reads | Guarded by output_lock on every path; no handler access |
-| `adamic.c:output_used:1`, 53 | buffer increments; all flush paths read/reset | Guarded by output_lock; no handler access |
-| `adamic.c:output_mode:1`, 56 | First write_line sets mode and registers finish | Guarded by output_lock; exit/handler do not read |
-| `adamic.c:broken:1`, 59 | Failed writes set; flush and finish read | Guarded by output_lock; finish snapshots failure before unlocking |
-| `adamic.c:output_lock:1`, 60 | Ordinary writes, signal thread, finish, panic lock/unlock | Statically initialized mutex; never used by a handler |
-| `adamic.c:panicking:1`, 61 | Panic selects the one fatal-message writer | Atomic flag; losing panic threads pause; winner locks output, reports then _exit |
+| `adamic.c:stop_pipe:1`, 130 | Startup initializes; stopped reads write descriptor; stop_loop reads read descriptor; stop_end sends shutdown | Written only before pool starts and handler installation; never closed/changed. Handler uses async-signal-safe nonblocking write |
+| `adamic.c:stop_thread:1`, 131 | Startup pthread_create writes identity; stop_end joins | Written only before pool starts; no handler access |
+| `adamic.c:output:1`, 66 | buffer/write_line writes; signal-thread, finish and panic flush reads | Guarded by output_lock on every path; no handler access |
+| `adamic.c:output_used:1`, 67 | buffer increments; all flush paths read/reset | Guarded by output_lock; no handler access |
+| `adamic.c:output_mode:1`, 70 | First write_line sets mode and registers finish | Guarded by output_lock; exit/handler do not read |
+| `adamic.c:broken:1`, 73 | Failed writes set; flush and finish read | Guarded by output_lock; finish snapshots failure before unlocking |
+| `adamic.c:output_lock:1`, 74 | Ordinary writes, signal thread, finish, panic lock/unlock | Statically initialized mutex; never used by a handler |
+| `adamic.c:panicking:1`, 75 | Panic selects the one fatal-message writer | Atomic flag; losing panic threads pause; winner locks output, reports then _exit |
 | adamic.c const prefix/message | Panic/unreachable read constant message bytes | Static initialization, no writers, excluded from mutable inventory |
 | parallel.c started 55, scheduler 56, changed 57, workers 58, thread_count 59, created 60, stopping 61, worker_index 62 | shutdown sets stopping under scheduler, broadcasts, joins workers, frees workers/resets created; workers read deques/stopping and TLS worker_index | pthread_once publishes startup, scheduler guards live deque/state; shutdown is an exit/quiescent operation. finish explicitly joins before flushing even if first worker output registered finish after pool hook. Repeated shutdown sees created zero. No handler access |
 | heap.c giving 94, spares 95, owned_chunks 96, freeing 281, freeing_count 282, freeing_capacity 283, draining 284 | Worker heap_thread_end drains owned remote frees, changes its free lists and frees freeing buffer; heap_end cleans caller | C TLS; each worker cleans its own state. Signal thread allocates no Adamic values |
@@ -369,3 +369,40 @@ Whole slices retain their input without writing its units field, including immor
   const byte arrays. There are no lazy writes or runtime static caches. Mutable
   records and iterators are counted heap objects using the existing Map/Object
   ownership and concurrency rules.
+
+## signals-area reconciliation
+
+Base: codex/string-views-concurrency at 4b9f0c6; merge: area/runtime at 14504c7. Keep the threaded stop handler and output_lock, rather than restoring the area's signal-handler buffer access. Every handler still touches only the immutable write descriptor and thread-local errno. stop_start masks the full external stop list, including realtime signals, when creating the signal thread. The caller's mask is restored. Whole-line flushing needs no output_whole/fence: write_line holds output_lock through the terminating newline, and the signal thread waits for that lock before flushing. The signal thread holds output_lock through default-action re-raising, so another writer cannot start an incomplete line between the stop flush and termination. Signal handling never acquires the lock on the interrupted thread.
+
+| Audit key | Current line | Holds / writers and timing | Classification |
+|---|---:|---|---|
+| `adamic.c:default_action:1` | 132 | Default signal disposition; adamic_start fills handler and mask, stop_loop reads after pthread_create publication | Written only before pool starts, before signal thread creation and handler installation; immutable afterward, no handler access |
+| adamic.c stop_signals | 135 | Full ordinary external stop list, static const initializer; startup installs and masks these signals | Const, no runtime writers; public realtime limits queried at startup |
+
+Closed descriptors 0/1/2 are reopened on /dev/null in descriptor order before arguments or signal pipes are initialized. Native startup ignores SIGXFSZ so file-size-limit failures follow the write-error path, and SIGUSR1 so the program continues as Node's inspector startup does. Regular files and terminals flush each line; pipes retain buffered output. write_all waits through nonblocking EAGAIN, detects zero writes, and retries EINTR. Panic replaces lone surrogates through write_text. All new POSIX startup, signals, poll and destination-stat behavior remains excluded under ADAMIC_TARGET_WASI; parallelMap there stays sequential.
+
+The new TestRuntimeStopWholeLines observes Node first, requires two exact newline-terminated lines and termination by SIGUSR2, then checks native three times. Its mutant removes the signal thread's whole-line flush; it must still compile and terminate by the same signal, but must lose the two lines. No compiler failure, sanitizer report or timeout counts as catching this behavior mutant. The pool signal/exit TSan proof now raises every ordinary Linux stop signal plus realtime endpoints (34 and 64), on both the caller and a deliberately unblocked pool worker. Existing unsafe handler/exit flush mutants remain required.
+
+Reconciliation setup: Go 1.27.1, clang 20.1.8 and Node 24.19.0 ready at 0s; WASI SDK 27 and submodules ready at 8s; build cache warm and setup done at 250s. nproc is 5, CPU quota 4. This integration resolves the historical map_hash_test field-build failure; the whole native package now compiles.
+
+Counts were regenerated with `ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m -args -update-counts` (exit 0, 298.672s, `/tmp/signals-area-counts.log`). All 453 existing rows are unchanged. Five rows imported from stdout edges are added, yielding 458 rows:
+
+| Fixture | Allocations / frees / retains / releases / peak / regions | Explanation |
+|---|---|---|
+| output_edges/fsize.a | 8 / 8 / 3 / 12 / 5 / 0 | Finite file-size-limit write/result fixture |
+| output_edges/fsize_out.a | 60000 / 60000 / 0 / 60000 / 3 / 0 | Formats 60000 lines for stdout size-limit behavior |
+| output_edges/closed.a | 0 / 0 / 0 / 0 / 0 / 0 | Writes immortal strings to standard descriptors |
+| output_edges/panic_surrogate.a | 3 / 1 / 0 / 2 / 2 / 0 | Builds surrogate-bearing strings, then panic leaves live values through _exit |
+| output_edges/usr1.a | 2 / 2 / 0 / 2 / 2 / 0 | Finite work/formatting fixture for continued execution after SIGUSR1 |
+
+These additions increase table totals solely through new fixture work; there is no rise in any existing fixture. POSIX descriptors and the signal thread allocate no counted Adamic values.
+
+`TestWASI` explicitly enabled with SDK clang passed in 105.015s (`/tmp/signals-area-wasi.log`): 52 strict C11 runtime units, 35/35 Node equivalences, and 100000 request rounds with zero live values and constant memory. This is a passing target test, not an opt-in skip.
+
+Final focused mutant run passed in 38.102s (`/tmp/signals-area-final-mutants.log`). The handler mutant repeats the same unlocked flush before forwarding, to expose competing writes without adding a happens-before edge; a single flush in an early run occasionally terminated before a race observation and is not certified. Each of the three final executions emitted an explicit TSan data race in flush. Whole-line stop positive and drop-flush mutant each ran three times; the latter compiled and died by SIGUSR2 with empty stdout while Node printed both complete lines. The guard's new-file/unlisted-static mutant failed at line 1 (`/tmp/signals-area-guard-mutant.log`), and touched-package vet passed (`/tmp/signals-area-vet.log`). No working-tree mutant remains.
+
+Final full native package: `go test ./internal/native -count=1 -timeout 30m` passed in 1407.283s (`/tmp/signals-area-native-final.log`). It includes all eleven cache/table fixtures and their mutants, every expanded signal/exit scenario, whole-line stop proof, and the static inventory guard. Full uncached native oracle: `ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -count=1 -timeout 30m` passed in 944.127s (`/tmp/signals-area-oracle-native-final.log`), including the output-edge tests and regenerated-count verification. The dedicated output-edge run also passed in 34.025s (`/tmp/signals-area-output-edges.log`).
+
+An initial combined native/WebAssembly oracle hit its 30-minute package timeout under simultaneous compilation and exposed a timing assumption in the Node signal probe: a 750ms delay could signal Node before its first line. The probe now waits for Node's actual newline and preserves consumed bytes before signaling; native buffered output retains the existing delay. Exact stdout and signal-status assertions are unchanged. Final native and WebAssembly oracle commands run separately. The initial weak handler mutant was replaced by the repeated unsafe flush described above; only final passing runs are evidence.
+
+Final uncached WebAssembly oracle: `ADAMIC_GATE_UNCACHED=1 ADAMIC_ORACLE_WASI=1 go test ./internal/oracle -run '^TestWASI' -count=1 -v -timeout 30m` passed in 1237.955s (`/tmp/signals-area-oracle-wasi-final.log`). All Node comparisons (973.13s), byte/exit oracle and runner mutants (0.51s/0.48s), and every emission check (263.78s) passed. The gate reported zero cache hits and 463 Node misses. Final touched-package vet and staged whitespace checks passed. No full-repository `go test ./...` was run; this unit's complete native and oracle packages, opt-in target test, and complete WebAssembly oracle were run explicitly.

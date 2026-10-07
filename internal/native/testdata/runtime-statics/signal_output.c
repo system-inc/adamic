@@ -18,6 +18,7 @@ static double exercise(size_t index) {
  sigset_t signals;
  sigemptyset(&signals);
  sigaddset(&signals, SIGTERM); sigaddset(&signals, SIGINT); sigaddset(&signals, SIGHUP);
+ if (stop_signal != 0) { sigaddset(&signals, stop_signal); }
  pthread_sigmask(SIG_UNBLOCK, &signals, NULL);
  bool is_caller = pthread_equal(caller, pthread_self());
  // One sender keeps a second worker from terminating the process while TSan is
