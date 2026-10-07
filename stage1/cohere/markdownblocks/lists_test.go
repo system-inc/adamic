@@ -381,14 +381,20 @@ func testBlockLayout(t *testing.T, slice string) {
 			content = []byte(strings.Replace(string(content), "../../markdowninline/inline.ts", "../markdowninline/inline.ts", 1))
 			mutantMain := filepath.Join(scratch, "testdata/list_probe.ts")
 			write(t, mutantMain, content)
-			result := nativeMutant(t, lowered(t, mutantMain), nativeCases)
-			clean(t, "native list mutant", result)
+			result := onNode(t, mutantMain, nativeCases)
+			clean(t, "source Node layout mutant", result)
+			// One package canary: this copy imports every composed layout printer.
+			if slice == "lists" && mutation.name == "unordered marker" {
+				nativeResult := nativeMutant(t, lowered(t, mutantMain), nativeCases)
+				clean(t, "native layout canary", nativeResult)
+				equal(t, "edited native canary equals source Node", nativeResult.stdout, result.stdout)
+			}
 			if bytes.Equal(result.stdout, want.stdout) {
 				t.Fatal("list mutant survived")
 			}
 			offset := firstDifference(string(result.stdout), string(want.stdout))
 			index := bytes.Count(want.stdout[:offset], []byte("\n"))
-			t.Logf("output-only native mutant caught by %q at byte %d", inputs[index].Name, offset)
+			t.Logf("output-only source Node mutant caught by %q at byte %d", inputs[index].Name, offset)
 		})
 	}
 	// Repeat timings only on request; all corpus and mutant comparisons ran above.
