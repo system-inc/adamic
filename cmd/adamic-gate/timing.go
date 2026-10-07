@@ -142,7 +142,13 @@ func calibrateTimings(paths []string) (map[string]float64, timingCalibration, er
 		union := map[string][]float64{}
 		for _, o := range observations {
 			sum := 0.0
-			for child, seconds := range o.Children {
+			childKeys := []string{}
+			for child := range o.Children {
+				childKeys = append(childKeys, child)
+			}
+			sort.Strings(childKeys)
+			for _, child := range childKeys {
+				seconds := o.Children[child]
 				sum += seconds
 				union[child] = append(union[child], seconds)
 			}
@@ -158,8 +164,13 @@ func calibrateTimings(paths []string) (map[string]float64, timingCalibration, er
 			continue
 		}
 		seconds := median(residuals)
-		for _, v := range union {
-			seconds += median(v)
+		childKeys := []string{}
+		for child := range union {
+			childKeys = append(childKeys, child)
+		}
+		sort.Strings(childKeys)
+		for _, child := range childKeys {
+			seconds += median(union[child])
 		}
 		weights[key] = seconds
 	}

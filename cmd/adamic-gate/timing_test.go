@@ -84,3 +84,32 @@ func TestTimingsMergedLogPreservesInvocations(t *testing.T) {
 		t.Fatal("merged invocations overwritten", weights, err)
 	}
 }
+
+func TestTimingsReorderingIsByteIdentical(t *testing.T) {
+	paths := []string{}
+	for i := 1; i <= 15; i++ {
+		paths = append(paths, timingLog(t, event{Action: "pass", Package: "p", Test: "TestParent/" + string(rune('a'+i)), Elapsed: float64(i) / 10}, event{Action: "pass", Package: "p", Test: "TestParent", Elapsed: 10 + float64(i)/10}))
+	}
+	first, _, err := calibrateTimings(paths)
+	if err != nil {
+		t.Fatal(err)
+	}
+	want, err := json.Marshal(first)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for i := 0; i < 20; i++ {
+		paths = append(paths[1:], paths[0])
+		weights, _, err := calibrateTimings(paths)
+		if err != nil {
+			t.Fatal(err)
+		}
+		got, err := json.Marshal(weights)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if string(got) != string(want) {
+			t.Fatal("reordered evidence changed timing bytes", string(want), string(got))
+		}
+	}
+}
