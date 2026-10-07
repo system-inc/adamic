@@ -103,12 +103,12 @@ Callgrind 3.24.0: `VALGRIND_LIB=/tmp/0aja3b1-valgrind/usr/libexec/valgrind /tmp/
 The percentages below are self instruction shares, not wall-clock percentages; profiles
 ran after timing and both printed their unchanged checksum.
 
-**string_build:** 5,501,186,038 instructions; runtime UTF-16 lookup (`char_code` + `locate`) is 28.3%, index access/building (`usable`) 7.6%, surrogate joining 8.0%, append 3.2%.  
-The checksum algorithm's double remainder (`fmod`) is 15.3%; generated `main` is 10.7%, including inlined construction and checksum loops.  
+**string_build:** 5,501,186,038 instructions; runtime UTF-16 lookup (`char_code` + `locate`) is 28.3%, index access/building (`usable`) 7.6%, surrogate joining 8.0%, append 3.2%.
+The checksum algorithm's double remainder (`fmod`) is 15.3%; generated `main` is 10.7%, including inlined construction and checksum loops.
 The main costs belong to runtime string handling and to the checksum algorithm as emitted.
 
-**map_workload:** 3,457,359,803 instructions; runtime `map.c`'s `find` is 84.9% and `adamic_map_set` 4.8%, dominated by hash-table probing.  
-Source inspection and a standalone reproduction of its numeric hash formula put all initial IDs 0..2047 in one starting bucket at 4,096 or 8,192 buckets.  
+**map_workload:** 3,457,359,803 instructions; runtime `map.c`'s `find` is 84.9% and `adamic_map_set` 4.8%, dominated by hash-table probing.
+Source inspection and a standalone reproduction of its numeric hash formula put all initial IDs 0..2047 in one starting bucket at 4,096 or 8,192 buckets.
 This supports runtime hash clustering as the cause; generated code and the checksum algorithm are minor here (`fmod` 1.7%).
 
 Raw profiles: `/tmp/0aja3b1-string-final.callgrind` and
