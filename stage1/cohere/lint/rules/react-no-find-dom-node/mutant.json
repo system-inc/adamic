@@ -1,0 +1,5 @@
+{
+  "name": "react-no-find-dom-node mutant from batch 8",
+  "from": "context.node(name).text === 'findDOMNode'",
+  "to": "context.node(name).text !== 'findDOMNode'"
+}

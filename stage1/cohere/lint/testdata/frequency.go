@@ -60,7 +60,7 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
-		file := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: parts[1], Path: tspath.Path(parts[1])}, string(data), core.ScriptKindTS)
+		file := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: tspath.RootedFilePathFromAbsolute(parts[1]), PathKey: tspath.CaseSensitive.PathKey(tspath.RootedPathFromAbsolute(parts[1]))}, string(data), core.ScriptKindTS)
 		if len(file.Diagnostics()) != 0 {
 			fmt.Fprintf(out, "skip-parse\t%s\n", parts[1])
 			continue

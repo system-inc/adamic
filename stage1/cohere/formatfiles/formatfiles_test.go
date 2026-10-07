@@ -98,7 +98,7 @@ func TestThePortParsesAsGoCohereDoes(t *testing.T) {
 		var missing []string
 		for _, each := range []string{"\nenumerate error ", "\nnested-below error ", "\nnested \"", "\nnested-below \"", "\nsymbolic-links 1",
 			"layer \"format.ignore\" 1", "layer \".gitignore\" 1", "\nlayer \"ignorePatterns\" 0", "\ndeclined \".i\"", "\ndeclined \".\u03b1\u03c3\"",
-			"\ndeclined \".\"", "\ndeclined \"(none)\"", "\" 1\nhas", "\nfile \""} {
+			"\ndeclined \".\"", "\ndeclined \"(none)\"", "\" 1\nhas", "\nfile \"", "\nadamic \""} {
 			if !strings.Contains(goAnswers, each) {
 				missing = append(missing, each)
 			}
@@ -150,6 +150,24 @@ var mutants = []mutant{
 		from: "if (directory && pattern !== '**' && !pattern.endsWith('/**'))", to: "if (false)"},
 	{name: "lint globs relative to the walk instead of settings", file: "enumerate.ts",
 		from: "const fromSettings = rel(layer.from, join(root, relative));", to: "const fromSettings = relative;"},
+	{
+		name: "Adamic files declined instead of held back",
+		file: "enumerate.ts",
+		from: "if (path.endsWith('.a') && base(path) !== '.a') {",
+		to:   "if (path.endsWith('.a') && base(path) !== '.a' && false) {",
+	},
+	{
+		name: "a bare .a name held back as Adamic",
+		file: "enumerate.ts",
+		from: "if (path.endsWith('.a') && base(path) !== '.a') {",
+		to:   "if (path.endsWith('.a')) {",
+	},
+	{
+		name: "uppercase .A held back as Adamic",
+		file: "enumerate.ts",
+		from: "if (path.endsWith('.a') && base(path) !== '.a') {",
+		to:   "if (path.toLowerCase().endsWith('.a') && base(path) !== '.a') {",
+	},
 	// JavaScript's lowercasing for Go's: U+0130 becomes two characters, and Σ ending a word ς.
 	{
 		name: "an extension lowercased as JavaScript does",

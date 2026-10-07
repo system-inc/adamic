@@ -1,0 +1,5 @@
+import { Flags as Imported, Bits, combine, remove } from './flags.a';
+const flags: Imported = Imported.A | Imported.B;
+const bits: Bits = Bits.A | Bits.B;
+const high: Imported = combine(flags, Imported.High);
+console.log(`${flags} ${remove(high)} ${bits} ${Imported[flags] ?? 'missing'}`);

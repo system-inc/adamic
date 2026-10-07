@@ -70,7 +70,7 @@ func usesNodeModules(program *compiler.Program) bool {
 
 // Unit lowerers use declaration identity, not the spelling of an imported name.
 func IsNodeLibrary(file *ast.SourceFile) bool {
-	return file != nil && strings.Contains(file.FileName(), "/"+nodeTypesRelative+"/") && strings.HasSuffix(file.FileName(), ".d.ts")
+	return file != nil && strings.Contains(file.FileName().AsString(), "/"+nodeTypesRelative+"/") && strings.HasSuffix(file.FileName().AsString(), ".d.ts")
 }
 
 // Preserve the existing console lowerer's declaration identity while letting

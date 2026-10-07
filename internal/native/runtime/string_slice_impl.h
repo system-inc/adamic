@@ -67,9 +67,14 @@ adamic_maybe_number adamic_string_code_point_at(const adamic_string *string, dou
 		adamic_maybe_number found = {true, (double)(unsigned char)string->bytes[(size_t)position]};
 		return found;
 	}
-	const uint16_t *bmp = adamic_string_bmp_view(string);
-	if (bmp != NULL) {
-		adamic_maybe_number found = {true, (double)bmp[(size_t)position]};
+	const uint16_t *view = adamic_string_unit_view(string);
+	if (view != NULL) {
+		size_t at = (size_t)position;
+		unsigned point = view[at];
+		if (point >= 0xd800 && point <= 0xdbff && at + 1 < length && view[at + 1] >= 0xdc00 && view[at + 1] <= 0xdfff) {
+			point = 0x10000 + ((point - 0xd800) << 10) + (view[at + 1] - 0xdc00);
+		}
+		adamic_maybe_number found = {true, (double)point};
 		return found;
 	}
 	// At the high half of a pair, the whole code point; anywhere else, the unit.

@@ -171,7 +171,7 @@ func TestNodeProcessUnicodeDirectory(t *testing.T) {
 			t.Fatal(difference)
 		}
 	}
-	if report := inputLeaks(t, how, program, binary); report != "" {
+	if report := inputLeaks(t, func() inputRun { return how }, program, binary); report != "" {
 		t.Fatal(report)
 	}
 }

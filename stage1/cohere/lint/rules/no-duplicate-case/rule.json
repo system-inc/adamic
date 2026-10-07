@@ -1,0 +1,14 @@
+{
+  "name": "no-duplicate-case",
+  "order": 5,
+  "kinds": [
+    "SwitchStatement"
+  ],
+  "visit": "visit",
+  "oracle": "oracleNoDuplicateCase",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoDuplicateCase",
+  "factory": "create",
+  "class": "Rule",
+  "parent": false
+}

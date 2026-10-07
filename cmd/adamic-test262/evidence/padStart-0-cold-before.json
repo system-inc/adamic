@@ -1,0 +1,72 @@
+{
+  "test262": "/tmp/adamic-test262-corpus",
+  "commit": "5992dc3b60faf62a48fd6be8a40ae9d9a8c84d81",
+  "adapt": true,
+  "filters": [
+    {
+      "path": "built-ins/String/prototype/padStart",
+      "pass": 3,
+      "fail": 0,
+      "refused": 4,
+      "crashed": 0,
+      "skipped": 6,
+      "total": 13,
+      "directories": [
+        {
+          "path": "built-ins/String/prototype/padStart",
+          "pass": 3,
+          "fail": 0,
+          "refused": 4,
+          "crashed": 0,
+          "skipped": 6,
+          "total": 13
+        }
+      ],
+      "refusalReasons": [
+        {
+          "reason": "error TS2345: Argument of type '…' is not assignable to parameter of type '…'.",
+          "count": 2
+        },
+        {
+          "reason": "error TS2554: Expected 2-3 arguments, but got 1.",
+          "count": 1
+        },
+        {
+          "reason": "error TS7006: Parameter '…' implicitly has an '…' type.",
+          "count": 1
+        }
+      ],
+      "skipReasons": [
+        {
+          "reason": "harness include propertyHelper.js",
+          "count": 3
+        },
+        {
+          "reason": "feature Symbol",
+          "count": 2
+        },
+        {
+          "reason": "harness include isConstructor.js",
+          "count": 1
+        }
+      ],
+      "crashReasons": [],
+      "failReasons": [],
+      "passes": [
+        "built-ins/String/prototype/padStart/fill-string-empty.js",
+        "built-ins/String/prototype/padStart/fill-string-omitted.js",
+        "built-ins/String/prototype/padStart/normal-operation.js"
+      ],
+      "adaptations": [
+        {
+          "reason": "var-to-let",
+          "count": 6
+        },
+        {
+          "reason": "throw-error",
+          "count": 1
+        }
+      ]
+    }
+  ]
+}

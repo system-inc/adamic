@@ -8,6 +8,8 @@ class Specification {
 	files: string[] = [];
 	includes: string[] = [];
 	excludes: string[] = [];
+	sourceExtensions: string[] = [];
+	sourceExtensionsPresent = false;
 	filesPresent = false;
 	includePresent = false;
 	excludePresent = false;
@@ -73,6 +75,14 @@ function readSpecification(path: string, chain: readonly string[]): Specificatio
 		return result;
 	}
 	const root = dir(path);
+	const ownSources = document.get(0, 'sourceExtensions');
+	result.sourceExtensionsPresent = ownSources >= 0;
+	if (document.kind(ownSources) === 'array') {
+		for (const child of document.node(ownSources).children) {
+			if (document.kind(child) === 'string') { result.sourceExtensions.push(document.string(child)); }
+			else { result.diagnostics.push(5024); }
+		}
+	} else if (ownSources >= 0 && document.kind(ownSources) !== 'null') { result.diagnostics.push(5024); }
 	result.extendsPresent = document.get(0, 'extends') >= 0;
 	const options = document.get(0, 'compilerOptions');
 	if (document.kind(options) === 'object') {
@@ -93,6 +103,7 @@ function readSpecification(path: string, chain: readonly string[]): Specificatio
 		const inherited = readSpecification(basePath, chain.concat([path]));
 		for (const diagnostic of inherited.diagnostics) { result.diagnostics.push(diagnostic); }
 		if (inherited.gap !== '') { result.gap = inherited.gap; }
+		if (ownSources < 0 && inherited.sourceExtensionsPresent) { result.sourceExtensions = inherited.sourceExtensions; result.sourceExtensionsPresent = true; }
 		if (hasOwn.get('files') !== true && inherited.filesPresent) { result.files = inherited.files; result.filesPresent = true; }
 		if (hasOwn.get('include') !== true && inherited.includePresent) { result.includes = inherited.includes; result.includePresent = true; }
 		if (hasOwn.get('exclude') !== true && inherited.excludePresent) { result.excludes = inherited.excludes; result.excludePresent = true; }
@@ -190,9 +201,19 @@ export function readProjectConfig(configPath: string): ProjectResult {
 	const includeGlobs = includes.map((pattern) => new TsGlob(pattern, root, false));
 	const excludeGlobs = excludes.map((pattern) => new TsGlob(pattern, root, true));
 	const allowJs = specification.options.get('allowJs') === 'true' || (!specification.options.has('allowJs') && specification.options.get('checkJs') === 'true');
-	const groups: readonly (readonly string[])[] = allowJs ? [['.ts', '.tsx', '.d.ts', '.js', '.jsx'], ['.cts', '.d.cts', '.cjs'], ['.mts', '.d.mts', '.mjs']] : [['.ts', '.tsx', '.d.ts'], ['.cts', '.d.cts'], ['.mts', '.d.mts']];
+	const groups: (readonly string[])[] = allowJs ? [['.ts', '.tsx', '.d.ts', '.js', '.jsx'], ['.cts', '.d.cts', '.cjs'], ['.mts', '.d.mts', '.mjs']] : [['.ts', '.tsx', '.d.ts'], ['.cts', '.d.cts'], ['.mts', '.d.mts']];
 	const extensions: string[] = [];
 	for (const group of groups) { for (const extension of group) { extensions.push(extension); } }
+	// The pinned TypeScript reader opts extra extensions in per config, inherits
+	// the list through extends, and never groups them with built-in priorities.
+	const builtinExtensions = ['.ts', '.tsx', '.d.ts', '.cts', '.d.cts', '.mts', '.d.mts', '.js', '.jsx', '.cjs', '.mjs', '.json'];
+	const seenSources = new Map<string, boolean>();
+	for (const suffix of specification.sourceExtensions) {
+		if (!suffix.startsWith('.') || suffix.length < 2 || builtinExtensions.includes(suffix.toLowerCase()) || seenSources.has(suffix)) { specification.diagnostics.push(6046); continue; }
+		seenSources.set(suffix, true);
+		if (!extensions.includes(suffix)) { groups.push([suffix]); extensions.push(suffix); }
+	}
+
 	const json = specification.options.get('resolveJsonModule') === 'true';
 	if (json) { extensions.push('.json'); }
 	const buckets = includeGlobs.map(() => new Bucket());
@@ -224,6 +245,8 @@ export function readProjectConfig(configPath: string): ProjectResult {
 	for (const file of jsonFiles.values()) { files.push(file); }
 	if (files.length === 0 && !specification.filesPresent && !specification.referencesPresent) { specification.diagnostics.push(18003); }
 	const errors = specification.diagnostics;
-	if (errors.length > 0) { return { kind: 'Error', message: `reading ${path}: ${errors.slice(0, 5).map((code) => `TS${code}: `).join('\n')}${errors.length > 5 ? `\nand ${errors.length - 5} more` : ''}` }; }
+	// Go ReadProjectConfig permits option-only findings while retaining valid
+	// values; cohere reports those findings later in its options phase.
+	if (errors.length > 0 && !errors.every((code) => [5023, 5024, 5025, 6046].includes(code))) { return { kind: 'Error', message: `reading ${path}: ${errors.slice(0, 5).map((code) => `TS${code}: `).join('\n')}${errors.length > 5 ? `\nand ${errors.length - 5} more` : ''}` }; }
 	return { kind: 'Ok', project: { files, references: specification.references } };
 }

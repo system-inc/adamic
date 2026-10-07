@@ -8,7 +8,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#ifndef ADAMIC_TARGET_WASI
 #include <sys/ioctl.h>
+#endif
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <time.h>
@@ -77,6 +79,14 @@ static void finish_host(void) {
 }
 
 void adamic_node_process_start(int count, char **values) {
+#ifdef ADAMIC_TARGET_WASI
+    // Preview 1 has no initial cwd. A command host can explicitly supply one
+    // inside its preopens; otherwise wasi-libc's virtual cwd remains '/'.
+    const char *directory = getenv("ADAMIC_WASI_CWD");
+    if (directory != NULL && chdir(directory) != 0) {
+        adamic_panic("wasm32-wasi: cannot enter supplied working directory", sizeof "wasm32-wasi: cannot enter supplied working directory" - 1);
+    }
+#endif
     saved_count = count;
     saved_values = values;
     monotonic_origin = milliseconds(CLOCK_MONOTONIC);
@@ -93,17 +103,27 @@ adamic_string *adamic_node_eol(void) {
 
 bool adamic_node_next_tick_feature(void) { return true; }
 
-double adamic_node_pid(void) { return (double)getpid(); }
+double adamic_node_pid(void) {
+#ifdef ADAMIC_TARGET_WASI
+    adamic_panic("wasm32-wasi: process.pid requires process identifiers", sizeof "wasm32-wasi: process.pid requires process identifiers" - 1);
+#else
+    return (double)getpid();
+#endif
+}
 
 adamic_string *adamic_node_platform(void) {
-#if defined(__APPLE__)
+#if defined(ADAMIC_TARGET_WASI)
+    adamic_panic("wasm32-wasi: process.platform requires a Node host platform", sizeof "wasm32-wasi: process.platform requires a Node host platform" - 1);
+#elif defined(__APPLE__)
     static adamic_string platform = ADAMIC_STRING("darwin");
 #elif defined(__linux__)
     static adamic_string platform = ADAMIC_STRING("linux");
 #else
 #error Unsupported Node host platform
 #endif
+#ifndef ADAMIC_TARGET_WASI
     return &platform;
+#endif
 }
 
 // Code-bearing host errors use the existing pending-exception word and cleanup paths.
@@ -118,6 +138,9 @@ static void host_directory_error(int error, const char *operation, const adamic_
         case ENOMEM: code = "ENOMEM"; description = "not enough memory"; break;
         case EIO: code = "EIO"; description = "i/o error"; break;
         default: { static const char message[] = "unsupported host directory errno"; adamic_panic(message, sizeof message - 1); }
+    }
+    if (error == ENOENT && strcmp(operation, "uv_cwd") == 0) {
+        description = "process.cwd failed with error no such file or directory, the current working directory was likely removed without changing the working directory";
     }
     static const char *const directory_error_names[] = {"name", "message", "code"};
     static const bool references[] = {true, true, true};
@@ -167,6 +190,9 @@ adamic_string *adamic_node_cwd(void) {
 }
 
 static adamic_string *executable_path(void) {
+#ifdef ADAMIC_TARGET_WASI
+    adamic_panic("wasm32-wasi: process.argv requires executable paths", sizeof "wasm32-wasi: process.argv requires executable paths" - 1);
+#endif
 #if defined(__linux__)
     size_t capacity = 256;
     for (;;) {
@@ -219,6 +245,9 @@ adamic_array *adamic_node_exec_argv(void) {
 }
 
 adamic_maybe_number adamic_node_columns(void) {
+#ifdef ADAMIC_TARGET_WASI
+    adamic_panic("wasm32-wasi: process.stdout.columns requires terminal size", sizeof "wasm32-wasi: process.stdout.columns requires terminal size" - 1);
+#else
     adamic_maybe_number result = {0};
     if (isatty(STDOUT_FILENO)) {
         struct winsize size = {0};
@@ -226,6 +255,7 @@ adamic_maybe_number adamic_node_columns(void) {
         if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &size) == 0) { result.number = size.ws_col; }
     }
     return result;
+#endif
 }
 
 bool adamic_node_stdout_write(const adamic_string *text) {
@@ -233,6 +263,9 @@ bool adamic_node_stdout_write(const adamic_string *text) {
 }
 
 adamic_object *adamic_node_memory_usage(void) {
+#ifdef ADAMIC_TARGET_WASI
+    adamic_panic("wasm32-wasi: process.memoryUsage requires allocator observations", sizeof "wasm32-wasi: process.memoryUsage requires allocator observations" - 1);
+#endif
     static const char *const memory_names[] = {"heapUsed"};
     static const bool references[] = {false};
     static const adamic_shape shape = {1, memory_names, references, NULL};
@@ -365,10 +398,12 @@ void adamic_node_chdir(const adamic_string *directory) {
         return;
     }
     int error = errno;
+    adamic_string *target = adamic_decode_utf8((const unsigned char *)path, strlen(path));
     free(path);
     adamic_string *from = adamic_node_cwd();
-    if (adamic_thrown != NULL) { return; }
-    host_directory_error(error, "chdir", from, directory);
+    if (adamic_thrown != NULL) { adamic_release(target); return; }
+    host_directory_error(error, "chdir", from, target);
+    adamic_release(target);
     adamic_release(from);
 }
 

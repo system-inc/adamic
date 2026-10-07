@@ -1,0 +1,17 @@
+[
+  {
+    "mutant": "search-byte-offset",
+    "exit": 1,
+    "log": "/tmp/lint-search-byte-offset-mutant.log"
+  },
+  {
+    "mutant": "search-ignore-halves",
+    "exit": 1,
+    "log": "/tmp/lint-search-ignore-halves-mutant.log"
+  },
+  {
+    "mutant": "search-miss-absent",
+    "exit": 1,
+    "log": "/tmp/lint-search-miss-absent-mutant.log"
+  }
+]

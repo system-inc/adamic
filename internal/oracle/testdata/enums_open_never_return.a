@@ -1,0 +1,10 @@
+enum SyntaxKind { First, Last }
+enum Text { Member = 'member' }
+function describe(value: SyntaxKind): Text {
+    if (value === SyntaxKind.First) { return Text.Member; }
+    if (value === SyntaxKind.Last) { return Text.Member; }
+    return value;
+}
+function other(): number { return 42; }
+console.log('before');
+console.log(`${describe(other())}`);
