@@ -58,6 +58,21 @@ failed the actual oracle interrupt test for that reason; it was retained separat
 and never published. The direct runner passed all three signal cases. Record format
 4 and the invocation identity prevent mixing the two harnesses on resume.
 
+On this fixed main, markdownblocks also requires pinned upstream width dependencies
+that `cloud/setup.sh` does not install:
+
+```sh
+npm install --prefix /tmp/adamic-markdown-width --ignore-scripts --no-audit --no-fund emoji-regex@10.6.0 get-east-asian-width@1.6.0 narrow-emojis@0.0.3 > /tmp/markdown-width-npm.log 2>&1
+```
+
+The first format-4 attempt retained 42 successful package records. Markdownblocks
+failed its width oracle because those dependencies were absent, then timed out;
+typeaware also hit its 30-minute deadline. Both failures remain in the log directory.
+After installing the pinned dependencies, a small original-library width control
+passed. The explicit retry uses `-jobs 1` to reduce contention, preserving and
+revalidating the 42 completed records. None of these partial results is certified
+until all 44 packages pass.
+
 On a branch:
 
 ```sh
@@ -242,7 +257,47 @@ speedup is claimed.
 |---|---|---|---|
 | Toolchain setup | Not measured | 280s, reported by script | `bash cloud/setup.sh > /tmp/affected-setup.log 2>&1` |
 
+Observed-path processing was measured on the actual saved fresh-package trace,
+interleaving before/after three times on this box. The trace was loaded before the
+timed loop; file bytes were fingerprinted during every trial. All three comparisons
+produced identical closures and uncertainty lists. This is not a gate speedup.
+
+Build flags: worker `2e18756`, input main
+`e011f8f60899586d6373a5ccb07335ad82cfbf3c`, nproc 5, cpu.max `400000 100000`,
+Go 1.27.1 linux/amd64, clang 20.1.8, Node v24.19.0, uncached test results,
+existing Go compilation cache. Best before load: `0.44 1.76 3.29` to
+`0.41 1.73 3.27`; best after load: `0.45 1.72 3.26` to `0.45 1.72 3.26`.
+All six trial metadata rows are in `/tmp/affected-proof/observation-replay.log`.
+
+| Loop | Before | After | Instrument |
+|---|---|---|---|
+| Saved fresh trace, best of 3 | 3.253772s, hash every open | 0.102878s, hash the path union | `ADAMIC_GATE_UNCACHED=1 go test -count=1 -v -timeout 30m ./cmd/adamic-affected -run '^TestObservationReplayTimings$' -args -affected-replay-trace /tmp/affected-proof/green-main.json.logs/run-1538579916/014.trace -affected-replay-root /tmp/affected-main > /tmp/affected-proof/observation-replay.log 2>&1` |
+
 ## Uncompleted integration proof
+
+The cheaper five-shape runner is checked in as `cmd/adamic-affected/proof.py`:
+
+```sh
+python3 /workspace/adamic/cmd/adamic-affected/proof.py --root /tmp/affected-main --record /tmp/affected-proof/green-main.json --output /tmp/affected-proof/branches > /tmp/affected-proof/branches.log 2> /tmp/affected-proof/branches.stderr
+```
+
+It refuses incomplete or modified reference events and a dirty scratch checkout.
+For each shape it runs exactly the skipped packages, uncached, and compares their
+test names, actions and output lines with the saved reference. It then runs the
+selected packages uncached. It saves each finished package and phase timing to
+disk, and produces `branches/summary.json`. Failures and event differences are
+preserved and cause an unsuccessful final exit. The original JSON streams remain
+available; only harness timestamps, elapsed fields and explicitly marked test
+frame durations are omitted from the comparison. Per-test order remains exact;
+interleaving distinct parallel tests is ignored. Counts and paths remain exact.
+
+Five detached review worktrees preserve the probe commits. Execution switches
+the same scratch checkout among those commits so absolute checkout paths and
+environment identity do not turn this into an all-selected relocation test.
+No probe branch is pushed. Mutants retain uncertainty and change only the input
+component being tested. The directory mutant has a supplemental new-fixture
+probe with the primary changed fixture restored, so its retained file hash cannot
+mask a missing listing dependency.
 
 No full-main input record was certified. Therefore none of the five scratch branch
 selection sets, skipped-package event comparisons or paired timing measurements

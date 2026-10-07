@@ -241,6 +241,8 @@ def main():
         raise RuntimeError("proof requires a complete reference")
     record_hash = hashlib.sha256(args.record.read_bytes()).hexdigest()
     args.output.mkdir(parents=True, exist_ok=True)
+    if output(["git", "status", "--porcelain", "--untracked-files=all"], args.root, environment):
+        raise RuntimeError("scratch checkout changed; refusing to reuse proof evidence")
     for name, closure in record["Packages"].items():
         if closure["Events"]:
             actual = hashlib.sha256(Path(closure["Events"]).read_bytes()).hexdigest()
@@ -261,6 +263,7 @@ def main():
         "oracle": ("internal/oracle/testdata/numbers.a",
                    "const affectedProofBox: { value: number } = { value: 1 };\naffectedProofBox.value = 2;\n"),
     }
+    reports = {}
     for shape, (relative, addition) in shapes.items():
         destination = args.output / shape
         destination.mkdir(exist_ok=True)
@@ -306,7 +309,26 @@ def main():
                 destination / "selected", test_environment, record)
         mutant_matrix(state, state_path, args.root, destination, environment,
                       record, args.binary, tool_mutant)
+        reports[shape] = {
+            "commit": state["commit"], "selected": selected, "skipped": skipped,
+            "skipped_pass_and_identical": all(result["exit"] == 0 and result["identical"]
+                                              for result in state["skipped"]["packages"].values()),
+            "selected_pass": all(result["exit"] == 0 for result in state["selected_run"]["packages"].values()),
+            "selected_wall_seconds": state["selected_run"]["wall_seconds"],
+            "reference_wall_seconds": record["WallSeconds"], "mutants": state["mutants"],
+        }
+        atomic_json(args.output / "summary.json", reports)
     output(["git", "checkout", "--detach", record["Commit"]], args.root, environment)
+    if not all(report["skipped_pass_and_identical"] for report in reports.values()):
+        raise RuntimeError("skipped-package proof failed; inspect saved differences")
+    if not all(report["selected_pass"] for report in reports.values()):
+        raise RuntimeError("selected packages failed; inspect saved logs")
+    if not any(report["mutants"]["observed"]["caught_by"] for report in reports.values()):
+        raise RuntimeError("observed-input mutant was not caught by a branch shape")
+    if not reports["oracle"]["mutants"]["directories"].get("new_fixture_probe", {}).get("caught_by"):
+        raise RuntimeError("directory-input mutant was not caught by the new oracle fixture")
+    if not all(report["mutants"]["toolchain"]["caught_by"] for report in reports.values()):
+        raise RuntimeError("toolchain-input mutant was not caught in every branch shape")
 
 
 if __name__ == "__main__":
