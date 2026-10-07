@@ -44,3 +44,5 @@ TMPDIR=/workspace python3 stage1/cohere/typeaware/wave_06_jsx/validate.py --scra
 go vet ./... > /tmp/wave-06-jsx-vet.log 2>&1
 gofmt -l stage1/cohere/typeaware/wave_06_jsx/testdata > /tmp/wave-06-jsx-format.log
 ```
+
+The regex-rule continuation replaces the edge-whitespace predicate with a single JS RegExp literal and revalidates all prepared controls plus a U+0085 regex mutant. See REGEX_REPORT.md and regex_evidence. Source integration blockers are unchanged.

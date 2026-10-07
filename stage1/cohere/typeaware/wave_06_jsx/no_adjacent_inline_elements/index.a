@@ -5,13 +5,13 @@ import {ContainerInput,ChildInput} from '../inputs.a';
 import {bindsPragma} from '../bindings.a';
 const inlineNames=["a", "b", "big", "i", "small", "tt", "abbr", "acronym", "cite", "code", "dfn", "em", "kbd", "strong", "samp", "time", "var", "bdo", "br", "img", "map", "object", "q", "script", "span", "sub", "sup", "button", "input", "label", "select", "textarea"];
 function inlineName(name:string):boolean{for(const candidate of inlineNames){if(name===candidate){return true;}}return false;}
-// Go unicode.IsSpace includes U+0085 and excludes BOM; String.trim is not equivalent.
-function space(code:number):boolean{return code===9||code===10||code===11||code===12||code===13||code===32||code===133||code===160||code===5760||(code>=8192&&code<=8202)||code===8232||code===8233||code===8239||code===8287||code===12288;}
+// Translate Go unicode.IsSpace once; JS \s differs on U+0085 and BOM.
+const edgeWhitespace=/^[\u0009-\u000d\u0020\u0085\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]|[\u0009-\u000d\u0020\u0085\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]$/u;
 function literal(kind:number):boolean{return kind===StringLiteral||kind===NumericLiteral||kind===BigIntLiteral||kind===TrueKeyword||kind===FalseKeyword||kind===NullKeyword||kind===RegularExpressionLiteral;}
 export class NoAdjacentInlineElements {
  child(child:ChildInput,jsx:boolean):boolean{
   if(jsx){return (child.kind===JsxElement||child.kind===JsxSelfClosingElement)&&child.tagKind===Identifier&&inlineName(child.tagText);}
-  if(literal(child.kind)){return child.text===''||(!space(child.text.charCodeAt(0))&&!space(child.text.charCodeAt(child.text.length-1)));}
+  if(literal(child.kind)){return !edgeWhitespace.test(child.text);}
   return child.kind===CallExpression&&child.firstKind===StringLiteral&&inlineName(child.firstText);
  }
  validate(node:ContainerInput,jsx:boolean):Diagnostic[]{

@@ -70,4 +70,9 @@ for folder,old,new in [('jsx_fragments','if(!match)','if(match)'),('jsx_no_undef
  text=re.sub(r"(['\"])([^'\"]+\.(?:a|ts))\1",lambda m:q(str((original.parent/m.group(2)).resolve())),text)
  mutant=S/(folder+'-mutant.a');mutant.write_text(text.replace(old,new));entry=S/(folder+'-probe.a');entry.write_text(source.replace(str(original),str(mutant)));exe=S/(folder+'-mutant');run(folder+'-mutant-build',[stage0,'build',entry,'-o',exe]);assert run(folder+'-mutant',[exe])!=truth;assert (S/(folder+'-mutant.stderr')).read_bytes()==b'';print(folder,'semantic mutant exits zero and differs only on independent Go bytes',flush=True)
  cls={'jsx_fragments':'JsxFragments','jsx_no_undef':'JsxNoUndef','no_adjacent_inline_elements':'NoAdjacentInlineElements'}[folder];entry=S/(folder+'-refusal.a');entry.write_text(f'import {{{cls}}} from {q(str(original))};new {cls}().analyze();');exe=S/(folder+'-refusal');run(folder+'-refusal-build',[stage0,'build',entry,'-o',exe]);run(folder+'-refusal',[exe],70);assert b'NotYet:' in (S/(folder+'-refusal.stderr')).read_bytes()
+# The U+0085 fixture distinguishes Go's space class from JavaScript's built-in \s.
+original=OWN/'no_adjacent_inline_elements/index.a';text=original.read_text();assert r'\u0085' in text
+text=re.sub(r"(['\"])([^'\"]+\.(?:a|ts))\1",lambda m:q(str((original.parent/m.group(2)).resolve())),text)
+mutant=S/'edge-whitespace-mutant.a';mutant.write_text(text.replace(r'\u0085',''));entry=S/'edge-whitespace-probe.a';entry.write_text(source.replace(str(original),str(mutant)));exe=S/'edge-whitespace-mutant';run('edge-whitespace-mutant-build',[stage0,'build',entry,'-o',exe]);assert run('edge-whitespace-mutant',[exe])!=truth;assert (S/'edge-whitespace-mutant.stderr').read_bytes()==b''
+print('edge whitespace regex mutant exits zero; Go bytes catch missing U+0085',flush=True)
 print('PARTIAL PASS: prepared nodes only; source JSX/numeric/checker adapter missing',flush=True)
