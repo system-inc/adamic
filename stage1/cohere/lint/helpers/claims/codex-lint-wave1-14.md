@@ -23,3 +23,19 @@ exactly rather than as an unsafe JavaScript number. Compare real Go on all six
 consumer fixture sources plus integer, Unicode and overflow controls, source
 Node, emitted JavaScript and sanitized native, with a compiling mutant.
 This claim is pushed before implementation.
+
+## Race correction and replacement
+
+Withdraw leadingInteger: slot 05 claim 652db0c7 at 02:30:32 UTC precedes
+our 2b2947ff at 02:30:56 UTC. No duplicate implementation is delivered.
+Bounded comparisons passed but live consumer coverage is blocked by absent
+Kirk-local Tailwind installation and theme fixtures. Preserve that evidence
+without counting its prerequisite removals.
+
+Refetched all 404 origin refs and inspected all 16 distinct helper claim blobs.
+Replacement claim: github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.nodesFromStaticDeclarations
+File: slot14/nodes_from_static_declarations.a. Six consumers, the same six
+Tailwind rules above, zero final blockers alone. This ties the highest unclaimed
+concrete-symbol count. Preserve sequence, every property/value/presence/important
+field, empty input, fresh output list and fresh declaration allocation. Real Go
+framework declarations and independent controls decide behavior. Push before code.
