@@ -118,7 +118,8 @@ func (l *lowering) recordOwnCheck(condition, read *ast.Node) bool {
 	}
 	call := condition.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
-	if callee.Kind != ast.KindPropertyAccessExpression || callee.Name().Text() != "hasOwn" || !l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Object") || len(call.Arguments.Nodes) != 2 {
+	ordinary := callee.Kind == ast.KindPropertyAccessExpression && callee.Name().Text() == "hasOwn" && l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Object")
+	if (!ordinary && l.detachedOwnCallReceiver(condition) == nil) || len(call.Arguments.Nodes) != 2 {
 		return false
 	}
 	access := read.AsElementAccessExpression()

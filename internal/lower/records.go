@@ -327,6 +327,9 @@ func (l *lowering) recordStorageView(node *ast.Node) error {
 		return nil
 	}
 	if parent := source.Parent; parent != nil && parent.Kind == ast.KindCallExpression {
+		if l.detachedOwnCallReceiver(parent) != nil {
+			return nil
+		}
 		callee := ast.SkipParentheses(parent.AsCallExpression().Expression)
 		if l.isLibraryGlobal(callee, "String") {
 			return nil
