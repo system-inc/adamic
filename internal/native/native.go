@@ -44,10 +44,17 @@ func cString(value string) string {
 
 // Options says how to compile.
 type Options struct {
-	// Compiler selects clang (the default) or gcc for the differential lane.
+	// Compiler selects clang (the default) or gcc for the differential lane. GCC is native only.
 	Compiler string
 
-	// Split compiles generated functions in separate translation units. Off by default.
+	// Target is empty for native, or wasm32-wasi for a WASI module.
+	Target string
+
+	// Request selects a WASI reactor containing the emitted request ABI.
+	Request bool
+
+	// Split compiles generated functions in separate translation units. Off by default, and only
+	// for native targets.
 	Split bool
 
 	// Jobs bounds parallel clang processes in a split build; zero means one.
@@ -97,6 +104,9 @@ func Flags(options Options) []string {
 	// that clang turns into a jump never makes a frame: a self tail call becomes a loop, and recursion
 	// with no end runs forever where Node's runs out of stack. Every call keeps its frame, as V8's do.
 	flags = append(flags, "-fno-optimize-sibling-calls")
+	if options.Target == "wasm32-wasi" {
+		flags = append(flags, "--target=wasm32-wasi", "--sysroot="+os.Getenv("WASI_SYSROOT"), "-DADAMIC_TARGET_WASI=1", "-mno-atomics")
+	}
 	if options.Count {
 		flags = append(flags, "-DADAMIC_COUNT")
 	}
@@ -123,6 +133,9 @@ func CoverageRequested() bool {
 
 // Build compiles C source and the runtime into a native binary at output.
 func Build(source string, output string, options Options) error {
+	if err := ValidateOptions(options); err != nil {
+		return err
+	}
 	compiler, err := selectedCompiler(options)
 	if err != nil {
 		return err
@@ -130,10 +143,9 @@ func Build(source string, output string, options Options) error {
 	if compiler == "gcc" && (options.Split || os.Getenv("ADAMIC_NATIVE_SPLIT") == "1") {
 		return fmt.Errorf("native: GCC lane requires an unsplit build")
 	}
-	if options.Split || os.Getenv("ADAMIC_NATIVE_SPLIT") == "1" {
+	if options.Target == "" && (options.Split || os.Getenv("ADAMIC_NATIVE_SPLIT") == "1") {
 		return buildUnits(source, output, options)
 	}
-
 	directory, err := os.MkdirTemp("", "adamic-build-")
 	if err != nil {
 		return fmt.Errorf("native: %w", err)
@@ -147,11 +159,25 @@ func Build(source string, output string, options Options) error {
 	if err := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0o644); err != nil {
 		return fmt.Errorf("native: %w", err)
 	}
-	arguments := append(Flags(options), "-I", filepath.Dir(library), "-o", output, filepath.Join(directory, "main.c"))
-	arguments = append(arguments, RuntimeLinkFlags(library)...)
+	arguments := append(Flags(options), "-I", filepath.Dir(library), "-o", output)
+	if !options.Request {
+		arguments = append(arguments, filepath.Join(directory, "main.c"))
+	}
+	if options.Target == "wasm32-wasi" {
+		arguments = append(arguments, "-Xlinker", "--whole-archive", library, "-Xlinker", "--no-whole-archive")
+	} else {
+		arguments = append(arguments, RuntimeLinkFlags(library)...)
+	}
 	// The runtime calls libm (trunc, floor, sqrt). On macOS that's part of libSystem and comes free; on
 	// Linux it's its own library, and only the sanitizers' runtime happened to pull it in.
+	if options.Request {
+		// Runtime constructors precede module initialization at the same default priority.
+		arguments = append(arguments, filepath.Join(directory, "main.c"))
+	}
 	arguments = append(arguments, "-lm")
+	if options.Target == "wasm32-wasi" {
+		arguments = append(arguments, WASILinkFlags(options)...)
+	}
 	command := exec.Command(compiler, arguments...)
 	if combined, err := command.CombinedOutput(); err != nil {
 		return fmt.Errorf("native: %s failed: %w\n%s", compiler, err, combined)
@@ -159,11 +185,16 @@ func Build(source string, output string, options Options) error {
 	return nil
 }
 
+// selectedCompiler is the one place a build chooses its compiler: the GCC lane's gcc for a native
+// target, otherwise clang, or the WASI SDK's clang for a WASI target (compilerName).
 func selectedCompiler(options Options) (string, error) {
 	switch options.Compiler {
 	case "", "clang":
-		return "clang", nil
+		return compilerName(options), nil
 	case "gcc":
+		if options.Target != "" {
+			return "", fmt.Errorf("native: the GCC lane builds native targets only, not %s", options.Target)
+		}
 		return "gcc", nil
 	default:
 		return "", fmt.Errorf("native: unsupported compiler %q", options.Compiler)

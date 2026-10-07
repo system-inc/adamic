@@ -184,6 +184,31 @@ export function arrowAhead(scanner: Scanner, allowReturn: boolean): boolean {
     return result;
 }
 
+// JSX generic arrows require a comma, default or a real constraint.
+export function jsxArrowAhead(scanner: Scanner): boolean {
+    const state = new Speculation(scanner);
+    if(kind(scanner) === 'AsyncKeyword') {
+        state.next();
+    }
+    if(kind(scanner) !== 'LessThanToken') {
+        state.restore();
+        return true;
+    }
+    state.next();
+    if(kind(scanner) === 'ConstKeyword') {
+        state.next();
+    }
+    state.next();
+    let result = kind(scanner) === 'CommaToken' || kind(scanner) === 'EqualsToken';
+    if(kind(scanner) === 'ExtendsKeyword') {
+        state.next();
+        result =
+            kind(scanner) !== 'EqualsToken' && kind(scanner) !== 'GreaterThanToken' && kind(scanner) !== 'SlashToken';
+    }
+    state.restore();
+    return result;
+}
+
 export function typeArgumentsAhead(scanner: Scanner): boolean {
     const state = new Speculation(scanner);
     let depth = 0;
