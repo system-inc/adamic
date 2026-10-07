@@ -1,0 +1,14 @@
+Consumer fixture strings: {'core/no_restricted_exports': 178, 'core/no_restricted_imports': 463, 'next/no_html_link_for_pages': 284, 'typescript/no_empty_object_type': 186}
+Node: byte-identical 173833604 bytes
+JavaScript: byte-identical 173833604 bytes
+native: byte-identical 173833604 bytes
+Duplicate-flag mutant caught on Node only by output comparison; successful compile and exit
+Duplicate-flag mutant caught on JavaScript only by output comparison; successful compile and exit
+Duplicate-flag mutant caught on native only by output comparison; successful compile and exit
+Traceback (most recent call last):
+  File "/workspace/adamic/stage1/cohere/lint/helpers/wave15/regexp_flags/validate.py", line 36, in <module>
+    run(['go','test',path,'-count=1','-run',filters,'-timeout=10m'],'upstream-'+package.split('/')[-1],repo/'cohere')
+  File "/workspace/adamic/stage1/cohere/lint/helpers/wave15/regexp_flags/validate.py", line 11, in run
+    if result.returncode or result.stderr:raise RuntimeError(f'{label}: exit={result.returncode} {result.stderr[:800]!r}')
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: upstream-core: exit=1 b'# github.com/system-inc/cohere/internal/lint/rules/core.test\n/workspace/adamic-tools/go/pkg/tool/linux_amd64/link: mapping output file failed: no space left on device\n'
