@@ -2,12 +2,15 @@ package main
 
 import (
 	"crypto/sha256"
+	"embed"
 	"encoding/json"
 	"fmt"
+	"io/fs"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"runtime"
+	"runtime/debug"
 	"sort"
 	"strings"
 	"sync"
@@ -16,8 +19,9 @@ import (
 
 // Cache observations, never verdicts: decide still compares both executions on every hit.
 type resultCache struct {
-	directory string
-	locks     sync.Map
+	directory   string
+	locks       sync.Map
+	nodeContext string
 }
 
 type recordedExecution struct {
@@ -134,7 +138,19 @@ func prepareCache() (*resultCache, string, string, error) {
 			parts = append(parts, variable)
 		}
 	}
-	// The executable covers the runner's own harness, adaptation and capture implementation.
+	// Node's harness is embedded source plus Go build settings, not the linked compiler.
+	// Lowering and the embedded runtime can change without changing Node's execution.
+	nodeParts := append([]string{}, parts...)
+	nodeParts = append(nodeParts, nodeHarnessIdentity())
+	if info, ok := debug.ReadBuildInfo(); ok {
+		nodeParts = append(nodeParts, info.GoVersion)
+		for _, setting := range info.Settings {
+			if !strings.HasPrefix(setting.Key, "vcs") {
+				nodeParts = append(nodeParts, setting.Key, setting.Value)
+			}
+		}
+	}
+	// The full executable remains a conservative compiler and native identity.
 	executable, err := os.Executable()
 	if err != nil {
 		return nil, "", "", err
@@ -152,6 +168,37 @@ func prepareCache() (*resultCache, string, string, error) {
 			return nil, "", "", err
 		}
 		parts = append(parts, path, cacheKey(string(contents)))
+		if name == "node" {
+			nodeParts = append(nodeParts, path, cacheKey(string(contents)))
+		}
 	}
-	return &resultCache{directory: filepath.Join(directory, "adamic", "test262")}, string(version), cacheKey(parts...), nil
+	return &resultCache{directory: filepath.Join(directory, "adamic", "test262"), nodeContext: cacheKey(nodeParts...)}, string(version), cacheKey(parts...), nil
+}
+
+// Embedding the actual built sources avoids trusting mutable checkout files at run time.
+// Compiler implementation and tests cannot affect the Node adaptation/capture path.
+//
+//go:embed *.go
+var runnerSources embed.FS
+
+func nodeHarnessIdentity() string { return nodeHarnessSourceIdentity(runnerSources) }
+
+func nodeHarnessSourceIdentity(sources fs.FS) string {
+	entries, err := fs.ReadDir(sources, ".")
+	if err != nil {
+		panic(err)
+	}
+	parts := []string{"test262-node-harness-v2"}
+	for _, entry := range entries {
+		name := entry.Name()
+		if name == "compiler.go" || strings.HasSuffix(name, "_test.go") {
+			continue
+		}
+		contents, err := fs.ReadFile(sources, name)
+		if err != nil {
+			panic(err)
+		}
+		parts = append(parts, name, string(contents))
+	}
+	return cacheKey(parts...)
 }

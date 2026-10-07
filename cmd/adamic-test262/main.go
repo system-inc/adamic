@@ -40,7 +40,7 @@ func main() {
 	os.Exit(run(os.Args[1:]))
 }
 
-func run(arguments []string) int {
+func run(arguments []string) (exit int) {
 	flags := flag.NewFlagSet("adamic-test262", flag.ContinueOnError)
 	flags.SetOutput(os.Stderr)
 	test262 := flags.String("test262", "", "test262 checkout (a clone at a pinned commit, not part of this repo)")
@@ -84,13 +84,20 @@ func run(arguments []string) int {
 		defer func() {
 			if err := profile.write(*profilePath); err != nil {
 				fmt.Fprintln(os.Stderr, err)
+				exit = 1
 			}
 		}()
 	}
+	inProcess := !*subprocess
+	flags.Visit(func(flag *flag.Flag) {
+		if flag.Name == "root" {
+			inProcess = false
+		}
+	})
 	var prepared *engine
 	var err error
 	if !*classifyOnly {
-		prepared, err = prepareProfile(*root, *test262, workDirectory, profile)
+		prepared, err = prepareMode(*root, *test262, workDirectory, profile, inProcess)
 		if err != nil {
 			fmt.Fprintln(os.Stderr, err)
 			return 1
@@ -100,12 +107,7 @@ func run(arguments []string) int {
 	}
 	prepared.adapt = *adapt
 	prepared.jobs = *jobs
-	prepared.inProcess = !*subprocess
-	flags.Visit(func(flag *flag.Flag) {
-		if flag.Name == "root" {
-			prepared.inProcess = false
-		}
-	})
+	prepared.inProcess = inProcess
 	document := reportDocument{Test262: *test262, Commit: test262Commit(*test262), Adapt: *adapt}
 	for _, filter := range flags.Args() {
 		report, err := prepared.runFilter(filter, *limit, *classifyOnly)
