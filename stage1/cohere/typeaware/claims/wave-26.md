@@ -241,3 +241,5 @@ with zero selected test skips. See ../wave_26_react_attributes/LANDING_CURRENT_R
 for commands, outputs, every mutant, the earlier disk retry and native/Go costs.
 The final pruned audit scanned 463 current origin refs and found no unclaimed
 ranked rules. No additional claim was made.
+
+Current-main landing refresh: rebased onto area d3a37422, containing main b6b1538b0. All 27 owned commands passed, including decoded-options and new typeof oracle/mutants. Twenty-one ports remain complete under their private runners. Final all-head audit: 505 origin refs, zero available rules. Evidence: ../wave_26_react_attributes/LANDING_D3_REPORT.md. No new claim.
