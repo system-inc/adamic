@@ -1,0 +1,157 @@
+=== RUN   TestRulesAndSuggestions
+    validation_test.go:517: better-tailwindcss/enforce-consistent-important-position upstream unique configurations=16
+    validation_test.go:517: better-tailwindcss/enforce-consistent-variable-syntax upstream unique configurations=14
+    validation_test.go:517: better-tailwindcss/enforce-consistent-variant-order upstream unique configurations=15
+    validation_test.go:524: independent parser comparison: 6 cases; 45 JSX cases explicitly blocked
+    validation_test.go:525: Go, Node, emitted JavaScript, ASan/UBSan native: 11374 identical bytes
+--- PASS: TestRulesAndSuggestions (16.78s)
+=== RUN   TestOwnedMutants
+=== RUN   TestOwnedMutants/tailwind-important-position
+    validation_test.go:560: silence important-position caught by Go comparison on Node: line 2 port="fixed\tmergeClassNames('!flex');\\u000a" Go="finding better-tailwindcss/enforce-consistent-important-position importantPosition 17 22\tThe important marker on \"!flex\" is written where Tailwind v3 put it. Tailwind v4 moved it to the end of the utility, so this is spelled \"flex!\" now. Both still compile, which is exactly why a v3 habit survives a paste and then sits next to the v4 spelling with nothing to say which one the file means. Write it as \"flex!\"."
+        Go context:
+        case 0
+        finding better-tailwindcss/enforce-consistent-important-position importantPosition 17 22	The important marker on "!flex" is written where Tailwind v3 put it. Tailwind v4 moved it to the end of the utility, so this is spelled "flex!" now. Both still compile, which is exactly why a v3 habit survives a paste and then sits next to the v4 spelling with nothing to say which one the file means. Write it as "flex!".
+        fixes 0
+        suggestions 0
+        fixed	mergeClassNames('!flex');\u000a
+        case 1
+    validation_test.go:560: silence important-position caught by Go comparison on emitted JavaScript: line 2 port="fixed\tmergeClassNames('!flex');\\u000a" Go="finding better-tailwindcss/enforce-consistent-important-position importantPosition 17 22\tThe important marker on \"!flex\" is written where Tailwind v3 put it. Tailwind v4 moved it to the end of the utility, so this is spelled \"flex!\" now. Both still compile, which is exactly why a v3 habit survives a paste and then sits next to the v4 spelling with nothing to say which one the file means. Write it as \"flex!\"."
+        Go context:
+        case 0
+        finding better-tailwindcss/enforce-consistent-important-position importantPosition 17 22	The important marker on "!flex" is written where Tailwind v3 put it. Tailwind v4 moved it to the end of the utility, so this is spelled "flex!" now. Both still compile, which is exactly why a v3 habit survives a paste and then sits next to the v4 spelling with nothing to say which one the file means. Write it as "flex!".
+        fixes 0
+        suggestions 0
+        fixed	mergeClassNames('!flex');\u000a
+        case 1
+    validation_test.go:560: silence important-position caught by Go comparison on sanitized native: line 2 port="fixed\tmergeClassNames('!flex');\\u000a" Go="finding better-tailwindcss/enforce-consistent-important-position importantPosition 17 22\tThe important marker on \"!flex\" is written where Tailwind v3 put it. Tailwind v4 moved it to the end of the utility, so this is spelled \"flex!\" now. Both still compile, which is exactly why a v3 habit survives a paste and then sits next to the v4 spelling with nothing to say which one the file means. Write it as \"flex!\"."
+        Go context:
+        case 0
+        finding better-tailwindcss/enforce-consistent-important-position importantPosition 17 22	The important marker on "!flex" is written where Tailwind v3 put it. Tailwind v4 moved it to the end of the utility, so this is spelled "flex!" now. Both still compile, which is exactly why a v3 habit survives a paste and then sits next to the v4 spelling with nothing to say which one the file means. Write it as "flex!".
+        fixes 0
+        suggestions 0
+        fixed	mergeClassNames('!flex');\u000a
+        case 1
+=== RUN   TestOwnedMutants/tailwind-variable-syntax
+    validation_test.go:560: silence variable-syntax caught by Go comparison on Node: line 42 port="fixed\tmergeClassNames('text-[--x]');\\u000a" Go="finding better-tailwindcss/enforce-consistent-variable-syntax variableSyntax 17 27\tThe custom property in \"text-[--x]\" is written as an arbitrary value. Tailwind v4 reads parentheses as a custom property and square brackets as an arbitrary value that happens to look like one, so \"text-(--x)\" is the spelling that says what this means. Both resolve today, which is why the two forms accumulate side by side until a reader cannot tell whether a difference between two classes is deliberate. Write it as \"text-(--x)\"."
+        Go context:
+        fixes 0
+        suggestions 0
+        finding better-tailwindcss/enforce-consistent-important-position importantPosition 265 275	The important marker on "!flex" is written where Tailwind v3 put it. Tailwind v4 moved it to the end of the utility, so this is spelled "flex!" now. Both still compile, which is exactly why a v3 habit survives a paste and then sits next to the v4 spelling with nothing to say which one the file means. Write it as "flex!".
+        fixes 0
+        suggestions 0
+        fixed	const MyClassNames = ['!flex', flag ? '!block' : '!grid', flag && '!inline', '!hidden' || '!visible', `base ${'!contents'}`];\u000amergeClassNames(('!flex'), '!block' as string, ['!grid']);\u000atheme.mergeClassNames('!flex'); const ignored='!flex';\u000a'\ud83d\ude00'; mergeClassNames('\u005cu0021flex');\u000a
+        case 2
+        finding better-tailwindcss/enforce-consistent-variable-syntax variableSyntax 17 27	The custom property in "text-[--x]" is written as an arbitrary value. Tailwind v4 reads parentheses as a custom property and square brackets as an arbitrary value that happens to look like one, so "text-(--x)" is the spelling that says what this means. Both resolve today, which is why the two forms accumulate side by side until a reader cannot tell whether a difference between two classes is deliberate. Write it as "text-(--x)".
+        fixes 0
+        suggestions 0
+        fixed	mergeClassNames('text-[--x]');\u000a
+        case 3
+    validation_test.go:560: silence variable-syntax caught by Go comparison on emitted JavaScript: line 42 port="fixed\tmergeClassNames('text-[--x]');\\u000a" Go="finding better-tailwindcss/enforce-consistent-variable-syntax variableSyntax 17 27\tThe custom property in \"text-[--x]\" is written as an arbitrary value. Tailwind v4 reads parentheses as a custom property and square brackets as an arbitrary value that happens to look like one, so \"text-(--x)\" is the spelling that says what this means. Both resolve today, which is why the two forms accumulate side by side until a reader cannot tell whether a difference between two classes is deliberate. Write it as \"text-(--x)\"."
+        Go context:
+        fixes 0
+        suggestions 0
+        finding better-tailwindcss/enforce-consistent-important-position importantPosition 265 275	The important marker on "!flex" is written where Tailwind v3 put it. Tailwind v4 moved it to the end of the utility, so this is spelled "flex!" now. Both still compile, which is exactly why a v3 habit survives a paste and then sits next to the v4 spelling with nothing to say which one the file means. Write it as "flex!".
+        fixes 0
+        suggestions 0
+        fixed	const MyClassNames = ['!flex', flag ? '!block' : '!grid', flag && '!inline', '!hidden' || '!visible', `base ${'!contents'}`];\u000amergeClassNames(('!flex'), '!block' as string, ['!grid']);\u000atheme.mergeClassNames('!flex'); const ignored='!flex';\u000a'\ud83d\ude00'; mergeClassNames('\u005cu0021flex');\u000a
+        case 2
+        finding better-tailwindcss/enforce-consistent-variable-syntax variableSyntax 17 27	The custom property in "text-[--x]" is written as an arbitrary value. Tailwind v4 reads parentheses as a custom property and square brackets as an arbitrary value that happens to look like one, so "text-(--x)" is the spelling that says what this means. Both resolve today, which is why the two forms accumulate side by side until a reader cannot tell whether a difference between two classes is deliberate. Write it as "text-(--x)".
+        fixes 0
+        suggestions 0
+        fixed	mergeClassNames('text-[--x]');\u000a
+        case 3
+    validation_test.go:560: silence variable-syntax caught by Go comparison on sanitized native: line 42 port="fixed\tmergeClassNames('text-[--x]');\\u000a" Go="finding better-tailwindcss/enforce-consistent-variable-syntax variableSyntax 17 27\tThe custom property in \"text-[--x]\" is written as an arbitrary value. Tailwind v4 reads parentheses as a custom property and square brackets as an arbitrary value that happens to look like one, so \"text-(--x)\" is the spelling that says what this means. Both resolve today, which is why the two forms accumulate side by side until a reader cannot tell whether a difference between two classes is deliberate. Write it as \"text-(--x)\"."
+        Go context:
+        fixes 0
+        suggestions 0
+        finding better-tailwindcss/enforce-consistent-important-position importantPosition 265 275	The important marker on "!flex" is written where Tailwind v3 put it. Tailwind v4 moved it to the end of the utility, so this is spelled "flex!" now. Both still compile, which is exactly why a v3 habit survives a paste and then sits next to the v4 spelling with nothing to say which one the file means. Write it as "flex!".
+        fixes 0
+        suggestions 0
+        fixed	const MyClassNames = ['!flex', flag ? '!block' : '!grid', flag && '!inline', '!hidden' || '!visible', `base ${'!contents'}`];\u000amergeClassNames(('!flex'), '!block' as string, ['!grid']);\u000atheme.mergeClassNames('!flex'); const ignored='!flex';\u000a'\ud83d\ude00'; mergeClassNames('\u005cu0021flex');\u000a
+        case 2
+        finding better-tailwindcss/enforce-consistent-variable-syntax variableSyntax 17 27	The custom property in "text-[--x]" is written as an arbitrary value. Tailwind v4 reads parentheses as a custom property and square brackets as an arbitrary value that happens to look like one, so "text-(--x)" is the spelling that says what this means. Both resolve today, which is why the two forms accumulate side by side until a reader cannot tell whether a difference between two classes is deliberate. Write it as "text-(--x)".
+        fixes 0
+        suggestions 0
+        fixed	mergeClassNames('text-[--x]');\u000a
+        case 3
+=== RUN   TestOwnedMutants/tailwind-variant-order
+    validation_test.go:560: silence variant ordering caught by Go comparison on Node: line 61 port="fixed\tmergeClassNames('hover:sm:flex');\\u000a" Go="finding better-tailwindcss/enforce-consistent-variant-order variantOrder 17 30\tThe variants on \"hover:sm:flex\" are written in an order Tailwind does not emit them in; it compiles to the same CSS as \"sm:hover:flex\", which is the spelling the engine's own sort produces. Nothing breaks either way, and that is why the two spellings accumulate side by side until a reader cannot tell whether a difference between two class lists is meaningful. Write it as \"sm:hover:flex\"."
+        Go context:
+        fixes 0
+        suggestions 0
+        finding better-tailwindcss/enforce-consistent-variable-syntax variableSyntax 121 138	The custom property in "bg-[var(--shade)]" is written as an arbitrary value. Tailwind v4 reads parentheses as a custom property and square brackets as an arbitrary value that happens to look like one, so "bg-(--shade)" is the spelling that says what this means. Both resolve today, which is why the two forms accumulate side by side until a reader cannot tell whether a difference between two classes is deliberate. Write it as "bg-(--shade)".
+        fixes 0
+        suggestions 0
+        fixed	const ButtonClassName = flag ? 'text-[--x]' : 'text-[var(--y)]';\u000amergeClassNames(['text-[--x]', flag && 'text-(--z)'], ('bg-[var(--shade)]' as string));\u000atheme.mergeClassNames('text-[--x]');\u000a
+        case 4
+        finding better-tailwindcss/enforce-consistent-variant-order variantOrder 17 30	The variants on "hover:sm:flex" are written in an order Tailwind does not emit them in; it compiles to the same CSS as "sm:hover:flex", which is the spelling the engine's own sort produces. Nothing breaks either way, and that is why the two spellings accumulate side by side until a reader cannot tell whether a difference between two class lists is meaningful. Write it as "sm:hover:flex".
+        fixes 0
+        suggestions 0
+        fixed	mergeClassNames('hover:sm:flex');\u000a
+        case 5
+    validation_test.go:560: silence variant ordering caught by Go comparison on emitted JavaScript: line 61 port="fixed\tmergeClassNames('hover:sm:flex');\\u000a" Go="finding better-tailwindcss/enforce-consistent-variant-order variantOrder 17 30\tThe variants on \"hover:sm:flex\" are written in an order Tailwind does not emit them in; it compiles to the same CSS as \"sm:hover:flex\", which is the spelling the engine's own sort produces. Nothing breaks either way, and that is why the two spellings accumulate side by side until a reader cannot tell whether a difference between two class lists is meaningful. Write it as \"sm:hover:flex\"."
+        Go context:
+        fixes 0
+        suggestions 0
+        finding better-tailwindcss/enforce-consistent-variable-syntax variableSyntax 121 138	The custom property in "bg-[var(--shade)]" is written as an arbitrary value. Tailwind v4 reads parentheses as a custom property and square brackets as an arbitrary value that happens to look like one, so "bg-(--shade)" is the spelling that says what this means. Both resolve today, which is why the two forms accumulate side by side until a reader cannot tell whether a difference between two classes is deliberate. Write it as "bg-(--shade)".
+        fixes 0
+        suggestions 0
+        fixed	const ButtonClassName = flag ? 'text-[--x]' : 'text-[var(--y)]';\u000amergeClassNames(['text-[--x]', flag && 'text-(--z)'], ('bg-[var(--shade)]' as string));\u000atheme.mergeClassNames('text-[--x]');\u000a
+        case 4
+        finding better-tailwindcss/enforce-consistent-variant-order variantOrder 17 30	The variants on "hover:sm:flex" are written in an order Tailwind does not emit them in; it compiles to the same CSS as "sm:hover:flex", which is the spelling the engine's own sort produces. Nothing breaks either way, and that is why the two spellings accumulate side by side until a reader cannot tell whether a difference between two class lists is meaningful. Write it as "sm:hover:flex".
+        fixes 0
+        suggestions 0
+        fixed	mergeClassNames('hover:sm:flex');\u000a
+        case 5
+    validation_test.go:560: silence variant ordering caught by Go comparison on sanitized native: line 61 port="fixed\tmergeClassNames('hover:sm:flex');\\u000a" Go="finding better-tailwindcss/enforce-consistent-variant-order variantOrder 17 30\tThe variants on \"hover:sm:flex\" are written in an order Tailwind does not emit them in; it compiles to the same CSS as \"sm:hover:flex\", which is the spelling the engine's own sort produces. Nothing breaks either way, and that is why the two spellings accumulate side by side until a reader cannot tell whether a difference between two class lists is meaningful. Write it as \"sm:hover:flex\"."
+        Go context:
+        fixes 0
+        suggestions 0
+        finding better-tailwindcss/enforce-consistent-variable-syntax variableSyntax 121 138	The custom property in "bg-[var(--shade)]" is written as an arbitrary value. Tailwind v4 reads parentheses as a custom property and square brackets as an arbitrary value that happens to look like one, so "bg-(--shade)" is the spelling that says what this means. Both resolve today, which is why the two forms accumulate side by side until a reader cannot tell whether a difference between two classes is deliberate. Write it as "bg-(--shade)".
+        fixes 0
+        suggestions 0
+        fixed	const ButtonClassName = flag ? 'text-[--x]' : 'text-[var(--y)]';\u000amergeClassNames(['text-[--x]', flag && 'text-(--z)'], ('bg-[var(--shade)]' as string));\u000atheme.mergeClassNames('text-[--x]');\u000a
+        case 4
+        finding better-tailwindcss/enforce-consistent-variant-order variantOrder 17 30	The variants on "hover:sm:flex" are written in an order Tailwind does not emit them in; it compiles to the same CSS as "sm:hover:flex", which is the spelling the engine's own sort produces. Nothing breaks either way, and that is why the two spellings accumulate side by side until a reader cannot tell whether a difference between two class lists is meaningful. Write it as "sm:hover:flex".
+        fixes 0
+        suggestions 0
+        fixed	mergeClassNames('hover:sm:flex');\u000a
+        case 5
+--- PASS: TestOwnedMutants (41.78s)
+    --- PASS: TestOwnedMutants/tailwind-important-position (13.30s)
+    --- PASS: TestOwnedMutants/tailwind-variable-syntax (13.69s)
+    --- PASS: TestOwnedMutants/tailwind-variant-order (12.39s)
+=== RUN   TestCompilerAndStage1
+    validation_test.go:606: whole compiler and stage1 corpus: 356 files, 1068 rule/file pairs
+    validation_test.go:606: Go, Node, emitted JavaScript, ASan/UBSan native: 39743373 identical bytes
+--- PASS: TestCompilerAndStage1 (63.74s)
+=== RUN   TestThroughput
+    validation_test.go:610: ADAMIC_LINT_BENCH=1
+--- SKIP: TestThroughput (0.00s)
+=== RUN   TestJsxProjectedSemanticsAndParserBlocker
+    validation_test.go:662: better-tailwindcss/enforce-consistent-important-position upstream unique configurations=16
+    validation_test.go:662: better-tailwindcss/enforce-consistent-variable-syntax upstream unique configurations=14
+    validation_test.go:662: better-tailwindcss/enforce-consistent-variant-order upstream unique configurations=15
+    validation_test.go:667: Go AST projection only: 45 JSX cases; this does not certify the independent parser
+    validation_test.go:668: Go, Node, emitted JavaScript, ASan/UBSan native: 15246 identical bytes
+    validation_test.go:684: Node, emitted JS, ASan/UBSan native: exact parser refusal observed
+--- PASS: TestJsxProjectedSemanticsAndParserBlocker (24.84s)
+=== RUN   TestExplicitProviderRefusals
+    validation_test.go:736: Go positive controls fire; Node, emitted JS and ASan/UBSan native refuse missing ProgramReads and nonconstant regex providers with exit 70
+    validation_test.go:756: provider guard mutant caught by missing required refusal on Node
+    validation_test.go:756: provider guard mutant caught by missing required refusal on emitted JavaScript
+    validation_test.go:756: provider guard mutant caught by missing required refusal on sanitized native
+--- PASS: TestExplicitProviderRefusals (40.50s)
+=== RUN   TestCustomRegexGuardMutant
+    validation_test.go:791: custom regexp guard mutant caught by missing exit-70 refusal and Go comparison on Node
+    validation_test.go:791: custom regexp guard mutant caught by missing exit-70 refusal and Go comparison on emitted JavaScript
+    validation_test.go:791: custom regexp guard mutant caught by missing exit-70 refusal and Go comparison on sanitized native
+--- PASS: TestCustomRegexGuardMutant (15.42s)
+=== RUN   TestConfiguredCallees
+    validation_test.go:808: Go, Node, emitted JavaScript, ASan/UBSan native: 1642 identical bytes
+--- PASS: TestConfiguredCallees (15.69s)
+=== RUN   TestPositiveThroughput
+    validation_test.go:817: ADAMIC_LINT_BENCH=1
+--- SKIP: TestPositiveThroughput (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/rules/tailwind-important-position	218.749s
