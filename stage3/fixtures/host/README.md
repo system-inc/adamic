@@ -83,9 +83,33 @@ injection of partial writes/close failures. These are outside the requested
 creation still contains tsc's race-handling statements. readFile's ignored
 encoding parameter is preserved, not replaced by a new encoding policy.
 
-Adaptation 50 does not remove tsc's requires. Its seven builtin loads are lazy,
-conditional or caught; the adapter records why static hoisting is declined.
-The fixtures' explicit static node: imports are inputs for the library worker,
-not permission to change those load semantics. Only this host bucket,
-adaptation 50 and the shared missing NOTICE were edited. The fixture Go test
-owned by another worker was not edited.
+## For the require-builtins worker
+
+@system_adamic_compiler is implementing literal builtin requires natively on
+`codex/require-builtins`. No source adaptation is needed. These seven calls
+retain their original conditional or lazy load behavior:
+
+| Source in src/compiler | Builtin | Why retained |
+| --- | --- | --- |
+| sys.ts:1470 | fs | getNodeSystem body; initialized only on the Node-like branch |
+| sys.ts:1471 | path | getNodeSystem body; initialized only on the Node-like branch |
+| sys.ts:1472 | os | getNodeSystem body; initialized only on the Node-like branch |
+| sys.ts:1476 | crypto | getNodeSystem body on the Node-like branch, plus a catch for reduced Node installations without crypto |
+| sys.ts:1650 | inspector | enableCPUProfiler body, after the active-session early return |
+| tracing.ts:63 | fs | startTracing body, only while fs is undefined, with a load-error catch |
+| performanceCore.ts:35 | perf_hooks | tryGetPerformance body, inside Node-like detection and a catch |
+
+The seven calls include fs twice. `source-map-support` at sys.ts:1597 is an
+optional third-party package and remains inside its catch. The plugin require
+at sys.ts:1619 has a nonliteral specifier and remains dynamic.
+
+An unconditional static import would move load failures outside these guards
+and load inspector/tracing before the first request. Keeping an assignment
+conditional after hoisting its import does not preserve the load timing.
+Namespace imports can also change the identity and mutability of CommonJS
+module objects. The fixtures' explicit static node: imports provide inputs for
+the library worker; tsc's original requires retain their load semantics.
+
+The unused adaptation was removed; number 50 belongs to the scanner proof's
+temporary adaptations. Historical oracle evidence is retained in this bucket.
+The fixture Go test owned by another worker was not edited.
