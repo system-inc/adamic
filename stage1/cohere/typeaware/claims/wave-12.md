@@ -48,3 +48,18 @@ ports on main/the bridge branch. There were 54 remaining entries. Matching
 module filename checks across all origin refs found no existing ports of these
 three. The earlier remaining Nexus entries are now claimed and were skipped.
 This claim update is pushed before implementation; shared files stay untouched.
+
+## Fourth batch after completing nine rules
+
+The third batch is pushed in `32f968f3`, with evidence in `ba3b7db2` and
+compressed reference inputs in `5da49595`. After fetching all origin heads,
+the next three available checker-dependent ranking entries are:
+
+- `prefer-regex-literals` (0 compiler, 0 repository).
+- `prefer-rest-params` (0 compiler, 0 repository).
+- `react-hooks/exhaustive-deps` (0 compiler, 0 repository).
+
+The audit inspected 356 origin refs, 133 claimed ranking names and 25 checker
+ports on main/the bridge branch, leaving 39 entries. Matching module filename
+checks across all origin refs found no competing ports. This claim update is
+pushed before implementation. Shared harness and generator files stay untouched.
