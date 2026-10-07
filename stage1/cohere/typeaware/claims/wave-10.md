@@ -64,3 +64,11 @@ the @typescript-eslint prefix by the original native suite were normalized befor
 selection. Checking these three names across 129 distinct origin stage1 trees
 found only config/sets.ts inventory references, not implementations. None was
 skipped. This claim is committed and pushed before implementation work.
+
+Second continuation status: reserved but unported. A minimal valid TSX input
+produces one production Go iframe finding, while the unchanged native stage-1
+parser exits 70 expecting GreaterThanToken at the self-closing slash. Shared
+JSX parsing blocks these rules before listener dispatch. Ahra's explicit stop
+instruction applies to this non-harness blocker; no shared parser is edited.
+See ../wave_10_react/README.md for the input, exact error, Go verdict and limits.
+No additional batch is claimed.

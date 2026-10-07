@@ -1,0 +1,60 @@
+{
+  "filename": "/workspace/wave-10-react-parser-input.tsx",
+  "source": "const frame = <iframe />;\n",
+  "Go_exit": 0,
+  "Go_findings": 1,
+  "Go_span": [
+    14,
+    24
+  ],
+  "Go_rule": "react/iframe-missing-sandbox",
+  "Go_id": "attributeMissing",
+  "native_parser_exit": 70,
+  "native_parser_stderr": "adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 22 in /workspace/wave-10-react-parser-input.tsx\n",
+  "logs": {
+    "wave-10-react-parser-build.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "wave-10-react-go-parser.stdout": {
+      "bytes": 58,
+      "sha256": "d677b29b0bf5b4063d78d6891527f58428060cea13fd29ae2e779a11e932f793"
+    },
+    "wave-10-react-native-parser.stdout": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "wave-10-react-go-parser.stderr": {
+      "bytes": 52,
+      "sha256": "6e714fb3d1eb8f9765dd3889c8dd16832164ebeb1ba603e9462f5d045d5d9b16"
+    },
+    "wave-10-react-native-parser.stderr": {
+      "bytes": 121,
+      "sha256": "003a7e484358678afd3e1b3cfd3a563bb90bdbd8315014bbf1dbb72c57da79d1"
+    },
+    "wave-10-react-go-parser.status": {
+      "bytes": 18,
+      "sha256": "09ccf5bb8abce6262ecc80e5cf0792d87836da8179bcfe303da3875f1aa2eb5a"
+    },
+    "wave-10-react-native-parser.status": {
+      "bytes": 23,
+      "sha256": "613b74693814c26a9cff82763ff092c483279cb3eda3c47a55a1b4f3e212aa80"
+    },
+    "wave-10-react-iframe-oracle-build.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "wave-10-react-iframe-go.stdout": {
+      "bytes": 607,
+      "sha256": "4ec4c498a7230c2e808cab890b35206bddec754af7b9456dbb8adf1372de4f55"
+    },
+    "wave-10-react-iframe-go.stderr": {
+      "bytes": 52,
+      "sha256": "bf23c970357bba8be919606e6a9130b1fcbec85d48e5fc60e6f2ce84651dcb83"
+    },
+    "wave-10-react-iframe-go.status": {
+      "bytes": 26,
+      "sha256": "1dfa0992e76ec32715d118923fbf2964e086a954756b441d74d4acf919ff0296"
+    }
+  }
+}
