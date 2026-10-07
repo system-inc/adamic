@@ -350,6 +350,8 @@ var fixtures = []struct {
 	// Every string length from 1 to 300 bytes, and objects of every size an object can be in that
 	// range: some kept, some dropped, then more of the same size (heap.c).
 	{"internal/oracle/testdata/slab_sizes.a", true, false},
+	// A throw from inside a ?:, && or ?? arm after the statement built strings (9984394).
+	{"internal/oracle/testdata/aside_throw.a", true, false},
 	// Assignments inside a try (integration 9): a parameter assigned there, a counter assigned there,
 	// and a counted loop inside one.
 	{"internal/oracle/testdata/try_assignments.a", true, false},
