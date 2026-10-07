@@ -212,3 +212,10 @@ with five uncached Node fixtures, inherited lowering/refusal and record-runtime
 mutants, and vet. Shared checker-context gap and partial/PARKED statuses remain
 unchanged. No new claims or implementation edits. See
 ../WAVE_30_PREDICATE_LANDING_REPORT.md and its exact rebase/validation evidence.
+
+
+Unified landing disposition: all fourteen retained claims are PARKED; the eight
+standalone ports lack the registered checker context, and the six partial React/JSX
+ports lack checker or HIR/SSA/capture integration. Exact reproducer commands and
+TSX sources are in ../parked/wave-30.md. This branch is a parked archive, not
+a unified landing candidate. Step 1 is skipped under Ahra's all-blocked exception.
