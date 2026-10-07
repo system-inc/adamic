@@ -1,0 +1,21 @@
+import type { RuleContext } from '../../context.ts';
+import { Diagnostic } from '../typescript-prefer-as-const/records.a';
+import { message } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext; readonly records: Diagnostic[] = [];
+    constructor(context: RuleContext) { this.context = context; }
+    analyze(index: number): void {
+        const context = this.context; const node = context.node(index);
+        if(node.kind !== 'NumericLiteral') return;
+        const start = context.start(index); const raw = context.source.slice(start, node.end);
+        if(raw.length < 2 || raw.charCodeAt(0) !== 48) return;
+        const second = raw.charCodeAt(1);
+        if(second >= 48 && second <= 57) this.records.push(new Diagnostic('no-octal', 'noOctal', message, start, node.end));
+    }
+    visit(index: number): void {
+        const previous = this.records.length; this.analyze(index);
+        if(this.records.length !== previous) this.context.report(index, 'no-octal', 'noOctal', message, '', '', '');
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

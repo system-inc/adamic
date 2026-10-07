@@ -1,0 +1,12 @@
+{
+  "name": "no-octal",
+  "kinds": [
+    "NumericLiteral"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoOctal",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoOctal"
+}

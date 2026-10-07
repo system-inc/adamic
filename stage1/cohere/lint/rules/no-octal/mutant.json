@@ -1,0 +1,6 @@
+{
+  "name": "no-octal-semantic-mutant",
+  "file": "rule.a",
+  "from": "second <= 57",
+  "to": "second <= 55"
+}
