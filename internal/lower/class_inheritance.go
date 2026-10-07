@@ -29,6 +29,9 @@ func (l *lowering) baseInstance(declaration *ast.Node, classType *checker.Type) 
 		if symbol == nil || len(symbol.Declarations) != 1 || symbol.Declarations[0].Kind != ast.KindClassDeclaration {
 			return nil, l.notYet(clause, "a base that isn't a declared class")
 		}
+		if err := l.extendsApple(clause, symbol); err != nil {
+			return nil, err
+		}
 		base := symbol.Declarations[0]
 		return l.instantiate(base, baseType, clause)
 	}

@@ -65,7 +65,7 @@ func TestClangGolden(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	files := append(append([]File{}, output.Files...), File{Path: "bindings-check.m", Content: output.Check})
+	files := append(append([]File{}, output.Files...), File{Path: "bindings-check.m", Content: output.Check}, File{Path: LeavesFile, Content: output.Leaves})
 	if len(files) != len(golden) {
 		t.Fatalf("generated %d files, golden has %d", len(files), len(golden))
 	}
@@ -134,6 +134,26 @@ func TestPatterns(t *testing.T) {
 		if !strings.Contains(source, want) {
 			t.Errorf("table source missing %q:\n%s", want, source)
 		}
+	}
+	// Leaves: a class whose instances, and every subclass's, keep only leaves (NSFixtureText and its
+	// mutable subclass keep strings); not one whose subclass keeps a record (NSFixtureNote), nor a
+	// timer, which keeps what its initializer is handed, nor the record, whose mutators keep records,
+	// nor the root, which may be anything.
+	for _, want := range []string{"\nleaf NSFixtureText\n", "\nleaf NSFixtureMutableText\n", "\nleaf NSString\n", "\t-[NSFixtureMutableText appendText:] NSString *: a leaf\n"} {
+		if !strings.Contains(string(output.Leaves), want) {
+			t.Errorf("leaf table missing %q:\n%s", want, output.Leaves)
+		}
+	}
+	for _, refused := range []string{"leaf NSFixtureNote\n", "leaf NSFixtureStickyNote\n", "leaf NSFixtureRecord\n", "leaf NSFixtureRoot\n", "leaf NSFixtureTimer\n"} {
+		if strings.Contains(string(output.Leaves), refused) {
+			t.Errorf("leaf table names %q", refused)
+		}
+	}
+	// Deprecated on the platform is left out, with its reason; deprecated only later, or only on
+	// another platform, isn't.
+	text := files["foundation/fixture-text.d.ts"]
+	if !strings.Contains(text, "// Skipped -[NSFixtureText oldWay]: deprecated on macos.") || strings.Contains(text, "oldWay(") || !strings.Contains(text, "futureWay(): void;") || !strings.Contains(text, "phoneWay(): void;") {
+		t.Errorf("deprecation misread:\n%s", text)
 	}
 	loose := files["foundation/fixture-loose.d.ts"]
 	if !strings.Contains(loose, "string | undefined") {
@@ -336,6 +356,15 @@ func TestDelegateRefusals(t *testing.T) {
 			header + "class Plain {\n\tnumberOfRows(table: FixtureRecord): number {\n\t\treturn table.text.length;\n\t}\n}\nconst record = new FixtureRecord({ count: 1 });\nrecord.source = new Plain();\n",
 			"an object of the program's own class handed to Apple without an Apple protocol it implements",
 		},
+		// A leaf holds only leaves: a delegate may hold one, and no class of the program's extends one.
+		"holds a leaf": {
+			header + "import type { FixtureText } from 'apple/foundation/fixture-text';\nclass Owner implements FixtureTableSource {\n\treadonly note: FixtureText;\n\tconstructor(note: FixtureText) {\n\t\tthis.note = note;\n\t}\n\tnumberOfRows(table: FixtureRecord): number {\n\t\treturn this.note.text.length + table.text.length;\n\t}\n}\nexport function attach(record: FixtureRecord, note: FixtureText): void {\n\trecord.source = new Owner(note);\n}\n",
+			"",
+		},
+		"extends a leaf": {
+			header + "import { FixtureText } from 'apple/foundation/fixture-text';\nclass Pinned extends FixtureText {\n\trecord: FixtureRecord | undefined = undefined;\n}\nexport function pin(pinned: Pinned): void {\n\tconsole.log(pinned.text);\n}\n",
+			"a class extending Apple's FixtureText",
+		},
 		"a result of the wrong type": {
 			header + "class Source implements FixtureTableSource {\n\tnumberOfRows(table: FixtureRecord): string {\n\t\treturn table.text;\n\t}\n}\n",
 			"error TS",
@@ -361,6 +390,39 @@ func TestDelegateRefusals(t *testing.T) {
 				t.Fatalf("want a refusal containing %q, got %v:\n%s", test.want, runError, output)
 			}
 		})
+	}
+}
+
+// The deprecation reader takes each way Apple's headers write it, for the platform generated.
+func TestDeprecatedIn(t *testing.T) {
+	t.Parallel()
+	g := &generator{configuration: Configuration{Platform: "macos"}}
+	for text, want := range map[string]bool{
+		`API_DEPRECATED("Use NSURLSession", macos(10.0, 10.4), ios(2.0, 9.0))`:              true,
+		`API_DEPRECATED("x", ios(2.0, 9.0))`:                                                false,
+		`API_DEPRECATED("x", macos(10.0, API_TO_BE_DEPRECATED))`:                            false,
+		`API_DEPRECATED_WITH_REPLACEMENT("newWay", macos(10.0, 11.0))`:                      true,
+		`API_DEPRECATED_WITH_REPLACEMENT("newWay", macosx(10.0, 11.0))`:                     true,
+		`NS_DEPRECATED_MAC(10_0, 10_4, "x")`:                                                true,
+		`NS_DEPRECATED_IOS(2_0, 9_0)`:                                                       false,
+		`NS_DEPRECATED(10_0, 10_4, 2_0, 9_0)`:                                               true,
+		`NS_DEPRECATED(10_0, NA, 2_0, 9_0)`:                                                 false,
+		`NS_CLASS_DEPRECATED_MAC(10_0, 10_4)`:                                               true,
+		`AVAILABLE_MAC_OS_X_VERSION_10_0_AND_LATER_BUT_DEPRECATED_IN_MAC_OS_X_VERSION_10_4`: true,
+		`DEPRECATED_ATTRIBUTE`:                                                              true,
+		`availability(macos, introduced=10.0, deprecated=10.4)`:                             true,
+		`availability(macos, introduced=10.0, deprecated=100000)`:                           false,
+		`availability(ios, introduced=2.0, deprecated=9.0)`:                                 false,
+		`API_AVAILABLE(macos(10.0))`:                                                        false,
+	} {
+		if got := g.deprecatedIn(text, ""); got != want {
+			t.Errorf("deprecatedIn(%s) = %t, want %t", text, got, want)
+		}
+	}
+	for macro, want := range map[string]bool{"API_DEPRECATED_BEGIN": true, "APPKIT_API_DEPRECATED_BEGIN_IOS": false, "APPKIT_API_DEPRECATED_BEGIN_MACOS": true, "API_TO_BE_DEPRECATED_BEGIN": false} {
+		if got := g.deprecatedByName(macro); got != want {
+			t.Errorf("deprecatedByName(%s) = %t, want %t", macro, got, want)
+		}
 	}
 }
 

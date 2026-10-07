@@ -33,6 +33,9 @@ type node struct {
 	// SetterOnly is the generator's too: a property's setter offered as a method, since its
 	// getter's result can't cross (see emitClass).
 	SetterOnly bool
+	// Unowned is a property whose value the object doesn't hold: weak, assign or unsafe_unretained
+	// (NSView's window, its superview). Leaves read it (leaves.go).
+	Unowned bool
 }
 type astStream struct {
 	decoder *json.Decoder
@@ -268,6 +271,10 @@ func (s *astStream) readNode() (*node, error) {
 			err = s.decoder.Decode(&n.Variadic)
 		case "readonly":
 			err = s.decoder.Decode(&n.Readonly)
+		case "weak", "assign", "unsafe_unretained":
+			var set bool
+			err = s.decoder.Decode(&set)
+			n.Unowned = n.Unowned || set
 		case "class":
 			err = s.decoder.Decode(&n.ClassProperty)
 		case "completeDefinition":

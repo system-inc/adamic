@@ -69,6 +69,9 @@ func (l *lowering) staticInstance(declaration *ast.Node) (*instance, error) {
 	}
 	var base *instance
 	if parent := l.staticBase(declaration); parent != nil {
+		if err := l.extendsApple(declaration, l.symbol(parent.Name())); err != nil {
+			return nil, err
+		}
 		var err error
 		base, err = l.staticInstance(parent)
 		if err != nil {

@@ -442,8 +442,13 @@ func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
 					}
 				}
 			}
-			for _, field := range f.fields(proven) {
-				queue = append(queue, cycleNode{proven: f.l.checker.GetTypeOfSymbol(field)})
+			// An Apple leaf (load.AppleLeaves: a URL, a string, a number) holds only other leaves, so
+			// nothing of it reaches back: its fields aren't followed. What the program's own classes
+			// that can be seen as it hold still is, below, so a subclass that adds a field stays honest.
+			if !f.l.foreignLeaf(proven) {
+				for _, field := range f.fields(proven) {
+					queue = append(queue, cycleNode{proven: f.l.checker.GetTypeOfSymbol(field)})
+				}
 			}
 			// A value seen as this type may be any object type the program has that can be seen as
 			// it, with fields this type doesn't show.

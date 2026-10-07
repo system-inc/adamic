@@ -43,11 +43,11 @@ func (g *generator) emitCheck() (string, error) {
 		constants := children(d.node, "EnumConstantDecl")
 		available := []*node{}
 		for _, constant := range constants {
-			_, _, unavailable, err := g.attributes(constant)
+			_, _, gone, err := g.attributes(constant)
 			if err != nil {
 				return "", err
 			}
-			if !unavailable {
+			if gone == "" {
 				available = append(available, constant)
 			}
 		}

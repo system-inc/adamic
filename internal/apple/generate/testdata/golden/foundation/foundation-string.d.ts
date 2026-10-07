@@ -9,5 +9,11 @@ declare module 'apple/foundation/foundation-string' {
 	 */
 	export class FoundationString extends FixtureRoot {
 		private constructor();
+
+		/**
+		 * -[NSString length]
+		 * @objc method length -> integer
+		 */
+		length(): number;
 	}
 }
