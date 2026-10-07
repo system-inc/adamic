@@ -55,3 +55,15 @@ readiness expansion. Existing reservations remain in place.
 
 This claim is committed and pushed before implementation. Rule sources use .a.
 Shared integration compatibility stays in scratch overlays and will be reported.
+
+## Fourth claim, October 7
+
+After pushing 86546bbf and fetching all origin heads (330 refs), claim the
+first three unported and unclaimed syntax-ready entries, positions 13-15:
+
+1. default-case-last
+2. default-param-last
+3. for-direction
+
+All original 46 helper-ready entries are reserved. Main sources and all origin
+claim documents were checked. This update is pushed before implementation.
