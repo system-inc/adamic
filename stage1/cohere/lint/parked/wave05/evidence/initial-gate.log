@@ -1,0 +1,658 @@
+--- FAIL: TestRulesAgree (158.95s)
+    lint_test.go:322: go [test -overlay=/tmp/adamic-gate/TestRulesAgree3640546333/019/overlay.json ./internal/lint/rules/tailwind -run ^(Test|TestNoPhysicalDirection) -count=1 -timeout=10m]: exit status 1
+--- FAIL: TestMutants (3.58s)
+    --- FAIL: TestMutants/debugger_fix_suppressed (0.02s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantsdebugger_fix_suppressed3340348846/019/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x40cc51c0fc0, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x40cc570569a, 0x50}, {0x40cc52bc1b0, 0x86}, {0x40cc51c0fc0, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x40cc570569a?, 0x40cc5254140?}, 0x0, 0x40cc5254140)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/empty_function_body_reported (0.02s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantsempty_function_body_reported1897479230/019/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x9ae7a84afc0, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x9ae7ac576ae, 0x55}, {0x9ae7a9461b0, 0x86}, {0x9ae7a84afc0, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x9ae7ac576ae?, 0x9ae7ab63740?}, 0x0, 0x9ae7ab63740)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/suggestion_applied_as_fix (0.02s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantssuggestion_applied_as_fix879599490/019/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x3c8fac178fc0, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x3c8fac19d69e, 0x51}, {0x3c8fac254240, 0x86}, {0x3c8fac178fc0, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x3c8fac19d69e?, 0x3c8fac490500?}, 0x0, 0x3c8fac490500)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/var_declaration_suppressed (0.02s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantsvar_declaration_suppressed3799263460/019/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x15d0bd5e4e40, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x15d0bda936a6, 0x53}, {0x15d0bd5fa1b0, 0x86}, {0x15d0bd5e4e40, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x15d0bda936a6?, 0x15d0bd89d740?}, 0x0, 0x15d0bd89d740)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/duplicate_case_suppressed (0.02s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantsduplicate_case_suppressed4208055669/019/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x347b99c5efc0, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x347b9a0e16a2, 0x52}, {0x347b99d3a240, 0x86}, {0x347b99c5efc0, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x347b9a0e16a2?, 0x347b99f76500?}, 0x0, 0x347b99f76500)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/no-octal-escape_mutant_from_batch_8 (0.02s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantsno-octal-escape_mutant_from_batch_83670078978/020/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x1abf019aafc0, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x1abf01df61ca, 0x5c}, {0x1abf01e80240, 0x86}, {0x1abf019aafc0, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x1abf01df61ca?, 0x1abf01dc6140?}, 0x0, 0x1abf01dc6140)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/no-unexpected-multiline_mutant_from_batch_8 (0.03s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantsno-unexpected-multiline_mutant_from_batch_83988206069/021/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x1e215d620fc0, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x1e215d9f01ea, 0x64}, {0x1e215d67c1b0, 0x86}, {0x1e215d620fc0, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x1e215d9f01ea?, 0x1e215d9e4000?}, 0x0, 0x1e215d9e4000)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/no-unused-private-class-members_mutant_from_batch_8 (0.02s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantsno-unused-private-class-members_mutant_from_batch_81367243615/021/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x2fb07444efc0, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x2fb07491cc8a, 0x6c}, {0x2fb07454a240, 0x86}, {0x2fb07444efc0, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x2fb07491cc8a?, 0x2fb074766640?}, 0x0, 0x2fb074766640)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/no-useless-constructor_mutant_from_batch_8 (0.02s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantsno-useless-constructor_mutant_from_batch_82812408710/021/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x1e85c0c1cfc0, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x1e85c10601e6, 0x63}, {0x1e85c0c78240, 0x86}, {0x1e85c0c1cfc0, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x1e85c10601e6?, 0x1e85c102a0c0?}, 0x0, 0x1e85c102a0c0)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/prefer-template_mutant_from_batch_8 (0.03s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantsprefer-template_mutant_from_batch_82830664961/020/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x315caefc1140, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x315caf0641ca, 0x5c}, {0x315caf050240, 0x86}, {0x315caefc1140, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x315caf0641ca?, 0x315caf2687c0?}, 0x0, 0x315caf2687c0)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/react-forward-ref-uses-ref_mutant_from_batch_8 (0.02s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantsreact-forward-ref-uses-ref_mutant_from_batch_8959209177/020/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x24e9c8b7cfc0, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x24e9c8ff61f2, 0x66}, {0x24e9c8c60240, 0x86}, {0x24e9c8b7cfc0, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x24e9c8ff61f2?, 0x24e9c8e9c500?}, 0x0, 0x24e9c8e9c500)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/react-jsx-no-comment-textnodes_mutant_from_batch_8 (0.02s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantsreact-jsx-no-comment-textnodes_mutant_from_batch_83987320996/020/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x220040b78d80, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x220040b5cc86, 0x6b}, {0x220040b70240, 0x86}, {0x220040b78d80, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x220040b5cc86?, 0x220040b2c140?}, 0x0, 0x220040b2c140)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/react-no-find-dom-node_mutant_from_batch_8 (0.02s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantsreact-no-find-dom-node_mutant_from_batch_81252421651/020/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x3253a9038f00, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x3253a958e1e6, 0x63}, {0x3253a91341b0, 0x86}, {0x3253a9038f00, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x3253a958e1e6?, 0x3253a90dc140?}, 0x0, 0x3253a90dc140)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/react-no-is-mounted_mutant_from_batch_8 (0.03s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantsreact-no-is-mounted_mutant_from_batch_84100304101/020/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x131944b6d200, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x131944c921da, 0x60}, {0x1319447b8240, 0x86}, {0x131944b6d200, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x131944c921da?, 0x131944b36480?}, 0x0, 0x131944b36480)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/react-no-redundant-should-component-update_mutant_from_batch_8 (0.02s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantsreact-no-redundant-should-component-update_mutant_fr1123524749/020/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x3caeb66fefc0, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x3caeb6720c8e, 0x6d}, {0x3caeb67da240, 0x86}, {0x3caeb66fefc0, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x3caeb6720c8e?, 0x3caeb6c120c0?}, 0x0, 0x3caeb6c120c0)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/reason_ignored (0.02s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantsreason_ignored1868646104/019/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x541a0672fc0, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x541a09dd176, 0x47}, {0x541a07c0240, 0x86}, {0x541a0672fc0, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x541a09dd176?, 0x541a073c640?}, 0x0, 0x541a073c640)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/method_listener_lost (0.02s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantsmethod_listener_lost3784782124/019/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0xf295d1f0d80, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0xf295d1df18e, 0x4d}, {0xf295d1e8240, 0x86}, {0xf295d1f0d80, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0xf295d1df18e?, 0xf295d1a0100?}, 0x0, 0xf295d1a0100)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/parenthesized_chain_missed (0.02s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantsparenthesized_chain_missed624405502/020/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x44d73c8fc0, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x44d785d6a2, 0x52}, {0x44d74c4240, 0x86}, {0x44d73c8fc0, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x44d785d6a2?, 0x44d784e140?}, 0x0, 0x44d784e140)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/postfix_assignment_suggestion (0.02s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantspostfix_assignment_suggestion1757915615/020/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x18ae48f9efc0, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x18ae4921b6b2, 0x56}, {0x18ae48ffa240, 0x86}, {0x18ae48f9efc0, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x18ae4921b6b2?, 0x18ae49236500?}, 0x0, 0x18ae49236500)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/wrapper_Number_ignored (0.03s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantswrapper_Number_ignored2388737979/019/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x1999858eefc0, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x199985cd7696, 0x4f}, {0x1999859ca240, 0x86}, {0x1999858eefc0, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x199985cd7696?, 0x199985c07600?}, 0x0, 0x199985c07600)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/array_function_type_unwrapped (0.02s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantsarray_function_type_unwrapped3747000011/019/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x1c61a42d4cc0, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x1c61a46c36b2, 0x56}, {0x1c61a43b21b0, 0x86}, {0x1c61a42d4cc0, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x1c61a46c36b2?, 0x1c61a45cf740?}, 0x0, 0x1c61a45cf740)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/enum_bitwise_option_ignored (0.02s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantsenum_bitwise_option_ignored3313340313/019/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x33ad0aebcc00, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x33ad0af696aa, 0x54}, {0x33ad0af78240, 0x86}, {0x33ad0aebcc00, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x33ad0af696aa?, 0x33ad0af2c0c0?}, 0x0, 0x33ad0af2c0c0)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/export_report_span_misplaced (0.03s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantsexport_report_span_misplaced779705010/019/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0xbbe05977140, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0xbbe05e256aa, 0x54}, {0xbbe05a38240, 0x86}, {0xbbe05977140, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0xbbe05e256aa?, 0xbbe05c70600?}, 0x0, 0xbbe05c70600)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/first_repeated_directive_kept (0.02s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantsfirst_repeated_directive_kept2415102945/019/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x753d871af00, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x753d87056b2, 0x56}, {0x753d82f81b0, 0x86}, {0x753d871af00, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x753d87056b2?, 0x753d8254140?}, 0x0, 0x753d8254140)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/predicate_finding_widened_to_its_owner (0.02s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantspredicate_finding_widened_to_its_owner460255297/019/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x2d4d7eafefc0, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x2d4d7ef2c1d2, 0x5e}, {0x2d4d7ebea240, 0x86}, {0x2d4d7eafefc0, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x2d4d7ef2c1d2?, 0x2d4d7eb3c140?}, 0x0, 0x2d4d7eb3c140)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/console_receiver_widened (0.02s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantsconsole_receiver_widened1190950652/019/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x3b0f83750fc0, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x3b0f837d969e, 0x51}, {0x3b0f8384c240, 0x86}, {0x3b0f83750fc0, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x3b0f837d969e?, 0x3b0f837d2000?}, 0x0, 0x3b0f837d2000)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/spaces_by_holes_trimmed (0.02s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantsspaces_by_holes_trimmed2577349615/019/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x2d881631afc0, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x2d881678969a, 0x50}, {0x2d8816376240, 0x86}, {0x2d881631afc0, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x2d881678969a?, 0x2d88165b25c0?}, 0x0, 0x2d88165b25c0)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/modified_switch_counted_classically (0.02s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantsmodified_switch_counted_classically475824137/019/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x1d1050f4cfc0, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x1d10513a41c6, 0x5b}, {0x1d1051048240, 0x86}, {0x1d1050f4cfc0, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x1d10513a41c6?, 0x1d1051265740?}, 0x0, 0x1d1051265740)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/enum_reported_at_its_declaration_rather_than_its_name (0.02s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantsenum_reported_at_its_declaration_rather_than_its_nam3438028689/019/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x3b26092fefc0, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x3b260933ec8e, 0x6d}, {0x3b26093e6240, 0x86}, {0x3b26092fefc0, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x3b260933ec8e?, 0x3b2609622500?}, 0x0, 0x3b2609622500)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/interface_accepts_type_suffix (0.02s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantsinterface_accepts_type_suffix2864407994/019/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x24e394beafc0, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x24e394c236b2, 0x56}, {0x24e394cc6240, 0x86}, {0x24e394beafc0, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x24e394c236b2?, 0x24e3950c2140?}, 0x0, 0x24e3950c2140)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/await_crosses_function_boundary (0.03s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantsawait_crosses_function_boundary1159313750/019/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x3b3ae8e37200, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x3b3ae8d761ba, 0x58}, {0x3b3ae89b8240, 0x86}, {0x3b3ae8e37200, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x3b3ae8d761ba?, 0x3b3ae8d36280?}, 0x0, 0x3b3ae8d36280)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/int32_hint_option_ignored (0.02s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantsint32_hint_option_ignored3394515101/019/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x1ae815c31200, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x1ae815c436a2, 0x52}, {0x1ae8158b8240, 0x86}, {0x1ae815c31200, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x1ae815c436a2?, 0x1ae8157bc540?}, 0x0, 0x1ae8157bc540)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/compound_assignment_omitted (0.02s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantscompound_assignment_omitted1614038825/019/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x1d86a9b7cfc0, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x1d86aa0936aa, 0x54}, {0x1d86aa0a2240, 0x86}, {0x1d86a9b7cfc0, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x1d86aa0936aa?, 0x1d86a9be4140?}, 0x0, 0x1d86a9be4140)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/continue_finding_stops_before_its_semicolon (0.02s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantscontinue_finding_stops_before_its_semicolon2441598022/019/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0xd096b01f200, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0xd096aea81ea, 0x64}, {0xd096abb8240, 0x86}, {0xd096b01f200, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0xd096aea81ea?, 0xd096b088180?}, 0x0, 0xd096b088180)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/regex_fix_eats_extra_byte (0.02s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantsregex_fix_eats_extra_byte533482373/019/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0xc3a5d9a3200, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0xc3a5d9b569e, 0x51}, {0xc3a5d6b0240, 0x86}, {0xc3a5d9a3200, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0xc3a5d9b569e?, 0xc3a5d8e8840?}, 0x0, 0xc3a5d8e8840)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/label_option_widened (0.02s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantslabel_option_widened973526495/019/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x3b4c4c37afc0, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x3b4c4c85518a, 0x4c}, {0x3b4c4c45e240, 0x86}, {0x3b4c4c37afc0, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x3b4c4c85518a?, 0x3b4c4c828140?}, 0x0, 0x3b4c4c828140)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/condition_polarity_reversed (0.03s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantscondition_polarity_reversed3441966103/019/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x3e6cd7217200, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x3e6cd72296aa, 0x54}, {0x3e6cd7330240, 0x86}, {0x3e6cd7217200, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x3e6cd72296aa?, 0x3e6cd763a540?}, 0x0, 0x3e6cd763a540)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/parentheses_around_a_discarded_construction_not_seen_through (0.02s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantsparentheses_around_a_discarded_construction_not_seen2337002107/019/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x2f4556a75200, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x2f45565a6c8e, 0x6d}, {0x2f45566b8240, 0x86}, {0x2f4556a75200, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x2f45565a6c8e?, 0x2f45568f07c0?}, 0x0, 0x2f45568f07c0)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/for_update_option_ignored (0.03s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantsfor_update_option_ignored1378048287/019/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x31bb4617efc0, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x31bb4648b6a2, 0x52}, {0x31bb4626a240, 0x86}, {0x31bb4617efc0, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x31bb4648b6a2?, 0x31bb464a6500?}, 0x0, 0x31bb464a6500)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/return_parentheses_option_reversed (0.02s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantsreturn_parentheses_option_reversed470373643/019/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x279fcd12d080, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x279fcd1641c2, 0x5a}, {0x279fccd38240, 0x86}, {0x279fcd12d080, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x279fcd1641c2?, 0x279fcd122300?}, 0x0, 0x279fcd122300)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/comma_chain_reports_inner (0.02s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantscomma_chain_reports_inner1210243239/019/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x20990bf4d200, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x20990bf9f6a2, 0x52}, {0x20990bc50240, 0x86}, {0x20990bf4d200, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x20990bf9f6a2?, 0x20990bb4c200?}, 0x0, 0x20990bb4c200)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/destructuring_hole_reported (0.02s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantsdestructuring_hole_reported3391053126/019/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x380c6dfa0fc0, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x380c6de9b6aa, 0x54}, {0x380c6db38240, 0x86}, {0x380c6dfa0fc0, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x380c6de9b6aa?, 0x380c6dd70600?}, 0x0, 0x380c6dd70600)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/empty_placeholder_reported (0.02s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantsempty_placeholder_reported724071984/019/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x15f42ffcfc0, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x15f434656a2, 0x52}, {0x15f430e01b0, 0x86}, {0x15f42ffcfc0, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x15f434656a2?, 0x15f43438140?}, 0x0, 0x15f43438140)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/boolean_inverse_changed (0.02s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantsboolean_inverse_changed724238110/019/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x685e4bafc0, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x685e7b7696, 0x4f}, {0x685e5b6240, 0x86}, {0x685e4bafc0, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x685e7b7696?, 0x685e7d2500?}, 0x0, 0x685e7d2500)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/comment_self_directive_exemption_removed (0.02s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantscomment_self_directive_exemption_removed3802918004/019/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x1590e69c9200, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x1590e69261de, 0x61}, {0x1590e6ab8240, 0x86}, {0x1590e69c9200, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x1590e69261de?, 0x1590e6e36280?}, 0x0, 0x1590e6e36280)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/with_statement_underlined_whole (0.02s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantswith_statement_underlined_whole969199752/019/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x30728f449200, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x30728f8a36b6, 0x57}, {0x30728f4b8240, 0x86}, {0x30728f449200, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x30728f8a36b6?, 0x30728f836280?}, 0x0, 0x30728f836280)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/nested_generator_owns_outer_yield (0.02s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantsnested_generator_owns_outer_yield2243105267/019/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x22ed28608fc0, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x22ed286261c2, 0x5a}, {0x22ed28664240, 0x86}, {0x22ed28608fc0, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x22ed286261c2?, 0x22ed285dc140?}, 0x0, 0x22ed285dc140)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/rtl_exemption_removed (0.02s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantsrtl_exemption_removed3890960304/019/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x2b2b40790fc0, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x2b2b40a0d192, 0x4e}, {0x2b2b407ec240, 0x86}, {0x2b2b40790fc0, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x2b2b40a0d192?, 0x2b2b407600c0?}, 0x0, 0x2b2b407600c0)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/bom_removes_two_marks (0.02s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantsbom_removes_two_marks2818203949/019/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x1ab6f971afc0, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x1ab6f9997192, 0x4e}, {0x1ab6f9776240, 0x86}, {0x1ab6f971afc0, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x1ab6f9997192?, 0x1ab6f96a0100?}, 0x0, 0x1ab6f96a0100)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/directive_prefix_ignored (0.02s)
+        lint_test.go:747: /tmp/adamic-gate/TestMutants3061496464/001/oracle [--manifest /tmp/adamic-gate/TestMutantsdirective_prefix_ignored3506933917/019/manifest.txt]: exit status 2
+            panic: json: cannot unmarshal object into Go value of type string
+            
+            goroutine 1 [running]:
+            main.oracleNoCondAssignOptions({0x32ac4cdc9080, 0x1a7ca20?, 0x0?})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_no_cond_assign.go:18 +0xde
+            main.collect({0x32ac4d13b69e, 0x51}, {0x32ac4ce38240, 0x86}, {0x32ac4cdc9080, 0x7, 0xc})
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x32ac4d13b69e?, 0x32ac4d1b6200?}, 0x0, 0x32ac4d1b6200)
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic-w05-rules-landing/cohere/adamic_lint_oracle.go:233 +0x374
+--- FAIL: TestOwnedWitnesses (3.19s)
+    registration_test.go:39: complexity witness reports no findings
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	165.735s
+FAIL

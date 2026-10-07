@@ -1,0 +1,33 @@
+=== RUN   TestMutants
+=== RUN   TestMutants/array_function_type_unwrapped
+    lint_test.go:759: array function type unwrapped caught on Node: case 145 line 2789: port "range 18 26 functionTypeOverCallableType fix\t() => void\t\t16 28", Go "range 18 26 functionTypeOverCallableType fix\t(() => void)\t\t16 28"
+        Go context:
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsarray_function_type_unwrapped4257902870/016/typescript-prefer-function-type-0.ts:1:19
+          @typescript-eslint/prefer-function-type  Type literal only has a call signature, you should use a function type instead.
+        
+        range 18 26 functionTypeOverCallableType fix	(() => void)		16 28
+        fixed	type Callable = (() => void)[];\u000a
+    lint_test.go:759: array function type unwrapped caught on emitted JavaScript: case 145 line 2789: port "range 18 26 functionTypeOverCallableType fix\t() => void\t\t16 28", Go "range 18 26 functionTypeOverCallableType fix\t(() => void)\t\t16 28"
+        Go context:
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsarray_function_type_unwrapped4257902870/016/typescript-prefer-function-type-0.ts:1:19
+          @typescript-eslint/prefer-function-type  Type literal only has a call signature, you should use a function type instead.
+        
+        range 18 26 functionTypeOverCallableType fix	(() => void)		16 28
+        fixed	type Callable = (() => void)[];\u000a
+    lint_test.go:759: array function type unwrapped caught on native: case 145 line 2789: port "range 18 26 functionTypeOverCallableType fix\t() => void\t\t16 28", Go "range 18 26 functionTypeOverCallableType fix\t(() => void)\t\t16 28"
+        Go context:
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsarray_function_type_unwrapped4257902870/016/typescript-prefer-function-type-0.ts:1:19
+          @typescript-eslint/prefer-function-type  Type literal only has a call signature, you should use a function type instead.
+        
+        range 18 26 functionTypeOverCallableType fix	(() => void)		16 28
+        fixed	type Callable = (() => void)[];\u000a
+--- PASS: TestMutants (23.17s)
+    --- PASS: TestMutants/array_function_type_unwrapped (20.45s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	23.189s

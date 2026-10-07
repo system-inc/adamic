@@ -28,7 +28,7 @@ export class Rule {
         if(this.context.source.slice(keywordStart, keywordEnd) !== 'module') { return; }
         scanner.pos = reportStart; scanner.scan();
         const finding = new Finding('@typescript-eslint/prefer-namespace-keyword', 'preferNamespaceKeyword', description,
-            scanner.start, node.end, 'range-fix', 'namespace', '');
+            scanner.start, node.end, 'fix', 'namespace', '');
         finding.editStart = keywordStart; finding.editEnd = keywordEnd;
         this.context.findings.push(finding);
     }

@@ -1,0 +1,16 @@
+--- FAIL: TestOwnedWitnesses (27.11s)
+    registration_test.go:45: Node: case 70 line 649: port "range 18 26 functionTypeOverCallableType range-fix\t(() => void)\t\t16 28", Go "range 18 26 functionTypeOverCallableType fix\t(() => void)\t\t16 28"
+        Go context:
+        fixed	let boxed: number;\u000aclass Thing implements Boolean {}\u000a
+        case 70
+        /tmp/adamic-gate/TestOwnedWitnesses506295253/178/typescript-prefer-function-type-0.ts:1:19
+          @typescript-eslint/prefer-function-type  Type literal only has a call signature, you should use a function type instead.
+        
+        range 18 26 functionTypeOverCallableType fix	(() => void)		16 28
+        fixed	type Callable = (() => void)[];\u000a
+        case 71
+        /tmp/adamic-gate/TestOwnedWitnesses506295253/178/typescript-prefer-function-type-0.ts:1:6
+          nexus/consistency-require-type-suffix  Type alias "Callable" should end in "Type", "Properties", "Interface", or "Options". Rename to "CallableType", "CallableProperties" if it shapes React component props, "CallableOptions" if it is an options or config bag, or convert it to an interface and use "CallableInterface".
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	27.126s
+FAIL

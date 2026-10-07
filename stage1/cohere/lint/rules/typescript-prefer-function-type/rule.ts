@@ -80,8 +80,8 @@ export class Rule {
                 }
             }
         }
-        const finding = new Finding('@typescript-eslint/prefer-function-type', 'functionTypeOverCallableType', description(isInterface ? 'Interface' : 'Type literal'), start, signature.end, repair ? 'range-fix' : '', repair ? replacement : '', '');
-        finding.editStart = this.context.start(index); finding.editEnd = node.end;
+        const finding = new Finding('@typescript-eslint/prefer-function-type', 'functionTypeOverCallableType', description(isInterface ? 'Interface' : 'Type literal'), start, signature.end, repair ? 'fix' : '', repair ? replacement : '', '');
+        if(repair) { finding.editStart = this.context.start(index); finding.editEnd = node.end; }
         this.context.findings.push(finding);
     }
 }

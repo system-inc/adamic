@@ -2,7 +2,7 @@ import { panic } from 'adamic';
 import type { RuleContext } from '../../context.ts';
 import { Finding } from '../../finding.ts';
 import { space } from '../../comments.ts';
-import { comments, type Comment } from '../typescript-prefer-function-type/comments.ts';
+import { comments, type Comment } from './comments.a';
 import { description } from './messages.ts';
 
 export class Rule {

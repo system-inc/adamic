@@ -11,5 +11,5 @@
   "class": "Rule",
   "oracle": "oracleNoUnnecessaryWhitespace",
   "upstreamPackage": "tailwind",
-  "upstreamTest": "TestNoUnnecessaryWhitespace|TestWhitespaceFix"
+  "upstreamTest": "Test"
 }
