@@ -1,9 +1,0 @@
-=== RUN   TestWave25ThirdAgreementAndMutants
-    wave_25_third_test.go:183: 108 roots including imported graph fixtures
-    wave_25_third_test.go:209: controls-native: exit status 70
-        
-        adamic: panic: Unhandled case in Node.Text: *ast.SourceFile
---- FAIL: TestWave25ThirdAgreementAndMutants (22.22s)
-FAIL
-FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	22.229s
-FAIL
