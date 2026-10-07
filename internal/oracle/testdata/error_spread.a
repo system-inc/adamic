@@ -1,0 +1,16 @@
+// Spreading an Error: in JavaScript its name and message aren't own enumerable fields, so the copy
+// has neither (Node prints 'no name no message'). Natively they're ordinary fields, so stage 0 says
+// not yet, as it does for Object.keys, hasOwn and toString on an Error. From integration's reading
+// of 9984394 (#fxspptb).
+interface Shown {
+	readonly name?: string;
+	readonly message?: string;
+}
+try {
+	throw new Error(`bad ${1}`);
+} catch (error) {
+	if (error instanceof Error) {
+		const copy: Shown = { ...error };
+		console.log(`${copy.name ?? 'no name'} ${copy.message ?? 'no message'}`);
+	}
+}
