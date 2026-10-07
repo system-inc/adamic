@@ -1,0 +1,89 @@
+// ASCII literals and flat, unescaped classes have a native validation path.
+// Other grammar is explicitly unsupported rather than silently accepted.
+export class RegexpPatternValidation {
+    readonly pattern: string;
+    supported = true;
+    message = '';
+    constructor(pattern: string) {
+        this.pattern = pattern;
+    }
+    refuse(reason: string): void {
+        this.message = `Invalid regular expression: /${this.pattern}/: unsupported regexp syntax: ${reason}`;
+    }
+    run(): void {
+        for(let at = 0; at < this.pattern.length; at++) {
+            if(this.pattern.charCodeAt(at) > 127) {
+                this.supported = false;
+                return;
+            }
+        }
+        for(let at = 0; at < this.pattern.length; at++) {
+            const character = this.pattern.slice(at, at + 1);
+            if(character === '[') {
+                // Go finds the closing bracket before decoding class members.
+                let end = at + 1;
+                while(end < this.pattern.length) {
+                    if(this.pattern.slice(end, end + 1) === '\\') {
+                        end += 2;
+                    }
+                    else if(this.pattern.slice(end, end + 1) === ']') {
+                        break;
+                    }
+                    else {
+                        end++;
+                    }
+                }
+                if(end >= this.pattern.length) {
+                    this.refuse('[ that no ] closes');
+                    return;
+                }
+                let member = at + 1;
+                if(this.pattern.slice(member, member + 1) === '^') {
+                    member++;
+                }
+                // Go decodes the entire body before joining its ranges.
+                for(let escaped = member; escaped < end; escaped++) {
+                    if(this.pattern.slice(escaped, escaped + 1) === '\\') {
+                        this.supported = false;
+                        return;
+                    }
+                }
+                while(member < end) {
+                    if(this.pattern.slice(member, member + 1) === '\\') {
+                        this.supported = false;
+                        return;
+                    }
+                    if(member + 2 < end && this.pattern.slice(member + 1, member + 2) === '-') {
+                        // Dash endpoints are classDash atoms, not classRune.
+                        // Their Annex B/u distinction is outside this slice.
+                        if(this.pattern.slice(member, member + 1) === '-' || this.pattern.slice(member + 2, member + 3) === '-') {
+                            this.supported = false;
+                            return;
+                        }
+                        if(this.pattern.charCodeAt(member) > this.pattern.charCodeAt(member + 2)) {
+                            this.refuse('a character range running backwards');
+                            return;
+                        }
+                        member += 3;
+                    }
+                    else {
+                        member++;
+                    }
+                }
+                at = end;
+            }
+            else if(character === '\\') {
+                if(at + 1 === this.pattern.length) {
+                    this.refuse('\\ at the end of the pattern');
+                    return;
+                }
+                this.supported = false;
+                return;
+            }
+            else if('()*+?{}'.includes(character)) {
+                this.supported = false;
+                return;
+            }
+        }
+    }
+}

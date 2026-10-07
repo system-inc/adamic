@@ -2,9 +2,10 @@ import { panic } from 'adamic';
 import type { Rules } from './rules.ts';
 import { Frames, header } from './frames.ts';
 import { Diagnostic } from './diagnostic.ts';
+import { RegexpPatternValidation } from './regexp_pattern_validation.a';
 
-// Constructor selection and the flag walk are native. Pattern validation needs
-// cohere's ECMAScript rewrite and regexp2 syntax parser; it is an explicit gap.
+// Constructor selection, flags and the ASCII/flat-class pattern slice are native.
+// Remaining grammar needs ECMAScript rewriting and regexp2-compatible errors.
 export class NoInvalidRegexp {
     readonly syntaxKinds: readonly number[] = [214, 215];
     readonly rules: Rules;
@@ -291,7 +292,23 @@ export class NoInvalidRegexp {
             if(pattern.kind !== 'StringLiteral' || (known && flags.includes('v'))) {
                 continue;
             }
-            panic('NotYet: no-invalid-regexp needs native ECMAScript pattern validation and regexp2-compatible errors');
+            const validation = new RegexpPatternValidation(pattern.text);
+            validation.run();
+            if(!validation.supported) {
+                panic('NotYet: no-invalid-regexp needs native ECMAScript pattern validation and regexp2-compatible errors');
+            }
+            if(validation.message !== '') {
+                this.rules.findings.push(
+                    new Diagnostic(
+                        'no-invalid-regexp',
+                        'invalidRegexp',
+                        validation.message,
+                        this.rules.byte(this.rules.start(node)),
+                        this.rules.byte(node.end),
+                        '',
+                    ),
+                );
+            }
         }
     }
 }

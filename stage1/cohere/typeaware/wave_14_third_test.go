@@ -2,10 +2,12 @@ package typeaware
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"testing"
 )
@@ -235,9 +237,36 @@ func TestWave14ThirdAgreementAndMutants(t *testing.T) {
 			h.compare(corpus.name+"-asan", oracle, asan, corpus.config, corpus.manifest)
 		}
 	}
+	var patternPaths []string
+	for at, pattern := range []string{"", "abc", "a b", ".", "^a$", "a|b", "|", "]", "[]", "[^]", "[a-z]", "[-a]", "[a-]", "[a-cx-z]", "[z-a]", "[^z-a]", "[", "[a", "[^", "[a\\", "\\", "[z-a][", "[,]["} {
+		encoded, err := json.Marshal(pattern)
+		if err != nil {
+			t.Fatal(err)
+		}
+		for flagAt, flags := range []string{"", "u", "imsu", "v", "dynamicFlags"} {
+			argument := strconv.Quote(flags)
+			if flags == "dynamicFlags" {
+				argument = flags
+			}
+			source := fmt.Sprintf("declare const dynamicFlags:string; new RegExp(%s,%s); export {};\n", encoded, argument)
+			patternPaths = append(patternPaths, h.write(fmt.Sprintf("pattern-control-%03d-%d.a", at, flagAt), source))
+		}
+	}
+	patternManifest := h.write("patterns.manifest", strings.Join(patternPaths, "\n")+"\n")
+	patternTruth := h.compare("patterns", oracle, binary, config, patternManifest)
+	h.compare("patterns-asan", oracle, asan, config, patternManifest)
+	patternMutant := wave14NextMutant(h, stage0, archive, "pattern-range", "regexp_pattern_validation.a", "this.pattern.charCodeAt(member) > this.pattern.charCodeAt(member + 2)", "this.pattern.charCodeAt(member) < this.pattern.charCodeAt(member + 2)")
+	patternGot := h.must("pattern-range-run", exec.Command(patternMutant, config, patternManifest))
+	if len(patternGot.stderr) != 0 || bytes.Equal(patternGot.stdout, patternTruth.stdout) {
+		t.Fatal("pattern range mutant survived")
+	}
+	t.Logf("pattern range mutant exits 0 with empty stderr; byte oracle catches byte %d", firstDifference(patternGot.stdout, patternTruth.stdout))
+	if err := os.Remove(patternMutant); err != nil {
+		t.Fatal(err)
+	}
 	for _, gap := range []struct{ name, source, id, reason string }{
 		{"label-parser", "undefined: for(;;) {break undefined;}", "identifierClashWithLabel", "parser slice expected semicolon"},
-		{"pattern", "new RegExp('[');", "invalidRegexp", "native ECMAScript pattern validation"},
+		{"pattern", "new RegExp('(');", "invalidRegexp", "native ECMAScript pattern validation"},
 	} {
 		witness := h.write(gap.name+"-witness.a", gap.source+"\nexport {};\n")
 		roots := h.write(gap.name+"-witness.manifest", witness+"\n")
