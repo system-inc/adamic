@@ -137,7 +137,7 @@ func TestMarkdownUnicodeWidths(t *testing.T) {
 			main := filepath.Join(scratch, "testdata/width_probe.ts")
 			mutant := lowered(t, main)
 			for _, side := range []struct {
-				name string
+				name   string
 				result run
 			}{{"Node", onNode(t, main, cases)}, {"native", nativelyRun(t, mutant, cases)}} {
 				clean(t, m.name+" "+side.name, side.result)

@@ -72,7 +72,7 @@ func CheckLog(input io.Reader, output io.Writer, rows []Row) error {
 			fmt.Fprintf(output, "unknown\t%s\t%s\n", event.Package, event.Test)
 			continue
 		}
-		fmt.Fprintf(output, "%s\t%s\t%s\t%s\n", row.Class, event.Package, event.Test, row.ID)
+		fmt.Fprintf(output, "%s\t%s\t%s\t%s\t%s\n", row.Class, event.Package, event.Test, row.ID, row.Provides)
 		if row.Class == "required-input" {
 			required++
 		}

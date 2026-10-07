@@ -311,3 +311,59 @@ func helper(t *testing.T) { if os.Getenv("CORPUS") == "" {t.Skip("missing corpus
 		})
 	}
 }
+
+// Historical area logs contain five tests absent from main. These proof-only
+// declarations must never enter main's source inventory or the default command.
+func TestProvidedHistoricalPlainLog(t *testing.T) {
+	t.Parallel()
+	load := func(path string) []Row {
+		f, err := os.Open(path)
+		if err != nil {
+			t.Fatal(err)
+		}
+		defer f.Close()
+		rows, err := Load(f)
+		if err != nil {
+			t.Fatal(err)
+		}
+		return rows
+	}
+	rows := load("testdata/skips.json")
+	data, err := os.ReadFile("testdata/provided-plain-skips.jsonl")
+	if err != nil {
+		t.Fatal(err)
+	}
+	var output bytes.Buffer
+	if err := CheckLog(bytes.NewReader(data), &output, rows); err == nil || !strings.Contains(output.String(), "unknown=") {
+		t.Fatalf("mismatched tree must fail closed: %v %s", err, &output)
+	}
+	output.Reset()
+	historical := append([]Row{}, rows...)
+	for _, proof := range load("testdata/provided-historical-rows.json") {
+		found := false
+		for _, row := range rows {
+			if row.File == proof.File && row.ID == proof.ID {
+				found = true
+			}
+		}
+		if !found {
+			historical = append(historical, proof)
+		}
+	}
+	if err := CheckLog(bytes.NewReader(data), &output, historical); err != nil {
+		t.Fatal(err, &output)
+	}
+	if !strings.Contains(output.String(), "skips=25 required-input=0 unknown=0") || !strings.Contains(output.String(), "not-applicable\t") || !strings.Contains(output.String(), "measurement\t") {
+		t.Fatal(output.String())
+	}
+}
+
+func TestRequiredSkipNamesInput(t *testing.T) {
+	t.Parallel()
+	rows := []Row{{File: "lint/probe_test.go", ID: "source", Class: "required-input", Provides: "ADAMIC_TYPESCRIPT_SOURCE: pinned v6.0.3 checkout", Callers: []string{"TestCompilerAndStage1Agree"}}}
+	var output bytes.Buffer
+	log := `{"Action":"skip","Package":"github.com/system-inc/adamic/lint","Test":"TestCompilerAndStage1Agree"}`
+	if err := CheckLog(strings.NewReader(log), &output, rows); err == nil || !strings.Contains(output.String(), "ADAMIC_TYPESCRIPT_SOURCE") {
+		t.Fatalf("missing input unnamed: %v %s", err, &output)
+	}
+}
