@@ -201,3 +201,14 @@ also matches its one finding under sanitizers. Existing regex validation
 and undefined-label gaps remain. No unclaimed ranked rules remain and no
 new reservations are taken. See ../WAVE_14_AREA_REPORT.md and
 validation-wave-14-area for exact inputs, complete streams and mutants.
+
+## Area runtime refresh
+
+Rebased onto area d65a8f93 at tested source 7a600bed3, including current
+main 39638d9e. Shared runtime changes were retained without owned source
+adjustments. All owned byte suites PASS 511.172 s with twenty-one semantic
+mutants, nine declaration mutants, sanitizer corpora and released handles.
+Bridge, filtered uncached Node including runtime last-index-of, registry
+and vet pass. Real JSX remains green. Zero ranked rules are unclaimed;
+no new reservations. Regex validation and undefined labels remain incomplete.
+See ../WAVE_14_AREA_REFRESH_REPORT.md and validation-wave-14-area-refresh.
