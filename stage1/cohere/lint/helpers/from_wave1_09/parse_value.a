@@ -1,0 +1,73 @@
+import { panic } from 'adamic';
+export interface ParsedValueNode {
+    readonly kind: string;
+    readonly value: string;
+    readonly nodesPresent: boolean;
+    readonly nodes: number[];
+}
+export interface ParsedValue {
+    readonly arena: ParsedValueNode[];
+    readonly roots: number[];
+}
+// Separator membership is exported from Go's other-owned isValueSeparator.
+// Indexed child lists preserve the tree without introducing ownership cycles.
+export function parseValue(source: string, separators: ReadonlySet<number>): ParsedValue {
+    const input = source.split('\r\n').join('\n');
+    const arena: ParsedValueNode[] = [];
+    const roots: number[] = [];
+    const stack: number[] = [];
+    let buffer = '';
+    const push = (kind: string, value: string, nodesPresent: boolean): number => {
+        const index = arena.length;
+        arena.push({kind, value, nodesPresent, nodes: []});
+        const parent = stack[stack.length - 1];
+        if(parent === undefined) { roots.push(index); }
+        else { (arena[parent] ?? panic('missing function node')).nodes.push(index); }
+        return index;
+    };
+    const flush = (): void => {
+        if(buffer.length === 0) { return; }
+        push('word', buffer, false);
+        buffer = '';
+    };
+    for(let index = 0; index < input.length; index++) {
+        const character = input.slice(index, index + 1);
+        if(character === '\\') {
+            if(index + 1 < input.length) { buffer += input.slice(index, index + 2); index++; }
+            else { buffer += '\\undefined'; }
+        } else if(character === '/') {
+            flush(); push('word', '/', false);
+        } else if(separators.has(input.charCodeAt(index))) {
+            flush();
+            const start = index;
+            let end = index + 1;
+            while(end < input.length && separators.has(input.charCodeAt(end))) { end++; }
+            index = end - 1;
+            push('separator', input.slice(start, end), false);
+        } else if(character === '"' || character === "'") {
+            const start = index;
+            for(let scan = index + 1; scan < input.length; scan++) {
+                const next = input.slice(scan, scan + 1);
+                if(next === '\\') { scan++; continue; }
+                if(next === character) { index = scan; break; }
+            }
+            buffer += input.slice(start, index + 1);
+        } else if(character === '(') {
+            const name = buffer;
+            buffer = '';
+            stack.push(push('function', name, true));
+        } else if(character === ')') {
+            if(stack.length > 0) { flush(); stack.pop(); }
+            else { buffer = ''; }
+        } else {
+            buffer += character;
+        }
+    }
+    // This final word is deliberately outside any function still left open.
+    if(buffer.length > 0) {
+        const index = arena.length;
+        arena.push({kind: 'word', value: buffer, nodesPresent: false, nodes: []});
+        roots.push(index);
+    }
+    return {arena, roots};
+}
