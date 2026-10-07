@@ -1,0 +1,1 @@
+Raw regular-expression syntax helpers copied from cohere 715ba94f3608a6500086b1076ce5cb7e51b836db, internal/lint/ecmascript/regexpattern and regexsyntax. Imports point to this isolated copy; dash punctuation in comments is normalized. No lint judgment or edit construction is included. The upstream MIT license is retained.

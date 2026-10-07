@@ -1,0 +1,30 @@
+import type { Bindings } from '../bindings.ts';
+import { Helpers } from './helpers.a';
+export class PreferRestParams {
+    readonly helpers: Helpers;
+    constructor(bindings: Bindings) {
+        this.helpers = new Helpers(bindings);
+    }
+    run(): void {
+        for(let index = 0; index < this.helpers.bindings.rules.parser.nodes.length; index++) {
+            const node = this.helpers.node(index);
+            if(node.kind !== 'Identifier' || node.text !== 'arguments') {
+                continue;
+            }
+            const symbol = this.helpers.symbol(index);
+            if(symbol.identity === 0 || symbol.declarations.length !== 0) {
+                continue;
+            }
+            const parent = this.helpers.node(this.helpers.bindings.parent(index));
+            if(parent.kind === 'PropertyAccessExpression' && parent.children[0] === index) {
+                continue;
+            }
+            this.helpers.report(
+                index,
+                'prefer-rest-params',
+                'preferRestParams',
+                'This reads the implicit `arguments` object, which is array-like rather than an array and carries none of `Array.prototype`, so iterating or slicing it needs a conversion first. Declare a rest parameter (`...args`) and use that instead.',
+            );
+        }
+    }
+}

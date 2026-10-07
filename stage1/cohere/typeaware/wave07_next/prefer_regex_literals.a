@@ -1,0 +1,87 @@
+import type { Bindings } from '../bindings.ts';
+import { Helpers } from './helpers.a';
+import { RegexReferences } from './regex_references.a';
+import { RegexSuggestions } from './regex_suggestions.a';
+import { Diagnostic } from '../diagnostic.ts';
+export class PreferRegexLiterals {
+    readonly helpers: Helpers;
+    readonly suggestions: RegexSuggestions;
+    constructor(bindings: Bindings) {
+        this.helpers = new Helpers(bindings);
+        this.suggestions = new RegexSuggestions(this.helpers);
+    }
+    static(index: number): boolean {
+        const node = this.helpers.node(index);
+        if(['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(node.kind)) {
+            return true;
+        }
+        if(node.kind !== 'TaggedTemplateExpression') {
+            return false;
+        }
+        const template = node.children[node.children.length - 1] ?? -1;
+        if(this.helpers.node(template).kind !== 'NoSubstitutionTemplateLiteral') {
+            return false;
+        }
+        const tag = this.helpers.node(this.helpers.bindings.rules.skip(node.children[0] ?? -1));
+        if(!['PropertyAccessExpression', 'ElementAccessExpression'].includes(tag.kind)) {
+            return false;
+        }
+        const name = this.helpers.node(tag.children[tag.children.length - 1] ?? -1);
+        if(
+            tag.kind === 'ElementAccessExpression' &&
+            !['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(name.kind)
+        ) {
+            return false;
+        }
+        const receiver = tag.children[0] ?? -1;
+        const object = this.helpers.node(receiver);
+        return (
+            name.text === 'raw' &&
+            object.kind === 'Identifier' &&
+            object.text === 'String' &&
+            this.helpers.symbol(receiver).firstDeclarationFile
+        );
+    }
+    value(index: number): string {
+        const node = this.helpers.node(index);
+        if(node.kind !== 'TaggedTemplateExpression') {
+            return node.text;
+        }
+        const template = this.helpers.node(node.children[node.children.length - 1] ?? -1);
+        let text = this.helpers.bindings.rules.text(template);
+        if(text.startsWith('`')) {
+            text = text.slice(1);
+        }
+        if(text.endsWith('`')) {
+            text = text.slice(0, -1);
+        }
+        return text;
+    }
+    run(): void {
+        if(!this.helpers.bindings.rules.scanner.text.includes('RegExp')) {
+            return;
+        }
+        const refs = new RegexReferences(this.helpers);
+        for(const index of refs.run()) {
+            const args = this.helpers.args(index);
+            if(![1, 2].includes(args.length) || !args.every((arg) => this.static(arg))) {
+                continue;
+            }
+            const pattern = this.value(args[0] ?? -1);
+            const flags = args.length === 2 ? this.value(args[1] ?? -1) : '';
+            const node = this.helpers.node(index);
+            const finding = new Diagnostic(
+                'prefer-regex-literals',
+                'unexpectedRegExp',
+                'This builds a regular expression by handing constant strings to the `RegExp` constructor, which does at runtime what a literal does at parse time. The constructor form costs a parse on every evaluation, hides syntax errors until the line is reached rather than surfacing them when the file is read, and doubles every backslash so the pattern stops looking like the pattern. Write the regular expression literal.',
+                this.helpers.bindings.rules.byte(this.helpers.bindings.rules.start(node)),
+                this.helpers.bindings.rules.byte(node.end),
+                '',
+            );
+            for(const suggestion of this.suggestions.build(index, pattern, flags)) {
+                finding.suggestions.push(suggestion);
+            }
+            this.helpers.bindings.rules.findings.push(finding);
+        }
+    }
+}

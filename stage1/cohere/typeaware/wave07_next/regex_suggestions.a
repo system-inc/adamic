@@ -1,0 +1,343 @@
+import type { Helpers } from './helpers.a';
+import { RegexStructure } from './regex_structure.a';
+import { Suggestion } from '../suggestion.ts';
+import { Repair } from '../repair.ts';
+export class RegexSuggestions {
+    readonly helpers: Helpers;
+    constructor(helpers: Helpers) {
+        this.helpers = helpers;
+    }
+    validFlags(flags: string): boolean {
+        let seen = '';
+        for(let at = 0; at < flags.length; at++) {
+            const flag = flags.slice(at, at + 1);
+            if(!'dgimsuvy'.includes(flag) || seen.includes(flag)) {
+                return false;
+            }
+            seen += flag;
+        }
+        return !(seen.includes('u') && seen.includes('v'));
+    }
+    digit(character: string): boolean {
+        return character !== '' && character >= '0' && character <= '9';
+    }
+    balanced(pattern: string, flags: string, structure: RegexStructure): boolean {
+        let depth = 0;
+        let repeatable = false;
+        let index = 0;
+        while(index < pattern.length) {
+            const character = pattern.slice(index, index + 1);
+            if(character === '\\' || character === '[') {
+                const end = structure.boundaries.get(index) ?? -1;
+                if(end <= index) {
+                    return false;
+                }
+                index = end;
+                repeatable = true;
+                continue;
+            }
+            if(character === '(') {
+                depth++;
+                repeatable = false;
+            }
+            else if(character === ')') {
+                depth--;
+                if(depth < 0) {
+                    return false;
+                }
+                repeatable = true;
+            }
+            else if('*+?'.includes(character)) {
+                if(!repeatable) {
+                    return false;
+                }
+                repeatable = false;
+            }
+            else if(character === '{') {
+                let end = index + 1;
+                while(this.digit(pattern.slice(end, end + 1))) {
+                    end++;
+                }
+                const digits = end > index + 1;
+                if(pattern.slice(end, end + 1) === ',') {
+                    end++;
+                    while(this.digit(pattern.slice(end, end + 1))) {
+                        end++;
+                    }
+                }
+                if(digits && pattern.slice(end, end + 1) === '}') {
+                    if(!repeatable) {
+                        return false;
+                    }
+                    index = end + 1;
+                    repeatable = false;
+                    continue;
+                }
+                if(flags.includes('u') || flags.includes('v')) {
+                    return false;
+                }
+                repeatable = true;
+            }
+            else {
+                repeatable = character !== '|';
+            }
+            index++;
+        }
+        return depth === 0;
+    }
+    rewritable(pattern: string): boolean {
+        const punctuation = '-\\[](){}!@#$%^&*+=/~`.><?,\'"|:;_';
+        for(let at = 0; at < pattern.length; at++) {
+            const character = pattern.slice(at, at + 1);
+            if(
+                !punctuation.includes(character) &&
+                !' \t\r\n\v\f'.includes(character) &&
+                !(
+                    (character >= 'a' && character <= 'z') ||
+                    (character >= 'A' && character <= 'Z') ||
+                    this.digit(character)
+                )
+            ) {
+                return false;
+            }
+        }
+        return true;
+    }
+    comments(index: number): boolean {
+        const source = this.helpers.bindings.rules.text(this.helpers.node(index));
+        let quote = '';
+        for(let at = 0; at < source.length; at++) {
+            const character = source.slice(at, at + 1);
+            if(character === '\\') {
+                at++;
+                continue;
+            }
+            if(quote !== '') {
+                if(character === quote) {
+                    quote = '';
+                }
+                continue;
+            }
+            if(character === "'" || character === '"' || character === '`') {
+                quote = character;
+                continue;
+            }
+            if(character === '/' && ['/', '*'].includes(source.slice(at + 1, at + 2))) {
+                return true;
+            }
+        }
+        return false;
+    }
+    lineComment(source: string, index: number): number {
+        let start = index;
+        while(start >= 0 && source.slice(start, start + 1) !== '\n') {
+            start--;
+        }
+        let quote = '';
+        for(let at = start + 1; at <= index; at++) {
+            const character = source.slice(at, at + 1);
+            if(character === '\\') {
+                at++;
+                continue;
+            }
+            if(quote !== '') {
+                if(character === quote) {
+                    quote = '';
+                }
+                continue;
+            }
+            if(character === "'" || character === '"' || character === '`') {
+                quote = character;
+            }
+            else if(character === '/' && source.slice(at + 1, at + 2) === '/') {
+                return at;
+            }
+        }
+        return -1;
+    }
+    preceding(index: number): boolean {
+        const source = this.helpers.bindings.rules.scanner.text;
+        const start = this.helpers.bindings.rules.start(this.helpers.node(index));
+        if(start <= 0 || start > source.length) {
+            return true;
+        }
+        if(source.startsWith('#!')) {
+            const newline = source.indexOf('\n');
+            if(newline >= 0 && start > newline && source.slice(newline + 1, start).trim() === '') {
+                return true;
+            }
+        }
+        let at = start - 1;
+        while(at >= 0) {
+            const character = source.slice(at, at + 1);
+            if(' \t\r\n\v\f'.includes(character)) {
+                at--;
+                continue;
+            }
+            if(at >= 1 && source.slice(at - 1, at + 1) === '*/') {
+                const opening = source.slice(0, at - 1).lastIndexOf('/*');
+                if(opening < 0) {
+                    return true;
+                }
+                at = opening - 1;
+                continue;
+            }
+            const line = this.lineComment(source, at);
+            if(line >= 0) {
+                at = line - 1;
+                continue;
+            }
+            break;
+        }
+        if(at < 0) {
+            return true;
+        }
+        let begin = at;
+        while(begin >= 0 && this.word(source.slice(begin, begin + 1))) {
+            begin--;
+        }
+        const words = [
+            'typeof',
+            'instanceof',
+            'return',
+            'delete',
+            'void',
+            'in',
+            'do',
+            'break',
+            'continue',
+            'debugger',
+            'case',
+            'throw',
+        ];
+        if(begin < at) {
+            return words.includes(source.slice(begin + 1, at + 1));
+        }
+        const tokens = [
+            '(',
+            ';',
+            '[',
+            ',',
+            '=',
+            '+',
+            '*',
+            '-',
+            '?',
+            '~',
+            '%',
+            '**',
+            '!',
+            '&&',
+            '||',
+            '??',
+            '...',
+            '<',
+            '>',
+            '<=',
+            '>=',
+            '==',
+            '===',
+            '!=',
+            '!==',
+            '<<',
+            '>>',
+            '>>>',
+            '&',
+            '|',
+            '^',
+            ':',
+            '{',
+            '=>',
+            '*=',
+            '<<=',
+            '>>=',
+            '>>>=',
+            '^=',
+            '|=',
+            '&=',
+            '??=',
+            '||=',
+            '&&=',
+            '**=',
+            '+=',
+            '-=',
+            '/=',
+            '%=',
+            '/',
+        ];
+        for(let length = 4; length >= 1; length--) {
+            if(at - length + 1 >= 0 && tokens.includes(source.slice(at - length + 1, at + 1))) {
+                return true;
+            }
+        }
+        return false;
+    }
+    word(character: string): boolean {
+        return (
+            character !== '' &&
+            (character === '_' ||
+                character === '$' ||
+                this.digit(character) ||
+                (character >= 'a' && character <= 'z') ||
+                (character >= 'A' && character <= 'Z'))
+        );
+    }
+    build(index: number, pattern: string, flags: string): Suggestion[] {
+        if(this.comments(index) || !this.preceding(index) || !this.validFlags(flags) || !this.rewritable(pattern)) {
+            return [];
+        }
+        const structure = new RegexStructure(this.helpers.bindings.rules, index, pattern, flags);
+        if(!structure.scanned || !this.balanced(pattern, flags, structure)) {
+            return [];
+        }
+        let rebuilt = '';
+        let previous = 0;
+        for(let at = 0; at < structure.starts.length; at++) {
+            const start = structure.starts[at] ?? 0;
+            const end = structure.ends[at] ?? 0;
+            const written = pattern.slice(start, end);
+            let escaped = '';
+            if(written === '/') {
+                escaped = '\\/';
+            }
+            for(const control of ['\n', '\r', '\t', '\v', '\f']) {
+                if(written === control || written === `\\${control}`) {
+                    escaped =
+                        control === '\n'
+                            ? '\\n'
+                            : control === '\r'
+                              ? '\\r'
+                              : control === '\t'
+                                ? '\\t'
+                                : control === '\v'
+                                  ? '\\v'
+                                  : '\\f';
+                }
+            }
+            if(escaped !== '' && start >= previous) {
+                rebuilt += pattern.slice(previous, start) + escaped;
+                previous = end;
+            }
+        }
+        rebuilt += pattern.slice(previous);
+        if(rebuilt === '') {
+            rebuilt = '(?:)';
+        }
+        let replacement = `/${rebuilt}/${flags}`;
+        const node = this.helpers.node(index);
+        const start = this.helpers.bindings.rules.start(node);
+        const source = this.helpers.bindings.rules.scanner.text;
+        if(start > 0 && source.slice(start - 1, start) === '/') {
+            replacement = ` ${replacement}`;
+        }
+        if(this.word(source.slice(node.end, node.end + 1))) {
+            replacement += ' ';
+        }
+        const fix = new Repair(
+            this.helpers.bindings.rules.byte(start),
+            this.helpers.bindings.rules.byte(node.end),
+            replacement,
+        );
+        return [new Suggestion('replaceWithLiteral', 'Replace with an equivalent regular expression literal.', [fix])];
+    }
+}

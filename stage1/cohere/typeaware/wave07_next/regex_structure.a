@@ -1,0 +1,35 @@
+import { panic } from 'adamic';
+import type { Rules } from '../rules.ts';
+import { Frames, header } from '../frames.ts';
+export class RegexStructure {
+    readonly scanned: boolean;
+    readonly starts: number[] = [];
+    readonly ends: number[] = [];
+    readonly boundaries = new Map<number, number>();
+    constructor(rules: Rules, index: number, pattern: string, flags: string) {
+        const frames = new Frames(rules.ask(index, `wave07-regex-structure\n${flags}\n${pattern}`));
+        header(frames, 'wave07-regex-structure');
+        this.scanned = frames.yes();
+        const count = frames.natural();
+        for(let at = 0; at < count; at++) {
+            const start = frames.natural();
+            const end = frames.natural();
+            if(start >= end || end > pattern.length) {
+                panic('invalid regex character span');
+            }
+            this.starts.push(start);
+            this.ends.push(end);
+        }
+        const length = frames.natural();
+        for(let at = 0; at < length; at++) {
+            const start = frames.natural();
+            const end = frames.natural();
+            const ok = frames.yes();
+            if(start >= pattern.length || end > pattern.length || end < start) {
+                panic('invalid regex scanner boundary');
+            }
+            this.boundaries.set(start, ok ? end : -1);
+        }
+        frames.end();
+    }
+}

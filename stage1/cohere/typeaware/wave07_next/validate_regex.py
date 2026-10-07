@@ -1,0 +1,88 @@
+#!/usr/bin/env python3
+"""Exercise a private registration overlay; never edit the shared dispatcher."""
+import argparse, json, os, pathlib, subprocess, time, re
+
+parser = argparse.ArgumentParser()
+parser.add_argument('artifacts', type=pathlib.Path)
+parser.add_argument('--compiler', type=pathlib.Path, required=True)
+args = parser.parse_args()
+root = pathlib.Path(__file__).resolve().parents[4]
+unit = pathlib.Path(__file__).resolve().parent
+out = args.artifacts.resolve()
+out.mkdir(parents=True, exist_ok=True)
+records = []
+
+def run(name, command, cwd=root, environment=None, expected=0):
+    started = time.perf_counter_ns()
+    with (out/(name+'.stdout')).open('wb') as stdout, (out/(name+'.stderr')).open('wb') as stderr:
+        result = subprocess.run([str(x) for x in command], cwd=cwd, env=environment, stdout=stdout, stderr=stderr)
+    elapsed = time.perf_counter_ns()-started
+    if result.returncode != expected:
+        raise RuntimeError(f'{name}: exit {result.returncode}, expected {expected}; see saved stderr')
+    record = dict(name=name, command=[str(x) for x in command], process_ns=elapsed, exit=result.returncode)
+    records.append(record)
+    (out/'commands.json').write_text(json.dumps(records,indent=2)+'\n')
+    return (out/(name+'.stdout')).read_bytes(), (out/(name+'.stderr')).read_bytes()
+
+def overlay(name, replacements):
+    path=out/(name+'.json')
+    path.write_text(json.dumps({'Replace':{str(k):str(v) for k,v in replacements.items()}}))
+    return path
+
+facts=root/'bridge/tsgo/checker/facts.go'
+private=out/'facts.go';source=facts.read_text()
+if source.count('switch mode {')!=1:raise RuntimeError('nonunique dispatcher')
+private.write_text(source.replace('switch mode {','switch mode {\n case "wave07-regex-structure": return p.wave07RegexStructure(node,question)'))
+registration=overlay('registration',{facts:private})
+run('stage0',['go','build','-o',out/'adamic','./cmd/adamic'])
+run('archive',['go','build','-overlay',registration,'-buildmode=c-archive','-o',out/'checker.a','./bridge/tsgo/archive'])
+entry=unit/'regex_suite.a'
+run('native-build',[out/'adamic','build',entry,'-o',out/'timer','--tsgo',out/'checker.a'])
+virtual=root/'cohere/adamic_wave07_timer_oracle.go'
+oracle_overlay=overlay('oracle',{virtual:unit/'testdata/oracle_regex.go'})
+run('oracle-build',['go','build','-overlay',oracle_overlay,'-o',out/'oracle',virtual],root/'cohere')
+prelude=out/'ambient.d.ts'
+prelude.write_text('export {};')
+config=out/'tsconfig.json'
+config.write_text(json.dumps({'compilerOptions':{'strict':True,'target':'ES2022','lib':['es2022']},'files':['ambient.d.ts']}))
+common='declare const flag:boolean;declare let other:any;declare const pattern:string;declare const suffix:string;declare const flags:string;\n'
+controls=["new RegExp('abc');", "RegExp('abc','g');", "new RegExp('');", 'RegExp();', 'new RegExp(pattern);', "new RegExp('a'+suffix);", "new RegExp('a'+'b');", "new RegExp('a',flags);", "new RegExp('a','g','x');", 'new RegExp(/a/);', "function f(RegExp:any){new RegExp('a');}", "const R=RegExp;new R('a');", "let R=RegExp;R=other;R('a');", "const {RegExp:R}=globalThis;new R('a');", "globalThis.RegExp('a');", "globalThis['Reg'+'Exp']('a');", "new RegExp(String.raw`\\d`,'g');", "new RegExp(String['raw']`a/b`);", 'new RegExp(`abc`);', "new RegExp(String.raw`\\w{1, 2`,'u');", "new RegExp('+');", "new RegExp('[abc');", "new RegExp('(');", "new RegExp('a','gg');", "new RegExp('a','uv');", "new RegExp('a','d');", "new RegExp('a/b');", "new RegExp('a\\nb');", "new RegExp('世界');", "new RegExp(/* note */ 'a');", "const r=/* before */new RegExp('a');", "const r=1;\nnew RegExp('a');", "const r=(()=>{return RegExp('a');})();", "new RegExp(String.raw`\\p{Script=Greek}`,'u');", "new RegExp(String.raw`[a&&b]`,'v');", 'function f(String:any){new RegExp(String.raw`a`);}', "RegExp=other;RegExp('a');", "globalThis=other;globalThis.RegExp('a');", "const R=(flag?RegExp:RegExp);R('a');", "/*世界 🌍*/\r\nRegExp('abc');", "new RegExp('a\\tb');", "new RegExp('(?:abc)');", "new RegExp('a{2}');", "const g=globalThis;const {RegExp}=g;RegExp('a');", "const R=RegExp; const x={R}; x.R('a');", "const R=(0,RegExp);new R('a');", "let R; (R=RegExp)('a');", "const R=RegExp;R('a')in other;", "const R=RegExp;1/R('a');", 'new RegExp(String.raw`\\\\/`);', 'new RegExp(String.raw`\\\n`);', "RegExp('a','q');"]
+controls.append('declare global { namespace String {const extra:unknown;} } new RegExp(String.raw`a`);')
+paths=[]
+for i,source in enumerate(controls):
+    path=out/f'control-{i:03d}.a';path.write_text(common+source+'\nexport {};\n');paths.append(path)
+manifest=out/'controls.manifest';manifest.write_text(''.join(str(p)+'\n' for p in paths))
+
+def compare(name, native, config, manifest):
+    truth,go_error=run(name+'-go',[out/'oracle',config,manifest])
+    actual,native_error=run(name+'-native',[native,config,manifest])
+    if truth!=actual or native_error: raise RuntimeError(f'{name}: diagnostic disagreement or native stderr')
+    print(f'{name}: {len(actual)} identical bytes, {actual.splitlines()[-1].decode()}',flush=True)
+    return truth
+
+truth=compare('controls',out/'timer',config,manifest)
+if b'\tprefer-regex-literals\t' not in truth: raise RuntimeError('no positive control')
+# DOM-only declarations exercise window and library member merging independently.
+(out/'dom-prelude.d.ts').write_text('export {};')
+dom_config=out/'dom.json';dom_config.write_text(json.dumps({'compilerOptions':{'strict':True,'target':'ES2022','lib':['es2022','dom']},'files':['dom-prelude.d.ts']}))
+compare('controls-dom',out/'timer',dom_config,manifest)
+environment=dict(os.environ,CC='clang',CGO_CFLAGS='-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all')
+run('archive-asan',['go','build','-overlay',registration,'-buildmode=c-archive','-o',out/'checker-asan.a','./bridge/tsgo/archive'],environment=environment)
+run('native-asan-build',[out/'adamic','build',entry,'-o',out/'timer-asan','--tsgo',out/'checker-asan.a','--sanitize'])
+compare('controls-asan',out/'timer-asan',config,manifest)
+for name,corpus_root,corpus_config in [('repository',root,root/'tsconfig.json'),('compiler',args.compiler,args.compiler/'src/compiler/tsconfig.json')]:
+    lines=(root/f'stage1/cohere/typeaware/validation-volume/{name}.manifest').read_text().splitlines()
+    corpus_manifest=out/(name+'.manifest');corpus_manifest.write_text(''.join(str(corpus_root/line)+'\n' for line in lines))
+    compare(name,out/'timer',corpus_config,corpus_manifest)
+    compare(name+'-asan',out/'timer-asan',corpus_config,corpus_manifest)
+mutant=out/'mutant.a';rule=(unit/'prefer_regex_literals.a').read_text();token="'unexpectedRegExp'"
+if rule.count(token)!=1: raise RuntimeError('nonunique mutant')
+rule=rule.replace(token,"'unexpectedRegExpMutant'").replace("'../","'"+str(unit.parent)+"/").replace("'../../../typescript/","'"+str(root/'stage1/typescript')+"/").replace("'./","'"+str(unit)+"/")
+mutant.write_text(rule)
+mutant_entry=out/'mutant-suite.a';source=entry.read_text().replace("'../","'"+str(unit.parent)+"/").replace("'../../../typescript/","'"+str(root/'stage1/typescript')+"/").replace("'./prefer_regex_literals.a'","'"+str(mutant)+"'")
+mutant_entry.write_text(source)
+run('mutant-build',[out/'adamic','build',mutant_entry,'-o',out/'timer-mutant','--tsgo',out/'checker.a'])
+changed,errors=run('mutant',[out/'timer-mutant',config,manifest])
+if errors or truth==changed: raise RuntimeError('rule mutant survived')
+print('rule mutant: exit 0, empty stderr; caught only by independent Go bytes',flush=True)
+print('PASS private-overlay regex gate; normal dispatcher remains unregistered',flush=True)
