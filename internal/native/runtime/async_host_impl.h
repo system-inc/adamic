@@ -1,12 +1,14 @@
 /* Private host bridge, included only by async.c. Counts and values stay on the
  * loop. The mutex protects identities, copied buffers, and queue publication. */
-#include <errno.h>
-#include <fcntl.h>
 #include <pthread.h>
 #include <stdio.h>
 #include <string.h>
+#ifndef ADAMIC_TARGET_WASI
+#include <errno.h>
+#include <fcntl.h>
 #include <unistd.h>
 #include <poll.h>
+#endif
 
 typedef struct host_entry host_entry;
 struct host_entry {
@@ -23,7 +25,9 @@ static host_entry *host_requests, *host_completions, *host_completions_last;
 static uintptr_t host_next_identity = 1;
 static bool host_started, host_closed, host_hooks_set, host_owner_set;
 static pthread_t host_owner;
+#ifndef ADAMIC_TARGET_WASI
 static int host_pipe[2] = {-1, -1};
+#endif
 static void host_default_wake(void);
 static void host_default_wait(void);
 static adamic_host_loop_hook host_wake_hook = host_default_wake;
@@ -49,6 +53,16 @@ static void host_loop_thread(void) {
         abort();
     }
 }
+#ifdef ADAMIC_TARGET_WASI
+/* WASI preview 1 has no pipe and no worker pool. A host using promises must
+ * provide both loop hooks; synchronous async programs never enter these. */
+static void host_pipe_start(void) {
+    static const char message[] = "WASI host promises require wake and wait loop hooks";
+    adamic_panic(message, sizeof message - 1);
+}
+static void host_default_wake(void) { host_pipe_start(); }
+static void host_default_wait(void) { host_pipe_start(); }
+#else
 static void host_pipe_start(void) {
     if (host_pipe[0] != -1) return;
     if (pipe(host_pipe) != 0) abort();
@@ -76,6 +90,7 @@ static void host_default_wait(void) {
     do { result = poll(&descriptor, 1, -1); } while (result == -1 && errno == EINTR);
     if (result < 0 || (descriptor.revents & (POLLERR | POLLNVAL))) abort();
 }
+#endif
 bool adamic_host_set_loop_hooks(adamic_host_loop_hook wake, adamic_host_loop_hook wait) {
     host_loop_thread();
     if (host_hooks_set || host_started || host_closed) return false;
@@ -223,6 +238,7 @@ static void host_drop(host_entry *entry) {
 }
 void adamic_host_process_completions(void) {
     if (host_started) host_loop_thread();
+#ifndef ADAMIC_TARGET_WASI
     /* Only the loop drains pipe bytes. Workers publish while holding the mutex;
      * a publication after this read either appears below or leaves a new byte. */
     if (host_pipe[0] != -1) {
@@ -232,6 +248,7 @@ void adamic_host_process_completions(void) {
         while (result > 0 || (result == -1 && errno == EINTR));
         if (result == -1 && errno != EAGAIN && errno != EWOULDBLOCK) abort();
     }
+#endif
     for (;;) {
         host_lock();
         host_entry *entry = host_completions;
@@ -258,10 +275,12 @@ static void host_shutdown(void) {
     host_closed = true;
     host_entry *entry = host_requests;
     host_requests = host_completions = host_completions_last = NULL;
+#ifndef ADAMIC_TARGET_WASI
     for (unsigned index = 0; index < 2; index++) {
         if (host_pipe[index] != -1) close(host_pipe[index]);
         host_pipe[index] = -1;
     }
+#endif
     host_unlock();
     while (entry != NULL) {
         host_entry *next = entry->next;
