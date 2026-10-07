@@ -1,8 +1,10 @@
 package oracle
 
 import (
+	"github.com/system-inc/adamic/internal/ir"
 	"os"
 	"path/filepath"
+	"reflect"
 	"strconv"
 	"strings"
 	"testing"
@@ -115,3 +117,141 @@ int main(int argc,char **argv) {
  return 0;
 }
 `
+
+// Enable with the lane-owned Go overlay until the integrator applies shared-hooks.patch.
+func TestCheckedViewIntersectionSource(t *testing.T) {
+	if os.Getenv("ADAMIC_INTERSECTION_HOOKS") != "1" {
+		t.Skip("shared intersection hooks await integrator; run lane7 overlay")
+	}
+	for _, probe := range []struct{ name, node, diagnostic string }{
+		{"emit-good", "1:42:p\n", ""},
+		{"emit-absent", "1:42:none\n", ""},
+		{"emit-wrong", "true:42:p\n", "field read failed: node.emitNode.flags is not a number; expected number, found boolean"},
+		{"emit-nested", "1:true:p\n", "field read failed: node.emitNode.autoGenerate.id is not a number; expected number, found boolean"},
+		{"good", "name:42\n", ""}, {"absent", "name:42\n", ""},
+		{"wrong", "name:true\n", "field read failed: view.value.child.count is not a number; expected number, found boolean"},
+		{"nested", "name:bad\n", "field read failed: view.value.child.count is not a number; expected number, found string"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			program, path := interfaceFixture(t, "lane7/"+probe.name)
+			kind := os.Getenv("ADAMIC_INTERSECTION_SOURCE_MUTANT")
+			if (probe.name == "emit-wrong" && (kind == "skip" || kind == "shape")) || (probe.name == "wrong" && kind == "nested") {
+				changed := 0
+				rewrite := func(expression ir.Expression) ir.Expression {
+					property, ok := expression.(ir.Property)
+					if !ok || property.View == "" {
+						return expression
+					}
+					if kind == "skip" || kind == "nested" && property.Name == "count" {
+						property.View = ""
+						changed++
+						return property
+					}
+					if kind == "shape" && property.Name == "flags" {
+						property.Of = ir.Boolean
+						property.ViewType = "boolean"
+						changed++
+						return property
+					}
+					return expression
+				}
+				mutateStringExpressions(reflect.ValueOf(&program.Main).Elem(), rewrite)
+				mutateStringExpressions(reflect.ValueOf(&program.Functions).Elem(), rewrite)
+				if changed == 0 {
+					t.Fatal("requested source mutant found no checked read")
+				}
+			}
+
+			if difference := disagreement(run{stdout: []byte(probe.node)}, onNode(t, path)); difference != "" {
+				t.Fatal("Node: " + difference)
+			}
+			want := run{stdout: []byte(probe.node)}
+			if probe.diagnostic != "" {
+				want = run{exitCode: 70, stderr: []byte("adamic: panic: " + probe.diagnostic + "\n")}
+			}
+			for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+				if difference := disagreement(want, got); difference != "" {
+					t.Errorf("%s; got %#v", difference, got)
+				}
+			}
+			if kind == "" && probe.name == "emit-wrong" {
+				for _, kind := range []string{"skip check", "accept wrong shape"} {
+					mutated, _ := interfaceFixture(t, "lane7/emit-wrong")
+					changed := 0
+					rewrite := func(expression ir.Expression) ir.Expression {
+						property, ok := expression.(ir.Property)
+						if !ok || property.View == "" {
+							return expression
+						}
+						if kind == "skip check" {
+							property.View = ""
+							changed++
+							return property
+						}
+						if property.Name == "flags" {
+							property.Of = ir.Boolean
+							property.ViewType = "boolean"
+							changed++
+							return property
+						}
+						return expression
+					}
+					mutateStringExpressions(reflect.ValueOf(&mutated.Main).Elem(), rewrite)
+					mutateStringExpressions(reflect.ValueOf(&mutated.Functions).Elem(), rewrite)
+					if changed == 0 {
+						t.Fatal("source mutant found no checked read")
+					}
+					for _, got := range []run{releasedUncached(t, mutated), onJavaScriptBackend(t, mutated)} {
+						if got.exitCode != 0 {
+							t.Fatalf("%s must execute valid release code: %#v", kind, got)
+						}
+						if disagreement(want, got) == "" {
+							t.Fatalf("%s mutant survived pinned refusal", kind)
+						}
+						t.Logf("%s source mutant caught: exit=%d stdout=%q", kind, got.exitCode, got.stdout)
+					}
+				}
+			}
+			if kind == "" && probe.name == "wrong" {
+				changed := 0
+				mutate := func(expression ir.Expression) ir.Expression {
+					if property, ok := expression.(ir.Property); ok && property.Name == "count" && property.View != "" {
+						property.View = ""
+						changed++
+						return property
+					}
+					return expression
+				}
+				mutateStringExpressions(reflect.ValueOf(&program.Main).Elem(), mutate)
+				mutateStringExpressions(reflect.ValueOf(&program.Functions).Elem(), mutate)
+				if changed == 0 {
+					t.Fatal("nested source mutant found no checked read")
+				}
+				for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+					if disagreement(want, got) == "" {
+						t.Fatal("drop transitive source check mutant survived")
+					}
+					t.Logf("transitive source mutant caught: exit=%d stdout=%q", got.exitCode, got.stdout)
+				}
+			}
+		})
+	}
+}
+
+// This red probe prevents treating flattened field metadata as runtime conjunction.
+// Run explicitly when reviewing the shared hooks; it remains a known blocker.
+func TestCheckedViewIntersectionRootConjunctionProbe(t *testing.T) {
+	if os.Getenv("ADAMIC_INTERSECTION_CONJUNCTION_PROBE") != "1" {
+		t.Skip("explicit negative probe for unfinished all-members runtime dispatch")
+	}
+	program, path := interfaceFixture(t, "lane7/root-only-wrong")
+	if difference := disagreement(run{stdout: []byte("true\n")}, onNode(t, path)); difference != "" {
+		t.Fatal(difference)
+	}
+	want := run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: view.value.child.count is not a number; expected number, found boolean\n")}
+	for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+		if difference := disagreement(want, got); difference != "" {
+			t.Errorf("%s; got %#v", difference, got)
+		}
+	}
+}

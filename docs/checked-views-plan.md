@@ -1010,3 +1010,44 @@ refuses Named & Counted at value, so zero pairs/reads are complete. Native and
 JavaScript package tests pass; lower retains the documented mixed-array adapter
 failure. The lane-owned component work, six executable mutants and exact blocker
 handoff are recorded in lane7/REPORT.txt. Rest pending integrated lazy admission.
+
+
+Lane 7 integrated-lazy checkpoint, October 7: integration ba59427c includes this
+lane's earlier tip and merges by fast-forward. Do not merge individual lanes.
+The newer lazy census lists 45 intersection candidates / 769 reads across owners;
+lazy/REPORT.md explicitly leaves allocation-exact reachability UNMEASURED.
+Do not report these candidate counts as exact or subtract component fixtures.
+
+Concrete shared-hook handoff is lane7/shared-hooks.patch, generated without
+editing shared files by lane7/make-integration-overlay.py. The integrator owns
+four small hooks: view_lazy.go recognizes structural intersections; view_contracts.go
+routes them to internStructuralViewIntersection; view_objects.go admits their data
+representation; expression.go selects object storage without the old scalar-only
+field restriction. The lane-owned builder uses ViewObject plus Members as a
+conjunction and checker-combined Fields for duplicate names. This representation
+supports lazy structural field reads, rather than eager payload certification.
+It excludes callable, indexed, array, tuple, nominal and primitive constituents;
+phantom-only arms contribute no runtime fields. Unsupported descendants retain
+lazy obligations. The component all-members matcher is not used by this path.
+
+Source tests enable the handoff via ADAMIC_INTERSECTION_HOOKS=1 with the generated
+Go overlay. They cover the first directly structural declared intersection,
+GeneratedIdentifier.emitNode (4 candidate reads), with reduced contract fragments,
+shared-helper reads, a wrong first-arm scalar, a wrong second-arm nested scalar,
+and optional absence. Generic Named & Counted controls remain separate. These
+fixtures do not certify the full upstream interface pair or exact reachability.
+Production completions remain zero pending integrator hooks. Revised whole-family
+working date: October 12, 2026, 23:00 UTC, conditional on hooks landing promptly
+and remaining compound families being supported. This is an estimate, not a
+promise established by measured throughput.
+
+Lane 7 correctness review: the four-hook patch is INCOMPLETE and must not enable
+production admission. Native and JavaScript viewObjectUnion currently ignore
+Members when Kind is ViewObject. Thus metadata preserves obligations on later
+field reads but does not check all members at an intersection-valued root read.
+RootConjunctionProbe is an explicit red probe for this gap. Required fifth/sixth
+shared seams are native/view_unions.go and javascript/view_unions.go: recognize
+the conjunctive descriptor and call lane-owned all-member snapshot matchers.
+Do not certify a shape with only the heap tag or flattened field registration.
+Until this dispatch exists, the original unsupported intersection refusal stays
+active in the production tree. The overlay is experimental evidence only.
