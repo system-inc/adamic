@@ -296,9 +296,14 @@ func (l *lowering) regexUnsupportedUse(node *ast.Node) error {
 	if parent.Kind == ast.KindSpreadAssignment {
 		return l.notYet(parent, "spreading a RegExp or its iterator")
 	}
-	if parent.Kind == ast.KindPropertyAccessExpression && parent.Parent != nil && parent.Parent.Kind == ast.KindBinaryExpression {
+	if (parent.Kind == ast.KindPropertyAccessExpression || parent.Kind == ast.KindElementAccessExpression) && parent.Parent != nil && parent.Parent.Kind == ast.KindBinaryExpression {
 		assignment := parent.Parent.AsBinaryExpression()
-		if assignment.Left == parent && assignment.OperatorToken.Kind == ast.KindEqualsToken && (parent.Name().Text() != "lastIndex" || l.regexGroups(node)) {
+		lastIndex := parent.Kind == ast.KindPropertyAccessExpression && parent.Name().Text() == "lastIndex"
+		if parent.Kind == ast.KindElementAccessExpression {
+			key := ast.SkipParentheses(parent.AsElementAccessExpression().ArgumentExpression)
+			lastIndex = key.Kind == ast.KindStringLiteral && key.Text() == "lastIndex"
+		}
+		if assignment.Left == parent && ast.IsAssignmentOperator(assignment.OperatorToken.Kind) && (!lastIndex || l.regexGroups(node)) {
 			return l.notYet(parent, "overriding a RegExp or iterator property")
 		}
 	}

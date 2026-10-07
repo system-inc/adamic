@@ -1,0 +1,101 @@
+{
+  "typescript": "6.0.3",
+  "files": 3,
+  "owners": [
+    {
+      "file": "src/compiler/types.ts",
+      "declaration": "EvaluatorResult",
+      "member": "value",
+      "references": 65,
+      "copies": [],
+      "writes": [],
+      "escapes": [],
+      "where": "src/compiler/types.ts:6264:5"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "declaration": "ParsedPatterns",
+      "member": "matchableStringSet",
+      "references": 0,
+      "copies": [
+        "src/compiler/utilities.ts:10325:46"
+      ],
+      "writes": [],
+      "escapes": [],
+      "where": "src/compiler/utilities.ts:10218:5"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "declaration": "ParsedPatterns",
+      "member": "patterns",
+      "references": 0,
+      "copies": [
+        "src/compiler/utilities.ts:10325:46"
+      ],
+      "writes": [],
+      "escapes": [],
+      "where": "src/compiler/utilities.ts:10219:5"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "declaration": "Resolved",
+      "member": "originalPath",
+      "references": 3,
+      "copies": [],
+      "writes": [],
+      "escapes": [],
+      "where": "src/compiler/moduleNameResolver.ts:168:5"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "declaration": "ModuleResolutionState",
+      "member": "reportDiagnostic",
+      "references": 1,
+      "copies": [
+        "src/compiler/moduleNameResolver.ts:2446:36"
+      ],
+      "writes": [],
+      "escapes": [],
+      "where": "src/compiler/moduleNameResolver.ts:329:5"
+    },
+    {
+      "file": "src/compiler/moduleSpecifiers.ts",
+      "declaration": "ModuleSpecifierResult",
+      "member": "kind",
+      "references": 2,
+      "copies": [
+        "src/services/codefixes/importFixes.ts:1271:87",
+        "src/services/codefixes/importFixes.ts:1271:87"
+      ],
+      "writes": [],
+      "escapes": [],
+      "where": "src/compiler/moduleSpecifiers.ts:380:5"
+    },
+    {
+      "file": "src/compiler/moduleSpecifiers.ts",
+      "declaration": "ModuleSpecifierResult",
+      "member": "moduleSpecifiers",
+      "references": 3,
+      "copies": [
+        "src/services/codefixes/importFixes.ts:1271:87",
+        "src/services/codefixes/importFixes.ts:1271:87"
+      ],
+      "writes": [],
+      "escapes": [],
+      "where": "src/compiler/moduleSpecifiers.ts:381:5"
+    },
+    {
+      "file": "src/compiler/moduleSpecifiers.ts",
+      "declaration": "ModuleSpecifierResult",
+      "member": "computedWithoutCache",
+      "references": 0,
+      "copies": [
+        "src/services/codefixes/importFixes.ts:1271:87",
+        "src/services/codefixes/importFixes.ts:1271:87"
+      ],
+      "writes": [],
+      "escapes": [],
+      "where": "src/compiler/moduleSpecifiers.ts:382:5"
+    }
+  ]
+}

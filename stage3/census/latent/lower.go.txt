@@ -65,11 +65,44 @@ type LatentUnit struct {
 	CheckerDiagnostics []string `json:"checker_diagnostics"`
 }
 
+// Declaration spans add attribution only; they never change lowering eligibility.
+type LatentDeclaration struct {
+	Measurement string `json:"measurement"`
+	Where       string `json:"where"`
+	Name        string `json:"name"`
+	Kind        string `json:"kind"`
+	Start       int    `json:"start"`
+	End         int    `json:"end"`
+}
+
+func latentDeclarations(program *load.Program, file *ast.SourceFile) []LatentDeclaration {
+	result := []LatentDeclaration{}
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		switch node.Kind {
+		case ast.KindFunctionDeclaration, ast.KindFunctionExpression, ast.KindMethodDeclaration,
+			ast.KindVariableDeclaration, ast.KindParameter, ast.KindPropertyDeclaration,
+			ast.KindPropertySignature, ast.KindMethodSignature, ast.KindTypeAliasDeclaration,
+			ast.KindInterfaceDeclaration, ast.KindClassDeclaration, ast.KindEnumDeclaration,
+			ast.KindModuleDeclaration, ast.KindGetAccessor, ast.KindSetAccessor:
+			if name := node.Name(); name != nil {
+				text := file.Text()[name.Pos():name.End()]
+				result = append(result, LatentDeclaration{Measurement: LatentMeasurementLabel, Where: program.Where(node), Name: text, Kind: node.Kind.String(), Start: node.Pos(), End: node.End()})
+			}
+		}
+		node.ForEachChild(visit)
+		return false
+	}
+	file.AsNode().ForEachChild(visit)
+	return result
+}
+
 type LatentFile struct {
-	Measurement string          `json:"measurement"`
-	File        string          `json:"file"`
-	Units       []LatentUnit    `json:"units"`
-	Findings    []LatentFinding `json:"findings"`
+	Measurement  string              `json:"measurement"`
+	File         string              `json:"file"`
+	Declarations []LatentDeclaration `json:"declarations"`
+	Units        []LatentUnit        `json:"units"`
+	Findings     []LatentFinding     `json:"findings"`
 }
 
 func (l *lowering) latentSignature(index int) error {
@@ -162,7 +195,7 @@ func Latent(ctx context.Context, program *load.Program, emit func(LatentFile)) {
 	for _, file := range program.Files() {
 		latentFindings = nil
 		latentFindingOwner, latentFindingPhase = program.Where(file.AsNode()), "refusal_scan"
-		record := LatentFile{Measurement: LatentMeasurementLabel, File: program.FileName(file), Units: []LatentUnit{}}
+		record := LatentFile{Measurement: LatentMeasurementLabel, File: program.FileName(file), Declarations: latentDeclarations(program, file), Units: []LatentUnit{}}
 		checker, release := program.Checker(ctx, file)
 		fresh := func() *lowering {
 			return &lowering{program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1}
