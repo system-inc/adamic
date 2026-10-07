@@ -1,0 +1,8 @@
+=== RUN   TestDeclarationFileFlags
+=== PAUSE TestDeclarationFileFlags
+=== CONT  TestDeclarationFileFlags
+    declaration_file_flags_test.go:58: parseInt: ["1" "declaration-file-flags" "1" "1" "1" "0"] != direct checker
+--- FAIL: TestDeclarationFileFlags (0.08s)
+FAIL
+FAIL	github.com/system-inc/adamic/bridge/tsgo/checker	0.111s
+FAIL

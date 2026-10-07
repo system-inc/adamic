@@ -1,0 +1,51 @@
+=== RUN   TestWave09AgreementAndMutants
+    wave_09_test.go:93: controls: 13444 identical finding bytes; findings 41
+    wave_09_test.go:101: controls-asan: 13444 identical finding bytes; findings 41
+    wave_09_test.go:112: prefer-const mutant: exit 0, Go byte oracle catches byte 49
+    wave_09_test.go:112: radix mutant: exit 0, Go byte oracle catches byte 8945
+    wave_09_test.go:112: non-nullable mutant: exit 0, Go byte oracle catches byte 11197
+    wave_09_test.go:125: repository-native: exit status 70
+        file	/workspace/adamic/bench/nbody.ts
+        file	/workspace/adamic/bench/sort.ts
+        file	/workspace/adamic/bench/spectral_norm.ts
+        file	/workspace/adamic/bench/tokenizer.ts
+        file	/workspace/adamic/bench/trees.ts
+        file	/workspace/adamic/bench/word_count.ts
+        file	/workspace/adamic/dedication/dedication.a
+        file	/workspace/adamic/internal/load/testdata/0.1/compile/01_hello.ts
+        file	/workspace/adamic/internal/load/testdata/0.1/compile/02_fizzbuzz.ts
+        file	/workspace/adamic/internal/load/testdata/0.1/compile/03_shapes.ts
+        file	/workspace/adamic/internal/load/testdata/0.1/compile/04_closures.ts
+        file	/workspace/adamic/internal/load/testdata/0.1/compile/05_wordcount.ts
+        file	/workspace/adamic/internal/load/testdata/0.1/compile/06_stack.ts
+        file	/workspace/adamic/internal/load/testdata/0.1/compile/07_modules/geometry.ts
+        file	/workspace/adamic/internal/load/testdata/0.1/compile/07_modules/main.ts
+        file	/workspace/adamic/internal/load/testdata/0.1/compile/08_results.ts
+        file	/workspace/adamic/internal/load/testdata/0.1/compile/09_tree.ts
+        file	/workspace/adamic/internal/load/testdata/0.1/compile/10_unicode.ts
+        file	/workspace/adamic/internal/oracle/testdata/adversarial_exits.a
+        file	/workspace/adamic/internal/oracle/testdata/adversarial_iteration.a
+        file	/workspace/adamic/internal/oracle/testdata/adversarial_order.a
+        file	/workspace/adamic/internal/oracle/testdata/arguments.a
+        file	/workspace/adamic/internal/oracle/testdata/array_from.a
+        file	/workspace/adamic/internal/oracle/testdata/array_from_length.a
+        file	/workspace/adamic/internal/oracle/testdata/array_from_undefined.a
+        file	/workspace/adamic/internal/oracle/testdata/ascii_scan.a
+        file	/workspace/adamic/internal/oracle/testdata/bitwise.a
+        file	/workspace/adamic/internal/oracle/testdata/booleans.a
+        file	/workspace/adamic/internal/oracle/testdata/borrow_map_overwrite.a
+        file	/workspace/adamic/internal/oracle/testdata/borrow_reassigned.a
+        file	/workspace/adamic/internal/oracle/testdata/case_mapping.a
+        file	/workspace/adamic/internal/oracle/testdata/cast_fails.a
+        file	/workspace/adamic/internal/oracle/testdata/casts.a
+        file	/workspace/adamic/internal/oracle/testdata/class_layouts.a
+        file	/workspace/adamic/internal/oracle/testdata/classes.a
+        file	/workspace/adamic/internal/oracle/testdata/closures.a
+        file	/workspace/adamic/internal/oracle/testdata/closures_throw.a
+        file	/workspace/adamic/internal/oracle/testdata/closures_throw_uncaught.a
+        
+        adamic: panic: missing node
+--- FAIL: TestWave09AgreementAndMutants (218.54s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	218.544s
+FAIL

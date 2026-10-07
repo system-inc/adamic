@@ -1,0 +1,14 @@
+=== RUN   TestWave09AgreementAndMutants
+    wave_09_test.go:94: controls: 14366 identical finding bytes; findings 43
+    wave_09_test.go:102: controls-asan: 14366 identical finding bytes; findings 43
+    wave_09_test.go:113: prefer-const mutant: exit 0, Go byte oracle catches byte 49
+    wave_09_test.go:113: radix mutant: exit 0, Go byte oracle catches byte 9867
+    wave_09_test.go:113: non-nullable mutant: exit 0, Go byte oracle catches byte 12119
+    wave_09_test.go:126: repository: 19865 identical finding bytes; findings 4
+    wave_09_test.go:127: repository-asan: 19865 identical finding bytes; findings 4
+    wave_09_test.go:133: repository complete output: native 759.78621ms, Go 475.60486ms, findings 4
+    wave_09_test.go:126: compiler mismatch byte 2024: native "0b356b686bd3144efe24f875ebc8/src/compiler/core.ts\n55662\t55686\t@typescript-eslint/non-nullable-type-assertion-style\tpreferNonNullAssertion\tUse a ! assertion to more succinctly remove null and undefined from the type.\t1\t0\t55662\t55686\telements[headIndex]!\nfile\t/workspace/TypeScript-050880ce59e30b356b68" Go "0b356b686bd3144efe24f875ebc8/src/compiler/core.ts\nfile\t/workspace/TypeScript-050880ce59e30b356b686bd3144efe24f875ebc8/src/compiler/corePublic.ts\nfile\t/workspace/TypeScript-050880ce59e30b356b686bd3144efe24f875ebc8/src/compiler/debug.ts\n2469\t2484\tprefer-const\tpreferConst\tThis binding is declared `let`"
+--- FAIL: TestWave09AgreementAndMutants (79.93s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	79.951s
+FAIL
