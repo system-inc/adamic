@@ -1,0 +1,49 @@
+// Partial reporting predicates over an already classified refs environment.
+import { panic } from 'adamic';
+import { RefEnvironment } from './refs_environment.a';
+export class RefFinding {
+    readonly kind: number;
+    readonly value: number;
+    readonly hasValue: boolean;
+    readonly node: number;
+    constructor(kind: number, value: number, hasValue: boolean, node: number) {
+        this.kind = kind; this.value = value; this.hasValue = hasValue; this.node = node;
+    }
+    written(): string { return `${this.kind}:${this.value}:${this.hasValue}:${this.node}`; }
+}
+export class RefChecks {
+    append(findings: RefFinding[], kind: number, id: number, node = -1): void {
+        findings.push(new RefFinding(kind,id,true,node));
+    }
+    direct(env: RefEnvironment, id: number, findings: RefFinding[]): void {
+        const current = env.get(id);
+        if(current < 0) { return; }
+        const value = env.arena.values[env.arena.destructure(current)] ?? panic('missing direct value');
+        if(value.kind === 4) { this.append(findings,0,id,env.accessNodes.get(id) ?? -1); }
+    }
+    value(env: RefEnvironment, id: number, findings: RefFinding[]): void {
+        const current = env.get(id);
+        if(current < 0) { return; }
+        const value = env.arena.values[env.arena.destructure(current)] ?? panic('missing read value');
+        if(value.kind === 4) { this.append(findings,0,id,env.accessNodes.get(id) ?? -1); return; }
+        const fn = env.arena.functions[value.fn];
+        if(value.kind === 5 && fn?.readRefEffect === true) {
+            this.append(findings,0,id,env.accessNodes.get(id) ?? -1);
+        }
+    }
+    passed(env: RefEnvironment, id: number, findings: RefFinding[]): void {
+        const current = env.get(id);
+        if(current < 0) { return; }
+        const value = env.arena.values[env.arena.destructure(current)] ?? panic('missing passed value');
+        const fn = env.arena.functions[value.fn];
+        if(value.kind === 3 || value.kind === 4 || (value.kind === 5 && fn?.readRefEffect === true)) {
+            this.append(findings,1,id);
+        }
+    }
+    update(env: RefEnvironment, id: number, node: number, findings: RefFinding[]): void {
+        const current = env.get(id);
+        if(current < 0) { return; }
+        const value = env.arena.values[env.arena.destructure(current)] ?? panic('missing update value');
+        if(value.kind === 3 || value.kind === 4) { this.append(findings,2,id,node); }
+    }
+}

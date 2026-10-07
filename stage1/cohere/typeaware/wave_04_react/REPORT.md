@@ -316,3 +316,58 @@ fixes/suggestions, full-rule mutants, checker-handle tests or full-rule timings
 are claimed. The full gate was not rerun for this owned kernel. Earlier complete
 ports, released-handle checks and native/Go timing remain in the landing report.
 No further claims were made.
+
+## Refs finding predicates continuation
+
+Landing verified first: main was still `e8ba3d5d`, already an ancestor of the
+green pushed wave 04 branch at `5df6d34b`. No rebase was needed and no additional
+rules were claimed. This work stays in the owned React directory.
+
+`refs_checks.a` ports `refsCheckDirectValueAccess`, `refsCheckValueAccess`,
+`refsCheckPassedToFunction` and `refsCheckUpdate`. These operate on the already
+classified environment. Direct access reports ref values, including values
+inside structures. The broader value check also reports ref-reading functions,
+using the value-access finding kind. Passing checks both refs and ref values,
+plus ref-reading functions; it deliberately omits an access-node override.
+Updates check refs and ref values and preserve the supplied update node. All
+helpers append to existing findings rather than replace or clear them.
+
+The Go overlay calls the unmodified private production helpers on eleven
+classified values plus absent data, four checks and both seeded/unseeded finding
+lists. Controls include none, nullable, guards, bare refs, ref values, nested
+structures, functions with and without read effects, a function returning a ref
+value without a read effect, and a structure carrying none plus a read function.
+Cached access-node and explicit update-node identities are distinct, so a span
+source swap changes the comparison.
+
+All 96 cases produce the same 180 records / 3,136 bytes on Go, native,
+ASan/UBSan/leaks, source Node and emitted JavaScript, with empty backend stderr.
+This stream compares complete helper finding metadata (kind, value, presence
+and node override), not source lint verdicts or final source spans. The earlier
+reporting oracle independently covers diagnostic text and zero repairs.
+
+Four sanitized predicate mutants compile and exit zero with empty stderr and
+are caught only by the independent Go bytes: direct reads classify refs instead
+of ref values, the function-read effect is inverted, passing emits the wrong
+finding kind, and an update loses its explicit node. These remain kernel mutants,
+not the required full refs rule mutant.
+
+```sh
+source /workspace/adamic-tools/env.sh
+python3 stage1/cohere/typeaware/wave_04_react/validate_refs_checks.py /workspace/typeaware-wave-04-react/refs-checks > /workspace/typeaware-wave-04-react/refs-checks.log 2>&1
+```
+
+The command prints `PASS partial refs predicates: 96 cases, 180 records, 3136
+bytes`. Inputs, source hashes, exact backend streams and mutant build/run logs
+are in [evidence/refs-checks](evidence/refs-checks). It uses the fresh stage 0
+built for main `e8ba3d5d`. No shared harness, generator or bridge was edited.
+The six earlier complete rule runners do not import these new predicates.
+
+Uncovered: source/HIR lowering, SSA and capture propagation, type-based ref
+classification, instruction transfer, guarded initialization, bounded sweep and
+final AST-to-diagnostic placement. Purity and manual-memoization also still need
+their HIR/reactive pipelines. All three source analyses remain explicitly refused.
+No full React corpus parity, fixes/suggestions, full-rule mutants, checker-handle
+checks, timings or full repository gate are claimed for this kernel. Earlier
+complete ports retain their landing evidence and native/Go measurements. No
+further rules were claimed.
