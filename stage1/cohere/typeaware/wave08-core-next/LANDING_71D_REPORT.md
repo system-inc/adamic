@@ -1,6 +1,6 @@
-Built: wave 08 rebased onto current main 71d7e491b, retaining lint area bb2ece564; owned profiles re-green.
+Built: wave 08 rebased onto current main 71d7e491b, including current lint area b28757f33; owned profiles re-green.
 Commits: tested rebased tip aaea3b0104495d77cba9e5a48c4bd601c51dda8c; this report accompanies its evidence commit.
-Checks: ten completed profiles, two parked kernels, core 264/264 and Globals 111 typed programs pass normally and sanitized.
+Checks: owned profiles and sanitizers, shared syntax parity and unattached-node guard pass.
 Mutants: all ten completed-rule mutants caught by Go bytes; released handles and the filtered Node oracle pass.
 Uncovered: shared typed registration, two HIR rules, fresh quiet timing and the full required-input gate.
 
@@ -91,3 +91,19 @@ not certify that integration. React immutability and no-deriving-state-in-effect
 remain parked for native HIR/SSA/capture analysis on #dnv6f2c. This unit adds only
 owned claim/evidence files and publishes only codex/typeaware-wave-08, with an
 explicit lease on the previous published SHA.
+
+Final area refresh before publication: the remote lint-area tip advanced to
+b28757f339f3253ed3796a4dd6138d9ee736d887. The push check stopped before
+publication; the new area was merged cleanly into wave-08 at
+c1799095b4514a3ede38f873129e640d1f28428d. It changes only shared syntax-lint
+files, leaving owned profiles and dependencies unchanged. The earlier owned
+comparisons remain applicable, and the new shared behavior was tested:
+
+`go test ./stage1/cohere/lint -run
+'^(TestNodeTableIsLinkOnly|TestRulesAgree)$' -count=1 -v -timeout 30m`
+passes in 186.114 seconds, without skips. TestRulesAgree holds Go, source Node,
+emitted JavaScript and native to 13,053,452 identical bytes, including the fixed
+TSX and unconverged-pass fixtures. TestNodeTableIsLinkOnly covers 2,154 rows,
+including 2,017 unique cohere source/rule/options combinations, and preserves
+13,069,337 bytes with unattached node rows appended. This final merge retains
+current main 71d7e491b and current lint area b28757f33 as ancestors.

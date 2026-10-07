@@ -154,3 +154,9 @@ bb2ece564. Compiler/bridge/profile sources are unchanged; all ten completed
 profiles, parked kernels, byte-only mutants, sanitizers, released handles and
 filtered Node checks pass again. A 755-ref audit finds no unclaimed rule.
 No selected check skipped; full gate not run. See ../wave08-core-next/LANDING_71D_REPORT.md.
+
+Final area refresh: merged lint area b28757f33 before publishing, retaining
+main 71d7e491b. Shared Go/Node/emitted-JavaScript/native parity and the unattached
+node-row guard pass, 13 MB of complete bytes each; no skips. Owned profile
+dependencies are unchanged, so their completed current-main validation applies.
+See ../wave08-core-next/LANDING_71D_REPORT.md for the final area checks.
