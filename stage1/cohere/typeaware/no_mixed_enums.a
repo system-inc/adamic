@@ -1,0 +1,70 @@
+import type { Rules } from './rules.ts';
+import { enumDeclarations } from './enum_declarations.a';
+import { types } from './facts.ts';
+import { stringLike } from './flags.ts';
+
+const message = 'This enum has both number members and string members. A reader reaches for an enum expecting one kind of value, and a mixed one silently changes what comparison, serialization, and reverse lookup mean from member to member: numeric members get a reverse mapping and string members do not. Pick one kind for the whole enum.';
+
+// 0 is number, 1 is string, 2 aborts the declaration, including a merge reference.
+function classify(kind: string, flags: number): number {
+    if(kind === '') { return 0; }
+    if(kind === 'NumericLiteral') { return 0; }
+    if(kind === 'StringLiteral' || kind === 'NoSubstitutionTemplateLiteral' || kind === 'TemplateExpression') { return 1; }
+    if(kind === 'TrueKeyword' || kind === 'FalseKeyword' || kind === 'NullKeyword') { return 2; }
+    return (flags & stringLike) !== 0 ? 1 : 0;
+}
+export class NoMixedEnums {
+    readonly rules: Rules;
+    constructor(rules: Rules) { this.rules = rules; }
+    initializer(member: number): number {
+        return this.rules.parser.node(member).children[1] ?? -1;
+    }
+    memberType(member: number): number {
+        const initializer = this.initializer(member);
+        if(initializer < 0) { return 0; }
+        const inner = this.rules.skip(initializer);
+        const kind = this.rules.parser.node(inner).kind;
+        if(kind === 'NumericLiteral' || kind === 'StringLiteral' || kind === 'NoSubstitutionTemplateLiteral' || kind === 'TemplateExpression' || kind === 'TrueKeyword' || kind === 'FalseKeyword' || kind === 'NullKeyword') {
+            return classify(kind, 0);
+        }
+        const facts = types(this.rules.ask(inner, 'raw-shape'), 'raw-shape');
+        return facts.has(facts.root(), stringLike) ? 1 : 0;
+    }
+    visit(index: number): void {
+        const node = this.rules.parser.node(index);
+        const members = node.children.filter((child) => this.rules.parser.node(child).kind === 'EnumMember');
+        const first = members[0] ?? -1;
+        if(first < 0) { return; }
+        let desired = this.memberType(first);
+        let otherFile = false;
+        let earlier = 9007199254740991;
+        for(const reference of enumDeclarations(this.rules, index)) {
+            if(reference.kind !== 'EnumDeclaration' || reference.members === 0 || (reference.path === this.rules.path && reference.pos === this.rules.byte(node.pos) && reference.end === this.rules.byte(node.end))) { continue; }
+            if(reference.path !== this.rules.path) {
+                if(!otherFile) {
+                    desired = classify(reference.initializer, reference.flags);
+                    otherFile = true;
+                }
+            }
+            else if(!otherFile && reference.pos < this.rules.byte(node.pos) && reference.pos < earlier) {
+                earlier = reference.pos;
+                desired = classify(reference.initializer, reference.flags);
+            }
+        }
+        if(desired === 2) { return; }
+        for(const member of members) {
+            const current = this.memberType(member);
+            if(current === 2) { return; }
+            if(current !== desired) {
+                const initializer = this.initializer(member);
+                this.rules.add('no-mixed-enums', 'mixed', message, initializer < 0 ? member : this.rules.skip(initializer));
+                return;
+            }
+        }
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            if(this.rules.parser.node(index).kind === 'EnumDeclaration') { this.visit(index); }
+        }
+    }
+}

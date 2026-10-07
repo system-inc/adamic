@@ -1,0 +1,37 @@
+import { Frames, header } from './frames.ts';
+import type { Rules } from './rules.ts';
+
+export class EnumReference {
+    readonly kind: string;
+    readonly path: string;
+    readonly pos: number;
+    readonly end: number;
+    readonly members: number;
+    readonly initializer: string;
+    readonly flags: number;
+    constructor(frames: Frames) {
+        this.kind = frames.field();
+        this.path = frames.field();
+        this.pos = frames.natural();
+        this.end = frames.natural();
+        this.members = frames.natural();
+        this.initializer = frames.field();
+        this.flags = frames.natural();
+    }
+}
+export function enumDeclarations(rules: Rules, index: number): EnumReference[] {
+    const frames = new Frames(rules.ask(index, 'enum-declarations'));
+    header(frames, 'enum-declarations');
+    const declarations: EnumReference[] = [];
+    const named = frames.natural();
+    for(let at = 0; at < named; at++) {
+        declarations.push(new EnumReference(frames));
+    }
+    const local = frames.natural();
+    const locals: EnumReference[] = [];
+    for(let at = 0; at < local; at++) {
+        locals.push(new EnumReference(frames));
+    }
+    frames.end();
+    return local > named ? locals : declarations;
+}
