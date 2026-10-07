@@ -1,0 +1,36 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { isDigit } from './digit.a';
+import { isBracketed } from './bracketed.a';
+import { hasAnyPrefix } from './any_prefix.a';
+function observe(data: readonly number[], prefixes: readonly (readonly number[])[]): void {
+    console.log(`${isDigit(data[0] ?? 0)}|${isDigit(data[data.length - 1] ?? 0)}|${isBracketed(data)}|${hasAnyPrefix(data,prefixes)}`);
+}
+function raw(data: readonly number[]): void {
+    observe(data,[]); observe(data,[[]]); observe(data,[[91]]); observe(data,[[91,93]]); observe(data,[[48],[255]]);
+}
+function field(corpus: OptionsJson, row: number, name: string): number {
+    const node = corpus.node(row); const index = node.keys.indexOf(name);
+    if(index < 0) { panic('field'); }
+    return node.children[index] ?? panic('value');
+}
+function integers(corpus: OptionsJson, row: number): number[] {
+    const result: number[] = [];
+    for(const value of corpus.node(row).children) { result.push(Number(corpus.node(value).text)); }
+    return result;
+}
+const path = programArguments()[0] ?? panic('path');
+if(path === '--full') {
+    raw([]);
+    for(let first = 0; first <= 255; first++) {
+        raw([first]); for(let last = 0; last <= 255; last++) { raw([first,last]); }
+    }
+} else {
+    const input = readTextFile(path); if(input.kind === 'Error') { panic(input.message); }
+    const corpus = new OptionsJson(input.text); const root = corpus.parse(); if(root < 0) { panic(corpus.error); }
+    for(const row of corpus.node(root).children) {
+        const prefixes: (readonly number[])[] = [];
+        for(const prefix of corpus.node(field(corpus,row,'Prefixes')).children) { prefixes.push(integers(corpus,prefix)); }
+        observe(integers(corpus,field(corpus,row,'Data')),prefixes);
+    }
+}
