@@ -199,7 +199,13 @@ func identity(t *testing.T) gateIdentity {
 			gateError = err
 			return
 		}
-		files = append(files, repository+"/oracle/node.mjs", repository+"/oracle/adamic.mjs", repository+"/internal/native/native.go", repository+"/internal/native/library.go")
+		runners, err := filepath.Glob(filepath.Join(repository, "oracle", "*.mjs"))
+		if err != nil {
+			gateError = err
+			return
+		}
+		files = append(files, runners...)
+		files = append(files, repository+"/internal/native/native.go", repository+"/internal/native/library.go")
 		parts := []string{"gate-context-v1", runtime.GOOS, runtime.GOARCH, fmt.Sprint(os.Geteuid())}
 		root, err := filepath.Abs(repository)
 		if err != nil {
@@ -216,7 +222,7 @@ func identity(t *testing.T) gateIdentity {
 		environment := os.Environ()
 		sort.Strings(environment)
 		for _, variable := range environment {
-			if !strings.HasPrefix(variable, "ADAMIC_GATE_UNCACHED=") {
+			if !strings.HasPrefix(variable, "ADAMIC_GATE_UNCACHED=") && !strings.HasPrefix(variable, "ADAMIC_ORACLE_JSON_TYPES=") {
 				parts = append(parts, variable)
 			}
 		}
@@ -228,7 +234,7 @@ func identity(t *testing.T) gateIdentity {
 			}
 			parts = append(parts, file, string(contents))
 		}
-		gate.context = cacheKey(parts...)
+		gate.context = jsonTypesContext(cacheKey(parts...), jsonTypesDigest)
 	})
 	if gateError != nil {
 		t.Fatal(gateError)
@@ -449,7 +455,15 @@ func cacheProbe(t *testing.T, path string, program *ir.Program, external string,
 }
 
 func TestMain(main *testing.M) {
+	directory, err := prepareJSONTypes()
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
 	status := main.Run()
+	if directory != "" {
+		os.RemoveAll(directory)
+	}
 	if gate.cache != nil {
 		for index, kind := range resultKinds {
 			fmt.Printf("gate cache: %s hits=%d misses=%d\n", kind, gate.cache.hits[index].Load(), gate.cache.misses[index].Load())
