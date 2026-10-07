@@ -5,6 +5,57 @@ function plan(ts, file, text, check) {
     if (sf.parseDiagnostics.length) throw new Error(`closure parse failure: ${file}`);
     const edits = [];
     for (const site of sites.filter(s => s.file === file)) {
+        if (site.kind === "nonempty-initializer") {
+            const found = [];
+            function visit(n) {
+                if (ts.isVariableDeclaration(n) && n.name.getText(sf) === site.name) {
+                    let owner = n.parent;
+                    while (owner && !(ts.isFunctionDeclaration(owner) && owner.name)) owner = owner.parent;
+                    if (owner?.name.text === site.function) found.push(n);
+                }
+                ts.forEachChild(n, visit);
+            }
+            visit(sf);
+            if (found.length !== 1 || !found[0].initializer) throw new Error("nonempty local owner drift");
+            const n = found[0].initializer;
+            if (n.getText(sf) === site.expression) {
+                if (check) throw new Error("nonempty local contract missing");
+                edits.push({at:n.end, text:" as " + site.after});
+            }
+            else if (!ts.isAsExpression(n) || n.expression.getText(sf) !== site.expression || n.type.getText(sf) !== site.after) throw new Error("nonempty local type drift");
+            continue;
+        }
+        if (site.kind === "nonempty-parameter") {
+            const found = [];
+            function visit(n) {
+                if (site.kind === "nonempty-parameter" && ts.isParameter(n) && n.name.getText(sf) === site.name && ts.isFunctionDeclaration(n.parent) && n.parent.name?.text === site.function) found.push(n);
+                ts.forEachChild(n, visit);
+            }
+            visit(sf);
+            if (found.length !== 1 || !found[0].type) throw new Error("nonempty declaration owner drift");
+            const n = found[0].type, actual = n.getText(sf);
+            if (actual === site.type) {
+                if (check) throw new Error("nonempty tuple contract missing");
+                edits.push({at:n.getStart(sf), end:n.end, text:site.after});
+            }
+            else if (actual !== site.after) throw new Error("nonempty declaration type drift");
+            continue;
+        }
+        if (site.kind === "optional-tuple") {
+            const owners = sf.statements.filter(n => ts.isFunctionDeclaration(n) && n.name?.text === site.function);
+            if (owners.length !== 1 || !owners[0].type || !ts.isTypeOperatorNode(owners[0].type) || owners[0].type.operator !== ts.SyntaxKind.ReadonlyKeyword || !ts.isTupleTypeNode(owners[0].type.type)) throw new Error("closure tuple owner drift");
+            const tuple = owners[0].type.type;
+            if (tuple.elements.length !== 5) throw new Error("closure tuple length drift");
+            const members = tuple.elements.filter(n => ts.isNamedTupleMember(n) && n.name.getText(sf) === site.name);
+            if (members.length !== 1 || !members[0].questionToken) throw new Error("closure tuple member drift");
+            const n = members[0].type, actual = n.getText(sf), wanted = site.type + " | undefined";
+            if (actual === site.type) {
+                if (check) throw new Error("closure tuple undefined missing");
+                edits.push({at:n.end, text:" | undefined"});
+            }
+            else if (actual !== wanted) throw new Error("closure tuple type drift");
+            continue;
+        }
         const matches = [];
         function visit(n) {
             if (ts.isCallExpression(n) && n.expression.getText(sf) === site.call) {
@@ -26,7 +77,7 @@ function plan(ts, file, text, check) {
             edits.push({at: n.expression.end, text: `<${site.typeArguments.join(", ")}>`});
         }
     }
-    for (const e of edits.sort((a,b) => b.at-a.at)) text = text.slice(0,e.at)+e.text+text.slice(e.at);
+    for (const e of edits.sort((a,b) => b.at-a.at)) text = text.slice(0,e.at)+e.text+text.slice(e.end === undefined ? e.at : e.end);
     return {text, contracts: edits.length};
 }
 module.exports = {plan};

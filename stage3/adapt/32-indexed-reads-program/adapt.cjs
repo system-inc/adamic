@@ -75,6 +75,7 @@ function plan(ts, file, text, check = false, zeroOnly = false) {
         }
         else throw new Error(`unknown action: ${site.action}`);
     }
+    if (file === "moduleSpecifiers.ts") require("./nonempty-endings.cjs").validate(ts, source);
     for (const edit of edits.sort((a, b) => b.at - a.at)) {
         text = text.slice(0, edit.at) + edit.text + text.slice(edit.at);
     }

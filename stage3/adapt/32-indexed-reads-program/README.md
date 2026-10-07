@@ -3,7 +3,7 @@
 ## Whole-file closure unit (October 7)
 
 The new unit starts from integration 634ef061fc72c061e2de1606d5c8faebec4411f6.
-builderState.ts and executeCommandLine.ts are now at zero. Builder’s two iterator-inference
+builderState.ts, executeCommandLine.ts and moduleSpecifiers.ts are now at zero. Builder’s two iterator-inference
 findings are addressed by explicit erased generic arguments, not new runtime
 reads: `mapDefinedIterator<Path, string>` and `arrayFrom<Path>`.
 [closure-sites.json](closure-sites.json) records each exact call, owning function,
@@ -64,6 +64,15 @@ public API changes outside the exact sanctioned set. No source changed during
 that review; the already-green default oracle for the identical source tree
 covers it, with the reuse and fresh census documented in
 [watch proof](closure-watch/proof.json).
+
+The third wave closes **moduleSpecifiers.ts at zero: 3 to 0**. Its private
+nonempty ending protocol, cache tuple absence unions and map iterator contract
+are detailed in [module proof](closure-moduleSpecifiers/README.md). Whole-tree
+census is 377 to 374. All changes erase to identical JavaScript, and the default
+oracle passes 106,367 tests with an empty baseline diff. The twelve audited
+producer/forwarder bodies and unchanged exported interface are guarded; empty
+producer, missing tuple union, runtime zero-default and external-interface
+mutants all fail. The second adapter run makes zero edits.
 
 Setup: Go 0s, clang 1s, Node 1s, submodules 1s, build cache 203s, total 203s;
 `nproc` is 5 (4 effective CPUs).
