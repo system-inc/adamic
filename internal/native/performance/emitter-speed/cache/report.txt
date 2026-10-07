@@ -1,0 +1,45 @@
+Built cache/branch evidence for the field-store fix and both sieve fixes; no compiler or runtime code changed.
+Commits: measured field-store compiler 137c46b; scalar stores 89f9c44; literal equality ec5f84a; evidence on codex/emitter-speed.
+Commands/output: five Callgrind 3.24.0 cache/branch runs exited 0; all stdout matched retained good outputs; every self-event sum matched its totals footer.
+Mutants: each footer event +1 rejected by reconciliation, 13 events times 5 profiles; existing compiler mutants remain in the parent reports, not rerun here.
+Not covered: hardware cache/cycles, a new timing run, current runtime/LTO integration, layout implementation, full gate, new parse compilation with the sieve changes, or W6.
+
+Build and model flags for every number below
+Parse: retained clang 20.1.8 release binaries, -O2 -g, no sanitizers, counting or LTO. Full flags in ../flags.txt. Before/after have the same original runtime inputs and corpus; only field-store emission differs.
+Sieve: retained clang 20.1.8 release binaries, -O2, no -g, sanitizers, counting or LTO. Full flags in ../sieve/flags.txt. One request at 1000000, unchanged driver and runtime.
+Callgrind for all profiles: --tool=callgrind --cache-sim=yes --branch-sim=yes --I1=32768,8,64 --D1=32768,8,64 --LL=268435456,1,64 --callgrind-out-file=PATH.
+I1 and D1 are each 32KiB, 8 ways, 64-byte lines; LL is 256MiB, direct mapped, 64-byte lines. This explicitly matches the model documented in release-lto c7c8c0b, not the physical EPYC cache hierarchy. Simulations ran concurrently, with no wall-time result claimed. Each process models only its own references; this does not simulate cross-process contention.
+
+Correct the ranking input before selecting a fix
+Read c7c8c0b's cloud/reports/release-lto/report.md and raw evidence/cache-rerank.json. Its L1 column is I1mr+D1mr+D1mw, including instruction misses:
+Source bucket                 I1 misses     D1 read+write misses    combined L1
+Remainder                     48,840,075        6,965,735           55,805,810
+Scanner control               18,189,936          214,740           18,404,676
+Releases and child destruction    952,291        4,603,164            5,555,455
+So 55.8M is not a data-only count, and scanner data misses are 0.215M. The remainder is still the largest data bucket, but not ten times the next data bucket: release/destruction is 4.603M. The remainder also includes libc and unattributed inline and must not be called an exact compiler-only subtotal.
+The supplied 5.529x user-time versus 4.070x instruction ratio and its modeled sensitivity are useful ranking evidence; neither ratio is a hardware cycle count. That runtime-base build uses a different runtime revision and already has header field-write fast paths. Its 6.504G baseline must not be compared directly with this unit's older 9.260G baseline as an isolated emitter effect.
+
+Before/after, same cache model and build flags above
+Variant                      self Ir        I1 misses     D1 read+write misses   Bcm+Bim
+Parse before              9,259,806,749     62,465,543       22,620,045         45,535,074
+Parse field stores        7,954,273,647     77,310,659       21,145,376         46,116,735
+Sieve before                197,182,145          1,713        1,702,967             83,542
+Sieve scalar stores         165,232,075          1,706        1,703,102             83,544
+Sieve stores + equality     142,895,457          1,698        1,702,964             91,694
+
+Field stores reduce Ir 14.10% and D1 misses 6.52%, but increase I1 misses 23.77% and modeled mispredictions 1.28%. The whole-program .text grows from 489,582 to 506,094 bytes (3.37%), measured with GNU objcopy --only-section=.text -O binary. This is consistent with needing to consider emitted code footprint. It does not prove that the 3.37% size change caused the I1 change: code/data placement and simulated cache/predictor conflicts also change, and no alignment or layout ablation was run.
+Sieve instructions improve 16.20% after scalar stores and 27.53% after both fixes; D1 misses remain essentially flat. The equality specialization increases Bcm+Bim by 8,150 from the scalar-store state (9.76%). An instruction win is not a blanket cache or predictor win. The previous ordinary release timing improvement remains independently measured in ../sieve/report.txt; no cycle saving is inferred from these modeled events.
+The cache-run Ir totals differ slightly from the earlier Ir-only runs. Record them separately; no cause is established. Every summary exceeds the reconciled self/footer Ir by exactly 2 and agrees on all 12 other events. Tables use self/footer values. Raw summary differences are retained in measurements.json, with no rounding or assigned mechanism.
+
+Next-fix ranking, observations versus proposals
+1. Compact numeric switch lowering and parser/scanner control footprint, within emitter ownership. After the field-store fix the hot Statements.statement clone has 62,924,222 self Ir, 6,408,557 I1 misses, 133,689 D1 misses and 385,185 modeled mispredictions. Scanner.scan has 516,050,528 Ir, 4,693,189 I1, 96,596 D1 and 2,357,224 mispredictions. Scanner.punctuation has 34,958,843 Ir, 1,506,002 I1, 2,315 D1 and 1,217,929 mispredictions. Prefer a measured comparison-chain versus guarded C-switch experiment before additional expansion of hot emitted code. These are function/clone totals, not a claim that a switch explains all their events. Keep fractional/out-of-range default behavior and the pinned switch mutant. Naming and temporary/cache counter allocation stay unchanged.
+2. Parser access order and proven array checks, with the runtime boundary explicit. The hot Context.mapParents clone has 50,523,684 self Ir, 77 I1 misses, 1,388,237 D1 misses and 899,486 modeled mispredictions. This is a concrete generated data-miss site to inspect before proposing changes to unrelated field layouts. Removing a proven check does not automatically remove its pointer-chasing data misses. No loop interchange, reordering of observable effects, guessed bounds proof or field reordering was performed.
+3. Compact boolean storage as a runtime-owned experiment for the sieve. Its 8-byte untagged slots were documented previously; the compiler fixes leave about 1.703M D1 misses in the modeled run. Retain the byte-storage proposal in ../sieve/report.txt, including the typed-read API and dispatch across generic array operations. Field order and dense handles likewise need a concrete layout/mapping proposal that preserves JavaScript enumeration order, shared slot metadata and ownership before implementation. These experiments may matter for data locality, but an eightfold element-width reduction is not an observed eightfold miss or time reduction.
+Release-path branches are runtime's. This report records their whole-program effects for comparison but makes no changes to retain/release, destruction, allocator, field-read plumbing or character/string operations. The original runtime model has 16.597M release/destruction mispredictions; that is not assigned to emitter work. W6 remains after the existing priorities.
+
+Reproduction
+Use binaries.json to identify the retained binaries and the flags files above. Run from the repository root:
+VALGRIND_LIB=/workspace/adamic/scratch/emitter-speed/valgrind/usr/libexec/valgrind scratch/emitter-speed/valgrind/usr/bin/valgrind --tool=callgrind --cache-sim=yes --branch-sim=yes --I1=32768,8,64 --D1=32768,8,64 --LL=268435456,1,64 --callgrind-out-file=scratch/emitter-speed/cache/parse-before.callgrind scratch/emitter-speed/native-before --manifest scratch/emitter-speed/compiler.txt --count > scratch/emitter-speed/cache/parse-before.stdout 2> scratch/emitter-speed/cache/parse-before.stderr
+Repeat with native-after and parse-after paths. For sieve use scratch/emitter-speed/sieve/native, native-after and native-final, with scratch/emitter-speed/sieve/corpus.txt 1 instead of the manifest arguments.
+python3 internal/native/performance/emitter-speed/cache/summarize.py scratch/emitter-speed/cache/parse-before.callgrind scratch/emitter-speed/cache/parse-after.callgrind scratch/emitter-speed/cache/sieve-before.callgrind scratch/emitter-speed/cache/sieve-stores.callgrind scratch/emitter-speed/cache/sieve-final.callgrind
+Raw profiles and stderr are gzip-compressed without alteration. Program stdout is retained byte for byte. The known nonfatal brk overflow and cache-discovery warnings are preserved. All five runs exited 0 and produced the same good output as their corresponding original workload runs. No compiler sources changed, so the previously green byte oracles and mutants were not rerun for this report-only change.
