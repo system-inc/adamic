@@ -1,0 +1,6 @@
+{
+  "name": "no-octal semantic mutant",
+  "file": "rule.a",
+  "from": "digit <= '9'",
+  "to": "digit <= '7'"
+}
