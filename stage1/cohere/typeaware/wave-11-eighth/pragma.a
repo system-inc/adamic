@@ -1,0 +1,42 @@
+import { SyntaxBindings, SyntaxNode } from './react_syntax_details.a';
+import { BindingElement, CallExpression, Identifier, ImportClause, ImportDeclaration, ImportSpecifier, NamedImports, NoSubstitutionTemplateLiteral, ObjectBindingPattern, ParenthesizedExpression, PropertyAccessExpression, StringLiteral, VariableDeclaration } from './syntax_kinds.a';
+export class Pragma {
+    readonly context: SyntaxBindings;
+    constructor(context: SyntaxBindings) { this.context = context; }
+    unwrap(node: SyntaxNode): SyntaxNode { let current = node; while(current.kind === ParenthesizedExpression) { current = this.context.node(current.expression); } return current; }
+    parent(node: SyntaxNode): SyntaxNode { let current = this.context.node(node.parent); while(current.kind === ParenthesizedExpression) { current = this.context.node(current.parent); } return current; }
+    require(node: SyntaxNode, template: boolean, one: boolean): boolean {
+        if(node.kind !== CallExpression) { return false; }
+        const callee = this.context.node(node.expression); const first = this.context.node(node.arguments[0] ?? 0);
+        return callee.kind === Identifier && callee.text === 'require' && (!one || node.arguments.length === 1) && (first.kind === StringLiteral || (template && first.kind === NoSubstitutionTemplateLiteral)) && first.text === 'react';
+    }
+    value(node: SyntaxNode): boolean { const current = this.unwrap(node); return (current.kind === Identifier && current.text === 'React') || this.require(current, true, true); }
+    initializer(node: SyntaxNode): boolean {
+        if(node.kind === Identifier) { return node.text === 'React'; }
+        if(node.kind === PropertyAccessExpression) { const object = this.context.node(node.expression); return (object.kind === Identifier && object.text === 'React') || this.require(object, false, false); }
+        return this.require(node, false, false);
+    }
+    create(node: SyntaxNode): boolean {
+        if(node.kind !== CallExpression) { return false; }
+        const callee = this.unwrap(this.context.node(node.expression));
+        if(callee.kind === PropertyAccessExpression) { const object = this.context.node(callee.expression); const name = this.context.node(callee.name); return object.kind === Identifier && object.text === 'React' && name.kind === Identifier && name.text === 'createElement'; }
+        if(callee.kind !== Identifier || callee.text !== 'createElement') { return false; }
+        for(const binding of callee.bindings) {
+            if(binding.kind === ImportSpecifier && binding.parentKind === NamedImports && binding.grandKind === ImportClause && binding.greatKind === ImportDeclaration && binding.moduleKind === StringLiteral && binding.moduleText === 'react') { return true; }
+            if(binding.kind === VariableDeclaration || (binding.kind === BindingElement && binding.parentKind === ObjectBindingPattern && binding.grandKind === VariableDeclaration)) { if(this.initializer(this.context.node(binding.initializer))) { return true; } }
+        }
+        return false;
+    }
+    fromReact(node: SyntaxNode, name: string): boolean {
+        if(node.kind === ImportSpecifier) {
+            const local = this.context.node(node.name); const parent = this.context.node(node.parent); const grand = this.context.node(parent.parent); const declaration = this.context.node(grand.parent); const module = this.context.node(declaration.expression);
+            if(local.text === name && parent.kind === NamedImports && grand.kind === ImportClause && declaration.kind === ImportDeclaration && (module.kind === StringLiteral || module.kind === NoSubstitutionTemplateLiteral) && module.text === 'react') { return true; }
+        } else if(node.kind === VariableDeclaration) {
+            const target = this.context.node(node.name); const initializer = this.context.node(node.initializer);
+            if(target.kind === Identifier && target.text === name && initializer.kind === PropertyAccessExpression && this.context.node(initializer.name).text === name && this.value(this.context.node(initializer.expression))) { return true; }
+            if(target.kind === ObjectBindingPattern && this.value(initializer)) { for(const child of target.children) { if(this.context.node(this.context.node(child).name).text === name) { return true; } } }
+        }
+        for(const child of node.children) { if(this.fromReact(this.context.node(child), name)) { return true; } }
+        return false;
+    }
+}

@@ -5,13 +5,15 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/microsoft/TypeScript/tsc/shim/scanner"
+	"strings"
+	"unicode"
 )
 
 // Numeric parser nodes and raw symbol declaration syntax. No lint predicates,
 // React inference, scope classification, or diagnostic decisions live here.
-func (p *Program) numericSyntaxBindings(out *fields, c *checker.Checker, root *ast.Node, question string) (string, error) {
-	if question != "numeric-syntax-bindings" || root.Kind != ast.KindSourceFile {
-		return "", fmt.Errorf("numeric-syntax-bindings requires a SourceFile")
+func (p *Program) reactSyntaxDetails(out *fields, c *checker.Checker, root *ast.Node, question string) (string, error) {
+	if question != "react-syntax-details" || root.Kind != ast.KindSourceFile {
+		return "", fmt.Errorf("react-syntax-details requires a SourceFile")
 	}
 	type binding struct {
 		node        *ast.Node
@@ -35,10 +37,10 @@ func (p *Program) numericSyntaxBindings(out *fields, c *checker.Checker, root *a
 		return id
 	}
 	add(root)
-	localCount := len(nodes)
 	declarations := map[*ast.Node][]binding{}
 	hasSymbol := map[*ast.Node]bool{}
-	for _, node := range nodes[:localCount] {
+	for at := 0; at < len(nodes); at++ {
+		node := nodes[at]
 		if node.Kind != ast.KindIdentifier {
 			continue
 		}
@@ -107,6 +109,8 @@ func (p *Program) numericSyntaxBindings(out *fields, c *checker.Checker, root *a
 			parameters = node.ParameterList().Nodes
 		}
 		switch node.Kind {
+		case ast.KindImportDeclaration:
+			expression = node.AsImportDeclaration().ModuleSpecifier
 		case ast.KindCallExpression:
 			call := node.AsCallExpression()
 			expression = call.Expression
@@ -138,12 +142,44 @@ func (p *Program) numericSyntaxBindings(out *fields, c *checker.Checker, root *a
 			attributes = j.Attributes
 		case ast.KindImportSpecifier:
 			property = node.AsImportSpecifier().PropertyName
+		case ast.KindJsxSpreadAttribute, ast.KindSpreadAssignment, ast.KindComputedPropertyName, ast.KindReturnStatement, ast.KindExpressionWithTypeArguments:
+			expression = node.Expression()
 		case ast.KindParameter:
 			rest = node.AsParameterDeclaration().DotDotDotToken != nil
 		}
 		for _, value := range []*ast.Node{initializer, expression, property, opening, tag, attributes, left, right} {
 			out.number(ids[value])
 		}
+		var whenTrue, whenFalse, asterisk *ast.Node
+		var jsxChildren, modifiers []*ast.Node
+		token := ast.KindUnknown
+		if node.Kind == ast.KindConditionalExpression {
+			whenTrue = node.AsConditionalExpression().WhenTrue
+			whenFalse = node.AsConditionalExpression().WhenFalse
+		}
+		if node.Kind == ast.KindFunctionDeclaration {
+			asterisk = node.AsFunctionDeclaration().AsteriskToken
+		}
+		if node.Kind == ast.KindFunctionExpression {
+			asterisk = node.AsFunctionExpression().AsteriskToken
+		}
+		if node.Kind == ast.KindHeritageClause {
+			token = node.AsHeritageClause().Token
+		}
+		if node.Kind == ast.KindJsxElement && node.AsJsxElement().Children != nil {
+			jsxChildren = node.AsJsxElement().Children.Nodes
+		}
+		if node.Modifiers() != nil {
+			modifiers = node.Modifiers().Nodes
+		}
+		for _, value := range []*ast.Node{node.Body(), whenTrue, whenFalse, asterisk} {
+			out.number(ids[value])
+		}
+		out.number(uint64(token))
+		out.yes(ast.IsWhitespaceOnlyJsxText(node))
+		out.text(strings.Map(unicode.ToUpper, text(node)))
+		list(jsxChildren)
+		list(modifiers)
 		out.number(uint64(operator))
 		out.yes(rest)
 		list(arguments)

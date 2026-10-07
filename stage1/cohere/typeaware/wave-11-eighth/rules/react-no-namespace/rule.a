@@ -1,0 +1,15 @@
+import { SyntaxBindings, SyntaxNode } from '../../react_syntax_details.a';
+import { Pragma } from '../../pragma.a';
+import { CallExpression, JsxNamespacedName, JsxOpeningElement, JsxSelfClosingElement, StringLiteral } from '../../syntax_kinds.a';
+export const kinds: readonly number[] = [JsxOpeningElement, JsxSelfClosingElement, CallExpression];
+export class NoNamespace {
+    readonly context: SyntaxBindings; readonly pragma: Pragma;
+    constructor(context: SyntaxBindings) { this.context = context; this.pragma = new Pragma(context); }
+    visit(node: SyntaxNode): void {
+        if(node.kind === CallExpression) {
+            const first = this.context.node(node.arguments[0] ?? 0);
+            if(!this.pragma.create(node) || first.kind !== StringLiteral || !first.text.includes(':')) { return; }
+        } else if(this.context.node(node.tag).kind !== JsxNamespacedName) { return; }
+        this.context.report('react/no-namespace', 'noNamespace', 'This element names a namespace, and React has no notion of one. The colon in a tag like `svg:circle` is meaningful in XML and in real XHTML documents, and JSX borrows the syntax without borrowing the meaning: React reads the whole string as a single tag name and hands it to the host, which has no element by that name. Nothing renders and nothing warns. Write the element without the prefix.', node);
+    }
+}

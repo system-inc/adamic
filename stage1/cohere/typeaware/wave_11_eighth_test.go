@@ -16,10 +16,10 @@ import (
 	"testing"
 )
 
-func wave11SeventhUpstream(t *testing.T, repository string) []string {
+func wave11EighthUpstream(t *testing.T, repository string) []string {
 	t.Helper()
 	var sources []string
-	for _, name := range []string{"jsx_fragments", "jsx_no_undef", "no_array_index_key"} {
+	for _, name := range []string{"no_danger_with_children", "no_namespace", "no_multi_comp"} {
 		tree, err := parser.ParseFile(token.NewFileSet(), filepath.Join(repository, "cohere/internal/lint/rules/react", name+"_test.go"), nil, 0)
 		if err != nil {
 			t.Fatal(err)
@@ -79,12 +79,12 @@ func wave11SeventhUpstream(t *testing.T, repository string) []string {
 	return sources
 }
 
-func TestWave11SeventhAgreementAndMutants(t *testing.T) {
+func TestWave11EighthAgreementAndMutants(t *testing.T) {
 	repository, err := filepath.Abs("../../..")
 	if err != nil {
 		t.Fatal(err)
 	}
-	directory := os.Getenv("ADAMIC_WAVE_11_SEVENTH_ARTIFACTS")
+	directory := os.Getenv("ADAMIC_WAVE_11_EIGHTH_ARTIFACTS")
 	if directory == "" {
 		directory = t.TempDir()
 	}
@@ -95,16 +95,16 @@ func TestWave11SeventhAgreementAndMutants(t *testing.T) {
 	stage0 := filepath.Join(directory, "adamic")
 	h.must("stage0", exec.Command("go", "build", "-o", stage0, "./cmd/adamic"))
 	archive := h.archive("checker", "", false)
-	entry := filepath.Join(repository, "stage1/cohere/typeaware/wave-11-seventh/main.a")
-	binary := h.build(stage0, "seventh", entry, archive, false)
-	oracle := volumeOracle(h, "seventh-oracle", "../wave-11-seventh/testdata/oracle.go")
-	listenerOracle := volumeOracle(h, "seventh-listeners", "../wave-11-seventh/testdata/listeners.go")
+	entry := filepath.Join(repository, "stage1/cohere/typeaware/wave-11-eighth/main.a")
+	binary := h.build(stage0, "eighth", entry, archive, false)
+	oracle := volumeOracle(h, "eighth-oracle", "../wave-11-eighth/testdata/oracle.go")
+	listenerOracle := volumeOracle(h, "eighth-listeners", "../wave-11-eighth/testdata/listeners.go")
 	listenerConfig := h.write("listeners-config.json", `{"compilerOptions":{"strict":true,"target":"ES2022","module":"ESNext","jsx":"react"}}`)
 	listenerSource := h.write("listeners.tsx", "export {};\n")
 	listenerTruth := h.must("listeners", exec.Command(listenerOracle, listenerConfig, listenerSource))
 	var listenerLines []string
-	for _, directory := range []string{"react-jsx-fragments", "react-jsx-no-undef", "react-no-array-index-key"} {
-		data, e := os.ReadFile(filepath.Join(repository, "stage1/cohere/typeaware/wave-11-seventh/rules", directory, "rule.json"))
+	for _, directory := range []string{"react-no-danger-with-children", "react-no-namespace", "react-no-multi-comp"} {
+		data, e := os.ReadFile(filepath.Join(repository, "stage1/cohere/typeaware/wave-11-eighth/rules", directory, "rule.json"))
 		if e != nil {
 			t.Fatal(e)
 		}
@@ -128,21 +128,30 @@ func TestWave11SeventhAgreementAndMutants(t *testing.T) {
 	}
 	t.Log("numeric manifests match live production Go listeners")
 	config := h.write("tsconfig.json", `{"compilerOptions":{"strict":true,"target":"ES2022","module":"ESNext","jsx":"react","lib":["ES2022"],"noEmit":true},"include":["*.tsx"]}`)
+
 	controls := []string{
-		`declare const React:any; <React.Fragment>text</React.Fragment>; <React.Fragment> </React.Fragment>;`,
-		`declare const React:any; <React.Fragment/>; <React.Fragment key="x"/>; <><Missing/></>; <div/>; <a/>; <Map/>; <Foo.Bar/>;`,
-		`import {Fragment as F} from 'react'; <F/>; <F key="x"/>; import {Fragment as Other} from 'other'; <Other/>;`,
-		`const F=React; <F/>; const G=React.Fragment; <G/>; const {Fragment:H}=React; <H/>; const I=require('react'); <I/>;`,
-		`declare const React:any; declare const X:any; declare const xs:any; xs.map((x:any,i:number)=><X key={i}/>); xs.map((x:any,i:number)=><X key={String(i)}/>); xs.map((x:any,i:number)=><X key={i.toString()}/>);`,
-		"declare const xs:any; xs.map((x:any,i:number)=><X key={`${i}${i}`}/>); xs.map((x:any,i:number)=><X key={i+i}/>); xs.map((x:any,i:number)=><X key={i||x.id}/>);",
-		`declare const xs:any; xs.reduce((acc:any,x:any,i:number)=><X key={i}/>); xs.map((x:any,i=0)=><X key={i}/>); xs.map((x:any,...i:any)=><X key={i}/>);`,
-		`declare const React:any; declare const xs:any; xs.map((x:any,i:number)=>React.createElement('div',{key:i})); React.Children.map(xs,(x:any,i:number)=><X key={i}/>); Children.forEach(xs,(x:any,i:number)=><X key={i}/>);`,
-		`import {createElement as h} from 'react'; declare const xs:any; xs.map((x:any,i:number)=>h('div',{key:i}));`,
-		"/* 世界 🌍 */\r\n<Missing/>; <é/>; <_Missing/>; <x-widget/>; <ns:tag/>;",
-		`declare const Foo:any; <Foo.Bar/>; <foo.Bar/>; declare const foo:any; <foo.Bar/>;`,
+		`<div dangerouslySetInnerHTML={{__html:'x'}}>child</div>; <div dangerouslySetInnerHTML={{__html:'x'}}/>; <div children="x" dangerouslySetInnerHTML={{__html:'x'}}/>;`,
+		"<div dangerouslySetInnerHTML={{__html:'x'}}> </div>; <div dangerouslySetInnerHTML={{__html:'x'}}>\n </div>; <div dangerouslySetInnerHTML={{__html:'x'}}>\n <X/></div>;",
+		`const a={children:1}; const b={...a}; const props={...b,dangerouslySetInnerHTML:{__html:'x'}}; <X {...props}/>; const c={...d}; const d={...c}; <X {...c}/>;`,
+		`const a={children:1}; React.createElement('div',{...a,dangerouslySetInnerHTML:{__html:'x'}}); const p={...a,dangerouslySetInnerHTML:{__html:'x'}}; React.createElement('div',p);`,
+		`document.createElement('div',{['dangerouslySetInnerHTML']:1},'x'); createElement('div',{dangerouslySetInnerHTML:1},'x'); React['createElement']('div',{dangerouslySetInnerHTML:1},'x');`,
+		`<ns:x/>; <ns:x></ns:x>; <X/>; <X.Y/>; <this.foo/>; React.createElement('a:b'); Foo.createElement('a:b'); React.createElement('a:b',{});`,
+		`import {createElement} from 'react'; createElement('a:b'); import {createElement as h} from 'react'; h('a:b');`,
+		`const {createElement}=React; createElement('a:b'); const other=React.createElement; other('a:b');`,
+		`function A(){return <div/>;} function B(){return null;} function c(){return <div/>;} const D=()=> <div/>; const e=()=> <div/>;`,
+		`class A extends (React.Component) {} class B extends PureComponent {} const C=React.memo((p)=><A/>); const D=React.memo((p)=><div/>);`,
+		`import {memo,forwardRef} from 'react'; const A=()=> <div/>; const B=memo(forwardRef((p,r)=><A/>));`,
+		`const A=()=>null; export default ()=>null; const B=()=>x?<div/>:null; const C=()=>x&&<div/>; const D=()=> (0,<div/>);`,
+		`function A(){try {return <div/>;}catch(e){}} function B(){while(x){return <div/>;}} function C(){for(const x of y){return <div/>;}} function D(){if(x){return <div/>;}}`,
+		`const $foo=()=> <div/>; const _1=()=> <div/>; const 테스트=()=> <div/>; const ß=()=> <div/>; const 𐐨=()=> <div/>; const 𐐀=()=> <div/>;`,
+		`const A=createReactClass({render:function(){return <div/>;}}); const B=createReactClass({render:function(){return <div/>;}});`,
+		`const A=()=> <div/>; const o={Foo(){return <div/>;}, bar:function Bar(){return <div/>;}, low:()=>null}; module.exports=()=> <div/>; exports.foo=function Bar(){return <div/>;};`,
+		`const A=()=> <div/>; demo=()=>()=>null; const B=(0,()=> <div/>); const C=()=> {function Nested(){return <div/>;}};`,
+		"/* 世界 🌍 */\r\n<div dangerouslySetInnerHTML={{__html:'x'}}>text</div>; <svg:circle/>; function Émile(){return <div/>;} function Ωmega(){return <div/>;}",
 	}
+
 	var paths []string
-	for i, source := range append(controls, wave11SeventhUpstream(t, repository)...) {
+	for i, source := range append(controls, wave11EighthUpstream(t, repository)...) {
 		paths = append(paths, h.write(fmt.Sprintf("control-%03d.tsx", i), source+"\nexport {};\n"))
 	}
 	manifest := h.write("controls.manifest", strings.Join(paths, "\n")+"\n")
@@ -150,21 +159,21 @@ func TestWave11SeventhAgreementAndMutants(t *testing.T) {
 	t.Logf("controls %d parse-clean %d", len(paths), len(strings.Fields(string(valid.stdout))))
 	manifest = h.write("controls-valid.manifest", string(valid.stdout))
 	truth := h.compare("controls", oracle, binary, config, manifest)
-	for _, name := range []string{"react/jsx-fragments", "react/jsx-no-undef", "react/no-array-index-key"} {
+	for _, name := range []string{"react/no-danger-with-children", "react/no-namespace", "react/no-multi-comp"} {
 		if !bytes.Contains(truth.stdout, []byte("\t"+name+"\t")) {
 			t.Fatalf("no positive: %s", name)
 		}
 	}
 	sanitized := h.archive("checker-asan", "", true)
-	asan := h.build(stage0, "seventh-asan", entry, sanitized, true)
+	asan := h.build(stage0, "eighth-asan", entry, sanitized, true)
 	h.compare("controls-asan", oracle, asan, config, manifest)
 	for _, change := range []struct{ name, file, from, to string }{
-		{"fragment-attributes", "rules/react-jsx-fragments/rule.a", "attributes.children.length > 0", "attributes.children.length > 1"},
-		{"undefined-intrinsic", "rules/react-jsx-no-undef/rule.a", "first >= 97", "first >= 98"},
-		{"index-name", "rules/react-no-array-index-key/rule.a", "this.indices.includes(node.text)", "this.indices.includes(node.text + '!')"},
+		{"danger-property", "rules/react-no-danger-with-children/rule.a", "includes(name.kind) && name.text === wanted", "includes(name.kind) && name.text === wanted + '!'"},
+		{"namespace-colon", "rules/react-no-namespace/rule.a", "first.text.includes(':')", "first.text.includes('/')"},
+		{"component-first", "rules/react-no-multi-comp/rule.a", "let at = 1", "let at = 2"},
 	} {
 		root := filepath.Join(directory, change.name+"-source")
-		sourceRoot := filepath.Join(repository, "stage1/cohere/typeaware/wave-11-seventh")
+		sourceRoot := filepath.Join(repository, "stage1/cohere/typeaware/wave-11-eighth")
 		err = filepath.WalkDir(sourceRoot, func(path string, d os.DirEntry, e error) error {
 			if e != nil {
 				return e
@@ -208,16 +217,27 @@ func TestWave11SeventhAgreementAndMutants(t *testing.T) {
 		t.Logf("%s mutant exit 0 empty stderr, Go bytes catch byte %d", change.name, firstDifference(got.stdout, truth.stdout))
 		os.Remove(mutant)
 	}
-	overlay := h.overlay("foreign-binding", "bridge/tsgo/checker/numeric_syntax_bindings.go", "out.text(source.FileName())", "out.text(source.FileName()[:0] + root.AsSourceFile().FileName())")
-	mutantArchive := h.archive("foreign-binding", overlay, false)
-	mutant := h.build(stage0, "foreign-binding-mutant", entry, mutantArchive, false)
-	got := h.must("foreign-binding-mutant-run", exec.Command(mutant, config, manifest))
+	overlay := h.overlay("jsx-whitespace", "bridge/tsgo/checker/react_syntax_details.go", "out.yes(ast.IsWhitespaceOnlyJsxText(node))", "out.yes(false && ast.IsWhitespaceOnlyJsxText(node))")
+	mutantArchive := h.archive("jsx-whitespace", overlay, false)
+	mutant := h.build(stage0, "jsx-whitespace-mutant", entry, mutantArchive, false)
+	got := h.must("jsx-whitespace-mutant-run", exec.Command(mutant, config, manifest))
 	if len(got.stderr) != 0 || bytes.Equal(got.stdout, truth.stdout) {
-		t.Fatal("raw binding mutant survived")
+		t.Fatal("raw whitespace mutant survived")
 	}
-	t.Logf("raw binding mutant exit 0 empty stderr, Go bytes catch byte %d", firstDifference(got.stdout, truth.stdout))
+	t.Logf("raw whitespace mutant exit 0 empty stderr, Go bytes catch byte %d", firstDifference(got.stdout, truth.stdout))
 	os.Remove(mutantArchive)
+
 	os.Remove(mutant)
+	upperOverlay := h.overlay("unicode-upper", "bridge/tsgo/checker/react_syntax_details.go", "out.text(strings.Map(unicode.ToUpper, text(node)))", "out.text(strings.Map(func(r rune) rune { _ = unicode.ToUpper(r); return r }, text(node)))")
+	upperArchive := h.archive("unicode-upper", upperOverlay, false)
+	upperMutant := h.build(stage0, "unicode-upper-mutant", entry, upperArchive, false)
+	upperResult := h.must("unicode-upper-mutant-run", exec.Command(upperMutant, config, manifest))
+	if len(upperResult.stderr) != 0 || bytes.Equal(upperResult.stdout, truth.stdout) {
+		t.Fatal("raw uppercase mutant survived")
+	}
+	t.Logf("raw uppercase mutant exit 0 empty stderr, Go bytes catch byte %d", firstDifference(upperResult.stdout, truth.stdout))
+	os.Remove(upperArchive)
+	os.Remove(upperMutant)
 	for _, population := range []struct{ name, root, config, manifest string }{
 		{"repository", repository, filepath.Join(repository, "tsconfig.json"), "repository.manifest"},
 		{"compiler", os.Getenv("ADAMIC_TYPESCRIPT_SOURCE"), filepath.Join(os.Getenv("ADAMIC_TYPESCRIPT_SOURCE"), "src/compiler/tsconfig.json"), "compiler.manifest"},
@@ -245,7 +265,7 @@ func TestWave11SeventhAgreementAndMutants(t *testing.T) {
 			t.Logf("%s %s process %s %s", population.name, impl.name, r.elapsed, strings.TrimSpace(string(r.stderr)))
 		}
 	}
-	released := h.write("released.a", `import {programArguments,tsgoProgram,tsgoRelease,tsgoInspect} from 'adamic'; const args=programArguments(); const file=args[1]??''; const p=tsgoProgram(args[0]??'',[file]); tsgoRelease(p); console.log(tsgoInspect(p,file,0,3,'SourceFile','numeric-syntax-bindings'));`)
+	released := h.write("released.a", `import {programArguments,tsgoProgram,tsgoRelease,tsgoInspect} from 'adamic'; const args=programArguments(); const file=args[1]??''; const p=tsgoProgram(args[0]??'',[file]); tsgoRelease(p); console.log(tsgoInspect(p,file,0,3,'SourceFile','react-syntax-details'));`)
 	probe := h.write("probe.tsx", "x;\n")
 	stale := h.build(stage0, "released", released, archive, false)
 	got = h.run("released-run", exec.Command(stale, config, probe))

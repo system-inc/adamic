@@ -1,0 +1,63 @@
+import { panic, tsgoInspect } from 'adamic';
+import { Frames, header } from '../frames.ts';
+import { Diagnostic } from '../diagnostic.ts';
+
+export class Binding {
+    kind = 0; file = ''; initializer = 0; importedKind = 0; importedText = '';
+    parentKind = 0; grandKind = 0; greatKind = 0; moduleKind = 0; moduleText = '';
+}
+export class SyntaxNode {
+    kind = 0; pos = 0; end = 0; start = 0; text = ''; parent = 0;
+    readonly children: number[] = []; name = 0; initializer = 0; expression = 0;
+    property = 0; opening = 0; tag = 0; attributes = 0; left = 0; right = 0;
+    body = 0; whenTrue = 0; whenFalse = 0; asterisk = 0; token = 0; whitespace = false; upperText = ''; readonly jsxChildren: number[] = []; readonly modifiers: number[] = [];
+    operator = 0; rest = false; readonly arguments: number[] = []; readonly parameters: number[] = [];
+    symbol = false; readonly bindings: Binding[] = [];
+}
+export class SyntaxBindings {
+    readonly path: string;
+    readonly nodes: SyntaxNode[] = [];
+    readonly findings: Diagnostic[] = [];
+    constructor(path: string) { this.path = path; this.nodes.push(new SyntaxNode()); }
+    node(index: number): SyntaxNode { return this.nodes[index] ?? panic('numeric syntax index outside graph'); }
+    report(rule: string, id: string, message: string, node: SyntaxNode): void {
+        this.findings.push(new Diagnostic(rule, id, message, node.start, node.end, ''));
+    }
+}
+// One raw parser/binding snapshot per file. No rule re-queries its handed node.
+export function reactSyntaxDetails(program: number, path: string, byteLength: number): SyntaxBindings {
+    const frames = new Frames(tsgoInspect(program, path, 0, byteLength, 'SourceFile', 'react-syntax-details'));
+    header(frames, 'react-syntax-details');
+    const context = new SyntaxBindings(path); const count = frames.natural();
+    for(let at = 0; at < count; at++) {
+        const node = new SyntaxNode();
+        node.kind = frames.natural(); node.pos = frames.natural(); node.end = frames.natural(); node.start = frames.natural();
+        node.text = frames.field(); node.parent = frames.natural();
+        const children = frames.natural(); for(let child = 0; child < children; child++) { node.children.push(frames.natural()); }
+        node.name = frames.natural(); node.initializer = frames.natural(); node.expression = frames.natural();
+        node.property = frames.natural(); node.opening = frames.natural(); node.tag = frames.natural();
+        node.attributes = frames.natural(); node.left = frames.natural(); node.right = frames.natural();
+        node.body = frames.natural(); node.whenTrue = frames.natural(); node.whenFalse = frames.natural(); node.asterisk = frames.natural();
+        node.token = frames.natural(); node.whitespace = frames.yes(); node.upperText = frames.field();
+        const jsxChildren = frames.natural(); for(let child = 0; child < jsxChildren; child++) { node.jsxChildren.push(frames.natural()); }
+        const modifiers = frames.natural(); for(let child = 0; child < modifiers; child++) { node.modifiers.push(frames.natural()); }
+        node.operator = frames.natural(); node.rest = frames.yes();
+        const argumentsCount = frames.natural(); for(let index = 0; index < argumentsCount; index++) { node.arguments.push(frames.natural()); }
+        const parameters = frames.natural(); for(let index = 0; index < parameters; index++) { node.parameters.push(frames.natural()); }
+        node.symbol = frames.yes(); const declarations = frames.natural();
+        for(let index = 0; index < declarations; index++) {
+            const binding = new Binding(); binding.kind = frames.natural(); binding.file = frames.field();
+            binding.initializer = frames.natural(); binding.importedKind = frames.natural(); binding.importedText = frames.field();
+            binding.parentKind = frames.natural(); binding.grandKind = frames.natural(); binding.greatKind = frames.natural();
+            binding.moduleKind = frames.natural(); binding.moduleText = frames.field(); node.bindings.push(binding);
+        }
+        context.nodes.push(node);
+    }
+    frames.end();
+    for(const node of context.nodes) {
+        const links = [node.body, node.whenTrue, node.whenFalse, node.asterisk, ...node.jsxChildren, ...node.modifiers, node.parent, node.name, node.initializer, node.expression, node.property, node.opening, node.tag, node.attributes, node.left, node.right, ...node.children, ...node.arguments, ...node.parameters];
+        for(const link of links) { if(link >= context.nodes.length) { panic('numeric syntax link outside graph'); } }
+        for(const binding of node.bindings) { if(binding.initializer >= context.nodes.length) { panic('binding initializer outside graph'); } }
+    }
+    return context;
+}

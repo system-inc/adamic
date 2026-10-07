@@ -1,0 +1,49 @@
+import { SyntaxBindings, SyntaxNode } from '../../react_syntax_details.a';
+import { BigIntLiteral, CallExpression, ComputedPropertyName, Identifier, JsxAttribute, JsxAttributes, JsxElement, JsxSelfClosingElement, JsxSpreadAttribute, NoSubstitutionTemplateLiteral, NumericLiteral, ObjectLiteralExpression, PrivateIdentifier, PropertyAccessExpression, SpreadAssignment, StringLiteral, VariableDeclaration } from '../../syntax_kinds.a';
+export const kinds: readonly number[] = [JsxElement, JsxSelfClosingElement, CallExpression];
+export class NoDangerWithChildren {
+    readonly context: SyntaxBindings;
+    constructor(context: SyntaxBindings) { this.context = context; }
+    named(property: SyntaxNode, wanted: string): boolean {
+        let name = this.context.node(property.name);
+        if(name.kind === ComputedPropertyName) { name = this.context.node(name.expression); if(![StringLiteral, NumericLiteral, BigIntLiteral, NoSubstitutionTemplateLiteral].includes(name.kind)) { return false; } }
+        return [Identifier, PrivateIdentifier, StringLiteral, NumericLiteral, BigIntLiteral, NoSubstitutionTemplateLiteral].includes(name.kind) && name.text === wanted;
+    }
+    variable(node: SyntaxNode, wanted: string, seen: number[]): boolean {
+        const binding = node.bindings[0];
+        if(binding === undefined || binding.kind !== VariableDeclaration || seen.includes(binding.initializer)) { return false; }
+        const object = this.context.node(binding.initializer); if(object.kind !== ObjectLiteralExpression) { return false; }
+        seen.push(binding.initializer);
+        for(const child of object.children) { const property = this.context.node(child); if(property.kind === SpreadAssignment) { const spread = this.context.node(property.expression); if(spread.kind === Identifier && this.variable(spread, wanted, seen)) { return true; } } else if(this.named(property, wanted)) { return true; } }
+        return false;
+    }
+    object(node: SyntaxNode, wanted: string): boolean {
+        if(node.kind === Identifier) { return this.variable(node, wanted, []); }
+        if(node.kind !== ObjectLiteralExpression) { return false; }
+        for(const child of node.children) { const property = this.context.node(child); if(property.kind !== SpreadAssignment && this.named(property, wanted)) { return true; } }
+        return false;
+    }
+    attribute(node: SyntaxNode, wanted: string): boolean {
+        if(node.kind !== JsxAttributes) { return false; }
+        for(const child of node.children) {
+            const property = this.context.node(child); const name = this.context.node(property.name);
+            if(property.kind === JsxAttribute && name.kind === Identifier && name.text === wanted) { return true; }
+            if(property.kind === JsxSpreadAttribute) { const spread = this.context.node(property.expression); if(spread.kind === Identifier && this.variable(spread, wanted, [])) { return true; } }
+        }
+        return false;
+    }
+    visit(node: SyntaxNode): void {
+        if(node.kind === CallExpression) {
+            const callee = this.context.node(node.expression); const name = this.context.node(callee.name);
+            if(node.arguments.length < 2 || callee.kind !== PropertyAccessExpression || name.kind !== Identifier || name.text !== 'createElement') { return; }
+            const props = this.context.node(node.arguments[1] ?? 0);
+            if((node.arguments.length <= 2 && !this.object(props, 'children')) || !this.object(props, 'dangerouslySetInnerHTML')) { return; }
+        } else {
+            const opening = node.kind === JsxElement ? this.context.node(node.opening) : node;
+            const attributes = this.context.node(opening.attributes); const first = this.context.node(node.jsxChildren[0] ?? 0);
+            if(!this.attribute(attributes, 'children') && (node.jsxChildren.length === 0 || first.whitespace)) { return; }
+            if(!this.attribute(attributes, 'dangerouslySetInnerHTML')) { return; }
+        }
+        this.context.report('react/no-danger-with-children', 'noDangerWithChildren', 'This element sets `dangerouslySetInnerHTML` and also passes children. React renders one or the other, not both, so the children written here are silently discarded and React warns at runtime. Keep whichever one is meant to render and remove the other.', node);
+    }
+}

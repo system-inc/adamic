@@ -1,0 +1,147 @@
+import { SyntaxBindings, SyntaxNode } from '../../react_syntax_details.a';
+import { Pragma } from '../../pragma.a';
+import { AmpersandAmpersandToken, ArrowFunction, AsyncKeyword, BarBarToken, BinaryExpression, Block, CallExpression, CaseBlock, CaseClause, ClassDeclaration, ClassExpression, CommaToken, DefaultClause, EqualsToken, ExportAssignment, ExpressionWithTypeArguments, ExtendsKeyword, ForStatement, FunctionDeclaration, FunctionExpression, HeritageClause, Identifier, IfStatement, JsxElement, JsxFragment, JsxSelfClosingElement, MethodDeclaration, NullKeyword, ObjectLiteralExpression, PropertyAccessExpression, PropertyAssignment, QuestionQuestionToken, ReturnStatement, SourceFile, SwitchStatement, VariableDeclaration, WhileStatement } from '../../syntax_kinds.a';
+export const kinds: readonly number[] = [SourceFile];
+export class NoMultiComp {
+    readonly context: SyntaxBindings; readonly pragma: Pragma;
+    readonly components: SyntaxNode[] = []; readonly detectedNames: string[] = [];
+    constructor(context: SyntaxBindings) { this.context = context; this.pragma = new Pragma(context); }
+    capital(name: SyntaxNode): boolean {
+        let at = 0; while(name.text.charAt(at) === '_') { at++; }
+        return at < name.text.length && name.text.codePointAt(at) === name.upperText.codePointAt(at);
+    }
+    add(node: SyntaxNode): void {
+        if(this.components.includes(node)) { return; }
+        this.components.push(node);
+        if(node.kind === ClassDeclaration) { const name = this.context.node(node.name); if(name.text !== '') { this.detectedNames.push(name.text); } }
+        else if(node.kind === ArrowFunction) { const parent = this.pragma.parent(node); const name = this.context.node(parent.name); if(parent.kind === VariableDeclaration && name.kind === Identifier) { this.detectedNames.push(name.text); } }
+    }
+    value(node: SyntaxNode, acceptNull: boolean): boolean {
+        const value = this.pragma.unwrap(node);
+        if([JsxElement, JsxSelfClosingElement, JsxFragment].includes(value.kind)) { return true; }
+        if(value.kind === NullKeyword) { return acceptNull; }
+        if(value.kind === CallExpression) { return this.pragma.create(value); }
+        if(value.kind === BinaryExpression) {
+            if(value.operator === CommaToken) { return this.value(this.context.node(value.right), acceptNull); }
+            if([AmpersandAmpersandToken, BarBarToken, QuestionQuestionToken].includes(value.operator)) { return this.value(this.context.node(value.left), acceptNull) || this.value(this.context.node(value.right), acceptNull); }
+        }
+        if(value.whenTrue !== 0 || value.whenFalse !== 0) { return this.value(this.context.node(value.whenTrue), acceptNull) || this.value(this.context.node(value.whenFalse), acceptNull); }
+        return false;
+    }
+    statements(node: SyntaxNode, acceptNull: boolean): boolean {
+        if(node.kind === ReturnStatement) { return this.value(this.context.node(node.expression), acceptNull); }
+        if(![Block, IfStatement, ForStatement, WhileStatement, SwitchStatement, CaseBlock, CaseClause, DefaultClause].includes(node.kind)) { return false; }
+        for(const child of node.children) { if(this.statements(this.context.node(child), acceptNull)) { return true; } }
+        return false;
+    }
+    returns(node: SyntaxNode, acceptNull: boolean): boolean {
+        const body = this.context.node(node.body);
+        if(node.kind === ArrowFunction && body.kind !== Block) { return this.value(body, acceptNull); }
+        return body.kind === Block && this.statements(body, acceptNull);
+    }
+    asyncGenerator(node: SyntaxNode): boolean {
+        if(node.asterisk === 0) { return false; }
+        for(const modifier of node.modifiers) { if(this.context.node(modifier).kind === AsyncKeyword) { return true; } }
+        return false;
+    }
+    returnedTag(wrapped: SyntaxNode): string {
+        if(wrapped.kind !== ArrowFunction && wrapped.kind !== FunctionExpression) { return ''; }
+        let body = this.context.node(wrapped.body);
+        if(body.kind === Block) {
+            let found = false;
+            for(const child of body.children) { const statement = this.context.node(child); if(statement.kind === ReturnStatement) { body = this.context.node(statement.expression); found = true; break; } }
+            if(!found) { return ''; }
+        }
+        body = this.pragma.unwrap(body);
+        if(body.kind === JsxElement) { body = this.context.node(body.opening); }
+        const name = this.context.node(body.tag); return name.kind === Identifier ? name.text : '';
+    }
+    wrapper(node: SyntaxNode): boolean {
+        if(node.kind !== CallExpression || node.arguments.length === 0) { return false; }
+        const callee = this.context.node(node.expression);
+        if(callee.kind === PropertyAccessExpression) {
+            const receiver = this.pragma.unwrap(this.context.node(callee.expression)); const name = this.context.node(callee.name);
+            return receiver.kind === Identifier && receiver.text === 'React' && name.kind === Identifier && (name.text === 'memo' || name.text === 'forwardRef') && !this.detectedNames.includes(this.returnedTag(this.context.node(node.arguments[0] ?? 0)));
+        }
+        return callee.kind === Identifier && (callee.text === 'memo' || callee.text === 'forwardRef') && this.pragma.fromReact(this.context.node(1), callee.text);
+    }
+    wrapperFor(node: SyntaxNode): SyntaxNode {
+        let wrapper = this.context.node(0); let current = this.context.node(node.parent);
+        while(this.wrapper(current)) { wrapper = current; current = this.context.node(current.parent); }
+        return wrapper;
+    }
+    allowed(node: SyntaxNode): boolean {
+        const parent = this.pragma.parent(node);
+        if(parent.kind === BinaryExpression) {
+            if(parent.operator === EqualsToken) { return true; }
+            if(parent.operator !== CommaToken || this.pragma.unwrap(this.context.node(parent.right)) !== node) { return false; }
+            return this.allowed(parent);
+        }
+        return [VariableDeclaration, PropertyAssignment, ReturnStatement, ExportAssignment, ArrowFunction].includes(parent.kind);
+    }
+    stateless(node: SyntaxNode): SyntaxNode {
+        const absent = this.context.node(0); const name = this.context.node(node.name);
+        if(node.kind === FunctionDeclaration) {
+            return !this.asyncGenerator(node) && (node.name === 0 || this.capital(name)) && this.returns(node, true) ? node : absent;
+        }
+        if(node.kind !== FunctionExpression && node.kind !== ArrowFunction) { return absent; }
+        if(node.kind === FunctionExpression && this.asyncGenerator(node)) { return absent; }
+        const parent = this.pragma.parent(node);
+        if(parent.kind === ReturnStatement || (parent.kind === ArrowFunction && this.context.node(parent.body) === node)) { if(!this.returns(node, false)) { return absent; } }
+        if(parent.kind === ExportAssignment) { return this.returns(node, false) ? node : absent; }
+        if(parent.kind === VariableDeclaration && this.returns(node, true)) { const target = this.context.node(parent.name); return target.kind === Identifier && this.capital(target) ? node : absent; }
+        if(parent.kind === PropertyAssignment && !(node.kind === FunctionExpression && node.name !== 0)) { const target = this.context.node(parent.name); return this.returns(node, false) && target.kind === Identifier && this.capital(target) ? node : absent; }
+        const wrapper = this.wrapperFor(node); if(wrapper.kind !== 0 && this.returns(node, true)) { return wrapper; }
+        if(parent.kind === MethodDeclaration) { const target = this.context.node(parent.name); return this.returns(node, false) && target.kind === Identifier && this.capital(target) ? node : absent; }
+        if(!this.allowed(node) || !this.returns(node, true)) { return absent; }
+        if(node.kind === FunctionExpression && node.name !== 0) { return this.capital(name) ? node : absent; }
+        if(parent.kind === BinaryExpression && parent.operator === EqualsToken) {
+            const target = this.pragma.unwrap(this.context.node(parent.left));
+            if(target.kind === 0) { return absent; }
+            if(target.kind === Identifier) { return this.capital(target) ? node : absent; }
+            if(target.kind === PropertyAccessExpression) {
+                const property = this.context.node(target.name); const object = this.pragma.unwrap(this.context.node(target.expression));
+                if(property.kind === 0) { return absent; }
+                if(object.kind === Identifier && object.text === 'module' && property.text === 'exports') { return node; }
+                return this.capital(property) ? node : absent;
+            }
+        }
+        return node;
+    }
+    base(node: SyntaxNode): boolean {
+        const expression = this.pragma.unwrap(node);
+        if(expression.kind === Identifier) { return expression.text === 'Component' || expression.text === 'PureComponent'; }
+        if(expression.kind !== PropertyAccessExpression) { return false; }
+        const object = this.pragma.unwrap(this.context.node(expression.expression)); const name = this.context.node(expression.name);
+        return object.kind === Identifier && object.text === 'React' && (name.text === 'Component' || name.text === 'PureComponent');
+    }
+    componentClass(node: SyntaxNode): boolean {
+        for(const child of node.children) { const clause = this.context.node(child); if(clause.kind === HeritageClause && clause.token === ExtendsKeyword) { for(const index of clause.children) { const type = this.context.node(index); if(type.kind === ExpressionWithTypeArguments && this.base(this.context.node(type.expression))) { return true; } } } }
+        return false;
+    }
+    factory(node: SyntaxNode): boolean {
+        const callee = this.pragma.unwrap(this.context.node(node.expression));
+        if(callee.kind === Identifier) { return callee.text === 'createReactClass'; }
+        if(callee.kind !== PropertyAccessExpression) { return false; }
+        const object = this.pragma.unwrap(this.context.node(callee.expression)); const name = this.context.node(callee.name);
+        return object.kind === Identifier && object.text === 'React' && name.text === 'createReactClass';
+    }
+    collect(node: SyntaxNode): void {
+        if(node.kind === ClassDeclaration || node.kind === ClassExpression) { if(this.componentClass(node)) { this.add(node); } }
+        else if(node.kind === CallExpression) {
+            const first = this.context.node(node.arguments[0] ?? 0); const unwrapped = this.pragma.unwrap(first);
+            if(this.wrapper(node) && (unwrapped.kind === ArrowFunction || unwrapped.kind === FunctionExpression)) { this.add(node); }
+            if(this.factory(node) && first.kind === ObjectLiteralExpression) { this.add(first); }
+        } else if(node.kind === MethodDeclaration) {
+            const parent = this.context.node(node.parent); const name = this.context.node(node.name);
+            if(parent.kind === ObjectLiteralExpression && name.kind === Identifier && this.capital(name) && this.returns(node, false)) { this.add(node); }
+        } else if([FunctionDeclaration, FunctionExpression, ArrowFunction].includes(node.kind)) {
+            const component = this.stateless(node); if(component.kind !== 0) { this.add(component); }
+        }
+        for(const child of node.children) { this.collect(this.context.node(child)); }
+    }
+    visit(node: SyntaxNode): void {
+        this.collect(node);
+        for(let at = 1; at < this.components.length; at++) { const component = this.components[at]; if(component !== undefined) { this.context.report('react/no-multi-comp', 'onlyOneComponent', 'Declare only one React component per file', component); } }
+    }
+}

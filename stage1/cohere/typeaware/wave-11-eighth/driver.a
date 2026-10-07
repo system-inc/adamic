@@ -1,0 +1,26 @@
+import { SyntaxBindings, SyntaxNode } from './react_syntax_details.a';
+import { NoDangerWithChildren, kinds as fragmentKinds } from './rules/react-no-danger-with-children/rule.a';
+import { NoNamespace, kinds as undefKinds } from './rules/react-no-namespace/rule.a';
+import { NoMultiComp, kinds as indexKinds } from './rules/react-no-multi-comp/rule.a';
+export class Driver {
+    readonly context: SyntaxBindings;
+    readonly fragments: NoDangerWithChildren; readonly undef: NoNamespace; readonly indices: NoMultiComp;
+    readonly listeners = new Map<number, number[]>();
+    constructor(context: SyntaxBindings) {
+        this.context = context; this.fragments = new NoDangerWithChildren(context); this.undef = new NoNamespace(context); this.indices = new NoMultiComp(context);
+        for(const kind of fragmentKinds) { this.listeners.set(kind, [1]); }
+        for(const kind of undefKinds) { const handlers: number[] = this.listeners.get(kind) ?? []; handlers.push(2); this.listeners.set(kind, handlers); }
+        for(const kind of indexKinds) { const handlers: number[] = this.listeners.get(kind) ?? []; handlers.push(3); this.listeners.set(kind, handlers); }
+    }
+    visit(node: SyntaxNode): void {
+        const handlers = this.listeners.get(node.kind);
+        if(handlers !== undefined) {
+            for(const handler of handlers) {
+                if(handler === 1) { this.fragments.visit(node); }
+                else if(handler === 2) { this.undef.visit(node); }
+                else if(handler === 3) { this.indices.visit(node); }
+            }
+        }
+        for(const child of node.children) { this.visit(this.context.node(child)); }
+    }
+}
