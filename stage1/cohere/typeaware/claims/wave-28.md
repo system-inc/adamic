@@ -37,3 +37,13 @@ The six earlier ports are tested and pushed at `4f3a94110b2e2ec55098cef7cf1a9138
 3. `prefer-arrow-callback` (0 compiler, 0 repository).
 
 No matching source literal occurs in the 34 distinct origin typeaware trees. No selected rule was skipped. This claim is pushed before any third-batch implementation.
+
+## Fourth batch claim
+
+All nine earlier ports are tested and pushed at `431ab666b8d3fc3919f8d6a434e58538a65bc5ac`. After another all-heads fetch, 389 origin refs contain 33 distinct Markdown claim blobs naming 142 ranked rules. Excluding those claims and the base/main ports leaves these first three by combined volume:
+
+1. `react-hooks/set-state-in-effect` (0 compiler, 0 repository).
+2. `react-hooks/set-state-in-render` (0 compiler, 0 repository).
+3. `react-hooks/static-components` (0 compiler, 0 repository).
+
+No matching implementation literal was found in the 34 distinct origin typeaware trees. No selected rule was skipped. This claim is pushed before fourth-batch implementation.
