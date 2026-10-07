@@ -1,5 +1,37 @@
 # Scanner blockers
 
+## October 7: real unstubbed run after library Error and non-null tip
+
+Scratch compiler e034d3d merges library-error-value 6469f37 and non-null-check
+a02613e, retaining the earlier feature integration. Compiler build passes;
+the original error-constructor-value.a probe prints `captureStackTrace available`
+natively. No Error capture stub or discovery bypass is present. Selected
+validated adaptations remain 52, 53, 54, 55, 56, 57, 59, 81, 82, 85; 58 is retired.
+
+**Next real blocker, before lowering:**
+`diagnosticInformationMap.generated.ts:13:45: Adamic 0.1 refuses a conservative refusal of an imported binding read during cyclic module evaluation [nexus/correctness-no-import-cycle-load-time-read]; defer the read until module evaluation finishes or break the import cycle (#xjdce2d)`.
+The read is `DiagnosticCategory.Error` in the Diagnostics initializer. The
+order-preserving slice retains types.ts -> _namespaces/ts.ts -> generated
+diagnostics -> types.ts. The interim guard rejects all top-level imported
+reads in a cyclic program, including initialized exporters and enum members.
+This is an observation on the scratch merge, not a claim of unsafe execution.
+
+Minimal program: probes/cyclic-initialized-enum/{main,barrel,types,reader}.a.
+Stock TypeScript 6.0.3 on Node prints `1`; stage 0 refuses reader.a:2:23 with
+the same diagnostic. codex/import-cycles tip 7b2c3f2 was fetched and inspected:
+it still installs conservativeLoadTimeReads; the public runner admission seam
+is TODO #xjdce2d. Needed compiler change: prove safe imported reads using actual
+module evaluation order (including const-enum reads), while refusing premature
+value reads. No source adaptation was made: deferring Diagnostics changes
+verbatim declarations, and removing barrel cycles discards the evaluation-order
+proof the shared slicer now preserves. Native build and native token diff stop
+here; no further stub discovery or full compiler gate was run.
+
+Node over all 81 corpus files emits 509,014 tokens, 27,879,197 bytes, exactly
+matching the full-tree oracle (diff exit 0). Token end+1 mutant is caught
+(diff exit 1); unmodified comparison control exits 0. Evidence: error-real-*.
+
+
 ## October 7: slice evaluation order and reference-chain repair
 
 Shared tool now retains the original runtime graph and binding modules.
