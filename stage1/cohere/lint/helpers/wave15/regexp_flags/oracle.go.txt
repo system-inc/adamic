@@ -1,0 +1,13 @@
+package regexp
+
+func Wave15ParseFlags(input string) (int, string) {
+    flags, err := parseFlags(input)
+    mask := 0
+    if flags.ignoreCase { mask |= 1 }
+    if flags.multiline { mask |= 2 }
+    if flags.dotAll { mask |= 4 }
+    if flags.unicode { mask |= 8 }
+    if flags.sticky { mask |= 16 }
+    if err != nil { return mask, err.Error() }
+    return mask, ""
+}

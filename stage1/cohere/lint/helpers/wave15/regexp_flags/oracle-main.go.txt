@@ -1,0 +1,76 @@
+package main
+
+import (
+ "bufio"
+ "encoding/json"
+ "fmt"
+ "go/ast"
+ "go/parser"
+ "go/token"
+ "os"
+ "path/filepath"
+ "sort"
+ "strconv"
+ "strings"
+ "unicode/utf16"
+ esregexp "github.com/system-inc/cohere/internal/lint/ecmascript/regexp"
+)
+func encode(s string) string {
+ var out strings.Builder
+ for _, c := range utf16.Encode([]rune(s)) { fmt.Fprintf(&out, "%04x", c) }
+ return out.String()
+}
+func decode(s string) string {
+ units := []uint16{}
+ for i:=0; i<len(s); i+=4 { n,e:=strconv.ParseUint(s[i:i+4],16,16); if e!=nil {panic(e)};units=append(units,uint16(n)) }
+ return string(utf16.Decode(units))
+}
+func main() {
+ if os.Args[1]=="tables" {
+  f,e:=os.Create(os.Args[2]);if e!=nil {panic(e)};defer f.Close()
+  fmt.Fprintln(f,"// Generated from the pinned Go toolchain's strconv.IsPrint.")
+  fmt.Fprintln(f,"export const printableRanges: readonly number[] = [")
+  start:=-1
+  for c:=0;c<=0x110000;c++ {
+   good:=c<0x110000 && strconv.IsPrint(rune(c))
+   if good && start<0 {start=c}
+   if !good && start>=0 {fmt.Fprintf(f,"    %d, %d,\n",start,c-1);start=-1}
+  }
+  fmt.Fprintln(f,"];");return
+ }
+ if os.Args[1]=="generate" {
+  f,e:=os.Create(os.Args[2]);if e!=nil {panic(e)};defer f.Close();out:=bufio.NewWriter(f);defer out.Flush()
+  write:=func(s string) {fmt.Fprintln(out,"x"+encode(s))}
+  coverage:=map[string]int{}
+  stems:=[]string{"next/no_html_link_for_pages","typescript/no_empty_object_type","core/no_restricted_exports","core/no_restricted_imports"}
+  for _,stem:=range stems {
+   paths,e:=filepath.Glob(filepath.Join(os.Args[3],stem+"*_test.go"));if e!=nil {panic(e)}
+   set:=map[string]bool{}
+   for _,p:=range paths {
+    file,e:=parser.ParseFile(token.NewFileSet(),p,nil,0);if e!=nil {panic(e)}
+    ast.Inspect(file,func(n ast.Node)bool {
+     lit,ok:=n.(*ast.BasicLit);if ok && lit.Kind==token.STRING {s,e:=strconv.Unquote(lit.Value);if e!=nil{panic(e)};set[s]=true};return true
+    })
+   }
+   keys:=[]string{};for s:=range set {keys=append(keys,s)};sort.Strings(keys);coverage[stem]=len(keys)
+   for _,s:=range keys {write(s);write("i"+s);write("imsuy"+s)}
+  }
+  alphabet:="imsuygdvq"
+  var combinations func(string,int)
+  combinations=func(s string,remaining int) {write(s);if remaining==0{return};for _,c:=range alphabet {combinations(s+string(c),remaining-1)}}
+  combinations("",5)
+  var permutations func(string,string)
+  permutations=func(prefix,remaining string) {write(prefix);for i:=range remaining {permutations(prefix+remaining[i:i+1],remaining[:i]+remaining[i+1:])}}
+  permutations("","imsuygd")
+  for c:=0;c<=0x10ffff;c++ {if c>=0xd800&&c<=0xdfff {continue};write("imsuy"+string(rune(c)))}
+  for c:=0xd800;c<=0xdfff;c++ {fmt.Fprintf(out,"x0069%04x\n",c)}
+  for _,s:=range []string{"imsuygdimsuygd","gg","dd","vvi","qim","imq","😀😀","\ufffd"} {write(s)}
+  data,e:=json.MarshalIndent(coverage,"","  ");if e!=nil{panic(e)};if e=os.WriteFile(os.Args[2]+".coverage.json",data,0644);e!=nil{panic(e)}
+  return
+ }
+ f,e:=os.Open(os.Args[1]);if e!=nil{panic(e)};defer f.Close()
+ scan:=bufio.NewScanner(f);scan.Buffer(make([]byte,4096),16*1024*1024)
+ out:=bufio.NewWriter(os.Stdout);defer out.Flush()
+ for scan.Scan() {mask,err:=esregexp.Wave15ParseFlags(decode(scan.Text()[1:]));fmt.Fprintf(out,"%d\t%s.\n",mask,encode(err))}
+ if scan.Err()!=nil{panic(scan.Err())}
+}

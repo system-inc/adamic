@@ -1,0 +1,24 @@
+import { readTextFile, programArguments, panic } from 'adamic';
+import { parseFlags } from './parse_flags.a';
+function decode(text: string): string {
+    let result = '';
+    for(let index = 0; index < text.length; index += 4) {
+        result += String.fromCharCode(parseInt(text.slice(index, index + 4), 16));
+    }
+    return result;
+}
+function encode(text: string): string {
+    let result = '';
+    for(let index = 0; index < text.length; index++) {
+        result += text.charCodeAt(index).toString(16).padStart(4, '0');
+    }
+    return result;
+}
+const input = readTextFile(programArguments()[0] ?? panic('missing cases'));
+if(input.kind === 'Error') { panic(input.message); }
+for(const line of input.text.split('\n')) {
+    if(line === '') { continue; }
+    const flags = parseFlags(decode(line.slice(1)));
+    const mask = (flags.ignoreCase ? 1 : 0) + (flags.multiline ? 2 : 0) + (flags.dotAll ? 4 : 0) + (flags.unicode ? 8 : 0) + (flags.sticky ? 16 : 0);
+    console.log(`${mask}\t${encode(flags.error)}.`);
+}

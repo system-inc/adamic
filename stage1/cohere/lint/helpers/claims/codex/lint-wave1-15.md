@@ -69,3 +69,7 @@ Refetched all 530 origin refs and read all 17 helper claim occurrences, plus HEL
 - github.com/system-inc/cohere/internal/lint/ecmascript/regexp.parseFlags
 
 File: wave15/regexp_flags/parse_flags.a. Four frozen consumers: @next/next/no-html-link-for-pages, @typescript-eslint/no-empty-object-type, no-restricted-exports and no-restricted-imports. Preserve partial flag state on failure, ignored global/indices flags, sticky, duplicate priority and exact Go rune-quoted error bytes. Compare the actual private Go function on every consumer fixture's strings and exhaustive ordered flag/control cases, source Node, emitted JavaScript and sanitized native, with a compiling duplicate-state mutant. This supplies four prerequisite edges, not complete regexp compilation or completed rule ports. Claim pushed before code.
+
+## Flag parser outcome and selection correction
+
+parseFlags is delivered and validated over 1,197,583 four-way queries and its compiling duplicate mutant. All four upstream consumer families pass. See wave15/regexp_flags/REPORT.md. The initial highest-count assertion above was incorrect: the scan counted the withdrawn DesignSystemForProgram mention as a reservation. Slot 05 explicitly released that six-consumer cache, and there is no other active claim. Continue with the released higher-count helper after pushing this implementation.
