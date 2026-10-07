@@ -20,3 +20,59 @@
         Node.js v24.19.0
 --- FAIL: TestCSSPrinterAgreesWithGo/default (478.54s)
 
+== github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo/narrow
+        
+        Error: Cannot find module '/workspace/gate-scratch/reference/node_modules/prettier/node_modules/prettier'
+        Require stack:
+        - /workspace/adamic/stage1/cohere/css/testdata/print_library.mjs
+            at Module._resolveFilename (node:internal/modules/cjs/loader:1517:15)
+            at wrapResolveFilename (node:internal/modules/cjs/loader:1071:27)
+            at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1095:10)
+            at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1122:12)
+            at Module._load (node:internal/modules/cjs/loader:1294:5)
+            at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+            at Module.require (node:internal/modules/cjs/loader:1617:12)
+            at require (node:internal/modules/helpers:153:16)
+            at file:///workspace/adamic/stage1/cohere/css/testdata/print_library.mjs:11:14
+            at ModuleJob.run (node:internal/modules/esm/module_job:439:25) {
+          code: 'MODULE_NOT_FOUND',
+          requireStack: [ '/workspace/adamic/stage1/cohere/css/testdata/print_library.mjs' ]
+        }
+        
+        Node.js v24.19.0
+--- FAIL: TestCSSPrinterAgreesWithGo/narrow (342.37s)
+
+== github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo
+=== RUN   TestCSSPrinterAgreesWithGo
+    print_test.go:53: Go oracle: === RUN   TestAdamicPortCases
+            adamic_port_side_test.go:116: Prettier fixtures absent; set ADAMIC_CSS_FIXTURES
+            adamic_port_side_test.go:148: corpus files: map[.css:165 .scss:90]
+            adamic_port_side_test.go:216: 24014 cases, 4988 parsed
+            adamic_port_side_test.go:234: Go: 240140 stylesheets in 15.755037153s, 15242 stylesheets/s; 49880 parsed, 95770 children
+        --- PASS: TestAdamicPortCases (21.33s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css/postcss	21.367s
+--- FAIL: TestCSSPrinterAgreesWithGo (862.42s)
+
+== github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterBoundaryProofs
+        
+        Error: Cannot find module '/workspace/gate-scratch/reference/node_modules/prettier/node_modules/prettier'
+        Require stack:
+        - /workspace/adamic/stage1/cohere/css/gaps/printer_library.mjs
+            at Module._resolveFilename (node:internal/modules/cjs/loader:1517:15)
+            at wrapResolveFilename (node:internal/modules/cjs/loader:1071:27)
+            at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1095:10)
+            at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1122:12)
+            at Module._load (node:internal/modules/cjs/loader:1294:5)
+            at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+            at Module.require (node:internal/modules/cjs/loader:1617:12)
+            at require (node:internal/modules/helpers:153:16)
+            at file:///workspace/adamic/stage1/cohere/css/gaps/printer_library.mjs:5:18
+            at ModuleJob.run (node:internal/modules/esm/module_job:439:25) {
+          code: 'MODULE_NOT_FOUND',
+          requireStack: [ '/workspace/adamic/stage1/cohere/css/gaps/printer_library.mjs' ]
+        }
+        
+        Node.js v24.19.0
+--- FAIL: TestCSSPrinterBoundaryProofs (2.22s)
+
