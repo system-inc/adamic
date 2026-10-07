@@ -35,8 +35,8 @@ Disassembly of section .text:
    7cd98:	4c 8d 25 2d e3 01 00 	lea    0x1e32d(%rip),%r12        # 9b0cc <codes_add.message+0x11>
    7cd9f:	eb 27                	jmp    7cdc8 <adamic_release+0x78>
    7cda1:	66 66 66 66 66 66 2e 	data16 data16 data16 data16 data16 cs nopw 0x0(%rax,%rax,1)
-   7cda8:	0f 1f 84 00 00 00 00 
-   7cdaf:	00 
+   7cda8:	0f 1f 84 00 00 00 00
+   7cdaf:	00
    7cdb0:	4c 89 f7             	mov    %r14,%rdi
    7cdb3:	e8 88 02 f9 ff       	call   d040 <free@plt>
    7cdb8:	48 8b 1d c1 d4 06 00 	mov    0x6d4c1(%rip),%rbx        # ea280 <freeing_count>
@@ -73,7 +73,7 @@ Disassembly of section .text:
    7ce42:	b9 40 00 00 00       	mov    $0x40,%ecx
    7ce47:	4c 0f 44 e9          	cmove  %rcx,%r13
    7ce4b:	4a 8d 34 ed 00 00 00 	lea    0x0(,%r13,8),%rsi
-   7ce52:	00 
+   7ce52:	00
    7ce53:	48 89 c7             	mov    %rax,%rdi
    7ce56:	e8 e5 03 f9 ff       	call   d240 <realloc@plt>
    7ce5b:	48 85 c0             	test   %rax,%rax
@@ -109,12 +109,12 @@ Disassembly of section .text:
    7ced7:	48 39 dd             	cmp    %rbx,%rbp
    7ceda:	75 c1                	jne    7ce9d <adamic_release+0x14d>
    7cedc:	48 8d 1c 6d 00 00 00 	lea    0x0(,%rbp,2),%rbx
-   7cee3:	00 
+   7cee3:	00
    7cee4:	48 85 ed             	test   %rbp,%rbp
    7cee7:	b9 40 00 00 00       	mov    $0x40,%ecx
    7ceec:	48 0f 44 d9          	cmove  %rcx,%rbx
    7cef0:	48 8d 34 dd 00 00 00 	lea    0x0(,%rbx,8),%rsi
-   7cef7:	00 
+   7cef7:	00
    7cef8:	48 89 c7             	mov    %rax,%rdi
    7cefb:	e8 40 03 f9 ff       	call   d240 <realloc@plt>
    7cf00:	48 85 c0             	test   %rax,%rax
@@ -158,12 +158,12 @@ Disassembly of section .text:
    7cfaf:	48 3b 2d 8a d3 06 00 	cmp    0x6d38a(%rip),%rbp        # ea340 <freeing_capacity>
    7cfb6:	75 3b                	jne    7cff3 <adamic_release+0x2a3>
    7cfb8:	4c 8d 2c 6d 00 00 00 	lea    0x0(,%rbp,2),%r13
-   7cfbf:	00 
+   7cfbf:	00
    7cfc0:	48 85 ed             	test   %rbp,%rbp
    7cfc3:	b9 40 00 00 00       	mov    $0x40,%ecx
    7cfc8:	4c 0f 44 e9          	cmove  %rcx,%r13
    7cfcc:	4a 8d 34 ed 00 00 00 	lea    0x0(,%r13,8),%rsi
-   7cfd3:	00 
+   7cfd3:	00
    7cfd4:	48 89 c7             	mov    %rax,%rdi
    7cfd7:	e8 64 02 f9 ff       	call   d240 <realloc@plt>
    7cfdc:	48 85 c0             	test   %rax,%rax
@@ -181,7 +181,7 @@ Disassembly of section .text:
    7d021:	4c 89 3c e8          	mov    %r15,(%rax,%rbp,8)
    7d025:	48 89 d5             	mov    %rdx,%rbp
    7d028:	0f 1f 84 00 00 00 00 	nopl   0x0(%rax,%rax,1)
-   7d02f:	00 
+   7d02f:	00
    7d030:	49 ff c5             	inc    %r13
    7d033:	49 39 cd             	cmp    %rcx,%r13
    7d036:	73 54                	jae    7d08c <adamic_release+0x33c>
@@ -198,12 +198,12 @@ Disassembly of section .text:
    7d055:	48 39 dd             	cmp    %rbx,%rbp
    7d058:	75 bc                	jne    7d016 <adamic_release+0x2c6>
    7d05a:	48 8d 1c 6d 00 00 00 	lea    0x0(,%rbp,2),%rbx
-   7d061:	00 
+   7d061:	00
    7d062:	48 85 ed             	test   %rbp,%rbp
    7d065:	b9 40 00 00 00       	mov    $0x40,%ecx
    7d06a:	48 0f 44 d9          	cmove  %rcx,%rbx
    7d06e:	48 8d 34 dd 00 00 00 	lea    0x0(,%rbx,8),%rsi
-   7d075:	00 
+   7d075:	00
    7d076:	48 89 c7             	mov    %rax,%rdi
    7d079:	e8 c2 01 f9 ff       	call   d240 <realloc@plt>
    7d07e:	48 85 c0             	test   %rax,%rax
@@ -221,12 +221,12 @@ Disassembly of section .text:
    7d0a5:	48 3b 2d 94 d2 06 00 	cmp    0x6d294(%rip),%rbp        # ea340 <freeing_capacity>
    7d0ac:	75 3b                	jne    7d0e9 <adamic_release+0x399>
    7d0ae:	4c 8d 3c 6d 00 00 00 	lea    0x0(,%rbp,2),%r15
-   7d0b5:	00 
+   7d0b5:	00
    7d0b6:	48 85 ed             	test   %rbp,%rbp
    7d0b9:	b9 40 00 00 00       	mov    $0x40,%ecx
    7d0be:	4c 0f 44 f9          	cmove  %rcx,%r15
    7d0c2:	4a 8d 34 fd 00 00 00 	lea    0x0(,%r15,8),%rsi
-   7d0c9:	00 
+   7d0c9:	00
    7d0ca:	48 89 c7             	mov    %rax,%rdi
    7d0cd:	e8 6e 01 f9 ff       	call   d240 <realloc@plt>
    7d0d2:	48 85 c0             	test   %rax,%rax
@@ -239,8 +239,8 @@ Disassembly of section .text:
    7d0f8:	49 8b 7e 28          	mov    0x28(%r14),%rdi
    7d0fc:	e8 3f ff f8 ff       	call   d040 <free@plt>
    7d101:	66 66 66 66 66 66 2e 	data16 data16 data16 data16 data16 cs nopw 0x0(%rax,%rax,1)
-   7d108:	0f 1f 84 00 00 00 00 
-   7d10f:	00 
+   7d108:	0f 1f 84 00 00 00 00
+   7d10f:	00
    7d110:	4c 89 f7             	mov    %r14,%rdi
    7d113:	e8 38 49 01 00       	call   91a50 <adamic_weak_forget>
    7d118:	41 8b 46 0c          	mov    0xc(%r14),%eax
@@ -312,7 +312,7 @@ Disassembly of section .text:
    7d21a:	41 bf 40 00 00 00    	mov    $0x40,%r15d
    7d220:	4c 0f 45 f9          	cmovne %rcx,%r15
    7d224:	4a 8d 34 fd 00 00 00 	lea    0x0(,%r15,8),%rsi
-   7d22b:	00 
+   7d22b:	00
    7d22c:	48 89 c7             	mov    %rax,%rdi
    7d22f:	e8 0c 00 f9 ff       	call   d240 <realloc@plt>
    7d234:	48 85 c0             	test   %rax,%rax
