@@ -153,3 +153,11 @@ Configuration file: /workspace/adamic-tools/wasi-sdk/bin/clang.cfg
 {"Time":"2026-10-07T23:45:11.2999186Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASI","Output":"    wasm_test.go:141: WASI oracle: 35/35 equivalent\n"}
 {"Time":"2026-10-07T23:45:11.299948215Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASI/requests"}
 {"Time":"2026-10-07T23:45:11.299951349Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASI/requests","Output":"=== RUN   TestWASI/requests\n","OutputType":"frame"}
+{"Time":"2026-10-07T23:45:16.741383016Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASI/requests","Output":"    wasm_test.go:163: request benchmark: {\"rounds\":100000,\"moduleBytes\":272554,\"compileMilliseconds\":1.3166709999999995,\"instantiateMilliseconds\":1.2522540000000006,\"memoryMinimum\":393216,\"memoryMaximum\":393216,\"live\":0,\"regionObjects\":6300000,\"wasmRequestsPerSecond\":272254.78024875093,\"plainRequestsPerSecond\":893563.6086069512}\n"}
+{"Time":"2026-10-07T23:45:16.741576909Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASI/requests","Output":"--- PASS: TestWASI/requests (5.44s)\n","OutputType":"frame"}
+{"Time":"2026-10-07T23:45:16.741583419Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASI/requests","Elapsed":5.44}
+{"Time":"2026-10-07T23:45:16.748177033Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASI","Output":"--- PASS: TestWASI (24.74s)\n","OutputType":"frame"}
+{"Time":"2026-10-07T23:45:16.748202421Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASI","Elapsed":24.74}
+{"Time":"2026-10-07T23:45:16.748215662Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-07T23:45:16.755498763Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t24.754s\n"}
+{"Time":"2026-10-07T23:45:16.755538994Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":24.755}
