@@ -8,6 +8,6 @@ const settings = new Settings();
 settings.load('{"modules":{"react":{"name":"Renamed"}},"modules":{"react":{"style":"Namespace"}}}');
 const parser = new Parser('');
 const scanner = new Scanner('');
-const context = new RuleContext('', parser, scanner, 'nexus/import-require-module-alias', '', '', false, [], settings);
+const context = new RuleContext('', parser, scanner, 'nexus/import-require-module-alias', '', '', false, [], settings, parser.file());
 create(context);
 console.log('accepted');

@@ -1,7 +1,7 @@
 # Integrated lint area landing
 
-Current compiler landing: c7991b900; area base b84a9d931. See the final
-compiler-refresh section for rebuilt results. Earlier sections preserve their
+Current compiler landing: c7991b900; area base b46914832. See the final
+registry-refresh section for rebuilt results. Earlier sections preserve their
 original observations and bases. The branch remains blocked for landing.
 
 Rebased codex/lint-wave1-14 onto area/stage1-lint
@@ -226,3 +226,55 @@ The separately rebased helper branch is pushed at
 consumers still remove zero complete blocker sets. The rule branch remains
 blocked on the shared parser and shared oracle, so no new helper or rule is
 claimed. Reproducers above are unchanged. No main or area branch was pushed.
+
+## Registry migration refresh at b46914832
+
+Rebased onto area/stage1-lint b46914832d70e00847d82d5d221ab7bb24040c53,
+containing unchanged main c7991b900362796aefd111474e65eb5398e91953. The ledger
+is unchanged. Accepted the registry migration and required root argument in the
+shared RuleContext constructor; only the owned options_probe.a call needed an
+update, passing parser.file(). No shared harness or compiler file was edited.
+
+Fresh commands use source /workspace/adamic-tools/env.sh and regular log files:
+
+- TestCompilerAndStage1Agree PASS (100.52s): 415 compiler/stage1 files,
+  20,751,296 identical bytes on Go, source Node, emitted JavaScript and
+  ASan/UBSan native, with the pinned TypeScript input supplied.
+- validate_landing.py exits 1 (89.025s). Nine complete upstream groups PASS
+  across all four sides, 579 cases. The 92-case constructor group fails on the
+  unchanged original modified-destructured parameter: expected CloseParenToken,
+  got OpenBraceToken at 33. No case was excluded.
+- The no-lonely-if extra-space mutant PASSes its control (38.24s): clean compiling
+  and exit-zero runs differ from Go only by comparison on source Node, emitted
+  JavaScript and sanitized native, over all 32 original cases.
+- The updated duplicate-options refusal probe exits 70 with the expected
+  repeated-module-keys message on source Node, emitted JavaScript through
+  oracle/node.mjs, and ASan/UBSan native. Native and JavaScript builds succeed.
+  An initial plain-node invocation of the emitted file failed to resolve the
+  adamic runtime; rerunning through the required loader proves the refusal.
+- The filtered inherited-static-field compiler fixture and one-byte control
+  PASS (0.200s; gate-cache hits). go vet ./... PASS.
+- Both retained helper validators and their compiling width mutants were
+  rebuilt and PASS: 68,844 fixed-hex records / 2,149,768 bytes and 12,935 Unicode
+  records / 834,966 bytes, on all three backends against actual Go. Four original
+  consumer suites and all targeted actual leaf calls PASS. The helper branch
+  is pushed at 9e12c31220894af47d027b7a2322a01282f3d77f.
+
+Setup evidence remains the preceding unchanged-toolchain run: 149s total,
+nproc 5, quota 4 cores. No full repository gate, new findings-per-second
+measurement, full regexp integration or arbitrary-input parameter-property
+parity is claimed. The seventeen broader required-input checks were not run.
+Eight helper prerequisite entries for four consumers still remove zero complete
+blocker sets. The parser and fix-budget reproducers above remain intact.
+No new helper or rule is claimed while the rule branch is blocked.
+
+The nine selected default TestMutants subtests listed in the preceding compiler
+refresh were rerun with the same exact filter: PASS (196.09s). Every mutation in
+the retained semantic-mutant table is therefore freshly caught only by actual
+Go byte comparison after clean compilation and exit-zero runs on all three
+backends. The tenth uses the 32-case no-lonely-if probe described above.
+TestOwnedWitnesses was also rerun unchanged: FAIL (22.52s), Go Converged:false
+after ten passes and the shared oracle's fix-failed panic before comparison.
+The branch is explicitly not green or landing-ready. Resolving the constructor
+parser and shared oracle contract requires their owners; no shared fix, skipped
+check, relaxed assertion or new claim is used. Raw failures are committed.
