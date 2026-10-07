@@ -66,12 +66,12 @@ func TestAwaitRawContractAndTypeEdges(t *testing.T) {
 		t.Fatal("signature missing")
 	}
 	returns := checker.Checker_getReturnTypeOfSignature(c, signatures[0])
-	raw := wave08core.AwaitTypeFields(c, fn, returns, "", id)
+	raw := wave08core.AwaitTypeFields(c, fn, returns, "", false, id)
 	if len(raw) < 12 || raw[len(raw)-2] == "0" {
 		t.Fatalf("then-property edge missing: %v", raw)
 	}
 	union := c.GetUnionType([]*checker.Type{returns, checker.Checker_numberType(c)})
-	raw = wave08core.AwaitTypeFields(c, fn, union, "", id)
+	raw = wave08core.AwaitTypeFields(c, fn, union, "", false, id)
 	if raw[2] != strconv.FormatUint(uint64(union.Flags()), 10) || raw[3] != "2" {
 		t.Fatalf("union edges differ: %v", raw)
 	}

@@ -1,5 +1,11 @@
 // Pinned numeric SyntaxKind adapter; convert once before dispatch.
 export function numericKind(name: string): number {
+    if(name === '' || name === 'Unknown') { return 0; }
+    if(name === 'Identifier') { return 79; }
+    if(name === 'CallExpression') { return 214; }
+    if(name === 'ParenthesizedExpression') { return 218; }
+    if(name === 'PropertyAccessExpression') { return 212; }
+    if(name === 'TypeReference') { return 184; }
     const part0 = kind0(name);
     if(part0 > 0) { return part0; }
     const part1 = kind1(name);

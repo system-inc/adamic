@@ -13,11 +13,11 @@ text=text.replace(needle,needle+'''
    if mode != question { return "", fmt.Errorf("unexpected await contract suffix") }
    values = wave08core.AwaitContractFields(c, node, g.id)
   } else {
-   split := strings.Split(question, "\\n")
-   if len(split) != 3 { return "", fmt.Errorf("await type needs identity and property") }
+   split := strings.SplitN(question, "\\n", 4)
+   if len(split) != 4 || (split[2] != "0" && split[2] != "1") { return "", fmt.Errorf("await type needs identity and property") }
    id, err := strconv.ParseUint(split[1], 10, 64)
    if err != nil || id == 0 || id > uint64(len(p.typesByID)) || strconv.FormatUint(id,10) != split[1] { return "", fmt.Errorf("unknown await type identity") }
-   values = wave08core.AwaitTypeFields(c, node, p.typesByID[id-1], split[2], g.id)
+   values = wave08core.AwaitTypeFields(c, node, p.typesByID[id-1], split[3], split[2] == "1", g.id)
   }
   for _,value := range values[2:] { out.text(value) }
  case "wave08-resolved-callee", "wave08-program-loads", "wave08-symbol-ancestry", "wave08-symbol-origins", "wave08-syntax-snapshot":

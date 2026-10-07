@@ -104,7 +104,7 @@ func main() {
 		}
 		return
 	}
-	countOnly := len(args) > 2 && args[2] == "--count"
+	countOnly := slices.Contains(args[2:], "--count")
 	out := bufio.NewWriter(os.Stdout)
 	defer out.Flush()
 	findings := 0

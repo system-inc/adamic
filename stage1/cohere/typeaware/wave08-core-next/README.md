@@ -56,7 +56,15 @@ upstream assertions; one deliberately checker-free Symbol guard witness is
 excluded from the typed native comparison. The three typed profiles cover 254
 upstream programs: 94 atomic / 59 findings, 126 await / 97 findings, and 34 Symbol
 / 13 findings. All three also compare the frozen 77 compiler and 287 repository
-files; those corpora produce zero findings for this zero-volume batch. Additional
+files; those corpora produce zero findings for this zero-volume batch. Four additional positive/negative generic-contract witnesses cover empty and
+multiline member names; the raw question encodes property presence separately
+and preserves the entire final field. A missing function metadata guard refuses
+with exit 70, and its compiling witness proves that refusal. Additional
 Symbol controls cover unfollowed imports, source ambient declarations, Unicode,
 comments, explicit type arguments and optional calls. Corpus emptiness is not
 used as evidence that the rules fire; the positive controls and mutants do that.
+
+`validate_listeners.py` checks native numeric exports and JSON manifests against
+Go AST enums and catches a compiling 214-to-215 substitution. `time_core.py`
+measures quiet, alternating three-round native/Go medians. The adapter avoids
+scanning each token start twice and immediately resolves empty operator names.

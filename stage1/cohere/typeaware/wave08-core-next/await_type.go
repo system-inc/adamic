@@ -8,7 +8,7 @@ import (
 
 // AwaitTypeFields returns raw type edges and call signatures at the supplied
 // source location. Thenable and promise-contract decisions remain native.
-func AwaitTypeFields(c *checker.Checker, node *ast.Node, t *checker.Type, property string, id func(*checker.Type) uint64) []string {
+func AwaitTypeFields(c *checker.Checker, node *ast.Node, t *checker.Type, property string, propertyPresent bool, id func(*checker.Type) uint64) []string {
 	out := []string{"1", "wave08-await-type"}
 	number := func(n int) { out = append(out, strconv.Itoa(n)) }
 	typ := func(t *checker.Type) { out = append(out, strconv.FormatUint(id(t), 10)) }
@@ -59,7 +59,7 @@ func AwaitTypeFields(c *checker.Checker, node *ast.Node, t *checker.Type, proper
 	if then := checker.Checker_getPropertyOfType(c, t, "then"); then != nil {
 		thenType = c.GetTypeOfSymbolAtLocation(then, node)
 	}
-	if property != "" {
+	if propertyPresent {
 		if member := checker.Checker_getPropertyOfType(c, t, property); member != nil {
 			propertyType = checker.Checker_getTypeOfSymbol(c, member)
 		}

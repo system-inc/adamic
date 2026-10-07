@@ -128,7 +128,7 @@ export class AwaitContract {
                     const step = steps[at], next: number[] = [];
                     if(step === undefined) { continue; }
                     for(const part of types.expand(demand, substitutions)) {
-                        const type = types.type(part, step.kind === 0 ? step.name : '');
+                        const type = types.type(part, step.kind === 0 ? step.name : '', step.kind === 0);
                         if(step.kind === 0) { const member = type.propertyType !== 0 ? type.propertyType : type.stringIndex; if(member !== 0) { next.push(member); } }
                         else if(step.kind === 1) {
                             const element = type.tuple ? (type.elements[step.index] ?? 0) : type.numberIndex;

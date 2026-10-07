@@ -15,6 +15,10 @@ for folder in sorted((pathlib.Path(a.fixtures)/'cases').iterdir()):
  options=metadata['Options'];args=[flag]
  if isinstance(options,dict) and options.get('allowProperties',False):args+=['--allow-properties']
  cases.append((folder.name,folder/'tsconfig.json',folder/'roots.manifest',args,metadata['Name']))
+(out/'extra-ambient.d.ts').write_text('export {};\n')
+extra_config=out/'extra-tsconfig.json';extra_config.write_text(json.dumps({'compilerOptions':{'strict':True,'target':'ES2022','lib':['ES2022'],'moduleDetection':'force','types':[]},'include':['*.ts']}))
+for path in sorted((s/'testdata/controls').glob('contract-name-*.a')):
+ manifest=out/(path.stem+'.manifest');manifest.write_text(str(path)+'\n');cases.append((path.stem,extra_config,manifest,['--await'],'extra contract-name witness'))
 for corpus,prefix in [('compiler',a.compiler_root),('repository',str(r))]:
  manifest=out/(corpus+'.manifest');manifest.write_text(''.join(str(pathlib.Path(prefix)/path)+'\n' for path in (s.parent/'validation-coverage'/(corpus+'.manifest')).read_text().splitlines()))
  config=pathlib.Path(a.compiler_root)/'src/compiler/tsconfig.json' if corpus=='compiler' else r/'tsconfig.json'
@@ -23,7 +27,7 @@ def compare(case):
  name,config,manifest,args,description=case
  gs,go,ge,gt=run(name+'-go',[out/'oracle',config,manifest,*args]);ns,native,ne,nt=run(name+'-native',[a.native,config,manifest,*args])
  same=gs==ns==0 and go==native and ne==b''
- result=dict(name=name,description=description,flags=args,go_status=gs,native_status=ns,match=same,go_seconds=gt,native_seconds=nt,go_findings=go.splitlines()[-1].decode(errors='replace') if go else '',native_findings=native.splitlines()[-1].decode(errors='replace') if native else '',native_error=ne.decode(errors='replace'))
+ result=dict(name=name,description=description,config=str(config),manifest=str(manifest),flags=args,go_status=gs,native_status=ns,match=same,go_seconds=gt,native_seconds=nt,go_findings=go.splitlines()[-1].decode(errors='replace') if go else '',native_findings=native.splitlines()[-1].decode(errors='replace') if native else '',native_error=ne.decode(errors='replace'))
  if not same:
   result['first_difference']=next((i for i,(g,n) in enumerate(zip(go,native)) if g!=n),min(len(go),len(native)))
  return result

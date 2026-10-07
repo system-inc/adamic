@@ -18,7 +18,7 @@ for slug,filename,before,after in mutants:
  for case in cases:
   if case['description'] in ['compiler','repository'] or case['flags'][0]!='--'+slug:continue
   fixture=pathlib.Path(a.fixtures)/'cases'/case['name']
-  data,errors=run(slug+'-'+case['name'],[out/slug/'native',fixture/'tsconfig.json',fixture/'roots.manifest',*case['flags']]);assert errors==b''
+  data,errors=run(slug+'-'+case['name'],[out/slug/'native',case.get('config',str(fixture/'tsconfig.json')),case.get('manifest',str(fixture/'roots.manifest')),*case['flags']]);assert errors==b''
   truth=(baseline/(case['name']+'-go.stdout')).read_bytes()
   if data!=truth:
    first=next((i for i,(g,n) in enumerate(zip(truth,data)) if g!=n),min(len(truth),len(data)))
@@ -29,7 +29,7 @@ for slug,filename,before,after in mutants:
 (out/'results.json').write_text(json.dumps(records,indent=2)+'\n')
 run('handle-build',[a.stage0,'build',s/'testdata/handle_probe.a','-o',out/'handle','--tsgo',a.archive,'--sanitize'])
 fixture=pathlib.Path(a.fixtures)/'cases'/cases[0]['name'];path=(fixture/'roots.manifest').read_text().splitlines()[0]
-for question in ['wave08-symbol-origins','wave08-syntax-snapshot','wave08-await-contract','wave08-await-type\n1\n']:
+for question in ['wave08-symbol-origins','wave08-syntax-snapshot','wave08-await-contract','wave08-await-type\n1\n0\n']:
  slug=question.split('\n')[0];data,errors=run('released-'+slug,[out/'handle',fixture/'tsconfig.json',path,question,'--release'],70)
  assert data==b'' and b'invalid or released checker handle' in errors
  print(slug,'released handle refused before output, exit 70',flush=True)

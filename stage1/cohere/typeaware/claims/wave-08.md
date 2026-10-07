@@ -93,3 +93,11 @@ New native sources use .a, declare numeric listeners and rule.json kinds, and
 will receive nodes through an owned indexed profile while the shared driver is
 pending. Shared source remains untouched. Frozen selection is in
 ../wave08-core-next/selection.json.gz.
+
+Third continuation status: COMPLETE in owned native profiles. All three rules
+have full finding/fix/suggestion byte parity on captured upstream programs and
+both frozen corpora, normal/sanitized, with one compiling byte-only mutant per
+rule. Numeric listeners, manifests, released handles and missing-metadata refusal
+are checked. The branch is rebased onto main c01907a70, and earlier six ports are
+re-green. Shared production factory/dispatcher integration is still owned by the
+harness worker; no shared source was edited. See ../wave08-core-next/REPORT.md.

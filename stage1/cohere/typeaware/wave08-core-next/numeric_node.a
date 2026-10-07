@@ -38,7 +38,7 @@ export class NumericNode {
         this.optional = node?.optional ?? false;
         this.operator = numericKind(node?.operator ?? '');
         this.pos = rules.byte(node?.pos ?? 0);
-        this.start = rules.byte(node === undefined ? 0 : rules.start(node));
+        this.start = rules.byte(this.charStart);
         this.end = rules.byte(node?.end ?? 0);
         this.text = node?.text ?? '';
         this.list = node?.list ?? -1;

@@ -39,11 +39,11 @@ export class AwaitTypes {
     readonly node: NumericNode;
     readonly records = new Map<string, AwaitType>();
     constructor(rules: Rules, node: NumericNode) { this.rules = rules; this.node = node; }
-    type(id: number, property = ''): AwaitType {
+    type(id: number, property = '', propertyPresent = false): AwaitType {
         if(id === 0) { panic('missing await type'); }
-        const key = `${id}:${property}`, cached = this.records.get(key);
+        const key = `${id}:${propertyPresent ? 1 : 0}:${property}`, cached = this.records.get(key);
         if(cached !== undefined) { return cached; }
-        const frames = new Frames(tsgoInspect(this.rules.program, this.rules.path, this.node.pos, this.node.end, this.node.bridgeKind, `wave08-await-type\n${id}\n${property}`));
+        const frames = new Frames(tsgoInspect(this.rules.program, this.rules.path, this.node.pos, this.node.end, this.node.bridgeKind, `wave08-await-type\n${id}\n${propertyPresent ? 1 : 0}\n${property}`));
         header(frames, 'wave08-await-type');
         const record = new AwaitType(id, frames); this.records.set(key, record); return record;
     }

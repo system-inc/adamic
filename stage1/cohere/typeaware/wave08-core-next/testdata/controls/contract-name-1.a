@@ -1,0 +1,2 @@
+declare function wrap<T extends { "a\nb": () => Promise<number> }>(arg: T): T;
+wrap({ "a\nb": async () => 1 });
