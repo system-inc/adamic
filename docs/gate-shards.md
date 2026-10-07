@@ -886,3 +886,49 @@ The race suite passes 45 named tests; twenty repetitions of both focused proofs
 pass with a hostile inherited template. Removing fixture environment isolation is
 caught by the new test. Vet and Darwin arm64 cross-compilation pass. No actual
 Mac was available. Raw proof logs are in evidence/submodule-portability.tar.gz.
+
+
+## Required environment gates and const names
+
+The source audit resolves package-level string const literals, aliases and string
+concatenations across files in a package. Mutable names, local shadows, unresolved
+expressions and ambiguous declarations still fail closed. Skip predicates retain
+the existing restricted comparison/alias audit; helper-routed gates are not assumed
+safe. Only variables feeding recognized skip conditions become required inputs,
+so the optional ADAMIC_WASI_RUNTIME override is not made mandatory.
+
+The plan now records RequiredVariables and Environment, and each selected unit
+records RequiredEnvironment. The required list is ADAMIC_TEST_WASI,
+ADAMIC_ORACLE_WASI and ADAMIC_GATE_COHERE. internal/skipcensus has not landed in
+the merged developer-tools area (f13e632e); the existing fail-closed census hook
+remains, and this list must be replaced by its required-input declarations when
+it lands. WASI_SYSROOT retains the SDK-specific readiness validation.
+
+Every required-gate unit goes to the last shard. The cohere baseline is its own
+unit, cloud::TestRepositoryPassesCohereBaseline, on the same shard as WASI.
+Its reported roughly two-minute cost has not been remeasured or inserted as a
+fabricated timing. The plan's printed command enables every required variable;
+shard refuses startup if any is absent or not 1, and additionally checks the WASI
+SDK when needed. With fifteen shards this is index 14; ordinary complements
+remain on index 13, and required-parent complements stay on index 14.
+
+```sh
+bash cloud/setup.sh --wasi-sdk
+source "${ADAMIC_TOOLS:-/opt/adamic-tools}/env.sh"
+ADAMIC_TEST_WASI=1 ADAMIC_ORACLE_WASI=1 ADAMIC_GATE_COHERE=1 \
+  adamic-gate shard -index 14 -count 15 -resume -scratch DISK_SCRATCH -out OUTPUT
+```
+
+Merge checks raw terminal events and refuses every skip of a required unit,
+including descendants and previously unplanned complement children, regardless
+of the skip reason. Its error names the shard, unit, skipped test and input names.
+The integration proof first merges a real const-gated fixture green with its
+input, then verifies preflight refusal without it. It runs Go with the variable
+absent and refreshes the package/aggregate log checksums and verdict summary;
+merge goes red for exactly one error: the named required-input skip. Thus malformed
+evidence or unrelated validations do not explain the red verdict.
+
+Mutants removing constant resolution, required-skip merge enforcement and
+required-input startup enforcement each fail their corresponding test. The
+package race suite, vet and Darwin arm64 cross-compilation are the verification
+scope; neither the whole gate nor the fleet is rerun.

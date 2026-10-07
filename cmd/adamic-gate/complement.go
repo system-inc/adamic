@@ -27,7 +27,7 @@ func complements(p plan) []complement {
 		}
 		seen[key] = true
 		owner := p.Count - 1
-		if p.WASI != nil && !u.WASI && p.Count > 1 {
+		if (p.WASI != nil || p.Environment != nil) && !u.WASI && len(u.RequiredEnvironment) == 0 && p.Count > 1 {
 			owner--
 		}
 		out = append(out, complement{u.Package, parent, owner})

@@ -34,25 +34,28 @@ var packageJobs = runtime.GOMAXPROCS(0)
 const timingPath = "cmd/adamic-gate/timings.json"
 
 type unit struct {
-	Package string
-	Test    string
-	Shard   int
-	Seconds float64
-	WASI    bool
+	Package             string
+	Test                string
+	Shard               int
+	Seconds             float64
+	WASI                bool
+	RequiredEnvironment []string
 }
 
 func (u unit) key() string { return u.Package + "::" + u.Test }
 
 type plan struct {
-	Version     int
-	Commit      string
-	Source      string
-	Count       int
-	Units       []unit
-	Digest      string
-	Shards      []prediction
-	Complements []complement
-	WASI        *wasiRequirement
+	Version           int
+	Commit            string
+	Source            string
+	Count             int
+	Units             []unit
+	Digest            string
+	Shards            []prediction
+	Complements       []complement
+	WASI              *wasiRequirement
+	RequiredVariables []string
+	Environment       *environmentRequirement
 }
 type event struct {
 	Action, Package, Test, Output string
@@ -488,7 +491,7 @@ func makePlan(count int) (plan, error) {
 		return p, err
 	}
 	ordinaryCount := count
-	if p.WASI != nil && count > 1 {
+	if p.Environment != nil && count > 1 {
 		ordinaryCount--
 	}
 	loads := make([]float64, count)
@@ -510,7 +513,7 @@ func makePlan(count int) (plan, error) {
 			hash := sha256.Sum256([]byte(u.key()))
 			u.Shard = int(binary.BigEndian.Uint64(hash[:8]) % uint64(ordinaryCount))
 		}
-		if u.WASI {
+		if u.WASI || len(u.RequiredEnvironment) > 0 {
 			u.Shard = count - 1
 		}
 	}
@@ -522,7 +525,7 @@ func makePlan(count int) (plan, error) {
 		return a.Seconds > b.Seconds
 	})
 	for _, i := range known {
-		if p.Units[i].WASI {
+		if p.Units[i].WASI || len(p.Units[i].RequiredEnvironment) > 0 {
 			loads[count-1] += p.Units[i].Seconds
 			continue
 		}
@@ -717,6 +720,9 @@ func shard(index, count int, out, scratch string, resume bool) error {
 		return err
 	}
 
+	if err := environmentReady(p, index); err != nil {
+		return err
+	}
 	if p.WASI != nil && p.WASI.Shard == index {
 		if err := wasiReady(); err != nil {
 			return err
@@ -1208,6 +1214,7 @@ func merge(dirs []string, out string) error {
 			return err
 		}
 		m.Errors = append(m.Errors, wasiSkips(expected, s.Index, results)...)
+		m.Errors = append(m.Errors, requiredEnvironmentSkips(expected, s.Index, results)...)
 		m.RawTerminalEvents += raw
 		for _, r := range results {
 			if r.Test != "" && r.Action == "fail" {
