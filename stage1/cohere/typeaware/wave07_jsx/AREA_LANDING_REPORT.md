@@ -4,6 +4,8 @@ Checks: all 17 landing steps, 131 JSX controls, both corpora, sanitizers and rel
 Mutants: twelve rules, three JSX dispatches, nine legacy listeners, graph/fact/data/ownership guards and shared harness witnesses are caught.
 Not covered: three parked React analysis ports, four production bridge routes, shared type-aware context integration, own emitted-JavaScript comparison and the full repository gate.
 
+The latest rebase and required-input checks are in [REQUIRED_INPUTS_REPORT.md](REQUIRED_INPUTS_REPORT.md).
+
 ## Integration outcome
 
 The branch was rebased cleanly onto origin/area/stage1-lint at

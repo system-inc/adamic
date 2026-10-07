@@ -4,6 +4,8 @@ Commands and outputs: all 17 landing steps pass; fresh all-head audit examines 6
 Mutants: every rule, named dispatch, legacy listener, graph/fact/data/ownership and shared-model witness is recorded in AREA_LANDING_REPORT.md.
 Not covered: parked IR/SSA/capture-dependent hooks, four production bridge registrations, shared checker context, own emitted JavaScript and the full repository gate.
 
+The latest rebase and required-input checks are in [REQUIRED_INPUTS_REPORT.md](REQUIRED_INPUTS_REPORT.md).
+
 The final ranking audit excludes the original production ports, native filenames
 and rule.json descriptors on origin/main and origin/codex/tsgo-c-library, and
 rules named in claims on every origin branch. It inspects all 197 ranked names.

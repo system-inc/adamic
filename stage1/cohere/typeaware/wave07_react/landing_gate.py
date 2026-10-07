@@ -82,11 +82,13 @@ run('fact-guards',['go','test','./stage1/cohere/typeaware','-run',
     '^(TestFactsDecoderGuards|TestInspectRequestRefusals|TestPinnedTypeFlags)$',
     '-count=1','-v','-timeout','30m'])
 run('node-oracle',['go','test','./internal/oracle','-run',
-    '^TestTheOracleCatchesOneByte$|^TestLibraryMapSetIteratorCopiesRefused$|^TestNativeAgreesWithNode$/internal/oracle/testdata/(maps_and_text|sorting|string_index|lone_surrogates|functions|closures|devirtualize|call_targets_.*|047cb0d_n_.*|library_map_set_iterator_(number_hash|exhausted)|override_same_representation|inherited_static_field_read)[.]a$',
+    '^TestRuntimeLastIndexOfMatchesNode$|^TestTheOracleCatchesOneByte$|^TestLibraryMapSetIteratorCopiesRefused$|^TestNativeAgreesWithNode$/internal/oracle/testdata/(maps_and_text|sorting|string_index|lone_surrogates|functions|closures|devirtualize|call_targets_.*|047cb0d_n_.*|library_map_set_iterator_(number_hash|exhausted)|override_same_representation|inherited_static_field_read)[.]a$',
     '-count=1','-v','-timeout','30m'])
 run('shared-finding-model',['go','test','./stage1/cohere/lint','./stage1/cohere/lint/registry','-run',
     '^(TestEmittedJavaScriptMismatch|TestCompleteSuggestionSerialization|TestSuggestionAlongsideAutomaticFix|TestAdamicRuleModule|TestDescriptorRejections|TestDeterministicRegeneration)$',
     '-count=1','-v','-timeout','30m'])
+run('runtime-integration',['go','test','./internal/native','-run',
+    '^(TestRuntimeReleasePaths|TestRuntimeStringEquality)$','-count=1','-v','-timeout','30m'])
 run('vet',['go','vet','./...'])
 run('gofmt',['gofmt','-l','cmd','internal','bridge/tsgo','stage1/cohere/typeaware'])
 assert not (OUT/'gofmt.log').read_text().strip(), 'Go formatting differs'

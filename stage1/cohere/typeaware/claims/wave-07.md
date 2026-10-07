@@ -214,3 +214,13 @@ no private parser copy is needed. Three hook claims remain parked solely on
 native IR/SSA/capture analysis. Four private bridge routes and shared checker
 context access remain pending. See ../wave07_jsx/AREA_LANDING_REPORT.md.
 No new rules are claimed by this update.
+
+## Required-input landing refresh
+
+Rebased onto area/stage1-lint d65a8f93, containing current main 39638d9e.
+All twelve implemented ports pass again, together with 18 owned landing steps
+and the supplied-input external correctness suite: 16 root tests, 100 passing
+events, zero skips and zero failures. Exact pinned inputs and no-skip receipts
+are archived. React hook claims stay parked on IR/SSA/capture analysis; four
+production bridge routes and shared checker context remain pending. See
+../wave07_jsx/REQUIRED_INPUTS_REPORT.md. No additional claim is made.
