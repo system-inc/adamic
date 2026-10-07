@@ -1,0 +1,3 @@
+export function isEscapeTerminator(character: number): boolean {
+ return character === 9 || character === 10 || character === 12 || character === 13 || character === 32;
+}

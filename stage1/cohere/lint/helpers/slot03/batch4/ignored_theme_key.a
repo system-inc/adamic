@@ -1,0 +1,12 @@
+export function isIgnoredThemeKey(themeKey: string, namespace: string): boolean {
+ let ignored: string[] = [];
+ if(namespace === '--font') { ignored = ['--font-weight', '--font-size']; }
+ else if(namespace === '--inset') { ignored = ['--inset-shadow', '--inset-ring']; }
+ else if(namespace === '--text') { ignored = ['--text-color', '--text-decoration-color', '--text-decoration-thickness', '--text-indent', '--text-shadow', '--text-underline-offset']; }
+ else if(namespace === '--grid-column') { ignored = ['--grid-column-start', '--grid-column-end']; }
+ else if(namespace === '--grid-row') { ignored = ['--grid-row-start', '--grid-row-end']; }
+ for(const key of ignored) {
+  if(themeKey === key || themeKey.startsWith(key + '-')) { return true; }
+ }
+ return false;
+}

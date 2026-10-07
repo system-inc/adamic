@@ -1,0 +1,67 @@
+=== RUN   TestBatch2Helpers
+    batch2_test.go:61: 208636 lines match real Go, Node source and sanitized native
+--- PASS: TestBatch2Helpers (29.28s)
+=== RUN   TestBatch2Mutants
+=== RUN   TestBatch2Mutants/intrinsic_element_named.a
+    batch2_test.go:101: compiled semantic mutant caught at line 24: got "true" Go "false"
+=== RUN   TestBatch2Mutants/hole_edges.a
+    batch2_test.go:101: compiled semantic mutant caught at line 179230: got "false,false" Go "true,false"
+=== RUN   TestBatch2Mutants/read_class_values.a
+    batch2_test.go:101: compiled semantic mutant caught at line 185959: got "Attribute::" Go "Callee::"
+--- PASS: TestBatch2Mutants (84.41s)
+    --- PASS: TestBatch2Mutants/intrinsic_element_named.a (25.68s)
+    --- PASS: TestBatch2Mutants/hole_edges.a (26.18s)
+    --- PASS: TestBatch2Mutants/read_class_values.a (29.51s)
+=== RUN   TestBatch3Helpers
+    batch3_test.go:63: 1117150 lines match real Go, Node source, emitted JavaScript and sanitized native
+--- PASS: TestBatch3Helpers (8.13s)
+=== RUN   TestBatch3Mutants
+=== RUN   TestBatch3Mutants/hex_value.a
+    batch3_test.go:99: compiled semantic mutant caught at line 43: got "-1" Go "15"
+=== RUN   TestBatch3Mutants/unescape_string_literal_text.a
+    batch3_test.go:99: compiled semantic mutant caught at line 1114212: got "0,99,111,112,121,10,:99,111,112,121," Go "0,169,10,:99,111,112,121,"
+=== RUN   TestBatch3Mutants/parameter_nodes.a
+    batch3_test.go:99: compiled semantic mutant caught at line 1115385: got "2,-1,3,2" Go "-1,-1,3,2"
+=== RUN   TestBatch3Mutants/parameter_nodes.a#01
+    batch3_test.go:99: compiled semantic mutant caught at line 1115375: got "0,1" Go ""
+--- PASS: TestBatch3Mutants (12.07s)
+    --- PASS: TestBatch3Mutants/hex_value.a (2.26s)
+    --- PASS: TestBatch3Mutants/unescape_string_literal_text.a (2.03s)
+    --- PASS: TestBatch3Mutants/parameter_nodes.a (2.59s)
+    --- PASS: TestBatch3Mutants/parameter_nodes.a#01 (2.56s)
+=== RUN   TestBatch4Helpers
+    batch4_test.go:49: 77616 lines match real Go, Node source, emitted JavaScript and sanitized native
+--- PASS: TestBatch4Helpers (2.52s)
+=== RUN   TestBatch4Mutants
+=== RUN   TestBatch4Mutants/escape_terminator.a
+    batch4_test.go:85: compiled semantic mutant caught at line 13: got "false" Go "true"
+=== RUN   TestBatch4Mutants/followed_by_whitespace.a
+    batch4_test.go:85: compiled semantic mutant caught at line 3585: got "true:10" Go "false:10,11"
+=== RUN   TestBatch4Mutants/ignored_theme_key.a
+    batch4_test.go:85: compiled semantic mutant caught at line 75243: got "true" Go "false"
+--- PASS: TestBatch4Mutants (6.11s)
+    --- PASS: TestBatch4Mutants/escape_terminator.a (1.98s)
+    --- PASS: TestBatch4Mutants/followed_by_whitespace.a (1.84s)
+    --- PASS: TestBatch4Mutants/ignored_theme_key.a (2.00s)
+=== RUN   TestSlot03HelpersMatchCohere
+    slot03_test.go:105: 1115085 helper output lines match Go, Node source and sanitized native
+--- PASS: TestSlot03HelpersMatchCohere (5.18s)
+=== RUN   TestSlot03HelperMutants
+=== RUN   TestSlot03HelperMutants/component_base_name.a/value
+    slot03_test.go:160: compiled semantic mutant caught at line 159: got "false" Go "true"
+=== RUN   TestSlot03HelperMutants/tailwind_space.a/value
+    slot03_test.go:160: compiled semantic mutant caught at line 847: got "false" Go "true"
+=== RUN   TestSlot03HelperMutants/listener_kinds.a/value
+    slot03_test.go:160: compiled semantic mutant caught at line 1114948: got "JsxAttribute,CallExpression,StringLiteral" Go "JsxAttribute,CallExpression,VariableDeclaration"
+=== RUN   TestSlot03HelperMutants/listener_kinds.a/shared-list
+    slot03_test.go:160: compiled semantic mutant caught at line 1114949: got "StringLiteral,CallExpression,VariableDeclaration" Go "JsxAttribute,CallExpression,VariableDeclaration"
+--- PASS: TestSlot03HelperMutants (8.87s)
+    --- PASS: TestSlot03HelperMutants/component_base_name.a/value (1.89s)
+    --- PASS: TestSlot03HelperMutants/tailwind_space.a/value (1.50s)
+    --- PASS: TestSlot03HelperMutants/listener_kinds.a/value (1.31s)
+    --- PASS: TestSlot03HelperMutants/listener_kinds.a/shared-list (1.57s)
+=== RUN   TestConsumerCoverageRejectsMutant
+    slot03_test.go:277: missing-consumer mutant caught: consumer capture mismatch: missing [better-tailwindcss/no-unknown-classes] extra []
+--- PASS: TestConsumerCoverageRejectsMutant (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot03	156.584s

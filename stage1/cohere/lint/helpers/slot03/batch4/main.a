@@ -1,0 +1,31 @@
+import {programArguments, readTextFile, panic} from 'adamic';
+import {OptionsJson} from '../../options_json.ts';
+import {isEscapeTerminator} from './escape_terminator.a';
+import {isFollowedByWhitespace} from './followed_by_whitespace.a';
+import {isIgnoredThemeKey} from './ignored_theme_key.a';
+const input = readTextFile(programArguments()[0] ?? panic('missing cases'));
+if(input.kind === 'Error') { panic(input.message); }
+const reader = new OptionsJson(input.text);
+const root = reader.parse();
+if(root < 0) { panic(reader.error); }
+function observe(first: number, second: number, index: number): void {
+ const calls: number[] = [];
+ const result = isFollowedByWhitespace('unused', index, (position: number): number => {
+  calls.push(position);
+  if(position === index + 1) { return first; }
+  return second;
+ });
+ console.log(`${result}` + ':' + calls.join(','));
+}
+for(let character = 0; character < 256; character++) { console.log(`${isEscapeTerminator(character)}`); }
+for(let first = 0; first < 256; first++) {
+ for(let second = 0; second < 256; second++) { observe(first, second, 9); }
+}
+for(const row of reader.node(reader.field(root, 'pairs')).children) {
+ const values = reader.node(row).children;
+ observe(reader.node(values[0] ?? panic('missing number')).number, reader.node(values[1] ?? panic('missing number')).number, reader.node(values[2] ?? panic('missing number')).number);
+}
+for(const row of reader.node(reader.field(root, 'keys')).children) {
+ const values = reader.node(row).children;
+ console.log(`${isIgnoredThemeKey(reader.node(values[0] ?? panic('missing string')).text, reader.node(values[1] ?? panic('missing string')).text)}`);
+}

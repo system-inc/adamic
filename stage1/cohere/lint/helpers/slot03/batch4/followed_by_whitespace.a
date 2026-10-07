@@ -1,0 +1,6 @@
+// The caller supplies Go byte positions, not JavaScript UTF-16 positions.
+export function isFollowedByWhitespace(input: string, index: number, peekAt: (index: number) => number): boolean {
+ const character = peekAt(index + 1);
+ if(character === 32 || character === 10 || character === 9) { return true; }
+ return character === 13 && peekAt(index + 2) === 10;
+}
