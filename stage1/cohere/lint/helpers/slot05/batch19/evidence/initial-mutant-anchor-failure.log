@@ -1,0 +1,72 @@
+=== RUN   TestSlot05WhileStatement
+    helper_test.go:78: while: 64 queries, 801 sources, 12482 parser nodes
+    helper_test.go:88: consumer coverage: {
+          "Consumers": {
+            "array-callback-return": 166,
+            "consistent-return": 272,
+            "no-unreachable-loop": 71,
+            "react-hooks/rules-of-hooks": 555
+          },
+          "Sources": 801,
+          "Nodes": 12482,
+          "Queries": 64,
+          "WrapperKinds": {
+            "KindAsExpression": 6,
+            "KindParenthesizedExpression": 23
+          }
+        }
+    helper_test.go:148: while_statement.a mutant "if(ops.truthy(stmt.expression))" -> "if(!ops.truthy(stmt.expression))" caught at output line 1 byte 128: mutant "false;condition:1:3:-1;push:0:2:1:0;enter:3;stmt:2:3:[]:2:1:0:true:false,;loop:0:3;link:3:1;pop:[]:2:1:0:true:false,;ent", Go "false;condition:1:3:2;push:0:2:1:0;enter:3;stmt:2:3:[]:2:1:0:true:false,;loop:0:3;link:3:1;pop:[]:2:1:0:true:false,;ente"
+    helper_test.go:148: while_statement.a mutant "ops.loop(node);" -> "if(false){ops.loop(node);}" caught at output line 1 byte 182: mutant ":2:1:0:true:false,;link:3:1;pop:[]:2:1:0:true:false,;enter:2;", Go ":2:1:0:true:false,;loop:0:3;link:3:1;pop:[]:2:1:0:true:false,;enter:2;"
+    helper_test.go:148: while_statement.a mutant "ops.link(state.cur,test);\n ops.popJump();" -> "ops.link(state.cur,body);\n ops.popJump();" caught at output line 1 byte 60: mutant ":false:;false:false:3,;|new:1;link:0:1;enter:1;new:2;new:3;truthy:1:false;condition:1:3:2;push:0:2:1:0;enter:3;stmt:2:3:", Go ":false:;false:false:1,;|new:1;link:0:1;enter:1;new:2;new:3;truthy:1:false;condition:1:3:2;push:0:2:1:0;enter:3;stmt:2:3:"
+    helper_test.go:148: while_statement.a mutant "ops.pushJump(node,after,test,node);" -> "ops.pushJump(node,after,body,node);" caught at output line 1 byte 139: mutant "tion:1:3:2;push:0:2:3:0;enter:3;stmt:2:3:[]:2:3:0:true:false,;loop:0:3;link:3:1;pop:[]:2:3:0:true:false,;enter:2;", Go "tion:1:3:2;push:0:2:1:0;enter:3;stmt:2:3:[]:2:1:0:true:false,;loop:0:3;link:3:1;pop:[]:2:1:0:true:false,;enter:2;"
+    helper_test.go:148: while_statement.a mutant "ops.condition(stmt.expression,body,falseEntry);" -> "ops.condition(stmt.expression,after,falseEntry);" caught at output line 1 byte 126: mutant "1:false;condition:1:2:2;push:0:2:1:0;enter:3;stmt:2:3:[]:2:1:0:true:false,;loop:0:3;link:3:1;pop:[]:2:1:0:true:false,;en", Go "1:false;condition:1:3:2;push:0:2:1:0;enter:3;stmt:2:3:[]:2:1:0:true:false,;loop:0:3;link:3:1;pop:[]:2:1:0:true:false,;en"
+--- PASS: TestSlot05WhileStatement (7.77s)
+=== RUN   TestSlot05DoStatement
+    helper_test.go:78: do: 34 queries, 801 sources, 12482 parser nodes
+    helper_test.go:88: consumer coverage: {
+          "Consumers": {
+            "array-callback-return": 166,
+            "consistent-return": 272,
+            "no-unreachable-loop": 71,
+            "react-hooks/rules-of-hooks": 555
+          },
+          "Sources": 801,
+          "Nodes": 12482,
+          "Queries": 34,
+          "WrapperKinds": {
+            "KindAsExpression": 6,
+            "KindParenthesizedExpression": 23
+          }
+        }
+    helper_test.go:148: do_statement.a mutant "ops.pushJump(node,after,test,undefined);" -> "ops.pushJump(node,after,body,node);" caught at output line 1 byte 100: mutant "ew:2;new:3;push:0:3:1:0;enter:1;stmt:2:1:[]:3:1:0:true:false,;link:1:2;pop:[]:3:1:0:true:false,;enter:2;expr:1:2;loop:0:", Go "ew:2;new:3;push:0:3:2:-1;enter:1;stmt:2:1:[]:3:2:-1:true:false,;link:1:2;pop:[]:3:2:-1:true:false,;enter:2;expr:1:2;loop"
+    helper_test.go:148: do_statement.a mutant "if(!ops.truthy(stmt.expression))" -> "if(ops.truthy(stmt.expression))" caught at output line 1 byte 47: mutant "se:2,;false:false:1,;false:false:;|new:1;link:0:1;new:2;new:3;push:0:3:2:-1;enter:1;stmt:2:1:[]:3:2:-1:true:false,;link:", Go "se:2,;false:false:1,3,;false:false:;|new:1;link:0:1;new:2;new:3;push:0:3:2:-1;enter:1;stmt:2:1:[]:3:2:-1:true:false,;lin"
+    helper_test.go:148: do_statement.a mutant "ops.expr(stmt.expression);" -> "if(false){ops.expr(stmt.expression);}" caught at output line 1 byte 187: mutant "true:false,;enter:2;loop:0:2;link:2:1;truthy:1:false;link:2:3;enter:3;", Go "true:false,;enter:2;expr:1:2;loop:0:2;link:2:1;truthy:1:false;link:2:3;enter:3;"
+    helper_test.go:148: do_statement.a mutant "ops.loop(node);" -> "if(false){ops.loop(node);}" caught at output line 1 byte 197: mutant ",;enter:2;expr:1:2;link:2:1;truthy:1:false;link:2:3;enter:3;", Go ",;enter:2;expr:1:2;loop:0:2;link:2:1;truthy:1:false;link:2:3;enter:3;"
+    helper_test.go:124: mutant anchor drift
+--- FAIL: TestSlot05DoStatement (6.32s)
+=== RUN   TestSlot05LabeledStatement
+    helper_test.go:78: label: 42 queries, 801 sources, 12482 parser nodes
+    helper_test.go:88: consumer coverage: {
+          "Consumers": {
+            "array-callback-return": 166,
+            "consistent-return": 272,
+            "no-unreachable-loop": 71,
+            "react-hooks/rules-of-hooks": 555
+          },
+          "Sources": 801,
+          "Nodes": 12482,
+          "Queries": 42,
+          "WrapperKinds": {
+            "KindAsExpression": 6,
+            "KindParenthesizedExpression": 23
+          }
+        }
+    helper_test.go:148: labeled_statement.a mutant "if(ops.breakable(stmt.statement))" -> "if(false)" caught at output line 1 byte 64: mutant ":1,;false:false:2,;|new:1;text:1:label;stmt:2:0:[label]:1:-1:-1:false:false,;pop:[label]:1:-1:-1:false:false,;link:2:1;e", Go ":1,;false:false:2,;|breakable:2:false;new:1;text:1:label;stmt:2:0:[label]:1:-1:-1:false:false,;pop:[label]:1:-1:-1:false"
+    helper_test.go:148: labeled_statement.a mutant "breakable:false" -> "breakable:true" caught at output line 1 byte 126: mutant "2:0:[label]:1:-1:-1:true:false,;pop:[label]:1:-1:-1:true:false,;link:2:1;enter:1;", Go "2:0:[label]:1:-1:-1:false:false,;pop:[label]:1:-1:-1:false:false,;link:2:1;enter:1;"
+    helper_test.go:148: labeled_statement.a mutant "labels:[ops.text(stmt.label)]" -> "labels:[]" caught at output line 1 byte 88: mutant "kable:2:false;new:1;stmt:2:0:[]:1:-1:-1:false:false,;pop:[]:1:-1:-1:false:false,;link:2:1;enter:1;", Go "kable:2:false;new:1;text:1:label;stmt:2:0:[label]:1:-1:-1:false:false,;pop:[label]:1:-1:-1:false:false,;link:2:1;enter:1"
+    helper_test.go:148: labeled_statement.a mutant "ops.link(state.cur,after);" -> "if(false){ops.link(state.cur,after);}" caught at output line 1 byte 45: mutant ":false:;false:false:;false:false:2,;|breakable:2:false;new:1;text:1:label;stmt:2:0:[label]:1:-1:-1:false:false,;pop:[lab", Go ":false:;false:false:1,;false:false:2,;|breakable:2:false;new:1;text:1:label;stmt:2:0:[label]:1:-1:-1:false:false,;pop:[l"
+    helper_test.go:148: labeled_statement.a mutant "ops.enter(after);" -> "if(false){ops.enter(after);}" caught at output line 1 byte 0: mutant "2||false:false:3,2,;false:false:;false:false:1,;false:false:2,;|breakable:2:false;new:1;text:1:label;stmt:2:0:[label]:1:", Go "1||false:false:3,2,;false:false:;false:false:1,;false:false:2,;|breakable:2:false;new:1;text:1:label;stmt:2:0:[label]:1:"
+--- PASS: TestSlot05LabeledStatement (7.65s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch19	21.746s
+FAIL

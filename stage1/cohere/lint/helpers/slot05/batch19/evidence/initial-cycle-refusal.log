@@ -1,0 +1,60 @@
+=== RUN   TestSlot05WhileStatement
+    helper_test.go:78: while: 64 queries, 801 sources, 12482 parser nodes
+    helper_test.go:88: consumer coverage: {
+          "Consumers": {
+            "array-callback-return": 166,
+            "consistent-return": 272,
+            "no-unreachable-loop": 71,
+            "react-hooks/rules-of-hooks": 555
+          },
+          "Sources": 801,
+          "Nodes": 12482,
+          "Queries": 64,
+          "WrapperKinds": {
+            "KindAsExpression": 6,
+            "KindParenthesizedExpression": 23
+          }
+        }
+    helper_test.go:102: /workspace/adamic/stage1/cohere/lint/helpers/slot05/batch19/main.a:19:8: Adamic 0.1 refuses 'effect', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function effect() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+--- FAIL: TestSlot05WhileStatement (5.44s)
+=== RUN   TestSlot05DoStatement
+    helper_test.go:78: do: 34 queries, 801 sources, 12482 parser nodes
+    helper_test.go:88: consumer coverage: {
+          "Consumers": {
+            "array-callback-return": 166,
+            "consistent-return": 272,
+            "no-unreachable-loop": 71,
+            "react-hooks/rules-of-hooks": 555
+          },
+          "Sources": 801,
+          "Nodes": 12482,
+          "Queries": 34,
+          "WrapperKinds": {
+            "KindAsExpression": 6,
+            "KindParenthesizedExpression": 23
+          }
+        }
+    helper_test.go:102: /workspace/adamic/stage1/cohere/lint/helpers/slot05/batch19/main.a:19:8: Adamic 0.1 refuses 'effect', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function effect() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+--- FAIL: TestSlot05DoStatement (0.73s)
+=== RUN   TestSlot05LabeledStatement
+    helper_test.go:78: label: 42 queries, 801 sources, 12482 parser nodes
+    helper_test.go:88: consumer coverage: {
+          "Consumers": {
+            "array-callback-return": 166,
+            "consistent-return": 272,
+            "no-unreachable-loop": 71,
+            "react-hooks/rules-of-hooks": 555
+          },
+          "Sources": 801,
+          "Nodes": 12482,
+          "Queries": 42,
+          "WrapperKinds": {
+            "KindAsExpression": 6,
+            "KindParenthesizedExpression": 23
+          }
+        }
+    helper_test.go:102: /workspace/adamic/stage1/cohere/lint/helpers/slot05/batch19/main.a:19:8: Adamic 0.1 refuses 'effect', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function effect() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+--- FAIL: TestSlot05LabeledStatement (0.74s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch19	6.914s
+FAIL
