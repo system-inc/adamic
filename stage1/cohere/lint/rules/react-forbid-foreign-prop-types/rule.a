@@ -1,0 +1,72 @@
+import type { RuleContext } from '../../context.ts';
+import { description } from './messages.a';
+const assignmentTokens = ['EqualsToken','PlusEqualsToken','MinusEqualsToken','AsteriskEqualsToken','AsteriskAsteriskEqualsToken','SlashEqualsToken','PercentEqualsToken','LessThanLessThanEqualsToken','GreaterThanGreaterThanEqualsToken','GreaterThanGreaterThanGreaterThanEqualsToken','AmpersandEqualsToken','BarEqualsToken','CaretEqualsToken','BarBarEqualsToken','AmpersandAmpersandEqualsToken','QuestionQuestionEqualsToken'];
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    assignment(index: number): boolean {
+        if(index < 0 || this.context.node(index).kind !== 'BinaryExpression') { return false; }
+        const operator = this.context.node(index).children[1] ?? -1;
+        return operator >= 0 && assignmentTokens.includes(this.context.node(operator).kind);
+    }
+    property(index: number): number {
+        const children = this.context.node(index).children;
+        return children[children.length - 1] ?? -1;
+    }
+    named(index: number): boolean {
+        return index >= 0 && this.context.node(index).kind === 'Identifier' && this.context.node(index).text === 'propTypes';
+    }
+    allowed(index: number): boolean {
+        if(this.context.settings.read('allowinproptypes', 'false') !== 'true') { return false; }
+        let parent = this.context.parents[index] ?? -1;
+        while(parent >= 0 && this.context.node(parent).kind !== 'SourceFile') {
+            if(this.assignment(parent)) {
+                const left = this.context.node(parent).children[0] ?? -1;
+                if(left >= 0) {
+                    const unwrapped = this.context.unwrap(left);
+                    if(this.context.node(unwrapped).kind === 'PropertyAccessExpression' && this.named(this.property(unwrapped))) { return true; }
+                }
+            }
+            if(this.context.node(parent).kind === 'PropertyDeclaration') {
+                for(const child of this.context.node(parent).children) {
+                    const kind = this.context.node(child).kind;
+                    if(['Identifier','ComputedPropertyName','StringLiteral','NumericLiteral','PrivateIdentifier'].includes(kind)) {
+                        if(this.named(child)) { return true; }
+                        break;
+                    }
+                }
+            }
+            parent = this.context.parents[parent] ?? -1;
+        }
+        return false;
+    }
+    visit(index: number): void {
+        const node = this.context.node(index);
+        if(node.kind === 'ObjectBindingPattern') {
+            for(const element of node.children) {
+                if(this.context.node(element).kind !== 'BindingElement') { continue; }
+                const children = this.context.node(element).children;
+                const key = children[0] ?? -1;
+                if(key >= 0 && this.context.node(key).kind === 'DotDotDotToken') { continue; }
+                if(this.named(key)) {
+                    this.context.report(element, 'react/forbid-foreign-prop-types', 'forbiddenPropType', description, '', '', '');
+                    return;
+                }
+            }
+            return;
+        }
+        const property = this.property(index);
+        if(property < 0) { return; }
+        if(node.kind === 'PropertyAccessExpression' ? !this.named(property) :
+            this.context.node(property).kind !== 'StringLiteral' || this.context.node(property).text !== 'propTypes') { return; }
+        let parent = this.context.parents[index] ?? -1;
+        while(parent >= 0 && this.context.node(parent).kind === 'ParenthesizedExpression') { parent = this.context.parents[parent] ?? -1; }
+        if(this.assignment(parent)) {
+            const left = this.context.node(parent).children[0] ?? -1;
+            if(left >= 0 && this.context.unwrap(left) === index) { return; }
+        }
+        if(this.allowed(index)) { return; }
+        this.context.report(property, 'react/forbid-foreign-prop-types', 'forbiddenPropType', description, '', '', '');
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
