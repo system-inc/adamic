@@ -1,0 +1,130 @@
+{
+  "origin_main": "ef3d907ecdc4c771b016f7d9c52372def057a340",
+  "origin_refs_inspected": 341,
+  "distinct_claim_trees": 16,
+  "helper_ready_list": [
+    "@typescript-eslint/consistent-type-assertions",
+    "@typescript-eslint/consistent-type-definitions",
+    "@typescript-eslint/init-declarations",
+    "@typescript-eslint/no-explicit-any",
+    "@typescript-eslint/no-inferrable-types",
+    "@typescript-eslint/no-restricted-types",
+    "@typescript-eslint/no-unused-expressions",
+    "@typescript-eslint/unified-signatures",
+    "class-methods-use-this",
+    "consistent-this",
+    "func-name-matching",
+    "max-classes-per-file",
+    "max-depth",
+    "max-nested-callbacks",
+    "no-cond-assign",
+    "no-inner-declarations",
+    "no-restricted-properties",
+    "no-self-assign",
+    "no-underscore-dangle",
+    "no-unsafe-negation",
+    "no-unsafe-optional-chaining",
+    "no-useless-computed-key",
+    "react-hooks/gating",
+    "react/forbid-foreign-prop-types",
+    "react/jsx-no-useless-fragment",
+    "react/no-invalid-html-attribute",
+    "react/no-unescaped-entities",
+    "react/no-unsafe",
+    "react/self-closing-comp",
+    "sort-vars",
+    "adamic/no-definite-assignment",
+    "base/boundary-no-global-container",
+    "base/consistency-no-hand-built-declared-error",
+    "base/consistency-require-pagination-argument-name",
+    "base/correctness-require-orm-column-declare",
+    "nexus/consistency-no-boolean-outcome",
+    "nexus/consistency-no-for-in",
+    "nexus/consistency-no-hand-rolled-delay",
+    "nexus/consistency-no-return-void",
+    "nexus/consistency-no-stuttering-name",
+    "nexus/consistency-no-utils-folder",
+    "nexus/import-require-module-alias",
+    "nexus/import-require-node-namespace",
+    "structure/network-no-invalidate-cache-literal-key",
+    "structure/network-no-string-literal-query",
+    "structure/tailwind-no-physical-direction"
+  ],
+  "helper_ready_unclaimed": [],
+  "inventory_queue": "syntax ready for AST/API adaptation",
+  "unclaimed_ready_syntax_existing_origin_ports": {
+    "no-octal-escape": [
+      "origin/cloud/integrate-s2-1:stage1/cohere/lint/batch8/no_octal_escape.ts",
+      "origin/codex/stage1-jsx-lint:stage1/cohere/lint/batch8/no_octal_escape.ts",
+      "origin/codex/stage1-lint-batch8:stage1/cohere/lint/batch8/no_octal_escape.ts"
+    ],
+    "no-script-url": [
+      "origin/codex/stage1-lint-batch2:stage1/cohere/lint/no_script_url.ts",
+      "origin/codex/stage1-lint-batch4:stage1/cohere/lint/no_script_url.ts"
+    ],
+    "no-unexpected-multiline": [
+      "origin/cloud/integrate-s2-1:stage1/cohere/lint/batch8/no_unexpected_multiline.ts",
+      "origin/codex/stage1-jsx-lint:stage1/cohere/lint/batch8/no_unexpected_multiline.ts",
+      "origin/codex/stage1-lint-batch8:stage1/cohere/lint/batch8/no_unexpected_multiline.ts"
+    ],
+    "no-unsafe-finally": [
+      "origin/codex/stage1-lint-batch2:stage1/cohere/lint/no_unsafe_finally.ts",
+      "origin/codex/stage1-lint-batch4:stage1/cohere/lint/no_unsafe_finally.ts"
+    ],
+    "no-unused-private-class-members": [
+      "origin/cloud/integrate-s2-1:stage1/cohere/lint/batch8/no_unused_private_class_members.ts",
+      "origin/codex/stage1-jsx-lint:stage1/cohere/lint/batch8/no_unused_private_class_members.ts",
+      "origin/codex/stage1-lint-batch8:stage1/cohere/lint/batch8/no_unused_private_class_members.ts"
+    ],
+    "no-useless-catch": [
+      "origin/codex/stage1-lint-batch2:stage1/cohere/lint/no_useless_catch.ts",
+      "origin/codex/stage1-lint-batch4:stage1/cohere/lint/no_useless_catch.ts"
+    ],
+    "no-useless-concat": [
+      "origin/codex/stage1-lint-batch2:stage1/cohere/lint/no_useless_concat.ts",
+      "origin/codex/stage1-lint-batch4:stage1/cohere/lint/no_useless_concat.ts"
+    ],
+    "no-useless-constructor": [
+      "origin/cloud/integrate-s2-1:stage1/cohere/lint/batch8/no_useless_constructor.ts",
+      "origin/codex/stage1-jsx-lint:stage1/cohere/lint/batch8/no_useless_constructor.ts",
+      "origin/codex/stage1-lint-batch8:stage1/cohere/lint/batch8/no_useless_constructor.ts"
+    ],
+    "prefer-template": [
+      "origin/cloud/integrate-s2-1:stage1/cohere/lint/batch8/prefer_template.ts",
+      "origin/codex/stage1-jsx-lint:stage1/cohere/lint/batch8/prefer_template.ts",
+      "origin/codex/stage1-lint-batch8:stage1/cohere/lint/batch8/prefer_template.ts"
+    ],
+    "react/forward-ref-uses-ref": [
+      "origin/cloud/integrate-s2-1:stage1/cohere/lint/batch8/forward_ref_uses_ref.ts",
+      "origin/codex/stage1-jsx-lint:stage1/cohere/lint/batch8/forward_ref_uses_ref.ts",
+      "origin/codex/stage1-lint-batch8:stage1/cohere/lint/batch8/forward_ref_uses_ref.ts"
+    ],
+    "react/jsx-no-comment-textnodes": [
+      "origin/cloud/integrate-s2-1:stage1/cohere/lint/batch8/jsx_no_comment_textnodes.ts",
+      "origin/codex/stage1-jsx-lint:stage1/cohere/lint/batch8/jsx_no_comment_textnodes.ts",
+      "origin/codex/stage1-lint-batch8:stage1/cohere/lint/batch8/jsx_no_comment_textnodes.ts"
+    ],
+    "react/no-find-dom-node": [
+      "origin/cloud/integrate-s2-1:stage1/cohere/lint/batch8/no_find_dom_node.ts",
+      "origin/codex/stage1-jsx-lint:stage1/cohere/lint/batch8/no_find_dom_node.ts",
+      "origin/codex/stage1-lint-batch8:stage1/cohere/lint/batch8/no_find_dom_node.ts"
+    ],
+    "react/no-is-mounted": [
+      "origin/cloud/integrate-s2-1:stage1/cohere/lint/batch8/no_is_mounted.ts",
+      "origin/codex/stage1-jsx-lint:stage1/cohere/lint/batch8/no_is_mounted.ts",
+      "origin/codex/stage1-lint-batch8:stage1/cohere/lint/batch8/no_is_mounted.ts"
+    ],
+    "react/no-redundant-should-component-update": [
+      "origin/cloud/integrate-s2-1:stage1/cohere/lint/batch8/no_redundant_should_component_update.ts",
+      "origin/codex/stage1-jsx-lint:stage1/cohere/lint/batch8/no_redundant_should_component_update.ts",
+      "origin/codex/stage1-lint-batch8:stage1/cohere/lint/batch8/no_redundant_should_component_update.ts"
+    ]
+  },
+  "eligible_next_rules": [],
+  "notes": [
+    "All 46 helper-ready rules are ported on main or named in origin branch claim files.",
+    "Fourteen ready syntax rules unclaimed and absent on main have actual origin implementations. The initial instruction requires skipping them.",
+    "The separate syntax waiting on helpers queue is not treated as the inventory ready syntax queue. It retains unported helper-blocked rules.",
+    "Presence of an origin implementation is not a new parity certification of that implementation."
+  ]
+}

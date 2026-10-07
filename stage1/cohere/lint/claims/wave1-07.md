@@ -68,3 +68,8 @@ The original three reservations now have own-directory .a ports, complete indepe
 Google Font Display now has its own registered .a listener, diagnostic/query/entity implementation and a validated selector. All sixteen upstream cases plus eleven query/entity cases match the actual Go rule on the three Adamic runtimes; its block-display mutant is caught by comparison. Full independent parsing, finding ranges and corpus parity remain blocked: the current Parser treats JSX as a type assertion and exits 70 on a real link. No shared parser, harness or registry generator was edited. This remains a partial port, with the blocker demonstrated on all three runtimes in rules/next-google-font-display/evidence/full-parser-results.txt.
 
 No further rules were claimed before pushing this completion. Earlier blocker entries above are historical; the three TypeScript assertion/alias rules were completed and pushed at 76d6c805, 80485a80 and 4fc20717. The earlier Tailwind and directive-description candidates remain pushed with their original evidence and declared limits.
+
+
+## Fresh next-queue audit after completion push
+
+Completion was pushed through f2ef276d before a fresh all-head fetch. Inspected 341 origin refs and 16 distinct claims trees, with main at ef3d907e. No helper-ready rule is unclaimed. The fourteen unclaimed inventory ready-syntax entries already have executable ports on origin/codex/stage1-lint-batch2 or origin/codex/stage1-lint-batch8, so they are skipped under the original instruction. No further claim is added. See wave1-07-next-audit.json and wave1-07-completion-report.md; the separate helper-blocked syntax queue is not reported exhausted.
