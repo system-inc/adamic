@@ -1,0 +1,405 @@
+{
+  "mergedAdaptation": "2bcff092155fc19c6519b27891e53163d6191ae7",
+  "mergeCommit": "bb89005ad09d72cc5474df5e60c30ac7b141f2cd",
+  "nodeVersion": "v24.19.0",
+  "observations": [
+    {
+      "file": "01_readFile_utf8.a",
+      "before": {
+        "stdout": "\"\"\n\"a\"\n\"a\"\n\"\ufffd\"\n\"\ufffd(\"\n\"a\\u0000b\"\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "after": {
+        "stdout": "\"\"\n\"a\"\n\"a\"\n\"\ufffd\"\n\"\ufffd(\"\n\"a\\u0000b\"\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "goldenUnchanged": true
+    },
+    {
+      "file": "02_readFile_utf16le.a",
+      "before": {
+        "stdout": "\"\"\n\"a\"\n\"\ud83d\ude00\"\n\"a\"\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "after": {
+        "stdout": "\"\"\n\"a\"\n\"\ud83d\ude00\"\n\"a\"\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "goldenUnchanged": true
+    },
+    {
+      "file": "03_readFile_utf16be.a",
+      "before": {
+        "stdout": "\"\"\n\"a\"\n\"\ud83d\ude00\"\n\"a\"\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "after": {
+        "stdout": "\"\"\n\"a\"\n\"\ud83d\ude00\"\n\"a\"\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "goldenUnchanged": true
+    },
+    {
+      "file": "04_readFile_missing.a",
+      "before": {
+        "stdout": "undefined\nundefined\n\"\"\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "after": {
+        "stdout": "undefined\nundefined\n\"\"\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "goldenUnchanged": true
+    },
+    {
+      "file": "05_writeFile.a",
+      "before": {
+        "stdout": "efbbbf68c3a96c6c6f20f09f8c8d0a\n78\nENOENT\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "after": {
+        "stdout": "efbbbf68c3a96c6c6f20f09f8c8d0a\n78\nENOENT\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "goldenUnchanged": true
+    },
+    {
+      "file": "06_fileExists.a",
+      "before": {
+        "stdout": "file true\ndir false\nmissing false\nfileLink true\ndirLink false\nbroken false\nfile/child false\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "after": {
+        "stdout": "file true\ndir false\nmissing false\nfileLink true\ndirLink false\nbroken false\nfile/child false\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "goldenUnchanged": true
+    },
+    {
+      "file": "07_directoryExists.a",
+      "before": {
+        "stdout": "file false\ndir true\nmissing false\nfileLink false\ndirLink true\nbroken false\nfile/child false\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "after": {
+        "stdout": "file false\ndir true\nmissing false\nfileLink false\ndirLink true\nbroken false\nfile/child false\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "goldenUnchanged": true
+    },
+    {
+      "file": "08_getDirectories.a",
+      "before": {
+        "stdout": "a,link,z\na,link,z\n\na,link,z\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "after": {
+        "stdout": "a,link,z\na,link,z\n\na,link,z\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "goldenUnchanged": true
+    },
+    {
+      "file": "09_realpath.a",
+      "before": {
+        "stdout": "true\ntrue\n./adamic-host-missing/../absent\ntrue\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "after": {
+        "stdout": "true\ntrue\n./adamic-host-missing/../absent\ntrue\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "goldenUnchanged": true
+    },
+    {
+      "file": "10_getModifiedTime.a",
+      "before": {
+        "stdout": "946684800000\nundefined\n946684800000\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "after": {
+        "stdout": "946684800000\nundefined\n946684800000\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "goldenUnchanged": true
+    },
+    {
+      "file": "11_setModifiedTime.a",
+      "before": {
+        "stdout": "946684800000\n946684800000\nmissing ignored\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "after": {
+        "stdout": "946684800000\n946684800000\nmissing ignored\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "goldenUnchanged": true
+    },
+    {
+      "file": "12_deleteFile.a",
+      "before": {
+        "stdout": "true\nfalse\ntrue\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "after": {
+        "stdout": "true\nfalse\ntrue\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "goldenUnchanged": true
+    },
+    {
+      "file": "13_createDirectory.a",
+      "before": {
+        "stdout": "true\ntrue\nENOENT\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "after": {
+        "stdout": "true\ntrue\nENOENT\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "goldenUnchanged": true
+    },
+    {
+      "file": "14_getCurrentDirectory.a",
+      "before": {
+        "stdout": "true\ntrue\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "after": {
+        "stdout": "true\ntrue\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "goldenUnchanged": true
+    },
+    {
+      "file": "15_getExecutingFilePath.a",
+      "before": {
+        "stdout": "__fake__.js\n_tsc.js\nsys.cjs\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "after": {
+        "stdout": "__fake__.js\n_tsc.js\nsys.cjs\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "goldenUnchanged": true
+    },
+    {
+      "file": "16_getEnvironmentVariable.a",
+      "before": {
+        "stdout": "\"\"\n\"0\"\n\"h\u00e9llo\"\n\"\"\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "after": {
+        "stdout": "\"\"\n\"0\"\n\"h\u00e9llo\"\n\"\"\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "goldenUnchanged": true
+    },
+    {
+      "file": "17_write.a",
+      "before": {
+        "stdout": "first|h\u00e9llo \ud83c\udf0d\nlast!\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "after": {
+        "stdout": "first|h\u00e9llo \ud83c\udf0d\nlast!\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "goldenUnchanged": true
+    },
+    {
+      "file": "18_exit_0.a",
+      "before": {
+        "stdout": "exit 0\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "after": {
+        "stdout": "exit 0\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "goldenUnchanged": true
+    },
+    {
+      "file": "19_exit_1.a",
+      "before": {
+        "stdout": "exit 1\n",
+        "stderr": "",
+        "exit": 1
+      },
+      "after": {
+        "stdout": "exit 1\n",
+        "stderr": "",
+        "exit": 1
+      },
+      "goldenUnchanged": true
+    },
+    {
+      "file": "20_exit_2.a",
+      "before": {
+        "stdout": "exit 2\n",
+        "stderr": "",
+        "exit": 2
+      },
+      "after": {
+        "stdout": "exit 2\n",
+        "stderr": "",
+        "exit": 2
+      },
+      "goldenUnchanged": true
+    },
+    {
+      "file": "21_createHash.a",
+      "before": {
+        "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\nba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad\ncbbcee01a3fc5f1c0db23e02be25316adf28ede876031fdbabe5f4fabe47ed7f\n59b271ae1bbcb1d31d41929817f4b16fb439eb4f31520b5ad1d5ce98920a7138\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "after": {
+        "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\nba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad\ncbbcee01a3fc5f1c0db23e02be25316adf28ede876031fdbabe5f4fabe47ed7f\n59b271ae1bbcb1d31d41929817f4b16fb439eb4f31520b5ad1d5ce98920a7138\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "goldenUnchanged": true
+    },
+    {
+      "file": "22_createHash_fallback.a",
+      "before": {
+        "stdout": "5381\n193485963\n2317135974\n-997923643\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "after": {
+        "stdout": "5381\n193485963\n2317135974\n-997923643\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "goldenUnchanged": true
+    },
+    {
+      "file": "23_newLine.a",
+      "before": {
+        "stdout": "\"\\n\"\nVersion 6.0.3\ndiagnostic\n\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "after": {
+        "stdout": "\"\\n\"\nVersion 6.0.3\ndiagnostic\n\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "goldenUnchanged": true
+    },
+    {
+      "file": "24_useCaseSensitiveFileNames.a",
+      "before": {
+        "stdout": "false\nfalse\ntrue\nfalse\naBc_09.TS\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "after": {
+        "stdout": "false\nfalse\ntrue\nfalse\naBc_09.TS\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "goldenUnchanged": true
+    },
+    {
+      "file": "25_readDirectory.a",
+      "before": {
+        "stdout": "a.ts,z.ts,alias/b.ts,alias/deep/c.ts\na.ts,z.ts\nsrc/b.ts,src/deep/c.ts,a.ts\nplain.js\n\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "after": {
+        "stdout": "a.ts,z.ts,alias/b.ts,alias/deep/c.ts\na.ts,z.ts\nsrc/b.ts,src/deep/c.ts,a.ts\nplain.js\n\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "goldenUnchanged": true
+    }
+  ],
+  "changedFixtures": [
+    {
+      "file": "08_getDirectories.a",
+      "declarations": [
+        {
+          "name": "Path",
+          "file": "src/compiler/types.ts"
+        }
+      ]
+    },
+    {
+      "file": "25_readDirectory.a",
+      "declarations": [
+        {
+          "name": "SortedReadonlyArray",
+          "file": "src/compiler/corePublic.ts"
+        },
+        {
+          "name": "isArray",
+          "file": "src/compiler/core.ts"
+        },
+        {
+          "name": "Path",
+          "file": "src/compiler/types.ts"
+        },
+        {
+          "name": "PathPathComponents",
+          "file": "src/compiler/path.ts"
+        }
+      ]
+    }
+  ],
+  "sourceAudit": {
+    "copiedDeclarations": 164,
+    "functionAndMethodSpans": 126,
+    "exit": 0
+  },
+  "mutants": [
+    "25 semantic Node mutants caught by stdout/stderr/exit",
+    "invented compiler diagnostic caught",
+    "reduction-only ErrnoException cast caught",
+    "SHA256 to SHA1 caught",
+    "stale Path undefined annotation caught by full audit",
+    "stale isArray any annotation caught by full audit",
+    "actual re-extractor rejects unreviewed isArray string input before writes"
+  ],
+  "idempotent": true,
+  "stockAcceptedFixtures": 25
+}

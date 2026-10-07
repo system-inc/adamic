@@ -423,7 +423,7 @@
           "adaptations": [
             "40-explicit-any"
           ],
-          "tokens": "type Path = string & {\n    __pathBrand: undefined;\n};"
+          "tokens": "type Path = string & {\n    __pathBrand: void;\n};"
         }
       ],
       "changedDeclarations": [
@@ -440,7 +440,7 @@
           ]
         }
       ],
-      "stage3": "06971f0574b6cd408c6291973c685941ea6457ee"
+      "stage3": "bb89005ad09d72cc5474df5e60c30ac7b141f2cd"
     },
     {
       "file": "09_realpath.a",
@@ -1004,7 +1004,7 @@
           "adaptations": [
             "40-explicit-any"
           ],
-          "tokens": "interface SortedReadonlyArray<T> extends ReadonlyArray<T> {\n    \" __sortedArrayBrand\": undefined;\n}"
+          "tokens": "interface SortedReadonlyArray<T> extends ReadonlyArray<T> {\n    \" __sortedArrayBrand\": void;\n}"
         },
         {
           "file": "src/compiler/path.ts",
@@ -1185,8 +1185,10 @@
           "name": "isArray",
           "originalLine": 1750,
           "adaptedLine": 1750,
-          "adaptations": [],
-          "tokens": "function isArray(value: any): value is readonly unknown[] {\n    return Array.isArray(value);\n}"
+          "adaptations": [
+            "40-explicit-any"
+          ],
+          "tokens": "function isArray(value: unknown): value is readonly unknown[] {\n    return Array.isArray(value);\n}"
         },
         {
           "file": "src/compiler/core.ts",
@@ -1868,7 +1870,7 @@
           "adaptations": [
             "40-explicit-any"
           ],
-          "tokens": "type Path = string & {\n    __pathBrand: undefined;\n};"
+          "tokens": "type Path = string & {\n    __pathBrand: void;\n};"
         },
         {
           "file": "src/compiler/path.ts",
@@ -1879,7 +1881,7 @@
           "adaptations": [
             "40-explicit-any"
           ],
-          "tokens": "type PathPathComponents = Path[] & {\n    __pathComponensBrand: undefined;\n};"
+          "tokens": "type PathPathComponents = Path[] & {\n    __pathComponensBrand: void;\n};"
         }
       ],
       "changedDeclarations": [
@@ -1984,9 +1986,15 @@
           "adaptations": [
             "40-explicit-any"
           ]
+        },
+        {
+          "name": "isArray",
+          "adaptations": [
+            "40-explicit-any"
+          ]
         }
       ],
-      "stage3": "06971f0574b6cd408c6291973c685941ea6457ee"
+      "stage3": "bb89005ad09d72cc5474df5e60c30ac7b141f2cd"
     }
   ]
 }
