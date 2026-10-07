@@ -96,3 +96,12 @@ producers. All three assertions retain their original evaluation points. Stock
 JavaScript and idempotence pass; both property and JSON-result mutants are caught
 twice. Default oracle **106367 passing**, empty baseline diff,
 229.955s. [Complete proof](proof/whole-files/emitter/README.md).
+
+### transformers/ts.ts at zero
+
+All-code census **3 -> 0**, clean files **38 -> 39 of 78**. The nonempty super
+path records bounded indices into the corresponding input arrays; successful
+try recursion proves each next component exists. Both U-position reads are
+asserted at their original points. Stock JavaScript and idempotence pass, and
+the path-index mutant is caught twice. Default oracle **106367
+passing**, empty baseline diff, 219.657s. [Proof](proof/whole-files/ts/README.md).

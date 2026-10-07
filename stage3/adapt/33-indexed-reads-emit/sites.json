@@ -1111,9 +1111,9 @@
     "expression": "superPath[superPathDepth]",
     "occurrence": 1,
     "total": 1,
-    "action": "decline",
+    "action": "assert",
     "class": "U-position",
-    "invariant": "The super-call path producer must prove this depth and the selected statement index; that cross-function invariant remains unreviewed."
+    "invariant": "The caller enters at depth 0 only for a nonempty findSuperStatementIndexPath result; each recursive try prefix was prepended only after its child found a super call, so the corresponding next depth exists and the terminal depth selects the super-call statement."
   },
   {
     "file": "transformers/ts.ts",
@@ -1123,9 +1123,9 @@
     "expression": "statementsIn[superStatementIndex]",
     "occurrence": 1,
     "total": 1,
-    "action": "decline",
+    "action": "assert",
     "class": "U-position",
-    "invariant": "The super-call path producer must prove this depth and the selected statement index; that cross-function invariant remains unreviewed."
+    "invariant": "findSuperStatementIndexPath records i only inside i < statements.length on the same populated NodeArray; each try recursion pairs its next index with that tryBlock.statements, and parameter-property generation clones names without modifying these statement arrays."
   },
   {
     "file": "transformer.ts",
