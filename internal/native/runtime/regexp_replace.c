@@ -4,6 +4,8 @@
 #include <string.h>
 #include <stdlib.h>
 
+#ifdef ADAMIC_REGEXP_REPLACE_CALLBACK
+
 // Each argument has its actual kind before conversion to the proven closure
 // representation.
 static adamic_value regex_replacement_argument(adamic_value value, unsigned actual,
@@ -158,3 +160,5 @@ adamic_string *adamic_regex_replace_callback(adamic_string *input, adamic_object
 	adamic_release(pieces);
 	return result;
 }
+
+#endif

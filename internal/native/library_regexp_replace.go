@@ -25,6 +25,7 @@ func regexReplacementKind(of ir.Type) int {
 }
 
 func (e *emitter) regexReplacement(call ir.RegExpCall) string {
+	e.line("#define ADAMIC_REGEXP_REPLACE_CALLBACK 1")
 	input := e.value(call.Value)
 	regex := e.value(call.Arguments[0])
 	callback := e.value(call.Arguments[1])

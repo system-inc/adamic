@@ -16,7 +16,7 @@ func init() {
 			lowers, checked bool
 		}{"internal/oracle/testdata/regexp_replace/" + name + ".a", true, true})
 	}
-	for _, name := range []string{"callback", "dynamic", "throw", "arguments"} {
+	for _, name := range []string{"callback", "dynamic", "throw", "arguments", "effects", "move_effect"} {
 		fixtures = append(fixtures, struct {
 			path            string
 			lowers, checked bool
@@ -48,7 +48,7 @@ func TestRegExpReplacementNodeMutants(t *testing.T) {
 			}
 			changed := strings.Replace(string(runtime), mutant.old, mutant.new, 1)
 			changed = strings.ReplaceAll(changed, "adamic_regex_replace_callback", "adamic_regex_replace_callback_mutant")
-			source := changed + "\n" + strings.ReplaceAll(native.C(program), "adamic_regex_replace_callback", "adamic_regex_replace_callback_mutant")
+			source := "#define ADAMIC_REGEXP_REPLACE_CALLBACK 1\n" + changed + "\n" + strings.ReplaceAll(native.C(program), "adamic_regex_replace_callback", "adamic_regex_replace_callback_mutant")
 			binary := filepath.Join(t.TempDir(), "mutant")
 			if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
@@ -90,7 +90,7 @@ func TestRegExpReplacementTypeGuardMutants(t *testing.T) {
 			}
 			changed := strings.Replace(string(runtime), mutant.old, mutant.new, 1)
 			changed = strings.ReplaceAll(changed, "adamic_regex_replace_callback", "adamic_regex_replace_callback_mutant")
-			source := changed + "\n" + strings.ReplaceAll(native.C(program), "adamic_regex_replace_callback", "adamic_regex_replace_callback_mutant")
+			source := "#define ADAMIC_REGEXP_REPLACE_CALLBACK 1\n" + changed + "\n" + strings.ReplaceAll(native.C(program), "adamic_regex_replace_callback", "adamic_regex_replace_callback_mutant")
 			binary := filepath.Join(t.TempDir(), "mutant")
 			if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
