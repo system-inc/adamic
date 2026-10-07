@@ -1,0 +1,12 @@
+case 0
+/tmp/w05-fourth-whitespace/case-19.tsx:1:33
+  better-tailwindcss/no-unnecessary-whitespace  This class string carries whitespace that does nothing: a leading or trailing run, or more than one space between two classes. It is invisible in the rendered output and it makes the string a worse thing to diff and search, because two literals that mean the same list stop being the same text.
+
+range 32 50 unnecessaryWhitespace fix		
+fix-edit 37 38	
+fixed	const merged = mergeClassNames('flex items-center');
+case 1
+fixed	const value = someOtherFunction('flex  items-center');
+case 2
+/tmp/w05-fourth-whitespace/case-23.ts:1:26
+  better-tailwindcss/no-unnecessary-whitespace  This class string carries whitespace that does nothing: a leading or trailing run, or more than one space between two classes. It is invisible in the rendered output and it makes the string a worse thing to diff and search, because two literals that mean the same list stop being the same text.

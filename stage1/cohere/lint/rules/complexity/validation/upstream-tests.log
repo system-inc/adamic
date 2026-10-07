@@ -1,0 +1,30 @@
+=== RUN   TestComplexityFires
+=== PAUSE TestComplexityFires
+=== RUN   TestComplexityStaysSilent
+=== PAUSE TestComplexityStaysSilent
+=== RUN   TestComplexityNamesAndSpans
+=== PAUSE TestComplexityNamesAndSpans
+=== RUN   TestComplexityNeverReportsTheProgram
+=== PAUSE TestComplexityNeverReportsTheProgram
+=== RUN   TestComplexityNamesModifiersTheCorpusNeverCrosses
+=== PAUSE TestComplexityNamesModifiersTheCorpusNeverCrosses
+=== RUN   TestComplexityDecoderReadsEveryOptionShape
+=== PAUSE TestComplexityDecoderReadsEveryOptionShape
+=== RUN   TestComplexityNameBuilderBranches
+=== PAUSE TestComplexityNameBuilderBranches
+=== CONT  TestComplexityFires
+=== CONT  TestComplexityNamesModifiersTheCorpusNeverCrosses
+=== CONT  TestComplexityNamesAndSpans
+=== CONT  TestComplexityNameBuilderBranches
+=== CONT  TestComplexityNeverReportsTheProgram
+--- PASS: TestComplexityNamesModifiersTheCorpusNeverCrosses (0.00s)
+=== CONT  TestComplexityStaysSilent
+--- PASS: TestComplexityNeverReportsTheProgram (0.00s)
+=== CONT  TestComplexityDecoderReadsEveryOptionShape
+--- PASS: TestComplexityNameBuilderBranches (0.00s)
+--- PASS: TestComplexityNamesAndSpans (0.00s)
+--- PASS: TestComplexityDecoderReadsEveryOptionShape (0.00s)
+--- PASS: TestComplexityStaysSilent (0.00s)
+--- PASS: TestComplexityFires (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/core	0.010s

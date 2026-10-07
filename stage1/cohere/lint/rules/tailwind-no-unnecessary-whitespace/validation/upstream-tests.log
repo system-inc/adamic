@@ -1,0 +1,134 @@
+=== RUN   TestNoUnnecessaryWhitespaceReportsPadding
+=== PAUSE TestNoUnnecessaryWhitespaceReportsPadding
+=== RUN   TestNoUnnecessaryWhitespaceStaysSilent
+=== PAUSE TestNoUnnecessaryWhitespaceStaysSilent
+=== RUN   TestNoUnnecessaryWhitespaceFixMatchesUpstream
+=== PAUSE TestNoUnnecessaryWhitespaceFixMatchesUpstream
+=== RUN   TestWhitespaceFixClaimsNoClassByte
+=== PAUSE TestWhitespaceFixClaimsNoClassByte
+=== RUN   TestWhitespaceFixNeverFusesClassesAcrossAHole
+=== PAUSE TestWhitespaceFixNeverFusesClassesAcrossAHole
+=== RUN   TestNoUnnecessaryWhitespaceAllowMultiline
+=== PAUSE TestNoUnnecessaryWhitespaceAllowMultiline
+=== CONT  TestNoUnnecessaryWhitespaceReportsPadding
+=== RUN   TestNoUnnecessaryWhitespaceReportsPadding/doubled_space_between_classes
+=== PAUSE TestNoUnnecessaryWhitespaceReportsPadding/doubled_space_between_classes
+=== CONT  TestWhitespaceFixClaimsNoClassByte
+=== RUN   TestNoUnnecessaryWhitespaceReportsPadding/leading_space
+=== CONT  TestNoUnnecessaryWhitespaceFixMatchesUpstream
+=== CONT  TestNoUnnecessaryWhitespaceStaysSilent
+=== CONT  TestNoUnnecessaryWhitespaceAllowMultiline
+=== PAUSE TestNoUnnecessaryWhitespaceReportsPadding/leading_space
+=== RUN   TestNoUnnecessaryWhitespaceReportsPadding/trailing_space
+=== PAUSE TestNoUnnecessaryWhitespaceReportsPadding/trailing_space
+=== RUN   TestNoUnnecessaryWhitespaceReportsPadding/whitespace_only
+=== PAUSE TestNoUnnecessaryWhitespaceReportsPadding/whitespace_only
+=== RUN   TestNoUnnecessaryWhitespaceReportsPadding/inside_a_class-merging_call
+=== PAUSE TestNoUnnecessaryWhitespaceReportsPadding/inside_a_class-merging_call
+=== RUN   TestNoUnnecessaryWhitespaceFixMatchesUpstream/collapses_a_doubled_space
+=== PAUSE TestNoUnnecessaryWhitespaceFixMatchesUpstream/collapses_a_doubled_space
+=== RUN   TestNoUnnecessaryWhitespaceStaysSilent/single_spaces
+=== RUN   TestNoUnnecessaryWhitespaceFixMatchesUpstream/drops_a_leading_space
+=== PAUSE TestNoUnnecessaryWhitespaceFixMatchesUpstream/drops_a_leading_space
+=== RUN   TestNoUnnecessaryWhitespaceFixMatchesUpstream/drops_a_trailing_space
+=== PAUSE TestNoUnnecessaryWhitespaceStaysSilent/single_spaces
+=== RUN   TestNoUnnecessaryWhitespaceStaysSilent/one_class
+=== PAUSE TestNoUnnecessaryWhitespaceStaysSilent/one_class
+=== RUN   TestNoUnnecessaryWhitespaceStaysSilent/empty_string
+=== PAUSE TestNoUnnecessaryWhitespaceStaysSilent/empty_string
+=== RUN   TestNoUnnecessaryWhitespaceStaysSilent/tab_between_classes
+--- PASS: TestWhitespaceFixClaimsNoClassByte (0.00s)
+=== CONT  TestWhitespaceFixNeverFusesClassesAcrossAHole
+=== RUN   TestNoUnnecessaryWhitespaceReportsPadding/assigned_to_a_class-named_variable
+=== PAUSE TestNoUnnecessaryWhitespaceStaysSilent/tab_between_classes
+=== RUN   TestNoUnnecessaryWhitespaceStaysSilent/single_space_around_a_hole
+=== PAUSE TestNoUnnecessaryWhitespaceReportsPadding/assigned_to_a_class-named_variable
+=== PAUSE TestNoUnnecessaryWhitespaceFixMatchesUpstream/drops_a_trailing_space
+=== PAUSE TestNoUnnecessaryWhitespaceStaysSilent/single_space_around_a_hole
+=== RUN   TestNoUnnecessaryWhitespaceFixMatchesUpstream/empties_a_whitespace-only_string
+=== RUN   TestNoUnnecessaryWhitespaceReportsPadding/doubled_space_before_a_hole
+=== PAUSE TestNoUnnecessaryWhitespaceFixMatchesUpstream/empties_a_whitespace-only_string
+=== RUN   TestNoUnnecessaryWhitespaceStaysSilent/no_whitespace_at_the_hole
+--- PASS: TestWhitespaceFixNeverFusesClassesAcrossAHole (0.00s)
+=== RUN   TestNoUnnecessaryWhitespaceFixMatchesUpstream/keeps_one_space_before_a_hole
+=== PAUSE TestNoUnnecessaryWhitespaceFixMatchesUpstream/keeps_one_space_before_a_hole
+=== RUN   TestNoUnnecessaryWhitespaceFixMatchesUpstream/keeps_one_space_after_a_hole
+=== PAUSE TestNoUnnecessaryWhitespaceFixMatchesUpstream/keeps_one_space_after_a_hole
+=== RUN   TestNoUnnecessaryWhitespaceFixMatchesUpstream/keeps_a_wrapped_list_wrapped
+=== PAUSE TestNoUnnecessaryWhitespaceFixMatchesUpstream/keeps_a_wrapped_list_wrapped
+=== RUN   TestNoUnnecessaryWhitespaceFixMatchesUpstream/drops_the_spaces_before_a_newline
+=== PAUSE TestNoUnnecessaryWhitespaceFixMatchesUpstream/drops_the_spaces_before_a_newline
+=== PAUSE TestNoUnnecessaryWhitespaceStaysSilent/no_whitespace_at_the_hole
+=== RUN   TestNoUnnecessaryWhitespaceStaysSilent/adjacent_holes
+=== PAUSE TestNoUnnecessaryWhitespaceStaysSilent/adjacent_holes
+=== PAUSE TestNoUnnecessaryWhitespaceReportsPadding/doubled_space_before_a_hole
+=== RUN   TestNoUnnecessaryWhitespaceReportsPadding/doubled_space_after_a_hole
+=== PAUSE TestNoUnnecessaryWhitespaceReportsPadding/doubled_space_after_a_hole
+=== CONT  TestNoUnnecessaryWhitespaceReportsPadding/doubled_space_between_classes
+=== CONT  TestNoUnnecessaryWhitespaceReportsPadding/inside_a_class-merging_call
+=== CONT  TestNoUnnecessaryWhitespaceReportsPadding/doubled_space_after_a_hole
+=== RUN   TestNoUnnecessaryWhitespaceFixMatchesUpstream/writes_a_doubled_tab_as_one_space
+=== CONT  TestNoUnnecessaryWhitespaceReportsPadding/doubled_space_before_a_hole
+=== CONT  TestNoUnnecessaryWhitespaceReportsPadding/trailing_space
+=== CONT  TestNoUnnecessaryWhitespaceReportsPadding/assigned_to_a_class-named_variable
+=== CONT  TestNoUnnecessaryWhitespaceReportsPadding/whitespace_only
+=== PAUSE TestNoUnnecessaryWhitespaceFixMatchesUpstream/writes_a_doubled_tab_as_one_space
+=== RUN   TestNoUnnecessaryWhitespaceStaysSilent/unrelated_attribute
+=== CONT  TestNoUnnecessaryWhitespaceFixMatchesUpstream/collapses_a_doubled_space
+=== PAUSE TestNoUnnecessaryWhitespaceStaysSilent/unrelated_attribute
+=== RUN   TestNoUnnecessaryWhitespaceStaysSilent/unrelated_callee
+=== PAUSE TestNoUnnecessaryWhitespaceStaysSilent/unrelated_callee
+--- PASS: TestNoUnnecessaryWhitespaceAllowMultiline (0.00s)
+=== RUN   TestNoUnnecessaryWhitespaceStaysSilent/unrelated_variable
+=== PAUSE TestNoUnnecessaryWhitespaceStaysSilent/unrelated_variable
+=== CONT  TestNoUnnecessaryWhitespaceFixMatchesUpstream/drops_the_spaces_before_a_newline
+=== CONT  TestNoUnnecessaryWhitespaceFixMatchesUpstream/keeps_one_space_after_a_hole
+=== CONT  TestNoUnnecessaryWhitespaceReportsPadding/leading_space
+=== CONT  TestNoUnnecessaryWhitespaceFixMatchesUpstream/keeps_one_space_before_a_hole
+=== CONT  TestNoUnnecessaryWhitespaceFixMatchesUpstream/empties_a_whitespace-only_string
+=== CONT  TestNoUnnecessaryWhitespaceFixMatchesUpstream/keeps_a_wrapped_list_wrapped
+=== CONT  TestNoUnnecessaryWhitespaceFixMatchesUpstream/drops_a_trailing_space
+=== CONT  TestNoUnnecessaryWhitespaceFixMatchesUpstream/writes_a_doubled_tab_as_one_space
+=== CONT  TestNoUnnecessaryWhitespaceFixMatchesUpstream/drops_a_leading_space
+=== CONT  TestNoUnnecessaryWhitespaceStaysSilent/no_whitespace_at_the_hole
+=== CONT  TestNoUnnecessaryWhitespaceStaysSilent/single_spaces
+--- PASS: TestNoUnnecessaryWhitespaceReportsPadding (0.00s)
+    --- PASS: TestNoUnnecessaryWhitespaceReportsPadding/doubled_space_between_classes (0.00s)
+    --- PASS: TestNoUnnecessaryWhitespaceReportsPadding/inside_a_class-merging_call (0.00s)
+    --- PASS: TestNoUnnecessaryWhitespaceReportsPadding/doubled_space_after_a_hole (0.00s)
+    --- PASS: TestNoUnnecessaryWhitespaceReportsPadding/doubled_space_before_a_hole (0.00s)
+    --- PASS: TestNoUnnecessaryWhitespaceReportsPadding/trailing_space (0.00s)
+    --- PASS: TestNoUnnecessaryWhitespaceReportsPadding/whitespace_only (0.00s)
+    --- PASS: TestNoUnnecessaryWhitespaceReportsPadding/assigned_to_a_class-named_variable (0.00s)
+    --- PASS: TestNoUnnecessaryWhitespaceReportsPadding/leading_space (0.00s)
+=== CONT  TestNoUnnecessaryWhitespaceStaysSilent/unrelated_variable
+=== CONT  TestNoUnnecessaryWhitespaceStaysSilent/unrelated_callee
+=== CONT  TestNoUnnecessaryWhitespaceStaysSilent/unrelated_attribute
+=== CONT  TestNoUnnecessaryWhitespaceStaysSilent/adjacent_holes
+=== CONT  TestNoUnnecessaryWhitespaceStaysSilent/tab_between_classes
+=== CONT  TestNoUnnecessaryWhitespaceStaysSilent/single_space_around_a_hole
+=== CONT  TestNoUnnecessaryWhitespaceStaysSilent/empty_string
+--- PASS: TestNoUnnecessaryWhitespaceFixMatchesUpstream (0.00s)
+    --- PASS: TestNoUnnecessaryWhitespaceFixMatchesUpstream/collapses_a_doubled_space (0.00s)
+    --- PASS: TestNoUnnecessaryWhitespaceFixMatchesUpstream/drops_the_spaces_before_a_newline (0.00s)
+    --- PASS: TestNoUnnecessaryWhitespaceFixMatchesUpstream/keeps_one_space_after_a_hole (0.00s)
+    --- PASS: TestNoUnnecessaryWhitespaceFixMatchesUpstream/keeps_one_space_before_a_hole (0.00s)
+    --- PASS: TestNoUnnecessaryWhitespaceFixMatchesUpstream/empties_a_whitespace-only_string (0.00s)
+    --- PASS: TestNoUnnecessaryWhitespaceFixMatchesUpstream/keeps_a_wrapped_list_wrapped (0.00s)
+    --- PASS: TestNoUnnecessaryWhitespaceFixMatchesUpstream/drops_a_trailing_space (0.00s)
+    --- PASS: TestNoUnnecessaryWhitespaceFixMatchesUpstream/drops_a_leading_space (0.00s)
+    --- PASS: TestNoUnnecessaryWhitespaceFixMatchesUpstream/writes_a_doubled_tab_as_one_space (0.00s)
+=== CONT  TestNoUnnecessaryWhitespaceStaysSilent/one_class
+--- PASS: TestNoUnnecessaryWhitespaceStaysSilent (0.00s)
+    --- PASS: TestNoUnnecessaryWhitespaceStaysSilent/single_spaces (0.00s)
+    --- PASS: TestNoUnnecessaryWhitespaceStaysSilent/no_whitespace_at_the_hole (0.00s)
+    --- PASS: TestNoUnnecessaryWhitespaceStaysSilent/unrelated_callee (0.00s)
+    --- PASS: TestNoUnnecessaryWhitespaceStaysSilent/unrelated_attribute (0.00s)
+    --- PASS: TestNoUnnecessaryWhitespaceStaysSilent/tab_between_classes (0.00s)
+    --- PASS: TestNoUnnecessaryWhitespaceStaysSilent/empty_string (0.00s)
+    --- PASS: TestNoUnnecessaryWhitespaceStaysSilent/adjacent_holes (0.00s)
+    --- PASS: TestNoUnnecessaryWhitespaceStaysSilent/unrelated_variable (0.00s)
+    --- PASS: TestNoUnnecessaryWhitespaceStaysSilent/single_space_around_a_hole (0.00s)
+    --- PASS: TestNoUnnecessaryWhitespaceStaysSilent/one_class (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/tailwind	0.011s

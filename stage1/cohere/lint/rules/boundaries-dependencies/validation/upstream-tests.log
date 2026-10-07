@@ -1,0 +1,174 @@
+=== RUN   TestDependenciesBasePackageBoundary
+=== PAUSE TestDependenciesBasePackageBoundary
+=== RUN   TestDependenciesProjectModuleBoundary
+=== PAUSE TestDependenciesProjectModuleBoundary
+=== RUN   TestDependenciesUsesThePolicyMessage
+=== PAUSE TestDependenciesUsesThePolicyMessage
+=== RUN   TestDependenciesWordsAnUnmessagedDisallow
+=== PAUSE TestDependenciesWordsAnUnmessagedDisallow
+=== RUN   TestDependenciesLastMatchingPolicyDecides
+=== PAUSE TestDependenciesLastMatchingPolicyDecides
+=== RUN   TestDependenciesEntrySelectorWinsOverThePolicys
+=== PAUSE TestDependenciesEntrySelectorWinsOverThePolicys
+=== RUN   TestDependenciesEntryTypesWinOverThePolicys
+=== PAUSE TestDependenciesEntryTypesWinOverThePolicys
+=== RUN   TestDependenciesUsesTheRuleMessageWhenNoPolicyHasOne
+=== PAUSE TestDependenciesUsesTheRuleMessageWhenNoPolicyHasOne
+=== RUN   TestDependenciesReportsAtTheSpecifier
+=== PAUSE TestDependenciesReportsAtTheSpecifier
+=== RUN   TestDependenciesRequireInTypeScriptIsTheMeasuredDivergence
+=== PAUSE TestDependenciesRequireInTypeScriptIsTheMeasuredDivergence
+=== RUN   TestDependenciesElementMembership
+=== PAUSE TestDependenciesElementMembership
+=== RUN   TestDependenciesRefusesWhatItDoesNotPort
+=== PAUSE TestDependenciesRefusesWhatItDoesNotPort
+=== RUN   TestDependenciesDecodesBasesOwnBlocksAndAnchorsTheRoot
+=== PAUSE TestDependenciesDecodesBasesOwnBlocksAndAnchorsTheRoot
+=== CONT  TestDependenciesBasePackageBoundary
+=== CONT  TestDependenciesUsesTheRuleMessageWhenNoPolicyHasOne
+=== CONT  TestDependenciesElementMembership
+=== CONT  TestDependenciesDecodesBasesOwnBlocksAndAnchorsTheRoot
+=== CONT  TestDependenciesEntryTypesWinOverThePolicys
+--- PASS: TestDependenciesDecodesBasesOwnBlocksAndAnchorsTheRoot (0.00s)
+=== CONT  TestDependenciesWordsAnUnmessagedDisallow
+--- PASS: TestDependenciesElementMembership (0.00s)
+=== RUN   TestDependenciesBasePackageBoundary/api_imports_foundation
+=== CONT  TestDependenciesRefusesWhatItDoesNotPort
+=== RUN   TestDependenciesRefusesWhatItDoesNotPort/no_options
+=== PAUSE TestDependenciesRefusesWhatItDoesNotPort/no_options
+=== RUN   TestDependenciesRefusesWhatItDoesNotPort/no_elements
+=== PAUSE TestDependenciesRefusesWhatItDoesNotPort/no_elements
+=== RUN   TestDependenciesRefusesWhatItDoesNotPort/a_legacy_string_selector
+=== PAUSE TestDependenciesRefusesWhatItDoesNotPort/a_legacy_string_selector
+=== RUN   TestDependenciesRefusesWhatItDoesNotPort/a_captured_selector
+=== PAUSE TestDependenciesRefusesWhatItDoesNotPort/a_captured_selector
+=== RUN   TestDependenciesRefusesWhatItDoesNotPort/a_file_selector
+=== PAUSE TestDependenciesRefusesWhatItDoesNotPort/a_file_selector
+=== RUN   TestDependenciesRefusesWhatItDoesNotPort/an_allOf_query
+=== PAUSE TestDependenciesRefusesWhatItDoesNotPort/an_allOf_query
+=== RUN   TestDependenciesRefusesWhatItDoesNotPort/a_type_pattern
+=== PAUSE TestDependenciesRefusesWhatItDoesNotPort/a_type_pattern
+=== RUN   TestDependenciesRefusesWhatItDoesNotPort/a_templated_message
+=== PAUSE TestDependenciesRefusesWhatItDoesNotPort/a_templated_message
+=== RUN   TestDependenciesRefusesWhatItDoesNotPort/the_legacy_rules_key
+=== PAUSE TestDependenciesRefusesWhatItDoesNotPort/the_legacy_rules_key
+=== RUN   TestDependenciesRefusesWhatItDoesNotPort/checkInternals_true
+=== PAUSE TestDependenciesRefusesWhatItDoesNotPort/checkInternals_true
+=== RUN   TestDependenciesRefusesWhatItDoesNotPort/file_mode
+=== PAUSE TestDependenciesRefusesWhatItDoesNotPort/file_mode
+=== RUN   TestDependenciesRefusesWhatItDoesNotPort/a_brace_pattern
+=== PAUSE TestDependenciesRefusesWhatItDoesNotPort/a_brace_pattern
+=== RUN   TestDependenciesRefusesWhatItDoesNotPort/a_basePattern
+=== PAUSE TestDependenciesRefusesWhatItDoesNotPort/a_basePattern
+=== RUN   TestDependenciesRefusesWhatItDoesNotPort/a_dependency_selector
+=== PAUSE TestDependenciesRefusesWhatItDoesNotPort/a_dependency_selector
+=== RUN   TestDependenciesRefusesWhatItDoesNotPort/a_policy_that_decides_nothing
+=== PAUSE TestDependenciesRefusesWhatItDoesNotPort/a_policy_that_decides_nothing
+=== RUN   TestDependenciesRefusesWhatItDoesNotPort/an_unknown_default
+=== PAUSE TestDependenciesRefusesWhatItDoesNotPort/an_unknown_default
+=== CONT  TestDependenciesRequireInTypeScriptIsTheMeasuredDivergence
+--- PASS: TestDependenciesUsesTheRuleMessageWhenNoPolicyHasOne (0.02s)
+=== CONT  TestDependenciesReportsAtTheSpecifier
+--- PASS: TestDependenciesEntryTypesWinOverThePolicys (0.02s)
+=== CONT  TestDependenciesRefusesWhatItDoesNotPort/no_options
+=== CONT  TestDependenciesRefusesWhatItDoesNotPort/an_unknown_default
+=== CONT  TestDependenciesRefusesWhatItDoesNotPort/a_policy_that_decides_nothing
+=== CONT  TestDependenciesRefusesWhatItDoesNotPort/a_dependency_selector
+=== CONT  TestDependenciesRefusesWhatItDoesNotPort/a_basePattern
+=== CONT  TestDependenciesRefusesWhatItDoesNotPort/a_brace_pattern
+=== CONT  TestDependenciesRefusesWhatItDoesNotPort/file_mode
+=== CONT  TestDependenciesRefusesWhatItDoesNotPort/checkInternals_true
+=== CONT  TestDependenciesRefusesWhatItDoesNotPort/the_legacy_rules_key
+=== CONT  TestDependenciesRefusesWhatItDoesNotPort/a_templated_message
+=== CONT  TestDependenciesRefusesWhatItDoesNotPort/a_type_pattern
+--- PASS: TestDependenciesWordsAnUnmessagedDisallow (0.02s)
+=== CONT  TestDependenciesRefusesWhatItDoesNotPort/an_allOf_query
+=== RUN   TestDependenciesBasePackageBoundary/api_imports_a_foundation_type
+=== CONT  TestDependenciesRefusesWhatItDoesNotPort/a_file_selector
+=== CONT  TestDependenciesRefusesWhatItDoesNotPort/a_captured_selector
+=== CONT  TestDependenciesRefusesWhatItDoesNotPort/a_legacy_string_selector
+=== CONT  TestDependenciesUsesThePolicyMessage
+--- PASS: TestDependenciesUsesThePolicyMessage (0.00s)
+=== CONT  TestDependenciesEntrySelectorWinsOverThePolicys
+=== CONT  TestDependenciesRefusesWhatItDoesNotPort/no_elements
+--- PASS: TestDependenciesRefusesWhatItDoesNotPort (0.00s)
+    --- PASS: TestDependenciesRefusesWhatItDoesNotPort/no_options (0.00s)
+    --- PASS: TestDependenciesRefusesWhatItDoesNotPort/an_unknown_default (0.00s)
+    --- PASS: TestDependenciesRefusesWhatItDoesNotPort/a_policy_that_decides_nothing (0.00s)
+    --- PASS: TestDependenciesRefusesWhatItDoesNotPort/a_dependency_selector (0.00s)
+    --- PASS: TestDependenciesRefusesWhatItDoesNotPort/a_basePattern (0.00s)
+    --- PASS: TestDependenciesRefusesWhatItDoesNotPort/a_brace_pattern (0.00s)
+    --- PASS: TestDependenciesRefusesWhatItDoesNotPort/file_mode (0.00s)
+    --- PASS: TestDependenciesRefusesWhatItDoesNotPort/checkInternals_true (0.00s)
+    --- PASS: TestDependenciesRefusesWhatItDoesNotPort/the_legacy_rules_key (0.00s)
+    --- PASS: TestDependenciesRefusesWhatItDoesNotPort/a_templated_message (0.00s)
+    --- PASS: TestDependenciesRefusesWhatItDoesNotPort/a_type_pattern (0.00s)
+    --- PASS: TestDependenciesRefusesWhatItDoesNotPort/an_allOf_query (0.00s)
+    --- PASS: TestDependenciesRefusesWhatItDoesNotPort/a_file_selector (0.00s)
+    --- PASS: TestDependenciesRefusesWhatItDoesNotPort/a_captured_selector (0.00s)
+    --- PASS: TestDependenciesRefusesWhatItDoesNotPort/a_legacy_string_selector (0.00s)
+    --- PASS: TestDependenciesRefusesWhatItDoesNotPort/no_elements (0.00s)
+=== CONT  TestDependenciesLastMatchingPolicyDecides
+--- PASS: TestDependenciesLastMatchingPolicyDecides (0.00s)
+=== CONT  TestDependenciesProjectModuleBoundary
+--- PASS: TestDependenciesReportsAtTheSpecifier (0.00s)
+=== RUN   TestDependenciesProjectModuleBoundary/a_module_imports_a_worker
+=== RUN   TestDependenciesProjectModuleBoundary/a_module_imports_a_worker's_type
+--- PASS: TestDependenciesRequireInTypeScriptIsTheMeasuredDivergence (0.02s)
+=== RUN   TestDependenciesBasePackageBoundary/api_imports_the_command_line
+=== RUN   TestDependenciesBasePackageBoundary/api_re-exports_all_of_foundation
+=== RUN   TestDependenciesProjectModuleBoundary/a_module_imports_a_worker's_index
+--- PASS: TestDependenciesEntrySelectorWinsOverThePolicys (0.00s)
+=== RUN   TestDependenciesBasePackageBoundary/api_re-exports_from_foundation
+=== RUN   TestDependenciesProjectModuleBoundary/a_module_imports_a_worker_dynamically
+=== RUN   TestDependenciesBasePackageBoundary/api_imports_foundation_dynamically
+=== RUN   TestDependenciesProjectModuleBoundary/a_module_imports_a_nested_workers_folder
+=== RUN   TestDependenciesBasePackageBoundary/api_imports_foundation_for_its_side_effects
+=== RUN   TestDependenciesBasePackageBoundary/api_imports_itself
+=== RUN   TestDependenciesProjectModuleBoundary/a_module_imports_common_source
+=== RUN   TestDependenciesProjectModuleBoundary/a_module_imports_another_module
+=== RUN   TestDependenciesProjectModuleBoundary/a_module_imports_a_package_laid_out_like_a_worker
+=== RUN   TestDependenciesBasePackageBoundary/api_imports_a_module,_which_is_no_element
+=== RUN   TestDependenciesProjectModuleBoundary/a_module_imports_Base
+=== RUN   TestDependenciesBasePackageBoundary/api_imports_nexus,_which_is_no_element
+=== RUN   TestDependenciesProjectModuleBoundary/a_worker_imports_another_worker
+=== RUN   TestDependenciesBasePackageBoundary/api_imports_a_package
+=== RUN   TestDependenciesProjectModuleBoundary/common_source_imports_a_worker
+=== RUN   TestDependenciesBasePackageBoundary/api_imports_a_file_that_does_not_exist
+--- PASS: TestDependenciesProjectModuleBoundary (0.02s)
+    --- PASS: TestDependenciesProjectModuleBoundary/a_module_imports_a_worker (0.00s)
+    --- PASS: TestDependenciesProjectModuleBoundary/a_module_imports_a_worker's_type (0.00s)
+    --- PASS: TestDependenciesProjectModuleBoundary/a_module_imports_a_worker's_index (0.00s)
+    --- PASS: TestDependenciesProjectModuleBoundary/a_module_imports_a_worker_dynamically (0.00s)
+    --- PASS: TestDependenciesProjectModuleBoundary/a_module_imports_a_nested_workers_folder (0.00s)
+    --- PASS: TestDependenciesProjectModuleBoundary/a_module_imports_common_source (0.00s)
+    --- PASS: TestDependenciesProjectModuleBoundary/a_module_imports_another_module (0.00s)
+    --- PASS: TestDependenciesProjectModuleBoundary/a_module_imports_a_package_laid_out_like_a_worker (0.00s)
+    --- PASS: TestDependenciesProjectModuleBoundary/a_module_imports_Base (0.00s)
+    --- PASS: TestDependenciesProjectModuleBoundary/a_worker_imports_another_worker (0.00s)
+    --- PASS: TestDependenciesProjectModuleBoundary/common_source_imports_a_worker (0.00s)
+=== RUN   TestDependenciesBasePackageBoundary/foundation_imports_api
+=== RUN   TestDependenciesBasePackageBoundary/foundation_imports_the_command_line
+=== RUN   TestDependenciesBasePackageBoundary/foundation_imports_a_module
+=== RUN   TestDependenciesBasePackageBoundary/foundation_imports_across_its_own_folders
+=== RUN   TestDependenciesBasePackageBoundary/a_module_imports_the_command_line
+--- PASS: TestDependenciesBasePackageBoundary (0.04s)
+    --- PASS: TestDependenciesBasePackageBoundary/api_imports_foundation (0.02s)
+    --- PASS: TestDependenciesBasePackageBoundary/api_imports_a_foundation_type (0.00s)
+    --- PASS: TestDependenciesBasePackageBoundary/api_imports_the_command_line (0.00s)
+    --- PASS: TestDependenciesBasePackageBoundary/api_re-exports_all_of_foundation (0.00s)
+    --- PASS: TestDependenciesBasePackageBoundary/api_re-exports_from_foundation (0.00s)
+    --- PASS: TestDependenciesBasePackageBoundary/api_imports_foundation_dynamically (0.00s)
+    --- PASS: TestDependenciesBasePackageBoundary/api_imports_foundation_for_its_side_effects (0.00s)
+    --- PASS: TestDependenciesBasePackageBoundary/api_imports_itself (0.01s)
+    --- PASS: TestDependenciesBasePackageBoundary/api_imports_a_module,_which_is_no_element (0.00s)
+    --- PASS: TestDependenciesBasePackageBoundary/api_imports_nexus,_which_is_no_element (0.00s)
+    --- PASS: TestDependenciesBasePackageBoundary/api_imports_a_package (0.00s)
+    --- PASS: TestDependenciesBasePackageBoundary/api_imports_a_file_that_does_not_exist (0.00s)
+    --- PASS: TestDependenciesBasePackageBoundary/foundation_imports_api (0.00s)
+    --- PASS: TestDependenciesBasePackageBoundary/foundation_imports_the_command_line (0.00s)
+    --- PASS: TestDependenciesBasePackageBoundary/foundation_imports_a_module (0.00s)
+    --- PASS: TestDependenciesBasePackageBoundary/foundation_imports_across_its_own_folders (0.00s)
+    --- PASS: TestDependenciesBasePackageBoundary/a_module_imports_the_command_line (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/boundaries	0.051s

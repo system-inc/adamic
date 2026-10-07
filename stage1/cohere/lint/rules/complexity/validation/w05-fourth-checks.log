@@ -1,0 +1,28 @@
+--- FAIL: TestDeterministicRegeneration (0.01s)
+    registry_test.go:44: /tmp/adamic-gate/TestDeterministicRegeneration3705926297/001/rules/boundaries-dependencies/rule.json: mutant file must be an owned TS module
+--- FAIL: TestDuplicateOracleAdapter (0.02s)
+    registry_test.go:145: duplicate adapter mutant survived: /tmp/adamic-gate/TestDuplicateOracleAdapter340446841/001/rules/boundaries-dependencies/rule.json: mutant file must be an owned TS module
+--- FAIL: TestDescriptorRejections (0.00s)
+    --- FAIL: TestDescriptorRejections/missing_finish_hook (0.01s)
+        registry_test.go:117: mutant survived or wrong failure: /tmp/adamic-gate/TestDescriptorRejectionsmissing_finish_hook1106270267/001/rules/boundaries-dependencies/rule.json: mutant file must be an owned TS module
+    --- FAIL: TestDescriptorRejections/duplicate_public_name (0.01s)
+        registry_test.go:117: mutant survived or wrong failure: /tmp/adamic-gate/TestDescriptorRejectionsduplicate_public_name1729424731/001/rules/boundaries-dependencies/rule.json: mutant file must be an owned TS module
+    --- FAIL: TestDescriptorRejections/unsafe_public_name (0.02s)
+        registry_test.go:117: mutant survived or wrong failure: /tmp/adamic-gate/TestDescriptorRejectionsunsafe_public_name528529640/001/rules/boundaries-dependencies/rule.json: mutant file must be an owned TS module
+    --- FAIL: TestDescriptorRejections/no_listener (0.01s)
+        registry_test.go:117: mutant survived or wrong failure: /tmp/adamic-gate/TestDescriptorRejectionsno_listener3403493520/001/rules/boundaries-dependencies/rule.json: mutant file must be an owned TS module
+    --- FAIL: TestDescriptorRejections/missing_factory (0.01s)
+        registry_test.go:117: mutant survived or wrong failure: /tmp/adamic-gate/TestDescriptorRejectionsmissing_factory3342139565/001/rules/boundaries-dependencies/rule.json: mutant file must be an owned TS module
+    --- FAIL: TestDescriptorRejections/bad_kind (0.01s)
+        registry_test.go:117: mutant survived or wrong failure: /tmp/adamic-gate/TestDescriptorRejectionsbad_kind2750630261/001/rules/boundaries-dependencies/rule.json: mutant file must be an owned TS module
+    --- FAIL: TestDescriptorRejections/missing_class (0.02s)
+        registry_test.go:117: mutant survived or wrong failure: /tmp/adamic-gate/TestDescriptorRejectionsmissing_class3276515830/001/rules/boundaries-dependencies/rule.json: mutant file must be an owned TS module
+    --- FAIL: TestDescriptorRejections/missing_named_export (0.01s)
+        registry_test.go:117: mutant survived or wrong failure: /tmp/adamic-gate/TestDescriptorRejectionsmissing_named_export734198039/001/rules/boundaries-dependencies/rule.json: mutant file must be an owned TS module
+    --- FAIL: TestDescriptorRejections/missing_oracle_export (0.01s)
+        registry_test.go:117: mutant survived or wrong failure: /tmp/adamic-gate/TestDescriptorRejectionsmissing_oracle_export3379787551/001/rules/boundaries-dependencies/rule.json: mutant file must be an owned TS module
+    --- FAIL: TestDescriptorRejections/unknown_field (0.01s)
+        registry_test.go:117: mutant survived or wrong failure: /tmp/adamic-gate/TestDescriptorRejectionsunknown_field1772479293/001/rules/boundaries-dependencies/rule.json: mutant file must be an owned TS module
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/registry	0.036s
+?   	github.com/system-inc/adamic/cmd/lint-registry	[no test files]
