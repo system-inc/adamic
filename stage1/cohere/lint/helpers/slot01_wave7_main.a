@@ -1,0 +1,48 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from './options_json.ts';
+import { collapseIngestUtilityBlock } from './collapse_ingest_utility_block.a';
+const args = programArguments();
+const file = readTextFile(args[0] ?? panic('fixture path'));
+if (file.kind === 'Error') { panic(file.message); }
+function units(value: string): string {
+    let output = `${value.length}:`;
+    for (let index = 0; index < value.length; index++) { output += `${value.charCodeAt(index)},`; }
+    return output;
+}
+for (const line of file.text.split('\n')) {
+    if (line === '') { continue; }
+    const json = new OptionsJson(line);
+    const root = json.parse();
+    if (root < 0) { panic(json.error); }
+    const fields = json.node(root).children;
+    const state = { roots: new Map<string, number>(), definitions: [] as { readonly name: string; readonly nodes: readonly number[] }[], statics: new Map<string, readonly number[]>() };
+    const bodies: number[][] = [];
+    const queries: string[] = [];
+    for (const child of json.node(fields[1] ?? panic('queries')).children) { queries.push(json.node(child).text); }
+    const observe = (error: string) => {
+        console.log(units(error));
+        console.log(`${state.roots.size} ${state.definitions.length}`);
+        for (const query of queries) {
+            const body = state.statics.get(query) ?? ([] as readonly number[]);
+            let output = `${state.roots.get(query) ?? 0} ${body.length}`;
+            for (const value of body) { output += ` ${value}`; }
+            console.log(output);
+        }
+        for (const definition of state.definitions) {
+            let output = units(definition.name);
+            for (const value of definition.nodes) { output += ` ${value}`; }
+            console.log(output);
+        }
+    };
+    for (const child of json.node(fields[0] ?? panic('rows')).children) {
+        const row = json.node(child).children;
+        const raw = json.node(row[0] ?? panic('raw')).text;
+        const trimmed = json.node(row[1] ?? panic('trimmed')).text;
+        const body: number[] = [];
+        for (const value of json.node(row[2] ?? panic('body')).children) { body.push(Number(json.node(value).text)); }
+        bodies.push(body);
+        observe(collapseIngestUtilityBlock(state, raw, body, 'fixture.css', value => { if (value !== raw) { panic('trim argument'); } return trimmed; }));
+    }
+    for (const body of bodies) { body[0] = 99; }
+    observe('');
+}

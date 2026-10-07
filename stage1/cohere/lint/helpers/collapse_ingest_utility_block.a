@@ -1,0 +1,20 @@
+// The collector keeps static and functional declarations independently. Bodies retain identity.
+export interface CollapseUtilityCollector {
+    readonly roots: Map<string, number>;
+    readonly definitions: { readonly name: string; readonly nodes: readonly number[] }[];
+    readonly statics: Map<string, readonly number[]>;
+}
+export function collapseIngestUtilityBlock(collector: CollapseUtilityCollector, params: string, nodes: readonly number[], path: string, trimSpace: (value: string) => string): string {
+    const name = trimSpace(params);
+    if (name === '') { return `${path}: \`@utility\` with no name`; }
+    let kind = 1;
+    let root = name;
+    if (name.endsWith('-*')) { kind = 2; root = name.slice(0, -2); }
+    if (root === '' || root.includes('*')) {
+        return `${path}: \`@utility ${name}\` is not a valid utility name; expected \`name\` or \`name-*\``;
+    }
+    collector.roots.set(root, (collector.roots.get(root) ?? 0) | kind);
+    if (kind === 2) { collector.definitions.push({ name: root, nodes }); return ''; }
+    collector.statics.set(root, nodes);
+    return '';
+}
