@@ -1,0 +1,20 @@
+dropped-row exit 1
+
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/triage/audit_contracts.py", line 62, in <module>
+    audit(sys.argv[1], json.loads(Path(sys.argv[2]).read_text()))
+  File "/workspace/adamic/stage3/triage/audit_contracts.py", line 36, in audit
+    assert not missing and not extra, f'dropped/changed rows: {list(missing.items())[:3]}; extra: {list(extra.items())[:3]}'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: dropped/changed rows: [(('src/compiler/builder.ts', 1246, 69, 2345, "Argument of type 'Path | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."), 1)]; extra: []
+
+changed-class exit 1
+
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/triage/audit_contracts.py", line 62, in <module>
+    audit(sys.argv[1], json.loads(Path(sys.argv[2]).read_text()))
+  File "/workspace/adamic/stage3/triage/audit_contracts.py", line 48, in audit
+    assert all(row[k] == proof[k] for k in ('file', 'line', 'column', 'origin_class')), 'changed origin classification'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: changed origin classification
+

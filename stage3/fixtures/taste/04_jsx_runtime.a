@@ -1,0 +1,9 @@
+// From TypeScript 6.0.3, src/compiler/utilities.ts:9430
+// Census reason: non-boolean control condition
+interface CompilerOptions { jsx?: number; }
+const JsxEmit = {ReactJSXDev: 5};
+export function getJSXRuntimeImport(base: string | undefined, options: CompilerOptions): string | undefined {
+    return base ? `${base}/${options.jsx === JsxEmit.ReactJSXDev ? "jsx-dev-runtime" : "jsx-runtime"}` : undefined;
+}
+
+for (const base of [undefined, "", "react"]) { console.log(String(getJSXRuntimeImport(base, {jsx: 5}))); console.log(String(getJSXRuntimeImport(base, {jsx: 4}))); }

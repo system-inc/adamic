@@ -481,7 +481,7 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 					return nil, l.notYet(node, "a narrowed boolean | undefined field; copy the field into a local and narrow that local instead")
 				}
 				read := l.readObjectField(node, ir.Property{Object: object, Name: name, Of: stored, Optional: optional, Class: l.classOf(node)})
-				if comparedWithUndefined(node) {
+				if l.acceptsUndefined(node) {
 					return read, nil
 				}
 				return ir.Unwrap{Value: read}, nil
@@ -1639,7 +1639,7 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 		if position.Type() != ir.Number {
 			return nil, l.notYet(node, "an array index that isn't a number")
 		}
-		return ir.ArrayIndex{Array: object, Index: position, Element: element}, nil
+		return l.defined(node, ir.ArrayIndex{Array: object, Index: position, Element: element}), nil
 	}
 	// pairs[0]?.[0]: the tuple may be missing, and the read is undefined then (collections.go).
 	if optional {

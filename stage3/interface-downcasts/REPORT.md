@@ -225,3 +225,19 @@ filtered oracle checks. Setup from this unit remains: go ready 0s, clang ready 1
 Node ready 1s, submodules ready 1s, cache warm 95s, done 95s; nproc 5, quota 4 CPUs.
 No second initialization representation was built. Default checked-view lowering
 and the outstanding measurements remain work, not a claimed completed ruling (c).
+
+## Current main merge before default admission
+
+Merged origin/main b6b1538 into this feature branch. Conflict resolution preserves
+both oracle fixture sets, main's body-proven predicates, and the non-null worker's
+supported readiness assertions. The newer checked-field ruling remains the stated
+cast decision. Count regeneration only reorders the five proven-* rows relative
+to the combined merge result; no existing numbers changed. Main contributes 19
+new fixture rows (typeof-null, twelve nullable regressions, override representation,
+and five proven-* probes).
+
+Touched lower/IR/JavaScript/native packages passed (21.538s/23.020s/no local tests/
+143.769s). The uncached filtered oracle, checked-field mutants, and regenerated
+counts passed in 66.324s. Commands and output are in main-b6b1538-packages.log and
+main-b6b1538-oracle.log. Full repository gate was not run. This is the prerequisite
+merge, not default cast admission or a new ledger lowering count.

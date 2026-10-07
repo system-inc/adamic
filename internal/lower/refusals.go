@@ -31,7 +31,6 @@ var refusals = map[ast.Kind]refusal{
 	ast.KindVoidExpression:    {"the void operator", "evaluate the expression as a statement"},
 	ast.KindIndexSignature:    {"an index signature", "use a Map, which keeps keys in the order they were added"},
 	ast.KindExportAssignment:  {"export default", "export by name: one name for one thing"},
-	ast.KindTypePredicate:     {"a type predicate", "narrow where you use it, with ===, typeof or instanceof (adamic/no-type-predicate)"},
 }
 
 // refusedOperators are binary operators 0.1 refuses.
@@ -57,6 +56,14 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		line, column := scanner.GetLineAndCharacterOfPosition(module, directive.Loc.Pos())
 		return &Refused{Where: fmt.Sprintf("%s:%d:%d", l.program.FileName(module), line+1, column+1), What: name + " suppression directive", Fix: "remove it and fix the type error"}
 	}
+	// File-level checking pragmas are separate from line-suppression directives. Use every
+	// parsed pragma, including one overridden by a later pragma, rather than just CheckJsDirective.
+	for _, pragma := range module.Pragmas {
+		if pragma.Name == "ts-nocheck" || pragma.Name == "ts-check" {
+			line, column := scanner.GetLineAndCharacterOfPosition(module, pragma.Pos())
+			return &Refused{Where: fmt.Sprintf("%s:%d:%d", l.program.FileName(module), line+1, column+1), What: "@" + pragma.Name + " checking pragma", Fix: "remove it and fix any type errors"}
+		}
+	}
 	var found error
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
@@ -66,6 +73,12 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		if refused, isRefused := refusals[node.Kind]; isRefused {
 			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
 			return true
+		}
+		if node.Kind == ast.KindTypePredicate {
+			if err := l.provePredicate(node); err != nil {
+				found = err
+				return true
+			}
 		}
 		if node.Kind == ast.KindBinaryExpression {
 			if refused, isRefused := refusedOperators[node.AsBinaryExpression().OperatorToken.Kind]; isRefused {
