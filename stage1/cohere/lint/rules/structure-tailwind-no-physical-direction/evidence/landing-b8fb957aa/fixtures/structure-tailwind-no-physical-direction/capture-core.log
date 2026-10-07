@@ -1,0 +1,470 @@
+=== RUN   TestRequireDescriptionStaysSilentOnUpstreamPassCases
+=== PAUSE TestRequireDescriptionStaysSilentOnUpstreamPassCases
+=== RUN   TestRequireDescriptionFiresOnUpstreamFailCases
+=== PAUSE TestRequireDescriptionFiresOnUpstreamFailCases
+=== RUN   TestRequireDescriptionReadsTheSeparatorAsESLintDoes
+=== PAUSE TestRequireDescriptionReadsTheSeparatorAsESLintDoes
+=== RUN   TestRequireDescriptionMatchesUpstreamOnCommentShapes
+=== PAUSE TestRequireDescriptionMatchesUpstreamOnCommentShapes
+=== RUN   TestRequireDescriptionCoversWhatCohereHonors
+=== PAUSE TestRequireDescriptionCoversWhatCohereHonors
+=== RUN   TestRequireDescriptionIsRegisteredAsADirectiveSubject
+=== PAUSE TestRequireDescriptionIsRegisteredAsADirectiveSubject
+=== RUN   TestRequireDescriptionWithNoOptionsAtAll
+=== PAUSE TestRequireDescriptionWithNoOptionsAtAll
+=== RUN   TestRequireDescriptionDecoderRefusesWhatTheSchemaRefuses
+=== PAUSE TestRequireDescriptionDecoderRefusesWhatTheSchemaRefuses
+=== CONT  TestRequireDescriptionStaysSilentOnUpstreamPassCases
+=== RUN   TestRequireDescriptionStaysSilentOnUpstreamPassCases/case0
+=== PAUSE TestRequireDescriptionStaysSilentOnUpstreamPassCases/case0
+=== RUN   TestRequireDescriptionStaysSilentOnUpstreamPassCases/case1
+=== PAUSE TestRequireDescriptionStaysSilentOnUpstreamPassCases/case1
+=== RUN   TestRequireDescriptionStaysSilentOnUpstreamPassCases/case2
+=== PAUSE TestRequireDescriptionStaysSilentOnUpstreamPassCases/case2
+=== RUN   TestRequireDescriptionStaysSilentOnUpstreamPassCases/case3
+=== PAUSE TestRequireDescriptionStaysSilentOnUpstreamPassCases/case3
+=== RUN   TestRequireDescriptionStaysSilentOnUpstreamPassCases/case4
+=== CONT  TestRequireDescriptionCoversWhatCohereHonors
+=== RUN   TestRequireDescriptionCoversWhatCohereHonors/case0
+=== PAUSE TestRequireDescriptionCoversWhatCohereHonors/case0
+=== RUN   TestRequireDescriptionCoversWhatCohereHonors/case1
+=== PAUSE TestRequireDescriptionCoversWhatCohereHonors/case1
+=== RUN   TestRequireDescriptionCoversWhatCohereHonors/case2
+=== PAUSE TestRequireDescriptionCoversWhatCohereHonors/case2
+=== RUN   TestRequireDescriptionCoversWhatCohereHonors/case3
+=== PAUSE TestRequireDescriptionCoversWhatCohereHonors/case3
+=== RUN   TestRequireDescriptionCoversWhatCohereHonors/case4
+=== PAUSE TestRequireDescriptionCoversWhatCohereHonors/case4
+=== RUN   TestRequireDescriptionCoversWhatCohereHonors/case5
+=== PAUSE TestRequireDescriptionCoversWhatCohereHonors/case5
+=== RUN   TestRequireDescriptionCoversWhatCohereHonors/case6
+=== PAUSE TestRequireDescriptionCoversWhatCohereHonors/case6
+=== RUN   TestRequireDescriptionCoversWhatCohereHonors/case7
+=== PAUSE TestRequireDescriptionCoversWhatCohereHonors/case7
+=== RUN   TestRequireDescriptionCoversWhatCohereHonors/case8
+=== PAUSE TestRequireDescriptionStaysSilentOnUpstreamPassCases/case4
+=== CONT  TestRequireDescriptionMatchesUpstreamOnCommentShapes
+=== RUN   TestRequireDescriptionStaysSilentOnUpstreamPassCases/case5
+=== PAUSE TestRequireDescriptionStaysSilentOnUpstreamPassCases/case5
+=== CONT  TestRequireDescriptionReadsTheSeparatorAsESLintDoes
+=== RUN   TestRequireDescriptionReadsTheSeparatorAsESLintDoes/case0
+=== PAUSE TestRequireDescriptionReadsTheSeparatorAsESLintDoes/case0
+=== CONT  TestRequireDescriptionFiresOnUpstreamFailCases
+=== RUN   TestRequireDescriptionFiresOnUpstreamFailCases/case0
+=== PAUSE TestRequireDescriptionFiresOnUpstreamFailCases/case0
+=== RUN   TestRequireDescriptionMatchesUpstreamOnCommentShapes/case0
+=== RUN   TestRequireDescriptionStaysSilentOnUpstreamPassCases/case6
+=== PAUSE TestRequireDescriptionStaysSilentOnUpstreamPassCases/case6
+=== RUN   TestRequireDescriptionStaysSilentOnUpstreamPassCases/case7
+=== PAUSE TestRequireDescriptionStaysSilentOnUpstreamPassCases/case7
+=== RUN   TestRequireDescriptionStaysSilentOnUpstreamPassCases/case8
+=== RUN   TestRequireDescriptionReadsTheSeparatorAsESLintDoes/case1
+=== PAUSE TestRequireDescriptionStaysSilentOnUpstreamPassCases/case8
+=== PAUSE TestRequireDescriptionReadsTheSeparatorAsESLintDoes/case1
+=== RUN   TestRequireDescriptionStaysSilentOnUpstreamPassCases/case9
+=== PAUSE TestRequireDescriptionStaysSilentOnUpstreamPassCases/case9
+=== RUN   TestRequireDescriptionReadsTheSeparatorAsESLintDoes/case2
+=== PAUSE TestRequireDescriptionMatchesUpstreamOnCommentShapes/case0
+=== PAUSE TestRequireDescriptionReadsTheSeparatorAsESLintDoes/case2
+=== RUN   TestRequireDescriptionReadsTheSeparatorAsESLintDoes/case3
+=== PAUSE TestRequireDescriptionReadsTheSeparatorAsESLintDoes/case3
+=== RUN   TestRequireDescriptionReadsTheSeparatorAsESLintDoes/case4
+=== RUN   TestRequireDescriptionFiresOnUpstreamFailCases/case1
+=== PAUSE TestRequireDescriptionFiresOnUpstreamFailCases/case1
+=== RUN   TestRequireDescriptionFiresOnUpstreamFailCases/case2
+=== PAUSE TestRequireDescriptionFiresOnUpstreamFailCases/case2
+=== RUN   TestRequireDescriptionFiresOnUpstreamFailCases/case3
+=== PAUSE TestRequireDescriptionFiresOnUpstreamFailCases/case3
+=== RUN   TestRequireDescriptionFiresOnUpstreamFailCases/case4
+=== PAUSE TestRequireDescriptionFiresOnUpstreamFailCases/case4
+=== RUN   TestRequireDescriptionFiresOnUpstreamFailCases/case5
+=== PAUSE TestRequireDescriptionFiresOnUpstreamFailCases/case5
+=== RUN   TestRequireDescriptionFiresOnUpstreamFailCases/case6
+=== PAUSE TestRequireDescriptionFiresOnUpstreamFailCases/case6
+=== RUN   TestRequireDescriptionFiresOnUpstreamFailCases/case7
+=== PAUSE TestRequireDescriptionFiresOnUpstreamFailCases/case7
+=== RUN   TestRequireDescriptionFiresOnUpstreamFailCases/case8
+=== PAUSE TestRequireDescriptionFiresOnUpstreamFailCases/case8
+=== RUN   TestRequireDescriptionFiresOnUpstreamFailCases/case9
+=== PAUSE TestRequireDescriptionFiresOnUpstreamFailCases/case9
+=== RUN   TestRequireDescriptionFiresOnUpstreamFailCases/case10
+=== PAUSE TestRequireDescriptionFiresOnUpstreamFailCases/case10
+=== RUN   TestRequireDescriptionFiresOnUpstreamFailCases/case11
+=== PAUSE TestRequireDescriptionFiresOnUpstreamFailCases/case11
+=== RUN   TestRequireDescriptionFiresOnUpstreamFailCases/case12
+=== PAUSE TestRequireDescriptionFiresOnUpstreamFailCases/case12
+=== RUN   TestRequireDescriptionFiresOnUpstreamFailCases/case13
+=== PAUSE TestRequireDescriptionFiresOnUpstreamFailCases/case13
+=== RUN   TestRequireDescriptionFiresOnUpstreamFailCases/case14
+=== PAUSE TestRequireDescriptionFiresOnUpstreamFailCases/case14
+=== RUN   TestRequireDescriptionFiresOnUpstreamFailCases/case15
+=== PAUSE TestRequireDescriptionFiresOnUpstreamFailCases/case15
+=== RUN   TestRequireDescriptionFiresOnUpstreamFailCases/case16
+=== PAUSE TestRequireDescriptionFiresOnUpstreamFailCases/case16
+=== RUN   TestRequireDescriptionFiresOnUpstreamFailCases/case17
+=== PAUSE TestRequireDescriptionFiresOnUpstreamFailCases/case17
+=== RUN   TestRequireDescriptionFiresOnUpstreamFailCases/case18
+=== PAUSE TestRequireDescriptionFiresOnUpstreamFailCases/case18
+=== RUN   TestRequireDescriptionFiresOnUpstreamFailCases/case19
+=== PAUSE TestRequireDescriptionFiresOnUpstreamFailCases/case19
+=== RUN   TestRequireDescriptionFiresOnUpstreamFailCases/case20
+=== PAUSE TestRequireDescriptionFiresOnUpstreamFailCases/case20
+=== RUN   TestRequireDescriptionFiresOnUpstreamFailCases/case21
+=== PAUSE TestRequireDescriptionFiresOnUpstreamFailCases/case21
+=== RUN   TestRequireDescriptionFiresOnUpstreamFailCases/case22
+=== PAUSE TestRequireDescriptionFiresOnUpstreamFailCases/case22
+=== RUN   TestRequireDescriptionMatchesUpstreamOnCommentShapes/case1
+=== PAUSE TestRequireDescriptionMatchesUpstreamOnCommentShapes/case1
+=== RUN   TestRequireDescriptionMatchesUpstreamOnCommentShapes/case2
+=== PAUSE TestRequireDescriptionMatchesUpstreamOnCommentShapes/case2
+=== RUN   TestRequireDescriptionMatchesUpstreamOnCommentShapes/case3
+=== PAUSE TestRequireDescriptionMatchesUpstreamOnCommentShapes/case3
+=== RUN   TestRequireDescriptionMatchesUpstreamOnCommentShapes/case4
+=== PAUSE TestRequireDescriptionMatchesUpstreamOnCommentShapes/case4
+=== RUN   TestRequireDescriptionMatchesUpstreamOnCommentShapes/case5
+=== PAUSE TestRequireDescriptionMatchesUpstreamOnCommentShapes/case5
+=== RUN   TestRequireDescriptionMatchesUpstreamOnCommentShapes/case6
+=== PAUSE TestRequireDescriptionMatchesUpstreamOnCommentShapes/case6
+=== RUN   TestRequireDescriptionMatchesUpstreamOnCommentShapes/case7
+=== PAUSE TestRequireDescriptionMatchesUpstreamOnCommentShapes/case7
+=== RUN   TestRequireDescriptionMatchesUpstreamOnCommentShapes/case8
+=== PAUSE TestRequireDescriptionMatchesUpstreamOnCommentShapes/case8
+=== RUN   TestRequireDescriptionMatchesUpstreamOnCommentShapes/case9
+=== PAUSE TestRequireDescriptionMatchesUpstreamOnCommentShapes/case9
+=== RUN   TestRequireDescriptionMatchesUpstreamOnCommentShapes/case10
+=== PAUSE TestRequireDescriptionMatchesUpstreamOnCommentShapes/case10
+=== RUN   TestRequireDescriptionMatchesUpstreamOnCommentShapes/case11
+=== PAUSE TestRequireDescriptionMatchesUpstreamOnCommentShapes/case11
+=== RUN   TestRequireDescriptionMatchesUpstreamOnCommentShapes/case12
+=== PAUSE TestRequireDescriptionMatchesUpstreamOnCommentShapes/case12
+=== RUN   TestRequireDescriptionMatchesUpstreamOnCommentShapes/case13
+=== PAUSE TestRequireDescriptionMatchesUpstreamOnCommentShapes/case13
+=== RUN   TestRequireDescriptionMatchesUpstreamOnCommentShapes/case14
+=== PAUSE TestRequireDescriptionMatchesUpstreamOnCommentShapes/case14
+=== RUN   TestRequireDescriptionMatchesUpstreamOnCommentShapes/case15
+=== PAUSE TestRequireDescriptionMatchesUpstreamOnCommentShapes/case15
+=== RUN   TestRequireDescriptionMatchesUpstreamOnCommentShapes/case16
+=== PAUSE TestRequireDescriptionMatchesUpstreamOnCommentShapes/case16
+=== RUN   TestRequireDescriptionMatchesUpstreamOnCommentShapes/case17
+=== PAUSE TestRequireDescriptionMatchesUpstreamOnCommentShapes/case17
+=== RUN   TestRequireDescriptionMatchesUpstreamOnCommentShapes/case18
+=== PAUSE TestRequireDescriptionMatchesUpstreamOnCommentShapes/case18
+=== RUN   TestRequireDescriptionMatchesUpstreamOnCommentShapes/case19
+=== PAUSE TestRequireDescriptionMatchesUpstreamOnCommentShapes/case19
+=== RUN   TestRequireDescriptionMatchesUpstreamOnCommentShapes/case20
+=== PAUSE TestRequireDescriptionMatchesUpstreamOnCommentShapes/case20
+=== RUN   TestRequireDescriptionMatchesUpstreamOnCommentShapes/case21
+=== PAUSE TestRequireDescriptionMatchesUpstreamOnCommentShapes/case21
+=== RUN   TestRequireDescriptionMatchesUpstreamOnCommentShapes/case22
+=== PAUSE TestRequireDescriptionMatchesUpstreamOnCommentShapes/case22
+=== CONT  TestRequireDescriptionDecoderRefusesWhatTheSchemaRefuses
+--- PASS: TestRequireDescriptionDecoderRefusesWhatTheSchemaRefuses (0.00s)
+=== CONT  TestRequireDescriptionWithNoOptionsAtAll
+--- PASS: TestRequireDescriptionWithNoOptionsAtAll (0.00s)
+=== CONT  TestRequireDescriptionFiresOnUpstreamFailCases/case0
+=== PAUSE TestRequireDescriptionCoversWhatCohereHonors/case8
+=== RUN   TestRequireDescriptionCoversWhatCohereHonors/case9
+=== PAUSE TestRequireDescriptionCoversWhatCohereHonors/case9
+=== RUN   TestRequireDescriptionCoversWhatCohereHonors/case10
+=== PAUSE TestRequireDescriptionCoversWhatCohereHonors/case10
+=== RUN   TestRequireDescriptionCoversWhatCohereHonors/case11
+=== PAUSE TestRequireDescriptionCoversWhatCohereHonors/case11
+=== RUN   TestRequireDescriptionCoversWhatCohereHonors/case12
+=== PAUSE TestRequireDescriptionCoversWhatCohereHonors/case12
+=== RUN   TestRequireDescriptionCoversWhatCohereHonors/case13
+=== PAUSE TestRequireDescriptionCoversWhatCohereHonors/case13
+=== RUN   TestRequireDescriptionCoversWhatCohereHonors/case14
+=== PAUSE TestRequireDescriptionCoversWhatCohereHonors/case14
+=== RUN   TestRequireDescriptionCoversWhatCohereHonors/case15
+=== PAUSE TestRequireDescriptionCoversWhatCohereHonors/case15
+=== RUN   TestRequireDescriptionCoversWhatCohereHonors/case16
+=== PAUSE TestRequireDescriptionCoversWhatCohereHonors/case16
+=== RUN   TestRequireDescriptionCoversWhatCohereHonors/case17
+=== PAUSE TestRequireDescriptionCoversWhatCohereHonors/case17
+=== RUN   TestRequireDescriptionCoversWhatCohereHonors/case18
+=== PAUSE TestRequireDescriptionCoversWhatCohereHonors/case18
+=== RUN   TestRequireDescriptionCoversWhatCohereHonors/case19
+=== PAUSE TestRequireDescriptionCoversWhatCohereHonors/case19
+=== RUN   TestRequireDescriptionCoversWhatCohereHonors/case20
+=== PAUSE TestRequireDescriptionCoversWhatCohereHonors/case20
+=== RUN   TestRequireDescriptionCoversWhatCohereHonors/case21
+=== PAUSE TestRequireDescriptionCoversWhatCohereHonors/case21
+=== RUN   TestRequireDescriptionCoversWhatCohereHonors/case22
+=== PAUSE TestRequireDescriptionCoversWhatCohereHonors/case22
+=== RUN   TestRequireDescriptionCoversWhatCohereHonors/case23
+=== PAUSE TestRequireDescriptionCoversWhatCohereHonors/case23
+=== RUN   TestRequireDescriptionCoversWhatCohereHonors/case24
+=== PAUSE TestRequireDescriptionCoversWhatCohereHonors/case24
+=== RUN   TestRequireDescriptionCoversWhatCohereHonors/case25
+=== PAUSE TestRequireDescriptionCoversWhatCohereHonors/case25
+=== CONT  TestRequireDescriptionIsRegisteredAsADirectiveSubject
+--- PASS: TestRequireDescriptionIsRegisteredAsADirectiveSubject (0.00s)
+=== CONT  TestRequireDescriptionFiresOnUpstreamFailCases/case21
+=== CONT  TestRequireDescriptionFiresOnUpstreamFailCases/case20
+=== CONT  TestRequireDescriptionFiresOnUpstreamFailCases/case19
+=== CONT  TestRequireDescriptionFiresOnUpstreamFailCases/case18
+=== CONT  TestRequireDescriptionFiresOnUpstreamFailCases/case17
+=== CONT  TestRequireDescriptionFiresOnUpstreamFailCases/case16
+=== CONT  TestRequireDescriptionFiresOnUpstreamFailCases/case22
+=== CONT  TestRequireDescriptionMatchesUpstreamOnCommentShapes/case0
+=== RUN   TestRequireDescriptionStaysSilentOnUpstreamPassCases/case10
+=== PAUSE TestRequireDescriptionReadsTheSeparatorAsESLintDoes/case4
+=== CONT  TestRequireDescriptionFiresOnUpstreamFailCases/case14
+=== CONT  TestRequireDescriptionFiresOnUpstreamFailCases/case15
+=== CONT  TestRequireDescriptionFiresOnUpstreamFailCases/case13
+=== PAUSE TestRequireDescriptionStaysSilentOnUpstreamPassCases/case10
+=== RUN   TestRequireDescriptionReadsTheSeparatorAsESLintDoes/case5
+=== RUN   TestRequireDescriptionStaysSilentOnUpstreamPassCases/case11
+=== PAUSE TestRequireDescriptionReadsTheSeparatorAsESLintDoes/case5
+=== RUN   TestRequireDescriptionReadsTheSeparatorAsESLintDoes/case6
+=== PAUSE TestRequireDescriptionReadsTheSeparatorAsESLintDoes/case6
+=== RUN   TestRequireDescriptionReadsTheSeparatorAsESLintDoes/case7
+=== PAUSE TestRequireDescriptionReadsTheSeparatorAsESLintDoes/case7
+=== RUN   TestRequireDescriptionReadsTheSeparatorAsESLintDoes/case8
+=== PAUSE TestRequireDescriptionReadsTheSeparatorAsESLintDoes/case8
+=== RUN   TestRequireDescriptionReadsTheSeparatorAsESLintDoes/case9
+=== PAUSE TestRequireDescriptionReadsTheSeparatorAsESLintDoes/case9
+=== RUN   TestRequireDescriptionReadsTheSeparatorAsESLintDoes/case10
+=== CONT  TestRequireDescriptionFiresOnUpstreamFailCases/case12
+=== PAUSE TestRequireDescriptionReadsTheSeparatorAsESLintDoes/case10
+=== PAUSE TestRequireDescriptionStaysSilentOnUpstreamPassCases/case11
+=== RUN   TestRequireDescriptionStaysSilentOnUpstreamPassCases/case12
+=== PAUSE TestRequireDescriptionStaysSilentOnUpstreamPassCases/case12
+=== RUN   TestRequireDescriptionStaysSilentOnUpstreamPassCases/case13
+=== PAUSE TestRequireDescriptionStaysSilentOnUpstreamPassCases/case13
+=== RUN   TestRequireDescriptionStaysSilentOnUpstreamPassCases/case14
+=== PAUSE TestRequireDescriptionStaysSilentOnUpstreamPassCases/case14
+=== RUN   TestRequireDescriptionStaysSilentOnUpstreamPassCases/case15
+=== PAUSE TestRequireDescriptionStaysSilentOnUpstreamPassCases/case15
+=== RUN   TestRequireDescriptionStaysSilentOnUpstreamPassCases/case16
+=== PAUSE TestRequireDescriptionStaysSilentOnUpstreamPassCases/case16
+=== RUN   TestRequireDescriptionStaysSilentOnUpstreamPassCases/case17
+=== PAUSE TestRequireDescriptionStaysSilentOnUpstreamPassCases/case17
+=== RUN   TestRequireDescriptionStaysSilentOnUpstreamPassCases/case18
+=== PAUSE TestRequireDescriptionStaysSilentOnUpstreamPassCases/case18
+=== RUN   TestRequireDescriptionStaysSilentOnUpstreamPassCases/case19
+=== PAUSE TestRequireDescriptionStaysSilentOnUpstreamPassCases/case19
+=== RUN   TestRequireDescriptionStaysSilentOnUpstreamPassCases/case20
+=== PAUSE TestRequireDescriptionStaysSilentOnUpstreamPassCases/case20
+=== RUN   TestRequireDescriptionStaysSilentOnUpstreamPassCases/case21
+=== PAUSE TestRequireDescriptionStaysSilentOnUpstreamPassCases/case21
+=== RUN   TestRequireDescriptionStaysSilentOnUpstreamPassCases/case22
+=== PAUSE TestRequireDescriptionStaysSilentOnUpstreamPassCases/case22
+=== RUN   TestRequireDescriptionStaysSilentOnUpstreamPassCases/case23
+=== PAUSE TestRequireDescriptionStaysSilentOnUpstreamPassCases/case23
+=== RUN   TestRequireDescriptionStaysSilentOnUpstreamPassCases/case24
+=== PAUSE TestRequireDescriptionStaysSilentOnUpstreamPassCases/case24
+=== RUN   TestRequireDescriptionStaysSilentOnUpstreamPassCases/case25
+=== PAUSE TestRequireDescriptionStaysSilentOnUpstreamPassCases/case25
+=== CONT  TestRequireDescriptionFiresOnUpstreamFailCases/case8
+=== CONT  TestRequireDescriptionFiresOnUpstreamFailCases/case6
+=== CONT  TestRequireDescriptionFiresOnUpstreamFailCases/case5
+=== CONT  TestRequireDescriptionFiresOnUpstreamFailCases/case4
+=== CONT  TestRequireDescriptionFiresOnUpstreamFailCases/case3
+=== CONT  TestRequireDescriptionFiresOnUpstreamFailCases/case2
+=== CONT  TestRequireDescriptionFiresOnUpstreamFailCases/case1
+=== CONT  TestRequireDescriptionFiresOnUpstreamFailCases/case10
+=== CONT  TestRequireDescriptionMatchesUpstreamOnCommentShapes/case11
+=== CONT  TestRequireDescriptionFiresOnUpstreamFailCases/case7
+=== CONT  TestRequireDescriptionMatchesUpstreamOnCommentShapes/case22
+=== CONT  TestRequireDescriptionCoversWhatCohereHonors/case0
+=== CONT  TestRequireDescriptionMatchesUpstreamOnCommentShapes/case21
+=== CONT  TestRequireDescriptionFiresOnUpstreamFailCases/case9
+=== CONT  TestRequireDescriptionMatchesUpstreamOnCommentShapes/case20
+=== CONT  TestRequireDescriptionMatchesUpstreamOnCommentShapes/case19
+=== CONT  TestRequireDescriptionFiresOnUpstreamFailCases/case11
+=== CONT  TestRequireDescriptionMatchesUpstreamOnCommentShapes/case17
+=== CONT  TestRequireDescriptionMatchesUpstreamOnCommentShapes/case18
+=== CONT  TestRequireDescriptionMatchesUpstreamOnCommentShapes/case16
+=== CONT  TestRequireDescriptionMatchesUpstreamOnCommentShapes/case15
+--- PASS: TestRequireDescriptionFiresOnUpstreamFailCases (0.00s)
+    --- PASS: TestRequireDescriptionFiresOnUpstreamFailCases/case0 (0.00s)
+    --- PASS: TestRequireDescriptionFiresOnUpstreamFailCases/case21 (0.00s)
+    --- PASS: TestRequireDescriptionFiresOnUpstreamFailCases/case20 (0.00s)
+    --- PASS: TestRequireDescriptionFiresOnUpstreamFailCases/case19 (0.00s)
+    --- PASS: TestRequireDescriptionFiresOnUpstreamFailCases/case18 (0.00s)
+    --- PASS: TestRequireDescriptionFiresOnUpstreamFailCases/case17 (0.00s)
+    --- PASS: TestRequireDescriptionFiresOnUpstreamFailCases/case22 (0.00s)
+    --- PASS: TestRequireDescriptionFiresOnUpstreamFailCases/case16 (0.00s)
+    --- PASS: TestRequireDescriptionFiresOnUpstreamFailCases/case15 (0.00s)
+    --- PASS: TestRequireDescriptionFiresOnUpstreamFailCases/case14 (0.00s)
+    --- PASS: TestRequireDescriptionFiresOnUpstreamFailCases/case13 (0.00s)
+    --- PASS: TestRequireDescriptionFiresOnUpstreamFailCases/case12 (0.00s)
+    --- PASS: TestRequireDescriptionFiresOnUpstreamFailCases/case8 (0.00s)
+    --- PASS: TestRequireDescriptionFiresOnUpstreamFailCases/case6 (0.00s)
+    --- PASS: TestRequireDescriptionFiresOnUpstreamFailCases/case5 (0.00s)
+    --- PASS: TestRequireDescriptionFiresOnUpstreamFailCases/case4 (0.00s)
+    --- PASS: TestRequireDescriptionFiresOnUpstreamFailCases/case3 (0.00s)
+    --- PASS: TestRequireDescriptionFiresOnUpstreamFailCases/case2 (0.00s)
+    --- PASS: TestRequireDescriptionFiresOnUpstreamFailCases/case1 (0.00s)
+    --- PASS: TestRequireDescriptionFiresOnUpstreamFailCases/case10 (0.00s)
+    --- PASS: TestRequireDescriptionFiresOnUpstreamFailCases/case7 (0.00s)
+    --- PASS: TestRequireDescriptionFiresOnUpstreamFailCases/case9 (0.00s)
+    --- PASS: TestRequireDescriptionFiresOnUpstreamFailCases/case11 (0.00s)
+=== CONT  TestRequireDescriptionMatchesUpstreamOnCommentShapes/case14
+=== CONT  TestRequireDescriptionMatchesUpstreamOnCommentShapes/case13
+=== CONT  TestRequireDescriptionMatchesUpstreamOnCommentShapes/case12
+=== CONT  TestRequireDescriptionCoversWhatCohereHonors/case13
+=== CONT  TestRequireDescriptionCoversWhatCohereHonors/case25
+=== CONT  TestRequireDescriptionCoversWhatCohereHonors/case24
+=== CONT  TestRequireDescriptionCoversWhatCohereHonors/case23
+=== CONT  TestRequireDescriptionCoversWhatCohereHonors/case22
+=== CONT  TestRequireDescriptionCoversWhatCohereHonors/case21
+=== CONT  TestRequireDescriptionCoversWhatCohereHonors/case20
+=== CONT  TestRequireDescriptionCoversWhatCohereHonors/case19
+=== CONT  TestRequireDescriptionCoversWhatCohereHonors/case18
+=== CONT  TestRequireDescriptionCoversWhatCohereHonors/case17
+=== CONT  TestRequireDescriptionCoversWhatCohereHonors/case16
+=== CONT  TestRequireDescriptionCoversWhatCohereHonors/case15
+=== CONT  TestRequireDescriptionCoversWhatCohereHonors/case14
+=== CONT  TestRequireDescriptionMatchesUpstreamOnCommentShapes/case5
+=== CONT  TestRequireDescriptionMatchesUpstreamOnCommentShapes/case9
+=== CONT  TestRequireDescriptionMatchesUpstreamOnCommentShapes/case8
+=== CONT  TestRequireDescriptionMatchesUpstreamOnCommentShapes/case6
+=== CONT  TestRequireDescriptionMatchesUpstreamOnCommentShapes/case7
+=== CONT  TestRequireDescriptionCoversWhatCohereHonors/case12
+=== CONT  TestRequireDescriptionMatchesUpstreamOnCommentShapes/case10
+=== CONT  TestRequireDescriptionCoversWhatCohereHonors/case10
+=== CONT  TestRequireDescriptionCoversWhatCohereHonors/case7
+=== CONT  TestRequireDescriptionCoversWhatCohereHonors/case9
+=== CONT  TestRequireDescriptionCoversWhatCohereHonors/case8
+=== CONT  TestRequireDescriptionCoversWhatCohereHonors/case2
+=== CONT  TestRequireDescriptionCoversWhatCohereHonors/case1
+=== CONT  TestRequireDescriptionCoversWhatCohereHonors/case3
+=== CONT  TestRequireDescriptionMatchesUpstreamOnCommentShapes/case3
+=== CONT  TestRequireDescriptionCoversWhatCohereHonors/case11
+=== CONT  TestRequireDescriptionMatchesUpstreamOnCommentShapes/case4
+=== CONT  TestRequireDescriptionCoversWhatCohereHonors/case4
+=== CONT  TestRequireDescriptionCoversWhatCohereHonors/case6
+=== CONT  TestRequireDescriptionMatchesUpstreamOnCommentShapes/case1
+=== CONT  TestRequireDescriptionReadsTheSeparatorAsESLintDoes/case0
+=== CONT  TestRequireDescriptionMatchesUpstreamOnCommentShapes/case2
+=== CONT  TestRequireDescriptionReadsTheSeparatorAsESLintDoes/case10
+=== CONT  TestRequireDescriptionStaysSilentOnUpstreamPassCases/case0
+=== CONT  TestRequireDescriptionReadsTheSeparatorAsESLintDoes/case9
+=== CONT  TestRequireDescriptionCoversWhatCohereHonors/case5
+--- PASS: TestRequireDescriptionCoversWhatCohereHonors (0.00s)
+    --- PASS: TestRequireDescriptionCoversWhatCohereHonors/case0 (0.00s)
+    --- PASS: TestRequireDescriptionCoversWhatCohereHonors/case13 (0.00s)
+    --- PASS: TestRequireDescriptionCoversWhatCohereHonors/case25 (0.00s)
+    --- PASS: TestRequireDescriptionCoversWhatCohereHonors/case22 (0.00s)
+    --- PASS: TestRequireDescriptionCoversWhatCohereHonors/case21 (0.00s)
+    --- PASS: TestRequireDescriptionCoversWhatCohereHonors/case20 (0.00s)
+    --- PASS: TestRequireDescriptionCoversWhatCohereHonors/case19 (0.00s)
+    --- PASS: TestRequireDescriptionCoversWhatCohereHonors/case18 (0.00s)
+    --- PASS: TestRequireDescriptionCoversWhatCohereHonors/case17 (0.00s)
+    --- PASS: TestRequireDescriptionCoversWhatCohereHonors/case16 (0.00s)
+    --- PASS: TestRequireDescriptionCoversWhatCohereHonors/case15 (0.00s)
+    --- PASS: TestRequireDescriptionCoversWhatCohereHonors/case24 (0.00s)
+    --- PASS: TestRequireDescriptionCoversWhatCohereHonors/case14 (0.00s)
+    --- PASS: TestRequireDescriptionCoversWhatCohereHonors/case23 (0.00s)
+    --- PASS: TestRequireDescriptionCoversWhatCohereHonors/case12 (0.00s)
+    --- PASS: TestRequireDescriptionCoversWhatCohereHonors/case10 (0.00s)
+    --- PASS: TestRequireDescriptionCoversWhatCohereHonors/case7 (0.00s)
+    --- PASS: TestRequireDescriptionCoversWhatCohereHonors/case9 (0.00s)
+    --- PASS: TestRequireDescriptionCoversWhatCohereHonors/case2 (0.00s)
+    --- PASS: TestRequireDescriptionCoversWhatCohereHonors/case8 (0.00s)
+    --- PASS: TestRequireDescriptionCoversWhatCohereHonors/case1 (0.00s)
+    --- PASS: TestRequireDescriptionCoversWhatCohereHonors/case3 (0.00s)
+    --- PASS: TestRequireDescriptionCoversWhatCohereHonors/case11 (0.00s)
+    --- PASS: TestRequireDescriptionCoversWhatCohereHonors/case4 (0.00s)
+    --- PASS: TestRequireDescriptionCoversWhatCohereHonors/case6 (0.00s)
+    --- PASS: TestRequireDescriptionCoversWhatCohereHonors/case5 (0.00s)
+=== CONT  TestRequireDescriptionReadsTheSeparatorAsESLintDoes/case7
+=== CONT  TestRequireDescriptionReadsTheSeparatorAsESLintDoes/case6
+=== CONT  TestRequireDescriptionReadsTheSeparatorAsESLintDoes/case5
+=== CONT  TestRequireDescriptionReadsTheSeparatorAsESLintDoes/case4
+=== CONT  TestRequireDescriptionReadsTheSeparatorAsESLintDoes/case3
+=== CONT  TestRequireDescriptionReadsTheSeparatorAsESLintDoes/case8
+=== CONT  TestRequireDescriptionReadsTheSeparatorAsESLintDoes/case2
+=== CONT  TestRequireDescriptionReadsTheSeparatorAsESLintDoes/case1
+=== CONT  TestRequireDescriptionStaysSilentOnUpstreamPassCases/case20
+=== CONT  TestRequireDescriptionStaysSilentOnUpstreamPassCases/case25
+=== CONT  TestRequireDescriptionStaysSilentOnUpstreamPassCases/case24
+=== CONT  TestRequireDescriptionStaysSilentOnUpstreamPassCases/case22
+=== CONT  TestRequireDescriptionStaysSilentOnUpstreamPassCases/case23
+=== CONT  TestRequireDescriptionStaysSilentOnUpstreamPassCases/case21
+=== CONT  TestRequireDescriptionStaysSilentOnUpstreamPassCases/case17
+=== CONT  TestRequireDescriptionStaysSilentOnUpstreamPassCases/case19
+=== CONT  TestRequireDescriptionStaysSilentOnUpstreamPassCases/case18
+--- PASS: TestRequireDescriptionMatchesUpstreamOnCommentShapes (0.00s)
+    --- PASS: TestRequireDescriptionMatchesUpstreamOnCommentShapes/case0 (0.00s)
+    --- PASS: TestRequireDescriptionMatchesUpstreamOnCommentShapes/case11 (0.00s)
+    --- PASS: TestRequireDescriptionMatchesUpstreamOnCommentShapes/case22 (0.00s)
+    --- PASS: TestRequireDescriptionMatchesUpstreamOnCommentShapes/case21 (0.00s)
+    --- PASS: TestRequireDescriptionMatchesUpstreamOnCommentShapes/case19 (0.00s)
+    --- PASS: TestRequireDescriptionMatchesUpstreamOnCommentShapes/case15 (0.00s)
+    --- PASS: TestRequireDescriptionMatchesUpstreamOnCommentShapes/case17 (0.00s)
+    --- PASS: TestRequireDescriptionMatchesUpstreamOnCommentShapes/case18 (0.00s)
+    --- PASS: TestRequireDescriptionMatchesUpstreamOnCommentShapes/case16 (0.00s)
+    --- PASS: TestRequireDescriptionMatchesUpstreamOnCommentShapes/case12 (0.00s)
+    --- PASS: TestRequireDescriptionMatchesUpstreamOnCommentShapes/case20 (0.00s)
+    --- PASS: TestRequireDescriptionMatchesUpstreamOnCommentShapes/case14 (0.00s)
+    --- PASS: TestRequireDescriptionMatchesUpstreamOnCommentShapes/case9 (0.00s)
+    --- PASS: TestRequireDescriptionMatchesUpstreamOnCommentShapes/case5 (0.00s)
+    --- PASS: TestRequireDescriptionMatchesUpstreamOnCommentShapes/case13 (0.00s)
+    --- PASS: TestRequireDescriptionMatchesUpstreamOnCommentShapes/case8 (0.00s)
+    --- PASS: TestRequireDescriptionMatchesUpstreamOnCommentShapes/case6 (0.00s)
+    --- PASS: TestRequireDescriptionMatchesUpstreamOnCommentShapes/case7 (0.00s)
+    --- PASS: TestRequireDescriptionMatchesUpstreamOnCommentShapes/case10 (0.00s)
+    --- PASS: TestRequireDescriptionMatchesUpstreamOnCommentShapes/case4 (0.00s)
+    --- PASS: TestRequireDescriptionMatchesUpstreamOnCommentShapes/case3 (0.00s)
+    --- PASS: TestRequireDescriptionMatchesUpstreamOnCommentShapes/case1 (0.00s)
+    --- PASS: TestRequireDescriptionMatchesUpstreamOnCommentShapes/case2 (0.00s)
+=== CONT  TestRequireDescriptionStaysSilentOnUpstreamPassCases/case15
+=== CONT  TestRequireDescriptionStaysSilentOnUpstreamPassCases/case16
+=== CONT  TestRequireDescriptionStaysSilentOnUpstreamPassCases/case14
+=== CONT  TestRequireDescriptionStaysSilentOnUpstreamPassCases/case6
+=== CONT  TestRequireDescriptionStaysSilentOnUpstreamPassCases/case12
+=== CONT  TestRequireDescriptionStaysSilentOnUpstreamPassCases/case11
+=== CONT  TestRequireDescriptionStaysSilentOnUpstreamPassCases/case10
+=== CONT  TestRequireDescriptionStaysSilentOnUpstreamPassCases/case9
+=== CONT  TestRequireDescriptionStaysSilentOnUpstreamPassCases/case8
+=== CONT  TestRequireDescriptionStaysSilentOnUpstreamPassCases/case7
+=== CONT  TestRequireDescriptionStaysSilentOnUpstreamPassCases/case2
+=== CONT  TestRequireDescriptionStaysSilentOnUpstreamPassCases/case5
+=== CONT  TestRequireDescriptionStaysSilentOnUpstreamPassCases/case4
+=== CONT  TestRequireDescriptionStaysSilentOnUpstreamPassCases/case3
+=== CONT  TestRequireDescriptionStaysSilentOnUpstreamPassCases/case1
+--- PASS: TestRequireDescriptionReadsTheSeparatorAsESLintDoes (0.00s)
+    --- PASS: TestRequireDescriptionReadsTheSeparatorAsESLintDoes/case0 (0.00s)
+    --- PASS: TestRequireDescriptionReadsTheSeparatorAsESLintDoes/case10 (0.00s)
+    --- PASS: TestRequireDescriptionReadsTheSeparatorAsESLintDoes/case7 (0.00s)
+    --- PASS: TestRequireDescriptionReadsTheSeparatorAsESLintDoes/case6 (0.00s)
+    --- PASS: TestRequireDescriptionReadsTheSeparatorAsESLintDoes/case5 (0.00s)
+    --- PASS: TestRequireDescriptionReadsTheSeparatorAsESLintDoes/case4 (0.00s)
+    --- PASS: TestRequireDescriptionReadsTheSeparatorAsESLintDoes/case9 (0.00s)
+    --- PASS: TestRequireDescriptionReadsTheSeparatorAsESLintDoes/case3 (0.00s)
+    --- PASS: TestRequireDescriptionReadsTheSeparatorAsESLintDoes/case8 (0.00s)
+    --- PASS: TestRequireDescriptionReadsTheSeparatorAsESLintDoes/case2 (0.00s)
+    --- PASS: TestRequireDescriptionReadsTheSeparatorAsESLintDoes/case1 (0.00s)
+=== CONT  TestRequireDescriptionStaysSilentOnUpstreamPassCases/case13
+--- PASS: TestRequireDescriptionStaysSilentOnUpstreamPassCases (0.00s)
+    --- PASS: TestRequireDescriptionStaysSilentOnUpstreamPassCases/case0 (0.00s)
+    --- PASS: TestRequireDescriptionStaysSilentOnUpstreamPassCases/case25 (0.00s)
+    --- PASS: TestRequireDescriptionStaysSilentOnUpstreamPassCases/case20 (0.00s)
+    --- PASS: TestRequireDescriptionStaysSilentOnUpstreamPassCases/case24 (0.00s)
+    --- PASS: TestRequireDescriptionStaysSilentOnUpstreamPassCases/case22 (0.00s)
+    --- PASS: TestRequireDescriptionStaysSilentOnUpstreamPassCases/case17 (0.00s)
+    --- PASS: TestRequireDescriptionStaysSilentOnUpstreamPassCases/case23 (0.00s)
+    --- PASS: TestRequireDescriptionStaysSilentOnUpstreamPassCases/case19 (0.00s)
+    --- PASS: TestRequireDescriptionStaysSilentOnUpstreamPassCases/case21 (0.00s)
+    --- PASS: TestRequireDescriptionStaysSilentOnUpstreamPassCases/case18 (0.00s)
+    --- PASS: TestRequireDescriptionStaysSilentOnUpstreamPassCases/case14 (0.00s)
+    --- PASS: TestRequireDescriptionStaysSilentOnUpstreamPassCases/case16 (0.00s)
+    --- PASS: TestRequireDescriptionStaysSilentOnUpstreamPassCases/case15 (0.00s)
+    --- PASS: TestRequireDescriptionStaysSilentOnUpstreamPassCases/case6 (0.00s)
+    --- PASS: TestRequireDescriptionStaysSilentOnUpstreamPassCases/case12 (0.00s)
+    --- PASS: TestRequireDescriptionStaysSilentOnUpstreamPassCases/case11 (0.00s)
+    --- PASS: TestRequireDescriptionStaysSilentOnUpstreamPassCases/case10 (0.00s)
+    --- PASS: TestRequireDescriptionStaysSilentOnUpstreamPassCases/case8 (0.00s)
+    --- PASS: TestRequireDescriptionStaysSilentOnUpstreamPassCases/case9 (0.00s)
+    --- PASS: TestRequireDescriptionStaysSilentOnUpstreamPassCases/case5 (0.00s)
+    --- PASS: TestRequireDescriptionStaysSilentOnUpstreamPassCases/case7 (0.00s)
+    --- PASS: TestRequireDescriptionStaysSilentOnUpstreamPassCases/case2 (0.00s)
+    --- PASS: TestRequireDescriptionStaysSilentOnUpstreamPassCases/case4 (0.00s)
+    --- PASS: TestRequireDescriptionStaysSilentOnUpstreamPassCases/case3 (0.00s)
+    --- PASS: TestRequireDescriptionStaysSilentOnUpstreamPassCases/case1 (0.00s)
+    --- PASS: TestRequireDescriptionStaysSilentOnUpstreamPassCases/case13 (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/core	0.021s

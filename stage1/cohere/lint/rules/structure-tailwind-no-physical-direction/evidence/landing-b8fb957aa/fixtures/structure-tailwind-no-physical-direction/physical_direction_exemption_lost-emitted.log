@@ -1,0 +1,495 @@
+case 0
+adamic/no-definite-assignment	definiteAssignment	16 23	`!` here tells tsc this is assigned before it is read, and nothing checks it: read early, it is undefined while its type says otherwise. Assign it where it is declared or in the constructor, or type it with `| undefined` and handle the missing case.
+fixed	class Account { balance!: number; describe(): string { return this.balance.toFixed(2); } }\u000a
+case 1
+adamic/no-definite-assignment	definiteAssignment	4 9	`!` here tells tsc this is assigned before it is read, and nothing checks it: read early, it is undefined while its type says otherwise. Assign it where it is declared or in the constructor, or type it with `| undefined` and handle the missing case.
+fixed	let total!: number; function read(): number { return total; }\u000a
+case 2
+adamic/no-definite-assignment	definiteAssignment	16 24	`!` here tells tsc this is assigned before it is read, and nothing checks it: read early, it is undefined while its type says otherwise. Assign it where it is declared or in the constructor, or type it with `| undefined` and handle the missing case.
+fixed	class Account { #balance!: number; read(): number { return this.#balance; } }\u000a
+case 3
+fixed	console.log('In dedication, with gratitude, to Kenneth Lane Thompson, whose work we stand on. - Kirk and Ahra');\u000a
+case 4
+fixed	declare const ages: Map<string, number>; const age = ages.get('Ahra')!;\u000a
+case 5
+fixed	function makeCounter(start: number): () => number {\u000a\u0009let count = start;\u000a\u0009return () => {\u000a\u0009\u0009count += 1;\u000a\u0009\u0009return count;\u000a\u0009};\u000a}\u000a\u000aconst first = makeCounter(0);\u000aconst second = makeCounter(100);\u000afirst();\u000afirst();\u000aconsole.log(`first: ${first()}, second: ${second()}`);\u000a\u000a// Each iteration gets its own binding of `step`, as in JavaScript.\u000aconst adders: ((value: number) => number)[] = [];\u000afor (let step = 1; step <= 3; step += 1) {\u000a\u0009adders.push((value) => value + step);\u000a}\u000aconsole.log(adders.map((add) => add(10)).join(' '));\u000a
+case 6
+fixed	interface Tree {\u000a\u0009readonly value: number;\u000a\u0009readonly left: Tree | undefined;\u000a\u0009readonly right: Tree | undefined;\u000a}\u000a\u000afunction insert(tree: Tree | undefined, value: number): Tree {\u000a\u0009if (tree === undefined) {\u000a\u0009\u0009return { value, left: undefined, right: undefined };\u000a\u0009}\u000a\u0009if (value < tree.value) {\u000a\u0009\u0009return { ...tree, left: insert(tree.left, value) };\u000a\u0009}\u000a\u0009if (value > tree.value) {\u000a\u0009\u0009return { ...tree, right: insert(tree.right, value) };\u000a\u0009}\u000a\u0009return tree;\u000a}\u000a\u000afunction collect(tree: Tree | undefined, into: number[]): void {\u000a\u0009if (tree !== undefined) {\u000a\u0009\u0009collect(tree.left, into);\u000a\u0009\u0009into.push(tree.value);\u000a\u0009\u0009collect(tree.right, into);\u000a\u0009}\u000a}\u000a\u000afunction height(tree: Tree | undefined): number {\u000a\u0009return tree === undefined ? 0 : 1 + Math.max(height(tree.left), height(tree.right));\u000a}\u000a\u000alet tree: Tree | undefined = undefined;\u000afor (const value of [50, 30, 70, 20, 40, 60, 80, 30, 65]) {\u000a\u0009tree = insert(tree, value);\u000a}\u000aconst before = tree;\u000atree = insert(tree, 10);\u000a\u000aconst values: number[] = [];\u000acollect(tree, values);\u000aconsole.log(values.join(' '));\u000aconsole.log(`height ${height(tree)}, was ${height(before)}`);\u000aconsole.log(`right subtree shared: ${tree.right === before?.right}`);\u000a
+case 7
+fixed	const greeting = 'h\u00e9llo, \u4e16\u754c \ud83c\udf0d';\u000a\u000aconsole.log(`${greeting.length} UTF-16 code units, ${[...greeting].length} code points`);\u000aconsole.log(greeting.slice(7, 9));\u000aconsole.log(`${greeting.codePointAt(10) ?? -1} ${greeting.charCodeAt(11)}`);\u000aconsole.log(`[${greeting.slice(0, 11)}]`);\u000aconsole.log(`${'b' < '\u00e9'} ${'\u005cuFFFF' < '\ud83c\udf0d'}`);\u000aconsole.log(`${'ab'.padStart(5, '-')}|${'  trim me \u005cn'.trim()}|${'na'.repeat(3)}`);\u000aconsole.log(`${greeting.indexOf('\u4e16')} ${greeting.includes('\ud83c\udf0d')} ${greeting.startsWith('h\u00e9')}`);\u000a
+case 8
+fixed	class Account { balance?: number; }\u000a
+case 9
+fixed	class Account { balance = 0; }\u000a
+case 10
+fixed	type Shape =\u000a\u0009| { readonly kind: 'Circle'; readonly radius: number }\u000a\u0009| { readonly kind: 'Rectangle'; readonly width: number; readonly height: number }\u000a\u0009| { readonly kind: 'Triangle'; readonly base: number; readonly height: number };\u000a\u000afunction area(shape: Shape): number {\u000a\u0009switch (shape.kind) {\u000a\u0009\u0009case 'Circle':\u000a\u0009\u0009\u0009return Math.PI * shape.radius ** 2;\u000a\u0009\u0009case 'Rectangle':\u000a\u0009\u0009\u0009return shape.width * shape.height;\u000a\u0009\u0009case 'Triangle':\u000a\u0009\u0009\u0009return (shape.base * shape.height) / 2;\u000a\u0009}\u000a}\u000a\u000aconst shapes: readonly Shape[] = [\u000a\u0009{ kind: 'Circle', radius: 1.5 },\u000a\u0009{ kind: 'Rectangle', width: 3, height: 4 },\u000a\u0009{ kind: 'Triangle', base: 6, height: 2.5 },\u000a];\u000a\u000alet total = 0;\u000afor (const shape of shapes) {\u000a\u0009const shapeArea = area(shape);\u000a\u0009total += shapeArea;\u000a\u0009console.log(`${shape.kind}: ${shapeArea.toFixed(3)}`);\u000a}\u000aconsole.log(`Total: ${total.toFixed(3)} (${total})`);\u000a
+case 11
+fixed	class Account { balance: number; constructor() { this.balance = 0; } }\u000a
+case 12
+fixed	export interface Point {\u000a\u0009readonly x: number;\u000a\u0009readonly y: number;\u000a}\u000a\u000aexport function distance(from: Point, to: Point): number {\u000a\u0009return Math.sqrt((to.x - from.x) ** 2 + (to.y - from.y) ** 2);\u000a}\u000a\u000aexport function pathLength(points: readonly Point[]): number {\u000a\u0009let length = 0;\u000a\u0009let previous: Point | undefined = undefined;\u000a\u0009for (const point of points) {\u000a\u0009\u0009if (previous !== undefined) {\u000a\u0009\u0009\u0009length += distance(previous, point);\u000a\u0009\u0009}\u000a\u0009\u0009previous = point;\u000a\u0009}\u000a\u0009return length;\u000a}\u000a
+case 13
+fixed	class Stack<Item> {\u000a\u0009private readonly items: Item[] = [];\u000a\u000a\u0009push(item: Item): void {\u000a\u0009\u0009this.items.push(item);\u000a\u0009}\u000a\u000a\u0009pop(): Item | undefined {\u000a\u0009\u0009return this.items.pop();\u000a\u0009}\u000a\u000a\u0009size(): number {\u000a\u0009\u0009return this.items.length;\u000a\u0009}\u000a}\u000a\u000aconst openers = new Map<string, string>([\u000a\u0009[')', '('],\u000a\u0009[']', '['],\u000a\u0009['}', '{'],\u000a]);\u000a\u000afunction isBalanced(input: string): boolean {\u000a\u0009const stack = new Stack<string>();\u000a\u0009for (const character of input) {\u000a\u0009\u0009if (character === '(' || character === '[' || character === '{') {\u000a\u0009\u0009\u0009stack.push(character);\u000a\u0009\u0009\u0009continue;\u000a\u0009\u0009}\u000a\u0009\u0009const opener = openers.get(character);\u000a\u0009\u0009if (opener !== undefined && stack.pop() !== opener) {\u000a\u0009\u0009\u0009return false;\u000a\u0009\u0009}\u000a\u0009}\u000a\u0009return stack.size() === 0;\u000a}\u000a\u000afor (const input of ['([]{})', '([)]', '((', '', 'f(x[0]) { }']) {\u000a\u0009console.log(`'${input}' ${isBalanced(input) ? 'balanced' : 'unbalanced'}`);\u000a}\u000a
+case 14
+fixed	import { distance, pathLength, type Point } from './geometry.ts';\u000a\u000aconst route: readonly Point[] = [\u000a\u0009{ x: 0, y: 0 },\u000a\u0009{ x: 3, y: 4 },\u000a\u0009{ x: 3, y: 10 },\u000a\u0009{ x: 0, y: 14 },\u000a];\u000aconsole.log(`legs: ${distance({ x: 0, y: 0 }, { x: 3, y: 4 })} first, ${pathLength(route)} total`);\u000aconsole.log(`diagonal: ${distance({ x: 0, y: 0 }, { x: 1, y: 1 })}`);\u000a
+case 15
+fixed	type Entry = readonly [string, number];\u000a\u000afunction compareEntries(left: Entry, right: Entry): number {\u000a\u0009if (left[1] !== right[1]) {\u000a\u0009\u0009return right[1] - left[1];\u000a\u0009}\u000a\u0009return left[0] < right[0] ? -1 : left[0] > right[0] ? 1 : 0;\u000a}\u000a\u000aconst text = 'the quick brown fox jumps over the lazy dog and the fox naps';\u000aconst counts = new Map<string, number>();\u000afor (const word of text.split(' ')) {\u000a\u0009counts.set(word, (counts.get(word) ?? 0) + 1);\u000a}\u000a\u000aconst entries: Entry[] = [...counts];\u000aentries.sort(compareEntries);\u000afor (const [word, count] of entries.slice(0, 4)) {\u000a\u0009console.log(`${word.padEnd(6, '.')}${count}`);\u000a}\u000aconsole.log(`${counts.size} distinct words`);\u000a
+case 16
+fixed	import { panic } from 'adamic';\u000a\u000atype Parsed = { readonly kind: 'Ok'; readonly value: number } | { readonly kind: 'Error'; readonly message: string };\u000a\u000afunction parseAge(input: string): Parsed {\u000a\u0009const trimmed = input.trim();\u000a\u0009if (trimmed.length === 0) {\u000a\u0009\u0009return { kind: 'Error', message: 'empty' };\u000a\u0009}\u000a\u0009let value = 0;\u000a\u0009for (const character of trimmed) {\u000a\u0009\u0009const digit = character.charCodeAt(0) - 48;\u000a\u0009\u0009if (digit < 0 || digit > 9) {\u000a\u0009\u0009\u0009return { kind: 'Error', message: `'${character}' is not a digit` };\u000a\u0009\u0009}\u000a\u0009\u0009value = value * 10 + digit;\u000a\u0009}\u000a\u0009if (value > 150) {\u000a\u0009\u0009return { kind: 'Error', message: `${value} is too old` };\u000a\u0009}\u000a\u0009return { kind: 'Ok', value };\u000a}\u000a\u000afor (const input of ['42', ' 7 ', '', '12a', '200']) {\u000a\u0009const parsed = parseAge(input);\u000a\u0009switch (parsed.kind) {\u000a\u0009\u0009case 'Ok':\u000a\u0009\u0009\u0009console.log(`ok ${parsed.value}`);\u000a\u0009\u0009\u0009break;\u000a\u0009\u0009case 'Error':\u000a\u0009\u0009\u0009console.log(`error: ${parsed.message}`);\u000a\u0009\u0009\u0009break;\u000a\u0009}\u000a}\u000a\u000aconst ages = new Map<string, number>([['Kirk', 42]]);\u000aconst age = ages.get('Ahra') ?? panic('no age on record for Ahra');\u000aconsole.log(`Ahra is ${age}`);\u000a
+case 17
+fixed	for (let number = 1; number <= 15; number += 1) {\u000a\u0009if (number % 15 === 0) {\u000a\u0009\u0009console.log('FizzBuzz');\u000a\u0009} else if (number % 3 === 0) {\u000a\u0009\u0009console.log('Fizz');\u000a\u0009} else if (number % 5 === 0) {\u000a\u0009\u0009console.log('Buzz');\u000a\u0009} else {\u000a\u0009\u0009console.log(`${number}`);\u000a\u0009}\u000a}\u000a
+case 18
+structure/tailwind-no-physical-direction	useLogicalClass	17 28	The class "ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex ml-4';\u000a
+case 19
+structure/tailwind-no-physical-direction	useLogicalClass	17 82	The class "before:left-1/2" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "before:start-1/2", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'before:absolute before:top-1/2 before:left-1/2 before:size-full';\u000a
+case 20
+structure/tailwind-no-physical-direction	useLogicalClass	17 28	The class "ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = `flex ml-4`;\u000a
+case 21
+structure/tailwind-no-physical-direction	useLogicalClass	52 70	The class "left-[50%]" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "start-[50%]", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const theme = [\u000a    'flex items-center',\u000a    'fixed left-[50%]',\u000a];\u000a
+case 22
+structure/tailwind-no-physical-direction	useLogicalClass	17 30	The class "ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = `flex ml-4 ${other}`;\u000a
+case 23
+structure/tailwind-no-physical-direction	useLogicalClass	32 43	The class "ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = <div className="flex ml-4" />;\u000a
+case 24
+structure/tailwind-no-physical-direction	useLogicalClass	17 28	The class "ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+structure/tailwind-no-physical-direction	useLogicalClass	17 28	The class "mr-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "me-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'ml-4 mr-4';\u000a
+case 25
+structure/tailwind-no-physical-direction	useLogicalClass	17 63	The class "left-[50%]" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "start-[50%]", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'fixed top-[50%] left-[50%] z-50 outline-none';\u000a
+case 26
+structure/tailwind-no-physical-direction	useLogicalClass	17 37	The class "md:hover:ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "md:hover:ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex md:hover:ml-4';\u000a
+case 27
+structure/tailwind-no-physical-direction	useLogicalClass	17 29	The class "-ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "-ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex -ml-4';\u000a
+case 28
+structure/tailwind-no-physical-direction	useLogicalClass	30 37	The class "ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = `flex ${other} ml-4`;\u000a
+case 29
+structure/tailwind-no-physical-direction	useLogicalClass	33 44	The class "ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = mergeClassNames('flex ml-4');\u000a
+case 30
+structure/tailwind-no-physical-direction	useLogicalClass	17 31	The class "md:ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "md:ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex md:ml-4';\u000a
+case 31
+structure/tailwind-no-physical-direction	useLogicalClass	17 35	The class "scroll-pr-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "scroll-pe-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex scroll-pr-4';\u000a
+case 32
+structure/tailwind-no-physical-direction	useLogicalClass	17 35	The class "scroll-ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "scroll-ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex scroll-ml-4';\u000a
+case 33
+structure/tailwind-no-physical-direction	useLogicalClass	17 33	The class "rounded-r" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "rounded-e", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex rounded-r';\u000a
+case 34
+structure/tailwind-no-physical-direction	useLogicalClass	17 36	The class "rounded-l-md" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "rounded-s-md", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex rounded-l-md';\u000a
+case 35
+structure/tailwind-no-physical-direction	useLogicalClass	17 33	The class "rounded-l" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "rounded-s", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex rounded-l';\u000a
+case 36
+structure/tailwind-no-physical-direction	useLogicalClass	17 36	The class "rounded-r-md" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "rounded-e-md", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex rounded-r-md';\u000a
+case 37
+structure/tailwind-no-physical-direction	useLogicalClass	17 32	The class "border-r" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "border-e", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex border-r';\u000a
+case 38
+structure/tailwind-no-physical-direction	useLogicalClass	17 35	The class "scroll-mr-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "scroll-me-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex scroll-mr-4';\u000a
+case 39
+structure/tailwind-no-physical-direction	useLogicalClass	17 35	The class "scroll-pl-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "scroll-ps-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex scroll-pl-4';\u000a
+case 40
+structure/tailwind-no-physical-direction	useLogicalClass	17 34	The class "border-l-2" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "border-s-2", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex border-l-2';\u000a
+case 41
+structure/tailwind-no-physical-direction	useLogicalClass	17 32	The class "border-l" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "border-s", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex border-l';\u000a
+case 42
+structure/tailwind-no-physical-direction	useLogicalClass	17 31	The class "right-0" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "end-0", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex right-0';\u000a
+case 43
+structure/tailwind-no-physical-direction	useLogicalClass	17 30	The class "left-0" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "start-0", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex left-0';\u000a
+case 44
+structure/tailwind-no-physical-direction	useLogicalClass	17 33	The class "text-left" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "text-start", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex text-left';\u000a
+case 45
+structure/tailwind-no-physical-direction	useLogicalClass	17 34	The class "text-right" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "text-end", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex text-right';\u000a
+case 46
+structure/tailwind-no-physical-direction	useLogicalClass	17 28	The class "pr-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "pe-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex pr-4';\u000a
+case 47
+fixed	export const c = 'flex ms-4 me-4';\u000a
+case 48
+structure/tailwind-no-physical-direction	useLogicalClass	17 34	The class "border-r-2" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "border-e-2", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex border-r-2';\u000a
+case 49
+structure/tailwind-no-physical-direction	useLogicalClass	17 28	The class "mr-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "me-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex mr-4';\u000a
+case 50
+fixed	export const message = 'Align the text to the left side';\u000a
+case 51
+structure/tailwind-no-physical-direction	useLogicalClass	17 32	The class "ltr:mr-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ltr:me-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex ltr:mr-4';\u000a
+case 52
+fixed	export const message = 'You have items left in your cart';\u000a
+case 53
+fixed	export const c = 'flex overflow-hidden';\u000a
+case 54
+fixed	export const c = 'border-s-2 rounded-e-md';\u000a
+case 55
+structure/tailwind-no-physical-direction	useLogicalClass	17 32	The class "rtl:ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "rtl:ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex rtl:ml-4';\u000a
+case 56
+fixed	export const c = 'flex mlauto';\u000a
+case 57
+fixed	export const c = 'flex start-0 end-0';\u000a
+case 58
+fixed	export const path = '/repository/source/Thing.ts';\u000a
+case 59
+fixed	export const c = 'flex ml-4';\u000a
+case 60
+fixed	export const c = 'flex -text-left';\u000a
+case 61
+fixed	export const c = '';\u000a
+case 62
+fixed	export const key = 'someIdentifierName';\u000a
+case 63
+fixed	export const note = 'ml-4;';\u000a
+case 64
+fixed	export const c = 'flex text-start text-end';\u000a
+case 65
+fixed	export const c = 'flex ps-4 pe-4';\u000a
+case 66
+fixed	export const c = 'flex ml-';\u000a
+case 67
+fixed	export const token = '{{ml-4}}';\u000a
+case 68
+structure/tailwind-no-physical-direction	useLogicalClass	17 28	The class "pl-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ps-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex pl-4';\u000a
+case 69
+fixed	export const link = 'See docs/text-left.md';\u000a
+case 70
+structure/tailwind-no-physical-direction	useLogicalClass	17 35	The class "md:rtl:ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "md:rtl:ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex md:rtl:ml-4';\u000a
+case 71
+fixed	export const url = 'https://example.com/left/right';\u000a
+case 72
+@eslint-community/eslint-comments/require-description	missingDescription	0 22	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	// eslint-disable-line\u000a
+case 73
+@eslint-community/eslint-comments/require-description	missingDescription	3 29	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	x; // eslint-disable-line foo
+case 74
+@eslint-community/eslint-comments/require-description	missingDescription	0 19	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	/* eslint-enable */
+case 75
+@eslint-community/eslint-comments/require-description	missingDescription	0 20	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	/* eslint-disable */
+case 76
+@eslint-community/eslint-comments/require-description	missingDescription	0 20	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	/* eslint-disable */
+case 77
+fixed	// c8 ignore next
+case 78
+fixed	// c8 ignore next -- covered elsewhere
+case 79
+@eslint-community/eslint-comments/require-description	missingDescription	0 17	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	// c8 ignore next
+case 80
+fixed	// a note about eslint-disable
+case 81
+fixed	// global foo
+case 82
+fixed	// eslint eqeqeq: 0
+case 83
+fixed	/* c8x ignore */
+case 84
+fixed	const s = '/* eslint-disable */';
+case 85
+fixed	/** eslint-disable */
+case 86
+fixed	/* eslint-disabled */
+case 87
+@eslint-community/eslint-comments/require-description	missingDescription	0 31	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	/* eslint-disable-next-line\u000a */
+case 88
+@eslint-community/eslint-comments/require-description	missingDescription	0 20	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+@eslint-community/eslint-comments/require-description	missingDescription	70 89	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	/* eslint-disable */\u000afoo();\u000a// eslint-disable-next-line -- why\u000abar();\u000a/* eslint-enable */
+case 89
+@eslint-community/eslint-comments/require-description	missingDescription	0 22	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	/*\u000a eslint-disable\u000a */
+case 90
+@eslint-community/eslint-comments/require-description	missingDescription	0 18	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	/*eslint-disable*/
+case 91
+@eslint-community/eslint-comments/require-description	missingDescription	0 21	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	//eslint-disable-line
+case 92
+@eslint-community/eslint-comments/require-description	missingDescription	17 37	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	const a = 1;\u000a    /* eslint-disable */\u000aconst b = 2;
+case 93
+@eslint-community/eslint-comments/require-description	missingDescription	16 41	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	const a = <div>{/* eslint-disable-line */}</div>;
+case 94
+@eslint-community/eslint-comments/require-description	missingDescription	0 36	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	// cohere-disable-next-line no-alert
+case 95
+fixed	x;\u000a/* eslint-disable
+case 96
+fixed	// eslint-disable
+case 97
+fixed	// cohere-disabled
+case 98
+@eslint-community/eslint-comments/require-description	missingDescription	0 26	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	/* eslint-disable-line\u000a */
+case 99
+@eslint-community/eslint-comments/require-description	missingDescription	0 24	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	/*\u000a * eslint-disable\u000a */
+case 100
+fixed	// eslint-disable -- generated
+case 101
+fixed	// eslint-enable
+case 102
+fixed	// eslint-disable
+case 103
+@eslint-community/eslint-comments/require-description	missingDescription	0 20	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	/* cohere-disable */
+case 104
+fixed	/* eslint-disable-next-line, foo */
+case 105
+@eslint-community/eslint-comments/require-description	missingDescription	0 26	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	/* istanbul ignore next */
+case 106
+fixed	// a note about cohere-disable
+case 107
+fixed	/* cohere-enable -- generated */
+case 108
+fixed	// cohere-disable-next-line foo
+case 109
+fixed	// eslint-disable eqeqeq
+case 110
+@eslint-community/eslint-comments/require-description	missingDescription	0 23	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	/* oxlint-enable foo */
+case 111
+fixed	/* cohere-disable -- generated */
+case 112
+@eslint-community/eslint-comments/require-description	missingDescription	0 35	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	// cohere-disable-next-line foo -- 
+case 113
+fixed	// cohere-disable-next-line no-alert -- the kiosk build has no other channel
+case 114
+@eslint-community/eslint-comments/require-description	missingDescription	1 31	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	{/* cohere-disable-next-line */}
+case 115
+@eslint-community/eslint-comments/require-description	missingDescription	0 36	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	// cohere-disable-next-line foo--bar
+case 116
+@eslint-community/eslint-comments/require-description	missingDescription	0 31	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	// verify-disable-next-line foo
+case 117
+@eslint-community/eslint-comments/require-description	missingDescription	0 20	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	/* cohere-disable */
+case 118
+fixed	/* cohere-enable */
+case 119
+@eslint-community/eslint-comments/require-description	missingDescription	3 25	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	x; // cohere-disable-line
+case 120
+@eslint-community/eslint-comments/require-description	missingDescription	0 12	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	/* eslint */
+case 121
+@eslint-community/eslint-comments/require-description	missingDescription	0 30	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	/* eslint-disable-next-line */
+case 122
+@eslint-community/eslint-comments/require-description	missingDescription	0 31	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	// oxlint-disable-next-line foo
+case 123
+@eslint-community/eslint-comments/require-description	missingDescription	0 21	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	/* eslint-env node */
+case 124
+@eslint-community/eslint-comments/require-description	missingDescription	0 32	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	/* eslint-disable-line eqeqeq */
+case 125
+@eslint-community/eslint-comments/require-description	missingDescription	0 19	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	/* cohere-enable */
+case 126
+@eslint-community/eslint-comments/require-description	missingDescription	0 22	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	// eslint-disable-line
+case 127
+@eslint-community/eslint-comments/require-description	missingDescription	0 16	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	/* eslint-env */
+case 128
+@eslint-community/eslint-comments/require-description	missingDescription	0 34	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	// eslint-disable-next-line eqeqeq
+case 129
+@eslint-community/eslint-comments/require-description	missingDescription	0 40	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	/* eslint-disable-next-line eqeqeq -- */
+case 130
+@eslint-community/eslint-comments/require-description	missingDescription	0 15	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	/* globals _ */
+case 131
+@eslint-community/eslint-comments/require-description	missingDescription	0 20	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	/* c8 ignore next */
+case 132
+@eslint-community/eslint-comments/require-description	missingDescription	0 27	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	// eslint-disable-next-line
+case 133
+@eslint-community/eslint-comments/require-description	missingDescription	0 29	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	// eslint-disable-line eqeqeq
+case 134
+@eslint-community/eslint-comments/require-description	missingDescription	0 25	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	/* eslint-disable-line */
+case 135
+@eslint-community/eslint-comments/require-description	missingDescription	0 37	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	/* eslint-disable-next-line eqeqeq */
+case 136
+@eslint-community/eslint-comments/require-description	missingDescription	0 14	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	/* exported */
+case 137
+@eslint-community/eslint-comments/require-description	missingDescription	0 13	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	/* globals */
+case 138
+@eslint-community/eslint-comments/require-description	missingDescription	0 26	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	/* eslint-enable eqeqeq */
+case 139
+@eslint-community/eslint-comments/require-description	missingDescription	0 27	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	/* eslint-disable eqeqeq */
+case 140
+@eslint-community/eslint-comments/require-description	missingDescription	0 19	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	/* eslint-enable */
+case 141
+@eslint-community/eslint-comments/require-description	missingDescription	0 14	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	/* global _ */
+case 142
+@eslint-community/eslint-comments/require-description	missingDescription	0 42	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	/* eslint eqeqeq: "off", curly: "error" */
+case 143
+fixed	/* eslint-disable-next-line\u0009foo\u0009--\u0009reason */
+case 144
+@eslint-community/eslint-comments/require-description	missingDescription	0 35	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	// eslint-disable-next-line foo -- 
+case 145
+fixed	// eslint-disable-next-line foo -- -- 
+case 146
+fixed	// eslint-disable-next-line foo -- --bar
+case 147
+fixed	// eslint-disable-next-line foo -- bar
+case 148
+fixed	// eslint-disable-next-line foo\u00a0--\u00a0bar
+case 149
+@eslint-community/eslint-comments/require-description	missingDescription	0 36	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	// eslint-disable-next-line foo--bar
+case 150
+@eslint-community/eslint-comments/require-description	missingDescription	0 25	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	/* eslint-disable -- \u0009 */
+case 151
+@eslint-community/eslint-comments/require-description	missingDescription	0 12	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	/* global */
+case 152
+@eslint-community/eslint-comments/require-description	missingDescription	0 35	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	// eslint-disable-next-line foo --\u0009
+case 153
+@eslint-community/eslint-comments/require-description	missingDescription	0 34	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	// eslint-disable-next-line foo --
+case 154
+fixed	/* eslint */
+case 155
+fixed	/* c8 ignore next */
+case 156
+fixed	/* eslint eqeqeq: "off", curly: "error" -- Here's a description about why this configuration is necessary. */
+case 157
+fixed	/* globals */
+case 158
+fixed	/* eslint-disable-next-line */
+case 159
+fixed	/* global */
+case 160
+fixed	/* eslint-disable-line */
+case 161
+fixed	/* c8 ignore next -- description */
+case 162
+fixed	// eslint-disable-line
+case 163
+fixed	// eslint-disable-next-line
+case 164
+fixed	/* eslint-enable */
+case 165
+fixed	/* eslint-disable */
+case 166
+fixed	// eslint-disable-next-line eqeqeq -- description
+case 167
+fixed	/* c8 without options */
+case 168
+fixed	/* eslint-disable-next-line -- description */
+case 169
+fixed	// eslint-disable-line eqeqeq -- description
+case 170
+fixed	// eslint-disable-line -- description
+case 171
+fixed	/* eslint-disable-line -- description */
+case 172
+fixed	/* just eslint in a normal comment */
+case 173
+fixed	// eslint-disable-next-line -- description
+case 174
+fixed	/* globals -- description */
+case 175
+fixed	/* eslint-enable -- description */
+case 176
+fixed	/* exported -- description */
+case 177
+fixed	// eslint-disable-next-line foo ---  bar
+case 178
+fixed	/* global -- description */
+case 179
+fixed	/* eslint-disable -- description */
+case 180
+fixed	/* exported */
+case 181
+@next/next/google-font-display	googleFontDisplayMissing	26 92	This Google Fonts <link> has no `display` parameter, so the browser uses the default and hides the text while the font downloads. On a slow connection that is a blank block where the words should be. Add `&display=optional` or `&display=swap` to the href so the text is painted in a fallback face first.
+fixed	export const Test = () => <link href="https://fonts.googleapis.com/css2?family=Krona+One" />;
+case 182
+@next/next/google-font-display	googleFontDisplayMissing	26 100	This Google Fonts <link> has no `display` parameter, so the browser uses the default and hides the text while the font downloads. On a slow connection that is a blank block where the words should be. Add `&display=optional` or `&display=swap` to the href so the text is painted in a fallback face first.
+fixed	export const Test = () => <link href="https://fonts.googleapis.com/css2?family=Krona+One&display" />;
+case 183
+@next/next/google-font-display	googleFontDisplayMissing	26 75	This Google Fonts <link> has no `display` parameter, so the browser uses the default and hides the text while the font downloads. On a slow connection that is a blank block where the words should be. Add `&display=optional` or `&display=swap` to the href so the text is painted in a fallback face first.
+fixed	export const Test = () => <link href="https://fonts.googleapis.com/css2" />;
+case 184
+fixed	export const Test = () => <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=optional" />;
+case 185
+@next/next/google-font-display	googleFontDisplayNotRecommended	26 109	This Google Fonts <link> sets `display` to auto, block, or fallback, each of which blocks or flashes the text while the font loads. Use `optional`, which paints a fallback immediately and only swaps if the font arrives in time, or `swap` if the exact face matters more than the reflow.
+fixed	export const Test = () => <link href="https://fonts.googleapis.com/css2?display=fallback&family=Krona+One" />;
+case 186
+fixed	export const Test = () => <link rel="preconnect" href="https://fonts.gstatic.com" />;
+case 187
+@next/next/google-font-display	googleFontDisplayNotRecommended	26 105	This Google Fonts <link> sets `display` to auto, block, or fallback, each of which blocks or flashes the text while the font loads. Use `optional`, which paints a fallback immediately and only swaps if the font arrives in time, or `swap` if the exact face matters more than the reflow.
+fixed	export const Test = () => <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=auto" />;
+case 188
+fixed	export const Test = () => <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=something" />;
+case 189
+fixed	export const Test = () => <link href="https://example.com/css?family=Krona+One" />;
+case 190
+fixed	export const Test = () => <link href="https://fonts.googleapis.com/css?family=Krona+One&display=swap" />;
+case 191
+fixed	export const Test = () => <Foo.link href="https://fonts.googleapis.com/css2?family=Krona+One" />;
+case 192
+fixed	export const Test = () => <link href={fontUrl} />;
+case 193
+fixed	export const Test = (props) => <link {...props} />;
+case 194
+fixed	export const Test = () => <link href="https://fonts.googleapis.com/css2?family=Krona+One&amp;display=optional" />;
+case 195
+@next/next/google-font-display	googleFontDisplayNotRecommended	26 110	This Google Fonts <link> sets `display` to auto, block, or fallback, each of which blocks or flashes the text while the font loads. Use `optional`, which paints a fallback immediately and only swaps if the font arrives in time, or `swap` if the exact face matters more than the reflow.
+fixed	export const Test = () => <link href="https://fonts.googleapis.com/css2?family=Krona+One&amp;display=block" />;
+case 196
+@next/next/google-font-display	googleFontDisplayNotRecommended	26 106	This Google Fonts <link> sets `display` to auto, block, or fallback, each of which blocks or flashes the text while the font loads. Use `optional`, which paints a fallback immediately and only swaps if the font arrives in time, or `swap` if the exact face matters more than the reflow.
+fixed	export const Test = () => <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=block" />;

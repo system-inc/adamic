@@ -1,0 +1,1288 @@
+case 0
+/tmp/wave11-current-harness/case-0/Case.ts:1:17
+  adamic/no-definite-assignment  `!` here tells tsc this is assigned before it is read, and nothing checks it: read early, it is undefined while its type says otherwise. Assign it where it is declared or in the constructor, or type it with `| undefined` and handle the missing case.
+
+range 16 23 definiteAssignment 			16 23
+fixed	class Account { balance!: number; describe(): string { return this.balance.toFixed(2); } }\u000a
+case 1
+/tmp/wave11-current-harness/case-1/Case.ts:1:5
+  adamic/no-definite-assignment  `!` here tells tsc this is assigned before it is read, and nothing checks it: read early, it is undefined while its type says otherwise. Assign it where it is declared or in the constructor, or type it with `| undefined` and handle the missing case.
+
+range 4 9 definiteAssignment 			4 9
+fixed	let total!: number; function read(): number { return total; }\u000a
+case 2
+/tmp/wave11-current-harness/case-2/Case.ts:1:17
+  adamic/no-definite-assignment  `!` here tells tsc this is assigned before it is read, and nothing checks it: read early, it is undefined while its type says otherwise. Assign it where it is declared or in the constructor, or type it with `| undefined` and handle the missing case.
+
+range 16 24 definiteAssignment 			16 24
+fixed	class Account { #balance!: number; read(): number { return this.#balance; } }\u000a
+case 3
+fixed	console.log('In dedication, with gratitude, to Kenneth Lane Thompson, whose work we stand on. - Kirk and Ahra');\u000a
+case 4
+fixed	declare const ages: Map<string, number>; const age = ages.get('Ahra')!;\u000a
+case 5
+fixed	function makeCounter(start: number): () => number {\u000a\u0009let count = start;\u000a\u0009return () => {\u000a\u0009\u0009count += 1;\u000a\u0009\u0009return count;\u000a\u0009};\u000a}\u000a\u000aconst first = makeCounter(0);\u000aconst second = makeCounter(100);\u000afirst();\u000afirst();\u000aconsole.log(`first: ${first()}, second: ${second()}`);\u000a\u000a// Each iteration gets its own binding of `step`, as in JavaScript.\u000aconst adders: ((value: number) => number)[] = [];\u000afor (let step = 1; step <= 3; step += 1) {\u000a\u0009adders.push((value) => value + step);\u000a}\u000aconsole.log(adders.map((add) => add(10)).join(' '));\u000a
+case 6
+fixed	interface Tree {\u000a\u0009readonly value: number;\u000a\u0009readonly left: Tree | undefined;\u000a\u0009readonly right: Tree | undefined;\u000a}\u000a\u000afunction insert(tree: Tree | undefined, value: number): Tree {\u000a\u0009if (tree === undefined) {\u000a\u0009\u0009return { value, left: undefined, right: undefined };\u000a\u0009}\u000a\u0009if (value < tree.value) {\u000a\u0009\u0009return { ...tree, left: insert(tree.left, value) };\u000a\u0009}\u000a\u0009if (value > tree.value) {\u000a\u0009\u0009return { ...tree, right: insert(tree.right, value) };\u000a\u0009}\u000a\u0009return tree;\u000a}\u000a\u000afunction collect(tree: Tree | undefined, into: number[]): void {\u000a\u0009if (tree !== undefined) {\u000a\u0009\u0009collect(tree.left, into);\u000a\u0009\u0009into.push(tree.value);\u000a\u0009\u0009collect(tree.right, into);\u000a\u0009}\u000a}\u000a\u000afunction height(tree: Tree | undefined): number {\u000a\u0009return tree === undefined ? 0 : 1 + Math.max(height(tree.left), height(tree.right));\u000a}\u000a\u000alet tree: Tree | undefined = undefined;\u000afor (const value of [50, 30, 70, 20, 40, 60, 80, 30, 65]) {\u000a\u0009tree = insert(tree, value);\u000a}\u000aconst before = tree;\u000atree = insert(tree, 10);\u000a\u000aconst values: number[] = [];\u000acollect(tree, values);\u000aconsole.log(values.join(' '));\u000aconsole.log(`height ${height(tree)}, was ${height(before)}`);\u000aconsole.log(`right subtree shared: ${tree.right === before?.right}`);\u000a
+case 7
+fixed	const greeting = 'h\u00e9llo, \u4e16\u754c \ud83c\udf0d';\u000a\u000aconsole.log(`${greeting.length} UTF-16 code units, ${[...greeting].length} code points`);\u000aconsole.log(greeting.slice(7, 9));\u000aconsole.log(`${greeting.codePointAt(10) ?? -1} ${greeting.charCodeAt(11)}`);\u000aconsole.log(`[${greeting.slice(0, 11)}]`);\u000aconsole.log(`${'b' < '\u00e9'} ${'\u005cuFFFF' < '\ud83c\udf0d'}`);\u000aconsole.log(`${'ab'.padStart(5, '-')}|${'  trim me \u005cn'.trim()}|${'na'.repeat(3)}`);\u000aconsole.log(`${greeting.indexOf('\u4e16')} ${greeting.includes('\ud83c\udf0d')} ${greeting.startsWith('h\u00e9')}`);\u000a
+case 8
+fixed	class Account { balance?: number; }\u000a
+case 9
+fixed	class Account { balance = 0; }\u000a
+case 10
+fixed	type Shape =\u000a\u0009| { readonly kind: 'Circle'; readonly radius: number }\u000a\u0009| { readonly kind: 'Rectangle'; readonly width: number; readonly height: number }\u000a\u0009| { readonly kind: 'Triangle'; readonly base: number; readonly height: number };\u000a\u000afunction area(shape: Shape): number {\u000a\u0009switch (shape.kind) {\u000a\u0009\u0009case 'Circle':\u000a\u0009\u0009\u0009return Math.PI * shape.radius ** 2;\u000a\u0009\u0009case 'Rectangle':\u000a\u0009\u0009\u0009return shape.width * shape.height;\u000a\u0009\u0009case 'Triangle':\u000a\u0009\u0009\u0009return (shape.base * shape.height) / 2;\u000a\u0009}\u000a}\u000a\u000aconst shapes: readonly Shape[] = [\u000a\u0009{ kind: 'Circle', radius: 1.5 },\u000a\u0009{ kind: 'Rectangle', width: 3, height: 4 },\u000a\u0009{ kind: 'Triangle', base: 6, height: 2.5 },\u000a];\u000a\u000alet total = 0;\u000afor (const shape of shapes) {\u000a\u0009const shapeArea = area(shape);\u000a\u0009total += shapeArea;\u000a\u0009console.log(`${shape.kind}: ${shapeArea.toFixed(3)}`);\u000a}\u000aconsole.log(`Total: ${total.toFixed(3)} (${total})`);\u000a
+case 11
+fixed	class Account { balance: number; constructor() { this.balance = 0; } }\u000a
+case 12
+fixed	export interface Point {\u000a\u0009readonly x: number;\u000a\u0009readonly y: number;\u000a}\u000a\u000aexport function distance(from: Point, to: Point): number {\u000a\u0009return Math.sqrt((to.x - from.x) ** 2 + (to.y - from.y) ** 2);\u000a}\u000a\u000aexport function pathLength(points: readonly Point[]): number {\u000a\u0009let length = 0;\u000a\u0009let previous: Point | undefined = undefined;\u000a\u0009for (const point of points) {\u000a\u0009\u0009if (previous !== undefined) {\u000a\u0009\u0009\u0009length += distance(previous, point);\u000a\u0009\u0009}\u000a\u0009\u0009previous = point;\u000a\u0009}\u000a\u0009return length;\u000a}\u000a
+case 13
+fixed	class Stack<Item> {\u000a\u0009private readonly items: Item[] = [];\u000a\u000a\u0009push(item: Item): void {\u000a\u0009\u0009this.items.push(item);\u000a\u0009}\u000a\u000a\u0009pop(): Item | undefined {\u000a\u0009\u0009return this.items.pop();\u000a\u0009}\u000a\u000a\u0009size(): number {\u000a\u0009\u0009return this.items.length;\u000a\u0009}\u000a}\u000a\u000aconst openers = new Map<string, string>([\u000a\u0009[')', '('],\u000a\u0009[']', '['],\u000a\u0009['}', '{'],\u000a]);\u000a\u000afunction isBalanced(input: string): boolean {\u000a\u0009const stack = new Stack<string>();\u000a\u0009for (const character of input) {\u000a\u0009\u0009if (character === '(' || character === '[' || character === '{') {\u000a\u0009\u0009\u0009stack.push(character);\u000a\u0009\u0009\u0009continue;\u000a\u0009\u0009}\u000a\u0009\u0009const opener = openers.get(character);\u000a\u0009\u0009if (opener !== undefined && stack.pop() !== opener) {\u000a\u0009\u0009\u0009return false;\u000a\u0009\u0009}\u000a\u0009}\u000a\u0009return stack.size() === 0;\u000a}\u000a\u000afor (const input of ['([]{})', '([)]', '((', '', 'f(x[0]) { }']) {\u000a\u0009console.log(`'${input}' ${isBalanced(input) ? 'balanced' : 'unbalanced'}`);\u000a}\u000a
+case 14
+fixed	import { distance, pathLength, type Point } from './geometry.ts';\u000a\u000aconst route: readonly Point[] = [\u000a\u0009{ x: 0, y: 0 },\u000a\u0009{ x: 3, y: 4 },\u000a\u0009{ x: 3, y: 10 },\u000a\u0009{ x: 0, y: 14 },\u000a];\u000aconsole.log(`legs: ${distance({ x: 0, y: 0 }, { x: 3, y: 4 })} first, ${pathLength(route)} total`);\u000aconsole.log(`diagonal: ${distance({ x: 0, y: 0 }, { x: 1, y: 1 })}`);\u000a
+case 15
+fixed	type Entry = readonly [string, number];\u000a\u000afunction compareEntries(left: Entry, right: Entry): number {\u000a\u0009if (left[1] !== right[1]) {\u000a\u0009\u0009return right[1] - left[1];\u000a\u0009}\u000a\u0009return left[0] < right[0] ? -1 : left[0] > right[0] ? 1 : 0;\u000a}\u000a\u000aconst text = 'the quick brown fox jumps over the lazy dog and the fox naps';\u000aconst counts = new Map<string, number>();\u000afor (const word of text.split(' ')) {\u000a\u0009counts.set(word, (counts.get(word) ?? 0) + 1);\u000a}\u000a\u000aconst entries: Entry[] = [...counts];\u000aentries.sort(compareEntries);\u000afor (const [word, count] of entries.slice(0, 4)) {\u000a\u0009console.log(`${word.padEnd(6, '.')}${count}`);\u000a}\u000aconsole.log(`${counts.size} distinct words`);\u000a
+case 16
+fixed	import { panic } from 'adamic';\u000a\u000atype Parsed = { readonly kind: 'Ok'; readonly value: number } | { readonly kind: 'Error'; readonly message: string };\u000a\u000afunction parseAge(input: string): Parsed {\u000a\u0009const trimmed = input.trim();\u000a\u0009if (trimmed.length === 0) {\u000a\u0009\u0009return { kind: 'Error', message: 'empty' };\u000a\u0009}\u000a\u0009let value = 0;\u000a\u0009for (const character of trimmed) {\u000a\u0009\u0009const digit = character.charCodeAt(0) - 48;\u000a\u0009\u0009if (digit < 0 || digit > 9) {\u000a\u0009\u0009\u0009return { kind: 'Error', message: `'${character}' is not a digit` };\u000a\u0009\u0009}\u000a\u0009\u0009value = value * 10 + digit;\u000a\u0009}\u000a\u0009if (value > 150) {\u000a\u0009\u0009return { kind: 'Error', message: `${value} is too old` };\u000a\u0009}\u000a\u0009return { kind: 'Ok', value };\u000a}\u000a\u000afor (const input of ['42', ' 7 ', '', '12a', '200']) {\u000a\u0009const parsed = parseAge(input);\u000a\u0009switch (parsed.kind) {\u000a\u0009\u0009case 'Ok':\u000a\u0009\u0009\u0009console.log(`ok ${parsed.value}`);\u000a\u0009\u0009\u0009break;\u000a\u0009\u0009case 'Error':\u000a\u0009\u0009\u0009console.log(`error: ${parsed.message}`);\u000a\u0009\u0009\u0009break;\u000a\u0009}\u000a}\u000a\u000aconst ages = new Map<string, number>([['Kirk', 42]]);\u000aconst age = ages.get('Ahra') ?? panic('no age on record for Ahra');\u000aconsole.log(`Ahra is ${age}`);\u000a
+case 17
+fixed	for (let number = 1; number <= 15; number += 1) {\u000a\u0009if (number % 15 === 0) {\u000a\u0009\u0009console.log('FizzBuzz');\u000a\u0009} else if (number % 3 === 0) {\u000a\u0009\u0009console.log('Fizz');\u000a\u0009} else if (number % 5 === 0) {\u000a\u0009\u0009console.log('Buzz');\u000a\u0009} else {\u000a\u0009\u0009console.log(`${number}`);\u000a\u0009}\u000a}\u000a
+case 18
+/tmp/wave11-current-harness/case-18/repository/source/components/Thing.tsx:1:18
+  structure/tailwind-no-physical-direction  The class "ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+
+range 17 28 useLogicalClass 			17 28
+fixed	export const c = 'flex ml-4';\u000a
+case 19
+/tmp/wave11-current-harness/case-19/repository/source/components/Thing.tsx:1:18
+  structure/tailwind-no-physical-direction  The class "before:left-1/2" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "before:start-1/2", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+
+range 17 82 useLogicalClass 			17 82
+fixed	export const c = 'before:absolute before:top-1/2 before:left-1/2 before:size-full';\u000a
+case 20
+/tmp/wave11-current-harness/case-20/repository/source/components/Thing.tsx:1:18
+  structure/tailwind-no-physical-direction  The class "ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+
+range 17 28 useLogicalClass 			17 28
+fixed	export const c = `flex ml-4`;\u000a
+case 21
+/tmp/wave11-current-harness/case-21/repository/source/components/Thing.tsx:3:5
+  structure/tailwind-no-physical-direction  The class "left-[50%]" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "start-[50%]", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+
+range 52 70 useLogicalClass 			52 70
+fixed	export const theme = [\u000a    'flex items-center',\u000a    'fixed left-[50%]',\u000a];\u000a
+case 22
+/tmp/wave11-current-harness/case-22/repository/source/components/Thing.tsx:1:18
+  structure/tailwind-no-physical-direction  The class "ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+
+range 17 30 useLogicalClass 			17 30
+fixed	export const c = `flex ml-4 ${other}`;\u000a
+case 23
+/tmp/wave11-current-harness/case-23/repository/source/components/Thing.tsx:1:33
+  structure/tailwind-no-physical-direction  The class "ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+
+range 32 43 useLogicalClass 			32 43
+fixed	export const c = <div className="flex ml-4" />;\u000a
+case 24
+/tmp/wave11-current-harness/case-24/repository/source/components/Thing.tsx:1:18
+  structure/tailwind-no-physical-direction  The class "ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+
+range 17 28 useLogicalClass 			17 28
+/tmp/wave11-current-harness/case-24/repository/source/components/Thing.tsx:1:18
+  structure/tailwind-no-physical-direction  The class "mr-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "me-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+
+range 17 28 useLogicalClass 			17 28
+fixed	export const c = 'ml-4 mr-4';\u000a
+case 25
+/tmp/wave11-current-harness/case-25/repository/source/components/Thing.tsx:1:18
+  structure/tailwind-no-physical-direction  The class "left-[50%]" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "start-[50%]", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+
+range 17 63 useLogicalClass 			17 63
+fixed	export const c = 'fixed top-[50%] left-[50%] z-50 outline-none';\u000a
+case 26
+/tmp/wave11-current-harness/case-26/repository/source/components/Thing.tsx:1:18
+  structure/tailwind-no-physical-direction  The class "md:hover:ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "md:hover:ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+
+range 17 37 useLogicalClass 			17 37
+fixed	export const c = 'flex md:hover:ml-4';\u000a
+case 27
+/tmp/wave11-current-harness/case-27/repository/source/components/Thing.tsx:1:18
+  structure/tailwind-no-physical-direction  The class "-ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "-ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+
+range 17 29 useLogicalClass 			17 29
+fixed	export const c = 'flex -ml-4';\u000a
+case 28
+/tmp/wave11-current-harness/case-28/repository/source/components/Thing.tsx:1:31
+  structure/tailwind-no-physical-direction  The class "ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+
+range 30 37 useLogicalClass 			30 37
+fixed	export const c = `flex ${other} ml-4`;\u000a
+case 29
+/tmp/wave11-current-harness/case-29/repository/source/components/Thing.tsx:1:34
+  structure/tailwind-no-physical-direction  The class "ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+
+range 33 44 useLogicalClass 			33 44
+fixed	export const c = mergeClassNames('flex ml-4');\u000a
+case 30
+/tmp/wave11-current-harness/case-30/repository/source/components/Thing.tsx:1:18
+  structure/tailwind-no-physical-direction  The class "md:ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "md:ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+
+range 17 31 useLogicalClass 			17 31
+fixed	export const c = 'flex md:ml-4';\u000a
+case 31
+/tmp/wave11-current-harness/case-31/repository/source/components/Thing.tsx:1:18
+  structure/tailwind-no-physical-direction  The class "scroll-pr-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "scroll-pe-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+
+range 17 35 useLogicalClass 			17 35
+fixed	export const c = 'flex scroll-pr-4';\u000a
+case 32
+/tmp/wave11-current-harness/case-32/repository/source/components/Thing.tsx:1:18
+  structure/tailwind-no-physical-direction  The class "scroll-ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "scroll-ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+
+range 17 35 useLogicalClass 			17 35
+fixed	export const c = 'flex scroll-ml-4';\u000a
+case 33
+/tmp/wave11-current-harness/case-33/repository/source/components/Thing.tsx:1:18
+  structure/tailwind-no-physical-direction  The class "rounded-r" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "rounded-e", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+
+range 17 33 useLogicalClass 			17 33
+fixed	export const c = 'flex rounded-r';\u000a
+case 34
+/tmp/wave11-current-harness/case-34/repository/source/components/Thing.tsx:1:18
+  structure/tailwind-no-physical-direction  The class "rounded-l-md" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "rounded-s-md", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+
+range 17 36 useLogicalClass 			17 36
+fixed	export const c = 'flex rounded-l-md';\u000a
+case 35
+/tmp/wave11-current-harness/case-35/repository/source/components/Thing.tsx:1:18
+  structure/tailwind-no-physical-direction  The class "rounded-l" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "rounded-s", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+
+range 17 33 useLogicalClass 			17 33
+fixed	export const c = 'flex rounded-l';\u000a
+case 36
+/tmp/wave11-current-harness/case-36/repository/source/components/Thing.tsx:1:18
+  structure/tailwind-no-physical-direction  The class "rounded-r-md" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "rounded-e-md", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+
+range 17 36 useLogicalClass 			17 36
+fixed	export const c = 'flex rounded-r-md';\u000a
+case 37
+/tmp/wave11-current-harness/case-37/repository/source/components/Thing.tsx:1:18
+  structure/tailwind-no-physical-direction  The class "border-r" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "border-e", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+
+range 17 32 useLogicalClass 			17 32
+fixed	export const c = 'flex border-r';\u000a
+case 38
+/tmp/wave11-current-harness/case-38/repository/source/components/Thing.tsx:1:18
+  structure/tailwind-no-physical-direction  The class "scroll-mr-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "scroll-me-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+
+range 17 35 useLogicalClass 			17 35
+fixed	export const c = 'flex scroll-mr-4';\u000a
+case 39
+/tmp/wave11-current-harness/case-39/repository/source/components/Thing.tsx:1:18
+  structure/tailwind-no-physical-direction  The class "scroll-pl-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "scroll-ps-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+
+range 17 35 useLogicalClass 			17 35
+fixed	export const c = 'flex scroll-pl-4';\u000a
+case 40
+/tmp/wave11-current-harness/case-40/repository/source/components/Thing.tsx:1:18
+  structure/tailwind-no-physical-direction  The class "border-l-2" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "border-s-2", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+
+range 17 34 useLogicalClass 			17 34
+fixed	export const c = 'flex border-l-2';\u000a
+case 41
+/tmp/wave11-current-harness/case-41/repository/source/components/Thing.tsx:1:18
+  structure/tailwind-no-physical-direction  The class "border-l" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "border-s", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+
+range 17 32 useLogicalClass 			17 32
+fixed	export const c = 'flex border-l';\u000a
+case 42
+/tmp/wave11-current-harness/case-42/repository/source/components/Thing.tsx:1:18
+  structure/tailwind-no-physical-direction  The class "right-0" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "end-0", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+
+range 17 31 useLogicalClass 			17 31
+fixed	export const c = 'flex right-0';\u000a
+case 43
+/tmp/wave11-current-harness/case-43/repository/source/components/Thing.tsx:1:18
+  structure/tailwind-no-physical-direction  The class "left-0" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "start-0", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+
+range 17 30 useLogicalClass 			17 30
+fixed	export const c = 'flex left-0';\u000a
+case 44
+/tmp/wave11-current-harness/case-44/repository/source/components/Thing.tsx:1:18
+  structure/tailwind-no-physical-direction  The class "text-left" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "text-start", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+
+range 17 33 useLogicalClass 			17 33
+fixed	export const c = 'flex text-left';\u000a
+case 45
+/tmp/wave11-current-harness/case-45/repository/source/components/Thing.tsx:1:18
+  structure/tailwind-no-physical-direction  The class "text-right" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "text-end", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+
+range 17 34 useLogicalClass 			17 34
+fixed	export const c = 'flex text-right';\u000a
+case 46
+/tmp/wave11-current-harness/case-46/repository/source/components/Thing.tsx:1:18
+  structure/tailwind-no-physical-direction  The class "pr-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "pe-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+
+range 17 28 useLogicalClass 			17 28
+fixed	export const c = 'flex pr-4';\u000a
+case 47
+fixed	export const c = 'flex ms-4 me-4';\u000a
+case 48
+/tmp/wave11-current-harness/case-48/repository/source/components/Thing.tsx:1:18
+  structure/tailwind-no-physical-direction  The class "border-r-2" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "border-e-2", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+
+range 17 34 useLogicalClass 			17 34
+fixed	export const c = 'flex border-r-2';\u000a
+case 49
+/tmp/wave11-current-harness/case-49/repository/source/components/Thing.tsx:1:18
+  structure/tailwind-no-physical-direction  The class "mr-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "me-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+
+range 17 28 useLogicalClass 			17 28
+fixed	export const c = 'flex mr-4';\u000a
+case 50
+fixed	export const message = 'Align the text to the left side';\u000a
+case 51
+fixed	export const c = 'flex ltr:mr-4';\u000a
+case 52
+fixed	export const message = 'You have items left in your cart';\u000a
+case 53
+fixed	export const c = 'flex overflow-hidden';\u000a
+case 54
+fixed	export const c = 'border-s-2 rounded-e-md';\u000a
+case 55
+fixed	export const c = 'flex rtl:ml-4';\u000a
+case 56
+fixed	export const c = 'flex mlauto';\u000a
+case 57
+fixed	export const c = 'flex start-0 end-0';\u000a
+case 58
+fixed	export const path = '/repository/source/Thing.ts';\u000a
+case 59
+fixed	export const c = 'flex ml-4';\u000a
+case 60
+fixed	export const c = 'flex -text-left';\u000a
+case 61
+fixed	export const c = '';\u000a
+case 62
+fixed	export const key = 'someIdentifierName';\u000a
+case 63
+fixed	export const note = 'ml-4;';\u000a
+case 64
+fixed	export const c = 'flex text-start text-end';\u000a
+case 65
+fixed	export const c = 'flex ps-4 pe-4';\u000a
+case 66
+fixed	export const c = 'flex ml-';\u000a
+case 67
+fixed	export const token = '{{ml-4}}';\u000a
+case 68
+/tmp/wave11-current-harness/case-68/repository/source/components/Thing.tsx:1:18
+  structure/tailwind-no-physical-direction  The class "pl-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ps-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+
+range 17 28 useLogicalClass 			17 28
+fixed	export const c = 'flex pl-4';\u000a
+case 69
+fixed	export const link = 'See docs/text-left.md';\u000a
+case 70
+fixed	export const c = 'flex md:rtl:ml-4';\u000a
+case 71
+fixed	export const url = 'https://example.com/left/right';\u000a
+case 72
+/tmp/wave11-current-harness/case-72/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 22 missingDescription 			0 22
+fixed	// eslint-disable-line\u000a
+case 73
+/tmp/wave11-current-harness/case-73/repository/source/RequireDescription.tsx:1:4
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 3 29 missingDescription 			3 29
+fixed	x; // eslint-disable-line foo
+case 74
+/tmp/wave11-current-harness/case-74/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 19 missingDescription 			0 19
+fixed	/* eslint-enable */
+case 75
+/tmp/wave11-current-harness/case-75/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 20 missingDescription 			0 20
+fixed	/* eslint-disable */
+case 76
+/tmp/wave11-current-harness/case-76/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 20 missingDescription 			0 20
+fixed	/* eslint-disable */
+case 77
+fixed	// c8 ignore next
+case 78
+fixed	// c8 ignore next -- covered elsewhere
+case 79
+/tmp/wave11-current-harness/case-79/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 17 missingDescription 			0 17
+fixed	// c8 ignore next
+case 80
+fixed	// a note about eslint-disable
+case 81
+fixed	// global foo
+case 82
+fixed	// eslint eqeqeq: 0
+case 83
+fixed	/* c8x ignore */
+case 84
+fixed	const s = '/* eslint-disable */';
+case 85
+fixed	/** eslint-disable */
+case 86
+fixed	/* eslint-disabled */
+case 87
+/tmp/wave11-current-harness/case-87/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 31 missingDescription 			0 31
+fixed	/* eslint-disable-next-line\u000a */
+case 88
+/tmp/wave11-current-harness/case-88/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 20 missingDescription 			0 20
+/tmp/wave11-current-harness/case-88/repository/source/RequireDescription.tsx:5:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 70 89 missingDescription 			70 89
+fixed	/* eslint-disable */\u000afoo();\u000a// eslint-disable-next-line -- why\u000abar();\u000a/* eslint-enable */
+case 89
+/tmp/wave11-current-harness/case-89/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 22 missingDescription 			0 22
+fixed	/*\u000a eslint-disable\u000a */
+case 90
+/tmp/wave11-current-harness/case-90/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 18 missingDescription 			0 18
+fixed	/*eslint-disable*/
+case 91
+/tmp/wave11-current-harness/case-91/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 21 missingDescription 			0 21
+fixed	//eslint-disable-line
+case 92
+/tmp/wave11-current-harness/case-92/repository/source/RequireDescription.tsx:2:5
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 17 37 missingDescription 			17 37
+fixed	const a = 1;\u000a    /* eslint-disable */\u000aconst b = 2;
+case 93
+/tmp/wave11-current-harness/case-93/repository/source/RequireDescription.tsx:1:17
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 16 41 missingDescription 			16 41
+fixed	const a = <div>{/* eslint-disable-line */}</div>;
+case 94
+/tmp/wave11-current-harness/case-94/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 36 missingDescription 			0 36
+fixed	// cohere-disable-next-line no-alert
+case 95
+recovery findings only
+case 96
+fixed	// eslint-disable
+case 97
+fixed	// cohere-disabled
+case 98
+/tmp/wave11-current-harness/case-98/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 26 missingDescription 			0 26
+fixed	/* eslint-disable-line\u000a */
+case 99
+/tmp/wave11-current-harness/case-99/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 24 missingDescription 			0 24
+fixed	/*\u000a * eslint-disable\u000a */
+case 100
+fixed	// eslint-disable -- generated
+case 101
+fixed	// eslint-enable
+case 102
+fixed	// eslint-disable
+case 103
+/tmp/wave11-current-harness/case-103/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 20 missingDescription 			0 20
+fixed	/* cohere-disable */
+case 104
+fixed	/* eslint-disable-next-line, foo */
+case 105
+/tmp/wave11-current-harness/case-105/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 26 missingDescription 			0 26
+fixed	/* istanbul ignore next */
+case 106
+fixed	// a note about cohere-disable
+case 107
+fixed	/* cohere-enable -- generated */
+case 108
+fixed	// cohere-disable-next-line foo
+case 109
+fixed	// eslint-disable eqeqeq
+case 110
+/tmp/wave11-current-harness/case-110/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 23 missingDescription 			0 23
+fixed	/* oxlint-enable foo */
+case 111
+fixed	/* cohere-disable -- generated */
+case 112
+/tmp/wave11-current-harness/case-112/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 35 missingDescription 			0 35
+fixed	// cohere-disable-next-line foo -- 
+case 113
+fixed	// cohere-disable-next-line no-alert -- the kiosk build has no other channel
+case 114
+/tmp/wave11-current-harness/case-114/repository/source/RequireDescription.tsx:1:2
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 1 31 missingDescription 			1 31
+fixed	{/* cohere-disable-next-line */}
+case 115
+/tmp/wave11-current-harness/case-115/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 36 missingDescription 			0 36
+fixed	// cohere-disable-next-line foo--bar
+case 116
+/tmp/wave11-current-harness/case-116/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 31 missingDescription 			0 31
+fixed	// verify-disable-next-line foo
+case 117
+/tmp/wave11-current-harness/case-117/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 20 missingDescription 			0 20
+fixed	/* cohere-disable */
+case 118
+fixed	/* cohere-enable */
+case 119
+/tmp/wave11-current-harness/case-119/repository/source/RequireDescription.tsx:1:4
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 3 25 missingDescription 			3 25
+fixed	x; // cohere-disable-line
+case 120
+/tmp/wave11-current-harness/case-120/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 12 missingDescription 			0 12
+fixed	/* eslint */
+case 121
+/tmp/wave11-current-harness/case-121/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 30 missingDescription 			0 30
+fixed	/* eslint-disable-next-line */
+case 122
+/tmp/wave11-current-harness/case-122/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 31 missingDescription 			0 31
+fixed	// oxlint-disable-next-line foo
+case 123
+/tmp/wave11-current-harness/case-123/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 21 missingDescription 			0 21
+fixed	/* eslint-env node */
+case 124
+/tmp/wave11-current-harness/case-124/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 32 missingDescription 			0 32
+fixed	/* eslint-disable-line eqeqeq */
+case 125
+/tmp/wave11-current-harness/case-125/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 19 missingDescription 			0 19
+fixed	/* cohere-enable */
+case 126
+/tmp/wave11-current-harness/case-126/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 22 missingDescription 			0 22
+fixed	// eslint-disable-line
+case 127
+/tmp/wave11-current-harness/case-127/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 16 missingDescription 			0 16
+fixed	/* eslint-env */
+case 128
+/tmp/wave11-current-harness/case-128/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 34 missingDescription 			0 34
+fixed	// eslint-disable-next-line eqeqeq
+case 129
+/tmp/wave11-current-harness/case-129/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 40 missingDescription 			0 40
+fixed	/* eslint-disable-next-line eqeqeq -- */
+case 130
+/tmp/wave11-current-harness/case-130/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 15 missingDescription 			0 15
+fixed	/* globals _ */
+case 131
+/tmp/wave11-current-harness/case-131/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 20 missingDescription 			0 20
+fixed	/* c8 ignore next */
+case 132
+/tmp/wave11-current-harness/case-132/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 27 missingDescription 			0 27
+fixed	// eslint-disable-next-line
+case 133
+/tmp/wave11-current-harness/case-133/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 29 missingDescription 			0 29
+fixed	// eslint-disable-line eqeqeq
+case 134
+/tmp/wave11-current-harness/case-134/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 25 missingDescription 			0 25
+fixed	/* eslint-disable-line */
+case 135
+/tmp/wave11-current-harness/case-135/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 37 missingDescription 			0 37
+fixed	/* eslint-disable-next-line eqeqeq */
+case 136
+/tmp/wave11-current-harness/case-136/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 14 missingDescription 			0 14
+fixed	/* exported */
+case 137
+/tmp/wave11-current-harness/case-137/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 13 missingDescription 			0 13
+fixed	/* globals */
+case 138
+/tmp/wave11-current-harness/case-138/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 26 missingDescription 			0 26
+fixed	/* eslint-enable eqeqeq */
+case 139
+/tmp/wave11-current-harness/case-139/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 27 missingDescription 			0 27
+fixed	/* eslint-disable eqeqeq */
+case 140
+/tmp/wave11-current-harness/case-140/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 19 missingDescription 			0 19
+fixed	/* eslint-enable */
+case 141
+/tmp/wave11-current-harness/case-141/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 14 missingDescription 			0 14
+fixed	/* global _ */
+case 142
+/tmp/wave11-current-harness/case-142/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 42 missingDescription 			0 42
+fixed	/* eslint eqeqeq: "off", curly: "error" */
+case 143
+fixed	/* eslint-disable-next-line\u0009foo\u0009--\u0009reason */
+case 144
+/tmp/wave11-current-harness/case-144/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 35 missingDescription 			0 35
+fixed	// eslint-disable-next-line foo -- 
+case 145
+fixed	// eslint-disable-next-line foo -- -- 
+case 146
+fixed	// eslint-disable-next-line foo -- --bar
+case 147
+fixed	// eslint-disable-next-line foo -- bar
+case 148
+fixed	// eslint-disable-next-line foo\u00a0--\u00a0bar
+case 149
+/tmp/wave11-current-harness/case-149/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 36 missingDescription 			0 36
+fixed	// eslint-disable-next-line foo--bar
+case 150
+/tmp/wave11-current-harness/case-150/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 25 missingDescription 			0 25
+fixed	/* eslint-disable -- \u0009 */
+case 151
+/tmp/wave11-current-harness/case-151/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 12 missingDescription 			0 12
+fixed	/* global */
+case 152
+/tmp/wave11-current-harness/case-152/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 35 missingDescription 			0 35
+fixed	// eslint-disable-next-line foo --\u0009
+case 153
+/tmp/wave11-current-harness/case-153/repository/source/RequireDescription.tsx:1:1
+  @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+
+range 0 34 missingDescription 			0 34
+fixed	// eslint-disable-next-line foo --
+case 154
+fixed	/* eslint */
+case 155
+fixed	/* c8 ignore next */
+case 156
+fixed	/* eslint eqeqeq: "off", curly: "error" -- Here's a description about why this configuration is necessary. */
+case 157
+fixed	/* globals */
+case 158
+fixed	/* eslint-disable-next-line */
+case 159
+fixed	/* global */
+case 160
+fixed	/* eslint-disable-line */
+case 161
+fixed	/* c8 ignore next -- description */
+case 162
+fixed	// eslint-disable-line
+case 163
+fixed	// eslint-disable-next-line
+case 164
+fixed	/* eslint-enable */
+case 165
+fixed	/* eslint-disable */
+case 166
+fixed	// eslint-disable-next-line eqeqeq -- description
+case 167
+fixed	/* c8 without options */
+case 168
+fixed	/* eslint-disable-next-line -- description */
+case 169
+fixed	// eslint-disable-line eqeqeq -- description
+case 170
+fixed	// eslint-disable-line -- description
+case 171
+fixed	/* eslint-disable-line -- description */
+case 172
+fixed	/* just eslint in a normal comment */
+case 173
+fixed	// eslint-disable-next-line -- description
+case 174
+fixed	/* globals -- description */
+case 175
+fixed	/* eslint-enable -- description */
+case 176
+fixed	/* exported -- description */
+case 177
+fixed	// eslint-disable-next-line foo ---  bar
+case 178
+fixed	/* global -- description */
+case 179
+fixed	/* eslint-disable -- description */
+case 180
+fixed	/* exported */
+case 181
+/tmp/wave11-current-harness/case-181/Component.tsx:1:27
+  @next/next/google-font-display  This Google Fonts <link> has no `display` parameter, so the browser uses the default and hides the text while the font downloads. On a slow connection that is a blank block where the words should be. Add `&display=optional` or `&display=swap` to the href so the text is painted in a fallback face first.
+
+range 26 92 googleFontDisplayMissing 			26 92
+fixed	export const Test = () => <link href="https://fonts.googleapis.com/css2?family=Krona+One" />;
+case 182
+/tmp/wave11-current-harness/case-182/Component.tsx:1:27
+  @next/next/google-font-display  This Google Fonts <link> has no `display` parameter, so the browser uses the default and hides the text while the font downloads. On a slow connection that is a blank block where the words should be. Add `&display=optional` or `&display=swap` to the href so the text is painted in a fallback face first.
+
+range 26 100 googleFontDisplayMissing 			26 100
+fixed	export const Test = () => <link href="https://fonts.googleapis.com/css2?family=Krona+One&display" />;
+case 183
+/tmp/wave11-current-harness/case-183/Component.tsx:1:27
+  @next/next/google-font-display  This Google Fonts <link> has no `display` parameter, so the browser uses the default and hides the text while the font downloads. On a slow connection that is a blank block where the words should be. Add `&display=optional` or `&display=swap` to the href so the text is painted in a fallback face first.
+
+range 26 75 googleFontDisplayMissing 			26 75
+fixed	export const Test = () => <link href="https://fonts.googleapis.com/css2" />;
+case 184
+fixed	export const Test = () => <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=optional" />;
+case 185
+/tmp/wave11-current-harness/case-185/Component.tsx:1:27
+  @next/next/google-font-display  This Google Fonts <link> sets `display` to auto, block, or fallback, each of which blocks or flashes the text while the font loads. Use `optional`, which paints a fallback immediately and only swaps if the font arrives in time, or `swap` if the exact face matters more than the reflow.
+
+range 26 109 googleFontDisplayNotRecommended 			26 109
+fixed	export const Test = () => <link href="https://fonts.googleapis.com/css2?display=fallback&family=Krona+One" />;
+case 186
+fixed	export const Test = () => <link rel="preconnect" href="https://fonts.gstatic.com" />;
+case 187
+/tmp/wave11-current-harness/case-187/Component.tsx:1:27
+  @next/next/google-font-display  This Google Fonts <link> sets `display` to auto, block, or fallback, each of which blocks or flashes the text while the font loads. Use `optional`, which paints a fallback immediately and only swaps if the font arrives in time, or `swap` if the exact face matters more than the reflow.
+
+range 26 105 googleFontDisplayNotRecommended 			26 105
+fixed	export const Test = () => <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=auto" />;
+case 188
+fixed	export const Test = () => <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=something" />;
+case 189
+fixed	export const Test = () => <link href="https://example.com/css?family=Krona+One" />;
+case 190
+fixed	export const Test = () => <link href="https://fonts.googleapis.com/css?family=Krona+One&display=swap" />;
+case 191
+fixed	export const Test = () => <Foo.link href="https://fonts.googleapis.com/css2?family=Krona+One" />;
+case 192
+fixed	export const Test = () => <link href={fontUrl} />;
+case 193
+fixed	export const Test = (props) => <link {...props} />;
+case 194
+fixed	export const Test = () => <link href="https://fonts.googleapis.com/css2?family=Krona+One&amp;display=optional" />;
+case 195
+/tmp/wave11-current-harness/case-195/Component.tsx:1:27
+  @next/next/google-font-display  This Google Fonts <link> sets `display` to auto, block, or fallback, each of which blocks or flashes the text while the font loads. Use `optional`, which paints a fallback immediately and only swaps if the font arrives in time, or `swap` if the exact face matters more than the reflow.
+
+range 26 110 googleFontDisplayNotRecommended 			26 110
+fixed	export const Test = () => <link href="https://fonts.googleapis.com/css2?family=Krona+One&amp;display=block" />;
+case 196
+/tmp/wave11-current-harness/case-196/Component.tsx:1:27
+  @next/next/google-font-display  This Google Fonts <link> sets `display` to auto, block, or fallback, each of which blocks or flashes the text while the font loads. Use `optional`, which paints a fallback immediately and only swaps if the font arrives in time, or `swap` if the exact face matters more than the reflow.
+
+range 26 106 googleFontDisplayNotRecommended 			26 106
+fixed	export const Test = () => <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=block" />;
+case 197
+fixed	class A { @RequireSessionAccess() constructor(@InjectRequestContext(AccountRequestContextKey) private a: string) {} }
+case 198
+fixed	function m(@InjectRequestContext(AccountRequestContextKey) a: string) {}
+case 199
+/tmp/wave11-current-harness/case-200/repository/source/SecurityRequireContextAccess.ts:1:11
+  base/security-require-context-access  This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 10 91 missingProtector 			10 91
+fixed	class A { constructor(@InjectRequestContext(AccountRequestContextKey) private a: string) {} }
+case 200
+/tmp/wave11-current-harness/case-201/repository/source/SecurityRequireContextAccess.ts:1:11
+  base/security-require-context-access  This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 10 11 missingProtector 			10 11
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 201
+/tmp/wave11-current-harness/case-202/repository/source/SecurityRequireContextAccess.ts:1:15
+  base/security-require-context-access  This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 14 15 missingProtector 			14 15
+fixed	class A { set m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 202
+/tmp/wave11-current-harness/case-203/repository/source/SecurityRequireContextAccess.ts:1:18
+  base/security-require-context-access  This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 17 18 missingProtector 			17 18
+fixed	class A { static m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 203
+/tmp/wave11-current-harness/case-204/repository/source/SecurityRequireContextAccess.ts:1:11
+  base/security-require-context-access  This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 10 15 missingProtector 			10 15
+fixed	class A { [key](@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 204
+/tmp/wave11-current-harness/case-205/repository/source/SecurityRequireContextAccess.ts:1:19
+  base/security-require-context-access  This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 18 19 missingProtector 			18 19
+fixed	const A = class { m(@InjectRequestContext(AccountRequestContextKey) a: string) {} };
+case 205
+/tmp/wave11-current-harness/case-206/repository/source/SecurityRequireContextAccess.ts:2:11
+  base/security-require-context-access  This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 62 63 missingProtector 			62 63
+fixed	import { AccountRequestContextKey as AK } from 'x';\u000aclass A { m(@InjectRequestContext(AK) a: string) {} }
+case 206
+/tmp/wave11-current-harness/case-207/repository/source/SecurityRequireContextAccess.ts:1:11
+  base/security-require-context-access  This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 10 11 missingProtector 			10 11
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a: string, @InjectRequestContext(AccountRequestContextKey) b: string) {} }
+case 207
+/tmp/wave11-current-harness/case-208/repository/source/SecurityRequireContextAccess.ts:2:11
+  base/security-require-context-access  This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 56 57 missingProtector 			56 57
+fixed	import { AccountRequestContextKey } from 'x';\u000aclass A { m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 208
+/tmp/wave11-current-harness/case-209/repository/source/SecurityRequireContextAccess.ts:1:30
+  base/security-require-context-access  This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 29 30 missingProtector 			29 30
+fixed	class A { @RequireDeviceId() m(@InjectRequestContext(AccountRequestContextKey) a: string, @InjectRequestContext(DeviceIdRequestContextKey) b: string) {} }
+case 209
+/tmp/wave11-current-harness/case-210/repository/source/SecurityRequireContextAccess.ts:1:11
+  base/security-require-context-access  This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 10 11 missingProtector 			10 11
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a: string = 'x') {} }
+case 210
+/tmp/wave11-current-harness/case-211/repository/source/SecurityRequireContextAccess.ts:1:11
+  base/security-require-context-access  This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 10 11 missingProtector 			10 11
+/tmp/wave11-current-harness/case-211/repository/source/SecurityRequireContextAccess.ts:1:11
+  base/security-require-context-access  This injects `DeviceIdRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireDeviceId()` or `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 10 11 missingProtector 			10 11
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a: string, @InjectRequestContext(DeviceIdRequestContextKey) b: string) {} }
+case 211
+/tmp/wave11-current-harness/case-212/repository/source/SecurityRequireContextAccess.ts:1:11
+  base/security-require-context-access  This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 10 11 missingProtector 			10 11
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a) {} }
+case 212
+/tmp/wave11-current-harness/case-213/repository/source/SecurityRequireContextAccess.ts:1:11
+  base/security-require-context-access  This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 10 11 missingProtector 			10 11
+fixed	class A { m(@InjectRequestContext(Keys.AccountRequestContextKey) a: string) {} }
+case 213
+/tmp/wave11-current-harness/case-214/repository/source/SecurityRequireContextAccess.ts:1:30
+  base/security-require-context-access  This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 29 30 missingProtector 			29 30
+fixed	class A { @RequireDeviceId() m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 214
+/tmp/wave11-current-harness/case-215/repository/source/SecurityRequireContextAccess.ts:1:30
+  base/security-require-context-access  This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 29 30 missingProtector 			29 30
+fixed	@RequireDeviceId() class A { m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 215
+/tmp/wave11-current-harness/case-216/repository/source/SecurityRequireContextAccess.ts:1:42
+  base/security-require-context-access  This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 41 42 missingProtector 			41 42
+fixed	class A { @Access.RequireSessionAccess() m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 216
+/tmp/wave11-current-harness/case-217/repository/source/SecurityRequireContextAccess.ts:1:11
+  base/security-require-context-access  This injects `AuthenticationRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireAuthenticationSession()` or `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 10 11 missingProtector 			10 11
+fixed	class A { m(@InjectRequestContext(AuthenticationRequestContextKey) a: string) {} }
+case 217
+/tmp/wave11-current-harness/case-218/repository/source/SecurityRequireContextAccess.ts:1:11
+  base/security-require-context-access  This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 10 20 missingProtector 			10 20
+fixed	class A { [computed](@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 218
+/tmp/wave11-current-harness/case-219/repository/source/SecurityRequireContextAccess.ts:1:11
+  base/security-require-context-access  This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 10 11 missingProtector 			10 11
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) { a }: { a: string }) {} }
+case 219
+fixed	import { Something as AccountRequestContextKey } from 'x';\u000aclass A { m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 220
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a: any) {} }
+case 221
+/tmp/wave11-current-harness/case-222/repository/source/SecurityRequireContextAccess.ts:1:11
+  base/security-require-context-access  This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 10 11 missingProtector 			10 11
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) [a]: string[]) {} }
+case 222
+/tmp/wave11-current-harness/case-223/repository/source/SecurityRequireContextAccess.ts:1:11
+  base/security-require-context-access  This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 10 11 missingProtector 			10 11
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) ...rest: string[]) {} }
+case 223
+/tmp/wave11-current-harness/case-224/repository/source/SecurityRequireContextAccess.ts:1:28
+  base/security-require-context-access  This injects `AccountRequestContextKey` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add `@RequireSessionAccess()` or `@WithSessionAccess()`, to this member or to its class.
+
+range 27 28 missingProtector 			27 28
+fixed	class A { @RequireDeviceId m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 224
+fixed	class A { @RequireSessionAccess() m(@InjectRequestContext(AccountRequestContextKey) a: string, @InjectRequestContext(DeviceIdRequestContextKey) b: string) {} }
+case 225
+fixed	class A { @RequireSessionAccess m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 226
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a: string | undefined = undefined) {} }
+case 227
+fixed	class A { @GraphQlFieldResolver() m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 228
+fixed	class A { constructor(@InjectRequestContext(AccountRequestContextKey) private a?: string) {} }
+case 229
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a: void) {} }
+case 230
+fixed	class A { m(@InjectRequestContext(Keys['AccountRequestContextKey']) a: string) {} }
+case 231
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a: unknown) {} }
+case 232
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a: string | (number | null)) {} }
+case 233
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a: string | null) {} }
+case 234
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a: string | undefined) {} }
+case 235
+fixed	@RequireSessionAccess() class A { m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 236
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a?: string) {} }
+case 237
+fixed	class A { @WithSessionAccess() m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 238
+fixed	class A { m(@InjectRequestContext(SomeOtherKey) a: string) {} }
+case 239
+fixed	@RequireSessionAccess class A { m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 240
+fixed	class A { @RequireDeviceId() m(@InjectRequestContext(DeviceIdRequestContextKey) a: string) {} }
+case 241
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a: undefined) {} }
+case 242
+fixed	@RequireSessionAccess() class A { constructor(@InjectRequestContext(AccountRequestContextKey) private readonly a: string) {} }
+case 243
+fixed	class A { m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 244
+fixed	class A { @RequireAuthenticationSession() m(@InjectRequestContext(AuthenticationRequestContextKey) a: string) {} }
+case 245
+fixed	class A { m(@InjectRequestContext a: string) {} }
+case 246
+fixed	class A { m(@InjectRequestContext() a: string) {} }
+case 247
+fixed	class A { m(@InjectSomethingElse(AccountRequestContextKey) a: string) {} }
+case 248
+fixed	import { AccountRequestContextKey as AK } from 'x';\u000aclass A { @RequireSessionAccess() m(@InjectRequestContext(AK) a: string) {} }
+case 249
+fixed	class A { @RequireSessionAccess() m(@InjectRequestContext(AccountRequestContextKey) a: string) {} }
+case 250
+fixed	const orderColumns = [];\u000a
+case 251
+fixed	const DATABASE_URL = process.env.DATABASE_URL ?? 'local';\u000a
+case 252
+/tmp/wave11-current-harness/case-253/repository/source/Thing.ts:1:7
+  nexus/consistency-no-screaming-snake-case  Constant "STRIPE_WEBHOOK_SECRET" is file-local and should be camelCase ("stripeWebhookSecret"). `const` already tells the reader and the compiler the value is immutable, so shouting adds no information. The casing is free to signal scope instead, the way Go does it: PascalCase means the value came from somewhere else, camelCase means it lives in this file. Reserve the shouting form for values that mirror an external system's grammar, where matching the upstream spelling keeps the value greppable across a boundary you do not control.
+
+range 6 27 noScreamingSnakeCaseLocal 			6 27
+fixed	const STRIPE_WEBHOOK_SECRET = readSecret();\u000a
+case 253
+/tmp/wave11-current-harness/case-254/repository/source/Thing.ts:1:7
+  nexus/consistency-no-screaming-snake-case  Constant "MAX_RETRY_COUNT" is file-local and should be camelCase ("maxRetryCount"). `const` already tells the reader and the compiler the value is immutable, so shouting adds no information. The casing is free to signal scope instead, the way Go does it: PascalCase means the value came from somewhere else, camelCase means it lives in this file. Reserve the shouting form for values that mirror an external system's grammar, where matching the upstream spelling keeps the value greppable across a boundary you do not control.
+
+range 6 21 noScreamingSnakeCaseLocal 			6 21
+fixed	const MAX_RETRY_COUNT = 3;\u000a
+case 254
+fixed	var MAX_RETRY_COUNT = 3;\u000a
+case 255
+fixed	let MAX_RETRY_COUNT = 3;\u000a
+case 256
+fixed	const RED = '#ff0000';\u000a
+case 257
+fixed	export const RED = '#ff0000';\u000a
+case 258
+fixed	const DATABASE_URL = process.env.DATABASE_URL;\u000a
+case 259
+fixed	const max_retry = 3;\u000a
+case 260
+fixed	export const OrderColumns = [];\u000a
+case 261
+/tmp/wave11-current-harness/case-262/repository/source/Thing.ts:1:14
+  nexus/consistency-no-screaming-snake-case  Constant "MAX_RETRY_COUNT" is exported and should be PascalCase ("MaxRetryCount"). `const` already tells the reader and the compiler the value is immutable, so shouting adds no information. The casing is free to signal scope instead, the way Go does it: PascalCase means the value came from somewhere else, camelCase means it lives in this file. Reserve the shouting form for values that mirror an external system's grammar, where matching the upstream spelling keeps the value greppable across a boundary you do not control.
+
+range 13 28 noScreamingSnakeCaseExported 			13 28
+fixed	export const MAX_RETRY_COUNT = 3;\u000a
+case 262
+fixed	export function run() {\u000a    return 1;\u000a}\u000a
+case 263
+fixed	const DATABASE_URL = process.env.DATABASE_URL || 'local';\u000a
+case 264
+fixed	const Max_Retry = 3;\u000a
+case 265
+fixed	const STRIPE_WEBHOOK_SECRET = readSecret();\u000a
+case 266
+/tmp/wave11-current-harness/case-267/repository/source/Thing.ts:1:7
+  nexus/consistency-no-screaming-snake-case  Constant "SOME_PLATFORM" is file-local and should be camelCase ("somePlatform"). `const` already tells the reader and the compiler the value is immutable, so shouting adds no information. The casing is free to signal scope instead, the way Go does it: PascalCase means the value came from somewhere else, camelCase means it lives in this file. Reserve the shouting form for values that mirror an external system's grammar, where matching the upstream spelling keeps the value greppable across a boundary you do not control.
+
+range 6 19 noScreamingSnakeCaseLocal 			6 19
+fixed	const SOME_PLATFORM = process.platform;\u000a
+case 267
+/tmp/wave11-current-harness/case-268/repository/source/Thing.ts:1:7
+  nexus/consistency-no-screaming-snake-case  Constant "STRIPE_WEBHOOK_SECRET_OLD" is file-local and should be camelCase ("stripeWebhookSecretOld"). `const` already tells the reader and the compiler the value is immutable, so shouting adds no information. The casing is free to signal scope instead, the way Go does it: PascalCase means the value came from somewhere else, camelCase means it lives in this file. Reserve the shouting form for values that mirror an external system's grammar, where matching the upstream spelling keeps the value greppable across a boundary you do not control.
+
+range 6 31 noScreamingSnakeCaseLocal 			6 31
+fixed	const STRIPE_WEBHOOK_SECRET_OLD = readSecret();\u000a
+case 268
+/tmp/wave11-current-harness/case-269/repository/source/Thing.ts:1:7
+  nexus/consistency-no-screaming-snake-case  Constant "SOME_ARGUMENT" is file-local and should be camelCase ("someArgument"). `const` already tells the reader and the compiler the value is immutable, so shouting adds no information. The casing is free to signal scope instead, the way Go does it: PascalCase means the value came from somewhere else, camelCase means it lives in this file. Reserve the shouting form for values that mirror an external system's grammar, where matching the upstream spelling keeps the value greppable across a boundary you do not control.
+
+range 6 19 noScreamingSnakeCaseLocal 			6 19
+fixed	const SOME_ARGUMENT = process.argv[2];\u000a
+case 269
+/tmp/wave11-current-harness/case-270/repository/source/Thing.ts:1:7
+  nexus/consistency-no-screaming-snake-case  Constant "API_V2_URL" is file-local and should be camelCase ("apiV2Url"). `const` already tells the reader and the compiler the value is immutable, so shouting adds no information. The casing is free to signal scope instead, the way Go does it: PascalCase means the value came from somewhere else, camelCase means it lives in this file. Reserve the shouting form for values that mirror an external system's grammar, where matching the upstream spelling keeps the value greppable across a boundary you do not control.
+
+range 6 16 noScreamingSnakeCaseLocal 			6 16
+fixed	const API_V2_URL = 'x';\u000a
+case 270
+/tmp/wave11-current-harness/case-271/repository/source/Thing.ts:1:14
+  nexus/consistency-no-screaming-snake-case  Constant "HTTP_TIMEOUT" is exported and should be PascalCase ("HttpTimeout"). `const` already tells the reader and the compiler the value is immutable, so shouting adds no information. The casing is free to signal scope instead, the way Go does it: PascalCase means the value came from somewhere else, camelCase means it lives in this file. Reserve the shouting form for values that mirror an external system's grammar, where matching the upstream spelling keeps the value greppable across a boundary you do not control.
+
+range 13 25 noScreamingSnakeCaseExported 			13 25
+fixed	export const HTTP_TIMEOUT = 5000;\u000a
+case 271
+/tmp/wave11-current-harness/case-272/repository/source/Thing.ts:1:7
+  nexus/consistency-no-screaming-snake-case  Constant "DATABASE_URL" is file-local and should be camelCase ("databaseUrl"). `const` already tells the reader and the compiler the value is immutable, so shouting adds no information. The casing is free to signal scope instead, the way Go does it: PascalCase means the value came from somewhere else, camelCase means it lives in this file. Reserve the shouting form for values that mirror an external system's grammar, where matching the upstream spelling keeps the value greppable across a boundary you do not control.
+
+range 6 18 noScreamingSnakeCaseLocal 			6 18
+fixed	const DATABASE_URL = 'postgres://local';\u000a
+case 272
+/tmp/wave11-current-harness/case-273/repository/source/Thing.ts:1:7
+  nexus/consistency-no-screaming-snake-case  Constant "ORDER_COLUMNS" is file-local and should be camelCase ("orderColumns"). `const` already tells the reader and the compiler the value is immutable, so shouting adds no information. The casing is free to signal scope instead, the way Go does it: PascalCase means the value came from somewhere else, camelCase means it lives in this file. Reserve the shouting form for values that mirror an external system's grammar, where matching the upstream spelling keeps the value greppable across a boundary you do not control.
+
+range 6 19 noScreamingSnakeCaseLocal 			6 19
+fixed	const ORDER_COLUMNS = [];\u000a
+case 273
+fixed	import Link from '@structure/source/components/navigation/Link';\u000a
+case 274
+fixed	import { Thing } from './Thing';\u000a
+case 275
+fixed	import { thing } from 'next/link-utilities';\u000a
+case 276
+fixed	import { headers } from 'next/headers';\u000a
+case 277
+fixed	import { motion } from 'motion/react';\u000a
+case 278
+/tmp/wave11-current-harness/case-279/repository/source/Thing.tsx:4:23
+  nexus/import-no-forbidden-source  Importing from 'next/image' is not allowed. Use '@structure/source/components/images/Image' instead, so an image renders the same way whichever framework is underneath it.
+
+range 159 171 forbiddenImageImport fix	'@structure/source/components/images/Image'		159 171
+fixed	// Dependencies - Frameworks\u000a// This is the only place this import is valid\u000a// eslint-disable-next-line nexus/import-no-forbidden-source\u000aimport NextImage from '@structure/source/components/images/Image';\u000a
+case 279
+fixed	const module = import(somePath);\u000a
+case 280
+fixed	import NextImage from 'next/image';\u000a
+case 281
+fixed	export const Value = 1;\u000a
+case 282
+/tmp/wave11-current-harness/case-283/repository/source/Thing.tsx:1:27
+  nexus/import-no-forbidden-source  Importing from 'next/navigation' is not allowed. Use '@structure/source/router/Navigation', which is the same navigation without binding the file to one framework's router.
+
+range 26 43 forbiddenNavigationImport fix	'@structure/source/router/Navigation'		26 43
+fixed	import { useRouter } from '@structure/source/router/Navigation';\u000a
+case 283
+/tmp/wave11-current-harness/case-284/repository/libraries/structure/source/router/hooks/useRouter.ts:1:24
+  nexus/import-no-forbidden-source  Importing from 'framer-motion' is not allowed. Use 'motion/react', which is the same library under the name it ships as now.
+
+range 23 38 forbiddenMotionImport fix	'motion/react'		23 38
+fixed	import { motion } from 'motion/react';\u000a
+case 284
+/tmp/wave11-current-harness/case-285/repository/libraries/structure/source/components/navigation/NavigationMenu.tsx:1:18
+  nexus/import-no-forbidden-source  Importing from 'next/link' is not allowed. Use '@structure/source/components/navigation/Link' instead, so a link renders the same way whichever framework is underneath it.
+
+range 17 28 forbiddenLinkImport fix	'@structure/source/components/navigation/Link'		17 28
+fixed	import Link from '@structure/source/components/navigation/Link';\u000a
+case 285
+/tmp/wave11-current-harness/case-286/repository/libraries/structure/source/components/images/dialogs/ImageDialog.tsx:1:19
+  nexus/import-no-forbidden-source  Importing from 'next/image' is not allowed. Use '@structure/source/components/images/Image' instead, so an image renders the same way whichever framework is underneath it.
+
+range 18 30 forbiddenImageImport fix	'@structure/source/components/images/Image'		18 30
+fixed	import Image from '@structure/source/components/images/Image';\u000a
+case 286
+fixed	const NextImage = import('next/image');\u000a
+case 287
+fixed	import { useRouter as useNextRouter } from 'next/navigation';\u000a
+case 288
+fixed	import { usePathname } from 'next/navigation';\u000a
+case 289
+fixed	import NextLink from 'next/link';\u000a
+case 290
+/tmp/wave11-current-harness/case-291/repository/source/Thing.tsx:1:41
+  nexus/import-no-forbidden-source  Importing from 'framer-motion' is not allowed. Use 'motion/react', which is the same library under the name it ships as now.
+
+range 40 55 forbiddenMotionImport fix	'motion/react'		40 55
+fixed	import { motion, AnimatePresence } from 'motion/react';\u000a
+case 291
+/tmp/wave11-current-harness/case-292/repository/source/Thing.tsx:1:22
+  nexus/import-no-forbidden-source  Importing from 'next/image' is not allowed. Use '@structure/source/components/images/Image' instead, so an image renders the same way whichever framework is underneath it.
+
+range 21 33 forbiddenImageImport fix	'@structure/source/components/images/Image'		21 33
+fixed	const Image = import('@structure/source/components/images/Image');\u000a
+case 292
+/tmp/wave11-current-harness/case-293/repository/source/Thing.tsx:1:22
+  nexus/import-no-forbidden-source  Importing from 'next/link' is not allowed. Use '@structure/source/components/navigation/Link' instead, so a link renders the same way whichever framework is underneath it.
+
+range 21 32 forbiddenLinkImport fix	'@structure/source/components/navigation/Link'		21 32
+fixed	const Link = require('@structure/source/components/navigation/Link');\u000a
+case 293
+/tmp/wave11-current-harness/case-294/repository/source/Thing.tsx:1:24
+  nexus/import-no-forbidden-source  Importing from 'framer-motion' is not allowed. Use 'motion/react', which is the same library under the name it ships as now.
+
+range 23 38 forbiddenMotionImport fix	'motion/react'		23 38
+fixed	import { motion } from 'motion/react';\u000a
+case 294
+/tmp/wave11-current-harness/case-295/repository/source/Thing.tsx:1:19
+  nexus/import-no-forbidden-source  Importing from 'next/image' is not allowed. Use '@structure/source/components/images/Image' instead, so an image renders the same way whichever framework is underneath it.
+
+range 18 30 forbiddenImageImport fix	'@structure/source/components/images/Image'		18 30
+fixed	import Image from '@structure/source/components/images/Image';\u000a
+case 295
+/tmp/wave11-current-harness/case-296/repository/source/Thing.tsx:1:18
+  nexus/import-no-forbidden-source  Importing from 'next/link' is not allowed. Use '@structure/source/components/navigation/Link' instead, so a link renders the same way whichever framework is underneath it.
+
+range 17 28 forbiddenLinkImport fix	'@structure/source/components/navigation/Link'		17 28
+fixed	import Link from '@structure/source/components/navigation/Link';\u000a
+case 296
+fixed	import { thing } from 'framer-motion-extras';\u000a
+case 297
+/tmp/wave11-current-harness/case-298/repository/source/features/orders/Thing.ts:1:23
+  nexus/import-require-path-alias  '../../foundation/Thing' climbs 2 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@project/source/foundation/Thing', which reads the same from any file and survives this one moving.
+
+range 22 46 useAlias fix	'@project/source/foundation/Thing'		22 46
+fixed	import { Thing } from '@project/source/foundation/Thing';\u000a
+case 298
+/tmp/wave11-current-harness/case-299/repository/source/features/orders/Thing.ts:1:23
+  nexus/import-require-path-alias  '../../foundation/Thing' climbs 2 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@project/source/foundation/Thing', which reads the same from any file and survives this one moving.
+
+range 22 46 useAlias fix	"@project/source/foundation/Thing"		22 46
+fixed	import { Thing } from "@project/source/foundation/Thing";\u000a
+case 299
+/tmp/wave11-current-harness/case-300/repository/app/features/orders/Thing.ts:1:24
+  nexus/import-require-path-alias  '../../shared/Helper' climbs 2 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@project/app/shared/Helper', which reads the same from any file and survives this one moving.
+
+range 23 44 useAlias fix	'@project/app/shared/Helper'		23 44
+fixed	import { Helper } from '@project/app/shared/Helper';\u000a
+case 300
+/tmp/wave11-current-harness/case-301/repository/app/features/orders/Thing.ts:1:23
+  nexus/import-require-path-alias  '../../../libraries/base/source/Thing' climbs 3 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@base/source/Thing', which reads the same from any file and survives this one moving.
+
+range 22 60 useAlias fix	'@base/source/Thing'		22 60
+fixed	import { Thing } from '@base/source/Thing';\u000a
+case 301
+/tmp/wave11-current-harness/case-302/repository/app/features/orders/Thing.ts:1:24
+  nexus/import-require-path-alias  '../../shared/Helper' climbs 2 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@project/app/shared/Helper', which reads the same from any file and survives this one moving.
+
+range 23 44 useAlias fix	'@project/app/shared/Helper'		23 44
+fixed	import { Helper } from '@project/app/shared/Helper';\u000a
+case 302
+/tmp/wave11-current-harness/case-303/repository/libraries/base/deep/nested/Thing.ts:1:23
+  nexus/import-require-path-alias  '../../source/foundation/Thing' climbs 2 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@basesource/foundation/Thing', which reads the same from any file and survives this one moving.
+
+range 22 53 useAlias fix	'@basesource/foundation/Thing'		22 53
+fixed	import { Thing } from '@basesource/foundation/Thing';\u000a
+case 303
+fixed	import { Sibling } from './Sibling';\u000a
+case 304
+fixed	const thing = import(somePath);\u000a
+case 305
+fixed	import { Thing } from '../../../other/Thing';\u000a
+case 306
+fixed	import { Detail } from '../../internal/Detail';\u000a
+case 307
+fixed	import * as NodePath from 'node:path';\u000a
+case 308
+fixed	import { Thing } from '@base/source/Thing';\u000a
+case 309
+fixed	import { Thing } from '../../foundation/Thing';\u000a
+case 310
+fixed	import { Parent } from '../Parent';\u000a
+case 311
+fixed	import { Thing } from '../../foundation/Thing';\u000a
+case 312
+fixed	import { Thing } from '../../elsewhere/Thing';\u000a
+case 313
+fixed	import { Thing } from '../../foundation/Thing';\u000a
+case 314
+fixed	import { Thing } from '../../foundation/Thing';\u000a
+case 315
+/tmp/wave11-current-harness/case-316/repository/app/features/orders/Thing.ts:1:24
+  nexus/import-require-path-alias  '../../shared/Helper' climbs 2 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@app/shared/Helper', which reads the same from any file and survives this one moving.
+
+range 23 44 useAlias fix	'@app/shared/Helper'		23 44
+fixed	import { Helper } from '@app/shared/Helper';\u000a
+case 316
+/tmp/wave11-current-harness/case-317/repository/app/features/orders/Thing.ts:1:24
+  nexus/import-require-path-alias  '../../shared/Helper' climbs 2 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@app/shared/Helper', which reads the same from any file and survives this one moving.
+
+range 23 44 useAlias fix	'@app/shared/Helper'		23 44
+fixed	import { Helper } from '@app/shared/Helper';\u000a
+case 317
+/tmp/wave11-current-harness/case-318/repository/app/features/orders/Thing.ts:1:24
+  nexus/import-require-path-alias  '../../shared/Helper' climbs 2 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@app/shared/Helper', which reads the same from any file and survives this one moving.
+
+range 23 44 useAlias fix	'@app/shared/Helper'		23 44
+fixed	import { Helper } from '@app/shared/Helper';\u000a
+case 318
+fixed	import { Helper } from '../../../libraries/structure/source/Helper';\u000a
+case 319
+/tmp/wave11-current-harness/case-320/repository/source/features/orders/Thing.ts:1:23
+  nexus/import-require-path-alias  '../../foundation/Thing' climbs 2 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@project/source/foundation/Thing', which reads the same from any file and survives this one moving.
+
+range 22 46 useAlias fix	'@project/source/foundation/Thing'		22 46
+fixed	const thing = require('@project/source/foundation/Thing');\u000a
+case 320
+/tmp/wave11-current-harness/case-321/repository/libraries/base/source/deep/Thing.ts:1:23
+  nexus/import-require-path-alias  '../Other' is relative, and everything under 'libraries/base' is imported by alias so one path means one thing in every project that reads it. Import it as '@base/source/Other'.
+
+range 22 32 useAliasInStrictRoot fix	'@base/source/Other'		22 32
+fixed	import { Other } from '@base/source/Other';\u000a
+case 321
+/tmp/wave11-current-harness/case-322/repository/libraries/base/source/Thing.ts:1:23
+  nexus/import-require-path-alias  './Other' is relative, and everything under 'libraries/base' is imported by alias so one path means one thing in every project that reads it. Import it as '@base/source/Other'.
+
+range 22 31 useAliasInStrictRoot fix	'@base/source/Other'		22 31
+fixed	import { Other } from '@base/source/Other';\u000a
+case 322
+/tmp/wave11-current-harness/case-323/repository/source/features/orders/Thing.ts:1:22
+  nexus/import-require-path-alias  '../../foundation/Thing' climbs 2 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@project/source/foundation/Thing', which reads the same from any file and survives this one moving.
+
+range 21 45 useAlias fix	'@project/source/foundation/Thing'		21 45
+fixed	const thing = import('@project/source/foundation/Thing');\u000a
+case 323
+/tmp/wave11-current-harness/case-324/repository/source/features/orders/Thing.ts:1:23
+  nexus/import-require-path-alias  '../../../source/foundation/Thing' climbs 3 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@project/source/foundation/Thing', which reads the same from any file and survives this one moving.
+
+range 22 56 useAlias fix	'@project/source/foundation/Thing'		22 56
+fixed	import { Thing } from '@project/source/foundation/Thing';\u000a
+case 324
+fixed	import { Helper } from '../../../libraries/structure/source/Helper';\u000a
+case 325
+fixed	import { Helper } from '../../../libraries/structure/source/Helper';\u000a
+case 326
+fixed	import { Helper } from '../../../libraries/structure/source/Helper';\u000a
+case 327
+fixed	import { Helper } from '../../../libraries/structure/source/Helper';\u000a
+case 328
+fixed	import { Helper } from '../../../libraries/structure/source/Helper';\u000a
+case 329
+fixed	import { Helper } from '../../../libraries/structure/source/Helper';\u000a

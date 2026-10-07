@@ -1,0 +1,46 @@
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:10:10: function read: (path: string) => string
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:10:15: parameter path: string
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:10:45: variable value: { readonly kind: "Ok"; readonly text: string; } | { readonly kind: "Error"; readonly message: string; }
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:12:10: function escaped: (text: string) => string
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:12:18: parameter text: string
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:13:11: variable chunks: string[]
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:14:13: variable start: number
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:17:10: function compare: (left: Finding, right: Finding) => number
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:17:18: parameter left: Finding
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:17:33: parameter right: Finding
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:18:7: variable args: readonly string[]
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:19:7: variable corpus: OptionsJson
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:20:7: variable root: number
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:21:7: variable countOnly: boolean
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:22:7: variable independent: boolean
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:23:10: function field: (index: number, name: string) => string
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:23:16: parameter index: number
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:23:31: parameter name: string
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:23:61: variable id: number
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:24:5: variable caseNumber: number
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:25:5: variable count: number
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:26:11: variable row: number
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:27:11: variable source: string
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:28:11: variable name: string
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:29:11: variable selected: string
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:30:11: variable parser: Parser
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:31:9: variable tree: number
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:37:15: variable adapted: number
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:39:19: variable raw: number
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:40:19: variable children: number[]
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:41:23: variable child: number
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:42:19: variable node: ParseNode
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:48:11: variable parents: number[]
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:49:13: variable index: number
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:49:74: variable child: number
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:50:11: variable settings: Settings
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:52:11: variable context: RuleContext
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:53:11: variable rule: Rule
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:54:11: variable stack: number[]
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:56:15: variable index: number
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:57:15: variable kind: string
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:59:15: variable children: number[]
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:60:17: variable child: number
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:66:19: variable finding: Finding
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:68:19: variable start: number
+stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts:69:19: variable end: number

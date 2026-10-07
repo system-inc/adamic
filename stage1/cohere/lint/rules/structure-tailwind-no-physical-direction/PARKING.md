@@ -21,3 +21,5 @@ Rebased onto origin/main c01907a70 and reran the five owned fixture suites: 329 
 ## Published harness integrated
 
 See HARNESS_REPORT.md for the ab70f38d4 integration and fresh production proof. The undefined registration helpers and missing Settings.text blockers above are resolved. New raw factory defaults and a JSX witness rename are owned fixes. The remaining shared witness-option sidecar gap and one parser refusal are explicit; 329 production source cases and all 330 metadata cases are green across three backends. The branch remains parked under #zmh9v36 pending configured witness support and integration.
+
+Current-main landing refresh: both worker branches rebased onto b8fb957aa. Fresh independent eight-rule fixture gate and production registry comparison pass, with nine healthy semantic mutants caught on all three backends. The shared configured-witness test still omits required sidecar options and fails visibly; one decorated-class parser refusal remains explicitly excluded and retained. LANDING_REPORT.md and evidence/landing-b8fb957aa contain exact commands, bytes and scope. No shared harness change authored.
