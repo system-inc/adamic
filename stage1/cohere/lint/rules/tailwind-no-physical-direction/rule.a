@@ -1,0 +1,59 @@
+import type { RuleContext } from '../../context.ts';
+import { message } from './messages.a';
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    report(index: number): void {
+        const text = this.context.node(index).text;
+        const tokens: string[] = [];
+        let start = 0;
+        for(let i = 0; i <= text.length; i++) {
+            if(i === text.length || /[\t\n\v\f\r \u0085\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]/.test(text.slice(i, i + 1))) {
+                if(i > start) { tokens.push(text.slice(start, i)); }
+                start = i + 1;
+            }
+        }
+        let qualifies = false;
+        for(const token of tokens) {
+            if(/^-?(?:[a-z]+:)*(?:[a-z]+-)?[a-z]+(?:-[a-z0-9.\[\]/]+)?$/.test(token)) { qualifies = true; }
+        }
+        if(!qualifies) { return; }
+        const prefixes = ['ml-', 'mr-', 'pl-', 'pr-', 'text-left', 'text-right', 'left-', 'right-', 'border-l', 'border-l-', 'border-r', 'border-r-', 'rounded-l', 'rounded-l-', 'rounded-r', 'rounded-r-', 'scroll-ml-', 'scroll-mr-', 'scroll-pl-', 'scroll-pr-'];
+        const replacements = ['ms-', 'me-', 'ps-', 'pe-', 'text-start', 'text-end', 'start-', 'end-', 'border-s', 'border-s-', 'border-e', 'border-e-', 'rounded-s', 'rounded-s-', 'rounded-e', 'rounded-e-', 'scroll-ms-', 'scroll-me-', 'scroll-ps-', 'scroll-pe-'];
+        for(const token of tokens) {
+            const parts = token.split(':');
+            const base = parts[parts.length - 1] ?? '';
+            let direction = false;
+            for(let i = 0; i < parts.length - 1; i++) {
+                if(parts[i] === 'rtl' || parts[i] === 'ltr') { direction = true; }
+            }
+            if(direction) { continue; }
+            const negative = base.startsWith('-');
+            const body = negative ? base.slice(1) : base;
+            for(let i = 0; i < prefixes.length; i++) {
+                const prefix = prefixes[i] ?? '';
+                const exact = !prefix.endsWith('-');
+                if(exact ? body !== prefix || negative : !body.startsWith(prefix) || body.length === prefix.length || (negative && i > 7)) { continue; }
+                const logical = `${negative ? '-' : ''}${replacements[i] ?? ''}${exact ? '' : body.slice(prefix.length)}`;
+                const variant = token.slice(0, token.length - base.length);
+                this.context.report(index, 'structure/tailwind-no-physical-direction', 'useLogicalClass', message(token, variant + logical), '', '', '');
+                break;
+            }
+        }
+    }
+    visit(index: number): void {
+        const path = this.context.parser.path;
+        if(!path.endsWith('.ts') && !path.endsWith('.tsx')) { return; }
+        const node = this.context.node(index);
+        if(node.kind !== 'TemplateExpression') { this.report(index); return; }
+        for(const child of node.children) {
+            const part = this.context.node(child);
+            if(part.kind === 'TemplateHead') { this.report(child); }
+            if(part.kind === 'TemplateSpan') {
+                const literal = part.children[1] ?? -1;
+                if(literal >= 0) { this.report(literal); }
+            }
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
