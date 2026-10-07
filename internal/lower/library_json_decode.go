@@ -60,17 +60,21 @@ func (l *lowering) jsonDecodeContainsNull(t *checker.Type, seen map[*checker.Typ
 func (l *lowering) decodeJsonType(node *ast.Node) (ir.JSONDecodeSchema, error) {
 	schema := ir.JSONDecodeSchema{}
 	call := node.AsCallExpression()
+	operation, argument := "decodeJson", "text"
+	if l.isPreludeFunction(call.Expression, "encodeJson") {
+		operation, argument = "encodeJson", "value"
+	}
 	if call.TypeArguments == nil || len(call.TypeArguments.Nodes) != 1 {
-		return schema, &Refused{Where: l.program.Where(node), What: "decodeJson requires a type argument", Fix: "name the type: decodeJson<YourType>(text)"}
+		return schema, &Refused{Where: l.program.Where(node), What: operation + " requires a type argument", Fix: "name the type: " + operation + "<YourType>(" + argument + ")"}
 	}
 	rootType := l.checker.GetTypeFromTypeNode(call.TypeArguments.Nodes[0])
 	if l.jsonDecodeContainsNull(rootType, map[*checker.Type]bool{}) {
-		return schema, &jsonDecodeNullableNotYet{NotYet{Where: l.program.Where(node), What: "decodeJson<" + l.checker.TypeToString(rootType) + "> containing null"}}
+		return schema, &jsonDecodeNullableNotYet{NotYet{Where: l.program.Where(node), What: operation + "<" + l.checker.TypeToString(rootType) + "> containing null"}}
 	}
 	seen := map[*checker.Type]int{}
 	var visit func(*checker.Type) (int, error)
 	refuse := func(t *checker.Type) error {
-		return &Refused{Where: l.program.Where(node), What: "decodeJson cannot prove " + l.checker.TypeToString(t) + " is JSON data", Fix: "name a data type made of JSON scalars, arrays, tuples and plain fields; give object unions one distinct literal discriminant"}
+		return &Refused{Where: l.program.Where(node), What: operation + " cannot prove " + l.checker.TypeToString(t) + " is JSON data", Fix: "name a data type made of JSON scalars, arrays, tuples and plain fields; give object unions one distinct literal discriminant"}
 	}
 	visit = func(t *checker.Type) (int, error) {
 		// An open generic is refused even if it has a data constraint.
@@ -168,6 +172,9 @@ func (l *lowering) decodeJsonType(node *ast.Node) (ir.JSONDecodeSchema, error) {
 				}
 			}
 		} else if flags&checker.TypeFlagsObject != 0 {
+			if operation == "encodeJson" && isClassInstance(t) {
+				return 0, l.notYet(node, "encodeJson of a class instance is not yet supported; describe the data with an interface")
+			}
 			if isClassInstance(t) || l.isLibraryType(t, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Date", "RegExp") || len(l.checker.GetSignaturesOfType(t, checker.SignatureKindCall)) != 0 || len(l.checker.GetSignaturesOfType(t, checker.SignatureKindConstruct)) != 0 || len(l.checker.GetIndexInfosOfType(t)) != 0 && !l.checker.IsArrayType(t) && !checker.IsTupleType(t) {
 				return 0, refuse(t)
 			}
