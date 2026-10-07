@@ -1,0 +1,6 @@
+panic: /workspace/adamic/stage1/cohere/lint/helpers/slot_wave1_03/gaps/successor-cycle.a:3:5: Adamic 0.1 refuses Block[], an array whose elements can reach back to an array like it: a cycle reference counting can't free, and the write at /workspace/adamic/stage1/cohere/lint/helpers/slot_wave1_03/gaps/successor-cycle.a:7:5 may close one (the value written reaches something this function didn't make or let escape, and what it's written into wasn't made here, where appendSuccessor is called from the top level); declare the elements weak, Weak<Block>[] (import type { Weak } from 'adamic'), which don't count and read undefined once what they point to is freed; or make it readonly Block[]; or write into such an array only values this function made, or only into one it made (adamic/cycle-capable)
+
+goroutine 1 [running]:
+main.main()
+	/workspace/adamic/adamic_owned_successor_build.go:21 +0x29f
+exit status 2
