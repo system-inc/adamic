@@ -1,0 +1,6 @@
+=== RUN   TestRegisteredCorpusControl
+    adamic_inventory_test.go:114: positive control failed: main.frequency{Count:(*int)(0x1e3d3c493f38), Status:"not measured", Offered:1, Listeners:1, Skips:map[string]int{}, Failures:[]string{}}, count 2
+--- FAIL: TestRegisteredCorpusControl (0.00s)
+FAIL
+FAIL	command-line-arguments	0.037s
+FAIL

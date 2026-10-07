@@ -1,0 +1,31 @@
+=== RUN   TestJsxMemberNameRejection
+    jsx_rejection_test.go:57: Go rejects with diagnostic 1003; Node/native reject identically: adamic: panic: JSX expected name at 21 in /tmp/adamic-gate/TestJsxMemberNameRejection2988206561/001/dashed-member.tsx
+    jsx_rejection_test.go:72: Node compiled permissive mutant finishes cleanly; Go-backed rejection check catches its exit 0
+    jsx_rejection_test.go:72: native compiled permissive mutant finishes cleanly; Go-backed rejection check catches its exit 0
+--- PASS: TestJsxMemberNameRejection (34.82s)
+=== RUN   TestJsxNameBoundaryRejections
+    jsx_rejection_test.go:108: private member: Go diagnoses; Node/native refuse identically
+    jsx_rejection_test.go:108: escaped tag: Go diagnoses; Node/native refuse identically
+    jsx_rejection_test.go:108: escaped member: Go diagnoses; Node/native refuse identically
+    jsx_rejection_test.go:108: escaped namespace: Go diagnoses; Node/native refuse identically
+    jsx_rejection_test.go:108: escaped attribute: Go diagnoses; Node/native refuse identically
+=== RUN   TestJsxNameBoundaryRejections/private_name_accepted
+    jsx_rejection_test.go:129: Node compiled permissive mutant exits 0; Go-backed refusal check catches it
+    jsx_rejection_test.go:129: native compiled permissive mutant exits 0; Go-backed refusal check catches it
+=== RUN   TestJsxNameBoundaryRejections/escaped_name_accepted
+    jsx_rejection_test.go:129: Node compiled permissive mutant exits 0; Go-backed refusal check catches it
+    jsx_rejection_test.go:129: native compiled permissive mutant exits 0; Go-backed refusal check catches it
+--- PASS: TestJsxNameBoundaryRejections (45.58s)
+    --- PASS: TestJsxNameBoundaryRejections/private_name_accepted (13.74s)
+    --- PASS: TestJsxNameBoundaryRejections/escaped_name_accepted (16.78s)
+=== RUN   TestJsxNode
+    jsx_test.go:88: all 13 Go JSX AST kinds covered
+    jsx_test.go:93: 348 JSX inputs, 277842 identical whole-tree bytes
+--- PASS: TestJsxNode (0.85s)
+=== RUN   TestJsxNative
+    jsx_test.go:108: sanitize=true: 348 JSX inputs, 277842 identical whole-tree bytes
+    jsx_test.go:108: sanitize=false: 348 JSX inputs, 277842 identical whole-tree bytes
+--- PASS: TestJsxNative (20.85s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/typescript/parser	102.114s
+wall 113.819 seconds user 117.769 seconds sys 11.258 seconds

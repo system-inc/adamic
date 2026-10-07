@@ -1,0 +1,290 @@
+{
+  "group": "original8",
+  "cases": [
+    "original8"
+  ],
+  "findings": 161,
+  "samples": {
+    "Go": [
+      0.6313537830010318,
+      0.43371226400086016,
+      0.3928367930002423,
+      0.513856036001016,
+      0.4470742710000195
+    ],
+    "original8_release_O2": [
+      2.5449143659989204,
+      2.612671495999166,
+      2.455951276000633,
+      2.7448625870001706,
+      2.4136678480008413
+    ],
+    "original8_asan_ubsan_O1": [
+      13.576865926001119,
+      12.779847306999727,
+      11.048057470999993,
+      11.46092592200148,
+      11.489314229000229
+    ]
+  },
+  "best": {
+    "Go": 0.3928367930002423,
+    "original8_release_O2": 2.4136678480008413,
+    "original8_asan_ubsan_O1": 11.048057470999993
+  },
+  "orders": [
+    [
+      "Go",
+      "original8_release_O2",
+      "original8_asan_ubsan_O1"
+    ],
+    [
+      "original8_release_O2",
+      "original8_asan_ubsan_O1",
+      "Go"
+    ],
+    [
+      "original8_asan_ubsan_O1",
+      "Go",
+      "original8_release_O2"
+    ],
+    [
+      "Go",
+      "original8_release_O2",
+      "original8_asan_ubsan_O1"
+    ],
+    [
+      "original8_release_O2",
+      "original8_asan_ubsan_O1",
+      "Go"
+    ]
+  ],
+  "load_before": "1.01 1.51 1.76 1/174 33266",
+  "load_after": "1.00 1.40 1.70 1/178 33341",
+  "environment": {
+    "ASAN_OPTIONS": "detect_leaks=1",
+    "UBSAN_OPTIONS": "print_stacktrace=1"
+  },
+  "nproc": "5",
+  "cpu_max": "400000 100000",
+  "machine": {
+    "system": "Linux",
+    "node": "d629e9781a5a",
+    "release": "6.18.44",
+    "version": "#1 SMP Sat Sep 26 20:02:31 UTC 2026",
+    "machine": "x86_64",
+    "processor": ""
+  },
+  "runs": [
+    {
+      "round": 0,
+      "label": "Go",
+      "argv": [
+        "/workspace/lint-flags-original8/oracle",
+        "--manifest",
+        "/workspace/lint-flags-original8/compiler.txt",
+        "--count"
+      ],
+      "seconds": 0.6313537830010318,
+      "stdout_sha256": "ed0f61e6f6796d3d9f1ec1eb3851c8743e8b78c793741b0b4ba541e9e8a0313c",
+      "stderr_bytes": 0,
+      "exit": 0
+    },
+    {
+      "round": 0,
+      "label": "original8_release_O2",
+      "argv": [
+        "/workspace/lint-flags-original8/scanner",
+        "--manifest",
+        "/workspace/lint-flags-original8/compiler.txt",
+        "--count"
+      ],
+      "seconds": 2.5449143659989204,
+      "stdout_sha256": "ed0f61e6f6796d3d9f1ec1eb3851c8743e8b78c793741b0b4ba541e9e8a0313c",
+      "stderr_bytes": 0,
+      "exit": 0
+    },
+    {
+      "round": 0,
+      "label": "original8_asan_ubsan_O1",
+      "argv": [
+        "/workspace/lint-flags-original8/sanitized",
+        "--manifest",
+        "/workspace/lint-flags-original8/compiler.txt",
+        "--count"
+      ],
+      "seconds": 13.576865926001119,
+      "stdout_sha256": "ed0f61e6f6796d3d9f1ec1eb3851c8743e8b78c793741b0b4ba541e9e8a0313c",
+      "stderr_bytes": 0,
+      "exit": 0
+    },
+    {
+      "round": 1,
+      "label": "original8_release_O2",
+      "argv": [
+        "/workspace/lint-flags-original8/scanner",
+        "--manifest",
+        "/workspace/lint-flags-original8/compiler.txt",
+        "--count"
+      ],
+      "seconds": 2.612671495999166,
+      "stdout_sha256": "ed0f61e6f6796d3d9f1ec1eb3851c8743e8b78c793741b0b4ba541e9e8a0313c",
+      "stderr_bytes": 0,
+      "exit": 0
+    },
+    {
+      "round": 1,
+      "label": "original8_asan_ubsan_O1",
+      "argv": [
+        "/workspace/lint-flags-original8/sanitized",
+        "--manifest",
+        "/workspace/lint-flags-original8/compiler.txt",
+        "--count"
+      ],
+      "seconds": 12.779847306999727,
+      "stdout_sha256": "ed0f61e6f6796d3d9f1ec1eb3851c8743e8b78c793741b0b4ba541e9e8a0313c",
+      "stderr_bytes": 0,
+      "exit": 0
+    },
+    {
+      "round": 1,
+      "label": "Go",
+      "argv": [
+        "/workspace/lint-flags-original8/oracle",
+        "--manifest",
+        "/workspace/lint-flags-original8/compiler.txt",
+        "--count"
+      ],
+      "seconds": 0.43371226400086016,
+      "stdout_sha256": "ed0f61e6f6796d3d9f1ec1eb3851c8743e8b78c793741b0b4ba541e9e8a0313c",
+      "stderr_bytes": 0,
+      "exit": 0
+    },
+    {
+      "round": 2,
+      "label": "original8_asan_ubsan_O1",
+      "argv": [
+        "/workspace/lint-flags-original8/sanitized",
+        "--manifest",
+        "/workspace/lint-flags-original8/compiler.txt",
+        "--count"
+      ],
+      "seconds": 11.048057470999993,
+      "stdout_sha256": "ed0f61e6f6796d3d9f1ec1eb3851c8743e8b78c793741b0b4ba541e9e8a0313c",
+      "stderr_bytes": 0,
+      "exit": 0
+    },
+    {
+      "round": 2,
+      "label": "Go",
+      "argv": [
+        "/workspace/lint-flags-original8/oracle",
+        "--manifest",
+        "/workspace/lint-flags-original8/compiler.txt",
+        "--count"
+      ],
+      "seconds": 0.3928367930002423,
+      "stdout_sha256": "ed0f61e6f6796d3d9f1ec1eb3851c8743e8b78c793741b0b4ba541e9e8a0313c",
+      "stderr_bytes": 0,
+      "exit": 0
+    },
+    {
+      "round": 2,
+      "label": "original8_release_O2",
+      "argv": [
+        "/workspace/lint-flags-original8/scanner",
+        "--manifest",
+        "/workspace/lint-flags-original8/compiler.txt",
+        "--count"
+      ],
+      "seconds": 2.455951276000633,
+      "stdout_sha256": "ed0f61e6f6796d3d9f1ec1eb3851c8743e8b78c793741b0b4ba541e9e8a0313c",
+      "stderr_bytes": 0,
+      "exit": 0
+    },
+    {
+      "round": 3,
+      "label": "Go",
+      "argv": [
+        "/workspace/lint-flags-original8/oracle",
+        "--manifest",
+        "/workspace/lint-flags-original8/compiler.txt",
+        "--count"
+      ],
+      "seconds": 0.513856036001016,
+      "stdout_sha256": "ed0f61e6f6796d3d9f1ec1eb3851c8743e8b78c793741b0b4ba541e9e8a0313c",
+      "stderr_bytes": 0,
+      "exit": 0
+    },
+    {
+      "round": 3,
+      "label": "original8_release_O2",
+      "argv": [
+        "/workspace/lint-flags-original8/scanner",
+        "--manifest",
+        "/workspace/lint-flags-original8/compiler.txt",
+        "--count"
+      ],
+      "seconds": 2.7448625870001706,
+      "stdout_sha256": "ed0f61e6f6796d3d9f1ec1eb3851c8743e8b78c793741b0b4ba541e9e8a0313c",
+      "stderr_bytes": 0,
+      "exit": 0
+    },
+    {
+      "round": 3,
+      "label": "original8_asan_ubsan_O1",
+      "argv": [
+        "/workspace/lint-flags-original8/sanitized",
+        "--manifest",
+        "/workspace/lint-flags-original8/compiler.txt",
+        "--count"
+      ],
+      "seconds": 11.46092592200148,
+      "stdout_sha256": "ed0f61e6f6796d3d9f1ec1eb3851c8743e8b78c793741b0b4ba541e9e8a0313c",
+      "stderr_bytes": 0,
+      "exit": 0
+    },
+    {
+      "round": 4,
+      "label": "original8_release_O2",
+      "argv": [
+        "/workspace/lint-flags-original8/scanner",
+        "--manifest",
+        "/workspace/lint-flags-original8/compiler.txt",
+        "--count"
+      ],
+      "seconds": 2.4136678480008413,
+      "stdout_sha256": "ed0f61e6f6796d3d9f1ec1eb3851c8743e8b78c793741b0b4ba541e9e8a0313c",
+      "stderr_bytes": 0,
+      "exit": 0
+    },
+    {
+      "round": 4,
+      "label": "original8_asan_ubsan_O1",
+      "argv": [
+        "/workspace/lint-flags-original8/sanitized",
+        "--manifest",
+        "/workspace/lint-flags-original8/compiler.txt",
+        "--count"
+      ],
+      "seconds": 11.489314229000229,
+      "stdout_sha256": "ed0f61e6f6796d3d9f1ec1eb3851c8743e8b78c793741b0b4ba541e9e8a0313c",
+      "stderr_bytes": 0,
+      "exit": 0
+    },
+    {
+      "round": 4,
+      "label": "Go",
+      "argv": [
+        "/workspace/lint-flags-original8/oracle",
+        "--manifest",
+        "/workspace/lint-flags-original8/compiler.txt",
+        "--count"
+      ],
+      "seconds": 0.4470742710000195,
+      "stdout_sha256": "ed0f61e6f6796d3d9f1ec1eb3851c8743e8b78c793741b0b4ba541e9e8a0313c",
+      "stderr_bytes": 0,
+      "exit": 0
+    }
+  ]
+}

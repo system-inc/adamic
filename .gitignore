@@ -36,3 +36,6 @@ Thumbs.db
 # Nothing here writes a .log on purpose. Test runs are sent to a log rather than through a pipe (see
 # CLAUDE.md), and that file should never reach a commit.
 *.log
+
+# Static lint dispatch is regenerated before builds and tests.
+/stage1/cohere/lint/.generated/

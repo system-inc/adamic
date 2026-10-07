@@ -1,0 +1,5 @@
+{
+  "name": "react-no-redundant-should-component-update mutant from batch 8",
+  "from": "if(!pure)",
+  "to": "if(pure)"
+}

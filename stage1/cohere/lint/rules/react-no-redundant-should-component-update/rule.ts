@@ -1,0 +1,71 @@
+import type { RuleContext } from '../../context.ts';
+export function noRedundantShouldComponentUpdate(context: RuleContext, index: number): void {
+    if(!['ClassDeclaration', 'ClassExpression'].includes(context.kind(index))) {
+        return;
+    }
+    let pure = false;
+    for(const clause of context.children(index, 'HeritageClause')) {
+        if(context.node(clause).operator !== 'ExtendsKeyword') {
+            continue;
+        }
+        for(const type of context.children(clause, 'ExpressionWithTypeArguments')) {
+            const base = context.unwrap(context.child(type, 0));
+            if(context.kind(base) === 'Identifier' && context.node(base).text === 'PureComponent') {
+                pure = true;
+            }
+            if(context.kind(base) === 'PropertyAccessExpression') {
+                const receiver = context.child(base, 0);
+                const name = context.property(base);
+                if(
+                    context.kind(receiver) === 'Identifier' &&
+                    context.node(receiver).text === 'React' &&
+                    context.kind(name) === 'Identifier' &&
+                    context.node(name).text === 'PureComponent'
+                ) {
+                    pure = true;
+                }
+            }
+        }
+    }
+    if(!pure) {
+        return;
+    }
+    for(const member of context.members(index)) {
+        const name = context.memberName(member);
+        if(!['Identifier', 'PrivateIdentifier'].includes(context.kind(name))) {
+            continue;
+        }
+        if(context.node(name).text.replace('#', '') !== 'shouldComponentUpdate') {
+            continue;
+        }
+        let className = '';
+        let named = context.name(index);
+        if(named < 0 && context.kind(context.parent(index)) === 'VariableDeclaration') {
+            named = context.name(context.parent(index));
+        }
+        if(context.kind(named) === 'Identifier') {
+            className = context.node(named).text;
+        }
+        context.reportNode(
+            index,
+            'react/no-redundant-should-component-update',
+            'noShouldCompUpdate',
+            `${className} extends PureComponent and also writes shouldComponentUpdate. PureComponent's whole contribution IS an implementation of that method, a shallow comparison of props and state, and defining your own replaces it rather than adding to it. So the class pays for the base class and then discards what it bought, and a reader who sees PureComponent in the heritage will believe a shallow compare is happening when it is not. Extend Component instead, or delete the method.`,
+        );
+        return;
+    }
+}
+
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) {
+        this.context = context;
+    }
+    visit(index: number): void {
+        noRedundantShouldComponentUpdate(this.context, index);
+    }
+}
+
+export function create(context: RuleContext): Rule {
+    return new Rule(context);
+}

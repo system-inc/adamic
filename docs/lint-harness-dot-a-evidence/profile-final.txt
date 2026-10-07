@@ -1,0 +1,7 @@
+=== RUN   TestProfileCompilation
+    profile_test.go:116: release, counted and -O2 -g profiling builds saved in /tmp/adamic-gate/TestProfileCompilation1235536139/001
+    profile_test.go:119: Go, Node, emitted JavaScript, native identical: 654 bytes
+    profile_test.go:152: counted instrumentation: adamic: counts: allocations 107 frees 107 retains 970 releases 585 peak 84 regions 0
+--- PASS: TestProfileCompilation (30.45s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	30.465s

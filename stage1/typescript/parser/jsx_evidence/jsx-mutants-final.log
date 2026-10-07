@@ -1,0 +1,78 @@
+=== RUN   TestJsxMutants
+=== RUN   TestJsxMutants/text_payload
+=== PAUSE TestJsxMutants/text_payload
+=== RUN   TestJsxMutants/whitespace_flag
+=== PAUSE TestJsxMutants/whitespace_flag
+=== RUN   TestJsxMutants/namespace_kind
+=== PAUSE TestJsxMutants/namespace_kind
+=== RUN   TestJsxMutants/self_closing_kind
+=== PAUSE TestJsxMutants/self_closing_kind
+=== RUN   TestJsxMutants/type_argument_comma
+=== PAUSE TestJsxMutants/type_argument_comma
+=== RUN   TestJsxMutants/attribute_list
+=== PAUSE TestJsxMutants/attribute_list
+=== RUN   TestJsxMutants/expression_kind
+=== PAUSE TestJsxMutants/expression_kind
+=== RUN   TestJsxMutants/child_order
+=== PAUSE TestJsxMutants/child_order
+=== RUN   TestJsxMutants/text_start
+=== PAUSE TestJsxMutants/text_start
+=== CONT  TestJsxMutants/text_payload
+=== CONT  TestJsxMutants/attribute_list
+=== CONT  TestJsxMutants/child_order
+=== CONT  TestJsxMutants/expression_kind
+=== CONT  TestJsxMutants/text_start
+=== NAME  TestJsxMutants/child_order
+    jsx_mutants_test.go:48: Node compiled mutant caught: case 2 line 31: port "5 JsxClosingElement 15 21 0 0 -1 0 0\t\t\t\t", Go "5 JsxOpeningElement 9 15 0 0 -1 0 0\t\t\t\t-1:0"
+    jsx_mutants_test.go:48: native compiled mutant caught: case 2 line 31: port "5 JsxClosingElement 15 21 0 0 -1 0 0\t\t\t\t", Go "5 JsxOpeningElement 9 15 0 0 -1 0 0\t\t\t\t-1:0"
+=== CONT  TestJsxMutants/type_argument_comma
+=== NAME  TestJsxMutants/attribute_list
+    jsx_mutants_test.go:48: Node compiled mutant caught: case 0 line 10: port "5 JsxAttributes 14 14 0 0 1 0 0\t\t\t\t", Go "5 JsxAttributes 14 14 0 0 0 0 0\t\t\t\t"
+    jsx_mutants_test.go:48: native compiled mutant caught: case 0 line 10: port "5 JsxAttributes 14 14 0 0 1 0 0\t\t\t\t", Go "5 JsxAttributes 14 14 0 0 0 0 0\t\t\t\t"
+=== CONT  TestJsxMutants/self_closing_kind
+=== NAME  TestJsxMutants/text_payload
+    jsx_mutants_test.go:48: Node compiled mutant caught: case 6 line 89: port "6 JsxText 19 23 0 0 -1 0 0\t\ttext!\t\t0", Go "6 JsxText 19 23 0 0 -1 0 0\t\ttext\t\t0"
+    jsx_mutants_test.go:48: native compiled mutant caught: case 6 line 89: port "6 JsxText 19 23 0 0 -1 0 0\t\ttext!\t\t0", Go "6 JsxText 19 23 0 0 -1 0 0\t\ttext\t\t0"
+=== CONT  TestJsxMutants/namespace_kind
+=== NAME  TestJsxMutants/expression_kind
+    jsx_mutants_test.go:48: Node compiled mutant caught: case 12 line 228: port "8 ParenthesizedExpression 31 37 0 0 -1 0 0\t\t\t\t", Go "8 JsxExpression 31 37 0 0 -1 0 0\t\t\t\t"
+    jsx_mutants_test.go:48: native compiled mutant caught: case 12 line 228: port "8 ParenthesizedExpression 31 37 0 0 -1 0 0\t\t\t\t", Go "8 JsxExpression 31 37 0 0 -1 0 0\t\t\t\t"
+=== CONT  TestJsxMutants/whitespace_flag
+=== NAME  TestJsxMutants/type_argument_comma
+    jsx_mutants_test.go:48: Node compiled mutant caught: case 16 line 356: port "5 JsxSelfClosingElement 19 38 0 0 -1 0 0\t\t\t\t2:0", Go "5 JsxSelfClosingElement 19 38 0 0 -1 0 0\t\t\t\t2:1"
+    jsx_mutants_test.go:48: native compiled mutant caught: case 16 line 356: port "5 JsxSelfClosingElement 19 38 0 0 -1 0 0\t\t\t\t2:0", Go "5 JsxSelfClosingElement 19 38 0 0 -1 0 0\t\t\t\t2:1"
+=== NAME  TestJsxMutants/text_start
+    jsx_mutants_test.go:48: Node compiled mutant caught: case 6 line 89: port "6 JsxText 20 23 0 0 -1 0 0\t\ttext\t\t0", Go "6 JsxText 19 23 0 0 -1 0 0\t\ttext\t\t0"
+    jsx_mutants_test.go:48: native compiled mutant caught: case 6 line 89: port "6 JsxText 20 23 0 0 -1 0 0\t\ttext\t\t0", Go "6 JsxText 19 23 0 0 -1 0 0\t\ttext\t\t0"
+=== NAME  TestJsxMutants/self_closing_kind
+    jsx_mutants_test.go:48: Node compiled mutant caught: case 0 line 8: port "4 JsxOpeningElement 9 16 0 0 -1 0 0\t\t\t\t-1:0", Go "4 JsxSelfClosingElement 9 16 0 0 -1 0 0\t\t\t\t-1:0"
+    jsx_mutants_test.go:48: native compiled mutant caught: case 0 line 8: port "4 JsxOpeningElement 9 16 0 0 -1 0 0\t\t\t\t-1:0", Go "4 JsxSelfClosingElement 9 16 0 0 -1 0 0\t\t\t\t-1:0"
+=== NAME  TestJsxMutants/whitespace_flag
+    jsx_mutants_test.go:48: Node compiled mutant caught: case 20 line 459: port "5 JsxText 48 54 0 0 -1 0 0\t\t\\u000a  \\u0009\\u000d\\u000a\t\t0", Go "5 JsxText 48 54 0 0 -1 0 0\t\t\\u000a  \\u0009\\u000d\\u000a\t\t1"
+    jsx_mutants_test.go:48: native compiled mutant caught: case 20 line 459: port "5 JsxText 48 54 0 0 -1 0 0\t\t\\u000a  \\u0009\\u000d\\u000a\t\t0", Go "5 JsxText 48 54 0 0 -1 0 0\t\t\\u000a  \\u0009\\u000d\\u000a\t\t1"
+=== NAME  TestJsxMutants/namespace_kind
+    jsx_mutants_test.go:48: Node compiled mutant caught: case 8 line 133: port "7 QualifiedName 40 49 0 0 -1 0 0\t\t\t\t", Go "7 JsxNamespacedName 40 49 0 0 -1 0 0\t\t\t\t"
+    jsx_mutants_test.go:48: native compiled mutant caught: case 8 line 133: port "7 QualifiedName 40 49 0 0 -1 0 0\t\t\t\t", Go "7 JsxNamespacedName 40 49 0 0 -1 0 0\t\t\t\t"
+--- PASS: TestJsxMutants (17.29s)
+    --- PASS: TestJsxMutants/child_order (15.34s)
+    --- PASS: TestJsxMutants/attribute_list (20.41s)
+    --- PASS: TestJsxMutants/text_payload (22.58s)
+    --- PASS: TestJsxMutants/expression_kind (36.63s)
+    --- PASS: TestJsxMutants/type_argument_comma (25.63s)
+    --- PASS: TestJsxMutants/text_start (43.72s)
+    --- PASS: TestJsxMutants/self_closing_kind (36.38s)
+    --- PASS: TestJsxMutants/whitespace_flag (21.84s)
+    --- PASS: TestJsxMutants/namespace_kind (38.21s)
+=== RUN   TestJsxScannerMutants
+=== RUN   TestJsxScannerMutants/raw_attribute_value
+    jsx_scanner_mutants_test.go:71: Node compiled mutant caught: case 8 line 131: port "7 StringLiteral 34 40 0 0 -1 0 0\t\ta\\u005cnb!\t\t", Go "7 StringLiteral 34 40 0 0 -1 0 0\t\ta\\u005cnb\t\t"
+    jsx_scanner_mutants_test.go:71: native compiled mutant caught: case 8 line 131: port "7 StringLiteral 34 40 0 0 -1 0 0\t\ta\\u005cnb!\t\t", Go "7 StringLiteral 34 40 0 0 -1 0 0\t\ta\\u005cnb\t\t"
+=== RUN   TestJsxScannerMutants/JSX_name_payload
+    jsx_scanner_mutants_test.go:71: Node compiled mutant caught: case 0 line 9: port "5 Identifier 11 14 0 0 -1 0 0\t\tdiv!\t\t", Go "5 Identifier 11 14 0 0 -1 0 0\t\tdiv\t\t"
+    jsx_scanner_mutants_test.go:71: native compiled mutant caught: case 0 line 9: port "5 Identifier 11 14 0 0 -1 0 0\t\tdiv!\t\t", Go "5 Identifier 11 14 0 0 -1 0 0\t\tdiv\t\t"
+--- PASS: TestJsxScannerMutants (44.88s)
+    --- PASS: TestJsxScannerMutants/raw_attribute_value (14.22s)
+    --- PASS: TestJsxScannerMutants/JSX_name_payload (15.36s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/typescript/parser	123.003s
+wall 124.834 seconds user 228.980 seconds sys 14.313 seconds

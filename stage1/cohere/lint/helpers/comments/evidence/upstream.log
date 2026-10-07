@@ -1,0 +1,263 @@
+=== RUN   TestForFileComputesOncePerFile
+=== PAUSE TestForFileComputesOncePerFile
+=== RUN   TestDifferentKeysDoNotShareAnEntry
+=== PAUSE TestDifferentKeysDoNotShareAnEntry
+=== RUN   TestForFileSurvivesANilCache
+=== PAUSE TestForFileSurvivesANilCache
+=== RUN   TestAllCommentsSeesEveryPosition
+=== PAUSE TestAllCommentsSeesEveryPosition
+=== RUN   TestAllCommentsSeesInsideEmptyDelimiters
+=== PAUSE TestAllCommentsSeesInsideEmptyDelimiters
+=== RUN   TestAllCommentsInventsNothingFromSlashesInLiterals
+=== PAUSE TestAllCommentsInventsNothingFromSlashesInLiterals
+=== RUN   TestAllCommentsDeduplicates
+=== PAUSE TestAllCommentsDeduplicates
+=== RUN   TestCommentClassification
+=== PAUSE TestCommentClassification
+=== RUN   TestCommentContentLines
+=== PAUSE TestCommentContentLines
+=== RUN   TestLeadingRunFor
+=== PAUSE TestLeadingRunFor
+=== RUN   TestLeadingRunForDeclinesNil
+=== PAUSE TestLeadingRunForDeclinesNil
+=== RUN   TestCommentGuardFindsTheSameComments
+=== PAUSE TestCommentGuardFindsTheSameComments
+=== RUN   TestCommentGuardHandlesEverySeparator
+=== PAUSE TestCommentGuardHandlesEverySeparator
+=== RUN   TestCommentGuardActuallySkips
+=== PAUSE TestCommentGuardActuallySkips
+=== CONT  TestForFileComputesOncePerFile
+--- PASS: TestForFileComputesOncePerFile (0.00s)
+=== CONT  TestAllCommentsDeduplicates
+=== CONT  TestCommentClassification
+--- PASS: TestAllCommentsDeduplicates (0.00s)
+=== CONT  TestForFileSurvivesANilCache
+--- PASS: TestForFileSurvivesANilCache (0.00s)
+=== CONT  TestDifferentKeysDoNotShareAnEntry
+--- PASS: TestDifferentKeysDoNotShareAnEntry (0.00s)
+=== CONT  TestAllCommentsInventsNothingFromSlashesInLiterals
+=== RUN   TestAllCommentsInventsNothingFromSlashesInLiterals/two_slashes_inside_a_string
+=== PAUSE TestAllCommentsInventsNothingFromSlashesInLiterals/two_slashes_inside_a_string
+=== RUN   TestAllCommentsInventsNothingFromSlashesInLiterals/two_slashes_inside_a_string,_with_a_real_comment_after
+=== PAUSE TestAllCommentsInventsNothingFromSlashesInLiterals/two_slashes_inside_a_string,_with_a_real_comment_after
+=== RUN   TestAllCommentsInventsNothingFromSlashesInLiterals/a_slash_inside_a_regex
+=== PAUSE TestAllCommentsInventsNothingFromSlashesInLiterals/a_slash_inside_a_regex
+=== RUN   TestAllCommentsInventsNothingFromSlashesInLiterals/a_division
+=== PAUSE TestAllCommentsInventsNothingFromSlashesInLiterals/a_division
+=== RUN   TestAllCommentsInventsNothingFromSlashesInLiterals/a_slash_inside_a_template_literal
+=== CONT  TestAllCommentsSeesEveryPosition
+--- PASS: TestCommentClassification (0.00s)
+=== CONT  TestCommentGuardHandlesEverySeparator
+=== PAUSE TestAllCommentsInventsNothingFromSlashesInLiterals/a_slash_inside_a_template_literal
+=== RUN   TestAllCommentsInventsNothingFromSlashesInLiterals/a_comment_marker_inside_an_empty_object's_string_neighbour
+=== PAUSE TestAllCommentsInventsNothingFromSlashesInLiterals/a_comment_marker_inside_an_empty_object's_string_neighbour
+=== CONT  TestLeadingRunFor
+=== RUN   TestCommentGuardHandlesEverySeparator/separated_by_a_space
+=== PAUSE TestCommentGuardHandlesEverySeparator/separated_by_a_space
+=== CONT  TestCommentGuardFindsTheSameComments
+    guard_test.go:15: only 0 source files available, too few to be a corpus
+=== CONT  TestLeadingRunForDeclinesNil
+=== RUN   TestLeadingRunFor/a_single_line_comment
+=== PAUSE TestLeadingRunFor/a_single_line_comment
+=== RUN   TestLeadingRunFor/a_run_of_line_comments
+=== PAUSE TestLeadingRunFor/a_run_of_line_comments
+=== RUN   TestLeadingRunFor/a_blank_line_breaks_the_run
+=== PAUSE TestLeadingRunFor/a_blank_line_breaks_the_run
+--- PASS: TestAllCommentsSeesEveryPosition (0.00s)
+=== RUN   TestLeadingRunFor/a_block_comment_ends_the_run
+=== CONT  TestCommentGuardActuallySkips
+=== PAUSE TestLeadingRunFor/a_block_comment_ends_the_run
+=== CONT  TestAllCommentsInventsNothingFromSlashesInLiterals/two_slashes_inside_a_string
+=== RUN   TestLeadingRunFor/a_block_comment_alone
+=== PAUSE TestLeadingRunFor/a_block_comment_alone
+=== RUN   TestLeadingRunFor/code_between_the_comment_and_the_node
+=== PAUSE TestLeadingRunFor/code_between_the_comment_and_the_node
+--- PASS: TestCommentGuardActuallySkips (0.00s)
+=== CONT  TestAllCommentsSeesInsideEmptyDelimiters
+=== RUN   TestLeadingRunFor/a_trailing_comment_on_the_same_line
+--- PASS: TestLeadingRunForDeclinesNil (0.00s)
+--- SKIP: TestCommentGuardFindsTheSameComments (0.00s)
+=== RUN   TestAllCommentsSeesInsideEmptyDelimiters/a_block_that_is_a_switch_clause's_only_statement
+=== CONT  TestCommentContentLines
+=== PAUSE TestAllCommentsSeesInsideEmptyDelimiters/a_block_that_is_a_switch_clause's_only_statement
+=== CONT  TestAllCommentsInventsNothingFromSlashesInLiterals/a_comment_marker_inside_an_empty_object's_string_neighbour
+=== RUN   TestAllCommentsSeesInsideEmptyDelimiters/an_empty_function_body
+=== PAUSE TestAllCommentsSeesInsideEmptyDelimiters/an_empty_function_body
+=== RUN   TestAllCommentsSeesInsideEmptyDelimiters/an_empty_arrow_body
+=== PAUSE TestAllCommentsSeesInsideEmptyDelimiters/an_empty_arrow_body
+=== RUN   TestAllCommentsSeesInsideEmptyDelimiters/an_empty_bare_block
+=== PAUSE TestAllCommentsSeesInsideEmptyDelimiters/an_empty_bare_block
+=== RUN   TestAllCommentsSeesInsideEmptyDelimiters/an_empty_if_branch
+=== PAUSE TestAllCommentsSeesInsideEmptyDelimiters/an_empty_if_branch
+=== RUN   TestAllCommentsSeesInsideEmptyDelimiters/an_empty_loop_body
+=== PAUSE TestAllCommentsSeesInsideEmptyDelimiters/an_empty_loop_body
+=== RUN   TestAllCommentsSeesInsideEmptyDelimiters/an_empty_method_body
+=== PAUSE TestAllCommentsSeesInsideEmptyDelimiters/an_empty_method_body
+=== CONT  TestAllCommentsInventsNothingFromSlashesInLiterals/a_slash_inside_a_template_literal
+=== RUN   TestAllCommentsSeesInsideEmptyDelimiters/every_arm_of_an_empty_try
+=== PAUSE TestAllCommentsSeesInsideEmptyDelimiters/every_arm_of_an_empty_try
+=== RUN   TestAllCommentsSeesInsideEmptyDelimiters/an_empty_switch_body
+=== PAUSE TestAllCommentsSeesInsideEmptyDelimiters/an_empty_switch_body
+=== RUN   TestCommentContentLines/one_line_jsdoc
+=== RUN   TestAllCommentsSeesInsideEmptyDelimiters/a_line_comment_as_a_body's_only_content
+=== PAUSE TestAllCommentsSeesInsideEmptyDelimiters/a_line_comment_as_a_body's_only_content
+=== CONT  TestAllCommentsInventsNothingFromSlashesInLiterals/a_division
+=== RUN   TestAllCommentsSeesInsideEmptyDelimiters/an_empty_class_body
+=== PAUSE TestAllCommentsSeesInsideEmptyDelimiters/an_empty_class_body
+=== RUN   TestAllCommentsSeesInsideEmptyDelimiters/an_empty_interface_body
+=== PAUSE TestAllCommentsSeesInsideEmptyDelimiters/an_empty_interface_body
+=== PAUSE TestCommentContentLines/one_line_jsdoc
+=== CONT  TestAllCommentsInventsNothingFromSlashesInLiterals/a_slash_inside_a_regex
+=== RUN   TestCommentContentLines/multi_line_jsdoc,_asterisks_are_furniture
+=== PAUSE TestCommentContentLines/multi_line_jsdoc,_asterisks_are_furniture
+=== CONT  TestAllCommentsInventsNothingFromSlashesInLiterals/two_slashes_inside_a_string,_with_a_real_comment_after
+=== RUN   TestCommentContentLines/jsdoc_with_a_tag
+=== PAUSE TestCommentContentLines/jsdoc_with_a_tag
+=== RUN   TestAllCommentsSeesInsideEmptyDelimiters/an_empty_enum_body
+=== PAUSE TestAllCommentsSeesInsideEmptyDelimiters/an_empty_enum_body
+--- PASS: TestAllCommentsInventsNothingFromSlashesInLiterals (0.00s)
+    --- PASS: TestAllCommentsInventsNothingFromSlashesInLiterals/two_slashes_inside_a_string (0.00s)
+    --- PASS: TestAllCommentsInventsNothingFromSlashesInLiterals/a_comment_marker_inside_an_empty_object's_string_neighbour (0.00s)
+    --- PASS: TestAllCommentsInventsNothingFromSlashesInLiterals/a_slash_inside_a_template_literal (0.00s)
+    --- PASS: TestAllCommentsInventsNothingFromSlashesInLiterals/a_division (0.00s)
+    --- PASS: TestAllCommentsInventsNothingFromSlashesInLiterals/a_slash_inside_a_regex (0.00s)
+    --- PASS: TestAllCommentsInventsNothingFromSlashesInLiterals/two_slashes_inside_a_string,_with_a_real_comment_after (0.00s)
+=== RUN   TestAllCommentsSeesInsideEmptyDelimiters/an_empty_type_literal
+=== PAUSE TestAllCommentsSeesInsideEmptyDelimiters/an_empty_type_literal
+=== RUN   TestAllCommentsSeesInsideEmptyDelimiters/an_empty_object_literal
+=== PAUSE TestAllCommentsSeesInsideEmptyDelimiters/an_empty_object_literal
+=== RUN   TestAllCommentsSeesInsideEmptyDelimiters/an_empty_array_literal
+=== PAUSE TestAllCommentsSeesInsideEmptyDelimiters/an_empty_array_literal
+=== RUN   TestAllCommentsSeesInsideEmptyDelimiters/an_empty_argument_list
+=== PAUSE TestAllCommentsSeesInsideEmptyDelimiters/an_empty_argument_list
+=== RUN   TestAllCommentsSeesInsideEmptyDelimiters/an_empty_parameter_list
+=== PAUSE TestAllCommentsSeesInsideEmptyDelimiters/an_empty_parameter_list
+=== CONT  TestAllCommentsSeesInsideEmptyDelimiters/a_block_that_is_a_switch_clause's_only_statement
+=== RUN   TestCommentContentLines/empty_jsdoc
+=== PAUSE TestCommentContentLines/empty_jsdoc
+=== CONT  TestCommentContentLines/one_line_jsdoc
+=== CONT  TestAllCommentsSeesInsideEmptyDelimiters/every_arm_of_an_empty_try
+=== CONT  TestAllCommentsSeesInsideEmptyDelimiters/an_empty_method_body
+=== CONT  TestAllCommentsSeesInsideEmptyDelimiters/an_empty_loop_body
+=== CONT  TestAllCommentsSeesInsideEmptyDelimiters/an_empty_if_branch
+=== CONT  TestAllCommentsSeesInsideEmptyDelimiters/an_empty_bare_block
+=== CONT  TestAllCommentsSeesInsideEmptyDelimiters/an_empty_arrow_body
+=== CONT  TestAllCommentsSeesInsideEmptyDelimiters/an_empty_function_body
+=== CONT  TestAllCommentsSeesInsideEmptyDelimiters/an_empty_type_literal
+=== RUN   TestCommentGuardHandlesEverySeparator/separated_by_a_tab
+=== PAUSE TestCommentGuardHandlesEverySeparator/separated_by_a_tab
+=== PAUSE TestLeadingRunFor/a_trailing_comment_on_the_same_line
+=== CONT  TestAllCommentsSeesInsideEmptyDelimiters/an_empty_argument_list
+=== RUN   TestCommentGuardHandlesEverySeparator/separated_by_a_newline
+=== PAUSE TestCommentGuardHandlesEverySeparator/separated_by_a_newline
+=== CONT  TestAllCommentsSeesInsideEmptyDelimiters/an_empty_parameter_list
+=== RUN   TestLeadingRunFor/no_comment_at_all
+=== PAUSE TestLeadingRunFor/no_comment_at_all
+=== CONT  TestAllCommentsSeesInsideEmptyDelimiters/an_empty_array_literal
+=== CONT  TestAllCommentsSeesInsideEmptyDelimiters/an_empty_class_body
+=== CONT  TestAllCommentsSeesInsideEmptyDelimiters/an_empty_enum_body
+=== CONT  TestAllCommentsSeesInsideEmptyDelimiters/an_empty_object_literal
+=== CONT  TestAllCommentsSeesInsideEmptyDelimiters/an_empty_interface_body
+=== CONT  TestCommentContentLines/empty_jsdoc
+=== CONT  TestCommentContentLines/jsdoc_with_a_tag
+=== CONT  TestAllCommentsSeesInsideEmptyDelimiters/a_line_comment_as_a_body's_only_content
+=== RUN   TestCommentGuardHandlesEverySeparator/separated_by_a_carriage_return_and_newline
+=== CONT  TestCommentContentLines/multi_line_jsdoc,_asterisks_are_furniture
+=== CONT  TestLeadingRunFor/a_single_line_comment
+--- PASS: TestCommentContentLines (0.00s)
+    --- PASS: TestCommentContentLines/one_line_jsdoc (0.00s)
+    --- PASS: TestCommentContentLines/jsdoc_with_a_tag (0.00s)
+    --- PASS: TestCommentContentLines/empty_jsdoc (0.00s)
+    --- PASS: TestCommentContentLines/multi_line_jsdoc,_asterisks_are_furniture (0.00s)
+=== PAUSE TestCommentGuardHandlesEverySeparator/separated_by_a_carriage_return_and_newline
+=== RUN   TestCommentGuardHandlesEverySeparator/no_separator_at_all
+=== PAUSE TestCommentGuardHandlesEverySeparator/no_separator_at_all
+=== RUN   TestCommentGuardHandlesEverySeparator/block_comment_with_no_separator
+=== PAUSE TestCommentGuardHandlesEverySeparator/block_comment_with_no_separator
+=== CONT  TestAllCommentsSeesInsideEmptyDelimiters/an_empty_switch_body
+=== CONT  TestLeadingRunFor/a_trailing_comment_on_the_same_line
+=== CONT  TestLeadingRunFor/a_blank_line_breaks_the_run
+--- PASS: TestAllCommentsSeesInsideEmptyDelimiters (0.00s)
+    --- PASS: TestAllCommentsSeesInsideEmptyDelimiters/a_block_that_is_a_switch_clause's_only_statement (0.00s)
+    --- PASS: TestAllCommentsSeesInsideEmptyDelimiters/an_empty_method_body (0.00s)
+    --- PASS: TestAllCommentsSeesInsideEmptyDelimiters/an_empty_loop_body (0.00s)
+    --- PASS: TestAllCommentsSeesInsideEmptyDelimiters/an_empty_if_branch (0.00s)
+    --- PASS: TestAllCommentsSeesInsideEmptyDelimiters/an_empty_bare_block (0.00s)
+    --- PASS: TestAllCommentsSeesInsideEmptyDelimiters/an_empty_arrow_body (0.00s)
+    --- PASS: TestAllCommentsSeesInsideEmptyDelimiters/an_empty_type_literal (0.00s)
+    --- PASS: TestAllCommentsSeesInsideEmptyDelimiters/every_arm_of_an_empty_try (0.01s)
+    --- PASS: TestAllCommentsSeesInsideEmptyDelimiters/an_empty_array_literal (0.00s)
+    --- PASS: TestAllCommentsSeesInsideEmptyDelimiters/an_empty_class_body (0.00s)
+    --- PASS: TestAllCommentsSeesInsideEmptyDelimiters/an_empty_enum_body (0.00s)
+    --- PASS: TestAllCommentsSeesInsideEmptyDelimiters/an_empty_argument_list (0.00s)
+    --- PASS: TestAllCommentsSeesInsideEmptyDelimiters/an_empty_parameter_list (0.00s)
+    --- PASS: TestAllCommentsSeesInsideEmptyDelimiters/an_empty_object_literal (0.00s)
+    --- PASS: TestAllCommentsSeesInsideEmptyDelimiters/an_empty_interface_body (0.00s)
+    --- PASS: TestAllCommentsSeesInsideEmptyDelimiters/a_line_comment_as_a_body's_only_content (0.00s)
+    --- PASS: TestAllCommentsSeesInsideEmptyDelimiters/an_empty_function_body (0.01s)
+    --- PASS: TestAllCommentsSeesInsideEmptyDelimiters/an_empty_switch_body (0.00s)
+=== CONT  TestLeadingRunFor/no_comment_at_all
+=== CONT  TestLeadingRunFor/a_block_comment_ends_the_run
+=== CONT  TestLeadingRunFor/a_run_of_line_comments
+=== RUN   TestCommentGuardHandlesEverySeparator/comment_at_position_zero
+=== PAUSE TestCommentGuardHandlesEverySeparator/comment_at_position_zero
+=== RUN   TestCommentGuardHandlesEverySeparator/two_comments_on_one_line
+=== PAUSE TestCommentGuardHandlesEverySeparator/two_comments_on_one_line
+=== RUN   TestCommentGuardHandlesEverySeparator/no_comments_at_all
+=== PAUSE TestCommentGuardHandlesEverySeparator/no_comments_at_all
+=== RUN   TestCommentGuardHandlesEverySeparator/comment_after_a_shebang
+=== PAUSE TestCommentGuardHandlesEverySeparator/comment_after_a_shebang
+=== RUN   TestCommentGuardHandlesEverySeparator/line_comment_after_a_shebang
+=== PAUSE TestCommentGuardHandlesEverySeparator/line_comment_after_a_shebang
+=== RUN   TestCommentGuardHandlesEverySeparator/a_division_is_not_a_comment
+=== PAUSE TestCommentGuardHandlesEverySeparator/a_division_is_not_a_comment
+=== RUN   TestCommentGuardHandlesEverySeparator/a_regex_literal_is_not_a_comment
+=== PAUSE TestCommentGuardHandlesEverySeparator/a_regex_literal_is_not_a_comment
+=== RUN   TestCommentGuardHandlesEverySeparator/a_regex_containing_a_slash
+=== PAUSE TestCommentGuardHandlesEverySeparator/a_regex_containing_a_slash
+=== RUN   TestCommentGuardHandlesEverySeparator/a_string_containing_two_slashes
+=== PAUSE TestCommentGuardHandlesEverySeparator/a_string_containing_two_slashes
+=== CONT  TestCommentGuardHandlesEverySeparator/separated_by_a_space
+=== CONT  TestCommentGuardHandlesEverySeparator/no_comments_at_all
+=== CONT  TestCommentGuardHandlesEverySeparator/a_regex_literal_is_not_a_comment
+=== CONT  TestLeadingRunFor/a_block_comment_alone
+=== CONT  TestCommentGuardHandlesEverySeparator/no_separator_at_all
+=== CONT  TestCommentGuardHandlesEverySeparator/two_comments_on_one_line
+=== CONT  TestCommentGuardHandlesEverySeparator/comment_at_position_zero
+=== CONT  TestLeadingRunFor/code_between_the_comment_and_the_node
+=== CONT  TestCommentGuardHandlesEverySeparator/block_comment_with_no_separator
+=== CONT  TestCommentGuardHandlesEverySeparator/a_string_containing_two_slashes
+=== CONT  TestCommentGuardHandlesEverySeparator/a_regex_containing_a_slash
+=== CONT  TestCommentGuardHandlesEverySeparator/separated_by_a_newline
+=== CONT  TestCommentGuardHandlesEverySeparator/separated_by_a_carriage_return_and_newline
+--- PASS: TestLeadingRunFor (0.01s)
+    --- PASS: TestLeadingRunFor/a_single_line_comment (0.00s)
+    --- PASS: TestLeadingRunFor/a_trailing_comment_on_the_same_line (0.00s)
+    --- PASS: TestLeadingRunFor/a_blank_line_breaks_the_run (0.00s)
+    --- PASS: TestLeadingRunFor/no_comment_at_all (0.00s)
+    --- PASS: TestLeadingRunFor/a_block_comment_ends_the_run (0.00s)
+    --- PASS: TestLeadingRunFor/a_run_of_line_comments (0.00s)
+    --- PASS: TestLeadingRunFor/code_between_the_comment_and_the_node (0.00s)
+    --- PASS: TestLeadingRunFor/a_block_comment_alone (0.00s)
+=== CONT  TestCommentGuardHandlesEverySeparator/separated_by_a_tab
+=== CONT  TestCommentGuardHandlesEverySeparator/line_comment_after_a_shebang
+=== CONT  TestCommentGuardHandlesEverySeparator/a_division_is_not_a_comment
+=== CONT  TestCommentGuardHandlesEverySeparator/comment_after_a_shebang
+--- PASS: TestCommentGuardHandlesEverySeparator (0.01s)
+    --- PASS: TestCommentGuardHandlesEverySeparator/no_comments_at_all (0.00s)
+    --- PASS: TestCommentGuardHandlesEverySeparator/no_separator_at_all (0.00s)
+    --- PASS: TestCommentGuardHandlesEverySeparator/two_comments_on_one_line (0.00s)
+    --- PASS: TestCommentGuardHandlesEverySeparator/comment_at_position_zero (0.00s)
+    --- PASS: TestCommentGuardHandlesEverySeparator/block_comment_with_no_separator (0.00s)
+    --- PASS: TestCommentGuardHandlesEverySeparator/a_string_containing_two_slashes (0.00s)
+    --- PASS: TestCommentGuardHandlesEverySeparator/a_regex_literal_is_not_a_comment (0.00s)
+    --- PASS: TestCommentGuardHandlesEverySeparator/separated_by_a_newline (0.00s)
+    --- PASS: TestCommentGuardHandlesEverySeparator/separated_by_a_carriage_return_and_newline (0.00s)
+    --- PASS: TestCommentGuardHandlesEverySeparator/line_comment_after_a_shebang (0.00s)
+    --- PASS: TestCommentGuardHandlesEverySeparator/a_regex_containing_a_slash (0.00s)
+    --- PASS: TestCommentGuardHandlesEverySeparator/separated_by_a_tab (0.00s)
+    --- PASS: TestCommentGuardHandlesEverySeparator/a_division_is_not_a_comment (0.00s)
+    --- PASS: TestCommentGuardHandlesEverySeparator/comment_after_a_shebang (0.00s)
+    --- PASS: TestCommentGuardHandlesEverySeparator/separated_by_a_space (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/ecmascript/comments	0.016s

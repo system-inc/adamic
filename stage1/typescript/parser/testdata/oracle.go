@@ -56,6 +56,13 @@ func semantic(n *ast.Node) string {
 		return fmt.Sprint(core.IfElse(n.AsImportEqualsDeclaration().IsTypeOnly, 1, 0))
 	case ast.KindExportAssignment:
 		return fmt.Sprint(core.IfElse(n.AsExportAssignment().IsExportEquals, 1, 0))
+	case ast.KindJsxText:
+		return fmt.Sprint(core.IfElse(n.AsJsxText().ContainsOnlyTriviaWhiteSpaces, 1, 0))
+	case ast.KindJsxOpeningElement, ast.KindJsxSelfClosingElement:
+		if arguments := n.TypeArgumentList(); arguments != nil {
+			return fmt.Sprintf("%d:%d", len(arguments.Nodes), core.IfElse(arguments.HasTrailingComma(), 1, 0))
+		}
+		return "-1:0"
 	}
 	return ""
 }
@@ -63,6 +70,12 @@ func walk(out *bufio.Writer, n *ast.Node, depth int, countOnly bool, source stri
 	text, operator, raw := "", "", ""
 	flags, list, trailing, multiline := ast.TokenFlags(0), -1, false, false
 	switch n.Kind {
+	case ast.KindJsxText:
+		text = n.AsJsxText().Text
+	case ast.KindJsxAttributes:
+		list = len(n.AsJsxAttributes().Properties.Nodes)
+	case ast.KindJsxElement, ast.KindJsxFragment:
+		list = len(n.Children().Nodes)
 	case ast.KindIdentifier, ast.KindPrivateIdentifier:
 		text = n.Text()
 	case ast.KindStringLiteral, ast.KindNumericLiteral, ast.KindBigIntLiteral, ast.KindRegularExpressionLiteral:
@@ -128,13 +141,24 @@ func walk(out *bufio.Writer, n *ast.Node, depth int, countOnly bool, source stri
 
 var docTypes bool
 var obsoleteAssertions bool
+var jsxRecovery bool
 
 func run(out *bufio.Writer, path string, countOnly bool, whole bool) int {
 	text, err := os.ReadFile(path)
 	if err != nil {
 		panic(err)
 	}
-	f := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: "/source.ts"}, string(text), core.ScriptKindTS)
+	script := core.ScriptKindTS
+	if strings.HasSuffix(path, ".tsx") {
+		script = core.ScriptKindTSX
+	}
+	if strings.HasSuffix(path, ".js") || strings.HasSuffix(path, ".mjs") || strings.HasSuffix(path, ".cjs") {
+		script = core.ScriptKindJS
+	}
+	if strings.HasSuffix(path, ".jsx") {
+		script = core.ScriptKindJSX
+	}
+	f := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: path}, string(text), script)
 	obsoleteOnly := obsoleteAssertions && len(f.Diagnostics()) > 0
 	for _, d := range f.Diagnostics() {
 		if d.Code() != 2880 {
@@ -144,7 +168,7 @@ func run(out *bufio.Writer, path string, countOnly bool, whole bool) int {
 	if obsoleteAssertions && !obsoleteOnly {
 		panic("obsolete assertion probe must emit only diagnostic 2880")
 	}
-	if len(f.Diagnostics()) != 0 && !obsoleteOnly {
+	if len(f.Diagnostics()) != 0 && !obsoleteOnly && !(jsxRecovery && (script == core.ScriptKindTSX || script == core.ScriptKindJSX)) {
 		fmt.Fprintf(os.Stderr, "source: %q\n", text)
 		for _, d := range f.Diagnostics() {
 			fmt.Fprintf(os.Stderr, "parser diagnostic %s %d %d %d\n", path, d.Code(), d.Pos(), d.Len())
@@ -194,6 +218,13 @@ func main() {
 	out := bufio.NewWriterSize(os.Stdout, 65536)
 	defer out.Flush()
 	args := os.Args[1:]
+	if args[0] == "--jsx-kinds" {
+		fmt.Fprintln(out, kind(ast.KindJsxText))
+		for k := ast.KindJsxElement; k <= ast.KindJsxNamespacedName; k++ {
+			fmt.Fprintln(out, kind(k))
+		}
+		return
+	}
 	if args[0] == "--type-kinds" {
 		for k := ast.KindUnknown; k <= ast.KindLastJSDocNode; k++ {
 			if ast.IsTypeNodeKind(k) {
@@ -204,6 +235,9 @@ func main() {
 	}
 	whole, countOnly := false, false
 	for _, arg := range args {
+		if arg == "--jsx-recovery" {
+			jsxRecovery = true
+		}
 		if arg == "--allow-obsolete-assert" {
 			obsoleteAssertions = true
 		}
