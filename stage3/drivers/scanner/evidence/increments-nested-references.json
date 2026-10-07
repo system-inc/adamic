@@ -1,0 +1,103 @@
+{
+  "scratch_commit": "48f092a58a47075eeef538cd9ea5662f7ec1b6fa",
+  "features": {
+    "scanner-value-increments": "85cade98",
+    "scanner-nested-references": "e35ee2d390e87e22369b4cb8c198aec057d863f3"
+  },
+  "probes": {
+    "postfix-call-argument": {
+      "Node": {
+        "exit": 0,
+        "stdout": "0\n1\n",
+        "stderr": ""
+      },
+      "build": {
+        "exit": 0,
+        "diagnostic": ""
+      },
+      "native": {
+        "exit": 0,
+        "stdout": "0\n1\n",
+        "stderr": ""
+      },
+      "matches_Node": true,
+      "byte_mutant_diff_exit": 1
+    },
+    "prefix-call-argument": {
+      "Node": {
+        "exit": 0,
+        "stdout": "1\n1\n",
+        "stderr": ""
+      },
+      "build": {
+        "exit": 0,
+        "diagnostic": ""
+      },
+      "native": {
+        "exit": 0,
+        "stdout": "1\n1\n",
+        "stderr": ""
+      },
+      "matches_Node": true,
+      "byte_mutant_diff_exit": 1
+    },
+    "nested-sibling-callback": {
+      "Node": {
+        "exit": 0,
+        "stdout": "x\n",
+        "stderr": ""
+      },
+      "build": {
+        "exit": 0,
+        "diagnostic": ""
+      },
+      "native": {
+        "exit": 0,
+        "stdout": "x\n",
+        "stderr": ""
+      },
+      "matches_Node": true,
+      "byte_mutant_diff_exit": 1
+    },
+    "nested-generic-sibling-call": {
+      "Node": {
+        "exit": 0,
+        "stdout": "x\n",
+        "stderr": ""
+      },
+      "build": {
+        "exit": 0,
+        "diagnostic": ""
+      },
+      "native": {
+        "exit": 0,
+        "stdout": "x\n",
+        "stderr": ""
+      },
+      "matches_Node": true,
+      "byte_mutant_diff_exit": 1
+    },
+    "nested-ancestor-call": {
+      "Node": {
+        "exit": 0,
+        "stdout": "1\n",
+        "stderr": ""
+      },
+      "build": {
+        "exit": 0,
+        "diagnostic": ""
+      },
+      "native": {
+        "exit": 0,
+        "stdout": "1\n",
+        "stderr": ""
+      },
+      "matches_Node": true,
+      "byte_mutant_diff_exit": 1
+    }
+  },
+  "merge_limits": "Increment feature merged normally, combining dispatch with current void/numeric coercions. Nested tip integrated with ours strategy plus feature patch f76331d5 and prerequisite frame-forwarding seams from its nested_functions.go. Preserved record, enum, host, checked readiness and void/never behavior. Added NULL canonical cache fields to existing host closure constants after clang flagged missing initializers. No compiler changes pushed. Validates five probes, not full branch prerequisites or compiler gate.",
+  "resource_note": "Initial builds failed due disk exhaustion; removed named redundant comparison/mutant dumps, preserving canonical references. All five builds then passed after closure initializer integration.",
+  "mutants": "XOR first native stdout byte with 1 in each scratch output; every diff exit 1.",
+  "full_slice": "Held in this step, unchanged. Non-null write retry follows."
+}

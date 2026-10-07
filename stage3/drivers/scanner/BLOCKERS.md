@@ -1,5 +1,21 @@
 # Scanner blockers
 
+## October 7: five increment and nested-reference probes fixed
+
+Integrated scanner-value-increments 85cade98 and scanner-nested-references
+e35ee2d3 in unpushed scratch 48f092a5. All five unchanged probes build natively
+and match source Node stdout, empty stderr and exit 0: postfix-call-argument
+prints `0` then `1`; prefix-call-argument prints `1` twice; sibling and generic
+sibling callback probes print `x`; ancestor call prints `1`. Each one-byte native
+stdout mutant is caught by diff exit 1.
+
+Merge limits and results: `evidence/increments-nested-references.json`.
+Nested integration isolated f76331d5 with needed frame-forwarding seams, retained
+existing host/readiness/coercion features, and initialized new canonical cache
+fields in existing host closure constants. No compiler changes were pushed.
+This is five-probe validation, not a full compiler gate or scanner token proof.
+Full validated slice was held at this step, pending non-null write retry.
+
 ## October 7: string destructuring and nested overload probes fixed
 
 Integrated scanner-string-destructuring cf9fa276 and nested-functions-scanner
