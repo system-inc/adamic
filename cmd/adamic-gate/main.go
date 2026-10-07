@@ -48,6 +48,8 @@ func (u unit) key() string { return u.Package + "::" + u.Test }
 type plan struct {
 	Version           int
 	Commit            string
+	GoVersion         string `json:",omitempty"`
+	NodeVersion       string `json:",omitempty"`
 	Source            string
 	Count             int
 	Units             []unit
@@ -471,6 +473,14 @@ func makePlan(count int) (plan, error) {
 		return p, errors.New("count must be positive")
 	}
 	p.Commit, err = output("git", "rev-parse", "HEAD")
+	if err != nil {
+		return p, err
+	}
+	p.GoVersion, err = output("go", "version")
+	if err != nil {
+		return p, err
+	}
+	p.NodeVersion, err = output("node", "--version")
 	if err != nil {
 		return p, err
 	}
@@ -1390,6 +1400,9 @@ func compare(path, log string) error {
 		}
 		defer cleanup()
 		log = local
+	}
+	if err := checkPlainProvenance(log, m); err != nil {
+		return err
 	}
 	whole, _, raw, err := readLog(log)
 	if err != nil {

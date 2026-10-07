@@ -1086,7 +1086,7 @@ and repeated layout setup. Deliberate overlay mutants prove those checks fail.
 
 ### Affinity measurement and 15-shard table
 
-Source: `47fbaf174d168f14cd50dedcaabfaa09c51cdefd`. Runner: `1e9192b65a41bcd108ff04c09b732864b28a5bbe`, binary SHA-256 `9238514115d652e0cc7d456b8853ae703154d64348dc1b40ef2fc6a61a417601`. Branch base: `0081e98d25a4e9d560da789a2ad389d38dc43a26`.
+Source: `47fbaf174d168f14cd50dedcaabfaa09c51cdefd`. Runner: `1e9192b65a41bcd108ff04c09b732864b28a5bbe`, binary SHA-256 `9238514115d652e0cc7d456b8853ae703154d64348dc1b40ef2fc6a61a417601`. Measured runner base: `0081e98d25a4e9d560da789a2ad389d38dc43a26`. The final branch is rebased onto the requested `976ce7fa3f4e157353947fcdd60d24ae60ae4f9a`; the historical rerun retains the exact frozen runner binary above.
 
 All fifteen original logs merged green with the original runner: 6,016 pass, 0 fail, 25 skip. Calibration from the merged stream is byte-identical to calibration from the fifteen individual streams. The new plan is preserved in `cmd/adamic-gate/evidence/affinity-47fb-plan.json`.
 
@@ -1197,3 +1197,66 @@ The full runner race suite and vet passed. The final focused race tests also pas
 | `unordered-timing-sums` | `TestTimingsReorderingIsByteIdentical` |
 
 Evidence: `cmd/adamic-gate/evidence/affinity-47fb-shard-0.tgz` and `affinity-47fb-measurement.json`. Fourteen new shards and a complete plain/sharded equivalence comparison were not run. The historical merge was validated under its original runner, before the newer skip census.
+
+### Plain-log provenance
+
+`compare` requires the plain log's full tested commit SHA, Go version, and Node
+version to match the merged plan. New plans record `GoVersion` and `NodeVersion`.
+Older plans use every shard's recorded `BuildFlags`; missing versions or
+inconsistent shard toolchains refuse comparison. Versions come from recorded
+run evidence, never the machine running `compare`.
+
+A local `plain.jsonl` must have `plain.jsonl.provenance.json`:
+
+```json
+{"commit":"47fbaf174d168f14cd50dedcaabfaa09c51cdefd","go":"go version go1.27.1 linux/amd64","node":"v24.19.0"}
+```
+
+Alternatively, sibling `run-notes.txt` must contain exactly one of each:
+
+```text
+commit=47fbaf174d168f14cd50dedcaabfaa09c51cdefd
+go=go version go1.27.1 linux/amd64
+node=v24.19.0
+```
+
+Quoted version values and the keys `go_version`/`node_version` also work.
+An existing sidecar takes precedence; malformed sidecars cannot fall back to
+notes. Git-reference archives preserve their notes and use the same three
+checks after the independent branch/archive commit check. A missing field or
+mismatch refuses comparison and names the field. This is recorded provenance,
+not a cryptographic attestation of a local file's author.
+
+`TestCompareLocalProvenance` uses identical test names and passing verdicts for
+all cases: another commit, another Node, another Go, missing Go or Node, missing
+metadata, matching sidecar, matching notes, matching legacy build flags, and
+inconsistent shard versions. Overlay mutants that independently remove the
+commit, Go, and Node comparisons all fail this test. Sources, overlays and
+outputs are in `cmd/adamic-gate/evidence/provenance-checks.tgz`.
+
+The filtered oracle command on the requested final base fails to compile:
+`internal/oracle/gcc_lane_test.go:84:15: undefined: leakSanitizer`. The missing
+helper is inherited from `976ce7fa3`; this unit does not alter oracle tests.
+The exact historical `47fbaf17` checkout is checked separately below. No full
+15-shard gate or plain/sharded equivalence certificate is claimed.
+
+The filtered oracle passed on the clean measured source `47fbaf174d16`, including
+`TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null.a`, with zero
+native/Node cache hits. Commands (all output saved to files):
+
+```sh
+go test -race ./cmd/adamic-gate
+go vet ./cmd/adamic-gate
+go test -race ./cmd/adamic-gate -run '^TestCompareLocalProvenance$' -count=1
+ADAMIC_GATE_UNCACHED=1 go test -json -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^typeof_null[.]a$'
+go test -overlay <commit|go|node>.json ./cmd/adamic-gate -run '^TestCompareLocalProvenance$' -count=1
+```
+
+The three provenance mutants fail specifically at `other-commit`, `other-go`,
+and `other-node` (the Node mutant also accepts missing Node incorrectly).
+
+Final validation: the full runner race suite passed, vet passed, and the final
+focused provenance race suite passed. The three provenance mutants were killed
+by the expected behavioral assertions, with no compilation failure. The final
+branch contains the requested base's setup and stage1 changes; measurements
+above remain attributed to their exact historical source and frozen runner.
