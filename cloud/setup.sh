@@ -201,6 +201,22 @@ done
 [ "$failed" = 0 ] || exit 1
 [ -x "$tools/go/bin/go" ] && export PATH="$tools/go/bin:$PATH"
 
+# Optional WASI SDK 27: native clang remains the default in PATH.
+if "$wasiSDK"; then
+ wasiVersion=27
+ wasiDirectory="$tools/wasi-sdk"
+ if [ ! -x "$wasiDirectory/bin/clang" ]; then
+  case $(uname -m) in
+   x86_64) wasiArchitecture=x86_64 ;;
+   *) wasiArchitecture=arm64 ;;
+  esac
+  mkdir -p "$wasiDirectory"
+  curl -fsSL "https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-$wasiVersion/wasi-sdk-$wasiVersion.0-$wasiArchitecture-linux.tar.gz" | tar --no-same-owner -xz -C "$wasiDirectory" --strip-components 1
+ fi
+ "$wasiDirectory/bin/clang" --version | head -n 1
+ step "wasi sdk ready ($wasiDirectory)"
+fi
+
 # One file every shell sources: the agent's shell in Codex is a different session from this one.
 cat > "$tools/env.sh" << ENV
 export PATH="$tools/bin:$([ -x "$tools/go/bin/go" ] && echo "$tools/go/bin:")\$PATH"

@@ -22,8 +22,15 @@ func newMap(key ir.Type, referenceValues bool) string {
 }
 
 // mapForEach emits map.forEach and set.forEach as for...of's loop over the map, live as it is. The key
-// and value are held across each call, since the callback may delete their entry; a Set's callback
-// gets its element twice, as JavaScript gives it.
+// is borrowed: closure parameters retain on entry, before user code can delete or clear it.
+// A named callback goes through an owned closure forwarder, which holds the key while the named
+// function borrows it; a reassigned parameter takes an additional count in that function.
+// After the callback returns (or throws), the loop never reads that key again. The iterator owns
+// the map and its iterating count prevents tombstone compaction; next reads the current entries
+// array by index, skipping deleted entries even after growth. A Set passes the key twice, and
+// each callback parameter owns its own count. Keep the value hold, whose release reads it after
+// the call. The Map and Set foreach_keys.a and foreach_named_keys.a fixtures hold this with
+// counted keys. Detached methods through interfaces are refused as unbound-method.
 func (e *emitter) mapForEach(visit ir.MapForEach) string {
 	collection := e.value(visit.Map)
 	callback := e.value(visit.Callback)
@@ -37,21 +44,17 @@ func (e *emitter) mapForEach(visit ir.MapForEach) string {
 			e.line("%s(%s.reference);", how, slot)
 		}
 	}
-	hold(key, visit.Key, "adamic_retain")
 	first := value
 	if visit.Set {
 		first = key
 	} else {
 		hold(value, visit.Value, "adamic_retain")
 	}
-	call := fmt.Sprintf("%s->code(%s, (adamic_value[]){%s, %s, {.reference = %s}})", callback, callback, first, key, collection)
-	// A throw lets go of the key and value held across the call, and the iterator.
+	call := fmt.Sprintf("%s->code(%s, (adamic_value[]){%s, %s, {.reference = %s}}, 3)", callback, callback, first, key, collection)
+	// A throw lets go of the value held across the call, and the iterator.
 	holds := []string{}
 	if !visit.Set && visit.Value.IsReference() {
 		holds = append(holds, value+".reference")
-	}
-	if visit.Key.IsReference() {
-		holds = append(holds, key+".reference")
 	}
 	holds = append(holds, iterator)
 	if visit.Returns.IsReference() {
@@ -66,7 +69,6 @@ func (e *emitter) mapForEach(visit ir.MapForEach) string {
 	if !visit.Set {
 		hold(value, visit.Value, "adamic_release")
 	}
-	hold(key, visit.Key, "adamic_release")
 	e.indent--
 	e.line("}")
 	e.line("adamic_release(%s);", iterator)

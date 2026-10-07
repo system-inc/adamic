@@ -16,23 +16,14 @@ import (
 // an object literal can be seen through a class's type, since tsc lets one through and only cohere's
 // adamic/nominal-class refuses it, so the shape is checked unless fields.go proves a uniform slot.
 func (e *emitter) fieldSlot(object string, name string, class int) string {
-	// Constructor objects can inherit live data from their parent. Even a uniform offset
-	// names only their own storage, not necessarily the field JavaScript reads. The IR
-	// enumerates every static layout; keep lookup for names any such layout contains.
-	for _, layout := range e.program.Classes {
-		if !layout.Static {
-			continue
-		}
-		for _, field := range layout.Fields {
-			if field.Name == name {
-				return fmt.Sprintf("adamic_object_field(%s, %s, &%s)", object, cString(name), e.cache())
-			}
-		}
+	// Uniform offsets describe own storage; static names may instead read live parent data.
+	if e.staticFieldName(name) {
+		return fmt.Sprintf("adamic_object_field(%s, %s, &%s)", object, cString(name), e.cache())
 	}
 	if slot := e.uniformFieldSlot(object, name); slot != "" {
 		return slot
 	}
-	lookup := fmt.Sprintf("adamic_object_field(%s, %s, &%s)", object, cString(name), e.cache())
+	lookup := fmt.Sprintf("adamic_object_data_field(%s, %s, &%s)", object, cString(name), e.cache())
 	if class == 0 || !cName.MatchString(object) {
 		return lookup
 	}
@@ -54,6 +45,69 @@ func (e *emitter) fieldSlot(object string, name string, class int) string {
 		}
 	}
 	return lookup
+}
+
+// staticFieldName is conservative across all constructor layouts, including inherited
+// fields. A name in none of them cannot need live-parent reads or own-write flags.
+// Class descriptors are emitted only from these IR layouts (class_inheritance.go).
+func (e *emitter) staticFieldName(name string) bool {
+	for _, layout := range e.program.Classes {
+		if !layout.Static {
+			continue
+		}
+		for _, field := range layout.Fields {
+			if field.Name == name {
+				return true
+			}
+		}
+	}
+	return false
+}
+
+// writeFieldSlot keeps static own-property bookkeeping on the runtime path. A write
+// does not prove an optional field exists, and SetProperty carries no presence proof.
+// Uniform offsets therefore need an exact literal-layout guard here; a class fallback
+// already has that guard. Unknown, absent and conflicting layouts keep checked lookup.
+// Frozen checks and value evaluation remain at the statement. Only C names may repeat.
+func (e *emitter) writeFieldSlot(object, name string, class int) string {
+	lookup := fmt.Sprintf("adamic_object_write_field(%s, %s, &%s)", object, cString(name), e.cache())
+	if !cName.MatchString(object) {
+		return lookup
+	}
+	static := e.staticFieldName(name)
+	fallback := lookup
+	if !static {
+		fallback = fmt.Sprintf("adamic_object_data_field(%s, %s, &%s)", object, cString(name), e.cache())
+	}
+	data := e.fieldSlot(object, name, class)
+	if slot := e.uniformFieldSlot(object, name); slot != "" {
+		seen := map[string]bool{}
+		checks := []string{}
+		walkExpressions(e.program, func(expression ir.Expression) {
+			literal, ok := expression.(ir.ObjectLiteral)
+			if !ok || literal.Spread != nil {
+				return
+			}
+			for _, field := range literal.Fields {
+				if field.Name == name {
+					shape := e.literalShape(literal)
+					if !seen[shape] {
+						seen[shape] = true
+						checks = append(checks, fmt.Sprintf("%s->shape == &%s", object, shape))
+					}
+					break
+				}
+			}
+		})
+		data = fallback
+		if len(checks) != 0 {
+			data = fmt.Sprintf("(%s ? %s : %s)", strings.Join(checks, " || "), slot, fallback)
+		}
+	}
+	if !static {
+		return data
+	}
+	return fmt.Sprintf("(%s->class != NULL && %s->class->is_static ? %s : %s)", object, object, lookup, data)
 }
 
 // cName is a C name alone, which a C expression can repeat without evaluating anything twice.
@@ -212,12 +266,12 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 }
 
 // dispatchable reports whether a class's method can be called through an interface: each value it
-// takes and gives fits an adamic_value. One that doesn't (boolean | undefined, a union) can't be
+// takes and gives fits an adamic_value. One that doesn't (a union) can't be
 // passed to a function value either (lower's callClosure says not yet), so no call through an
 // interface reaches it with one, and it's left out of its class's table.
 func (e *emitter) dispatchable(function int) bool {
 	method := e.program.Functions[function]
-	slotless := func(valueType ir.Type) bool { return valueType == ir.MaybeBoolean || valueType == ir.Union }
+	slotless := func(valueType ir.Type) bool { return valueType == ir.Union }
 	for index, parameter := range method.Parameters {
 		if index > 0 && slotless(e.program.Locals[parameter].Type) {
 			return false
@@ -240,13 +294,13 @@ func (e *emitter) methodThunk(function int) string {
 	}
 	e.thunks[function] = true
 	method := e.program.Functions[function]
-	lines := []string{fmt.Sprintf("static adamic_value %s(adamic_object *self, adamic_value *arguments) {", name), "\t(void)arguments;"}
+	lines := []string{fmt.Sprintf("static adamic_value %s(adamic_object *self, adamic_value *arguments, size_t argument_count) {", name), "\t(void)arguments;", "\t(void)argument_count;"}
 	values := []string{}
 	for index, parameter := range method.Parameters {
 		local := e.program.Locals[parameter]
 		value := "self"
 		if index > 0 {
-			value = unslotted(local.Type, fmt.Sprintf("arguments[%d].%s", index-1, member(local.Type)))
+			value = closureArgument(local.Type, index-1)
 			if local.Type.IsReference() {
 				value = fmt.Sprintf("(%s)%s", cType(local.Type), value)
 			}

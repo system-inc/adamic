@@ -1,0 +1,8 @@
+// Error storage is runtime-produced, with no literal shape to guard a write.
+const error = new Error(`old${1}`);
+error.message = error.message;
+error.message = `${error.message}!`;
+error.name = `named${2}`;
+console.log(`${error.name}/${error.message}`);
+error.message = error.name;
+console.log(`${error.name}/${error.message}`);

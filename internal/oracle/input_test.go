@@ -39,6 +39,7 @@ var inputFixtures = []struct {
 	{"internal/oracle/testdata/node_process_system.a", []string{"--noEmit", "tiny.a"}, false, false},
 	{"internal/oracle/testdata/read_files.a", nil, false, false},
 	{"internal/oracle/testdata/realpath.a", nil, false, false},
+	{"internal/oracle/testdata/empty-path.a", nil, false, false},
 	{"internal/oracle/testdata/utf8_sweep.a", nil, false, false},
 	{"internal/oracle/testdata/arguments.a", []string{
 		"plain", "", "with space", "héllo 🌍", "--flag=1",

@@ -80,6 +80,9 @@ type Function struct {
 	Closure     bool
 	Environment []int
 
+	// Receiver marks a literal method closure whose first parameter receives the calling object.
+	Receiver bool
+
 	// MayThrow is a function a throw can leave (docs/memory.md, "Exceptions"): its callers test for
 	// one after each call. Lowering works it out over the call graph once every function is lowered.
 	MayThrow bool
@@ -250,7 +253,7 @@ type (
 
 	// Binary is an operator whose operands are already of the types it takes (the checker and
 	// lowering saw to that): arithmetic on numbers, comparison of numbers, equality of like types,
-	// bitwise operations on numbers, and && and || on booleans, which short-circuit.
+	// bitwise operations on numbers, and && and || on booleans or maybe booleans, which short-circuit.
 	Binary struct {
 		Operator    Operator
 		Left, Right Expression
@@ -947,6 +950,9 @@ func (u Unary) Type() Type {
 }
 
 func (b Binary) Type() Type {
+	if (b.Operator == And || b.Operator == Or) && b.Left.Type() == MaybeBoolean && b.Right.Type() == MaybeBoolean {
+		return MaybeBoolean
+	}
 	switch b.Operator {
 	case Add, Subtract, Multiply, Divide, Remainder, Power, BitAnd, BitOr, BitXor, ShiftLeft, ShiftRight, ShiftRightUnsigned:
 		return Number

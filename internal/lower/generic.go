@@ -216,6 +216,17 @@ func (l *lowering) inferTypes(declared *checker.Type, instantiated *checker.Type
 	if declared == nil || instantiated == nil {
 		return
 	}
+	// Optional implementation parameters and results can wrap the same generic
+	// binder that the resolved overload exposes directly. Infer from the present
+	// member; an absent argument supplies no evidence about that binder.
+	if declared.Flags()&checker.TypeFlagsUnion != 0 && l.censusHasUndefined(declared) {
+		present := l.checker.GetNonNullableType(declared)
+		given := l.checker.GetNonNullableType(instantiated)
+		if present.Flags()&checker.TypeFlagsUnion == 0 && given.Flags()&checker.TypeFlagsNever == 0 {
+			l.inferTypes(present, given, into)
+		}
+		return
+	}
 	if declared.Flags()&checker.TypeFlagsTypeParameter != 0 {
 		if _, isSet := into[declared]; !isSet {
 			into[declared] = l.concrete(instantiated)
