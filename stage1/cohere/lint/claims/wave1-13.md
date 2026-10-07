@@ -103,3 +103,5 @@ Rebased the eight retained ports onto area 7481e032 after checking its identical
 Latest area follow-up: d65a8f931 retained and rechecked, supported witnesses and all eight active mutants pass. Frontend and JSX fix-reparse blockers remain as named in AREA_REPORT.md. No additional rule or helper is claimed.
 
 Required correctness input follow-up: main and area unchanged; TestCompilerAndStage1Agree executed with the real pinned sources and passed on 364 files, 20,648,441 matching Go bytes and no skip. Upstream-fixture blockers remain. No additional claim.
+
+Current main c7991b900 / area b84a9d931: clean rebase and fresh shared real-input corpus, supported witness, active-mutant and vet checks complete. Upstream top-level await and JSX fixed-source reparsing remain named blockers. No new rule or helper claim; not declared fully green.

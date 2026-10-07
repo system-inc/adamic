@@ -1,6 +1,6 @@
-Built: eight retained rule ports rebased onto landed area d65a8f931; return-void uses JS RegExp literals and raw regex/JSX controls.
-Commits: this latest-area evidence follows the owned rebase; helper branch is pushed at e053989fb on the same area and main 39638d9e.
-Commands: 364 compiler/stage1 files PASS with real inputs (20,648,441 Go bytes); supported witnesses, eight active mutants, vet and uncached lastIndexOf oracle PASS.
+Built: eight retained rule ports rebased onto landed area b84a9d931; return-void uses JS RegExp literals and raw regex/JSX controls.
+Commits: this latest-area evidence follows the owned rebase; helper branch is pushed at cdb36d199 on the same area and main c7991b900.
+Commands: 364 compiler/stage1 files PASS with real inputs (20,648,441 Go bytes); fresh supported witnesses (71,653 bytes), eight active mutants and vet PASS; the inherited lastIndexOf result above is historical.
 Mutants: all eight active rule mutants and twelve helper mutants compile, finish cleanly and are caught on source Node, emitted JavaScript and sanitized native; the former braces mutant was also caught on area 7481e032.
 Not covered: complete upstream-fixture parity, the other required correctness packages, new throughput or full gate; top-level await and JSX fixed-source reparsing block landing, so no new helper claim.
 
@@ -62,3 +62,32 @@ ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/typescript-6.0.3 go test ./stage1/co
 The actual TypeScript checkout pin is 050880ce59e30b356b686bd3144efe24f875ebc8. The test ran, with no skip: 364 compiler and stage1 files, Go/source Node/emitted JavaScript/ASan-UBSan native identical on 20,648,441 output bytes, PASS in 84.933s. Complete output is retained as evidence/parking/required-compiler-stage1.log. This supersedes the earlier limitation about lacking a fresh broad corpus run on this area. No rule implementation changed, so the latest eight active rule mutant and twelve helper mutant results remain applicable.
 
 This check's all-rule source corpus is distinct from the failing upstream-fixture corpus. It does not cover or repair the Go-valid top-level-await delay fixture or JSX fixed-source reparsing. Those remain named with exact inputs and failure logs above, and the branch is not declared fully green or landing-ready. The other input-dependent stage1 correctness packages and full gate were not run; they are not claimed passing or silently skipped. No new helper claim follows the landing cap.
+
+## Current main proof and record landing
+
+Main advanced to c7991b900362796aefd111474e65eb5398e91953, and area to b84a9d9314b65d3d0261ee017e233287b4f071da, which contains current main. The complete dedup ledger has the same SHA-256 as the pinned, already-read ledger. Both owned branches rebased cleanly, keeping upstream proven-predicate/lowering and record-runtime changes; no shared file was edited or reverted. Helper branch is published at cdb36d199 after all three packages, 4,470 direct-helper cases, twelve compiling semantic mutants and owned vet passed again.
+
+The fresh shared rule command supplies the actual pinned TypeScript checkout and selects the upstream-fixture test, compiler/stage1 test, eight active mutants and supported witness test together:
+
+```
+ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/typescript-6.0.3 go test ./stage1/cohere/lint -run '^(TestCompilerAndStage1Agree|TestRulesAgree|TestOwnedWitnesses|TestMutants)$/(delay-resolve-name-ignored|return-void-unicode-whitespace-mutant|default-case-last-semantic-mutant|for-direction-semantic-mutant|guard-for-in-semantic-mutant|no-constructor-return-semantic-mutant|no-delete-var-semantic-mutant|no-eq-null-semantic-mutant)$' -count=1 -v -timeout=20m > /tmp/wave13-b84-rules.log 2>&1
+go vet ./stage1/cohere/lint ./stage1/cohere/lint/registry > /tmp/wave13-b84-rule-vet.log 2>&1
+```
+
+No selected correctness test skips and no failed assertion is weakened. TestRulesAgree still fails: source Node exits 70 at ConsistencyNoHandRolledDelay.ts with parser slice expected semicolon at 6; duration 59.13s. The exact Go-valid reproducer remains under the delay rule's gaps directory. TestCompilerAndStage1Agree passes: 364 files, 20,648,441 matching Go bytes across source Node, emitted JavaScript and sanitized native, duration 91.84s. The full upstream failure is distinct from that broad supported-source success. Other required correctness packages and the complete gate were not run or claimed passing.
+
+Rule implementations and test inputs have not changed in this rebase. JSX fixed-source reparsing is still documented with its exact failing input; this landing changes lowering/native records, not that shared source-Node reparse path. New claims remain blocked while the branch lacks full upstream parity. The new fresh suite output and vet log are retained under evidence/parking/b84-*.log when the run completes.
+
+Fresh results on b84a9d931: combined suite exits 1 in 344.900s because TestRulesAgree fails on the named top-level-await input. TestCompilerAndStage1Agree PASS in 91.84s with 364 real-input files and 20,648,441 matching Go bytes; TestMutants PASS in 168.54s with all eight active semantic mutants; TestOwnedWitnesses PASS in 25.37s with 71,653 matching Go bytes. Every mutant is caught separately on source Node, emitted JavaScript and sanitized native after clean compilation/execution. Fresh rule/registry vet exits zero with empty output. No selected correctness test skips. Complete output is evidence/parking/b84-rules.log and b84-vet.log.
+
+The shared frontend block is before rule dispatch: stage1/typescript/parser/parser.ts:1478 recognizes AwaitKeyword only when awaitContext is true or the following token is Identifier; awaitContext starts false, and this fixture next has NewKeyword. These code observations explain why changing the rule listener cannot fix its missing AwaitExpression. No parser change is made by this unit.
+
+The JSX bug is also shared: stage1/cohere/lint/lint.ts:1412 rebuilds the repaired input with new Parser(result, 'fixed source'), while stage1/typescript/parser/parser.ts:23 derives JSX mode from the source path suffix. A fresh source-Node reproduction on this area emits the expected return-void finding and fix, then exits 70 while reparsing, with expected GreaterThanToken, got Identifier at 24 in fixed source. The exact source remains gaps/jsx-fix-reparse.tsx.txt, and complete fresh output is evidence/parking/b84-jsx-reparse.log. Reproduce with the configured Node environment:
+
+```
+cp stage1/cohere/lint/rules/nexus-consistency-no-return-void/gaps/jsx-fix-reparse.tsx.txt /tmp/wave13-b84-jsx-reparse.tsx
+printf '/tmp/wave13-b84-jsx-reparse.tsx\tnexus/consistency-no-return-void\n' > /tmp/wave13-b84-jsx-reparse.manifest
+node --disable-warning=ExperimentalWarning oracle/node.mjs stage1/cohere/lint/main.ts --manifest /tmp/wave13-b84-jsx-reparse.manifest > /tmp/wave13-b84-jsx-reparse.log 2>&1
+```
+
+Both issues remain explicit blockers, not passing parity or newly skipped checks. No shared file, finding model, registry generator, oracle or comparison is edited. This branch is rebased and pushed with bounded green checks but is not declared fully green or landing-ready; no new helper claim follows.
