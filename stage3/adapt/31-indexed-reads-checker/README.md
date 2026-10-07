@@ -426,3 +426,161 @@ Commands use the reproduction above with /tmp/checker-wave-b-final-after and /tm
 | checker.ts:16693:62 | TS2322 | Not an indexed read: siblingSymbols inherits the Map iterator payload union from arrayFrom; its existing undefined-list handling is retained. |
 | checker.ts:18662:15 | TS2322 | Not an indexed read: arrayFrom(typeMembershipMap.values()) widens iterator payloads to Type | undefined. |
 | checker.ts:20618:50 | TS2345 | Not an indexed read: the TypeMapper Function object debugInfo optional-field assignment violates exactOptionalPropertyTypes. |
+
+## Wave C
+
+Frozen ranks 401-600: 134 new required-read assertions, 0 reviewed read declines; 197 frozen findings removed, 3 declined. Net census reduction: 200. Related alias repairs can also remove findings across a wave boundary.
+
+| File | TS2345 | TS18048 | TS2532 | TS2322 | TS2538 | Total |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| checker.ts before | 211 | 143 | 53 | 29 | 0 | 436 |
+| checker.ts after | 122 | 73 | 19 | 22 | 0 | 236 |
+
+Default oracle: **106,367 passing, 0 failing, 0 pending**, all phase exits 0, **empty baseline diff**, 356.196s. `oracle-wave-c.json` and `baseline-wave-c.diff` retain this observation.
+
+Stock emitted JavaScript is byte-identical; site contract and CLI idempotence pass. CRLF preserved. The isolated mutant replaces `source.target.elementFlags[sourcePosition]!` at checker.ts:24478 with `(source.target.elementFlags[sourcePosition] ?? 0)`; the emitted-JavaScript verifier exits 1. No mutant is run in the real oracle tree. `proof-wave-c.json` records hashes and counts. Every remaining finding is recorded in `remaining-wave-c.json`; every frozen-wave disposition is recorded in `findings-wave-c.json`.
+
+Commands use the reproduction above with /tmp/checker-wave-c-final-after and /tmp/checker-wave-c-final-oracle. Output logs: /tmp/checker-wave-c-final-{adapt,census,verify,idempotence,oracle}.log and /tmp/checker-wave-c-mutant.log.
+
+| Site | Read | Class | Action | Invariant or reason |
+| --- | --- | --- | --- | --- |
+| checker.ts:24413:66 | `unmatchedProperty.declarations[0]` | U-endpoint | assert | The positive unmatched-property declaration length precedes the populated first diagnostic declaration. |
+| checker.ts:24478:67 | `source.target.elementFlags[sourcePosition]` | U-parallel | assert | Tuple relation arity checks bound source and rest-adjusted target positions; argument and flag lists are populated in that shared tuple shape. |
+| checker.ts:24485:45 | `target.target.elementFlags[targetPosition]` | U-parallel | assert | Tuple relation arity checks bound source and rest-adjusted target positions; argument and flag lists are populated in that shared tuple shape. |
+| checker.ts:24515:62 | `sourceTypeArguments[sourcePosition]` | U-parallel | assert | Tuple relation arity checks bound source and rest-adjusted target positions; argument and flag lists are populated in that shared tuple shape. |
+| checker.ts:24516:44 | `targetTypeArguments[targetPosition]` | U-parallel | assert | Tuple relation arity checks bound source and rest-adjusted target positions; argument and flag lists are populated in that shared tuple shape. |
+| checker.ts:24629:45 | `sourceSignatures[0]` | U-endpoint | assert | Both positive signature-length guards precede each populated first constructor signature read. |
+| checker.ts:24630:45 | `targetSignatures[0]` | U-endpoint | assert | Both positive signature-length guards precede each populated first constructor signature read. |
+| checker.ts:24641:59 | `sourceSignatures[0]` | U-endpoint | assert | Both positive signature-length guards precede each populated first constructor signature read. |
+| checker.ts:24641:80 | `targetSignatures[0]` | U-endpoint | assert | Both positive signature-length guards precede each populated first constructor signature read. |
+| checker.ts:24660:56 | `sourceSignatures[i]` | U-parallel | assert | Signature counts are equal by assertion or explicit guard; the bounded comparison traverses populated signatures at the shared index. |
+| checker.ts:24660:77 | `targetSignatures[i]` | U-parallel | assert | Signature counts are equal by assertion or explicit guard; the bounded comparison traverses populated signatures at the shared index. |
+| checker.ts:24660:168 | `sourceSignatures[i]` | U-parallel | assert | Signature counts are equal by assertion or explicit guard; the bounded comparison traverses populated signatures at the shared index. |
+| checker.ts:24660:189 | `targetSignatures[i]` | U-parallel | assert | Signature counts are equal by assertion or explicit guard; the bounded comparison traverses populated signatures at the shared index. |
+| checker.ts:24762:60 | `sourceSignatures[i]` | U-parallel | assert | Signature counts are equal by assertion or explicit guard; the bounded comparison traverses populated signatures at the shared index. |
+| checker.ts:24762:81 | `targetSignatures[i]` | U-parallel | assert | Signature counts are equal by assertion or explicit guard; the bounded comparison traverses populated signatures at the shared index. |
+| checker.ts:24956:80 | `types[i]` | U-loop | assert | The union discriminator loop bounds i by the populated target constituent list. |
+| checker.ts:25105:18 | `variances[i]` | U-parallel | assert | The caller supplies variance flags for the same generic parameters as the populated type-argument list; the bounded loop shares that index. |
+| checker.ts:25105:92 | `typeArguments[i]` | U-parallel | assert | The caller supplies variance flags for the same generic parameters as the populated type-argument list; the bounded loop shares that index. |
+| checker.ts:25251:27 | `stack[i]` | U-position | assert | The recursion stack is populated through the caller supplied depth; its bounded traversal selects a live type. |
+| checker.ts:25414:27 | `source.typeParameters[i]` | U-parallel | assert | Signature identity rejects unequal type-parameter counts before traversing their populated aligned parameter lists. |
+| checker.ts:25415:27 | `target.typeParameters[i]` | U-parallel | assert | Signature identity rejects unequal type-parameter counts before traversing their populated aligned parameter lists. |
+| checker.ts:25486:20 | `types[0]` | U-endpoint | assert | The exactly-one type or base guard selects the populated sole constituent, including both original conditional branch reads. |
+| checker.ts:25571:65 | `bases[0]` | U-endpoint | assert | The exactly-one type or base guard selects the populated sole constituent, including both original conditional branch reads. |
+| checker.ts:25571:92 | `bases[0]` | U-endpoint | assert | The exactly-one type or base guard selects the populated sole constituent, including both original conditional branch reads. |
+| checker.ts:25748:27 | `typeArguments[i]` | U-parallel | assert | Tuple arity and slice bounds select populated argument and flag positions; structure matching first establishes equal arity. |
+| checker.ts:25749:35 | `type.target.elementFlags[i]` | U-parallel | assert | Tuple arity and slice bounds select populated argument and flag positions; structure matching first establishes equal arity. |
+| checker.ts:25758:86 | `t2.target.elementFlags[i]` | U-parallel | assert | Tuple arity and slice bounds select populated argument and flag positions; structure matching first establishes equal arity. |
+| checker.ts:26481:56 | `getTypeArguments(source)[0]` | U-endpoint | assert | A recognized array type supplies its populated required element type argument. |
+| checker.ts:26601:29 | `source.texts[0]` | U-endpoint | assert | Template literal text lists always include a populated head and tail, even with no interpolations. |
+| checker.ts:26602:29 | `target.texts[0]` | U-endpoint | assert | Template literal text lists always include a populated head and tail, even with no interpolations. |
+| checker.ts:26603:27 | `source.texts[source.texts.length - 1]` | U-endpoint | assert | Template literal text lists always include a populated head and tail, even with no interpolations. |
+| checker.ts:26604:27 | `target.texts[target.texts.length - 1]` | U-endpoint | assert | Template literal text lists always include a populated head and tail, even with no interpolations. |
+| checker.ts:26672:99 | `(source as TemplateLiteralType).types[0]` | U-parallel | assert | A two-text template shape has exactly one populated interpolation type; only that required type argument is asserted. |
+| checker.ts:26681:95 | `target.types[i]` | U-parallel | assert | Equal template text lists or successful template inference align populated target interpolation types at the callback position. |
+| checker.ts:26689:104 | `target.types[i]` | U-parallel | assert | Equal template text lists or successful template inference align populated target interpolation types at the callback position. |
+| checker.ts:26717:33 | `sourceTexts[0]` | U-position | assert | Template text lists are populated; delimiter bounds and match segment transitions select positions within their head-to-tail range. |
+| checker.ts:26718:31 | `sourceTexts[lastSourceIndex]` | U-position | assert | Template text lists are populated; delimiter bounds and match segment transitions select positions within their head-to-tail range. |
+| checker.ts:26721:33 | `targetTexts[0]` | U-position | assert | Template text lists are populated; delimiter bounds and match segment transitions select positions within their head-to-tail range. |
+| checker.ts:26722:31 | `targetTexts[lastTargetIndex]` | U-position | assert | Template text lists are populated; delimiter bounds and match segment transitions select positions within their head-to-tail range. |
+| checker.ts:26732:27 | `targetTexts[i]` | U-position | assert | Template text lists are populated; delimiter bounds and match segment transitions select positions within their head-to-tail range. |
+| checker.ts:26759:46 | `sourceTexts[index]` | U-position | assert | Template text lists are populated; delimiter bounds and match segment transitions select positions within their head-to-tail range. |
+| checker.ts:26765:22 | `sourceTexts[seg]` | U-position | assert | Template text lists are populated; delimiter bounds and match segment transitions select positions within their head-to-tail range. |
+| checker.ts:27091:46 | `variances[i]` | U-parallel | assert | Generic reference inference traverses aligned populated variance and source/target argument lists for the same generic target. |
+| checker.ts:27092:49 | `sourceTypes[i]` | U-parallel | assert | Generic reference inference traverses aligned populated variance and source/target argument lists for the same generic target. |
+| checker.ts:27092:65 | `targetTypes[i]` | U-parallel | assert | Generic reference inference traverses aligned populated variance and source/target argument lists for the same generic target. |
+| checker.ts:27095:36 | `sourceTypes[i]` | U-parallel | assert | Generic reference inference traverses aligned populated variance and source/target argument lists for the same generic target. |
+| checker.ts:27095:52 | `targetTypes[i]` | U-parallel | assert | Generic reference inference traverses aligned populated variance and source/target argument lists for the same generic target. |
+| checker.ts:27158:44 | `sources[i]` | U-loop | assert | The source-constituent loop bounds i by its populated union-or-singleton source list. |
+| checker.ts:27290:46 | `matches[i]` | U-parallel | assert | Successful template matching produces one populated match per target interpolation; the loop is bounded by the populated target type list. |
+| checker.ts:27291:36 | `types[i]` | U-parallel | assert | Successful template matching produces one populated match per target interpolation; the loop is bounded by the populated target type list. |
+| checker.ts:27388:48 | `getTypeArguments(source)[i]` | U-parallel | assert | Tuple inference splits populated argument/flag lists into bounded fixed ends and one- or two-element middles; each selected position belongs to that established segment. |
+| checker.ts:27388:77 | `elementTypes[i]` | U-parallel | assert | Tuple inference splits populated argument/flag lists into bounded fixed ends and one- or two-element middles; each selected position belongs to that established segment. |
+| checker.ts:27396:44 | `getTypeArguments(source)[i]` | U-parallel | assert | Tuple inference splits populated argument/flag lists into bounded fixed ends and one- or two-element middles; each selected position belongs to that established segment. |
+| checker.ts:27396:73 | `elementTypes[i]` | U-parallel | assert | Tuple inference splits populated argument/flag lists into bounded fixed ends and one- or two-element middles; each selected position belongs to that established segment. |
+| checker.ts:27398:100 | `source.target.elementFlags[startLength]` | U-parallel | assert | Tuple inference splits populated argument/flag lists into bounded fixed ends and one- or two-element middles; each selected position belongs to that established segment. |
+| checker.ts:27400:46 | `getTypeArguments(source)[startLength]` | U-parallel | assert | Tuple inference splits populated argument/flag lists into bounded fixed ends and one- or two-element middles; each selected position belongs to that established segment. |
+| checker.ts:27402:48 | `elementFlags[i]` | U-parallel | assert | Tuple inference splits populated argument/flag lists into bounded fixed ends and one- or two-element middles; each selected position belongs to that established segment. |
+| checker.ts:27402:128 | `elementTypes[i]` | U-parallel | assert | Tuple inference splits populated argument/flag lists into bounded fixed ends and one- or two-element middles; each selected position belongs to that established segment. |
+| checker.ts:27408:37 | `elementFlags[startLength]` | U-parallel | assert | Tuple inference splits populated argument/flag lists into bounded fixed ends and one- or two-element middles; each selected position belongs to that established segment. |
+| checker.ts:27408:65 | `elementFlags[startLength + 1]` | U-parallel | assert | Tuple inference splits populated argument/flag lists into bounded fixed ends and one- or two-element middles; each selected position belongs to that established segment. |
+| checker.ts:27410:80 | `elementTypes[startLength]` | U-parallel | assert | Tuple inference splits populated argument/flag lists into bounded fixed ends and one- or two-element middles; each selected position belongs to that established segment. |
+| checker.ts:27413:144 | `elementTypes[startLength]` | U-parallel | assert | Tuple inference splits populated argument/flag lists into bounded fixed ends and one- or two-element middles; each selected position belongs to that established segment. |
+| checker.ts:27414:130 | `elementTypes[startLength + 1]` | U-parallel | assert | Tuple inference splits populated argument/flag lists into bounded fixed ends and one- or two-element middles; each selected position belongs to that established segment. |
+| checker.ts:27417:42 | `elementFlags[startLength]` | U-parallel | assert | Tuple inference splits populated argument/flag lists into bounded fixed ends and one- or two-element middles; each selected position belongs to that established segment. |
+| checker.ts:27417:95 | `elementFlags[startLength + 1]` | U-parallel | assert | Tuple inference splits populated argument/flag lists into bounded fixed ends and one- or two-element middles; each selected position belongs to that established segment. |
+| checker.ts:27420:75 | `elementTypes[startLength]` | U-parallel | assert | Tuple inference splits populated argument/flag lists into bounded fixed ends and one- or two-element middles; each selected position belongs to that established segment. |
+| checker.ts:27424:137 | `elementTypes[startLength]` | U-parallel | assert | Tuple inference splits populated argument/flag lists into bounded fixed ends and one- or two-element middles; each selected position belongs to that established segment. |
+| checker.ts:27425:138 | `elementTypes[startLength + 1]` | U-parallel | assert | Tuple inference splits populated argument/flag lists into bounded fixed ends and one- or two-element middles; each selected position belongs to that established segment. |
+| checker.ts:27428:42 | `elementFlags[startLength]` | U-parallel | assert | Tuple inference splits populated argument/flag lists into bounded fixed ends and one- or two-element middles; each selected position belongs to that established segment. |
+| checker.ts:27428:91 | `elementFlags[startLength + 1]` | U-parallel | assert | Tuple inference splits populated argument/flag lists into bounded fixed ends and one- or two-element middles; each selected position belongs to that established segment. |
+| checker.ts:27431:75 | `elementTypes[startLength + 1]` | U-parallel | assert | Tuple inference splits populated argument/flag lists into bounded fixed ends and one- or two-element middles; each selected position belongs to that established segment. |
+| checker.ts:27439:138 | `elementTypes[startLength]` | U-parallel | assert | Tuple inference splits populated argument/flag lists into bounded fixed ends and one- or two-element middles; each selected position belongs to that established segment. |
+| checker.ts:27440:71 | `elementTypes[startLength + 1]` | U-parallel | assert | Tuple inference splits populated argument/flag lists into bounded fixed ends and one- or two-element middles; each selected position belongs to that established segment. |
+| checker.ts:27444:60 | `elementFlags[startLength]` | U-parallel | assert | Tuple inference splits populated argument/flag lists into bounded fixed ends and one- or two-element middles; each selected position belongs to that established segment. |
+| checker.ts:27447:56 | `target.target.elementFlags[targetArity - 1]` | U-parallel | assert | Tuple inference splits populated argument/flag lists into bounded fixed ends and one- or two-element middles; each selected position belongs to that established segment. |
+| checker.ts:27449:64 | `elementTypes[startLength]` | U-parallel | assert | Tuple inference splits populated argument/flag lists into bounded fixed ends and one- or two-element middles; each selected position belongs to that established segment. |
+| checker.ts:27451:60 | `elementFlags[startLength]` | U-parallel | assert | Tuple inference splits populated argument/flag lists into bounded fixed ends and one- or two-element middles; each selected position belongs to that established segment. |
+| checker.ts:27455:62 | `elementTypes[startLength]` | U-parallel | assert | Tuple inference splits populated argument/flag lists into bounded fixed ends and one- or two-element middles; each selected position belongs to that established segment. |
+| checker.ts:27461:44 | `getTypeArguments(source)[sourceArity - i - 1]` | U-parallel | assert | Tuple inference splits populated argument/flag lists into bounded fixed ends and one- or two-element middles; each selected position belongs to that established segment. |
+| checker.ts:27461:91 | `elementTypes[targetArity - i - 1]` | U-parallel | assert | Tuple inference splits populated argument/flag lists into bounded fixed ends and one- or two-element middles; each selected position belongs to that established segment. |
+| checker.ts:27500:57 | `sourceSignatures[sourceIndex]` | U-parallel | assert | Positive source count and bounded target traversal select populated signatures; Math.max maps excess targets to the required first source signature. |
+| checker.ts:27500:108 | `targetSignatures[i]` | U-parallel | assert | Positive source count and bounded target traversal select populated signatures; Math.max maps excess targets to the required first source signature. |
+| checker.ts:27609:27 | `context.inferences[index]` | U-position | assert | Inference callers select an index of the populated context inference list, preserving the required inference record at its original read. |
+| checker.ts:28545:32 | `originFiltered[0]` | U-endpoint | assert | Positive, singleton, or bounded nonempty-list guards establish the populated first or last parser node, signature, type, property, or diagnostic. |
+| checker.ts:28820:59 | `signatures[0]` | U-endpoint | assert | Positive, singleton, or bounded nonempty-list guards establish the populated first or last parser node, signature, type, property, or diagnostic. |
+| checker.ts:28820:90 | `signatures[0]` | U-endpoint | assert | Positive, singleton, or bounded nonempty-list guards establish the populated first or last parser node, signature, type, property, or diagnostic. |
+| checker.ts:28906:24 | `antecedents[0]` | U-endpoint | assert | Positive, singleton, or bounded nonempty-list guards establish the populated first or last parser node, signature, type, property, or diagnostic. |
+| checker.ts:28961:24 | `(flow as FlowLabel).antecedent[0]` | U-endpoint | assert | A loop flow junction has its populated first non-looping antecedent leading to the loop top, as documented by flow-loop processing. |
+| checker.ts:29056:36 | `sharedFlowTypes[i]` | U-parallel | assert | The live shared-flow or loop range populates aligned node, key, and type cache entries; only the required type entry is selected. |
+| checker.ts:29084:32 | `(flow as FlowLabel).antecedent[0]` | U-endpoint | assert | Positive, singleton, or bounded nonempty-list guards establish the populated first or last parser node, signature, type, property, or diagnostic. |
+| checker.ts:29225:200 | `flow.node.arguments[predicate.parameterIndex]` | U-position | assert | The assertion predicate parameter index is explicitly nonnegative and below the populated call argument list length. |
+| checker.ts:29395:77 | `flowLoopTypes[i]` | U-parallel | assert | The live shared-flow or loop range populates aligned node, key, and type cache entries; only the required type entry is selected. |
+| checker.ts:29396:71 | `flowLoopTypes[i]` | U-parallel | assert | The live shared-flow or loop range populates aligned node, key, and type cache entries; only the required type entry is selected. |
+| checker.ts:29834:31 | `clauseTypes[i]` | U-loop | assert | The bounded traversal reads populated parser nodes or compiler-built type/property entries; omitted syntax remains a defined node. |
+| checker.ts:29925:32 | `switchStatement.caseBlock.clauses[i]` | U-loop | assert | The bounded traversal reads populated parser nodes or compiler-built type/property entries; omitted syntax remains a defined node. |
+| checker.ts:29936:36 | `switchStatement.caseBlock.clauses[i]` | U-loop | assert | The bounded traversal reads populated parser nodes or compiler-built type/property entries; omitted syntax remains a defined node. |
+| checker.ts:30127:38 | `callExpression.arguments[0]` | U-endpoint | assert | Positive, singleton, or bounded nonempty-list guards establish the populated first or last parser node, signature, type, property, or diagnostic. |
+| checker.ts:30749:155 | `symbol.declarations[0]` | U-endpoint | assert | An existing declaration list on a resolved declared symbol is populated by binding; synthetic undefined/globalThis symbols exit through earlier disjuncts. |
+| checker.ts:30999:97 | `contextualSignature.parameters[0]` | U-endpoint | assert | Positive, singleton, or bounded nonempty-list guards establish the populated first or last parser node, signature, type, property, or diagnostic. |
+| checker.ts:31953:55 | `args[indexOfParameter]` | U-position | assert | The parameter membership, rest-parameter predicate, or fixed tuple bound identifies a populated required argument/parameter/type position. |
+| checker.ts:32182:50 | `signature.parameters[restIndex]` | U-position | assert | The parameter membership, rest-parameter predicate, or fixed tuple bound identifies a populated required argument/parameter/type position. |
+| checker.ts:32517:33 | `elements[i]` | U-loop | assert | The bounded traversal reads populated parser nodes or compiler-built type/property entries; omitted syntax remains a defined node. |
+| checker.ts:32531:46 | `getTypeArguments(t)[index]` | U-position | assert | The parameter membership, rest-parameter predicate, or fixed tuple bound identifies a populated required argument/parameter/type position. |
+| checker.ts:32531:77 | `t.target.elementFlags[index]` | U-position | assert | The parameter membership, rest-parameter predicate, or fixed tuple bound identifies a populated required argument/parameter/type position. |
+| checker.ts:32925:9 | `activeTypeMappersCaches[activeTypeMappersCount]` | U-position | assert | pushActiveMapper creates each live mapper cache before incrementing the count; pop and clear traverse only those populated live slots. |
+| checker.ts:32939:13 | `activeTypeMappersCaches[i]` | U-position | assert | pushActiveMapper creates each live mapper cache before incrementing the count; pop and clear traverse only those populated live slots. |
+| checker.ts:33201:27 | `target.parameters[targetParameterCount]` | U-loop | assert | The bounded traversal reads populated parser nodes or compiler-built type/property entries; omitted syntax remains a defined node. |
+| checker.ts:33206:64 | `target.parameters[0]` | U-endpoint | assert | Positive, singleton, or bounded nonempty-list guards establish the populated first or last parser node, signature, type, property, or diagnostic. |
+| checker.ts:33246:54 | `signatureList[0]` | U-endpoint | assert | Positive, singleton, or bounded nonempty-list guards establish the populated first or last parser node, signature, type, property, or diagnostic. |
+| checker.ts:33258:49 | `signatureList[0]` | U-endpoint | assert | Positive, singleton, or bounded nonempty-list guards establish the populated first or last parser node, signature, type, property, or diagnostic. |
+| checker.ts:33258:89 | `signatureList[0]` | U-endpoint | assert | Positive, singleton, or bounded nonempty-list guards establish the populated first or last parser node, signature, type, property, or diagnostic. |
+| checker.ts:33342:23 | `elements[i]` | U-loop | assert | The bounded traversal reads populated parser nodes or compiler-built type/property entries; omitted syntax remains a defined node. |
+| checker.ts:33401:62 | `elementFlags[i]` | U-parallel | assert | Array or tuple construction aligns populated flags with element types; generic argument filling and count checks align populated parameters and arguments. |
+| checker.ts:33499:26 | `properties[i]` | U-loop | assert | The bounded traversal reads populated parser nodes or compiler-built type/property entries; omitted syntax remains a defined node. |
+| checker.ts:33505:48 | `properties[i]` | U-loop | assert | The bounded traversal reads populated parser nodes or compiler-built type/property entries; omitted syntax remains a defined node. |
+| checker.ts:33506:46 | `properties[i]` | U-loop | assert | The bounded traversal reads populated parser nodes or compiler-built type/property entries; omitted syntax remains a defined node. |
+| checker.ts:33507:53 | `properties[i]` | U-loop | assert | The bounded traversal reads populated parser nodes or compiler-built type/property entries; omitted syntax remains a defined node. |
+| checker.ts:34136:24 | `propertiesOfJsxElementAttribPropInterface[0]` | U-endpoint | assert | Positive, singleton, or bounded nonempty-list guards establish the populated first or last parser node, signature, type, property, or diagnostic. |
+| checker.ts:35142:57 | `baseTypes[0]` | U-endpoint | assert | Positive, singleton, or bounded nonempty-list guards establish the populated first or last parser node, signature, type, property, or diagnostic. |
+| checker.ts:35906:25 | `args[i]` | U-loop | assert | The bounded traversal reads populated parser nodes or compiler-built type/property entries; omitted syntax remains a defined node. |
+| checker.ts:35953:25 | `args[i]` | U-loop | assert | The bounded traversal reads populated parser nodes or compiler-built type/property entries; omitted syntax remains a defined node. |
+| checker.ts:35991:61 | `typeParameters[i]` | U-parallel | assert | Array or tuple construction aligns populated flags with element types; generic argument filling and count checks align populated parameters and arguments. |
+| checker.ts:35998:38 | `typeArgumentTypes[i]` | U-parallel | assert | Array or tuple construction aligns populated flags with element types; generic argument filling and count checks align populated parameters and arguments. |
+| checker.ts:36185:25 | `args[i]` | U-loop | assert | The bounded traversal reads populated parser nodes or compiler-built type/property entries; omitted syntax remains a defined node. |
+| checker.ts:36206:60 | `args[argCount]` | U-position | assert | The positive rest-argument count or successful spread-index search selects populated parser argument positions. |
+| checker.ts:36207:81 | `args[argCount]` | U-position | assert | The positive rest-argument count or successful spread-index search selects populated parser argument positions. |
+| checker.ts:36207:101 | `args[args.length - 1]` | U-position | assert | The positive rest-argument count or successful spread-index search selects populated parser argument positions. |
+| checker.ts:36224:36 | `errorOutputContainer.errors[0]` | U-endpoint | assert | Positive, singleton, or bounded nonempty-list guards establish the populated first or last parser node, signature, type, property, or diagnostic. |
+| checker.ts:36291:29 | `args[i]` | U-loop | assert | The bounded traversal reads populated parser nodes or compiler-built type/property entries; omitted syntax remains a defined node. |
+| checker.ts:36296:39 | `spreadType.target.elementFlags[i]` | U-parallel | assert | Array or tuple construction aligns populated flags with element types; generic argument filling and count checks align populated parameters and arguments. |
+| checker.ts:36413:44 | `args[spreadIndex]` | U-position | assert | The positive rest-argument count or successful spread-index search selects populated parser argument positions. |
+| checker.ts:36501:25 | `signatures[0]` | U-endpoint | assert | Positive, singleton, or bounded nonempty-list guards establish the populated first or last parser node, signature, type, property, or diagnostic. |
+| checker.ts:36611:73 | `candidates[0]` | U-endpoint | assert | Positive, singleton, or bounded nonempty-list guards establish the populated first or last parser node, signature, type, property, or diagnostic. |
+| checker.ts:36681:34 | `candidatesForArgumentError[candidatesForArgumentError.length - 1]` | U-endpoint | assert | Positive, singleton, or bounded nonempty-list guards establish the populated first or last parser node, signature, type, property, or diagnostic. |
+
+| Remaining reviewed site | Code | Reason |
+| --- | --- | --- |
+| checker.ts:25972:13 | TS2322 | Not an indexed read: arrayFrom(names.values()) widens Map iterator payloads to Symbol | undefined. |
+| checker.ts:25974:9 | TS2322 | Not an indexed read: resolvedProperties is an optional cached property; the preceding Map iterator assignment does not establish a required array under current loader typing. |
+| checker.ts:35291:79 | TS2345 | Not an indexed read: candidates comes from arrayFrom(symbols.values()), whose iterator payload union includes undefined. |
