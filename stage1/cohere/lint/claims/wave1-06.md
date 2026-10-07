@@ -62,3 +62,9 @@ covered 320 refs. These are the first syntax inventory rules
 without a claim or main lint-source reference. Inventory order is retained;
 needs_type_information and binding_only entries are excluded. This update
 is pushed before implementation. Earlier reservations remain.
+
+## Parking under the shared harness exception
+
+Pushed implementation and prior oracle evidence: ae71cb01f4089a42b5260fbe82363b3dd6c6c47b; detailed parity and mutants are in rules/no-unsafe-function-type/FOLLOWUP.md. Current origin/main is f8013f0baac41ddc340d76f83bddde38536a8f07. Rebase cannot apply the registration foundation 291754439 because stage1/cohere/lint/README.md, lint.ts, lint_test.go and testdata/oracle.go conflict. These are unowned shared files being unified on #zmh9v36; no resolution was authored here. Earlier attempts were aborted cleanly. This is a recorded parking blocker, not a claim that this branch has successfully rebased or passed an oracle on current main.
+
+Rebase and rerun the owned comparisons when the unified harness SHA is supplied, before further work. Numeric node listeners and handed-node adaptation remain pending that contract; existing descriptors declare kind names but the existing shared context exposes string kinds and index-based node lookup. No shared finding, context, main, registry generator, oracle or comparison files were edited to work around this.
