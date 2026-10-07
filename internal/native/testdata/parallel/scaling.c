@@ -50,8 +50,9 @@ int main(int argc, char **argv) {
 		for (size_t i = 0; i < lengths[k]; i += k == 3 ? 1 : 2) {
 			memcpy((char *)text->bytes + i, k == 3 ? "a" : "é", k == 3 ? 1 : 2);
 		}
+		size_t known_units = text->units;
 		adamic_share(text);
-		if (text->index != NULL || text->units != 0) { abort(); }
+		if (text->index != NULL || text->units != known_units) { abort(); }
 		for (size_t i = 0; i < 256; i++) { adamic_array_push(items, (adamic_value){.reference = adamic_retain(text)}); }
 		adamic_release(text);
 	}
