@@ -1,0 +1,13 @@
+=== RUN   TestFixtureRates
+    port_test.go:401: fixture rate structure/tailwind-no-physical-direction side 0 findings=33 elapsed=0.008678s findings/s=3802.580
+    port_test.go:401: fixture rate structure/tailwind-no-physical-direction side 1 findings=33 elapsed=0.110481s findings/s=298.695
+    port_test.go:401: fixture rate structure/tailwind-no-physical-direction side 2 findings=33 elapsed=0.073739s findings/s=447.526
+    port_test.go:401: fixture rate @eslint-community/eslint-comments/require-description side 0 findings=55 elapsed=0.008944s findings/s=6149.189
+    port_test.go:401: fixture rate @eslint-community/eslint-comments/require-description side 1 findings=55 elapsed=0.143971s findings/s=382.022
+    port_test.go:401: fixture rate @eslint-community/eslint-comments/require-description side 2 findings=55 elapsed=0.092145s findings/s=596.884
+    port_test.go:401: fixture rate @next/next/google-font-display side 0 findings=7 elapsed=0.008070s findings/s=867.454
+    port_test.go:401: fixture rate @next/next/google-font-display side 1 findings=7 elapsed=0.101693s findings/s=68.835
+    port_test.go:401: fixture rate @next/next/google-font-display side 2 findings=7 elapsed=0.039449s findings/s=177.444
+--- PASS: TestFixtureRates (15.82s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/rules/structure-tailwind-no-physical-direction	15.830s

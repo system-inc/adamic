@@ -1,0 +1,35 @@
+=== RUN   TestRuleContracts
+    port_test.go:151: Go AST contract side 0 identical: 58087 bytes
+    port_test.go:151: Go AST contract side 1 identical: 58087 bytes
+    port_test.go:151: Go AST contract side 2 identical: 58087 bytes
+    port_test.go:179: independently parsed source side 0 identical: 52052 bytes
+    port_test.go:179: independently parsed source side 1 identical: 52052 bytes
+    port_test.go:179: independently parsed source side 2 identical: 52052 bytes
+    port_test.go:181: fixture contracts: total=179 independently parsed=161 JSX unsupported=18
+=== RUN   TestRuleContracts/structure-tailwind-no-physical-direction
+    port_test.go:214: compiling/run-successful mutant caught only by output comparison on side 0
+    port_test.go:214: compiling/run-successful mutant caught only by output comparison on side 1
+    port_test.go:214: compiling/run-successful mutant caught only by output comparison on side 2
+=== RUN   TestRuleContracts/eslint-comments-require-description
+    port_test.go:214: compiling/run-successful mutant caught only by output comparison on side 0
+    port_test.go:214: compiling/run-successful mutant caught only by output comparison on side 1
+    port_test.go:214: compiling/run-successful mutant caught only by output comparison on side 2
+=== RUN   TestRuleContracts/next-google-font-display
+    port_test.go:214: compiling/run-successful mutant caught only by output comparison on side 0
+    port_test.go:214: compiling/run-successful mutant caught only by output comparison on side 1
+    port_test.go:214: compiling/run-successful mutant caught only by output comparison on side 2
+--- PASS: TestRuleContracts (57.70s)
+    --- PASS: TestRuleContracts/structure-tailwind-no-physical-direction (13.40s)
+    --- PASS: TestRuleContracts/eslint-comments-require-description (14.12s)
+    --- PASS: TestRuleContracts/next-google-font-display (13.18s)
+=== RUN   TestSourceCorpora
+    port_test.go:253: owned changed-source corpus only
+    port_test.go:308: corpus projected rule structure/tailwind-no-physical-direction: 8 files all three sides identical 29673 bytes
+    port_test.go:308: corpus projected rule @eslint-community/eslint-comments/require-description: 8 files all three sides identical 27479 bytes
+    port_test.go:308: corpus projected rule @next/next/google-font-display: 8 files all three sides identical 27295 bytes
+    port_test.go:330: independent source probe side 0 passed; full independent corpus not certified
+    port_test.go:330: independent source probe side 1 passed; full independent corpus not certified
+    port_test.go:330: independent source probe side 2 passed; full independent corpus not certified
+--- PASS: TestSourceCorpora (20.30s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/rules/structure-tailwind-no-physical-direction	78.006s

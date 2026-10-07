@@ -1,0 +1,28 @@
+--- FAIL: TestDeterministicRegeneration (0.00s)
+    registry_test.go:44: open /tmp/adamic-gate/TestDeterministicRegeneration3321162573/001/rules/eslint-comments-require-description/rule.ts: no such file or directory
+--- FAIL: TestDuplicateOracleAdapter (0.00s)
+    registry_test.go:145: duplicate adapter mutant survived: open /tmp/adamic-gate/TestDuplicateOracleAdapter126699921/001/rules/eslint-comments-require-description/rule.ts: no such file or directory
+--- FAIL: TestDescriptorRejections (0.00s)
+    --- FAIL: TestDescriptorRejections/duplicate_public_name (0.00s)
+        registry_test.go:117: mutant survived or wrong failure: open /tmp/adamic-gate/TestDescriptorRejectionsduplicate_public_name3870113255/001/rules/eslint-comments-require-description/rule.ts: no such file or directory
+    --- FAIL: TestDescriptorRejections/no_listener (0.00s)
+        registry_test.go:117: mutant survived or wrong failure: open /tmp/adamic-gate/TestDescriptorRejectionsno_listener1473835799/001/rules/eslint-comments-require-description/rule.ts: no such file or directory
+    --- FAIL: TestDescriptorRejections/missing_finish_hook (0.00s)
+        registry_test.go:117: mutant survived or wrong failure: open /tmp/adamic-gate/TestDescriptorRejectionsmissing_finish_hook158679274/001/rules/eslint-comments-require-description/rule.ts: no such file or directory
+    --- FAIL: TestDescriptorRejections/bad_kind (0.00s)
+        registry_test.go:117: mutant survived or wrong failure: open /tmp/adamic-gate/TestDescriptorRejectionsbad_kind1048397721/001/rules/eslint-comments-require-description/rule.ts: no such file or directory
+    --- FAIL: TestDescriptorRejections/unknown_field (0.00s)
+        registry_test.go:117: mutant survived or wrong failure: open /tmp/adamic-gate/TestDescriptorRejectionsunknown_field911915311/001/rules/eslint-comments-require-description/rule.ts: no such file or directory
+    --- FAIL: TestDescriptorRejections/missing_named_export (0.00s)
+        registry_test.go:117: mutant survived or wrong failure: open /tmp/adamic-gate/TestDescriptorRejectionsmissing_named_export2072036421/001/rules/eslint-comments-require-description/rule.ts: no such file or directory
+    --- FAIL: TestDescriptorRejections/missing_oracle_export (0.01s)
+        registry_test.go:117: mutant survived or wrong failure: open /tmp/adamic-gate/TestDescriptorRejectionsmissing_oracle_export1780027337/001/rules/eslint-comments-require-description/rule.ts: no such file or directory
+    --- FAIL: TestDescriptorRejections/missing_factory (0.00s)
+        registry_test.go:117: mutant survived or wrong failure: open /tmp/adamic-gate/TestDescriptorRejectionsmissing_factory1394068247/001/rules/eslint-comments-require-description/rule.ts: no such file or directory
+    --- FAIL: TestDescriptorRejections/unsafe_public_name (0.00s)
+        registry_test.go:117: mutant survived or wrong failure: open /tmp/adamic-gate/TestDescriptorRejectionsunsafe_public_name1306587327/001/rules/eslint-comments-require-description/rule.ts: no such file or directory
+    --- FAIL: TestDescriptorRejections/missing_class (0.00s)
+        registry_test.go:117: mutant survived or wrong failure: open /tmp/adamic-gate/TestDescriptorRejectionsmissing_class677089874/001/rules/eslint-comments-require-description/rule.ts: no such file or directory
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/registry	0.014s
+FAIL
