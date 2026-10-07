@@ -221,8 +221,14 @@ if printf '%s\n' "$changed" | grep -q '^stage3/' && [ -x stage3/lane/run.sh ]; t
 	stage3/lane/run.sh >"$logs/stage3-lane.log" 2>&1 || { echo "stage3/lane/run.sh failed: $logs/stage3-lane.log"; status=1; }
 	echo "ran: stage3/lane/run.sh on the merged tree"
 elif printf '%s\n' "$changed" | grep -q '^stage3/'; then
-	expectedPassing=${ADAMIC_STAGE3_EXPECTED_PASSING:-106367}
-	sanctioned=${ADAMIC_STAGE3_SANCTIONED_DIFFS:-api/typescript.d.ts}
+	# Measured by typescript with every adaptation composed: the one sanctioned failure is the API
+	# snapshot test, and upstream's total differs by platform (Linux 106,366 passing, macOS arm64
+	# with Node 24.19.0 106,369).
+	case "$(uname -s)" in
+	Darwin) defaultPassing=106369 ;;
+	*) defaultPassing=106366 ;;
+	esac
+	expectedPassing=${ADAMIC_STAGE3_EXPECTED_PASSING:-$defaultPassing}
 	if ! bash stage3/apply.sh "$logs/stage3-tree" >"$logs/stage3-apply.log" 2>&1; then
 		echo "stage3/apply.sh failed on the merged tree: $logs/stage3-apply.log"
 		status=1
@@ -231,14 +237,12 @@ elif printf '%s\n' "$changed" | grep -q '^stage3/'; then
 		python3 -c 'import json,sys
 report = json.load(open(sys.argv[1]))
 expected = int(sys.argv[2])
-sanctioned = [name for name in sys.argv[3].split(",") if name]
-passing = report.get("counts", {}).get("passing", 0)
-differences = report.get("baseline_diffs") or []
-unsanctioned = [d for d in differences if not any(name in str(d) for name in sanctioned)]
-print("stage3 upstream suite: %d passing (expected %d), %d baseline differences, %d unsanctioned" % (passing, expected, len(differences), len(unsanctioned)))
-for d in unsanctioned:
-    print("  unsanctioned baseline difference: %s" % d)
-sys.exit(0 if passing == expected and not unsanctioned else 1)' "$logs/stage3-oracle/report.json" "$expectedPassing" "$sanctioned" || status=1
+counts = report.get("counts", {})
+differences = [str(d) for d in (report.get("baseline_diffs") or [])]
+print("stage3 upstream suite: %d passing (expected %d), %d failing (expected 1, the API snapshot test), %d pending, baseline differences %s" % (counts.get("passing", 0), expected, counts.get("failing", 0), counts.get("pending", 0), differences))
+ok = counts.get("passing") == expected and counts.get("failing") == 1 and counts.get("pending", 0) == 0 and differences == ["api/typescript.d.ts"]
+sys.exit(0 if ok else 1)' "$logs/stage3-oracle/report.json" "$expectedPassing" || status=1
+		echo "  (the API snapshot diff's lines aren't compared to the sanctioned set here; stage3/lane/run.sh does that)"
 	fi
 	echo "ran: stage3/apply.sh and stage3/oracle/run.sh on the merged tree"
 fi
