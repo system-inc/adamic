@@ -194,5 +194,15 @@
     "before": "any[]",
     "after": "Parameters<FileWatcherCallback> | Parameters<DirectoryWatcherCallback>",
     "proof": "Only the selected host watcher invokes this callback: file events use the FileWatcherCallback tuple, directory events use its one-string tuple. Forwarding retains the exact argument list, including optional modifiedTime."
+  },
+  {
+    "kind": "internal-property",
+    "file": "tracing.ts",
+    "namespace": "tracingEnabled",
+    "interface": "TraceRecord",
+    "name": "typesPath",
+    "before": "string",
+    "after": "string | undefined",
+    "proof": "stopTracing deliberately clears typesPath to undefined when the server has no type catalog, because the precomputed types file will not exist. This private optional TraceRecord field owns that absence; the annotation is erased and no read, write or object shape changes."
   }
 ]

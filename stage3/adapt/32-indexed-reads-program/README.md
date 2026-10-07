@@ -787,3 +787,18 @@ closure-sites.json. Default oracle: 106,367 passing, zero failing, empty baselin
 diff; all 26 emitted outputs and CRLF counts unchanged, second run zero edits.
 All eight type contract removal guards, the key-flow mutant and the ! to ?? 0
 emission/occurrence mutant fail as required.
+
+## Whole-file closure: tracing.ts remainder
+
+The private typesPath undefined contract removes one finding, 6 to 5; the fair
+whole-tree census is 370 to 369, still 40 whole files at zero. This file is not
+counted as zero. [The tracing proof](closure-tracing/README.md) lists every
+remaining finding and its reason, as does closure-declined.json. Default oracle:
+106,367 passing, zero failing, empty baseline diff. All 26 emitted outputs and
+CRLF counts remain unchanged; second run zero edits; declaration/census and
+! to ?? 0 mutants fail. The requested six-file pass closes builderState.ts,
+executeCommandLine.ts, moduleSpecifiers.ts and watchUtilities.ts completely;
+watch.ts retains two unsanctioned public-host declaration findings. See the
+[remaining-file roadmap](closure-frontier.md) and closure-frontier.json for every
+remaining owned diagnostic on the current all-code meter. The final emitted
+proof compares directly with untouched input, independent of the adapter.

@@ -5,6 +5,25 @@ function plan(ts, file, text, check) {
     if (sf.parseDiagnostics.length) throw new Error(`closure parse failure: ${file}`);
     const edits = [];
     for (const site of sites.filter(s => s.file === file)) {
+        if (site.kind === "internal-property") {
+            const found = [];
+            function visit(n) {
+                if (ts.isPropertySignature(n) && n.name.getText(sf) === site.name && ts.isInterfaceDeclaration(n.parent) && n.parent.name.text === site.interface) {
+                    const block = n.parent.parent;
+                    if (ts.isModuleBlock(block) && ts.isModuleDeclaration(block.parent) && block.parent.name.getText(sf) === site.namespace && !n.parent.modifiers?.some(m => m.kind === ts.SyntaxKind.ExportKeyword)) found.push(n);
+                }
+                ts.forEachChild(n, visit);
+            }
+            visit(sf);
+            if (found.length !== 1 || !found[0].questionToken || !found[0].type) throw new Error("private optional property owner drift");
+            const n = found[0].type;
+            if (n.getText(sf) === site.before) {
+                if (check) throw new Error("private optional property undefined missing");
+                edits.push({at:n.getStart(sf), end:n.end, text:site.after});
+            }
+            else if (n.getText(sf) !== site.after) throw new Error("private optional property type drift");
+            continue;
+        }
         if (["internal-method", "call-receiver", "rest-type"].includes(site.kind)) {
             const found = [];
             function visit(n) {
