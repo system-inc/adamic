@@ -760,3 +760,26 @@ type-aware suites were not completed. A final full green gate is not claimed.
 The freshness seam, exact non-suspending finally completion routing and the
 unavailable shared-SSA reconciliation remain blockers to reporting the entire
 October 9 bar complete.
+
+### Granted freshness seam and final completion scope
+
+The compiler granted internal/fresh/fresh.go on October 7. The repository now
+recognizes Await and PromiseValue as conservative calls, turns off call freshness
+summaries whenever Program.HasAsync is true, and escapes every frame-held local
+at Suspend. Ownership of those references is established; confinement across
+queued work is not. The new async_fresh_holder.a fixture creates both a value and
+a holder before an await and stores the value into the holder after resumption.
+Its ordinary types are acyclic, so the program remains accepted while freshness
+must decline the write proof. TestAsyncSuspensionEndsFreshConfinement checks that
+specific field write. A mutant skipping the Suspend escape accepts that proof
+and is killed by the test; the production implementation was restored.
+
+Non-suspending finally is not a small emission hook. builder.route records
+possible exits, and the finally ends in Choose without an exact runtime selector.
+Returns routed through it also need a retained pending payload, rather than the
+block-local return operand used by the current resume emitter. Correct lowering
+must preserve normal, return, throw, break and continue completions through
+nested cleanup, with replacement by a cleanup return or throw. This requires a
+completion representation and its ownership proof. It remains explicit NotYet;
+await in catch or finally remains NotYet as well. Shared-SSA reconciliation is
+left pending the worker branch, as the compiler requested.
