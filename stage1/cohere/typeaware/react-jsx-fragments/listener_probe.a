@@ -1,0 +1,7 @@
+import { syntaxKinds as fragmentsKinds } from './listeners.a';
+import { syntaxKinds as constructedKinds } from '../react-jsx-no-constructed-context-values/listeners.a';
+import { syntaxKinds as undefKinds } from '../react-jsx-no-undef/listeners.a';
+
+console.log(`react/jsx-fragments ${fragmentsKinds.join(',')}`);
+console.log(`react/jsx-no-constructed-context-values ${constructedKinds.join(',')}`);
+console.log(`react/jsx-no-undef ${undefKinds.join(',')}`);

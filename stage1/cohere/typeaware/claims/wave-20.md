@@ -103,3 +103,9 @@ The first three eligible rules, each with combined volume zero, are:
 These rules use AST and checker facts, not the parked native React HIR/SSA
 pipeline. Claim update is pushed before any implementation. Shared JSX and
 numeric node handoff availability will constrain their source entry points.
+
+Fifth-batch status: BLOCKED, not parked and not ported. Shared native JSX
+productions and numeric handed-node interfaces are not integrated on current
+main or area/stage1-lint. Go controls and numeric declaration checks pass;
+valid JSX panics before native dispatch. See each new rule's BLOCKED.md.
+The three metadata declarations are not a source-analysis completion claim.

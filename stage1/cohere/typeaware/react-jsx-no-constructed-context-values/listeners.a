@@ -1,0 +1,2 @@
+// Registration metadata only; the source analysis is blocked on shared JSX nodes.
+export const syntaxKinds: readonly number[] = [286, 287];
