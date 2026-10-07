@@ -1,0 +1,22 @@
+let text: string | null = `present ${1}`;
+function clearText(): void { text = null; }
+if (text !== null) {
+    clearText();
+    console.log(`${text}`);
+    console.log('local: ' + text);
+}
+interface Holder { text: string | null; }
+const holder: Holder = { text: `held ${2}` };
+function clearHolder(): void { holder.text = null; }
+if (holder.text !== null) {
+    clearHolder();
+    console.log(`${holder.text}`);
+    console.log('field: ' + holder.text);
+}
+let optional: string | undefined = `optional ${3}`;
+function clearOptional(): void { optional = undefined; }
+if (optional !== undefined) {
+    clearOptional();
+    console.log(`${optional}`);
+    console.log('optional: ' + optional);
+}

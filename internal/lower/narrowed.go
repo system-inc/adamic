@@ -120,6 +120,10 @@ func (l *lowering) acceptsUndefined(node *ast.Node) bool {
 			return true
 		case ast.KindBinaryExpression:
 			binary := parent.AsBinaryExpression()
+			if binary.OperatorToken.Kind == ast.KindPlusToken && l.checker.GetTypeAtLocation(parent).Flags()&checker.TypeFlagsStringLike != 0 {
+				// String concatenation observes an empty case as text, just as a template does.
+				return true
+			}
 			if binary.OperatorToken.Kind == ast.KindQuestionQuestionToken && binary.Left == node {
 				return true
 			}

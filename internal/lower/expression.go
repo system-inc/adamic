@@ -747,8 +747,21 @@ func (l *lowering) spelled(node *ast.Node, value ir.Expression) ir.Expression {
 		constant := ir.StringConstant{Index: l.constant(text)}
 		return l.nullableObservation("spelling", value, constant, func(ir.Expression) ir.Expression { return constant })
 	}
-	if value.Type() == ir.String && l.includesNull(l.checker.GetTypeAtLocation(node)) {
-		return ir.Coalesce{Value: value, Fallback: ir.StringConstant{Index: l.constant("null")}, Of: ir.String}
+	if value.Type() == ir.String {
+		nullable := l.includesNull(l.checker.GetTypeAtLocation(node))
+		at := ast.SkipParentheses(node)
+		if l.narrowedAway(at) {
+			if at.Kind == ast.KindPropertyAccessExpression {
+				at = at.Name()
+			}
+			if symbol := l.checker.GetSymbolAtLocation(at); symbol != nil {
+				// A call can restore null after the checker narrowed it to string.
+				nullable = l.includesNull(l.checker.GetTypeOfSymbol(symbol))
+			}
+		}
+		if nullable {
+			return ir.Coalesce{Value: value, Fallback: ir.StringConstant{Index: l.constant("null")}, Of: ir.String}
+		}
 	}
 	if value.Type() != ir.String || !(l.includesUndefined(l.checker.GetTypeAtLocation(node)) || l.narrowedAway(ast.SkipParentheses(node))) {
 		return value
