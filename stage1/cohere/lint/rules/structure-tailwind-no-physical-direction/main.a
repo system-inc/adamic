@@ -1,7 +1,7 @@
 // Owned comparison driver. --source uses Adamic's parser; default uses Go AST geometry.
 import { panic, programArguments, readTextFile, utf8Length } from 'adamic';
 import { Parser } from '../../../../typescript/parser/parser.ts';
-import { ParseNode, written } from '../../../../typescript/parser/nodes.ts';
+import { ParseNode } from '../../../../typescript/parser/nodes.ts';
 import { Scanner } from '../../../../typescript/scanner/scanner.ts';
 import { OptionsJson } from '../../helpers/options_json.ts';
 import { Settings } from '../../settings.ts';
@@ -9,6 +9,14 @@ import { RuleContext } from '../../context.ts';
 import { Rule as Tailwind } from './rule.a';
 import { Rule as Description } from '../eslint-comments-require-description/rule.a';
 import { Rule as Font } from '../next-google-font-display/rule.a';
+function written(text: string): string {
+    const pieces: string[] = [];
+    for(let index = 0; index < text.length; index++) {
+        const code = text.charCodeAt(index);
+        pieces.push(code >= 32 && code <= 126 && code !== 92 ? text.slice(index, index + 1) : `\\u${code.toString(16).padStart(4, '0')}`);
+    }
+    return pieces.join('');
+}
 const args = programArguments();
 const file = readTextFile(args[0] ?? panic('corpus path'));
 if(file.kind === 'Error') { panic(file.message); }
@@ -17,7 +25,9 @@ const root = corpus.parse();
 let count = 0;
 for(const row of corpus.node(root).children) {
     const name = corpus.node(corpus.field(row, 'file')).text;
-    const source = corpus.node(corpus.field(row, 'source')).text;
+    const chunks: string[] = [];
+    for(const chunk of corpus.node(corpus.field(row, 'sourceChunks')).children) { chunks.push(corpus.node(chunk).text); }
+    const source = chunks.length > 0 ? chunks.join('') : corpus.node(corpus.field(row, 'source')).text;
     const rule = corpus.node(corpus.field(row, 'rule')).text;
     const parser = new Parser(source, name);
     let tree: number;

@@ -240,6 +240,7 @@ func TestRuleContracts(t *testing.T) {
 	}
 }
 
+// Not parallel: bounded batches keep sanitizer and JSON memory below the worker limit.
 func TestSourceCorpora(t *testing.T) {
 	var rows []map[string]any
 	rules := []string{"structure/tailwind-no-physical-direction", "@eslint-community/eslint-comments/require-description", "@next/next/google-font-display"}
@@ -272,14 +273,15 @@ func TestSourceCorpora(t *testing.T) {
 	binary, emitted := compile(t, entry)
 	runner := filepath.Join(root(t), "oracle/node.mjs")
 	for _, rule := range rules {
+		if selection := os.Getenv("ADAMIC_WAVE1_RULES"); selection != "" && !strings.Contains(selection, rule) {
+			continue
+		}
 		var subset []map[string]any
 		for _, row := range rows {
 			if row["rule"] == rule {
 				subset = append(subset, row)
 			}
 		}
-		rates := []float64{0, 0, 0}
-		counts := []int{0, 0, 0}
 		totalBytes := 0
 		for start := 0; start < len(subset); start += 10 {
 			end := start + 10
@@ -294,33 +296,8 @@ func TestSourceCorpora(t *testing.T) {
 				equal(t, got, want)
 			}
 			totalBytes += len(want)
-			for side, cmd := range []*exec.Cmd{exec.Command(goOracle, "--count", raw), exec.Command("node", "--disable-warning=ExperimentalWarning", runner, entry, adapted, "--count"), exec.Command(binary, adapted, "--count")} {
-				log, err := os.CreateTemp(t.TempDir(), "rate-")
-				if err != nil {
-					t.Fatal(err)
-				}
-				cmd.Stdout = log
-				var stderr bytes.Buffer
-				cmd.Stderr = &stderr
-				begin := time.Now()
-				err = cmd.Run()
-				rates[side] += time.Since(begin).Seconds()
-				log.Close()
-				if err != nil || stderr.Len() != 0 {
-					t.Fatalf("rate: %v %s", err, stderr.String())
-				}
-				output, _ := os.ReadFile(log.Name())
-				count, err := strconv.Atoi(strings.TrimSpace(string(output)))
-				if err != nil {
-					t.Fatal(err)
-				}
-				counts[side] += count
-			}
 		}
 		t.Logf("corpus projected rule %s: %d files all three sides identical %d bytes", rule, len(subset), totalBytes)
-		for side, seconds := range rates {
-			t.Logf("rate %s side %d findings=%d elapsed=%.6fs findings/s=%.3f", rule, side, counts[side], seconds, float64(counts[side])/seconds)
-		}
 	}
 	// Probe independent parsing separately: source refusal must never be hidden by projection.
 	encoded, _ := json.Marshal(rows[:3])
@@ -343,6 +320,61 @@ func TestSourceCorpora(t *testing.T) {
 			got, _ := os.ReadFile(output.Name())
 			equal(t, got, want)
 			t.Logf("independent source probe side %d passed; full independent corpus not certified", side)
+		}
+	}
+}
+
+// Not parallel: sanitized native builds share the worker CPU and memory budget.
+func TestFixtureRates(t *testing.T) {
+	goOracle := oracle(t)
+	entry, _ := filepath.Abs("main.a")
+	binary, _ := compile(t, entry)
+	runner := filepath.Join(root(t), "oracle/node.mjs")
+	data, err := os.ReadFile("testdata/cases.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	var rows []map[string]any
+	if err = json.Unmarshal(data, &rows); err != nil {
+		t.Fatal(err)
+	}
+	for _, rule := range []string{"structure/tailwind-no-physical-direction", "@eslint-community/eslint-comments/require-description", "@next/next/google-font-display"} {
+		var subset []map[string]any
+		for _, row := range rows {
+			if row["rule"] == rule {
+				subset = append(subset, row)
+			}
+		}
+		encoded, _ := json.Marshal(subset)
+		raw := file(t, "cases.json", encoded)
+		adapted := file(t, "ast.json", command(t, "", goOracle, "--ast", raw))
+		want := ""
+		for side, cmd := range []*exec.Cmd{exec.Command(goOracle, "--count", raw), exec.Command("node", "--disable-warning=ExperimentalWarning", runner, entry, adapted, "--count"), exec.Command(binary, adapted, "--count")} {
+			log, err := os.CreateTemp(t.TempDir(), "rate-")
+			if err != nil {
+				t.Fatal(err)
+			}
+			cmd.Stdout = log
+			var stderr bytes.Buffer
+			cmd.Stderr = &stderr
+			start := time.Now()
+			err = cmd.Run()
+			seconds := time.Since(start).Seconds()
+			log.Close()
+			if err != nil || stderr.Len() != 0 {
+				t.Fatalf("rate: %v %s", err, stderr.String())
+			}
+			output, _ := os.ReadFile(log.Name())
+			if side == 0 {
+				want = string(output)
+			} else if string(output) != want {
+				t.Fatal("rate count mismatch")
+			}
+			count, err := strconv.Atoi(strings.TrimSpace(string(output)))
+			if err != nil {
+				t.Fatal(err)
+			}
+			t.Logf("fixture rate %s side %d findings=%d elapsed=%.6fs findings/s=%.3f", rule, side, count, seconds, float64(count)/seconds)
 		}
 	}
 }

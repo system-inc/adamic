@@ -54,7 +54,9 @@ func main() {
 	var projected []map[string]any
 	count := 0
 	for _, row := range rows {
-        if !strings.HasPrefix(row.File, "/") { row.File = "/repository/source/" + row.File }
+		if !strings.HasPrefix(row.File, "/") {
+			row.File = "/repository/source/" + row.File
+		}
 		kind := core.ScriptKindTS
 		if strings.HasSuffix(row.File, ".tsx") {
 			kind = core.ScriptKindTSX
@@ -91,7 +93,19 @@ func main() {
 			if options == "" {
 				options = "null"
 			}
-			projected = append(projected, map[string]any{"file": row.File, "source": row.Source, "rule": row.Rule, "options": options, "ast": nodes, "root": root, "goDiagnostics": len(file.Diagnostics())})
+			chunks := []string{}
+			for start := 0; start < len(row.Source); {
+				end := start + 4096
+				if end > len(row.Source) {
+					end = len(row.Source)
+				}
+				for end < len(row.Source) && !utf8.RuneStart(row.Source[end]) {
+					end++
+				}
+				chunks = append(chunks, row.Source[start:end])
+				start = end
+			}
+			projected = append(projected, map[string]any{"file": row.File, "source": "", "sourceChunks": chunks, "rule": row.Rule, "options": options, "ast": nodes, "root": root, "goDiagnostics": len(file.Diagnostics())})
 			continue
 		}
 		var subject rule.Rule
