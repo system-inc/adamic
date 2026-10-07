@@ -1,0 +1,6 @@
+=== RUN   TestLandingExistingCandidates
+    wave12_landing_test.go:95: capture unexpectedly small: 22 cases
+--- FAIL: TestLandingExistingCandidates (12.40s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	12.411s
+FAIL

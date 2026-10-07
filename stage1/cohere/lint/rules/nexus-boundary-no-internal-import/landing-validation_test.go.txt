@@ -1,0 +1,211 @@
+package lint
+
+import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"os"
+	"path/filepath"
+	"sort"
+	"strings"
+	"testing"
+)
+
+func landingInitialUpstream(t *testing.T) []string {
+	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	harness := filepath.Join(root, "internal/lint/testing/rule_testing.go")
+	data, err := os.ReadFile(harness)
+	if err != nil {
+		t.Fatal(err)
+	}
+	original := "return Result{Diagnostics: diagnostics, SourceFile: sourceFile, capture: captured}"
+	replacement := "result := Result{Diagnostics: diagnostics, SourceFile: sourceFile, capture: captured}\n RecordAssertedCase(t, result)\n return result"
+	if strings.Count(string(data), original) != 1 {
+		t.Fatal("capture overlay anchor changed")
+	}
+	directory := t.TempDir()
+	side := filepath.Join(directory, "rule_testing.go")
+	if err := os.WriteFile(side, []byte(strings.Replace(string(data), original, replacement, 1)), 0644); err != nil {
+		t.Fatal(err)
+	}
+	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{harness: side}})
+	overlayPath := filepath.Join(directory, "overlay.json")
+	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
+		t.Fatal(err)
+	}
+	capture := filepath.Join(directory, "capture")
+	t.Setenv("COHERE_DOCS_CAPTURE", capture)
+	selected := map[string]bool{"base/correctness-require-orm-column-declare": true, "nexus/consistency-no-boolean-outcome": true}
+	execute(t, root, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/base", "-run", "^TestOrmColumnRequiresDeclare$", "-count=1", "-timeout=10m")
+	execute(t, root, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/nexus", "-run", "^TestConsistencyNoBooleanOutcome$", "-count=1", "-timeout=10m")
+	files, err := filepath.Glob(filepath.Join(capture, "*.jsonl"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	type record struct {
+		Rule, File, Source, Outcome, FixedSource string
+		Options                                  json.RawMessage
+	}
+	unique := map[string]record{}
+	for _, path := range files {
+		data, err := os.ReadFile(path)
+		if err != nil {
+			t.Fatal(err)
+		}
+		for _, line := range bytes.Split(data, []byte("\n")) {
+			if len(line) == 0 {
+				continue
+			}
+			var row record
+			if err := json.Unmarshal(line, &row); err != nil {
+				t.Fatal(err)
+			}
+			if !selected[row.Rule] {
+				continue
+			}
+			key := fmt.Sprintf("%s\t%s\t%+v\t%s", row.Rule, row.File, row.Options, row.Source)
+			unique[key] = row
+		}
+	}
+	var keys []string
+	for key := range unique {
+		keys = append(keys, key)
+	}
+	sort.Strings(keys)
+	var rows []string
+	for i, key := range keys {
+		row := unique[key]
+		path := filepath.Join(directory, fmt.Sprintf("case-%03d", i), strings.TrimPrefix(row.File, "/"))
+		if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(path, []byte(row.Source), 0644); err != nil {
+			t.Fatal(err)
+		}
+		options := "null"
+		if len(row.Options) > 0 {
+			options = string(row.Options)
+		}
+		rows = append(rows, fmt.Sprintf("%s\t%s\t\t\tfalse\t%s", path, row.Rule, options))
+	}
+	if len(rows) != 22 {
+		t.Fatalf("expected the pinned 22 initial-rule cases, got %d", len(rows))
+	}
+	t.Logf("cohere cases: %d unique source/rule/options combinations", len(rows))
+	return rows
+}
+
+// Not parallel: captures, environment and copied registries are shared within this scratch checkout.
+func TestLandingExistingCandidates(t *testing.T) {
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	rows := landingInitialUpstream(t)
+	rows = append(rows, aliasUpstream(t)...)
+	rows = append(rows, completedUpstream(t)...)
+	rows = append(rows, nexusUpstream(t)...)
+	var slugs = []string{
+		"base-correctness-require-orm-column-declare", "nexus-consistency-no-boolean-outcome",
+		"next-no-document-import-in-page", "typescript-no-this-alias", "typescript-no-non-null-asserted-optional-chain", "typescript-no-unnecessary-type-constraint",
+		"nexus-boundary-no-internal-import", "nexus-boundary-no-nexus-outside-import", "nexus-boundary-no-project-import",
+	}
+	for _, slug := range slugs {
+		data, err := os.ReadFile(filepath.Join("rules", slug, "rule.json"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		var descriptor struct{ Name string }
+		if err := json.Unmarshal(data, &descriptor); err != nil {
+			t.Fatal(err)
+		}
+		for _, path := range ownedWitnesses(t, ".", slug) {
+			rows = append(rows, path+"\t"+descriptor.Name)
+		}
+	}
+	// Import path exemptions use logical filenames preserved by both parsers.
+	witnesses := t.TempDir()
+	for _, name := range []string{"components/Thing.ts", "pages/About.ts", "pages/_document.ts", "pages/_documentation.ts", "pages/_document/index.ts", "src/pages/user/_document.ts", "pagesapp/src/pages/_document.ts", "mypages/_document.ts", "pages/pages/_document.ts", "pages/_document/pages/X.ts"} {
+		path := filepath.Join(witnesses, name)
+		if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(path, []byte("import Document from 'next/document';\n"), 0644); err != nil {
+			t.Fatal(err)
+		}
+		rows = append(rows, path+"\t@next/next/no-document-import-in-page")
+	}
+	mutationRows := append([]string(nil), rows...)
+	var paths []string
+	for _, root := range []string{filepath.Join(os.Getenv("ADAMIC_TYPESCRIPT_SOURCE"), "src/compiler"), os.Getenv("ADAMIC_STAGE1_SOURCE")} {
+		if root == "" {
+			t.Fatal("missing source corpus")
+		}
+		err := filepath.WalkDir(root, func(path string, entry os.DirEntry, err error) error {
+			if err != nil {
+				return err
+			}
+			if !entry.IsDir() && (strings.HasSuffix(path, ".ts") || strings.HasSuffix(path, ".a")) && !strings.Contains(path, "/.generated/") && !strings.Contains(path, "/gaps/") {
+				paths = append(paths, path)
+			}
+			return nil
+		})
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
+	sort.Strings(paths)
+	for _, path := range paths {
+		for _, slug := range slugs {
+			data, err := os.ReadFile(filepath.Join("rules", slug, "rule.json"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			var descriptor struct{ Name string }
+			if err := json.Unmarshal(data, &descriptor); err != nil {
+				t.Fatal(err)
+			}
+			row := path + "\t" + descriptor.Name
+			if slug == "nexus-boundary-no-project-import" {
+				row += "\t\t\tfalse\t{\"libraryDirectory\":\"/libraries/nexus/\"}"
+			}
+			rows = append(rows, row)
+		}
+	}
+	t.Logf("%d compiler/stage1 source files across 9 registered candidates; %d total fixture, witness, path and corpus cases", len(paths), len(rows))
+	oracle := goOracle(t)
+	path := manifest(t, rows)
+	compare(t, oracle, buildPort(t, directory, true), directory, path)
+	mutationPath := manifest(t, mutationRows)
+	want := execute(t, "", oracle, "--manifest", mutationPath).output
+	for _, slug := range slugs {
+		t.Run(slug, func(t *testing.T) {
+			var change struct{ Name, File, From, To string }
+			data, err := os.ReadFile(filepath.Join("rules", slug, "mutant.json"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			if err := json.Unmarshal(data, &change); err != nil {
+				t.Fatal(err)
+			}
+			mutated := mutant(t, change.From, change.To, filepath.Join("rules", slug, change.File))
+			binary := buildPort(t, mutated, true)
+			for _, side := range []struct {
+				name   string
+				output []byte
+			}{
+				{"source Node", node(t, mutated, mutationPath, false).output},
+				{"emitted JavaScript", emittedNode(t, mutated, mutationPath, false).output},
+				{"sanitized native", execute(t, "", binary, "--manifest", mutationPath).output},
+			} {
+				if bytes.Equal(side.output, want) {
+					t.Fatalf("%s compiling mutant survived on %s", change.Name, side.name)
+				}
+				t.Logf("%s compiles and exits cleanly; only Go findings/fixes comparison catches it on %s", change.Name, side.name)
+			}
+		})
+	}
+}
