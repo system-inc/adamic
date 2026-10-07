@@ -1,3 +1,72 @@
+# Deferred cast preflight rerun: six probes green, slice red at sameMap return
+
+Merged views-arrays-callables-parser 4ed5e301 into the unpushed scratch, producing
+42b2ee13. It includes proven-predicates 3d48edb, census-small-families bde0030,
+library-array-holes f05aec3 and phantom-brands a73f93c5. Compiler rebuild succeeds.
+The validated slice still contains only sanctioned 60-65 adaptations.
+
+Rows 2 and 5 clear: native prefix cast prints 1, branded-array cast prints 2,
+matching Node byte for byte. Unchanged probe count is now 6/11, rows 1, 2, 3, 4,
+5 and 9. All six native-output one-byte mutants are caught (cmp exit 1). Row 10's
+original cast probe remains unchanged/refused; adaptation 65 removes that cast
+in the actual slice. Probe greens retain their original coverage: some only
+prove declaration admission, as their source comments say.
+
+Unsplit, split and repeat builds all exit 1 before C emission at
+src/compiler/core.ts:204:12, sameMap's final `array as unknown[] as U[]`.
+This is another array-view case: the operand is `readonly T[] | undefined`,
+unlike the now-green changed-prefix slice cast. The minimal
+native-same-map-return-cast.a reproduces the refusal at 4:12; Node prints
+`2\nundefined\n`. No unchecked-cast proof was bypassed.
+
+## Ordered discovery behind scratch-only source stubs
+
+Only row 1 is the real validated-slice failure. Every later row was found behind
+cumulative stubs in a separate copied tree. Function bodies were replaced by
+throwing bodies; the unbound method initializer became a typed uninitialized
+slot. These are discovery stubs, not adaptations, and were never run as proofs.
+
+| Order | Slice location | Stop | Minimal witness |
+| --- | --- | --- | --- |
+| 1 | core.ts:204:12 | sameMap final nullable readonly array cast refused | native-same-map-return-cast.a |
+| 2 | core.ts:421:34 | toSorted conditional emptyArray: never viewed as writable T | native-sorted-empty-conditional.a |
+| 3 | core.ts:525:17 | reduceLeft arguments.length refused (original row 6) | native-arguments-length.a |
+| 4 | core.ts:542:24 | Object.prototype.hasOwnProperty method read refused (original row 7) | native-has-own-property.a |
+| 5 | core.ts:594:5 | Array.isArray predicate return not trusted (original row 8) | native-array-is-array-predicate.a |
+| 6 | core.ts:889:14 | process.nextTick truthiness method read refused | native-process-next-tick-read.a |
+| 7 | debug.ts:26:1 | Debug namespace refused (original row 11) | native-debug-namespace.a |
+
+Row 2's new minimal reproduces adamic/invariant-mutable and Node prints
+`0\n1\n`. Row 6's new minimal activates the pinned Node loader with an otherwise
+unused Node import, reproduces unbound-method and Node prints `true\n`.
+Arguments.length stays exactly as ruled, with no adaptation. Stubbing it reaches
+the hasOwnProperty read; stubbing that read reaches the Array.isArray predicate.
+Discovery ends at the namespace, which has no function-body/initializer stub;
+no namespace or compiler proof bypass was introduced to reach more stops.
+All diagnostics, exact cumulative replacements and discovery patch are retained.
+
+## Validation and merge limits
+
+Focused deferred-preflight, phantom-array, predicate and checked-overload lower
+tests pass in 13.283s. Full gate, counts gate and complete oracle were not run.
+The scratch merge conflicts touch lowering, native emission, runtime, flow and
+loader; their resolutions and exact ancestry are in evidence/front15/report.json
+and scratch-merge.patch.gz. Source stubs live only in the discovery scratch copy.
+
+C size, clang times, native parser binary size/timing and both native reference
+comparisons remain unavailable because lowering stops before C. nproc is 5.
+The repeat cache is empty and is not a warm measurement. The 81-file extended
+reference and 10,406-case manifest remain Node-validated acceptance targets;
+native JSDoc and error-recovery acceptance remain unverified.
+
+Reproduce the validated run with probe-stops.py and measure-builds.py, compiler
+/workspace/scratch/parser-front15-adamic, scratch /tmp/parser-front7-scratch,
+and entry /workspace/scratch/parser-temp65-slice/parser-proof-main.a (jobs 5).
+See evidence/front15/probes/report.json, build-modes/report.json,
+new-probes/report.json and discovery/report.json for exact outputs.
+
+---
+
 # Row 5 phantom-array brand rerun: red before native emission
 
 Merged phantom-brands a73f93c5 into scratch 444d57b1, producing unpushed
