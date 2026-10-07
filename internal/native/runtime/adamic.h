@@ -306,7 +306,6 @@ static inline void adamic_object_check_data_write(const adamic_object *object, c
 
 typedef struct adamic_array {
 	adamic_heap heap;
-	adamic_array_view_metadata view;
 	size_t length;
 	size_t capacity;
 	bool references;

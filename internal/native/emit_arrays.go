@@ -52,6 +52,9 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 	}
 	e.line("}")
 	if visit.ViewRead.View != "" {
+		if e.hasArrayHoles() && visit.Method != "find" && visit.Method != "findIndex" && visit.Method != "findLast" && visit.Method != "findLastIndex" {
+			e.line("if (adamic_array_holes_at(%s, (double)%s) == NULL) continue;", source, index)
+		}
 		checked := e.viewArrayElementSlot(visit.ViewRead, source, index)
 		e.line("adamic_value %s = %s;", element, checked)
 	} else if e.hasArrayHoles() {
@@ -154,6 +157,9 @@ func (e *emitter) arrayReduce(reduce ir.ArrayReduce) string {
 	e.line("\tcontinue;")
 	e.line("}")
 	if reduce.ViewRead.View != "" {
+		if e.hasArrayHoles() {
+			e.line("if (adamic_array_holes_at(%s, (double)%s) == NULL) continue;", source, index)
+		}
 		checked := e.viewArrayElementSlot(reduce.ViewRead, source, index)
 		e.line("adamic_value %s = %s;", element, checked)
 	} else if e.hasArrayHoles() {
