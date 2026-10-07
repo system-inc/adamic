@@ -54,3 +54,27 @@ func (e *emitter) primitiveArrayStore(element ir.Type, array, index, value strin
 	e.line("}")
 	return true
 }
+
+// booleanLiteralEquality needs only the optional operand's tag: the literal's
+// tag is proven present. The optional operand is evaluated once and its missing
+// case remains unequal even to false.
+func (e *emitter) booleanLiteralEquality(binary ir.Binary) (string, bool) {
+	if binary.Left.Type() != ir.MaybeBoolean || (binary.Operator != ir.Equal && binary.Operator != ir.NotEqual) {
+		return "", false
+	}
+	operand := binary.Left
+	literal, known := binary.Right.(ir.MaybeOf)
+	if !known {
+		return "", false
+	}
+	boolean, known := literal.Value.(ir.BooleanConstant)
+	if !known {
+		return "", false
+	}
+	value := e.snapshot(ir.MaybeBoolean, e.value(operand))
+	equal := fmt.Sprintf("(%s.present && %s.boolean == %t)", value, value, boolean.Value)
+	if binary.Operator == ir.NotEqual {
+		equal = "(!" + equal + ")"
+	}
+	return equal, true
+}

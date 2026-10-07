@@ -54,6 +54,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			return "adamic_bitwise_not(" + operand + ")"
 		}
 	case ir.Binary:
+		if value, known := e.booleanLiteralEquality(expression); known {
+			return value
+		}
 		if expression.Operator == ir.And || expression.Operator == ir.Or {
 			return e.logical(expression)
 		}

@@ -111,6 +111,9 @@ func TestPrimitiveArrayStoresMatchNode(t *testing.T) {
 const flags = [false, false];
 store(flags, -0, true);
 console.log(flags.join(','));
+for (const index of [0, 1, 2, -1, 0.5]) {
+console.log(String(flags[index] === true) + ':' + String(flags[index] !== true) + ':' + String(flags[index] === false) + ':' + String(flags[index] !== false));
+}
 const numbers: number[] = [1, 2];
 numbers[1] = 3.5;
 console.log(numbers.join(','));
