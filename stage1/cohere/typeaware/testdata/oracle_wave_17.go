@@ -10,6 +10,7 @@ import (
 	"path/filepath"
 	"slices"
 	"sort"
+	"strconv"
 	"strings"
 	"time"
 	"unicode/utf16"
@@ -93,6 +94,50 @@ func main() {
 			file := program.GetSourceFile(roots[i])
 			if file != nil && len(file.Diagnostics()) == 0 {
 				fmt.Println(path)
+			}
+		}
+		return
+	}
+	if len(args) > 2 && args[2] == "--tree" {
+		if len(paths) != 1 {
+			panic("one source per AST fixture")
+		}
+		file := program.GetSourceFile(roots[0])
+		if len(file.Diagnostics()) != 0 {
+			panic("invalid AST fixture")
+		}
+		field := func(s string) { fmt.Printf("%d\n%s", len(utf16.Encode([]rune(s))), s) }
+		nodes := []*ast.Node{}
+		ids := map[*ast.Node]int{}
+		var collect func(*ast.Node)
+		collect = func(n *ast.Node) {
+			ids[n] = len(nodes)
+			nodes = append(nodes, n)
+			n.ForEachChild(func(c *ast.Node) bool { collect(c); return false })
+		}
+		collect(file.AsNode())
+		field("1")
+		field("ast-fixture")
+		field(strconv.Itoa(len(nodes)))
+		for _, n := range nodes {
+			field(strings.TrimPrefix(n.Kind.String(), "Kind"))
+			field(strconv.Itoa(n.Pos()))
+			field(strconv.Itoa(n.End()))
+			text := ""
+			if n.Kind == ast.KindIdentifier || n.Kind == ast.KindStringLiteral || n.Kind == ast.KindNoSubstitutionTemplateLiteral {
+				text = n.Text()
+			}
+			field(text)
+			semantic := ""
+			if n.Kind == ast.KindImportClause {
+				semantic = strings.TrimPrefix(n.AsImportClause().PhaseModifier.String(), "Kind")
+			}
+			field(semantic)
+			children := []*ast.Node{}
+			n.ForEachChild(func(c *ast.Node) bool { children = append(children, c); return false })
+			field(strconv.Itoa(len(children)))
+			for _, c := range children {
+				field(strconv.Itoa(ids[c]))
 			}
 		}
 		return

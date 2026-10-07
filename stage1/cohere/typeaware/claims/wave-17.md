@@ -57,3 +57,12 @@ refusal itself still passes. Per Ahra's correction, that shared harness was not
 edited, and no further rules were claimed. The failure and all evidence are in
 [the continuation report](../WAVE_17_NEXT_REPORT.md). The original Next JSX
 limitations recorded above remain unchanged.
+
+## Original JSX rules continued
+
+Both Head rule decisions are now implemented in their own `.a` files. The
+40-fixture raw-AST projection test matches complete production Go diagnostics
+(21 findings, 10,044 bytes), normally and under sanitizers, and catches a mutant
+for each rule. This validates native rule decisions, not the shared parser.
+Production JSX parsing still refuses with panic 70. The own-directory projection
+runner is validation only. See [the Head report](../WAVE_17_HEADS_REPORT.md).

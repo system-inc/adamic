@@ -1,0 +1,49 @@
+import type { Rules } from './rules.ts';
+import type { Bindings } from './bindings.ts';
+import { Diagnostic } from './diagnostic.ts';
+
+export class HeadComponents {
+    readonly rules: Rules;
+    readonly bindings: Bindings;
+    constructor(rules: Rules, bindings: Bindings) {
+        this.rules = rules;
+        this.bindings = bindings;
+    }
+    tag(index: number): number {
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'JsxElement') {
+            return this.tag(node.children[0] ?? -1);
+        }
+        return ['JsxOpeningElement', 'JsxSelfClosingElement'].includes(node.kind) ? (node.children[0] ?? -1) : -1;
+    }
+    clause(index: number): number {
+        return (
+            this.rules.parser.node(index).children.find((c) => this.rules.parser.node(c).kind === 'ImportClause') ?? -1
+        );
+    }
+    defaultName(clause: number): number {
+        return (
+            this.rules.parser.node(clause).children.find((c) => this.rules.parser.node(c).kind === 'Identifier') ?? -1
+        );
+    }
+    resolves(tag: number, declarations: readonly number[], firstOnly = false): boolean {
+        if(tag < 0 || this.rules.parser.node(tag).kind !== 'Identifier' || declarations.length === 0) {
+            return false;
+        }
+        const found = this.bindings.list(tag, 'binding-declarations', false);
+        return firstOnly ? declarations.includes(found[0] ?? -1) : found.some((d) => declarations.includes(d));
+    }
+    report(rule: string, id: string, message: string, index: number): void {
+        const node = this.rules.parser.node(index);
+        this.rules.findings.push(
+            new Diagnostic(
+                rule,
+                id,
+                message,
+                this.rules.byte(this.rules.start(node)),
+                this.rules.byte(node.end),
+                '@next/next/',
+            ),
+        );
+    }
+}

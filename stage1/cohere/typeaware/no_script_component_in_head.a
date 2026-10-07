@@ -1,0 +1,56 @@
+import { HeadComponents } from './head_components.a';
+export class NoScriptComponentInHead {
+    readonly heads: HeadComponents;
+    readonly clauses: number[] = [];
+    constructor(heads: HeadComponents) {
+        this.heads = heads;
+    }
+    script(index: number): boolean {
+        const tag = this.heads.tag(index);
+        return (
+            tag >= 0 &&
+            this.heads.rules.parser.node(tag).kind === 'Identifier' &&
+            this.heads.rules.parser.node(tag).text === 'Script'
+        );
+    }
+    visit(index: number): void {
+        const rules = this.heads.rules;
+        const node = rules.parser.node(index);
+        if(node.kind === 'ImportDeclaration') {
+            const clause = this.heads.clause(index);
+            const module =
+                node.children.find((c) =>
+                    ['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(rules.parser.node(c).kind),
+                ) ?? -1;
+            if(
+                clause >= 0 &&
+                module >= 0 &&
+                rules.parser.node(module).text === 'next/head' &&
+                this.heads.defaultName(clause) >= 0
+            ) {
+                this.clauses.push(clause);
+            }
+        }
+        if(node.kind === 'JsxElement') {
+            const tag = this.heads.tag(index);
+            if(this.heads.resolves(tag, this.clauses, true)) {
+                for(const child of node.children) {
+                    if(this.script(child) && rules.parser.node(child).kind !== 'JsxOpeningElement') {
+                        this.heads.report(
+                            'no-script-component-in-head',
+                            'noScriptComponentInHead',
+                            'This puts a <Script> inside <Head>. The head component only forwards plain markup into the document head, so the script loader never mounts and the loading strategy is dropped: nothing decides when the script runs and nothing tracks whether it already did. Move the <Script> outside of <Head> and let it sit in the page body.',
+                            tag,
+                        );
+                    }
+                }
+            }
+        }
+        for(const child of node.children) {
+            this.visit(child);
+        }
+    }
+    run(root: number): void {
+        this.visit(root);
+    }
+}

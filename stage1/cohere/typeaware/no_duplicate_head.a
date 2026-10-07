@@ -1,0 +1,79 @@
+import { HeadComponents } from './head_components.a';
+export class NoDuplicateHead {
+    readonly heads: HeadComponents;
+    readonly declarations: number[] = [];
+    occurrences = 0;
+    first = -1;
+    constructor(heads: HeadComponents) {
+        this.heads = heads;
+    }
+    imports(root: number): void {
+        const rules = this.heads.rules;
+        for(const index of rules.parser.node(root).children) {
+            if(rules.parser.node(index).kind !== 'ImportDeclaration') {
+                continue;
+            }
+            const clause = this.heads.clause(index);
+            if(clause < 0 || rules.parser.node(clause).semantic === 'TypeKeyword') {
+                continue;
+            }
+            const name = this.heads.defaultName(clause);
+            if(name >= 0 && rules.parser.node(name).text === 'Head') {
+                this.declarations.push(clause);
+            }
+            for(const child of rules.parser.node(clause).children) {
+                const node = rules.parser.node(child);
+                if(node.kind === 'NamespaceImport') {
+                    const local = node.children[node.children.length - 1] ?? -1;
+                    if(local >= 0 && rules.parser.node(local).text === 'Head') {
+                        this.declarations.push(child);
+                    }
+                }
+                if(node.kind === 'NamedImports') {
+                    for(const specifier of node.children) {
+                        const binding = rules.parser.node(specifier);
+                        const local = binding.children[binding.children.length - 1] ?? -1;
+                        if(local >= 0 && rules.parser.node(local).text === 'Head') {
+                            this.declarations.push(specifier);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    visit(index: number): void {
+        const node = this.heads.rules.parser.node(index);
+        if(['JsxOpeningElement', 'JsxSelfClosingElement'].includes(node.kind)) {
+            const tag = this.heads.tag(index);
+            if(
+                tag >= 0 &&
+                this.heads.rules.parser.node(tag).kind === 'Identifier' &&
+                this.heads.rules.parser.node(tag).text === 'Head' &&
+                this.heads.resolves(tag, this.declarations)
+            ) {
+                this.occurrences++;
+                if(this.first < 0) {
+                    this.first = tag;
+                }
+            }
+        }
+        for(const child of node.children) {
+            this.visit(child);
+        }
+    }
+    run(root: number): void {
+        this.imports(root);
+        if(this.declarations.length === 0) {
+            return;
+        }
+        this.visit(root);
+        if(this.occurrences > 1) {
+            this.heads.report(
+                'no-duplicate-head',
+                'noDuplicateHead',
+                "This file renders the imported `Head` component more than once. Next.js merges one document head, so a second `Head` does not add to the first, it competes with it: whichever the framework resolves last wins and the other one's tags are silently dropped. Render a single `Head` and put every tag inside it.",
+                this.first,
+            );
+        }
+    }
+}
