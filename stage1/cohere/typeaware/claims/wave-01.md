@@ -49,3 +49,18 @@ The immediate refresh found new claims for prefer-promise-reject-errors,
 prefer-regex-literals, prefer-rest-params and react-hooks/exhaustive-deps.
 Those candidates were skipped. Main is ef3d907e and the bridge branch is 5afbdb83.
 This reservation is pushed before implementation.
+
+## Parked React batch
+
+Status: parked by Ahra's React parking instruction; counts as finished for the
+landing-first cap. No native implementation is represented as complete.
+
+- react-hooks/globals: native JSX parsing and component gate integration.
+- react-hooks/immutability: native React high-level IR, SSA construction and capture analysis, plus JSX.
+- react-hooks/no-deriving-state-in-effects: native React high-level IR, SSA and capture/context identity, memo erasure and callback inlining, plus JSX.
+
+Analysis modules are being ported on #dnv6f2c. JSX support is landing on
+area/stage1-lint. Existing blocker controls and partial work are pushed in
+wave_01_third. The six completed ports are oracle-green on main f8013f0b and
+published through 25f5e73b. These three reservations stay parked until their
+shared dependencies land; they are not offered to another worker implicitly.
