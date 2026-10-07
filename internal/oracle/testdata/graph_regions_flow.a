@@ -1,0 +1,19 @@
+interface Flow {
+ readonly id: number;
+ readonly label: string;
+ antecedent: Flow | undefined;
+ branches: Flow[];
+}
+function connect(from: Flow, to: Flow): void { from.branches.push(to); to.antecedent = from; }
+function run(): void {
+ const entry: Flow = { id: 1, label: `entry${1}`, antecedent: undefined, branches: [] };
+ const loop: Flow = { id: 2, label: `loop${2}`, antecedent: undefined, branches: [] };
+ connect(entry, loop); connect(loop, entry);
+ const saved = loop.antecedent;
+ loop.antecedent = undefined;
+ console.log(`${loop.label} ${loop.antecedent === undefined} ${entry.antecedent?.id}`);
+ loop.antecedent = saved;
+ const parent = loop.antecedent;
+ if (parent !== undefined) { const child = parent.branches[0]; console.log(`${child?.label}`); }
+}
+run();

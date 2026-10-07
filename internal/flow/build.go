@@ -172,6 +172,8 @@ func (b *builder) statement(at *ir.Statement) {
 		b.emit(at, 0, nil, b.uses(statement), nil)
 	case ir.SetProperty:
 		b.emit(at, 0, nil, b.uses(statement), nil)
+	case ir.AllocateEnvironment:
+		b.emit(at, 0, nil, nil, nil)
 	case ir.Declare:
 		b.emit(at, 0, statement.Value, b.uses(statement.Value), b.defines(statement.Local))
 	case ir.Assign:

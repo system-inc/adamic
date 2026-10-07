@@ -1,0 +1,12 @@
+interface Link { readonly label: string; next: Link | undefined; }
+function absent(): Link | undefined { return undefined; }
+function literal(label: string) {
+ return { label, next: absent() };
+}
+function run(index: number): void {
+ const allocated = literal(`view${index}`);
+ const view: Link = allocated;
+ view.next = view;
+ console.log(`${view.next.label} ${allocated === view}`);
+}
+run(1);
