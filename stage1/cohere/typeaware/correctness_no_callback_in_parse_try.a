@@ -4,7 +4,11 @@ import { Diagnostic } from './diagnostic.ts';
 
 const message = 'This calls a caller-supplied function inside a `try` that guards a JSON parse, and the `catch` throws the caught error away. An error the callback throws is caught there and handled as if the text had not parsed: the real error is lost and the line is blamed. Parse inside the `try` and call the callback after it, or use `parseJson` and branch on its outcome.';
 
+// Numeric TypeScript SyntaxKind listeners, matching the pinned Go cohere registry.
+export const callbackInParseTrySyntaxKinds: readonly number[] = [259];
+
 export class CallbackInParseTry {
+    readonly syntaxKinds = callbackInParseTrySyntaxKinds;
     readonly bindings: Bindings;
     constructor(bindings: Bindings) { this.bindings = bindings; }
     catchDiscards(index: number): boolean {

@@ -1,0 +1,17 @@
+import { isoStringDateCutSyntaxKinds } from './consistency_no_iso_string_date_cut.a';
+import { callbackInParseTrySyntaxKinds } from './correctness_no_callback_in_parse_try.a';
+import { collectionMisuseSyntaxKinds } from './correctness_no_collection_misuse.a';
+import { discardedOutcomeSyntaxKinds } from './correctness_no_discarded_outcome.a';
+import { discardedPureResultSyntaxKinds } from './correctness_no_discarded_pure_result.a';
+import { unclearedRaceTimeoutSyntaxKinds } from './correctness_no_uncleared_race_timeout.a';
+import { processExitAfterOutputSyntaxKinds } from './correctness_no_process_exit_after_output.a';
+import { requireBlockingStandardStreamsSyntaxKinds } from './correctness_require_blocking_standard_streams.a';
+
+console.log(`consistency_no_iso_string_date_cut ${isoStringDateCutSyntaxKinds.join(',')}`);
+console.log(`correctness_no_callback_in_parse_try ${callbackInParseTrySyntaxKinds.join(',')}`);
+console.log(`correctness_no_collection_misuse ${collectionMisuseSyntaxKinds.join(',')}`);
+console.log(`correctness_no_discarded_outcome ${discardedOutcomeSyntaxKinds.join(',')}`);
+console.log(`correctness_no_discarded_pure_result ${discardedPureResultSyntaxKinds.join(',')}`);
+console.log(`correctness_no_uncleared_race_timeout ${unclearedRaceTimeoutSyntaxKinds.join(',')}`);
+console.log(`correctness_no_process_exit_after_output ${processExitAfterOutputSyntaxKinds.join(',')}`);
+console.log(`correctness_require_blocking_standard_streams ${requireBlockingStandardStreamsSyntaxKinds.join(',')}`);

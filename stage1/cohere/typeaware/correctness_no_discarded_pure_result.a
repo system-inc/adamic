@@ -7,7 +7,11 @@ const message = "This call computes a new value and changes nothing, and its res
 
 const stringMethods = ['at', 'charAt', 'charCodeAt', 'codePointAt', 'concat', 'endsWith', 'includes', 'indexOf', 'isWellFormed', 'lastIndexOf', 'match', 'matchAll', 'padEnd', 'padStart', 'replace', 'replaceAll', 'search', 'slice', 'split', 'startsWith', 'substr', 'substring', 'toLocaleLowerCase', 'toLocaleUpperCase', 'toLowerCase', 'toString', 'toUpperCase', 'toWellFormed', 'trim', 'trimEnd', 'trimLeft', 'trimRight', 'trimStart', 'valueOf'];
 const arrayMethods = ['at', 'concat', 'entries', 'flat', 'includes', 'indexOf', 'join', 'keys', 'lastIndexOf', 'slice', 'toReversed', 'toSorted', 'toSpliced', 'values', 'with'];
+// Numeric TypeScript SyntaxKind listeners, matching the pinned Go cohere registry.
+export const discardedPureResultSyntaxKinds: readonly number[] = [245];
+
 export class DiscardedPureResult {
+    readonly syntaxKinds = discardedPureResultSyntaxKinds;
     readonly bindings: Bindings;
     constructor(bindings: Bindings) { this.bindings = bindings; }
     check(statement: number): void {

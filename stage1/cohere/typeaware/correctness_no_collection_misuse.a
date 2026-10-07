@@ -13,7 +13,11 @@ const allCollections = ['Map', 'ReadonlyMap', 'Set', 'ReadonlySet', 'WeakMap', '
 const sizedCollections = ['Map', 'ReadonlyMap', 'Set', 'ReadonlySet'];
 const typedArrays = ['Int8Array', 'Uint8Array', 'Uint8ClampedArray', 'Int16Array', 'Uint16Array', 'Int32Array', 'Uint32Array', 'Float16Array', 'Float32Array', 'Float64Array', 'BigInt64Array', 'BigUint64Array'];
 
+// Numeric TypeScript SyntaxKind listeners, matching the pinned Go cohere registry.
+export const collectionMisuseSyntaxKinds: readonly number[] = [227, 213, 214];
+
 export class CollectionMisuse {
+    readonly syntaxKinds = collectionMisuseSyntaxKinds;
     readonly bindings: Bindings;
     constructor(bindings: Bindings) { this.bindings = bindings; }
     collection(index: number, names: readonly string[]): boolean {

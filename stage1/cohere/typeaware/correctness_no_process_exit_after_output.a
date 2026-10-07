@@ -26,7 +26,11 @@ class ProcessExitPosition {
     readonly block: number; readonly state: ProcessOutputState;
     constructor(block: number, state: ProcessOutputState) { this.block = block; this.state = state; }
 }
+// Numeric TypeScript SyntaxKind listeners, matching the pinned Go cohere registry.
+export const processExitAfterOutputSyntaxKinds: readonly number[] = [307];
+
 export class ProcessExitAfterOutput {
+    readonly syntaxKinds = processExitAfterOutputSyntaxKinds;
     readonly bindings: Bindings; readonly calls: ProcessOutputCalls; readonly writers: ProcessCallWriters;
     constructor(bindings: Bindings, calls: ProcessOutputCalls, writers: ProcessCallWriters) { this.bindings = bindings; this.calls = calls; this.writers = writers; }
     analyze(root: number, exits: readonly number[]): void {

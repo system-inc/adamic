@@ -29,7 +29,11 @@ export function streamFunctionWithBody(bindings: Bindings, index: number): boole
     return bindings.functionKind(bindings.rules.parser.node(index).kind) && new ProcessNodeFields(bindings, index).get(2) >= 0;
 }
 export function streamCallLike(bindings: Bindings, index: number): boolean { return ['CallExpression', 'NewExpression', 'TaggedTemplateExpression'].includes(bindings.rules.parser.node(index).kind); }
+// Numeric TypeScript SyntaxKind listeners, matching the pinned Go cohere registry.
+export const requireBlockingStandardStreamsSyntaxKinds: readonly number[] = [307];
+
 export class RequireBlockingStandardStreams {
+    readonly syntaxKinds = requireBlockingStandardStreamsSyntaxKinds;
     readonly emptyStrings: readonly string[] = [];
     readonly bindings: Bindings; readonly index: BlockingStreamIndex; readonly calls: ProcessOutputCalls; readonly ordered: boolean;
     readonly functionMayBlock = new Map<string, number>(); readonly symbolFacts = new Map<string, SymbolDeclarationSet>(); readonly fields = new Map<string, ProcessNodeFields>();

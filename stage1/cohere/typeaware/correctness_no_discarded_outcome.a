@@ -11,7 +11,11 @@ export class OutcomeArms {
     readonly key: string; readonly name: string; readonly count: number; readonly seen: string[];
     constructor(key: string, name: string, count: number) { this.key = key; this.name = name; this.count = count; this.seen = []; }
 }
+// Numeric TypeScript SyntaxKind listeners, matching the pinned Go cohere registry.
+export const discardedOutcomeSyntaxKinds: readonly number[] = [245];
+
 export class DiscardedOutcome {
+    readonly syntaxKinds = discardedOutcomeSyntaxKinds;
     readonly bindings: Bindings;
     constructor(bindings: Bindings) { this.bindings = bindings; }
     add(declaration: TypeDeclaration, groups: OutcomeArms[]): void {
