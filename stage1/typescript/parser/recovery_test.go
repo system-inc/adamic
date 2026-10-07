@@ -15,11 +15,22 @@ import (
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
 
-var recoveryCases = []string{
-	"interface I",
-	"interface I { m(a: string): void;",
-	"interface I { m<(a: string): void; }",
-	"interface I { m<T(a: T): T; }",
+func recoveryInputs(t *testing.T) []string {
+	t.Helper()
+	var cases []string
+	for _, name := range []string{"interface-eof.ts.txt", "method-eof.ts.txt", "generic-method-open.ts.txt", "generic-method-close.ts.txt"} {
+		cases = append(cases, recoveryInput(t, name))
+	}
+	return cases
+}
+
+func recoveryInput(t *testing.T, name string) string {
+	t.Helper()
+	data, err := os.ReadFile(filepath.Join("testdata", "recovery", name))
+	if err != nil {
+		t.Fatal(err)
+	}
+	return string(data)
 }
 
 // Each process has its own deadline. Inputs and answers survive a failing test.
@@ -61,6 +72,7 @@ func recoveryRunLimit(t *testing.T, limit time.Duration, artifact, name string, 
 }
 
 func TestMethodRecoveryAgrees(t *testing.T) {
+	recoveryCases := recoveryInputs(t)
 	oracle := goOracle(t)
 	directory, err := filepath.Abs(".")
 	if err != nil {
@@ -79,6 +91,7 @@ func TestMethodRecoveryAgrees(t *testing.T) {
 		t.Fatal(err)
 	}
 	cases := append([]string(nil), recoveryCases...)
+	cases = append(cases, recoveryInput(t, "unterminated-string.ts.txt"), recoveryInput(t, "reserved-binding.ts.txt"))
 	cases = append(cases, "(readonly T)", "(readonly T[])[];", "(public x);", "(readonly as U);", "async (readonly T)", "((x): number => x)(1);", "type T = ({x = 1}) => U;", "type T = ({x = 1});", "export function min< <T>(items: readonly [T, ...T[]], compare: Comparer<T>): T;", "const x = <T>(x: T): T;", "const x = <T>(x: T) => x;", "const x = { has( (element: T): boolean {} };", "const x = { values() ): T {} };", "const x = { a: 1; x.y };", "class C { m() x; }", "const x = { a: 1\n; };", "const x = { a: 1; if (x) {} };", "f(x :);", "const x = [a :];", "function f(export function g() {}", "function f(static x: T) {}", "function f(abstract x: T) {}", "function f(public @dec x: T) {}", "function f<T, U = T T>() {}", "function f<T T>() {}", "function f<T,, U>() {}", "function f<out>", "function f<const>", "function f<T extends>", "const a = [x x, y];", "const a = [x,,];", "const a = [;];", "for (const a = [x in y];;) {}", "try", "try {", "try {x;}", "try {} catch {}", "try {} finally", "try {} x;", "interface {}", "interface 1 {}", "namespace {}", "namespace 1 {}", "type = A;", "type 1 = A;", "is T;", "declare", "declare x;", "abstract", "undefined: x;", "type: x;", "let: x;", "async function f(){ await: x; }", "enum E { A B }", "enum E { A,, B }", "enum E", "enum E {", "let", "let;", "let = 1;", "let\nx;", "function f(){ let }", "export let", "namespace N", "namespace A.B", "namespace N;", "declare module \"m\";", "function", "function () {}", "export function function f() {}", "export default function () {}", "const {a b} = obj;", "const {a,,b} = obj;", "const [a b] = obj;", "type T = A | | B;", "type T = A & & B;", "type T = | A;", "function f(x, { return g(); }", "const { return x } = obj;", "x[];", "x?.[];", "f()[ ];", "import { A B } from \"m\";", "import { A,, B } from \"m\";", "export { A B };", "import { A from \"m\";", "function f(x:: T | undefined, y: U) {}", "function f(| T) {}", "function f(1) {}", "`unterminated", "const s = \"unterminated", "/* unterminated", "const r = /unterminated", "const f = ( => g();", "=> x", "const x = { a.b };", "module`M` {}", "tag`x` x;", "const x = { a: 1; };", "const x = { a: 1 b: 2 };", "type T = Omit<A \"b\"> & { b: string | false | undefined; };", "type T = A[", "function f(x: A[", "type T = A[;", "* from \"../moduleSpecifiers.js\";", "export export * from \"../moduleSpecifiers.js\";", "export from \"../moduleSpecifiers.js\";", "import import * as p from \"p.js\";", "import", "import\r\n  ", "}", ") ;", "x ?", "x ? y", "x ? y :", "x?.", "`x${", "`x${y", "type T = `x${", "interface I { : I | undefined; name: string; }", "interface I { x: T y: U }", "f(x x);", "f(, x);", "function f(){ g(x }", "function f(){ export }", "default x;", "switch(x){case 1:: f();}", "switch(x){default:: f();}", "switch(x){ f(); }", "namespace N { : f(); }", "function f(x: T y: U) {}", "function f(, x: T) {}", "function f(return) {}", "function f(const) {}", "function f(this: T) {}", "function f(x:: T) {}", "function f() x;", "break break;", "continue continue;", "break 1;", "throw", "throw\nx;", "throw x y;", "setParent setParent(x, y);", "retrun 1;", "Set 1;", "globl 1;", "İmport 1;", "export {", "import {", "f(", "[", "({", "function f() {", "class C {", "type T =", "type T = A<", "type T = (x:", "type T = ()", "type T = <", "function f(): (x: T, y:", "const {", "const const x = 1;", "const x = 1 y = 2;", "const , x = 1;", "const", "function f() { const", "const f = (x:", "const f = (...", "const f = ():", "const f = () {}", "export *", "export * from", "export * from\r\n  ", "export default", "export =", "export", "export\r\n  ", "export export", "export\nconst x = 1;", "export x;", "/* π 💡 */\r\nexport")
 	cases = append(cases, `const s = "\1\12\123\377\400\8\9";`, "const x = 0123;", "const x = -0123;", "const x = - 0123;", "const x = 0000;", "const x = 0777777777777777777777777777777777;", "/* π 💡 */ const x = 0123;")
 	for _, source := range recoveryCases {
@@ -115,6 +128,7 @@ func TestMethodRecoveryAgrees(t *testing.T) {
 // The three checks are independent: diagnostic bytes, recovered child shape,
 // and termination. A build error or crash does not kill a comparison mutant.
 func TestRecoveryMutants(t *testing.T) {
+	recoveryCases := recoveryInputs(t)
 	oracle := goOracle(t)
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	if err != nil {
@@ -128,6 +142,8 @@ func TestRecoveryMutants(t *testing.T) {
 		name, file, from, to, source string
 		timeout, expressions         bool
 	}{
+		{"scanner-error-hook", "parser.ts", "this.scanner.errors.length !== errors", "this.scanner.errors.length === errors", recoveryInput(t, "unterminated-string.ts.txt"), false, false},
+		{"reserved-token-switch", "grammar.ts", "case 'ReturnKeyword':", "case 'Identifier':", recoveryInput(t, "reserved-binding.ts.txt"), false, false},
 		{"octal-suggestion", "lexical.ts", "const suggestion =", "const suggestion = 'wrong' +", `const s = "\123";`, false, false},
 		{"diagnostic-code", "parser.ts", "this.error(1005, `'${tokenSpelling(kind)}' expected.`);\n            return false;", "this.error(1006, `'${tokenSpelling(kind)}' expected.`);\n            return false;", recoveryCases[0], false, false},
 		{"stranded-export", "parser.ts", "this.error(diagnostic.code, diagnostic.message);", "this.error(diagnostic.code + (context === 'source' ? 1 : 0), diagnostic.message);", "export", false, false},
@@ -179,6 +195,7 @@ func TestRecoveryMutants(t *testing.T) {
 }
 
 func TestRecoveredLintCasesAgree(t *testing.T) {
+	recoveryCases := recoveryInputs(t)
 	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
 	if err != nil {
 		t.Fatal(err)

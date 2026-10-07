@@ -2,7 +2,7 @@
 import { panic } from 'adamic';
 import { Scanner } from '../scanner/scanner.ts';
 import type { ParseNode } from './nodes.ts';
-import { reservedKinds } from './grammar.ts';
+import { isReservedKind } from './grammar.ts';
 import { keywordSuggestion } from './spelling.ts';
 import { declarationAhead } from './lookahead.ts';
 
@@ -407,7 +407,7 @@ export class Statements {
         let phase = 'Unknown';
         if(
             this.parser.kind() === 'Identifier' ||
-            (this.parser.kind().endsWith('Keyword') && !reservedKinds.includes(this.parser.kind()))
+            (this.parser.kind().endsWith('Keyword') && !isReservedKind(this.parser.kind()))
         ) {
             name = this.parser.identifier();
         }
@@ -616,7 +616,7 @@ export class Statements {
         if(
             !defaulted ||
             this.parser.kind() === 'Identifier' ||
-            (this.parser.kind().endsWith('Keyword') && !reservedKinds.includes(this.parser.kind()))
+            (this.parser.kind().endsWith('Keyword') && !isReservedKind(this.parser.kind()))
         ) {
             children.push(this.parser.bindingIdentifier());
         }
@@ -988,7 +988,7 @@ export class Statements {
         const next = this.parser.peek();
         return (
             next === 'Identifier' ||
-            (next.endsWith('Keyword') && !reservedKinds.includes(next)) ||
+            (next.endsWith('Keyword') && !isReservedKind(next)) ||
             next === 'OpenBraceToken' ||
             next === 'OpenBracketToken'
         );

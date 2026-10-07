@@ -1,6 +1,6 @@
 // Speculation saves and restores scanner state without building a tree.
 import type { Scanner } from '../scanner/scanner.ts';
-import { modifierKinds, precedence, reservedKinds } from './grammar.ts';
+import { isModifierKind, precedence, isReservedKind, bindingStart } from './grammar.ts';
 
 export interface ParserStateInterface {
     readonly pos: number;
@@ -13,6 +13,82 @@ export interface ParserStateInterface {
     readonly nodes: number;
     readonly roots: number;
     readonly diagnostics: number;
+}
+
+function declarationModifierStart(tokenKind: string): boolean {
+    switch(tokenKind) {
+        case 'AbstractKeyword':
+        case 'AccessorKeyword':
+        case 'AsyncKeyword':
+        case 'DeclareKeyword':
+        case 'PrivateKeyword':
+        case 'ProtectedKeyword':
+        case 'PublicKeyword':
+        case 'ReadonlyKeyword':
+        case 'StaticKeyword':
+            return true;
+        default:
+            return false;
+    }
+}
+
+function typeKeywordStart(tokenKind: string): boolean {
+    switch(tokenKind) {
+        case 'AnyKeyword':
+        case 'UnknownKeyword':
+        case 'StringKeyword':
+        case 'NumberKeyword':
+        case 'BigIntKeyword':
+        case 'BooleanKeyword':
+        case 'ReadonlyKeyword':
+        case 'SymbolKeyword':
+        case 'UniqueKeyword':
+        case 'VoidKeyword':
+        case 'UndefinedKeyword':
+        case 'NullKeyword':
+        case 'ThisKeyword':
+        case 'TypeOfKeyword':
+        case 'NeverKeyword':
+        case 'OpenBraceToken':
+        case 'OpenBracketToken':
+        case 'LessThanToken':
+        case 'BarToken':
+        case 'AmpersandToken':
+        case 'NewKeyword':
+        case 'StringLiteral':
+        case 'NumericLiteral':
+        case 'BigIntLiteral':
+        case 'TrueKeyword':
+        case 'FalseKeyword':
+        case 'ObjectKeyword':
+        case 'AsteriskToken':
+        case 'QuestionToken':
+        case 'ExclamationToken':
+        case 'DotDotDotToken':
+        case 'InferKeyword':
+        case 'ImportKeyword':
+        case 'AssertsKeyword':
+        case 'NoSubstitutionTemplateLiteral':
+        case 'TemplateHead':
+        case 'FunctionKeyword':
+            return true;
+        default:
+            return false;
+    }
+}
+
+function statementModifierStart(tokenKind: string): boolean {
+    switch(tokenKind) {
+        case 'AccessorKeyword':
+        case 'PublicKeyword':
+        case 'PrivateKeyword':
+        case 'ProtectedKeyword':
+        case 'StaticKeyword':
+        case 'ReadonlyKeyword':
+            return true;
+        default:
+            return false;
+    }
 }
 
 function kind(scanner: Scanner): string {
@@ -109,10 +185,7 @@ export function arrowAhead(scanner: Scanner, allowReturn: boolean): boolean {
             state.restore();
             return false;
         }
-        if(
-            kind(scanner) === 'Identifier' ||
-            (kind(scanner).endsWith('Keyword') && !reservedKinds.includes(kind(scanner)))
-        ) {
+        if(kind(scanner) === 'Identifier' || (kind(scanner).endsWith('Keyword') && !isReservedKind(kind(scanner)))) {
             state.next();
             result = kind(scanner) === 'EqualsGreaterThanToken' && (scanner.flags & 1) === 0;
             state.restore();
@@ -144,18 +217,16 @@ export function arrowAhead(scanner: Scanner, allowReturn: boolean): boolean {
         parameterState.restore();
         if(
             !generic &&
-            modifierKinds.includes(first) &&
+            isModifierKind(first) &&
             first !== 'AsyncKeyword' &&
             second !== 'AsKeyword' &&
-            (second === 'Identifier' || (second.endsWith('Keyword') && !reservedKinds.includes(second)))
+            (second === 'Identifier' || (second.endsWith('Keyword') && !isReservedKind(second)))
         ) {
             state.restore();
             return true;
         }
         const parameterHead =
-            first === 'Identifier' ||
-            first === 'ThisKeyword' ||
-            (first.endsWith('Keyword') && !reservedKinds.includes(first));
+            first === 'Identifier' || first === 'ThisKeyword' || (first.endsWith('Keyword') && !isReservedKind(first));
         let depth = 0;
         let typed = false;
         let head = 0;
@@ -360,7 +431,7 @@ export function declarationAhead(scanner: Scanner): boolean {
             result =
                 (scanner.flags & 1) === 0 &&
                 (kind(scanner) === 'Identifier' ||
-                    (kind(scanner).endsWith('Keyword') && !reservedKinds.includes(kind(scanner))) ||
+                    (kind(scanner).endsWith('Keyword') && !isReservedKind(kind(scanner))) ||
                     ((current === 'ModuleKeyword' || current === 'NamespaceKeyword') &&
                         kind(scanner) === 'StringLiteral'));
             break;
@@ -381,7 +452,7 @@ export function declarationAhead(scanner: Scanner): boolean {
                     kind(scanner) === 'AsteriskToken' ||
                     kind(scanner) === 'OpenBraceToken' ||
                     ((kind(scanner) === 'Identifier' ||
-                        (kind(scanner).endsWith('Keyword') && !reservedKinds.includes(kind(scanner)))) &&
+                        (kind(scanner).endsWith('Keyword') && !isReservedKind(kind(scanner)))) &&
                         (scanner.flags & 1) === 0);
                 break;
             }
@@ -399,19 +470,7 @@ export function declarationAhead(scanner: Scanner): boolean {
             result = ['OpenBraceToken', 'Identifier', 'ExportKeyword'].includes(kind(scanner));
             break;
         }
-        if(
-            [
-                'AbstractKeyword',
-                'AccessorKeyword',
-                'AsyncKeyword',
-                'DeclareKeyword',
-                'PrivateKeyword',
-                'ProtectedKeyword',
-                'PublicKeyword',
-                'ReadonlyKeyword',
-                'StaticKeyword',
-            ].includes(current)
-        ) {
+        if(declarationModifierStart(current)) {
             state.next();
             if(current !== 'StaticKeyword' && (scanner.flags & 1) !== 0) {
                 break;
@@ -428,8 +487,70 @@ export function declarationAhead(scanner: Scanner): boolean {
     return result;
 }
 
+function statementTokenStart(tokenKind: string): boolean {
+    switch(tokenKind) {
+        case 'AtToken':
+        case 'SemicolonToken':
+        case 'OpenBraceToken':
+        case 'VarKeyword':
+        case 'LetKeyword':
+        case 'UsingKeyword':
+        case 'FunctionKeyword':
+        case 'ClassKeyword':
+        case 'EnumKeyword':
+        case 'IfKeyword':
+        case 'DoKeyword':
+        case 'WhileKeyword':
+        case 'ForKeyword':
+        case 'ContinueKeyword':
+        case 'BreakKeyword':
+        case 'ReturnKeyword':
+        case 'WithKeyword':
+        case 'SwitchKeyword':
+        case 'ThrowKeyword':
+        case 'TryKeyword':
+        case 'DebuggerKeyword':
+        case 'CatchKeyword':
+        case 'FinallyKeyword':
+        case 'ThisKeyword':
+        case 'SuperKeyword':
+        case 'NullKeyword':
+        case 'TrueKeyword':
+        case 'FalseKeyword':
+        case 'NumericLiteral':
+        case 'BigIntLiteral':
+        case 'StringLiteral':
+        case 'NoSubstitutionTemplateLiteral':
+        case 'TemplateHead':
+        case 'OpenParenToken':
+        case 'OpenBracketToken':
+        case 'NewKeyword':
+        case 'SlashToken':
+        case 'SlashEqualsToken':
+        case 'PlusToken':
+        case 'MinusToken':
+        case 'TildeToken':
+        case 'ExclamationToken':
+        case 'DeleteKeyword':
+        case 'TypeOfKeyword':
+        case 'VoidKeyword':
+        case 'PlusPlusToken':
+        case 'MinusMinusToken':
+        case 'LessThanToken':
+        case 'AwaitKeyword':
+        case 'YieldKeyword':
+        case 'PrivateIdentifier':
+            return true;
+        default:
+            return false;
+    }
+}
+
 export function statementAhead(scanner: Scanner): boolean {
     const current = kind(scanner);
+    if(current === 'Identifier') {
+        return true;
+    }
     if(current === 'ExportKeyword' || current === 'ConstKeyword') {
         return declarationAhead(scanner);
     }
@@ -440,16 +561,7 @@ export function statementAhead(scanner: Scanner): boolean {
         state.restore();
         return expression || declarationAhead(scanner);
     }
-    if(
-        [
-            'AccessorKeyword',
-            'PublicKeyword',
-            'PrivateKeyword',
-            'ProtectedKeyword',
-            'StaticKeyword',
-            'ReadonlyKeyword',
-        ].includes(current)
-    ) {
+    if(statementModifierStart(current)) {
         if(declarationAhead(scanner)) {
             return true;
         }
@@ -461,62 +573,10 @@ export function statementAhead(scanner: Scanner): boolean {
         return !identifier;
     }
     return (
-        [
-            'AtToken',
-            'SemicolonToken',
-            'OpenBraceToken',
-            'VarKeyword',
-            'LetKeyword',
-            'UsingKeyword',
-            'FunctionKeyword',
-            'ClassKeyword',
-            'EnumKeyword',
-            'IfKeyword',
-            'DoKeyword',
-            'WhileKeyword',
-            'ForKeyword',
-            'ContinueKeyword',
-            'BreakKeyword',
-            'ReturnKeyword',
-            'WithKeyword',
-            'SwitchKeyword',
-            'ThrowKeyword',
-            'TryKeyword',
-            'DebuggerKeyword',
-            'CatchKeyword',
-            'FinallyKeyword',
-            'ThisKeyword',
-            'SuperKeyword',
-            'NullKeyword',
-            'TrueKeyword',
-            'FalseKeyword',
-            'NumericLiteral',
-            'BigIntLiteral',
-            'StringLiteral',
-            'NoSubstitutionTemplateLiteral',
-            'TemplateHead',
-            'OpenParenToken',
-            'OpenBracketToken',
-            'NewKeyword',
-            'SlashToken',
-            'SlashEqualsToken',
-            'PlusToken',
-            'MinusToken',
-            'TildeToken',
-            'ExclamationToken',
-            'DeleteKeyword',
-            'TypeOfKeyword',
-            'VoidKeyword',
-            'PlusPlusToken',
-            'MinusMinusToken',
-            'LessThanToken',
-            'AwaitKeyword',
-            'YieldKeyword',
-            'PrivateIdentifier',
-        ].includes(current) ||
+        statementTokenStart(current) ||
         precedence(current) >= 0 ||
         current === 'Identifier' ||
-        (current.endsWith('Keyword') && !reservedKinds.includes(current))
+        (current.endsWith('Keyword') && !isReservedKind(current))
     );
 }
 
@@ -526,7 +586,7 @@ export function typeMemberAhead(scanner: Scanner): boolean {
     }
     const state = new Speculation(scanner);
     let identifier = false;
-    while(modifierKinds.includes(kind(scanner))) {
+    while(isModifierKind(kind(scanner))) {
         identifier = true;
         state.next();
     }
@@ -563,52 +623,14 @@ export function typeMemberAhead(scanner: Scanner): boolean {
 export function typeTokenStart(tokenKind: string): boolean {
     return (
         tokenKind === 'Identifier' ||
-        (tokenKind.endsWith('Keyword') && !reservedKinds.includes(tokenKind)) ||
-        [
-            'AnyKeyword',
-            'UnknownKeyword',
-            'StringKeyword',
-            'NumberKeyword',
-            'BigIntKeyword',
-            'BooleanKeyword',
-            'ReadonlyKeyword',
-            'SymbolKeyword',
-            'UniqueKeyword',
-            'VoidKeyword',
-            'UndefinedKeyword',
-            'NullKeyword',
-            'ThisKeyword',
-            'TypeOfKeyword',
-            'NeverKeyword',
-            'OpenBraceToken',
-            'OpenBracketToken',
-            'LessThanToken',
-            'BarToken',
-            'AmpersandToken',
-            'NewKeyword',
-            'StringLiteral',
-            'NumericLiteral',
-            'BigIntLiteral',
-            'TrueKeyword',
-            'FalseKeyword',
-            'ObjectKeyword',
-            'AsteriskToken',
-            'QuestionToken',
-            'ExclamationToken',
-            'DotDotDotToken',
-            'InferKeyword',
-            'ImportKeyword',
-            'AssertsKeyword',
-            'NoSubstitutionTemplateLiteral',
-            'TemplateHead',
-            'FunctionKeyword',
-        ].includes(tokenKind)
+        (tokenKind.endsWith('Keyword') && !isReservedKind(tokenKind)) ||
+        typeKeywordStart(tokenKind)
     );
 }
 
 export function modifierAhead(scanner: Scanner, permitConst: boolean): boolean {
     const current = kind(scanner);
-    if(!modifierKinds.includes(current)) {
+    if(!isModifierKind(current)) {
         return false;
     }
     const state = new Speculation(scanner);
@@ -649,6 +671,14 @@ export function modifierAhead(scanner: Scanner, permitConst: boolean): boolean {
                   ? kind(scanner) === 'EnumKeyword'
                   : follow && (current === 'StaticKeyword' || (scanner.flags & 1) === 0);
     }
+    state.restore();
+    return result;
+}
+
+export function nextIdentifierSameLine(scanner: Scanner): boolean {
+    const state = new Speculation(scanner);
+    scanner.scan();
+    const result = bindingStart(kind(scanner)) && (scanner.flags & 1) === 0;
     state.restore();
     return result;
 }

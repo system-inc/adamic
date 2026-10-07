@@ -5,9 +5,9 @@ import { Statements } from './statements.ts';
 import { Jsx } from './jsx.ts';
 import { ParseNode } from './nodes.ts';
 import {
-    modifierKinds,
+    isModifierKind,
     precedence,
-    reservedKinds,
+    isReservedKind,
     tokenSpelling,
     expressionTokenStart,
     bindingStart,
@@ -22,6 +22,7 @@ import {
     typeMemberAhead,
     typeTokenStart,
     modifierAhead,
+    nextIdentifierSameLine,
 } from './lookahead.ts';
 import type { ParserStateInterface } from './lookahead.ts';
 import { listDiagnostic, listTerminator } from './recovery.ts';
@@ -63,7 +64,8 @@ export class Parser {
         return this.scanner.kind;
     }
     scannerErrors(start: number): void {
-        for(const error of this.scanner.errors.slice(start)) {
+        for(let index = start; index < this.scanner.errors.length; index++) {
+            const error = this.scanner.errors[index] ?? panic('missing scanner error');
             const message = lexicalMessage(error, this.scanner.text);
             this.errorAt(error.code, error.start, error.start + error.length, message);
         }
@@ -71,7 +73,9 @@ export class Parser {
     next(): void {
         const errors = this.scanner.errors.length;
         this.scanner.scan();
-        this.scannerErrors(errors);
+        if(this.scanner.errors.length !== errors) {
+            this.scannerErrors(errors);
+        }
     }
     readonly listContexts: string[] = [];
     beginList(context: string): void {
@@ -285,7 +289,7 @@ export class Parser {
         return this.make('Identifier', this.scanner.fullStart);
     }
     identifier(allowReserved = true): number {
-        if(!allowReserved && reservedKinds.includes(this.kind())) {
+        if(!allowReserved && this.kind() !== 'Identifier' && isReservedKind(this.kind())) {
             return this.missingIdentifier(
                 1359,
                 `Identifier expected. '${tokenSpelling(this.kind())}' is a reserved word that cannot be used here.`,
@@ -432,11 +436,7 @@ export class Parser {
         });
     }
     nextIdentifierSameLine(): boolean {
-        const state = this.mark();
-        this.next();
-        const result = bindingStart(this.kind()) && (this.scanner.flags & 1) === 0;
-        this.rewind(state);
-        return result;
+        return nextIdentifierSameLine(this.scanner);
     }
     mark(): ParserStateInterface {
         return {
@@ -1142,7 +1142,7 @@ export class Parser {
         }
         const name = this.kind() === 'ThisKeyword' ? this.identifier() : this.bindingName();
         const node = this.node(name);
-        if(node.pos === node.end && children.length === 0 && modifierKinds.includes(this.kind())) {
+        if(node.pos === node.end && children.length === 0 && isModifierKind(this.kind())) {
             this.next();
         }
         children.push(name);
