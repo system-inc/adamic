@@ -9,6 +9,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
 	"sort"
 	"strings"
 	"sync"
@@ -21,21 +22,22 @@ import (
 // engine owns one checkout's compiler, keyed runtime archive and observation cache. Each worker
 // owns a compiler process; tests are classified and their observations reduced in serial order.
 type engine struct {
-	test262     string
-	work        string
-	adamic      string
-	runtime     []string
-	include     string
-	flags       []string
-	log         io.Writer
-	adapt       bool
-	jobs        int
-	runtimeKey  string
-	cache       *resultCache
-	nodeVersion string
-	context     string
-	compiler    *compilerWorker
-	inProcess   bool
+	test262          string
+	work             string
+	adamic           string
+	runtime          []string
+	include          string
+	flags            []string
+	log              io.Writer
+	adapt            bool
+	jobs             int
+	runtimeKey       string
+	cache            *resultCache
+	nodeVersion      string
+	context          string
+	compiler         *compilerWorker
+	inProcess        bool
+	compilerIdentity string
 }
 
 func prepare(root string, test262 string, work string) (*engine, error) {
@@ -56,17 +58,22 @@ func prepare(root string, test262 string, work string) (*engine, error) {
 	if err != nil {
 		return nil, err
 	}
+	compilerBytes, err := os.ReadFile(adamic)
+	if err != nil {
+		return nil, err
+	}
 	cache, version, context, err := prepareCache()
 	if err != nil {
 		return nil, err
 	}
 	return &engine{
-		test262:    test262,
-		work:       work,
-		adamic:     adamic,
-		runtime:    native.RuntimeLinkFlags(library),
-		runtimeKey: filepath.Base(filepath.Dir(library)),
-		cache:      cache, nodeVersion: version, context: context,
+		test262:          test262,
+		work:             work,
+		adamic:           adamic,
+		runtime:          native.RuntimeLinkFlags(library),
+		runtimeKey:       filepath.Base(filepath.Dir(library)),
+		compilerIdentity: cacheKey(string(compilerBytes)),
+		cache:            cache, nodeVersion: version, context: context,
 		include: filepath.Dir(library),
 		flags:   flags,
 		log:     os.Stderr,
@@ -187,11 +194,19 @@ func (e *engine) attempt(test classified) result {
 	base := result{Path: test.Path, Directory: test.Directory, Adaptations: test.Adaptations}
 	directory := e.programDirectory(test)
 	if err := os.MkdirAll(directory, 0700); err != nil {
-		base.Kind = outcomeCrashed
-		base.Reason = err.Error()
-		return base
+		// A broken observation cache must not prevent the uncached program from running.
+		directory = e.work
+		if err := os.MkdirAll(directory, 0700); err != nil {
+			base.Kind = outcomeCrashed
+			base.Reason = err.Error()
+			return base
+		}
 	}
 	lock, err := os.OpenFile(filepath.Join(directory, ".lock"), os.O_CREATE|os.O_RDWR, 0600)
+	if err != nil && directory != e.work {
+		directory = e.work
+		lock, err = os.OpenFile(filepath.Join(directory, ".lock"), os.O_CREATE|os.O_RDWR, 0600)
+	}
 	if err != nil {
 		base.Kind = outcomeCrashed
 		base.Reason = err.Error()
@@ -212,15 +227,28 @@ func (e *engine) attempt(test classified) result {
 	if err := os.WriteFile(module, []byte(test.Program), 0o644); err != nil {
 		return result{Path: test.Path, Directory: test.Directory, Kind: outcomeCrashed, Reason: err.Error()}
 	}
-	var lowered execution
-	if e.compiler != nil {
-		lowered = e.compiler.compile(typescript)
-		if lowered.Exit == -1 && !lowered.TimedOut {
-			lowered = runCommandWithLimit(2*time.Minute, nil, 16<<20, e.adamic, "c", typescript)
-		}
-	} else {
-		lowered = runCommandWithLimit(2*time.Minute, nil, 16<<20, e.adamic, "c", typescript)
+	cache := e.cache
+	if dependentProgram(test.Program) {
+		cache = nil
 	}
+	mode := "adamic c"
+	if e.compiler != nil {
+		mode = "persistent load/lower/C"
+	}
+	compilerKey := compilerResultKey(test.Program, e.compilerIdentity, cacheKey(mode, e.adamic, typescript, "2m", "16MiB"), e.context)
+	lowered := cache.observe(compilerKey, func() (execution, bool) {
+		var result execution
+		if e.compiler != nil {
+			result = e.compiler.compile(typescript)
+			if result.Exit == -1 && !result.TimedOut {
+				result = runCommandWithLimit(2*time.Minute, nil, 16<<20, e.adamic, "c", typescript)
+			}
+		} else {
+			result = runCommandWithLimit(2*time.Minute, nil, 16<<20, e.adamic, "c", typescript)
+		}
+		// Refusals, compiler crashes and deadlines are always retried.
+		return result, result.Exit == 0 && !result.TimedOut
+	})
 	kind, reason := compileClass(lowered.Stderr, lowered.Exit, lowered.TimedOut)
 	if kind == "refused" {
 		base.Kind = outcomeRefused
@@ -245,7 +273,10 @@ func (e *engine) attempt(test classified) result {
 	nativeCommand := cacheKey(cacheKey(arguments...), binary, "15s", "2m", fmt.Sprint(outputLimit), fmt.Sprint(nativeEnvironment))
 	key := nativeResultKey(lowered.Stdout, e.runtimeKey, nativeCommand, e.context)
 	linkFailed := false
-	nativeRun := e.cache.observe(key, func() (execution, bool) {
+	// Imported modules can read files or have mutable dependencies. Until their whole input
+	// graph is keyed, run both observations fresh rather than pretending they are closed tests.
+
+	nativeRun := cache.observe(key, func() (execution, bool) {
 		linked := runCommand(2*time.Minute, nil, "clang", arguments...)
 		if linked.Exit != 0 || linked.TimedOut {
 			linkFailed = true
@@ -264,7 +295,7 @@ func (e *engine) attempt(test classified) result {
 	}
 	nodeCommand := cacheKey("node", "--disable-warning=ExperimentalWarning", module, "15s", fmt.Sprint(outputLimit))
 	nodeKey := nodeResultKey(test.Program, e.nodeVersion, fmt.Sprint(e.adapt), nodeCommand, e.context)
-	nodeRun := e.cache.observe(nodeKey, func() (execution, bool) {
+	nodeRun := cache.observe(nodeKey, func() (execution, bool) {
 		return runCommand(15*time.Second, nil, "node", "--disable-warning=ExperimentalWarning", module), true
 	})
 	decided := decide(verdictInput{
@@ -276,6 +307,13 @@ func (e *engine) attempt(test classified) result {
 	base.Kind = decided.Kind
 	base.Reason = decided.Reason
 	return base
+}
+
+var importedProgram = regexp.MustCompile(`(?:^|[^\w$])import(?:[^\w$]|$)`)
+var referencedProgram = regexp.MustCompile(`(?m)^\s*///\s*<reference\b`)
+
+func dependentProgram(program string) bool {
+	return importedProgram.MatchString(codeOnly(program)) || referencedProgram.MatchString(program)
 }
 
 var nativeEnvironment = []string{

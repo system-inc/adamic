@@ -233,3 +233,92 @@ func TestOrderedProgress(t *testing.T) {
 		t.Fatalf("ordered progress: %q, want %q", log.String(), want)
 	}
 }
+
+func TestUnavailableCacheStillRuns(t *testing.T) {
+	t.Parallel()
+	e, err := prepare("../..", "testdata/mini", t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	path := filepath.Join(t.TempDir(), "not-a-directory")
+	if err := os.WriteFile(path, []byte("file"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	e.cache = &resultCache{directory: path}
+	source, err := os.ReadFile("testdata/mini/test/pass/pad.js")
+	if err != nil {
+		t.Fatal(err)
+	}
+	result := e.attempt(classify("pass/pad.js", string(source), false))
+	if result.Kind != outcomePass {
+		t.Fatalf("unavailable result cache changed verdict: %+v", result)
+	}
+}
+
+func TestImportedInputsRunFresh(t *testing.T) {
+	t.Parallel()
+	e, err := prepare("../..", "testdata/mini", t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	e.cache = &resultCache{directory: t.TempDir()}
+	input := filepath.Join(t.TempDir(), "input")
+	source := fmt.Sprintf("import { readTextFile } from 'adamic';\nconst value = readTextFile(%q);\nif (value.kind === 'Ok' && value.text === 'after') { throw new Error('changed'); }\n", input)
+	test := classify("input.js", source, false)
+	var reasons []string
+	for _, word := range []string{"before", "after"} {
+		if err := os.WriteFile(input, []byte(word), 0600); err != nil {
+			t.Fatal(err)
+		}
+		result := e.attempt(test)
+		if result.Kind != outcomeFail {
+			t.Fatalf("Node cannot import the native runtime; want fail, got %+v", result)
+		}
+		reasons = append(reasons, result.Reason)
+	}
+	if reasons[0] == reasons[1] {
+		t.Fatalf("mutable imported input served stale native observation: %v", reasons)
+	}
+}
+
+func TestCompilerCacheProgram(t *testing.T) {
+	t.Parallel()
+	cache := &resultCache{directory: t.TempDir()}
+	path := filepath.Join(t.TempDir(), "program.a")
+	for _, word := range []string{"before", "after"} {
+		source := program(fmt.Sprintf("console.log(%q);", word))
+		if err := os.WriteFile(path, []byte(source), 0600); err != nil {
+			t.Fatal(err)
+		}
+		key := compilerResultKey(source, "compiler", path, "context")
+		compiled := cache.reuse(key, func() (execution, bool) {
+			value := compileInProcess(path)
+			if value.Exit != 0 {
+				t.Fatal(value.Stderr)
+			}
+			return value, true
+		})
+		binary := filepath.Join(t.TempDir(), "program")
+		if err := native.Build(compiled.Stdout, binary, native.Options{}); err != nil {
+			t.Fatal(err)
+		}
+		result := runCommand(15*time.Second, nil, binary)
+		if result.Stdout != word+"\n" {
+			t.Fatalf("changed compiler program served %q, want %q", result.Stdout, word+"\n")
+		}
+	}
+	for dimension := 0; dimension < 4; dimension++ {
+		cache := &resultCache{directory: t.TempDir()}
+		for _, version := range []string{"old", "new"} {
+			parts := []string{"source", "compiler", "command", "context"}
+			parts[dimension] = version
+			result := cache.reuse(compilerResultKey(parts[0], parts[1], parts[2], parts[3]), func() (execution, bool) { return execution{Stdout: version}, true })
+			if result.Stdout != version {
+				t.Fatalf("compiler key dimension %d served stale output", dimension)
+			}
+		}
+	}
+	if !dependentProgram("/// <reference path='external.d.ts' />\nconst x = 1;") {
+		t.Fatal("reference dependency treated as closed")
+	}
+}

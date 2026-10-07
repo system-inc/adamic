@@ -48,6 +48,10 @@ func cacheKey(parts ...string) string {
 	return fmt.Sprintf("%x", hash.Sum(nil))
 }
 
+func compilerResultKey(program, compiler, command, context string) string {
+	return cacheKey("test262-compiler-v1", program, compiler, command, context)
+}
+
 func nodeResultKey(program, version, adaptation, command, context string) string {
 	return cacheKey("test262-node-v1", program, version, adaptation, command, context)
 }

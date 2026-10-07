@@ -8,7 +8,8 @@
 // directory and pass it. A test is skipped, with a reason, when it needs a feature Adamic refuses
 // or has not built, when it is a negative parse or early error, or when it loads a harness file
 // the prelude cannot stand in for. Anything else is attempted: one program, the adapted harness
-// plus the test, run with `adamic c` and clang (the runtime compiled once) and with Node. pass
+// plus the test, lowered by an isolated persistent compiler worker, linked with clang and run
+// natively and with Node. An explicit -root or -compiler-subprocess uses `adamic c`. pass
 // means both succeeded and their output matches. fail means they disagree, or native failed where
 // Node passed. refused means stage 0 or the checker said no, the reason normalized the way a meter
 // groups them (cmd/adamic-meter is not on main; see reason.go). crashed means a signal, a
@@ -19,7 +20,10 @@
 // != where both sides already have the same type, and throw new Test262Error to throw new Error
 // when nothing observes the constructor. The checkout is not modified.
 //
-// Tests run concurrently and their results are printed in serial order. The runtime is built with the address and undefined-behavior sanitizers.
+// -jobs defaults to GOMAXPROCS. Reports and progress lines retain serial order. The runtime is
+// cached per source/toolchain/flag set, with the address and undefined-behavior sanitizers.
+// Node and native observations are cached under the user cache directory, with exact program,
+// toolchain, adaptation and command identities. ADAMIC_GATE_UNCACHED=1 bypasses both result caches.
 package main
 
 import (
