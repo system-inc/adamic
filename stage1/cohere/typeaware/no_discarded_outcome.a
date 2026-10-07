@@ -1,0 +1,62 @@
+import { panic } from 'adamic';
+import { Diagnostic } from './diagnostic.ts';
+import type { Rules } from './rules.ts';
+import { types } from './facts.ts';
+import { declarationAncestry } from './declaration_ancestry.a';
+import { awaitedShape } from './awaited_shape.a';
+const names = ['JsonParseOutcomeType', 'JsoncParseOutcomeType', 'JsonFileReadOutcomeType', 'JsonFileWriteOutcomeType', 'PackageJsonReadOutcomeType'];
+const paths = ['/nexus/source/structured-text/json/Json.ts', '/nexus/source/structured-text/json/Jsonc.ts', '/nexus/source/structured-text/json/JsonFile.ts', '/nexus/source/structured-text/json/JsonFile.ts', '/nexus/source/system/PackageJson.ts'];
+export class NoDiscardedOutcome {
+    readonly rules: Rules;
+    constructor(rules: Rules) { this.rules = rules; }
+    check(index: number): void {
+        let expression = this.rules.skip(this.rules.parser.node(index).children[0] ?? -1);
+        const awaited = this.rules.parser.node(expression).kind === 'AwaitExpression';
+        if(awaited) { expression = this.rules.skip(this.rules.parser.node(expression).children[0] ?? -1); }
+        if(this.rules.parser.node(expression).kind !== 'CallExpression') { return; }
+        const facts = awaited ? awaitedShape(this.rules, expression) : types(this.rules.ask(expression, 'raw-shape'), 'raw-shape');
+        if(!facts.present || facts.roots.length === 0) { return; }
+        const arms = new Map<string, string[]>();
+        const counts = new Map<string, number>();
+        const aliases = new Map<string, string>();
+        for(const id of facts.parts(facts.root())) {
+            for(const chain of declarationAncestry(this.rules, expression, id)) {
+                if(chain[0]?.kind !== 'TypeLiteral') { continue; }
+                let at = 1;
+                while(chain[at]?.kind === 'ParenthesizedType') { at++; }
+                const union = chain[at];
+                if(union === undefined || union.kind !== 'UnionType') { continue; }
+                at++;
+                while(chain[at]?.kind === 'ParenthesizedType') { at++; }
+                const alias = chain[at]; const written = chain[at - 1];
+                if(alias === undefined || written === undefined || alias.kind !== 'TypeAliasDeclaration' || chain[at + 1]?.kind !== 'SourceFile' ||
+                    alias.typeStart !== written.start || alias.typeEnd !== written.end) { continue; }
+                const known = names.indexOf(alias.name);
+                if(known < 0 || !alias.path.endsWith(paths[known] ?? '')) { continue; }
+                const declaration = chain[0];
+                if(declaration === undefined) { continue; }
+                const key = union.identity(); const arm = declaration.identity();
+                if(!arms.has(key)) { arms.set(key, []); counts.set(key, union.children); aliases.set(key, alias.name); }
+                const collected = arms.get(key) ?? panic('missing outcome arms');
+                if(!collected.includes(arm)) { collected.push(arm); }
+            }
+        }
+        const complete: string[] = [];
+        for(const key of arms.keys()) {
+            if((arms.get(key) ?? panic('missing outcome arms')).length === counts.get(key)) { complete.push(aliases.get(key) ?? ''); }
+        }
+        for(const name of names) {
+            if(complete.includes(name)) {
+                const message = "This call returns a `{{typeName}}` and the statement throws it away, so the arm that says it failed (a write that never landed, a file that would not parse) is never read and the code runs on as if it succeeded. Keep the outcome and handle its failure arm, or return it to a caller that will. If ignoring it is the intent, say so with `void`.".replace('{{typeName}}', name);
+                const node = this.rules.parser.node(index);
+                this.rules.findings.push(new Diagnostic('nexus/correctness-no-discarded-outcome', 'outcomeDiscarded', message, this.rules.byte(this.rules.start(node)), this.rules.byte(node.end), ''));
+                return;
+            }
+        }
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            if(this.rules.parser.node(index).kind === 'ExpressionStatement') { this.check(index); }
+        }
+    }
+}

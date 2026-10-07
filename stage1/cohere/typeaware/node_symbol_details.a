@@ -1,0 +1,33 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+export class SymbolDeclaration {
+    readonly kind: string;
+    readonly library: boolean;
+    readonly ownerKind: string;
+    readonly ownerName: string;
+    constructor(kind: string, library: boolean, ownerKind: string, ownerName: string) {
+        this.kind = kind; this.library = library; this.ownerKind = ownerKind; this.ownerName = ownerName;
+    }
+}
+// Decode the existing declaration facts without turning them into a rule verdict.
+export function nodeSymbolDetails(rules: Rules, index: number): readonly SymbolDeclaration[] {
+    const frames = new Frames(rules.ask(index, 'node-symbol-details'));
+    header(frames, 'node-symbol-details');
+    const result: SymbolDeclaration[] = [];
+    if(frames.yes()) {
+        frames.natural(); frames.natural(); frames.field();
+        const count = frames.natural();
+        for(let at = 0; at < count; at++) {
+            frames.field(); const kind = frames.field(); frames.natural(); frames.natural(); frames.yes();
+            const library = frames.yes(); const ownerKind = frames.field(); const ownerName = frames.field();
+            frames.natural(); frames.natural();
+            const tags = frames.natural();
+            for(let tag = 0; tag < tags; tag++) { frames.field(); frames.field(); frames.natural(); frames.natural(); frames.field(); }
+            const parameters = frames.natural();
+            for(let parameter = 0; parameter < parameters; parameter++) { frames.field(); }
+            result.push(new SymbolDeclaration(kind, library, ownerKind, ownerName));
+        }
+    }
+    frames.end();
+    return result;
+}

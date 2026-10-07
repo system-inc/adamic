@@ -43,7 +43,7 @@ func (p *Program) inspectTypeAliasInfo(out *fields, c *checker.Checker, node *as
 		return p.thenCallbackParameters(out, c, node, question)
 	}
 	if strings.Split(question, "\n")[0] != "type-alias-info" {
-		return "", fmt.Errorf("unsupported checker question: %s", question)
+		return p.inspectContinuation(out, c, node, question)
 	}
 	if err := p.typeAliasInfo(out, c, question); err != nil {
 		return "", err

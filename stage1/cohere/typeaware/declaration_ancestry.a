@@ -1,0 +1,33 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+export class Ancestor {
+    readonly kind: string;
+    readonly name: string;
+    readonly start: number;
+    readonly end: number;
+    readonly path: string;
+    readonly children: number;
+    readonly typeStart: number;
+    readonly typeEnd: number;
+    constructor(kind: string, name: string, start: number, end: number, path: string, children: number, typeStart: number, typeEnd: number) {
+        this.kind = kind; this.name = name; this.start = start; this.end = end; this.path = path;
+        this.children = children; this.typeStart = typeStart; this.typeEnd = typeEnd;
+    }
+    identity(): string { return `${this.path}:${this.start}:${this.end}:${this.kind}`; }
+}
+export function declarationAncestry(rules: Rules, index: number, id: number): readonly Ancestor[][] {
+    const frames = new Frames(rules.ask(index, `declaration-ancestry\n${id}`));
+    header(frames, 'declaration-ancestry');
+    const result: Ancestor[][] = [];
+    const declarations = frames.natural();
+    for(let at = 0; at < declarations; at++) {
+        const chain: Ancestor[] = [];
+        const count = frames.natural();
+        for(let ancestor = 0; ancestor < count; ancestor++) {
+            chain.push(new Ancestor(frames.field(), frames.field(), frames.natural(), frames.natural(), frames.field(), frames.natural(), frames.natural(), frames.natural()));
+        }
+        result.push(chain);
+    }
+    frames.end();
+    return result;
+}
