@@ -1,0 +1,28 @@
+import * as fs from 'node:fs';
+const statSyncOptions = {throwIfNoEntry: false} as const;
+function statSync(path: string): import('fs').Stats | undefined {
+    try { return fs.statSync(path, statSyncOptions); }
+    catch { return undefined; }
+}
+function fileExists(path: string): boolean {
+    const stat = statSync(path);
+    return stat !== undefined && stat.isFile();
+}
+function directoryExists(path: string): boolean {
+    const stat = statSync(path);
+    return stat !== undefined && stat.isDirectory();
+}
+for (const path of ['node_fs_directory_inputs/plain.txt','node_fs_directory_inputs/nested','node_fs_directory_inputs/absent','node_fs_directory_inputs/plain.txt/child']) {
+    console.log(`${path} ${fileExists(path)} ${directoryExists(path)}`);
+    try { console.log(`direct ${fs.statSync(path,statSyncOptions) === undefined}`); }
+    catch (error) { if (error instanceof Error) {
+        const errno: NodeJS.ErrnoException = error;
+        console.log(`caught ${errno.code ?? ''} ${error.message}`);
+    } }
+}
+const throwingOptions = {throwIfNoEntry: true} as const;
+try { fs.statSync('node_fs_directory_inputs/absent', throwingOptions); }
+catch (error) { if (error instanceof Error) {
+    const errno: NodeJS.ErrnoException = error;
+    console.log(`required ${errno.code ?? ''} ${error.message}`);
+} }

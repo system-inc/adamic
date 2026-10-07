@@ -153,6 +153,8 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 	for _, sourceFile := range program.GetSourceFiles() {
 		byPath[sourceFile.PathKey()] = sourceFile
 	}
+	// The Node declarations' index follows the prelude when the program imports node:*, so only
+	// the named paths are checked here.
 	for _, root := range roots[:len(paths)] {
 		sourceFile, isLoaded := byPath[fileSystem.CaseSensitivity().PathKey(root.AsPath())]
 		if !isLoaded {

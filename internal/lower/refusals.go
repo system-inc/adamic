@@ -88,7 +88,9 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			return true
 		}
 		checkedCast := false
-		if node.Kind == ast.KindAsExpression {
+		// A cast on a process path (process.stdout as {...}) is never lowered as a cast: processPath
+		// reads through it, and processValue lowers the complete path or refuses it.
+		if node.Kind == ast.KindAsExpression && l.processPath(node.AsAsExpression().Expression) == "" {
 			proof, err := l.castProof(node)
 			if err != nil {
 				found = err

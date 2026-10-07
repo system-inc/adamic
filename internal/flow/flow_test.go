@@ -47,7 +47,10 @@ func programs(t *testing.T) []string {
 	// refused, so they have no accepted IR to trace. The oracle still verifies refusal.
 	// The process runtime-only probes are tested through explicit IR by their oracle
 	// tests; their source does not lower. Keep each exclusion explicit so other lowering
-	// failures still fail the flow gate.
+	// failures still fail the flow gate. normalize_coverage_long.a observes every point of
+	// million-unit normalized strings; its trace would record hundreds of millions of
+	// instructions, the smaller normalization fixtures cover the same loop shapes here, and
+	// the oracle still runs the long program.
 	paths = slices.DeleteFunc(paths, func(path string) bool {
 		switch filepath.Base(path) {
 		case "regexp_surrogate_limit_refused.a", "regexp_surrogate_nested_limit_refused.a", "regexp_native_write_groups_compound_missing.a",

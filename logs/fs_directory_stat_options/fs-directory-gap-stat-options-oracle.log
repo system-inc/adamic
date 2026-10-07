@@ -1,0 +1,20 @@
+=== RUN   TestInputAgreesWithNode
+=== PAUSE TestInputAgreesWithNode
+=== RUN   TestNodeFSDirectoryStatConstOptionsMutant
+=== PAUSE TestNodeFSDirectoryStatConstOptionsMutant
+=== CONT  TestInputAgreesWithNode
+=== CONT  TestNodeFSDirectoryStatConstOptionsMutant
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_stat_options.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_stat_options.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_stat_options.a
+    input_test.go:111: gate cache probe miss
+=== NAME  TestNodeFSDirectoryStatConstOptionsMutant
+    node_fs_directory_stat_options_test.go:45: false option forced true; caught only by Node stdout; sanitizers and leaks clean
+--- PASS: TestNodeFSDirectoryStatConstOptionsMutant (2.29s)
+--- PASS: TestInputAgreesWithNode (0.00s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_stat_options.a (2.74s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=1
+ok  	github.com/system-inc/adamic/internal/oracle	2.843s

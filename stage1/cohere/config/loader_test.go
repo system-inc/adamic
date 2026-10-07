@@ -58,6 +58,7 @@ func loaderCases(t *testing.T) string {
 		"cycle-a": "{\"extends\":\"./cycle-b.json\"}", "cycle-b": "{\"extends\":\"./cycle-a.json\"}",
 		"absent-base": "{\"extends\":\"./absent.json\"}", "set-typescript": "{\"extends\":\"cohere:typescript\"}",
 		"set-composed": "{\"extends\":[\"cohere:react\",\"cohere:next\",\"cohere:tailwind\"]}", "set-adamic": "{\"extends\":\"cohere:adamic\"}",
+		"set-style": "{\"extends\":\"cohere:style\"}", "old-house": "{\"extends\":\"cohere:house\"}",
 		"bad-set": "{\"extends\":\"cohere:absent\"}", "empty-extends": "{\"extends\":[\"\"]}", "wrong-extends": "{\"extends\":7}",
 		"reason":     "{\"rules\":{\"eqeqeq\":\"off\"},\"reasons\":{\"eqeqeq\":\"  Chosen off.  \"}}",
 		"bad-reason": "{\"reasons\":{\"eqeqeq\":\"Something.\"}}", "empty-reason": "{\"reasons\":{\"eqeqeq\":\" \"}}",
@@ -115,7 +116,7 @@ func loaderCases(t *testing.T) string {
 		path := write(name, fmt.Sprintf(`{"extends":"./base.json","rules":{"eqeqeq":%q}%s}`, rule, extra))
 		fmt.Fprintf(&input, "settings\t%s\n", path)
 	}
-	for _, name := range []string{"src/a.ts", "src/a.tsx", "src/a.d.ts", "src/a.js", "src/a.jsx", "src/b.ts", "src/b.d.ts", "src/b.js", "src/x.cts", "src/x.d.cts", "src/x.cjs", "src/x.mts", "src/x.d.mts", "src/x.mjs", "src/z.min.js", "src/keep.min.js", "src/é.ts", "src/😀.ts", "src/.hidden.ts", "src/deep/c.ts", "src/deep/data.json", "src/data.json", "src/code.a", "src/node_modules/n.ts", "src/.hidden/h.ts", "src/UPPER.TS", "out/a.ts"} {
+	for _, name := range []string{"src/a.ts", "src/a.tsx", "src/a.d.ts", "src/a.js", "src/a.jsx", "src/b.ts", "src/b.d.ts", "src/b.js", "src/x.cts", "src/x.d.cts", "src/x.cjs", "src/x.mts", "src/x.d.mts", "src/x.mjs", "src/z.min.js", "src/keep.min.js", "src/é.ts", "src/😀.ts", "src/.hidden.ts", "src/deep/c.ts", "src/deep/data.json", "src/data.json", "src/code.a", "src/a.a", "src/node_modules/n.ts", "src/.hidden/h.ts", "src/UPPER.TS", "out/a.ts"} {
 		write(name, "export const value=1;\n")
 	}
 	projects := map[string]string{
@@ -130,6 +131,13 @@ func loaderCases(t *testing.T) string {
 		"json":              "{\"compilerOptions\":{\"resolveJsonModule\":true},\"include\":[\"../src/**/*.json\",\"../src/**/*.ts\"]}",
 		"foreign-extension": `{ "sourceExtensions": [".a"], "include": ["../src"] }`,
 		"literal-foreign":   `{ "files": ["../src/code.a"] }`,
+		"extension-base":    `{ "sourceExtensions": [".a"], "include": ["../src"] }`,
+		"extension-child":   `{ "extends": "./extension-base.json" }`,
+		"extension-clear":   `{ "extends": "./extension-base.json", "sourceExtensions": [] }`,
+		"extension-invalid": `{ "sourceExtensions": ["a", ".", ".ts", ".TS", ".json", ".a", ".a"], "include": ["../src"] }`,
+		"extension-types":   `{ "sourceExtensions": [7, ".a", null], "include": ["../src"] }`,
+		"extension-wrong":   `{ "sourceExtensions": true, "include": ["../src"] }`,
+		"extension-null":    `{ "sourceExtensions": null, "include": ["../src"] }`,
 		"unknown-option":    "{\"compilerOptions\":{\"doesNotExist\":true,\"target\":\"nonsense\"},\"include\":[\"../src\"]}",
 		"template":          "{\"include\":[\"${configDir}/../src\"]}", "wildcard-question": "{\"include\":[\"../src/?.ts\"]}",
 		"hidden-explicit":       "{\"include\":[\"../src/.hidden/*.ts\",\"../src/.hidden.ts\"]}",
@@ -196,6 +204,8 @@ func TestLoadersMatchGoCohere(t *testing.T) {
 	}
 	t.Logf("%d settings, %d tsconfigs, %d source files", strings.Count(want, "settings "), strings.Count(want, "tsconfig "), strings.Count(want, "\nfile "))
 	for _, mutant := range []struct{ name, file, from, to string }{
+		{"source extension opt-in", "tsconfig.ts", "if (!extensions.includes(suffix))", "if (false)"},
+		{"preset origin", "sets.ts", `\"cohere:style\"`, `\"cohere:house\"`},
 		{"strict JSON comments", "settings.ts", "parseJson(text, false)", "parseJson(text, true)"},
 		{"inherited rule options", "settings.ts", "setting = { severity: setting.severity, options: inherited.options };", "setting = { severity: setting.severity, options: [] };"},
 		{"tsconfig excludes", "tsconfig.ts", "if (exclude.matches(path, false))", "if (false)"},
@@ -203,10 +213,19 @@ func TestLoadersMatchGoCohere(t *testing.T) {
 		t.Run("catches "+mutant.name, func(t *testing.T) {
 			path := filepath.Join(filepath.Dir(portDirectory(t, mutant.file, mutant.from, mutant.to)), "loader_main.ts")
 			program := lowered(t, path)
-			for _, side := range []struct {
+			sides := []struct {
 				name   string
 				result run
-			}{{"native", nativelyRun(t, program, input)}, {"Node", onNode(t, path, input)}} {
+			}{{"native", nativelyRun(t, program, input)}, {"Node", onNode(t, path, input)}, {"backend", onJavaScriptBackend(t, program, input)}}
+			if mutant.name == "preset origin" {
+				for _, side := range sides[1:] {
+					if string(side.result.stdout) != string(sides[0].result.stdout) {
+						t.Fatal("preset mutant must agree across Adamic and Node before Go catches it")
+					}
+				}
+				t.Log("all three port executions agree; only the independent Go reference catches the preset mutant")
+			}
+			for _, side := range sides {
 				if side.result.exitCode != 0 || len(side.result.stderr) > 0 {
 					t.Fatalf("%s mutant must execute successfully: exit %d stderr %s", side.name, side.result.exitCode, side.result.stderr)
 				}

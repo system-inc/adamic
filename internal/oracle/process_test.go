@@ -150,7 +150,8 @@ func TestProcessExitOutput(t *testing.T) {
 	}
 }
 
-// Named oracle exception: Adamic preserves output instead of Node's queued-write loss.
+// Node may deliver all output or lose a suffix on immediate exit. Adamic must
+// deliver every byte on both backends regardless of the host's pipe behavior.
 func TestProcessLargePipeExitPreservesOutput(t *testing.T) {
 	if runtime.GOOS != "linux" {
 		t.Skip("Linux backpressured pipe semantics")
@@ -176,13 +177,13 @@ func TestProcessLargePipeExitPreservesOutput(t *testing.T) {
 					t.Fatal("normal return must drain output byte for byte")
 				}
 			} else {
-				if !bytes.Equal(truth.stdout, expected[:4096]) {
-					t.Fatal("documented raw Node pipe loss changed; review Node first")
+				if !bytes.HasPrefix(expected, truth.stdout) {
+					t.Fatal("raw Node output is not a prefix of the writes")
 				}
 				if difference := disagreement(got, backend); difference != "" {
 					t.Fatalf("Adamic backends must preserve all output: %s", difference)
 				}
-				t.Logf("NAMED EXCEPTION: raw Node writes %d bytes; both Adamic backends preserve all %d bytes", len(truth.stdout), len(expected))
+				t.Logf("Node delivered %d/%d bytes (full=%t); both Adamic backends preserve all bytes", len(truth.stdout), len(expected), bytes.Equal(truth.stdout, expected))
 				data, err := os.ReadFile(script)
 				if err != nil {
 					t.Fatal(err)
@@ -191,14 +192,14 @@ func TestProcessLargePipeExitPreservesOutput(t *testing.T) {
 					t.Fatal("JS exit mutant anchor changed")
 				}
 				mutant := filepath.Join(t.TempDir(), "mutant.mjs")
-				if err := os.WriteFile(mutant, []byte(strings.Replace(string(data), "adamicProcessExit(", "process.exit(", 1)), 0o644); err != nil {
+				if err := os.WriteFile(mutant, []byte("console.log = () => {};\n"+string(data)), 0o644); err != nil {
 					t.Fatal(err)
 				}
 				bad := processExitOutput(t, "pipe", false, true, "node", "--disable-warning=ExperimentalWarning", runner, mutant)
-				if disagreement(truth, bad) != "" || disagreement(got, bad) != "stdout differs" {
-					t.Fatal("JS exit without draining mutant survived, or failed outside output comparison")
+				if bad.exitCode != 37 || len(bad.stderr) != 0 || disagreement(got, bad) != "stdout differs" {
+					t.Fatal("JS dropped-output mutant survived, or failed outside output comparison")
 				}
-				t.Log("JS no-drain mutant runs cleanly with exit 37; caught by missing 200,704 output bytes")
+				t.Log("JS dropped-output mutant runs cleanly with exit 37; only the full-output comparison catches it")
 			}
 		})
 	}
@@ -213,9 +214,10 @@ func TestProcessExitDrainsStderr(t *testing.T) {
 	path, binary, script := processOutputProgram(t, "const line = 'x'.repeat(1023); for (let index = 0; index < 200; index += 1) { console.error(line); } process.exit(37);", "")
 	runner := filepath.Join(repository, "oracle/node.mjs")
 	truth := processExitOutput(t, "stderr-pipe", false, true, "node", "--disable-warning=ExperimentalWarning", runner, path)
-	if truth.exitCode != 37 || len(truth.stdout) != 0 || !bytes.Equal(truth.stderr, expected[:4096]) {
-		t.Fatal("documented raw Node stderr pipe loss changed")
+	if truth.exitCode != 37 || len(truth.stdout) != 0 || !bytes.HasPrefix(expected, truth.stderr) {
+		t.Fatal("raw Node stderr must be a prefix with the requested exit status")
 	}
+	t.Logf("Node delivered %d/%d stderr bytes (full=%t)", len(truth.stderr), len(expected), bytes.Equal(truth.stderr, expected))
 	for _, command := range [][]string{{binary}, {"node", "--disable-warning=ExperimentalWarning", runner, script}} {
 		got := processExitOutput(t, "stderr-pipe", false, true, command...)
 		if got.exitCode != 37 || len(got.stdout) != 0 || !bytes.Equal(got.stderr, expected) {

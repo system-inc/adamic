@@ -77,7 +77,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "stage3/fixtures/host/05_writeFile.a:13:9: Adamic 0.1 refuses a boolean | undefined as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      "what": "stage3/fixtures/host/05_writeFile.a:37:30: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
     }
   },
   {
@@ -97,7 +97,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/host/06_fileExists.a:48:5: stage 0 can't lower node:fs.symlinkSync yet"
+      "what": "stage3/fixtures/host/06_fileExists.a:29:9: stage 0 can't lower a PrefixUnaryExpression on a value yet"
     }
   },
   {
@@ -117,7 +117,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/host/07_directoryExists.a:48:5: stage 0 can't lower node:fs.symlinkSync yet"
+      "what": "stage3/fixtures/host/07_directoryExists.a:29:9: stage 0 can't lower a PrefixUnaryExpression on a value yet"
     }
   },
   {
@@ -147,7 +147,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/host/08_getDirectories.a:208:5: stage 0 can't lower node:fs.symlinkSync yet"
+      "what": "stage3/fixtures/host/08_getDirectories.a:143:44: stage 0 can't lower a parameter that isn't a plain name yet"
     }
   },
   {
@@ -165,8 +165,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/09_realpath.a:27:5: stage 0 can't lower node:fs.symlinkSync yet"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -184,7 +184,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/host/10_getModifiedTime.a:33:5: stage 0 can't lower node:fs.symlinkSync yet"
+      "what": "stage3/fixtures/host/10_getModifiedTime.a:31:24: stage 0 can't lower a call through ?. (an optional call) yet"
     }
   },
   {
@@ -198,7 +198,10 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"Compiles","what":""}
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
   },
   {
     "file": "12_deleteFile.a",
@@ -212,8 +215,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/12_deleteFile.a:21:5: stage 0 can't lower node:fs.symlinkSync yet"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -268,8 +271,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/15_getExecutingFilePath.a:21:21: stage 0 can't lower node:path.basename yet"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -401,7 +404,10 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"Compiles","what":""}
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
   },
   {
     "file": "24_useCaseSensitiveFileNames.a",
@@ -424,7 +430,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/host/24_useCaseSensitiveFileNames.a:20:16: stage 0 can't lower statSync: fs options other than a fixed literal or its plain const binding yet"
+      "what": "stage3/fixtures/host/24_useCaseSensitiveFileNames.a:32:9: stage 0 can't lower a PrefixUnaryExpression on a value yet"
     }
   },
   {
@@ -539,7 +545,7 @@
     },
     "stage0": {
       "outcome": "Checker",
-      "what": "stage3/fixtures/host/25_readDirectory.a:1001:23: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:1041:17: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/host/25_readDirectory.a:1046:21: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/host/25_readDirectory.a:408:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:430:21: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:449:29: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:513:31: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:543:5: error TS2322: Type '(string | undefined)[]' is not assignable to type 'string[]'.\n  Type 'string | undefined' is not assignable to type 'string'.\n    Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/25_readDirectory.a:587:5: error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.\nstage3/fixtures/host/25_readDirectory.a:588:5: error TS2322: Type 'T | undefined' is not assignable to type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:613:54: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/25_readDirectory.a:709:34: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:741:10: error TS7030: Not all code paths return a value.\nstage3/fixtures/host/25_readDirectory.a:851:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:879:31: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+      "what": "stage3/fixtures/host/25_readDirectory.a:1001:23: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:1041:17: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/host/25_readDirectory.a:1046:21: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/host/25_readDirectory.a:408:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:430:21: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:449:29: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:513:31: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:543:5: error TS2322: Type '(string | undefined)[]' is not assignable to type 'string[]'.\n  Type 'string | undefined' is not assignable to type 'string'.\n    Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/25_readDirectory.a:587:5: error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.\nstage3/fixtures/host/25_readDirectory.a:588:5: error TS2322: Type 'T | undefined' is not assignable to type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:613:54: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/25_readDirectory.a:709:34: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:851:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:879:31: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
     }
   }
 ]

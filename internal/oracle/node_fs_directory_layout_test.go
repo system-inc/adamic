@@ -40,7 +40,7 @@ func TestNodeFSDirectoryRuntimeLayouts(t *testing.T) {
 	// Omitting the runtime's (kind, path) shape falsely makes path uniform at
 	// slot 0, the position of the program's own field. Reproduce that old C.
 	generated := native.C(program)
-	pattern := regexp.MustCompile(`adamic_object_field\((adamic_[A-Za-z0-9_]+), "path", &adamic_cache_[0-9]+\)`)
+	pattern := regexp.MustCompile(`adamic_object_data_field\((adamic_[A-Za-z0-9_]+), "path", &adamic_cache_[0-9]+\)`)
 	changed := pattern.ReplaceAllString(generated, "(&${1}->slots[0])")
 	if changed == generated || strings.Contains(changed, `"path", &adamic_cache_`) {
 		t.Fatal("layout mutant changed nothing or missed a path read")
