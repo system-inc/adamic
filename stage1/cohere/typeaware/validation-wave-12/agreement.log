@@ -1,0 +1,18 @@
+=== RUN   TestWave12AgreementAndMutants
+    wave_12_test.go:104: typescript/no_redeclare_corpus_data_test.go: 86 reference source rows
+    wave_12_test.go:104: typescript/no_redeclare_discrimination_test.go: 29 reference source rows
+    wave_12_test.go:104: nexus/correctness_no_test_on_global_regex_test.go: 22 reference source rows
+    wave_12_test.go:104: nexus/correctness_no_write_only_collection_test.go: 23 reference source rows
+    wave_12_test.go:108: controls: 62220 identical finding bytes; findings 89
+    wave_12_test.go:116: controls-asan: 62220 identical finding bytes; findings 89
+    wave_12_test.go:127: no_redeclare.a mutant exits 0, empty stderr, byte oracle catches byte 44
+    wave_12_test.go:127: no_test_on_global_regex.a mutant exits 0, empty stderr, byte oracle catches byte 5496
+    wave_12_test.go:127: no_write_only_collection.a mutant exits 0, empty stderr, byte oracle catches byte 9106
+    wave_12_test.go:139: repository: 18903 identical finding bytes; findings 1
+    wave_12_test.go:140: repository-asan: 18903 identical finding bytes; findings 1
+    wave_12_test.go:139: compiler: 8014 identical finding bytes; findings 5
+    wave_12_test.go:140: compiler-asan: 8014 identical finding bytes; findings 5
+    wave_12_test.go:155: released handle panics 70; retaining registry mutant exits 0 and is caught
+--- PASS: TestWave12AgreementAndMutants (101.35s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	101.359s
