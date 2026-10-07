@@ -1,0 +1,19 @@
+export class Node {
+    readonly index: number;
+    readonly kind: number;
+    readonly kindName: string;
+    readonly file: string;
+    readonly pos: number;
+    readonly end: number;
+    readonly start: number;
+    readonly text: string;
+    readonly children: readonly number[];
+    readonly list: number;
+    readonly parent: number;
+    initializer = -1;
+    constructor(index: number, kind: number, kindName: string, file: string, pos: number, end: number, start: number,
+        text: string, children: readonly number[], list: number, parent: number) {
+        this.index=index;this.kind=kind;this.kindName=kindName;this.file=file;this.pos=pos;this.end=end;this.start=start;
+        this.text=text;this.children=children;this.list=list;this.parent=parent;
+    }
+}
