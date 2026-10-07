@@ -48,7 +48,7 @@ func TestNumericEnumNeverProof(t *testing.T) {
 		name, source string
 		guarded      bool
 	}{
-		{"member", "enum E { A, B } const member: E = E.A; switch(member) { case E.A: break; default: { const unreachable: never = member; console.log(`${unreachable}`); } }", false},
+		{"member", "enum E { A, B } const member: E = E.A; switch(member) { case E.A: break; default: { const unreachable: never = member; console.log(`${unreachable}`); } }", true},
 		{"parameter", "enum E { A, B } function show(e: E): number { switch(e) { case E.A: return 1; case E.B: return 2; default: { const unreachable: never = e; return 3; } } }", true},
 		{"combination", "enum E { A = 1 << 0, B = 1 << 1 } const mask: E = E.A | E.B; switch(mask) { case E.A: break; case E.B: break; default: { const unreachable: never = mask; console.log(`${unreachable}`); } }", true},
 		{"array_read", "enum E { A, B } function show(values: E[]): number { if(values[0] === undefined) return 0; if(values[0] === E.A) return 1; if(values[0] === E.B) return 2; const unreachable: never = values[0]; return 3; }", true},

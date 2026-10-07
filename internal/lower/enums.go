@@ -348,25 +348,18 @@ func (l *lowering) enumExpression(node *ast.Node) (ir.Expression, bool, error) {
 }
 
 func (l *lowering) enumRefusal(node *ast.Node) error {
+	// The checker conflates a singleton numeric enum with its member literal.
+	// Its arbitrary numeric values can overlap another variant's tag, so a
+	// payload refinement needs a checked object view that this backend lacks.
 	if l.isExpression(node) {
 		if symbol := l.flagValueSymbol(node); symbol != nil {
 			declared := l.checker.GetTypeOfSymbol(symbol)
 			observed := l.checker.GetTypeAtLocation(node)
-			objectMembers := 0
-			if declared.Flags()&checker.TypeFlagsUnion != 0 {
-				for _, member := range declared.Types() {
-					if member.Flags()&checker.TypeFlagsObject != 0 {
-						objectMembers++
-					}
-				}
-			}
-			if objectMembers > 1 && declared.Flags()&checker.TypeFlagsUnion != 0 && observed != declared && observed.Flags()&checker.TypeFlagsObject != 0 {
-				for _, member := range declared.Types() {
-					for _, field := range l.checker.GetPropertiesOfType(member) {
-						tag := l.checker.GetTypeOfSymbol(field)
-						if l.openNumericEnumType(tag) {
-							return &Refused{Where: l.program.Where(node), What: "an object refinement using an open numeric enum as a literal tag", Fix: "use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)"}
-						}
+			if declared.Flags()&checker.TypeFlagsUnion != 0 && observed != declared && observed.Flags()&checker.TypeFlagsObject != 0 {
+				for _, field := range l.checker.GetPropertiesOfType(observed) {
+					tag := l.checker.GetTypeOfSymbol(field)
+					if tag.Flags()&checker.TypeFlagsNumberLiteral != 0 && l.openNumericEnumType(tag) {
+						return &Refused{Where: l.program.Where(node), What: "an ambiguous singleton numeric enum tag without a checked object view", Fix: "use a member-specific tag from a multi-member enum until checked object views can validate the payload (adamic/enum-tag)"}
 					}
 				}
 			}
@@ -486,6 +479,9 @@ func (l *lowering) enumSwitchCovered(node *ast.Node) bool {
 	covered := map[any]bool{}
 	for _, clause := range statement.CaseBlock.AsCaseBlock().Clauses.Nodes {
 		if clause.Kind == ast.KindDefaultClause {
+			if l.numericEnum(l.enumIdentity(proven)) {
+				return false
+			}
 			continue
 		}
 		test := clause.AsCaseOrDefaultClause().Expression
