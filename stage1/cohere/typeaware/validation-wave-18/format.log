@@ -1,0 +1,12 @@
+go: downloading github.com/dop251/goja v0.0.0-20260822123354-58e940e0d230
+go: downloading github.com/google/pprof v0.0.0-20230207041349-798e818bf904
+go: downloading github.com/go-sourcemap/sourcemap v2.1.3+incompatible
+=== RUN   TestWave18Format
+    wave_18_format_test.go:10: await_thenable.a formatted and stable
+    wave_18_format_test.go:10: class_literal_property_style.a formatted and stable
+    wave_18_format_test.go:10: iteration_type_facts.a formatted and stable
+    wave_18_format_test.go:10: base_member_facts.a formatted and stable
+    wave_18_format_test.go:10: wave_18_suite.a formatted and stable
+--- PASS: TestWave18Format (0.03s)
+PASS
+ok  	github.com/system-inc/cohere/internal/format/native	0.039s
