@@ -132,3 +132,7 @@ All three native rules are implemented with numeric kind listeners and handed-no
 ### Mandatory regex migration status
 
 Under the updated no-handwritten-matcher requirement, boolean-prop-naming's option matcher now uses new RegExp(pattern, 'u') and message interpolation uses the literal from codex/lint-regex. The literal helper passes Go/native/emitted-JavaScript/sanitizer comparisons and a compiled byte-only mutant. Native runtime RegExp construction is still refused on current main c01907a70, so the full owned React driver is now blocked at boolean_pattern.a:4:23 and its oracle explicitly SKIPs with that reason. This is a regex lowering blocker, not the parked IR/SSA/capture category. Existing prior green results predate this migration. No additional rules were claimed. See wave_03_react/REGEX_MIGRATION.md. The final three rule.json files declare parser kind names in kinds as required by the shared registry.
+
+### Landing refresh on b8fb957aa
+
+Rebased onto fetched origin/main b8fb957aa and reran all owned suites. Twelve rules pass full comparisons, mutants, sanitizer and handle checks; the combined three-rule React suite explicitly skips for the unchanged native new RegExp(pattern, 'u') refusal. The standalone literal interpolation again passes all 15 Go/native/emitted-JavaScript/sanitizer controls and its compiled byte-only mutant. No new claims; the branch is not described as fully oracle-green while this blocker remains. See wave_03_react/LANDING_B8FB.md.
