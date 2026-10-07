@@ -167,6 +167,9 @@ func TestSlot03HelperMutants(t *testing.T) {
 }
 
 func verifyCoverage(t *testing.T) {
+	verifyCoverageAt(t, "testdata", []string{"/react.isComponentBaseName", "/tailwind.isSpace", "/tailwind.ListenerKinds"})
+}
+func verifyCoverageAt(t *testing.T, directory string, suffixes []string) {
 	t.Helper()
 	var ledger struct {
 		Remaining []struct {
@@ -184,7 +187,7 @@ func verifyCoverage(t *testing.T) {
 	expected := map[string]bool{}
 	for _, rule := range ledger.Remaining {
 		for _, helper := range rule.RemainingHelpers {
-			for _, suffix := range []string{"/react.isComponentBaseName", "/tailwind.isSpace", "/tailwind.ListenerKinds"} {
+			for _, suffix := range suffixes {
 				if strings.HasSuffix(helper, suffix) {
 					expected[rule.Rule] = true
 				}
@@ -196,7 +199,7 @@ func verifyCoverage(t *testing.T) {
 		Sources      int
 		CohereCommit string `json:"cohere_commit"`
 	}
-	data, err = os.ReadFile("testdata/coverage.json")
+	data, err = os.ReadFile(filepath.Join(directory, "coverage.json"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -204,7 +207,7 @@ func verifyCoverage(t *testing.T) {
 		t.Fatal(err)
 	}
 	observed := map[string]bool{}
-	f, err := os.Open("testdata/sources.jsonl.gz")
+	f, err := os.Open(filepath.Join(directory, "sources.jsonl.gz"))
 	if err != nil {
 		t.Fatal(err)
 	}

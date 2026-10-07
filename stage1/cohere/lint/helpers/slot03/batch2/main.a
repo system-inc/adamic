@@ -1,5 +1,6 @@
 import { panic, programArguments, readTextFile } from 'adamic';
 import { OptionsJson } from '../../options_json.ts';
+import { holeEdges } from './hole_edges.a';
 import { isIntrinsicElementNamed } from './intrinsic_element_named.a';
 const input = readTextFile(programArguments()[0] ?? panic('missing cases'));
 if(input.kind === 'Error') { panic(input.message); }
@@ -12,4 +13,15 @@ for(const item of json.node(json.field(root, 'intrinsic')).children) {
     const text = json.node(json.field(item, 'text')).text;
     const name = json.node(json.field(item, 'name')).text;
     console.log(`${isIntrinsicElementNamed(node, kind, text, name)}`);
+}
+
+for(const item of json.node(json.field(root, 'edges')).children) {
+    const before = json.node(json.field(item, 'before')).text;
+    const after = json.node(json.field(item, 'after')).text;
+    const first = json.node(json.field(item, 'first')).text === 'true';
+    const last = json.node(json.field(item, 'last')).text === 'true';
+    const leading = json.node(json.field(item, 'leading')).text === 'true';
+    const trailing = json.node(json.field(item, 'trailing')).text === 'true';
+    const edges = holeEdges(before, after, first, last, { leading, trailing });
+    console.log(`${edges.leading},${edges.trailing}`);
 }

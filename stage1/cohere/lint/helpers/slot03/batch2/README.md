@@ -1,0 +1,9 @@
+# Slot 03 continuation contracts
+
+One helper per `.a` file. The frozen parent readiness ledger decides consumer counts. Removed dependencies are not completed rules.
+
+`isIntrinsicElementNamed(node, kind, text, name)` accepts an arena node index, parser kind without the `Kind` prefix, and decoded identifier text. A negative index is nil. It accepts only an exact name on an Identifier node. It deliberately does not enforce lowercase: Go's implementation accepts any supplied matching identifier name. Member and namespace shapes remain distinct kinds.
+
+`holeEdges(before, after, firstHole, lastHole, template)` returns leading/trailing contact flags for a template hole. Empty first/last boundaries inherit the surrounding template's flags; empty interior boundaries touch a neighbor. Nonempty boundaries test only the last/first character respectively against the delivered six-ASCII-rune `isTailwindSpace`. UTF-16 units here are equivalent to Go's UTF-8 boundary bytes for valid strings: neither a non-ASCII byte nor a non-ASCII unit is one of those six ASCII whitespace values.
+
+The Go overlay parses actual consuming-rule runtime fixture sources with typescript-go. Comparisons use the original Adamic source on Node and ASan/UBSan native. Every fixture consumer must appear in the capture and manifest, and the cohere pin must match. The capture hooks run before external Tailwind engine skips, but upstream corpus/installation failures remain failures in capture.log. Synthetic controls cover nil, wrong kinds, exact matching, all sixteen hole-position/parent-edge combinations and ASCII/control/Unicode boundaries. New rule finding implementations and external engine corpora are outside this helper unit.

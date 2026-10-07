@@ -1,6 +1,7 @@
 {
   "symbols": [
-    "jsx.IsIntrinsicElementNamed"
+    "jsx.IsIntrinsicElementNamed",
+    "tailwind.holeEdges"
   ],
   "rules": [
     "@next/next/google-font-display",
@@ -13,13 +14,25 @@
     "@next/next/no-styled-jsx-in-document",
     "@next/next/no-sync-scripts",
     "@next/next/no-unwanted-polyfillio",
+    "better-tailwindcss/enforce-canonical-classes",
+    "better-tailwindcss/enforce-consistent-class-order",
+    "better-tailwindcss/enforce-consistent-important-position",
+    "better-tailwindcss/enforce-consistent-variable-syntax",
+    "better-tailwindcss/enforce-consistent-variant-order",
+    "better-tailwindcss/enforce-shorthand-classes",
+    "better-tailwindcss/no-conflicting-classes",
+    "better-tailwindcss/no-deprecated-classes",
+    "better-tailwindcss/no-duplicate-classes",
+    "better-tailwindcss/no-unknown-classes",
+    "better-tailwindcss/no-unnecessary-whitespace",
     "react/jsx-no-target-blank"
   ],
-  "sources": 419,
+  "sources": 717,
   "packages": [
     "./internal/lint/rules/next",
-    "./internal/lint/rules/react"
+    "./internal/lint/rules/react",
+    "./internal/lint/rules/tailwind"
   ],
-  "capture_gate_exit": 0,
+  "capture_gate_exit": 1,
   "cohere_commit": "715ba94f3608a6500086b1076ce5cb7e51b836db"
 }

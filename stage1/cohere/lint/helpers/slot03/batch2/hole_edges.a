@@ -1,0 +1,13 @@
+import { isTailwindSpace } from '../tailwind_space.a';
+export type ClassValueEdges = { leading: boolean; trailing: boolean; };
+export function holeEdges(before: string, after: string, firstHole: boolean, lastHole: boolean, template: ClassValueEdges): ClassValueEdges {
+    let leading = false;
+    if(before === '' && firstHole) { leading = template.leading; }
+    else if(before === '') { leading = true; }
+    else { leading = !isTailwindSpace(before.charCodeAt(before.length - 1)); }
+    let trailing = false;
+    if(after === '' && lastHole) { trailing = template.trailing; }
+    else if(after === '') { trailing = true; }
+    else { trailing = !isTailwindSpace(after.charCodeAt(0)); }
+    return { leading, trailing };
+}

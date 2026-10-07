@@ -11,12 +11,13 @@ import (
 
 func batch2Oracle(t *testing.T) (string, []byte) {
 	t.Helper()
+	verifyCoverageAt(t, "batch2/testdata", []string{"/jsx.IsIntrinsicElementNamed", "/tailwind.holeEdges"})
 	root, _ := filepath.Abs("../../../../../cohere")
 	here, _ := filepath.Abs("batch2/testdata")
 	directory := t.TempDir()
 	virtual := filepath.Join(root, "adamic_slot03_batch2.go")
 	overlay := filepath.Join(directory, "overlay.json")
-	data, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: filepath.Join(here, "oracle.go")}})
+	data, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: filepath.Join(here, "oracle.go"), filepath.Join(root, "internal/lint/rules/tailwind/adamic_slot03_batch2.go"): filepath.Join(here, "tailwind_export.go")}})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -46,10 +47,10 @@ func TestBatch2Helpers(t *testing.T) {
 // Not parallel: compiling semantic variants run serially with sanitizer observations.
 func TestBatch2Mutants(t *testing.T) {
 	cases, want := batch2Oracle(t)
-	for _, mutant := range []struct{ file, old, new string }{{"intrinsic_element_named.a", "kind === 'Identifier'", "kind !== 'StringLiteral'"}} {
+	for _, mutant := range []struct{ file, old, new string }{{"intrinsic_element_named.a", "kind === 'Identifier'", "kind !== 'StringLiteral'"}, {"hole_edges.a", "leading = template.leading;", "leading = false;"}} {
 		t.Run(mutant.file, func(t *testing.T) {
 			scratch := t.TempDir()
-			for _, file := range []string{"intrinsic_element_named.a", "main.a"} {
+			for _, file := range []string{"intrinsic_element_named.a", "hole_edges.a", "main.a"} {
 				data, err := os.ReadFile(filepath.Join("batch2", file))
 				if err != nil {
 					t.Fatal(err)
@@ -60,6 +61,10 @@ func TestBatch2Mutants(t *testing.T) {
 						t.Fatal("mutant anchor changed")
 					}
 					text = strings.Replace(text, mutant.old, mutant.new, 1)
+				}
+				if file == "hole_edges.a" {
+					dependency, _ := filepath.Abs("tailwind_space.a")
+					text = strings.ReplaceAll(text, "../tailwind_space.a", filepath.ToSlash(dependency))
 				}
 				if file == "main.a" {
 					reader, _ := filepath.Abs("../options_json.ts")
