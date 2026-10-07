@@ -138,3 +138,34 @@ guards, 30 Node fixtures and 12 iterator refusals pass. A disk-full failure
 was recovered using obsolete owned scratch binaries; its log and successful
 retry are preserved. See ../wave07_react/CURRENT_LANDING_REPORT.md. Three React
 claims and four bridge routes remain pending; no new rules are claimed.
+
+## React analysis parking
+
+Under Ahra's October 7 parking instruction, react-hooks/set-state-in-effect,
+react-hooks/set-state-in-render and react-hooks/static-components are parked.
+Their blocker is missing native high-level IR, single-assignment/value-flow and
+closure/capture analyses; cohere's analysis modules are being ported on #dnv6f2c.
+JSX support is landing on area/stage1-lint. The pushed probes and dependency
+evidence remain; these are not completed implementations. They count as finished
+only for the landing-first work-in-progress cap.
+
+## Fourth continuation claim
+
+The owned branch is landing-ready at 3028b011f on current main f8013f0b. A fresh
+all-head fetch inspected 529 origin refs and 33 distinct claim blobs. Selection
+uses the 197-row VOLUME_REPORT combined compiler/repository ranking and excludes
+the original production ports, native ports on main/base and all origin claims.
+The first eligible name needing capture/escape stability analysis,
+react/jsx-no-constructed-context-values, is skipped until #dnv6f2c. The next three
+without that analysis, all zero-volume on the frozen corpora, are:
+
+1. react/jsx-fragments.
+2. react/jsx-no-undef.
+3. react/no-adjacent-inline-elements.
+
+Only counts/inventory mentions were found for these names on main/base, with no
+native implementations. No origin claim matches any of the three. This update
+is pushed before rule implementation. New modules use .a, numeric listener kinds
+in each rule.json and handlers taking the handed node. Shared parser, generator,
+harness and dispatcher files remain untouched. JSX parser integration is still
+pending; isolated published-parser validation may establish rule behavior first.
