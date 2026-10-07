@@ -358,15 +358,20 @@ func upstreamFrom(t *testing.T, sourceRoot string) []string {
 	var rows []string
 	for i, key := range keys {
 		row := unique[key]
-		name := filepath.Base(strings.ReplaceAll(row.File, "\\", "/"))
-		if name == "." || name == "" {
+		// The case keeps its file name's directories, not only its base name: a rule that judges a
+		// path (a utils folder, a page directory) reads them, and Go's capture recorded them.
+		name := filepath.Clean(strings.TrimLeft(strings.ReplaceAll(row.File, "\\", "/"), "/"))
+		if name == "." || name == "" || strings.HasPrefix(name, "..") {
+			name = filepath.Base(name)
+		}
+		if name == "." || name == "" || name == ".." {
 			name = "source.ts"
 		}
 		caseDirectory := filepath.Join(directory, fmt.Sprintf("case-%03d", i))
-		if err := os.MkdirAll(caseDirectory, 0755); err != nil {
+		path := filepath.Join(caseDirectory, name)
+		if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
 			t.Fatal(err)
 		}
-		path := filepath.Join(caseDirectory, name)
 		if err := os.WriteFile(path, []byte(row.Source), 0644); err != nil {
 			t.Fatal(err)
 		}
@@ -725,6 +730,32 @@ func TestThroughput(t *testing.T) {
 	t.Logf("load after %s", strings.TrimSpace(string(loadAfter)))
 }
 
+// TestNodeTableIsLinkOnly requires the same output with a copy of every row appended to the node table,
+// attached to nothing. Stage 1 reads the table only by following links from the root, and the flat copy
+// of typescript-go's tree (#k4fm1vf) depends on it: its tables hold rows no link reaches. A rule or
+// harness pass that walks the table by row reports on the copies and fails here.
+func TestNodeTableIsLinkOnly(t *testing.T) {
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	oracle := goOracle(t)
+	rows := generated(t)
+	for _, row := range upstream(t) {
+		if !strings.HasSuffix(row, "\tunsupported-recovery") {
+			rows = append(rows, row)
+		}
+	}
+	path := manifest(t, recoveryRows(t, oracle, rows))
+	binary := buildPort(t, directory, false)
+	plain := execute(t, "", binary, "--manifest", path)
+	junk := execute(t, "", binary, "--manifest", path, "--junk-rows")
+	if diff := difference(junk.output, plain.output); diff != "" {
+		t.Fatalf("output changed with unattached rows in the node table: %s", diff)
+	}
+	t.Logf("%d rows: identical with and without unattached node rows, %d bytes", len(rows), len(plain.output))
+}
+
 func TestMutants(t *testing.T) {
 	oracle := goOracle(t)
 	for _, descriptor := range prepareRegistry(t, ".") {
@@ -738,11 +769,7 @@ func TestMutants(t *testing.T) {
 		}
 		t.Run(change.Name, func(t *testing.T) {
 			rows := generated(t)
-			var witnesses []string
-			for _, source := range ownedWitnesses(t, ".", descriptor.Slug) {
-				witnesses = append(witnesses, source+"\t"+descriptor.Name)
-			}
-			rows = append(rows, recoveryRows(t, oracle, witnesses)...)
+			rows = append(rows, recoveryRows(t, oracle, ownedWitnessRows(t, ".", descriptor))...)
 			path := manifest(t, rows)
 			want := execute(t, "", oracle, "--manifest", path).output
 			if change.File == "" {
