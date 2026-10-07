@@ -584,3 +584,138 @@ Commands use the reproduction above with /tmp/checker-wave-c-final-after and /tm
 | checker.ts:25972:13 | TS2322 | Not an indexed read: arrayFrom(names.values()) widens Map iterator payloads to Symbol | undefined. |
 | checker.ts:25974:9 | TS2322 | Not an indexed read: resolvedProperties is an optional cached property; the preceding Map iterator assignment does not establish a required array under current loader typing. |
 | checker.ts:35291:79 | TS2345 | Not an indexed read: candidates comes from arrayFrom(symbols.values()), whose iterator payload union includes undefined. |
+
+## Wave D
+
+Frozen ranks 601-796: 80 new required-read assertions, 5 reviewed read declines; 169 frozen findings removed, 27 declined. Net census reduction: 166. Related alias repairs can also remove findings across a wave boundary.
+
+| File | TS2345 | TS18048 | TS2532 | TS2322 | TS2538 | Total |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| checker.ts before | 122 | 73 | 19 | 22 | 0 | 236 |
+| checker.ts after | 29 | 28 | 1 | 12 | 0 | 70 |
+
+Default oracle: **106,367 passing, 0 failing, 0 pending**, all phase exits 0, **empty baseline diff**, 350.388s. `oracle-wave-d.json` and `baseline-wave-d.diff` retain this observation.
+
+Stock emitted JavaScript is byte-identical; site contract and CLI idempotence pass. CRLF preserved. The isolated mutant replaces `candidates[candidateIndex]!` at checker.ts:36809 with `(candidates[candidateIndex] ?? 0)`; the emitted-JavaScript verifier exits 1. No mutant is run in the real oracle tree. `proof-wave-d.json` records hashes and counts. Every remaining finding is recorded in `remaining-wave-d.json`; every frozen-wave disposition is recorded in `findings-wave-d.json`.
+
+Final refinement: the Wave B assertion on `(type as IntersectionType).types[index]` at checker.ts:18272:29 was removed. Equality already handles absence at that probe; the complementary containsType input remains required. The final ledger has **447 assertions, 18 declined reads, zero defaults**. Historical Wave B/C reports describe their pushed revisions. A tree adapted with the older assertion needs a fresh pinned checkout for this revised decline contract; unexpected asserted declines deliberately fail rather than being silently erased. Exact fresh adapter replay is byte-identical to the final source, and rejects the same defaulting mutant. The corrected Wave D logs are /tmp/checker-wave-d-corrected-{census,verify,idempotence,oracle}.log; the original Wave D oracle was stopped before completion and is not claimed as proof.
+
+Commands use the reproduction above with /tmp/checker-wave-d-final-after and /tmp/checker-wave-d-corrected-oracle. Output logs: /tmp/checker-wave-d-final-{adapt,census,verify,idempotence,oracle}.log and /tmp/checker-wave-d-mutant.log.
+
+| Site | Read | Class | Action | Invariant or reason |
+| --- | --- | --- | --- | --- |
+| checker.ts:18272:29 | `(type as IntersectionType).types[index]` | U-position | decline | Absence is handled at this equality probe; only the complementary constituent used as a required containsType input is asserted. This refines the earlier Wave B ledger entry. |
+| checker.ts:36727:45 | `allDiagnostics[minIndex]` | U-position | assert | Each failed overload appends a diagnostic list; minIndex records the position of the least-error populated entry before selection. |
+| checker.ts:36740:55 | `diags[0]` | U-endpoint | assert | The preceding assertion establishes a nonempty diagnostic list produced by failed overload checking; every selected first diagnostic is populated. |
+| checker.ts:36740:86 | `diags[0]` | U-endpoint | assert | The preceding assertion establishes a nonempty diagnostic list produced by failed overload checking; every selected first diagnostic is populated. |
+| checker.ts:36740:116 | `diags[0]` | U-endpoint | assert | The preceding assertion establishes a nonempty diagnostic list produced by failed overload checking; every selected first diagnostic is populated. |
+| checker.ts:36741:57 | `diags[0]` | U-endpoint | assert | The preceding assertion establishes a nonempty diagnostic list produced by failed overload checking; every selected first diagnostic is populated. |
+| checker.ts:36747:57 | `candidatesForArgumentError[0]` | U-endpoint | assert | Overload failure retains a nonempty candidate list; singleton/non-generic or positive signature/base guards select its populated first entry. |
+| checker.ts:36797:35 | `candidates[0]` | U-endpoint | assert | Overload failure retains a nonempty candidate list; singleton/non-generic or positive signature/base guards select its populated first entry. |
+| checker.ts:36809:35 | `candidates[candidateIndex]` | U-loop | assert | Overload candidate traversal is bounded by the populated signature candidate list length. |
+| checker.ts:36921:13 | `candidates[0]` | U-endpoint | assert | Overload failure retains a nonempty candidate list; singleton/non-generic or positive signature/base guards select its populated first entry. |
+| checker.ts:36954:27 | `candidates[bestIndex]` | U-position | assert | getLongestCandidateIndex starts at zero and updates only within the nonempty populated overload candidate list. |
+| checker.ts:36974:60 | `typeParameters[typeArguments.length]` | U-position | assert | The argument-filling loop bounds the current argument count below the populated parameter count, retaining both original parameter reads. |
+| checker.ts:36974:130 | `typeParameters[typeArguments.length]` | U-position | assert | The argument-filling loop bounds the current argument count below the populated parameter count, retaining both original parameter reads. |
+| checker.ts:36990:31 | `candidates[i]` | U-loop | assert | Overload candidate traversal is bounded by the populated signature candidate list length. |
+| checker.ts:37164:48 | `constructSignatures[0]` | U-endpoint | assert | Overload failure retains a nonempty candidate list; singleton/non-generic or positive signature/base guards select its populated first entry. |
+| checker.ts:37218:27 | `baseTypes[0]` | U-endpoint | assert | Overload failure retains a nonempty candidate list; singleton/non-generic or positive signature/base guards select its populated first entry. |
+| checker.ts:37942:27 | `node.arguments[0]` | U-position | assert | Import checking returns on zero arguments; positive option-length guards and the extra-argument loop bound select populated parser arguments. |
+| checker.ts:37944:79 | `node.arguments[1]` | U-position | assert | Import checking returns on zero arguments; positive option-length guards and the extra-argument loop bound select populated parser arguments. |
+| checker.ts:37947:35 | `node.arguments[i]` | U-position | assert | Import checking returns on zero arguments; positive option-length guards and the extra-argument loop bound select populated parser arguments. |
+| checker.ts:37959:91 | `node.arguments[1]` | U-position | assert | Import checking returns on zero arguments; positive option-length guards and the extra-argument loop bound select populated parser arguments. |
+| checker.ts:38391:41 | `elements[index]` | U-position | assert | The binding-pattern index is a nonnegative tuple position below its populated fixed binding-element count. |
+| checker.ts:38421:20 | `signature.parameters[pos]` | U-position | assert | Parameter positions are nonnegative caller positions and explicitly below the populated non-rest parameter count. |
+| checker.ts:38429:34 | `tupleType.elementFlags[index]` | U-position | decline | Declined: tuple label lookup has no local bound on pos - paramCount, so populated flag existence is not established; only the numeric bitwise U-zero rule permits defaulting and this is a function argument. |
+| checker.ts:38441:27 | `signature.parameters[pos]` | U-position | assert | Parameter positions are nonnegative caller positions and explicitly below the populated non-rest parameter count. |
+| checker.ts:38487:26 | `signature.parameters[pos]` | U-position | assert | Parameter positions are nonnegative caller positions and explicitly below the populated non-rest parameter count. |
+| checker.ts:38507:39 | `signature.parameters[pos]` | U-position | assert | Parameter positions are nonnegative caller positions and explicitly below the populated non-rest parameter count. |
+| checker.ts:38513:46 | `signature.parameters[paramCount]` | U-endpoint | assert | signatureHasRestParameter identifies a nonempty signature whose populated last parameter is the rest symbol. |
+| checker.ts:38562:46 | `signature.parameters[length - 1]` | U-endpoint | assert | signatureHasRestParameter identifies a nonempty signature whose populated last parameter is the rest symbol. |
+| checker.ts:38576:50 | `signature.parameters[signature.parameters.length - 1]` | U-endpoint | assert | signatureHasRestParameter identifies a nonempty signature whose populated last parameter is the rest symbol. |
+| checker.ts:38608:46 | `signature.parameters[signature.parameters.length - 1]` | U-endpoint | assert | signatureHasRestParameter identifies a nonempty signature whose populated last parameter is the rest symbol. |
+| checker.ts:38616:46 | `signature.parameters[signature.parameters.length - 1]` | U-endpoint | assert | signatureHasRestParameter identifies a nonempty signature whose populated last parameter is the rest symbol. |
+| checker.ts:38643:33 | `signature.parameters[i]` | U-loop | assert | The signature traversal bounds i by its populated non-rest parameter count. |
+| checker.ts:38679:31 | `signature.parameters[i]` | U-loop | assert | The signature traversal bounds i by its populated non-rest parameter count. |
+| checker.ts:40244:26 | `properties[propertyIndex]` | U-position | assert | The parser-node caller loop or local binding-pattern loop bounds its nonnegative position within the populated property/element list. |
+| checker.ts:40298:17 | `node.elements[i]` | U-position | assert | The parser-node caller loop or local binding-pattern loop bounds its nonnegative position within the populated property/element list. |
+| checker.ts:40308:25 | `elements[elementIndex]` | U-position | assert | The parser-node caller loop or local binding-pattern loop bounds its nonnegative position within the populated property/element list. |
+| checker.ts:41428:23 | `patternElements[i]` | U-position | assert | The parser-node caller loop or local binding-pattern loop bounds its nonnegative position within the populated property/element list. |
+| checker.ts:41606:40 | `a[i]` | U-parallel | assert | Inference contexts describe the same generic signature parameters, creating populated aligned inference arrays; the bounded merge uses that shared position. |
+| checker.ts:41606:72 | `b[i]` | U-parallel | assert | Inference contexts describe the same generic signature parameters, creating populated aligned inference arrays; the bounded merge uses that shared position. |
+| checker.ts:41615:41 | `target[i]` | U-parallel | assert | Inference contexts describe the same generic signature parameters, creating populated aligned inference arrays; the bounded merge uses that shared position. |
+| checker.ts:41615:78 | `source[i]` | U-parallel | assert | Inference contexts describe the same generic signature parameters, creating populated aligned inference arrays; the bounded merge uses that shared position. |
+| checker.ts:41616:29 | `source[i]` | U-parallel | assert | Inference contexts describe the same generic signature parameters, creating populated aligned inference arrays; the bounded merge uses that shared position. |
+| checker.ts:42061:83 | `signature.parameters[typePredicate.parameterIndex]` | U-position | assert | A nonnegative predicate parameterIndex comes from resolving its name in this populated signature parameter list. |
+| checker.ts:42398:64 | `declaration.parameters[0]` | U-endpoint | assert | The exactly-one index-signature parameter guard precedes each populated first parameter read. |
+| checker.ts:42399:57 | `declaration.parameters[0]` | U-endpoint | assert | The exactly-one index-signature parameter guard precedes each populated first parameter read. |
+| checker.ts:42670:40 | `node.typeArguments[index]` | U-position | assert | The enclosing infer-argument lookup selects a valid generic parameter index; the explicit syntax bound or missing-argument filling supplies its populated type. |
+| checker.ts:42672:16 | `getEffectiveTypeArguments(node, typeParameters)[index]` | U-position | assert | The enclosing infer-argument lookup selects a valid generic parameter index; the explicit syntax bound or missing-argument filling supplies its populated type. |
+| checker.ts:42684:61 | `typeParameters[i]` | U-parallel | assert | Constraint checking traverses populated type parameters and fills missing argument types before reading their aligned index. |
+| checker.ts:42691:21 | `typeArguments[i]` | U-parallel | assert | Constraint checking traverses populated type parameters and fills missing argument types before reading their aligned index. |
+| checker.ts:42848:47 | `typeParameters[typeArgumentPosition]` | U-position | decline | Declined: parser type-argument membership does not establish that the generic parameter list covers this position for malformed excess type arguments. |
+| checker.ts:42981:39 | `node.members[0]` | U-endpoint | assert | The positive mapped-type member length guard precedes its populated first parser member. |
+| checker.ts:43094:126 | `overloads[0]` | U-endpoint | assert | Function/constructor overload processing supplies its nonempty populated declaration list to canonical-overload selection. |
+| checker.ts:43095:86 | `overloads[0]` | U-endpoint | assert | Function/constructor overload processing supplies its nonempty populated declaration list to canonical-overload selection. |
+| checker.ts:43624:48 | `type.aliasTypeArguments[0]` | U-endpoint | assert | isAwaitedTypeInstantiation checks aliasTypeArguments length exactly one before unwrapAwaitedType selects the populated required argument. |
+| checker.ts:44254:37 | `tags[i]` | U-loop | assert | The JSDoc tag loop starts at one and bounds i by the populated filtered tag list length. |
+| checker.ts:46398:35 | `globalType.typeParameters[0]` | U-position | assert | The recognized global Generator/Iterator method belongs to the validated three-parameter global generic type; mapping selects its populated yield/return/next parameter. |
+| checker.ts:46399:35 | `globalType.typeParameters[1]` | U-position | assert | The recognized global Generator/Iterator method belongs to the validated three-parameter global generic type; mapping selects its populated yield/return/next parameter. |
+| checker.ts:46400:59 | `globalType.typeParameters[2]` | U-position | assert | The recognized global Generator/Iterator method belongs to the validated three-parameter global generic type; mapping selects its populated yield/return/next parameter. |
+| checker.ts:46914:30 | `typeParameterDeclarations[i]` | U-loop | assert | The parser type-parameter traversal and captured earlier-index loop select populated declaration nodes within their established bounds. |
+| checker.ts:46931:25 | `typeParameterDeclarations[j]` | U-loop | assert | The parser type-parameter traversal and captured earlier-index loop select populated declaration nodes within their established bounds. |
+| checker.ts:46947:68 | `typeParameters[i]` | U-loop | assert | The parser type-parameter traversal and captured earlier-index loop select populated declaration nodes within their established bounds. |
+| checker.ts:46995:32 | `sourceParameters[i]` | U-parallel | assert | Type-parameter count checks align the populated source declarations and target generic parameters before the bounded comparison. |
+| checker.ts:46996:32 | `targetParameters[i]` | U-parallel | assert | Type-parameter count checks align the populated source declarations and target generic parameters before the bounded comparison. |
+| checker.ts:47140:38 | `baseTypes[0]` | U-endpoint | assert | The class-base path uses the populated first base type after its nonempty base-type guard. |
+| checker.ts:47446:33 | `signatures[0]` | U-endpoint | assert | The singleton constructor/signature or positive enum-member guard selects a populated first entry. |
+| checker.ts:48091:41 | `enumDeclaration.members[0]` | U-endpoint | assert | The singleton constructor/signature or positive enum-member guard selects a populated first entry. |
+| checker.ts:48833:155 | `symbol.declarations[0]` | U-endpoint | assert | A present resolved-symbol declaration list is populated by binding; synthetic undefined/globalThis symbols exit through earlier disjuncts. |
+| checker.ts:49308:38 | `statements[i]` | U-position | assert | A successful statement membership search and bounded forward/backward scans retain populated start/end statement indices. |
+| checker.ts:49318:38 | `statements[i]` | U-position | assert | A successful statement membership search and bounded forward/backward scans retain populated start/end statement indices. |
+| checker.ts:49326:29 | `statements[first]` | U-position | assert | A successful statement membership search and bounded forward/backward scans retain populated start/end statement indices. |
+| checker.ts:49327:27 | `statements[last]` | U-position | assert | A successful statement membership search and bounded forward/backward scans retain populated start/end statement indices. |
+| checker.ts:50153:121 | `copy.declarations[0]` | U-endpoint | decline | Declined: mapDefined filters optional index-info declarations; a nonempty input does not establish a nonempty declaration result in this branch. |
+| checker.ts:50849:53 | `signaturesOfSymbol[0]` | U-endpoint | assert | The singleton constructor/signature or positive enum-member guard selects a populated first entry. |
+| checker.ts:52306:38 | `list[0]` | U-endpoint | assert | A parser list with hasTrailingComma contains its populated first element, including recovery nodes for malformed syntax. |
+| checker.ts:52325:31 | `parameters[i]` | U-loop | assert | Grammar parameter traversal bounds i by the populated parser parameter list length. |
+| checker.ts:52403:113 | `node.typeParameters[0]` | U-endpoint | assert | Present parser type-parameter lists are populated, including missing-node recovery entries; the arrow grammar branch selects the required first parameter. |
+| checker.ts:52405:36 | `node.typeParameters[0]` | U-endpoint | assert | Present parser type-parameter lists are populated, including missing-node recovery entries; the arrow grammar branch selects the required first parameter. |
+| checker.ts:52416:27 | `node.parameters[0]` | U-endpoint | decline | Absence is handled nearby: an empty index-signature parameter list deliberately produces the invalid-arity diagnostic before later alias reads; asserting this initializer would change that path. |
+| checker.ts:52516:57 | `heritageClause.types[1]` | U-position | assert | Explicit positive or length-greater-than-one guards, or membership of the reported property, select populated parser list positions. |
+| checker.ts:52838:53 | `variableList.declarations[1]` | U-position | assert | Explicit positive or length-greater-than-one guards, or membership of the reported property, select populated parser list positions. |
+| checker.ts:52840:42 | `declarations[0]` | U-position | assert | Explicit positive or length-greater-than-one guards, or membership of the reported property, select populated parser list positions. |
+| checker.ts:53398:39 | `node.parent.members[0]` | U-position | assert | Explicit positive or length-greater-than-one guards, or membership of the reported property, select populated parser list positions. |
+| checker.ts:53652:50 | `nodeArguments[1]` | U-position | assert | Explicit positive or length-greater-than-one guards, or membership of the reported property, select populated parser list positions. |
+| checker.ts:54122:23 | `t1.elementFlags[i]` | U-parallel | assert | Tuple comparison checks equal flag-list lengths before traversing their populated aligned flag positions. |
+| checker.ts:54122:44 | `t2.elementFlags[i]` | U-parallel | assert | Tuple comparison checks equal flag-list lengths before traversing their populated aligned flag positions. |
+
+| Remaining reviewed site | Code | Reason |
+| --- | --- | --- |
+| checker.ts:38430:64 | TS2345 | Declined indexed-read alias: tupleType.elementFlags[index] has no local upper bound for a rest-label position; populated flag existence is unproven, and a numeric default is not permitted at this argument. |
+| checker.ts:42849:65 | TS2345 | Declined indexed-read alias: typeParameters[typeArgumentPosition] is not bounded by generic arity for malformed excess type arguments; populated parameter existence is unproven. |
+| checker.ts:45935:19 | TS2322 | Not an indexed read: the ErrorOutputContainer object explicitly assigns undefined to its optional errors property under exactOptionalPropertyTypes. |
+| checker.ts:45960:19 | TS2322 | Not an indexed read: the ErrorOutputContainer object explicitly assigns undefined to its optional errors property under exactOptionalPropertyTypes. |
+| checker.ts:46114:128 | TS2345 | Not an indexed expression: array destructuring of generic type arguments yields possibly-undefined bindings; asserting a callback/argument alias would not follow the required-read adaptation method. |
+| checker.ts:46114:208 | TS2345 | Not an indexed expression: array destructuring of generic type arguments yields possibly-undefined bindings; asserting a callback/argument alias would not follow the required-read adaptation method. |
+| checker.ts:46128:128 | TS2345 | Not an indexed expression: array destructuring of generic type arguments yields possibly-undefined bindings; asserting a callback/argument alias would not follow the required-read adaptation method. |
+| checker.ts:46734:64 | TS2345 | Not an indexed read: forEachKey callback caughtName is typed __String | undefined under the current table/callback typing. |
+| checker.ts:46736:167 | TS2345 | Not an indexed read: forEachKey callback caughtName is typed __String | undefined under the current table/callback typing. |
+| checker.ts:50153:121 | TS2532 | Declined indexed read: mapDefined filters optional index-info declarations; nonempty infos does not establish a nonempty copy.declarations in this branch. |
+| checker.ts:51465:110 | TS2345 | Not an indexed read: arrayFrom(getMembersOfSymbol(sym).values()) widens Map iterator payloads to Symbol | undefined. |
+| checker.ts:51530:21 | TS18048 | Not an indexed read: the for-of variable s comes from arrayFrom(exports.values()), with a possibly-undefined iterator payload. |
+| checker.ts:51532:25 | TS18048 | Not an indexed read: getMergedSymbol(s) inherits the possibly-undefined Map iterator input. |
+| checker.ts:51533:41 | TS18048 | Not an indexed read: merged inherits the Map iterator payload contract, rather than a required indexed read. |
+| checker.ts:52426:13 | TS18048 | Absence handled nearby: parameter = node.parameters[0] intentionally permits absence for the invalid-arity diagnostic; later alias reads remain after the exactly-one guard, which the current loader does not correlate with that prior read. |
+| checker.ts:52427:39 | TS18048 | Absence handled nearby: parameter = node.parameters[0] intentionally permits absence for the invalid-arity diagnostic; later alias reads remain after the exactly-one guard, which the current loader does not correlate with that prior read. |
+| checker.ts:52429:35 | TS2345 | Absence handled nearby: parameter = node.parameters[0] intentionally permits absence for the invalid-arity diagnostic; later alias reads remain after the exactly-one guard, which the current loader does not correlate with that prior read. |
+| checker.ts:52430:39 | TS18048 | Absence handled nearby: parameter = node.parameters[0] intentionally permits absence for the invalid-arity diagnostic; later alias reads remain after the exactly-one guard, which the current loader does not correlate with that prior read. |
+| checker.ts:52432:13 | TS18048 | Absence handled nearby: parameter = node.parameters[0] intentionally permits absence for the invalid-arity diagnostic; later alias reads remain after the exactly-one guard, which the current loader does not correlate with that prior read. |
+| checker.ts:52433:39 | TS18048 | Absence handled nearby: parameter = node.parameters[0] intentionally permits absence for the invalid-arity diagnostic; later alias reads remain after the exactly-one guard, which the current loader does not correlate with that prior read. |
+| checker.ts:52435:13 | TS18048 | Absence handled nearby: parameter = node.parameters[0] intentionally permits absence for the invalid-arity diagnostic; later alias reads remain after the exactly-one guard, which the current loader does not correlate with that prior read. |
+| checker.ts:52436:39 | TS18048 | Absence handled nearby: parameter = node.parameters[0] intentionally permits absence for the invalid-arity diagnostic; later alias reads remain after the exactly-one guard, which the current loader does not correlate with that prior read. |
+| checker.ts:52438:14 | TS18048 | Absence handled nearby: parameter = node.parameters[0] intentionally permits absence for the invalid-arity diagnostic; later alias reads remain after the exactly-one guard, which the current loader does not correlate with that prior read. |
+| checker.ts:52439:39 | TS18048 | Absence handled nearby: parameter = node.parameters[0] intentionally permits absence for the invalid-arity diagnostic; later alias reads remain after the exactly-one guard, which the current loader does not correlate with that prior read. |
+| checker.ts:52441:42 | TS18048 | Absence handled nearby: parameter = node.parameters[0] intentionally permits absence for the invalid-arity diagnostic; later alias reads remain after the exactly-one guard, which the current loader does not correlate with that prior read. |
+| checker.ts:52443:39 | TS18048 | Absence handled nearby: parameter = node.parameters[0] intentionally permits absence for the invalid-arity diagnostic; later alias reads remain after the exactly-one guard, which the current loader does not correlate with that prior read. |
+| checker.ts:52446:39 | TS18048 | Absence handled nearby: parameter = node.parameters[0] intentionally permits absence for the invalid-arity diagnostic; later alias reads remain after the exactly-one guard, which the current loader does not correlate with that prior read. |
