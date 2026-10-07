@@ -123,7 +123,7 @@ suggestion-test failures: the rename changed an obsolete removal of `rule.ts`
 into removal of the newly installed `rule.a`. The codemod now removes that parsed
 Go cleanup block. Its executed regression passes and the mutant is caught by
 loss of the installed module. Both suggestion tests passed their targeted rerun in 142.224 seconds. All 19
-other tested stage 1 packages passed except Markdown; three generator packages
+other tested stage 1 packages passed; three generator packages
 have no test files. Type-aware passed in 1,181.645 seconds. Markdown's full
 package exceeded 30 minutes and also exposed a stale generated import in the
 width-table regeneration. Go literal fragments are now parsed as TypeScript,
@@ -135,17 +135,21 @@ All 20 ordinary Markdown tests are being run individually by two workers,
 '^<test-name>$'`. Every name and log is retained under
 `/tmp/dot-a-stack-markdown-individual/`; a targeted exhaustive width rerun is
 also logged at `/tmp/dot-a-stack-width-rerun.log`.
-The final command was also run literally in a second clean main snapshot,
-`/tmp/dot-a-stack-inventory`: apply exited 0 and printed
-`TOTAL files=337 references=1875 reference_files=346`; its immediate repeat exited
+The complete final command was run literally in a clean main snapshot,
+`/tmp/dot-a-stack-last-inventory`: apply exited 0 and printed
+`TOTAL files=337 references=1876 reference_files=346`; its immediate repeat exited
 0 and printed `TOTAL files=0 references=0 reference_files=0`. Byte comparisons
-verified all 7,931 files in that fresh apply against the tested scratch tree.
-Logs are `/tmp/dot-a-stack-final-{apply,repeat,equivalence}.log`.
+verified all 7,931 files in that apply against the tested scratch tree.
+Logs are `/tmp/dot-a-stack-complete-{apply,repeat,equivalence}.log`.
+Final build and vet were repeated after both fixture fixes and exited 0.
 The first stack apply had one extra edit to the stale `.ts` ambiguity witness;
-the protected-witness fix and regression test remove that edit. The final lint
-cleanup fix replaces a path rewrite with deletion of one parsed conditional
-block; the cleanup edit count remains 1,875; the generated import adds one, yielding
-1,876. Earlier main
+the protected-witness fix and regression test remove that edit. The lint cleanup
+fix replaces a path rewrite with deletion of a parsed conditional block; that
+count remains 1,875. The generated import adds one, yielding 1,876.
+The targeted exhaustive width rerun passed in 171.352 seconds, including
+Go, original Node dependencies, the actual fork, source Node, both backends,
+release, sanitizers, leaks, all three width mutants and table regeneration.
+Earlier main
 verification below is historical evidence, not a claim about this stack's gate.
 
 ## October 7 refresh
