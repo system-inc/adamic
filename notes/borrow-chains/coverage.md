@@ -158,7 +158,7 @@ go run ./cmd/adamic build /tmp/borrow-coverage-union.a -o /tmp/borrow-coverage-u
 
 The mutation was run by an inline Python driver with exactly the change and Go
 command in mutant.py, writing /tmp/borrow-coverage-mutant.log. Its full output is
-retained in mutant.log. To reproduce after sourcing the toolchain:
+retained in mutant.txt. To reproduce after sourcing the toolchain:
 
 ```sh
 python3 notes/borrow-chains/mutant.py
@@ -178,3 +178,68 @@ confirmed the lowering limit. Neither unsupported temporary program was committe
 
 Generated C verifies that list, map and callback declarations in values borrow
 without retains or scope releases. depths records zero retains overall.
+
+## Intermediate flow-range finding
+
+The full gate caught an additional, non-oracle issue in the first writing-callback
+probe. Node, native and JavaScript all agreed, but the flow range verifier reported:
+
+    function 1 (changes): child$2 was mutated at instruction 2 (order 3), outside its range [1, 2)
+
+The intermediate probe was:
+
+```ts
+function changes(root: Root): void {
+ const child = root.child;
+ const text = child.text;
+ [1].forEach((n: number): void => { root.child.text = `changed${n}`; });
+ console.log(text);
+}
+```
+
+The final probe saves root.child.text directly, preserving the two-field read,
+writing callback and old-string observation without the redundant object alias.
+No flow/compiler fix is included. The redundant alias form remains a known gap
+in flow's range inference; the branch's native borrow guard correctly kept it
+alive. This finding must not be interpreted as a backend output disagreement.
+
+A focused range-test invocation on the simplified probe alone failed the
+harness's "no mutation was seen in any program" assertion: it tracks no mutable
+object local in that form. The whole flow package was therefore rerun, rather
+than accepting an empty mutation run. Exact follow-up commands:
+
+```sh
+go test ./internal/flow -run 'TestEveryMutationIsInItsRange/programs/../oracle/testdata/borrow_chain_coverage_callbacks.a' -count=1 -timeout 30m > /tmp/borrow-coverage-flow-focused.log 2>&1
+go test ./internal/flow -count=1 -timeout 30m > /tmp/borrow-coverage-flow-final.log 2>&1
+```
+
+Counts, the focused uncached oracle and every standalone build/run were repeated
+with the final direct-string version, using the commands above and the same
+complete/final log paths.
+
+## Final results
+
+Zero backend disagreements. Twelve programs added, each registered in the oracle
+and counts table. All final standalone builds/runs succeeded (builds.txt).
+Final focused uncached oracle PASS 6.417s (oracle.txt). Final complete count update
+PASS 52.653s (counts.txt). Complete flow package after simplifying the callback
+PASS 137.588s (flow.txt). Vet, gofmt listing and git diff --check were clean.
+The one-line field-write mutant was caught by ASan, and the compiler was restored.
+
+The broad uncached repository gate is incomplete, not a claimed full pass. It
+reported complete native PASS 239.371s and complete oracle PASS 213.352s, along
+with all completed non-stage1 packages except the intermediate alias form's flow
+failure. After the final flow rerun passed, the remaining stage1 CSS/JSON/lint
+processes were stopped with SIGTERM to the Go test driver (exit 143).
+The gate invocation had already failed on the intermediate fixture, so it could
+not supply a clean final full-gate result. Its captured output is gate.txt. No
+claim is made that every stage1 corpus package finished. Exact termination:
+
+```sh
+kill -TERM 20225
+```
+
+The final focused oracle and count update ran after all fixture edits. No compiler
+source or pre-existing count row differs from the feature branch base. The known
+flow alias gap above is documented rather than repaired as part of this coverage
+change.

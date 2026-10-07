@@ -11,8 +11,7 @@ function inspect(root: Root, map: Map<number, number>): number {
  return total + (copy[0] ?? 0) + (sorted[0] ?? 0) + child.text.length;
 }
 function changes(root: Root): void {
- const child = root.child;
- const text = child.text;
+ const text = root.child.text;
  [1].forEach((n: number): void => { root.child.text = `changed${n}`; });
  console.log(text);
 }
