@@ -1,0 +1,72 @@
+[
+  {
+    "version": "before",
+    "name": "hello",
+    "target": "native",
+    "raw": 385632,
+    "brotli": 128837
+  },
+  {
+    "version": "before",
+    "name": "hello",
+    "target": "wasm32-wasi",
+    "raw": 245068,
+    "brotli": 71934
+  },
+  {
+    "version": "before",
+    "name": "request",
+    "target": "native",
+    "raw": 386368,
+    "brotli": 129699
+  },
+  {
+    "version": "before",
+    "name": "request",
+    "target": "wasm32-wasi",
+    "raw": 289230,
+    "brotli": 87461
+  },
+  {
+    "version": "after",
+    "name": "hello",
+    "target": "native",
+    "raw": 385872,
+    "brotli": 129086
+  },
+  {
+    "version": "after",
+    "name": "hello",
+    "target": "wasm32-wasi",
+    "raw": 245068,
+    "brotli": 71934
+  },
+  {
+    "version": "after",
+    "name": "request",
+    "target": "native",
+    "raw": 386608,
+    "brotli": 129579
+  },
+  {
+    "version": "after",
+    "name": "request",
+    "target": "wasm32-wasi",
+    "raw": 289230,
+    "brotli": 87461
+  },
+  {
+    "version": "after",
+    "name": "dynamic_gap",
+    "target": "native",
+    "raw": 1826984,
+    "brotli": 271283
+  },
+  {
+    "version": "after",
+    "name": "dynamic_gap",
+    "target": "wasm32-wasi",
+    "raw": 783380,
+    "brotli": 148727
+  }
+]

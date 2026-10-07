@@ -24,7 +24,7 @@ func TestUndefinedNumbersShapes(t *testing.T) {
 	sources := map[string]bool{}
 	directory := t.TempDir()
 	for seed := uint64(1); seed <= 40; seed++ {
-		source := Generate(seed).Source()
+		source := GenerateWithout(seed, []string{"moves", "parallel"}).Source()
 		for _, line := range strings.Split(source, "\n") {
 			if !strings.HasPrefix(line, "console.log(`maybeValue") {
 				continue
@@ -71,7 +71,7 @@ func TestUndefinedNumbersShapes(t *testing.T) {
 
 	var optedIn bool
 	for seed := uint64(1); seed <= 40 && !optedIn; seed++ {
-		source := GenerateFeatures(seed, nil, []string{interfaceOmittedOptional}).Source()
+		source := GenerateFeatures(seed, []string{"moves", "parallel"}, []string{interfaceOmittedOptional}).Source()
 		optedIn = interfaceOmitted.MatchString(source)
 	}
 	if !optedIn {

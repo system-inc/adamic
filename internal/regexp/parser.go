@@ -2,10 +2,10 @@ package regexp
 
 import (
 	"fmt"
+	"github.com/system-inc/adamic/internal/unicodeproperties"
 	"math/big"
 	"strconv"
 	"strings"
-	"unicode"
 	"unicode/utf8"
 )
 
@@ -142,7 +142,7 @@ func (p *parser) disjunction(stop byte) (*Disjunction, error) {
 
 func (p *parser) alternative(stop byte) (*Alternative, error) {
 	a := &Alternative{}
-	for !p.done() && p.peek() != '|' && p.peek() != stop {
+	for !p.done() && p.peek() != '|' && (stop == 0 || p.peek() != stop) {
 		if p.peek() == ')' && stop == 0 {
 			return nil, p.fail("unmatched closing parenthesis")
 		}
@@ -322,23 +322,20 @@ func (p *parser) quantifier(atom Node) (Node, error) {
 			p.pos = start
 			return nil, p.fail("incomplete quantifier")
 		}
-		// V8's ParseIntervalQuantifier saturates each decimal at INT_MAX
-		// before checking order. Keep exact counters, but use that observed
-		// early-error comparison, including the cohere witness near 2^63.
-		if max != nil && quantifierOrderBound(min).Cmp(quantifierOrderBound(max)) > 0 {
+		if max != nil && min.Cmp(max) > 0 {
+			// Exact decimal MVs determine the spec's early error. Node's
+			// clamped comparison instead accepts this ruled-on divergence.
+			if max.Cmp(big.NewInt(2147483647)) >= 0 {
+				return nil, &V8DivergenceError{
+					Behavior: "clamps quantifier bounds above 2^31-1 before the min > max check",
+					Section:  "22.2.1.1 Static Semantics: Early Errors, QuantifierPrefix",
+				}
+			}
 			return nil, p.failAt(start, "quantifier range out of order")
 		}
 	}
 	greedy := !p.take('?')
 	return &Quantifier{Atom: atom, Min: min, Max: max, Greedy: greedy}, nil
-}
-
-func quantifierOrderBound(value *big.Int) *big.Int {
-	limit := big.NewInt(2147483647)
-	if value.Cmp(limit) > 0 {
-		return limit
-	}
-	return value
 }
 
 func (p *parser) escape(inClass bool) (Node, bool, error) {
@@ -826,11 +823,13 @@ func (p *parser) groupNameRune() (rune, error) {
 }
 
 func isRegExpIdentifierStart(r rune) bool {
-	return r == '$' || r == '_' || unicode.IsLetter(r) || unicode.In(r, unicode.Nl)
+	property, _ := unicodeproperties.Lookup("ID_Start", false)
+	return r == '$' || r == '_' || property.Contains(r)
 }
 
 func isRegExpIdentifierPart(r rune) bool {
-	return isRegExpIdentifierStart(r) || r == 0x200C || r == 0x200D || unicode.In(r, unicode.Mn, unicode.Mc, unicode.Nd, unicode.Pc)
+	property, _ := unicodeproperties.Lookup("ID_Continue", false)
+	return isRegExpIdentifierStart(r) || r == 0x200C || r == 0x200D || property.Contains(r)
 }
 func (p *parser) decimal() (*big.Int, bool) {
 	start := p.pos
@@ -856,7 +855,7 @@ func (p *parser) hexNumber(end byte) (int, bool) {
 		} else if c >= 'A' && c <= 'F' {
 			d = int(c-'A') + 10
 		}
-		if d < 0 {
+		if d < 0 || n > (utf8.MaxRune-d)/16 {
 			return 0, false
 		}
 		n = n*16 + d

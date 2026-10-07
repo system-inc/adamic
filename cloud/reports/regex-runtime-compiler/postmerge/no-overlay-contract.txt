@@ -1,0 +1,56 @@
+=== RUN   TestRuntimeFieldLayoutsAreIncluded
+=== PAUSE TestRuntimeFieldLayoutsAreIncluded
+=== RUN   TestRegExpRuntimeOwnershipOptInMutant
+    library_regexp_compile_test.go:54: caught always-on ownership variant at the symbol assertion
+--- PASS: TestRegExpRuntimeOwnershipOptInMutant (2.27s)
+=== RUN   TestRegExpRuntimeBytecodeIdentity
+    regexp_compile_bytecode_test.go:17: byte-identical: 7433 programs, 3197 syntax/refusal cases (WASI=false)
+--- PASS: TestRegExpRuntimeBytecodeIdentity (3.35s)
+=== RUN   TestRegExpRuntimeBytecodeWASI
+    regexp_compile_bytecode_test.go:18: byte-identical: 7433 programs, 3197 syntax/refusal cases (WASI=true)
+--- PASS: TestRegExpRuntimeBytecodeWASI (2.51s)
+=== RUN   TestRegExpRuntimeBytecodeEmissionMutant
+    regexp_compile_bytecode_test.go:250: caught set opcode mutant: case 0 "b{2,3}c"/ byte 288 Go=1 C=5
+--- PASS: TestRegExpRuntimeBytecodeEmissionMutant (3.17s)
+=== RUN   TestRegExpRuntimeRejectedPatternMutant
+    regexp_compile_bytecode_test.go:254: caught accept syntax mutant: case 4700 "?"/ byte 0 Go=1 C=0
+--- PASS: TestRegExpRuntimeRejectedPatternMutant (3.25s)
+=== RUN   TestRegExpRuntimeV8Refusals
+    regexp_compile_bytecode_test.go:257: byte-identical: 7677 programs, 3354 syntax/refusal cases (WASI=false)
+--- PASS: TestRegExpRuntimeV8Refusals (3.75s)
+=== RUN   TestRegExpRuntimeV8WASI
+    regexp_compile_bytecode_test.go:258: byte-identical: 7677 programs, 3354 syntax/refusal cases (WASI=true)
+--- PASS: TestRegExpRuntimeV8WASI (3.00s)
+=== RUN   TestRegExpRuntimeV8RefusalMutant
+    regexp_compile_bytecode_test.go:259: caught v8 bypass mutant: case 10630 "[\\q{a}]{18446744073709551616}"/iv byte 0 Go=3 C=4
+--- PASS: TestRegExpRuntimeV8RefusalMutant (3.66s)
+=== RUN   TestRegExpRuntimeParserAcceptance
+    regexp_compile_parser_test.go:20: 5746 test262 + 875 cohere + 4000 seeded + 9 ruling probes agree on acceptance, complete Node SyntaxError messages and Go divergence reasons (WASI=false)
+--- PASS: TestRegExpRuntimeParserAcceptance (4.06s)
+=== RUN   TestRegExpRuntimeParserWASI
+    regexp_compile_parser_test.go:21: 5746 test262 + 875 cohere + 4000 seeded + 9 ruling probes agree on acceptance, complete Node SyntaxError messages and Go divergence reasons (WASI=true)
+--- PASS: TestRegExpRuntimeParserWASI (3.09s)
+=== RUN   TestRegExpRuntimeCountedErrorMutant
+    regexp_compile_parser_test.go:175: caught error-message corruption after embedded NUL at counted-byte comparison
+--- PASS: TestRegExpRuntimeCountedErrorMutant (4.04s)
+=== RUN   TestRegExpRuntimePropertiesGenerated
+--- PASS: TestRegExpRuntimePropertiesGenerated (0.12s)
+=== RUN   TestRegExpRuntimePropertyIdentity
+    regexp_compile_test.go:193: entry identity: 1722 aliases, 448 unique properties, 23045 ranges, 7906 strings
+--- PASS: TestRegExpRuntimePropertyIdentity (1.73s)
+=== RUN   TestRegExpRuntimePropertiesWASI
+    regexp_compile_test.go:220: entry identity: 1722 aliases, 448 unique properties, 23045 ranges, 7906 strings
+--- PASS: TestRegExpRuntimePropertiesWASI (0.57s)
+=== RUN   TestRegExpRuntimeCompilerNotLinked
+    regexp_compile_test.go:260: nm: no compiler or ownership symbols in a program without dynamic RegExp
+--- PASS: TestRegExpRuntimeCompilerNotLinked (0.17s)
+=== RUN   TestRuntimeStaticsAreListed
+=== PAUSE TestRuntimeStaticsAreListed
+=== CONT  TestRuntimeFieldLayoutsAreIncluded
+=== CONT  TestRuntimeStaticsAreListed
+=== NAME  TestRuntimeFieldLayoutsAreIncluded
+    fields_test.go:178: 39 runtime layouts included
+--- PASS: TestRuntimeFieldLayoutsAreIncluded (0.01s)
+--- PASS: TestRuntimeStaticsAreListed (0.43s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	39.183s

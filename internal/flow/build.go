@@ -485,6 +485,10 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 				if program.CallMayThrow(value.Interface().(ir.Call)) {
 					throws = true
 				}
+			case reflect.TypeOf(ir.RegExpCall{}):
+				if value.Interface().(ir.RegExpCall).Replacement != nil && program.ClosuresMayThrow {
+					throws = true
+				}
 			case callClosureType, arrayMapType, arrayVisitType, arrayReduceType, arrayFromType, mapForEachType:
 				// A call through a function value, written out or made by the runtime's loop.
 				if program.ClosuresMayThrow {

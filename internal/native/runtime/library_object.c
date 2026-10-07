@@ -123,7 +123,7 @@ adamic_array *adamic_object_values_checked(const adamic_object *object, bool ref
   size_t index = indices[at];
   const char *name = object->shape->names[index];
   if (name[0] == '#') continue;
-  adamic_slot_cache cache = {NULL, 0};
+  adamic_slot_cache cache = {0};
   adamic_value value = expression == NULL ? object->slots[index] : *adamic_object_read(object, name, &cache, expression);
   if (references) adamic_retain(value.reference);
   if (entries) {
@@ -147,10 +147,10 @@ void adamic_object_assign_checked(adamic_object *target, const adamic_object *so
  for (size_t at = 0; at < source->shape->count; at++) {
   size_t index = indices[at];
   const char *name = source->shape->names[index];
-  adamic_slot_cache read_cache = {NULL, 0};
+  adamic_slot_cache read_cache = {0};
   adamic_value value = expression == NULL ? source->slots[index] : *adamic_object_read(source, name, &read_cache, expression);
   adamic_object_check_write(target, name);
-  adamic_slot_cache cache = {NULL, 0};
+  adamic_slot_cache cache = {0};
   adamic_value *slot = adamic_object_write_field(target, name, &cache);
   if (source->shape->references[index]) {
    adamic_retain(value.reference);

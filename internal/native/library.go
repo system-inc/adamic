@@ -26,6 +26,10 @@ var runtimeBuilds sync.Map
 // uses the embedded runtime; the fuzzer supplies another checkout's runtime directory instead.
 // Sources and headers are snapshotted together, so the key and the compiled bytes cannot disagree.
 func RuntimeLibrary(directory string, options Options) (string, error) {
+	return runtimeLibrary(directory, options, nil)
+}
+
+func runtimeLibrary(directory string, options Options, extraFlags []string) (string, error) {
 	if err := ValidateOptions(options); err != nil {
 		return "", err
 	}
@@ -50,7 +54,7 @@ func RuntimeLibrary(directory string, options Options) (string, error) {
 	if err != nil {
 		return "", fmt.Errorf("native: cache directory: %w", err)
 	}
-	return cachedRuntime(files, Flags(options), compiler, string(version), filepath.Join(cache, "adamic", "runtime"))
+	return cachedRuntime(files, append(Flags(options), extraFlags...), compiler, string(version), filepath.Join(cache, "adamic", "runtime"))
 }
 
 func readRuntime(sources fs.FS, root string) ([]runtimeFile, error) {

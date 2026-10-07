@@ -59,11 +59,12 @@ adamic_string *adamic_string_at(const adamic_string *string, double index) {
 adamic_maybe_number adamic_string_code_point_at(const adamic_string *string, double position) {
 	position = isnan(position) ? 0 : trunc(position);
 	adamic_maybe_number missing = {false, 0};
-	size_t length = string->units != 0 ? string->units - 1 : adamic_string_units(string);
+	size_t known = adamic_string_known_units(string);
+	size_t length = known != 0 ? known - 1 : adamic_string_units(string);
 	if (position < 0 || position >= (double)length) {
 		return missing;
 	}
-	if (string->units == string->length + 1) {
+	if (length == string->length) {
 		adamic_maybe_number found = {true, (double)(unsigned char)string->bytes[(size_t)position]};
 		return found;
 	}

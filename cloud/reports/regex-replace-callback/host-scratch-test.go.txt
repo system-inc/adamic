@@ -1,0 +1,34 @@
+package oracle
+
+import (
+	"github.com/system-inc/adamic/internal/native"
+	"path/filepath"
+	"testing"
+)
+
+func TestReplacementHostFixture24(t *testing.T) {
+	path, _ := filepath.Abs(filepath.Join(repository, "stage3/fixtures/host/24_useCaseSensitiveFileNames.a"))
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	truth := onNode(t, path)
+	t.Logf("Node: exit=%d stdout=%q stderr=%q", truth.exitCode, truth.stdout, truth.stderr)
+	t.Run("native_and_javascript", func(t *testing.T) {
+		if difference := disagreement(truth, onJavaScriptBackend(t, program)); difference != "" {
+			t.Fatal("JavaScript: " + difference)
+		}
+		actual, binary := natively(t, program)
+		if difference := disagreement(truth, actual); difference != "" {
+			t.Fatalf("native: %s %+v", difference, actual)
+		}
+		if failure := leaks(t, program, binary); failure != "" {
+			t.Fatal(failure)
+		}
+	})
+	t.Run("WASI", func(t *testing.T) {
+		if difference := disagreement(truth, onWASI(t, native.C(program))); difference != "" {
+			t.Fatal("WASI: " + difference)
+		}
+	})
+}

@@ -44,6 +44,9 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 			return nil, err
 		}
 	}
+	if lowering.hasAsync(modules) {
+		return lowering.lowerAsync(modules)
+	}
 	// Link every declaration before lowering any function body, including across back edges.
 	var declarations []*ast.Node
 	for _, module := range modules {

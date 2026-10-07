@@ -60,6 +60,9 @@ type Options struct {
 	// Sanitize compiles with the address and undefined-behavior sanitizers, as the tests do.
 	Sanitize bool
 
+	// ThreadSanitize is a separate race-check build, never combined with ASan.
+	ThreadSanitize bool
+
 	// Count makes the binary count its allocations, frees, retains and releases, and write them to
 	// stderr as it exits (runtime/count.h). Only a counted build does; the counts table is made of them.
 	Count bool
@@ -68,9 +71,15 @@ type Options struct {
 	// see what fused multiply-adds would do, as on arm64.
 	cpu string
 
-	// slabs, for tests, keeps the size-class allocator on in a sanitized build (heap.c), where every
-	// value otherwise comes from malloc, to show a use after a free is still caught with it on.
-	slabs bool
+	// Slabs keeps the size-class allocator on in a sanitized build (heap.c), where every value
+	// otherwise comes from malloc: the oracle runs every fixture this way too, so the classes
+	// themselves run under the sanitizers, and a use after a free is still caught with them on.
+	Slabs bool
+
+	// Malloc takes every value from malloc in a build without sanitizers, as a sanitized build does.
+	// macOS's leaks tool needs it: a chunk of the size classes stays reachable from the runtime's own
+	// table, so a value leaked into one is never reported.
+	Malloc bool
 }
 
 // Flags are what clang compiles a program and the runtime with. The fuzzer (internal/fuzz) compiles
@@ -90,15 +99,26 @@ func Flags(options Options) []string {
 	flags = append(flags, "-fno-optimize-sibling-calls")
 	if options.Target == "wasm32-wasi" {
 		flags = append(flags, "--target=wasm32-wasi", "--sysroot="+os.Getenv("WASI_SYSROOT"), "-DADAMIC_TARGET_WASI=1", "-mno-atomics")
+	} else {
+		flags = append(flags, "-pthread")
 	}
 	if options.Count {
 		flags = append(flags, "-DADAMIC_COUNT")
 	}
-	if options.slabs {
+	if options.Slabs {
 		flags = append(flags, "-DADAMIC_SLABS")
+	}
+	if options.Malloc {
+		flags = append(flags, "-DADAMIC_MALLOC")
 	}
 	if options.cpu != "" {
 		flags = append(flags, "-march="+options.cpu)
+	}
+	if options.Sanitize && options.ThreadSanitize {
+		panic("native: ASan and TSan cannot be combined")
+	}
+	if options.ThreadSanitize {
+		return append(flags, "-O1", "-g", "-fsanitize=thread", "-DADAMIC_TSAN_TEST")
 	}
 	if options.Sanitize {
 		return append(flags, "-O1", "-g", "-fsanitize=address,undefined", "-fno-sanitize-recover=all")
@@ -120,7 +140,7 @@ func Build(source string, output string, options Options) error {
 	}
 	defer os.RemoveAll(directory)
 
-	library, err := RuntimeLibrary("", options)
+	library, err := runtimeLibraryForSource(source, options)
 	if err != nil {
 		return err
 	}

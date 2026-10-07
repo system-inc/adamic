@@ -290,6 +290,10 @@ func (plan *reusePlan) movable(program *ir.Program, instruction *flow.Instructio
 					reached = true
 				}
 			}
+		case ir.RegExpCall:
+			if expression.Replacement != nil {
+				reached = true
+			}
 		case ir.CallClosure, ir.MakeClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.ArraySort:
 			// A Map's or Set's forEach is void, so it's never in the value an assignment evaluates;
 			// in a function this calls, touches finds it.
@@ -327,6 +331,10 @@ func touches(program *ir.Program, function int, global int, seen map[int]bool) b
 						if touches(program, target, global, seen) {
 							found = true
 						}
+					}
+				case ir.RegExpCall:
+					if expression.Replacement != nil {
+						found = true
 					}
 				case ir.CallClosure, ir.MakeClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.ArraySort, ir.MapForEach:
 					found = true
@@ -755,7 +763,7 @@ func (e *emitter) spreadArray(literal ir.ArrayLiteral) (string, bool) {
 // at it. A Weak doesn't count, so a count of 1 alone leaves the Weak's holder able to read or write
 // the value while it's being taken over, and to find the new value at the old one's place after.
 func uniquelyHeld(value string) string {
-	return fmt.Sprintf("(%s->heap.references == 1 && !adamic_weak_held(%s))", value, value)
+	return fmt.Sprintf("(adamic_reference_count(&%s->heap) == 1 && !adamic_weak_held(%s))", value, value)
 }
 
 // callConsumes requires a count to be handed over at this position for every

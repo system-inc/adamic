@@ -81,6 +81,14 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 			if returns.Flags()&checker.TypeFlagsUndefined != 0 {
 				valueType, isKnown = ir.Object, true
 			}
+			if function.Closure && l.regexReplacementArgument(declaration) {
+				if returns.Flags()&checker.TypeFlagsUndefined != 0 {
+					valueType, isKnown = ir.String, true
+				}
+				if returns.Flags()&checker.TypeFlagsNull != 0 {
+					valueType, isKnown = ir.Object, true
+				}
+			}
 			if !isKnown {
 				// An arrow function has no name to point at, so it's pointed at whole.
 				where := declaration.Name()

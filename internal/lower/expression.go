@@ -597,6 +597,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	case ast.KindPrefixUnaryExpression:
 		return l.prefix(node)
 	case ast.KindTypeOfExpression:
+		if value, known := l.asyncTypeOf(node); known {
+			return value, nil
+		}
 		if l.isLibraryGlobal(node.AsTypeOfExpression().Expression, "Number") {
 			return ir.StringConstant{Index: l.constant("function")}, nil
 		}
@@ -1242,6 +1245,9 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 				return nil, l.notYet(node, "an overloaded function as a value")
 			}
 		}
+	}
+	if l.result.Async != nil {
+		return nil, l.notYet(node, "async function "+node.Text()+" as a value; only direct typeof observations and awaited calls are lowered")
 	}
 	if held, isMade := l.forwarders[target]; isMade {
 		return ir.Read{Local: held, Of: ir.Closure}, nil

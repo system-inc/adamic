@@ -157,19 +157,27 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 				found = found || l.throwsOut(node.Catch) || l.throwsOut(node.Finally)
 				return false
 			}
+		case ir.RegExpNew:
+			if node.Index < 0 {
+				found = true
+			}
 		case ir.NodeFSFile:
 			found = found || node.MayThrow()
 		case ir.Throw:
 			found = true
 		case ir.NodeHostCall:
-			found = node.Throws
+			found = found || node.Throws
 		case ir.ProcessCall:
-			found = node.Operation == "exit" || node.Operation == "setExitCode" || node.Operation == "cwd" || node.Operation == "chdir" || node.Operation == "measure"
+			found = found || node.Operation == "exit" || node.Operation == "setExitCode" || node.Operation == "cwd" || node.Operation == "chdir" || node.Operation == "measure"
 		case ir.Call:
 			if l.result.CallMayThrow(node) {
 				found = true
 			}
-		case ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.MapForEach:
+		case ir.RegExpCall:
+			if node.Replacement != nil && l.result.ClosuresMayThrow {
+				found = true
+			}
+		case ir.CallClosure, ir.ParallelMap, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.MapForEach:
 			// A call through a function value, written out or made by the runtime's loop.
 			if l.result.ClosuresMayThrow {
 				found = true
@@ -202,7 +210,7 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 					}
 				}
 			}
-		case ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.MapForEach:
+		case ir.CallClosure, ir.ParallelMap, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.MapForEach:
 			callsClosures = true
 		case ir.ArraySort:
 			if node.Callback != nil {
@@ -224,6 +232,9 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 				failing = "Object.assign into a potentially frozen object"
 			}
 		case ir.RegExpCall:
+			if node.Replacement != nil {
+				callsClosures = true
+			}
 			if node.Method == "replaceAll" || node.Method == "matchAll" {
 				failing = "RegExp global-flag validation"
 			}

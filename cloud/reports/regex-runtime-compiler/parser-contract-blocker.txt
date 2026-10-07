@@ -1,0 +1,8 @@
+=== RUN   TestRegExpRuntimeParserAcceptance
+    regexp_compile_parser_test.go:80: reference versus Node "a{9223372036854775808,9223372036854775807}" "": regexp: quantifier range out of order at byte 1 / 
+    regexp_compile_parser_test.go:106: C versus Go: exit status 1
+        case 6356: status 1 reason Invalid regular expression: /a{9223372036854775808,9223372036854775807}/: numbers out of order in {} quantifier expected 
+--- FAIL: TestRegExpRuntimeParserAcceptance (3.35s)
+FAIL
+FAIL	command-line-arguments	3.355s
+FAIL
