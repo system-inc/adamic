@@ -1,0 +1,16 @@
+01_has_property.a node 0 stage0 Refused
+02_get_property.a node 0 stage0 Refused
+03_own_keys.a node 0 stage0 Refused
+04_own_values.a node 0 stage0 Checker
+05_integer_order.a node 0 stage0 Refused
+06_delete_readd.a node 0 stage0 Refused
+07_optional_view.a node 0 stage0 Refused
+08_option_boolean.a node 0 stage0 Checker
+09_option_undefined.a node 0 stage0 Checker
+10_option_wrong_type.a node 0 stage0 Checker
+11_option_string.a node 0 stage0 Checker
+12_nested_entries.a node 0 stage0 Refused
+13_strict_option.a node 0 stage0 Refused
+14_group_by.a node 0 stage0 Checker
+15_inherited_read.a node 70 stage0 Checker
+16_built_strings.a node 0 stage0 Refused

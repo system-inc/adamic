@@ -1,0 +1,7 @@
+// From TypeScript 6.0.3, src/compiler/core.ts:1769
+// Census reason: a type predicate
+export function isString(text: unknown): text is string {
+    return typeof text === "string";
+}
+
+console.log(`${isString("compiler")} ${isString(42)}`);
