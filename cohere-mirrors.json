@@ -110,12 +110,12 @@
     "retiring_task": "xjdce2d"
   },
   {
-    "path": "internal/lower/refusals.go",
+    "path": "internal/lower/predicates.go",
     "kind": "rule",
     "rule_id": "adamic/no-type-predicate",
     "counterpart": "cohere/internal/lint/rules/adamic/no_type_predicate.go",
     "decision": "a",
-    "reason": "cohere owns the soundness judgment; Adamic will consume it by reference.",
+    "reason": "cohere owns the soundness judgment; Adamic will consume it by reference. Predicate-body verification replaces the former blanket syntax refusal under the accepted escape-hatch ruling.",
     "retiring_task": "xjdce2d"
   },
   {
@@ -146,5 +146,23 @@
     "reason": "cohere owns the soundness judgment; Adamic will consume it by reference. Pending on codex/no-optional-widening: main has no optional-widening diagnostic. The existing relation walker is the landing site, not evidence of an implemented check.",
     "retiring_task": "xjdce2d",
     "pending_function": "widened"
+  },
+  {
+    "path": "internal/lower/proven_relations.go",
+    "kind": "rule",
+    "rule_id": "adamic/nominal-class",
+    "counterpart": "cohere/internal/lint/rules/adamic/nominal_class.go",
+    "decision": "a",
+    "reason": "cohere owns the soundness judgment; Adamic will consume it by reference. Proven satisfies and erased upcasts now enforce this obligation in their common relation proof.",
+    "retiring_task": "xjdce2d"
+  },
+  {
+    "path": "internal/lower/proven_relations.go",
+    "kind": "rule",
+    "rule_id": "adamic/no-optional-widening",
+    "counterpart": "cohere/internal/lint/rules/adamic/no_optional_widening.go",
+    "decision": "a",
+    "reason": "cohere owns the soundness judgment; Adamic will consume it by reference. Proven satisfies and erased upcasts now enforce this obligation in their common relation proof.",
+    "retiring_task": "xjdce2d"
   }
 ]
