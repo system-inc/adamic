@@ -1,0 +1,45 @@
+import { panic, readTextFile, programArguments } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import type { StaticDeclaration } from './nodes_from_static_declarations.a';
+import { nodesFromStaticDeclarations } from './nodes_from_static_declarations.a';
+const input = readTextFile(programArguments()[0] ?? panic('missing corpus'));
+if(input.kind === 'Error') { panic(input.message); }
+const json = new OptionsJson(input.text);
+const root = json.parse();
+if(root < 0) { panic(json.error); }
+for(const row of json.node(root).children) {
+    const declarations: StaticDeclaration[] = [];
+    for(const index of json.node(row).children) {
+        declarations.push({
+            property: json.node(json.field(index, 'property')).text,
+            value: json.node(json.field(index, 'value')).text,
+            valuePresent: json.node(json.field(index, 'valuePresent')).text === 'true',
+            important: json.node(json.field(index, 'important')).text === 'true',
+        });
+    }
+    const nodes = nodesFromStaticDeclarations(declarations);
+    const again = nodesFromStaticDeclarations(declarations);
+    console.log(`${nodes.length}`);
+    for(const node of nodes) {
+        console.log(node.kind); console.log(node.selector); console.log(node.name); console.log(node.params);
+        console.log(node.property); console.log(node.value);
+        console.log(`${node.valuePresent}`); console.log(`${node.important}`);
+        console.log(`${node.contextPresent}`); console.log(`${node.nodesPresent}`);
+    }
+    const first = nodes[0];
+    const next = nodes[1];
+    const fresh = again[0];
+    const original = declarations[0];
+    if(first !== undefined && fresh !== undefined && original !== undefined) {
+        console.log(`${first === fresh}`);
+        if(next !== undefined) { console.log(`${first === next}`); }
+        first.property = original.property + ' mutated node';
+        first.value = original.value + ' mutated value';
+        console.log(original.property); console.log(original.value);
+        console.log(fresh.property); console.log(fresh.value);
+        if(next !== undefined) { console.log(next.property); console.log(next.value); }
+        original.property += ' mutated input'; original.value += ' mutated input';
+        console.log(first.property); console.log(first.value);
+        console.log(fresh.property); console.log(fresh.value);
+    }
+}
