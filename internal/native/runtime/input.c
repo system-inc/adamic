@@ -15,6 +15,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#ifdef ADAMIC_TARGET_WASI
+#include <sys/stat.h>
+#endif
 
 // new_string makes a string of length bytes, references 1, its bytes right after it in one block, the
 // same layout string.c makes, so the heap frees it the same way.
@@ -262,6 +265,12 @@ static int read_all(int descriptor, unsigned char **bytes, size_t *length) {
 adamic_object *adamic_read_text_file(const adamic_string *path) {
 	// What was printed comes first, as on Node: the file may be stdin, waiting on a prompt.
 	adamic_output_flush();
+#ifdef ADAMIC_TARGET_WASI
+	// WASI libc cannot resolve an empty capability path. Node treats it as ENOENT.
+	if (path->length == 0) {
+		return failure(path, ENOENT, false);
+	}
+#endif
 	char *name = file_name(path);
 	if (name == NULL) {
 		return failure(path, 0, false);
@@ -274,6 +283,14 @@ adamic_object *adamic_read_text_file(const adamic_string *path) {
 	if (descriptor < 0) {
 		return failure(path, errno, false);
 	}
+#ifdef ADAMIC_TARGET_WASI
+	// fd_read on a directory returns EBADF in WASI; Node reports EISDIR instead.
+	struct stat status;
+	if (fstat(descriptor, &status) == 0 && S_ISDIR(status.st_mode)) {
+		close(descriptor);
+		return failure(path, EISDIR, false);
+	}
+#endif
 	unsigned char *bytes;
 	size_t length;
 	int error = read_all(descriptor, &bytes, &length);
@@ -322,6 +339,11 @@ static int write_all(int descriptor, const char *bytes, size_t length) {
 adamic_object *adamic_write_text_file(const adamic_string *path, const adamic_string *text) {
 	// What was printed comes first, as on Node: the file may be stdout or stderr themselves.
 	adamic_output_flush();
+#ifdef ADAMIC_TARGET_WASI
+	if (path->length == 0) {
+		return failure(path, ENOENT, true);
+	}
+#endif
 	char *name = file_name(path);
 	if (name == NULL) {
 		return failure(path, 0, true);

@@ -10,7 +10,9 @@
 
 #include "adamic.h"
 
+#ifndef ADAMIC_TARGET_WASI
 #include <setjmp.h>
+#endif
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
@@ -32,14 +34,21 @@ typedef struct {
 	// stop is where a comparator that throws sends the sort, out of however deep in a merge it is:
 	// V8 sorts a copy and writes it back only once it's done, so a throw leaves the array as it was,
 	// and the work in progress, perhaps halfway through a merge, is dropped.
+#ifndef ADAMIC_TARGET_WASI
 	jmp_buf stop;
+#endif
 } sort_state;
 
 static int order(sort_state *state, adamic_value left, adamic_value right) {
 	int ordered = state->compare(left, right, state->context);
 	if (adamic_thrown != NULL) {
 		// Only the sort's own frames lie between here and stop, none holding a reference.
+#ifdef ADAMIC_TARGET_WASI
+		static const char message[] = "wasm32: throwing sort comparators are not supported";
+		adamic_panic(message, sizeof message - 1);
+#else
 		longjmp(state->stop, 1);
+#endif
 	}
 	return ordered;
 }
@@ -495,9 +504,11 @@ static void sorted(sort_state *state, ptrdiff_t length) {
 // sorted_or_stopped runs the sort, and says false when a comparator threw. The setjmp is in a frame
 // of its own, whose locals nothing changes after it, so none is left indeterminate by the longjmp.
 static bool sorted_or_stopped(sort_state *state, ptrdiff_t length) {
+#ifndef ADAMIC_TARGET_WASI
 	if (setjmp(state->stop) != 0) {
 		return false;
 	}
+#endif
 	sorted(state, length);
 	return true;
 }
