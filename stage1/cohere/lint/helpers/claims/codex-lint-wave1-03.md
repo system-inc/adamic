@@ -19,3 +19,12 @@ clearAll, ClearNamespace and delete operations are explicit dependencies.
 Claim committed and pushed before code. Actual pinned Go behavior on all six
 consumer fixtures, source Node, emitted JavaScript and sanitized native, with a
 compiling semantic mutant, decides the contract. One helper per .a file.
+
+### First helper outcome
+
+Theme.Add has an owned .a implementation and three compiling semantic mutants.
+14,780 bounded cases match Go across source Node, emitted JavaScript and sanitized
+native. Six consumer suites execute with pinned Tailwind; this removes six
+dependency entries and zero final blockers. Explicit callback integration and
+unavailable external repository corpus tests remain outside the evidence.
+See ../slot_wave1_03/REPORT.md and its raw evidence.

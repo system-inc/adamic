@@ -1,0 +1,38 @@
+{
+  "cases": 14780,
+  "bytes": 7180060,
+  "sha256": "1cfab9e3e8adeeb963affa9b2f295a57c0d7fbe508e68264c49585618cfef0d9",
+  "consumers": [
+    {
+      "rule": "better-tailwindcss/enforce-canonical-classes",
+      "distinct_actual_Add_inputs": 419,
+      "state_cases": 2095
+    },
+    {
+      "rule": "better-tailwindcss/enforce-consistent-class-order",
+      "distinct_actual_Add_inputs": 419,
+      "state_cases": 2095
+    },
+    {
+      "rule": "better-tailwindcss/enforce-consistent-variant-order",
+      "distinct_actual_Add_inputs": 419,
+      "state_cases": 2095
+    },
+    {
+      "rule": "better-tailwindcss/enforce-shorthand-classes",
+      "distinct_actual_Add_inputs": 419,
+      "state_cases": 2095
+    },
+    {
+      "rule": "better-tailwindcss/no-conflicting-classes",
+      "distinct_actual_Add_inputs": 419,
+      "state_cases": 2095
+    },
+    {
+      "rule": "better-tailwindcss/no-unknown-classes",
+      "distinct_actual_Add_inputs": 421,
+      "state_cases": 2105
+    }
+  ],
+  "control_cases": 2200
+}

@@ -1,0 +1,146 @@
+package tailwind
+
+import (
+	"encoding/json"
+	"fmt"
+	"os"
+	"sort"
+	"strings"
+	"sync"
+	"unicode/utf16"
+)
+
+type AdamicEntry struct {
+	Key, Value string
+	Options    int
+}
+type AdamicState struct {
+	Values []AdamicEntry
+	Order  []string
+	Dead   int
+	Prefix string
+}
+type AdamicAddCase struct {
+	Name, Key, Value string
+	Options          int
+	Before           AdamicState
+	Dependencies     []AdamicState
+	Queries          []string
+	Output           string
+}
+
+var adamicMutex sync.Mutex
+var adamicSeen = map[string]bool{}
+var adamicActive *AdamicAddCase
+var adamicTrace string
+
+func adamicCapture(key, value string, options ThemeOptions) {
+	path := os.Getenv("ADAMIC_THEME_CAPTURE")
+	if path == "" {
+		return
+	}
+	data, _ := json.Marshal(AdamicEntry{key, value, int(options)})
+	adamicMutex.Lock()
+	defer adamicMutex.Unlock()
+	if adamicSeen[string(data)] {
+		return
+	}
+	adamicSeen[string(data)] = true
+	file, err := os.OpenFile(path, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+	fmt.Fprintln(file, string(data))
+}
+func adamicState(theme *Theme) AdamicState {
+	state := AdamicState{Values: []AdamicEntry{}, Order: append([]string{}, theme.keyOrder...), Dead: theme.deadKeys, Prefix: theme.Prefix}
+	keys := make([]string, 0, len(theme.values))
+	for key := range theme.values {
+		keys = append(keys, key)
+	}
+	sort.Strings(keys)
+	for _, key := range keys {
+		value := theme.values[key]
+		state.Values = append(state.Values, AdamicEntry{key, value.value, int(value.options)})
+	}
+	return state
+}
+func adamicHex(text string) string {
+	var b strings.Builder
+	for _, unit := range utf16.Encode([]rune(text)) {
+		fmt.Fprintf(&b, "%04x", unit)
+	}
+	return b.String()
+}
+func adamicDependency(theme *Theme, name, key string, options ThemeOptions) {
+	if adamicActive != nil {
+		adamicActive.Dependencies = append(adamicActive.Dependencies, adamicState(theme))
+		adamicTrace += fmt.Sprintf("%s:%s:%d;", name, adamicHex(key), options)
+	}
+}
+func adamicClearAll(theme *Theme) { theme.clearAll(); adamicDependency(theme, "clearAll", "", 0) }
+func adamicClearNamespace(theme *Theme, namespace string, options ThemeOptions) {
+	theme.ClearNamespace(namespace, options)
+	adamicDependency(theme, "clearNamespace", namespace, options)
+}
+func adamicDelete(theme *Theme, key string) {
+	theme.delete(key)
+	adamicDependency(theme, "delete", key, 0)
+}
+func AdamicAddCases(entries []AdamicEntry, name string) []AdamicAddCase {
+	result := []AdamicAddCase{}
+	for _, input := range entries {
+		for _, mode := range []int{0, 1, 4, 5, 8} {
+			theme := NewTheme()
+			theme.Prefix = "p😀"
+			theme.values["--seed"] = themeValue{"old", 1}
+			theme.keyOrder = append(theme.keyOrder, "--seed")
+			if mode != 0 {
+				theme.values[input.Key] = themeValue{"previous", ThemeOptions(mode)}
+				theme.keyOrder = append(theme.keyOrder, input.Key)
+			}
+			theme.values["--font-weight-bold"] = themeValue{"700", 4}
+			theme.keyOrder = append(theme.keyOrder, "--font-weight-bold")
+			row := AdamicAddCase{Name: name, Key: input.Key, Value: input.Value, Options: input.Options, Before: adamicState(theme), Dependencies: []AdamicState{}}
+			adamicActive = &row
+			adamicTrace = ""
+			err := theme.Add(input.Key, input.Value, ThemeOptions(input.Options))
+			adamicActive = nil
+			message := ""
+			if err != nil {
+				message = err.Error()
+			}
+			// CSSSyntaxError.Error retains its zero-offset prefix for Add.
+			queries := map[string]bool{input.Key: true}
+			for key := range theme.values {
+				queries[key] = true
+			}
+			for _, v := range row.Before.Values {
+				queries[v.Key] = true
+			}
+			row.Queries = []string{}
+			for key := range queries {
+				row.Queries = append(row.Queries, key)
+			}
+			sort.Strings(row.Queries)
+			var b strings.Builder
+			fmt.Fprintf(&b, "error=%s;trace=%s;size=%d;dead=%d;prefix=%s;order=", adamicHex(message), adamicTrace, len(theme.values), theme.deadKeys, adamicHex(theme.Prefix))
+			for _, key := range theme.keyOrder {
+				fmt.Fprintf(&b, "%s,", adamicHex(key))
+			}
+			b.WriteString(";values=")
+			for _, key := range row.Queries {
+				fmt.Fprintf(&b, "%s:", adamicHex(key))
+				if value, ok := theme.values[key]; ok {
+					fmt.Fprintf(&b, "%s:%d;", adamicHex(value.value), value.options)
+				} else {
+					b.WriteString("absent;")
+				}
+			}
+			row.Output = b.String()
+			result = append(result, row)
+		}
+	}
+	return result
+}

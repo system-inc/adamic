@@ -1,0 +1,36 @@
+// Go Theme.Add, with separately owned store operations supplied explicitly.
+export class ThemeValue {
+    readonly value: string;
+    readonly options: number;
+    constructor(value: string, options: number) { this.value = value; this.options = options; }
+}
+export class ThemeState {
+    values: Map<string, ThemeValue> = new Map<string, ThemeValue>();
+    keyOrder: string[] = [];
+    deadKeys = 0;
+    prefix = '';
+}
+export interface ThemeOperations {
+    readonly clearAll: (theme: ThemeState) => void;
+    readonly clearNamespace: (theme: ThemeState, namespace: string, options: number) => void;
+    readonly deleteKey: (theme: ThemeState, key: string) => void;
+}
+// Empty error text denotes success; failures preserve CSSSyntaxError.Error().
+export function themeAdd(theme: ThemeState, key: string, value: string,
+                         options: number, operations: ThemeOperations): string {
+    if(key.endsWith('-*')) {
+        if(value !== 'initial') {
+            return '0: Invalid theme value `' + value + '` for namespace `' + key + '`';
+        }
+        if(key === '--*') { operations.clearAll(theme); }
+        else { operations.clearNamespace(theme, key.slice(0, key.length - 2), 0); }
+    }
+    if((options & 4) !== 0) {
+        const existing = theme.values.get(key);
+        if(existing !== undefined && (existing.options & 4) === 0) { return ''; }
+    }
+    if(value === 'initial') { operations.deleteKey(theme, key); return ''; }
+    if(!theme.values.has(key)) { theme.keyOrder.push(key); }
+    theme.values.set(key, new ThemeValue(value, options));
+    return '';
+}

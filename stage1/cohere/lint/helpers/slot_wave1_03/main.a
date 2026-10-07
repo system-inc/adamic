@@ -1,0 +1,66 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { ThemeState, ThemeValue, themeAdd } from './theme_add.a';
+function hex(text: string): string {
+    let result = '';
+    const digits = '0123456789abcdef';
+    for(let i = 0; i < text.length; i++) {
+        const code = text.charCodeAt(i);
+        for(let shift = 12; shift >= 0; shift -= 4) {
+            result += digits.slice((code >>> shift) & 15, ((code >>> shift) & 15) + 1);
+        }
+    }
+    return result;
+}
+const args = programArguments();
+const read = readTextFile(args[0] ?? panic('missing corpus'));
+if(read.kind === 'Error') { panic(read.message); }
+const json = new OptionsJson(read.text);
+const root = json.parse();
+if(root < 0) { panic(json.error); }
+function field(index: number, name: string): number {
+    const found = json.field(index, name);
+    if(found < 0) { panic('missing ' + name); }
+    return found;
+}
+function text(index: number, name: string): string { return json.node(field(index, name)).text; }
+function number(index: number, name: string): number { return json.node(field(index, name)).number; }
+function restore(theme: ThemeState, index: number): void {
+    theme.values = new Map<string, ThemeValue>(); theme.keyOrder = [];
+    theme.deadKeys = number(index, 'Dead'); theme.prefix = text(index, 'Prefix');
+    for(const value of json.node(field(index, 'Values')).children) {
+        theme.values.set(text(value, 'Key'), new ThemeValue(text(value, 'Value'), number(value, 'Options')));
+    }
+    for(const value of json.node(field(index, 'Order')).children) { theme.keyOrder.push(json.node(value).text); }
+}
+let dependencies: readonly number[] = [];
+let position = 0;
+let trace = '';
+function dependency(state: ThemeState, name: string, key: string, options: number): void {
+    trace += name + ':' + hex(key) + ':' + `${options}` + ';';
+    const snapshot = dependencies[position] ?? panic('unexpected dependency'); position++;
+    restore(state, snapshot);
+}
+function clearAllDelegate(state: ThemeState): void { dependency(state, 'clearAll', '', 0); }
+function clearNamespaceDelegate(state: ThemeState, key: string, options: number): void { dependency(state, 'clearNamespace', key, options); }
+function deleteDelegate(state: ThemeState, key: string): void { dependency(state, 'delete', key, 0); }
+for(const row of json.node(root).children) {
+    const theme = new ThemeState(); restore(theme, field(row, 'Before'));
+    dependencies = json.node(field(row, 'Dependencies')).children;
+    position = 0; trace = '';
+    const error = themeAdd(theme, text(row, 'Key'), text(row, 'Value'), number(row, 'Options'), {
+        clearAll: clearAllDelegate,
+        clearNamespace: clearNamespaceDelegate,
+        deleteKey: deleteDelegate,
+    });
+    let output = 'error=' + hex(error) + ';trace=' + trace + ';size=' + `${theme.values.size}` + ';dead=' + `${theme.deadKeys}` + ';prefix=' + hex(theme.prefix) + ';order=';
+    for(const key of theme.keyOrder) { output += hex(key) + ','; }
+    output += ';values=';
+    for(const query of json.node(field(row, 'Queries')).children) {
+        const key = json.node(query).text; const value = theme.values.get(key);
+        output += hex(key) + ':';
+        if(value === undefined) { output += 'absent;'; }
+        else { output += hex(value.value) + ':' + `${value.options}` + ';'; }
+    }
+    console.log(output);
+}
