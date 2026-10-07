@@ -54,3 +54,11 @@ consumer suites are covered. Three compiling semantic mutants are caught solely
 by comparison on all paths. This removes six more dependency entries, zero final
 blockers. Converter/sorter callback integration remains explicitly separate.
 See ../slot_wave1_03/STATIC_REPORT.md and its raw evidence.
+
+## Third helper
+
+- github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].appendSuccessor
+- Planned file: slot_wave1_03/control_flow_append_successor.a.
+- Four consumers: array-callback-return, consistent-return, no-unreachable-loop, react-hooks/rules-of-hooks; zero final blockers removed alone.
+
+Checked all 571 origin refs and 20 distinct helper claim blobs. Delivered comments are already reserved in HELPERS.md; all larger concrete helpers are claimed. This symbol ties the greatest unclaimed fan-out at four. Existing helpers are re-green and pushed at efc11a885 on c01907a7; rules are explicitly parked unrebased at c74d385b6 for #zmh9v36. Preserve ordered duplicate edges and target identity; check recursive graph ownership with a self-edge and back-edge before claiming native coverage. Go slice backing aliases remain an explicit representation boundary requiring proof. Claim pushed before implementation. No shared harness files will change.
