@@ -12,12 +12,26 @@ def run(name,args,cwd=repo):
 virtual=repo/'cohere/wave09_listener_oracle.go';overlay=write('overlay.json',json.dumps({'Replace':{str(virtual):str(root/'testdata/oracle.go')}}))
 go=work/'go';run('go-build',['go','build','-overlay',overlay,'-o',go,virtual],repo/'cohere')
 truth,go_time=run('go',[go]);data,_=run('maps',[go,'--json']);rows=json.loads(data)
+declarations=[]
+for row in rows:
+ directory=root/(row['Name'].split('/')[-1].replace('-','_'))
+ declaration=json.loads((directory/'rule.json').read_text())
+ assert declaration=={'name':row['Name'],'kinds':row['Kinds']},directory
+ assert all(type(kind) is int for kind in declaration['kinds']),directory
+ declarations.append(declaration)
+metadata=''.join(row['name']+'\t'+','.join(map(str,row['kinds']))+'\n' for row in declarations).encode()
+assert metadata==truth
+mutated=json.loads((root/'radix/rule.json').read_text());mutated['kinds']=[215]
+mutant_metadata=''.join((mutated if row['name']=='radix' else row)['name']+'\t'+','.join(map(str,(mutated if row['name']=='radix' else row)['kinds']))+'\n' for row in declarations).encode()
+assert mutant_metadata!=truth
+write('rule-json.stdout',metadata.decode());write('rule-json-mutant.stdout',mutant_metadata.decode())
+json_difference=next(i for i,(a,b) in enumerate(zip(mutant_metadata,truth)) if a!=b)
 source=''
 for i,row in enumerate(rows):
  file=root/(row['Name'].split('/')[-1].replace('-','_')+'.a')
  source+='import {ruleName as name'+str(i)+',syntaxKinds as kinds'+str(i)+'} from '+json.dumps(str(file))+';\n'
 for i,row in enumerate(rows):source+='console.log(name'+str(i)+'+\'\\t\'+kinds'+str(i)+'.join(\',\'));\n'
-path=write('main.a',source);measurements={'rules':len(rows),'bytes':len(truth),'go_seconds':go_time,'sha256':hashlib.sha256(truth).hexdigest()}
+path=write('main.a',source);measurements={'rules':len(rows),'bytes':len(truth),'go_seconds':go_time,'sha256':hashlib.sha256(truth).hexdigest(),'rule_json_mutant_difference':json_difference}
 for mode in ['normal','sanitized','mutant']:
  current=path
  if mode=='mutant':
