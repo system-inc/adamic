@@ -10,7 +10,7 @@ func (l *lowering) encodeJson(node *ast.Node) (ir.Expression, bool, error) {
 		return nil, false, nil
 	}
 	// Use exactly the decoder's schema and refusal policy. There is one type walker.
-	schema, err := l.decodeJsonType(node)
+	schema, err := l.jsonSchemaType(node, jsonSchemaEncode)
 	if err != nil {
 		return nil, true, err
 	}

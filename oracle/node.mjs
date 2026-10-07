@@ -14,6 +14,9 @@ const runtimeUrl = new URL('./adamic.mjs', import.meta.url).href;
 
 registerHooks({
 	resolve(specifier, context, nextResolve) {
+		if (specifier === 'adamic/http') {
+			return { url: 'data:text/javascript,export{}', shortCircuit: true };
+		}
 		if (specifier === 'adamic') {
 			return { url: runtimeUrl, shortCircuit: true };
 		}
@@ -22,6 +25,7 @@ registerHooks({
 	load(url, context, nextLoad) {
 		if (url.endsWith('.a') || url.endsWith('.ts')) {
 			let source = readFileSync(fileURLToPath(url), 'utf8');
+			// Decode and encode use the identical source trigger and descriptor insertion path.
 			if (source.includes('decodeJson') || source.includes('encodeJson')) {
 				const root = fileURLToPath(new URL('../', import.meta.url));
 				const sources = JSON.parse(execFileSync('go', ['run', './oracle/json_types.go', fileURLToPath(url)], { cwd: root, encoding: 'utf8' }));

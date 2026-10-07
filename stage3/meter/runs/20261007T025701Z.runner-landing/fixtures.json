@@ -1,0 +1,82 @@
+{
+  "platform": "linux",
+  "base": "d9fc3df",
+  "buckets": [
+    {
+      "bucket": "assertions",
+      "pass": 20,
+      "fail": 0,
+      "skip": 0
+    },
+    {
+      "bucket": "cycles",
+      "pass": 10,
+      "fail": 0,
+      "skip": 0
+    },
+    {
+      "bucket": "enums",
+      "pass": 13,
+      "fail": 0,
+      "skip": 0
+    },
+    {
+      "bucket": "host",
+      "pass": 25,
+      "fail": 0,
+      "skip": 0
+    },
+    {
+      "bucket": "namespaces",
+      "pass": 12,
+      "fail": 0,
+      "skip": 0
+    },
+    {
+      "bucket": "nested-functions",
+      "pass": 11,
+      "fail": 0,
+      "skip": 0
+    },
+    {
+      "bucket": "objects",
+      "pass": 25,
+      "fail": 0,
+      "skip": 0
+    },
+    {
+      "bucket": "predicates",
+      "pass": 11,
+      "fail": 0,
+      "skip": 0
+    },
+    {
+      "bucket": "records",
+      "pass": 19,
+      "fail": 0,
+      "skip": 0
+    },
+    {
+      "bucket": "runner",
+      "pass": 3,
+      "fail": 0,
+      "skip": 0
+    },
+    {
+      "bucket": "taste",
+      "pass": 24,
+      "fail": 0,
+      "skip": 0
+    }
+  ],
+  "totals": {
+    "pass": 173,
+    "fail": 0,
+    "skip": 0
+  },
+  "base_commit": "d9fc3df3f734ae50ab803c7a210f401f192deb21",
+  "branch": "codex/stage3-fixtures-runner-2",
+  "elapsed_seconds": 41.717,
+  "native_checks_passed": 6,
+  "test_log": "/tmp/stage3-landing-fixtures.jsonl"
+}

@@ -1,0 +1,26 @@
+// From TypeScript 6.0.3, src/compiler/core.ts:846
+// Census reason: non-boolean control condition
+
+export function compact<T>(array: readonly T[]): readonly T[] {
+    let result: T[] | undefined;
+    if (array !== undefined) {
+        for (let i = 0; i < array.length; i++) {
+            const v = array[i];
+            // Either the result has been initialized (and is looking to collect truthy values separately),
+            // or we've hit our first falsy value and need to copy over the current stretch of truthy values.
+            if (result ?? !v) {
+                result ??= array.slice(0, i);
+                if (v) {
+                    result.push(v);
+                }
+            }
+        }
+    }
+    return result ?? array;
+}
+
+console.log(compact([0, -0, NaN, 1, 2]).join(","));
+console.log(compact(["", "src", "", "compiler"]).join(","));
+const array: number[] = []; const object = {flags: 0};
+console.log(String(compact([array, object, undefined]).length));
+const truthy = [1, 2]; console.log(String(compact(truthy) === truthy));

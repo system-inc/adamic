@@ -12,7 +12,7 @@ func (e *emitter) jsonDecode(expression ir.JSONDecode) string {
 	return e.own(ir.Object, fmt.Sprintf("adamic_json_decode(%s, &%s)", e.value(expression.Text), name))
 }
 
-// The encoder and decoder consume the same descriptor format.
+// Preserve the decoder's existing C descriptor layout.
 func (e *emitter) jsonDecodeSchema(schema ir.JSONDecodeSchema) string {
 	return e.jsonDataSchema(schema, false)
 }

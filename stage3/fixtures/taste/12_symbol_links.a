@@ -1,0 +1,18 @@
+// From TypeScript 6.0.3, src/compiler/checker.ts:2932
+// Census reason: ||=
+interface Symbol {flags: number; id: number; links: SymbolLinks;}
+type TransientSymbol = Symbol;
+class SymbolLinks { value: number = 0; }
+const SymbolFlags = {Transient: 33554432};
+const symbolLinks: (SymbolLinks | undefined)[] = [undefined, undefined];
+function getSymbolId(symbol: Symbol): number {console.log("id:" + String(symbol.id)); return symbol.id;}
+function getSymbolLinks(symbol: Symbol): SymbolLinks {
+        if (symbol.flags & SymbolFlags.Transient) return (symbol as TransientSymbol).links;
+        const id = getSymbolId(symbol);
+        return symbolLinks[id] ??= new SymbolLinks();
+    }
+
+const symbol: Symbol = {flags: 0, id: 1, links: new SymbolLinks()};
+const links = getSymbolLinks(symbol); links.value = 7;
+console.log(String(getSymbolLinks(symbol).value));
+console.log(String(getSymbolLinks({flags: 33554432, id: 0, links}) === links));
