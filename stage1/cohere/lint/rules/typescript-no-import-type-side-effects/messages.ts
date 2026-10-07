@@ -1,0 +1,1 @@
+export const message = "Every name in this import carries its own inline `type` qualifier, so TypeScript erases the names and leaves the bare `import 'module'` behind, which still runs the module for its side effects. The import reads as type-only and is not. Move the qualifier to the top level, where it removes the whole statement.";
