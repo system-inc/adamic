@@ -55,5 +55,16 @@ on origin/main and origin/codex/tsgo-c-library and claims on every origin branch
 - nexus/correctness-no-uncleared-race-timeout (combined volume 0)
 - nexus/correctness-require-blocking-standard-streams (combined volume 0)
 
-The ranking contains 197 checker rules, 25 base ports and 98 claim mentions at
+The ranking contains 197 checker rules, 25 base ports and 96 distinct claim mentions at
 this selection. No implementation precedes this claim commit and push.
+
+Third batch status: uncleared-race-timeout is implemented in 80e56233 with Go
+byte agreement, a caught range mutant, sanitizer checks and released-handle checks.
+The process-exit and blocking-streams rules remain incomplete and claimed: only
+their reusable catch-sensitive output state is ported and independently tested.
+Their native control-flow event graph, resolved callee declarations and complete
+program module-resolution facts are absent. No shared harness or registration
+generator was edited. No subsequent batch was claimed. The reproducible selection
+snapshot uses full rule-token boundaries (96 distinct claims; the initial loose
+substring scan counted 98) and selects the same three rules.
+See ../WAVE_30_THIRD_REPORT.md for exact evidence and remaining work.
