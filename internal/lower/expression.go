@@ -379,6 +379,9 @@ func (l *lowering) weakTarget(proven *checker.Type) *checker.Type {
 
 // value lowers a value, as expression does, but leaves a Weak as it's kept.
 func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
+	if value, known, err := l.nodeCryptoNamespaceValue(node); known {
+		return value, err
+	}
 	if value, known, err := l.nodeFSDirectoryValue(node); known {
 		return value, err
 	}

@@ -17,6 +17,7 @@ buffer = 'internal/native/runtime/node_buffer.c'
 crypto = 'internal/native/runtime/node_crypto.c'
 lower = 'internal/lower/object.go'
 mutants = [
+    ('crypto_namespace_absent', 'internal/lower/library_node_buffer.go', 'return ir.ObjectLiteral{}, true, nil', 'return ir.Undefined{Of: ir.Object}, true, nil', 'namespace'),
     ('from_utf8_surrogate', buffer, '(unsigned)adamic_utf8_at(text, (double)at)', '(unsigned char)text->bytes[at]', 'encodings'),
     ('from_numeric_bytes', buffer, 'return (unsigned)byte;', 'return (unsigned)byte ^ 1;', 'writes'),
     ('utf8_reprocess', buffer, 'if (old != 12) { at--; }', 'if (old != 12) { at += 0; }', 'utf8'),

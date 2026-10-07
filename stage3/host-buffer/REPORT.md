@@ -1,3 +1,47 @@
+Built canonical node:crypto namespace presence and typeof reads; unimplemented namespace values remain named NotYet.
+Landing branch codex/host-buffer-crypto-land advances from 77a34e2; compiler d882fbc was merged only in a detached scratch checkout.
+Checks: lowering/load/full flow/freshness/IR PASS; all owned oracle fixtures PASS uncached; full Linux counts regenerated and verified; vet/format PASS.
+Mutant: namespace object replaced with typed undefined; compiled on both backends and caught only by Node stdout comparisons, including batch-3 truthiness.
+Remaining: full 21 advances to rmSync options NotYet in the proof merge; 22's undefined declaration is language-side. No require implementation, full repository gate or macOS execution.
+
+Crypto namespace read, October 7
+
+Implemented the read fixture 21 performs in `_crypto ? createSHA256Hash : generateDjb2Hash`. Recognition requires the resolved namespace symbol's module declaration to be node:crypto in the canonical pinned @types/node 25.3.3 tree. The value is a present object token, admitted only in condition/negation and typeof observations. It cannot escape into assignments, reflection or enumeration. Static crypto.createHash calls retain the existing intrinsic lowering. Unsupported exports retain the shared named NotYet guard. All code lives in library_node_buffer.go with a three-line named value hook in expression.go; no compiler batch-3 commit was added to this landing branch.
+
+The landing branch's new node_buffer_namespace.a oracle fixture reads the namespace with typeof and selects actual SHA-256 calls using that observation. The isolated proof checkout substitutes the exact direct namespace conditional that batch 3 admits; [namespace/truthiness.a](namespace/truthiness.a) preserves that executed source. The ordinary landing branch still keeps its non-null and strict-condition rules until compiler integration merges batch 3.
+
+Scratch: detached worktree at 77a34e2, merged d882fbced8e07b2f317fdd203400ed547190cccf with --no-commit --no-ff, then applied only the namespace fix. The merge was clean. Shared local dependency symlinks caused Go VCS stamping to fail on the first acceptance-driver attempt; reran with GOFLAGS=-buildvcs=false in the scratch only. This is a harness setup workaround, not a compiler change.
+
+Observed unmodified fixture stages on both backends in that scratch:
+
+| Fixture | Node bytes | Native | JavaScript |
+| --- | --- | --- | --- |
+| 02_readFile_utf16le.a | Agree | Checker | Checker |
+| 03_readFile_utf16be.a | Agree | Checker | Checker |
+| 21_createHash.a | Agree | NotYet, rmSync evaluated option literals | NotYet, rmSync evaluated option literals |
+| 22_createHash_fallback.a | Agree | NotYet, undefined value | NotYet, undefined value |
+
+Before the fix, 21 stopped at line 17 with `node:crypto."node:crypto" read as a value`. After the fix, it reaches line 30: `rmSync: fs option literals containing evaluated expressions; bind a plain options object first`. The namespace read is closed, but full fixture 21 is not claimed green. The audited host fixtures and status.json are unchanged.
+
+22 is a language representation gap, not an optional crypto result. Exact one-line reproducer: `const c: undefined = undefined;`. On the compiler proof merge this passes the checker and then reports `stage 0 can't lower a value of type undefined yet` at 1:7. An earlier probe added console.log(c), which introduced an unrelated checker error; that attempt is not the reproducer.
+
+Commands after export GOPROXY='https://proxy.golang.org|direct' and source /workspace/adamic-tools/env.sh:
+
+- bash cloud/setup.sh: Go/clang/Node/submodules ready 0s each; cache warm 93s; done 93s; nproc=5, cgroup quota=4.
+- go test ./internal/lower -run TestNodeBufferRefusals -count=1 -v: PASS 2.234s, including new namespace alias/reflection/member refusals.
+- go test ./internal/lower ./internal/load ./internal/flow ./internal/fresh ./internal/ir -count=1 -timeout 30m: PASS. Lower 86.255s, load 6.008s, full flow 137.628s, freshness 108.200s, IR 20.989s.
+- ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'Test(Native|Input)AgreesWithNode/internal/oracle/testdata/node_buffer_' -count=1 -v -timeout 30m: PASS 3.974s, zero cache hits; release/sanitized native and JavaScript held to source Node.
+- go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 30m -args -update-counts: PASS 75.449s. One namespace row added; directory-system row changed because it enumerates the added fixture.
+- go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 30m: verification PASS 29.893s.
+- go vet ./internal/lower ./internal/oracle, gofmt -l cmd internal and git diff --check: PASS, no output.
+- Scratch namespace oracle: PASS 13.009s; exact direct-truthiness version PASS 0.674s. Unmodified four-fixture acceptance returns 1 explicitly for frontend blockers; all four Node observations agree.
+
+Semantic mutant `crypto_namespace_absent` changes only the present namespace object token to ir.Undefined{Of: ir.Object}. Main and proof inputs compiled successfully on both backends and failed only source Node stdout comparison, with no compiler/sanitizer/leak failures. Runtime/Go source restored exactly after each run. Restored uncached namespace baseline: PASS 0.740s on landing, PASS 1.862s on the proof's direct-truthiness fixture. The reusable mutant is in node_buffer_mutants.py. [Namespace evidence](namespace/) contains the command logs as tracked text and the proof fixture stages.
+
+No full repository or whole oracle gate was repeated for this follow-up; the touched package gates, full flow, uncached owned oracle set and full count-table execution/verification ran. No runtime implementation, private declaration hook, require lowering or audited upstream source was changed.
+
+The following reports are historical.
+
 Catchable crypto finalization still needs runtime integration; owned full fixtures stop at Checker (02/03), non-null refusal (21), or undefined lowering (22).
 Merged area/library 53f44e05 with fs-file and macOS fixes, retaining both units through named Buffer hooks.
 Merge parents: a38287b and 53f44e05; codex/host-buffer-crypto-land. Merge commit, no rebase, force-push or push to main.
