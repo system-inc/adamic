@@ -28,6 +28,7 @@ enum adamic_kind {
 	adamic_kind_number,
 	adamic_kind_boolean,
 	adamic_kind_weak,
+	adamic_kind_environment,
 };
 
 typedef struct adamic_heap {
@@ -49,7 +50,7 @@ void *adamic_allocate(size_t size, enum adamic_kind kind);
 // that reads or writes one, and to the runtime through each object's shape and each array's flag.
 typedef union adamic_value {
 	double number;
-	bool boolean;
+	uint8_t boolean;
 	void *reference;
 } adamic_value;
 
@@ -70,15 +71,25 @@ typedef struct adamic_maybe_boolean {
 typedef struct adamic_cell {
 	adamic_heap heap;
 	bool references;
+	bool ready;
+	struct adamic_environment *owner;
 	adamic_value value;
 } adamic_cell;
+
+// One counted allocation owns every interior captured slot.
+typedef struct adamic_environment {
+	adamic_heap heap;
+	size_t count;
+	adamic_cell cells[];
+} adamic_environment;
+adamic_environment *adamic_environment_new(size_t count);
 
 adamic_cell *adamic_cell_new(adamic_value value, bool references);
 
 // adamic_closure is a function value: its code, and the cells it captured. Every closure is called
 // the same way, its arguments and its result as adamic_value, whatever its types.
 typedef struct adamic_closure adamic_closure;
-typedef adamic_value (*adamic_code)(adamic_closure *self, adamic_value *arguments);
+typedef adamic_value (*adamic_code)(adamic_closure *self, size_t argument_count, adamic_value *arguments);
 struct adamic_closure {
 	adamic_heap heap;
 	adamic_code code;
@@ -133,8 +144,10 @@ extern char adamic_literal_mark;
 // ADAMIC_STRING is a constant: ADAMIC_STRING("text") as a static adamic_string's initializer.
 #define ADAMIC_STRING(text) {{0, adamic_kind_string, 0}, sizeof text - 1, text, 0, ADAMIC_LITERAL_INDEX, NULL, 0}
 
-// ADAMIC_STRING_BYTES is a constant too long for a C string literal: its bytes an array of size.
-#define ADAMIC_STRING_BYTES(array, size) {{0, adamic_kind_string, 0}, size, array, 0, ADAMIC_LITERAL_INDEX, NULL, 0}
+// ADAMIC_STRING_BYTES holds an unsigned byte array too long for a C string literal.
+// Character pointers may read any object representation; the cast preserves the bytes
+// for the runtime, whose numeric byte readers use unsigned char.
+#define ADAMIC_STRING_BYTES(array, size) {{0, adamic_kind_string, 0}, size, (const char *)(array), 0, ADAMIC_LITERAL_INDEX, NULL, 0}
 
 // adamic_shape is an object's layout: its fields' names in order, and which fields hold references.
 //
@@ -180,6 +193,12 @@ typedef struct adamic_object {
 	adamic_value slots[];
 } adamic_object;
 
+// Initialized bits follow slots in the same allocation, indexed by the actual shape.
+static inline unsigned char *adamic_object_initialized(const adamic_object *object) {
+	return (unsigned char *)(void *)(object->slots + object->shape->count);
+}
+void adamic_object_set_initialized(adamic_object *object, const char *name, bool initialized);
+
 bool adamic_instanceof(const void *value, const adamic_class *wanted);
 adamic_virtual_method adamic_virtual(const adamic_object *object, size_t slot);
 void adamic_object_free_children(adamic_object *object, void (*release)(void *));
@@ -191,9 +210,11 @@ typedef struct adamic_slot_cache {
 	size_t index;
 } adamic_slot_cache;
 
+adamic_value *adamic_object_read(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *expression);
+
 // adamic_method is a class's method as a call through an interface calls it: the object as this, and
 // the arguments and the result as adamic_value, as a closure's are (the result owned).
-typedef adamic_value (*adamic_method)(adamic_object *self, adamic_value *arguments);
+typedef adamic_value (*adamic_method)(adamic_object *self, size_t argument_count, adamic_value *arguments);
 struct adamic_methods {
 	size_t count;
 	const char *const *names;
@@ -224,9 +245,21 @@ void adamic_region_end(adamic_region *region);
 
 // adamic_object_copy is { ...source }: the same shape, its references retained.
 adamic_object *adamic_object_copy(const adamic_object *source);
+adamic_object *adamic_object_copy_checked(const adamic_object *source, const char *expression);
 
 // adamic_object_has is object.hasOwnProperty(name).
 bool adamic_object_has(const adamic_object *object, const adamic_string *name);
+
+// Runtime scalar tags for fixed program shapes. Host reference slots already carry heap tags.
+typedef struct adamic_shape_types {
+	const adamic_shape *shape;
+	const int *types;
+	struct adamic_shape_types *next;
+} adamic_shape_types;
+extern adamic_heap adamic_null;
+void adamic_register_shape_types(adamic_shape_types *metadata);
+bool adamic_has_property(const adamic_heap *object, const char *name);
+adamic_heap *adamic_dynamic_property(adamic_heap *object, const char *name);
 
 // adamic_object_field finds a field by name. The checker proved the field is there. Where this place in
 // the program last saw the same shape, the field is where it was then, which is inline, since it's
@@ -270,6 +303,8 @@ bool adamic_object_has_own(const adamic_object *object, const adamic_string *key
 struct adamic_array *adamic_object_keys(const adamic_object *object);
 struct adamic_array *adamic_object_values(const adamic_object *object, bool references, bool entries);
 void adamic_object_assign(adamic_object *target, const adamic_object *source);
+struct adamic_array *adamic_object_values_checked(const adamic_object *object, bool references, bool entries, const char *expression);
+void adamic_object_assign_checked(adamic_object *target, const adamic_object *source, const char *expression);
 void adamic_object_check_write(const adamic_object *object, const char *name);
 // Keep frozen-object failures out of the ordinary write's call path.
 static inline void adamic_object_check_data_write(const adamic_object *object, const char *name) {
@@ -556,6 +591,8 @@ bool adamic_maybe_number_equal(adamic_maybe_number left, adamic_maybe_number rig
 double adamic_maybe_number_pack(adamic_maybe_number value);
 adamic_maybe_number adamic_maybe_number_unpack(double packed);
 bool adamic_maybe_boolean_equal(adamic_maybe_boolean left, adamic_maybe_boolean right);
+uint8_t adamic_maybe_boolean_pack(adamic_maybe_boolean value);
+adamic_maybe_boolean adamic_maybe_boolean_unpack(uint8_t packed);
 
 // A string's UTF-16 view (string.c): length, charCodeAt and trim as JavaScript means them.
 //
@@ -804,14 +841,8 @@ adamic_string *adamic_string_from_code_points_of(const adamic_array *values);
 double adamic_utf8_length(const adamic_string *text);
 double adamic_utf8_at(const adamic_string *text, double index);
 
-// JavaScript's bitwise operators on numbers, each through ToInt32 or ToUint32 exactly (bitwise.c).
-double adamic_bitwise_and(double left, double right);
-double adamic_bitwise_or(double left, double right);
-double adamic_bitwise_xor(double left, double right);
-double adamic_bitwise_not(double value);
-double adamic_shift_left(double left, double right);
-double adamic_shift_right(double left, double right);
-double adamic_shift_right_unsigned(double left, double right);
+// Inline integer remainder and bitwise operators, with general double fallbacks.
+#include "integer.h"
 
 // String.fromCharCode and String.fromCodePoint over their arguments, already evaluated in order
 // (from_codes.c): each a string the caller owns. fromCodePoint panics with V8's RangeError where a
@@ -887,6 +918,9 @@ _Noreturn void adamic_stack_overflow(void);
 _Noreturn void adamic_unreachable(void);
 
 #include "regexp.h"
+#include "node_fs_file.h"
+#include "node_buffer.h"
+#include "node_crypto.h"
 // Fixed plain literals can have public # keys; Object reflection refuses those shapes.
 // Keep their enumeration distinct from the Object slice, which skips private class slots.
 adamic_array *adamic_plain_object_keys(const adamic_object *object);

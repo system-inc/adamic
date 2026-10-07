@@ -1,0 +1,2 @@
+const r: Record<string, number> = {zero: 0};
+console.log(String(r['zero'] ||= 5));

@@ -1,0 +1,17 @@
+// Seed 193, shrunk by adamic-fuzz.
+class BaseCounter {
+    label = 'b';
+}
+const plainCounter = new BaseCounter();
+interface Link {
+    value: number;
+    label: string;
+    readonly next: Link | undefined;
+}
+let chain: Link | undefined = { value: 100, label: 'a,b', next: undefined };
+function effect5(parameter6: number[], parameter7: number, parameter8: number = (parameter7 << -1), parameter9: number = Number.parseFloat(plainCounter.label)): number {
+    chain = chain?.next;
+    return 0;
+}
+effect5([0], 0);
+chain = chain?.next;

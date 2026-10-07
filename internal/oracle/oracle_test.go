@@ -39,6 +39,28 @@ var fixtures = []struct {
 	checked bool
 }{
 	{"internal/oracle/testdata/typeof_null.a", true, false},
+	{"internal/oracle/testdata/records_coverage_fresh.a", true, false},
+	{"internal/oracle/testdata/records_coverage_calls.a", true, false},
+	{"internal/oracle/testdata/records_coverage_key_forms.a", true, false},
+	{"internal/oracle/testdata/records_coverage_order_edges.a", true, false},
+	{"internal/oracle/testdata/records_coverage_evaluation.a", true, false},
+	{"internal/oracle/testdata/records_coverage_nested_arrays.a", true, false},
+	{"internal/oracle/testdata/records_coverage_coalesce_scalars.a", true, false},
+	{"internal/oracle/testdata/records_coverage_iteration_edges.a", true, false},
+	{"internal/oracle/testdata/records_coverage_prototype_own.a", true, false},
+	{"internal/oracle/testdata/records_coverage_values.a", true, false},
+	{"internal/oracle/testdata/records_coverage_growth.a", true, false},
+	{"internal/oracle/testdata/records_coverage_json_options.a", true, false},
+	{"internal/oracle/testdata/records_coverage_inherited_signature.a", true, false},
+	{"internal/oracle/testdata/non_null.a", true, false},
+	{"internal/oracle/testdata/non_null_map.a", true, true},
+	{"internal/oracle/testdata/non_null_catch.a", true, true},
+	{"internal/oracle/testdata/non_null_field.a", true, true},
+	{"internal/oracle/testdata/non_null_capture.a", true, true},
+	{"internal/oracle/testdata/non_null_array.a", true, true},
+	{"internal/oracle/testdata/non_null_union.a", true, true},
+	{"internal/oracle/testdata/non_null_boolean.a", true, true},
+	{"internal/oracle/testdata/non_null_null.a", true, true},
 	{"internal/oracle/testdata/route_targets_callbacks.a", true, false},
 	{"internal/oracle/testdata/route_targets_virtual_fresh.a", true, false},
 	{"internal/oracle/testdata/route_targets_unknown.a", true, false},
@@ -468,6 +490,12 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/regexp_search.a", true, false},
 	{"internal/oracle/testdata/regexp_unicode.a", true, false},
 	{"internal/oracle/testdata/regexp_split_pair_pattern.a", true, false},
+	// Integer fast paths through calls, arithmetic, loops and numeric slots.
+	{"internal/oracle/testdata/integer_coverage_calls.a", true, false},
+	{"internal/oracle/testdata/integer_coverage_loops.a", true, false},
+	{"internal/oracle/testdata/integer_coverage_nested.a", true, false},
+	{"internal/oracle/testdata/integer_coverage_remainder.a", true, false},
+	{"internal/oracle/testdata/integer_coverage_slots.a", true, false},
 }
 
 // run is one execution's observable behavior: what the oracle compares.

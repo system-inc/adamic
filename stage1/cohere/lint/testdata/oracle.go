@@ -143,7 +143,7 @@ func parse(path, source string) *ast.SourceFile {
 	case strings.HasSuffix(path, ".js"):
 		kind = core.ScriptKindJS
 	}
-	return parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: path, Path: tspath.Path(path)}, source, kind)
+	return parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: tspath.RootedFilePathFromAbsolute(path), PathKey: tspath.CaseSensitive.PathKey(tspath.RootedPathFromAbsolute(path))}, source, kind)
 }
 
 func collect(path, source string, fields []string) []rule.Diagnostic {

@@ -1,0 +1,12 @@
+--- FAIL: TestRefusalPassRulings (0.00s)
+    --- FAIL: TestRefusalPassRulings/record.a (0.10s)
+        refusal_pass_test.go:40: got <nil>, want Refused
+    --- FAIL: TestRefusalPassRulings/record-generic-alias.a (0.08s)
+        refusal_pass_test.go:40: got <nil>, want Refused
+    --- FAIL: TestRefusalPassRulings/observe-record.a (0.06s)
+        refusal_pass_test.go:40: got <nil>, want Refused
+    --- FAIL: TestRefusalPassRulings/record-alias.a (0.06s)
+        refusal_pass_test.go:40: got <nil>, want Refused
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.467s
+FAIL

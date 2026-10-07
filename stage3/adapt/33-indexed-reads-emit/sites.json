@@ -573,7 +573,7 @@
     "total": 2,
     "action": "decline",
     "class": "U-position",
-    "invariant": "The adjacent typeof string guard handles missing source content; preserve its repeated read."
+    "invariant": "Decline: typeof checks the first indexed read, but the payload performs a second read of caller-supplied sourcesContent; a getter may return a different array and make that payload undefined. No stable-data provenance is guaranteed for this API input."
   },
   {
     "file": "sourcemap.ts",
@@ -763,9 +763,9 @@
     "expression": "props[0]",
     "occurrence": 1,
     "total": 1,
-    "action": "decline",
+    "action": "assert",
     "class": "U-endpoint",
-    "invariant": "The property-symbol list producer must prove a nonempty namespace list before selecting its parent; that invariant remains unreviewed."
+    "invariant": "isExpandoFunctionDeclaration requires an expando Value export on this parse-tree function symbol; getPropertiesOfContainerFunction resolves that same symbol export table through getNamedMembers, retaining the user-named Value property, so the populated props array has a first element and is not mutated before this read."
   },
   {
     "file": "transformers/declarations.ts",
@@ -777,7 +777,7 @@
     "total": 1,
     "action": "decline",
     "class": "U-endpoint",
-    "invariant": "The extends clause type-list producer must prove nonemptiness for synthetic and malformed input; that invariant remains unreviewed."
+    "invariant": "Decline: getEffectiveBaseTypeNode proves only the first extends clause is populated; the parser also accepts export class C extends f() extends {} with a second empty clause. That mapped read can be undefined, as an actual stock Node declaration-emitter crash demonstrates."
   },
   {
     "file": "transformers/es2015.ts",
@@ -1111,9 +1111,9 @@
     "expression": "superPath[superPathDepth]",
     "occurrence": 1,
     "total": 1,
-    "action": "decline",
+    "action": "assert",
     "class": "U-position",
-    "invariant": "The super-call path producer must prove this depth and the selected statement index; that cross-function invariant remains unreviewed."
+    "invariant": "The caller enters at depth 0 only for a nonempty findSuperStatementIndexPath result; each recursive try prefix was prepended only after its child found a super call, so the corresponding next depth exists and the terminal depth selects the super-call statement."
   },
   {
     "file": "transformers/ts.ts",
@@ -1123,9 +1123,9 @@
     "expression": "statementsIn[superStatementIndex]",
     "occurrence": 1,
     "total": 1,
-    "action": "decline",
+    "action": "assert",
     "class": "U-position",
-    "invariant": "The super-call path producer must prove this depth and the selected statement index; that cross-function invariant remains unreviewed."
+    "invariant": "findSuperStatementIndexPath records i only inside i < statements.length on the same populated NodeArray; each try recursion pairs its next index with that tryBlock.statements, and parameter-property generation clones names without modifying these statement arrays."
   },
   {
     "file": "transformer.ts",
@@ -1747,9 +1747,9 @@
     "expression": "objects[0]",
     "occurrence": 1,
     "total": 2,
-    "action": "decline",
+    "action": "assert",
     "class": "U-endpoint",
-    "invariant": "Presence of objects[0] in visitObjectLiteralExpression has not been established; its nonempty-list invariant review remains unfinished."
+    "invariant": "objects.length guards this first read; chunkObjectLiteralElements populates objects only with factory-created objects or defined expressions returned by the expression-preserving visitor."
   },
   {
     "file": "transformers/es2018.ts",
@@ -1759,9 +1759,9 @@
     "expression": "objects[0]",
     "occurrence": 2,
     "total": 2,
-    "action": "decline",
+    "action": "assert",
     "class": "U-endpoint",
-    "invariant": "Presence of objects[0] in visitObjectLiteralExpression has not been established; its nonempty-list invariant review remains unfinished."
+    "invariant": "createObjectLiteralExpression derives its spread flag from its property children, so this flagged literal is nonempty; chunking a spread or an ordinary property emits at least one defined expression, and the optional leading empty-object insertion preserves nonemptiness."
   },
   {
     "file": "transformers/es2018.ts",
@@ -1771,9 +1771,9 @@
     "expression": "objects[i]",
     "occurrence": 1,
     "total": 1,
-    "action": "decline",
+    "action": "assert",
     "class": "U-loop",
-    "invariant": "Presence of objects[i] in visitObjectLiteralExpression has not been established; its loop-bound and populated-list invariant review remains unfinished."
+    "invariant": "The loop has 1 <= i < objects.length in the populated private chunk array; createAssignHelper receives a new two-element array, so helper callbacks cannot mutate the original chunk list."
   },
   {
     "file": "transformers/es2018.ts",
@@ -1783,9 +1783,9 @@
     "expression": "node.elements[i]",
     "occurrence": 1,
     "total": 1,
-    "action": "decline",
+    "action": "assert",
     "class": "U-loop",
-    "invariant": "Presence of node.elements[i] in visitCommaListExpression has not been established; its loop-bound and populated-list invariant review remains unfinished."
+    "invariant": "The loop has 0 <= i < node.elements.length on the populated comma-expression NodeArray; the read precedes visiting, and changed expressions are accumulated into a separate result array without mutating the original elements."
   },
   {
     "file": "transformers/es2018.ts",
@@ -2815,9 +2815,9 @@
     "expression": "node.arguments[0]",
     "occurrence": 1,
     "total": 3,
-    "action": "decline",
+    "action": "assert",
     "class": "U-endpoint",
-    "invariant": "Presence of node.arguments[0] in <callback> has not been established; its nonempty-list invariant review remains unfinished."
+    "invariant": "forEachDynamicImportOrRequireCall with includeTypeSpaceImports=false invokes this callback only for import calls with arguments.length >= 1 or require calls with exactly one argument; the populated AST array is unchanged before this first read."
   },
   {
     "file": "transformers/module/module.ts",
@@ -2829,7 +2829,7 @@
     "total": 3,
     "action": "decline",
     "class": "U-endpoint",
-    "invariant": "Presence of node.arguments[0] in <callback> has not been established; its nonempty-list invariant review remains unfinished."
+    "invariant": "The immediately preceding isStringLiteralLike read narrows this same populated AST slot; the predicate only inspects kind and no callback or write intervenes. No additional assertion is needed."
   },
   {
     "file": "transformers/module/module.ts",
@@ -2839,9 +2839,9 @@
     "expression": "jsonSourceFile.statements[0]",
     "occurrence": 1,
     "total": 1,
-    "action": "decline",
+    "action": "assert",
     "class": "U-endpoint",
-    "invariant": "Presence of jsonSourceFile.statements[0] in transformAMDModule has not been established; its nonempty-list invariant review remains unfinished."
+    "invariant": "The immediately enclosing statements.length conditional selects this read only for a nonempty populated JSON statement NodeArray; no callback or write occurs between the guard and endpoint read."
   },
   {
     "file": "transformers/module/module.ts",
@@ -2889,7 +2889,7 @@
     "total": 1,
     "action": "decline",
     "class": "U-table",
-    "invariant": "Presence of moduleInfoMap[getOriginalNodeId(currentSourceFile)] in onEmitNode has not been established; its table population invariant review remains unfinished."
+    "invariant": "This cache is legitimately absent for skipped scripts. Its owning currentModuleInfo declaration now truthfully includes undefined; emission getExports reads already handle absence. Required transform-context receiver reads have separate individual proofs."
   },
   {
     "file": "transformers/module/module.ts",
@@ -3019,9 +3019,9 @@
     "expression": "dependencyGroups[groupIndex]",
     "occurrence": 1,
     "total": 1,
-    "action": "decline",
+    "action": "assert",
     "class": "U-position",
-    "invariant": "Presence of dependencyGroups[groupIndex] in collectDependencyGroups has not been established; its producer and index invariant review remains unfinished."
+    "invariant": "The private groupIndices map stores dependencyGroups.length immediately before pushing a defined DependencyGroup; the populated array is never spliced or truncated, so every existing map value names a present group at this original read."
   },
   {
     "file": "transformers/module/system.ts",
@@ -3033,7 +3033,7 @@
     "total": 2,
     "action": "decline",
     "class": "U-table",
-    "invariant": "Presence of moduleInfoMap[id] in onEmitNode has not been established; its table population invariant review remains unfinished."
+    "invariant": "The cache entry is legitimately absent for skipped plain scripts; its receiving owner now includes undefined. Required transformation and conditional emission consumers have separate individual proofs, so this sparse read is not asserted."
   },
   {
     "file": "transformers/module/system.ts",
@@ -3045,7 +3045,7 @@
     "total": 2,
     "action": "decline",
     "class": "U-table",
-    "invariant": "Presence of exportFunctionsMap[id] in onEmitNode has not been established; its table population invariant review remains unfinished."
+    "invariant": "The cache entry is legitimately absent for skipped plain scripts; its receiving owner now includes undefined. Required transformation and conditional emission consumers have separate individual proofs, so this sparse read is not asserted."
   },
   {
     "file": "transformers/module/system.ts",
@@ -3057,7 +3057,7 @@
     "total": 3,
     "action": "decline",
     "class": "U-table",
-    "invariant": "Presence of noSubstitutionMap[id] in onEmitNode has not been established; its table population invariant review remains unfinished."
+    "invariant": "This cache entry is legitimately absent unless the transformer records substitutions to suppress; the receiving noSubstitution owner already includes undefined and the subsequent guard handles absence."
   },
   {
     "file": "transformers/module/system.ts",
@@ -3069,7 +3069,7 @@
     "total": 2,
     "action": "decline",
     "class": "U-table",
-    "invariant": "Presence of contextObjectMap[id] in onEmitNode has not been established; its table population invariant review remains unfinished."
+    "invariant": "The cache entry is legitimately absent for skipped plain scripts; its receiving owner now includes undefined. Required transformation and conditional emission consumers have separate individual proofs, so this sparse read is not asserted."
   },
   {
     "file": "transformers/module/system.ts",
@@ -3307,9 +3307,9 @@
     "expression": "parameters[i]",
     "occurrence": 1,
     "total": 1,
-    "action": "decline",
+    "action": "assert",
     "class": "U-loop",
-    "invariant": "Presence of parameters[i] in addDefaultValueAssignmentsIfNeeded has not been established; its loop-bound and populated-list invariant review remains unfinished."
+    "invariant": "The for loop visits 0 <= i < parameters.length in the populated readonly NodeArray returned by nodesVisitor; parameters[i] is read once before any callback, at its original evaluation point."
   },
   {
     "file": "visitorPublic.ts",

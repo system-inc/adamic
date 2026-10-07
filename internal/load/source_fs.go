@@ -2,9 +2,11 @@ package load
 
 import (
 	_ "embed"
+	"sort"
 	"strings"
 	"time"
 
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 	"github.com/microsoft/TypeScript/tsc/shim/vfs"
 )
 
@@ -29,28 +31,30 @@ var prelude string
 // is ever shadowed silently.
 type sourceFS struct {
 	vfs.FS
-	overlay map[string]string
+	overlay        map[tspath.RootedFilePath]string
+	projectConsole bool
+	nodeTypes      bool
 }
 
 // adamicFile is the .a file behind a path the checker asked for, when there is one and no real .ts
 // file of that name.
-func (s *sourceFS) adamicFile(path string) (string, bool) {
-	if !strings.HasSuffix(path, ".a.ts") || s.FS.FileExists(path) {
+func (s *sourceFS) adamicFile(path tspath.RootedFilePath) (tspath.RootedFilePath, bool) {
+	if !strings.HasSuffix(path.AsString(), ".a.ts") || s.FS.FileExists(path) {
 		return "", false
 	}
-	adamicPath := strings.TrimSuffix(path, ".ts")
+	adamicPath := path.RemoveExtension(".ts").AppendSuffix("")
 	return adamicPath, s.FS.FileExists(adamicPath)
 }
 
 // displayName is the name a person wrote, for a file name the checker uses.
-func (s *sourceFS) displayName(path string) string {
+func (s *sourceFS) displayName(path tspath.RootedFilePath) string {
 	if adamicPath, isAdamic := s.adamicFile(path); isAdamic {
-		return adamicPath
+		return adamicPath.AsString()
 	}
-	return path
+	return path.AsString()
 }
 
-func (s *sourceFS) FileExists(path string) bool {
+func (s *sourceFS) FileExists(path tspath.RootedFilePath) bool {
 	if path == preludePath {
 		return true
 	}
@@ -63,9 +67,24 @@ func (s *sourceFS) FileExists(path string) bool {
 	return s.FS.FileExists(path)
 }
 
-func (s *sourceFS) ReadFile(path string) (string, bool) {
+func (s *sourceFS) ReadFile(path tspath.RootedFilePath) (string, bool) {
 	if path == preludePath {
-		return prelude, true
+		text := prelude
+		if s.nodeTypes {
+			text = nodePrelude()
+		}
+		if s.projectConsole {
+			start := strings.Index(text, "declare const console:")
+			if start < 0 {
+				start = strings.Index(text, "declare var console:")
+			}
+			if start >= 0 {
+				end := strings.Index(text[start:], "declare module 'adamic'") + start
+				text = text[:start] + text[end:]
+			}
+			return text, true
+		}
+		return text, true
 	}
 	if source, exists := s.overlay[path]; exists {
 		return source, true
@@ -79,23 +98,23 @@ func (s *sourceFS) ReadFile(path string) (string, bool) {
 	return s.FS.ReadFile(path)
 }
 
-func (s *sourceFS) DirectoryExists(path string) bool {
+func (s *sourceFS) DirectoryExists(path tspath.RootedDirectoryPath) bool {
 	return path == preludeDirectory || s.FS.DirectoryExists(path)
 }
 
-func (s *sourceFS) Stat(path string) vfs.FileInfo {
-	if adamicPath, isAdamic := s.adamicFile(path); isAdamic {
-		return s.FS.Stat(adamicPath)
+func (s *sourceFS) Stat(path tspath.RootedPath) vfs.FileInfo {
+	if adamicPath, isAdamic := s.adamicFile(tspath.RootedFilePathFromPath(path)); isAdamic {
+		return s.FS.Stat(adamicPath.AsPath())
 	}
 	return s.FS.Stat(path)
 }
 
-func (s *sourceFS) Realpath(path string) string {
+func (s *sourceFS) Realpath(path tspath.RootedPath) tspath.RootedPath {
 	if path == preludePath {
 		return path
 	}
-	if adamicPath, isAdamic := s.adamicFile(path); isAdamic {
-		return s.FS.Realpath(adamicPath) + ".ts"
+	if adamicPath, isAdamic := s.adamicFile(tspath.RootedFilePathFromPath(path)); isAdamic {
+		return tspath.RootedFilePathFromPath(s.FS.Realpath(adamicPath.AsPath())).AppendSuffix(".ts").AsPath()
 	}
 	return s.FS.Realpath(path)
 }
@@ -103,18 +122,32 @@ func (s *sourceFS) Realpath(path string) string {
 // The checker never writes. These refuse rather than pass through, so a write can't land on disk by
 // accident through a file system that exists to read.
 
-func (s *sourceFS) WriteFile(path string, data string) error {
+func (s *sourceFS) WriteFile(path tspath.RootedFilePath, data string) error {
 	return errReadOnly
 }
 
-func (s *sourceFS) AppendFile(path string, data string) error {
+func (s *sourceFS) AppendFile(path tspath.RootedFilePath, data string) error {
 	return errReadOnly
 }
 
-func (s *sourceFS) Remove(path string) error {
+func (s *sourceFS) Remove(path tspath.RootedPath) error {
 	return errReadOnly
 }
 
-func (s *sourceFS) Chtimes(path string, aTime time.Time, mTime time.Time) error {
+func (s *sourceFS) Chtimes(path tspath.RootedPath, aTime time.Time, mTime time.Time) error {
 	return errReadOnly
+}
+
+// Expose the same .a aliases to config glob expansion that module resolution already sees.
+func (s *sourceFS) GetAccessibleEntries(path tspath.RootedDirectoryPath) vfs.Entries {
+	entries := s.FS.GetAccessibleEntries(path)
+	files := append([]string(nil), entries.Files...)
+	for _, name := range entries.Files {
+		if strings.HasSuffix(name, ".a") && !s.FS.FileExists(path.ResolveFile(name+".ts")) {
+			files = append(files, name+".ts")
+		}
+	}
+	sort.Strings(files)
+	entries.Files = files
+	return entries
 }

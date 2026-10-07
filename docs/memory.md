@@ -300,6 +300,139 @@ The last three were caught only once `mutations.a` existed. Before it, no progra
 
 **Not covered:** the check sees mutations of tracked variables only. Globals and captured variables aren't values in the graph, and a variable a call reaches only through one isn't checked at that call. The check also counts a change in anything a variable's object reaches, which is exactly what a transitive range claims and more than a direct one does. A direct range that's too short for a mutation it only reaches indirectly would show up here as a failure, not a pass, so the check errs toward failing.
 
+### Calling conventions through call targets, October 7, 2026
+
+The current native convention refines the original lowering rule above. The one
+ownership flag is still `Local.Borrowed`, on each function's parameter locals,
+including its receiver. `inferParameterBorrows` runs before native lifetime plans.
+It computes a fixed point: a parameter borrows when it is only read, including
+through immutable local aliases, and is never assigned, captured, stored,
+returned directly, mutated, or handed to an owning parameter. Unknown operations
+are owning. Closure parameters additionally require a body that cannot remove
+array elements, since runtime callback loops can pass elements without a count.
+An ordinary direct field return acquires an independent count on the field;
+its receiver can borrow without transferring the receiver's own count.
+
+`Program.CallBorrows` joins one parameter position over `CallTargets`.
+`Program.ClosureBorrows` does the same over bounded `ClosureTargets`, adjusting
+for the implicit receiver of a class method. Unknown is owned. Structural
+listener calls use a whole-program superset of every method, function-valued
+field construction, and field write with the same name. An unbounded field or
+accessor keeps that set Unknown. This may include unrelated classes, but never
+uses a static interface signature as proof of its implementations' effects.
+
+Nominal virtual tables have a borrowing adapter boundary, as structural accessor
+adapters already do. A consuming implementation acquires its own count there;
+a read-only implementation does not inherit an unrelated override's consumption.
+Direct calls still move or hand over their count where reuse proves that safe.
+A structural dispatch resolving to a class method has no closure allocation to
+hold, so its absent closure branch takes neither a retain nor a release.
+
+The visitor fixture has 63 nodes with `kind`, weak `parent`, and readonly
+`children`, and two read-only rule listeners called through an interface. Eight
+rounds visit 1,008 nodes. Four-round and eight-round runs separate traversal
+cost from construction and printing: baseline retains and releases per visited
+node are both 2008/504 = 3.984127; after calling conventions they are both
+1504/504 = 2.984127. The full eight-round counted runs are 4,299 retains and
+4,305 releases before, and 3,354 retains and 3,360 releases after. Allocations
+and frees stay 192, peak live stays 161, and no allocation is in a region.
+
+The baseline is the merge of main `e011f8f` with routing `f64641f` (`669210d`).
+The visitor and `borrow_target_store.a` run against source on Node, both native
+builds, ASan/UBSan, and the leak check. Forcing the storing callback's `item`
+parameter to borrow is caught by ASan heap-use-after-free: it overwrites the last
+array owner before pushing the element into another array. A push alone takes
+its own count and cannot make an otherwise stable borrow wrong. The probe
+therefore tests the lifetime error as well as the storing convention.
+
+Additional independent mutants: considering only the first override fails
+`TestBorrowConventionJoinsEveryTarget`; treating Unknown as borrowed fails the
+same test's Unknown case; omitting a virtual adapter's consuming count fails the
+uncached inheritance/reuse oracle with ASan heap-use-after-free. All source edits
+were restored. Logs are `/tmp/borrow-step1-mutant.log` and
+`/tmp/borrow-step1-mutant-{first_target,unknown_borrowed,adapter_count}.log`.
+
+The visitor uses an interface method signature. Current main refuses a class
+prototype method called through a property-style function view as erasing its
+prototype origin; this unit does not change that lowering rule.
+
+### Borrowed array loops, October 7, 2026
+
+An array `for...of` borrows its iterator and reference elements when its array
+is an unchanged, uncaptured local or parameter of the same function, and its
+binding is unchanged and uncaptured. The complete body must neither remove
+array elements through any alias nor keep the element: immutable local aliases
+are followed, and storing, returning, capturing, mutating, or passing them to
+an owning or unknown parameter stops borrowing. Patterns, maps, regex iterators,
+and freshly allocated string iteration stay on their existing owning paths.
+The array is marked as lending, so reuse cannot move its owner into a consuming
+call. Each borrowed binding is marked `Borrowed`; its scope has no count to drop,
+on normal exit, break, continue, return, or throw.
+
+On the same visitor, eight rounds now count 1,354 retains and 1,360 releases;
+four rounds count 850 and 856. Both traversal counts are 504/504 = 1 per node,
+down from 2.984127. Removing the iterator and element counts eliminates 2,000
+pairs over 1,008 visits. Allocations and frees remain 192 and peak remains 161.
+The one remaining traversal pair is the owned return of `childNodes`.
+
+`borrow_for_of_store.a` replaces the element's source slot and then pushes the
+loop binding into another array. Forcing that binding to borrow is caught by
+ASan heap-use-after-free at the push, before it can acquire its own count.
+The independent mutant was restored; its complete log is
+`/tmp/borrow-step2-mutant.log`. The visitor's borrowed binding and C without its
+retain or release are also held by `TestVisitorLoopsBorrow`.
+
+### Borrowed field returns, October 7, 2026
+
+A method or getter whose complete body returns a direct reference field of its
+borrowed receiver can lend that result. Every possible target must have the same
+field and result type, and be non-throwing and free of other effects. The caller
+must bind it to an unchanged, uncaptured local and only read it. Its borrow is
+bounded by the receiver's lifetime: nothing in the caller's remaining scope may
+write that field or release the receiver while the borrow lives. The present
+proof conservatively rejects *any* reference assignment, field or element write,
+unknown call, or operation that cannot prove field preservation in that scope.
+It protects the receiver local from moves and requires it to be unchanged and
+uncaptured. Keeping, capturing, storing or returning the result selects the
+ordinary owned return instead.
+
+The native caller specializes the proven field-return body to a snapshot of the
+field at the original call point. The getter lowering wrapper keeps its runtime
+accessor lookup and ordinary data-field fallback; its accessor targets undergo
+the same proof. Setter-only descriptors and differing or effectful getter bodies
+refuse specialization. This does not add a second ownership flag: the local's
+existing `Borrowed` flag describes the borrowed result; unselected call sites
+continue using the ordinary owning function.
+
+The visitor's `childNodes()` now borrows its result. Counting four and eight
+rounds gives exactly the same 346 retains and 352 releases, all outside traversal.
+Thus a read-only traversal takes zero retains and releases per visited node.
+Allocations/frees remain 192, peak live 161, and regions 0 throughout all steps.
+
+| Stage | Eight-round retains | Eight-round releases | Retains/node | Releases/node |
+|---|---:|---:|---:|---:|
+| Routing baseline `669210d` | 4299 | 4305 | 3.984127 | 3.984127 |
+| Parameter conventions | 3354 | 3360 | 2.984127 | 2.984127 |
+| Array loop borrowing | 1354 | 1360 | 1 | 1 |
+| Field return borrowing | 346 | 352 | 0 | 0 |
+
+Per-node figures are the eight-minus-four-round difference divided by 504 visits;
+they exclude construction and output. Both outputs agree with Node: 1,872 for
+1,008 visits and 936 for 504 visits. These are counts, not batch-8 timing claims.
+Runtime's separate stage-1 measurement is outside this worker's report.
+
+`borrow_return.a` checks the port's `Parser.node` getter shape: a read-only caller,
+a caller replacing the backing field, and a caller returning the result. The
+plan test requires borrowing only in the first. Removing the remaining-scope
+field-preservation guard borrows across replacement and ASan reports
+heap-use-after-free, recorded in `/tmp/borrow-step3-mutant.log`; the restored
+fixture passes Node, release, ASan/UBSan and leak checks. General computed
+returns, effectful getters, mutable receiver bindings and unknown targets remain
+owned. Borrowing arbitrary inline call expressions is not covered.
+
+The integrated-main validation, all changed count rows, and merge-boundary
+mutants are recorded in [borrowing conventions](borrow-conventions.md).
+
 ## Cycles: found by the compiler, broken by Weak
 
 Reference counting can't free a cycle, and a garbage collector is refused (no cycle collector, ever: decided by @system_adamic, task #gsz351g). What's known:

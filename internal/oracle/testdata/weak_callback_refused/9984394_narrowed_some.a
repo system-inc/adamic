@@ -1,0 +1,13 @@
+import type { Weak } from 'adamic';
+interface Box {
+	readonly label: string;
+}
+function run(n: number): void {
+	const a: Box = { label: `a${n}` };
+	const b: Box = { label: `b${n}` };
+	const seen: Weak<Box>[] = [a, undefined, b];
+	const present = seen.filter((x) => x !== undefined);
+	const kept = present.some((x) => x.label === `b${n}`);
+	console.log(`${kept}`);
+}
+run(1);

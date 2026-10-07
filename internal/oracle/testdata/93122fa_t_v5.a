@@ -1,0 +1,7 @@
+type Entry = [string, number];
+const entries: Entry[] = [[`a${1}`, 1]];
+for (const entry of entries) {
+ console.log(`${entry.length}`);
+}
+const first = entries[0];
+console.log(`${first?.length ?? -1}`);

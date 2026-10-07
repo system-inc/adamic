@@ -28,7 +28,7 @@ func TestWASIRequestSelection(t *testing.T) {
 		handler, refused bool
 	}{
 		{"exported", "export function handleRequest(request: string): string { return request; }", true, false},
-		{"alias", "function serve(request: string): string { return request; } export { serve as handleRequest };", false, true},
+		{"alias", "function serve(request: string): string { return request; } export { serve as handleRequest };", true, false},
 		{"private", "function handleRequest(request: string): string { return request; }", false, false},
 		{"wrong parameter", "export function handleRequest(request: number): string { return `${request}`; }", false, true},
 		{"wrong result", "export function handleRequest(request: string): number { return request.length; }", false, true},

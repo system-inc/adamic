@@ -1,0 +1,4 @@
+type A = { readonly kind: 'a'; readonly n: number };
+type B = { readonly kind: 'b'; readonly n: number };
+function f(x: A | B): A { return x as A; }
+console.log(`${f({ kind: 'b', n: 2 }).n}`);

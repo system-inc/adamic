@@ -16,7 +16,7 @@ func (e *emitter) signature(function int) string {
 	if declared.Closure {
 		// Every closure's code is called the same way (adamic_code): its arguments and result as
 		// adamic_value, whatever their types.
-		return fmt.Sprintf("adamic_value %s(adamic_closure *self, adamic_value *arguments)", e.functionName(function))
+		return fmt.Sprintf("adamic_value %s(adamic_closure *self, size_t argument_count, adamic_value *arguments)", e.functionName(function))
 	}
 	returns := "void"
 	if declared.Returns != 0 {
@@ -48,6 +48,7 @@ func (e *emitter) functionBody(function ir.Function) {
 	e.line("ADAMIC_CHECK_STACK();")
 	if function.Closure {
 		e.line("(void)self;")
+		e.line("(void)argument_count;")
 		e.line("(void)arguments;")
 		for index, parameter := range function.Parameters {
 			local := e.program.Locals[parameter]
@@ -55,9 +56,13 @@ func (e *emitter) functionBody(function ir.Function) {
 			if local.Type.IsReference() {
 				value = fmt.Sprintf("(%s)%s", cType(local.Type), value)
 			}
+			if local.Type.IsMaybe() || local.Type.IsReference() {
+				value = fmt.Sprintf("(argument_count > %d ? %s : %s)", index, value, absent(local.Type))
+			}
 			e.line("%s %s = %s;", cType(local.Type), e.localName(parameter), value)
 		}
 	}
+	e.allocateEnvironment(function.FrameEnvironment)
 	for _, parameter := range function.Parameters {
 		switch {
 		case e.reuse.consumed[parameter]:
@@ -67,6 +72,9 @@ func (e *emitter) functionBody(function ir.Function) {
 			// A borrowed parameter is its caller's, kept alive for the whole call.
 			e.line("adamic_retain(%s);", e.localName(parameter))
 			e.hold(e.localName(parameter))
+		}
+		if e.program.Locals[parameter].Uninitialized && !e.program.Locals[parameter].Captured {
+			e.line("bool %s = true;", readyName(parameter))
 		}
 		if e.program.Locals[parameter].Captured {
 			// A closure captured this parameter: from here on it lives in a cell.
@@ -82,8 +90,8 @@ func (e *emitter) functionBody(function ir.Function) {
 			e.line("return (adamic_value){.number = 0};")
 		}
 	} else {
-		// The checker proved every path returns (noImplicitReturns), so this is never reached; C
-		// can't see that, and if it ever is reached it's a compiler bug, said out loud.
+		// Lowering records every permitted implicit return in the IR. C cannot always see
+		// that all paths return; reaching this guard still means an IR exit was lost.
 		e.line("adamic_unreachable();")
 	}
 	e.scopes = e.scopes[:e.functionDepth]
@@ -196,11 +204,7 @@ func (e *emitter) arguments(call ir.Call) []string {
 		arguments = append(arguments, value)
 	}
 	for _, parameter := range parameters[min(len(call.Arguments), len(parameters)):] {
-		if of := e.program.Locals[parameter].Type; of.IsMaybe() {
-			arguments = append(arguments, zero(of))
-		} else {
-			arguments = append(arguments, "NULL")
-		}
+		arguments = append(arguments, absent(e.program.Locals[parameter].Type))
 	}
 	return arguments
 }
@@ -213,13 +217,17 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 	if receiver != "" {
 		property := expression.Closure.(ir.Property)
 		if function, known := e.exactReceiverMethod(property.Object, property.Name); known {
-			// Keep the interface adapter's borrowed-input convention and the same
-			// exception and result handling, but call its proven method directly.
+			// The method thunk keeps the borrowing adapter boundary.
 			method = e.methodThunk(function)
 		} else {
 			method = e.temporary()
 			e.line("adamic_method %s = NULL;", method)
-			closure = e.own(ir.Closure, fmt.Sprintf("adamic_retain(adamic_object_callee(%s, %s, &%s, &%s))", receiver, cString(property.Name), e.cache(), method))
+			callee := e.snapshot(ir.Closure, fmt.Sprintf("adamic_object_callee(%s, %s, &%s, &%s)", receiver, cString(property.Name), e.cache(), method))
+			closure = e.own(ir.Closure, fmt.Sprintf("(%s == NULL ? NULL : adamic_retain(%s))", callee, callee))
+			if e.mostlyNull == nil {
+				e.mostlyNull = map[string]bool{}
+			}
+			e.mostlyNull[closure] = true
 		}
 	}
 	arguments := []string{}
@@ -230,12 +238,15 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 	if len(arguments) > 0 {
 		packed = "(adamic_value[]){" + strings.Join(arguments, ", ") + "}"
 	}
-	call := fmt.Sprintf("%s->code(%s, %s)", closure, closure, packed)
+	call := fmt.Sprintf("%s->code(%s, %d, %s)", closure, closure, len(arguments), packed)
+	if expression.Direct > 0 {
+		call = fmt.Sprintf("%s(%s, %d, %s)", e.functionName(expression.Direct-1), closure, len(arguments), packed)
+	}
 	if receiver != "" {
 		if closure == "" {
-			call = fmt.Sprintf("%s(%s, %s)", method, receiver, packed)
+			call = fmt.Sprintf("%s(%s, %d, %s)", method, receiver, len(arguments), packed)
 		} else {
-			call = fmt.Sprintf("(%s != NULL ? %s : %s(%s, %s))", closure, call, method, receiver, packed)
+			call = fmt.Sprintf("(%s != NULL ? %s : %s(%s, %d, %s))", closure, call, method, receiver, len(arguments), packed)
 		}
 	}
 	if expression.Returns == 0 {

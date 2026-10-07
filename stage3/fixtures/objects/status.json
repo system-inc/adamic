@@ -10,10 +10,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/01_reference_spreads.a:7:111: Adamic 0.1 refuses a spread after the first field; spread once, first: { ...source, field: value } (adamic/single-spread)"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/01_reference_spreads.a:7:111: stage 0 can't lower a spread whose complete ordered own shape is not static (adamic/spread-not-first) yet"}
   },
   {
     "file": "02_polling_levels.a",
@@ -26,10 +23,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/objects/02_polling_levels.a:10:17: stage 0 can't lower a BinaryExpression with a boolean and a value yet"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/02_polling_levels.a:11:63: stage 0 can't lower a spread whose complete ordered own shape is not static (adamic/spread-not-first) yet"}
   },
   {
     "file": "03_resolution_cache_spreads.a",
@@ -42,10 +36,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/03_resolution_cache_spreads.a:13:9: Adamic 0.1 refuses a spread after the first field; spread once, first: { ...source, field: value } (adamic/single-spread)"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "04_trace_metadata.a",
@@ -58,10 +49,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/04_trace_metadata.a:13:67: Adamic 0.1 refuses a spread after the first field; spread once, first: { ...source, field: value } (adamic/single-spread)"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/04_trace_metadata.a:14:46: stage 0 can't lower JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata) yet"}
   },
   {
     "file": "05_polling_array_metadata.a",
@@ -77,7 +65,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "stage3/fixtures/objects/05_polling_array_metadata.a:12:23: Adamic 0.1 refuses a cast the runtime can't check; narrow it instead (===, typeof, a discriminant), or cast a discriminated union to its members (adamic/no-unchecked-cast)"
+      "what": "stage3/fixtures/objects/05_polling_array_metadata.a:12:23: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
     }
   },
   {
@@ -92,10 +80,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/objects/06_watch_close.a:25:17: stage 0 can't lower storing boolean in a field yet"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/06_watch_close.a:25:17: stage 0 can't lower writing a possibly absent optional own field yet"}
   },
   {
     "file": "07_synthetic_reference.a",
@@ -126,10 +111,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/08_loop_state.a:10:13: Adamic 0.1 refuses a value as a condition; compare it explicitly, like name.length > 0 or count !== 0"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/08_loop_state.a:16:17: stage 0 can't lower writing a possibly absent optional own field yet"}
   },
   {
     "file": "10_build_options.a",
@@ -143,10 +125,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/10_build_options.a:14:54: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/10_build_options.a:14:54: stage 0 can't lower an index signature beside named members, or a non-mutable unrestricted string signature (dictionary storage cannot preserve named-property contracts) yet"}
   },
   {
     "file": "12_decorator_descriptor.a",
@@ -162,10 +141,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/objects/12_decorator_descriptor.a:13:55: stage 0 can't lower a BinaryExpression with a string and a string yet"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/12_decorator_descriptor.a:13:21: stage 0 can't lower writing a possibly absent optional own field yet"}
   },
   {
     "file": "14_comment_pending.a",
@@ -178,10 +154,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Checker",
-      "what": "stage3/fixtures/objects/14_comment_pending.a:28:13: error TS7029: Fallthrough case in switch."
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/14_comment_pending.a:52:17: stage 0 can't lower a declaration directly in a case (wrap the case in a block) yet"}
   },
   {
     "file": "15_accessor_absence.a",
@@ -194,10 +167,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/15_accessor_absence.a:17:22: Adamic 0.1 refuses a definite assignment assertion !; remove ! and initialize it where it is declared or in the constructor, or type it T | undefined"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/15_accessor_absence.a:30:13: stage 0 can't lower a call returning never yet"}
   },
   {
     "file": "16_version_defaults.a",
@@ -211,10 +181,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/objects/16_version_defaults.a:15:13: stage 0 can't lower a destructured name that isn't plain yet"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/16_version_defaults.a:15:13: stage 0 can't lower a destructured name that isn't plain (bind a plain name first, then destructure or apply a default in a separate statement) yet"}
   },
   {
     "file": "17_container_rest.a",
@@ -227,10 +194,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/objects/17_container_rest.a:13:19: stage 0 can't lower destructuring anything but a tuple into [names] yet"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/17_container_rest.a:13:42: stage 0 can't lower a structural view of library prototype member toString as an own field or method; use a wrapper object with an arrow that calls the member on its library receiver yet"}
   },
   {
     "file": "19_identifier_multimap.a",
@@ -246,10 +210,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/19_identifier_multimap.a:20:13: Adamic 0.1 refuses a value as a condition; compare it explicitly, like name.length > 0 or count !== 0"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/19_identifier_multimap.a:79:82: stage 0 can't lower a value of type (ModuleSpecifierResolutionHost \u0026 { getCommonSourceDirectory(): string; }) | undefined yet"}
   },
   {
     "file": "20_queue_optional_call.a",
@@ -279,8 +240,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Checker",
-      "what": "stage3/fixtures/objects/22_nested_optional_calls.a:15:48: error TS7030: Not all code paths return a value."
+      "outcome": "Refused",
+      "what": "stage3/fixtures/objects/22_nested_optional_calls.a:16:33: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
     }
   },
   {
@@ -327,10 +288,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/25_map_generator.a:3:1: Adamic 0.1 refuses a generator function; use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"
-    }
+    "stage0": {"outcome":"Refused","what":"stage3/fixtures/objects/25_map_generator.a:3:1: Adamic 0.1 refuses a generator function; use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md) (adamic/no-generators)"}
   },
   {
     "file": "26_diagnostic_in.a",
@@ -343,10 +301,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/26_diagnostic_in.a:21:53: Adamic 0.1 refuses in; an object's shape is known; use a discriminant, or a Map"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/26_diagnostic_in.a:8:107: stage 0 can't lower a parameter that isn't a plain name yet"}
   },
   {
     "file": "27_delete_substitution.a",
@@ -359,10 +314,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/27_delete_substitution.a:12:23: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/27_delete_substitution.a:12:23: stage 0 can't lower an index signature beside named members, or a non-mutable unrestricted string signature (dictionary storage cannot preserve named-property contracts) yet"}
   },
   {
     "file": "28_debugger.a",
@@ -376,10 +328,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/28_debugger.a:7:9: Adamic 0.1 refuses debugger; remove it"
-    }
+    "stage0": {"outcome":"Refused","what":"stage3/fixtures/objects/28_debugger.a:7:9: Adamic 0.1 refuses debugger; remove it (adamic/no-debugger)"}
   },
   {
     "file": "29_parameter_default.a",
@@ -410,8 +359,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/objects/30_host_optional_method.a:6:12: stage 0 can't lower a call through ?. (an optional call) yet"
+      "outcome": "Refused",
+      "what": "stage3/fixtures/objects/30_host_optional_method.a:8:73: Adamic 0.1 refuses optional property getCompilerHost in ResolutionCacheHost is absent from the source type { name: string; }; the value may hide an incompatible field; declare getCompilerHost with a compatible type on the source type, or copy the declared fields into a new object (adamic/no-optional-widening)"
     }
   }
 ]

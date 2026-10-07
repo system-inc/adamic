@@ -1,0 +1,33 @@
+interface Item { readonly label: string; }
+class Parser {
+ private current: Item;
+ constructor(item: Item) { this.current = item; }
+ get node(): Item { return this.current; }
+ replace(item: Item): void { this.current = item; }
+}
+function onlyRead(): void {
+ const parser = new Parser({ label: 'read' + String(1) });
+ const node = parser.node;
+ console.log(`${node.label.length}:${node.label.charCodeAt(0)}`);
+}
+function writesField(): void {
+ const parser = new Parser({ label: 'before' + String(2) });
+ const node = parser.node;
+ parser.replace({ label: 'after' + String(3) });
+ console.log(`${node.label.length}:${node.label.charCodeAt(0)}`);
+}
+function keepsResult(): Item {
+ const parser = new Parser({ label: 'kept' + String(4) });
+ const node = parser.node;
+ return node;
+}
+onlyRead();
+writesField();
+console.log(keepsResult().label);
+
+function readsView(parser: { readonly node: Item }): number {
+ const node = parser.node;
+ return node.label.length;
+}
+console.log(String(readsView(new Parser({ label: 'class' + String(5) }))));
+console.log(String(readsView({ node: { label: 'plain' + String(6) } })));

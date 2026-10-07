@@ -9,6 +9,10 @@ import (
 )
 
 func build(path, output string, arguments []string) int {
+	return buildInput([]string{path}, "", output, arguments)
+}
+
+func buildInput(paths []string, project, output string, arguments []string) int {
 	options := native.Options{}
 	archive := ""
 	for index := 0; index < len(arguments); index++ {
@@ -48,10 +52,14 @@ func build(path, output string, arguments []string) int {
 	var code int
 	handler := -1
 	if options.Target == "wasm32-wasi" {
-		program, handler, code = compileWASI(path)
+		if len(paths) != 1 || project != "" {
+			fmt.Fprintln(os.Stderr, "adamic: wasm32-wasi requires one source file without --project")
+			return 1
+		}
+		program, handler, code = compileWASI(paths[0])
 		options.Request = handler >= 0
 	} else {
-		program, code = compileLibrary(path, archive != "")
+		program, code = compileInput(paths, project, archive != "")
 	}
 	if program == nil {
 		return code

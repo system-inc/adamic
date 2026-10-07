@@ -1,0 +1,5 @@
+function run(source: { readonly a: number }): string {
+    const value = { ...source, a: "changed".repeat(2) };
+    return value.a;
+}
+console.log(run({ a: 1 }));

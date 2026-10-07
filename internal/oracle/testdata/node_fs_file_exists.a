@@ -1,0 +1,9 @@
+import { programArguments } from 'adamic';
+const root = programArguments()[0] ?? '';
+function failure(error: Error): void {
+    const code = 'code' in error && typeof error.code === 'string' ? error.code : undefined;
+    console.log(`${code ?? ''}: ${error.message.replace(root, '<root>')}`);
+}
+import { existsSync } from 'node:fs';
+for (const path of ['/file','/directory','/link','/dangling','/missing','/file/child','/closed/file']) { console.log(`${path}=${existsSync(root + path)}`); }
+console.log(`nul=${existsSync('a\0b')}`);

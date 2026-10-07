@@ -1,0 +1,3 @@
+function assertNumber(x: number | string): asserts x is number {}
+function f(x: number | string): void { assertNumber(x); console.log(`${x + 1}`); }
+f('wrong');
