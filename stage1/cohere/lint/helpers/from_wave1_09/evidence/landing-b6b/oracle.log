@@ -1,0 +1,248 @@
+=== RUN   TestStylesheetLoaderByteInputGap
+=== RUN   TestStylesheetLoaderByteInputGap/ASCII
+    file_gap_test.go:71: valid-text control matches Go on node
+    file_gap_test.go:71: valid-text control matches Go on node
+    file_gap_test.go:71: valid-text control matches Go on /tmp/adamic-gate/TestStylesheetLoaderByteInputGap1836886195/004/native
+=== RUN   TestStylesheetLoaderByteInputGap/Unicode
+    file_gap_test.go:71: valid-text control matches Go on node
+    file_gap_test.go:71: valid-text control matches Go on node
+    file_gap_test.go:71: valid-text control matches Go on /tmp/adamic-gate/TestStylesheetLoaderByteInputGap1836886195/004/native
+=== RUN   TestStylesheetLoaderByteInputGap/invalid80
+    file_gap_test.go:68: BLOCKED invalid80: actual Go loadFile theme bytes [128], decoded file-input bytes [239
+        191
+        189]; compiled exit 0, no stderr
+    file_gap_test.go:68: BLOCKED invalid80: actual Go loadFile theme bytes [128], decoded file-input bytes [239
+        191
+        189]; compiled exit 0, no stderr
+    file_gap_test.go:68: BLOCKED invalid80: actual Go loadFile theme bytes [128], decoded file-input bytes [239
+        191
+        189]; compiled exit 0, no stderr
+=== RUN   TestStylesheetLoaderByteInputGap/invalid81
+    file_gap_test.go:68: BLOCKED invalid81: actual Go loadFile theme bytes [129], decoded file-input bytes [239
+        191
+        189]; compiled exit 0, no stderr
+    file_gap_test.go:68: BLOCKED invalid81: actual Go loadFile theme bytes [129], decoded file-input bytes [239
+        191
+        189]; compiled exit 0, no stderr
+    file_gap_test.go:68: BLOCKED invalid81: actual Go loadFile theme bytes [129], decoded file-input bytes [239
+        191
+        189]; compiled exit 0, no stderr
+=== RUN   TestStylesheetLoaderByteInputGap/invalidFF
+    file_gap_test.go:68: BLOCKED invalidFF: actual Go loadFile theme bytes [255], decoded file-input bytes [239
+        191
+        189]; compiled exit 0, no stderr
+    file_gap_test.go:68: BLOCKED invalidFF: actual Go loadFile theme bytes [255], decoded file-input bytes [239
+        191
+        189]; compiled exit 0, no stderr
+    file_gap_test.go:68: BLOCKED invalidFF: actual Go loadFile theme bytes [255], decoded file-input bytes [239
+        191
+        189]; compiled exit 0, no stderr
+--- PASS: TestStylesheetLoaderByteInputGap (5.95s)
+    --- PASS: TestStylesheetLoaderByteInputGap/ASCII (0.11s)
+    --- PASS: TestStylesheetLoaderByteInputGap/Unicode (0.12s)
+    --- PASS: TestStylesheetLoaderByteInputGap/invalid80 (0.12s)
+    --- PASS: TestStylesheetLoaderByteInputGap/invalid81 (0.11s)
+    --- PASS: TestStylesheetLoaderByteInputGap/invalidFF (0.14s)
+=== RUN   TestStaticDeclarationNodesAgree
+    helper_test.go:47: 6 consumers, 639 distinct literals, 890 framework statics, 3461 cases
+    helper_test.go:51: coverage: {
+          "cases": 3461,
+          "consumers": {
+            "better-tailwindcss/enforce-canonical-classes": 259,
+            "better-tailwindcss/enforce-consistent-class-order": 370,
+            "better-tailwindcss/enforce-consistent-variant-order": 110,
+            "better-tailwindcss/enforce-shorthand-classes": 131,
+            "better-tailwindcss/no-conflicting-classes": 247,
+            "better-tailwindcss/no-unknown-classes": 239
+          },
+          "frameworkStatics": 890,
+          "uniqueStrings": 639
+        }
+    helper_test.go:63: baseline Go/source Node/emitted JavaScript/sanitized native agree: 2019129 output bytes
+=== RUN   TestStaticDeclarationNodesAgree/absent_versus_empty
+    helper_test.go:100: node compiled and exited 0; comparison caught line 29: mutant "false" Go "true"
+    helper_test.go:100: node compiled and exited 0; comparison caught line 29: mutant "false" Go "true"
+    helper_test.go:100: /tmp/adamic-gate/TestStaticDeclarationNodesAgreeabsent_versus_empty3395636925/002/native compiled and exited 0; comparison caught line 29: mutant "false" Go "true"
+=== RUN   TestStaticDeclarationNodesAgree/important_flag
+    helper_test.go:100: node compiled and exited 0; comparison caught line 30: mutant "false" Go "true"
+    helper_test.go:100: node compiled and exited 0; comparison caught line 30: mutant "false" Go "true"
+    helper_test.go:100: /tmp/adamic-gate/TestStaticDeclarationNodesAgreeimportant_flag826048213/002/native compiled and exited 0; comparison caught line 30: mutant "false" Go "true"
+=== RUN   TestStaticDeclarationNodesAgree/declaration_kind
+    helper_test.go:100: node compiled and exited 0; comparison caught line 3: mutant "comment" Go "declaration"
+    helper_test.go:100: node compiled and exited 0; comparison caught line 3: mutant "comment" Go "declaration"
+    helper_test.go:100: /tmp/adamic-gate/TestStaticDeclarationNodesAgreedeclaration_kind450943452/002/native compiled and exited 0; comparison caught line 3: mutant "comment" Go "declaration"
+=== RUN   TestStaticDeclarationNodesAgree/declaration_order
+    helper_test.go:100: node compiled and exited 0; comparison caught line 113736: mutant "margin-inline-end" Go "--tw-sort"
+    helper_test.go:100: node compiled and exited 0; comparison caught line 113736: mutant "margin-inline-end" Go "--tw-sort"
+    helper_test.go:100: /tmp/adamic-gate/TestStaticDeclarationNodesAgreedeclaration_order1777450211/002/native compiled and exited 0; comparison caught line 113736: mutant "margin-inline-end" Go "--tw-sort"
+=== RUN   TestStaticDeclarationNodesAgree/fresh_nodes
+    helper_test.go:100: node compiled and exited 0; comparison caught line 44: mutant "true" Go "false"
+    helper_test.go:100: node compiled and exited 0; comparison caught line 44: mutant "true" Go "false"
+    helper_test.go:100: /tmp/adamic-gate/TestStaticDeclarationNodesAgreefresh_nodes3884891267/002/native compiled and exited 0; comparison caught line 44: mutant "true" Go "false"
+--- PASS: TestStaticDeclarationNodesAgree (15.78s)
+    --- PASS: TestStaticDeclarationNodesAgree/absent_versus_empty (2.59s)
+    --- PASS: TestStaticDeclarationNodesAgree/important_flag (2.54s)
+    --- PASS: TestStaticDeclarationNodesAgree/declaration_kind (2.42s)
+    --- PASS: TestStaticDeclarationNodesAgree/declaration_order (2.59s)
+    --- PASS: TestStaticDeclarationNodesAgree/fresh_nodes (2.56s)
+=== RUN   TestPrivatePropertySortAgrees
+    sort_test.go:39: 6 consumers, 639 distinct literals, 890 framework statics, 3463 cases
+    sort_test.go:43: coverage: {
+          "cases": 3463,
+          "consumers": {
+            "better-tailwindcss/enforce-canonical-classes": 259,
+            "better-tailwindcss/enforce-consistent-class-order": 370,
+            "better-tailwindcss/enforce-consistent-variant-order": 110,
+            "better-tailwindcss/enforce-shorthand-classes": 131,
+            "better-tailwindcss/no-conflicting-classes": 247,
+            "better-tailwindcss/no-unknown-classes": 239
+          },
+          "frameworkStatics": 890,
+          "uniqueStrings": 639
+        }
+    sort_test.go:55: baseline Go/source Node/emitted JavaScript/sanitized native agree: 486278 output bytes
+=== RUN   TestPrivatePropertySortAgrees/absent_values
+    sort_test.go:94: node compiled and exited 0; comparison caught line 9: mutant "2" Go "1"
+    sort_test.go:94: node compiled and exited 0; comparison caught line 9: mutant "2" Go "1"
+    sort_test.go:94: /tmp/adamic-gate/TestPrivatePropertySortAgreesabsent_values3362370285/002/native compiled and exited 0; comparison caught line 9: mutant "2" Go "1"
+=== RUN   TestPrivatePropertySortAgrees/count_after_latch
+    sort_test.go:94: node compiled and exited 0; comparison caught line 8: mutant "1" Go "3"
+    sort_test.go:94: node compiled and exited 0; comparison caught line 8: mutant "1" Go "3"
+    sort_test.go:94: /tmp/adamic-gate/TestPrivatePropertySortAgreescount_after_latch3140202734/002/native compiled and exited 0; comparison caught line 8: mutant "1" Go "3"
+=== RUN   TestPrivatePropertySortAgrees/unknown_sort_latch
+    sort_test.go:94: node compiled and exited 0; comparison caught line 38: mutant "0" Go "1"
+    sort_test.go:94: node compiled and exited 0; comparison caught line 38: mutant "0" Go "1"
+    sort_test.go:94: /tmp/adamic-gate/TestPrivatePropertySortAgreesunknown_sort_latch3408483512/002/native compiled and exited 0; comparison caught line 38: mutant "0" Go "1"
+=== RUN   TestPrivatePropertySortAgrees/context_descent
+    sort_test.go:94: node compiled and exited 0; comparison caught line 100: mutant "5" Go "4"
+    sort_test.go:94: node compiled and exited 0; comparison caught line 100: mutant "5" Go "4"
+    sort_test.go:94: /tmp/adamic-gate/TestPrivatePropertySortAgreescontext_descent3681361807/002/native compiled and exited 0; comparison caught line 100: mutant "5" Go "4"
+=== RUN   TestPrivatePropertySortAgrees/breadth_first
+    sort_test.go:94: node compiled and exited 0; comparison caught line 10: mutant "341" Go "340"
+    sort_test.go:94: node compiled and exited 0; comparison caught line 10: mutant "341" Go "340"
+    sort_test.go:94: /tmp/adamic-gate/TestPrivatePropertySortAgreesbreadth_first2197279284/002/native compiled and exited 0; comparison caught line 10: mutant "341" Go "340"
+=== RUN   TestPrivatePropertySortAgrees/position_deduplication
+    sort_test.go:94: node compiled and exited 0; comparison caught line 101: mutant "3" Go "2"
+    sort_test.go:94: node compiled and exited 0; comparison caught line 101: mutant "3" Go "2"
+    sort_test.go:94: /tmp/adamic-gate/TestPrivatePropertySortAgreesposition_deduplication1235142792/002/native compiled and exited 0; comparison caught line 101: mutant "3" Go "2"
+=== RUN   TestPrivatePropertySortAgrees/ascending_order
+    sort_test.go:94: node compiled and exited 0; comparison caught line 69: mutant "341" Go "340"
+    sort_test.go:94: node compiled and exited 0; comparison caught line 69: mutant "341" Go "340"
+    sort_test.go:94: /tmp/adamic-gate/TestPrivatePropertySortAgreesascending_order2833615689/002/native compiled and exited 0; comparison caught line 69: mutant "341" Go "340"
+--- PASS: TestPrivatePropertySortAgrees (31.53s)
+    --- PASS: TestPrivatePropertySortAgrees/absent_values (3.71s)
+    --- PASS: TestPrivatePropertySortAgrees/count_after_latch (4.09s)
+    --- PASS: TestPrivatePropertySortAgrees/unknown_sort_latch (4.17s)
+    --- PASS: TestPrivatePropertySortAgrees/context_descent (3.71s)
+    --- PASS: TestPrivatePropertySortAgrees/breadth_first (3.93s)
+    --- PASS: TestPrivatePropertySortAgrees/position_deduplication (3.75s)
+    --- PASS: TestPrivatePropertySortAgrees/ascending_order (3.89s)
+=== RUN   TestValueParserAgrees
+    value_test.go:39: 6 consumers, 639 distinct literals, 8115 upstream fixture strings, 10230 cases
+    value_test.go:43: coverage: {
+          "cases": 10230,
+          "consumers": {
+            "better-tailwindcss/enforce-canonical-classes": 259,
+            "better-tailwindcss/enforce-consistent-class-order": 370,
+            "better-tailwindcss/enforce-consistent-variant-order": 110,
+            "better-tailwindcss/enforce-shorthand-classes": 131,
+            "better-tailwindcss/no-conflicting-classes": 247,
+            "better-tailwindcss/no-unknown-classes": 239
+          },
+          "uniqueStrings": 639,
+          "upstreamFixtureStrings": 8115
+        }
+    value_test.go:55: baseline Go/source Node/emitted JavaScript/sanitized native agree: 808162 output bytes
+=== RUN   TestValueParserAgrees/CRLF_normalization
+    value_test.go:94: node compiled and exited 0; comparison caught line 947: mutant "2" Go "1"
+    value_test.go:94: node compiled and exited 0; comparison caught line 947: mutant "2" Go "1"
+    value_test.go:94: /tmp/adamic-gate/TestValueParserAgreesCRLF_normalization3240968032/002/native compiled and exited 0; comparison caught line 947: mutant "2" Go "1"
+=== RUN   TestValueParserAgrees/trailing_backslash
+    value_test.go:94: node compiled and exited 0; comparison caught line 6491: mutant "\\" Go "\\undefined"
+    value_test.go:94: node compiled and exited 0; comparison caught line 6491: mutant "\\" Go "\\undefined"
+    value_test.go:94: /tmp/adamic-gate/TestValueParserAgreestrailing_backslash3266559026/002/native compiled and exited 0; comparison caught line 6491: mutant "\\" Go "\\undefined"
+=== RUN   TestValueParserAgrees/slash_word
+    value_test.go:94: node compiled and exited 0; comparison caught line 6434: mutant "separator" Go "word"
+    value_test.go:94: node compiled and exited 0; comparison caught line 6434: mutant "separator" Go "word"
+    value_test.go:94: /tmp/adamic-gate/TestValueParserAgreesslash_word901186938/002/native compiled and exited 0; comparison caught line 6434: mutant "separator" Go "word"
+=== RUN   TestValueParserAgrees/unmatched_close
+    value_test.go:94: node compiled and exited 0; comparison caught line 6843: mutant "2" Go "1"
+    value_test.go:94: node compiled and exited 0; comparison caught line 6843: mutant "2" Go "1"
+    value_test.go:94: /tmp/adamic-gate/TestValueParserAgreesunmatched_close2979314818/002/native compiled and exited 0; comparison caught line 6843: mutant "2" Go "1"
+=== RUN   TestValueParserAgrees/function_child_presence
+    value_test.go:94: node compiled and exited 0; comparison caught line 6350: mutant "false" Go "true"
+    value_test.go:94: node compiled and exited 0; comparison caught line 6350: mutant "false" Go "true"
+    value_test.go:94: /tmp/adamic-gate/TestValueParserAgreesfunction_child_presence2171586625/002/native compiled and exited 0; comparison caught line 6350: mutant "false" Go "true"
+=== RUN   TestValueParserAgrees/unclosed_final_flush
+    value_test.go:94: node compiled and exited 0; comparison caught line 7751: mutant "2" Go "3"
+    value_test.go:94: node compiled and exited 0; comparison caught line 7751: mutant "2" Go "3"
+    value_test.go:94: /tmp/adamic-gate/TestValueParserAgreesunclosed_final_flush2758900878/002/native compiled and exited 0; comparison caught line 7751: mutant "2" Go "3"
+=== RUN   TestValueParserAgrees/unterminated_quote
+    value_test.go:94: node compiled and exited 0; comparison caught line 6683: mutant "2" Go "3"
+    value_test.go:94: node compiled and exited 0; comparison caught line 6683: mutant "2" Go "3"
+    value_test.go:94: /tmp/adamic-gate/TestValueParserAgreesunterminated_quote3301013765/002/native compiled and exited 0; comparison caught line 6683: mutant "2" Go "3"
+--- PASS: TestValueParserAgrees (14.08s)
+    --- PASS: TestValueParserAgrees/CRLF_normalization (1.59s)
+    --- PASS: TestValueParserAgrees/trailing_backslash (1.58s)
+    --- PASS: TestValueParserAgrees/slash_word (1.69s)
+    --- PASS: TestValueParserAgrees/unmatched_close (1.69s)
+    --- PASS: TestValueParserAgrees/function_child_presence (1.93s)
+    --- PASS: TestValueParserAgrees/unclosed_final_flush (1.94s)
+    --- PASS: TestValueParserAgrees/unterminated_quote (1.73s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from_wave1_09	67.342s
+=== RUN   TestHelpersMatchCohere
+    helpers_test.go:101: 22412 oracle output lines matched Go, Node and sanitized native
+--- PASS: TestHelpersMatchCohere (14.11s)
+=== RUN   TestHelperMutants
+=== RUN   TestHelperMutants/options_json.ts
+    helpers_test.go:145: compiled semantic mutant caught at output line 15157: got "valid", Go "invalid"
+=== RUN   TestHelperMutants/option_schema.ts
+    helpers_test.go:145: compiled semantic mutant caught at output line 15166: got "valid", Go "invalid"
+=== RUN   TestHelperMutants/policy_message.ts
+    helpers_test.go:145: compiled semantic mutant caught at output line 22166: got "This throws a bare `{{constructor}}`, which names no declared failure. Raise it through the tier that declares it, `AccountModule.error(identifier, data, cause)`, `ApiWorker.error(...)` or `Base.error(...)`. A bare throw carries no identifier, so the board groups it by its message and one interpolated value mints one identity per value, and it normalizes to 500, so a refusal reads as our fault.", Go "This throws a bare `sentinel é😀`, which names no declared failure. Raise it through the tier that declares it, `AccountModule.error(identifier, data, cause)`, `ApiWorker.error(...)` or `Base.error(...)`. A bare throw carries no identifier, so the board groups it by its message and one interpolated value mints one identity per value, and it normalizes to 500, so a refusal reads as our fault."
+=== RUN   TestHelperMutants/strict_options.ts
+    helpers_test.go:145: compiled semantic mutant caught at output line 15178: got "valid", Go "invalid"
+--- PASS: TestHelperMutants (28.69s)
+    --- PASS: TestHelperMutants/options_json.ts (5.31s)
+    --- PASS: TestHelperMutants/option_schema.ts (5.13s)
+    --- PASS: TestHelperMutants/policy_message.ts (5.41s)
+    --- PASS: TestHelperMutants/strict_options.ts (5.41s)
+=== RUN   TestMessageRefusalsMatchGo
+    helpers_test.go:237: 10 message refusal cases match Go on Node and sanitized native
+--- PASS: TestMessageRefusalsMatchGo (5.50s)
+=== RUN   TestKnownGapsAreExplicit
+--- PASS: TestKnownGapsAreExplicit (1.40s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers	49.708s
+=== RUN   TestCommentsMatchCohere
+    comments_test.go:96: Go, Node and sanitized native match 390 output lines
+--- PASS: TestCommentsMatchCohere (15.29s)
+=== RUN   TestCommentMutants
+=== RUN   TestCommentMutants/can_begin_at.ts
+    comments_test.go:139: compiled semantic mutant caught at line 251: got "cached 0 0"; Go "cached 1 1"
+=== RUN   TestCommentMutants/collect_list_interiors.ts
+    comments_test.go:139: compiled semantic mutant caught at line 3: got "cached 0 0"; Go "cached 1 1"
+=== RUN   TestCommentMutants/sort_by_position.ts
+    comments_test.go:139: compiled semantic mutant caught at line 60: got "47 54 1 0 47 0\t/* f */"; Go "6 13 1 0 6 0\t/* t */"
+=== RUN   TestCommentMutants/all.ts
+    comments_test.go:139: compiled semantic mutant caught at line 201: got "cached 0 0"; Go "cached 1 1"
+=== RUN   TestCommentMutants/for_file.ts
+    comments_test.go:139: compiled semantic mutant caught at line 2: got "cache 0 0 0"; Go "cache 1 0 0"
+--- PASS: TestCommentMutants (41.62s)
+    --- PASS: TestCommentMutants/can_begin_at.ts (8.18s)
+    --- PASS: TestCommentMutants/collect_list_interiors.ts (7.92s)
+    --- PASS: TestCommentMutants/sort_by_position.ts (8.50s)
+    --- PASS: TestCommentMutants/all.ts (7.99s)
+    --- PASS: TestCommentMutants/for_file.ts (7.50s)
+=== RUN   TestConsumerCommentHelpers
+    comments_test.go:162: Go, Node and sanitized native agree on 32770 consumer output lines with the stated AST adapter
+--- PASS: TestConsumerCommentHelpers (27.59s)
+=== RUN   TestJsxParserGapIsExplicit
+    comments_test.go:204: 4 valid Go JSX inputs explicitly refuse in the independent-parser adapter; AST-adapter helper comparisons cover them separately
+--- PASS: TestJsxParserGapIsExplicit (9.21s)
+=== RUN   TestJsxAdapterGuardMutant
+    comments_test.go:255: compiled adapter-guard mutant finishes the unsupported JSX input with exit 0; the explicit-refusal check requires exit 70 and catches it
+--- PASS: TestJsxAdapterGuardMutant (7.64s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments	101.354s
