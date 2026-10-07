@@ -1,6 +1,7 @@
 # Optional callable presence
 
 Built on codex/method-presence-test, retaining method-presence commit 722a1c5afb5c070354af2f149030ae65feec7f32.
+Implementation commit: 49347bcea2517632ee69535d158b1b5e0788b8fd.
 Merged origin/main ce0750f2 through merge commit 73534167707b3c4f2ad91d88e3326c9572d2baaf.
 
 A condition reading a closure whose checker type includes undefined lowers to !IsUndefined.
