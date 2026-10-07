@@ -1,0 +1,65 @@
+import type { ParseNode } from '../../../typescript/parser/nodes.ts';
+import type { Rules } from '../rules.ts';
+import { Diagnostic } from '../diagnostic.ts';
+import { BindingOrigin } from '../prefer-promise-reject-errors/binding_origin.a';
+
+const componentName = /^[^a-z][^-]*$/u;
+
+// The driver selects opening and self-closing JSX nodes before handing one here.
+export class JsxNoUndef {
+    readonly rules: Rules;
+    readonly origins: BindingOrigin;
+    readonly allowGlobals: boolean;
+    constructor(rules: Rules, allowGlobals = false) {
+        this.rules = rules;
+        this.origins = new BindingOrigin(rules);
+        this.allowGlobals = allowGlobals;
+    }
+    component(name: string): boolean {
+        return componentName.test(name);
+    }
+    visit(node: ParseNode): void {
+        const tagIndex = node.children[0] ?? -1;
+        if(tagIndex < 0) {
+            return;
+        }
+        const tag = this.rules.parser.node(tagIndex);
+        const tagText = this.rules.scanner.text.slice(this.rules.start(tag), tag.end);
+        if(tagText.includes(':')) {
+            return;
+        }
+        let referenceIndex = tagIndex;
+        let reference = tag;
+        const member = tag.children.length !== 0;
+        while(reference.children.length !== 0) {
+            referenceIndex = reference.children[0] ?? -1;
+            if(referenceIndex < 0) {
+                return;
+            }
+            reference = this.rules.parser.node(referenceIndex);
+        }
+        const name = this.rules.scanner.text.slice(this.rules.start(reference), reference.end);
+        if(name === 'this' || (!member && !this.component(reference.text))) {
+            return;
+        }
+        const symbol = this.origins.original(referenceIndex);
+        if(
+            symbol.id !== 0 &&
+            (this.allowGlobals ||
+                this.rules.path.endsWith('.cjs') ||
+                symbol.declarations.some((declarationRecord) => declarationRecord.file === this.rules.path))
+        ) {
+            return;
+        }
+        this.rules.findings.push(
+            new Diagnostic(
+                'react/jsx-no-undef',
+                'jsxIdentifierNotDefined',
+                'This JSX tag names a component that has no declaration in scope, so React receives `undefined` where a component was meant and throws at render rather than at build. Almost always a misspelling or a missing import. Import the component, or fix the spelling to match the binding you meant.',
+                this.rules.byte(this.rules.start(reference)),
+                this.rules.byte(reference.end),
+                '',
+            ),
+        );
+    }
+}
