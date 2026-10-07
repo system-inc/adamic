@@ -1,0 +1,7 @@
+coverage release PASS
+coverage sanitized PASS
+volume release PASS
+volume sanitized PASS
+mutant wrong optimization caught: wrong optimization flags
+mutant sanitized release caught: wrong sanitizer flags
+mutant counting build caught: allocation counting enabled
