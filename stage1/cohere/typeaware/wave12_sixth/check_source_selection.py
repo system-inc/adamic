@@ -30,13 +30,19 @@ fragments = ['<React.Fragment />', '<React.Fragment></React.Fragment>', '<React.
 aliases = ['React', 'React.Fragment', "require('react')", 'require(`react`)',
            "require('react', 'ignored')", "require?.('react')", '(React.Fragment)',
            'A.Fragment', 'React.Other', "require('preact')", "require('React')", 'require(dynamic)']
+contexts = ['value={{a:1}}', 'value={[]}', 'value={() => {}}', 'value={class {}}',
+            'value={new Object()}', 'value={/a/}', 'value={<span/>}', 'value={<></>}',
+            '', 'value', 'value="s"', 'value={"s"}', 'value={1}', 'value={true}', 'value={null}']
 paths=[]; modes=[]
-for mode, texts in [(1, undef), (2, fragments), (3, aliases)]:
+for mode, texts in [(1, undef), (2, fragments), (3, aliases), (4, contexts)]:
     for index, text in enumerate(texts):
         path=scratch/f'{mode}-{index}.tsx'
         prefix='export {};\n' if mode == 1 else 'export {}; declare const React: any; declare const A: any; declare const props: any;\n'
         # Multibyte source before a finding proves byte offsets are built from UTF-16 parser spans.
-        if mode == 3:
+        if mode == 4:
+            prefix += 'declare const Ctx: any;\n'
+            text = 'function C() { return <Ctx.Provider '+text+' />; }'
+        elif mode == 3:
             prefix += 'declare function require(...values: any[]): any; declare const dynamic: string;\n'
             text = 'const F = '+text+'; const x = <F />'
         else:
@@ -56,7 +62,7 @@ for row in production.decode().splitlines():
         current+=1; expected.append(row)
     elif not row.startswith('findings '):
         rule=row.split('\t')[2]
-        target='react/jsx-no-undef' if modes[current] == 1 else 'react/jsx-fragments'
+        target='react/jsx-no-undef' if modes[current] == 1 else 'react/jsx-no-constructed-context-values' if modes[current] == 4 else 'react/jsx-fragments'
         if rule == target:
             expected.append(row); findings+=1
 expected.append(f'findings {findings}')
@@ -66,6 +72,7 @@ assert findings >= 15, findings
 reference=scratch/'tag_reference.a'; reference.write_text((owned/'jsx_no_undef/tag_reference.a').read_text().replace("'../../../../typescript/parser/",repr(str(repository/'stage1/typescript/parser')+'/')[:-1]))
 selection=scratch/'tag_selection.a'; selection.write_text((owned/'jsx_fragments/tag_selection.a').read_text().replace("'../../../../typescript/parser/",repr(str(repository/'stage1/typescript/parser')+'/')[:-1]))
 initializer=scratch/'initializer_selection.a'; initializer.write_text((owned/'jsx_fragments/initializer_selection.a').read_text().replace("'../../../../typescript/parser/",repr(str(repository/'stage1/typescript/parser')+'/')[:-1]))
+construction=scratch/'inline_construction.a'; construction.write_text((owned/'jsx_no_constructed_context_values/inline_construction.a').read_text().replace("'../../../../typescript/parser/",repr(str(repository/'stage1/typescript/parser')+'/')[:-1]))
 imports=f'''import {{ panic, programArguments, readTextFile, utf8Length }} from 'adamic';
 import {{ Parser }} from '{repository}/stage1/typescript/parser/parser.ts';
 import {{ ParseNode, written }} from '{repository}/stage1/typescript/parser/nodes.ts';
@@ -77,6 +84,8 @@ import {{ report as fragment }} from '{owned}/jsx_fragments/messages.a';
 import {{ tagReference }} from './tag_reference.a';
 import {{ namedSelection }} from './tag_selection.a';
 import {{ fragmentInitializer }} from './initializer_selection.a';
+import {{ memberProviderValue, inlineConstruction }} from './inline_construction.a';
+import {{ report as context }} from '{owned}/jsx_no_constructed_context_values/messages.a';
 '''
 entry=scratch/'selection-main.a'
 entry.write_text(imports+'''
@@ -92,7 +101,11 @@ for(let index = 0; index < args.length; index += 2) {
     const root = parser.file();
     const scanner = new Scanner(source);
     const listeners = new Map<string, number>();
-    if(mode === '1') {
+    if(mode === '4') {
+        listeners.set('JsxOpeningElement', 4);
+        listeners.set('JsxSelfClosingElement', 4);
+    }
+    else if(mode === '1') {
         listeners.set('JsxOpeningElement', 1);
         listeners.set('JsxSelfClosingElement', 1);
     }
@@ -129,7 +142,16 @@ for(let index = 0; index < args.length; index += 2) {
         const node = parser.node(current); // Fetch once before kind-indexed dispatch.
         const listener = listeners.get(node.kind) ?? 0;
         let finding: ParseNode | undefined;
-        if(listener === 1) {
+        let constructionKind = -1;
+        if(listener === 4) {
+            const value = memberProviderValue(parser, node);
+            if(value !== undefined) {
+                constructionKind = inlineConstruction(value);
+                if(constructionKind === -1) { panic('constructed-context value requires source or checker analysis'); }
+                if(constructionKind >= 0) { finding = value; }
+            }
+        }
+        else if(listener === 1) {
             finding = tagReference(parser, node);
         }
         else if(listener > 1) {
@@ -149,7 +171,12 @@ for(let index = 0; index < args.length; index += 2) {
             scanner.scan();
             const supplied = new SuppliedNode(utf8Length(source.slice(0, scanner.start)),
                 utf8Length(source.slice(0, finding.end)));
-            const diagnostic = listener === 1 ? undef(supplied) : fragment(supplied, false);
+            let line = 1;
+            for(let position = 0; position < scanner.start; position++) {
+                if(source.charCodeAt(position) === 10) { line++; }
+            }
+            const diagnostic = listener === 4 ? context(supplied, constructionKind, line, 0, '')
+                : listener === 1 ? undef(supplied) : fragment(supplied, false);
             diagnostics.push(diagnostic.written());
         }
         for(let child = node.children.length - 1; child >= 0; child--) {
@@ -173,7 +200,7 @@ source,err=run('source-node',['node','--disable-warning=ExperimentalWarning',rep
 emitted,_=run('emitted-build',[stage0,'js',entry]); emitted_path=scratch/'emitted.mjs'; emitted_path.write_bytes(emitted)
 got,err=run('emitted-node',['node','--disable-warning=ExperimentalWarning',repository/'oracle/node.mjs',emitted_path,*arguments]); assert not err and got == expected
 mutants=[]
-for name,file,before,after in [('undef-ascii',reference,'first >= 97','first >= 65'),('fragment-member',selection,"name.text === 'Fragment'","name.text === 'FragmentX'"),('fragment-initializer',initializer,"argument.text === 'react'","argument.text === 'preact'")]:
+for name,file,before,after in [('undef-ascii',reference,'first >= 97','first >= 65'),('fragment-member',selection,"name.text === 'Fragment'","name.text === 'FragmentX'"),('fragment-initializer',initializer,"argument.text === 'react'","argument.text === 'preact'"),('context-inline-array',construction,"case 'ArrayLiteralExpression': return 1;","case 'ArrayLiteralExpression': return 0;")]:
     original=file.read_text(); assert original.count(before)==1
     file.write_text(original.replace(before,after))
     binary=scratch/name;run(name+'-build',[stage0,'build',entry,'-o',binary]); got,err=run(name+'-run',[binary,*arguments])
@@ -187,6 +214,13 @@ original=selection.read_text(); assert original.count('return 2;')==1
 selection.write_text(original.replace('return 2;', 'return 0;'))
 binary=scratch/'unresolved-bypass';run('unresolved-bypass-build',[stage0,'build',entry,'-o',binary]);got,err=run('unresolved-bypass-run',[binary,alias,'2']);assert got and not err
 selection.write_text(original)
-summary=dict(source_selection_only=True,cases=len(paths),findings=findings,bytes=len(expected),backends=['native','native-asan','source-node','emitted-node'],mutants=mutants,unresolved_alias=dict(normal_exit=70,bypass_exit=0),commands=commands)
+unsupported=scratch/'unsupported-context.tsx'; unsupported.write_text('export {}; declare const Ctx: any; function C() { const v = {}; return <Ctx.Provider value={v} />; }\n')
+got,err=run('unsupported-context',[scratch/'native',unsupported,'4'],expected=70)
+assert not got and err == b'adamic: panic: constructed-context value requires source or checker analysis\n'
+original=construction.read_text(); assert original.count('default: return -1;')==1
+construction.write_text(original.replace('default: return -1;', 'default: return -2;'))
+binary=scratch/'unsupported-context-bypass';run('unsupported-context-bypass-build',[stage0,'build',entry,'-o',binary]);got,err=run('unsupported-context-bypass-run',[binary,unsupported,'4']);assert got and not err
+construction.write_text(original)
+summary=dict(source_selection_only=True,cases=len(paths),findings=findings,bytes=len(expected),backends=['native','native-asan','source-node','emitted-node'],mutants=mutants,unresolved_alias=dict(normal_exit=70,bypass_exit=0),unsupported_context=dict(normal_exit=70,bypass_exit=0),commands=commands)
 (scratch/'summary.json').write_text(json.dumps(summary,indent=2)+'\n')
-print('SOURCE SELECTION SUBSET PASS',len(paths),'cases',findings,'findings',len(expected),'bytes; three byte-only mutants; unresolved alias refused')
+print('SOURCE SELECTION SUBSET PASS',len(paths),'cases',findings,'findings',len(expected),'bytes; four byte-only mutants; unresolved alias and context binding refused')

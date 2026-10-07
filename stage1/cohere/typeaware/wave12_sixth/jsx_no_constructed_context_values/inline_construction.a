@@ -1,0 +1,55 @@
+import type { Parser } from '../../../../typescript/parser/parser.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+
+// Only the qualified-provider arm. Bare provider bindings still need the checker.
+export function memberProviderValue(parser: Parser, opening: ParseNode): ParseNode | undefined {
+    const tagIndex = opening.children[0];
+    const attributesIndex = opening.children[opening.children.length - 1];
+    if(tagIndex === undefined || attributesIndex === undefined) { return undefined; }
+    const tag = parser.node(tagIndex);
+    if(tag.kind !== 'PropertyAccessExpression') { return undefined; }
+    const nameIndex = tag.children[1];
+    if(nameIndex === undefined) { return undefined; }
+    const name = parser.node(nameIndex);
+    if(name.kind !== 'Identifier' || name.text !== 'Provider') { return undefined; }
+    for(const attributeIndex of parser.node(attributesIndex).children) {
+        const attribute = parser.node(attributeIndex);
+        if(attribute.kind !== 'JsxAttribute') { continue; }
+        const keyIndex = attribute.children[0];
+        if(keyIndex === undefined) { continue; }
+        const key = parser.node(keyIndex);
+        if(key.kind !== 'Identifier' || key.text !== 'value') { continue; }
+        const initializerIndex = attribute.children[1];
+        if(initializerIndex === undefined) { return undefined; }
+        const initializer = parser.node(initializerIndex);
+        if(initializer.kind !== 'JsxExpression') { return undefined; }
+        const expressionIndex = initializer.children[0];
+        return expressionIndex === undefined ? undefined : parser.node(expressionIndex);
+    }
+    return undefined;
+}
+
+// Positive values index the existing Go-compatible message kinds. -2 is a stable
+// primitive. -1 requires more source/checker analysis, never a silent clean result.
+export function inlineConstruction(expression: ParseNode): number {
+    switch(expression.kind) {
+        case 'ObjectLiteralExpression': return 0;
+        case 'ArrayLiteralExpression': return 1;
+        case 'ArrowFunction':
+        case 'FunctionExpression': return 2;
+        case 'ClassExpression': return 4;
+        case 'NewExpression': return 5;
+        case 'RegularExpressionLiteral': return 6;
+        case 'JsxElement':
+        case 'JsxSelfClosingElement': return 7;
+        case 'JsxFragment': return 8;
+        case 'StringLiteral':
+        case 'NoSubstitutionTemplateLiteral':
+        case 'NumericLiteral':
+        case 'BigIntLiteral':
+        case 'TrueKeyword':
+        case 'FalseKeyword':
+        case 'NullKeyword': return -2;
+        default: return -1;
+    }
+}
