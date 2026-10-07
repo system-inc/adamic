@@ -27,6 +27,7 @@ try:
 except (OSError, ValueError, KeyError, TypeError):
     haveTable = False
 skippedForInput, skippedUnknown = [], []
+packageElapsed = {}
 counts = collections.Counter()
 for line in open(log, errors="replace"):
     try:
@@ -56,6 +57,7 @@ for line in open(log, errors="replace"):
                     skippedForInput.append((package, test, skipProvides.get(test) or skipProvides.get(top, "")))
         else:
             finishedPackages.add(package)
+            packageElapsed[package] = event.get("Elapsed") or 0
             if action == "fail":
                 if event.get("FailedBuild"):
                     failedBuilds.add(package)
@@ -86,10 +88,31 @@ with open(failuresPath, "w") as failures:
             failures.writelines(output[(package, None)][-20:])
             failures.write("\n")
 
+# A package can fail with no failing test (a timeout, a panic outside a test, a build failure), so
+# the status line counts failed packages beside failed tests and names each with how it ended; a run
+# whose only failure was a package timeout must not read as "0 fail".
+def short(package):
+    return package.replace("github.com/system-inc/adamic/", "")
+
+def ending(package):
+    if package in failedBuilds:
+        return "failed to build"
+    # Go attributes the timeout panic to the test that was running, so read all of the package's output.
+    said = "".join("".join(lines) for (owner, _), lines in output.items() if owner == package)
+    seconds = f"{packageElapsed.get(package, 0):,.0f} s"
+    if "test timed out after" in said:
+        return f"timed out at {seconds}"
+    if any(failed[0] == package for failed in failedTests):
+        return f"failed tests ({seconds})"
+    return f"failed outside a test at {seconds}"
+
+failedPackageNames = sorted(failedPackages | failedBuilds)
+packageLine = f"{len(failedPackageNames)} packages failed" + (": " + ", ".join(f"{short(p)} {ending(p)}" for p in failedPackageNames) if failedPackageNames else "")
+
 with open(statusPath, "w") as status:
     status.write(
-        f"{state}: {counts['pass']} pass, {counts['fail']} fail, {counts['skip']} skip; "
-        f"{len(failedBuilds)} packages failed to build; {len(finishedPackages)} packages finished; "
+        f"{state}: {counts['pass']} pass, {counts['fail']} tests failed, {counts['skip']} skip; {packageLine}; "
+        f"{len(finishedPackages)} packages finished; "
         + (f"by test name, {len(skippedForInput)} required-input skips and {len(skippedUnknown)} unmatched "
            f"(census table: {os.environ.get('GATE_LOGS_SKIP_SOURCE', '?')}; the census command decides)\n" if haveTable
            else "skips not judged: no census table\n")
