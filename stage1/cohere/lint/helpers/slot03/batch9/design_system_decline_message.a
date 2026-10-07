@@ -1,0 +1,6 @@
+// Error text is supplied by the Go-error adapter. Nil is distinct from an empty error.
+export function designSystemDeclineMessage(rule: string, entryPoint: string, errorPresent: boolean, errorText: string): string {
+ const where = entryPoint !== '' ? ' from ' + entryPoint : '';
+ const reason = errorPresent ? errorText : '<nil>';
+ return rule + " could not build this project's Tailwind design system" + where + ', so it is reporting nothing rather than reporting a clean tree: ' + reason;
+}

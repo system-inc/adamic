@@ -1,0 +1,47 @@
+import {panic, readTextFile, programArguments} from 'adamic';
+import {OptionsJson} from '../../options_json.ts';
+import {type CSSNode, type DeclarationResult, type StringEnd, type CSSResult} from './css_model.a';
+import {parseCSS} from './parse_css.a';
+import {designSystemDeclineMessage} from './design_system_decline_message.a';
+import {loadedTheme} from './loaded_theme.a';
+import {isFollowedByWhitespace} from '../batch4/followed_by_whitespace.a';
+const file=readTextFile(programArguments()[0] ?? panic('missing cases'));if(file.kind==='Error') {panic(file.message);}
+const json=new OptionsJson(file.text);const root=json.parse();if(root<0) {panic(json.error);}
+function text(index: number, key: string): string {return json.node(json.field(index,key)).text;}
+function flag(index: number, key: string): boolean {return text(index,key)==='true';}
+function units(value: string): string {let out='';for(let i=0;i<value.length;i++) {out+=`${value.charCodeAt(i)},`;}return out;}
+// Test-only UTF-8 adapter. Invalid sequences consume one byte like Go's rune decoder.
+function decode(bytes: string): string {
+ let out='';for(let i=0;i<bytes.length;i++) {
+  const first=bytes.charCodeAt(i);if(first<128) {out+=String.fromCharCode(first);continue;}
+  let length=0;let value=0;let minimum=0;
+  if(first>=194 && first<=223) {length=2;value=first-192;minimum=128;}
+  else if(first>=224 && first<=239) {length=3;value=first-224;minimum=2048;}
+  else if(first>=240 && first<=244) {length=4;value=first-240;minimum=65536;}
+  let valid=length>0 && i+length<=bytes.length;
+  for(let j=1;j<length;j++) {const c=bytes.charCodeAt(i+j);if(c<128 || c>191) {valid=false;}value=value*64+c-128;}
+  if(!valid || value<minimum || value>1114111 || (value>=55296 && value<=57343)) {out+='\ufffd';continue;}
+  i+=length-1;if(value<65536) {out+=String.fromCharCode(value);} else {const scalar=value-65536;out+=String.fromCharCode(55296+Math.floor(scalar/1024))+String.fromCharCode(56320+scalar%1024);}
+ }return out;
+}
+function node(kind: string): CSSNode {return {kind,selector:'',name:'',params:'',property:'',value:'',important:false,valuePresent:false,childrenPresent:false,children:[]};}
+function readNode(index: number): CSSNode {return {kind:text(index,'kind'),selector:text(index,'selector'),name:text(index,'name'),params:text(index,'params'),property:text(index,'property'),value:text(index,'value'),important:flag(index,'important'),valuePresent:flag(index,'valuePresent'),childrenPresent:flag(index,'childrenPresent'),children:[]};}
+const adapter={row:0};
+function lookup(kind: string, key: string): number {return json.field(json.field(json.field(adapter.row,'dependencies'),kind),key);}
+function trim(bytes: string): string {const id=lookup('trims',bytes);return id<0 ? 'unexpected trim:'+bytes : json.node(id).text;}
+function atRule(bytes: string): CSSNode {const id=lookup('atRules',bytes);if(id<0) {const n=node('unexpected at-rule');n.value=decode(bytes);return n;}return readNode(id);}
+function declaration(bytes: string, colon: number): DeclarationResult {const id=lookup('declarations',bytes+'|'+`${colon}`);if(id<0) {const n=node('unexpected declaration');n.value=decode(bytes);return {present:true,node:n};}return {present:flag(id,'present'),node:readNode(json.field(id,'node'))};}
+function stringEnd(bytes: string, start: number, quote: number): StringEnd {const id=lookup('strings',`${start}`+'|'+`${quote}`);if(bytes!==text(adapter.row,'normalized') || id<0) {return {end:start,failed:true,message:'unexpected string argument',offset:start};}return {end:json.node(json.field(id,'end')).number,failed:flag(id,'failed'),message:text(id,'message'),offset:json.node(json.field(id,'offset')).number};}
+function style(selector: string): CSSNode {const n=node('rule');n.selector=selector;return n;}
+function comment(value: string): CSSNode {const n=node('comment');n.value=value;return n;}
+function tree(result: CSSResult, ids: number[]): string {let out='[';for(const id of ids) {const n=result.nodes[id] ?? panic('invalid tree');out+=n.kind+':'+units(n.selector)+':'+units(n.name)+':'+units(n.params)+':'+units(n.property)+':'+units(n.value)+':'+`${n.important}`+':'+`${n.valuePresent}`+':'+`${n.childrenPresent}`+':'+tree(result,n.children)+'|';}return out+']';}
+for(const row of json.node(json.field(root,'css')).children) {
+ adapter.row=row;const result=parseCSS(text(row,'input'),{trim:bytes=>trim(bytes),decode:bytes=>decode(bytes),atRule:bytes=>atRule(bytes),declaration:(bytes,colon)=>declaration(bytes,colon),string:(bytes,start,quote)=>stringEnd(bytes,start,quote),style:selector=>style(selector),comment:value=>comment(value),whitespace:(index,peek)=>isFollowedByWhitespace('',index,peek)});
+ console.log(result.failed ? 'error:'+`${result.offset}`+':'+units(result.message) : 'ok:'+tree(result,result.roots));
+}
+for(const row of json.node(json.field(root,'messages')).children) {console.log(units(designSystemDeclineMessage(text(row,'rule'),text(row,'entry'),flag(row,'present'),text(row,'error'))));}
+for(const handle of [-1,0,1]) {
+ const themes=[{prefix:''},{prefix:''}];const system={theme:handle};const got=loadedTheme(system);let alias=got===handle;
+ if(got>=0) {const selected=themes[got] ?? panic('invalid theme');selected.prefix='mutated';if(handle>=0) {alias=alias&&(themes[handle] ?? panic('invalid original theme')).prefix==='mutated';}}
+ console.log(`${got}`+':'+`${alias}`+':'+`${system.theme===handle}`);
+}

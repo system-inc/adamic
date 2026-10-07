@@ -1,0 +1,6 @@
+=== RUN   TestBatch9Helpers
+    batch9_test.go:61: /workspace/adamic/stage1/cohere/lint/helpers/slot03/batch9/css_model.a:4:26: Adamic 0.1 refuses CSSNode[], an array whose elements can reach back to an array like it: a cycle reference counting can't free, and the write at /workspace/adamic/stage1/cohere/lint/helpers/slot03/batch9/parse_css.a:22:78 may close one (the value written reaches something this function didn't make or let escape, and what it's written into wasn't made here); declare the elements weak, Weak<CSSNode>[] (import type { Weak } from 'adamic'), which don't count and read undefined once what they point to is freed; or make it readonly CSSNode[]; or write into such an array only values this function made, or only into one it made (adamic/cycle-capable)
+--- FAIL: TestBatch9Helpers (2.26s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot03	2.274s
+FAIL

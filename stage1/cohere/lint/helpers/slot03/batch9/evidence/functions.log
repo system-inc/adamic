@@ -1,0 +1,5 @@
+=== RUN   TestBatch9Helpers
+    batch9_test.go:66: 735 lines match real Go, Node source, emitted JavaScript and sanitized native
+--- PASS: TestBatch9Helpers (5.24s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot03	5.252s

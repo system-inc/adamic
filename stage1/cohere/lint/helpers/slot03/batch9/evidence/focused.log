@@ -1,0 +1,6 @@
+=== RUN   TestBatch9Helpers
+    batch9_test.go:61: /workspace/adamic/stage1/cohere/lint/helpers/slot03/batch9/parse_css.a:10:2: stage 0 can't lower a function inside a function (a closure) yet
+--- FAIL: TestBatch9Helpers (8.58s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot03	8.589s
+FAIL

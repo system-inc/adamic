@@ -1,0 +1,16 @@
+// All parser offsets index a byte string: UTF-8 bytes represented as code units 0..255.
+// Dependencies decode textual fields; arena edges preserve tree identity without cycles.
+export type CSSNode = {kind: string; selector: string; name: string; params: string; property: string; value: string; important: boolean; valuePresent: boolean; childrenPresent: boolean; children: number[]};
+export type CSSResult = {nodes: readonly CSSNode[]; roots: number[]; failed: boolean; message: string; offset: number};
+export type StringEnd = {end: number; failed: boolean; message: string; offset: number};
+export type DeclarationResult = {present: boolean; node: CSSNode};
+export type CSSDependencies = {
+ trim: (bytes: string) => string;
+ decode: (bytes: string) => string;
+ atRule: (bytes: string) => CSSNode;
+ declaration: (bytes: string, colon: number) => DeclarationResult;
+ string: (bytes: string, start: number, quote: number) => StringEnd;
+ style: (selector: string) => CSSNode;
+ comment: (text: string) => CSSNode;
+ whitespace: (index: number, peek: (index: number) => number) => boolean;
+};

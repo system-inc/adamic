@@ -1,0 +1,410 @@
+=== RUN   TestParseCSSMatchesEngine
+=== PAUSE TestParseCSSMatchesEngine
+=== RUN   TestParseCSSRejectsWhatTheEngineRejects
+=== PAUSE TestParseCSSRejectsWhatTheEngineRejects
+=== RUN   TestParseCSSCustomPropertyWhitespaceIsRaw
+=== PAUSE TestParseCSSCustomPropertyWhitespaceIsRaw
+=== RUN   TestParseCSSReadsRealStylesheets
+=== PAUSE TestParseCSSReadsRealStylesheets
+=== CONT  TestParseCSSMatchesEngine
+=== CONT  TestParseCSSCustomPropertyWhitespaceIsRaw
+--- PASS: TestParseCSSCustomPropertyWhitespaceIsRaw (0.00s)
+=== CONT  TestParseCSSReadsRealStylesheets
+=== CONT  TestParseCSSRejectsWhatTheEngineRejects
+=== RUN   TestParseCSSMatchesEngine/empty
+=== PAUSE TestParseCSSMatchesEngine/empty
+=== RUN   TestParseCSSMatchesEngine/whitespace_only
+=== PAUSE TestParseCSSMatchesEngine/whitespace_only
+=== RUN   TestParseCSSMatchesEngine/simple_rule
+=== PAUSE TestParseCSSMatchesEngine/simple_rule
+=== RUN   TestParseCSSMatchesEngine/no_trailing_semicolon
+=== PAUSE TestParseCSSMatchesEngine/no_trailing_semicolon
+=== RUN   TestParseCSSMatchesEngine/multiple_declarations
+=== PAUSE TestParseCSSMatchesEngine/multiple_declarations
+=== RUN   TestParseCSSMatchesEngine/nested_rule
+=== PAUSE TestParseCSSMatchesEngine/nested_rule
+=== RUN   TestParseCSSMatchesEngine/deeply_nested
+=== PAUSE TestParseCSSMatchesEngine/deeply_nested
+=== RUN   TestParseCSSMatchesEngine/at-rule_with_body
+=== PAUSE TestParseCSSMatchesEngine/at-rule_with_body
+=== RUN   TestParseCSSMatchesEngine/body-less_at-rule
+=== PAUSE TestParseCSSMatchesEngine/body-less_at-rule
+=== RUN   TestParseCSSMatchesEngine/import_at-rule
+=== PAUSE TestParseCSSMatchesEngine/import_at-rule
+=== RUN   TestParseCSSMatchesEngine/import_with_source
+=== PAUSE TestParseCSSMatchesEngine/import_with_source
+=== RUN   TestParseCSSMatchesEngine/at-rule_no_semicolon_at_eof
+=== PAUSE TestParseCSSMatchesEngine/at-rule_no_semicolon_at_eof
+=== RUN   TestParseCSSMatchesEngine/at-rule_closing_a_block
+=== PAUSE TestParseCSSMatchesEngine/at-rule_closing_a_block
+=== RUN   TestParseCSSMatchesEngine/at-rule_shorter_than_@page
+=== PAUSE TestParseCSSMatchesEngine/at-rule_shorter_than_@page
+=== RUN   TestParseCSSMatchesEngine/short_at-rule_with_params
+=== RUN   TestParseCSSRejectsWhatTheEngineRejects/custom_property_escaped
+=== RUN   TestParseCSSRejectsWhatTheEngineRejects/custom_property_ends_at_eof
+=== RUN   TestParseCSSRejectsWhatTheEngineRejects/custom_property_unbalanced_open_paren
+=== RUN   TestParseCSSRejectsWhatTheEngineRejects/missing_opening_brace
+=== RUN   TestParseCSSRejectsWhatTheEngineRejects/missing_opening_paren
+=== RUN   TestParseCSSRejectsWhatTheEngineRejects/missing_closing_brace_rule
+=== RUN   TestParseCSSRejectsWhatTheEngineRejects/missing_closing_brace_at-rule
+=== RUN   TestParseCSSRejectsWhatTheEngineRejects/invalid_declaration
+=== RUN   TestParseCSSRejectsWhatTheEngineRejects/unterminated_string
+=== RUN   TestParseCSSRejectsWhatTheEngineRejects/unterminated_string_with_semicolon
+=== RUN   TestParseCSSRejectsWhatTheEngineRejects/custom_property_without_value
+=== NAME  TestParseCSSRejectsWhatTheEngineRejects
+    css_parser_test.go:254: rejected 11 malformed stylesheets that the engine also rejects
+--- PASS: TestParseCSSRejectsWhatTheEngineRejects (0.00s)
+    --- PASS: TestParseCSSRejectsWhatTheEngineRejects/custom_property_escaped (0.00s)
+    --- PASS: TestParseCSSRejectsWhatTheEngineRejects/custom_property_ends_at_eof (0.00s)
+    --- PASS: TestParseCSSRejectsWhatTheEngineRejects/custom_property_unbalanced_open_paren (0.00s)
+    --- PASS: TestParseCSSRejectsWhatTheEngineRejects/missing_opening_brace (0.00s)
+    --- PASS: TestParseCSSRejectsWhatTheEngineRejects/missing_opening_paren (0.00s)
+    --- PASS: TestParseCSSRejectsWhatTheEngineRejects/missing_closing_brace_rule (0.00s)
+    --- PASS: TestParseCSSRejectsWhatTheEngineRejects/missing_closing_brace_at-rule (0.00s)
+    --- PASS: TestParseCSSRejectsWhatTheEngineRejects/invalid_declaration (0.00s)
+    --- PASS: TestParseCSSRejectsWhatTheEngineRejects/unterminated_string (0.00s)
+    --- PASS: TestParseCSSRejectsWhatTheEngineRejects/unterminated_string_with_semicolon (0.00s)
+    --- PASS: TestParseCSSRejectsWhatTheEngineRejects/custom_property_without_value (0.00s)
+=== PAUSE TestParseCSSMatchesEngine/short_at-rule_with_params
+=== RUN   TestParseCSSMatchesEngine/short_at-rule_with_params_and_body
+=== PAUSE TestParseCSSMatchesEngine/short_at-rule_with_params_and_body
+=== RUN   TestParseCSSMatchesEngine/short_at-rule_with_paren_params
+=== PAUSE TestParseCSSMatchesEngine/short_at-rule_with_paren_params
+=== RUN   TestParseCSSMatchesEngine/page_at-rule_splits_normally
+=== PAUSE TestParseCSSMatchesEngine/page_at-rule_splits_normally
+=== RUN   TestParseCSSMatchesEngine/at-rule_params_with_paren
+=== PAUSE TestParseCSSMatchesEngine/at-rule_params_with_paren
+=== RUN   TestParseCSSMatchesEngine/at-rule_tab_separated
+=== PAUSE TestParseCSSMatchesEngine/at-rule_tab_separated
+=== RUN   TestParseCSSMatchesEngine/comment_dropped
+=== PAUSE TestParseCSSMatchesEngine/comment_dropped
+=== RUN   TestParseCSSMatchesEngine/license_comment_hoisted
+=== PAUSE TestParseCSSMatchesEngine/license_comment_hoisted
+=== RUN   TestParseCSSMatchesEngine/license_comment_after_rule
+=== PAUSE TestParseCSSMatchesEngine/license_comment_after_rule
+=== RUN   TestParseCSSMatchesEngine/two_license_comments
+=== PAUSE TestParseCSSMatchesEngine/two_license_comments
+=== RUN   TestParseCSSMatchesEngine/comment_inside_declaration
+=== PAUSE TestParseCSSMatchesEngine/comment_inside_declaration
+=== RUN   TestParseCSSMatchesEngine/comment_with_escaped_star
+=== PAUSE TestParseCSSMatchesEngine/comment_with_escaped_star
+=== RUN   TestParseCSSMatchesEngine/unterminated_comment
+=== PAUSE TestParseCSSMatchesEngine/unterminated_comment
+=== RUN   TestParseCSSMatchesEngine/single_quoted
+=== PAUSE TestParseCSSMatchesEngine/single_quoted
+=== RUN   TestParseCSSMatchesEngine/double_quoted
+=== PAUSE TestParseCSSMatchesEngine/double_quoted
+=== RUN   TestParseCSSMatchesEngine/quote_inside_quote
+=== PAUSE TestParseCSSMatchesEngine/quote_inside_quote
+=== RUN   TestParseCSSMatchesEngine/semicolon_inside_string
+=== PAUSE TestParseCSSMatchesEngine/semicolon_inside_string
+=== RUN   TestParseCSSMatchesEngine/brace_inside_string
+=== PAUSE TestParseCSSMatchesEngine/brace_inside_string
+=== RUN   TestParseCSSMatchesEngine/colon_inside_string
+=== PAUSE TestParseCSSMatchesEngine/colon_inside_string
+=== RUN   TestParseCSSMatchesEngine/escaped_quote_in_string
+=== PAUSE TestParseCSSMatchesEngine/escaped_quote_in_string
+=== RUN   TestParseCSSMatchesEngine/escaped_colon_selector
+=== PAUSE TestParseCSSMatchesEngine/escaped_colon_selector
+=== RUN   TestParseCSSMatchesEngine/escaped_bracket_selector
+=== PAUSE TestParseCSSMatchesEngine/escaped_bracket_selector
+=== RUN   TestParseCSSMatchesEngine/escaped_slash_selector
+=== PAUSE TestParseCSSMatchesEngine/escaped_slash_selector
+=== RUN   TestParseCSSMatchesEngine/newlines_collapse
+=== PAUSE TestParseCSSMatchesEngine/newlines_collapse
+=== RUN   TestParseCSSMatchesEngine/tabs_collapse
+=== PAUSE TestParseCSSMatchesEngine/tabs_collapse
+=== NAME  TestParseCSSReadsRealStylesheets
+    css_parser_test.go:345: across 8 real stylesheets: 338 @theme entries, 51 @utility blocks, 1 @custom-variant rules, each matching the engine
+=== RUN   TestParseCSSMatchesEngine/crlf_line_endings
+=== PAUSE TestParseCSSMatchesEngine/crlf_line_endings
+--- PASS: TestParseCSSReadsRealStylesheets (0.01s)
+=== RUN   TestParseCSSMatchesEngine/crlf_inside_value
+=== PAUSE TestParseCSSMatchesEngine/crlf_inside_value
+=== RUN   TestParseCSSMatchesEngine/multiline_selector
+=== PAUSE TestParseCSSMatchesEngine/multiline_selector
+=== RUN   TestParseCSSMatchesEngine/semicolon_in_parens
+=== PAUSE TestParseCSSMatchesEngine/semicolon_in_parens
+=== RUN   TestParseCSSMatchesEngine/brace_in_parens
+=== PAUSE TestParseCSSMatchesEngine/brace_in_parens
+=== RUN   TestParseCSSMatchesEngine/nested_parens
+=== PAUSE TestParseCSSMatchesEngine/nested_parens
+=== RUN   TestParseCSSMatchesEngine/supports_at-rule
+=== PAUSE TestParseCSSMatchesEngine/supports_at-rule
+=== RUN   TestParseCSSMatchesEngine/paren_in_at-rule_params
+=== PAUSE TestParseCSSMatchesEngine/paren_in_at-rule_params
+=== RUN   TestParseCSSMatchesEngine/custom_variant_with_has
+=== PAUSE TestParseCSSMatchesEngine/custom_variant_with_has
+=== RUN   TestParseCSSMatchesEngine/important
+=== PAUSE TestParseCSSMatchesEngine/important
+=== RUN   TestParseCSSMatchesEngine/important_no_space
+=== PAUSE TestParseCSSMatchesEngine/important_no_space
+=== RUN   TestParseCSSMatchesEngine/important_in_custom_property
+=== PAUSE TestParseCSSMatchesEngine/important_in_custom_property
+=== RUN   TestParseCSSMatchesEngine/custom_property_simple
+=== PAUSE TestParseCSSMatchesEngine/custom_property_simple
+=== RUN   TestParseCSSMatchesEngine/custom_property_empty_value
+=== PAUSE TestParseCSSMatchesEngine/custom_property_empty_value
+=== RUN   TestParseCSSMatchesEngine/custom_property_no_semicolon
+=== PAUSE TestParseCSSMatchesEngine/custom_property_no_semicolon
+=== RUN   TestParseCSSMatchesEngine/custom_property_multiline
+=== PAUSE TestParseCSSMatchesEngine/custom_property_multiline
+=== RUN   TestParseCSSMatchesEngine/custom_property_keeps_indentation
+=== PAUSE TestParseCSSMatchesEngine/custom_property_keeps_indentation
+=== RUN   TestParseCSSMatchesEngine/custom_property_with_semicolon_in_parens
+=== PAUSE TestParseCSSMatchesEngine/custom_property_with_semicolon_in_parens
+=== RUN   TestParseCSSMatchesEngine/custom_property_with_braces
+=== PAUSE TestParseCSSMatchesEngine/custom_property_with_braces
+=== RUN   TestParseCSSMatchesEngine/custom_property_with_brackets
+=== PAUSE TestParseCSSMatchesEngine/custom_property_with_brackets
+=== RUN   TestParseCSSMatchesEngine/custom_property_with_nested_brackets
+=== PAUSE TestParseCSSMatchesEngine/custom_property_with_nested_brackets
+=== RUN   TestParseCSSMatchesEngine/custom_property_with_string
+=== PAUSE TestParseCSSMatchesEngine/custom_property_with_string
+=== RUN   TestParseCSSMatchesEngine/custom_property_with_string_brace
+=== PAUSE TestParseCSSMatchesEngine/custom_property_with_string_brace
+=== RUN   TestParseCSSMatchesEngine/custom_property_with_comment
+=== PAUSE TestParseCSSMatchesEngine/custom_property_with_comment
+=== RUN   TestParseCSSMatchesEngine/custom_property_with_colon_in_value
+=== PAUSE TestParseCSSMatchesEngine/custom_property_with_colon_in_value
+=== RUN   TestParseCSSMatchesEngine/custom_property_with_var_fallback_colon
+=== PAUSE TestParseCSSMatchesEngine/custom_property_with_var_fallback_colon
+=== RUN   TestParseCSSMatchesEngine/custom_property_at_top_level
+=== PAUSE TestParseCSSMatchesEngine/custom_property_at_top_level
+=== RUN   TestParseCSSMatchesEngine/custom_property_ends_at_brace
+=== PAUSE TestParseCSSMatchesEngine/custom_property_ends_at_brace
+=== RUN   TestParseCSSMatchesEngine/two_custom_properties
+=== PAUSE TestParseCSSMatchesEngine/two_custom_properties
+=== RUN   TestParseCSSMatchesEngine/custom_property_then_declaration
+=== PAUSE TestParseCSSMatchesEngine/custom_property_then_declaration
+=== RUN   TestParseCSSMatchesEngine/custom_property_tw_namespace
+=== PAUSE TestParseCSSMatchesEngine/custom_property_tw_namespace
+=== RUN   TestParseCSSMatchesEngine/theme_block
+=== PAUSE TestParseCSSMatchesEngine/theme_block
+=== RUN   TestParseCSSMatchesEngine/theme_inline
+=== PAUSE TestParseCSSMatchesEngine/theme_inline
+=== RUN   TestParseCSSMatchesEngine/theme_with_keyframes
+=== PAUSE TestParseCSSMatchesEngine/theme_with_keyframes
+=== RUN   TestParseCSSMatchesEngine/utility_static
+=== PAUSE TestParseCSSMatchesEngine/utility_static
+=== RUN   TestParseCSSMatchesEngine/utility_functional
+=== PAUSE TestParseCSSMatchesEngine/utility_functional
+=== RUN   TestParseCSSMatchesEngine/utility_negative
+=== PAUSE TestParseCSSMatchesEngine/utility_negative
+=== RUN   TestParseCSSMatchesEngine/utility_with_nested_selector
+=== PAUSE TestParseCSSMatchesEngine/utility_with_nested_selector
+=== RUN   TestParseCSSMatchesEngine/variant_at-rule
+=== PAUSE TestParseCSSMatchesEngine/variant_at-rule
+=== RUN   TestParseCSSMatchesEngine/apply_directive
+=== PAUSE TestParseCSSMatchesEngine/apply_directive
+=== RUN   TestParseCSSMatchesEngine/layer_block
+=== PAUSE TestParseCSSMatchesEngine/layer_block
+=== RUN   TestParseCSSMatchesEngine/config_at-rule
+=== PAUSE TestParseCSSMatchesEngine/config_at-rule
+=== RUN   TestParseCSSMatchesEngine/source_at-rule
+=== PAUSE TestParseCSSMatchesEngine/source_at-rule
+=== RUN   TestParseCSSMatchesEngine/byte_order_mark
+=== PAUSE TestParseCSSMatchesEngine/byte_order_mark
+=== RUN   TestParseCSSMatchesEngine/www-phi-health_app/_theme/styles/theme.css
+=== PAUSE TestParseCSSMatchesEngine/www-phi-health_app/_theme/styles/theme.css
+=== RUN   TestParseCSSMatchesEngine/www-phi-health_app/_theme/styles/variables.css
+=== PAUSE TestParseCSSMatchesEngine/www-phi-health_app/_theme/styles/variables.css
+=== RUN   TestParseCSSMatchesEngine/www-phi-health_app/_theme/styles/utilities.css
+=== PAUSE TestParseCSSMatchesEngine/www-phi-health_app/_theme/styles/utilities.css
+=== RUN   TestParseCSSMatchesEngine/www-phi-health_app/_theme/styles/animations.css
+=== PAUSE TestParseCSSMatchesEngine/www-phi-health_app/_theme/styles/animations.css
+=== RUN   TestParseCSSMatchesEngine/structure_theme/styles/global.css
+=== PAUSE TestParseCSSMatchesEngine/structure_theme/styles/global.css
+=== RUN   TestParseCSSMatchesEngine/structure_theme/styles/variables.css
+=== PAUSE TestParseCSSMatchesEngine/structure_theme/styles/variables.css
+=== RUN   TestParseCSSMatchesEngine/structure_theme/styles/utilities.css
+=== PAUSE TestParseCSSMatchesEngine/structure_theme/styles/utilities.css
+=== RUN   TestParseCSSMatchesEngine/structure_theme/styles/animations.css
+=== PAUSE TestParseCSSMatchesEngine/structure_theme/styles/animations.css
+=== NAME  TestParseCSSMatchesEngine
+    css_parser_test.go:216: tailwind 4.3.3: compared 91 stylesheets and 0 nodes against the engine's parser (found by identity as Te)
+=== CONT  TestParseCSSMatchesEngine/custom_property_keeps_indentation
+=== CONT  TestParseCSSMatchesEngine/custom_property_no_semicolon
+=== CONT  TestParseCSSMatchesEngine/utility_static
+=== CONT  TestParseCSSMatchesEngine/custom_property_empty_value
+=== CONT  TestParseCSSMatchesEngine/custom_property_simple
+=== CONT  TestParseCSSMatchesEngine/important_in_custom_property
+=== CONT  TestParseCSSMatchesEngine/important_no_space
+=== CONT  TestParseCSSMatchesEngine/empty
+=== CONT  TestParseCSSMatchesEngine/custom_variant_with_has
+=== CONT  TestParseCSSMatchesEngine/theme_with_keyframes
+=== CONT  TestParseCSSMatchesEngine/custom_property_multiline
+=== CONT  TestParseCSSMatchesEngine/theme_inline
+=== CONT  TestParseCSSMatchesEngine/theme_block
+=== CONT  TestParseCSSMatchesEngine/custom_property_with_var_fallback_colon
+=== CONT  TestParseCSSMatchesEngine/custom_property_then_declaration
+=== CONT  TestParseCSSMatchesEngine/custom_property_tw_namespace
+=== CONT  TestParseCSSMatchesEngine/two_custom_properties
+=== CONT  TestParseCSSMatchesEngine/custom_property_ends_at_brace
+=== CONT  TestParseCSSMatchesEngine/custom_property_at_top_level
+=== CONT  TestParseCSSMatchesEngine/custom_property_with_nested_brackets
+=== CONT  TestParseCSSMatchesEngine/custom_property_with_comment
+=== CONT  TestParseCSSMatchesEngine/custom_property_with_colon_in_value
+=== CONT  TestParseCSSMatchesEngine/custom_property_with_string_brace
+=== CONT  TestParseCSSMatchesEngine/custom_property_with_string
+=== CONT  TestParseCSSMatchesEngine/structure_theme/styles/animations.css
+=== CONT  TestParseCSSMatchesEngine/structure_theme/styles/variables.css
+=== CONT  TestParseCSSMatchesEngine/byte_order_mark
+=== CONT  TestParseCSSMatchesEngine/structure_theme/styles/utilities.css
+=== CONT  TestParseCSSMatchesEngine/structure_theme/styles/global.css
+=== CONT  TestParseCSSMatchesEngine/important
+=== CONT  TestParseCSSMatchesEngine/source_at-rule
+=== CONT  TestParseCSSMatchesEngine/config_at-rule
+=== CONT  TestParseCSSMatchesEngine/layer_block
+=== CONT  TestParseCSSMatchesEngine/www-phi-health_app/_theme/styles/animations.css
+=== CONT  TestParseCSSMatchesEngine/www-phi-health_app/_theme/styles/utilities.css
+=== CONT  TestParseCSSMatchesEngine/www-phi-health_app/_theme/styles/variables.css
+=== CONT  TestParseCSSMatchesEngine/www-phi-health_app/_theme/styles/theme.css
+=== CONT  TestParseCSSMatchesEngine/apply_directive
+=== CONT  TestParseCSSMatchesEngine/utility_negative
+=== CONT  TestParseCSSMatchesEngine/utility_functional
+=== CONT  TestParseCSSMatchesEngine/variant_at-rule
+=== CONT  TestParseCSSMatchesEngine/utility_with_nested_selector
+=== CONT  TestParseCSSMatchesEngine/comment_inside_declaration
+=== CONT  TestParseCSSMatchesEngine/escaped_bracket_selector
+=== CONT  TestParseCSSMatchesEngine/paren_in_at-rule_params
+=== CONT  TestParseCSSMatchesEngine/escaped_colon_selector
+=== CONT  TestParseCSSMatchesEngine/supports_at-rule
+=== CONT  TestParseCSSMatchesEngine/escaped_quote_in_string
+=== CONT  TestParseCSSMatchesEngine/colon_inside_string
+=== CONT  TestParseCSSMatchesEngine/nested_parens
+=== CONT  TestParseCSSMatchesEngine/brace_inside_string
+=== CONT  TestParseCSSMatchesEngine/semicolon_inside_string
+=== CONT  TestParseCSSMatchesEngine/brace_in_parens
+=== CONT  TestParseCSSMatchesEngine/quote_inside_quote
+=== CONT  TestParseCSSMatchesEngine/semicolon_in_parens
+=== CONT  TestParseCSSMatchesEngine/double_quoted
+=== CONT  TestParseCSSMatchesEngine/crlf_inside_value
+=== CONT  TestParseCSSMatchesEngine/crlf_line_endings
+=== CONT  TestParseCSSMatchesEngine/tabs_collapse
+=== CONT  TestParseCSSMatchesEngine/newlines_collapse
+=== CONT  TestParseCSSMatchesEngine/escaped_slash_selector
+=== CONT  TestParseCSSMatchesEngine/at-rule_closing_a_block
+=== CONT  TestParseCSSMatchesEngine/custom_property_with_braces
+=== CONT  TestParseCSSMatchesEngine/multiline_selector
+=== CONT  TestParseCSSMatchesEngine/unterminated_comment
+=== CONT  TestParseCSSMatchesEngine/comment_with_escaped_star
+=== CONT  TestParseCSSMatchesEngine/custom_property_with_brackets
+=== CONT  TestParseCSSMatchesEngine/at-rule_params_with_paren
+=== CONT  TestParseCSSMatchesEngine/deeply_nested
+=== CONT  TestParseCSSMatchesEngine/at-rule_no_semicolon_at_eof
+=== CONT  TestParseCSSMatchesEngine/import_with_source
+=== CONT  TestParseCSSMatchesEngine/import_at-rule
+=== CONT  TestParseCSSMatchesEngine/body-less_at-rule
+=== CONT  TestParseCSSMatchesEngine/license_comment_after_rule
+=== CONT  TestParseCSSMatchesEngine/single_quoted
+=== CONT  TestParseCSSMatchesEngine/at-rule_with_body
+=== CONT  TestParseCSSMatchesEngine/license_comment_hoisted
+=== CONT  TestParseCSSMatchesEngine/comment_dropped
+=== CONT  TestParseCSSMatchesEngine/page_at-rule_splits_normally
+=== CONT  TestParseCSSMatchesEngine/at-rule_tab_separated
+=== CONT  TestParseCSSMatchesEngine/short_at-rule_with_paren_params
+=== CONT  TestParseCSSMatchesEngine/short_at-rule_with_params
+=== CONT  TestParseCSSMatchesEngine/no_trailing_semicolon
+=== CONT  TestParseCSSMatchesEngine/nested_rule
+=== CONT  TestParseCSSMatchesEngine/multiple_declarations
+=== CONT  TestParseCSSMatchesEngine/custom_property_with_semicolon_in_parens
+=== CONT  TestParseCSSMatchesEngine/at-rule_shorter_than_@page
+=== CONT  TestParseCSSMatchesEngine/simple_rule
+=== CONT  TestParseCSSMatchesEngine/whitespace_only
+=== CONT  TestParseCSSMatchesEngine/short_at-rule_with_params_and_body
+=== CONT  TestParseCSSMatchesEngine/two_license_comments
+--- PASS: TestParseCSSMatchesEngine (0.01s)
+    --- PASS: TestParseCSSMatchesEngine/custom_property_no_semicolon (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/custom_property_empty_value (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/custom_property_simple (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/important_in_custom_property (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/utility_static (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/custom_property_keeps_indentation (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/empty (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/important_no_space (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/custom_variant_with_has (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/theme_inline (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/custom_property_multiline (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/theme_block (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/custom_property_then_declaration (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/two_custom_properties (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/custom_property_tw_namespace (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/custom_property_ends_at_brace (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/custom_property_at_top_level (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/theme_with_keyframes (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/custom_property_with_nested_brackets (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/custom_property_with_comment (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/custom_property_with_string_brace (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/custom_property_with_colon_in_value (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/custom_property_with_var_fallback_colon (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/custom_property_with_string (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/byte_order_mark (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/important (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/source_at-rule (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/config_at-rule (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/layer_block (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/structure_theme/styles/utilities.css (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/www-phi-health_app/_theme/styles/utilities.css (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/www-phi-health_app/_theme/styles/animations.css (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/www-phi-health_app/_theme/styles/variables.css (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/apply_directive (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/utility_negative (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/www-phi-health_app/_theme/styles/theme.css (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/utility_functional (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/variant_at-rule (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/utility_with_nested_selector (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/comment_inside_declaration (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/escaped_bracket_selector (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/escaped_colon_selector (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/paren_in_at-rule_params (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/supports_at-rule (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/escaped_quote_in_string (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/colon_inside_string (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/brace_inside_string (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/nested_parens (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/semicolon_inside_string (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/quote_inside_quote (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/brace_in_parens (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/semicolon_in_parens (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/double_quoted (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/crlf_inside_value (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/crlf_line_endings (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/tabs_collapse (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/newlines_collapse (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/escaped_slash_selector (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/at-rule_closing_a_block (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/multiline_selector (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/unterminated_comment (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/comment_with_escaped_star (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/custom_property_with_brackets (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/at-rule_params_with_paren (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/deeply_nested (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/at-rule_no_semicolon_at_eof (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/import_with_source (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/import_at-rule (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/body-less_at-rule (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/license_comment_after_rule (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/custom_property_with_braces (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/single_quoted (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/at-rule_with_body (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/license_comment_hoisted (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/comment_dropped (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/page_at-rule_splits_normally (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/structure_theme/styles/global.css (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/at-rule_tab_separated (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/short_at-rule_with_params (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/no_trailing_semicolon (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/nested_rule (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/short_at-rule_with_paren_params (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/multiple_declarations (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/custom_property_with_semicolon_in_parens (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/at-rule_shorter_than_@page (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/whitespace_only (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/simple_rule (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/two_license_comments (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/short_at-rule_with_params_and_body (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/structure_theme/styles/animations.css (0.00s)
+    --- PASS: TestParseCSSMatchesEngine/structure_theme/styles/variables.css (0.01s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse	0.018s

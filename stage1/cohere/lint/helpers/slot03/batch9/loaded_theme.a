@@ -1,0 +1,3 @@
+// Initialized system prerequisite; -1 is nil, other handles retain pointer identity.
+export type LoadedThemeSystem = {theme: number};
+export function loadedTheme(system: LoadedThemeSystem): number { return system.theme; }

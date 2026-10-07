@@ -1,0 +1,68 @@
+import {panic} from 'adamic';
+import {type CSSNode, type CSSResult, type CSSDependencies} from './css_model.a';
+// input is a UTF-8 byte string, not a JavaScript UTF-16 stylesheet. The caller owns encoding.
+export function parseCSS(original: string, dependencies: CSSDependencies): CSSResult {
+ let input = original;
+ if(input.startsWith('\u00ef\u00bb\u00bf')) { input = ' ' + input.slice(3); }
+ const nodes: CSSNode[] = []; const roots: number[] = []; const licenses: number[] = [];
+ const parents: number[] = []; const closing: number[] = [];
+ const state = {parent: -1, buffer: '', start: 0};
+ const peek = (index: number): number => { return index < 0 || index >= input.length ? 0 : input.charCodeAt(index); }
+ const top = (): number => { return closing[closing.length - 1] ?? 0; }
+ for(let i=0;i<input.length;i++) {
+  const c=peek(i);
+  if(c===13 && peek(i+1)===10) {continue;}
+  if(c===92) {if(state.buffer==='') {state.start=i;}state.buffer+=input.slice(i,Math.min(i+2,input.length));i++;}
+  else if(c===47 && peek(i+1)===42) {
+   const start=i;for(let j=i+2;j<input.length;j++) {if(peek(j)===92) {j++;} else if(peek(j)===42 && peek(j+1)===47) {i=j+1;break;}}
+   const comment=input.slice(start,Math.min(i+1,input.length));
+   if(comment.length>2 && comment.charCodeAt(2)===33) {const id=nodes.length;nodes.push(dependencies.comment(dependencies.decode(comment.slice(2,-2))));licenses.push(id);}
+  }
+  else if(c===39 || c===34) {const result=dependencies.string(input,i,c);if(result.failed) {return failCSS(result.message,result.offset);}state.buffer+=input.slice(i,result.end+1);i=result.end;}
+  else if((c===32 || c===10 || c===9) && dependencies.whitespace(i,peek)) {continue;}
+  else if(c===10) {if(state.buffer==='') {continue;}const last=state.buffer.charCodeAt(state.buffer.length-1);if(last!==32 && last!==10 && last!==9) {state.buffer+=' ';}}
+  else if(c===45 && peek(i+1)===45 && state.buffer==='') {
+   const local: number[]=[];const start=i;let colon=-1;let terminated=false;
+   for(let j=i+2;j<input.length;j++) {
+    const v=peek(j);
+    if(v===92) {j++;}
+    else if(v===39 || v===34) {const result=dependencies.string(input,j,v);if(result.failed) {return failCSS(result.message,result.offset);}j=result.end;}
+    else if(v===47 && peek(j+1)===42) {for(let k=j+2;k<input.length;k++) {if(peek(k)===92) {k++;} else if(peek(k)===42 && peek(k+1)===47) {j=k+1;break;}}}
+    else if(colon===-1 && v===58) {colon=state.buffer.length+j-start;}
+    else if(v===59 && local.length===0) {state.buffer+=input.slice(start,j);i=j;terminated=true;}
+    else if(v===40) {local.push(41);}
+    else if(v===91) {local.push(93);}
+    else if(v===123) {local.push(125);}
+    else if((v===125 || j===input.length-1) && local.length===0) {i=j-1;state.buffer+=input.slice(start,j);terminated=true;}
+    else if(v===41 || v===93 || v===125) {if(local.length>0 && v===local[local.length-1]) {local.pop();}}
+    if(terminated) {break;}
+   }
+   const result=dependencies.declaration(state.buffer,colon);if(!result.present) {return failCSS('Invalid custom property, expected a value',start);}const id=nodes.length;nodes.push(result.node);if(state.parent<0) {roots.push(id);} else {const parent=nodes[state.parent] ?? panic('invalid parent');parent.children.push(id);parent.childrenPresent=true;}state.buffer='';
+  }
+  else if(c===59 && state.buffer.startsWith('@')) {const id=nodes.length;nodes.push(dependencies.atRule(state.buffer));if(state.parent<0) {roots.push(id);} else {const parent=nodes[state.parent] ?? panic('invalid parent');parent.children.push(id);parent.childrenPresent=true;}state.buffer='';}
+  else if(c===59 && top()!==41) {const result=dependencies.declaration(state.buffer,state.buffer.indexOf(':'));if(!result.present) {if(state.buffer==='') {continue;}return failCSS('Invalid declaration: `'+dependencies.decode(dependencies.trim(state.buffer))+'`',state.start);}const id=nodes.length;nodes.push(result.node);if(state.parent<0) {roots.push(id);} else {const parent=nodes[state.parent] ?? panic('invalid parent');parent.children.push(id);parent.childrenPresent=true;}state.buffer='';}
+  else if(c===123 && top()!==41) {
+   closing.push(125);const trimmed=dependencies.trim(state.buffer);
+   const id=nodes.length;nodes.push(trimmed.startsWith('@') ? dependencies.atRule(trimmed) : dependencies.style(dependencies.decode(trimmed)));
+   if(state.parent>=0) {const parent=nodes[state.parent] ?? panic('invalid parent');parent.children.push(id);parent.childrenPresent=true;}parents.push(state.parent);state.parent=id;state.buffer='';
+  }
+  else if(c===125 && top()!==41) {
+   if(closing.length===0) {return failCSS('Missing opening {',i);}closing.pop();
+   if(state.buffer!=='') {if(state.buffer.startsWith('@')) {const id=nodes.length;nodes.push(dependencies.atRule(state.buffer));if(state.parent<0) {roots.push(id);} else {const parent=nodes[state.parent] ?? panic('invalid parent');parent.children.push(id);parent.childrenPresent=true;}state.buffer='';} else if(state.parent>=0) {const result=dependencies.declaration(state.buffer,state.buffer.indexOf(':'));if(!result.present) {return failCSS('Invalid declaration: `'+dependencies.decode(dependencies.trim(state.buffer))+'`',state.start);}const id=nodes.length;nodes.push(result.node);if(state.parent<0) {roots.push(id);} else {const parent=nodes[state.parent] ?? panic('invalid parent');parent.children.push(id);parent.childrenPresent=true;}}}
+   const grand=parents.pop() ?? -1;if(grand<0 && state.parent>=0) {roots.push(state.parent);}state.parent=grand;state.buffer='';
+  }
+  else if(c===40) {closing.push(41);if(state.buffer==='') {state.start=i;}state.buffer+='(';}
+  else if(c===41) {if(top()!==41) {return failCSS('Missing opening (',i);}closing.pop();state.buffer+=')';}
+  else {if(state.buffer==='' && (c===32 || c===10 || c===9)) {continue;}if(state.buffer==='') {state.start=i;}state.buffer+=input.slice(i,i+1);}
+ }
+ if(state.buffer.startsWith('@')) {const id=nodes.length;nodes.push(dependencies.atRule(state.buffer));roots.push(id);}
+ if(closing.length>0 && state.parent>=0) {
+  const parent=nodes[state.parent] ?? panic('invalid parent');
+  if(parent.kind==='rule') {return failCSS('Missing closing } at '+parent.selector,state.start);}
+  if(parent.kind==='at-rule') {return failCSS('Missing closing } at '+parent.name+' '+parent.params,state.start);}
+ }
+ const output: number[]=[];for(const id of licenses) {output.push(id);}for(const id of roots) {output.push(id);}
+ return {nodes,roots:output,failed:false,message:'',offset:0};
+}
+
+function failCSS(message: string, offset: number): CSSResult {return {nodes: [], roots: [], failed: true, message, offset};}

@@ -1,0 +1,6 @@
+=== RUN   TestBatch9Helpers
+    batch9_test.go:61: /workspace/adamic/stage1/cohere/lint/helpers/slot03/batch9/parse_css.a:12:8: Adamic 0.1 refuses 'fail', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function fail() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+--- FAIL: TestBatch9Helpers (2.76s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot03	2.772s
+FAIL
