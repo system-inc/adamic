@@ -245,6 +245,7 @@ func (l *lowering) containers(proven *checker.Type) []*checker.Type {
 	}
 	var found []*checker.Type
 	for _, member := range members {
+		member = l.phantomArrayView(member)
 		if member.Flags()&checker.TypeFlagsObject != 0 && member.ObjectFlags()&checker.ObjectFlagsReference != 0 &&
 			(l.checker.IsArrayType(member) || checker.IsTupleType(member) || l.isLibraryType(member, "Map", "ReadonlyMap", "Set", "ReadonlySet")) {
 			found = append(found, member)

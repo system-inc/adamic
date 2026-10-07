@@ -76,7 +76,9 @@ func (l *lowering) stringConversion(node *ast.Node) (ir.Expression, error) {
 	}
 	if text, known, err := l.dateStringConversion(node, value); known {
 		return text, err
-
+	}
+	if _, member := value.(ir.PhantomMember); member {
+		return l.phantomSpelling(value), nil
 	}
 	switch value.Type() {
 	case ir.Number:
@@ -142,7 +144,7 @@ func (l *lowering) libraryString(node *ast.Node) (ir.Expression, bool, error) {
 	}
 	if of, _ := l.representation(l.checker.GetTypeAtLocation(receiver)); of == ir.String {
 		switch name {
-		case "charAt", "substring", "concat", "toString", "valueOf":
+		case "charAt", "substring", "substr", "concat", "toString", "valueOf":
 			value, err := l.expression(receiver)
 			if err != nil {
 				return nil, true, err
@@ -156,6 +158,14 @@ func (l *lowering) libraryString(node *ast.Node) (ir.Expression, bool, error) {
 }
 
 func (l *lowering) libraryStringMethod(node *ast.Node, value ir.Expression, name string, written []*ast.Node) (ir.Expression, bool, error) {
+	// With no length argument, substr and slice use the same relative start and run to the end.
+	// A second argument is a length for substr, an end for slice, and cannot be substituted.
+	if name == "substr" {
+		if len(written) > 1 {
+			return nil, true, l.notYet(node, "substr with a length argument")
+		}
+		name = "slice"
+	}
 	if name == "toString" || name == "valueOf" {
 		if len(written) != 0 {
 			return nil, true, l.notYet(node, name+" with arguments")

@@ -1,0 +1,37 @@
+// TypeScript ensureTrailingDirectorySeparator shape, with its any brand adapted to void.
+type Path = string & { readonly __pathBrand: void };
+function ensureTrailingDirectorySeparator(path: Path): Path;
+function ensureTrailingDirectorySeparator(path: string): string;
+function ensureTrailingDirectorySeparator(path: string) { return path.endsWith('/') ? path : path + '/'; }
+
+const built = 'root' + `${1}`;
+const path = built as Path;
+const branded: Path = ensureTrailingDirectorySeparator(path);
+const plain: string = ensureTrailingDirectorySeparator('already/');
+console.log(`${branded} ${plain}`);
+console.log(ensureTrailingDirectorySeparator('plain' + `${2}`));
+console.log(String(branded.__pathBrand));
+
+// Both overloads introduce the brand; the generic-free implementation returns string.
+function brandedResult(path: Path): Path;
+function brandedResult(path: string): Path;
+function brandedResult(path: string) { return path.endsWith('/') ? path : path + '/'; }
+console.log(brandedResult(path));
+console.log(brandedResult('second' + `${3}`));
+
+// A wider ordinary overload result is already justified by the implementation.
+function wider(value: string): number | string;
+function wider(value: string): string { return value; }
+const widened = wider('wide' + `${4}`);
+console.log(`${typeof widened} ${widened}`);
+function choose(value: number): string;
+function choose(value: string): string;
+function choose(value: number | string): string { return `${value}/`; }
+console.log(choose(5));
+console.log(choose('dispatch' + `${6}`));
+
+type BrandedArray = readonly number[] & { readonly marker: undefined };
+function arrayResult(value: readonly number[]): BrandedArray;
+function arrayResult(value: readonly number[]): readonly number[] { return value; }
+const array = arrayResult([7, 8]);
+console.log(`${array.length} ${array.join(',')} ${String(array.marker)}`);

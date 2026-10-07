@@ -100,11 +100,11 @@
     "nodeMatches": true,
     "native": {
       "stage": "Refused",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/08_getDirectories.a:160:1: Adamic 0.1 refuses overload 1 of ensureTrailingDirectorySeparator result Path cannot be served by implementation result string; make the implementation result covariant with every overload result\n"
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/08_getDirectories.a:41:20: Adamic 0.1 refuses a primitive brand member __pathBrand whose type is not void; make __pathBrand void (or optional and typed undefined) so the brand is phantom\n"
     },
     "javascript": {
       "stage": "Refused",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/08_getDirectories.a:160:1: Adamic 0.1 refuses overload 1 of ensureTrailingDirectorySeparator result Path cannot be served by implementation result string; make the implementation result covariant with every overload result\n"
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/08_getDirectories.a:41:20: Adamic 0.1 refuses a primitive brand member __pathBrand whose type is not void; make __pathBrand void (or optional and typed undefined) so the brand is phantom\n"
     }
   },
   {
@@ -332,11 +332,11 @@
     "nodeMatches": true,
     "native": {
       "stage": "Refused",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/25_readDirectory.a:530:5: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on value); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\n"
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/25_readDirectory.a:207:20: Adamic 0.1 refuses a primitive brand member __pathBrand whose type is not void; make __pathBrand void (or optional and typed undefined) so the brand is phantom\n"
     },
     "javascript": {
       "stage": "Refused",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/25_readDirectory.a:530:5: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on value); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\n"
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/25_readDirectory.a:207:20: Adamic 0.1 refuses a primitive brand member __pathBrand whose type is not void; make __pathBrand void (or optional and typed undefined) so the brand is phantom\n"
     }
   }
 ]

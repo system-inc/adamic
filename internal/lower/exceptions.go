@@ -163,6 +163,8 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 			}
 		case ir.NodeFSFile:
 			found = found || node.MayThrow()
+		case ir.PhantomMember:
+			found = found || !node.Optional
 		case ir.Throw:
 			found = true
 		case ir.NodeHostCall:

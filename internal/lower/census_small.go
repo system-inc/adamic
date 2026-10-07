@@ -214,6 +214,9 @@ func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal in
 	promised := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(overload))
 	produced := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(implementation))
 	if !l.censusRelated(produced, promised) {
+		if l.phantomOverloadResult(overload, implementation, l.concrete(produced), l.concrete(promised)) {
+			return nil
+		}
 		if l.censusNullableOverloadResult(produced, promised) {
 			return nil // Each resolved call proves the result or checks its presence.
 		}

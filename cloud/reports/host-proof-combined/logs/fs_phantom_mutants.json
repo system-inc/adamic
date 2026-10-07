@@ -1,0 +1,14 @@
+[
+  {
+    "mutant": "drop-phantom-overload-proof",
+    "test": "TestPhantomOverloadResultCastsAreErased",
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "mutant": "forget-phantom-freshness",
+    "test": "TestPhantomMemberEvaluatesOperandWithoutEscaping",
+    "exit": 1,
+    "caught": true
+  }
+]

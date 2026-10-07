@@ -1148,6 +1148,9 @@ func (a *analysis) value(expression ir.Expression) value {
 		return a.value(expression.Value)
 	case ir.MaybeOf:
 		return a.value(expression.Value)
+	case ir.PhantomMember:
+		a.value(expression.Value)
+		return value{}
 	case ir.CheckedCast:
 		result := a.value(expression.Value)
 		for _, allowed := range expression.Allowed {

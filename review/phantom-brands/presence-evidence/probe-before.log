@@ -1,0 +1,6 @@
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/native-sorted-array-brand.a (0.04s)
+        oracle_test.go:727: Lower: /workspace/adamic/internal/oracle/testdata/native-sorted-array-brand.a:7:12: Adamic 0.1 refuses a cast the runtime can't check; narrow it instead (===, typeof, a discriminant), or cast a discriminated union to its members (adamic/no-unchecked-cast)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.057s
+FAIL

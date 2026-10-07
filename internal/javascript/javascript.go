@@ -787,6 +787,12 @@ func (e *emitter) value(expression ir.Expression) string {
 			object = "adamicUninitializedFields(" + object + ", [" + strings.Join(unready, ", ") + "])"
 		}
 		return object
+	case ir.PhantomMember:
+		operator := "["
+		if expression.Optional {
+			operator = "?.["
+		}
+		return "(" + e.value(expression.Value) + ")" + operator + quote(expression.Name) + "]"
 	case ir.Property:
 		if expression.Readiness != "" {
 			return fmt.Sprintf("adamicReadField(%s, %s, %s, %t, %t)", e.value(expression.Object), quote(expression.Name), quote(expression.Readiness), expression.Optional, expression.Absent)

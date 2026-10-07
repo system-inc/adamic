@@ -1,0 +1,1 @@
+export type Path = string & { __pathBrand: undefined }; function ensureTrailingDirectorySeparator(path: Path): Path; function ensureTrailingDirectorySeparator(path: string): string; function ensureTrailingDirectorySeparator(path: string) { return path + '/'; } console.log(ensureTrailingDirectorySeparator('x'));

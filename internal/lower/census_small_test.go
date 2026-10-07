@@ -31,7 +31,7 @@ function serve(animals: Animal[]): string { animals.push({ name: 'cat' }); retur
 function ensureTrailingDirectorySeparator(path: Path): Path;
 function ensureTrailingDirectorySeparator(path: string): string;
 function ensureTrailingDirectorySeparator(path: string) { return path + '/'; }
-`, "overload 1 of ensureTrailingDirectorySeparator result"},
+`, "a primitive brand member __pathBrand whose type is not void"},
 	}
 	for _, probe := range probes {
 		t.Run(probe.name, func(t *testing.T) {

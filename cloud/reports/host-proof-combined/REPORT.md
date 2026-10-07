@@ -13,7 +13,7 @@ Final additions: Buffer fallback ccb8a69 via merge 469bb8b9; exact audited adapt
 | 05_writeFile.a | Refused | Refused | NotYet | NotYet | unknown errorCode observation at 35:19 | Compiler, regression from a85a9cb1 |
 | 06_fileExists.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 07_directoryExists.a | Agrees | Agrees | Agrees | Agrees | None | None |
-| 08_getDirectories.a | NotYet | NotYet | Refused | Refused | ensureTrailingDirectorySeparator overload Path/string result at 160:1 | Compiler / adaptation ruling |
+| 08_getDirectories.a | NotYet | NotYet | Refused | Refused | required undefined __pathBrand at 41:20 | Compiler / adaptation ruling |
 | 09_realpath.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 10_getModifiedTime.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 11_setModifiedTime.a | Agrees | Agrees | Agrees | Agrees | None | None |
@@ -150,3 +150,17 @@ Final validation:
 - Selected compiler tests `go test ./internal/lower ./internal/fresh -run 'TestCensus|TestArrayPredicate|TestUnknownArrayPredicate' -count=1 -timeout 10m`: lower PASS 0.719s; fresh no matching tests. No full-package fresh success is claimed for that filtered command.
 - Full flow comparison requested by the user: proof checkpoint 57fd72ae FAIL 109.401s; pure main 48c05d09 PASS 117.159s; pure library/merge-p2b a5d5dc9 PASS 150.472s. Same full flow command and matching cohere pin. All four top-level failure names and first diagnostic lines are in FLOW-COMPARISON.md; every failing subtest first line is in flow-failure-first-lines.json. All 42 failing source files are absent on both baselines. The comparison applies to the cited pre-regex proof, not a new full flow run after regex integration.
 - Full go test ./..., full language WASI and counts regeneration were not run. All prior broader gate limits remain explicit; no main/area push or force push.
+
+## Phantom-brand recount
+
+Merged d90994da with the advanced census overload checks preserved. All 25 original and adapted fixtures rerun on both backends: 20/25 adapted and 16/25 pristine agree with fresh Node. 11 remains green; 24 is green. Adapted fixture 08 now refuses at 41:20:
+
+```
+adamic: /workspace/adamic/stage3/fixtures/host/08_getDirectories.a:41:20: Adamic 0.1 refuses a primitive brand member __pathBrand whose type is not void; make __pathBrand void (or optional and typed undefined) so the brand is phantom
+```
+
+Its exact declaration is `export type Path = string & { __pathBrand: undefined; };`. Verified standalone one-line probe on both backends: `probes/08_required_undefined_brand.a` (1:20, same diagnostic). No adaptation invented. 14 remains Refused at 17:24 on both backends, before capture-cycle checking: the exact 0555bc27 tip still contains `callback = undefined!`, and ADAPTED.md says adaptation 48 was declined. 05/13 stay NotYet; no later host-blockers fix merged.
+
+Validation: targeted lower phantom/census tests PASS 1.836s; targeted fresh phantom/fs tests PASS 0.010s; WASI host tests plus phantom review tests PASS 19.562s. Diagnostic assertions were reconciled with the newer census wording and the earlier non-void brand refusal; unsafe results, parameters, readonly removal and function-value reads still refuse. Added freshness handling for PhantomMember and a regression test. Two executed mutants: dropping the census phantom overload proof fails TestPhantomOverloadResultCastsAreErased; forgetting PhantomMember freshness fails TestPhantomMemberEvaluatesOperandWithoutEscaping. Sources restored. Full go test ./... not run; counts conflict retains both fixture families without claiming a full Linux regeneration. The prior full flow comparison is in FLOW-COMPARISON.md: main48c05d09 and librarya5d5dc9 pass, proof57fd72ae has four failing top-level tests.
+
+Incoming six phantom runtime fixtures agree with Node on both backends and native release/sanitizer legs: focused TestNativeAgreesWithNode PASS 1.637s (see fs_phantom_oracle.log).

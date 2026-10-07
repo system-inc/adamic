@@ -481,6 +481,10 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 				throws = throws || operation == "exit" || operation == "setExitCode" || operation == "cwd" || operation == "chdir" || operation == "measure"
 			case reflect.TypeOf(ir.NodeHostCall{}):
 				throws = throws || value.Interface().(ir.NodeHostCall).Throws
+			case reflect.TypeOf(ir.PhantomMember{}):
+				if !value.Interface().(ir.PhantomMember).Optional {
+					throws = true
+				}
 			case callType:
 				if program.CallMayThrow(value.Interface().(ir.Call)) {
 					throws = true

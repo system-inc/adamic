@@ -1,0 +1,10 @@
+--- FAIL: TestPhantomArrayPresenceRefusals (0.00s)
+    --- FAIL: TestPhantomArrayPresenceRefusals/marker:_undefined/hasOwnProperty (0.14s)
+        phantom_array_presence_test.go:32: got <nil>, want Adamic 0.1 refuses presence of phantom array brand member marker via hasOwnProperty; read the brand member's undefined value without testing its presence; use a separate real field or Map for observable presence
+    --- FAIL: TestPhantomArrayPresenceRefusals/marker?:_undefined/hasOwnProperty (0.08s)
+        phantom_array_presence_test.go:32: got <nil>, want Adamic 0.1 refuses presence of phantom array brand member marker via hasOwnProperty; read the brand member's undefined value without testing its presence; use a separate real field or Map for observable presence
+    --- FAIL: TestPhantomArrayPresenceRefusals/marker:_void/hasOwnProperty (0.05s)
+        phantom_array_presence_test.go:32: got <nil>, want Adamic 0.1 refuses presence of phantom array brand member marker via hasOwnProperty; read the brand member's undefined value without testing its presence; use a separate real field or Map for observable presence
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.690s
+FAIL

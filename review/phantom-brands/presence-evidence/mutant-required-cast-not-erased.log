@@ -1,0 +1,5 @@
+--- FAIL: TestPhantomArrayRequiredCastsAreErased (0.07s)
+    phantom_array_brands_test.go:137: required undefined array brands or casts changed the unbranded IR
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.081s
+FAIL
