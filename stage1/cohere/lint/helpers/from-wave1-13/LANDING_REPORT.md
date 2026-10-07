@@ -1,8 +1,8 @@
-Built: three retained helpers unchanged; both owned branches rebased onto origin/main c01907a7; no new claim.
-Commits: rule branch pushed at b6ae2ce0f; helper rebase head 65508f3f followed by this evidence commit.
-Commands: all three owned helper go tests and vet PASS again on c01907a7; 4,470 cases and 820,676 matching Go bytes; prior setup 128s, nproc 5.
-Mutants: all twelve retained helper semantic mutants compile, finish cleanly and are caught on source Node, emitted JavaScript and sanitized native; seventeen rule mutants also caught freshly.
-Not covered: full repository gate, normal rule harness integration, full Go rule parity on eleven parser/adapter exclusions; no new helper claim while these exceed the only-harness parking condition.
+Built: three retained helpers unchanged; both owned branches rebased onto origin/main b8fb957a; no new claims.
+Commits: rule branch pushed at 4a97dd6de; helper evidence commit follows this current-main rebase.
+Commands: owned helper tests and vet PASS again on b8fb957a; 4,470 cases and 820,676 matching Go bytes; six fresh rule witness/mutant suites and uncached inherited-field oracle also PASS.
+Mutants: twelve helper and seventeen rule semantic mutants compile, finish cleanly and are caught on source Node, emitted JavaScript and sanitized native again.
+Not covered: full gate, fresh broad rule corpus/performance on the new backend, normal harness integration and eleven frontend/capture exclusions; no new helper claim.
 
 ## Landing state
 
@@ -44,3 +44,7 @@ The helper branch also rebased cleanly to c01907a7. All three owned helper tests
 ## Corrected listener contract
 
 Rule descriptors use validated typescript-go ast.Kind names, not numeric kinds. The owned rule parking report was corrected and pushed at b6ae2ce0f294d1595ef97dda8e07ddcd484f7973. No code or test input changed, so the current-main oracle evidence remains applicable. The named shared harness ab70f38d4 includes JSX parser work but is not on main c01907a7; its effects on the remaining exclusions are unmeasured. No new helper or rule is claimed. New regex ports use the shared translated JS RegExp table or literals, with Unicode-mode constructors for option patterns.
+
+## Latest current main revalidation
+
+Main advanced to b8fb957aa839a9e8cb0b54279dd9864fa317bd30 with the inherited static field read backend fix. Both owned branches rebased cleanly and retained that upstream change. All three owned helper tests passed again with -count=1 -v -timeout=10m, including all twelve compiling semantic mutants; owned helper vet passed with empty output. Logs: evidence/b8-helper-tests.log and evidence/b8-helper-vet.log. The rule branch was freshly revalidated with six raw-witness/mutant suites and overlay vet, then pushed at 4a97dd6de22d0932c9c290ccc9f36d4f141aa8e1. Its uncached inherited-field Node oracle also passed. Broad rule corpus and throughput observations above remain historical for the preceding backend. The named shared harness ab70f38d4 is not on main. No new claim follows the eleven frontend/capture exclusions, which extend beyond the only-harness parking condition on this tested main.
