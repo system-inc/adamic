@@ -26,11 +26,11 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 	case ast.KindInterfaceDeclaration, ast.KindTypeAliasDeclaration, ast.KindEmptyStatement:
 		// Types erase to nothing, and so does an empty statement.
 		return nil, nil
-	case ast.KindImportDeclaration:
+	case ast.KindImportDeclaration, ast.KindExportDeclaration:
 		// What an import brings in is resolved through the checker at each use, and the module it
 		// names runs first (moduleOrder).
 		return nil, nil
-	case ast.KindExportDeclaration, ast.KindExportAssignment:
+	case ast.KindExportAssignment:
 		return nil, &Refused{Where: l.program.Where(node), What: describe(node), Fix: "export where you declare: export function, export const (one name for one thing)"}
 	case ast.KindFunctionDeclaration:
 		if l.function != nil {

@@ -429,7 +429,7 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		if !isLocal {
 			return nil, l.notYet(node, "reading "+node.Text())
 		}
-		read := ir.Expression(ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checked(local)})
+		read := ir.Expression(ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checkedModuleRead(node, local)})
 		if l.result.Locals[local].Type == ir.Union {
 			// Where the checker has narrowed it to fewer members held one way, it's read as that.
 			parent := node.Parent

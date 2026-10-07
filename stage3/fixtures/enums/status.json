@@ -135,7 +135,7 @@
     },
     "stage0": {
       "outcome": "Checker",
-      "what": "stage3/fixtures/enums/08_debug_format_enum.a:16:42: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/enums/08_debug_format_enum.a:16:64: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/enums/08_debug_format_enum.a:7:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      "what": "stage3/fixtures/enums/08_debug_format_enum.a:16:42: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/enums/08_debug_format_enum.a:16:64: error TS2532: Object is possibly 'undefined'."
     }
   },
   {
@@ -187,7 +187,7 @@
     },
     "stage0": {
       "outcome": "Checker",
-      "what": "stage3/fixtures/enums/11_format_syntax_kind.a:14:42: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/enums/11_format_syntax_kind.a:14:64: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/enums/syntax-kind-support.a:3:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      "what": "stage3/fixtures/enums/11_format_syntax_kind.a:14:42: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/enums/11_format_syntax_kind.a:14:64: error TS2532: Object is possibly 'undefined'."
     }
   },
   {

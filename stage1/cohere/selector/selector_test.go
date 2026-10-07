@@ -452,6 +452,68 @@ func TestSelectorThroughput(t *testing.T) {
 	}
 }
 
+// The vendored error fixtures may fail CSS parsing, but a parseable file must still contribute
+// every selector, including one inside _errors_. Unexpected malformed files and exclusions that
+// become parseable remain corpus failures.
+func TestCorpusKeepsEveryParseableFile(t *testing.T) {
+	t.Parallel()
+	library := os.Getenv("ADAMIC_SELECTOR_LIBRARY")
+	if library == "" {
+		t.Skip("set ADAMIC_SELECTOR_LIBRARY to check CSS corpus loading")
+	}
+	root := t.TempDir()
+	excluded := "internal/format/css/testdata/prettier/css/_errors_/less-syntax.css"
+	for name, source := range map[string]string{
+		"valid.css":          ".required { color: red; }",
+		"_errors_/valid.css": ".also-required { color: blue; }",
+		excluded:             "a {.bordered();}",
+	} {
+		path := filepath.Join(root, name)
+		if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(path, []byte(source), 0644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	script, err := filepath.Abs(filepath.Join("testdata", "library.mjs"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	corpus := filepath.Join(t.TempDir(), "corpus.txt")
+	result := execute(t, nil, "node", script, library, "corpus", root, corpus)
+	if result.exitCode != 0 {
+		t.Fatalf("corpus: %s", result.stderr)
+	}
+	selectors, err := os.ReadFile(corpus)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if string(selectors) != "\".also-required\"\n\".required\"\n" {
+		t.Fatalf("parseable files lost selectors: %q", selectors)
+	}
+	if !strings.Contains(string(result.stdout), "3 CSS files, 1 expected CSS errors, 2 selectors") {
+		t.Fatalf("expected CSS error was not counted: %s", result.stdout)
+	}
+	if err := os.WriteFile(filepath.Join(root, excluded), []byte(".newly-parseable {}"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	result = execute(t, nil, "node", script, library, "corpus", root, corpus)
+	if result.exitCode == 0 || !strings.Contains(string(result.stderr), "expected CSS error became parseable") {
+		t.Fatalf("parseable exclusion was omitted: exit %d, %s", result.exitCode, result.stderr)
+	}
+	if err := os.WriteFile(filepath.Join(root, excluded), []byte("a {.bordered();}"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(root, "unexpected.css"), []byte("a {.bordered();}"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	result = execute(t, nil, "node", script, library, "corpus", root, corpus)
+	if result.exitCode == 0 || !strings.Contains(string(result.stderr), "unexpected.css") {
+		t.Fatalf("unexpected CSS error was omitted: exit %d, %s", result.exitCode, result.stderr)
+	}
+}
+
 // The explicit exception to JS agreement is observable, not an inference from Go.
 func TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars(t *testing.T) {
 	t.Parallel()
