@@ -24,3 +24,11 @@ try { console.log(`${choose(false)}`); } catch { console.log(`${'caught false'}`
 console.log(`${other(false)}`);
 try { console.log(`${other(true)}`); } catch { console.log(`${'caught true'}`); }
 console.log(`${effects}`);
+
+const abort = (label: string): never => fail(label);
+const alias = fail;
+const system = { abort(label: string): never { return fail(label); } };
+console.log(read('y', 0) ?? abort('wrong closure'));
+try { console.log(`${text(undefined) ?? abort('closure')}`); } catch { console.log('caught closure'); }
+try { console.log(`${text(undefined) ?? alias('alias')}`); } catch { console.log('caught alias'); }
+try { console.log(`${text(undefined) ?? system.abort('method')}`); } catch { console.log('caught method'); }

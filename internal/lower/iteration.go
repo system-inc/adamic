@@ -446,7 +446,7 @@ func (l *lowering) userMethodCall(node *ast.Node) (ir.Expression, bool, error) {
 	}
 	proven := l.checker.GetTypeAtLocation(node)
 	result, known := l.representation(proven)
-	void := proven.Flags()&checker.TypeFlagsVoid != 0
+	void := proven.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) != 0
 	if void {
 		result = 0
 	}

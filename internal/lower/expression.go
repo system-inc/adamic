@@ -1144,7 +1144,7 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 		arguments = append(arguments, lowered)
 	}
 	var returns ir.Type
-	if result := l.checker.GetTypeAtLocation(node); result.Flags()&checker.TypeFlagsVoid == 0 {
+	if result := l.checker.GetTypeAtLocation(node); result.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 {
 		var isKnown bool
 		if returns, isKnown = l.representation(result); !isKnown {
 			return nil, l.notYet(node, "a call returning "+l.checker.TypeToString(result))
