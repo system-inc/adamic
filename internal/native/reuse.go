@@ -63,7 +63,15 @@ func planReuse(program *ir.Program, lending map[int]bool) *reusePlan {
 	comparators := map[int]bool{}
 	walkExpressions(program, func(expression ir.Expression) {
 		if sort, ok := expression.(ir.ArraySort); ok {
-			comparators[sort.Comparator] = true
+			targets := program.ClosureTargets(sort)
+			if targets.Unknown {
+				for target := range program.Functions {
+					comparators[target] = true
+				}
+			}
+			for _, target := range targets.Functions {
+				comparators[target] = true
+			}
 		}
 	})
 	type function struct {
@@ -137,10 +145,9 @@ func planReuse(program *ir.Program, lending map[int]bool) *reusePlan {
 				if !ok {
 					return
 				}
-				parameters := program.Functions[call.Function].Parameters
 				for index, argument := range call.Arguments {
 					read, isRead := variableRead(argument)
-					if !isRead || index >= len(parameters) || !plan.consumed[parameters[index]] {
+					if !isRead || !plan.callConsumes(program, call, index) {
 						continue
 					}
 					if plan.movable(program, instruction, each.live[instruction.Id], read) {
@@ -742,4 +749,16 @@ func (e *emitter) spreadArray(literal ir.ArrayLiteral) (string, bool) {
 // the value while it's being taken over, and to find the new value at the old one's place after.
 func uniquelyHeld(value string) string {
 	return fmt.Sprintf("(%s->heap.references == 1 && !adamic_weak_held(%s))", value, value)
+}
+
+// callConsumes requires a count to be handed over at this position for every
+// implementation. MethodTargets joins conventions before moves are planned.
+func (plan *reusePlan) callConsumes(program *ir.Program, call ir.Call, position int) bool {
+	for _, target := range program.CallTargets(call) {
+		parameters := program.Functions[target].Parameters
+		if position >= len(parameters) || !plan.consumed[parameters[position]] {
+			return false
+		}
+	}
+	return true
 }

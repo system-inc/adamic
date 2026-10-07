@@ -78,3 +78,31 @@ func TestThrowElementBorrowPlan(t *testing.T) {
 		}
 	}
 }
+
+// A bounded harmless closure can lend; an override, a bounded writer, or an
+// unknown function value must keep the element counted across the call.
+func TestCallTargetsElementBorrowPlan(t *testing.T) {
+	t.Parallel()
+	loaded, err := load.Load([]string{"../oracle/testdata/call_targets_element.a"})
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lower.Lower(context.Background(), loaded)
+	if err != nil {
+		t.Fatal(err)
+	}
+	borrows, _ := planElementBorrows(program)
+	borrowed := map[string]bool{}
+	for statement := range borrows {
+		local := program.Locals[(*statement).(ir.Declare).Local]
+		borrowed[program.Functions[local.Function].Name] = true
+	}
+	if !borrowed["boundRead"] {
+		t.Error("bounded harmless closure lost its element borrow")
+	}
+	for _, name := range []string{"virtualRead", "closureRead", "boundWrite"} {
+		if borrowed[name] {
+			t.Errorf("%s borrowed across a possible element write", name)
+		}
+	}
+}

@@ -1,0 +1,15 @@
+{
+  "typescript": "6.0.3",
+  "files": 1,
+  "owners": [
+    {
+      "file": "src/compiler/types.ts",
+      "declaration": "EvaluatorResult",
+      "member": "value",
+      "references": 65,
+      "writes": [],
+      "escapes": [],
+      "where": "src/compiler/types.ts:6264:5"
+    }
+  ]
+}

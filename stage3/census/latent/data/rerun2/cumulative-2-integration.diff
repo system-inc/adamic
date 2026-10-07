@@ -1,0 +1,617 @@
+diff --git a/internal/flow/build.go b/internal/flow/build.go
+index 6ba07f4c..9732e50b 100644
+--- a/internal/flow/build.go
++++ b/internal/flow/build.go
+@@ -217,7 +217,7 @@ func (b *builder) statement(at *ir.Statement) {
+ 	case ir.Switch:
+ 		b.switchStatement(at, statement)
+ 	case ir.Break:
+-		depth := len(b.jumps) - 1
++		depth := len(b.jumps) - 1 - statement.Depth
+ 		if statement.Label != "" {
+ 			for depth >= 0 && b.jumps[depth].name != statement.Label {
+ 				depth--
+diff --git a/internal/ir/ir.go b/internal/ir/ir.go
+index b9a4a14b..2c6a1b76 100644
+--- a/internal/ir/ir.go
++++ b/internal/ir/ir.go
+@@ -1105,16 +1105,16 @@ type (
+ 	}
+ 
+ 	// Switch matches Value against each case's tests in order with ===, and runs the first match's
+-	// Body, or Default's when none matches. A break inside a case leaves the switch. (0.1 has no
+-	// fallthrough: the checker refuses it.)
++	// Body, or Default's when none matches. A break inside a case leaves the switch. Source
++	// fallthrough is expressed by lowering as entry dispatch followed by sequential guarded bodies.
+ 	Switch struct {
+ 		Value   Expression
+ 		Cases   []Case
+ 		Default []Statement
+ 	}
+ 
+-	Break    struct{ Label string }
+-	Continue struct{ Label string }
++	Break struct { Label string; Depth int }
++	Continue struct { Label string }
+ 
+ 	// Throw throws Value, an Error: to the innermost Try around it, or out of the function, whose
+ 	// caller passes it on the same way, or, out of every function, as a panic of String(Value).
+diff --git a/internal/javascript/javascript.go b/internal/javascript/javascript.go
+index 75c07c15..12911c92 100644
+--- a/internal/javascript/javascript.go
++++ b/internal/javascript/javascript.go
+@@ -192,7 +192,8 @@ type emitter struct {
+ 	prototypeNames map[string]string
+ 
+ 	// continues holds, innermost last, each open loop's continue label.
+-	continues []string
++	continues  []string
++	breakables []string
+ }
+ 
+ func (e *emitter) line(format string, arguments ...any) {
+@@ -414,7 +415,9 @@ func (e *emitter) statement(at *ir.Statement) {
+ 	case ir.ForOf:
+ 		e.forOf(at, statement)
+ 	case ir.Switch:
+-		e.line("do {")
++		label := e.temporary()
++		e.breakables = append(e.breakables, label)
++		e.line("%s: do {", label)
+ 		e.indent++
+ 		value := e.temporary()
+ 		e.markLine(at, 0)
+@@ -442,11 +445,12 @@ func (e *emitter) statement(at *ir.Statement) {
+ 		}
+ 		e.indent--
+ 		e.line("} while (false);")
++		e.breakables = e.breakables[:len(e.breakables)-1]
+ 	case ir.Break:
+ 		if statement.Label != "" {
+ 			e.line("break source_%s;", statement.Label)
+ 		} else {
+-			e.line("break;")
++			e.line("break %s;", e.breakables[len(e.breakables)-1-statement.Depth])
+ 		}
+ 	case ir.Continue:
+ 		if statement.Label != "" {
+@@ -491,7 +495,9 @@ func (e *emitter) temporary() string {
+ func (e *emitter) loop(at *ir.Statement, statement ir.Loop) {
+ 	e.labels++
+ 	label := fmt.Sprintf("continue_%d", e.labels)
+-	e.line("for (;;) {")
++	breakLabel := e.temporary()
++	e.breakables = append(e.breakables, breakLabel)
++	e.line("%s: for (;;) {", breakLabel)
+ 	e.indent++
+ 	if !statement.CheckAfter {
+ 		e.line("if (!%s) break;", e.marked(at, 0, "("+e.value(statement.Condition)+")"))
+@@ -520,6 +526,7 @@ func (e *emitter) loop(at *ir.Statement, statement ir.Loop) {
+ 	}
+ 	e.indent--
+ 	e.line("}")
++	e.breakables = e.breakables[:len(e.breakables)-1]
+ }
+ 
+ func (e *emitter) forOf(at *ir.Statement, statement ir.ForOf) {
+@@ -530,6 +537,9 @@ func (e *emitter) forOf(at *ir.Statement, statement ir.ForOf) {
+ 	e.indent++
+ 	e.markLine(at, 0)
+ 	e.line("const %s = %s;", held, e.value(statement.Iterable))
++	breakLabel := e.temporary()
++	e.breakables = append(e.breakables, breakLabel)
++	e.line("%s:", breakLabel)
+ 	switch {
+ 	case statement.MapPart == "keys" || statement.MapPart == "values":
+ 		e.line("for (const %s of %s.%s()) {", index, held, statement.MapPart)
+@@ -568,6 +578,7 @@ func (e *emitter) forOf(at *ir.Statement, statement ir.ForOf) {
+ 	e.line("}")
+ 	e.indent--
+ 	e.line("}")
++	e.breakables = e.breakables[:len(e.breakables)-1]
+ }
+ 
+ var operators = map[ir.Operator]string{
+diff --git a/internal/load/load.go b/internal/load/load.go
+index 29972461..eece05bb 100644
+--- a/internal/load/load.go
++++ b/internal/load/load.go
+@@ -59,8 +59,6 @@ func compilerOptions() *core.CompilerOptions {
+ 		Strict:                     core.TSTrue,
+ 		NoUncheckedIndexedAccess:   core.TSTrue,
+ 		ExactOptionalPropertyTypes: core.TSTrue,
+-		NoImplicitReturns:          core.TSTrue,
+-		NoFallthroughCasesInSwitch: core.TSTrue,
+ 		ErasableSyntaxOnly:         core.TSFalse,
+ 		VerbatimModuleSyntax:       core.TSTrue,
+ 		AllowImportingTsExtensions: core.TSTrue,
+diff --git a/internal/load/load_test.go b/internal/load/load_test.go
+index e5f3c746..2d9be3f8 100644
+--- a/internal/load/load_test.go
++++ b/internal/load/load_test.go
+@@ -106,8 +106,6 @@ func TestAdamicOptionsAreOn(t *testing.T) {
+ 	}{
+ 		{"noUncheckedIndexedAccess", "const items: number[] = [1];\nconst first: number = items[0];\n", "TS2322"},
+ 		{"exactOptionalPropertyTypes", "const point: { x?: number } = { x: undefined };\n", "TS2375"},
+-		// Unannotated, so strict's own TS2366 (a declared return type with a missing return) can't stand in.
+-		{"noImplicitReturns", "function sign(value: number) {\n\tif (value > 0) {\n\t\treturn 1;\n\t}\n}\n", "TS7030"},
+ 		{"lib is es2024, not the DOM", "const element = document.body;\n", "TS2584"},
+ 	} {
+ 		t.Run(probe.option, func(t *testing.T) {
+@@ -249,3 +247,23 @@ func TestOverlayPrecedesDiskForAdamicAliases(t *testing.T) {
+ 		})
+ 	}
+ }
++
++// These checks are house style. Strict typing still includes the undefined result at an implicit exit.
++func TestHouseStyleOptionsDoNotRejectValidControlFlow(t *testing.T) {
++	t.Parallel()
++	for _, source := range []string{
++		"function sign(value: number) { if (value > 0) { return 1; } }",
++		"function choose(value: number): number { let result=0; switch(value) { case 1: result+=1; default: result+=2; } return result; }",
++	} {
++		t.Run(source, func(t *testing.T) {
++			t.Parallel()
++			if _, err := Load(writeProgram(t, [2]string{"main.a", source})); err != nil {
++				t.Fatal(err)
++			}
++		})
++	}
++	diagnostics := checkErrors(t, writeProgram(t, [2]string{"main.a", "function sign(value: number): number { if (value > 0) { return 1; } }"}))
++	if !slices.ContainsFunc(diagnostics, func(diagnostic string) bool { return strings.Contains(diagnostic, "TS2366") }) {
++		t.Fatalf("the explicit result still needs undefined: %v", diagnostics)
++	}
++}
+diff --git a/internal/lower/enum_flags.go b/internal/lower/enum_flags.go
+index 1fb3e02e..50a4e472 100644
+--- a/internal/lower/enum_flags.go
++++ b/internal/lower/enum_flags.go
+@@ -50,10 +50,8 @@ func (l *lowering) flagLiteral(node *ast.Node, value float64) bool {
+ 
+ func (l *lowering) flagInitializer(node, declaration *ast.Node, memberAllowed bool) bool {
+ 	node = ast.SkipParentheses(node)
+-	if memberAllowed {
+-		if member := l.enumMember(node); member != nil {
+-			return member.Parent == declaration
+-		}
++	if member := l.enumMember(node); member != nil {
++		return member.Parent == declaration
+ 	}
+ 	if l.flagLiteral(node, 0) && !memberAllowed {
+ 		return true
+@@ -125,10 +123,25 @@ func (l *lowering) flagDomainSeen(node *ast.Node, target *ast.Symbol, seen map[*
+ 	}
+ 	proven := l.checker.GetTypeAtLocation(node)
+ 	if proven.Flags()&checker.TypeFlagsEnumLike == 0 && ast.IsIdentifier(node) {
+-		symbol := l.symbol(node)
++		symbol := l.flagValueSymbol(node)
+ 		if symbol != nil && symbol.ValueDeclaration != nil {
+ 			declaration := symbol.ValueDeclaration
+ 			if declaration.Kind == ast.KindVariableDeclaration && declaration.Parent.Flags&ast.NodeFlagsConst != 0 && !seen[declaration] {
++				// A fresh inline iterable of primitives has no alias that can replace an element.
++				// The const binding receives only those proven values, even if tsc infers number[].
++				if loop := declaration.Parent.Parent; loop != nil && loop.Kind == ast.KindForOfStatement {
++					iterable := ast.SkipParentheses(loop.AsForInOrOfStatement().Expression)
++					if iterable.Kind == ast.KindArrayLiteralExpression {
++						seen[declaration] = true
++						defer delete(seen, declaration)
++						for _, element := range iterable.AsArrayLiteralExpression().Elements.Nodes {
++							if !l.flagDomainSeen(element, target, seen) {
++								return false
++							}
++						}
++						return true
++					}
++				}
+ 				if initializer := declaration.AsVariableDeclaration().Initializer; initializer != nil {
+ 					seen[declaration] = true
+ 					result := l.flagDomainSeen(initializer, target, seen)
+@@ -202,7 +215,7 @@ func (l *lowering) flagMemberWidened(node *ast.Node, contextual *checker.Type) *
+ 	if target.Flags()&checker.TypeFlagsEnumLike == 0 || !l.flagEnum(l.enumIdentity(target)) || l.flagTarget(target) != nil {
+ 		return nil
+ 	}
+-	if symbol := l.symbol(node); symbol != nil {
++	if symbol := l.flagValueSymbol(node); symbol != nil {
+ 		declared := l.checker.GetTypeOfSymbol(symbol)
+ 		if l.flagTarget(declared) != nil {
+ 			return &widening{source: declared, target: target, enum: true}
+@@ -210,3 +223,18 @@ func (l *lowering) flagMemberWidened(node *ast.Node, contextual *checker.Type) *
+ 	}
+ 	return nil
+ }
++
++// Shorthand names denote a field symbol at the syntax node, but the proof belongs to its value.
++func (l *lowering) flagValueSymbol(node *ast.Node) *ast.Symbol {
++	if node.Parent != nil && node.Parent.Kind == ast.KindShorthandPropertyAssignment {
++		symbol := l.checker.GetShorthandAssignmentValueSymbol(node.Parent)
++		if symbol != nil && symbol.Flags&ast.SymbolFlagsAlias != 0 {
++			symbol = l.checker.GetAliasedSymbol(symbol)
++		}
++		if symbol != nil {
++			return l.checker.GetExportSymbolOfSymbol(symbol)
++		}
++		return nil
++	}
++	return l.symbol(node)
++}
+diff --git a/internal/lower/enum_flags_test.go b/internal/lower/enum_flags_test.go
+index 70d52a8a..071ccb26 100644
+--- a/internal/lower/enum_flags_test.go
++++ b/internal/lower/enum_flags_test.go
+@@ -87,3 +87,45 @@ func TestFlagEnumLiteralSpellings(t *testing.T) {
+ 		t.Fatal(err)
+ 	}
+ }
++
++func TestFlagEnumMemberAliases(t *testing.T) {
++	t.Parallel()
++	_, err := lowerSource(t, "enum Flags { None = 0, A = 1 << 0, B = 1 << 1, Alias = A, Qualified = Flags.B } const flags: Flags = Flags.Alias | Flags.Qualified;")
++	if err != nil {
++		t.Fatal(err)
++	}
++}
++
++func TestEnumNameEnumeration(t *testing.T) {
++	t.Parallel()
++	_, err := lowerSource(t, "enum Names { A, B, Alias = B } const names = Names; for (const name in names) { console.log(name); }")
++	if err != nil {
++		t.Fatal(err)
++	}
++}
++
++func TestFlagEnumInlineIteration(t *testing.T) {
++	t.Parallel()
++	_, err := lowerSource(t, flagDeclaration+"function use(box: { flags: Flags }): void {} for (const flags of [Flags.None, Flags.A | Flags.B]) { use({flags}); }")
++	if err != nil {
++		t.Fatal(err)
++	}
++}
++
++func TestFlagEnumAliasBoundaries(t *testing.T) {
++	t.Parallel()
++	for _, source := range []string{
++		"enum Other { A = 1 << 0 } enum Flags { None = 0, A = 1 << 0, Alias = Other.A } const flags: Flags = Flags.A | Flags.Alias;",
++		flagDeclaration + "for (const flags of [Flags.A, 99]) { const value: Flags = flags; }",
++		flagDeclaration + "const numbers: number[] = [Flags.A]; numbers.push(99); for (const flags of numbers) { const value: Flags = flags; }",
++		flagDeclaration + "for (let flags of [Flags.A | Flags.B]) { flags = 99; const value: Flags = flags; }",
++		flagDeclaration + "const combined = Flags.A | Flags.B; function use(box: { flags: Flags.A }): void {} use({flags: combined});",
++		flagDeclaration + "interface Node { flags: Flags } type Mutable<T> = { -readonly [K in keyof T]: T[K] }; function set<T extends Node>(node: T, flags: Flags): void { (node as Mutable<T>).flags = flags; }",
++	} {
++		_, err := lowerSource(t, source)
++		var refused *Refused
++		if !errors.As(err, &refused) {
++			t.Fatalf("want Refused, got %v for %s", err, source)
++		}
++	}
++}
+diff --git a/internal/lower/functions.go b/internal/lower/functions.go
+index 69407111..6483ef0e 100644
+--- a/internal/lower/functions.go
++++ b/internal/lower/functions.go
+@@ -234,6 +234,15 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
+ 	if err != nil {
+ 		return err
+ 	}
++	if body.Kind == ast.KindBlock && declaration.Kind != ast.KindConstructor && declaration.Flags&ast.NodeFlagsHasImplicitReturn != 0 && l.permitsImplicitReturn(declaration) {
++		// The checker permits an end that is reachable only when the result can be undefined
++		// (or void). Put that exit in the IR so every backend and ownership pass sees it.
++		returned := ir.Return{}
++		if function.Returns != 0 {
++			returned.Value = fit(ir.Undefined{}, function.Returns)
++		}
++		lowered = append(lowered, returned)
++	}
+ 	// The environment may have grown while the body was lowered (captures are found as they're
+ 	// read), so it's taken from what's recorded, not from this copy.
+ 	function.Environment = l.result.Functions[index].Environment
+@@ -243,3 +252,10 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
+ 	l.result.Functions[index] = function
+ 	return nil
+ }
++
++// The binder marks a syntactic end even for a switch the checker proved exhaustive. Only the
++// checker's result type can authorize returning undefined at that end.
++func (l *lowering) permitsImplicitReturn(declaration *ast.Node) bool {
++	result := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(declaration))
++	return result.Flags()&checker.TypeFlagsVoid != 0 || l.includesUndefined(result)
++}
+diff --git a/internal/lower/invariance.go b/internal/lower/invariance.go
+index 75af0f15..f63afd2f 100644
+--- a/internal/lower/invariance.go
++++ b/internal/lower/invariance.go
+@@ -398,7 +398,7 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
+ 			return nil
+ 		}
+ 		own, contextual = l.checker.GetTypeAtLocation(node.Name()), l.checker.GetTypeOfSymbol(property)
+-		found = l.widened(own, contextual, map[[2]*checker.Type]bool{})
++		found = l.freshOrWidened(node.Name(), own, contextual)
+ 	case node.Kind == ast.KindSpreadAssignment:
+ 		// { ...kennel } copies kennel's fields, not what they hold: each field not written again after
+ 		// it is kennel's value seen as the literal's field.
+diff --git a/internal/lower/library_for_in.go b/internal/lower/library_for_in.go
+index 0a6e208c..ba60150f 100644
+--- a/internal/lower/library_for_in.go
++++ b/internal/lower/library_for_in.go
+@@ -67,6 +67,10 @@ func (l *lowering) forIn(node *ast.Node) ([]ir.Statement, error) {
+ 
+ func (l *lowering) plainEnumerableObject(node *ast.Node, visiting map[*ast.Symbol]bool) bool {
+ 	node = ast.SkipParentheses(node)
++	// Enum objects have a complete fixed shape, including numeric reverse keys.
++	if l.enumObject(node) != nil {
++		return true
++	}
+ 	if node.Kind == ast.KindAsExpression {
+ 		return l.plainEnumerableObject(node.AsAsExpression().Expression, visiting)
+ 	}
+diff --git a/internal/lower/object.go b/internal/lower/object.go
+index 49826bc4..8a9184b3 100644
+--- a/internal/lower/object.go
++++ b/internal/lower/object.go
+@@ -977,7 +977,9 @@ func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
+ 		return nil, err
+ 	}
+ 	lowered := ir.Switch{Value: value}
++	groups := []switchGroup{}
+ 	tests := []ir.Expression{}
++	defaultPending := false
+ 	for _, clause := range statement.CaseBlock.AsCaseBlock().Clauses.Nodes {
+ 		for _, inner := range clause.AsCaseOrDefaultClause().Statements.Nodes {
+ 			if inner.Kind == ast.KindVariableStatement {
+@@ -1011,17 +1013,35 @@ func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
+ 		if err != nil {
+ 			return nil, err
+ 		}
+-		if len(body) == 0 && !isDefault {
+-			// case 'a': case 'b': share the next body.
++		defaultPending = defaultPending || isDefault
++		if len(body) == 0 {
++			// Empty labels enter the next body, including labels on either side of default.
+ 			continue
+ 		}
+-		if isDefault {
+-			// Cases grouped with default run its body, which is what not matching does anyway.
++		groups = append(groups, switchGroup{tests: tests, body: body, isDefault: defaultPending})
++		if defaultPending {
+ 			lowered.Default = body
+-		} else {
++		}
++		if len(tests) > 0 {
++			// Default is a fallback position, but its grouped tests still compete in source order.
+ 			lowered.Cases = append(lowered.Cases, ir.Case{Tests: tests, Body: body})
+ 		}
+ 		tests = []ir.Expression{}
++		defaultPending = false
++	}
++	if len(tests) > 0 {
++		// A trailing empty label matches and leaves the switch without running default.
++		lowered.Cases = append(lowered.Cases, ir.Case{Tests: tests})
++	}
++	if len(tests) > 0 || defaultPending {
++		groups = append(groups, switchGroup{tests: tests, isDefault: defaultPending})
++	}
++	for index, group := range groups {
++		// A default with tests must also have one body, rather than sharing statement
++		// addresses between two branches (flow instrumentation identifies those addresses).
++		if (group.isDefault && len(group.tests) > 0) || (index+1 < len(groups) && len(group.body) > 0 && !switchBodyLeaves(group.body)) {
++			return l.fallthroughSwitch(value, groups), nil
++		}
+ 	}
+ 	return []ir.Statement{lowered}, nil
+ }
+diff --git a/internal/lower/statements.go b/internal/lower/statements.go
+index 4c8cd78f..6e36d855 100644
+--- a/internal/lower/statements.go
++++ b/internal/lower/statements.go
+@@ -183,7 +183,11 @@ func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
+ 	}
+ 	expression := node.AsReturnStatement().Expression
+ 	if expression == nil {
+-		return []ir.Statement{ir.Return{}}, nil
++		returned := ir.Return{}
++		if l.function.Returns != 0 {
++			returned.Value = fit(ir.Undefined{}, l.function.Returns)
++		}
++		return []ir.Statement{returned}, nil
+ 	}
+ 	if l.isPanicCall(expression) {
+ 		// return panic('why'): panic never returns, so there is nothing to return, and it is the panic.
+diff --git a/internal/lower/switch.go b/internal/lower/switch.go
+new file mode 100644
+index 00000000..9833c52e
+--- /dev/null
++++ b/internal/lower/switch.go
+@@ -0,0 +1,82 @@
++package lower
++
++import (
++	"github.com/microsoft/TypeScript/tsc/shim/ast"
++	"github.com/system-inc/adamic/internal/ir"
++)
++
++type switchGroup struct {
++	tests     []ir.Expression
++	body      []ir.Statement
++	isDefault bool
++}
++
++// switchBodyLeaves recognizes bodies that cannot reach a following group. Missing a form only
++// selects the general lowering; it never removes a possible fallthrough edge.
++func switchBodyLeaves(body []ir.Statement) bool {
++	if len(body) == 0 {
++		return false
++	}
++	switch statement := body[len(body)-1].(type) {
++	case ir.Break, ir.Continue, ir.Return, ir.Throw, ir.Panic:
++		return true
++	case ir.Block:
++		return switchBodyLeaves(statement.Body)
++	case ir.If:
++		return switchBodyLeaves(statement.Then) && switchBodyLeaves(statement.Else)
++	case ir.Try:
++		return (statement.HasFinally && switchBodyLeaves(statement.Finally)) ||
++			(switchBodyLeaves(statement.Body) && (!statement.HasCatch || switchBodyLeaves(statement.Catch)))
++	}
++	return false
++}
++
++// fallthroughSwitch first chooses the entry group in source test order, with default only as a
++// fallback. The entered body and every later body then run in one breakable switch, until an abrupt
++// exit leaves it. Bodies are emitted once, so their locals, ownership and flow points are not cloned.
++func (l *lowering) fallthroughSwitch(value ir.Expression, groups []switchGroup) []ir.Statement {
++	entry := len(l.result.Locals)
++	l.result.Locals = append(l.result.Locals, ir.Local{Name: "switch_entry", Type: ir.Number, Function: l.functionIndex})
++	dispatch := ir.Switch{Value: value}
++	bodies := []ir.Statement{}
++	for index, group := range groups {
++		position := ir.NumberConstant{Value: float64(index)}
++		choose := []ir.Statement{ir.Assign{Local: entry, Value: position}}
++		if len(group.tests) > 0 {
++			dispatch.Cases = append(dispatch.Cases, ir.Case{Tests: group.tests, Body: choose})
++		}
++		if group.isDefault {
++			// Each branch owns its statement addresses, including instrumentation points.
++			dispatch.Default = []ir.Statement{ir.Assign{Local: entry, Value: position}}
++		}
++		if len(group.body) > 0 {
++			bodies = append(bodies, ir.If{
++				Condition: ir.Binary{Operator: ir.LessOrEqual, Left: ir.Read{Local: entry, Of: ir.Number}, Right: position},
++				Then:      group.body,
++			})
++		}
++	}
++	return []ir.Statement{ir.Block{Body: []ir.Statement{
++		ir.Declare{Local: entry, Value: ir.NumberConstant{Value: float64(len(groups))}},
++		dispatch,
++		ir.Switch{Value: ir.BooleanConstant{Value: true}, Default: bodies},
++	}}}
++}
++
++// labeledBreak resolves the source label to a breakable depth. Dispatch switches introduced by
++// fallthrough lowering finish before any source body, so they never change this depth.
++func (l *lowering) labeledBreak(node *ast.Node) ([]ir.Statement, error) {
++	depth := 0
++	for parent := node.Parent; parent != nil; parent = parent.Parent {
++		if parent.Kind != ast.KindSwitchStatement && !ast.IsIterationStatement(parent, false) {
++			continue
++		}
++		for label := parent.Parent; label != nil && label.Kind == ast.KindLabeledStatement; label = label.Parent {
++			if label.Label().Text() == node.Label().Text() {
++				return []ir.Statement{ir.Break{Depth: depth}}, nil
++			}
++		}
++		depth++
++	}
++	return nil, l.notYet(node, "a break to a label that is not a loop or switch")
++}
+diff --git a/internal/native/emit_statements.go b/internal/native/emit_statements.go
+index 0da7f635..1173b3bf 100644
+--- a/internal/native/emit_statements.go
++++ b/internal/native/emit_statements.go
+@@ -17,6 +17,14 @@ type loop struct {
+ 	continued  bool
+ }
+ 
++// A break to an outer target uses a goto, emitted only when needed, after the target's loop.
++// Cleanup runs before the jump, including every finally and local scope it leaves.
++type breakable struct {
++	depth  int
++	label  string
++	broken bool
++}
++
+ // block emits statements in a scope of their own.
+ func (e *emitter) block(statements []ir.Statement, after func()) {
+ 	e.scopes = append(e.scopes, nil)
+@@ -214,10 +222,15 @@ func (e *emitter) statement(statement ir.Statement) {
+ 			e.labeledJump(statement.Label, false)
+ 			break
+ 		}
+-		// A try inside the loop or switch is left: its finally runs first.
+-		e.finallies(e.innerHandlers(e.breakables[len(e.breakables)-1]))
+-		e.releaseScopes(e.breakables[len(e.breakables)-1])
+-		e.line("break;")
++		target := e.breakables[len(e.breakables)-1-statement.Depth]
++		e.finallies(e.innerHandlers(target.depth))
++		e.releaseScopes(target.depth)
++		if statement.Depth == 0 {
++			e.line("break;")
++		} else {
++			target.broken = true
++			e.line("goto %s;", target.label)
++		}
+ 	case ir.Continue:
+ 		if statement.Label != "" {
+ 			e.labeledJump(statement.Label, true)
+@@ -277,7 +290,8 @@ func (e *emitter) loop(statement ir.Loop) {
+ 	current.depth = len(e.scopes)
+ 	e.linkLabels(statement.Labels, current)
+ 	e.loops = append(e.loops, current)
+-	e.breakables = append(e.breakables, current.depth)
++	target := &breakable{depth: current.depth, label: e.temporary()}
++	e.breakables = append(e.breakables, target)
+ 	e.line("{")
+ 	e.nested(statement.Body, nil)
+ 	e.line("}")
+@@ -313,6 +327,9 @@ func (e *emitter) loop(statement ir.Loop) {
+ 	}
+ 	e.indent--
+ 	e.line("}")
++	if target.broken {
++		e.line("%s:;", target.label)
++	}
+ }
+ 
+ // forOf emits for (const element of array). The array is held (retained) for the whole loop, as
+@@ -359,7 +376,8 @@ func (e *emitter) forOf(statement ir.ForOf) {
+ 	current.depth = len(e.scopes)
+ 	e.linkLabels(statement.Labels, current)
+ 	e.loops = append(e.loops, current)
+-	e.breakables = append(e.breakables, current.depth)
++	target := &breakable{depth: current.depth, label: e.temporary()}
++	e.breakables = append(e.breakables, target)
+ 	e.line("{")
+ 	e.indent++
+ 	e.scopes = append(e.scopes, nil)
+@@ -425,6 +443,9 @@ func (e *emitter) forOf(statement ir.ForOf) {
+ 	}
+ 	e.indent--
+ 	e.line("}")
++	if target.broken {
++		e.line("%s:;", target.label)
++	}
+ 	e.releaseScopes(len(e.scopes) - 1)
+ 	e.scopes = e.scopes[:len(e.scopes)-1]
+ 	e.indent--
+@@ -448,7 +469,8 @@ func (e *emitter) switchStatement(statement ir.Switch) {
+ 	e.end()
+ 	e.line("do {")
+ 	e.indent++
+-	e.breakables = append(e.breakables, len(e.scopes))
++	target := &breakable{depth: len(e.scopes), label: e.temporary()}
++	e.breakables = append(e.breakables, target)
+ 	depth := 0
+ 	for _, matched := range statement.Cases {
+ 		tests := []string{}
+@@ -469,6 +491,9 @@ func (e *emitter) switchStatement(statement ir.Switch) {
+ 	e.breakables = e.breakables[:len(e.breakables)-1]
+ 	e.indent--
+ 	e.line("} while (0);")
++	if target.broken {
++		e.line("%s:;", target.label)
++	}
+ 	e.releaseScopes(len(e.scopes) - 1)
+ 	e.scopes = e.scopes[:len(e.scopes)-1]
+ 	e.indent--
+diff --git a/tsconfig.json b/tsconfig.json
+index 60a45d25..07d5af73 100644
+--- a/tsconfig.json
++++ b/tsconfig.json
+@@ -3,8 +3,6 @@
+ 		"strict": true,
+ 		"noUncheckedIndexedAccess": true,
+ 		"exactOptionalPropertyTypes": true,
+-		"noImplicitReturns": true,
+-		"noFallthroughCasesInSwitch": true,
+ 		"erasableSyntaxOnly": false,
+ 		"verbatimModuleSyntax": true,
+ 		"allowImportingTsExtensions": true,

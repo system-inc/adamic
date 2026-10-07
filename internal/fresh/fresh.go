@@ -129,8 +129,14 @@ func directlyCalled(program *ir.Program) map[int]bool {
 				walk(node.Elem())
 			}
 		case reflect.Struct:
-			if sorted, ok := node.Interface().(ir.ArraySort); ok && sorted.Callback == nil {
-				delete(direct, sorted.Comparator)
+			if sorted, ok := node.Interface().(ir.ArraySort); ok {
+				targets := program.ClosureTargets(sorted)
+				if targets.Unknown {
+					clear(direct)
+				}
+				for _, target := range targets.Functions {
+					delete(direct, target)
+				}
 			}
 			for index := 0; index < node.NumField(); index++ {
 				walk(node.Field(index))
@@ -1391,24 +1397,30 @@ func (a *analysis) value(expression ir.Expression) value {
 		for _, argument := range expression.Arguments {
 			operands = append(operands, a.value(argument))
 		}
-		if a.proof.top || expression.Virtual != 0 {
+		if a.proof.top {
 			return a.call(operands, expression.Returns)
 		}
-		if !a.proof.direct[expression.Function] {
-			// Its parameters are outside to it, so it may keep them anywhere.
-			a.call(operands, 0)
+		before := a.state.copy()
+		joined := before.copy()
+		var result value
+		for _, target := range a.proof.program.CallTargets(expression) {
+			a.state = before.copy()
+			if !a.proof.direct[target] {
+				// Its parameters are outside to it, so it may keep them anywhere.
+				a.call(operands, 0)
+			}
+			result.merge(a.made(target, a.proof.summaries[target], operands))
+			joined.join(a.state)
 		}
-		result := a.made(expression.Function, a.proof.summaries[expression.Function], operands)
+		a.state = joined
 		if !mutable(expression.Returns) {
 			return value{}
 		}
 		return result
 	case ir.CallClosure:
-		operands := []value{a.value(expression.Closure)}
-		for _, argument := range expression.Arguments {
-			operands = append(operands, a.value(argument))
-		}
-		return a.call(operands, expression.Returns)
+		// Cells and structural receivers are outside this summary's model. The
+		// union for any bounded target set, and for Unknown, is an arbitrary call.
+		return a.call(a.operands(expression), expression.Returns)
 	case ir.ArrayMap:
 		return a.call([]value{a.value(expression.Array), a.value(expression.Callback)}, ir.Array)
 	case ir.ArrayVisit:

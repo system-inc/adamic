@@ -157,7 +157,7 @@ func (plan *regionPlan) freshValue(value ir.Expression) bool {
 	case ir.Undefined:
 		return true
 	case ir.Call:
-		return value.Virtual == 0 && plan.fresh[value.Function]
+		return plan.regionTarget(value) >= 0
 	}
 	return false
 }
@@ -252,7 +252,7 @@ func (plan *regionPlan) feedsRegion(statement ir.Statement) bool {
 	walk(statement, func(expression ir.Expression) {
 		if call, ok := expression.(ir.Call); ok {
 			for position, argument := range call.Arguments {
-				if inner, isCall := argument.(ir.Call); isCall && inner.Virtual == 0 && plan.fresh[inner.Function] && !plan.callEscapes(call, position) {
+				if inner, isCall := argument.(ir.Call); isCall && plan.regionTarget(inner) >= 0 && !plan.callEscapes(call, position) {
 					feeds = true
 				}
 			}
@@ -311,7 +311,7 @@ func (e *emitter) regionFunctionName(function int) string {
 // regionFor is the region a call to a function that takes one is handed: the one its parent said
 // (a statement's region, or the function's own), or none, and then it's the heap version's call.
 func (e *emitter) regionFor(call ir.Call) string {
-	if call.Virtual != 0 || !e.regions.fresh[call.Function] || e.depth != e.regionCallDepth {
+	if e.regions.regionTarget(call) < 0 || e.depth != e.regionCallDepth {
 		return ""
 	}
 	return e.regionCallArgument
@@ -333,7 +333,7 @@ func (e *emitter) regionValue(value string) string {
 // takes one; anything else is evaluated as it would be.
 func (e *emitter) handRegion(expression ir.Expression, region string) string {
 	call, isCall := expression.(ir.Call)
-	if region == "" || !isCall || call.Virtual != 0 || !e.regions.fresh[call.Function] {
+	if region == "" || !isCall || e.regions.regionTarget(call) < 0 {
 		return e.value(expression)
 	}
 	outerDepth, outerArgument := e.regionCallDepth, e.regionCallArgument
@@ -371,4 +371,15 @@ func (plan *regionPlan) callEscapes(call ir.Call, position int) bool {
 		}
 	}
 	return false
+}
+
+// regionTarget selects a variant only when there is one proven target and the
+// call uses the direct ABI. Virtual tables contain heap variants, even when all
+// targets return fresh, so virtual calls stay on the counted heap.
+func (plan *regionPlan) regionTarget(call ir.Call) int {
+	targets := plan.program.CallTargets(call)
+	if call.Virtual != 0 || len(targets) != 1 || !plan.fresh[targets[0]] {
+		return -1
+	}
+	return targets[0]
 }

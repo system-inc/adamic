@@ -1,0 +1,1 @@
+function read(value: number): void { switch (value) { case 1: console.log(String(1)); case 2: console.log(String(2)); break; default: break; } } read(1);

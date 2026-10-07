@@ -1,0 +1,10 @@
+{
+  "typescript": "6.0.3",
+  "source": "import ts from \"/tmp/assertions-work/api/node_modules/typescript/lib/typescript.js\";\ntype Mutable<T> = { -readonly [P in keyof T]: T[P] };\nconst token = ts.factory.createToken(ts.SyntaxKind.PlusToken);\nconst node: ts.Node = token;\n(node as Mutable<ts.Node>).kind = ts.SyntaxKind.Identifier;\nconst acceptedTag = node.kind === ts.SyntaxKind.Identifier;\nconsole.log(String(acceptedTag));\nconsole.log(String((node as ts.Identifier).escapedText));\n",
+  "diagnostics": [],
+  "node": {
+    "stdout": "true\nundefined\n",
+    "stderr": "",
+    "exit": 0
+  }
+}
