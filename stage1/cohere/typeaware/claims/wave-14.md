@@ -176,3 +176,15 @@ Shared regex table 071fb012 has no applicable owned-rule rows and confirms
 the dynamic constructor gap. No new matcher, shared-file edits or new claims.
 Remaining regex, JSX, label and numeric-dispatch boundaries are unchanged.
 See ../WAVE_14_RESUME_REPORT.md and validation-wave-14-resume.
+
+## Ranked pool exhausted and landing refreshed
+
+All 197 ranking rows are now either original base ports or reserved under claims
+on fetched origin branches: 584 refs, 33 distinct claim blobs, zero remaining.
+No new rules claimed. Rebased onto current main b8fb957a at tested source
+1c56e364; all owned byte suites PASS 461.469 s, with semantic mutants, sanitizer
+corpus comparisons and released-handle checks. Bridge, filtered uncached Node
+including inherited static-field reads, and vet pass. Named-kind clarification
+is accepted; numeric API absence is no longer a selection blocker. Existing
+regex, real JSX and undefined-label paths remain incomplete.
+See ../WAVE_14_EXHAUSTED_REPORT.md and validation-wave-14-exhausted.
