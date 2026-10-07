@@ -1,7 +1,7 @@
 Built: reachedStatement and typeArguments; eight .a helpers total, thirty-two prerequisite entries across four rules.
-Commits: both branches rebased onto main b8fb957aa and re-green; parked rules 0a642ff72; claims 7c973d706 and a3e8d8b9e pushed before code; statement helper f70eb4dfc.
-Checks: full touched helper package PASS 101.194s, 40,498 actual Go observations and 316,464 bytes per backend; vet and uncached input oracle PASS.
-Mutants: seventeen helper semantic mutants compile/run then comparison alone kills them on source Node, emitted JavaScript and ASan/UBSan native; fourteen parked-rule mutants re-green.
+Commits: rebased onto origin/area/stage1-lint 7481e0324 (contains origin/main 39638d9e2); no shared files changed.
+Checks: full touched helper package PASS 97.875s, 40,498 actual Go observations and 316,464 bytes per backend; vet and uncached input oracle PASS 1.064s.
+Mutants: all seventeen helper mutants compile/run then comparison alone catches them on source Node, emitted JavaScript and ASan/UBSan native.
 Not covered: complete CFG/AST/rule integration or opaque callback bodies, zero complete rules unblocked, invalid panic bytes, full repository/corpus gate or throughput.
 
 Observed calls: array-callback-return 79 (632 bytes), consistent-return 123 (984 bytes), no-unreachable-loop 8,861 (70,936 bytes), react-hooks/rules-of-hooks 495 (4,309 bytes), controls 120 (960 bytes), identical on each backend. Four helper prerequisite edges removed across these exact four rules; zero complete rule blocker sets removed. The helper takes a handed block and reads no syntax kinds.
@@ -109,3 +109,7 @@ Exact final commands, output redirected to retained batch4 logs:
 Full eight-helper package PASS 101.194s; vet silent success; uncached input oracle PASS 0.976s, six probe misses. Eight helpers hold 40,498 Go observations and 316,464 bytes per backend. All seventeen semantic mutants compile and execute successfully before comparison catches them across 51 backend checks: retained reachability; retained current block; outermost finally; skipped frame zero; outermost exception handler; inverted catch/finally predicate; catch selected outside try; finally instead of catch; ignored current reachability; discarded incoming edges; reversed declaration-name polarity; removed rest-binding exemption; inverted JSX tag identity; duplicated statement hook; discarded handed statement node; skipped first type argument; reversed type-argument order.
 
 Both new helpers remove four prerequisite entries each from array-callback-return, consistent-return, no-unreachable-loop and react-hooks/rules-of-hooks. Eight new entries, thirty-two cumulative; zero complete rules unblocked. Opaque callback bodies, AST projection and graph adapters remain caller-owned. No regex or node-kind string relevance dispatch introduced. All new Adamic source files are .a. No speed, whole-rule finding/fix or complete repository/corpus claim. Setup ready lines all 0s, cache warm and total 79s, nproc 5. Pinned cohere 715ba94f3608a6500086b1076ce5cb7e51b836db. Regenerating captures and test logs use temporary directories; untracked .generated registry output is not committed. No further helper reserved after this completed pair.
+
+## Landed harness refresh
+
+Rebased onto area 7481e0324, preserving current main and shared harness changes. Repeated the full helper package, vet and uncached TestInputAgreesWithNode commands above; logs are evidence/landed-tests.log, landed-vet.log and landed-input.log. The eight helper contracts and all seventeen mutants remain green. No new helper claimed: the separate rule branch still needs deduplication and landed-harness verification. No complete rule unblocking or throughput inferred.
