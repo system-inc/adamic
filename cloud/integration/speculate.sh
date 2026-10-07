@@ -5,12 +5,15 @@
 # Each candidate is a chain of merge commits built with git merge-tree, so no checkout is touched.
 # The chain stops at the first area that conflicts with the ones before it.
 #
-# usage: cloud/integration/speculate.sh <label> <area> [<area>...]
-#   e.g. cloud/integration/speculate.sh 0607a compiler runtime library
+# An argument without a slash names an area; one with a slash names any branch on origin, so an
+# integration branch can join the queue the same way.
+#
+# usage: cloud/integration/speculate.sh <label> <area or branch> [<area or branch>...]
+#   e.g. cloud/integration/speculate.sh 0607a compiler runtime cloud/integrate-16
 set -euo pipefail
 
 if [ "$#" -lt 2 ]; then
-	echo "usage: $0 <label> <area> [<area>...]" >&2
+	echo "usage: $0 <label> <area or branch> [<area or branch>...]" >&2
 	exit 2
 fi
 label=$1
@@ -21,18 +24,22 @@ main=$(git rev-parse origin/main)
 echo "main ${main}"
 candidate=$main
 position=0
-for area in "$@"; do
+for name in "$@"; do
 	position=$((position + 1))
-	tip=$(git rev-parse --verify "refs/remotes/origin/area/$area")
+	case "$name" in
+	*/*) area=$name ;;
+	*) area=area/$name ;;
+	esac
+	tip=$(git rev-parse --verify "refs/remotes/origin/$area")
 	if git merge-base --is-ancestor "$tip" "$candidate"; then
-		echo "${position} area/$area adds nothing; skipped"
+		echo "${position} $area adds nothing; skipped"
 		continue
 	fi
 	if ! tree=$(git merge-tree --write-tree "$candidate" "$tip" 2>/dev/null); then
-		echo "${position} area/$area ${tip:0:8} conflicts with the prefix before it; stopping here"
+		echo "${position} $area ${tip:0:8} conflicts with the prefix before it; stopping here"
 		break
 	fi
-	candidate=$(git commit-tree "$tree" -p "$candidate" -p "$tip" -m "Merge area/$area at ${tip:0:8} into the speculative main ${label}-${position}")
+	candidate=$(git commit-tree "$tree" -p "$candidate" -p "$tip" -m "Merge $area at ${tip:0:8} into the speculative main ${label}-${position}")
 	git push -q origin "${candidate}:refs/heads/cloud/speculate-${label}-${position}"
-	echo "${position} cloud/speculate-${label}-${position} ${candidate} (+area/$area ${tip:0:8})"
+	echo "${position} cloud/speculate-${label}-${position} ${candidate} (+$area ${tip:0:8})"
 done
