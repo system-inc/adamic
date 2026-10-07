@@ -2,5 +2,5 @@ sha: 48c05d091f0a43c31cbe051b1d6578d99eeedf19
 whole run: finished, exit 1
 first attempt: interrupted; 3328 pass, 0 fail, 8 skip; no finished whole run
 wasi-supplement: finished, exit 0; test events {"pass": 37}
-oracle-rerun: running; test events {"pass": 12}
+oracle-rerun: finished, exit 1; test events {"pass": 2241, "skip": 2, "fail": 2}
 stage3: apply exit 0; oracle 106366 passing, 1 failing, 0 pending; baseline_diffs ["api/typescript.d.ts"]; expected failure: unittests:: Public APIs for typescript.d.ts should be acknowledged when they change
