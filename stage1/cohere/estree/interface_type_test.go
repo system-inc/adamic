@@ -1,46 +1,57 @@
 package estree
 
 import (
+	"context"
+	"errors"
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
 )
 
 func TestInterfaceTypeMethodGap(t *testing.T) {
-	main, _ := filepath.Abs("gaps/interfaceTypeMethod.ts")
-	binary, script := build(t, main, true)
-	for name, got := range map[string][]byte{"Node": onNode(t, main), "emitted": onNode(t, script)} {
-		if string(got) != "1\n" {
-			t.Fatalf("%s: %s", name, got)
-		}
-	}
-	file, err := os.CreateTemp(t.TempDir(), "native-output")
+	main, err := filepath.Abs("gaps/interfaceTypeMethod.ts")
 	if err != nil {
 		t.Fatal(err)
 	}
-	cmd := exec.Command(binary)
-	cmd.Stdout = file
-	cmd.Stderr = file
-	err = cmd.Run()
-	file.Close()
-	data, _ := os.ReadFile(file.Name())
-	if err == nil || !strings.Contains(string(data), "compiler bug: a method the checker proved is there is missing") {
-		t.Fatalf("native: %v %s", err, data)
+	if got := string(onNode(t, main)); got != "1\n" {
+		t.Fatalf("Node: %q", got)
 	}
-	t.Log("Node and emitted JS print 1; sanitized native explicitly panics on the interface call with both arguments supplied")
+	loaded, err := load.Load([]string{main})
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = lower.Lower(context.Background(), loaded)
+	isGap := func(err error) bool {
+		var diagnostic *lower.NotYet
+		return errors.As(err, &diagnostic) && diagnostic.Where == main+":10:12" && diagnostic.What == "a class method through a view that erases its prototype origin"
+	}
+	if !isGap(err) {
+		t.Fatalf("recorded lowering gap changed: %v", err)
+	}
+	t.Logf("Node prints 1; lowering refuses before native emission: %s", err)
 	source, err := os.ReadFile(main)
 	if err != nil {
 		t.Fatal(err)
 	}
 	control := filepath.Join(t.TempDir(), "control.ts")
-	os.WriteFile(control, []byte(strings.Replace(string(source), "type(minimum = 0, conditional = true)", "type(minimum: number, conditional: boolean)", 1)), 0644)
+	if err = os.WriteFile(control, []byte(strings.Replace(strings.Replace(string(source), "type(minimum = 0, conditional = true)", "typeValue(minimum: number, conditional: boolean)", 1), "console.log(parse(new ParserLike()).toString());", "const parser = new ParserLike();\nconsole.log(parse({type: (minimum: number, conditional: boolean) => parser.typeValue(minimum, conditional)}).toString());", 1)), 0644); err != nil {
+		t.Fatal(err)
+	}
+	loaded, err = load.Load([]string{control})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err = lower.Lower(context.Background(), loaded); err != nil || isGap(err) {
+		t.Fatalf("default-free control lowering: %v", err)
+	}
 	controlBinary, controlScript := build(t, control, true)
 	for name, got := range map[string][]byte{"Node": onNode(t, control), "emitted": onNode(t, controlScript), "native": execute(t, "", controlBinary)} {
 		if string(got) != "1\n" {
 			t.Fatalf("%s default-free control: %s", name, got)
 		}
 	}
-	t.Log("removing concrete default parameters yields 1 in all builds; the expected-panic check catches that control")
+	t.Log("renamed default-free method through an explicit callback yields 1 in all builds; the lowering-gap check rejects that control")
 }

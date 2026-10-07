@@ -80,12 +80,17 @@ Node and sanitized native; byte comparison caught each on both:
 
 Compiler refusals, sanitizer failures and nonzero exits were not counted as
 qualifying port mutants. The separate interface-default gap is a compiler bug:
-Node and emitted JS print 5; ASan native reports stack-buffer-overflow. A release
-run printed 4, which is undefined behavior. Its minimal program and test were
-retained rather than editing the compiler. Method replacement is separately
+Node prints 5; main now refuses during lowering at interfaceDefault.ts:10:12
+with typed NotYet for a class method through a view that erases its prototype origin.
+The interfaceTypeMethod.ts proof likewise prints 1 on Node and now has the same
+typed refusal at 10:12; its workaround now uses a renamed default-free concrete
+method and an explicit callback property, and remains green on all builds.
+Both native failure paths are blocked, but origin-preserving dispatch remains
+open for @system_adamic. The exact assertions and unchanged proving programs
+are retained in this package. Method replacement is separately
 refused at lowering as unbound-method. Postfix increment used as a value is a
 held stage 0 NotYet. Each has a successful independent Node answer and an exact
-refusal or sanitizer expectation. The input API and recovery gaps are described
+recorded refusal expectation. The input API and recovery gaps are described
 with minimal programs in `GAPS.md`.
 
 Throughput uses the same 78-case manifest repeated 20 times: 1,560 texts,
@@ -195,3 +200,32 @@ go vet ./stage1/cohere/estree > /tmp/stage1-estree-final-vet.log 2>&1
 
 Full combined output: `validation/final-gate.log`. All test output was redirected
 to files, never piped. Pushes at each listed green checkpoint returned exit 0.
+
+## Merge-seat repair: stage1-format/estree-2
+
+Seat base cbcc1575, merged with main 71d7e491. The method-origin proof follows
+ts-printer commit b07a0643: both interface programs now assert errors.As to
+*lower.NotYet, exact file:10:12 and What
+"a class method through a view that erases its prototype origin".
+Node still prints 5 and 1 respectively. The former default-free type-method
+control is also refused on main; its replacement retains both arguments, removes
+defaults, renames the concrete method typeValue and exposes an explicit callback
+property. Node, sanitized native and emitted JS all print 1. The original gap
+programs remain unchanged. No other recorded gap moved or closed in this run.
+Origin-preserving interface dispatch remains open for @system_adamic.
+
+Pinned full-package command (Linux, output /tmp/estree-2-full.log):
+
+    env -u ADAMIC_ESTREE_CORPUS -u ADAMIC_ESTREE_BENCHMARK \
+      ADAMIC_ESTREE_LIBRARY=/tmp/estree-2-library \
+      go test -v -count=1 -timeout 60m ./stage1/cohere/estree
+
+The npm prefix contains @typescript-eslint/typescript-estree@8.65.0,
+typescript@6.0.3 and prettier@3.9.6. No package test requires
+ADAMIC_TYPESCRIPT_SOURCE. Result: exit 0, PASS, 777.287s. All Go byte comparisons,
+pinned-library checks and mutant checks passed without relaxed checks. The only
+skips are TestRepositoryAgreement and TestCorpusNativeRefusals (corpus opt-in),
+and TestThroughput (benchmark opt-in), left unset as requested.
+Focused interface proofs also passed. go vet ./stage1/cohere/estree, gofmt and
+git diff --check are clean. Leak detection is unchanged; only this package is
+edited beyond the requested merge from main. No full-repository gate is claimed.

@@ -78,14 +78,13 @@ success is not claimed. See FOLLOWUP.md for checkpoint commands and counts.
 ## Compiler gap: interface call and concrete default argument
 
 `gaps/interfaceDefault.ts` views a concrete `next(value, step = 1)` method through
-an interface exposing only `next(value)`. Type checking and lowering accept the
-program. Source Node and emitted JS print 5. Sanitized native reads one argument
-past the interface call's storage and reports an AddressSanitizer
-stack-buffer-overflow. A release run printed 4; its result is undefined behavior.
-`TestInterfaceDefaultGap` requires the two 5 answers and the sanitizer diagnostic.
-No compiler or runtime fix was attempted. A larger converter interface refactor
-also triggered the explicit missing-method panic; it was discarded in favor of
-concrete model classes and tables.
+an interface exposing only `next(value)`. Source Node prints 5. Main now refuses
+during lowering with a typed `*lower.NotYet` at `gaps/interfaceDefault.ts:10:12`:
+"stage 0 can't lower a class method through a view that erases its prototype origin yet".
+`TestInterfaceDefaultGap` checks the exact type, location and `What` before native emission.
+The former native stack-buffer-overflow path is blocked, but dispatch preserving the
+concrete method's prototype origin remains a compiler gap for @system_adamic.
+The proving program is unchanged; no compiler or runtime fix was made.
 
 `gaps/methodReplacement.ts` is another minimal compiler boundary. Node permits
 replacement of one instance's method, printing replacement then original.
@@ -152,14 +151,21 @@ members and accessor bodies that later TypeScript grammar checks would reject.
 
 ## Compiler gap: interface dispatch to a defaulted method
 
-The 13-line gaps/interfaceTypeMethod.ts supplies both arguments when calling a
+The 13-line `gaps/interfaceTypeMethod.ts` supplies both arguments when calling a
 concrete `type(minimum = 0, conditional = true)` through an interface. Source Node
-and emitted JS print 1. Sanitized native explicitly panics: “compiler bug: a
-method the checker proved is there is missing.” Removing the concrete defaults,
-without changing either supplied argument, yields 1 on all three builds. This is
-an observation; the compiler cause has not been diagnosed. TestInterfaceTypeMethodGap
-requires both outcomes. The port uses direct calls and pure helpers instead.
-This differs from the earlier fewer-arguments interfaceDefault sanitizer gap.
+prints 1. Main now refuses during lowering with a typed `*lower.NotYet` at
+`gaps/interfaceTypeMethod.ts:10:12`: "stage 0 can't lower a class method through a view
+that erases its prototype origin yet". `TestInterfaceTypeMethodGap` checks the exact
+type, location and `What`. The former native missing-method panic is blocked; the
+origin-preserving dispatch gap remains open for @system_adamic.
+The former default-free control is now refused too. Its workaround removes the
+concrete defaults, renames the concrete method to `typeValue`, and exposes an explicit
+callback property through the interface, retaining both supplied arguments. It
+yields 1 on Node, sanitized native and emitted JS. Renaming follows the ts-printer
+proof and avoids main's conservative compatible-shape origin guard. Successful
+lowering of that workaround proves the diagnostic check rejects a control. The port uses direct
+calls and pure helpers instead. Both interface proofs now share the same lowering
+refusal, while their proving programs remain unchanged.
 
 ## Deep binary expressions in the frozen corpus
 

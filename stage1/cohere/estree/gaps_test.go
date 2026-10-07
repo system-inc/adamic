@@ -3,6 +3,7 @@ package estree
 import (
 	"bytes"
 	"context"
+	"errors"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"os"
@@ -119,22 +120,14 @@ func TestInterfaceDefaultGap(t *testing.T) {
 	if got := string(onNode(t, path)); got != "5\n" {
 		t.Fatalf("source Node: %q", got)
 	}
-	binary, script := build(t, path, true)
-	command := exec.Command(binary)
-	stdout, err := os.CreateTemp(t.TempDir(), "native-gap-stdout")
+	loaded, err := load.Load([]string{path})
 	if err != nil {
 		t.Fatal(err)
 	}
-	var stderr bytes.Buffer
-	command.Stdout, command.Stderr = stdout, &stderr
-	err = command.Run()
-	stdout.Close()
-	if err == nil || !strings.Contains(stderr.String(), "AddressSanitizer: stack-buffer-overflow") {
-		t.Fatalf("native gap changed: %v\n%s", err, &stderr)
+	_, err = lower.Lower(context.Background(), loaded)
+	var diagnostic *lower.NotYet
+	if !errors.As(err, &diagnostic) || diagnostic.Where != path+":10:12" || diagnostic.What != "a class method through a view that erases its prototype origin" {
+		t.Fatalf("recorded lowering gap changed: %v", err)
 	}
-	t.Logf("Sanitized native: %v\n%s", err, &stderr)
-	if got := string(onNode(t, script)); got != "5\n" {
-		t.Fatalf("emitted JS: %q", got)
-	}
-	t.Log("Node and emitted JS: 5; sanitized native reads past interface argument storage; release output 4 was separately observed and is undefined behavior")
+	t.Logf("Node prints 5; lowering refuses before native emission: %s", err)
 }
