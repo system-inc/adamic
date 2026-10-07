@@ -21,6 +21,10 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 		}
 		return ir.Number, nil
 	}
+	if l.isNever(node) {
+		// Storage only: evaluating never always traps.
+		return ir.Number, nil
+	}
 	if valueType, isKnown := l.representation(l.checker.GetTypeAtLocation(node)); isKnown {
 		return valueType, nil
 	}
@@ -161,6 +165,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		return nil, err
 	}
 	value, err := l.value(node)
+	if l.isNever(node) {
+		return value, err
+	}
 	if literal := ast.SkipParentheses(node).Kind; err == nil && value.Type().IsReference() && literal != ast.KindArrayLiteralExpression && literal != ast.KindObjectLiteralExpression {
 		// The checker lets { v: Box } be seen as { v: Weak<Box> } and back, an array of Box as one of
 		// Weak<Box>, and (x: Weak<Box>) => ... as (x: Box) => ...; but one keeps a handle where the
@@ -375,7 +382,7 @@ func (l *lowering) weakTarget(proven *checker.Type) *checker.Type {
 // value lowers a value, as expression does, but leaves a Weak as it's kept.
 func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 	if identity := l.enumNeverIdentity(node, map[*ast.Node]bool{}); identity != nil {
-		value, err := l.enumNeverValue(node)
+		value, err := l.uncheckedValue(node)
 		if err != nil {
 			return nil, err
 		}
@@ -385,6 +392,14 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 }
 
 func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
+	node = ast.SkipParentheses(node)
+	if l.isNever(node) && !l.isPanicCall(node) {
+		return l.neverExpression(node)
+	}
+	return l.uncheckedValue(node)
+}
+
+func (l *lowering) uncheckedValue(node *ast.Node) (ir.Expression, error) {
 	node = ast.SkipParentheses(node)
 	if value, known, err := l.enumExpression(node); known {
 		return value, err
@@ -494,6 +509,11 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		operand, err := l.expression(node.AsTypeOfExpression().Expression)
 		if err != nil {
 			return nil, err
+		}
+		// typeof observes the runtime tag. Unboxing a flow narrowing first can
+		// read an object's bytes as a boolean after a call invalidates that fact.
+		if narrowed, ok := operand.(ir.Narrow); ok && narrowed.Value.Type() == ir.Union {
+			operand = narrowed.Value
 		}
 		written := node.AsTypeOfExpression().Expression
 		null := l.typeOfNull(written)

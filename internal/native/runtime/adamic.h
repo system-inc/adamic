@@ -178,6 +178,7 @@ typedef struct adamic_object {
 	const adamic_shape *shape;
 	const adamic_class *class;
 	bool frozen;
+	const char *real_type;
 	adamic_value slots[];
 } adamic_object;
 
@@ -192,6 +193,17 @@ static inline unsigned char *adamic_object_field_types(const adamic_object *obje
 	return adamic_object_initialized(object) + object->shape->count;
 }
 
+// Immutable declared slot contracts are separate from current representation and
+// readiness. They travel with every alias and copy, in the same allocation.
+static inline unsigned int *adamic_object_contracts(const adamic_object *object) {
+ uintptr_t end = (uintptr_t)(void *)(adamic_object_field_types(object) + object->shape->count);
+ return (unsigned int *)((end + _Alignof(unsigned int) - 1) & ~(uintptr_t)(_Alignof(unsigned int) - 1));
+}
+static inline size_t adamic_object_size(size_t count) {
+ size_t prefix = sizeof(adamic_object) + count * (sizeof(adamic_value) + 2);
+ return ((prefix + _Alignof(unsigned int) - 1) & ~(size_t)(_Alignof(unsigned int) - 1)) + count * sizeof(unsigned int);
+}
+
 bool adamic_instanceof(const void *value, const adamic_class *wanted);
 adamic_virtual_method adamic_virtual(const adamic_object *object, size_t slot);
 void adamic_object_free_children(adamic_object *object, void (*release)(void *));
@@ -202,8 +214,11 @@ typedef struct adamic_slot_cache {
 	const adamic_shape *shape;
 	size_t index;
 } adamic_slot_cache;
+void adamic_object_checked_write(adamic_object *object, const char *name, adamic_slot_cache *cache, const unsigned int *allowed, size_t count, const char *where);
+
 
 adamic_value *adamic_object_read(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *expression);
+adamic_value adamic_object_optional_view(const adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression, bool absent, bool optional);
 adamic_value adamic_object_view(const adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression);
 void adamic_view_literal_failure(const char *expression, const char *expected, unsigned char type, adamic_value value);
 void adamic_object_view_write(adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression);

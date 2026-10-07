@@ -36,21 +36,8 @@ func (l *lowering) interfaceCast(node *ast.Node, value ir.Expression, source, ta
 // conservative: aliases and function boundaries cannot lose a checked read.
 // More precise view propagation and erasure can reduce that set without trusting casts.
 func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Type) (ir.Expression, error) {
-	if l.callableViewContract(target) {
-		return nil, &Refused{Where: l.program.Where(node), What: "a checked view with a callable contract", Fix: "prove the callable body rather than asserting its signature"}
-	}
-	// Diagnose unreifiable contracts before temporary backend limitations.
-	for _, property := range l.checker.GetPropertiesOfType(target) {
-		declared := l.checker.GetTypeOfSymbol(property)
-		if l.callableViewContract(declared) {
-			return nil, &Refused{Where: l.program.Where(node), What: "a checked view with callable field " + property.Name, Fix: "prove the callable body rather than asserting its signature"}
-		}
-	}
-	fields := map[string]bool{}
-	if err := l.viewObjectFields(node, target, fields, map[*checker.Type]bool{}, false); err != nil {
-		return nil, err
-	}
-	if _, err := l.viewContract(node, target); err != nil {
+	fields, err := l.viewSchema(node, target)
+	if err != nil {
 		return nil, err
 	}
 	modules, err := l.moduleOrder(l.program.Files()[0])
@@ -81,16 +68,26 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 				}
 			}
 		}
+		if part.Kind == ast.KindPropertyAssignment && part.Name() != nil && fields[part.Name().Text()] {
+			value := ast.SkipParentheses(part.AsPropertyAssignment().Initializer)
+			if value.Kind != ast.KindNullKeyword && l.includesNull(l.checker.GetTypeAtLocation(value)) {
+				found = l.notYet(part, "a nullable hidden field requiring a distinct null runtime tag")
+			}
+		}
 		if part.Kind == ast.KindPropertyAccessExpression && fields[part.Name().Text()] {
 			access := part.AsPropertyAccessExpression()
 			if base, _ := l.representation(l.checker.GetTypeAtLocation(access.Expression)); base == ir.Object {
 				field := l.checker.GetSymbolAtLocation(part.Name())
 				if field != nil && len(l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(field), checker.SignatureKindCall)) == 0 {
+					if l.includesNull(l.checker.GetTypeOfSymbol(field)) {
+						found = l.notYet(part, "a nullable checked field requiring a distinct null runtime tag")
+					}
 					of, known := l.representation(l.checker.GetTypeOfSymbol(field))
-					if of == ir.Object && ast.IsAssignmentTarget(part) {
+					if of == ir.Object && ast.IsAssignmentTarget(part) && !l.result.OptionalViewFields[l.fieldName(part.Name())] {
 						found = l.notYet(part, "writing a checked object field without its source-slot type certificate")
 					}
-					if !viewDataType(l.checker.GetTypeOfSymbol(field)) || !known || of < ir.Number || of > ir.Object || field.Flags&ast.SymbolFlagsOptional != 0 || access.QuestionDotToken != nil || accessorSymbol(field) {
+
+					if !viewDataType(l.checker.GetTypeOfSymbol(field)) || !known || (of < ir.Number || of > ir.Object) && of != ir.MaybeNumber && of != ir.MaybeBoolean || accessorSymbol(field) {
 						found = l.notYet(part, "a checked field alias requiring an optional, accessor, or representation conversion")
 					}
 				}
@@ -125,7 +122,7 @@ func interfaceScalar(proven *checker.Type) bool {
 		}
 		return true
 	}
-	return proven.Flags()&(checker.TypeFlagsString|checker.TypeFlagsStringLiteral|checker.TypeFlagsNumber|checker.TypeFlagsNumberLiteral|checker.TypeFlagsBoolean|checker.TypeFlagsBooleanLiteral) != 0 && proven.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown|checker.TypeFlagsIntersection|checker.TypeFlagsTypeParameter) == 0
+	return proven.Flags()&checker.TypeFlagsUndefined != 0 || proven.Flags()&(checker.TypeFlagsString|checker.TypeFlagsStringLiteral|checker.TypeFlagsNumber|checker.TypeFlagsNumberLiteral|checker.TypeFlagsBoolean|checker.TypeFlagsBooleanLiteral) != 0 && proven.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown|checker.TypeFlagsIntersection|checker.TypeFlagsTypeParameter) == 0
 }
 
 func (l *lowering) interfaceScalarShape(proven *checker.Type) bool {
@@ -295,9 +292,16 @@ func (l *lowering) interfaceWrite(node *ast.Node, checked map[string]*checker.Ty
 
 // A finite literal contract is checked as well as its primitive representation.
 func (l *lowering) viewLiterals(declared *checker.Type) []ir.Expression {
+	// A whole numeric enum admits numbers outside its declared members.
+	if l.openNumericEnumType(declared) {
+		return nil
+	}
 	if declared.Flags()&checker.TypeFlagsUnion != 0 {
 		var allowed []ir.Expression
 		for _, member := range declared.Types() {
+			if member.Flags()&checker.TypeFlagsUndefined != 0 {
+				continue
+			}
 			values := l.viewLiterals(member)
 			if len(values) == 0 {
 				return nil
@@ -322,4 +326,27 @@ func (l *lowering) callableViewContract(proven *checker.Type) bool {
 		}
 	}
 	return len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) != 0 || len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) != 0
+}
+
+// viewSchema is the exact contract-admission portion of the shared entry point.
+// Inventories can audit it without claiming program lowering or alias admission.
+func (l *lowering) viewSchema(node *ast.Node, target *checker.Type) (map[string]bool, error) {
+	if l.callableViewContract(target) {
+		return nil, &Refused{Where: l.program.Where(node), What: "a checked view with a callable contract", Fix: "prove the callable body rather than asserting its signature"}
+	}
+	// Diagnose unreifiable contracts before temporary backend limitations.
+	for _, property := range l.checker.GetPropertiesOfType(target) {
+		declared := l.checker.GetTypeOfSymbol(property)
+		if l.callableViewContract(declared) {
+			return nil, &Refused{Where: l.program.Where(node), What: "a checked view with callable field " + property.Name, Fix: "prove the callable body rather than asserting its signature"}
+		}
+	}
+	fields := map[string]bool{}
+	if err := l.viewObjectFields(node, target, fields, map[*checker.Type]bool{}, false); err != nil {
+		return nil, err
+	}
+	if _, err := l.viewContract(node, target); err != nil {
+		return nil, err
+	}
+	return fields, nil
 }

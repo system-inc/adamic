@@ -1,0 +1,6 @@
+--- FAIL: TestOptionalWideningRefused (0.00s)
+    --- FAIL: TestOptionalWideningRefused/assignment (0.06s)
+        optional_widening_test.go:56: diagnostic: got "testdata/optional_widening/assignment.a:4:9: Adamic 0.1 refuses optional property y in { x: number; y?: number; } absent from structural source { x: number; }, which can hide fields MUTANT; declare y on the source type, or build a fresh object with known fields (adamic/no-optional-widening)", want "testdata/optional_widening/assignment.a:4:9: Adamic 0.1 refuses optional property y in { x: number; y?: number; } absent from structural source { x: number; }, which can hide fields; declare y on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.063s
+FAIL

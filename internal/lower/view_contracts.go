@@ -22,6 +22,12 @@ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewCo
 	if id := l.result.ViewContractTypes[int(target.Id())]; id != 0 {
 		return id, nil
 	}
+	if target.Flags()&checker.TypeFlagsUndefined != 0 {
+		id := ir.ViewContractID(len(l.result.ViewContracts) + 1)
+		l.result.ViewContracts = append(l.result.ViewContracts, ir.ViewContract{Kind: ir.ViewUndefined, Name: "undefined", Undefined: true, Of: ir.Object})
+		l.result.ViewContractTypes[int(target.Id())] = id
+		return id, nil
+	}
 	build := func(child *checker.Type) (ir.ViewContractID, error) { return l.viewContract(node, child) }
 	if target.Flags()&checker.TypeFlagsObject != 0 && (l.checker.IsArrayType(target) || checker.IsTupleType(target)) {
 		if viewArrayContractHook == nil {
@@ -35,12 +41,36 @@ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewCo
 		}
 		return viewCallableContractHook(l, node, target, build)
 	}
+	if l.includesUndefined(target) {
+		present := l.checker.GetNonNullableType(target)
+		if of, known := l.representation(present); known && of == ir.Object {
+			id, err := build(present)
+			if err != nil {
+				return 0, err
+			}
+			contract := l.result.ViewContracts[id-1]
+			contract.Undefined = true
+			contract.Name = l.checker.TypeToString(target)
+			optional := ir.ViewContractID(len(l.result.ViewContracts) + 1)
+			l.result.ViewContracts = append(l.result.ViewContracts, contract)
+			l.result.ViewContractTypes[int(target.Id())] = optional
+			return optional, nil
+		}
+	}
 	of, known := l.representation(target)
 	if !known {
 		return 0, l.notYet(node, "checked-view representation for "+l.checker.TypeToString(target))
 	}
-	contract := ir.ViewContract{Name: l.checker.TypeToString(target), Of: of}
-	if interfaceScalar(target) && of != ir.Union {
+	contract := ir.ViewContract{Undefined: l.includesUndefined(target), Name: l.checker.TypeToString(target), Of: of}
+	if isClassInstance(target) {
+		if declaration := l.classNodeFor(target); declaration != nil {
+			contract.Nominal = l.program.Where(declaration) + ":" + contract.Name
+			contract.NominalBases = l.viewNominalBases(target, map[*checker.Type]bool{})
+		}
+	}
+	if target.Flags()&checker.TypeFlagsUndefined != 0 {
+		contract.Kind = ir.ViewUndefined
+	} else if interfaceScalar(target) && of != ir.Union {
 		contract.Kind = ir.ViewScalar
 		contract.Allowed = l.viewContractLiterals(target)
 	} else {
@@ -77,9 +107,16 @@ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewCo
 }
 
 func (l *lowering) viewContractLiterals(target *checker.Type) []ir.ViewLiteral {
+	// A whole numeric enum admits numbers outside its declared members.
+	if l.openNumericEnumType(target) {
+		return nil
+	}
 	if target.Flags()&checker.TypeFlagsUnion != 0 {
 		var allowed []ir.ViewLiteral
 		for _, member := range target.Types() {
+			if member.Flags()&checker.TypeFlagsUndefined != 0 {
+				continue
+			}
 			values := l.viewContractLiterals(member)
 			if len(values) == 0 {
 				return nil
@@ -104,4 +141,19 @@ func (l *lowering) viewContractLiterals(target *checker.Type) []ir.ViewLiteral {
 		return []ir.ViewLiteral{{Of: ir.Boolean, Boolean: l.checker.TypeToString(target) == "true"}}
 	}
 	return nil
+}
+
+func (l *lowering) viewNominalBases(target *checker.Type, seen map[*checker.Type]bool) []string {
+	if seen[target] {
+		return nil
+	}
+	seen[target] = true
+	var names []string
+	for _, base := range l.classBases(target) {
+		if declaration := l.classNodeFor(base); declaration != nil {
+			names = append(names, l.program.Where(declaration)+":"+l.checker.TypeToString(base))
+			names = append(names, l.viewNominalBases(base, seen)...)
+		}
+	}
+	return names
 }

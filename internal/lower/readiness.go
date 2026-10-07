@@ -4,6 +4,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/scanner"
 	"github.com/system-inc/adamic/internal/flow"
+	"github.com/system-inc/adamic/internal/fresh"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 	"reflect"
@@ -53,6 +54,34 @@ func (l *lowering) uninitializedDeclaration(node *ast.Node) bool {
 // between declarations: an assignment makes the slot ready, and calls cannot unset it.
 // Captures and globals participate in this bit analysis even though value SSA excludes them.
 func readiness(program *ir.Program) {
+	objectWrites := false
+	inspect := func(value any) bool {
+		if write, ok := value.(ir.SetProperty); ok && write.WriteContract != 0 && write.Value.Type() == ir.Object {
+			objectWrites = true
+		}
+		return true
+	}
+	walk(program.Main, inspect)
+	for _, function := range program.Functions {
+		walk(function.Body, inspect)
+	}
+	if objectWrites {
+		for _, contract := range program.ViewContracts {
+			for _, field := range contract.Fields {
+				program.CheckedFields[field.Name] = true
+			}
+		}
+	}
+	program.FreshViewWrites = map[int]bool{}
+	if len(program.CheckedFields) != 0 {
+		for _, proof := range fresh.ProveWrites(program) {
+			if proof.Kind == fresh.WriteField && proof.Site != 0 {
+				previous, known := program.FreshViewWrites[proof.Site]
+				program.FreshViewWrites[proof.Site] = proof.Unaliased && (!known || previous)
+			}
+		}
+	}
+	eraseTagViewWrites(program)
 	names := map[string]bool{}
 	walk(program.Main, func(node any) bool {
 		if value, ok := node.(ir.ObjectLiteral); ok {
@@ -262,6 +291,8 @@ func readinessStatement(statement ir.Statement, program *ir.Program, fields map[
 					expression.SpreadReadiness = ""
 				}
 				node = expression
+			case ir.SetProperty:
+				node = eraseFreshViewWrite(program, expression)
 			case ir.Property:
 				if !program.CheckedFields[expression.Name] || expression.Method {
 					expression.View = ""
@@ -318,6 +349,9 @@ func readinessStatement(statement ir.Statement, program *ir.Program, fields map[
 		return value
 	}
 	result := transform(reflect.ValueOf(statement)).Interface().(ir.Statement)
+	if write, ok := result.(ir.SetProperty); ok {
+		result = eraseFreshViewWrite(program, write)
+	}
 	if assign, ok := result.(ir.Assign); ok && program.Locals[assign.Local].Uninitialized {
 		assign.Checked = false
 		result = assign
@@ -350,6 +384,10 @@ func readinessCalls(instruction *flow.Instruction) bool {
 			node = statement
 		}
 	}
+	return readinessHasCalls(node)
+}
+
+func readinessHasCalls(node any) bool {
 	calls := false
 	walk(node, func(node any) bool {
 		switch node.(type) {
@@ -416,4 +454,34 @@ stored:
 		assigned = ir.Narrow{Value: read, To: to}
 	}
 	return []ir.Statement{ir.Declare{Local: local, Value: value}}, present, assigned, nil
+}
+
+func eraseFreshViewWrite(program *ir.Program, write ir.SetProperty) ir.SetProperty {
+	if write.WriteContract == 0 || !program.FreshViewWrites[write.Site] {
+		return write
+	}
+	literal, ok := write.Object.(ir.ObjectLiteral)
+	if !ok || literal.Spread != nil || literal.Class != 0 {
+		return write
+	}
+	found := false
+	for _, field := range literal.Fields {
+		found = found || field.Name == write.Name
+	}
+	if !found {
+		literal.Fields = append(literal.Fields, ir.Field{Name: write.Name, Value: zeroValue(freshViewSlotType(program, write)), Contract: write.TargetContract, Uninitialized: true})
+	}
+	write.Object, write.WriteProven = literal, true
+	return write
+}
+
+func freshViewSlotType(program *ir.Program, write ir.SetProperty) ir.Type {
+	if write.TargetContract != 0 {
+		of := program.ViewContracts[write.TargetContract-1].Of
+		if of == ir.MaybeBoolean {
+			return ir.Boolean
+		}
+		return of
+	}
+	return write.Value.Type()
 }

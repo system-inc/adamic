@@ -381,6 +381,18 @@ func (e *emitter) statement(at *ir.Statement) {
 	case ir.Panic:
 		e.line("panic(%s);", e.value(statement.Message))
 	case ir.SetProperty:
+		if statement.WriteContract != 0 && e.program.CheckedFields[statement.Name] && !statement.Define && !statement.Uninitialized {
+			allowed := []string{}
+			for _, id := range ir.ScalarWriteContracts(e.program, statement.WriteContract) {
+				allowed = append(allowed, fmt.Sprint(id))
+			}
+			if statement.WriteProven {
+				e.line("adamicWriteField(%s, %s, %s);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value))
+				break
+			}
+			e.line("adamicCheckedWrite(%s, %s, %s, [%s], %s);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), strings.Join(allowed, ","), quote(statement.WriteWhere))
+			break
+		}
 		if e.program.CheckedFields[statement.Name] && !statement.Define && !statement.Uninitialized {
 			e.line("adamicViewWrite(%s, %s, %s, %d);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), statement.Value.Type())
 			break
@@ -705,6 +717,22 @@ func (e *emitter) value(expression ir.Expression) string {
 				parentTypes = "...adamicFieldRepresentations.get(adamicSpreadSource), "
 			}
 			object = "adamicRecordFieldTypes(" + object + ", {" + parentTypes + strings.Join(types, ", ") + "})"
+			contracts := []string{}
+			for _, field := range expression.Fields {
+				contracts = append(contracts, quote(field.Name)+": "+fmt.Sprint(field.Contract))
+			}
+			parentContracts := ""
+			if spreadValue != "" {
+				parentContracts = "...adamicSlotContracts.get(adamicSpreadSource), "
+			}
+			real := "record"
+			if expression.RealType != "" {
+				real = expression.RealType
+			}
+			if expression.Class != 0 {
+				real = e.program.Classes[expression.Class-1].Name
+			}
+			object = "adamicRecordSlotContracts(" + object + ", {" + parentContracts + strings.Join(contracts, ", ") + "}, " + quote(real) + ")"
 			if spreadValue != "" {
 				object = "((adamicSpreadSource) => " + object + ")(" + spreadValue + ")"
 			}
@@ -716,7 +744,7 @@ func (e *emitter) value(expression ir.Expression) string {
 			if expected == "" {
 				expected = map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Array: "array", ir.Map: "Map"}[expression.Of]
 			}
-			value := fmt.Sprintf("adamicViewField(%s, %s, %s, %d, %s, [%s])", e.value(expression.Object), quote(expression.Name), quote(expression.View), expression.Of, quote(expected), e.values(expression.ViewAllowed))
+			value := fmt.Sprintf("adamicViewField(%s, %s, %s, %d, %s, [%s], %t, %t)", e.value(expression.Object), quote(expression.Name), quote(expression.View), expression.Of, quote(expected), e.values(expression.ViewAllowed), expression.Absent, expression.Optional)
 			return e.viewObjectUnion(expression, value)
 		}
 		if expression.Readiness != "" {

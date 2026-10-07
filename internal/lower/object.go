@@ -103,6 +103,23 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 		}
 		literal.Empty = empty
 	}
+	{
+		actual := l.concrete(l.checker.GetTypeAtLocation(node))
+		literal.RealType = "record " + l.checker.TypeToString(actual)
+		contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone)
+		for i := range literal.Fields {
+			field := &literal.Fields[i]
+			symbol := l.checker.GetPropertyOfType(actual, field.Name)
+			if contextual != nil {
+				if declared := l.checker.GetPropertyOfType(contextual, field.Name); declared != nil {
+					symbol = declared
+				}
+			}
+			if symbol != nil {
+				field.Contract = l.slotContract(node, l.concrete(l.checker.GetTypeOfSymbol(symbol)))
+			}
+		}
+	}
 	return literal, nil
 }
 
@@ -477,7 +494,7 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 			if stored, known := l.representation(l.checker.GetTypeOfSymbol(field)); known && stored.IsMaybe() && of == stored.Present() {
 				// Read the declared representation before trusting the narrowing. A call or an
 				// alias write may have restored undefined, just as for a narrowed variable.
-				if slotless(stored) {
+				if slotless(stored) && !(stored == ir.MaybeBoolean && l.result.CheckedFields[name]) {
 					return nil, l.notYet(node, "a narrowed boolean | undefined field; copy the field into a local and narrow that local instead")
 				}
 				read := l.readObjectField(node, ir.Property{Object: object, Name: name, Of: stored, Optional: optional, Class: l.classOf(node)})
@@ -495,7 +512,7 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 				}
 			}
 		}
-		if slotless(of) {
+		if slotless(of) && !(of == ir.MaybeBoolean && l.result.CheckedFields[name]) {
 			return nil, l.notYet(node, "a field of type "+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))
 		}
 		if of == ir.MaybeNumber {

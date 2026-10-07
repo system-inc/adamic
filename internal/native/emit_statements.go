@@ -169,6 +169,10 @@ func (e *emitter) statement(statement ir.Statement) {
 		e.line("adamic_array_set(%s, %s, (adamic_value){.%s = %s});", array, index, member(statement.Element), slotted(statement.Element, value))
 		e.end()
 	case ir.SetProperty:
+		if statement.WriteContract != 0 && e.program.CheckedFields[statement.Name] && !statement.Define && !statement.Uninitialized {
+			e.checkedWrite(statement)
+			break
+		}
 		object := e.value(statement.Object)
 		value := e.value(statement.Value)
 		// The object may be undefined where the checker narrowed it away and a call since put it back
@@ -210,7 +214,7 @@ func (e *emitter) statement(statement ir.Statement) {
 		} else {
 			e.line("%s->%s = %s;", slot, member(statement.Value.Type()), slotted(statement.Value.Type(), value))
 		}
-		e.line("adamic_object_field_types(%s)[%s - %s->slots] = %d;", object, slot, object, statement.Value.Type())
+		e.line("adamic_object_field_types(%s)[%s - %s->slots] = %d;", object, slot, object, fieldRepresentation(statement.Value))
 		if converted {
 			e.line("}")
 		}

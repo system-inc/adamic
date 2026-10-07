@@ -44,6 +44,9 @@ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 	if len(proof.classes) > 0 {
 		return l.checkedClassCast(node, value, proof.classes, message)
 	}
+	if proof.view && len(proof.allowed) == 0 {
+		return l.view(node, value, target)
+	}
 	cast := ir.CheckedCast{Value: value, Field: proof.field, Message: message}
 	for _, literal := range proof.allowed {
 		allowed, fieldType, constant := l.literalConstant(literal)
@@ -53,6 +56,10 @@ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 		cast.Allowed = append(cast.Allowed, allowed)
 		cast.FieldType = fieldType
 	}
+	if _, err := l.view(node, value, target); err != nil {
+		return nil, err
+	}
+	cast.CheckedFields = true
 	return cast, nil
 }
 

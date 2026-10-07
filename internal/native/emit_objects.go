@@ -138,7 +138,8 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 			slot := e.temporary()
 			cache := e.cache()
 			e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), cache)
-			e.line("adamic_object_field_types(%s)[%s.index] = %d;", object, cache, field.Value.Type())
+			e.line("adamic_object_field_types(%s)[%s.index] = %d;", object, cache, fieldRepresentation(field.Value))
+			e.line("adamic_object_contracts(%s)[%s.index] = %d;", object, cache, field.Contract)
 			e.line("adamic_object_initialized(%s)[%s.index] = %d;", object, cache, map[bool]int{true: 0, false: 1}[field.Uninitialized])
 			if field.Value.Type().IsReference() {
 				e.line("adamic_release(%s->reference);", slot)
@@ -170,11 +171,16 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 	} else {
 		object = e.own(ir.Object, fmt.Sprintf("adamic_object_new(&%s)", e.literalShape(literal)))
 	}
+	if literal.RealType != "" {
+		e.line("%s->real_type = %s;", object, cString(literal.RealType))
+	}
 	if literal.Class != 0 {
 		e.line("%s->class = &adamic_class_%d;", object, literal.Class)
+		e.line("%s->real_type = %s;", object, cString(e.program.Classes[literal.Class-1].Name))
 	}
 	for index, field := range literal.Fields {
-		e.line("adamic_object_field_types(%s)[%d] = %d;", object, index, field.Value.Type())
+		e.line("adamic_object_field_types(%s)[%d] = %d;", object, index, fieldRepresentation(field.Value))
+		e.line("adamic_object_contracts(%s)[%d] = %d;", object, index, field.Contract)
 		if field.Uninitialized {
 			e.line("adamic_object_initialized(%s)[%d] = 0;", object, index)
 		}
@@ -331,4 +337,14 @@ func (e *emitter) cache() string {
 	name := fmt.Sprintf("adamic_cache_%d", e.temporaries)
 	e.declarations = append(e.declarations, fmt.Sprintf("static adamic_slot_cache %s;", name))
 	return name
+}
+
+// Null and undefined share a null pointer physically, but an optional checked read
+// must accept only undefined. Keep that semantic distinction in the slot tag.
+func fieldRepresentation(value ir.Expression) int {
+	switch value.(type) {
+	case ir.Null:
+		return 12
+	}
+	return int(value.Type())
 }

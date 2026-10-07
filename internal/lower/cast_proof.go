@@ -169,9 +169,20 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 		return castProof{classes: targets}, nil
 	}
 	if source.Flags()&checker.TypeFlagsUnion == 0 {
-		// Eligibility routes to view(), which must certify the complete field
-		// contract and all read paths. It is not an upcast proof.
+		// Shared views certify each read; mutable source slots still require
+		// the same reverse relation as the interface-downcast entry point.
 		if source.Flags()&checker.TypeFlagsObject != 0 && target.Flags()&checker.TypeFlagsObject != 0 && !isClassInstance(target) && l.checker.IsTypeAssignableTo(target, source) {
+			if l.widened(target, source, map[[2]*checker.Type]bool{}) != nil {
+				return castProof{}, l.notYet(node, "a writable-slot checked view requiring source contract certification")
+			}
+			if _, err := l.viewSchema(node, target); err != nil {
+				return castProof{}, err
+			}
+			for _, property := range l.checker.GetPropertiesOfType(source) {
+				if literal := l.fieldLiteral(target, property.Name); literal != nil {
+					return castProof{view: true, field: property.Name, allowed: []*checker.Type{literal}}, nil
+				}
+			}
 			return castProof{view: true}, nil
 		}
 		return castProof{}, refused

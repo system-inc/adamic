@@ -20,6 +20,11 @@ func (l *lowering) provenRelation(where, expression *ast.Node, target *checker.T
 		return l.wideningRefusal(where, source, target, found)
 	}
 	if field := l.optionalRelationFailure(source, target, expression, map[[2]*checker.Type]bool{}); field != "" {
+		if found := l.optionalWidened(source, target, nil, map[[2]*checker.Type]bool{}); found != nil {
+			_, err := l.view(where, nil, found.target)
+			return err
+		}
+		// Reverse mutable relations still require their invariant source-slot proof.
 		return refuse("optional field "+field+" has no proven compatible presence/type", "keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)")
 	}
 	if mismatch := l.nominalMismatch(source, target, map[[2]*checker.Type]bool{}); mismatch != nil {
@@ -32,6 +37,10 @@ func (l *lowering) provenRelation(where, expression *ast.Node, target *checker.T
 // Follow containers, callback arguments/results and nested fields, as the other relation walks do.
 func (l *lowering) optionalRelationFailure(from, to *checker.Type, origin *ast.Node, seen map[[2]*checker.Type]bool) string {
 	if from == nil || to == nil || from == to || seen[[2]*checker.Type{from, to}] {
+		return ""
+	}
+	from = reducedOptionalSource(l.checker, from)
+	if from.Flags()&checker.TypeFlagsNever != 0 {
 		return ""
 	}
 	seen[[2]*checker.Type{from, to}] = true

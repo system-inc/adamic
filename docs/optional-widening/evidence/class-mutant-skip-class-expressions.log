@@ -1,0 +1,6 @@
+--- FAIL: TestOptionalWideningRefused (0.00s)
+    --- FAIL: TestOptionalWideningRefused/class_expression (0.05s)
+        optional_widening_test.go:42: want optional-property refusal, got /workspace/adamic/internal/lower/testdata/optional_widening/class_expression.a:2:17: stage 0 can't lower a ClassExpression yet
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.068s
+FAIL

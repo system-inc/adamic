@@ -11,9 +11,11 @@ import "fmt"
 // Program is one compiled Adamic program.
 type Program struct {
 	// CheckedFields conservatively checks these field names at every object read.
-	CheckedFields     map[string]bool
-	ViewContracts     []ViewContract
-	ViewContractTypes map[int]ViewContractID
+	OptionalViewFields map[string]bool
+	FreshViewWrites    map[int]bool
+	CheckedFields      map[string]bool
+	ViewContracts      []ViewContract
+	ViewContractTypes  map[int]ViewContractID
 
 	// Source is the entry file's base name, as written, for the header of what the backends emit.
 	Source string
@@ -284,6 +286,7 @@ type (
 	// {}: the object made is Empty, each of the source type's fields the literal doesn't give, as
 	// undefined (what JavaScript reads from a field that isn't there), with Fields written into it.
 	ObjectLiteral struct {
+		RealType        string
 		SpreadReadiness string
 		// Class is the nominal class ID, or zero for a plain object.
 		Class                int
@@ -782,6 +785,7 @@ type (
 // Field is one field of an object literal.
 type Field struct {
 	// Uninitialized reserves storage without making its typed value readable.
+	Contract      ViewContractID
 	Uninitialized bool
 	Name          string
 	Value         Expression
@@ -1048,10 +1052,14 @@ type (
 
 	// SetProperty is object.name = value: the field takes the value, and lets go of what it held.
 	SetProperty struct {
-		Uninitialized bool
-		Object        Expression
-		Name          string
-		Value         Expression
+		WriteProven    bool
+		TargetContract ViewContractID
+		WriteContract  ViewContractID
+		WriteWhere     string
+		Uninitialized  bool
+		Object         Expression
+		Name           string
+		Value          Expression
 		// Class is as Property's.
 		Class int
 		// Site is which write of the program this is, for the cycle finder (lowering keeps the type of

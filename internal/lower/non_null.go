@@ -28,6 +28,11 @@ func (l *lowering) nonNull(node *ast.Node) (ir.Expression, error) {
 		}
 	}
 stored:
+	// A checked narrowing helper can return an already validated primitive.
+	// Unlike the original union, this representation has no nullish sentinel.
+	if value.Type() == ir.Number || value.Type() == ir.Boolean {
+		return value, nil
+	}
 	weakOperand := false
 	if target, ok := value.(ir.WeakTarget); ok {
 		// A narrowed Weak may have cleared since the narrowing. This assertion owns
