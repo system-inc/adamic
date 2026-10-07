@@ -103,3 +103,24 @@ files remain untouched.
 Native implementations and comparison evidence are in `wave_03_react/`. Unsupported syntax and use memo pass the full owned comparison. Boolean prop naming passes the default, all five configured patterns from Go's fixture table, nested props, custom prop types, message interpolation, foreign declarations and bundled-library aliases. Arbitrary configured regular expressions remain explicitly refused because stage 0 cannot lower `new RegExp`; this rule is partial until general native regex support is available. Emitted-JavaScript checker execution also remains a shared integration gap. These three claims remain reserved; no additional rules were claimed.
 
 New isolated questions: `source-syntax-tree`, `source-token-start`, `foreign-source-syntax-tree` and `foreign-node-symbol-context`. No shared registration generator, harness or protected compiler implementation was edited.
+
+## Continuation 4, React parking instruction
+
+The twelve earlier claims and evidence are pushed through f5219c77b and the
+branch is landing-ready on origin/main f8013f0ba. Refreshed all 528 origin
+refs and audited all distinct type-aware Markdown claims. React-family rules
+are skipped under the user parking instruction. Require-atomic-updates is
+skipped because it requires control-flow and suspended read/write analysis.
+The next three available rules without that analysis are reserved here before
+implementation:
+
+- require-await
+- structure/react-hook-no-any-type
+- symbol-description
+
+Each has zero findings in both frozen by-volume populations. Audit evidence is
+in validation-wave-03/continuation-4-selection.json. New rule implementations
+will declare rule.json kinds and accept the handed node; shared generator and
+harness files remain untouched. Earlier React ports are already pushed;
+boolean-prop-naming retains its separate arbitrary-runtime-regex limitation,
+which is not mislabelled as an IR or capture-analysis blocker.
