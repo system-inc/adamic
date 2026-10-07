@@ -124,6 +124,13 @@ func TestWave30JsxComponents(t *testing.T) {
 				t.Fatal(err)
 			}
 		}
+		printable, err := os.ReadFile(filepath.Join(root, "jsx-no-constructed-context-values", "printable.a"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if err = os.WriteFile(filepath.Join(scratch, "jsx-no-constructed-context-values", "printable.a"), printable, 0600); err != nil {
+			t.Fatal(err)
+		}
 		data, err := os.ReadFile(entry)
 		if err != nil {
 			t.Fatal(err)
@@ -141,8 +148,34 @@ func TestWave30JsxComponents(t *testing.T) {
 		}
 		t.Logf("%s: %d Go bytes match native, sanitizer and emitted JavaScript; successful-exit mutant caught only by Go at byte %d", row.mode, len(truth), firstDifference(got.stdout, truth))
 	}
+
+	// A successful Unicode escape mutant must be caught by the Go byte comparison.
+	scratch := filepath.Join(directory, "context-mutant-source")
+	original, err := os.ReadFile(filepath.Join(root, "jsx-no-constructed-context-values", "components.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	const anchor = "else if(code <= 0xffff)"
+	if strings.Count(string(original), anchor) != 1 {
+		t.Fatal("nonunique Unicode escape mutant")
+	}
+	mutated := strings.Replace(string(original), anchor, "else if(code <= 0x10ffff)", 1)
+	if err = os.WriteFile(filepath.Join(scratch, "jsx-no-constructed-context-values", "components.a"), []byte(mutated), 0600); err != nil {
+		t.Fatal(err)
+	}
+	mutant := filepath.Join(directory, "unicode-mutant")
+	h.must("unicode-mutant-build", exec.Command(stage0, "build", filepath.Join(scratch, "components_suite.a"), "-o", mutant))
+	unicodeResult := h.must("unicode-mutant-run", exec.Command(mutant, "context"))
+	truth, err := os.ReadFile(filepath.Join(directory, "context-go.stdout"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(unicodeResult.stderr) != 0 || bytes.Equal(unicodeResult.stdout, truth) {
+		t.Fatal("Unicode escape mutant escaped comparison")
+	}
+	t.Logf("Unicode astral escape mutant exits successfully and is caught only by Go at byte %d", firstDifference(unicodeResult.stdout, truth))
 	got := h.run("unsupported-name", exec.Command(binary, "unsupported"))
-	if exit, ok := got.err.(*exec.ExitError); !ok || exit.ExitCode() != 70 || string(got.stderr) != "adamic: panic: NotYet: non-ASCII named construction message\n" {
+	if exit, ok := got.err.(*exec.ExitError); !ok || exit.ExitCode() != 70 || string(got.stderr) != "adamic: panic: NotYet: unpaired surrogate in construction name\n" {
 		t.Fatalf("unsupported name silently accepted: %v %s", got.err, got.stderr)
 	}
 }

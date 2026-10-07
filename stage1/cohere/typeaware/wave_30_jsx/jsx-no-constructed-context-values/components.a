@@ -1,4 +1,5 @@
 import { panic } from 'adamic';
+import { printable } from './printable.a';
 // Message component only. Construction detection and memo-input stability are not supplied here.
 const constructions = ['object', 'array', 'function expression', 'function declaration', 'class expression', 'new expression', 'regular expression', 'JSX element', 'JSX fragment', 'assignment expression'];
 export class ConstructionNode {
@@ -15,7 +16,14 @@ export class ConstructionMessage {
 function quote(name: string): string {
     let result = '"';
     for(let at = 0; at < name.length; at++) {
-        const code = name.charCodeAt(at);
+        let code = name.charCodeAt(at);
+        let width = 1;
+        if(code >= 0xd800 && code <= 0xdbff) {
+            const low = name.charCodeAt(at + 1);
+            if(!(low >= 0xdc00 && low <= 0xdfff)) { panic('NotYet: unpaired surrogate in construction name'); }
+            code = 0x10000 + (code - 0xd800) * 1024 + low - 0xdc00;
+            width = 2;
+        } else if(code >= 0xdc00 && code <= 0xdfff) { panic('NotYet: unpaired surrogate in construction name'); }
         if(code === 34) { result += '\\"'; }
         else if(code === 92) { result += '\\\\'; }
         else if(code === 7) { result += '\\a'; }
@@ -26,8 +34,10 @@ function quote(name: string): string {
         else if(code === 12) { result += '\\f'; }
         else if(code === 13) { result += '\\r'; }
         else if(code < 32 || code === 127) { result += `\\x${code.toString(16).padStart(2, '0')}`; }
-        else if(code > 127) { panic('NotYet: non-ASCII named construction message'); }
-        else { result += name.slice(at, at + 1); }
+        else if(printable.test(name.slice(at, at + width))) { result += name.slice(at, at + width); }
+        else if(code <= 0xffff) { result += `\\u${code.toString(16).padStart(4, '0')}`; }
+        else { result += `\\U${code.toString(16).padStart(8, '0')}`; }
+        at += width - 1;
     }
     return `${result}"`;
 }

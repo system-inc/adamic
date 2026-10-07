@@ -65,7 +65,7 @@ func TestWave30JsxComponentOracle(t *testing.T) {
 	kinds := []string{"object", "array", "function expression", "function declaration", "class expression", "new expression", "regular expression", "JSX element", "JSX fragment", "assignment expression"}
 	for construction, kind := range kinds {
 		for _, named := range []bool{false, true} {
-			for _, name := range []string{"", "theme", "a\"b", "line\nbreak", "\\", string(rune(7)), string(rune(127))} {
+			for _, name := range []string{"", "theme", "a\"b", "line\nbreak", "\\", string(rune(7)), string(rune(127)), "테마", "Élément", "😀", "a😀b", "\u0085", "\u00a0", "\u0378", "\u200b", "\u2028", "\ufeff", "\uffff", "\U00010000", "\U0001fffe", "\U0010ffff", "\U000e0001"} {
 				input := jsxNoConstructedContextValuesConstruction{kind: kind}
 				if named {
 					input.usage = factory.NewIdentifier(name)

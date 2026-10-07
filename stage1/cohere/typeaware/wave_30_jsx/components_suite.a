@@ -27,12 +27,12 @@ if(mode === 'fragments') {
 } else if(mode === 'context') {
     for(let construction = 0; construction < 10; construction++) {
         for(const named of [false, true]) {
-            for(const name of ['', 'theme', 'a"b', 'line\nbreak', '\\', String.fromCharCode(7), String.fromCharCode(127)]) {
+            for(const name of ['', 'theme', 'a"b', 'line\nbreak', '\\', String.fromCharCode(7), String.fromCharCode(127), '테마', 'Élément', '😀', 'a😀b', '\u0085', '\u00a0', '\u0378', '\u200b', '\u2028', '\ufeff', '\uffff', '\u{10000}', '\u{1fffe}', '\u{10ffff}', '\u{e0001}']) {
                 const message = constructionMessage(new ConstructionNode(construction, named, 3, 9, name));
                 console.log(`${construction},${named},${written(name)}\t${message.id}\t${written(message.text)}`);
             }
         }
     }
 } else if(mode === 'unsupported') {
-    console.log(constructionMessage(new ConstructionNode(0, true, 1, 1, '테마')).text);
+    console.log(constructionMessage(new ConstructionNode(0, true, 1, 1, String.fromCharCode(0xd800))).text);
 } else { panic('unknown component mode'); }
