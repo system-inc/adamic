@@ -50,3 +50,24 @@ blocked; the copied control is explicitly not native output.
 BLOCKERS.md states the observed gate and the stopping point. Evidence retains
 all checker diagnostics in returned order. It does not claim an exhaustive
 Refused/NotYet traversal while checking still fails.
+
+## Current feature profile
+
+After gathering the raw scanner slice, set SLICE_TYPESCRIPT to stock TypeScript
+6.0.3's lib/typescript.js and run:
+
+```sh
+bash stage3/drivers/scanner/adapt-slice.sh SLICE > adaptations.log 2>&1
+bash stage3/drivers/scanner/run.sh OUTPUT --tree SLICE --inputs FIXED_CORPUS \
+  --compiler INTEGRATED_COMPILER > scanner.log 2>&1
+```
+
+The helper selects 52-57, 59, 81, 82 and 85. Current readiness bc9f5d7 closes
+58's literal-initializer workaround; numeric enums ec67b02 close 80, 83, 84 and
+the proposed 86. Those legacy plans and results remain historical evidence.
+56 remains selected: eef541e admits proven assertion syntax but the original
+unknown parameter still cannot lower. The latest compiler tips and scratch
+integration SHA are recorded in evidence/native-live-feature-refs.json.
+
+The current native attempt stops at reading Error as a value in Debug.fail's
+V8 captureStackTrace check. No native token diff or ownership pass is claimed.

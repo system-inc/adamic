@@ -14,3 +14,7 @@ Validated in the combined 59/80-83 full suite: 106,367 pass, zero baseline
 differences/failures/pending, 230.719 seconds. Node tokens match. Explicit
 return annotation advances to the reScanJsxToken Boolean parameter refusal
 (scanner:538:9); the expression and Scanner interface are unchanged.
+
+Current profile: superseded by open numeric enums ec67b02. The newest scratch
+compiler reaches lowering without this workaround. adapt-slice.sh omits it;
+the script and earlier validation remain reproducible historical evidence.

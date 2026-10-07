@@ -28,3 +28,11 @@ value-dependent scanning paths assign their values first. This is not a proof
 that every exported getter has a required value at every time. The bare local
 spelling passes the checker; native lowering and capture handling remain to
 be tested. The nested operand's plain spelling gets TS2454 and belongs to 59.
+
+Current profile: superseded by readiness bc9f5d7. Its literal-initializer probe
+passes on the feature alone and in the corrected scratch integration. Keep this
+script as the reproducible legacy profile; adapt-slice.sh does not select it.
+
+Captured marker control also passes on the integration. Original textInitial!
+followed by setText(text) compiles but panics on absence; 57 remains selected
+with setText(textInitial). Retiring 58 does not retire that separate adaptation.

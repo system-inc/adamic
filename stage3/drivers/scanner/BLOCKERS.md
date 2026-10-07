@@ -1,5 +1,42 @@
 # Scanner blockers
 
+## October 7: live feature refresh; native compiler blocker
+
+Explicitly fetched feature heads: the configured ordinary origin fetch updates
+only main. Earlier branch-tip observations below are historical. Live refs are
+in evidence/native-live-feature-refs.json; scratch integration is
+32352a2a46c2313eeeaf56a5ee4f9ebfaa36ccbb (never pushed).
+
+Current profile selects 52-57, 59, 81, 82 and 85. Non-null bc9f5d7
+closes 58: literal undefined! and captured tokenValue! controls compile and
+match Node. Adaptation 58 is omitted, not silently applied. The original
+textInitial! initialization still fails: probes/scanner-lazy-text.a compiles
+but native exits 70, read before assignment: variable text in textInitial!.
+Node prints [] then [source]. Therefore retain 57's text initialization and
+setText(textInitial) rewrite. On non-null alone this exact probe stops earlier
+at reading setText (nested-function dependency); the integrated runtime result
+is the observed lazy-read failure. No feature-alone runtime result is claimed.
+
+Numeric enum ec67b02 closes 80, 83, 84 and proposed 86. Those adaptations
+are omitted; 86 has no delivered source edit. Proven predicates eef541e admits
+Debug.assert syntax, but restoring it exposes the next lowering NotYet:
+assert-unknown.a:1:17, stage 0 can't lower a value of type unknown yet.
+Keep call-site adaptation 56. With it, checker diagnostics in slice files are
+clear; lowering stops at debug.ts:12:14, stage 0 can't lower reading Error yet.
+Minimal program probes/error-constructor-value.a reproduces it at 2:6.
+Node prints captureStackTrace available. No compiler branch found for Error
+constructor reflection; omitting capture breaks the stack-marker oracle.
+A faithful source adaptation has not been found. This is the stopping point: no
+native scanner executable, ownership traversal, or native token diff completed.
+
+Current reduced profile: Node 509,014 tokens, 27,879,197 bytes, SHA256
+c1a9f239790e158cc4471aa6c9273ff678cb32e5890b3d4c95e077ee90c61b0f.
+Full baseline 106,367 passing, zero failures/pending/differences, 246.014s.
+The end+1 mutant is rejected (diff exit 1); comparison control exit 0.
+State mutants (callback start, JSX default, regexp key) all exit normally and
+differ from Node controls. Evidence native-current-*, native-state-mutants.json,
+native-lazy-text-* and native-captured-marker-*.
+
 ## October 7: adaptation 85 guards function-body lexical locals
 
 23 function-body var keywords become let, preserving declaration positions and
