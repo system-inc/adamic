@@ -44,7 +44,9 @@ Only five existing executable oracle programs contained async syntax: async_plai
 | Empty Error message | none | async_coverage_reject_empty |
 | Caught rejection | none | unsupported_caught |
 | Explicit undefined returned | none | unsupported_undefined |
-| Null, union, object, array, function, class, Map, Set, Error payloads | none | unsupported payload probes |
+| Optional strings, including absent values, forwarded by named async functions | none | async_coverage_unions |
+| Same-kind string and number literal unions | none | async_coverage_unions |
+| Null, mixed-representation union, object, array, function, class, Map, Set, Error payloads | none | unsupported payload probes |
 
 All new fixtures are explicitly registered in internal/oracle/oracle_test.go; the harness does not discover arbitrary files automatically. New count rows are in registry order. Native variants include release, ASan/UBSan with malloc, and ASan/UBSan with slabs, with leak checks for successful programs. Uncaught rejection fixtures exit 70; this harness normalizes source Node errors to Adamic panic text via oracle/adamic.mjs.
 
@@ -56,7 +58,7 @@ The checked diagnostics, Node stdout/stderr and exit codes are in observations.j
 * Arrow declarations are rejected as function-valued locals at internal/lower/async.go:147; closures are also forbidden by asyncValue.
 * Switch and try/catch are rejected by asyncBody's closed statement grammar. A caught rejection cannot currently be tested as an executable Adamic program.
 * Compound function operands require async function values, rejected by functionValue in internal/lower/expression.go.
-* Null, object, array, closure, class, Map, Set, Error and multi-member union payloads are rejected by asyncType at internal/lower/async.go:147. Explicit undefined is classified as void but then rejected as a value expression by asyncValue. Void is executable when returned implicitly or obtained through Promise.resolve(). Never is exercised by an unconditional throw.
+* Null, object, array, closure, class, Map, Set, Error and mixed-representation union payloads are rejected by asyncType at internal/lower/async.go:147. Explicit undefined is classified as void but then rejected as a value expression by asyncValue. Void is executable when returned implicitly or obtained through Promise.resolve(). Never is exercised by an unconditional throw. Same-kind literal unions and string | undefined share accepted primitive representations. number | undefined and boolean | undefined use pair representations instead and are rejected; their probes record that distinction. A conditional expression can produce an absent optional string even though a direct undefined expression is rejected; async_coverage_unions covers both present and absent paths.
 
 Additional unsupported_*.a probes cover generic functions, synchronous helpers, anonymous/default declarations, optional/default/rest/destructured parameters, nested expression awaits, undefined await, void and uninitialized locals, destructuring, assignment, loops, finally, unawaited tasks, Promise executors/all/handles, console arity and numeric output, Error construction without a message, non-Error throws, and a recursive graph. Their observed diagnostics are in observations.json. The recursive function is deliberately never invoked on Node; observing its typeof terminates, while lowering still rejects the recursive graph. Several also have existing lowering tests in internal/lower/async_test.go. Async imports (the one-module restriction), thenable interop, user cancellation, and source host calls have no executable agreement witnesses because the implementation does not support them.
 
@@ -114,3 +116,13 @@ node --disable-warning=ExperimentalWarning oracle/node.mjs <file>
 ```
 
 Test output was redirected to /tmp/host-oracle-final.log, /tmp/host-counts-final.log, /tmp/host-mutant.log, /tmp/host-vet.log, /tmp/host-builds-final.log and /tmp/host-gate.log and then read. Setup, initial checks, and the corrected standalone runner were also run before the final checks above. The standalone runner initially omitted the loader warning suppression; its final recorded run includes it.
+
+## Final verification results
+
+Eight new fixtures are registered, with eight new count rows. The final standalone observations contain 13 executable programs (the eight new programs and all five original async fixtures), all agreeing on stdout, stderr and exit code, plus 48 probes rejected at compile time. No differing executable program was found. Numeric/multiple-argument console probes are rejected by the TypeScript checker before the async console guards can run.
+
+The final uncached focused async oracle passed in 4.941s; final full-table count regeneration passed in 27.653s. go vet, gofmt -l cmd internal and git diff --check passed. The original eight-fixture discovery sequence consisted of seven initial accepted programs and then the optional-string/literal-union program; the full repository gate started before that last fixture was registered. The final focused oracle, counts and standalone runs include all eight.
+
+The full uncached repository gate exited 1. All packages other than stage1/cohere/markdownblocks passed, including internal/native (344.375s), internal/oracle (366.408s), and stage1/cohere/typeaware (1170.715s). TestMarkdownUnicodeWidths could not import /tmp/adamic-markdown-width/node_modules/emoji-regex/index.js. The same package reached its 30-minute timeout while leaf/list/root/table/whitespace checks were still running. This is a validation limit, not an observed async output disagreement. No claim is made that the full gate is green. Full output is preserved in gate.log; the semantic typeof mutant failure is preserved in mutant.log. The gate was allowed to finish and no remaining test or mutant processes were observed afterward.
+
+The final static-check log is /tmp/host-vet-final.log. Before registration, the union program was also built and run independently as /tmp/async-unions.a with go run ./cmd/adamic build /tmp/async-unions.a -o /tmp/async-unions, node --disable-warning=ExperimentalWarning oracle/node.mjs /tmp/async-unions.a, and /tmp/async-unions. Both printed `undefined true value` then `b 2` and exited 0. Final observations.json records that same program under its committed fixture name.

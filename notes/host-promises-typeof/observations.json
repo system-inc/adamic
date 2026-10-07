@@ -72,6 +72,18 @@
     "agrees": true
   },
   {
+    "program": "internal/oracle/testdata/async_coverage_unions.a",
+    "build_exit": 0,
+    "build_stderr": "",
+    "node_stdout": "undefined true value\nb 2\n",
+    "node_stderr": "",
+    "node_exit": 0,
+    "native_stdout": "undefined true value\nb 2\n",
+    "native_stderr": "",
+    "native_exit": 0,
+    "agrees": true
+  },
+  {
     "program": "internal/oracle/testdata/async_coverage_values.a",
     "build_exit": 0,
     "build_stderr": "",
@@ -308,6 +320,22 @@
     "build_exit": 1,
     "build_stderr": "adamic: notes/host-promises-typeof/unsupported_object.a:1:1: stage 0 can't lower async object, union, Promise-handle or thenable payloads (full Promise compatibility) yet\nexit status 1\n",
     "node_stdout": "1\n",
+    "node_stderr": "",
+    "node_exit": 0
+  },
+  {
+    "program": "notes/host-promises-typeof/unsupported_optional_boolean.a",
+    "build_exit": 1,
+    "build_stderr": "adamic: notes/host-promises-typeof/unsupported_optional_boolean.a:1:1: stage 0 can't lower async object, union, Promise-handle or thenable payloads (full Promise compatibility) yet\nexit status 1\n",
+    "node_stdout": "boolean\n",
+    "node_stderr": "",
+    "node_exit": 0
+  },
+  {
+    "program": "notes/host-promises-typeof/unsupported_optional_number.a",
+    "build_exit": 1,
+    "build_stderr": "adamic: notes/host-promises-typeof/unsupported_optional_number.a:1:1: stage 0 can't lower async object, union, Promise-handle or thenable payloads (full Promise compatibility) yet\nexit status 1\n",
+    "node_stdout": "number\n",
     "node_stderr": "",
     "node_exit": 0
   },
