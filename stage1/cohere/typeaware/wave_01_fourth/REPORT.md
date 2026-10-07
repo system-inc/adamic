@@ -803,3 +803,28 @@ CFG/event collection and full integration remain pending. Three claims
 remain partial and no new claims were made. Full gate, the 17 external
 checks and fresh native/Go timings were not run for this isolated helper
 or represented as green.
+
+## Contextual return eligibility
+
+Landing bases main b6b1538b and area d3a37422 remain unchanged ancestors.
+Added require_await/return_context.a: only unannotated function expressions
+and arrows with normal function flags transfer return contextual types.
+The supplied facts avoid string-kind dispatch and current-node refetch.
+
+Sourced /workspace/adamic-tools/env.sh and ran python3
+stage1/cohere/typeaware/wave_01_fourth/testdata/verify_await_return.py
+/workspace/wave01-await-return /workspace/wave-01-fourth-adamic, logged
+in /tmp/wave01-await-return.log and validation/await-return. PASS 10 parsed
+return-context cases; sanitizer-clean declared-return mutant caught by bytes.
+Independent parsed facts are compared with unchanged
+requireAwaitReturnTakesContextualType. Cases include function/arrow with
+and without annotations, async function/arrow, generator/async generator,
+function declaration and method. Removing the annotation guard produces
+wrong output with exit zero and empty sanitizer stderr; byte comparison
+alone rejects it.
+
+Three claims remain partial. Native checker-fact delivery requires a
+checker program handle absent from shared RuleContext. Generic ancestor
+collection/replay and atomic CFG/event collection are also still pending.
+No shared files, new bridge handles or new claims. Full gate, 17 external
+checks and fresh timings were not run or represented as green.

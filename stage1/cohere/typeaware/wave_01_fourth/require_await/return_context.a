@@ -1,0 +1,9 @@
+export function awaitReturnTakesContext(functionExpression: boolean, arrow: boolean, declaredReturn: boolean, functionFlags: number): boolean {
+    if(!functionExpression && !arrow) {
+        return false;
+    }
+    if(declaredReturn) {
+        return false;
+    }
+    return functionFlags === 0;
+}
