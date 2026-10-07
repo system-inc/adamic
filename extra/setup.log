@@ -18,3 +18,9 @@ setup: build-flags commit=eac1fb47cc64c97f452be3b21ed1eab8b31ca29d nproc=5 cpu.m
 setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (81.103s)
 setup: source /workspace/adamic-tools/env.sh
 setup: logs /tmp/adamic-gate/setup.4hn5PS
+Gate preparation: go mod download all succeeded in root workspace and in cohere (exit 0).
+Gate preparation: node-v24.19.0-linux-x64.tar.xz SHA-256 verified against nodejs.org/dist/v24.19.0/SHASUMS256.txt (OK).
+Gate preparation: Prettier resolves to /workspace/gate-scratch/reference/node_modules/prettier/index.cjs, version 3.9.6.
+Gate preparation: disk-backed TMPDIR=/workspace/gate-scratch mode=1777.
+Gate preparation: git status --porcelain after setup was empty in repository and cohere.
+Gate preparation: native clang initially lacked WASI builtins; linked SDK builtins into its resource directory; compile and Node WASI execution then succeeded.
