@@ -3,6 +3,14 @@ package oracle
 func init() {
 	for _, name := range []string{
 		"nullable_references_strings.a",
+		"nullable_coverage_string.a",
+		"nullable_coverage_calls.a",
+		"nullable_coverage_object.a",
+		"nullable_coverage_array.a",
+		"nullable_coverage_map.a",
+		"nullable_coverage_class.a",
+		"nullable_coverage_nested_generics.a",
+
 		"nullable_references_generics.a",
 		"nullable_references_json.a",
 		"nullable_references_slots.a",
