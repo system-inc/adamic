@@ -52,3 +52,17 @@ inventory entries, preserving inventory order, are:
 These claims are published before rule code. Inventory revision remains
 73ac2eb0963e1a4166eaa0fbd160203f11dcdbdf. All existing claims, including this
 worker's prior allocations, count as occupied; no replay exemptions apply.
+
+## Fourth allocation, October 7
+
+Pushed existing work, fetched all origin heads, and audited 320 origin refs and
+39 claim documents. The original 46-rule helper queue is fully claimed.
+The first three unported and unclaimed syntax inventory rows are:
+
+1. `@typescript-eslint/no-non-null-asserted-optional-chain`
+2. `@typescript-eslint/no-non-null-assertion`
+3. `@typescript-eslint/no-this-alias`
+
+Main remains ef3d907e and inventory remains 73ac2eb0963e1a4166eaa0fbd160203f11dcdbdf.
+Existing claims, including this branch's earlier allocations, count as occupied.
+This update is pushed before implementation.
