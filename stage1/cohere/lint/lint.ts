@@ -41,6 +41,11 @@ export class Linter {
     // The rules still proposing fixes on the pass that exhausted the budget, in the order they first
     // propose, as cohere's edit engine names them. Empty when the fixes converge.
     readonly unconverged: string[] = [];
+    // junkRows appends a copy of every row to the node table after parsing, attached to nothing. Stage 1
+    // reads the table only by following links from the root, and the flat copy of typescript-go's tree
+    // (#k4fm1vf) relies on it: its tables hold rows no link reaches. TestNodeTableIsLinkOnly sets this
+    // and requires the same findings, so a rule that walks the table by row fails there first.
+    junkRows = false;
     parents: number[] = [];
     root = -1;
     readonly selected: string;
@@ -69,6 +74,12 @@ export class Linter {
     }
     run(): void {
         this.root = this.parser.file();
+        if(this.junkRows) {
+            const attached = this.parser.nodes.length;
+            for(let index = 0; index < attached; index++) {
+                this.parser.nodes.push(this.parser.node(index));
+            }
+        }
         this.parents = this.parser.nodes.map(() => -1);
         this.ancestry(this.root, -1);
         const context = new RuleContext(
@@ -160,6 +171,7 @@ export class Linter {
                 this.allowCatch,
                 this.settings,
             );
+            next.junkRows = this.junkRows;
             next.run();
             current = result;
             findings = next.findings;
