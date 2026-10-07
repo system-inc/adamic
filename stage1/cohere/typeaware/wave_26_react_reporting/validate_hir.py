@@ -116,4 +116,4 @@ run('registry-mutant-build', [stage0, 'build', probe, '-o', mutant_binary, '--ts
 assert run('registry-mutant-run', [mutant_binary, config, files[0], len(files[0].read_bytes())]) == output + output
 assert (scratch / 'registry-mutant-run.stderr').read_bytes() == b''
 print('released data survives; stale question panics 70; registry mutant exits 0', flush=True)
-print('RAW GRAPH PASS; three lint source analyses remain unfinished.', flush=True)
+print('RAW GRAPH PASS; lint analyses are validated separately by their source suites.', flush=True)

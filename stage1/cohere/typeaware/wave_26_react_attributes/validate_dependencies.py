@@ -27,11 +27,11 @@ with (S/'checker-server.stderr').open('wb') as err:
         if server.poll() is None:server.terminate();server.wait(timeout=10)
         for fd in fds:os.close(fd)
 print('source Node: complete default control bytes match production Go',flush=True)
-run('js-emission',['/workspace/wave-26-rawhir/adamic','js',OWN/'suite.a'],1)
+run('js-emission',[S/'adamic','js',OWN/'suite.a'],1)
 assert b'unlinked typescript-go library call' in (S/'js-emission.stderr').read_bytes()
 print('shared emitted-JavaScript checker-link gap: explicit refusal preserved',flush=True)
 probe=OWN/'testdata/released.a'
-run('released-build',['/workspace/wave-26-rawhir/adamic','build',probe,'-o',S/'released','--tsgo',S/'checker.a'])
+run('released-build',[S/'adamic','build',probe,'-o',S/'released','--tsgo',S/'checker.a'])
 file=pathlib.Path(manifest.read_text().splitlines()[0])
 outputs={}
 for question in ['jsx-structure','symbol-locations']:
@@ -41,7 +41,7 @@ registry=ROOT/'bridge/tsgo/archive/main.go';source=registry.read_text();needle='
 (S/'retained.go').write_text(source.replace(needle,'// Mutant retains the released handle.'))
 overlay=S/'retained.json';overlay.write_text(json.dumps({'Replace':{str(registry):str(S/'retained.go')}}))
 run('retained-archive',['go','build','-overlay',overlay,'-buildmode=c-archive','-o',S/'retained.a','./bridge/tsgo/archive'])
-run('retained-build',['/workspace/wave-26-rawhir/adamic','build',probe,'-o',S/'retained','--tsgo',S/'retained.a'])
+run('retained-build',[S/'adamic','build',probe,'-o',S/'retained','--tsgo',S/'retained.a'])
 for question,output in outputs.items():
     assert run(question+'-retained',[S/'retained',config,file,len(file.read_bytes()),question])==output+output
     assert (S/(question+'-retained.stderr')).read_bytes()==b''

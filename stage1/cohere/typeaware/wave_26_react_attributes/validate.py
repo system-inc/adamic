@@ -30,8 +30,8 @@ config=S/'tsconfig.json';config.write_text(json.dumps({'compilerOptions':{'stric
 manifest=S/'controls.manifest';manifest.write_text(''.join(str(f)+'\n' for f in files))
 valid=run('parse-filter',[oracle,config,manifest,'--valid-sources']);manifest.write_bytes(valid)
 print('controls: '+str(len(valid.splitlines()))+' parsed, '+str(len(files)-len(valid.splitlines()))+' nonsources excluded',flush=True)
-run('native-build',['/workspace/wave-26-rawhir/adamic','build',OWN/'suite.a','-o',S/'native','--tsgo',S/'checker.a'])
-run('asan-build',['/workspace/wave-26-rawhir/adamic','build',OWN/'suite.a','-o',S/'native-asan','--tsgo',S/'checker.a','--sanitize'])
+run('native-build',[S/'adamic','build',OWN/'suite.a','-o',S/'native','--tsgo',S/'checker.a'])
+run('asan-build',[S/'adamic','build',OWN/'suite.a','-o',S/'native-asan','--tsgo',S/'checker.a','--sanitize'])
 truth=None
 for name, conf, paths in [('controls',config,manifest),('compiler','/workspace/wave-26-typescript/src/compiler/tsconfig.json','/workspace/wave-26-compiler.manifest'),('repository',ROOT/'tsconfig.json','/workspace/wave-26-repository.manifest')]:
     expected=run(name+'-go',[oracle,conf,paths])
@@ -51,7 +51,7 @@ for directory, needle, replacement in [('button_has_type',"if(!proven) {","if(pr
     source=source.replace("from './"+directory+"/rule.a'","from '"+str(target/'rule.a')+"'")
     source=re.sub(r"from '([^']+)'",lambda m:m.group(0) if m.group(1)=='adamic' or m.group(1).startswith('/') else "from '"+str((entry.parent/m.group(1)).resolve())+"'",source)
     (target/'suite.a').write_text(source)
-    run(directory+'-mutant-build',['/workspace/wave-26-rawhir/adamic','build',target/'suite.a','-o',target/'native','--tsgo',S/'checker.a'])
+    run(directory+'-mutant-build',[S/'adamic','build',target/'suite.a','-o',target/'native','--tsgo',S/'checker.a'])
     assert run(directory+'-mutant-run',[target/'native',config,manifest])!=truth
     assert (S/(directory+'-mutant-run.stderr')).read_bytes()==b''
     print(directory+' mutant: exit 0, empty stderr, complete-byte oracle caught it',flush=True)

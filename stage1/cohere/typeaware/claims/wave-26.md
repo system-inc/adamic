@@ -187,3 +187,12 @@ Claim the first three available by combined volume and lexical tie order:
 Fresh origin audit: 417 refs, 25 ranked rules ported on main or the bridge
 baseline, 148 claimed names, 24 available. Full ref and claim evidence is
 wave-26-next-refresh.json. Claim pushed before implementation.
+
+Next batch complete natively: button-has-type, checked-requires-onchange-or-readonly
+and display-name. Source commit c06def68, rebased onto c01907a7. All twenty-one
+ports re-greened on that main base. New controls: 345 files, 163 findings and
+58,921 exact Go/native/sanitized bytes; both frozen corpora match. Source Node,
+three rule mutants, both question mutants, released-handle mutants and the full
+bridge gate passed. Shared emitted-JavaScript checker linking and registration
+remain integration gaps. Full evidence and timing observations are in
+../wave_26_react_attributes/README.md. No further rules claimed.
