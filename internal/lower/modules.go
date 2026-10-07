@@ -108,6 +108,12 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 				l.staticStorage(statement)
 			}
 		case ast.KindFunctionDeclaration:
+			if statement.Body() == nil && l.censusImplementation(statement) != nil {
+				continue
+			}
+			if err := l.censusOverloads(statement); err != nil {
+				return err
+			}
 			symbol := l.symbol(statement.Name())
 			if len(statement.TypeParameters()) > 0 {
 				// A generic function is lowered once per instantiation, where it's called (generic.go).
