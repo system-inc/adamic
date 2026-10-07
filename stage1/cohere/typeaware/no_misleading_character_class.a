@@ -2,9 +2,9 @@ import { panic } from 'adamic';
 import type { Rules } from './rules.ts';
 import { Diagnostic } from './diagnostic.ts';
 import { Suggestion } from './suggestion.ts';
-import { NoInvalidRegexp } from './no_invalid_regexp.a';
-import { SymbolContext } from './symbol_context.a';
-import { Shadow } from './shadow.ts';
+import { RegexpReferenceTracker } from './regexp_reference_tracker.a';
+import { RegexpConstant } from './regexp_constant.a';
+import { RegexpCookedOffsets } from './regexp_cooked_offsets.a';
 
 class ClassMember {
     readonly value: number;
@@ -28,8 +28,8 @@ class ClassFinding {
         this.end = end;
     }
 }
-// Complete literal sequence judgments. Constructor reference tracking is an
-// explicit NotYet path until the native reference shelf is available.
+// Native literal and constructor judgments, with global reference tracking
+// and cooked-to-raw source mapping.
 export class NoMisleadingCharacterClass {
     readonly rules: Rules;
     readonly found: ClassFinding[] = [];
@@ -40,45 +40,6 @@ export class NoMisleadingCharacterClass {
     cursor = 0;
     constructor(rules: Rules) {
         this.rules = rules;
-    }
-    constant(index: number, seen: readonly number[]): boolean {
-        index = this.rules.skip(index);
-        if(seen.includes(index)) {
-            return false;
-        }
-        const node = this.rules.parser.node(index);
-        if(['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(node.kind)) {
-            return true;
-        }
-        const next = seen.slice();
-        next.push(index);
-        if(node.kind === 'BinaryExpression' && node.operator === 'PlusToken') {
-            return this.constant(node.children[0] ?? -1, next) && this.constant(node.children[1] ?? -1, next);
-        }
-        if(node.kind !== 'Identifier') {
-            return false;
-        }
-        const binding = new SymbolContext(this.rules, index);
-        if(
-            binding.kinds.length !== 1 ||
-            binding.kinds[0] !== 'VariableDeclaration' ||
-            binding.paths[0] !== this.rules.path ||
-            ((binding.parentFlags[0] ?? 0) & 2) === 0
-        ) {
-            return false;
-        }
-        for(let at = 0; at < this.rules.parser.nodes.length; at++) {
-            const declaration = this.rules.parser.node(at);
-            if(
-                declaration.kind === 'VariableDeclaration' &&
-                this.rules.byte(declaration.pos) === binding.starts[0] &&
-                this.rules.byte(declaration.end) === binding.ends[0]
-            ) {
-                const initializer = new Shadow(this.rules).initializer(at);
-                return initializer >= 0 && this.constant(initializer, next);
-            }
-        }
-        return false;
     }
     message(id: string): string {
         if(id === 'surrogatePair') {
@@ -462,34 +423,91 @@ export class NoMisleadingCharacterClass {
             }
         }
     }
+    constructorCall(index: number, checked: number[]): void {
+        const node = this.rules.parser.node(index);
+        const first = node.children.length - node.list;
+        const patternIndex = this.rules.skip(node.children[first] ?? -1);
+        const pattern = this.rules.parser.node(patternIndex);
+        const constants = new RegexpConstant(this.rules);
+        const hasFlags = node.list > 1;
+        const flags = constants.value(hasFlags ? (node.children[first + 1] ?? -1) : patternIndex);
+        if(pattern.kind === 'RegularExpressionLiteral' && hasFlags) {
+            checked.push(patternIndex);
+        }
+        if(hasFlags && !flags.known) {
+            return;
+        }
+        const value = constants.value(patternIndex);
+        if(pattern.kind === 'RegularExpressionLiteral' && !hasFlags) {
+            return;
+        }
+        if(!value.known || (value.regexp && pattern.kind !== 'RegularExpressionLiteral')) {
+            return;
+        }
+        let text = value.text;
+        if(pattern.kind === 'RegularExpressionLiteral') {
+            text = text.slice(1, text.lastIndexOf('/'));
+        }
+        this.pattern = text;
+        this.unicode = hasFlags && (flags.text.includes('u') || flags.text.includes('v'));
+        this.sets = hasFlags && flags.text.includes('v');
+        this.scan();
+        if(!this.valid) {
+            return;
+        }
+        const literal = ['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(pattern.kind);
+        const raw = literal ? this.rules.text(pattern).slice(1, -1) : '';
+        const offsets: number[] = literal ? new RegexpCookedOffsets().map(raw, text) : [];
+        if(literal && offsets.length === 0) {
+            return;
+        }
+        const base =
+            pattern.kind === 'RegularExpressionLiteral'
+                ? pattern.end - pattern.text.length + 1
+                : this.rules.start(pattern) + 1;
+        const reported: string[] = [];
+        for(const item of this.found) {
+            if(!literal && pattern.kind !== 'RegularExpressionLiteral' && reported.includes(item.id)) {
+                continue;
+            }
+            reported.push(item.id);
+            const start = literal
+                ? base + (offsets[item.start] ?? panic('cooked start outside mapping'))
+                : pattern.kind === 'RegularExpressionLiteral'
+                  ? base + item.start
+                  : this.rules.start(pattern);
+            const end = literal
+                ? base + (offsets[item.end] ?? panic('cooked end outside mapping'))
+                : pattern.kind === 'RegularExpressionLiteral'
+                  ? base + item.end
+                  : pattern.end;
+            this.rules.findings.push(
+                new Diagnostic(
+                    'no-misleading-character-class',
+                    item.id,
+                    this.message(item.id),
+                    this.rules.byte(start),
+                    this.rules.byte(end),
+                    '',
+                ),
+            );
+        }
+    }
     run(): void {
-        const constructor = new NoInvalidRegexp(this.rules);
-        for(let at = 0; at < this.rules.parser.nodes.length; at++) {
-            const node = this.rules.parser.node(at);
-            if(node.kind === 'Identifier' && node.text === 'RegExp' && constructor.global(at)) {
-                const parent = this.rules.parser.node(this.rules.parents[at] ?? -1);
-                if(['VariableDeclaration', 'PropertyAssignment', 'ShorthandPropertyAssignment'].includes(parent.kind)) {
-                    panic(
-                        'NotYet: no-misleading-character-class needs native constructor reference tracking and cooked-to-raw mapping',
-                    );
+        const checked: number[] = [];
+        // File-entry constructor checks precede every regex-literal listener.
+        if(this.rules.scanner.text.includes('RegExp')) {
+            const tracker = new RegexpReferenceTracker(this.rules);
+            for(const call of tracker.run()) {
+                if(this.rules.parser.node(call).list > 0) {
+                    this.constructorCall(call, checked);
                 }
             }
-            if(['CallExpression', 'NewExpression'].includes(node.kind) && node.list > 0) {
-                const callee = this.rules.skip(node.children[0] ?? -1);
-                const name = this.rules.parser.node(callee);
-                if(name.kind === 'Identifier' && name.text === 'RegExp' && constructor.global(callee)) {
-                    const pattern = this.rules.parser.node(
-                        this.rules.skip(node.children[node.children.length - node.list] ?? -1),
-                    );
-                    if(
-                        this.constant(this.rules.skip(node.children[node.children.length - node.list] ?? -1), []) ||
-                        (pattern.kind === 'RegularExpressionLiteral' && node.list > 1)
-                    ) {
-                        panic(
-                            'NotYet: no-misleading-character-class needs native constructor reference tracking and cooked-to-raw mapping',
-                        );
-                    }
-                }
+        }
+        for(let at = 0; at < this.rules.parser.nodes.length; at++) {
+            const node = this.rules.parser.node(at);
+            if(checked.includes(at)) {
+                continue;
             }
             if(node.kind !== 'RegularExpressionLiteral') {
                 continue;

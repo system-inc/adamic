@@ -1,0 +1,2 @@
+let p='[Á]';function f(){let p='abc';p='x';}new RegExp(p);
+export {};

@@ -1,0 +1,2 @@
+var r = new RegExp("[\\u{41}\\u{301}]", "u")
+export {};

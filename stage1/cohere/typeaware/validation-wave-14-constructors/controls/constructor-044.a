@@ -1,0 +1,2 @@
+function f(R=RegExp){new R('[Á]');}
+export {};

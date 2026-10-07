@@ -1,0 +1,92 @@
+{
+  "005-controls-go.stdout": {
+    "bytes": 19622,
+    "sha256": "a5e4f0413ecf048e0cf4e9fe4fd7e406f654a2a6da24abf34a5ec91517019c3e",
+    "summary": "findings 60"
+  },
+  "006-controls-native.stdout": {
+    "bytes": 19622,
+    "sha256": "a5e4f0413ecf048e0cf4e9fe4fd7e406f654a2a6da24abf34a5ec91517019c3e",
+    "summary": "findings 60"
+  },
+  "009-controls-asan-go.stdout": {
+    "bytes": 19622,
+    "sha256": "a5e4f0413ecf048e0cf4e9fe4fd7e406f654a2a6da24abf34a5ec91517019c3e",
+    "summary": "findings 60"
+  },
+  "010-controls-asan-native.stdout": {
+    "bytes": 19622,
+    "sha256": "a5e4f0413ecf048e0cf4e9fe4fd7e406f654a2a6da24abf34a5ec91517019c3e",
+    "summary": "findings 60"
+  },
+  "053-compiler-go.stdout": {
+    "bytes": 5318,
+    "sha256": "5291a36f69f307a3c0521135c202924f8c67cc163b31932870857c6520b2fab4",
+    "summary": "findings 0"
+  },
+  "054-compiler-native.stdout": {
+    "bytes": 5318,
+    "sha256": "5291a36f69f307a3c0521135c202924f8c67cc163b31932870857c6520b2fab4",
+    "summary": "findings 0"
+  },
+  "055-compiler-asan-go.stdout": {
+    "bytes": 5318,
+    "sha256": "5291a36f69f307a3c0521135c202924f8c67cc163b31932870857c6520b2fab4",
+    "summary": "findings 0"
+  },
+  "056-compiler-asan-native.stdout": {
+    "bytes": 5318,
+    "sha256": "5291a36f69f307a3c0521135c202924f8c67cc163b31932870857c6520b2fab4",
+    "summary": "findings 0"
+  },
+  "057-repository-go.stdout": {
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "summary": "findings 0"
+  },
+  "058-repository-native.stdout": {
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "summary": "findings 0"
+  },
+  "059-repository-asan-go.stdout": {
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "summary": "findings 0"
+  },
+  "060-repository-asan-native.stdout": {
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "summary": "findings 0"
+  },
+  "011-constructors-go.stdout": {
+    "bytes": 24379,
+    "sha256": "a6350c1567719168e75d3894b1d7a10c4c67b3c7e23dbfcb02e21b58bb4640c6",
+    "summary": "findings 58"
+  },
+  "012-constructors-native.stdout": {
+    "bytes": 24379,
+    "sha256": "a6350c1567719168e75d3894b1d7a10c4c67b3c7e23dbfcb02e21b58bb4640c6",
+    "summary": "findings 58"
+  },
+  "013-constructors-asan.stdout": {
+    "bytes": 24379,
+    "sha256": "a6350c1567719168e75d3894b1d7a10c4c67b3c7e23dbfcb02e21b58bb4640c6",
+    "summary": "findings 58"
+  },
+  "wave-14-constructor-upstream-go.stdout": {
+    "bytes": 38351,
+    "sha256": "b47e0caed3215599fe7cc8c14919902322f7c1633fea6c748dd0d9e8aaab6d92",
+    "summary": "findings 89"
+  },
+  "wave-14-constructor-upstream-native.stdout": {
+    "bytes": 38351,
+    "sha256": "b47e0caed3215599fe7cc8c14919902322f7c1633fea6c748dd0d9e8aaab6d92",
+    "summary": "findings 89"
+  },
+  "wave-14-constructor-upstream-asan.stdout": {
+    "bytes": 38351,
+    "sha256": "b47e0caed3215599fe7cc8c14919902322f7c1633fea6c748dd0d9e8aaab6d92",
+    "summary": "findings 89"
+  }
+}

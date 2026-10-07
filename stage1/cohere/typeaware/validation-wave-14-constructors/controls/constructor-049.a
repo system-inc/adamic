@@ -1,0 +1,2 @@
+new (true&&RegExp)('[Á]');new (false||RegExp)('[Á]');
+export {};

@@ -1,0 +1,2 @@
+let R;({RegExp:R=()=>0}=globalThis);new R('[Á]');
+export {};

@@ -1,0 +1,2 @@
+const args = ['[👍]', 'i']; new RegExp(...args);
+export {};

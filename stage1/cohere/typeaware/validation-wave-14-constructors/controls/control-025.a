@@ -1,0 +1,2 @@
+declare const p:string;RegExp(p,'\u0080');RegExp(p,'\u00a0');RegExp(p,'\ue000');RegExp(p,'\u{10ffff}');RegExp(p,'é');
+export {};

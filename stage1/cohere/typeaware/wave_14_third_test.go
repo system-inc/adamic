@@ -101,6 +101,104 @@ func TestWave14ThirdAgreementAndMutants(t *testing.T) {
 	sanitized := h.archive("checker-asan", "", true)
 	asan := h.build(stage0, "third-asan", entry, sanitized, true)
 	h.compare("controls-asan", oracle, asan, config, manifest)
+	constructorSources := []string{
+		"new RegExp('[Á]');",
+		"new RegExp('[👍]');new RegExp('[👶🏻]','u');new RegExp('[🇯🇵]','u');new RegExp('[👨‍👩‍👦]','u');",
+		`new RegExp('[\\u{d83d}\\u{dc4d}]','u');`,
+		`new RegExp('[\u0041\u0301]','u');new RegExp('[\x41\u0301]');`,
+		`new RegExp('[\uD83D\uDC4D]');new RegExp('[\\uD83D\\uDC4D]');`,
+		`new RegExp('[\u{1F44D}]');new RegExp('[\\u{41}\\u{301}]','u');`,
+		"/* 世界 🌍 */\r\nnew RegExp('é👍[Á]');\r\n",
+		"new RegExp(`[👍]`);new RegExp(`\n\t[❇️]`);",
+		`const flags='u';new RegExp('[🇯🇵]',flags);`,
+		`const pattern='[Á][Á]';new RegExp(pattern,'u');`,
+		`const a='[A';const b='́]';const p=a+b;new RegExp((p));`,
+		"new RegExp('[A'+'́]'+'[B'+'̀]');",
+		"new RegExp(`[${'A'}́]`);new RegExp(`[${1}́]`);",
+		`let p='[Á]';new RegExp(p);`,
+		`let p='[Á]';p='abc';new RegExp(p);`,
+		`let p='[Á]';p+='abc';new RegExp(p);`,
+		`let p='[Á]';({p}={p:'abc'});new RegExp(p);`,
+		`let p='[Á]';[...p]=[];new RegExp(p);`,
+		`let p='[Á]';for(p of []){}new RegExp(p);`,
+		`let p='[Á]';function f(){let p='abc';p='x';}new RegExp(p);`,
+		`const p='[Á]';const value={p: 'abc'};new RegExp(p);`,
+		`const r=/[👍]/u;new RegExp(r);`,
+		`new RegExp(/[👍]/u,'');new RegExp(/[👍]/,'u');`,
+		`declare const flags:string;new RegExp(/[👍]/,flags);new RegExp('[Á]',flags);`,
+		`new RegExp(/[👍]/);new RegExp(/[Á]/u);`,
+		`new RegExp('[Á] [');new RegExp('{ [Á]','u');new RegExp('[abc]');`,
+		`new RegExp('[Á]','u'+'');new RegExp('[👍]',('u'));`,
+		`const p=p+'[Á]';new RegExp(p);`,
+		`function f(RegExp:any){new RegExp('[Á]');}new RegExp('[B̀]');`,
+		`new RegExp('[🇯[A]🇵]','v');new RegExp('[[🇯🇵]&&[abc]]','v');`,
+		`new RegExp('[\ud800\u0301]','u');new RegExp('[\udc00\u0301]','u');`,
+		"new RegExp('[A\\\ń]');new RegExp('[Á]\\\n');",
+		`const R=RegExp;new R('[Á]');`,
+		`let R=RegExp;R=()=>0;new R('[Á]');`,
+		`let R;R=RegExp;new R('[Á]');`,
+		`let R;R ||= RegExp;new R('[Á]');`,
+		`const R=RegExp;const S=R;new S('[Á]');`,
+		`const R=RegExp;R('[👍]','u');`,
+		`globalThis.RegExp('[Á]');new globalThis.RegExp('[👍]');`,
+		`globalThis['Reg'+'Exp']('[Á]');`,
+		`const g=globalThis;new g.RegExp('[Á]');`,
+		`const {RegExp:R}=globalThis;new R('[Á]');`,
+		`const {RegExp}=globalThis;new RegExp('[Á]');`,
+		`let R;({RegExp:R}=globalThis);new R('[Á]');`,
+		`function f(R=RegExp){new R('[Á]');}`,
+		`let R;({R=RegExp}={});new R('[Á]');`,
+		`let R;({RegExp:R=()=>0}=globalThis);new R('[Á]');`,
+		`const {RegExp:R=RegExp}=globalThis;new R('[Á]');`,
+		`const R=(true?RegExp:RegExp);new R('[Á]');`,
+		`new (true&&RegExp)('[Á]');new (false||RegExp)('[Á]');`,
+		`new (RegExp as any)('[Á]');new (RegExp!)('[Á]');`,
+		`new (0,RegExp)('[Á]');`,
+		`RegExp=(()=>0) as any;new RegExp('[Á]');`,
+		`globalThis=({}) as any;new globalThis.RegExp('[Á]');`,
+		`globalThis.RegExp=(()=>0) as any;new globalThis.RegExp('[Á]');`,
+		`const object={RegExp};object.RegExp('[Á]');`,
+		`function f(RegExp:any){new RegExp('[Á]');}const R=RegExp;new R('[B̀]');`,
+		`const key='RegExp';globalThis[key]('[Á]');`,
+		`const R=RegExp;let S=R;S=S;new S('[Á]');`,
+		`const R=RegExp;function f(R:any){new R('[Á]');}new R('[B̀]');`,
+		`const {RegExp:R,...rest}=globalThis;new R('[Á]');rest.RegExp('[Á]');`,
+		`const [R]=[RegExp];new R('[Á]');`,
+	}
+	var constructorPaths []string
+	for i, source := range constructorSources {
+		constructorPaths = append(constructorPaths, h.write(fmt.Sprintf("constructor-%03d.a", i), source+"\nexport {};\n"))
+	}
+	constructorManifest := h.write("constructors.manifest", strings.Join(constructorPaths, "\n")+"\n")
+	constructorTruth := h.must("constructors-go", exec.Command(oracle, config, constructorManifest, "--class-only"))
+	compareConstructors := func(name string, program string) {
+		got := h.must(name, exec.Command(program, config, constructorManifest, "--class-only"))
+		if len(got.stderr) != 0 || !bytes.Equal(got.stdout, constructorTruth.stdout) {
+			t.Fatalf("constructor bytes differ at %d: %s", firstDifference(got.stdout, constructorTruth.stdout), got.stderr)
+		}
+		t.Logf("%s: %d identical finding bytes; %s", name, len(got.stdout), strings.TrimSpace(string(got.stdout[bytes.LastIndex(bytes.TrimSpace(got.stdout), []byte("\n"))+1:])))
+	}
+	compareConstructors("constructors-native", binary)
+	compareConstructors("constructors-asan", asan)
+	for _, m := range []struct{ name, file, from, to string }{
+		{"cooked-mapping", "regexp_cooked_offsets.a", "byteOffsets.push(source);\n            }", "byteOffsets.push(source + 1);\n            }"},
+		{"constant-write", "regexp_constant.a", "this.writes(occurrence)", "false"},
+		{"call-flags", "no_misleading_character_class.a", "this.unicode = hasFlags && (flags.text.includes('u') || flags.text.includes('v'));", "this.unicode = false;"},
+		{"call-literal", "no_misleading_character_class.a", "checked.push(patternIndex);", "checked.push(-1);"},
+		{"constant-dedup", "no_misleading_character_class.a", "reported.includes(item.id)", "false"},
+		{"tracker-alias", "regexp_reference_tracker.a", "this.followTarget(new Shadow(this.rules).name(parentIndex), root);", "this.followTarget(new Shadow(this.rules).name(parentIndex), true);"},
+		{"tracker-write", "regexp_reference_tracker.a", "global && this.constants.writes(index)", "false"},
+	} {
+		unused := wave14NextMutant(h, stage0, archive, m.name, m.file, m.from, m.to)
+		os.Remove(unused)
+		mutant := h.build(stage0, m.name+"-third", filepath.Join(directory, m.name+"-source/wave_14_third.a"), archive, false)
+		got := h.must(m.name+"-run", exec.Command(mutant, config, constructorManifest, "--class-only"))
+		if len(got.stderr) != 0 || bytes.Equal(got.stdout, constructorTruth.stdout) {
+			t.Fatal("constructor mutant survived", m.name)
+		}
+		t.Logf("%s mutant exits 0 with empty stderr; byte oracle catches byte %d", m.name, firstDifference(got.stdout, constructorTruth.stdout))
+		os.Remove(mutant)
+	}
 	for _, m := range []struct{ name, file, from, to string }{
 		{"label", "no_label_var.a", "!new ScopeSymbols(this.rules, at).names.includes(label)", "new ScopeSymbols(this.rules, at).names.includes(label)"},
 		{"flags", "no_invalid_regexp.a", "if('dgimsuvy'.includes(flag)) {", "if('never'.includes(flag)) {"},
@@ -140,7 +238,6 @@ func TestWave14ThirdAgreementAndMutants(t *testing.T) {
 	for _, gap := range []struct{ name, source, id, reason string }{
 		{"label-parser", "undefined: for(;;) {break undefined;}", "identifierClashWithLabel", "parser slice expected semicolon"},
 		{"pattern", "new RegExp('[');", "invalidRegexp", "native ECMAScript pattern validation"},
-		{"constructor", "new RegExp('[Á]');", "combiningClass", "native constructor reference tracking"},
 	} {
 		witness := h.write(gap.name+"-witness.a", gap.source+"\nexport {};\n")
 		roots := h.write(gap.name+"-witness.manifest", witness+"\n")

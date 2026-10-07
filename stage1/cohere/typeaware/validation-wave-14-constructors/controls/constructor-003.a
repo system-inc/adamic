@@ -1,0 +1,2 @@
+new RegExp('[\u0041\u0301]','u');new RegExp('[\x41\u0301]');
+export {};

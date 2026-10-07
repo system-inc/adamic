@@ -1,0 +1,2 @@
+var r = new RegExp("\u1234[\\uD83D\\uDC4D]")
+export {};

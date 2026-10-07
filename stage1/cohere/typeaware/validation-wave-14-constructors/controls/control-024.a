@@ -1,0 +1,2 @@
+declare const p:string;RegExp(p,'🌍');RegExp(p,'\n');RegExp(p,"'");RegExp(p,'\x07');
+export {};

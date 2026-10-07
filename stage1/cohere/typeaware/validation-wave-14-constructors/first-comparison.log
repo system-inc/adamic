@@ -1,0 +1,8 @@
+=== RUN   TestWave14ThirdAgreementAndMutants
+    wave_14_third_test.go:95: controls: 19622 identical finding bytes; findings 60
+    wave_14_third_test.go:103: controls-asan: 19622 identical finding bytes; findings 60
+    wave_14_third_test.go:147: constructor bytes differ at 8860: 
+--- FAIL: TestWave14ThirdAgreementAndMutants (33.44s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	33.448s
+FAIL

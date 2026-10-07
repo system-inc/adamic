@@ -56,6 +56,9 @@ func main() {
 			paths = append(paths, path)
 		}
 	}
+	if slices.Contains(args, "--class-only") {
+		delete(coverageNames, "no-invalid-regexp")
+	}
 	configPath, err := filepath.Abs(args[0])
 	if err != nil {
 		panic(err)

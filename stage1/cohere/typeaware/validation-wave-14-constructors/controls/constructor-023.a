@@ -1,0 +1,2 @@
+declare const flags:string;new RegExp(/[👍]/,flags);new RegExp('[Á]',flags);
+export {};

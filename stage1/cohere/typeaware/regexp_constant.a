@@ -1,0 +1,183 @@
+import { panic } from 'adamic';
+import type { Rules } from './rules.ts';
+import { SymbolContext } from './symbol_context.a';
+import { Shadow } from './shadow.ts';
+import { Frames, header } from './frames.ts';
+
+export class RegexpConstantValue {
+    readonly known: boolean;
+    readonly text: string;
+    readonly string: boolean;
+    readonly regexp: boolean;
+    constructor(known: boolean, text = '', string = false, regexp = false) {
+        this.known = known;
+        this.text = text;
+        this.string = string;
+        this.regexp = regexp;
+    }
+}
+export class RegexpConstant {
+    readonly rules: Rules;
+    constructor(rules: Rules) {
+        this.rules = rules;
+    }
+    writes(index: number): boolean {
+        let current = index;
+        while((this.rules.parents[current] ?? -1) >= 0) {
+            const parentIndex = this.rules.parents[current] ?? -1;
+            const parent = this.rules.parser.node(parentIndex);
+            if(
+                [
+                    'ParenthesizedExpression',
+                    'SpreadElement',
+                    'SpreadAssignment',
+                    'ArrayLiteralExpression',
+                    'ObjectLiteralExpression',
+                ].includes(parent.kind)
+            ) {
+                current = parentIndex;
+                continue;
+            }
+            if(parent.kind === 'PropertyAssignment') {
+                if(parent.children[parent.children.length - 1] !== current) {
+                    return false;
+                }
+                current = parentIndex;
+                continue;
+            }
+            if(parent.kind === 'ShorthandPropertyAssignment') {
+                if(parent.children[0] !== current) {
+                    return false;
+                }
+                current = parentIndex;
+                continue;
+            }
+            if(parent.kind === 'BinaryExpression') {
+                const operator = this.rules.parser.node(parent.children[1] ?? -1).kind;
+                return (
+                    parent.children[0] === current &&
+                    operator.endsWith('EqualsToken') &&
+                    ![
+                        'EqualsEqualsToken',
+                        'EqualsEqualsEqualsToken',
+                        'ExclamationEqualsToken',
+                        'ExclamationEqualsEqualsToken',
+                        'LessThanEqualsToken',
+                        'GreaterThanEqualsToken',
+                    ].includes(operator)
+                );
+            }
+            if(['PrefixUnaryExpression', 'PostfixUnaryExpression'].includes(parent.kind)) {
+                return parent.operator === 'PlusPlusToken' || parent.operator === 'MinusMinusToken';
+            }
+            return ['ForInStatement', 'ForOfStatement'].includes(parent.kind) && parent.children[0] === current;
+        }
+        return false;
+    }
+    readIdentity(index: number): number {
+        const frames = new Frames(this.rules.ask(index, 'symbol-identities'));
+        header(frames, 'symbol-identities');
+        const symbol = frames.natural();
+        frames.natural();
+        frames.yes();
+        const local = frames.natural();
+        const shorthand = frames.natural();
+        frames.end();
+        return shorthand !== 0 ? shorthand : local !== 0 ? local : symbol;
+    }
+    initializer(index: number): number {
+        const node = this.rules.parser.node(index);
+        const binding = new SymbolContext(this.rules, index);
+        if(
+            binding.kinds.length !== 1 ||
+            binding.kinds[0] !== 'VariableDeclaration' ||
+            binding.paths[0] !== this.rules.path
+        ) {
+            return -1;
+        }
+        for(let at = 0; at < this.rules.parser.nodes.length; at++) {
+            const declaration = this.rules.parser.node(at);
+            if(
+                declaration.kind !== 'VariableDeclaration' ||
+                this.rules.byte(declaration.pos) !== binding.starts[0] ||
+                this.rules.byte(declaration.end) !== binding.ends[0]
+            ) {
+                continue;
+            }
+            const shadow = new Shadow(this.rules);
+            const name = shadow.name(at);
+            const value = shadow.initializer(at);
+            if(value < 0 || this.rules.parser.node(name).kind !== 'Identifier') {
+                return -1;
+            }
+            if(((binding.parentFlags[0] ?? 0) & 2) !== 0) {
+                return value;
+            }
+            for(let occurrence = 0; occurrence < this.rules.parser.nodes.length; occurrence++) {
+                const other = this.rules.parser.node(occurrence);
+                if(
+                    occurrence !== name &&
+                    other.kind === 'Identifier' &&
+                    other.text === node.text &&
+                    this.writes(occurrence) &&
+                    this.readIdentity(occurrence) === binding.id
+                ) {
+                    return -1;
+                }
+            }
+            return value;
+        }
+        return panic('constant declaration absent from native parser');
+    }
+    value(index: number, seen: readonly number[] = [], scoped = true): RegexpConstantValue {
+        index = this.rules.skip(index);
+        if(seen.includes(index)) {
+            return new RegexpConstantValue(false);
+        }
+        const node = this.rules.parser.node(index);
+        if(['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(node.kind)) {
+            return new RegexpConstantValue(true, node.text, true);
+        }
+        if(node.kind === 'RegularExpressionLiteral') {
+            return new RegexpConstantValue(scoped, node.text, true, true);
+        }
+        if(node.kind === 'NumericLiteral') {
+            return new RegexpConstantValue(true, node.text);
+        }
+        if(['TrueKeyword', 'FalseKeyword', 'NullKeyword'].includes(node.kind)) {
+            return new RegexpConstantValue(
+                true,
+                node.kind === 'TrueKeyword' ? 'true' : node.kind === 'FalseKeyword' ? 'false' : 'null',
+            );
+        }
+        const next = seen.slice();
+        next.push(index);
+        if(node.kind === 'Identifier') {
+            if(!scoped) {
+                return new RegexpConstantValue(false);
+            }
+            const initializer = this.initializer(index);
+            return initializer >= 0 ? this.value(initializer, next, scoped) : new RegexpConstantValue(false);
+        }
+        if(node.kind === 'BinaryExpression' && this.rules.parser.node(node.children[1] ?? -1).kind === 'PlusToken') {
+            const left = this.value(node.children[0] ?? -1, next, scoped);
+            const right = this.value(node.children[2] ?? -1, next, scoped);
+            return left.known && right.known && (left.string || right.string)
+                ? new RegexpConstantValue(true, left.text + right.text, true)
+                : new RegexpConstantValue(false);
+        }
+        if(node.kind === 'TemplateExpression') {
+            let text = this.rules.parser.node(node.children[0] ?? -1).text;
+            for(const spanIndex of node.children.slice(1)) {
+                const span = this.rules.parser.node(spanIndex);
+                const expression = this.value(span.children[0] ?? -1, next, scoped);
+                if(!expression.known) {
+                    return new RegexpConstantValue(false);
+                }
+                text += expression.text + this.rules.parser.node(span.children[1] ?? -1).text;
+            }
+            return new RegexpConstantValue(true, text, true);
+        }
+        return new RegexpConstantValue(false);
+    }
+}

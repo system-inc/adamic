@@ -102,3 +102,18 @@ mapping remain explicit Go-positive boundaries; real JSX remains blocked in the
 preceding batch. No further rules are claimed while these incomplete paths
 remain. See ../WAVE_14_SURROGATE_REPORT.md for the current commands, evidence and
 native-versus-Go timing.
+
+## Constructor class judgments and tracking completed on resume
+
+The owned class rule now ports constructor checking, native global reference
+tracking and constant evaluation, with byte-based Go-compatible cooked source
+mapping in three new .a helpers. The previous constructor and alias refusal
+witnesses now compare normally. Sixty-two constructor/reference controls match
+on 58 findings and 24,379 bytes under normal and sanitizer builds. Eighty-three
+upstream default constructor cases also match on 89 findings and 38,351 bytes;
+one legacy-octal case is excluded by the independent strict-module Go parser.
+The original 54 controls and both frozen corpora still agree. Thirteen compiled
+comparison-only mutants and the released-handle mutant are caught; the final
+owned suite passes in 174.233 s. No shared generator/harness/parser or bridge
+code changed. Native pattern validation, undefined labels and real JSX remain
+incomplete, so no further batch is claimed. See ../WAVE_14_CONSTRUCTOR_REPORT.md.

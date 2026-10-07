@@ -1,0 +1,2 @@
+new RegExp('[\ud800\u0301]','u');new RegExp('[\udc00\u0301]','u');
+export {};

@@ -1,0 +1,8 @@
+=== RUN   TestWave14ThirdAgreementAndMutants
+    wave_14_third_test.go:31: third: exit status 1
+        
+        adamic: /workspace/adamic/stage1/cohere/typeaware/no_misleading_character_class.a:460:78: stage 0 can't lower an array of never yet
+--- FAIL: TestWave14ThirdAgreementAndMutants (10.53s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	10.530s
+FAIL

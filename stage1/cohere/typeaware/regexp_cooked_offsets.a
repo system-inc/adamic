@@ -1,0 +1,178 @@
+// Go cohere's literal.CookedToRaw, with rune boundaries represented as UTF-16 offsets.
+export class RegexpCookedOffsets {
+    width(text: string, at: number): number {
+        const high = text.charCodeAt(at);
+        const low = text.charCodeAt(at + 1);
+        return high >= 0xd800 && high <= 0xdbff && low >= 0xdc00 && low <= 0xdfff ? 2 : 1;
+    }
+    hex(text: string): boolean {
+        return text !== '' && text.split('').every((digit) => '0123456789abcdefABCDEF'.includes(digit));
+    }
+    escape(raw: string, at: number): number {
+        const next = raw[at + 1] ?? '';
+        if(next === 'u') {
+            if(raw[at + 2] === '{') {
+                const end = raw.indexOf('}', at + 3);
+                return end >= 0 ? end + 1 - at : 2;
+            }
+            return at + 5 < raw.length && this.hex(raw.slice(at + 2, at + 6)) ? 6 : 2;
+        }
+        if(next === 'x') {
+            return at + 3 < raw.length && this.hex(raw.slice(at + 2, at + 4)) ? 4 : 2;
+        }
+        if('01234567'.includes(next)) {
+            const limit = next > '3' ? 3 : 4;
+            let width = 2;
+            while(width < limit && at + width < raw.length && '01234567'.includes(raw[at + width] ?? '')) {
+                width++;
+            }
+            return width;
+        }
+        return 1 + this.width(raw, at + 1);
+    }
+    emptyTail(raw: string, at: number): boolean {
+        while(at < raw.length) {
+            if(raw[at] !== '\\') {
+                return false;
+            }
+            if(at + 1 >= raw.length) {
+                return true;
+            }
+            const next = raw[at + 1];
+            if(next !== '\n' && next !== '\r') {
+                return false;
+            }
+            at += 2;
+            if(next === '\r' && raw[at] === '\n') {
+                at++;
+            }
+        }
+        return true;
+    }
+    bytes(text: string): number[] {
+        const bytes: number[] = [];
+        for(let at = 0; at < text.length; at++) {
+            let code = text.charCodeAt(at);
+            const low = text.charCodeAt(at + 1);
+            if(code >= 0xd800 && code <= 0xdbff && low >= 0xdc00 && low <= 0xdfff) {
+                code = 0x10000 + (code - 0xd800) * 1024 + low - 0xdc00;
+                at++;
+            }
+            if(code < 128) {
+                bytes.push(code);
+            }
+            else if(code < 2048) {
+                bytes.push(192 | (code >> 6));
+                bytes.push(128 | (code & 63));
+            }
+            else if(code < 65536) {
+                // Lone units remain CESU-8, as in the pinned Go scanner.
+                bytes.push(224 | (code >> 12));
+                bytes.push(128 | ((code >> 6) & 63));
+                bytes.push(128 | (code & 63));
+            }
+            else {
+                bytes.push(240 | (code >> 18));
+                bytes.push(128 | ((code >> 12) & 63));
+                bytes.push(128 | ((code >> 6) & 63));
+                bytes.push(128 | (code & 63));
+            }
+        }
+        return bytes;
+    }
+    runeWidth(bytes: readonly number[], at: number): number {
+        const first = bytes[at] ?? 0;
+        const second = bytes[at + 1] ?? -1;
+        const third = bytes[at + 2] ?? -1;
+        const fourth = bytes[at + 3] ?? -1;
+        const continuation = second >= 128 && second <= 191;
+        if(first >= 194 && first <= 223 && continuation) {
+            return 2;
+        }
+        if(
+            first >= 224 &&
+            first <= 239 &&
+            continuation &&
+            third >= 128 &&
+            third <= 191 &&
+            (first !== 224 || second >= 160) &&
+            (first !== 237 || second <= 159)
+        ) {
+            return 3;
+        }
+        if(
+            first >= 240 &&
+            first <= 244 &&
+            continuation &&
+            third >= 128 &&
+            third <= 191 &&
+            fourth >= 128 &&
+            fourth <= 191 &&
+            (first !== 240 || second >= 144) &&
+            (first !== 244 || second <= 143)
+        ) {
+            return 4;
+        }
+        return 1;
+    }
+    map(raw: string, cooked: string): number[] {
+        const rawBytes = this.bytes(raw);
+        const cookedBytes = this.bytes(cooked);
+        const rawUnits: number[] = [];
+        for(let unit = 0; unit < raw.length;) {
+            const width = this.width(raw, unit);
+            const byteWidth = this.bytes(raw.slice(unit, unit + width)).length;
+            for(let byte = 0; byte < byteWidth; byte++) {
+                rawUnits.push(unit);
+            }
+            unit += width;
+        }
+        rawUnits.push(raw.length);
+        const byteOffsets: number[] = [];
+        let source = 0;
+        let value = 0;
+        while(source < rawBytes.length && value < cookedBytes.length) {
+            const sourceUnit = rawUnits[source] ?? raw.length;
+            const escaped = raw[sourceUnit] === '\\' && sourceUnit + 1 < raw.length;
+            const width = escaped
+                ? this.bytes(raw.slice(sourceUnit, sourceUnit + this.escape(raw, sourceUnit))).length
+                : this.runeWidth(rawBytes, source);
+            const produced = this.runeWidth(cookedBytes, value);
+            if(!escaped) {
+                if(produced > width) {
+                    return [];
+                }
+                for(let byte = 0; byte < produced; byte++) {
+                    if(rawBytes[source + byte] !== cookedBytes[value + byte]) {
+                        return [];
+                    }
+                }
+            }
+            for(let byte = 0; byte < produced; byte++) {
+                byteOffsets.push(source);
+            }
+            source += width;
+            value += produced;
+        }
+        if(
+            value !== cookedBytes.length ||
+            (source < rawBytes.length && this.emptyTail(raw, rawUnits[source] ?? raw.length))
+        ) {
+            return [];
+        }
+        byteOffsets.push(source);
+        const offsets: number[] = [];
+        let byte = 0;
+        for(let unit = 0; unit < cooked.length;) {
+            const width = this.width(cooked, unit);
+            const byteWidth = this.bytes(cooked.slice(unit, unit + width)).length;
+            for(let part = 0; part < width; part++) {
+                offsets.push(rawUnits[byteOffsets[byte] ?? 0] ?? 0);
+            }
+            byte += byteWidth;
+            unit += width;
+        }
+        offsets.push(rawUnits[byteOffsets[byte] ?? 0] ?? 0);
+        return offsets;
+    }
+}

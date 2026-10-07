@@ -1,0 +1,2 @@
+let p='[Á]';[...p]=[];new RegExp(p);
+export {};

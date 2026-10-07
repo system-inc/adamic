@@ -1,0 +1,2 @@
+const a='[A';const b='́]';const p=a+b;new RegExp((p));
+export {};

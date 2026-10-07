@@ -1,0 +1,322 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+import { SymbolContext } from './symbol_context.a';
+import { Shadow } from './shadow.ts';
+import { NoInvalidRegexp } from './no_invalid_regexp.a';
+import { RegexpConstant } from './regexp_constant.a';
+
+// Native specialization of cohere's ReferenceTracker for RegExp calls and new.
+// A leaf is RegExp; the root is a global object with one traced member, RegExp.
+export class RegexpReferenceTracker {
+    readonly rules: Rules;
+    readonly constants: RegexpConstant;
+    readonly references: number[] = [];
+    readonly calls: number[] = [];
+    readonly following: string[] = [];
+    readonly identities: number[] = [];
+    readonly origins: number[] = [];
+    constructor(rules: Rules) {
+        this.rules = rules;
+        this.constants = new RegexpConstant(rules);
+        for(let index = 0; index < rules.parser.nodes.length; index++) {
+            this.identities.push(-1);
+            this.origins.push(-1);
+            if(rules.parser.node(index).kind === 'Identifier' && this.reference(index)) {
+                this.references.push(index);
+            }
+        }
+    }
+    reference(index: number): boolean {
+        const parentIndex = this.rules.parents[index] ?? -1;
+        // Speculative parser nodes not linked into the file are not AST references.
+        if(parentIndex < 0) {
+            return false;
+        }
+        const parent = this.rules.parser.node(parentIndex);
+        if(
+            [
+                'TypeReference',
+                'TypeQuery',
+                'QualifiedName',
+                'LabeledStatement',
+                'BreakStatement',
+                'ContinueStatement',
+                'ImportSpecifier',
+                'NamespaceImport',
+                'ImportClause',
+                'JsxAttribute',
+            ].includes(parent.kind)
+        ) {
+            return false;
+        }
+        if(parent.kind === 'PropertyAccessExpression') {
+            return parent.children[0] === index;
+        }
+        if(parent.kind === 'BindingElement') {
+            return new Shadow(this.rules).initializer(this.rules.parents[index] ?? -1) === index;
+        }
+        if(
+            [
+                'VariableDeclaration',
+                'Parameter',
+                'FunctionDeclaration',
+                'FunctionExpression',
+                'ClassDeclaration',
+                'ClassExpression',
+                'InterfaceDeclaration',
+                'TypeAliasDeclaration',
+                'EnumDeclaration',
+                'ModuleDeclaration',
+                'PropertyDeclaration',
+                'MethodDeclaration',
+                'PropertySignature',
+                'MethodSignature',
+                'GetAccessor',
+                'SetAccessor',
+                'TypeParameter',
+                'EnumMember',
+            ].includes(parent.kind)
+        ) {
+            return new Shadow(this.rules).name(this.rules.parents[index] ?? -1) !== index;
+        }
+        if(parent.kind === 'ExportSpecifier') {
+            let ancestor = this.rules.parents[index] ?? -1;
+            while(ancestor >= 0 && this.rules.parser.node(ancestor).kind !== 'ExportDeclaration') {
+                ancestor = this.rules.parents[ancestor] ?? -1;
+            }
+            if(
+                ancestor >= 0 &&
+                this.rules.parser
+                    .node(ancestor)
+                    .children.some((child) => this.rules.parser.node(child).kind === 'StringLiteral')
+            ) {
+                return false;
+            }
+            return parent.children[0] === index;
+        }
+        return true;
+    }
+    identity(index: number): number {
+        let identity = this.identities[index] ?? -1;
+        if(identity < 0) {
+            identity = this.constants.readIdentity(index);
+            this.identities[index] = identity;
+        }
+        return identity;
+    }
+    global(index: number): boolean {
+        let origin = this.origins[index] ?? -1;
+        if(origin >= 0) {
+            return origin === 1;
+        }
+        const parent = this.rules.parser.node(this.rules.parents[index] ?? -1);
+        let global = false;
+        if(['ShorthandPropertyAssignment', 'ExportSpecifier'].includes(parent.kind)) {
+            const frames = new Frames(this.rules.ask(index, 'resolved-name\n' + this.rules.parser.node(index).text));
+            header(frames, 'resolved-name');
+            const present = frames.yes();
+            global = true;
+            if(present) {
+                frames.field();
+                const declarations = frames.natural();
+                for(let at = 0; at < declarations; at++) {
+                    frames.field();
+                    if(!frames.yes()) {
+                        global = false;
+                    }
+                    frames.yes();
+                }
+            }
+            frames.end();
+        }
+        else {
+            const symbol = new SymbolContext(this.rules, index);
+            global = symbol.kinds.length === 0 || new NoInvalidRegexp(this.rules).global(index);
+        }
+        this.origins[index] = global ? 1 : 0;
+        return global;
+    }
+    named(name: string, identity: number, global: boolean): number[] {
+        const references: number[] = [];
+        for(const index of this.references) {
+            if(this.rules.parser.node(index).text !== name) {
+                continue;
+            }
+            if(global ? this.global(index) : this.identity(index) === identity) {
+                if(global && this.constants.writes(index)) {
+                    return [];
+                }
+                references.push(index);
+            }
+        }
+        return references;
+    }
+    followReads(key: string, references: readonly number[], root: boolean): void {
+        if(this.following.includes(key)) {
+            return;
+        }
+        this.following.push(key);
+        for(const reference of references) {
+            this.followValue(reference, root);
+        }
+        this.following.pop();
+    }
+    key(index: number, computed: boolean): string {
+        const node = this.rules.parser.node(index);
+        if(computed) {
+            const expression = node.kind === 'ComputedPropertyName' ? (node.children[0] ?? -1) : index;
+            const seen: number[] = [];
+            const value = this.constants.value(expression, seen, false);
+            return value.known ? value.text : '';
+        }
+        return ['Identifier', 'StringLiteral', 'NumericLiteral', 'NoSubstitutionTemplateLiteral'].includes(node.kind)
+            ? node.text
+            : '';
+    }
+    patternProperty(key: number, value: number, root: boolean): void {
+        if(root && this.key(key, this.rules.parser.node(key).kind === 'ComputedPropertyName') === 'RegExp') {
+            this.followTarget(value, false);
+        }
+    }
+    followTarget(index: number, root: boolean): void {
+        index = this.rules.skip(index);
+        const target = this.rules.parser.node(index);
+        if(target.kind === 'Identifier') {
+            const identity = this.identity(index);
+            if(identity !== 0) {
+                this.followReads('symbol:' + identity.toString(), this.named(target.text, identity, false), root);
+            }
+            return;
+        }
+        if(target.kind === 'ObjectBindingPattern') {
+            const shadow = new Shadow(this.rules);
+            for(const element of target.children) {
+                const node = this.rules.parser.node(element);
+                if(
+                    node.kind !== 'BindingElement' ||
+                    node.children.some((child) => this.rules.parser.node(child).kind === 'DotDotDotToken')
+                ) {
+                    continue;
+                }
+                const name = shadow.name(element);
+                const initializer = shadow.initializer(element);
+                const key =
+                    node.children.find(
+                        (child) => child !== initializer && this.rules.parser.node(child).kind !== 'DotDotDotToken',
+                    ) ?? name;
+                this.patternProperty(key, name, root);
+            }
+        }
+        if(target.kind === 'ObjectLiteralExpression') {
+            for(const member of target.children) {
+                const node = this.rules.parser.node(member);
+                if(node.kind === 'PropertyAssignment') {
+                    this.patternProperty(node.children[0] ?? -1, node.children[node.children.length - 1] ?? -1, root);
+                }
+                if(node.kind === 'ShorthandPropertyAssignment') {
+                    this.patternProperty(node.children[0] ?? -1, node.children[0] ?? -1, root);
+                }
+            }
+        }
+        if(
+            target.kind === 'BinaryExpression' &&
+            this.rules.parser.node(target.children[1] ?? -1).kind === 'EqualsToken'
+        ) {
+            this.followTarget(target.children[0] ?? -1, root);
+        }
+    }
+    pass(index: number, parent: number): boolean {
+        const node = this.rules.parser.node(parent);
+        if(
+            [
+                'ParenthesizedExpression',
+                'AsExpression',
+                'SatisfiesExpression',
+                'TypeAssertionExpression',
+                'NonNullExpression',
+                'ExpressionWithTypeArguments',
+            ].includes(node.kind)
+        ) {
+            return true;
+        }
+        if(node.kind === 'ConditionalExpression') {
+            return node.children[2] === index || node.children[4] === index;
+        }
+        if(node.kind === 'BinaryExpression') {
+            const operator = this.rules.parser.node(node.children[1] ?? -1).kind;
+            return (
+                ['AmpersandAmpersandToken', 'BarBarToken', 'QuestionQuestionToken'].includes(operator) ||
+                (operator === 'CommaToken' && node.children[2] === index)
+            );
+        }
+        return false;
+    }
+    followValue(index: number, root: boolean): void {
+        while((this.rules.parents[index] ?? -1) >= 0 && this.pass(index, this.rules.parents[index] ?? -1)) {
+            index = this.rules.parents[index] ?? -1;
+        }
+        const parentIndex = this.rules.parents[index] ?? -1;
+        if(parentIndex < 0) {
+            return;
+        }
+        const parent = this.rules.parser.node(parentIndex);
+        if(
+            ['PropertyAccessExpression', 'ElementAccessExpression'].includes(parent.kind) &&
+            parent.children[0] === index
+        ) {
+            if(
+                root &&
+                this.key(
+                    parent.children[parent.children.length - 1] ?? -1,
+                    parent.kind === 'ElementAccessExpression',
+                ) === 'RegExp'
+            ) {
+                this.followValue(parentIndex, false);
+            }
+            return;
+        }
+        if(['CallExpression', 'NewExpression'].includes(parent.kind) && parent.children[0] === index && !root) {
+            this.calls.push(parentIndex);
+            return;
+        }
+        if(
+            parent.kind === 'BinaryExpression' &&
+            parent.children[2] === index &&
+            [
+                'EqualsToken',
+                'BarBarEqualsToken',
+                'AmpersandAmpersandEqualsToken',
+                'QuestionQuestionEqualsToken',
+            ].includes(this.rules.parser.node(parent.children[1] ?? -1).kind)
+        ) {
+            this.followTarget(parent.children[0] ?? -1, root);
+            this.followValue(parentIndex, root);
+            return;
+        }
+        if(
+            ['VariableDeclaration', 'Parameter', 'BindingElement'].includes(parent.kind) &&
+            new Shadow(this.rules).initializer(parentIndex) === index
+        ) {
+            this.followTarget(new Shadow(this.rules).name(parentIndex), root);
+            return;
+        }
+        if(
+            parent.kind === 'ShorthandPropertyAssignment' &&
+            parent.children.length > 1 &&
+            parent.children[parent.children.length - 1] === index
+        ) {
+            this.followTarget(parent.children[0] ?? -1, root);
+        }
+    }
+    run(): number[] {
+        this.followReads('global:RegExp', this.named('RegExp', 0, true), false);
+        for(const global of ['global', 'globalThis', 'self', 'window']) {
+            this.followReads('global:' + global, this.named(global, 0, true), true);
+        }
+        this.calls.sort(
+            (left, right) =>
+                this.rules.start(this.rules.parser.node(left)) - this.rules.start(this.rules.parser.node(right)),
+        );
+        return this.calls;
+    }
+}

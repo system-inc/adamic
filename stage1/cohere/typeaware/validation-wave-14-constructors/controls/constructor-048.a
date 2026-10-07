@@ -1,0 +1,2 @@
+const R=(true?RegExp:RegExp);new R('[Á]');
+export {};
