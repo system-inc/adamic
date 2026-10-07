@@ -13,8 +13,9 @@ versions = json.loads((RESULTS / 'versions.json').read_text())
 lookup = {(row['program'], row['variant']): row for row in sizes}
 lines = ['# Wasm size and startup against JavaScript', '',
     f"Measured at `{versions['revision']}` on Node {versions['node']}, WASI SDK 27 (clang 20.1.8), "
-    'Binaryen 126, esbuild 0.25.12, gzip 1.13 and Node zlib Brotli quality 11. '
-    'No compiler source or production flags changed.', '',
+    f"Binaryen 126, esbuild 0.25.12, gzip 1.13 and {versions.get('brotli', 'brotli unknown')} CLI at `-q 11`. "
+    'No compiler changes were authored and this unit changed no production flags. Final gates and measurements follow the '
+    'merge of origin/main at f8013f0; premerge oracle logs are retained separately.', '',
     '`hello` is `internal/load/testdata/0.1/compile/01_hello.ts`; `dedication` is '
     '`dedication/dedication.a`. These sources contain the same dedication text and are intentional identical controls. '
     '`collections` is `internal/oracle/testdata/collections.a` (6,396 source bytes), the largest existing '
@@ -48,7 +49,8 @@ lines = ['# Wasm size and startup against JavaScript', '',
     'Suffix `raw` means no further treatment; `strip` runs SDK `llvm-strip`; `opt` runs '
     'Binaryen `wasm-opt -Oz` on the raw module; `strip-opt` runs `llvm-strip` then '
     '`wasm-opt -Oz`. Columns below are `bytes / gzip -9 -n / Brotli quality 11`, independently '
-    'compressing the named artifact. Gzip and Brotli decompression round trips are checked. '
+    'compressing the named artifact. Brotli uses `brotli -q 11 -c`; Node independently decodes its '
+    'output and checks the original bytes. Gzip and Brotli decompression round trips are checked. '
     'Complete rows, including treatments of every flag experiment and SHA-256 hashes, are in '
     '[sizes.csv](results/sizes.csv). Exact compiler argv, including SDK and cache paths, are in '
     '`results/clang-*.jsonl.gz`.', '',
@@ -103,7 +105,7 @@ lines += ['', 'In-process timings use Node `performance.now`, 30 rotating rounds
     'query string per round to execute the entry again; its shared runtime remains cached. Console '
     'output is suppressed; WASI output goes to `/dev/null`. Repeated Wasm compilation can use V8\'s '
     'code cache. These are warm-process measurements, not 30 independent cold compilations. '
-    'Entry timings include each program\'s top-level work. The request row measures initialization, '
+    'No forced garbage collection is performed. Entry timings include each program\'s top-level work. The request row measures initialization, '
     'not a served request.', '', '## Oracle evidence', '',
     'Every measured artifact was checked against the source on Node for exact stdout, stderr and '
     'exit. Reactor artifacts additionally agreed with the source handler on Node for ASCII, Unicode, '
@@ -121,8 +123,10 @@ lines += ['', 'The existing `TestWASIOracleCatchesMutants` and `TestWASIRunnerCa
     'a changed output byte and exit 23 each triggered their intended disagreement. The benchmark '
     'also changed `Kenneth Lane Thompson` to `Kenneth Lane Thompson!` in emitted JS, appended '
     '`process.exitCode = 23`, and appended a stderr write, independently. Each compiled/executed '
-    'and was rejected by the exact comparison. A synthetic no-tests-selected green log was rejected '
-    'by the nonzero subtest guard. These are recorded in `results/mutants.json`. No mutant '
+    'and was rejected by the exact comparison. A real Go no-tests-selected green run was rejected '
+    'by the nonzero subtest guard. Compressing input plus `!` was rejected by both decompressed-byte '
+    'equality checks; adding `!` to the observed reactor response was rejected by the source response '
+    'comparison. These are recorded in `results/mutants.json`. No mutant '
     'modified compiler or runtime sources.', '', '## Reproduce', '', '```sh',
     'bash cloud/setup.sh --wasi-sdk > /tmp/wasm-size-setup.log 2>&1',
     'source /workspace/adamic-tools/env.sh',
@@ -131,6 +135,10 @@ lines += ['', 'The existing `TestWASIOracleCatchesMutants` and `TestWASIRunnerCa
     'curl -fsSL https://github.com/WebAssembly/binaryen/releases/download/version_126/binaryen-version_126-x86_64-linux.tar.gz -o /workspace/wasm-size-tools/binaryen.tar.gz',
     'tar -xzf /workspace/wasm-size-tools/binaryen.tar.gz -C /workspace/wasm-size-tools',
     'npm install --prefix /workspace/wasm-size-tools esbuild@0.25.12 > /tmp/wasm-size-npm.log 2>&1',
+    'mkdir -p /workspace/wasm-size-tools/brotli-1.1.0 /workspace/wasm-size-tools/brotli-build',
+    'curl -fsSL https://github.com/google/brotli/archive/refs/tags/v1.1.0.tar.gz -o /workspace/wasm-size-tools/brotli.tar.gz',
+    'tar -xzf /workspace/wasm-size-tools/brotli.tar.gz -C /workspace/wasm-size-tools/brotli-1.1.0 --strip-components=1',
+    'cc -O2 -DBROTLI_HAVE_LOG2=1 -DOS_LINUX -I /workspace/wasm-size-tools/brotli-1.1.0/c/include /workspace/wasm-size-tools/brotli-1.1.0/c/common/*.c /workspace/wasm-size-tools/brotli-1.1.0/c/dec/*.c /workspace/wasm-size-tools/brotli-1.1.0/c/enc/*.c /workspace/wasm-size-tools/brotli-1.1.0/c/tools/brotli.c -lm -o /workspace/wasm-size-tools/brotli-build/brotli > /tmp/wasm-size-brotli-cc.log 2>&1',
     'bash bench/wasm/run.sh measure > /tmp/wasm-size-measure.log 2>&1',
     'bash bench/wasm/run.sh strip-opt > /tmp/wasm-size-strip-opt.log 2>&1',
     'for configuration in O2 Oz O2-opt Oz-opt Oz-strip-opt no-whole lto; do',
@@ -139,7 +147,8 @@ lines += ['', 'The existing `TestWASIOracleCatchesMutants` and `TestWASIRunnerCa
     '# Stop building/testing before this timing phase.',
     'bash bench/wasm/run.sh startup > /tmp/wasm-size-startup.log 2>&1',
     'ADAMIC_ORACLE_WASI=1 ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run "^TestWASI(OracleCatchesMutants|RunnerCatchesMutants)$" -count=1 -v -timeout 10m > bench/wasm/results/oracle-mutants.log 2>&1',
-    'python3 bench/wasm/render.py', '```', '',
+    'python3 bench/wasm/render.py',
+    'bash bench/wasm/run.sh archive', '```', '',
     'The oracle mode runs `ADAMIC_ORACLE_WASI=1 ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle '
     "-run '^TestWASIAgreesWithNode$' -count=1 -v -timeout 30m` into a log file. "
     'An isolated SDK directory symlinks the real sysroot and llvm-ar and supplies `clang.py` as '
@@ -148,18 +157,25 @@ lines += ['', 'The existing `TestWASIOracleCatchesMutants` and `TestWASIRunnerCa
     'cannot reuse an archive built with different hidden flags. Compiler argv and all build '
     'commands are recorded. It never edits `internal/native`.', '',
     'Setup printed Go/clang/Node ready at 0s, WASI SDK and submodules ready at 9s, '
-    'build cache warm and done at 117s, 5 processors and four CPUs of quota.', '',
+    'build cache warm and done at 117s, 5 processors and four CPUs of quota. CMake was unavailable '
+    '(`cmake: command not found`), so Brotli was built directly with the recorded C command.', '',
     '## Reading the numbers', '',
     'Stripping removes far more bytes than switching optimization levels. Explicit section GC '
-    'and function/data sections do not reduce stripped sizes here. Dropping whole-archive '
+    'and function/data sections do not reduce stripped sizes here. Function/data sections can change '
+    'raw metadata bytes; the complete raw and compressed rows remain in the CSV. Dropping whole-archive '
     'changes raw metadata size but has no stripped-size benefit for these programs; retain '
-    'the current constructor-preserving link policy. LTO is workload dependent, so there is '
-    'no general recommendation to enable it.', '',
+    'the current constructor-preserving link policy. The reactor is 16 stripped bytes larger '
+    'without whole-archive. LTO increases stripped sizes for all four measured programs; '
+    'this sample gives no size reason to enable it.', '',
     'For a size-oriented build, the observed candidate is `-Oz` followed by `llvm-strip` and '
     '`wasm-opt -Oz`, provided the configuration\'s full oracle is green. This is a recommendation '
     'supported by the recorded agreement run, not a production flag change. Compare compressed '
     'rows as well as raw rows: smaller uncompressed output does not guarantee smaller gzip or '
     'Brotli output.', '',
+    'In these runs, Wasm process medians were 29.4 to 31.3 ms, JS medians were 27.6 to 30.0 ms, '
+    'and source medians were 52.3 to 60.6 ms. JS processes finished sooner than Wasm processes; '
+    'warm in-process compile/import timings measure a different boundary and can benefit from '
+    'engine caches.', '',
     'The standalone minified JS bundles are much smaller than these Wasm modules. Process '
     'startup includes Node and differs from warm compile/import timings. These data do not '
     'measure browser downloads, Worker cold starts, HTTP throughput, deployed isolates, sustained '
