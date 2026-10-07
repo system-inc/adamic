@@ -1131,3 +1131,33 @@ native ASan/UBSan, JavaScript backend and native release; the separate leak pass
 Log: `/tmp/ts-printer-program-expression-retry-test.log`, including explicit `exit=0`.
 The retry used the same environment and flags above; the interrupted original attempt is not
 counted as a completed gate. Coverage: `results/statement-expression-coverage.json`.
+
+## Statement-family push and isolated throughput
+
+Statement-family commit **b308bab67b3a836596d5a74ec734cf744d9e38bf** was pushed successfully:
+`3dd85f2..b308bab codex/stage1-ts-printer -> codex/stage1-ts-printer`.
+The worktree was clean before measuring. All validation jobs had ended; the source was frozen
+under `/tmp/ts-printer-program-snapshot`, with parser/scanner and Node-oracle symlinks.
+
+```sh
+source /workspace/adamic-tools/env.sh
+python3 /tmp/ts-printer-program-snapshot/stage1/cohere/tsprinter/testdata/measure.py \
+  /tmp/ts-printer-program-corpus /tmp/ts-printer-program-artifacts/port \
+  /tmp/ts-printer-go-oracle /tmp/graphql-printer-prettier --entry statementsMain.ts \
+  > /tmp/ts-printer-program-timing.json 2> /tmp/ts-printer-program-timing.err
+```
+
+Exit 0, empty stderr. Three sequential complete-process runs per side, including startup,
+input/output and formatting; **every timed sample is byte-identical to Go**. On **44,091 texts**,
+median texts/s: native **29,135**, Node **37,933**, Go **42,278**, npm Prettier **2,825**.
+Native is **0.69x Go**, **0.77x Node** and **10.31x npm Prettier** on this workload. This is a
+measurement of a different corpus, not an inference about a regression from earlier increments.
+Raw samples, source SHA, source-file hashes and method are in `results/statement-timing.json`.
+The machine still reports **nproc 5**, with a four-core CPU quota.
+
+This unit is a partial port, with 15 green printer-family commits from `fbed1b7` through `b308bab`.
+Binding/assignment patterns, anonymous functions, Jest tables and broader control flow remain
+unported, alongside comments, source trivia and later typed declarations/types. Their current
+proving inputs and the five exact upstream control-flow differences are in GAPS.md. No complete
+TypeScript compiler source file is claimed formatted. No internal, parser, scanner or submodule
+file was edited. The port-specific gates above passed; the full repository gate was not run.
