@@ -151,3 +151,16 @@ func TestEmptyNeverMapCannotGainWritableInhabitants(t *testing.T) {
 		t.Fatalf("got %v, want invariant mutable view refused", err)
 	}
 }
+
+func TestDebugNamespaceObservationBoundary(t *testing.T) {
+	t.Parallel()
+	source, err := os.ReadFile("../../stage3/namespaces/debug-groups/object_observation.a")
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = lowerSource(t, string(source))
+	var notYet *NotYet
+	if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "no runtime container is emitted") {
+		t.Fatalf("Debug container boundary lost: %v", err)
+	}
+}

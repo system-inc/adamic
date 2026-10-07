@@ -1,0 +1,45 @@
+{
+  "group": "object_observation",
+  "sites": [
+    "debug.ts:169:49",
+    "debug.ts:170:22",
+    "debug.ts:189:56",
+    "debug.ts:190:14"
+  ],
+  "node": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/stage3/namespaces/debug-groups/object_observation.a"
+    ],
+    "stdout": "live:disabled:false\nlive\n",
+    "stderr": "",
+    "exit": 0
+  },
+  "mutant": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/tmp/debug-groups/object_observation/mutant.a"
+    ],
+    "stdout": "live:live:true\nlive\n",
+    "stderr": "",
+    "exit": 0
+  },
+  "build": {
+    "command": [
+      "/tmp/namespaces-graph-matrix-delivery/adamic",
+      "build",
+      "/workspace/adamic/stage3/namespaces/debug-groups/object_observation.a",
+      "-o",
+      "/tmp/debug-groups/object_observation/native",
+      "--sanitize"
+    ],
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/stage3/namespaces/debug-groups/object_observation.a:4:16: stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet\n",
+    "exit": 1
+  },
+  "judgment": "NotYet is necessary for the current flattened representation. A snapshot changes qualified call behavior. Narrow sound acceptance requires a canonical live container, finite checked property keys, mutable callable slots, detached-function identity, and staged initialization. Unchecked any casts and reflection still require separate checks. This exceeds the small-container boundary already authorized for this namespace unit."
+}

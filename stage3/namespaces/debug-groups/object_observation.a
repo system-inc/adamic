@@ -1,0 +1,10 @@
+// Four Debug[name] operations cut from the assertion-cache lifecycle.
+namespace Debug {export function assertion():string{return 'live';}}
+const key:'assertion'='assertion';
+const original=Debug[key];
+const cached={assertion:Debug[key]};
+Debug[key]=():string=>'disabled';
+console.log(`${original()}:${Debug.assertion()}:${cached.assertion()===Debug.assertion()}`);
+function restore():void {Debug[key]=original;}
+restore();
+console.log(Debug.assertion());
