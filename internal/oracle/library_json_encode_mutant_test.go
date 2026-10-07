@@ -119,13 +119,21 @@ func TestJSONEncodeNativeStringMetadata(t *testing.T) {
 			}
 		}
 		code := strings.ReplaceAll(source, "adamic_json_encode(", "metadata_target(") + "\n" + wrapper + strings.ReplaceAll(native.C(program), "adamic_json_encode(", "checked_encode(")
-		got := runDecodeMutant(t, code, buildDecodeMutant(t, code))
+		binary := buildDecodeMutant(t, code)
+		// The mutant panics with its result still allocated, by design. This test is about the
+		// result's metadata, not leaks, so the mutant runs uncounted: on macOS runDecodeMutant's
+		// counted build would report that allocation, exit 1 and hide the panic being asserted.
+		// The baseline keeps the leak check.
 		if mutant {
+			got := execute(t, binary)
 			if got.exitCode != 70 || !strings.Contains(string(got.stderr), "encode metadata differs") {
 				t.Fatalf("metadata mutant survived: %d %s", got.exitCode, got.stderr)
 			}
-		} else if diff := disagreement(onNode(t, path), got); diff != "" {
-			t.Fatalf("metadata baseline: %s %s", diff, got.stderr)
+		} else {
+			got := runDecodeMutant(t, code, binary)
+			if diff := disagreement(onNode(t, path), got); diff != "" {
+				t.Fatalf("metadata baseline: %s %s", diff, got.stderr)
+			}
 		}
 	}
 }
