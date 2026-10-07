@@ -251,6 +251,8 @@ bool adamic_object_has_own(const adamic_object *object, const adamic_string *key
 struct adamic_array *adamic_object_keys(const adamic_object *object);
 struct adamic_array *adamic_object_values(const adamic_object *object, bool references, bool entries);
 void adamic_object_assign(adamic_object *target, const adamic_object *source);
+struct adamic_array *adamic_object_values_checked(const adamic_object *object, bool references, bool entries, const char *expression);
+void adamic_object_assign_checked(adamic_object *target, const adamic_object *source, const char *expression);
 void adamic_object_check_write(const adamic_object *object, const char *name);
 
 // adamic_array is an array (array.c). references says whether its elements are references.
