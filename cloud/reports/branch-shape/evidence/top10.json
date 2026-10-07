@@ -1,0 +1,1258 @@
+[
+  {
+    "function": "adamic_function_33_Scanner_scan",
+    "events": {
+      "Ir": 524627048,
+      "Dr": 140039903,
+      "Dw": 66761072,
+      "I1mr": 3218907,
+      "D1mr": 33322,
+      "D1mw": 79038,
+      "ILmr": 134,
+      "DLmr": 7,
+      "DLmw": 15,
+      "Bc": 93773689,
+      "Bcm": 2439629,
+      "Bi": 0,
+      "Bim": 0
+    },
+    "hot_branches": [
+      {
+        "function": "adamic_function_33_Scanner_scan",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x3cb0e",
+        "line": 3694,
+        "costs": [
+          3656397,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          3656397,
+          1058886,
+          0,
+          0
+        ],
+        "taken": 1558249
+      },
+      {
+        "function": "adamic_function_33_Scanner_scan",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x3fd80",
+        "line": 7486,
+        "costs": [
+          1156287,
+          0,
+          0,
+          17979,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1156287,
+          522006,
+          0,
+          0
+        ],
+        "taken": 367032
+      },
+      {
+        "function": "adamic_function_33_Scanner_scan",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x3cbd7",
+        "line": 7022,
+        "costs": [
+          1372928,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1372928,
+          209691,
+          0,
+          0
+        ],
+        "taken": 1187607
+      },
+      {
+        "function": "adamic_function_33_Scanner_scan",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x3cbc7",
+        "line": 7022,
+        "costs": [
+          1558249,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1558249,
+          185325,
+          0,
+          0
+        ],
+        "taken": 1372928
+      },
+      {
+        "function": "adamic_function_33_Scanner_scan",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x3ce26",
+        "line": 7312,
+        "costs": [
+          1163147,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1163147,
+          82349,
+          0,
+          0
+        ],
+        "taken": 1091164
+      }
+    ]
+  },
+  {
+    "function": "adamic_function_1_isIdentifierStart",
+    "events": {
+      "Ir": 193073773,
+      "Dr": 72848998,
+      "Dw": 20491524,
+      "I1mr": 446121,
+      "D1mr": 688,
+      "D1mw": 4,
+      "ILmr": 4,
+      "DLmr": 1,
+      "DLmw": 0,
+      "Bc": 45554880,
+      "Bcm": 1511488,
+      "Bi": 0,
+      "Bim": 0
+    },
+    "hot_branches": [
+      {
+        "function": "adamic_function_1_isIdentifierStart",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x3795d",
+        "line": 3642,
+        "costs": [
+          6802594,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          6802594,
+          695007,
+          0,
+          0
+        ],
+        "taken": 1052236
+      },
+      {
+        "function": "adamic_function_1_isIdentifierStart",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x3796b",
+        "line": 3642,
+        "costs": [
+          5750358,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          5750358,
+          628545,
+          0,
+          0
+        ],
+        "taken": 603302
+      },
+      {
+        "function": "adamic_function_1_isIdentifierStart",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x37983",
+        "line": 3643,
+        "costs": [
+          5121459,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          5121459,
+          96025,
+          0,
+          0
+        ],
+        "taken": 5037539
+      },
+      {
+        "function": "adamic_function_1_isIdentifierStart",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x37975",
+        "line": 3643,
+        "costs": [
+          6199292,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          6199292,
+          29021,
+          0,
+          0
+        ],
+        "taken": 1077833
+      },
+      {
+        "function": "adamic_function_1_isIdentifierStart",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x37951",
+        "line": 3642,
+        "costs": [
+          6830494,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          6830494,
+          28693,
+          0,
+          0
+        ],
+        "taken": 6802594
+      }
+    ]
+  },
+  {
+    "function": "adamic_function_62_Context_mapParents",
+    "events": {
+      "Ir": 50564366,
+      "Dr": 15092343,
+      "Dw": 15092574,
+      "I1mr": 308,
+      "D1mr": 1404230,
+      "D1mw": 0,
+      "ILmr": 4,
+      "DLmr": 0,
+      "DLmw": 0,
+      "Bc": 2663332,
+      "Bcm": 903942,
+      "Bi": 0,
+      "Bim": 0
+    },
+    "hot_branches": [
+      {
+        "function": "adamic_function_62_Context_mapParents'2",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x22553",
+        "line": 9482,
+        "costs": [
+          887726,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          887726,
+          482325,
+          0,
+          0
+        ],
+        "taken": 463796
+      },
+      {
+        "function": "adamic_function_62_Context_mapParents'2",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x2257e",
+        "line": 9482,
+        "costs": [
+          883122,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          883122,
+          417228,
+          0,
+          0
+        ],
+        "taken": 459192
+      },
+      {
+        "function": "adamic_function_62_Context_mapParents",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x2257e",
+        "line": 9482,
+        "costs": [
+          4604,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          4604,
+          4122,
+          0,
+          0
+        ],
+        "taken": 4527
+      },
+      {
+        "function": "adamic_function_62_Context_mapParents'2",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x224e3",
+        "line": 9472,
+        "costs": [
+          887726,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          887726,
+          115,
+          0,
+          0
+        ],
+        "taken": 0
+      },
+      {
+        "function": "adamic_function_62_Context_mapParents",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x22553",
+        "line": 9482,
+        "costs": [
+          77,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          77,
+          77,
+          0,
+          0
+        ],
+        "taken": 0
+      }
+    ]
+  },
+  {
+    "function": "adamic_function_34_Scanner_punctuation",
+    "events": {
+      "Ir": 34958843,
+      "Dr": 15041988,
+      "Dw": 2937548,
+      "I1mr": 2688918,
+      "D1mr": 6530,
+      "D1mw": 0,
+      "ILmr": 34,
+      "DLmr": 3,
+      "DLmw": 0,
+      "Bc": 12538373,
+      "Bcm": 782726,
+      "Bi": 0,
+      "Bim": 0
+    },
+    "hot_branches": [
+      {
+        "function": "adamic_function_34_Scanner_punctuation",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x39f3c",
+        "line": 8041,
+        "costs": [
+          458584,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          458584,
+          114647,
+          0,
+          0
+        ],
+        "taken": 366057
+      },
+      {
+        "function": "adamic_function_34_Scanner_punctuation",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x39f54",
+        "line": 8045,
+        "costs": [
+          366057,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          366057,
+          109576,
+          0,
+          0
+        ],
+        "taken": 272543
+      },
+      {
+        "function": "adamic_function_34_Scanner_punctuation",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x39a8c",
+        "line": 7861,
+        "costs": [
+          615365,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          615365,
+          86920,
+          0,
+          0
+        ],
+        "taken": 540697
+      },
+      {
+        "function": "adamic_function_34_Scanner_punctuation",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x39a92",
+        "line": 7861,
+        "costs": [
+          74668,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          74668,
+          74661,
+          0,
+          0
+        ],
+        "taken": 0
+      },
+      {
+        "function": "adamic_function_34_Scanner_punctuation",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x39fcc",
+        "line": 8065,
+        "costs": [
+          192460,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          192460,
+          59724,
+          0,
+          0
+        ],
+        "taken": 131063
+      }
+    ]
+  },
+  {
+    "function": "adamic_function_11_precedence",
+    "events": {
+      "Ir": 34824750,
+      "Dr": 1525458,
+      "Dw": 7288761,
+      "I1mr": 1367167,
+      "D1mr": 3177,
+      "D1mw": 0,
+      "ILmr": 13,
+      "DLmr": 1,
+      "DLmw": 0,
+      "Bc": 6059960,
+      "Bcm": 689417,
+      "Bi": 0,
+      "Bim": 0
+    },
+    "hot_branches": [
+      {
+        "function": "adamic_function_11_precedence",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x6372b",
+        "line": 4038,
+        "costs": [
+          221974,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          221974,
+          159195,
+          0,
+          0
+        ],
+        "taken": 219897
+      },
+      {
+        "function": "adamic_function_11_precedence",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x6386a",
+        "line": 4053,
+        "costs": [
+          212457,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          212457,
+          147198,
+          0,
+          0
+        ],
+        "taken": 211871
+      },
+      {
+        "function": "adamic_function_11_precedence",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x636f2",
+        "line": 4038,
+        "costs": [
+          228134,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          228134,
+          146785,
+          0,
+          0
+        ],
+        "taken": 0
+      },
+      {
+        "function": "adamic_function_11_precedence",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x63680",
+        "line": 4023,
+        "costs": [
+          234519,
+          0,
+          0,
+          30262,
+          0,
+          0,
+          1,
+          0,
+          0,
+          234519,
+          95531,
+          0,
+          0
+        ],
+        "taken": 231700
+      },
+      {
+        "function": "adamic_function_11_precedence",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x638a5",
+        "line": 4058,
+        "costs": [
+          211849,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          211849,
+          61197,
+          0,
+          0
+        ],
+        "taken": 10
+      }
+    ]
+  },
+  {
+    "function": "adamic_function_153_Statements_statement",
+    "events": {
+      "Ir": 69803688,
+      "Dr": 11433951,
+      "Dw": 18209563,
+      "I1mr": 6515260,
+      "D1mr": 83365,
+      "D1mw": 90131,
+      "ILmr": 379,
+      "DLmr": 1,
+      "DLmw": 0,
+      "Bc": 5661669,
+      "Bcm": 334632,
+      "Bi": 1759644,
+      "Bim": 56192
+    },
+    "hot_branches": [
+      {
+        "function": "adamic_function_153_Statements_statement'2",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x45af6",
+        "line": 20905,
+        "costs": [
+          25316,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          25316,
+          24746,
+          0,
+          0
+        ],
+        "taken": 24747
+      },
+      {
+        "function": "adamic_function_153_Statements_statement'2",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x46da6",
+        "line": 21213,
+        "costs": [
+          23663,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          23663,
+          23663,
+          0,
+          0
+        ],
+        "taken": 23663
+      },
+      {
+        "function": "adamic_function_153_Statements_statement'2",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x4431b",
+        "line": 20540,
+        "costs": [
+          85340,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          85340,
+          20465,
+          0,
+          0
+        ],
+        "taken": 70320
+      },
+      {
+        "function": "adamic_function_153_Statements_statement'2",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x477d0",
+        "line": 21366,
+        "costs": [
+          17486,
+          17486,
+          17486,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          17486,
+          17485
+        ],
+        "taken": 0
+      },
+      {
+        "function": "adamic_function_153_Statements_statement'2",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x47b1e",
+        "line": 21416,
+        "costs": [
+          17483,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          17483,
+          17483,
+          0,
+          0
+        ],
+        "taken": 17483
+      }
+    ]
+  },
+  {
+    "function": "adamic_function_92_Parser_type",
+    "events": {
+      "Ir": 30847056,
+      "Dr": 2637814,
+      "Dw": 8247210,
+      "I1mr": 1532145,
+      "D1mr": 453,
+      "D1mw": 41,
+      "ILmr": 140,
+      "DLmr": 0,
+      "DLmw": 0,
+      "Bc": 2689975,
+      "Bcm": 305227,
+      "Bi": 0,
+      "Bim": 0
+    },
+    "hot_branches": [
+      {
+        "function": "adamic_function_92_Parser_type",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x277c2",
+        "line": 11159,
+        "costs": [
+          35314,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          35314,
+          35134,
+          0,
+          0
+        ],
+        "taken": 35312
+      },
+      {
+        "function": "adamic_function_92_Parser_type",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x28d9e",
+        "line": 11874,
+        "costs": [
+          26494,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          26494,
+          24930,
+          0,
+          0
+        ],
+        "taken": 24930
+      },
+      {
+        "function": "adamic_function_92_Parser_type",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x274e8",
+        "line": 11084,
+        "costs": [
+          36827,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          36827,
+          21354,
+          0,
+          0
+        ],
+        "taken": 20
+      },
+      {
+        "function": "adamic_function_92_Parser_type",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x27f68",
+        "line": 11333,
+        "costs": [
+          35251,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          35251,
+          20030,
+          0,
+          0
+        ],
+        "taken": 35251
+      },
+      {
+        "function": "adamic_function_92_Parser_type'2",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x277c2",
+        "line": 11159,
+        "costs": [
+          17299,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          17299,
+          16965,
+          0,
+          0
+        ],
+        "taken": 17299
+      }
+    ]
+  },
+  {
+    "function": "adamic_function_122_Parser_unary",
+    "events": {
+      "Ir": 27833711,
+      "Dr": 2974252,
+      "Dw": 6361306,
+      "I1mr": 2091181,
+      "D1mr": 3573,
+      "D1mw": 1568,
+      "ILmr": 30,
+      "DLmr": 0,
+      "DLmw": 0,
+      "Bc": 3803923,
+      "Bcm": 252737,
+      "Bi": 0,
+      "Bim": 0
+    },
+    "hot_branches": [
+      {
+        "function": "adamic_function_122_Parser_unary'2",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x32a16",
+        "line": 15322,
+        "costs": [
+          122630,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          122630,
+          116658,
+          0,
+          0
+        ],
+        "taken": 122630
+      },
+      {
+        "function": "adamic_function_122_Parser_unary",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x32a16",
+        "line": 15322,
+        "costs": [
+          96475,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          96475,
+          94687,
+          0,
+          0
+        ],
+        "taken": 96469
+      },
+      {
+        "function": "adamic_function_122_Parser_unary",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x32c74",
+        "line": 15348,
+        "costs": [
+          96467,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          96467,
+          10604,
+          0,
+          0
+        ],
+        "taken": 9
+      },
+      {
+        "function": "adamic_function_122_Parser_unary",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x329ca",
+        "line": 15322,
+        "costs": [
+          101247,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          101247,
+          8141,
+          0,
+          0
+        ],
+        "taken": 150
+      },
+      {
+        "function": "adamic_function_122_Parser_unary'2",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x3269b",
+        "line": 15214,
+        "costs": [
+          124860,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          124860,
+          6534,
+          0,
+          0
+        ],
+        "taken": 0
+      }
+    ]
+  },
+  {
+    "function": "adamic_function_81_Parser_primary",
+    "events": {
+      "Ir": 34406512,
+      "Dr": 2893083,
+      "Dw": 7744469,
+      "I1mr": 2122564,
+      "D1mr": 933,
+      "D1mw": 2917,
+      "ILmr": 32,
+      "DLmr": 0,
+      "DLmw": 0,
+      "Bc": 5077429,
+      "Bcm": 250175,
+      "Bi": 0,
+      "Bim": 0
+    },
+    "hot_branches": [
+      {
+        "function": "adamic_function_81_Parser_primary",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x244b7",
+        "line": 10345,
+        "costs": [
+          168186,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          168186,
+          164010,
+          0,
+          0
+        ],
+        "taken": 164007
+      },
+      {
+        "function": "adamic_function_81_Parser_primary",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x241f2",
+        "line": 10314,
+        "costs": [
+          168193,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          168193,
+          33331,
+          0,
+          0
+        ],
+        "taken": 168192
+      },
+      {
+        "function": "adamic_function_81_Parser_primary'2",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x244b7",
+        "line": 10345,
+        "costs": [
+          25913,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          25913,
+          25210,
+          0,
+          0
+        ],
+        "taken": 25214
+      },
+      {
+        "function": "adamic_function_81_Parser_primary",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x24472",
+        "line": 10328,
+        "costs": [
+          168187,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          168187,
+          10832,
+          0,
+          0
+        ],
+        "taken": 168186
+      },
+      {
+        "function": "adamic_function_81_Parser_primary'2",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x241f2",
+        "line": 10314,
+        "costs": [
+          26174,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          26174,
+          4038,
+          0,
+          0
+        ],
+        "taken": 26174
+      }
+    ]
+  },
+  {
+    "function": "adamic_function_73_Parser_kind",
+    "events": {
+      "Ir": 208327790,
+      "Dr": 66286115,
+      "Dw": 18938890,
+      "I1mr": 2984,
+      "D1mr": 329,
+      "D1mw": 749,
+      "ILmr": 4,
+      "DLmr": 0,
+      "DLmw": 1,
+      "Bc": 28408335,
+      "Bcm": 225408,
+      "Bi": 0,
+      "Bim": 0
+    },
+    "hot_branches": [
+      {
+        "function": "adamic_function_73_Parser_kind",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x227ae",
+        "line": 9853,
+        "costs": [
+          9469445,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          9469445,
+          220866,
+          0,
+          0
+        ],
+        "taken": 0
+      },
+      {
+        "function": "adamic_function_73_Parser_kind",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x227c2",
+        "line": 9854,
+        "costs": [
+          9469445,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          9469445,
+          4515,
+          0,
+          0
+        ],
+        "taken": 9469445
+      },
+      {
+        "function": "adamic_function_73_Parser_kind",
+        "source": "/workspace/scratch/branch-shape/before.c",
+        "address": "0x2282f",
+        "line": 9855,
+        "costs": [
+          9469445,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          9469445,
+          27,
+          0,
+          0
+        ],
+        "taken": 9469445
+      }
+    ]
+  }
+]

@@ -1,0 +1,116 @@
+Function adamic_function_62_Context_mapParents
+Aggregated self events {'Ir': 50564366, 'Dr': 15092343, 'Dw': 15092574, 'I1mr': 308, 'D1mr': 1404230, 'D1mw': 0, 'ILmr': 4, 'DLmr': 0, 'DLmw': 0, 'Bc': 2663332, 'Bcm': 903942, 'Bi': 0, 'Bim': 0}
+{'function': "adamic_function_62_Context_mapParents'2", 'source': '/workspace/scratch/branch-shape/before.c', 'address': '0x22553', 'line': 9482, 'costs': [887726, 0, 0, 0, 0, 0, 0, 0, 0, 887726, 482325, 0, 0], 'taken': 463796}
+9479: 		adamic_array * adamic_temporary_2037 = adamic_retain(adamic_temporary_2036);
+9480: 		adamic_release(adamic_temporary_2036);
+9481: 		adamic_release(adamic_temporary_2035);
+9482: 		for (size_t adamic_temporary_2038 = 0; adamic_temporary_2038 < adamic_temporary_2037->length; adamic_temporary_2038++) {
+9483: 			{
+9484: 				double adamic_local_879_child = adamic_temporary_2037->elements[adamic_temporary_2038].number;
+9485: 				{
+{'function': "adamic_function_62_Context_mapParents'2", 'source': '/workspace/scratch/branch-shape/before.c', 'address': '0x2257e', 'line': 9482, 'costs': [883122, 0, 0, 0, 0, 0, 0, 0, 0, 883122, 417228, 0, 0], 'taken': 459192}
+9479: 		adamic_array * adamic_temporary_2037 = adamic_retain(adamic_temporary_2036);
+9480: 		adamic_release(adamic_temporary_2036);
+9481: 		adamic_release(adamic_temporary_2035);
+9482: 		for (size_t adamic_temporary_2038 = 0; adamic_temporary_2038 < adamic_temporary_2037->length; adamic_temporary_2038++) {
+9483: 			{
+9484: 				double adamic_local_879_child = adamic_temporary_2037->elements[adamic_temporary_2038].number;
+9485: 				{
+{'function': 'adamic_function_62_Context_mapParents', 'source': '/workspace/scratch/branch-shape/before.c', 'address': '0x2257e', 'line': 9482, 'costs': [4604, 0, 0, 0, 0, 0, 0, 0, 0, 4604, 4122, 0, 0], 'taken': 4527}
+9479: 		adamic_array * adamic_temporary_2037 = adamic_retain(adamic_temporary_2036);
+9480: 		adamic_release(adamic_temporary_2036);
+9481: 		adamic_release(adamic_temporary_2035);
+9482: 		for (size_t adamic_temporary_2038 = 0; adamic_temporary_2038 < adamic_temporary_2037->length; adamic_temporary_2038++) {
+9483: 			{
+9484: 				double adamic_local_879_child = adamic_temporary_2037->elements[adamic_temporary_2038].number;
+9485: 				{
+{'function': "adamic_function_62_Context_mapParents'2", 'source': '/workspace/scratch/branch-shape/before.c', 'address': '0x224e3', 'line': 9472, 'costs': [887726, 0, 0, 0, 0, 0, 0, 0, 0, 887726, 115, 0, 0], 'taken': 0}
+9469: }
+9470: 
+9471: static void adamic_function_62_Context_mapParents(adamic_object * adamic_local_273_this, double adamic_local_274_index, double adamic_local_275_parent) {
+9472: 	ADAMIC_CHECK_STACK();
+9473: 	adamic_array * adamic_temporary_2034 = adamic_retain(((adamic_array *)(&adamic_local_273_this->slots[7])->reference));
+9474: 	adamic_array_set(adamic_temporary_2034, adamic_local_274_index, (adamic_value){.number = adamic_local_275_parent});
+9475: 	adamic_release(adamic_temporary_2034);
+{'function': 'adamic_function_62_Context_mapParents', 'source': '/workspace/scratch/branch-shape/before.c', 'address': '0x22553', 'line': 9482, 'costs': [77, 0, 0, 0, 0, 0, 0, 0, 0, 77, 77, 0, 0], 'taken': 0}
+9479: 		adamic_array * adamic_temporary_2037 = adamic_retain(adamic_temporary_2036);
+9480: 		adamic_release(adamic_temporary_2036);
+9481: 		adamic_release(adamic_temporary_2035);
+9482: 		for (size_t adamic_temporary_2038 = 0; adamic_temporary_2038 < adamic_temporary_2037->length; adamic_temporary_2038++) {
+9483: 			{
+9484: 				double adamic_local_879_child = adamic_temporary_2037->elements[adamic_temporary_2038].number;
+9485: 				{
+
+/workspace/scratch/branch-shape/landing-before:     file format elf64-x86-64
+
+
+Disassembly of section .init:
+
+Disassembly of section .plt:
+
+Disassembly of section .plt.got:
+
+Disassembly of section .text:
+
+00000000000224c0 <adamic_function_62_Context_mapParents>:
+   224c0:	push   %rbp
+   224c1:	mov    %rsp,%rbp
+   224c4:	push   %r15
+   224c6:	push   %r14
+   224c8:	push   %r12
+   224ca:	push   %rbx
+   224cb:	sub    $0x10,%rsp
+   224cf:	movsd  %xmm1,-0x30(%rbp)
+   224d4:	movsd  %xmm0,-0x28(%rbp)
+   224d9:	lea    0xb7ca0(%rip),%rax        # da180 <adamic_stack_limit>
+   224e0:	cmp    %rbp,(%rax)
+   224e3:	ja     22595 <adamic_function_62_Context_mapParents+0xd5>
+   224e9:	mov    %rdi,%rbx
+   224ec:	mov    0x60(%rdi),%rdi
+   224f0:	call   6ed70 <adamic_retain>
+   224f5:	mov    %rax,%r14
+   224f8:	movq   -0x30(%rbp),%xmm0
+   224fd:	movq   %xmm0,%rsi
+   22502:	mov    %rax,%rdi
+   22505:	movsd  -0x28(%rbp),%xmm0
+   2250a:	call   691f0 <adamic_array_set>
+   2250f:	mov    %r14,%rdi
+   22512:	call   6ed90 <adamic_release>
+   22517:	mov    %rbx,%rdi
+   2251a:	movsd  -0x28(%rbp),%xmm0
+   2251f:	call   64a20 <adamic_function_45_Context_node>
+   22524:	mov    %rax,%r15
+   22527:	mov    0x40(%rax),%rdi
+   2252b:	call   6ed70 <adamic_retain>
+   22530:	mov    %rax,%r12
+   22533:	mov    %rax,%rdi
+   22536:	call   6ed70 <adamic_retain>
+   2253b:	mov    %rax,%r14
+   2253e:	mov    %r12,%rdi
+   22541:	call   6ed90 <adamic_release>
+   22546:	mov    %r15,%rdi
+   22549:	call   6ed90 <adamic_release>
+   2254e:	cmpq   $0x0,0x10(%r14)
+   22553:	je     22580 <adamic_function_62_Context_mapParents+0xc0>
+   22555:	xor    %r15d,%r15d
+   22558:	nopl   0x0(%rax,%rax,1)
+   22560:	mov    0x28(%r14),%rax
+   22564:	movsd  (%rax,%r15,8),%xmm0
+   2256a:	mov    %rbx,%rdi
+   2256d:	movsd  -0x28(%rbp),%xmm1
+   22572:	call   224c0 <adamic_function_62_Context_mapParents>
+   22577:	inc    %r15
+   2257a:	cmp    0x10(%r14),%r15
+   2257e:	jb     22560 <adamic_function_62_Context_mapParents+0xa0>
+   22580:	mov    %r14,%rdi
+   22583:	call   6ed90 <adamic_release>
+   22588:	add    $0x10,%rsp
+   2258c:	pop    %rbx
+   2258d:	pop    %r12
+   2258f:	pop    %r14
+   22591:	pop    %r15
+   22593:	pop    %rbp
+   22594:	ret
+   22595:	call   7fa00 <adamic_stack_overflow>
+
+Disassembly of section .fini:

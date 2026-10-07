@@ -1,0 +1,108 @@
+Function adamic_function_1_isIdentifierStart
+Aggregated self events {'Ir': 193073773, 'Dr': 72848998, 'Dw': 20491524, 'I1mr': 446121, 'D1mr': 688, 'D1mw': 4, 'ILmr': 4, 'DLmr': 1, 'DLmw': 0, 'Bc': 45554880, 'Bcm': 1511488, 'Bi': 0, 'Bim': 0}
+{'function': 'adamic_function_1_isIdentifierStart', 'source': '/workspace/scratch/branch-shape/before.c', 'address': '0x3795d', 'line': 3642, 'costs': [6802594, 0, 0, 0, 0, 0, 0, 0, 0, 6802594, 695007, 0, 0], 'taken': 1052236}
+3639: 
+3640: static bool adamic_function_1_isIdentifierStart(double adamic_local_4_code) {
+3641: 	ADAMIC_CHECK_STACK();
+3642: 	bool adamic_temporary_17 = ((((adamic_local_4_code == (0x1.2p+05)) || (adamic_local_4_code == (0x1.7cp+06))) || ((adamic_local_4_code >= (0x1.04p+06)) && (adamic_local_4_code <= (0x1.68p+06)))) || ((adamic_local_4_code >= (0x1.84p+06)) && (adamic_local_4_code <= (0x1.e8p+06))));
+3643: 	if (!adamic_temporary_17) {
+3644: 		bool adamic_temporary_16 = (adamic_local_4_code >= (0x1p+07));
+3645: 		if (adamic_temporary_16) {
+{'function': 'adamic_function_1_isIdentifierStart', 'source': '/workspace/scratch/branch-shape/before.c', 'address': '0x3796b', 'line': 3642, 'costs': [5750358, 0, 0, 0, 0, 0, 0, 0, 0, 5750358, 628545, 0, 0], 'taken': 603302}
+3639: 
+3640: static bool adamic_function_1_isIdentifierStart(double adamic_local_4_code) {
+3641: 	ADAMIC_CHECK_STACK();
+3642: 	bool adamic_temporary_17 = ((((adamic_local_4_code == (0x1.2p+05)) || (adamic_local_4_code == (0x1.7cp+06))) || ((adamic_local_4_code >= (0x1.04p+06)) && (adamic_local_4_code <= (0x1.68p+06)))) || ((adamic_local_4_code >= (0x1.84p+06)) && (adamic_local_4_code <= (0x1.e8p+06))));
+3643: 	if (!adamic_temporary_17) {
+3644: 		bool adamic_temporary_16 = (adamic_local_4_code >= (0x1p+07));
+3645: 		if (adamic_temporary_16) {
+{'function': 'adamic_function_1_isIdentifierStart', 'source': '/workspace/scratch/branch-shape/before.c', 'address': '0x37983', 'line': 3643, 'costs': [5121459, 0, 0, 0, 0, 0, 0, 0, 0, 5121459, 96025, 0, 0], 'taken': 5037539}
+3640: static bool adamic_function_1_isIdentifierStart(double adamic_local_4_code) {
+3641: 	ADAMIC_CHECK_STACK();
+3642: 	bool adamic_temporary_17 = ((((adamic_local_4_code == (0x1.2p+05)) || (adamic_local_4_code == (0x1.7cp+06))) || ((adamic_local_4_code >= (0x1.04p+06)) && (adamic_local_4_code <= (0x1.68p+06)))) || ((adamic_local_4_code >= (0x1.84p+06)) && (adamic_local_4_code <= (0x1.e8p+06))));
+3643: 	if (!adamic_temporary_17) {
+3644: 		bool adamic_temporary_16 = (adamic_local_4_code >= (0x1p+07));
+3645: 		if (adamic_temporary_16) {
+3646: 			if (!adamic_ready_0) {
+{'function': 'adamic_function_1_isIdentifierStart', 'source': '/workspace/scratch/branch-shape/before.c', 'address': '0x37975', 'line': 3643, 'costs': [6199292, 0, 0, 0, 0, 0, 0, 0, 0, 6199292, 29021, 0, 0], 'taken': 1077833}
+3640: static bool adamic_function_1_isIdentifierStart(double adamic_local_4_code) {
+3641: 	ADAMIC_CHECK_STACK();
+3642: 	bool adamic_temporary_17 = ((((adamic_local_4_code == (0x1.2p+05)) || (adamic_local_4_code == (0x1.7cp+06))) || ((adamic_local_4_code >= (0x1.04p+06)) && (adamic_local_4_code <= (0x1.68p+06)))) || ((adamic_local_4_code >= (0x1.84p+06)) && (adamic_local_4_code <= (0x1.e8p+06))));
+3643: 	if (!adamic_temporary_17) {
+3644: 		bool adamic_temporary_16 = (adamic_local_4_code >= (0x1p+07));
+3645: 		if (adamic_temporary_16) {
+3646: 			if (!adamic_ready_0) {
+{'function': 'adamic_function_1_isIdentifierStart', 'source': '/workspace/scratch/branch-shape/before.c', 'address': '0x37951', 'line': 3642, 'costs': [6830494, 0, 0, 0, 0, 0, 0, 0, 0, 6830494, 28693, 0, 0], 'taken': 6802594}
+3639: 
+3640: static bool adamic_function_1_isIdentifierStart(double adamic_local_4_code) {
+3641: 	ADAMIC_CHECK_STACK();
+3642: 	bool adamic_temporary_17 = ((((adamic_local_4_code == (0x1.2p+05)) || (adamic_local_4_code == (0x1.7cp+06))) || ((adamic_local_4_code >= (0x1.04p+06)) && (adamic_local_4_code <= (0x1.68p+06)))) || ((adamic_local_4_code >= (0x1.84p+06)) && (adamic_local_4_code <= (0x1.e8p+06))));
+3643: 	if (!adamic_temporary_17) {
+3644: 		bool adamic_temporary_16 = (adamic_local_4_code >= (0x1p+07));
+3645: 		if (adamic_temporary_16) {
+
+/workspace/scratch/branch-shape/landing-before:     file format elf64-x86-64
+
+
+Disassembly of section .init:
+
+Disassembly of section .plt:
+
+Disassembly of section .plt.got:
+
+Disassembly of section .text:
+
+0000000000037920 <adamic_function_1_isIdentifierStart>:
+   37920:	push   %rbp
+   37921:	mov    %rsp,%rbp
+   37924:	push   %r14
+   37926:	push   %rbx
+   37927:	sub    $0x10,%rsp
+   3792b:	lea    0xa284e(%rip),%rax        # da180 <adamic_stack_limit>
+   37932:	cmp    %rbp,(%rax)
+   37935:	ja     379d2 <adamic_function_1_isIdentifierStart+0xb2>
+   3793b:	ucomisd 0x4d8ad(%rip),%xmm0        # 851f0 <_IO_stdin_used+0x1f0>
+   37943:	mov    $0x1,%bl
+   37945:	jne    37949 <adamic_function_1_isIdentifierStart+0x29>
+   37947:	jnp    379c7 <adamic_function_1_isIdentifierStart+0xa7>
+   37949:	ucomisd 0x4d877(%rip),%xmm0        # 851c8 <_IO_stdin_used+0x1c8>
+   37951:	jne    37955 <adamic_function_1_isIdentifierStart+0x35>
+   37953:	jnp    379c7 <adamic_function_1_isIdentifierStart+0xa7>
+   37955:	ucomisd 0x4d77b(%rip),%xmm0        # 850d8 <_IO_stdin_used+0xd8>
+   3795d:	jb     3796d <adamic_function_1_isIdentifierStart+0x4d>
+   3795f:	movsd  0x4d891(%rip),%xmm1        # 851f8 <_IO_stdin_used+0x1f8>
+   37967:	ucomisd %xmm0,%xmm1
+   3796b:	jae    379c7 <adamic_function_1_isIdentifierStart+0xa7>
+   3796d:	ucomisd 0x4d783(%rip),%xmm0        # 850f8 <_IO_stdin_used+0xf8>
+   37975:	jb     37985 <adamic_function_1_isIdentifierStart+0x65>
+   37977:	movsd  0x4d881(%rip),%xmm1        # 85200 <_IO_stdin_used+0x200>
+   3797f:	ucomisd %xmm0,%xmm1
+   37983:	jae    379c7 <adamic_function_1_isIdentifierStart+0xa7>
+   37985:	ucomisd 0x4d6a3(%rip),%xmm0        # 85030 <_IO_stdin_used+0x30>
+   3798d:	jae    37993 <adamic_function_1_isIdentifierStart+0x73>
+   3798f:	xor    %ebx,%ebx
+   37991:	jmp    379c7 <adamic_function_1_isIdentifierStart+0xa7>
+   37993:	movsd  %xmm0,-0x18(%rbp)
+   37998:	cmpb   $0x0,0x8ae31(%rip)        # c27d0 <adamic_ready_0>
+   3799f:	je     379d7 <adamic_function_1_isIdentifierStart+0xb7>
+   379a1:	mov    0x8ae20(%rip),%rdi        # c27c8 <adamic_global_0_identifierStart>
+   379a8:	call   6ed70 <adamic_retain>
+   379ad:	mov    %rax,%r14
+   379b0:	mov    %rax,%rdi
+   379b3:	movsd  -0x18(%rbp),%xmm0
+   379b8:	call   37aa0 <adamic_function_0_contains>
+   379bd:	mov    %eax,%ebx
+   379bf:	mov    %r14,%rdi
+   379c2:	call   6ed90 <adamic_release>
+   379c7:	mov    %ebx,%eax
+   379c9:	add    $0x10,%rsp
+   379cd:	pop    %rbx
+   379ce:	pop    %r14
+   379d0:	pop    %rbp
+   379d1:	ret
+   379d2:	call   7fa00 <adamic_stack_overflow>
+   379d7:	lea    0x51212(%rip),%rdi        # 88bf0 <adamic_function_1_isIdentifierStart.message>
+   379de:	mov    $0x45,%esi
+   379e3:	call   67c30 <adamic_panic>
+
+Disassembly of section .fini:

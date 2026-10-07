@@ -1,0 +1,32 @@
+diff --git a/internal/native/emit_expressions.go b/internal/native/emit_expressions.go
+index b0ba315..846f2bb 100644
+--- a/internal/native/emit_expressions.go
++++ b/internal/native/emit_expressions.go
+@@ -55,6 +55,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
+ 		}
+ 	case ir.Binary:
+ 		if expression.Operator == ir.And || expression.Operator == ir.Or {
++			if value, ok := e.scalarLogical(expression); ok {
++				return value
++			}
+ 			return e.logical(expression)
+ 		}
+ 		return e.binary(expression.Operator, expression.Left.Type(), e.value(expression.Left), e.value(expression.Right))
+diff --git a/internal/native/emit_statements.go b/internal/native/emit_statements.go
+index 36083eb..a81c24f 100644
+--- a/internal/native/emit_statements.go
++++ b/internal/native/emit_statements.go
+@@ -405,6 +405,13 @@ func (e *emitter) switchStatement(statement ir.Switch) {
+ 		e.line("%s %s = %s;", cType(statement.Value.Type()), held, value)
+ 	}
+ 	e.end()
++	if e.numericSwitch(statement, held) {
++		e.releaseScopes(len(e.scopes) - 1)
++		e.scopes = e.scopes[:len(e.scopes)-1]
++		e.indent--
++		e.line("}")
++		return
++	}
+ 	e.line("do {")
+ 	e.indent++
+ 	e.breakables = append(e.breakables, len(e.scopes))

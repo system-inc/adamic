@@ -1,3 +1,5 @@
 Claim: codex/branch-shape owns numeric switch dispatch in switchStatement in internal/native/emit_statements.go, with new helpers in internal/native/branch_shape.go. The switch value remains evaluated once, with guarded exact integer conversion and fallback for nonconstant cases. No field stores, sieve, data layout, stack checks, symbol counters, or integer-field emission will change. A second claim will precede any additional emitter function change.
 
 Second claim: evaluate's ir.Binary logical dispatch in internal/native/emit_expressions.go will select eager C boolean &/| only for a closed, total scalar-expression whitelist. Helpers stay in branch_shape.go. Calls, property/array reads, unwraps, checked/global/captured reads, and all reference operands retain short-circuit lowering. No changes to emit_branches.go or any other worker's paths.
+
+Final status: the scalar condition experiment was rejected by measurement and removed. emit_expressions.go is unchanged. Only numeric switch dispatch remains in production.

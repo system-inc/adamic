@@ -1,0 +1,251 @@
+Function adamic_function_11_precedence
+Aggregated self events {'Ir': 34824750, 'Dr': 1525458, 'Dw': 7288761, 'I1mr': 1367167, 'D1mr': 3177, 'D1mw': 0, 'ILmr': 13, 'DLmr': 1, 'DLmw': 0, 'Bc': 6059960, 'Bcm': 689417, 'Bi': 0, 'Bim': 0}
+{'function': 'adamic_function_11_precedence', 'source': '/workspace/scratch/branch-shape/before.c', 'address': '0x6372b', 'line': 4038, 'costs': [221974, 0, 0, 0, 0, 0, 0, 0, 0, 221974, 159195, 0, 0], 'taken': 219897}
+4035: 									adamic_release(adamic_temporary_126);
+4036: 									return adamic_temporary_132;
+4037: 								} else {
+4038: 									if (adamic_string_equal(adamic_temporary_126, &adamic_string_17) || adamic_string_equal(adamic_temporary_126, &adamic_string_18) || adamic_string_equal(adamic_temporary_126, &adamic_string_19) || adamic_string_equal(adamic_temporary_126, &adamic_string_20)) {
+4039: 										double adamic_temporary_133 = (0x1.4p+03);
+4040: 										adamic_release(adamic_temporary_126);
+4041: 										return adamic_temporary_133;
+{'function': 'adamic_function_11_precedence', 'source': '/workspace/scratch/branch-shape/before.c', 'address': '0x6386a', 'line': 4053, 'costs': [212457, 0, 0, 0, 0, 0, 0, 0, 0, 212457, 147198, 0, 0], 'taken': 211871}
+4050: 												adamic_release(adamic_temporary_126);
+4051: 												return adamic_temporary_135;
+4052: 											} else {
+4053: 												if (adamic_string_equal(adamic_temporary_126, &adamic_string_32) || adamic_string_equal(adamic_temporary_126, &adamic_string_33)) {
+4054: 													double adamic_temporary_136 = (0x1.ap+03);
+4055: 													adamic_release(adamic_temporary_126);
+4056: 													return adamic_temporary_136;
+{'function': 'adamic_function_11_precedence', 'source': '/workspace/scratch/branch-shape/before.c', 'address': '0x636f2', 'line': 4038, 'costs': [228134, 0, 0, 0, 0, 0, 0, 0, 0, 228134, 146785, 0, 0], 'taken': 0}
+4035: 									adamic_release(adamic_temporary_126);
+4036: 									return adamic_temporary_132;
+4037: 								} else {
+4038: 									if (adamic_string_equal(adamic_temporary_126, &adamic_string_17) || adamic_string_equal(adamic_temporary_126, &adamic_string_18) || adamic_string_equal(adamic_temporary_126, &adamic_string_19) || adamic_string_equal(adamic_temporary_126, &adamic_string_20)) {
+4039: 										double adamic_temporary_133 = (0x1.4p+03);
+4040: 										adamic_release(adamic_temporary_126);
+4041: 										return adamic_temporary_133;
+{'function': 'adamic_function_11_precedence', 'source': '/workspace/scratch/branch-shape/before.c', 'address': '0x63680', 'line': 4023, 'costs': [234519, 0, 0, 30262, 0, 0, 1, 0, 0, 234519, 95531, 0, 0], 'taken': 231700}
+4020: 						adamic_release(adamic_temporary_126);
+4021: 						return adamic_temporary_129;
+4022: 					} else {
+4023: 						if (adamic_string_equal(adamic_temporary_126, &adamic_string_14)) {
+4024: 							double adamic_temporary_130 = (0x1.cp+02);
+4025: 							adamic_release(adamic_temporary_126);
+4026: 							return adamic_temporary_130;
+{'function': 'adamic_function_11_precedence', 'source': '/workspace/scratch/branch-shape/before.c', 'address': '0x638a5', 'line': 4058, 'costs': [211849, 0, 0, 0, 0, 0, 0, 0, 0, 211849, 61197, 0, 0], 'taken': 10}
+4055: 													adamic_release(adamic_temporary_126);
+4056: 													return adamic_temporary_136;
+4057: 												} else {
+4058: 													if (adamic_string_equal(adamic_temporary_126, &adamic_string_34) || adamic_string_equal(adamic_temporary_126, &adamic_string_35) || adamic_string_equal(adamic_temporary_126, &adamic_string_36)) {
+4059: 														double adamic_temporary_137 = (0x1.cp+03);
+4060: 														adamic_release(adamic_temporary_126);
+4061: 														return adamic_temporary_137;
+
+/workspace/scratch/branch-shape/landing-before:     file format elf64-x86-64
+
+
+Disassembly of section .init:
+
+Disassembly of section .plt:
+
+Disassembly of section .plt.got:
+
+Disassembly of section .text:
+
+00000000000635f0 <adamic_function_11_precedence>:
+   635f0:	push   %rbp
+   635f1:	mov    %rsp,%rbp
+   635f4:	push   %r14
+   635f6:	push   %rbx
+   635f7:	lea    0x76b82(%rip),%rax        # da180 <adamic_stack_limit>
+   635fe:	cmp    %rbp,(%rax)
+   63601:	ja     637f3 <adamic_function_11_precedence+0x203>
+   63607:	call   6ed70 <adamic_retain>
+   6360c:	mov    %rax,%rbx
+   6360f:	lea    0x5a99a(%rip),%rsi        # bdfb0 <adamic_string_11>
+   63616:	mov    %rax,%rdi
+   63619:	call   7fec0 <adamic_string_equal>
+   6361e:	test   %eax,%eax
+   63620:	jne    63635 <adamic_function_11_precedence+0x45>
+   63622:	lea    0x5a887(%rip),%rsi        # bdeb0 <adamic_string_12>
+   63629:	mov    %rbx,%rdi
+   6362c:	call   7fec0 <adamic_string_equal>
+   63631:	test   %eax,%eax
+   63633:	je     6364a <adamic_function_11_precedence+0x5a>
+   63635:	mov    %rbx,%rdi
+   63638:	call   6ed90 <adamic_release>
+   6363d:	movsd  0x21d8b(%rip),%xmm0        # 853d0 <_IO_stdin_used+0x3d0>
+   63645:	pop    %rbx
+   63646:	pop    %r14
+   63648:	pop    %rbp
+   63649:	ret
+   6364a:	lea    0x5a7df(%rip),%rsi        # bde30 <adamic_string_13>
+   63651:	mov    %rbx,%rdi
+   63654:	call   7fec0 <adamic_string_equal>
+   63659:	test   %eax,%eax
+   6365b:	je     6366f <adamic_function_11_precedence+0x7f>
+   6365d:	mov    %rbx,%rdi
+   63660:	call   6ed90 <adamic_release>
+   63665:	movsd  0x21d5b(%rip),%xmm0        # 853c8 <_IO_stdin_used+0x3c8>
+   6366d:	jmp    63645 <adamic_function_11_precedence+0x55>
+   6366f:	lea    0x5a5ba(%rip),%rsi        # bdc30 <adamic_string_14>
+   63676:	mov    %rbx,%rdi
+   63679:	call   7fec0 <adamic_string_equal>
+   6367e:	test   %eax,%eax
+   63680:	je     63694 <adamic_function_11_precedence+0xa4>
+   63682:	mov    %rbx,%rdi
+   63685:	call   6ed90 <adamic_release>
+   6368a:	movsd  0x21ce6(%rip),%xmm0        # 85378 <_IO_stdin_used+0x378>
+   63692:	jmp    63645 <adamic_function_11_precedence+0x55>
+   63694:	lea    0x5a615(%rip),%rsi        # bdcb0 <adamic_string_15>
+   6369b:	mov    %rbx,%rdi
+   6369e:	call   7fec0 <adamic_string_equal>
+   636a3:	test   %eax,%eax
+   636a5:	je     636b9 <adamic_function_11_precedence+0xc9>
+   636a7:	mov    %rbx,%rdi
+   636aa:	call   6ed90 <adamic_release>
+   636af:	movsd  0x21a59(%rip),%xmm0        # 85110 <_IO_stdin_used+0x110>
+   636b7:	jmp    63645 <adamic_function_11_precedence+0x55>
+   636b9:	lea    0x5a4f0(%rip),%rsi        # bdbb0 <adamic_string_16>
+   636c0:	mov    %rbx,%rdi
+   636c3:	call   7fec0 <adamic_string_equal>
+   636c8:	test   %eax,%eax
+   636ca:	je     636e1 <adamic_function_11_precedence+0xf1>
+   636cc:	mov    %rbx,%rdi
+   636cf:	call   6ed90 <adamic_release>
+   636d4:	movsd  0x21c4c(%rip),%xmm0        # 85328 <_IO_stdin_used+0x328>
+   636dc:	jmp    63645 <adamic_function_11_precedence+0x55>
+   636e1:	lea    0x59c48(%rip),%rsi        # bd330 <adamic_string_17>
+   636e8:	mov    %rbx,%rdi
+   636eb:	call   7fec0 <adamic_string_equal>
+   636f0:	test   %eax,%eax
+   636f2:	jne    6372d <adamic_function_11_precedence+0x13d>
+   636f4:	lea    0x59cb5(%rip),%rsi        # bd3b0 <adamic_string_18>
+   636fb:	mov    %rbx,%rdi
+   636fe:	call   7fec0 <adamic_string_equal>
+   63703:	test   %eax,%eax
+   63705:	jne    6372d <adamic_function_11_precedence+0x13d>
+   63707:	lea    0x59d22(%rip),%rsi        # bd430 <adamic_string_19>
+   6370e:	mov    %rbx,%rdi
+   63711:	call   7fec0 <adamic_string_equal>
+   63716:	test   %eax,%eax
+   63718:	jne    6372d <adamic_function_11_precedence+0x13d>
+   6371a:	lea    0x59d8f(%rip),%rsi        # bd4b0 <adamic_string_20>
+   63721:	mov    %rbx,%rdi
+   63724:	call   7fec0 <adamic_string_equal>
+   63729:	test   %eax,%eax
+   6372b:	je     63742 <adamic_function_11_precedence+0x152>
+   6372d:	mov    %rbx,%rdi
+   63730:	call   6ed90 <adamic_release>
+   63735:	movsd  0x218e3(%rip),%xmm0        # 85020 <_IO_stdin_used+0x20>
+   6373d:	jmp    63645 <adamic_function_11_precedence+0x55>
+   63742:	lea    0x599e7(%rip),%rsi        # bd130 <adamic_string_21>
+   63749:	mov    %rbx,%rdi
+   6374c:	call   7fec0 <adamic_string_equal>
+   63751:	test   %eax,%eax
+   63753:	jne    637de <adamic_function_11_precedence+0x1ee>
+   63759:	lea    0x59a50(%rip),%rsi        # bd1b0 <adamic_string_22>
+   63760:	mov    %rbx,%rdi
+   63763:	call   7fec0 <adamic_string_equal>
+   63768:	test   %eax,%eax
+   6376a:	jne    637de <adamic_function_11_precedence+0x1ee>
+   6376c:	lea    0x59abd(%rip),%rsi        # bd230 <adamic_string_23>
+   63773:	mov    %rbx,%rdi
+   63776:	call   7fec0 <adamic_string_equal>
+   6377b:	test   %eax,%eax
+   6377d:	jne    637de <adamic_function_11_precedence+0x1ee>
+   6377f:	lea    0x59b2a(%rip),%rsi        # bd2b0 <adamic_string_24>
+   63786:	mov    %rbx,%rdi
+   63789:	call   7fec0 <adamic_string_equal>
+   6378e:	test   %eax,%eax
+   63790:	jne    637de <adamic_function_11_precedence+0x1ee>
+   63792:	lea    0x57c97(%rip),%rsi        # bb430 <adamic_string_25>
+   63799:	mov    %rbx,%rdi
+   6379c:	call   7fec0 <adamic_string_equal>
+   637a1:	test   %eax,%eax
+   637a3:	jne    637de <adamic_function_11_precedence+0x1ee>
+   637a5:	lea    0x57b84(%rip),%rsi        # bb330 <adamic_string_26>
+   637ac:	mov    %rbx,%rdi
+   637af:	call   7fec0 <adamic_string_equal>
+   637b4:	test   %eax,%eax
+   637b6:	jne    637de <adamic_function_11_precedence+0x1ee>
+   637b8:	lea    0x56b71(%rip),%rsi        # ba330 <adamic_string_27>
+   637bf:	mov    %rbx,%rdi
+   637c2:	call   7fec0 <adamic_string_equal>
+   637c7:	test   %eax,%eax
+   637c9:	jne    637de <adamic_function_11_precedence+0x1ee>
+   637cb:	lea    0x587de(%rip),%rsi        # bbfb0 <adamic_string_28>
+   637d2:	mov    %rbx,%rdi
+   637d5:	call   7fec0 <adamic_string_equal>
+   637da:	test   %eax,%eax
+   637dc:	je     637f8 <adamic_function_11_precedence+0x208>
+   637de:	mov    %rbx,%rdi
+   637e1:	call   6ed90 <adamic_release>
+   637e6:	movsd  0x21b32(%rip),%xmm0        # 85320 <_IO_stdin_used+0x320>
+   637ee:	jmp    63645 <adamic_function_11_precedence+0x55>
+   637f3:	call   7fa00 <adamic_stack_overflow>
+   637f8:	lea    0x5a1b1(%rip),%rsi        # bd9b0 <adamic_string_29>
+   637ff:	mov    %rbx,%rdi
+   63802:	call   7fec0 <adamic_string_equal>
+   63807:	test   %eax,%eax
+   63809:	jne    63831 <adamic_function_11_precedence+0x241>
+   6380b:	lea    0x5a29e(%rip),%rsi        # bdab0 <adamic_string_30>
+   63812:	mov    %rbx,%rdi
+   63815:	call   7fec0 <adamic_string_equal>
+   6381a:	test   %eax,%eax
+   6381c:	jne    63831 <adamic_function_11_precedence+0x241>
+   6381e:	lea    0x5a30b(%rip),%rsi        # bdb30 <adamic_string_31>
+   63825:	mov    %rbx,%rdi
+   63828:	call   7fec0 <adamic_string_equal>
+   6382d:	test   %eax,%eax
+   6382f:	je     63846 <adamic_function_11_precedence+0x256>
+   63831:	mov    %rbx,%rdi
+   63834:	call   6ed90 <adamic_release>
+   63839:	movsd  0x21ad7(%rip),%xmm0        # 85318 <_IO_stdin_used+0x318>
+   63841:	jmp    63645 <adamic_function_11_precedence+0x55>
+   63846:	lea    0x59d63(%rip),%rsi        # bd5b0 <adamic_string_32>
+   6384d:	mov    %rbx,%rdi
+   63850:	call   7fec0 <adamic_string_equal>
+   63855:	test   %eax,%eax
+   63857:	jne    6386c <adamic_function_11_precedence+0x27c>
+   63859:	lea    0x59dd0(%rip),%rsi        # bd630 <adamic_string_33>
+   63860:	mov    %rbx,%rdi
+   63863:	call   7fec0 <adamic_string_equal>
+   63868:	test   %eax,%eax
+   6386a:	je     63881 <adamic_function_11_precedence+0x291>
+   6386c:	mov    %rbx,%rdi
+   6386f:	call   6ed90 <adamic_release>
+   63874:	movsd  0x217dc(%rip),%xmm0        # 85058 <_IO_stdin_used+0x58>
+   6387c:	jmp    63645 <adamic_function_11_precedence+0x55>
+   63881:	lea    0x59ea8(%rip),%rsi        # bd730 <adamic_string_34>
+   63888:	mov    %rbx,%rdi
+   6388b:	call   7fec0 <adamic_string_equal>
+   63890:	test   %eax,%eax
+   63892:	jne    638ba <adamic_function_11_precedence+0x2ca>
+   63894:	lea    0x59f15(%rip),%rsi        # bd7b0 <adamic_string_35>
+   6389b:	mov    %rbx,%rdi
+   6389e:	call   7fec0 <adamic_string_equal>
+   638a3:	test   %eax,%eax
+   638a5:	jne    638ba <adamic_function_11_precedence+0x2ca>
+   638a7:	lea    0x59f82(%rip),%rsi        # bd830 <adamic_string_36>
+   638ae:	mov    %rbx,%rdi
+   638b1:	call   7fec0 <adamic_string_equal>
+   638b6:	test   %eax,%eax
+   638b8:	je     638cf <adamic_function_11_precedence+0x2df>
+   638ba:	mov    %rbx,%rdi
+   638bd:	call   6ed90 <adamic_release>
+   638c2:	movsd  0x21b0e(%rip),%xmm0        # 853d8 <_IO_stdin_used+0x3d8>
+   638ca:	jmp    63645 <adamic_function_11_precedence+0x55>
+   638cf:	lea    0x59dda(%rip),%rsi        # bd6b0 <adamic_string_37>
+   638d6:	mov    %rbx,%rdi
+   638d9:	call   7fec0 <adamic_string_equal>
+   638de:	xor    %r14d,%r14d
+   638e1:	test   %eax,%eax
+   638e3:	sete   %r14b
+   638e7:	mov    %rbx,%rdi
+   638ea:	call   6ed90 <adamic_release>
+   638ef:	lea    0x2209a(%rip),%rax        # 85990 <_IO_stdin_used+0x990>
+   638f6:	movsd  (%rax,%r14,8),%xmm0
+   638fc:	jmp    63645 <adamic_function_11_precedence+0x55>
+
+Disassembly of section .fini:

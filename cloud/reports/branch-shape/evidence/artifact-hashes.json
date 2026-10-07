@@ -1,0 +1,98 @@
+{
+  "before": {
+    "bytes": 2580544,
+    "sha256": "47ececb9e7c3d40cc3dcbb94d6b207bb43ab9ab88cb1e258f5e222c1cf5cfb13"
+  },
+  "switch": {
+    "bytes": 2580248,
+    "sha256": "371bd90c6c2c21cded5293b16551ce38e7a64f1981765703eef9b248f752fc1b"
+  },
+  "scalar": {
+    "bytes": 2580280,
+    "sha256": "c3e2c01d9dc56c5e56f66fba0d473272e5c74b288e42322228d745a5aae3d641"
+  },
+  "scalar-only": {
+    "bytes": 2580592,
+    "sha256": "7f06d17e23e0c0255aa0656513b903fd0aa22b250b51f005e2d44569b1bab0ed"
+  },
+  "landing": {
+    "bytes": 2598232,
+    "sha256": "6395b76b3d27c5d2f76eecc57426f3d6c9ed0c14f6d3fbda19c275762e69b4ed"
+  },
+  "landing-before": {
+    "bytes": 2594424,
+    "sha256": "09cbee97d31328ea422dbfeedc73cc28edec5369f668ed9030029b05fdadb6ee"
+  },
+  "batch8-release": {
+    "bytes": 1007456,
+    "sha256": "23f5e254bf4b6cbd51b8c84a87357db3661f9bee85b74aa7c4c71ac8d6a16ef6"
+  },
+  "batch8-final-release": {
+    "bytes": 1007456,
+    "sha256": "aa113ffeb3f7e6b7c29b519a4fdcdb0bab29c54c072f662dbcd69a0ad2ac4808"
+  },
+  "batch8-landing-release": {
+    "bytes": 1008464,
+    "sha256": "c95ae25958e7e66c5e9afe75bdc40989012d4f92d9f1c7c2163a0089a4ddb4ae"
+  },
+  "adamic-scalar": {
+    "bytes": 30686442,
+    "sha256": "d2e199d40986229d86cac544451de471696c373881d31acf4091cbd66d99ab52"
+  },
+  "adamic-scalar-only": {
+    "bytes": 30674944,
+    "sha256": "4c0d12260f568c3b0aa248f8ee6c869be41c2b6b2db17e33584a4a23a60974c8"
+  },
+  "adamic-landing": {
+    "bytes": 30735821,
+    "sha256": "07c2635a9bef2fc210e3137e881da669ecb166953a453de75ce864d1c6c05652"
+  },
+  "adamic-landing-before": {
+    "bytes": 30727851,
+    "sha256": "07b6db0a057f2636480ab8aa2835758b44862a82608380d039161c221f281f91"
+  },
+  "adamic-before": {
+    "bytes": 30671854,
+    "sha256": "c034f176456d31c71c34781439543bd067c5ad47ce23bbd11042cb7d7b49c4b8"
+  },
+  "adamic-switch": {
+    "bytes": 30677208,
+    "sha256": "35818e3618f294847780177a017a3480b20088d5abc725de00c06b9d0367816a"
+  },
+  "adamic-final": {
+    "bytes": 30677208,
+    "sha256": "6eb44b8c37db41f38033a6a2e8ee317a457e795d435f88d5c5703979857dc4be"
+  },
+  "scalar.c": {
+    "bytes": 2162648,
+    "sha256": "6936d7c62497e3533451b1f525320409518c4a0dcfeebad704195f618351766f"
+  },
+  "before.c": {
+    "bytes": 2166477,
+    "sha256": "40deb984009a1a596d1bdc653dfc99563fe67ea5174060588bc2fcda622981cd"
+  },
+  "landing.c": {
+    "bytes": 2162698,
+    "sha256": "e3aa5f0ab0a138bd7c324272bbe372f14081c1168ee226cdde67b1f8aaa8ce26"
+  },
+  "scalar-only.c": {
+    "bytes": 2166427,
+    "sha256": "ec4bc31cf5061eb6809bd413a3fdc24875aaa131707cbe41e70242db8b6af10e"
+  },
+  "switch.c": {
+    "bytes": 2162698,
+    "sha256": "e3aa5f0ab0a138bd7c324272bbe372f14081c1168ee226cdde67b1f8aaa8ce26"
+  },
+  "final.c": {
+    "bytes": 2162698,
+    "sha256": "e3aa5f0ab0a138bd7c324272bbe372f14081c1168ee226cdde67b1f8aaa8ce26"
+  },
+  "landing-before.c": {
+    "bytes": 2166477,
+    "sha256": "40deb984009a1a596d1bdc653dfc99563fe67ea5174060588bc2fcda622981cd"
+  },
+  "valgrind.deb": {
+    "bytes": 15380104,
+    "sha256": "0359e30820ccee7ee5c8d4c951ca276e3978b18f157d71bd77981de05b344907"
+  }
+}

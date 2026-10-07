@@ -1,0 +1,751 @@
+Function adamic_function_81_Parser_primary
+Aggregated self events {'Ir': 34406512, 'Dr': 2893083, 'Dw': 7744469, 'I1mr': 2122564, 'D1mr': 933, 'D1mw': 2917, 'ILmr': 32, 'DLmr': 0, 'DLmw': 0, 'Bc': 5077429, 'Bcm': 250175, 'Bi': 0, 'Bim': 0}
+{'function': 'adamic_function_81_Parser_primary', 'source': '/workspace/scratch/branch-shape/before.c', 'address': '0x244b7', 'line': 10345, 'costs': [168186, 0, 0, 0, 0, 0, 0, 0, 0, 168186, 164010, 0, 0], 'taken': 164007}
+10342: 															adamic_release(adamic_temporary_2290);
+10343: 															return adamic_temporary_2384;
+10344: 														} else {
+10345: 															if (adamic_string_equal(adamic_temporary_2290, &adamic_string_40)) {
+10346: 																{
+10347: 																	adamic_function_74_Parser_next(adamic_local_314_this);
+10348: 																	double adamic_temporary_2385 = adamic_function_126_Parser_allowInExpression(adamic_local_314_this);
+{'function': 'adamic_function_81_Parser_primary', 'source': '/workspace/scratch/branch-shape/before.c', 'address': '0x241f2', 'line': 10314, 'costs': [168193, 0, 0, 0, 0, 0, 0, 0, 0, 168193, 33331, 0, 0], 'taken': 168192}
+10311: 													return adamic_temporary_2373;
+10312: 												}
+10313: 											} else {
+10314: 												if (adamic_string_equal(adamic_temporary_2290, &adamic_string_159)) {
+10315: 													adamic_array * adamic_temporary_2374 = adamic_array_new(0, false);
+10316: 													double adamic_temporary_2375 = adamic_function_109_Parser_classDeclaration(adamic_local_314_this, adamic_local_399_pos, adamic_temporary_2374, true);
+10317: 													double adamic_temporary_2376 = adamic_temporary_2375;
+{'function': "adamic_function_81_Parser_primary'2", 'source': '/workspace/scratch/branch-shape/before.c', 'address': '0x244b7', 'line': 10345, 'costs': [25913, 0, 0, 0, 0, 0, 0, 0, 0, 25913, 25210, 0, 0], 'taken': 25214}
+10342: 															adamic_release(adamic_temporary_2290);
+10343: 															return adamic_temporary_2384;
+10344: 														} else {
+10345: 															if (adamic_string_equal(adamic_temporary_2290, &adamic_string_40)) {
+10346: 																{
+10347: 																	adamic_function_74_Parser_next(adamic_local_314_this);
+10348: 																	double adamic_temporary_2385 = adamic_function_126_Parser_allowInExpression(adamic_local_314_this);
+{'function': 'adamic_function_81_Parser_primary', 'source': '/workspace/scratch/branch-shape/before.c', 'address': '0x24472', 'line': 10328, 'costs': [168187, 0, 0, 0, 0, 0, 0, 0, 0, 168187, 10832, 0, 0], 'taken': 168186}
+10325: 														adamic_release(adamic_temporary_2290);
+10326: 														return adamic_temporary_2378;
+10327: 													} else {
+10328: 														if (adamic_string_equal(adamic_temporary_2290, &adamic_string_133)) {
+10329: 															adamic_string * adamic_temporary_2379 = adamic_function_110_Parser_peek(adamic_local_314_this);
+10330: 															bool adamic_temporary_2380 = adamic_string_equal(adamic_temporary_2379, &adamic_string_160);
+10331: 															adamic_release(adamic_temporary_2379);
+{'function': "adamic_function_81_Parser_primary'2", 'source': '/workspace/scratch/branch-shape/before.c', 'address': '0x241f2', 'line': 10314, 'costs': [26174, 0, 0, 0, 0, 0, 0, 0, 0, 26174, 4038, 0, 0], 'taken': 26174}
+10311: 													return adamic_temporary_2373;
+10312: 												}
+10313: 											} else {
+10314: 												if (adamic_string_equal(adamic_temporary_2290, &adamic_string_159)) {
+10315: 													adamic_array * adamic_temporary_2374 = adamic_array_new(0, false);
+10316: 													double adamic_temporary_2375 = adamic_function_109_Parser_classDeclaration(adamic_local_314_this, adamic_local_399_pos, adamic_temporary_2374, true);
+10317: 													double adamic_temporary_2376 = adamic_temporary_2375;
+
+/workspace/scratch/branch-shape/landing-before:     file format elf64-x86-64
+
+
+Disassembly of section .init:
+
+Disassembly of section .plt:
+
+Disassembly of section .plt.got:
+
+Disassembly of section .text:
+
+0000000000023b00 <adamic_function_81_Parser_primary>:
+   23b00:	push   %rbp
+   23b01:	mov    %rsp,%rbp
+   23b04:	push   %r15
+   23b06:	push   %r14
+   23b08:	push   %r13
+   23b0a:	push   %r12
+   23b0c:	push   %rbx
+   23b0d:	sub    $0x68,%rsp
+   23b11:	lea    0xb6668(%rip),%rax        # da180 <adamic_stack_limit>
+   23b18:	cmp    %rbp,(%rax)
+   23b1b:	ja     23f9e <adamic_function_81_Parser_primary+0x49e>
+   23b21:	mov    %rdi,%r14
+   23b24:	mov    0x10(%rdi),%rax
+   23b28:	lea    0x94681(%rip),%r13        # b81b0 <adamic_shape_5>
+   23b2f:	cmp    %r13,%rax
+   23b32:	je     23b7c <adamic_function_81_Parser_primary+0x7c>
+   23b34:	mov    0x18(%r14),%rcx
+   23b38:	test   %rcx,%rcx
+   23b3b:	je     23b5b <adamic_function_81_Parser_primary+0x5b>
+   23b3d:	cmpb   $0x1,0x40(%rcx)
+   23b41:	jne    23b5b <adamic_function_81_Parser_primary+0x5b>
+   23b43:	lea    0x63aa1(%rip),%rsi        # 875eb <adamic_math_exp.ln2LO+0x1adb>
+   23b4a:	lea    0xa087f(%rip),%rdx        # c43d0 <adamic_cache_2284>
+   23b51:	mov    %r14,%rdi
+   23b54:	call   6a940 <adamic_static_field>
+   23b59:	jmp    23b91 <adamic_function_81_Parser_primary+0x91>
+   23b5b:	cmp    %rax,0xa086e(%rip)        # c43d0 <adamic_cache_2284>
+   23b62:	je     23b82 <adamic_function_81_Parser_primary+0x82>
+   23b64:	lea    0x63a80(%rip),%rsi        # 875eb <adamic_math_exp.ln2LO+0x1adb>
+   23b6b:	lea    0xa085e(%rip),%rdx        # c43d0 <adamic_cache_2284>
+   23b72:	mov    %r14,%rdi
+   23b75:	call   78bd0 <adamic_object_find>
+   23b7a:	jmp    23b91 <adamic_function_81_Parser_primary+0x91>
+   23b7c:	lea    0x28(%r14),%rax
+   23b80:	jmp    23b91 <adamic_function_81_Parser_primary+0x91>
+   23b82:	mov    0xa084f(%rip),%rax        # c43d8 <adamic_cache_2284+0x8>
+   23b89:	lea    (%r14,%rax,8),%rax
+   23b8d:	add    $0x28,%rax
+   23b91:	mov    (%rax),%rax
+   23b94:	mov    0x10(%rax),%rcx
+   23b98:	lea    0x94869(%rip),%r12        # b8408 <adamic_shape_0>
+   23b9f:	cmp    %r12,%rcx
+   23ba2:	je     23bec <adamic_function_81_Parser_primary+0xec>
+   23ba4:	mov    0x18(%rax),%rdx
+   23ba8:	test   %rdx,%rdx
+   23bab:	je     23bcb <adamic_function_81_Parser_primary+0xcb>
+   23bad:	cmpb   $0x1,0x40(%rdx)
+   23bb1:	jne    23bcb <adamic_function_81_Parser_primary+0xcb>
+   23bb3:	lea    0x63a96(%rip),%rsi        # 87650 <adamic_math_exp.ln2LO+0x1b40>
+   23bba:	lea    0xa081f(%rip),%rdx        # c43e0 <adamic_cache_2286>
+   23bc1:	mov    %rax,%rdi
+   23bc4:	call   6a940 <adamic_static_field>
+   23bc9:	jmp    23c01 <adamic_function_81_Parser_primary+0x101>
+   23bcb:	cmp    %rcx,0xa080e(%rip)        # c43e0 <adamic_cache_2286>
+   23bd2:	je     23bf2 <adamic_function_81_Parser_primary+0xf2>
+   23bd4:	lea    0x63a75(%rip),%rsi        # 87650 <adamic_math_exp.ln2LO+0x1b40>
+   23bdb:	lea    0xa07fe(%rip),%rdx        # c43e0 <adamic_cache_2286>
+   23be2:	mov    %rax,%rdi
+   23be5:	call   78bd0 <adamic_object_find>
+   23bea:	jmp    23c01 <adamic_function_81_Parser_primary+0x101>
+   23bec:	add    $0x40,%rax
+   23bf0:	jmp    23c01 <adamic_function_81_Parser_primary+0x101>
+   23bf2:	mov    0xa07ef(%rip),%rcx        # c43e8 <adamic_cache_2286+0x8>
+   23bf9:	lea    (%rax,%rcx,8),%rax
+   23bfd:	add    $0x28,%rax
+   23c01:	movsd  (%rax),%xmm0
+   23c05:	movsd  %xmm0,-0x30(%rbp)
+   23c0a:	mov    %r14,%rdi
+   23c0d:	call   227a0 <adamic_function_73_Parser_kind>
+   23c12:	mov    %rax,%r15
+   23c15:	mov    %rax,%rdi
+   23c18:	call   6ed70 <adamic_retain>
+   23c1d:	mov    %rax,%rbx
+   23c20:	mov    %r15,%rdi
+   23c23:	call   6ed90 <adamic_release>
+   23c28:	lea    0x9b779(%rip),%rsi        # bf3a8 <adamic_string_60>
+   23c2f:	mov    %rbx,%rdi
+   23c32:	call   7fec0 <adamic_string_equal>
+   23c37:	test   %eax,%eax
+   23c39:	jne    23cdf <adamic_function_81_Parser_primary+0x1df>
+   23c3f:	lea    0x9b722(%rip),%rsi        # bf368 <adamic_string_59>
+   23c46:	mov    %rbx,%rdi
+   23c49:	call   7fec0 <adamic_string_equal>
+   23c4e:	test   %eax,%eax
+   23c50:	jne    23cdf <adamic_function_81_Parser_primary+0x1df>
+   23c56:	lea    0x9be4b(%rip),%rsi        # bfaa8 <adamic_string_51>
+   23c5d:	mov    %rbx,%rdi
+   23c60:	call   7fec0 <adamic_string_equal>
+   23c65:	test   %eax,%eax
+   23c67:	jne    23cdf <adamic_function_81_Parser_primary+0x1df>
+   23c69:	lea    0x9bab8(%rip),%rsi        # bf728 <adamic_string_54>
+   23c70:	mov    %rbx,%rdi
+   23c73:	call   7fec0 <adamic_string_equal>
+   23c78:	test   %eax,%eax
+   23c7a:	jne    23cdf <adamic_function_81_Parser_primary+0x1df>
+   23c7c:	lea    0x99b2d(%rip),%rsi        # bd7b0 <adamic_string_35>
+   23c83:	mov    %rbx,%rdi
+   23c86:	call   7fec0 <adamic_string_equal>
+   23c8b:	test   %eax,%eax
+   23c8d:	jne    23ca2 <adamic_function_81_Parser_primary+0x1a2>
+   23c8f:	lea    0x9a71a(%rip),%rsi        # be3b0 <adamic_string_38>
+   23c96:	mov    %rbx,%rdi
+   23c99:	call   7fec0 <adamic_string_equal>
+   23c9e:	test   %eax,%eax
+   23ca0:	je     23d08 <adamic_function_81_Parser_primary+0x208>
+   23ca2:	cmp    %r13,0x10(%r14)
+   23ca6:	je     23cc0 <adamic_function_81_Parser_primary+0x1c0>
+   23ca8:	lea    0x6393c(%rip),%rsi        # 875eb <adamic_math_exp.ln2LO+0x1adb>
+   23caf:	lea    0xa073a(%rip),%rdx        # c43f0 <adamic_cache_2293>
+   23cb6:	mov    %r14,%rdi
+   23cb9:	call   1e540 <adamic_object_field>
+   23cbe:	jmp    23cc4 <adamic_function_81_Parser_primary+0x1c4>
+   23cc0:	lea    0x28(%r14),%rax
+   23cc4:	mov    (%rax),%rdi
+   23cc7:	call   6ed70 <adamic_retain>
+   23ccc:	mov    %rax,%r15
+   23ccf:	mov    %rax,%rdi
+   23cd2:	call   3a470 <adamic_function_37_Scanner_rescanSlash>
+   23cd7:	mov    %r15,%rdi
+   23cda:	call   6ed90 <adamic_release>
+   23cdf:	mov    %r14,%rdi
+   23ce2:	call   23020 <adamic_function_79_Parser_literal>
+   23ce7:	movsd  %xmm0,-0x30(%rbp)
+   23cec:	mov    %rbx,%rdi
+   23cef:	call   6ed90 <adamic_release>
+   23cf4:	movsd  -0x30(%rbp),%xmm0
+   23cf9:	add    $0x68,%rsp
+   23cfd:	pop    %rbx
+   23cfe:	pop    %r12
+   23d00:	pop    %r13
+   23d02:	pop    %r14
+   23d04:	pop    %r15
+   23d06:	pop    %rbp
+   23d07:	ret
+   23d08:	lea    0x98621(%rip),%rsi        # bc330 <adamic_string_149>
+   23d0f:	mov    %rbx,%rdi
+   23d12:	call   7fec0 <adamic_string_equal>
+   23d17:	test   %eax,%eax
+   23d19:	jne    23d67 <adamic_function_81_Parser_primary+0x267>
+   23d1b:	lea    0x9848e(%rip),%rsi        # bc1b0 <adamic_string_150>
+   23d22:	mov    %rbx,%rdi
+   23d25:	call   7fec0 <adamic_string_equal>
+   23d2a:	test   %eax,%eax
+   23d2c:	jne    23d67 <adamic_function_81_Parser_primary+0x267>
+   23d2e:	lea    0x97bfb(%rip),%rsi        # bb930 <adamic_string_151>
+   23d35:	mov    %rbx,%rdi
+   23d38:	call   7fec0 <adamic_string_equal>
+   23d3d:	test   %eax,%eax
+   23d3f:	jne    23d67 <adamic_function_81_Parser_primary+0x267>
+   23d41:	lea    0x986e8(%rip),%rsi        # bc430 <adamic_string_152>
+   23d48:	mov    %rbx,%rdi
+   23d4b:	call   7fec0 <adamic_string_equal>
+   23d50:	test   %eax,%eax
+   23d52:	jne    23d67 <adamic_function_81_Parser_primary+0x267>
+   23d54:	lea    0x970d5(%rip),%rsi        # bae30 <adamic_string_153>
+   23d5b:	mov    %rbx,%rdi
+   23d5e:	call   7fec0 <adamic_string_equal>
+   23d63:	test   %eax,%eax
+   23d65:	je     23d74 <adamic_function_81_Parser_primary+0x274>
+   23d67:	mov    %r14,%rdi
+   23d6a:	call   22c80 <adamic_function_77_Parser_token>
+   23d6f:	jmp    23ce7 <adamic_function_81_Parser_primary+0x1e7>
+   23d74:	lea    0x9bc6d(%rip),%rsi        # bf9e8 <adamic_string_73>
+   23d7b:	mov    %rbx,%rdi
+   23d7e:	call   7fec0 <adamic_string_equal>
+   23d83:	test   %eax,%eax
+   23d85:	je     23dbe <adamic_function_81_Parser_primary+0x2be>
+   23d87:	mov    %r14,%rdi
+   23d8a:	call   23880 <adamic_function_80_Parser_identifier>
+   23d8f:	mov    %r14,%rdi
+   23d92:	movsd  %xmm0,-0x30(%rbp)
+   23d97:	call   228a0 <adamic_function_75_Parser_node>
+   23d9c:	mov    %rax,-0x38(%rbp)
+   23da0:	cmp    %r13,0x10(%r14)
+   23da4:	je     23de2 <adamic_function_81_Parser_primary+0x2e2>
+   23da6:	lea    0x63830(%rip),%rsi        # 875dd <adamic_math_exp.ln2LO+0x1acd>
+   23dad:	lea    0xa064c(%rip),%rdx        # c4400 <adamic_cache_2301>
+   23db4:	mov    %r14,%rdi
+   23db7:	call   1e540 <adamic_object_field>
+   23dbc:	jmp    23de6 <adamic_function_81_Parser_primary+0x2e6>
+   23dbe:	lea    0x9906b(%rip),%rsi        # bce30 <adamic_string_140>
+   23dc5:	mov    %rbx,%rdi
+   23dc8:	call   7fec0 <adamic_string_equal>
+   23dcd:	test   %eax,%eax
+   23dcf:	je     23f5e <adamic_function_81_Parser_primary+0x45e>
+   23dd5:	mov    %r14,%rdi
+   23dd8:	call   30fa0 <adamic_function_118_Parser_array>
+   23ddd:	jmp    23ce7 <adamic_function_81_Parser_primary+0x1e7>
+   23de2:	lea    0x38(%r14),%rax
+   23de6:	mov    (%rax),%rdi
+   23de9:	call   6ed70 <adamic_retain>
+   23dee:	mov    %rax,-0x50(%rbp)
+   23df2:	lea    0x947ef(%rip),%rax        # b85e8 <adamic_shape_4>
+   23df9:	mov    -0x38(%rbp),%rcx
+   23dfd:	cmp    %rax,0x10(%rcx)
+   23e01:	je     23e4c <adamic_function_81_Parser_primary+0x34c>
+   23e03:	lea    0x63842(%rip),%rsi        # 8764c <adamic_math_exp.ln2LO+0x1b3c>
+   23e0a:	lea    0xa05ff(%rip),%rdx        # c4410 <adamic_cache_2303>
+   23e11:	mov    -0x38(%rbp),%r15
+   23e15:	mov    %r15,%rdi
+   23e18:	call   1e540 <adamic_object_field>
+   23e1d:	movsd  (%rax),%xmm0
+   23e21:	movsd  %xmm0,-0x40(%rbp)
+   23e26:	lea    0x947bb(%rip),%rax        # b85e8 <adamic_shape_4>
+   23e2d:	cmp    %rax,0x10(%r15)
+   23e31:	je     23e5a <adamic_function_81_Parser_primary+0x35a>
+   23e33:	lea    0x64710(%rip),%rsi        # 8854a <adamic_math_exp.ln2LO+0x2a3a>
+   23e3a:	lea    0xa05df(%rip),%rdx        # c4420 <adamic_cache_2305>
+   23e41:	mov    -0x38(%rbp),%rdi
+   23e45:	call   1e540 <adamic_object_field>
+   23e4a:	jmp    23e62 <adamic_function_81_Parser_primary+0x362>
+   23e4c:	mov    -0x38(%rbp),%rax
+   23e50:	movsd  0x30(%rax),%xmm0
+   23e55:	movsd  %xmm0,-0x40(%rbp)
+   23e5a:	mov    -0x38(%rbp),%rax
+   23e5e:	add    $0x38,%rax
+   23e62:	movsd  (%rax),%xmm0
+   23e66:	movsd  %xmm0,-0x58(%rbp)
+   23e6b:	xor    %edi,%edi
+   23e6d:	xor    %esi,%esi
+   23e6f:	call   67d70 <adamic_array_new>
+   23e74:	mov    %rax,%r13
+   23e77:	lea    0x9bb6a(%rip),%rdi        # bf9e8 <adamic_string_73>
+   23e7e:	movsd  -0x40(%rbp),%xmm0
+   23e83:	movsd  -0x58(%rbp),%xmm1
+   23e88:	mov    %rax,%rsi
+   23e8b:	call   21bb0 <adamic_function_130_ParseNode_new>
+   23e90:	mov    %rax,%r12
+   23e93:	mov    %rax,%rdi
+   23e96:	call   6ed70 <adamic_retain>
+   23e9b:	mov    -0x50(%rbp),%r15
+   23e9f:	mov    %r15,%rdi
+   23ea2:	movsd  -0x30(%rbp),%xmm0
+   23ea7:	mov    %rax,%rsi
+   23eaa:	call   691f0 <adamic_array_set>
+   23eaf:	mov    %r12,%rdi
+   23eb2:	call   6ed90 <adamic_release>
+   23eb7:	mov    %r13,%rdi
+   23eba:	call   6ed90 <adamic_release>
+   23ebf:	mov    %r15,%rdi
+   23ec2:	call   6ed90 <adamic_release>
+   23ec7:	mov    %r14,%rdi
+   23eca:	movsd  -0x30(%rbp),%xmm0
+   23ecf:	call   228a0 <adamic_function_75_Parser_node>
+   23ed4:	mov    %rax,%r14
+   23ed7:	lea    0x9470a(%rip),%rax        # b85e8 <adamic_shape_4>
+   23ede:	mov    -0x38(%rbp),%rcx
+   23ee2:	cmp    %rax,0x10(%rcx)
+   23ee6:	je     23f01 <adamic_function_81_Parser_primary+0x401>
+   23ee8:	lea    0x63730(%rip),%rsi        # 8761f <adamic_math_exp.ln2LO+0x1b0f>
+   23eef:	lea    0xa053a(%rip),%rdx        # c4430 <adamic_cache_2310>
+   23ef6:	mov    -0x38(%rbp),%rdi
+   23efa:	call   1e540 <adamic_object_field>
+   23eff:	jmp    23f09 <adamic_function_81_Parser_primary+0x409>
+   23f01:	mov    -0x38(%rbp),%rax
+   23f05:	add    $0x48,%rax
+   23f09:	mov    (%rax),%rdi
+   23f0c:	call   6ed70 <adamic_retain>
+   23f11:	mov    %rax,%r12
+   23f14:	lea    0x63704(%rip),%r13        # 8761f <adamic_math_exp.ln2LO+0x1b0f>
+   23f1b:	mov    %r14,%rdi
+   23f1e:	mov    %r13,%rsi
+   23f21:	call   75b20 <adamic_object_check_write>
+   23f26:	lea    0xa0513(%rip),%rdx        # c4440 <adamic_cache_2313>
+   23f2d:	mov    %r14,%rdi
+   23f30:	mov    %r13,%rsi
+   23f33:	call   6a9a0 <adamic_object_write_field>
+   23f38:	mov    (%rax),%rdi
+   23f3b:	mov    %r12,(%rax)
+   23f3e:	test   %rdi,%rdi
+   23f41:	je     23f48 <adamic_function_81_Parser_primary+0x448>
+   23f43:	call   6ed90 <adamic_release>
+   23f48:	mov    %r14,%rdi
+   23f4b:	call   6ed90 <adamic_release>
+   23f50:	mov    -0x38(%rbp),%rdi
+   23f54:	call   6ed90 <adamic_release>
+   23f59:	jmp    23cec <adamic_function_81_Parser_primary+0x1ec>
+   23f5e:	lea    0x98ccb(%rip),%rsi        # bcc30 <adamic_string_128>
+   23f65:	mov    %rbx,%rdi
+   23f68:	call   7fec0 <adamic_string_equal>
+   23f6d:	test   %eax,%eax
+   23f6f:	je     23f7e <adamic_function_81_Parser_primary+0x47e>
+   23f71:	mov    %r14,%rdi
+   23f74:	call   31ac0 <adamic_function_121_Parser_object>
+   23f79:	jmp    23ce7 <adamic_function_81_Parser_primary+0x1e7>
+   23f7e:	lea    0x9b823(%rip),%rsi        # bf7a8 <adamic_string_56>
+   23f85:	mov    %rbx,%rdi
+   23f88:	call   7fec0 <adamic_string_equal>
+   23f8d:	test   %eax,%eax
+   23f8f:	je     23fa3 <adamic_function_81_Parser_primary+0x4a3>
+   23f91:	mov    %r14,%rdi
+   23f94:	call   30b80 <adamic_function_117_Parser_template>
+   23f99:	jmp    23ce7 <adamic_function_81_Parser_primary+0x1e7>
+   23f9e:	call   7fa00 <adamic_stack_overflow>
+   23fa3:	lea    0x97906(%rip),%rsi        # bb8b0 <adamic_string_154>
+   23faa:	mov    %rbx,%rdi
+   23fad:	call   7fec0 <adamic_string_equal>
+   23fb2:	test   %eax,%eax
+   23fb4:	je     24090 <adamic_function_81_Parser_primary+0x590>
+   23fba:	mov    %r14,%rdi
+   23fbd:	call   226f0 <adamic_function_74_Parser_next>
+   23fc2:	mov    %r14,%rdi
+   23fc5:	call   227a0 <adamic_function_73_Parser_kind>
+   23fca:	mov    %rax,%r15
+   23fcd:	lea    0x98f5c(%rip),%rsi        # bcf30 <adamic_string_141>
+   23fd4:	mov    %rax,%rdi
+   23fd7:	call   7fec0 <adamic_string_equal>
+   23fdc:	mov    %eax,%r12d
+   23fdf:	mov    %r15,%rdi
+   23fe2:	call   6ed90 <adamic_release>
+   23fe7:	mov    %r14,%rdi
+   23fea:	test   %r12d,%r12d
+   23fed:	je     2419b <adamic_function_81_Parser_primary+0x69b>
+   23ff3:	call   226f0 <adamic_function_74_Parser_next>
+   23ff8:	mov    %r14,%rdi
+   23ffb:	call   23880 <adamic_function_80_Parser_identifier>
+   24000:	movsd  %xmm0,-0x38(%rbp)
+   24005:	mov    $0x1,%edi
+   2400a:	xor    %esi,%esi
+   2400c:	call   67d70 <adamic_array_new>
+   24011:	mov    %rax,%r15
+   24014:	movq   -0x38(%rbp),%xmm0
+   24019:	movq   %xmm0,%rsi
+   2401e:	mov    %rax,%rdi
+   24021:	call   67de0 <adamic_array_push>
+   24026:	lea    0x9bbfb(%rip),%rsi        # bfc28 <adamic_string_155>
+   2402d:	mov    %r14,%rdi
+   24030:	movsd  -0x30(%rbp),%xmm0
+   24035:	mov    %r15,%rdx
+   24038:	call   229f0 <adamic_function_76_Parser_make>
+   2403d:	movsd  %xmm0,-0x30(%rbp)
+   24042:	mov    %r15,%rdi
+   24045:	call   6ed90 <adamic_release>
+   2404a:	mov    %r14,%rdi
+   2404d:	movsd  -0x30(%rbp),%xmm0
+   24052:	call   228a0 <adamic_function_75_Parser_node>
+   24057:	mov    %rax,%r14
+   2405a:	lea    0x63814(%rip),%r15        # 87875 <adamic_math_exp.ln2LO+0x1d65>
+   24061:	mov    %rax,%rdi
+   24064:	mov    %r15,%rsi
+   24067:	call   75b20 <adamic_object_check_write>
+   2406c:	lea    0xa03dd(%rip),%rdx        # c4450 <adamic_cache_2329>
+   24073:	mov    %r14,%rdi
+   24076:	mov    %r15,%rsi
+   24079:	call   6a9a0 <adamic_object_write_field>
+   2407e:	mov    %rax,%r12
+   24081:	mov    (%rax),%r15
+   24084:	lea    0x97825(%rip),%rdi        # bb8b0 <adamic_string_154>
+   2408b:	jmp    24178 <adamic_function_81_Parser_primary+0x678>
+   24090:	lea    0x97219(%rip),%rsi        # bb2b0 <adamic_string_158>
+   24097:	mov    %rbx,%rdi
+   2409a:	call   7fec0 <adamic_string_equal>
+   2409f:	test   %eax,%eax
+   240a1:	je     241e1 <adamic_function_81_Parser_primary+0x6e1>
+   240a7:	mov    %r14,%rdi
+   240aa:	call   2cbf0 <adamic_function_110_Parser_peek>
+   240af:	mov    %rax,%r15
+   240b2:	lea    0x98e77(%rip),%rsi        # bcf30 <adamic_string_141>
+   240b9:	mov    %rax,%rdi
+   240bc:	call   7fec0 <adamic_string_equal>
+   240c1:	mov    %eax,%r12d
+   240c4:	mov    %r15,%rdi
+   240c7:	call   6ed90 <adamic_release>
+   240cc:	test   %r12d,%r12d
+   240cf:	je     23d67 <adamic_function_81_Parser_primary+0x267>
+   240d5:	mov    %r14,%rdi
+   240d8:	call   226f0 <adamic_function_74_Parser_next>
+   240dd:	mov    %r14,%rdi
+   240e0:	call   226f0 <adamic_function_74_Parser_next>
+   240e5:	mov    %r14,%rdi
+   240e8:	call   23880 <adamic_function_80_Parser_identifier>
+   240ed:	movsd  %xmm0,-0x38(%rbp)
+   240f2:	mov    $0x1,%edi
+   240f7:	xor    %esi,%esi
+   240f9:	call   67d70 <adamic_array_new>
+   240fe:	mov    %rax,%r15
+   24101:	movq   -0x38(%rbp),%xmm0
+   24106:	movq   %xmm0,%rsi
+   2410b:	mov    %rax,%rdi
+   2410e:	call   67de0 <adamic_array_push>
+   24113:	lea    0x9bb0e(%rip),%rsi        # bfc28 <adamic_string_155>
+   2411a:	mov    %r14,%rdi
+   2411d:	movsd  -0x30(%rbp),%xmm0
+   24122:	mov    %r15,%rdx
+   24125:	call   229f0 <adamic_function_76_Parser_make>
+   2412a:	movsd  %xmm0,-0x30(%rbp)
+   2412f:	mov    %r15,%rdi
+   24132:	call   6ed90 <adamic_release>
+   24137:	mov    %r14,%rdi
+   2413a:	movsd  -0x30(%rbp),%xmm0
+   2413f:	call   228a0 <adamic_function_75_Parser_node>
+   24144:	mov    %rax,%r14
+   24147:	lea    0x63727(%rip),%r15        # 87875 <adamic_math_exp.ln2LO+0x1d65>
+   2414e:	mov    %rax,%rdi
+   24151:	mov    %r15,%rsi
+   24154:	call   75b20 <adamic_object_check_write>
+   24159:	lea    0xa0330(%rip),%rdx        # c4490 <adamic_cache_2369>
+   24160:	mov    %r14,%rdi
+   24163:	mov    %r15,%rsi
+   24166:	call   6a9a0 <adamic_object_write_field>
+   2416b:	mov    %rax,%r12
+   2416e:	mov    (%rax),%r15
+   24171:	lea    0x97138(%rip),%rdi        # bb2b0 <adamic_string_158>
+   24178:	call   6ed70 <adamic_retain>
+   2417d:	mov    %rax,(%r12)
+   24181:	test   %r15,%r15
+   24184:	je     2418e <adamic_function_81_Parser_primary+0x68e>
+   24186:	mov    %r15,%rdi
+   24189:	call   6ed90 <adamic_release>
+   2418e:	mov    %r14,%rdi
+   24191:	call   6ed90 <adamic_release>
+   24196:	jmp    23cec <adamic_function_81_Parser_primary+0x1ec>
+   2419b:	call   23b00 <adamic_function_81_Parser_primary>
+   241a0:	mov    %r14,%rdi
+   241a3:	xor    %esi,%esi
+   241a5:	call   2dc20 <adamic_function_114_Parser_suffix>
+   241aa:	mov    %r14,%rdi
+   241ad:	movsd  %xmm0,-0x50(%rbp)
+   241b2:	call   228a0 <adamic_function_75_Parser_node>
+   241b7:	lea    0x9442a(%rip),%rcx        # b85e8 <adamic_shape_4>
+   241be:	mov    %rax,-0x38(%rbp)
+   241c2:	cmp    %rcx,0x10(%rax)
+   241c6:	je     24223 <adamic_function_81_Parser_primary+0x723>
+   241c8:	lea    0x619e1(%rip),%rsi        # 85bb0 <adamic_math_exp.ln2LO+0xa0>
+   241cf:	lea    0xa028a(%rip),%rdx        # c4460 <adamic_cache_2335>
+   241d6:	mov    -0x38(%rbp),%rdi
+   241da:	call   1e540 <adamic_object_field>
+   241df:	jmp    2422b <adamic_function_81_Parser_primary+0x72b>
+   241e1:	lea    0x96548(%rip),%rsi        # ba730 <adamic_string_159>
+   241e8:	mov    %rbx,%rdi
+   241eb:	call   7fec0 <adamic_string_equal>
+   241f0:	test   %eax,%eax
+   241f2:	je     24441 <adamic_function_81_Parser_primary+0x941>
+   241f8:	xor    %edi,%edi
+   241fa:	xor    %esi,%esi
+   241fc:	call   67d70 <adamic_array_new>
+   24201:	mov    %rax,%r15
+   24204:	mov    %r14,%rdi
+   24207:	movsd  -0x30(%rbp),%xmm0
+   2420c:	mov    %rax,%rsi
+   2420f:	mov    $0x1,%edx
+   24214:	call   2cb90 <adamic_function_109_Parser_classDeclaration>
+   24219:	movsd  %xmm0,-0x30(%rbp)
+   2421e:	jmp    24434 <adamic_function_81_Parser_primary+0x934>
+   24223:	mov    -0x38(%rbp),%rax
+   24227:	add    $0x28,%rax
+   2422b:	mov    (%rax),%rdi
+   2422e:	call   6ed70 <adamic_retain>
+   24233:	lea    0x9ba2e(%rip),%rsi        # bfc68 <adamic_string_156>
+   2423a:	mov    %rax,-0x40(%rbp)
+   2423e:	mov    %rax,%rdi
+   24241:	call   7fec0 <adamic_string_equal>
+   24246:	test   %eax,%eax
+   24248:	je     2429a <adamic_function_81_Parser_primary+0x79a>
+   2424a:	mov    %r14,%rdi
+   2424d:	movq   -0x50(%rbp),%xmm0
+   24252:	call   228a0 <adamic_function_75_Parser_node>
+   24257:	mov    %rax,%r13
+   2425a:	mov    0x40(%rax),%rdi
+   2425e:	call   6ed70 <adamic_retain>
+   24263:	mov    %rax,-0x50(%rbp)
+   24267:	pxor   %xmm0,%xmm0
+   2426b:	xorpd  %xmm1,%xmm1
+   2426f:	mov    %rax,%rdi
+   24272:	xor    %esi,%esi
+   24274:	call   680b0 <adamic_array_slice>
+   24279:	mov    %rax,%r12
+   2427c:	mov    %rax,%rdi
+   2427f:	call   6ed70 <adamic_retain>
+   24284:	mov    %rax,%r15
+   24287:	mov    %r12,%rdi
+   2428a:	call   6ed90 <adamic_release>
+   2428f:	mov    -0x50(%rbp),%rdi
+   24293:	call   6ed90 <adamic_release>
+   24298:	jmp    242c6 <adamic_function_81_Parser_primary+0x7c6>
+   2429a:	mov    $0x1,%edi
+   2429f:	xor    %esi,%esi
+   242a1:	call   67d70 <adamic_array_new>
+   242a6:	mov    %rax,%r13
+   242a9:	movq   -0x50(%rbp),%xmm0
+   242ae:	movq   %xmm0,%rsi
+   242b3:	mov    %rax,%rdi
+   242b6:	call   67de0 <adamic_array_push>
+   242bb:	mov    %r13,%rdi
+   242be:	call   6ed70 <adamic_retain>
+   242c3:	mov    %rax,%r15
+   242c6:	mov    %r13,%rdi
+   242c9:	call   6ed90 <adamic_release>
+   242ce:	mov    -0x40(%rbp),%rdi
+   242d2:	call   6ed90 <adamic_release>
+   242d7:	mov    -0x38(%rbp),%rdi
+   242db:	call   6ed90 <adamic_release>
+   242e0:	mov    %r14,%rdi
+   242e3:	call   227a0 <adamic_function_73_Parser_kind>
+   242e8:	mov    %rax,%r12
+   242eb:	lea    0x98a3e(%rip),%rsi        # bcd30 <adamic_string_40>
+   242f2:	mov    %rax,%rdi
+   242f5:	call   7fec0 <adamic_string_equal>
+   242fa:	mov    %eax,%r13d
+   242fd:	mov    %r12,%rdi
+   24300:	call   6ed90 <adamic_release>
+   24305:	test   %r13d,%r13d
+   24308:	je     24384 <adamic_function_81_Parser_primary+0x884>
+   2430a:	mov    %r14,%rdi
+   2430d:	call   2da30 <adamic_function_113_Parser_arguments>
+   24312:	mov    %rax,-0x40(%rbp)
+   24316:	mov    %rax,%rdi
+   24319:	call   6ed70 <adamic_retain>
+   2431e:	mov    %rax,%r13
+   24321:	cmpq   $0x0,0x10(%rax)
+   24326:	je     24344 <adamic_function_81_Parser_primary+0x844>
+   24328:	xor    %r12d,%r12d
+   2432b:	mov    0x28(%r13),%rax
+   2432f:	mov    (%rax,%r12,8),%rsi
+   24333:	mov    %r15,%rdi
+   24336:	call   67de0 <adamic_array_push>
+   2433b:	inc    %r12
+   2433e:	cmp    0x10(%r13),%r12
+   24342:	jb     2432b <adamic_function_81_Parser_primary+0x82b>
+   24344:	mov    %r13,%rdi
+   24347:	call   6ed90 <adamic_release>
+   2434c:	mov    -0x40(%rbp),%rdi
+   24350:	movsd  0x10(%rdi),%xmm0
+   24355:	unpcklps 0x61534(%rip),%xmm0        # 85890 <_IO_stdin_used+0x890>
+   2435c:	subpd  0x6153c(%rip),%xmm0        # 858a0 <_IO_stdin_used+0x8a0>
+   24364:	movapd %xmm0,%xmm1
+   24368:	unpckhpd %xmm0,%xmm1
+   2436c:	addsd  %xmm0,%xmm1
+   24370:	movapd %xmm1,-0x50(%rbp)
+   24375:	movzbl 0x70(%r14),%eax
+   2437a:	mov    %eax,-0x38(%rbp)
+   2437d:	call   6ed90 <adamic_release>
+   24382:	jmp    24398 <adamic_function_81_Parser_primary+0x898>
+   24384:	movl   $0x0,-0x38(%rbp)
+   2438b:	movsd  0x60c75(%rip),%xmm0        # 85008 <_IO_stdin_used+0x8>
+   24393:	movapd %xmm0,-0x50(%rbp)
+   24398:	lea    0x9b909(%rip),%rsi        # bfca8 <adamic_string_157>
+   2439f:	mov    %r14,%rdi
+   243a2:	movsd  -0x30(%rbp),%xmm0
+   243a7:	mov    %r15,%rdx
+   243aa:	call   229f0 <adamic_function_76_Parser_make>
+   243af:	movsd  %xmm0,-0x30(%rbp)
+   243b4:	mov    %r14,%rdi
+   243b7:	call   228a0 <adamic_function_75_Parser_node>
+   243bc:	mov    %rax,%r12
+   243bf:	lea    0x634b8(%rip),%r13        # 8787e <adamic_math_exp.ln2LO+0x1d6e>
+   243c6:	mov    %rax,%rdi
+   243c9:	mov    %r13,%rsi
+   243cc:	call   75b20 <adamic_object_check_write>
+   243d1:	lea    0xa0098(%rip),%rdx        # c4470 <adamic_cache_2357>
+   243d8:	mov    %r12,%rdi
+   243db:	mov    %r13,%rsi
+   243de:	call   6a9a0 <adamic_object_write_field>
+   243e3:	movaps -0x50(%rbp),%xmm0
+   243e7:	movsd  %xmm0,(%rax)
+   243eb:	mov    %r12,%rdi
+   243ee:	call   6ed90 <adamic_release>
+   243f3:	mov    %r14,%rdi
+   243f6:	movsd  -0x30(%rbp),%xmm0
+   243fb:	call   228a0 <adamic_function_75_Parser_node>
+   24400:	mov    %rax,%r14
+   24403:	lea    0x63479(%rip),%r12        # 87883 <adamic_math_exp.ln2LO+0x1d73>
+   2440a:	mov    %rax,%rdi
+   2440d:	mov    %r12,%rsi
+   24410:	call   75b20 <adamic_object_check_write>
+   24415:	lea    0xa0064(%rip),%rdx        # c4480 <adamic_cache_2360>
+   2441c:	mov    %r14,%rdi
+   2441f:	mov    %r12,%rsi
+   24422:	call   6a9a0 <adamic_object_write_field>
+   24427:	mov    -0x38(%rbp),%ecx
+   2442a:	mov    %cl,(%rax)
+   2442c:	mov    %r14,%rdi
+   2442f:	call   6ed90 <adamic_release>
+   24434:	mov    %r15,%rdi
+   24437:	call   6ed90 <adamic_release>
+   2443c:	jmp    23cec <adamic_function_81_Parser_primary+0x1ec>
+   24441:	lea    0x96be8(%rip),%rsi        # bb030 <adamic_string_160>
+   24448:	mov    %rbx,%rdi
+   2444b:	call   7fec0 <adamic_string_equal>
+   24450:	test   %eax,%eax
+   24452:	je     24461 <adamic_function_81_Parser_primary+0x961>
+   24454:	mov    %r14,%rdi
+   24457:	call   2bde0 <adamic_function_104_Parser_functionExpression>
+   2445c:	jmp    23ce7 <adamic_function_81_Parser_primary+0x1e7>
+   24461:	lea    0x98648(%rip),%rsi        # bcab0 <adamic_string_133>
+   24468:	mov    %rbx,%rdi
+   2446b:	call   7fec0 <adamic_string_equal>
+   24470:	test   %eax,%eax
+   24472:	je     244a3 <adamic_function_81_Parser_primary+0x9a3>
+   24474:	mov    %r14,%rdi
+   24477:	call   2cbf0 <adamic_function_110_Parser_peek>
+   2447c:	mov    %rax,%r15
+   2447f:	lea    0x96baa(%rip),%rsi        # bb030 <adamic_string_160>
+   24486:	mov    %rax,%rdi
+   24489:	call   7fec0 <adamic_string_equal>
+   2448e:	mov    %eax,%r12d
+   24491:	mov    %r15,%rdi
+   24494:	call   6ed90 <adamic_release>
+   24499:	test   %r12d,%r12d
+   2449c:	jne    24454 <adamic_function_81_Parser_primary+0x954>
+   2449e:	jmp    24571 <adamic_function_81_Parser_primary+0xa71>
+   244a3:	lea    0x98886(%rip),%rsi        # bcd30 <adamic_string_40>
+   244aa:	mov    %rbx,%rdi
+   244ad:	call   7fec0 <adamic_string_equal>
+   244b2:	mov    %r14,%rdi
+   244b5:	test   %eax,%eax
+   244b7:	je     24517 <adamic_function_81_Parser_primary+0xa17>
+   244b9:	call   226f0 <adamic_function_74_Parser_next>
+   244be:	mov    %r14,%rdi
+   244c1:	call   33b80 <adamic_function_126_Parser_allowInExpression>
+   244c6:	movsd  %xmm0,-0x38(%rbp)
+   244cb:	lea    0x988de(%rip),%rsi        # bcdb0 <adamic_string_132>
+   244d2:	mov    %r14,%rdi
+   244d5:	call   22ef0 <adamic_function_78_Parser_expect>
+   244da:	mov    $0x1,%edi
+   244df:	xor    %esi,%esi
+   244e1:	call   67d70 <adamic_array_new>
+   244e6:	mov    %rax,%r15
+   244e9:	movq   -0x38(%rbp),%xmm0
+   244ee:	movq   %xmm0,%rsi
+   244f3:	mov    %rax,%rdi
+   244f6:	call   67de0 <adamic_array_push>
+   244fb:	lea    0x9b7e6(%rip),%rsi        # bfce8 <adamic_string_161>
+   24502:	mov    %r14,%rdi
+   24505:	movsd  -0x30(%rbp),%xmm0
+   2450a:	mov    %r15,%rdx
+   2450d:	call   229f0 <adamic_function_76_Parser_make>
+   24512:	jmp    24219 <adamic_function_81_Parser_primary+0x719>
+   24517:	call   227a0 <adamic_function_73_Parser_kind>
+   2451c:	mov    %rax,%r15
+   2451f:	lea    0x9b502(%rip),%rsi        # bfa28 <adamic_string_74>
+   24526:	mov    %rax,%rdi
+   24529:	call   7fec0 <adamic_string_equal>
+   2452e:	test   %eax,%eax
+   24530:	je     2453c <adamic_function_81_Parser_primary+0xa3c>
+   24532:	mov    %r15,%rdi
+   24535:	call   6ed90 <adamic_release>
+   2453a:	jmp    24571 <adamic_function_81_Parser_primary+0xa71>
+   2453c:	mov    %r14,%rdi
+   2453f:	call   227a0 <adamic_function_73_Parser_kind>
+   24544:	mov    %rax,-0x38(%rbp)
+   24548:	lea    0x9b7d9(%rip),%rsi        # bfd28 <adamic_string_134>
+   2454f:	mov    %rax,%rdi
+   24552:	call   82790 <adamic_string_ends_with>
+   24557:	mov    %al,-0x30(%rbp)
+   2455a:	mov    -0x38(%rbp),%rdi
+   2455e:	call   6ed90 <adamic_release>
+   24563:	mov    %r15,%rdi
+   24566:	call   6ed90 <adamic_release>
+   2456b:	cmpb   $0x0,-0x30(%rbp)
+   2456f:	je     2457e <adamic_function_81_Parser_primary+0xa7e>
+   24571:	mov    %r14,%rdi
+   24574:	call   23880 <adamic_function_80_Parser_identifier>
+   24579:	jmp    23ce7 <adamic_function_81_Parser_primary+0x1e7>
+   2457e:	mov    %r14,%rdi
+   24581:	call   227a0 <adamic_function_73_Parser_kind>
+   24586:	mov    %rax,%rbx
+   24589:	cmp    %r13,0x10(%r14)
+   2458d:	jne    24595 <adamic_function_81_Parser_primary+0xa95>
+   2458f:	lea    0x28(%r14),%rax
+   24593:	jmp    245ab <adamic_function_81_Parser_primary+0xaab>
+   24595:	lea    0x6304f(%rip),%rsi        # 875eb <adamic_math_exp.ln2LO+0x1adb>
+   2459c:	lea    0x9fefd(%rip),%rdx        # c44a0 <adamic_cache_2396>
+   245a3:	mov    %r14,%rdi
+   245a6:	call   1e540 <adamic_object_field>
+   245ab:	mov    (%rax),%rax
+   245ae:	cmp    %r12,0x10(%rax)
+   245b2:	jne    245ba <adamic_function_81_Parser_primary+0xaba>
+   245b4:	add    $0x38,%rax
+   245b8:	jmp    245d0 <adamic_function_81_Parser_primary+0xad0>
+   245ba:	lea    0x63f77(%rip),%rsi        # 88538 <adamic_math_exp.ln2LO+0x2a28>
+   245c1:	lea    0x9fee8(%rip),%rdx        # c44b0 <adamic_cache_2398>
+   245c8:	mov    %rax,%rdi
+   245cb:	call   1e540 <adamic_object_field>
+   245d0:	movsd  (%rax),%xmm0
+   245d4:	call   7fa60 <adamic_string_from_number>
+   245d9:	mov    %rax,%r15
+   245dc:	mov    0x30(%r14),%rdi
+   245e0:	call   6ed70 <adamic_retain>
+   245e5:	lea    0x9b77c(%rip),%rcx        # bfd68 <adamic_string_162>
+   245ec:	mov    %rcx,-0x88(%rbp)
+   245f3:	mov    %rbx,-0x80(%rbp)
+   245f7:	lea    0x9b5aa(%rip),%rcx        # bfba8 <adamic_string_147>
+   245fe:	mov    %rcx,-0x78(%rbp)
+   24602:	mov    %r15,-0x70(%rbp)
+   24606:	lea    0x9b5db(%rip),%rcx        # bfbe8 <adamic_string_148>
+   2460d:	mov    %rcx,-0x68(%rbp)
+   24611:	mov    %rax,-0x60(%rbp)
+   24615:	lea    -0x88(%rbp),%rsi
+   2461c:	mov    $0x6,%edi
+   24621:	call   7fae0 <adamic_string_concat>
+   24626:	mov    0x10(%rax),%rsi
+   2462a:	mov    0x18(%rax),%rdi
+   2462e:	call   67c30 <adamic_panic>
+
+Disassembly of section .fini:

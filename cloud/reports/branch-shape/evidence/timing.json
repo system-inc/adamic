@@ -1,0 +1,555 @@
+{
+  "cpu": 3,
+  "samples": {
+    "before": [
+      {
+        "wall": 1.2205752560000747,
+        "user": 1.195794,
+        "system": 0.023763,
+        "command": [
+          "/workspace/scratch/branch-shape/before",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.17 3.46 2.52 1/160 20070",
+        "load_after": "1.17 3.46 2.52 1/160 20071"
+      },
+      {
+        "wall": 1.115009758000042,
+        "user": 1.081892,
+        "system": 0.032483,
+        "command": [
+          "/workspace/scratch/branch-shape/before",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.16 3.42 2.51 1/160 20074",
+        "load_after": "1.16 3.42 2.51 1/160 20075"
+      },
+      {
+        "wall": 1.0829673130001538,
+        "user": 1.053527,
+        "system": 0.028752,
+        "command": [
+          "/workspace/scratch/branch-shape/before",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.14 3.38 2.51 1/160 20080",
+        "load_after": "1.14 3.38 2.51 1/160 20081"
+      },
+      {
+        "wall": 1.03440042599982,
+        "user": 1.013481,
+        "system": 0.020312999999999998,
+        "command": [
+          "/workspace/scratch/branch-shape/before",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.13 3.34 2.50 1/160 20084",
+        "load_after": "1.13 3.34 2.50 1/160 20085"
+      },
+      {
+        "wall": 1.1893810980000126,
+        "user": 1.143862,
+        "system": 0.044913999999999996,
+        "command": [
+          "/workspace/scratch/branch-shape/before",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.13 3.34 2.50 1/160 20086",
+        "load_after": "1.13 3.34 2.50 1/160 20087"
+      },
+      {
+        "wall": 1.0488817240000117,
+        "user": 1.006089,
+        "system": 0.042187999999999996,
+        "command": [
+          "/workspace/scratch/branch-shape/before",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.12 3.30 2.49 1/160 20090",
+        "load_after": "1.12 3.30 2.49 2/160 20091"
+      },
+      {
+        "wall": 1.0714301490002072,
+        "user": 1.042554,
+        "system": 0.02814,
+        "command": [
+          "/workspace/scratch/branch-shape/before",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.11 3.26 2.48 1/159 20096",
+        "load_after": "1.10 3.22 2.47 1/159 20097"
+      },
+      {
+        "wall": 1.0537115349998203,
+        "user": 1.001991,
+        "system": 0.051125,
+        "command": [
+          "/workspace/scratch/branch-shape/before",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.10 3.22 2.47 1/159 20100",
+        "load_after": "1.10 3.22 2.47 1/156 20101"
+      },
+      {
+        "wall": 1.043373986000006,
+        "user": 1.007005,
+        "system": 0.035836,
+        "command": [
+          "/workspace/scratch/branch-shape/before",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.09 3.19 2.46 1/156 20102",
+        "load_after": "1.09 3.19 2.46 1/156 20103"
+      },
+      {
+        "wall": 1.2028090060000522,
+        "user": 1.182566,
+        "system": 0.019575,
+        "command": [
+          "/workspace/scratch/branch-shape/before",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.09 3.15 2.46 1/156 20113",
+        "load_after": "1.09 3.15 2.46 1/156 20114"
+      }
+    ],
+    "scalar-only": [
+      {
+        "wall": 1.2291069660000176,
+        "user": 1.202203,
+        "system": 0.026105999999999997,
+        "command": [
+          "/workspace/scratch/branch-shape/scalar-only",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.17 3.46 2.52 1/160 20071",
+        "load_after": "1.17 3.46 2.52 1/160 20072"
+      },
+      {
+        "wall": 1.1416867179998462,
+        "user": 1.077168,
+        "system": 0.063829,
+        "command": [
+          "/workspace/scratch/branch-shape/scalar-only",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.16 3.42 2.51 1/160 20077",
+        "load_after": "1.16 3.42 2.51 1/160 20078"
+      },
+      {
+        "wall": 1.3430723120000039,
+        "user": 1.292915,
+        "system": 0.049469,
+        "command": [
+          "/workspace/scratch/branch-shape/scalar-only",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.14 3.38 2.51 1/160 20081",
+        "load_after": "1.14 3.38 2.51 1/160 20082"
+      },
+      {
+        "wall": 1.0512688860001163,
+        "user": 0.9981369999999999,
+        "system": 0.052334,
+        "command": [
+          "/workspace/scratch/branch-shape/scalar-only",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.13 3.34 2.50 1/160 20083",
+        "load_after": "1.13 3.34 2.50 1/160 20084"
+      },
+      {
+        "wall": 1.0911750029999894,
+        "user": 1.051115,
+        "system": 0.039397,
+        "command": [
+          "/workspace/scratch/branch-shape/scalar-only",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.13 3.34 2.50 1/160 20087",
+        "load_after": "1.12 3.30 2.49 1/160 20088"
+      },
+      {
+        "wall": 1.1021650410000348,
+        "user": 1.068708,
+        "system": 0.032638,
+        "command": [
+          "/workspace/scratch/branch-shape/scalar-only",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.11 3.26 2.48 1/160 20093",
+        "load_after": "1.11 3.26 2.48 1/160 20094"
+      },
+      {
+        "wall": 1.070379148000029,
+        "user": 1.037241,
+        "system": 0.032389,
+        "command": [
+          "/workspace/scratch/branch-shape/scalar-only",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.10 3.22 2.47 1/159 20097",
+        "load_after": "1.10 3.22 2.47 1/159 20098"
+      },
+      {
+        "wall": 1.0734735200001069,
+        "user": 1.032795,
+        "system": 0.040087,
+        "command": [
+          "/workspace/scratch/branch-shape/scalar-only",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.10 3.22 2.47 1/159 20099",
+        "load_after": "1.10 3.22 2.47 1/159 20100"
+      },
+      {
+        "wall": 1.064885575000062,
+        "user": 1.013558,
+        "system": 0.050686999999999996,
+        "command": [
+          "/workspace/scratch/branch-shape/scalar-only",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.09 3.19 2.46 1/156 20103",
+        "load_after": "1.09 3.19 2.46 1/156 20104"
+      },
+      {
+        "wall": 1.027494641999965,
+        "user": 0.990636,
+        "system": 0.036056,
+        "command": [
+          "/workspace/scratch/branch-shape/scalar-only",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.09 3.15 2.46 1/156 20116",
+        "load_after": "1.09 3.15 2.46 1/156 20117"
+      }
+    ],
+    "switch": [
+      {
+        "wall": 1.16706672600003,
+        "user": 1.137107,
+        "system": 0.029057,
+        "command": [
+          "/workspace/scratch/branch-shape/switch",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.17 3.46 2.52 1/160 20072",
+        "load_after": "1.17 3.46 2.52 1/160 20073"
+      },
+      {
+        "wall": 1.1616356829999859,
+        "user": 1.113795,
+        "system": 0.046935,
+        "command": [
+          "/workspace/scratch/branch-shape/switch",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.16 3.42 2.51 1/160 20076",
+        "load_after": "1.16 3.42 2.51 1/160 20077"
+      },
+      {
+        "wall": 1.1166084919998411,
+        "user": 1.07874,
+        "system": 0.035934,
+        "command": [
+          "/workspace/scratch/branch-shape/switch",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.16 3.42 2.51 1/160 20078",
+        "load_after": "1.14 3.38 2.51 1/160 20079"
+      },
+      {
+        "wall": 1.0294810709999638,
+        "user": 1.000769,
+        "system": 0.028083999999999998,
+        "command": [
+          "/workspace/scratch/branch-shape/switch",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.14 3.38 2.51 1/160 20082",
+        "load_after": "1.13 3.34 2.50 1/160 20083"
+      },
+      {
+        "wall": 1.0633726959999876,
+        "user": 1.031025,
+        "system": 0.031479,
+        "command": [
+          "/workspace/scratch/branch-shape/switch",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.12 3.30 2.49 1/160 20088",
+        "load_after": "1.12 3.30 2.49 1/160 20089"
+      },
+      {
+        "wall": 1.019225792000043,
+        "user": 0.9654189999999999,
+        "system": 0.05284,
+        "command": [
+          "/workspace/scratch/branch-shape/switch",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.11 3.26 2.48 1/160 20092",
+        "load_after": "1.11 3.26 2.48 1/160 20093"
+      },
+      {
+        "wall": 1.0900977460000831,
+        "user": 1.044488,
+        "system": 0.044697,
+        "command": [
+          "/workspace/scratch/branch-shape/switch",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.11 3.26 2.48 1/160 20094",
+        "load_after": "1.11 3.26 2.48 1/159 20095"
+      },
+      {
+        "wall": 1.1994245689998024,
+        "user": 1.157929,
+        "system": 0.040708999999999995,
+        "command": [
+          "/workspace/scratch/branch-shape/switch",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.10 3.22 2.47 1/159 20098",
+        "load_after": "1.10 3.22 2.47 1/159 20099"
+      },
+      {
+        "wall": 1.044845328000065,
+        "user": 1.032042,
+        "system": 0.011994999999999999,
+        "command": [
+          "/workspace/scratch/branch-shape/switch",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.09 3.19 2.46 1/156 20104",
+        "load_after": "1.09 3.19 2.46 1/156 20112"
+      },
+      {
+        "wall": 1.0753776179999477,
+        "user": 1.048683,
+        "system": 0.026105,
+        "command": [
+          "/workspace/scratch/branch-shape/switch",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.09 3.15 2.46 1/156 20115",
+        "load_after": "1.09 3.15 2.46 1/156 20116"
+      }
+    ],
+    "scalar": [
+      {
+        "wall": 1.1003516600001149,
+        "user": 1.066959,
+        "system": 0.032632,
+        "command": [
+          "/workspace/scratch/branch-shape/scalar",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.17 3.46 2.52 1/160 20073",
+        "load_after": "1.16 3.42 2.51 1/160 20074"
+      },
+      {
+        "wall": 1.0988719100000708,
+        "user": 1.057498,
+        "system": 0.040173,
+        "command": [
+          "/workspace/scratch/branch-shape/scalar",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.16 3.42 2.51 1/160 20075",
+        "load_after": "1.16 3.42 2.51 1/160 20076"
+      },
+      {
+        "wall": 1.0923599380000724,
+        "user": 1.039066,
+        "system": 0.052572,
+        "command": [
+          "/workspace/scratch/branch-shape/scalar",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.14 3.38 2.51 1/160 20079",
+        "load_after": "1.14 3.38 2.51 1/160 20080"
+      },
+      {
+        "wall": 1.104545485000017,
+        "user": 1.076598,
+        "system": 0.027194,
+        "command": [
+          "/workspace/scratch/branch-shape/scalar",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.13 3.34 2.50 1/160 20085",
+        "load_after": "1.13 3.34 2.50 1/160 20086"
+      },
+      {
+        "wall": 1.1638486150000062,
+        "user": 1.134552,
+        "system": 0.028742,
+        "command": [
+          "/workspace/scratch/branch-shape/scalar",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.12 3.30 2.49 1/160 20089",
+        "load_after": "1.12 3.30 2.49 1/160 20090"
+      },
+      {
+        "wall": 1.0324160739999115,
+        "user": 1.007126,
+        "system": 0.02452,
+        "command": [
+          "/workspace/scratch/branch-shape/scalar",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.12 3.30 2.49 2/160 20091",
+        "load_after": "1.11 3.26 2.48 1/160 20092"
+      },
+      {
+        "wall": 1.0924632580001798,
+        "user": 1.064162,
+        "system": 0.027337,
+        "command": [
+          "/workspace/scratch/branch-shape/scalar",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.11 3.26 2.48 1/159 20095",
+        "load_after": "1.11 3.26 2.48 1/159 20096"
+      },
+      {
+        "wall": 1.044852745000071,
+        "user": 1.009468,
+        "system": 0.034548999999999996,
+        "command": [
+          "/workspace/scratch/branch-shape/scalar",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.10 3.22 2.47 1/156 20101",
+        "load_after": "1.09 3.19 2.46 1/156 20102"
+      },
+      {
+        "wall": 1.0531209340001624,
+        "user": 1.016977,
+        "system": 0.035456,
+        "command": [
+          "/workspace/scratch/branch-shape/scalar",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.09 3.19 2.46 1/156 20112",
+        "load_after": "1.09 3.15 2.46 1/156 20113"
+      },
+      {
+        "wall": 1.259535139000036,
+        "user": 1.214985,
+        "system": 0.043813,
+        "command": [
+          "/workspace/scratch/branch-shape/scalar",
+          "--manifest",
+          "/workspace/scratch/branch-shape/compiler.txt",
+          "--count"
+        ],
+        "load_before": "1.09 3.15 2.46 1/156 20114",
+        "load_after": "1.09 3.15 2.46 1/156 20115"
+      }
+    ]
+  },
+  "best": {
+    "before": {
+      "user": 1.001991,
+      "wall": 1.03440042599982,
+      "system": 0.019575
+    },
+    "scalar-only": {
+      "user": 0.990636,
+      "wall": 1.027494641999965,
+      "system": 0.026105999999999997
+    },
+    "switch": {
+      "user": 0.9654189999999999,
+      "wall": 1.019225792000043,
+      "system": 0.011994999999999999
+    },
+    "scalar": {
+      "user": 1.007126,
+      "wall": 1.0324160739999115,
+      "system": 0.02452
+    }
+  }
+}

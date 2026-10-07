@@ -1,0 +1,103 @@
+Function adamic_function_73_Parser_kind
+Aggregated self events {'Ir': 208327790, 'Dr': 66286115, 'Dw': 18938890, 'I1mr': 2984, 'D1mr': 329, 'D1mw': 749, 'ILmr': 4, 'DLmr': 0, 'DLmw': 1, 'Bc': 28408335, 'Bcm': 225408, 'Bi': 0, 'Bim': 0}
+{'function': 'adamic_function_73_Parser_kind', 'source': '/workspace/scratch/branch-shape/before.c', 'address': '0x227ae', 'line': 9853, 'costs': [9469445, 0, 0, 0, 0, 0, 0, 0, 0, 9469445, 220866, 0, 0], 'taken': 0}
+9850: }
+9851: 
+9852: static adamic_string * adamic_function_73_Parser_kind(adamic_object * adamic_local_300_this) {
+9853: 	ADAMIC_CHECK_STACK();
+9854: 	adamic_object * adamic_temporary_2159 = ((adamic_object *)(adamic_local_300_this->shape == &adamic_shape_5 ? &adamic_local_300_this->slots[0] : adamic_object_field(adamic_local_300_this, "scanner", &adamic_cache_2158))->reference);
+9855: 	adamic_string * adamic_temporary_2161 = adamic_retain(((adamic_string *)(adamic_temporary_2159->shape == &adamic_shape_0 ? &adamic_temporary_2159->slots[4] : adamic_object_field(adamic_temporary_2159, "kind", &adamic_cache_2160))->reference));
+9856: 	adamic_string * adamic_temporary_2162 = adamic_temporary_2161;
+{'function': 'adamic_function_73_Parser_kind', 'source': '/workspace/scratch/branch-shape/before.c', 'address': '0x227c2', 'line': 9854, 'costs': [9469445, 0, 0, 0, 0, 0, 0, 0, 0, 9469445, 4515, 0, 0], 'taken': 9469445}
+9851: 
+9852: static adamic_string * adamic_function_73_Parser_kind(adamic_object * adamic_local_300_this) {
+9853: 	ADAMIC_CHECK_STACK();
+9854: 	adamic_object * adamic_temporary_2159 = ((adamic_object *)(adamic_local_300_this->shape == &adamic_shape_5 ? &adamic_local_300_this->slots[0] : adamic_object_field(adamic_local_300_this, "scanner", &adamic_cache_2158))->reference);
+9855: 	adamic_string * adamic_temporary_2161 = adamic_retain(((adamic_string *)(adamic_temporary_2159->shape == &adamic_shape_0 ? &adamic_temporary_2159->slots[4] : adamic_object_field(adamic_temporary_2159, "kind", &adamic_cache_2160))->reference));
+9856: 	adamic_string * adamic_temporary_2162 = adamic_temporary_2161;
+9857: 	return adamic_temporary_2162;
+{'function': 'adamic_function_73_Parser_kind', 'source': '/workspace/scratch/branch-shape/before.c', 'address': '0x2282f', 'line': 9855, 'costs': [9469445, 0, 0, 0, 0, 0, 0, 0, 0, 9469445, 27, 0, 0], 'taken': 9469445}
+9852: static adamic_string * adamic_function_73_Parser_kind(adamic_object * adamic_local_300_this) {
+9853: 	ADAMIC_CHECK_STACK();
+9854: 	adamic_object * adamic_temporary_2159 = ((adamic_object *)(adamic_local_300_this->shape == &adamic_shape_5 ? &adamic_local_300_this->slots[0] : adamic_object_field(adamic_local_300_this, "scanner", &adamic_cache_2158))->reference);
+9855: 	adamic_string * adamic_temporary_2161 = adamic_retain(((adamic_string *)(adamic_temporary_2159->shape == &adamic_shape_0 ? &adamic_temporary_2159->slots[4] : adamic_object_field(adamic_temporary_2159, "kind", &adamic_cache_2160))->reference));
+9856: 	adamic_string * adamic_temporary_2162 = adamic_temporary_2161;
+9857: 	return adamic_temporary_2162;
+9858: 	adamic_unreachable();
+
+/workspace/scratch/branch-shape/landing-before:     file format elf64-x86-64
+
+
+Disassembly of section .init:
+
+Disassembly of section .plt:
+
+Disassembly of section .plt.got:
+
+Disassembly of section .text:
+
+00000000000227a0 <adamic_function_73_Parser_kind>:
+   227a0:	push   %rbp
+   227a1:	mov    %rsp,%rbp
+   227a4:	lea    0xb79d5(%rip),%rax        # da180 <adamic_stack_limit>
+   227ab:	cmp    %rbp,(%rax)
+   227ae:	ja     22898 <adamic_function_73_Parser_kind+0xf8>
+   227b4:	mov    0x10(%rdi),%rax
+   227b8:	lea    0x959f1(%rip),%rcx        # b81b0 <adamic_shape_5>
+   227bf:	cmp    %rcx,%rax
+   227c2:	je     22809 <adamic_function_73_Parser_kind+0x69>
+   227c4:	mov    0x18(%rdi),%rcx
+   227c8:	test   %rcx,%rcx
+   227cb:	je     227e8 <adamic_function_73_Parser_kind+0x48>
+   227cd:	cmpb   $0x1,0x40(%rcx)
+   227d1:	jne    227e8 <adamic_function_73_Parser_kind+0x48>
+   227d3:	lea    0x64e11(%rip),%rsi        # 875eb <adamic_math_exp.ln2LO+0x1adb>
+   227da:	lea    0xa02cf(%rip),%rdx        # c2ab0 <adamic_cache_2158>
+   227e1:	call   6a940 <adamic_static_field>
+   227e6:	jmp    22804 <adamic_function_73_Parser_kind+0x64>
+   227e8:	cmp    %rax,0xa02c1(%rip)        # c2ab0 <adamic_cache_2158>
+   227ef:	je     2280f <adamic_function_73_Parser_kind+0x6f>
+   227f1:	lea    0x64df3(%rip),%rsi        # 875eb <adamic_math_exp.ln2LO+0x1adb>
+   227f8:	lea    0xa02b1(%rip),%rdx        # c2ab0 <adamic_cache_2158>
+   227ff:	call   78bd0 <adamic_object_find>
+   22804:	mov    %rax,%rdi
+   22807:	jmp    2281e <adamic_function_73_Parser_kind+0x7e>
+   22809:	add    $0x28,%rdi
+   2280d:	jmp    2281e <adamic_function_73_Parser_kind+0x7e>
+   2280f:	mov    0xa02a2(%rip),%rax        # c2ab8 <adamic_cache_2158+0x8>
+   22816:	lea    (%rdi,%rax,8),%rdi
+   2281a:	add    $0x28,%rdi
+   2281e:	mov    (%rdi),%rax
+   22821:	mov    0x10(%rax),%rcx
+   22825:	lea    0x95bdc(%rip),%rdx        # b8408 <adamic_shape_0>
+   2282c:	cmp    %rdx,%rcx
+   2282f:	je     22879 <adamic_function_73_Parser_kind+0xd9>
+   22831:	mov    0x18(%rax),%rdx
+   22835:	test   %rdx,%rdx
+   22838:	je     22858 <adamic_function_73_Parser_kind+0xb8>
+   2283a:	cmpb   $0x1,0x40(%rdx)
+   2283e:	jne    22858 <adamic_function_73_Parser_kind+0xb8>
+   22840:	lea    0x63369(%rip),%rsi        # 85bb0 <adamic_math_exp.ln2LO+0xa0>
+   22847:	lea    0xa0272(%rip),%rdx        # c2ac0 <adamic_cache_2160>
+   2284e:	mov    %rax,%rdi
+   22851:	call   6a940 <adamic_static_field>
+   22856:	jmp    2288e <adamic_function_73_Parser_kind+0xee>
+   22858:	cmp    %rcx,0xa0261(%rip)        # c2ac0 <adamic_cache_2160>
+   2285f:	je     2287f <adamic_function_73_Parser_kind+0xdf>
+   22861:	lea    0x63348(%rip),%rsi        # 85bb0 <adamic_math_exp.ln2LO+0xa0>
+   22868:	lea    0xa0251(%rip),%rdx        # c2ac0 <adamic_cache_2160>
+   2286f:	mov    %rax,%rdi
+   22872:	call   78bd0 <adamic_object_find>
+   22877:	jmp    2288e <adamic_function_73_Parser_kind+0xee>
+   22879:	add    $0x48,%rax
+   2287d:	jmp    2288e <adamic_function_73_Parser_kind+0xee>
+   2287f:	mov    0xa0242(%rip),%rcx        # c2ac8 <adamic_cache_2160+0x8>
+   22886:	lea    (%rax,%rcx,8),%rax
+   2288a:	add    $0x28,%rax
+   2288e:	mov    (%rax),%rdi
+   22891:	call   6ed70 <adamic_retain>
+   22896:	pop    %rbp
+   22897:	ret
+   22898:	call   7fa00 <adamic_stack_overflow>
+
+Disassembly of section .fini:
