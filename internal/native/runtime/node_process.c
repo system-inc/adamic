@@ -1,5 +1,6 @@
 // node_process.c: synchronous compiler host observations and performance entries.
 #define _POSIX_C_SOURCE 200809L
+#define _DARWIN_C_SOURCE
 #include "adamic.h"
 #include <errno.h>
 #include <stdio.h>

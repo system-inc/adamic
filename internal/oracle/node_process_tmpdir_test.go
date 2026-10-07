@@ -1,7 +1,9 @@
 package oracle
 
 import (
+	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
@@ -52,4 +54,20 @@ func TestNodeProcessOSNamespace(t *testing.T) {
 	if bad.exitCode != 0 || len(bad.stderr) != 0 || disagreement(truth, bad) != "stdout differs" {
 		t.Fatal("namespace EOL mutant not caught only by Node bytes")
 	}
+	data, err := os.ReadFile(script)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !strings.Contains(string(data), `"\n"`) {
+		t.Fatal("JavaScript EOL mutant anchor changed")
+	}
+	javascriptMutant := filepath.Join(t.TempDir(), "namespace-mutant.mjs")
+	if err := os.WriteFile(javascriptMutant, []byte(strings.ReplaceAll(string(data), `"\n"`, `"\r\n"`)), 0600); err != nil {
+		t.Fatal(err)
+	}
+	bad = onNode(t, javascriptMutant)
+	if bad.exitCode != 0 || len(bad.stderr) != 0 || disagreement(truth, bad) != "stdout differs" {
+		t.Fatal("JavaScript namespace EOL mutant not caught only by Node bytes")
+	}
+	t.Log("System.newLine namespace body agrees on both backends; native and JavaScript EOL mutants caught only by Node stdout comparison")
 }
