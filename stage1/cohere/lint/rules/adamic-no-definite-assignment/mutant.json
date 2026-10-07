@@ -1,0 +1,6 @@
+{
+  "name": "definite_assignment_subscription_lost",
+  "file": "rule.ts",
+  "from": "kind === 'ExclamationToken'",
+  "to": "kind === 'QuestionToken'"
+}

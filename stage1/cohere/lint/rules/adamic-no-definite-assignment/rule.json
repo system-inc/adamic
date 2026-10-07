@@ -1,0 +1,13 @@
+{
+  "name": "adamic/no-definite-assignment",
+  "kinds": [
+    "PropertyDeclaration",
+    "VariableDeclaration"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleDefiniteAssignment",
+  "upstreamPackage": "adamic",
+  "upstreamTest": "TestNoDefiniteAssignment"
+}
