@@ -110,9 +110,9 @@ This independently verifies the change in blocker stage after the dependency mer
 Verified one-line current reproducer:
 
 ```a
-console.log(Object.prototype.hasOwnProperty.call({}, 'code'));
+console.log(String(Object.prototype.hasOwnProperty.call({}, 'code')));
 ```
 
-It refuses at 1:13 with (unbound-method). Linux is the gate used here; macOS was
+It refuses at 1:20 with (unbound-method). Linux is the gate used here; macOS was
 not run. Only codex/node-options-widening is pushed; no main push, force push or
 history rewrite is performed.
