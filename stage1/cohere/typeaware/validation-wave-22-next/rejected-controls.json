@@ -1,0 +1,18 @@
+{
+  "control-020.a": "\n        type OnSelectNodeFn = (node: string | null) => void;\n\n        interface ASTViewerBaseProps {\n          readonly onSelectNode?: OnSelectNodeFn;\n        }\n\n        declare function ASTViewer(props: ASTViewerBaseProps): null;\n        declare const onSelectFn: OnSelectNodeFn;\n\n        <ASTViewer onSelectNode={onSelectFn} />;\n      \nexport {};\n",
+  "control-048.a": "\nclass A {}\n\nconst o = <div {...A} />;\n      \nexport {};\n",
+  "control-075.a": "\nconst Component: any = () => null;\n<Component func={async () => 10} />;\n      \nexport {};\n",
+  "control-106.a": "\nconst o = <div {...[1, 2, 3]} />;\n      \nexport {};\n",
+  "control-107.a": "\nconst o = <div {...new Date()} />;\n      \nexport {};\n",
+  "control-108.a": "\nconst o = <div {...new Set([1, 2, 3])} />;\n      \nexport {};\n",
+  "control-115.a": "\nconst obj = { a: 1, b: 2 };\nconst o = <div {...x} />;\n      \nexport {};\n",
+  "control-123.a": "\nconst promise = new Promise(() => {});\n\nconst o = <div {...promise} />;\n      \nexport {};\n",
+  "control-151.a": "\ndeclare const map: Map<string, number>;\n\nconst o = <div {...map} />;\n      \nexport {};\n",
+  "control-162.a": "\ndeclare const obj: { a: number; b: number } | any;\nconst o = <div {...x} />;\n      \nexport {};\n",
+  "control-219.a": "\nfunction f() {}\n\nconst o = <div {...f} />;\n      \nexport {};\n",
+  "control-283.a": "\ninterface Props {\n  onEvent: (() => void) | (() => Promise<void>);\n}\n\ndeclare function Component(props: Props): any;\n\nconst _ = <Component onEvent={async () => {}} />;\n      \nexport {};\n",
+  "control-303.a": "\ntype O = {\n  bool: boolean;\n  func: () => Promise<void>;\n};\nconst Component = (obj: O) => null;\n<Component bool func={async () => 10} />;\n      \nexport {};\n",
+  "control-304.a": "\ntype O = {\n  func: () => void;\n};\nconst Component = (obj: O) => null;\n<Component func={async () => 0} />;\n      \nexport {};\n",
+  "control-305.a": "\ntype O = {\n  func: () => void;\n};\nconst g = async () => 'foo';\nconst Component = (obj: O) => null;\n<Component func={g} />;\n      \nexport {};\n",
+  "control-319.a": "\ntype Props = { onEvent: () => void };\ndeclare function Component(props: Props): null;\nconst element = <Component onEvent={async () => {}} />;\n\nexport {};\n"
+}
