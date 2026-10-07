@@ -1,0 +1,6 @@
+import type { GapDescription } from './model.a';
+import { colorArm } from '../batch30/color_arm.a';
+export function maskStopDescription(): GapDescription {
+    return {themeKeys: [], themeKeysPresent: false, negative: false, fractions: false, defaultValue: '', defaultPresent: false, handlerPresent: false, negativeHandlerPresent: false, staticNames: new Map<string, boolean>(), staticNamesPresent: false, modifierOnArbitrary: false, armsPresent: true,
+        arms: [colorArm(['--background-color', '--color'], true), {themeKeys: ['--spacing'], themeKeysPresent: true, isColor: false, bareValue: 'SpacingMultiplier', bareValueSuffix: '', refusesModifier: true, inferTypes: ['number', 'percentage'], inferTypesPresent: true, percentagePassesThrough: true}]};
+}

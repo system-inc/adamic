@@ -1,0 +1,7 @@
+import type { GapDescription } from './model.a';
+import { colorArm } from '../batch30/color_arm.a';
+import { widthArm } from '../batch30/width_arm.a';
+export function borderSideDescription(): GapDescription {
+    return {themeKeys: [], themeKeysPresent: false, negative: false, fractions: false, defaultValue: '1px', defaultPresent: true, handlerPresent: false, negativeHandlerPresent: false, staticNames: new Map<string, boolean>(), staticNamesPresent: false, modifierOnArbitrary: false, armsPresent: true,
+        arms: [colorArm(['--border-color', '--color'], true), widthArm('--border-width', 'px', true)]};
+}

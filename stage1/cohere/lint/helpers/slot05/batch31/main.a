@@ -1,0 +1,38 @@
+import { panic, readTextFile, programArguments } from 'adamic';
+import { OptionsJson } from '../../options_json.ts';
+import { borderSideDescription } from './border_side_description.a';
+import { maskStopDescription } from './mask_stop_description.a';
+import { resolveArmColor } from './resolve_arm_color.a';
+import type { GapDescription, ThemeResolver, ColorResult } from './model.a';
+import type { UtilityArm } from '../batch30/model.a';
+const input = readTextFile(programArguments()[0] ?? panic('missing corpus'));
+if (input.kind === 'Error') { panic(input.message); }
+const json = new OptionsJson(input.text); const root = json.parse(); if (root < 0) { panic(json.error); }
+function text(index: number, name: string): string { return json.node(json.field(index, name)).text; }
+function truth(index: number, name: string): boolean { return text(index, name) === 'true'; }
+function texts(index: number, name: string): string[] { const values: string[] = []; for (const v of json.node(json.field(index, name)).children) { values.push(json.node(v).text); } return values; }
+function print(d: GapDescription): void {
+    console.log(`${d.themeKeysPresent}|${d.themeKeys.join('~')}|${d.negative}|${d.fractions}|${d.defaultValue}|${d.defaultPresent}|${d.handlerPresent}|${d.negativeHandlerPresent}|${d.staticNamesPresent}|${d.modifierOnArbitrary}|${d.armsPresent}|${d.arms.length}`);
+    for (const a of d.arms) { console.log(`${a.themeKeysPresent}|${a.themeKeys.join('~')}|${a.isColor}|${a.bareValue}|${a.bareValueSuffix}|${a.refusesModifier}|${a.inferTypesPresent}|${a.inferTypes.join('~')}|${a.percentagePassesThrough}`); }
+}
+const mode = text(root, 'mode');
+for (const row of json.node(json.field(root, 'rows')).children) {
+    const value = text(row, 'value');
+    if (mode === 'resolve') {
+        const arm: UtilityArm = {themeKeys: texts(row, 'keys'), themeKeysPresent: truth(row, 'keysPresent'), isColor: truth(row, 'guard'), bareValue: '', bareValueSuffix: '', refusesModifier: truth(row, 'guard'), inferTypes: ['percentage'], inferTypesPresent: true, percentagePassesThrough: true};
+        const resolver: ThemeResolver = (argument: string, present: boolean, keys: string[], options: number): ColorResult => {
+            if (argument !== value || !present || keys !== arm.themeKeys || options !== 0) { return panic('unexpected theme arguments'); }
+            return {text: text(row, 'resolved'), ok: truth(row, 'found')};
+        };
+        const result = resolveArmColor(value, arm, resolver);
+        console.log(`${result.ok}|${result.text}`);
+    } else {
+        const first = mode === 'border' ? borderSideDescription() : maskStopDescription();
+        const second = mode === 'border' ? borderSideDescription() : maskStopDescription();
+        print(first);
+        first.themeKeys.push(value);
+        if (first.staticNamesPresent) { first.staticNames.set(value, true); }
+        for (const a of first.arms) { if (a.themeKeys.length > 0) { a.themeKeys[0] = value; } if (a.inferTypes.length > 0) { a.inferTypes[0] = value; } }
+        print(second);
+    }
+}

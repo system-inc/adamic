@@ -1,0 +1,8 @@
+import type { UtilityArm } from '../batch30/model.a';
+import type { ColorResult, ThemeResolver } from './model.a';
+export function resolveArmColor(value: string, arm: UtilityArm, resolve: ThemeResolver): ColorResult {
+    if (value === 'inherit') { return {text: 'inherit', ok: true}; }
+    if (value === 'transparent') { return {text: 'transparent', ok: true}; }
+    if (value === 'current') { return {text: 'currentcolor', ok: true}; }
+    return resolve(value, true, arm.themeKeys, 0);
+}

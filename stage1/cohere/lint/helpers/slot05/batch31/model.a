@@ -1,0 +1,12 @@
+import type { UtilityArm } from '../batch30/model.a';
+export interface GapDescription {
+    themeKeys: string[]; themeKeysPresent: boolean;
+    negative: boolean; fractions: boolean;
+    defaultValue: string; defaultPresent: boolean;
+    handlerPresent: boolean; negativeHandlerPresent: boolean;
+    staticNames: Map<string, boolean>; staticNamesPresent: boolean;
+    modifierOnArbitrary: boolean;
+    arms: UtilityArm[]; armsPresent: boolean;
+}
+export interface ColorResult { text: string; ok: boolean; }
+export type ThemeResolver = (value: string, present: boolean, keys: string[], options: number) => ColorResult;
