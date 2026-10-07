@@ -85,3 +85,18 @@ three, each with compiler 0 and repository 0, are:
 
 Whole stage1/cohere searches on main and the bridge found inventory/count
 mentions only. This claim is pushed before implementation.
+
+## Sixth set
+
+Prior fifteen ports and validation are pushed at a278e5e7. Fresh all-head fetch
+found 30 remaining rules among 197 ranked names, excluding integration-head
+ports and 142 claimed names in 33 origin Markdown claim documents. The first
+three, each with compiler 0 and repository 0, are:
+
+- react-hooks/set-state-in-effect
+- react-hooks/set-state-in-render
+- react-hooks/static-components
+
+Main is e011f8f60899586d6373a5ccb07335ad82cfbf3c; bridge is
+5afbdb83da2ed7ad9815657cd3f6ececd5294bf6. Whole stage1/cohere searches found
+only inventory/count references on those heads. This claim is pushed before code.
