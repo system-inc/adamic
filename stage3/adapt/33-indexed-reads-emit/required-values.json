@@ -1,0 +1,15 @@
+[
+  {
+    "file": "sourcemap.ts",
+    "line": 83,
+    "column": 25,
+    "function": "createSourceMapGenerator",
+    "expression": "JSON.stringify(toJSON())",
+    "kind": "CallExpression",
+    "occurrence": 1,
+    "total": 1,
+    "action": "assert",
+    "class": "required-result",
+    "invariant": "toJSON returns a fresh plain object with a numeric version field and no toJSON method; JSON.stringify returns a string for that object or throws, never undefined. The assertion is on the original call result and erases on Node."
+  }
+]

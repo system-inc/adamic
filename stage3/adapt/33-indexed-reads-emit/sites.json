@@ -573,7 +573,7 @@
     "total": 2,
     "action": "decline",
     "class": "U-position",
-    "invariant": "The adjacent typeof string guard handles missing source content; preserve its repeated read."
+    "invariant": "Decline: typeof checks the first indexed read, but the payload performs a second read of caller-supplied sourcesContent; a getter may return a different array and make that payload undefined. No stable-data provenance is guaranteed for this API input."
   },
   {
     "file": "sourcemap.ts",

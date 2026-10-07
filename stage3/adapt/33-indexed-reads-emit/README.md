@@ -59,3 +59,21 @@ files **36 -> 37**, with the full input matching report 176a496 exactly. Stock
 JavaScript and idempotence pass; `! -> ?? 0` mutant caught twice. Default oracle:
 **106367 passing, zero failing**, **empty baseline diff**, 211.991s.
 See [the complete proof](proof/whole-files/visitorPublic/README.md).
+
+### sourcemap.ts: one remaining diagnostic
+
+The all-code latent census is **2 -> 1**. The call result
+`JSON.stringify(toJSON())!` is recorded in `required-values.json` as a
+`required-result` contract, rather than falsely classifying a call as an indexed
+read. `toJSON` returns a fresh ordinary object with `version: 3`; standard JSON
+serialization returns its string representation or throws. The adapter parses
+call/property sites with stock 6.0.3, validates their occurrence counts, and
+plans them together with every indexed site before writing any file.
+
+The remaining TS2345 at `appendSourceMap` line 216 is declined. Its `typeof`
+guard and payload perform different reads of caller-supplied `sourcesContent`.
+A real Node probe supplies a getter returning `['present']` for the first two
+property accesses and `[]` for the third. The guard passes, the payload is
+undefined, and existing code produces `[null]` when that content is serialized.
+An assertion would therefore claim an invariant this API does not guarantee;
+caching would change observable getter calls. The original reads remain intact.
