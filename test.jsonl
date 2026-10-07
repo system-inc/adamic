@@ -49,3 +49,27 @@
 {"Time":"2026-10-07T21:01:39.576706565Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo/cost"}
 {"Time":"2026-10-07T21:01:39.576724384Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo/cost","Output":"?   \tgithub.com/system-inc/adamic/bridge/tsgo/cost\t[no test files]\n"}
 {"Time":"2026-10-07T21:01:39.576730963Z","Action":"skip","Package":"github.com/system-inc/adamic/bridge/tsgo/cost","Elapsed":0}
+{"ImportPath":"github.com/system-inc/adamic/internal/metamorphic","Action":"build-output","Output":"# github.com/system-inc/adamic/internal/metamorphic\n"}
+{"ImportPath":"github.com/system-inc/adamic/internal/metamorphic","Action":"build-output","Output":"internal/metamorphic/source.go:439:70: cannot use parseName(path) (value of type string) as \"github.com/microsoft/TypeScript/tsc/internal/tspath\".RootedFilePath value in struct literal\n"}
+{"ImportPath":"github.com/system-inc/adamic/internal/metamorphic","Action":"build-output","Output":"internal/metamorphic/source.go:439:87: unknown field Path in struct literal of type \"github.com/microsoft/TypeScript/tsc/shim/ast\".SourceFileParseOptions\n"}
+{"ImportPath":"github.com/system-inc/adamic/internal/metamorphic","Action":"build-output","Output":"internal/metamorphic/source.go:439:100: undefined: tspath.Path\n"}
+{"ImportPath":"github.com/system-inc/adamic/internal/metamorphic","Action":"build-fail"}
+{"Time":"2026-10-07T21:01:49.123966391Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo/oracle"}
+{"Time":"2026-10-07T21:01:49.12400573Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo/oracle","Output":"?   \tgithub.com/system-inc/adamic/bridge/tsgo/oracle\t[no test files]\n"}
+{"Time":"2026-10-07T21:01:49.124019123Z","Action":"skip","Package":"github.com/system-inc/adamic/bridge/tsgo/oracle","Elapsed":0}
+{"Time":"2026-10-07T21:01:49.124031758Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo/spec"}
+{"Time":"2026-10-07T21:01:49.124036357Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo/spec","Output":"?   \tgithub.com/system-inc/adamic/bridge/tsgo/spec\t[no test files]\n"}
+{"Time":"2026-10-07T21:01:49.124039904Z","Action":"skip","Package":"github.com/system-inc/adamic/bridge/tsgo/spec","Elapsed":0}
+{"Time":"2026-10-07T21:01:49.124048617Z","Action":"start","Package":"github.com/system-inc/adamic/cloud"}
+{"Time":"2026-10-07T21:01:49.13412181Z","Action":"run","Package":"github.com/system-inc/adamic/cloud","Test":"TestRepositoryPassesCohereBaseline"}
+{"Time":"2026-10-07T21:01:49.134333031Z","Action":"output","Package":"github.com/system-inc/adamic/cloud","Test":"TestRepositoryPassesCohereBaseline","Output":"=== RUN   TestRepositoryPassesCohereBaseline\n","OutputType":"frame"}
+{"Time":"2026-10-07T21:01:49.134351314Z","Action":"output","Package":"github.com/system-inc/adamic/cloud","Test":"TestRepositoryPassesCohereBaseline","Output":"=== PAUSE TestRepositoryPassesCohereBaseline\n","OutputType":"frame"}
+{"Time":"2026-10-07T21:01:49.134355089Z","Action":"pause","Package":"github.com/system-inc/adamic/cloud","Test":"TestRepositoryPassesCohereBaseline"}
+{"Time":"2026-10-07T21:01:49.134359988Z","Action":"run","Package":"github.com/system-inc/adamic/cloud","Test":"TestLintWaveCheck"}
+{"Time":"2026-10-07T21:01:49.134362753Z","Action":"output","Package":"github.com/system-inc/adamic/cloud","Test":"TestLintWaveCheck","Output":"=== RUN   TestLintWaveCheck\n","OutputType":"frame"}
+{"Time":"2026-10-07T21:01:49.134367087Z","Action":"output","Package":"github.com/system-inc/adamic/cloud","Test":"TestLintWaveCheck","Output":"=== PAUSE TestLintWaveCheck\n","OutputType":"frame"}
+{"Time":"2026-10-07T21:01:49.134369935Z","Action":"pause","Package":"github.com/system-inc/adamic/cloud","Test":"TestLintWaveCheck"}
+{"Time":"2026-10-07T21:01:49.134379215Z","Action":"cont","Package":"github.com/system-inc/adamic/cloud","Test":"TestRepositoryPassesCohereBaseline"}
+{"Time":"2026-10-07T21:01:49.134384153Z","Action":"output","Package":"github.com/system-inc/adamic/cloud","Test":"TestRepositoryPassesCohereBaseline","Output":"=== CONT  TestRepositoryPassesCohereBaseline\n","OutputType":"frame"}
+{"Time":"2026-10-07T21:01:49.134391658Z","Action":"cont","Package":"github.com/system-inc/adamic/cloud","Test":"TestLintWaveCheck"}
+{"Time":"2026-10-07T21:01:49.134394964Z","Action":"output","Package":"github.com/system-inc/adamic/cloud","Test":"TestLintWaveCheck","Output":"=== CONT  TestLintWaveCheck\n","OutputType":"frame"}

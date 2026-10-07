@@ -1,0 +1,6 @@
+== github.com/system-inc/adamic/internal/metamorphic (build failed)
+# github.com/system-inc/adamic/internal/metamorphic
+internal/metamorphic/source.go:439:70: cannot use parseName(path) (value of type string) as "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedFilePath value in struct literal
+internal/metamorphic/source.go:439:87: unknown field Path in struct literal of type "github.com/microsoft/TypeScript/tsc/shim/ast".SourceFileParseOptions
+internal/metamorphic/source.go:439:100: undefined: tspath.Path
+
