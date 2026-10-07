@@ -94,7 +94,8 @@ typedef struct adamic_string {
 	adamic_heap heap;
 	size_t length;
 	const char *bytes;
-	// units is the length in UTF-16 units plus one, once it's been asked for, and 0 until then; index is
+	// units is the length in UTF-16 units plus one, propagated when building, or 0 if unknown.
+	// units == length + 1 is the ASCII flag: no unit counting or decoding is needed. index is
 	// a long non-ASCII string's position index, once built (string_index.c). Both are caches, which
 	// every initializer that leaves them out leaves empty.
 	size_t units;
