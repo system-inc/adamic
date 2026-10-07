@@ -69,3 +69,25 @@ Build testdata/oracle.go using a Go overlay mapping a virtual file directly
 under cohere to this oracle, with cohere as the build working directory.
 Run that oracle and /workspace/wave-01-next-final/native with the same tsconfig
 and manifest. The exact session commands are retained in validation/records.json.
+
+## Origin refresh on continuation
+
+All origin heads were fetched again. No further rules were claimed.
+
+```
+origin/main e011f8f60899586d6373a5ccb07335ad82cfbf3c
+origin/codex/tsgo-c-library 5afbdb83da2ed7ad9815657cd3f6ececd5294bf6
+origin/codex/lint-harness-dot-a f4d98cab50048692781da3599131317dc569d466
+origin/codex/stage1-jsx-lint a8a62d62ca49db7415e14c3887dd305022b17309
+```
+
+JSX support is now published on origin/codex/stage1-jsx-lint. Its
+implementation commit is e715ef4a2f898230af63c40195dea6586a557899, documented
+in stage1/typescript/parser/JSX_REPORT.md on that branch. It changes the shared
+parser and scanner; it has not reached this branch, main, or tsgo-c-library.
+The earlier absence statement refers to this branch, not every origin branch.
+
+The current scope instruction forbids changing shared files and requires stopping
+on other blockers. Integrating these parser/scanner changes therefore remains
+outside this unit. The three rules remain reserved and unported. No new test,
+mutant, sanitizer or performance result is claimed on this continuation.
