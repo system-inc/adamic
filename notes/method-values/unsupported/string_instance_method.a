@@ -1,0 +1,3 @@
+const text = ' x ';
+const method = text.trim;
+console.log(method.call(text));

@@ -367,6 +367,12 @@ func (l *lowering) weakTarget(proven *checker.Type) *checker.Type {
 // value lowers a value, as expression does, but leaves a Weak as it's kept.
 func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 	node = ast.SkipParentheses(node)
+	if value, known, err := l.namespaceExpression(node); known {
+		return value, err
+	}
+	if value, known, err := l.libraryMethodValue(node); known {
+		return value, err
+	}
 	if observed, known := l.libraryArrayObservation(node); known {
 		return observed, nil
 	}
@@ -865,7 +871,8 @@ func slotless(valueType ir.Type) bool {
 func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
-	if declaration, isGeneric := l.generics[l.symbol(callee)]; ast.IsIdentifier(callee) && isGeneric {
+	qualified := l.namespaceMember(callee)
+	if declaration, isGeneric := l.generics[l.symbol(callee)]; (ast.IsIdentifier(callee) || qualified) && isGeneric {
 		instance, err := l.instantiateFunction(node, declaration)
 		if err != nil {
 			return nil, err
@@ -873,7 +880,7 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 		return l.callFunction(call, instance)
 	}
 	function, isFunction := l.functions[l.symbol(callee)]
-	if !ast.IsIdentifier(callee) || !isFunction {
+	if (!ast.IsIdentifier(callee) && !qualified) || !isFunction {
 		if calleeType, _ := l.representation(l.checker.GetTypeAtLocation(callee)); calleeType == ir.Closure {
 			return l.callClosure(node)
 		}
@@ -960,6 +967,9 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 	}
 	symbol := l.symbol(node)
 	for _, parameter := range symbol.Declarations[0].Parameters() {
+		if parameter.Name().Text() == "this" {
+			return nil, l.notYet(parameter, "a function with a this parameter used as a value; pass the receiver explicitly or use an arrow")
+		}
 		declared := parameter.AsParameterDeclaration()
 		if declared.Initializer != nil || declared.QuestionToken != nil || declared.DotDotDotToken != nil {
 			return nil, l.notYet(node, "a function with an optional or rest parameter, as a value")

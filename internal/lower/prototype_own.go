@@ -9,6 +9,10 @@ import (
 // A generated function keeps the receiver and key in parameters, so each is evaluated once, in
 // JavaScript's order, even when the answer is constant. No native representation is read as an object.
 func (l *lowering) nonObjectOwnProperty(node, receiver *ast.Node, name string, of ir.Type) (ir.Expression, bool, error) {
+	return l.nonObjectOwnPropertyArguments(node, receiver, name, of, node.AsCallExpression().Arguments.Nodes)
+}
+
+func (l *lowering) nonObjectOwnPropertyArguments(node, receiver *ast.Node, name string, of ir.Type, arguments []*ast.Node) (ir.Expression, bool, error) {
 	functionPrototype := -1
 	if of == ir.Closure {
 		functionPrototype = l.functionPrototype(receiver, 0)
@@ -22,7 +26,6 @@ func (l *lowering) nonObjectOwnProperty(node, receiver *ast.Node, name string, o
 	default:
 		return nil, true, l.notYet(node, name+" on a "+typeName(of)+" (mixed value descriptors are not represented)")
 	}
-	arguments := node.AsCallExpression().Arguments.Nodes
 	if len(arguments) != 1 {
 		return nil, true, l.notYet(node, name+" with other than one key")
 	}

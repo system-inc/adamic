@@ -47,7 +47,7 @@ func (l *lowering) checkOverrides(declaration *ast.Node, classType *checker.Type
 
 func (l *lowering) checkMemberOverrides(declaration *ast.Node, classType, base *checker.Type, static bool) error {
 	checkABI := static || len(declaration.TypeParameters()) == 0 || classType != l.checker.GetTypeAtLocation(declaration.Name())
-	for _, member := range declaration.Members() {
+	for _, member := range classMembersWithParameters(declaration) {
 		if member.Name() == nil || ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) != static {
 			continue
 		}
@@ -104,7 +104,7 @@ func (l *lowering) checkMemberOverrides(declaration *ast.Node, classType, base *
 				return refuse("an accessor override with an unsafe read or write type (adamic/invariant-mutable)", "keep the inherited accessor type; narrow values inside the accessor")
 			}
 		}
-		if member.Kind == ast.KindPropertyDeclaration {
+		if member.Kind == ast.KindPropertyDeclaration || parameterProperty(member) {
 			if !l.checker.IsReadonlySymbol(inherited) && (!l.classAssignable(previous, own) || !l.classAssignable(own, previous) || l.widened(previous, own, map[[2]*checker.Type]bool{}) != nil || l.widened(own, previous, map[[2]*checker.Type]bool{}) != nil) {
 				return refuse("a mutable inherited field redeclared with a different type (adamic/invariant-mutable)", "keep the base field's type; narrow a local after reading it, or make the field readonly in the base")
 			}
@@ -225,8 +225,8 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
 	}
 	// The layout contains inherited fields first, but only this class's initializers run here.
 	fields := append([]ir.Field{}, l.result.Classes[instance.class-1].Fields...)
-	for _, member := range declaration.Members() {
-		if member.Kind != ast.KindPropertyDeclaration {
+	for _, member := range classMembersWithParameters(declaration) {
+		if member.Kind != ast.KindPropertyDeclaration && !parameterProperty(member) {
 			continue
 		}
 		if ast.HasSyntacticModifier(member, ast.ModifierFlagsAmbient|ast.ModifierFlagsAbstract) {
@@ -369,6 +369,11 @@ func (l *lowering) fieldInitializers(declaration *ast.Node, this int) ([]ir.Stat
 			available[field.Name] = true
 		}
 	}
+	resets, err := l.parameterPropertyResets(declaration, this, available)
+	if err != nil {
+		return nil, err
+	}
+	statements = append(statements, resets...)
 	for _, member := range declaration.Members() {
 		if member.Kind != ast.KindPropertyDeclaration || ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
 			continue
@@ -431,7 +436,9 @@ func (l *lowering) superStatement(node *ast.Node) ([]ir.Statement, error) {
 	if err != nil {
 		return nil, err
 	}
-	return append(statements, initialized...), nil
+	statements = append(statements, initialized...)
+	assigned, err := l.parameterPropertyStores(declaration, l.this)
+	return append(statements, assigned...), err
 }
 
 func (l *lowering) classInstanceOf(node *ast.Node) (ir.Expression, error) {
@@ -586,28 +593,15 @@ func (l *lowering) initializerReads(node *ast.Node, available map[string]bool) e
 	return refused
 }
 
-// Private names with the same spelling in a base and a derived class are separate JavaScript slots.
+// Private names with the same spelling in a base and a derived class are separate JavaScript slots,
+// so each is qualified by the class that declares it (privateName), the same spelling memberKey gives
+// its definition, for fields, methods, accessors and statics alike.
 func (l *lowering) fieldName(name *ast.Node) string {
 	if name.Kind != ast.KindPrivateIdentifier {
 		return name.Text()
 	}
-	symbol := l.checker.GetSymbolAtLocation(name)
-	if symbol != nil && len(symbol.Declarations) > 0 {
-		class := symbol.Declarations[0].Parent
-		if class != nil && ast.HasSyntacticModifier(symbol.Declarations[0], ast.ModifierFlagsStatic) {
-			if lowered := l.statics[l.symbol(class.Name())]; lowered != nil {
-				return memberKey(name, lowered.class)
-			}
-		}
-		if class != nil && class.Kind == ast.KindClassDeclaration {
-			if l.instance != nil && l.classNode != nil && l.classNode.Parent == class {
-				return name.Text() + "@" + strconv.Itoa(l.instance.class)
-			}
-			if instance := l.instances[l.program.Where(class)+":"+class.Name().Text()]; instance != nil {
-				return name.Text() + "@" + strconv.Itoa(instance.class)
-			}
-			return l.program.Where(class) + ":" + name.Text()
-		}
+	if declaring := l.declaringClass(name); declaring != nil {
+		return l.privateName(name.Text(), declaring)
 	}
 	return name.Text()
 }
@@ -776,22 +770,10 @@ func (l *lowering) cycleFieldMatches(holder *checker.Type, field, written string
 	if name == nil || name.Kind != ast.KindPrivateIdentifier {
 		return false
 	}
-	class := property.Declarations[0].Parent
-	if ast.HasSyntacticModifier(property.Declarations[0], ast.ModifierFlagsStatic) {
-		if lowered := l.statics[l.symbol(class.Name())]; lowered != nil {
-			return written == memberKey(name, lowered.class)
-		}
+	if class := property.Declarations[0].Parent; class != nil && class.Kind == ast.KindClassDeclaration {
+		return written == l.privateName(name.Text(), class)
 	}
-	prefix := l.program.Where(class) + ":" + class.Name().Text()
-	for key, instance := range l.instances {
-		if key != prefix && !strings.HasPrefix(key, prefix+",") {
-			continue
-		}
-		if written == name.Text()+"@"+strconv.Itoa(instance.class) {
-			return true
-		}
-	}
-	return false
+	return written == name.Text()
 }
 
 func (l *lowering) cycleFieldName(field *ast.Symbol) string {
