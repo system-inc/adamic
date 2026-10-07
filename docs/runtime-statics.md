@@ -361,3 +361,7 @@ Unicode property ranges, strings and alias entries are immutable static const da
 - `runtime-file:regexp_compile_tables.h`
 - `runtime-file:regexp_compile_parser.h`
 - `runtime-file:regexp_compile_parser.c`
+
+Library merge audit: record.c contains immutable const names, reference masks and shapes, plus const local diagnostic strings. All mutable record tables and iterators are owned by heap values; it introduces no mutable static storage.
+
+- `runtime-file:record.c`

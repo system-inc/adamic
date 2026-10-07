@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"os/exec"
 	"testing"
@@ -59,6 +60,13 @@ func compareSyntaxCases(t *testing.T, cases []oracleCase) {
 	}
 	for i, c := range cases {
 		_, err := Parse(c.Pattern, c.Flags)
+		var divergence *V8DivergenceError
+		if errors.As(err, &divergence) {
+			if !valid[i] {
+				t.Errorf("Node unexpectedly rejects divergence %s: %v", c.Pattern, err)
+			}
+			continue
+		}
 		if (err == nil) != valid[i] {
 			t.Errorf("DISAGREEMENT %s/%s parser=%v Node=%v", c.Pattern, c.Flags, err, valid[i])
 		}

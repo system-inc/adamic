@@ -133,3 +133,38 @@ and Other_ID_Continue capture names, and accepting an overflowing Unicode
 escape Node rejects. Reference edits need a scope ruling under the user's
 restriction on Go compiler changes. Bytecode, parser WASI, new compiler mutants,
 runtime divergence refusals and lowering remain unfinished.
+
+Rulings checkpoint: merged area/library fe0e7aa895266bd3d553ba4f148b0f5c0223ce01
+in a7f6f64 with a merge commit. Conflicts retain atomic string-index publication,
+Map's atomic iteration count plus the small-table layout, both fixture registries
+and both flow exclusions. The library's UTF-16 cache API borrows the already
+published immutable unit view. Oracle counts regeneration is running separately.
+
+The user's reference rulings supersede the earlier contract-blocker paragraph.
+Go now admits Other_ID_Start and Other_ID_Continue capture-name characters and
+bounds each braced Unicode-escape arithmetic step before overflow. Exact reversed
+quantifier MVs whose clamped bounds would compare equal return V8DivergenceError
+with the ruled reason and section. The merged clamping acceptance approximation
+was removed. The C parser follows these corrections and has a distinct divergence
+status, rather than pretending Node throws SyntaxError for an accepted pattern.
+
+Partial parser: regexp_compile_parser.c/.h own a per-call AST allocation arena;
+there are no mutable statics, caches or startup work. The oracle compares 5746
+existing test262 patterns (including the original 2776), 875 cohere patterns,
+4000 seeded random shapes and four ruling probes. Linux ASan/UBSan and WASI SDK
+27 both pass complete messages, acceptance and divergence reasons. The WASI
+command uses -DADAMIC_TARGET_WASI=1 -mno-atomics and runs through Node's WASI host.
+The cohere tuples in runtime-cohere.json were extracted from the inventory at
+c6487b485443a71f91f01b7a2568a44a9cee1ddc, preserving pattern, flags and location.
+Output: parser-linux-wasi.txt (6.862s). Native package execution still uses the
+previously documented temporary overlay for the unrelated Options.slabs typo.
+
+Reference proof: the 432-case large-bound sweep and Node ruling probes pass.
+Five source-overlay mutants each build and reach the intended failed assertions:
+drop Other_ID_Start, drop Other_ID_Continue, restore Unicode integer wrapping,
+silently accept clamped reversed bounds, classify that divergence as SyntaxError.
+Output: reference-rulings.txt (3.355s). No mutation remains in the working tree.
+
+This is the requested partial parser checkpoint, not a compiler-identity claim.
+AST and bytecode identity, compiler emission mutants, remaining V8 shape refusals,
+dynamic lowering, dynamic fixture sizes and full post-merge gates remain pending.
