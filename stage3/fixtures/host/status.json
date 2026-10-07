@@ -76,8 +76,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/05_writeFile.a:9:17: stage 0 can't lower node:fs.mkdtempSync yet"
+      "outcome": "Refused",
+      "what": "stage3/fixtures/host/05_writeFile.a:13:9: Adamic 0.1 refuses a boolean | undefined as a condition; compare it explicitly, like name.length > 0 or count !== 0"
     }
   },
   {
@@ -97,7 +97,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/host/06_fileExists.a:12:17: stage 0 can't lower node:fs.mkdtempSync yet"
+      "what": "stage3/fixtures/host/06_fileExists.a:48:5: stage 0 can't lower node:fs.symlinkSync yet"
     }
   },
   {
@@ -117,7 +117,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/host/07_directoryExists.a:12:17: stage 0 can't lower node:fs.mkdtempSync yet"
+      "what": "stage3/fixtures/host/07_directoryExists.a:48:5: stage 0 can't lower node:fs.symlinkSync yet"
     }
   },
   {
@@ -147,7 +147,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/host/08_getDirectories.a:22:17: stage 0 can't lower node:fs.mkdtempSync yet"
+      "what": "stage3/fixtures/host/08_getDirectories.a:208:5: stage 0 can't lower node:fs.symlinkSync yet"
     }
   },
   {
@@ -166,7 +166,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/host/09_realpath.a:10:17: stage 0 can't lower node:fs.mkdtempSync yet"
+      "what": "stage3/fixtures/host/09_realpath.a:27:5: stage 0 can't lower node:fs.symlinkSync yet"
     }
   },
   {
@@ -184,7 +184,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/host/10_getModifiedTime.a:10:17: stage 0 can't lower node:fs.mkdtempSync yet"
+      "what": "stage3/fixtures/host/10_getModifiedTime.a:33:5: stage 0 can't lower node:fs.symlinkSync yet"
     }
   },
   {
@@ -198,10 +198,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/11_setModifiedTime.a:8:17: stage 0 can't lower node:fs.mkdtempSync yet"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "12_deleteFile.a",
@@ -216,7 +213,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/host/12_deleteFile.a:8:17: stage 0 can't lower node:fs.mkdtempSync yet"
+      "what": "stage3/fixtures/host/12_deleteFile.a:21:5: stage 0 can't lower node:fs.symlinkSync yet"
     }
   },
   {
@@ -254,8 +251,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/14_getCurrentDirectory.a:9:17: stage 0 can't lower node:fs.mkdtempSync yet"
+      "outcome": "Refused",
+      "what": "stage3/fixtures/host/14_getCurrentDirectory.a:15:24: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
     }
   },
   {
@@ -272,7 +269,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/host/15_getExecutingFilePath.a:9:17: stage 0 can't lower node:fs.mkdtempSync yet"
+      "what": "stage3/fixtures/host/15_getExecutingFilePath.a:21:21: stage 0 can't lower node:path.basename yet"
     }
   },
   {
@@ -288,7 +285,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/host/16_getEnvironmentVariable.a:8:17: stage 0 can't lower node:fs.mkdtempSync yet"
+      "what": "stage3/fixtures/host/16_getEnvironmentVariable.a:11:12: stage 0 can't lower a BinaryExpression with a string and a string yet"
     }
   },
   {
@@ -304,7 +301,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/host/17_write.a:8:17: stage 0 can't lower node:fs.mkdtempSync yet"
+      "what": "stage3/fixtures/host/17_write.a:16:5: stage 0 can't lower a literal method call with an unrepresented result yet"
     }
   },
   {
@@ -321,7 +318,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/host/18_exit_0.a:9:17: stage 0 can't lower node:fs.mkdtempSync yet"
+      "what": "stage3/fixtures/host/18_exit_0.a:12:5: stage 0 can't lower a value of type undefined yet"
     }
   },
   {
@@ -338,7 +335,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/host/19_exit_1.a:9:17: stage 0 can't lower node:fs.mkdtempSync yet"
+      "what": "stage3/fixtures/host/19_exit_1.a:12:5: stage 0 can't lower a value of type undefined yet"
     }
   },
   {
@@ -355,7 +352,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/host/20_exit_2.a:9:17: stage 0 can't lower node:fs.mkdtempSync yet"
+      "what": "stage3/fixtures/host/20_exit_2.a:12:5: stage 0 can't lower a value of type undefined yet"
     }
   },
   {
@@ -372,8 +369,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/21_createHash.a:10:17: stage 0 can't lower node:fs.mkdtempSync yet"
+      "outcome": "Refused",
+      "what": "stage3/fixtures/host/21_createHash.a:13:18: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
     }
   },
   {
@@ -390,7 +387,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/host/22_createHash_fallback.a:9:17: stage 0 can't lower node:fs.mkdtempSync yet"
+      "what": "stage3/fixtures/host/22_createHash_fallback.a:17:7: stage 0 can't lower a value of type undefined yet"
     }
   },
   {
@@ -404,10 +401,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/23_newLine.a:8:17: stage 0 can't lower node:fs.mkdtempSync yet"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "24_useCaseSensitiveFileNames.a",
@@ -430,7 +424,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/host/24_useCaseSensitiveFileNames.a:15:17: stage 0 can't lower node:fs.mkdtempSync yet"
+      "what": "stage3/fixtures/host/24_useCaseSensitiveFileNames.a:20:16: stage 0 can't lower statSync: fs options other than a fixed literal or its plain const binding yet"
     }
   },
   {

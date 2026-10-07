@@ -15,7 +15,7 @@ import (
 // It constructs the typed IR explicitly and does not claim that the fixture passes the checker.
 func TestNodeProcessEnvironmentRuntime(t *testing.T) {
 	t.Parallel()
-	source := "internal/oracle/testdata/node_process_environment_mutation.a"
+	source := "internal/oracle/testdata/node_process_runtime/node_process_environment_mutation.a"
 	program := &ir.Program{Source: filepath.Base(source), Strings: []string{"ADAMIC_HOST_PROCESS_MUTATION", "", "0", "héllo 🌍", "missing"}}
 	key := ir.StringConstant{Index: 0}
 	for _, index := range []int{1, 2, 3} {

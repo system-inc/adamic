@@ -1,7 +1,9 @@
 package oracle
 
 import (
+	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
@@ -36,4 +38,36 @@ func TestNodeProcessTmpdir(t *testing.T) {
 		t.Fatal("tmpdir mutant not caught only by Node bytes")
 	}
 	t.Log("clean tmpdir mutant caught by Node stdout")
+}
+
+func TestNodeProcessOSNamespace(t *testing.T) {
+	t.Parallel()
+	path, binary, script := sanitized(t, "internal/oracle/testdata/node_process_os_namespace.a")
+	truth := onNode(t, path)
+	for _, got := range []run{execute(t, binary), onNode(t, script)} {
+		if difference := disagreement(truth, got); difference != "" {
+			t.Fatalf("%s: %q %q", difference, got.stdout, got.stderr)
+		}
+	}
+	_, mutant := nodeProcessMutant(t, "node_process_os_namespace.a", `ADAMIC_STRING("\n")`, `ADAMIC_STRING("\r\n")`)
+	bad := execute(t, mutant)
+	if bad.exitCode != 0 || len(bad.stderr) != 0 || disagreement(truth, bad) != "stdout differs" {
+		t.Fatal("namespace EOL mutant not caught only by Node bytes")
+	}
+	data, err := os.ReadFile(script)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !strings.Contains(string(data), `"\n"`) {
+		t.Fatal("JavaScript EOL mutant anchor changed")
+	}
+	javascriptMutant := filepath.Join(t.TempDir(), "namespace-mutant.mjs")
+	if err := os.WriteFile(javascriptMutant, []byte(strings.ReplaceAll(string(data), `"\n"`, `"\r\n"`)), 0600); err != nil {
+		t.Fatal(err)
+	}
+	bad = onNode(t, javascriptMutant)
+	if bad.exitCode != 0 || len(bad.stderr) != 0 || disagreement(truth, bad) != "stdout differs" {
+		t.Fatal("JavaScript namespace EOL mutant not caught only by Node bytes")
+	}
+	t.Log("System.newLine namespace body agrees on both backends; native and JavaScript EOL mutants caught only by Node stdout comparison")
 }

@@ -1,3 +1,63 @@
+Unknown-error source execution remains Refused at `in`; the exact adaptation 47 helpers and runtime own string code/message contract are tested.
+Built process/os/performance primitives and namespace/default imports; pushed checkpoints d06ed47, 157f53e, 8499196; landing branch rebased onto origin/main f8013f0.
+Commands: landing process oracle PASS 10.788s, counts PASS 12.926s, lowering PASS 11.174s, affected-package vet exit 0; load/native package checks passed after adaptation merge.
+Mutants: all host, blocking/cache, env/directory, error-code, temp-directory, namespace and exit-output mutants are caught by Node comparisons; complete names and effects below and in logs.
+Not covered: assigned System fixtures all NotYet at fs.mkdtempSync, unknown/in source execution, timers, nextTick scheduling, Date System.now and native tsc; no macOS run.
+
+## Landing verification
+
+Branch codex/host-process-land was created from the pushed process branch and rebased with `git rebase --rebase-merges origin/main`; success. Current origin/main is f8013f0baac41ddc340d76f83bddde38536a8f07 and is an ancestor. No main push and no force-push occurred. The branch includes the explicitly requested loader, fixture and adaptation-47 branch merges; their source/evidence files are part of the merge, not new edits by this unit.
+
+Additional namespace/default-import fixture node_process_os_namespace.a agrees on both backends for os.platform, os.EOL, os.tmpdir, imported process.cwd and process.env. Its EOL mutant changes only Node stdout. Namespace receivers resolve by official declaration identity; first-class os namespace objects remain NotYet. Namespace fixture is a custom oracle test rather than a row in the generic input registry.
+
+Commands, all redirected to logs:
+
+- `go test ./internal/oracle -run '^TestNodeProcess|^TestProcessExitOutput$|TestInputAgreesWithNode/internal/oracle/testdata/node_process' -count=1 -v`: PASS 10.788s, land-oracle.log. This includes the Refused-blocker assertion and independent typed-IR error tests; it does not mean unknown-error source compiles.
+- `go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1`: PASS 12.926s, land-counts.log. Preceding full refresh PASS 13.247s; only process_bad_code retains changed (31 to 41), and process rows moved after merge. Allocations/frees are unchanged.
+- `go test ./internal/lower -count=1`: PASS 11.174s, land-lower.log.
+- `go vet ./internal/load ./internal/lower ./internal/native ./internal/javascript ./internal/oracle`: exit 0, land-vet.log.
+- `go test ./internal/load ./internal/lower ./internal/native -count=1` after merging adaptation 47: PASS 3.661s, 14.170s, 78.865s, adaptation47-packages.log. The final error-message/path changes and namespace change are covered by the landing oracle and lowering package respectively.
+- `python3 stage3/host-process/check_acceptance.py --compiler /tmp/host-process-land-adamic --logs /tmp/host-process-land-acceptance`: exit 1 with eight expected NotYet rows; each unchanged Node fixture matches status.json and each Node source mutant is caught. Exact per-fixture stages are in acceptance/land-stages.json.
+
+| Assigned fixture | Native | JavaScript | Node |
+| --- | --- | --- | --- |
+| 14_getCurrentDirectory | NotYet: fs.mkdtempSync | NotYet: fs.mkdtempSync | Agrees |
+| 15_getExecutingFilePath | NotYet: fs.mkdtempSync | NotYet: fs.mkdtempSync | Agrees |
+| 16_getEnvironmentVariable | NotYet: fs.mkdtempSync | NotYet: fs.mkdtempSync | Agrees |
+| 17_write | NotYet: fs.mkdtempSync | NotYet: fs.mkdtempSync | Agrees |
+| 18_exit_0 | NotYet: fs.mkdtempSync | NotYet: fs.mkdtempSync | Agrees, exit 0 |
+| 19_exit_1 | NotYet: fs.mkdtempSync | NotYet: fs.mkdtempSync | Agrees, exit 1 |
+| 20_exit_2 | NotYet: fs.mkdtempSync | NotYet: fs.mkdtempSync | Agrees, exit 2 |
+| 23_newLine | NotYet: fs.mkdtempSync | NotYet: fs.mkdtempSync | Agrees |
+
+Additional clean native mutants beyond the original table: performance hook object's epoch changed to zero (clock predicate/stdout); os.tmpdir drops two slashes (stdout); os namespace EOL becomes CRLF (stdout); exit ERR_OUT_OF_RANGE becomes ERR_INVALID_ARG_TYPE (stdout); removed cwd ENOENT code becomes ENOTDIR (stdout); env set/delete disabled (stdout); successful chdir cache invalidation disabled (stdout); chdir ENOENT code changed (stdout). Five inherited exit-output mutants are file_immediate (flush omitted), file_normal (exit flush omitted), merged_file/merged_pipe (write ordering buffered), large_file (tail omitted); each is caught by Node stdout bytes. Logs name every run and record sanitizer-clean comparison failure.
+
+The error tests cover all seven mapped chdir errno and uncached cwd ENOENT. Normal errors have own string code/message. Missing performance marks follow Node's SyntaxError name/message; Node's DOMException code is inherited numeric 12, so the string-only errorCode helper returns undefined for that non-process exception. Generic reflection and broader Node APIs beyond the census are not certified by this unit. Timers are unbuilt: there is no timer/event-loop scheduler in this patch; callback nextTick remains named NotYet. This is a partial stage-3 host delivery, not the native tsc --noEmit proof.
+
+@types/node 25.3.3 is installed locally under stage3/api/node_modules, outside tracked source. No private node_*.d.ts files or replacement require loader were added. The pinned declaration installation remains necessary when reproducing tests in a clean checkout.
+
+Earlier reports below are historical. This landing summary supersedes their older stage, dependency and proof limitations where explicitly stated.
+
+Unknown-error source narrowing is blocked by Refused `in` at node_process_errors.a:5:66; runtime own string code/message and exact Node errors are built.
+Commits pushed: d06ed47 performance first, 157f53e process/tmpdir; adaptation cf976e8 merged as dd3c56f, exact helpers now used in both error fixtures.
+Commands: post-adaptation errors PASS 5.234s; affected packages load/lower/native PASS 3.661s/14.170s/78.865s; full counts PASS 13.247s; affected-package vet PASS.
+Mutants: original 19 host mutants and ancillary process/exit/env/cache mutants remain green; new ERR_OUT_OF_RANGE, removed-cwd code, tmpdir and performance-hook mutants are caught only by Node observations.
+Not covered: eight unchanged System acceptance fixtures stop at fs.mkdtempSync on both backends; unknown/in source execution, timers, nextTick scheduling, Date System.now and native tsc remain incomplete.
+
+## Adaptation 47 error contract
+
+Merged the requested complete branch at cf976e8. The source fixtures contain the helper text copied exactly from its adapt.cjs, and a drift check compares the text. Node's real errors pass through errorCode/errorMessage, which take unknown and use typeof, !== null and in. The source lowerer remains Refused; this is also the adaptation's documented compiler blocker. No assertion, private declaration, or syntax-policy exemption replaces those helpers. The separate runtime oracle explicitly constructs typed IR and is not counted as source acceptance.
+
+All seven mapped chdir errno are exercised: ENOENT, ENOTDIR, EACCES, ELOOP, ENAMETOOLONG against real directories, ENOMEM and EIO with the same Linux libc fault shim loaded into Node and native. Empty paths, embedded NUL and a lone surrogate are tested. Node truncates the error destination at NUL and replaces lone surrogates when converting it to the native path; the runtime now does the same. Both exit and exitCode are exercised with NaN, positive/negative infinity and a fraction. Own code and message properties are checked for every caught error.
+
+A real parent-process removal of the child's cwd tests uncached process.cwd after chdir invalidates the bootstrap cache. This exposed Node 24.19's longer ENOENT description, now copied exactly: `process.cwd failed with error no such file or directory, the current working directory was likely removed without changing the working directory`. Both backends match its full message and own fields. A code mutant exits normally and differs only in Node stdout. Sanitizers cover all runs; regular runtime tests include leak comparison, while the removal driver's sanitizer leak detection is disabled because the deleted cwd interferes with its exit probe.
+
+Linux is the gate. macOS uses the same POSIX host code but its fault-injection branch is not run; no macOS execution is claimed. Machine-dependent pid, memory, clock types/ranges/order and native executable-path rationale remain in the contract table below.
+
+Landing rule is acknowledged: create codex/host-process-land, rebase onto current origin/main, re-green, push that branch only. Never push main and never force-push.
+
+Earlier checkpoint reports below are historical; this supersedes their untested ENOMEM/EIO and removed-cwd-message statements.
+
 Process unknown-error narrowing remains blocked by the compiler's explicit refusal of `in`; runtime own string code/message and Node messages are implemented.
 Built os.tmpdir and official Node process integration; performance checkpoint d06ed47 was pushed first, with shared loader 69c71d5 merged.
 Commands: every process unit test plus all four registered process fixtures PASS 8.706s; layouts/uniform-field check PASS 7.352s; tmpdir matrix PASS 6.202s.
