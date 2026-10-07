@@ -93,6 +93,11 @@ func prepareMode(root string, test262 string, work string, profile *runProfile, 
 	if err != nil {
 		return nil, err
 	}
+	sourceIdentity, err := loweringSourceIdentity(root)
+	if err != nil {
+		return nil, err
+	}
+	context = cacheKey(context, sourceIdentity)
 	done()
 	return &engine{
 		profile: profile,

@@ -108,7 +108,8 @@ def run(variant, label, directory, kind, round_number, env, binary, build_comman
     if kind != 'prime':
         native = record['stages']['native-observation']
         node = record['stages']['node']
-        assert native['hits'] == 0, (label, native)
+        if kind == 'cold' or variant == 'after':
+            assert native['hits'] == 0, (label, native)
         if kind != 'cold' and variant == 'after':
             assert node['hits'] == node['calls'], (label, node)
         records.append(record)
@@ -122,7 +123,7 @@ def run(variant, label, directory, kind, round_number, env, binary, build_comman
     compact['runs'] = records
     (output / 'measurements.json').write_text(json.dumps(compact, indent=2) + '\n')
 
-compact = {'method': 'Same box, paired before/after for three rounds; edits include rebuilding runner then invoking it. Prime each loop, mutate exactly one comment byte, restore after every run. Cold runs use fresh result/runtime cache roots; Go build cache warm.',
+compact = {'method': 'Same box, paired before/after for three rounds; edits include rebuilding runner then invoking it. Prime each loop, mutate one runtime comment byte or one lowering whitespace byte, restore after every run. Cold runs use fresh result/runtime cache roots; Go build cache warm.',
            'identity': identity, 'commits': commits, 'cold_profiles': {}, 'runs': []}
 
 # Original-program caches are shared between edit kinds; every changed byte is unique and
@@ -147,7 +148,15 @@ for name, directory, runtime_file, lowering_file in loops:
                     binary, command = build(variant, env, label + '-prime')
                     run(variant, label + '-prime', directory, 'prime', -1, env, binary, command)
                     primed.add(variant)
-                changed = original[:comment] + bytes([[value for value in range(65, 91) if value != original[comment]][round_number]]) + original[comment + 1:]
+                offset = comment
+                replacement = [value for value in range(65, 91) if value != original[comment]][round_number]
+                if kind == 'lowering-edit':
+                    # Removing a blank-line byte preserves Go semantics but moves different
+                    # source regions in each round, including compiler debug line tables.
+                    blanks = [index + 1 for index in range(len(original) - 1) if original[index:index + 2] == b'\n\n']
+                    offset = min(blanks, key=lambda index: abs(index - len(original) * (round_number + 1) / 4))
+                    replacement = 32
+                changed = original[:offset] + bytes([replacement]) + original[offset + 1:]
                 assert sum(a != b for a, b in zip(original, changed)) == 1
                 path = root / relative
                 try:
@@ -156,7 +165,7 @@ for name, directory, runtime_file, lowering_file in loops:
                     start = time.monotonic()
                     binary, build_command = build(variant, env, label)
                     rebuild_seconds = time.monotonic() - start
-                    edit = {'path': relative, 'offset': comment, 'before_byte': original[comment], 'after_byte': changed[comment],
+                    edit = {'path': relative, 'offset': offset, 'before_byte': original[offset], 'after_byte': changed[offset],
                             'before_sha256': hashlib.sha256(original).hexdigest(), 'after_sha256': hashlib.sha256(changed).hexdigest()}
                     run(variant, label, directory, kind, round_number, env, binary, build_command, edit, rebuild_seconds, load_before)
                 finally:
@@ -167,4 +176,4 @@ for name, directory, runtime_file, lowering_file in loops:
             env = environment(output / ('cache-' + label))
             binary, build_command = build(variant, env, label)
             run(variant, label, directory, 'cold', round_number, env, binary, build_command)
-print('all changed native observations missed; all after-edit Node observations hit; all verdicts, tables and progress byte-identical', flush=True)
+print('all after-edit native observations missed; all after-edit Node observations hit; all verdicts, tables and progress byte-identical', flush=True)

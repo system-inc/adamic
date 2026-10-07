@@ -202,3 +202,27 @@ func nodeHarnessSourceIdentity(sources fs.FS) string {
 	}
 	return cacheKey(parts...)
 }
+
+// Binary identity covers executed compiler behavior. A source fingerprint additionally
+// invalidates observations for library-worker edits that Go can elide from linked code,
+// such as same-length comment changes. It only adds misses; it does not replace the binary.
+func loweringSourceIdentity(root string) (string, error) {
+	directory := filepath.Join(root, "internal", "lower")
+	entries, err := os.ReadDir(directory)
+	if err != nil {
+		return "", err
+	}
+	parts := []string{"test262-lowering-source-v1"}
+	for _, entry := range entries {
+		name := entry.Name()
+		if entry.IsDir() || !strings.HasSuffix(name, ".go") || strings.HasSuffix(name, "_test.go") {
+			continue
+		}
+		contents, err := os.ReadFile(filepath.Join(directory, name))
+		if err != nil {
+			return "", err
+		}
+		parts = append(parts, name, string(contents))
+	}
+	return cacheKey(parts...), nil
+}

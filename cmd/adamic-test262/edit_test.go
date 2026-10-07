@@ -89,3 +89,54 @@ func TestWorkerLazyFallback(t *testing.T) {
 		t.Fatal("fallback compiler missing", err)
 	}
 }
+
+func TestLoweringSourceEdit(t *testing.T) {
+	// Not parallel: explicitly enable cached observations for successive source edits.
+	t.Setenv("ADAMIC_GATE_UNCACHED", "0")
+	root := t.TempDir()
+	runtime, err := filepath.Abs("../../internal/native/runtime")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.MkdirAll(filepath.Join(root, "internal", "native"), 0700); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Symlink(runtime, filepath.Join(root, "internal", "native", "runtime")); err != nil {
+		t.Fatal(err)
+	}
+	lower := filepath.Join(root, "internal", "lower")
+	if err := os.MkdirAll(lower, 0700); err != nil {
+		t.Fatal(err)
+	}
+	cache := &resultCache{directory: t.TempDir()}
+	var previousContext string
+	for _, text := range []string{"// A\n", "// B\n"} {
+		if err := os.WriteFile(filepath.Join(lower, "probe.go"), []byte(text), 0600); err != nil {
+			t.Fatal(err)
+		}
+		profile := newRunProfile()
+		e, err := prepareMode(root, "testdata/mini", t.TempDir(), profile, true)
+		if err != nil {
+			t.Fatal(err)
+		}
+		e.cache = cache
+		e.compiler = &compilerWorker{}
+		result := e.attempt(classified{Path: "source-edit.js", Program: program("assertSameValue(1,1);")})
+		e.compiler.close()
+		if result.Kind != outcomePass {
+			t.Fatal(result)
+		}
+		if e.context == previousContext {
+			t.Fatal("one-byte lowering edit did not change native identity")
+		}
+		for _, phase := range profile.Tests[0].Phases {
+			if phase.Stage == "native-observation" && phase.Hit {
+				t.Fatal("one-byte lowering edit reused native result")
+			}
+			if phase.Stage == "node" && phase.Hit != (previousContext != "") {
+				t.Fatal("lowering edit invalidated Node")
+			}
+		}
+		previousContext = e.context
+	}
+}
