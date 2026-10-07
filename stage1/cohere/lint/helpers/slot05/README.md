@@ -37,3 +37,7 @@ Set `ADAMIC_SLOT05_EVIDENCE` to an existing directory to save per-consumer liter
 ## Fifth batch
 
 [batch5/REPORT.md](batch5/REPORT.md) records theme clearing, order compaction and deletion, with actual Go/source Node/emitted JavaScript/sanitized native agreement and thirteen compiling mutants caught. These remove eighteen dependencies across six Tailwind rules, with no new final blocker removed. Fourteen retained slot 05 helpers cover 64 rules and remove 133 dependency occurrences, including four final helper blockers.
+
+## Sixth batch
+
+[batch6/REPORT.md](batch6/REPORT.md) records fresh theme construction, ordered key resolution and literal value resolution. Actual Go/source Node/emitted JavaScript/sanitized native agree across 21,300 cases; twelve compiling semantic mutants are caught. This removes eighteen prerequisites across six Tailwind rules, with no new final blocker removed. Seventeen retained slot 05 helpers cover 64 rules and remove 151 dependency occurrences, including four final helper blockers.
