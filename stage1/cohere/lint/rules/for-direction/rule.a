@@ -1,0 +1,98 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import { message } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    named(index: number, name: string): boolean {
+        const node = this.context.node(this.context.unwrap(index));
+        return node.kind === 'Identifier' && node.text === name;
+    }
+    modifications(index: number, counter: string, result: number[]): void {
+        const current = this.context.unwrap(index);
+        const node = this.context.node(current);
+        if(node.kind === 'PostfixUnaryExpression' || node.kind === 'PrefixUnaryExpression') {
+            if((node.operator === 'PlusPlusToken' || node.operator === 'MinusMinusToken') &&
+                this.named(node.children[0] ?? panic('unary without operand'), counter)) result.push(current);
+        }
+        else if(node.kind === 'BinaryExpression') {
+            const left = node.children[0] ?? panic('binary without left');
+            const right = node.children[2] ?? panic('binary without right');
+            const operator = this.context.node(node.children[1] ?? panic('binary without operator')).kind;
+            if(operator === 'CommaToken') {
+                this.modifications(left, counter, result);
+                this.modifications(right, counter, result);
+            }
+            else if(['EqualsToken', 'PlusEqualsToken', 'MinusEqualsToken', 'AsteriskEqualsToken',
+                'AsteriskAsteriskEqualsToken', 'SlashEqualsToken', 'PercentEqualsToken',
+                'LessThanLessThanEqualsToken', 'GreaterThanGreaterThanEqualsToken',
+                'GreaterThanGreaterThanGreaterThanEqualsToken', 'AmpersandEqualsToken',
+                'BarEqualsToken', 'CaretEqualsToken', 'BarBarEqualsToken',
+                'AmpersandAmpersandEqualsToken', 'QuestionQuestionEqualsToken'].includes(operator) &&
+                this.named(left, counter)) result.push(current);
+        }
+    }
+    sign(index: number): number {
+        const node = this.context.node(this.context.unwrap(index));
+        if(node.kind === 'NumericLiteral' || node.kind === 'BigIntLiteral') {
+            for(const character of node.text) { if(character !== '0' && character !== '.') return 1; }
+            return 0;
+        }
+        if(node.kind === 'TrueKeyword') return 1;
+        if(node.kind === 'PrefixUnaryExpression') {
+            const operand = node.children[0] ?? panic('unary without operand');
+            if(node.operator === 'MinusToken') return -this.sign(operand);
+            if(node.operator === 'PlusToken') return this.sign(operand);
+        }
+        return 0;
+    }
+    direction(index: number): number {
+        const node = this.context.node(index);
+        if(node.kind === 'PostfixUnaryExpression' || node.kind === 'PrefixUnaryExpression') {
+            if(node.operator === 'PlusPlusToken') return 1;
+            if(node.operator === 'MinusMinusToken') return -1; // Decrement.
+            return 0;
+        }
+        const operator = this.context.node(node.children[1] ?? panic('binary without operator')).kind;
+        const right = node.children[2] ?? panic('binary without right');
+        if(operator === 'PlusEqualsToken') return this.sign(right);
+        if(operator === 'MinusEqualsToken') return -this.sign(right);
+        return 0;
+    }
+    visit(index: number): void {
+        const context = this.context; const node = context.node(index);
+        if(node.kind !== 'ForStatement') return;
+        // Optional clauses have no arena placeholder. Read the separators to recover their slots.
+        context.scanner.pos = node.pos;
+        context.scanner.scan(); context.scanner.scan();
+        let position = 0;
+        if(context.scanner.scan() !== 'SemicolonToken') {
+            context.scanner.pos = context.node(node.children[position] ?? panic('missing initializer')).end;
+            context.scanner.scan(); position++;
+        }
+        let condition = -1;
+        if(context.scanner.scan() !== 'SemicolonToken') {
+            condition = node.children[position] ?? panic('missing condition'); position++;
+            context.scanner.pos = context.node(condition).end; context.scanner.scan();
+        }
+        if(context.scanner.scan() === 'CloseParenToken' || condition < 0) return;
+        const update = node.children[position] ?? panic('missing incrementor');
+        const binary = context.node(context.unwrap(condition));
+        if(binary.kind !== 'BinaryExpression') return;
+        const operator = context.node(binary.children[1] ?? panic('missing comparison')).kind;
+        let wrongLeft = 0;
+        if(operator === 'LessThanToken' || operator === 'LessThanEqualsToken') wrongLeft = -1;
+        else if(operator === 'GreaterThanToken' || operator === 'GreaterThanEqualsToken') wrongLeft = 1;
+        else return;
+        for(const side of [0, 2]) {
+            const operand = context.node(context.unwrap(binary.children[side] ?? panic('missing operand')));
+            if(operand.kind !== 'Identifier') continue;
+            const changes: number[] = []; this.modifications(update, operand.text, changes);
+            if(changes.length === 1 && this.direction(changes[0] ?? panic('missing change')) === (side === 0 ? wrongLeft : -wrongLeft)) {
+                context.report(index, 'for-direction', 'incorrectDirection', message, '', '', ''); return;
+            }
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
