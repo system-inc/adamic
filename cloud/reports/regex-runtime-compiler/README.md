@@ -103,3 +103,33 @@ only that test spelling. With this overlay, regeneration, sanitizer-backed entry
 identity, WASI entry identity, unused-symbol proof and the statics guard pass in
 8.172s. Full output is properties-statics-merged.txt. No shared compiler or test
 file was edited for this workaround. Parser work is not yet certified.
+
+Release size follow-up (table layer only): sizes-table-layer.json compares the
+runtime-statics integration baseline e2422008 with 19c58e8. Each baseline and
+branch build uses matching output basenames, since WASI records that basename
+in its name section. Commands on each checkout, with the environment sourced:
+
+    adamic build --target wasm32-wasi internal/load/testdata/0.1/compile/01_hello.ts -o hello.wasm
+    adamic build --target wasm32-wasi cmd/adamic/testdata/wasi/request.a -o request.wasm
+    adamic build internal/load/testdata/0.1/compile/01_hello.ts -o hello
+    adamic build cmd/adamic/testdata/wasi/request.a -o request
+
+hello.wasm is byte identical at 245068 raw / 71934 Brotli quality 11 bytes;
+request.wasm is byte identical at 288915 raw / 87420 Brotli bytes. Native raw
+sizes are unchanged (380584 / 381312). Native binaries embed random runtime
+cache build-directory names in assertion strings, so their compressed sizes do
+not agree; those exact measurements are recorded without claiming a pass.
+These merged-baseline hello sizes do not reproduce the platform's 14236-byte
+release measurement. A dynamic compiler fixture is not yet lowered or measured.
+
+Parser development probe: 5746 test262 patterns and 4000 seeded cases agree on
+acceptance and full Node diagnostic messages under ASan and UBSan. Adding the
+875 pinned cohere patterns leaves exactly one contract blocker, captured in
+parser-contract-blocker.txt: Go rejects a{9223372036854775808,9223372036854775807}
+and Node accepts it. C follows Go and emits the Node-shaped rejection message,
+but Node has no SyntaxError message for a pattern it accepts. The parser is not
+certified or committed. Separate probes find Go rejecting valid Other_ID_Start
+and Other_ID_Continue capture names, and accepting an overflowing Unicode
+escape Node rejects. Reference edits need a scope ruling under the user's
+restriction on Go compiler changes. Bytecode, parser WASI, new compiler mutants,
+runtime divergence refusals and lowering remain unfinished.
