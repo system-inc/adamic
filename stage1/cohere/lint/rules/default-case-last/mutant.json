@@ -1,0 +1,6 @@
+{
+  "name": "default_clause_suppressed",
+  "file": "rule.a",
+  "from": "position !== clauses.length - 1",
+  "to": "false"
+}

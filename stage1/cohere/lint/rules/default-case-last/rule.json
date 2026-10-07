@@ -1,0 +1,13 @@
+{
+  "name": "default-case-last",
+  "kinds": [
+    "SwitchStatement"
+  ],
+  "visit": "visit",
+  "parent": false,
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleDefaultCaseLastCore",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestDefaultCaseLast"
+}
