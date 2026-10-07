@@ -30,3 +30,18 @@ was saved in 85dd293 at the user's request; it is not a certified port.
 Read docs/parallel-work.md from origin/codex/no-shared-lists. Shared infrastructure
 remains its owner's territory. Compatibility overlays may be used in scratch
 for evidence, with any default integration blocker stated separately.
+
+## Second continuation claim, October 7
+
+After pushing all earlier work, fetched all 320 origin refs. Searched all Markdown
+under stage1/cohere/lint/claims/ on every origin ref (39 unique blobs), plus main's
+lint modules. No helper-ready rule remains eligible. The first three eligible
+syntax-only entries in inventory order are reserved for this branch:
+
+1. @typescript-eslint/no-non-null-asserted-optional-chain
+2. @typescript-eslint/no-non-null-assertion
+3. @typescript-eslint/no-this-alias
+
+These names are neither ported on main nor present in any origin claim Markdown.
+This update is committed and pushed before implementation. Earlier implementation
+and evidence through 4570161b were already pushed; no shared source is claimed.
