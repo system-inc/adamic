@@ -48,7 +48,6 @@ export class Rule {
         panic('jsx-no-constructed-context-values requires numeric value-tree, binding and memo stability adapters');
     }
     visit(node: Input): Diagnostic | undefined {
-        if(![285, 286].includes(node.kind)) { return undefined; }
         if(node.tagKind === 79) {
             if(node.tagIndex < 0) { panic('jsx-no-constructed-context-values requires resolved createContext initializer facts'); }
             if(!resolvesToCreateContext(node.values, node.tagIndex)) { return undefined; }

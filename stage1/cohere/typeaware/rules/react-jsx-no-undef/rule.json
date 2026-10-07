@@ -1,12 +1,11 @@
 {
   "name": "react/jsx-no-undef",
   "kinds": [
-    285,
-    286
+    "JsxSelfClosingElement",
+    "JsxOpeningElement"
   ],
   "visit": "visit",
   "factory": "create",
   "class": "Rule",
-  "node": "supplied",
-  "status": "adapter-controls-only"
+  "node": true
 }

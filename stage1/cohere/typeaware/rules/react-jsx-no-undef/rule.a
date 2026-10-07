@@ -25,7 +25,7 @@ export class Rule {
         return first < 97 || first > 122;
     }
     visit(node: Input): Diagnostic | undefined {
-        if(![285, 286].includes(node.kind) || node.rootKind !== 79) { return undefined; }
+        if(node.rootKind !== 79) { return undefined; }
         if(node.tagKind === 79) {
             if(!this.component(node.rootName)) { return undefined; }
         }

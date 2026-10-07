@@ -1,13 +1,12 @@
 {
   "name": "react/jsx-fragments",
   "kinds": [
-    284,
-    285,
-    288
+    "JsxElement",
+    "JsxSelfClosingElement",
+    "JsxFragment"
   ],
   "visit": "visit",
   "factory": "create",
   "class": "Rule",
-  "node": "supplied",
-  "status": "adapter-controls-only"
+  "node": true
 }

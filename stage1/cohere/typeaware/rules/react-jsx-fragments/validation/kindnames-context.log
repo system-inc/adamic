@@ -1,0 +1,8 @@
+Go source/checker/all rules ns 58145454
+indirect PASS 19 findings 6726 bytes; process ns 1517064
+indirect-asan PASS 19 findings 6726 bytes; process ns 17618030
+SatisfiesExpression Go panic exit 2; native explicit refusal exit 70 (not byte agreement)
+branch-order compiled exit 0; Go byte comparison caught byte 2433
+provider-factory compiled exit 0; Go byte comparison caught byte 6380
+class-owner compiled exit 0; Go byte comparison caught byte 349
+function-kind compiled exit 0; Go byte comparison caught byte 5340
