@@ -1,5 +1,5 @@
 Built the isolated Unicode property table layer; the runtime pattern compiler is unfinished.
-Commit: this report is committed with the property table implementation on codex/regex-runtime-compiler.
+Commit: df4fd3e, pushed on codex/regex-runtime-compiler, contains the property table implementation.
 Checks: sanitized C/Go entry identity, wasm32/WASI identity, regeneration and no-compiler symbol checks pass.
 Mutants: range entry, invalid alias acceptance, unwanted linking, WASI-only lookup and stale generation all fail their intended checks.
 Not covered: pattern parser, bytecode compiler, runtime SyntaxError, divergence rulings, lowering and dynamic lint fixtures.
@@ -91,3 +91,5 @@ The requested dependency branches were fetched for inspection: corpus
 Base main: `c01907a`. The cohere corpus was not run through a C pattern compiler.
 There is no callable group messaging tool for `#adamic_runtime_platforms`; the user
 was asked to relay the platform requirement. No platform-group coordination is claimed.
+
+The package, platform, setup and mutant logs are retained beside this report as `.txt` files.

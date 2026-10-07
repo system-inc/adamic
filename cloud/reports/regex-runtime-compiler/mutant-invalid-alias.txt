@@ -1,0 +1,8 @@
+=== RUN   TestRegExpRuntimePropertyIdentity
+    regexp_compile_test.go:193: entry identity: 1722 aliases, 448 unique properties, 23045 ranges, 7906 strings
+    regexp_compile_test.go:212: C versus Go property identity: exit status 1
+        property identity failed at alias 1725
+--- FAIL: TestRegExpRuntimePropertyIdentity (1.49s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	1.490s
+FAIL
