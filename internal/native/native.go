@@ -100,7 +100,7 @@ func Flags(options Options) []string {
 		panic("native: ASan and TSan cannot be combined")
 	}
 	if options.ThreadSanitize {
-		return append(flags, "-O1", "-g", "-fsanitize=thread")
+		return append(flags, "-O1", "-g", "-fsanitize=thread", "-DADAMIC_TSAN_TEST")
 	}
 	if options.Sanitize {
 		return append(flags, "-O1", "-g", "-fsanitize=address,undefined", "-fno-sanitize-recover=all")

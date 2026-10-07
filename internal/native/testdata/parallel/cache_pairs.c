@@ -25,6 +25,12 @@ static adamic_slot_cache field_cache, method_cache;
 
 static void *read_fields(void *given) {
  size_t worker = (size_t)given;
+ // Exercise the field cache before method-cache atomics can accidentally order
+ // field accesses. TSan may model relaxed atomics more strongly than C does.
+ for (size_t i = 0; i < 1024; i++) {
+  size_t kind = (i + worker) % 2;
+  if (adamic_object_field(objects[kind], "value", &field_cache)->number != (kind == 0 ? 10 : 20)) { abort(); }
+ }
  for (size_t i = 0; i < 100000; i++) {
   size_t kind = (i + worker) % 2;
   adamic_object *object = objects[kind];

@@ -10,6 +10,7 @@ import (
 	"runtime"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/native"
@@ -74,10 +75,18 @@ func checkParallelVariants(t *testing.T, program *ir.Program, oracle run) {
 					name = "default"
 				}
 				t.Run(name, func(t *testing.T) {
-					observed := executeParallel(t, threads, false, binary)
-					if difference := disagreement(oracle, observed); difference != "" {
-						t.Fatalf("%s: Node exit %d stdout %q stderr %q; native exit %d stdout %q stderr %q", difference, oracle.exitCode, oracle.stdout, oracle.stderr, observed.exitCode, observed.stdout, observed.stderr)
+					attempts := 1
+					if build.options.ThreadSanitize {
+						attempts = 3
 					}
+					started := time.Now()
+					for attempt := 0; attempt < attempts; attempt++ {
+						observed := executeParallel(t, threads, false, binary)
+						if difference := disagreement(oracle, observed); difference != "" {
+							t.Fatalf("%s: Node exit %d stdout %q stderr %q; native exit %d stdout %q stderr %q", difference, oracle.exitCode, oracle.stdout, oracle.stderr, observed.exitCode, observed.stdout, observed.stderr)
+						}
+					}
+					t.Logf("race variant runs=%d elapsed=%s", attempts, time.Since(started))
 					if oracle.exitCode != 0 {
 						return
 					}
@@ -105,7 +114,7 @@ func executeParallel(t *testing.T, threads string, leaks bool, name string, argu
 	command := bounded(t, name, arguments...)
 	command.Env = []string{}
 	for _, entry := range os.Environ() {
-		if strings.HasPrefix(entry, "ADAMIC_THREADS=") || strings.HasPrefix(entry, "ASAN_OPTIONS=") || strings.HasPrefix(entry, "TSAN_OPTIONS=") {
+		if strings.HasPrefix(entry, "ADAMIC_THREADS=") || strings.HasPrefix(entry, "ASAN_OPTIONS=") || strings.HasPrefix(entry, "TSAN_OPTIONS=") || strings.HasPrefix(entry, "ADAMIC_TSAN_PERTURB=") {
 			continue
 		}
 		command.Env = append(command.Env, entry)
@@ -113,7 +122,7 @@ func executeParallel(t *testing.T, threads string, leaks bool, name string, argu
 	if threads != "" {
 		command.Env = append(command.Env, "ADAMIC_THREADS="+threads)
 	}
-	command.Env = append(command.Env, "TSAN_OPTIONS=halt_on_error=1")
+	command.Env = append(command.Env, "TSAN_OPTIONS=halt_on_error=1:history_size=4:report_atomic_races=1", "ADAMIC_TSAN_PERTURB=1")
 	if runtime.GOOS == "linux" {
 		flag := 0
 		if leaks {
