@@ -216,6 +216,55 @@
 === RUN   TestRuntimeStaticsSignalAndExit
 --- FAIL: TestRuntimeStaticsSignalAndExit (94.02s)
 
+== github.com/system-inc/adamic/internal/refusalprobe TestCatalogCoverage
+=== RUN   TestCatalogCoverage
+    probe_test.go:15: refusal catalog is incomplete: helper parallelPreflight, helper typedArrayUnsupported, helper enumRefusal, helper refuseOptionalWidening
+--- FAIL: TestCatalogCoverage (0.00s)
+
+== github.com/system-inc/adamic/internal/skipcensus TestProvidedHistoricalPlainLog
+        measurement	github.com/system-inc/adamic/internal/oracle	TestNativeMallocAgreesWithNode	TestNativeMallocAgreesWithNode:4be973d40ef3554399a7b55adc4838f67420bcdfeaba943cfec966c3f7a02827	ADAMIC_SLAB_MEASURE=1 enables the existing malloc allocator timing control, separate from the slab correctness lane.
+        measurement	github.com/system-inc/adamic/internal/native	TestMeasureClangUnits	TestMeasureClangUnits:03683169fb662d98215fb4465dea1cc535cddd2f3b736fc257b8ceee2618bd70	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+        measurement	github.com/system-inc/adamic/stage1/cohere/css	TestCSSThroughput	TestCSSThroughput:4f7695919100a8f192d2010d1445c8cf009fb0993b381a9fd014403ff103c479	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+        measurement	github.com/system-inc/adamic/stage1/cohere/json	TestProfileSnapshotsAgree	TestProfileSnapshotsAgree:0c806cf55aaf661dc1cd0ca6f410d2e8cd783d596f2a608e77da9ec5f091cf66	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+        not-applicable	github.com/system-inc/adamic/internal/oracle	TestStage3FixtureHook	TestStage3FixtureHook:071bee04ebc1306585f9ad6a0a4aa5333046920fcb7bc52d74b659e6bbc9199d	Dormant entry point called by the Stage 3 fixture runner, not an independent correctness check. With ADAMIC_STAGE3_FIXTURE empty there is no runner request, so the hook is not applicable to a whole run. stage3/fixtures supplies the fixture source and ADAMIC_STAGE3_RESULT writable result path when invoking it; opted-in execution failures still fail.
+        measurement	github.com/system-inc/adamic/stage1/cohere/lint	TestJsxLintReleaseAndThroughput	TestJsxLintReleaseAndThroughput:0ac2731cc03aa88aa1db988e0910063d36067cbcb25e2a776be9408d8e4d1ebf	ADAMIC_LINT_BENCH=1 enables five-round JSX throughput comparisons; ordinary JSX correctness is held separately by TestJsxLintTrees and the lint oracle.
+        measurement	github.com/system-inc/adamic/stage1/cohere/css	TestCSSPrinterThroughput	TestCSSPrinterThroughput:2de9a123130d9a85700e28f402ef09dab1a7ec570d865b0f14c3cf7e04f5bef1	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+        measurement	github.com/system-inc/adamic/stage1/cohere/css	TestCSSProfileArtifacts	TestCSSProfileArtifacts:03683169fb662d98215fb4465dea1cc535cddd2f3b736fc257b8ceee2618bd70	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+        measurement	github.com/system-inc/adamic/stage1/cohere/css	TestCSSProfileSnapshotsAgree	TestCSSProfileSnapshotsAgree:3bd24aa7ec39b0814f83da55e2fa69db6694d0b9024893cf146dc5f7e1cbb1b4	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+        measurement	github.com/system-inc/adamic/stage1/cohere/lint	TestThroughput	TestThroughput:0ac2731cc03aa88aa1db988e0910063d36067cbcb25e2a776be9408d8e4d1ebf	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+        measurement	github.com/system-inc/adamic/stage1/cohere/selector	TestSelectorThroughput	TestSelectorThroughput:bd045f17a47b90e4aa936cce7744f4c65a82b6b0a6aa7320868b549e63b7af2d	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+        measurement	github.com/system-inc/adamic/stage1/typescript/parser	TestPerformance	TestPerformance,TestWholePerformance:70379d1136172e1ccb3d2e6ce37b3c25fb71607b9927b3d32cd60151ea1b9a26	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+        measurement	github.com/system-inc/adamic/stage1/typescript/parser	TestWholePerformance	TestPerformance,TestWholePerformance:70379d1136172e1ccb3d2e6ce37b3c25fb71607b9927b3d32cd60151ea1b9a26	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+        measurement	github.com/system-inc/adamic/stage1/typescript/scanner	TestProfileArtifacts	TestProfileArtifacts:03683169fb662d98215fb4465dea1cc535cddd2f3b736fc257b8ceee2618bd70	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+        measurement	github.com/system-inc/adamic/stage1/typescript/scanner	TestProfileSnapshotsAgree	TestProfileSnapshotsAgree:3bd24aa7ec39b0814f83da55e2fa69db6694d0b9024893cf146dc5f7e1cbb1b4	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+        measurement	github.com/system-inc/adamic/stage1/typescript/scanner	TestPerformance	TestPerformance:fc2cecddef6499ecfc230850eb4569d7b20ef412ad51c601308d2654dfebb2e1	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+        measurement	github.com/system-inc/adamic/stage1/cohere/lint	TestProfileArtifacts	TestProfileArtifacts:03683169fb662d98215fb4465dea1cc535cddd2f3b736fc257b8ceee2618bd70	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+        measurement	github.com/system-inc/adamic/stage1/cohere/lint	TestProfileSnapshotsAgree	TestProfileSnapshotsAgree:3bd24aa7ec39b0814f83da55e2fa69db6694d0b9024893cf146dc5f7e1cbb1b4	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+        skips=25 required-input=0 unknown=0
+--- FAIL: TestProvidedHistoricalPlainLog (0.02s)
+
+== github.com/system-inc/adamic/internal/skipcensus TestCensus
+        undeclared skip stage1/cohere/graphql/printer/printer_test.go:TestPrinterUpstreamPreflight:03683169fb662d98215fb4465dea1cc535cddd2f3b736fc257b8ceee2618bd70 (TestPrinterUpstreamPreflight:84)
+        undeclared skip stage1/cohere/graphql/printer/testdata/cohere_side_test.go:TestAdamicPrinter:071bee04ebc1306585f9ad6a0a4aa5333046920fcb7bc52d74b659e6bbc9199d (TestAdamicPrinter:19)
+        undeclared skip stage1/cohere/lint/rule_check_test.go:TestRule:da5c31d098aed527635d2f72b8cae6d04c5a61eec036f59bfe65a10e65da9015 (TestRule:132)
+        undeclared skip stage1/cohere/tsprinter/doc_test.go:TestDocumentsAgainstGoAndPrettier:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestDocumentsAgainstGoAndPrettier:51)
+        undeclared skip stage1/cohere/tsprinter/expressions_test.go:TestExpressionsAgainstGoAndPrettier,TestMutants:1dbf140729f17ef866b29b574189ddf438e2a4dd6762d9bdcd8e5dae68bf6b7e (expressionCorpus:19)
+        undeclared skip stage1/cohere/tsprinter/expressions_test.go:TestExpressionsAgainstGoAndPrettier:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestExpressionsAgainstGoAndPrettier:102)
+        undeclared skip stage1/cohere/tsprinter/statements_test.go:TestMutants,TestStatementsAgainstGoAndPrettier:1dbf140729f17ef866b29b574189ddf438e2a4dd6762d9bdcd8e5dae68bf6b7e (statementCorpus:19)
+        undeclared skip stage1/cohere/tsprinter/statements_test.go:TestStatementsAgainstGoAndPrettier:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestStatementsAgainstGoAndPrettier:120)
+        undeclared skip stage1/cohere/tsprinter/testdata/expressions_side_test.go:TestAdamicExpressionBenchmark:071bee04ebc1306585f9ad6a0a4aa5333046920fcb7bc52d74b659e6bbc9199d (TestAdamicExpressionBenchmark:685)
+        undeclared skip stage1/cohere/tsprinter/upstream_test.go:TestStatementUpstreamDifferences:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestStatementUpstreamDifferences:58)
+        undeclared skip stage1/cohere/yaml/compose_test.go:TestComposeMatchGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestComposeMatchGo:137)
+        undeclared skip stage1/cohere/yaml/cst_test.go:TestCSTMatchesGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestCSTMatchesGo:82)
+        undeclared skip stage1/cohere/yaml/format_test.go:TestBundledParserDifference:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestBundledParserDifference:199)
+        undeclared skip stage1/cohere/yaml/format_test.go:TestFormatterMatchesGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestFormatterMatchesGo:141)
+        undeclared skip stage1/cohere/yaml/lexer_test.go:TestLexerMatchesGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestLexerMatchesGo:225)
+        undeclared skip stage1/cohere/yaml/props_test.go:TestPropsMatchGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestPropsMatchGo:109)
+        undeclared skip stage1/cohere/yaml/scalar_test.go:TestScalarsMatchGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestScalarsMatchGo:136)
+        undeclared skip stage1/cohere/yaml/schema_test.go:TestSchemaMatchesGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestSchemaMatchesGo:106)
+        undeclared skip stage1/cohere/yaml/unist_test.go:TestUnistMatchesGo:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestUnistMatchesGo:84)
+--- FAIL: TestCensus (0.61s)
+
 == github.com/system-inc/adamic/stage1/cohere/lint (failed outside a test)
 FAIL	github.com/system-inc/adamic/stage1/cohere/lint	3600.136s
 
