@@ -1,0 +1,14 @@
+{
+  "name": "react/no-invalid-html-attribute",
+  "kinds": [
+    "JsxAttribute",
+    "CallExpression"
+  ],
+  "parent": true,
+  "factory": "create",
+  "class": "Rule",
+  "visit": "visit",
+  "oracle": "oracleNoInvalidHtmlAttribute",
+  "upstreamPackage": "react",
+  "upstreamTest": "TestNoInvalidHtmlAttribute"
+}
