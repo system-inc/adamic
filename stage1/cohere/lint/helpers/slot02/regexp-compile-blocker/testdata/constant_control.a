@@ -1,0 +1,4 @@
+function matches(pattern: string, value: string): boolean {
+  return new RegExp('a', 'u').test(value);
+}
+console.log(matches('a', 'a') ? 'yes' : 'no');
