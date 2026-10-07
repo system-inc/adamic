@@ -93,3 +93,6 @@ shared driver. No silent fallback was added. No fresh whole-rule parity,
 throughput, semantic-mutant green, full repository gate or landing-ready green
 is asserted. The landing cap prevents further helper work until the named
 shared gates run successfully. Shared harness files remain untouched.
+
+
+Current-main refresh: origin/main b8fb957aa839a9e8cb0b54279dd9864fa317bd30 integrated with a clean merge, retaining the named harness ancestry. Only incoming inherited-static-field compiler changes were added; no shared lint hunks changed. TestOwnedWitnesses rerun FAIL 3.168s: restricted-types default witness still has zero findings. Shared option-aware witness support remains needed. No new claim, full-rule green, semantic mutant or throughput is asserted.
