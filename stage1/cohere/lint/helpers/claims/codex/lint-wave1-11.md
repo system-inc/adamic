@@ -17,4 +17,8 @@ Consumers whose recorded helper dependency is removed:
 - `better-tailwindcss/no-conflicting-classes`
 - `better-tailwindcss/no-unknown-classes`
 
-No rule is declared fully helper-ready by this one helper. No second helper is reserved.
+No rule is declared fully helper-ready by this one helper. Second claim follows a fresh fetch and audit of all 417 origin refs and 17 distinct claim contents.
+
+2. `github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ValueToCss`
+   File: from_wave1_11/tailwind_value_to_css.a.
+   Six consumers listed above. Preserve word/separator text, recursive function emission and ignoring unknown kinds. Compare actual value trees captured independently from each consumer fixture suite against Go on source Node, emitted JavaScript and sanitized native; run a compiling semantic mutant. This claim is pushed before implementation.
