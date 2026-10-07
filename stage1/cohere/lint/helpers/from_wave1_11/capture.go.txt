@@ -1,0 +1,11 @@
+package tailwind
+import("encoding/json";"os";"sync")
+var wave11CaptureLock sync.Mutex
+func FindEntryPoint(root string,exists func(string)bool)string{
+ present:=[]string{};probes:=[]string{}
+ result:=wave11OriginalFindEntryPoint(root,func(path string)bool{probes=append(probes,path);found:=exists(path);if found{present=append(present,path)};return found})
+ row:=struct{Root string `json:"root"`;Present []string `json:"present"`;Probes []string `json:"probes"`;Result string `json:"result"`}{root,present,probes,result}
+ wave11CaptureLock.Lock();defer wave11CaptureLock.Unlock()
+ file,err:=os.OpenFile(os.Getenv("WAVE11_ENTRY_CAPTURE"),os.O_CREATE|os.O_WRONLY|os.O_APPEND,0600);if err!=nil{panic(err)};defer file.Close();if err=json.NewEncoder(file).Encode(row);err!=nil{panic(err)}
+ return result
+}

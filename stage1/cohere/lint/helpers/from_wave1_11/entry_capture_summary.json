@@ -1,0 +1,21 @@
+{
+  "actualCalls": 154,
+  "consumers": {
+    "enforce_canonical_classes": 36,
+    "enforce_consistent_class_order": 39,
+    "enforce_consistent_variant_order": 16,
+    "enforce_shorthand_classes": 2,
+    "no_conflicting_classes": 23,
+    "no_unknown_classes": 27
+  },
+  "cases": 922,
+  "bytes": 130833,
+  "stdoutSha256": "1520370689e27a8d423caec1f024a6593e02494c8b20db9d133a5588d0749039",
+  "mutant": "entry_point_priority_reversed",
+  "backends": [
+    "Node",
+    "emitted",
+    "native"
+  ],
+  "onlyByteComparison": true
+}

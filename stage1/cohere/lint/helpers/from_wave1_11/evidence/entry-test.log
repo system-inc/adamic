@@ -1,0 +1,13 @@
+=== RUN   TestFindEntryPointMatchesGoWithMutant
+    entry_test.go:33: replaying 154 actual consumer calls and 768 controls
+        baseline Node equal
+        baseline emitted equal
+        baseline native equal
+        entry_point_priority_reversed Node byte-only catch
+        entry_point_priority_reversed emitted byte-only catch
+        entry_point_priority_reversed native byte-only catch
+        PASS 922 cases 130833 bytes
+        
+--- PASS: TestFindEntryPointMatchesGoWithMutant (3.99s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from_wave1_11	3.993s

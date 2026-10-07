@@ -1,0 +1,19 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { written } from '../../../../typescript/parser/nodes.ts';
+import { findEntryPoint } from './tailwind_find_entry_point.a';
+const input = readTextFile(programArguments()[0] ?? panic('cases path'));
+if(input.kind === 'Error') { panic(input.message); }
+const data = new OptionsJson(input.text); const root = data.parse();
+function field(row: number, name: string): string { const index = data.field(row, name); return index < 0 ? '' : data.node(index).text; }
+let number = 0;
+for(const row of data.node(root).children) {
+    const present = new Set<string>();
+    const files = data.field(row, 'present');
+    for(const file of data.node(files).children) { present.add(data.node(file).text); }
+    const probes: string[] = [];
+    const result = findEntryPoint(field(row, 'root'), path => { probes.push(path); return present.has(path); });
+    console.log(`case ${number}`); number++;
+    for(const probe of probes) { console.log(`probe\t${written(probe)}`); }
+    console.log(`result\t${written(result)}`);
+}

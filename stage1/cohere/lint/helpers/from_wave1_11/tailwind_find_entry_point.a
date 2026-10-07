@@ -1,0 +1,22 @@
+// filepath.Join follows the Linux Go oracle's slash and dot-segment rules.
+function joined(root: string, candidate: string): string {
+    const rooted = root.startsWith('/');
+    const parts: string[] = [];
+    for(const part of (root + '/' + candidate).split('/')) {
+        if(part === '' || part === '.') { continue; }
+        if(part === '..') {
+            if(parts.length > 0 && parts[parts.length - 1] !== '..') { parts.pop(); }
+            else if(!rooted) { parts.push(part); }
+        } else { parts.push(part); }
+    }
+    const result = (rooted ? '/' : '') + parts.join('/');
+    return result === '' ? '.' : result;
+}
+export function findEntryPoint(root: string, fileExists: (path: string) => boolean): string {
+    const candidates = ['app/_theme/styles/theme.css', 'app/globals.css', 'src/app/globals.css', 'styles/globals.css', 'src/styles/globals.css', 'app/theme.css'];
+    for(const candidate of candidates) {
+        const path = joined(root, candidate);
+        if(fileExists(path)) { return path; }
+    }
+    return '';
+}
