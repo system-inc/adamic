@@ -66,3 +66,18 @@ Both Head rule decisions are now implemented in their own `.a` files. The
 for each rule. This validates native rule decisions, not the shared parser.
 Production JSX parsing still refuses with panic 70. The own-directory projection
 runner is validation only. See [the Head report](../WAVE_17_HEADS_REPORT.md).
+
+## Third batch claim
+
+The prior claimed implementations and explicit shared-parser limitations are
+pushed in 8f3d8d05. A fresh October 7 fetch inspected 335 origin refs, 33 unique
+Markdown claim blobs, and native stage1 source on main and the library branch.
+The first eligible checker-dependent rules in the combined by-volume ranking are:
+
+- `no-global-assign` (global rank 137, 0 findings)
+- `no-implicit-globals` (global rank 138, 0 findings)
+- `no-implied-eval` (global rank 139, 0 findings)
+
+None is already ported on either requested base or claimed on any origin branch.
+The complete scan is preserved in validation-wave-17-third/selection.json.
+This claim is pushed before implementation, on the same branch.
