@@ -88,7 +88,7 @@ func (l *lowering) stringConverted(node *ast.Node, value ir.Expression) (ir.Expr
 	case ir.String:
 		return l.spelled(node, value), nil
 	case ir.Union:
-		if l.writable(l.checker.GetTypeAtLocation(node)) {
+		if l.writable(l.checker.GetTypeAtLocation(node)) || l.dynamicScalarProperty(node) {
 			return ir.UnionToString{Value: value}, nil
 		}
 	}

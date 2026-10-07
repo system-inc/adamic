@@ -470,7 +470,9 @@ func (n *inference) operands(expression ir.Expression) []shape {
 
 // writes reports whether an IR node writes into a container it's handed.
 func writes(expression ir.Expression) bool {
-	switch expression.(type) {
+	switch call := expression.(type) {
+	case ir.NodeBufferCall:
+		return call.Function == "buffer_set" || call.Function == "hash_update" || call.Function == "hash_digest"
 	case ir.ArraySplice, ir.ArrayFill, ir.ArraySort, ir.MapSet, ir.MapDelete:
 		return true
 	}

@@ -1361,6 +1361,8 @@ func (a *analysis) value(expression ir.Expression) value {
 	case ir.ReadDirectory:
 		a.value(expression.Path)
 		return a.fresh(anyField, a.fresh(elementKey, value{}))
+	case ir.NodeFSFile:
+		return a.nodeFSFile(expression)
 	case ir.FileStatus:
 		a.value(expression.Path)
 		return a.fresh(anyField, value{})
@@ -1384,6 +1386,11 @@ func (a *analysis) value(expression ir.Expression) value {
 			elements.merge(a.load(a.value(other), elementKey))
 		}
 		return a.fresh(elementKey, elements)
+	case ir.HasProperty:
+		a.value(expression.Object)
+		return value{}
+	case ir.DynamicProperty:
+		return a.load(a.value(expression.Object), expression.Name)
 	case ir.HasAccessor:
 		a.value(expression.Object)
 		return value{}

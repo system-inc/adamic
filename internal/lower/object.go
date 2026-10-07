@@ -479,6 +479,9 @@ func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
 // elementType is the representation of an array's elements, from the checker's type for the node.
 func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 	arrayType := l.checker.GetNonNullableType(l.concrete(l.checker.GetTypeAtLocation(node)))
+	if l.nodeBufferType(arrayType, "Buffer") {
+		return ir.Number, nil
+	}
 	if l.isLibraryType(arrayType, "RegExpExecArray", "RegExpMatchArray") {
 		return ir.String, nil
 	}
@@ -581,6 +584,12 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	object, err := l.expression(access.Expression)
 	if err != nil {
 		return nil, err
+	}
+	if object.Type() == ir.Union {
+		return l.dynamicProperty(node, object, name)
+	}
+	if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil && l.checker.GetTypeOfSymbol(field).Flags()&checker.TypeFlagsUnknown != 0 {
+		return l.dynamicProperty(node, fit(object, ir.Union), name)
 	}
 	if object.Type() == ir.Object && l.isLibraryType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression)), "RegExp") {
 		switch name {
@@ -865,6 +874,9 @@ func refusedRandom(l *lowering, node *ast.Node) error {
 func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 	if l.isOptionalJoin(node) {
 		value, err := l.optionalJoin(node)
+		return value, true, err
+	}
+	if value, handled, err := l.libraryNodeBuffer(node); handled {
 		return value, true, err
 	}
 	if value, handled, err := l.userMethodCall(node); handled {
@@ -1661,6 +1673,9 @@ func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
 // newExpression lowers new Map(), and new Map([[key, value], ...]) with its pairs written out, which
 // is what the array of pairs means.
 func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
+	if value, found, err := l.nodeFSFileDate(node); found {
+		return value, err
+	}
 	if l.isLibraryGlobal(node.AsNewExpression().Expression, "RegExp") {
 		return l.regexConstant(node)
 	}
@@ -2045,6 +2060,12 @@ func (l *lowering) setIndex(target *ast.Node, valueNode *ast.Node) ([]ir.Stateme
 	if err != nil {
 		return nil, err
 	}
+	if l.nodeBufferType(l.checker.GetTypeAtLocation(access.Expression), "Buffer") {
+		if value.Type() != ir.Number {
+			return nil, l.notYet(valueNode, "a Buffer write of a non-number")
+		}
+		return []ir.Statement{ir.Evaluate{Value: ir.NodeBufferCall{Function: "buffer_set", Arguments: []ir.Expression{array, index, value}, Returns: ir.Number}}}, nil
+	}
 	return []ir.Statement{ir.SetIndex{Array: array, Index: index, Value: fit(value, element), Element: element, Site: l.writeSite(access.Expression)}}, nil
 }
 
@@ -2267,6 +2288,9 @@ func (l *lowering) pairwiseTupleWhereArrayGoes(values []*checker.Type, targets [
 // read, and that read is held before the right side runs, exactly once each and in JavaScript's
 // order. The final SetIndex uses those same held values even when the right side changes their source.
 func (l *lowering) updateIndex(node *ast.Node, target *ast.Node, operator ast.Kind, valueNode *ast.Node) ([]ir.Statement, error) {
+	if l.nodeBufferType(l.checker.GetTypeAtLocation(target.AsElementAccessExpression().Expression), "Buffer") {
+		return nil, l.notYet(node, "a compound Buffer write outside the census")
+	}
 	access := target.AsElementAccessExpression()
 	array, err := l.expression(access.Expression)
 	if err != nil {

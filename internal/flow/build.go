@@ -469,6 +469,9 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 				walk(value.Elem())
 			}
 		case reflect.Struct:
+			if call, ok := value.Interface().(ir.NodeFSFile); ok && call.MayThrow() {
+				throws = true
+			}
 			switch value.Type() {
 			case reflect.TypeOf(ir.Defined{}):
 				if value.Interface().(ir.Defined).Throws() {

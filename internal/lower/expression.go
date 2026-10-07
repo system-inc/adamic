@@ -40,6 +40,19 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 	proven = l.concrete(proven)
 	flags := proven.Flags()
+	if flags&(checker.TypeFlagsUnknown|checker.TypeFlagsNonPrimitive) != 0 {
+		return ir.Union, true
+	}
+	if flags&checker.TypeFlagsIntersection != 0 {
+		for _, part := range proven.Types() {
+			if part.Flags()&checker.TypeFlagsNonPrimitive != 0 {
+				return ir.Union, true
+			}
+		}
+	}
+	if l.nodeBufferType(proven, "Buffer") {
+		return ir.Array, true
+	}
 	if flags&checker.TypeFlagsObject != 0 && enumObjectSymbol(proven) == nil && len(l.checker.GetIndexInfosOfType(proven)) > 0 && !l.checker.IsArrayType(proven) && !checker.IsTupleType(proven) && !l.isLibraryType(proven, "RegExpExecArray", "RegExpMatchArray", "RegExpIndicesArray") {
 		if l.recordElement(proven) != nil {
 			return ir.Record, true
@@ -89,7 +102,7 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		// An object with call signatures is a function, held as a closure.
 		return ir.Closure, true
 	case flags&checker.TypeFlagsUnion != 0:
-		if l.includesNull(proven) {
+		if l.includesNull(proven) && !dynamicObjectType(proven) {
 			// A nullable object reference uses NULL. Null and undefined together need distinct tags.
 			if l.includesUndefined(proven) {
 				return 0, false
@@ -191,14 +204,22 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	if err := l.libraryIteratorUnsupportedUse(node); err != nil {
 		return nil, err
 	}
+	if err := l.nodeBufferUnsupportedUse(node); err != nil {
+		return nil, err
+	}
 	if err := l.regexUnsupportedUse(node); err != nil {
 		return nil, err
 	}
 	value, err := l.value(node)
-	if err == nil && value.Type().IsReference() {
+	if err == nil {
 		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
-			if member := l.libraryPrototypeView(l.checker.GetTypeAtLocation(node), contextual, map[[2]*checker.Type]bool{}); member != "" {
-				return nil, l.notYet(node, "a structural view of library prototype member "+member+" as an own field or method; use a wrapper object with an arrow that calls the member on its library receiver")
+			if err := l.unknownView(node, l.checker.GetTypeAtLocation(node), contextual); err != nil {
+				return nil, err
+			}
+			if value.Type().IsReference() {
+				if member := l.libraryPrototypeView(l.checker.GetTypeAtLocation(node), contextual, map[[2]*checker.Type]bool{}); member != "" {
+					return nil, l.notYet(node, "a structural view of library prototype member "+member+" as an own field or method; use a wrapper object with an arrow that calls the member on its library receiver")
+				}
 			}
 		}
 	}
@@ -209,7 +230,10 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		// as an object, so it can't be seen as an array either, here or anywhere inside. A literal is
 		// made as the type it's written into, so it never differs.
 		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
-			if own := l.checker.GetTypeAtLocation(node); !l.sameKeeping(own, contextual, map[[2]*checker.Type]bool{}) {
+			if own := l.checker.GetTypeAtLocation(node); !l.nodeBufferView(l.present(own), l.present(contextual)) && !l.nodeBufferReadArgument(node) && !l.nodeFSFileBufferArgument(node) {
+				return nil, l.notYet(node, "Buffer or Hash viewed as another object type (native host internal slots)")
+			}
+			if own := l.checker.GetTypeAtLocation(node); !l.nodeBufferReadArgument(node) && !l.nodeFSFileBufferArgument(node) && !l.sameKeeping(own, contextual, map[[2]*checker.Type]bool{}) {
 				return nil, l.notYet(node, "a "+l.checker.TypeToString(own)+" seen as a "+l.checker.TypeToString(contextual)+" (one keeps something weakly that the other keeps strongly; keep the Weak annotations the same in the view and implementation)")
 			} else if tuple, array := l.tupleSeenAsArray(own, contextual, map[[2]*checker.Type]bool{}); tuple != nil {
 				return nil, l.notYet(node, "a "+l.checker.TypeToString(tuple)+" seen as a "+l.checker.TypeToString(array)+" (a tuple is held as an object, not an array, so far; write it as an array where it's made, or copy it into one: [pair[0], pair[1]])")
@@ -258,6 +282,9 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 		return true
 	}
 	visited[[2]*checker.Type{from, to}] = true
+	if !l.nodeBufferView(from, to) {
+		return false
+	}
 	if a, b := l.recordElement(from), l.recordElement(to); a != nil && b != nil {
 		return l.sameKeeping(a, b, visited)
 	}
@@ -572,6 +599,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		if logicalAssignment(binary.OperatorToken.Kind) {
 			return l.logicalAssignment(node)
 		}
+		if binary.OperatorToken.Kind == ast.KindInKeyword {
+			return l.inProperty(node)
+		}
 		if binary.OperatorToken.Kind == ast.KindQuestionQuestionToken {
 			return l.coalesce(node)
 		}
@@ -784,7 +814,7 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 			if leftNull {
 				operand = node.AsBinaryExpression().Right
 			}
-			test := ir.Expression(ir.IsNull{Value: value, AlwaysFalse: !l.includesNull(l.checker.GetTypeAtLocation(operand))})
+			test := ir.Expression(ir.IsNull{Value: value, AlwaysFalse: value.Type() != ir.Union && !l.includesNull(l.checker.GetTypeAtLocation(operand))})
 			if operator == ast.KindExclamationEqualsEqualsToken {
 				test = ir.Unary{Operator: ir.Not, Operand: test}
 			}
@@ -811,7 +841,7 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 			if leftUndefined {
 				operand = node.AsBinaryExpression().Right
 			}
-			if l.includesNull(l.checker.GetTypeAtLocation(operand)) {
+			if value.Type() != ir.Union && l.includesNull(l.checker.GetTypeAtLocation(operand)) {
 				test = ir.IsNull{Value: value, AlwaysFalse: true}
 			}
 			if operator == ast.KindExclamationEqualsEqualsToken {
@@ -1061,6 +1091,11 @@ func (l *lowering) callFunction(call *ast.CallExpression, function int) (ir.Expr
 			return nil, err
 		}
 		arguments = append(arguments, lowered)
+	}
+	for index, parameter := range l.result.Functions[function].Parameters {
+		if index < len(arguments) && l.result.Locals[parameter].Type == ir.Union {
+			arguments[index] = fit(arguments[index], ir.Union)
+		}
 	}
 	return ir.Call{Function: function, Arguments: arguments, Returns: l.result.Functions[function].Returns}, nil
 }

@@ -99,6 +99,9 @@ func counted(t *testing.T, path string, input bool, arguments []string, unreadab
 			if writes {
 				how.arguments = append([]string{writable(t, shared, "counted")}, how.arguments...)
 			}
+			if strings.HasPrefix(path, "internal/oracle/testdata/node_fs_file_") {
+				how = fsFilePrepare(t, shared, "counted")
+			}
 			binary := filepath.Join(shared, "program")
 			if err := native.Build(native.C(program), binary, native.Options{Count: true}); err != nil {
 				t.Fatal(err)
@@ -134,7 +137,7 @@ func counted(t *testing.T, path string, input bool, arguments []string, unreadab
 // Every fixture's counts are recorded, and a change to them fails until the table is updated with it.
 func TestCountsAreRecorded(t *testing.T) {
 	t.Parallel()
-	rows := make([]string, len(fixtures)+len(inputFixtures)+len(weakReadFixtures)+2)
+	rows := make([]string, len(fixtures)+len(inputFixtures)+len(weakReadFixtures)+len(fsFileFixtures)+2)
 	var lock sync.Mutex
 	t.Run("fixtures", func(t *testing.T) {
 		for index, fixture := range fixtures {
@@ -156,7 +159,7 @@ func TestCountsAreRecorded(t *testing.T) {
 				t.Parallel()
 				row := counted(t, fixture.path, false, nil, false, false)
 				lock.Lock()
-				rows[len(fixtures)+len(inputFixtures)+index] = row
+				rows[len(fixtures)+len(inputFixtures)+len(weakReadFixtures)+index] = row
 				lock.Unlock()
 			})
 		}
@@ -221,6 +224,16 @@ func TestCountsAreRecorded(t *testing.T) {
 			rows[len(rows)-1] = fmt.Sprintf("| %s | %s | %s | %s | %s | %s | %s |", fixture, match[1], match[2], match[3], match[4], match[5], match[6])
 			lock.Unlock()
 		})
+		for index, fixture := range fsFileFixtures {
+			path := "internal/oracle/testdata/node_fs_file_" + fixture + ".a"
+			t.Run(path, func(t *testing.T) {
+				t.Parallel()
+				row := counted(t, path, true, nil, false, false)
+				lock.Lock()
+				rows[len(fixtures)+len(inputFixtures)+len(weakReadFixtures)+index] = row
+				lock.Unlock()
+			})
+		}
 	})
 	if t.Failed() {
 		return

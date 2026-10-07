@@ -157,6 +157,23 @@ func loadInput(paths []string, overlay map[string]string, project string) (*Prog
 		}
 	}
 
+	if usesNodeModules(program) {
+		index, err := nodeTypesIndex(workingDirectory)
+		if err != nil {
+			return nil, err
+		}
+		fs.nodeTypes = true
+		roots = append(roots, currentDirectory.ResolveFile(index))
+		config = tsoptions.NewParsedCommandLine(compilerOptions(), roots, nil, currentDirectory, fs.CaseSensitivity())
+		if projectConfig != nil {
+			config = projectConfig.WithFileNames(roots)
+		}
+		program = buildProgram()
+		if program == nil {
+			return nil, errors.New("load: the compiler built no Node program")
+		}
+	}
+
 	loaded := &Program{compiler: program, fs: fs}
 	if diagnostics := loaded.diagnostics(context.Background()); len(diagnostics) > 0 {
 		return nil, &CheckError{Diagnostics: diagnostics}
