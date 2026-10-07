@@ -1,0 +1,3 @@
+// Scanner closure: targetOptionDeclaration.type is Map<string, string | number>.
+const values = new Map<string, string | number>([["one", 1], ["text", "x"]]);
+console.log(`${values.get("one")}`);

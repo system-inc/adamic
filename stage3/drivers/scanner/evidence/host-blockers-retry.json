@@ -1,0 +1,190 @@
+{
+  "result": "red: optional generic callback result",
+  "scratch_commit": "dc20aa66867952e7ddc28d7d8c1b4b2038b42cbb",
+  "compiler_pins": {
+    "origin/area/stage3": "03ccf222dfeedef4bfe5cc3e219e4586d14a5c13",
+    "origin/compiler/stage3-front-2": "391b3e9c378c0f5aea5ec34aec89a22eb3b59e73",
+    "origin/codex/host-blockers": "877ff0c021767217f539f107b04c6b07e8cbf072",
+    "origin/codex/proven-predicates": "6feee11b6e64c70838ab95cb2342c572daf13310",
+    "origin/codex/library-array-holes": "f05aec3cee91d2ce3bfced6d341865933ec28da1",
+    "origin/codex/census-small-families": "33a90f4b0763d797d33ed41eb9db79ef12ff6609",
+    "origin/codex/module-init-order": "28e366fa9ffa8ad5a44e2ee8a0d97a38faf2c916",
+    "origin/codex/phantom-brands": "d2d3c77e308cc26d4af196dedeba92d7d38c4cda",
+    "origin/codex/require-builtins-2": "6439f4cf6a7f2d1d9de86bfc8f941d6f2d9087b3",
+    "origin/codex/non-null-check": "a02613eff851e07f567ab9934adfc8a2dc98eeca",
+    "origin/library/qualified-as-const": "8280fd0873a3d5c425f8a1a342b44af20cf883d9"
+  },
+  "never_fix": {
+    "probe": "probes/coalesce-never-fallback.a",
+    "native_build_exit": 0,
+    "stdout": "x\nmissing\n",
+    "Node_diff_exit": 0,
+    "one_byte_mutant_diff_exit": 1,
+    "native_exit": 0,
+    "stderr": ""
+  },
+  "expanded_node_reference": {
+    "tokens": 1369432,
+    "errors": 466,
+    "sha256": "41672da9bab56f9d10ad7d45b5938f96e3f969c6a299e5be1b260cba189893cc",
+    "bytes": 108019935,
+    "input_tree": "/workspace/scratch/scanner-fixed-inputs",
+    "files": 81,
+    "node_exit": 0,
+    "comparison_control_exit": 0,
+    "end_mutant_diff_exit": 1,
+    "native": "blocked at compilation",
+    "build_exit": 1
+  },
+  "unsplit_diagnostic": "adamic: /workspace/scratch/scanner-host-off-run/adapted/src/compiler/utilities.ts:13:17: stage 0 can't lower a function returning U | undefined yet\n",
+  "split_diagnostic": "adamic: /workspace/scratch/scanner-latest-preflight-run/adapted/src/compiler/utilities.ts:13:17: stage 0 can't lower a function returning U | undefined yet\n",
+  "validated_slice_audit": "PASS: 168 byte-identical source spans; 79 ordered module import lists\n",
+  "ordered_stops": [
+    {
+      "context": "validated slice",
+      "diagnostic": "adamic: /workspace/scratch/scanner-latest-preflight-run/adapted/src/compiler/utilities.ts:13:17: stage 0 can't lower a function returning U | undefined yet\n"
+    },
+    {
+      "context": "untracked U extends {} constraint",
+      "diagnostic": "adamic: /workspace/scratch/scanner-host-discovery-run/adapted/src/compiler/utilities.ts:14:22: stage 0 can't lower a Map of V yet\n"
+    },
+    {
+      "context": "untracked concrete string-or-number Map/callback specialization",
+      "diagnostic": "adamic: /workspace/scratch/scanner-host-discovery-run/adapted/src/compiler/utilities.ts:14:22: stage 0 can't lower a Map of string | number yet\n"
+    },
+    {
+      "context": "original generic restored; untracked getNameOfScriptTarget returns discovery-stub",
+      "diagnostic": "adamic: /workspace/scratch/scanner-host-discovery-run/adapted/src/compiler/utilities.ts:51:13: stage 0 can't lower a declaration directly in a case (wrap the case in a block) yet\n"
+    },
+    {
+      "context": "same lookup stub plus untracked block around the default clause",
+      "diagnostic": "adamic: /workspace/scratch/scanner-host-discovery-run/adapted/src/compiler/utilities.ts:67:11: stage 0 can't lower a value of type Uint16Array<ArrayBuffer> yet\n"
+    }
+  ],
+  "minimal_probes": [
+    {
+      "file": "probes/generic-optional-callback-result.a",
+      "node_stdout": "x\n",
+      "diagnostic": "adamic: /workspace/adamic/stage3/drivers/scanner/probes/generic-optional-callback-result.a:2:10: stage 0 can't lower a function returning U | undefined yet\n"
+    },
+    {
+      "file": "probes/generic-map-callback-inference.a",
+      "node_stdout": "x\n",
+      "diagnostic": "adamic: /workspace/adamic/stage3/drivers/scanner/probes/generic-map-callback-inference.a:11:16: stage 0 can't lower a Map of string | number yet\n"
+    },
+    {
+      "file": "probes/map-union-values.a",
+      "node_stdout": "1\n",
+      "diagnostic": "adamic: /workspace/adamic/stage3/drivers/scanner/probes/map-union-values.a:2:16: stage 0 can't lower a Map of string | number yet\n"
+    },
+    {
+      "file": "probes/switch-case-declaration.a",
+      "node_stdout": "other\n",
+      "diagnostic": "adamic: /workspace/adamic/stage3/drivers/scanner/probes/switch-case-declaration.a:6:13: stage 0 can't lower a declaration directly in a case (wrap the case in a block) yet\n"
+    },
+    {
+      "file": "probes/uint16-array-constructor.a",
+      "node_stdout": "1\n",
+      "diagnostic": "adamic: /workspace/adamic/stage3/drivers/scanner/probes/uint16-array-constructor.a:2:7: stage 0 can't lower a value of type Uint16Array<ArrayBuffer> yet\n"
+    }
+  ],
+  "successful_controls": [
+    {
+      "file": "probes/generic-optional-result-constrained-control.a",
+      "native_build_exit": 0,
+      "native_stdout": "x\n",
+      "Node_diff_exit": 0,
+      "one_byte_mutant_diff_exit": 1
+    },
+    {
+      "file": "probes/optional-result-string-control.a",
+      "native_build_exit": 0,
+      "native_stdout": "x\n",
+      "Node_diff_exit": 0,
+      "one_byte_mutant_diff_exit": 1
+    },
+    {
+      "file": "probes/generic-map-value.a",
+      "native_build_exit": 0,
+      "native_stdout": "x\n",
+      "Node_diff_exit": 0,
+      "one_byte_mutant_diff_exit": 1
+    },
+    {
+      "file": "probes/concrete-map-value-control.a",
+      "native_build_exit": 0,
+      "native_stdout": "x\n",
+      "Node_diff_exit": 0,
+      "one_byte_mutant_diff_exit": 1
+    },
+    {
+      "file": "probes/switch-case-block-control.a",
+      "native_build_exit": 0,
+      "native_stdout": "other\n",
+      "Node_diff_exit": 0,
+      "one_byte_mutant_diff_exit": 1
+    },
+    {
+      "file": "probes/map-number-values-control.a",
+      "native_build_exit": 0,
+      "native_stdout": "1\n",
+      "Node_diff_exit": 0,
+      "one_byte_mutant_diff_exit": 1
+    }
+  ],
+  "discovery_type_error": "/workspace/scratch/scanner-host-discovery-run/adapted/src/compiler/utilities.ts:26:25: error TS2345: Argument of type 'Map<string, string | number>' is not assignable to parameter of type 'ReadonlyMap<string, ScriptTarget>'.\n  Types of property 'forEach' are incompatible.\n    Type '(callbackfn: (value: string | number, key: string, map: Map<string, string | number>) => void, thisArg?: any) => void' is not assignable to type '(callbackfn: (value: ScriptTarget, key: string, map: ReadonlyMap<string, ScriptTarget>) => void, thisArg?: any) => void'.\n      Types of parameters 'callbackfn' and 'callbackfn' are incompatible.\n        Types of parameters 'value' and 'value' are incompatible.\n          Type 'string | number' is not assignable to type 'ScriptTarget'.\n            Type 'string' is not assignable to type 'ScriptTarget'.\n",
+  "discovery_note": "The initial concrete ScriptTarget specialization was checker-rejected: the actual declared map value is string | number. Correcting that specialization exposed union Map storage. All constraints, specializations, lookup stubs and case wrappers are untracked discovery changes only; none changes the validated proof slice or slice tool. No native scanner result or green claim comes from them.",
+  "typed_array_branches_checked": {
+    "origin/codex/typed-arrays": "22b5809139c5dacd2210ece20a7834ed63172ddd",
+    "origin/codex/typed-arrays-runtime": "86769a34ae57226a44722c14704796ebc3860440"
+  },
+  "typed_array_support": "typedArrayKind recognizes Uint8Array, Int32Array and Float64Array only; typedArrayUnsupported explicitly lists Uint16Array. Uncommitted merge was aborted; these tips are not in the final scratch compiler.",
+  "focused_lower_tests": "ok  \tgithub.com/system-inc/adamic/internal/lower\t1.261s\n",
+  "focused_uncached_oracle": "ok  \tgithub.com/system-inc/adamic/internal/oracle\t1.390s\n",
+  "merge_conflicts": "Scratch-only lowering conflicts in class defaults, conditions, expressions and refusals retained the earlier feature support and union readiness guards. Predicate overlap retained isolated overload-flow helpers and the single packed boolean field reader. Array-holes f05aec3c merged without conflict. No authored compiler changes pushed.",
+  "metrics": {
+    "nproc": 5,
+    "C_bytes": null,
+    "C_lines": null,
+    "clang_unsplit_wall": null,
+    "clang_split_cold_wall": null,
+    "clang_split_warm_wall": null,
+    "scanner_binary_bytes": null,
+    "native_user_time": null,
+    "Node_prior_best_user_seconds": 4.270926,
+    "reason": "Both validated builds stop during lowering before scanner C exists; metrics script requires a green executable."
+  },
+  "scanner_native_one_byte_mutant": "not run: no scanner binary or native output",
+  "control_exit_stderr_verification": [
+    {
+      "name": "generic-optional-result-constrained-control",
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "optional-result-string-control",
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "generic-map-value",
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "concrete-map-value-control",
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "switch-case-block-control",
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "name": "map-number-values-control",
+      "exit": 0,
+      "stderr": ""
+    }
+  ]
+}

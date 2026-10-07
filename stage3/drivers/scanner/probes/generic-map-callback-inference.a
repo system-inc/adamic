@@ -1,0 +1,12 @@
+// Reduced from TypeScript 6.0.3, src/compiler/utilities.ts:746-755
+// Untracked discovery counterpart constrains only U to expose the next blocker.
+function forEachEntry<K, V, U extends {}>(map: ReadonlyMap<K, V>, callback: (value: V, key: K) => U | undefined): U | undefined {
+    const iterator = map.entries();
+    for (const [key, value] of iterator) {
+        const result = callback(value, key);
+        if (result) { return result; }
+    }
+    return undefined;
+}
+const values = new Map<string, string | number>([["x", 1]]);
+console.log(`${forEachEntry(values, (value, key) => value === 1 ? key : undefined)}`);

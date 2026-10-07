@@ -1,0 +1,7 @@
+// Reduced from TypeScript 6.0.3, src/compiler/utilities.ts:746-748
+function read<V extends {}>(map: ReadonlyMap<string, V>): string {
+    const iterator = map.entries();
+    for (const [key, value] of iterator) { return key; }
+    return "empty";
+}
+console.log(read(new Map<string, number>([["x", 1]])));

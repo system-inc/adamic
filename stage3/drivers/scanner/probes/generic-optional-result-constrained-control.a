@@ -1,0 +1,4 @@
+function first<U extends {}>(callback: () => U | undefined): U | undefined {
+    return callback();
+}
+console.log(`${first(() => "x")}`);

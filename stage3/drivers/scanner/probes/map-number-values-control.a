@@ -1,0 +1,2 @@
+const values = new Map<string, number>([["one", 1]]);
+console.log(`${values.get("one")}`);

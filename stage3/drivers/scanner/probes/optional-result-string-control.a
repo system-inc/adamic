@@ -1,0 +1,2 @@
+function first(callback: () => string | undefined): string | undefined { return callback(); }
+console.log(`${first(() => "x")}`);

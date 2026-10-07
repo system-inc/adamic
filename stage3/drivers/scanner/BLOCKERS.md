@@ -1,5 +1,68 @@
 # Scanner blockers
 
+## October 7: never fallback fixed; generic result, Map union, case scope and Uint16 remain
+
+Fetched and merged host-blockers 877ff0c, proven-predicates 6feee11, and newest
+Array-holes f05aec3c into the unpushed scratch. All prior features remain.
+Exact pins, conflict resolutions, tests and logs: evidence/host-blockers-retry.json.
+The unchanged never-fallback probe builds and prints `x` then `missing`, matching
+Node. Its one-byte native-output mutation is caught. Focused predicate/overload
+lowering and uncached host never-arm, optional-callable and append oracle fixtures pass.
+
+The validated slice is unchanged: its byte audit passes. Node still matches the
+full extended reference exactly: 1,369,432 tokens, 466 errors, SHA-256
+`41672da9bab56f9d10ad7d45b5938f96e3f969c6a299e5be1b260cba189893cc`.
+The token-end mutant is caught. Both split modes stop at utilities.ts:13:17:
+
+```text
+stage 0 can't lower a function returning U | undefined yet
+```
+
+This is forEachEntry's result, upstream utilities.ts:746-755. Minimal probe:
+`generic-optional-callback-result.a`; Node prints `x`. Constraining U to {} or
+using a concrete string result closes the probe, with native/Node equality.
+Required feature: infer and represent unconstrained generic optional callback
+results. Census reason: this representation-specific NotYet is not separately
+named in REPORT.md; the underlying form is a generic callback and optional result.
+
+Continued in an untracked discovery copy, without changing the proof slice:
+
+1. Adding only `U extends {}` exposes utilities.ts:14:22,
+   `stage 0 can't lower a Map of V yet`, at map.entries().
+2. A concrete specialization using the map's actual declared string-or-number
+   value exposes the same site as `a Map of string | number`. Minimal isolated
+   probe `map-union-values.a` refuses at 2:16; Node prints `1`. Generic and
+   concrete numeric-valued Map controls compile, so those are not blanket Map
+   or generic-Map refusals. Required feature: union-valued Map storage/operations.
+   The first attempted ScriptTarget specialization was checker-rejected (TS2345);
+   it was corrected after inspecting the actual `Map<string, string | number>`.
+3. Restore the original generic declaration and stub only getNameOfScriptTarget
+   in discovery. This exposes utilities.ts:51:13, `a declaration directly in a
+   case (wrap the case in a block)`, from upstream utilities.ts:10477.
+   `switch-case-declaration.a` reproduces at 6:13; block-wrapped control builds
+   and matches Node's `other`. Required feature: lexical switch-case declarations,
+   or a separately validated temporary scope wrapper.
+4. An untracked block around that default clause exposes utilities.ts:67:11,
+   `a value of type Uint16Array<ArrayBuffer>`, from upstream utilities.ts:10491.
+   `uint16-array-constructor.a` reproduces at 2:7. Node prints `1` after storing
+   65537, observing unsigned 16-bit truncation. Required feature: Uint16Array
+   storage, construction, initialized reads and modulo writes. Fetched typed-arrays
+   22b58091 and runtime 86769a34 explicitly leave Uint16Array unsupported; they
+   support Uint8Array, Int32Array and Float64Array. Their uncommitted merge was
+   abandoned; it is not part of the final compiler or any proof.
+
+These later NotYet reasons are not separately named in REPORT.md. Each is
+reported as an observation; no reachable declaration was dropped by the slice
+tool. The lookup stub, constraints, specialization and case wrapper remain
+untracked discovery-only changes, and no Node equivalence is claimed for them.
+No temporary adaptation was introduced by this retry.
+
+All successful native probe/control comparisons were challenged with one-byte
+output mutants, each caught. Scanner C, executable, token diff, clang split and
+warm-cache timings, binary size and native user time remain unavailable because
+the first real blocker prevents C emission. The previous Node best user time is
+4.270926 seconds; nproc is 5. No native scanner output mutant could run.
+
 ## October 7: adaptation 89 validated; never fallback in ?? is next
 
 Latest integrated scratch includes frontend 391b3e9, proven-predicates 746af2f,

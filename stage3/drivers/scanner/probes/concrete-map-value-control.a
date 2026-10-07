@@ -1,0 +1,6 @@
+function read(map: ReadonlyMap<string, number>): string {
+    const iterator = map.entries();
+    for (const [key, value] of iterator) { return key; }
+    return "empty";
+}
+console.log(read(new Map<string, number>([["x", 1]])));

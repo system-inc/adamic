@@ -1,0 +1,4 @@
+// From TypeScript 6.0.3, src/compiler/utilities.ts:10491 (parsePseudoBigInt)
+const segments = new Uint16Array(2);
+segments[0] = 65537;
+console.log(`${segments[0]}`);
