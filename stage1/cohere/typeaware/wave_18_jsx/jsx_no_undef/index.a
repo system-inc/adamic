@@ -1,0 +1,46 @@
+import { SyntaxFacts, SyntaxNode } from '../jsx_syntax_facts.a';
+export class JsxNoUndef {
+    readonly syntaxKinds: readonly number[] = [287, 286];
+    readonly facts: SyntaxFacts;
+    readonly allowGlobals: boolean;
+    constructor(facts: SyntaxFacts, allowGlobals: boolean) {
+        this.facts = facts;
+        this.allowGlobals = allowGlobals;
+    }
+    visit(node: SyntaxNode): void {
+        let reference = this.facts.node(node.expression);
+        if(reference?.kind === 79) {
+            const first = reference.text.charCodeAt(0);
+            if(reference.text === '' || reference.text.includes('-') || (first >= 97 && first <= 122)) {
+                return;
+            }
+        }
+        else if(reference?.kind === 212) {
+            while(reference?.kind === 212) {
+                reference = this.facts.node(reference.expression);
+            }
+            if(reference?.kind !== 79) {
+                return;
+            }
+        }
+        else {
+            return;
+        }
+        if(reference.resolved) {
+            if(this.allowGlobals || this.facts.path.endsWith('.cjs')) {
+                return;
+            }
+            for(const id of reference.declarations) {
+                if(this.facts.node(id)?.path === this.facts.path) {
+                    return;
+                }
+            }
+        }
+        this.facts.report(
+            reference,
+            'jsx-no-undef',
+            'jsxIdentifierNotDefined',
+            'This JSX tag names a component that has no declaration in scope, so React receives `undefined` where a component was meant and throws at render rather than at build. Almost always a misspelling or a missing import. Import the component, or fix the spelling to match the binding you meant.',
+        );
+    }
+}

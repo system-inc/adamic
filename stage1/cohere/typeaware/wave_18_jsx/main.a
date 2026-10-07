@@ -1,0 +1,70 @@
+import { panic, programArguments, readTextFile, tsgoProgram, tsgoRelease } from 'adamic';
+import { written } from '../../../typescript/parser/nodes.ts';
+import { byteOffsets } from '../unary_minus.ts';
+import { SyntaxFacts, SyntaxNode } from './jsx_syntax_facts.a';
+import { JsxFragments } from './jsx_fragments/index.a';
+import { JsxNoUndef } from './jsx_no_undef/index.a';
+import { NoAdjacentInlineElements } from './no_adjacent_inline_elements/index.a';
+const args = programArguments();
+const manifest = readTextFile(args[1] ?? panic('missing manifest'));
+if(manifest.kind === 'Error') {
+    panic(manifest.message);
+}
+const paths = manifest.text.split('\n').filter((p) => p !== '');
+const program = tsgoProgram(args[0] ?? panic('missing config'), paths);
+let count = 0;
+for(const path of paths) {
+    const source = readTextFile(path);
+    if(source.kind === 'Error') {
+        panic(source.message);
+    }
+    const offsets = byteOffsets(source.text);
+    const facts = new SyntaxFacts(program, path, offsets[source.text.length] ?? panic('missing end'));
+    const fragments = new JsxFragments(facts, args.includes('--element'));
+    const undef = new JsxNoUndef(facts, args.includes('--allow-globals'));
+    const adjacent = new NoAdjacentInlineElements(facts);
+    const callbacks = new Map<number, ((node: SyntaxNode) => void)[]>();
+    for(const kind of fragments.syntaxKinds) {
+        callbacks.set(kind, [(node: SyntaxNode) => fragments.visit(node)]);
+    }
+    for(const kind of undef.syntaxKinds) {
+        let row = callbacks.get(kind);
+        if(row === undefined) {
+            const fresh: ((node: SyntaxNode) => void)[] = [];
+            row = fresh;
+            callbacks.set(kind, row);
+        }
+        row.push((node: SyntaxNode) => undef.visit(node));
+    }
+    for(const kind of adjacent.syntaxKinds) {
+        let row = callbacks.get(kind);
+        if(row === undefined) {
+            const fresh: ((node: SyntaxNode) => void)[] = [];
+            row = fresh;
+            callbacks.set(kind, row);
+        }
+        row.push((node: SyntaxNode) => adjacent.visit(node));
+    }
+    for(let at = 1; at < facts.sourceCount; at++) {
+        const node = facts.require(at);
+        const listeners = callbacks.get(node.kind);
+        if(listeners !== undefined) {
+            for(const visit of listeners) {
+                visit(node);
+            }
+        }
+    }
+    for(const finding of facts.findings) {
+        finding.sortKey = finding.written();
+    }
+    facts.findings.sort((a, b) => (a.sortKey < b.sortKey ? -1 : a.sortKey > b.sortKey ? 1 : 0));
+    count += facts.findings.length;
+    if(!args.includes('--count')) {
+        console.log(`file\t${written(path)}`);
+        for(const finding of facts.findings) {
+            console.log(finding.written());
+        }
+    }
+}
+console.log(`findings ${count}`);
+tsgoRelease(program);
