@@ -1,0 +1,6 @@
+=== RUN   TestShardsAgree
+    lint_test.go:406: cohere cases: 2017 unique source/rule/options combinations
+    lint_test.go:810: 2192 rows: identical at 1, 2 and 5 shards, 27549087 bytes
+--- PASS: TestShardsAgree (44.58s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	44.612s

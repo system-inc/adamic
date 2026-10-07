@@ -1,0 +1,14 @@
+=== RUN   TestNodeTableIsLinkOnly
+    lint_test.go:406: cohere cases: 2017 unique source/rule/options combinations
+    lint_test.go:758: 2154 rows: identical with and without unattached node rows, 13085662 bytes
+--- PASS: TestNodeTableIsLinkOnly (137.05s)
+=== RUN   TestShardsAgree
+    lint_test.go:406: cohere cases: 2017 unique source/rule/options combinations
+    lint_test.go:780: set ADAMIC_TYPESCRIPT_SOURCE to the pinned TypeScript checkout: TestShardsAgree needs its compiler files
+--- FAIL: TestShardsAgree (15.66s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	152.755s
+testing: warning: no tests to run
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/shards	0.006s [no tests to run]
+FAIL

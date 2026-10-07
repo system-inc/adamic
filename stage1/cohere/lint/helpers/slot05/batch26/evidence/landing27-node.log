@@ -1,0 +1,37 @@
+=== RUN   TestInputAgreesWithNode
+=== PAUSE TestInputAgreesWithNode
+=== CONT  TestInputAgreesWithNode
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/read_files.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/read_files.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/empty-path.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/empty-path.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/utf8_sweep.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/utf8_sweep.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/arguments.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/arguments.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/read_arguments.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/read_arguments.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/write_files.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/write_files.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/walk.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/walk.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/read_files.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/read_arguments.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/utf8_sweep.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/arguments.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/walk.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/empty-path.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/write_files.a
+--- PASS: TestInputAgreesWithNode (0.00s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/read_arguments.a (0.59s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/read_files.a (0.64s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/arguments.a (0.67s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/utf8_sweep.a (0.70s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/walk.a (0.71s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/empty-path.a (0.37s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/write_files.a (0.46s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=7
+ok  	github.com/system-inc/adamic/internal/oracle	1.105s

@@ -1,0 +1,14 @@
+=== RUN   TestMergePutsCasesBackInOrder
+=== PAUSE TestMergePutsCasesBackInOrder
+=== RUN   TestMergeKeepsLinesThatOnlyLookLikeCases
+=== PAUSE TestMergeKeepsLinesThatOnlyLookLikeCases
+=== RUN   TestMergeRefusesAMissingOrRepeatedCase
+=== PAUSE TestMergeRefusesAMissingOrRepeatedCase
+=== CONT  TestMergePutsCasesBackInOrder
+--- PASS: TestMergePutsCasesBackInOrder (0.00s)
+=== CONT  TestMergeRefusesAMissingOrRepeatedCase
+--- PASS: TestMergeRefusesAMissingOrRepeatedCase (0.00s)
+=== CONT  TestMergeKeepsLinesThatOnlyLookLikeCases
+--- PASS: TestMergeKeepsLinesThatOnlyLookLikeCases (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/shards	0.057s

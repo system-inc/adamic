@@ -41,3 +41,7 @@ gofmt -l cmd internal stage1/cohere/lint/helpers/slot05 > /tmp/lint05-batch26-fo
 Go 1.27.1, clang 20.1.8, Node 24.19.0. Setup lines: Node ready 0.030s, Go ready 0.031s, submodules 0.136s, markdown validated 0.148s, clang 0.345s, Go build ready 238.591s, test-binary warming deferred 238.871s, cache warm 238.874s, done 238.972s. nproc 5, cgroup quota four cores, 17.6 GB. Deferred setup warming is not a skipped correctness check. Exact lines and environment build flags are in evidence/setup.log. Seven Node probes ran uncached, seven misses and zero hits. Vet and format logs are empty. All selected checks passed and none skipped.
 
 Full repository gate and seventeen required external-input correctness checks were not run, relaxed or credited. This is the authorized bounded worker gate over the completed package plus an external Node oracle. Prior 71 helpers retain their unchanged source and prior proofs; no new complete all-package rerun is claimed. No regex engine, AST adapter, rule listener or finding integration was built. No regex-runtime compilation blocker was encountered because these helpers introduce no regex patterns.
+
+## Sharded lint-area landing
+
+See LANDING27.md for area 7076b4eb, unchanged helper/compiler inputs, thirteen fresh semantic mutant witnesses and required TypeScript input recovery followed by passing shard parity. No new reservation.
