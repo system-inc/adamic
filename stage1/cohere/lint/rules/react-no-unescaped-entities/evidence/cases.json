@@ -1,0 +1,237 @@
+[
+  {
+    "file": "/captured/component.tsx",
+    "options": null,
+    "sourceText": "\n          var Hello = createReactClass({\n            render: function() {\n              return <div>> default parser</div>;\n            }\n          });\n        "
+  },
+  {
+    "file": "/captured/component.tsx",
+    "options": null,
+    "sourceText": "\n          var Hello = createReactClass({\n            render: function() {\n              return <div>Multiple errors: '>> default parser</div>;\n            }\n          });\n        "
+  },
+  {
+    "file": "/captured/component.tsx",
+    "options": null,
+    "sourceText": "\n          var Hello = createReactClass({\n            render: function() {\n              return <div>first line is ok\n              so is second\n              and here are some bad entities: ></div>\n            }\n          });\n        "
+  },
+  {
+    "file": "/captured/component.tsx",
+    "options": null,
+    "sourceText": "\n          var Hello = createReactClass({\n            render: function() {\n              return <div>{\"Unbalanced braces - default parser\"}}</div>;\n            }\n          });\n        "
+  },
+  {
+    "file": "/captured/component.tsx",
+    "options": null,
+    "sourceText": "\n        <script>window.foo = \"bar\"</script>\n      "
+  },
+  {
+    "file": "/captured/component.tsx",
+    "options": null,
+    "sourceText": "\n        var Hello = createReactClass({\n          render: function() {\n            return (\n              <div/>\n            );\n          }\n        });\n      "
+  },
+  {
+    "file": "/captured/component.tsx",
+    "options": null,
+    "sourceText": "\n        var Hello = createReactClass({\n          render: function() {\n            return <>> babel-eslint</>;\n          }\n        });\n      "
+  },
+  {
+    "file": "/captured/component.tsx",
+    "options": null,
+    "sourceText": "\n        var Hello = createReactClass({\n          render: function() {\n            return <>Here is some text!</>;\n          }\n        });\n      "
+  },
+  {
+    "file": "/captured/component.tsx",
+    "options": null,
+    "sourceText": "\n        var Hello = createReactClass({\n          render: function() {\n            return <>I&rsquo;ve escaped some entities: &gt; &lt; &amp;</>;\n          }\n        });\n      "
+  },
+  {
+    "file": "/captured/component.tsx",
+    "options": null,
+    "sourceText": "\n        var Hello = createReactClass({\n          render: function() {\n            return <>first line is ok\n            so is second\n            and here are some bad entities: ></>\n          }\n        });\n      "
+  },
+  {
+    "file": "/captured/component.tsx",
+    "options": {
+      "forbid": [
+        "&"
+      ]
+    },
+    "sourceText": "\n        var Hello = createReactClass({\n          render: function() {\n            return <>foo & bar</>;\n          }\n        });\n      "
+  },
+  {
+    "file": "/captured/component.tsx",
+    "options": null,
+    "sourceText": "\n        var Hello = createReactClass({\n          render: function() {\n            return <>{\">\" + \"<\" + \"&\" + '\"'}</>;\n          },\n        });\n      "
+  },
+  {
+    "file": "/captured/component.tsx",
+    "options": null,
+    "sourceText": "\n        var Hello = createReactClass({\n          render: function() {\n            return <>{\"Unbalanced braces - babel-eslint\"}}</>;\n          }\n        });\n      "
+  },
+  {
+    "file": "/captured/component.tsx",
+    "options": null,
+    "sourceText": "\n        var Hello = createReactClass({\n          render: function() {\n            return <div>'</div>;\n          }\n        });\n      "
+  },
+  {
+    "file": "/captured/component.tsx",
+    "options": null,
+    "sourceText": "\n        var Hello = createReactClass({\n          render: function() {\n            return <div>Here is some text!</div>;\n          }\n        });\n      "
+  },
+  {
+    "file": "/captured/component.tsx",
+    "options": null,
+    "sourceText": "\n        var Hello = createReactClass({\n          render: function() {\n            return <div>I&rsquo;ve escaped some entities: &gt; &lt; &amp;</div>;\n          }\n        });\n      "
+  },
+  {
+    "file": "/captured/component.tsx",
+    "options": null,
+    "sourceText": "\n        var Hello = createReactClass({\n          render: function() {\n            return <div>first line is ok\n            so is second\n            and here are some escaped entities: &gt; &lt; &amp;</div>;\n          }\n        });\n      "
+  },
+  {
+    "file": "/captured/component.tsx",
+    "options": null,
+    "sourceText": "\n        var Hello = createReactClass({\n          render: function() {\n            return <div>{\">\" + \"<\" + \"&\" + '\"'}</div>;\n          },\n        });\n      "
+  },
+  {
+    "file": "/captured/component.tsx",
+    "options": {
+      "forbid": [
+        "&"
+      ]
+    },
+    "sourceText": "\n        var Hello = createReactClass({\n          render: function() {\n            return <span>foo & bar</span>;\n          }\n        });\n      "
+  },
+  {
+    "file": "/captured/component.tsx",
+    "options": {
+      "forbid": [
+        {
+          "alternatives": [
+            "&amp;"
+          ],
+          "char": "&"
+        }
+      ]
+    },
+    "sourceText": "\n        var Hello = createReactClass({\n          render: function() {\n            return <span>foo & bar</span>;\n          }\n        });\n      "
+  },
+  {
+    "file": "/captured/component.tsx",
+    "options": null,
+    "sourceText": "const a = \"he said \\\"hi\\\"\";"
+  },
+  {
+    "file": "/captured/component.tsx",
+    "options": null,
+    "sourceText": "const a = <div title=\"a>b\" />;"
+  },
+  {
+    "file": "/captured/component.tsx",
+    "options": null,
+    "sourceText": "const a = <div>&gt;&amp;&quot;&apos;&#125;</div>;"
+  },
+  {
+    "file": "/captured/component.tsx",
+    "options": null,
+    "sourceText": "const a = <div>'</div>;"
+  },
+  {
+    "file": "/captured/component.tsx",
+    "options": null,
+    "sourceText": "const a = <div>Multiple errors: '>> default parser</div>;"
+  },
+  {
+    "file": "/captured/component.tsx",
+    "options": {
+      "forbid": []
+    },
+    "sourceText": "const a = <div>a&b</div>;"
+  },
+  {
+    "file": "/captured/component.tsx",
+    "options": {
+      "forbid": [
+        {
+          "alternatives": [],
+          "char": "&"
+        }
+      ]
+    },
+    "sourceText": "const a = <div>a&b</div>;"
+  },
+  {
+    "file": "/captured/component.tsx",
+    "options": null,
+    "sourceText": "const a = <div>a'b\"c</div>;"
+  },
+  {
+    "file": "/captured/component.tsx",
+    "options": {
+      "forbid": []
+    },
+    "sourceText": "const a = <div>a'b\"c</div>;"
+  },
+  {
+    "file": "/captured/component.tsx",
+    "options": {},
+    "sourceText": "const a = <div>a'b\"c</div>;"
+  },
+  {
+    "file": "/captured/component.tsx",
+    "options": null,
+    "sourceText": "const a = <div>café \"q\" 😀 'y'</div>;"
+  },
+  {
+    "file": "/captured/component.tsx",
+    "options": {
+      "forbid": [
+        "&"
+      ]
+    },
+    "sourceText": "const a = <div>foo & bar</div>;"
+  },
+  {
+    "file": "/captured/component.tsx",
+    "options": {
+      "forbid": [
+        ""
+      ]
+    },
+    "sourceText": "const a = <div>foo bar</div>;"
+  },
+  {
+    "file": "/captured/component.tsx",
+    "options": {
+      "forbid": [
+        "oo"
+      ]
+    },
+    "sourceText": "const a = <div>foo bar</div>;"
+  },
+  {
+    "file": "/captured/component.tsx",
+    "options": null,
+    "sourceText": "const a = <div>ok\n  bad: \"q\"\n  more</div>;"
+  },
+  {
+    "file": "/captured/component.tsx",
+    "options": null,
+    "sourceText": "const a = <div>x\"y</div>;"
+  },
+  {
+    "file": "/captured/component.tsx",
+    "options": null,
+    "sourceText": "const a = <div>{\"has > and quote \\\"\"}</div>;"
+  },
+  {
+    "file": "/captured/component.tsx",
+    "options": null,
+    "sourceText": "const a = `it's here`;"
+  },
+  {
+    "file": "/source.tsx",
+    "options": null,
+    "sourceText": "const a = <div>Hello > \"world\" 'friend' }</div>;\n"
+  }
+]
