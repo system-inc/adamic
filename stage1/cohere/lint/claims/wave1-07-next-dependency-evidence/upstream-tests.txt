@@ -1,0 +1,1238 @@
+=== RUN   TestConsistentReturnFires
+=== PAUSE TestConsistentReturnFires
+=== RUN   TestConsistentReturnStaysSilent
+=== PAUSE TestConsistentReturnStaysSilent
+=== RUN   TestConsistentReturnAddedCases
+=== PAUSE TestConsistentReturnAddedCases
+=== RUN   TestConsistentReturnDecoderRoundTrip
+=== PAUSE TestConsistentReturnDecoderRoundTrip
+=== RUN   TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken
+=== PAUSE TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken
+=== RUN   TestConsistentReturnHandlesATryWithADeclarationAndAFinally
+=== PAUSE TestConsistentReturnHandlesATryWithADeclarationAndAFinally
+=== RUN   TestConstructorSuperFires
+=== PAUSE TestConstructorSuperFires
+=== RUN   TestConstructorSuperStaysSilent
+=== PAUSE TestConstructorSuperStaysSilent
+=== RUN   TestConstructorSuperPointsAtTheRightNode
+=== PAUSE TestConstructorSuperPointsAtTheRightNode
+=== RUN   TestConstructorSuperReportsTheSecondCallNotTheFirst
+=== PAUSE TestConstructorSuperReportsTheSecondCallNotTheFirst
+=== RUN   TestConstructorSuperReportsTheRightOperandOfALogicalOr
+=== PAUSE TestConstructorSuperReportsTheRightOperandOfALogicalOr
+=== RUN   TestConstructorSuperRendersItsMessages
+=== PAUSE TestConstructorSuperRendersItsMessages
+=== RUN   TestConstructorSuperClassifiesUnconstructableExtends
+=== PAUSE TestConstructorSuperClassifiesUnconstructableExtends
+=== RUN   TestConstructorSuperAcceptsConstructableExtendsOurCodeWrites
+=== PAUSE TestConstructorSuperAcceptsConstructableExtendsOurCodeWrites
+=== RUN   TestConstructorSuperCountsOneFindingPerExtraCall
+=== PAUSE TestConstructorSuperCountsOneFindingPerExtraCall
+=== RUN   TestConstructorSuperIgnoresCallsInNestedEvaluationContexts
+=== PAUSE TestConstructorSuperIgnoresCallsInNestedEvaluationContexts
+=== RUN   TestConstructorSuperHandlesBaseAndNullExtendsSeparately
+=== PAUSE TestConstructorSuperHandlesBaseAndNullExtendsSeparately
+=== RUN   TestConstructorSuperDeclinesAConstructorOverloadSignature
+=== PAUSE TestConstructorSuperDeclinesAConstructorOverloadSignature
+=== RUN   TestConstructorSuperDoesNotBlameANestedClassForAnUnconstructableExtends
+=== PAUSE TestConstructorSuperDoesNotBlameANestedClassForAnUnconstructableExtends
+=== RUN   TestConstructorSuperAcceptsAMixedShortCircuit
+=== PAUSE TestConstructorSuperAcceptsAMixedShortCircuit
+=== RUN   TestConstructorSuperTreatsLoopBodiesAsOneIteration
+=== PAUSE TestConstructorSuperTreatsLoopBodiesAsOneIteration
+=== RUN   TestConstructorSuperFindsNoDuplicateAmongUnreachableCalls
+=== PAUSE TestConstructorSuperFindsNoDuplicateAmongUnreachableCalls
+=== RUN   TestConstructorSuperReportsEveryBadCall
+=== PAUSE TestConstructorSuperReportsEveryBadCall
+=== RUN   TestConstructorSuperRequiresARealValueFromAnExtendsNullConstructor
+=== PAUSE TestConstructorSuperRequiresARealValueFromAnExtendsNullConstructor
+=== RUN   TestDefaultCaseLastStaysSilent
+=== PAUSE TestDefaultCaseLastStaysSilent
+=== RUN   TestDefaultCaseLastFires
+=== PAUSE TestDefaultCaseLastFires
+=== RUN   TestDefaultCaseLastReportsTheDefaultClause
+=== PAUSE TestDefaultCaseLastReportsTheDefaultClause
+=== RUN   TestDefaultCaseLastReportsOnceForTwoDefaults
+=== PAUSE TestDefaultCaseLastReportsOnceForTwoDefaults
+=== RUN   TestDefaultCaseFires
+=== PAUSE TestDefaultCaseFires
+=== RUN   TestDefaultCaseStaysSilent
+=== PAUSE TestDefaultCaseStaysSilent
+=== RUN   TestDefaultCaseCommentPatternIsAnchored
+=== PAUSE TestDefaultCaseCommentPatternIsAnchored
+=== CONT  TestConsistentReturnFires
+=== RUN   TestConsistentReturnFires/function_foo()_{_if_(true)_return_true;_else_return;_}
+=== PAUSE TestConsistentReturnFires/function_foo()_{_if_(true)_return_true;_else_return;_}
+=== RUN   TestConsistentReturnFires/var_foo_=_()_=>_{_if_(true)_return_true;_else_return;_}
+=== PAUSE TestConsistentReturnFires/var_foo_=_()_=>_{_if_(true)_return_true;_else_return;_}
+=== RUN   TestConsistentReturnFires/function_foo()_{_if_(true)_return;_else_return_false;_}
+=== PAUSE TestConsistentReturnFires/function_foo()_{_if_(true)_return;_else_return_false;_}
+=== RUN   TestConsistentReturnFires/f(function()_{_if_(true)_return_true;_else_return;_})
+=== PAUSE TestConsistentReturnFires/f(function()_{_if_(true)_return_true;_else_return;_})
+=== RUN   TestConsistentReturnFires/f(function()_{_if_(true)_return;_else_return_false;_})
+=== PAUSE TestConsistentReturnFires/f(function()_{_if_(true)_return;_else_return_false;_})
+=== CONT  TestConstructorSuperHandlesBaseAndNullExtendsSeparately
+=== RUN   TestConstructorSuperHandlesBaseAndNullExtendsSeparately/a_base_class_needs_nothing
+=== PAUSE TestConstructorSuperHandlesBaseAndNullExtendsSeparately/a_base_class_needs_nothing
+=== RUN   TestConstructorSuperHandlesBaseAndNullExtendsSeparately/extends_null_with_no_constructor_is_fine
+=== PAUSE TestConstructorSuperHandlesBaseAndNullExtendsSeparately/extends_null_with_no_constructor_is_fine
+=== RUN   TestConstructorSuperHandlesBaseAndNullExtendsSeparately/extends_null_with_an_empty_constructor_binds_no_this
+=== PAUSE TestConstructorSuperHandlesBaseAndNullExtendsSeparately/extends_null_with_an_empty_constructor_binds_no_this
+=== RUN   TestConstructorSuperHandlesBaseAndNullExtendsSeparately/extends_null_returning_an_object_is_the_only_valid_form
+=== PAUSE TestConstructorSuperHandlesBaseAndNullExtendsSeparately/extends_null_returning_an_object_is_the_only_valid_form
+=== RUN   TestConstructorSuperHandlesBaseAndNullExtendsSeparately/extends_null_calling_super_has_nothing_to_call
+=== PAUSE TestConstructorSuperHandlesBaseAndNullExtendsSeparately/extends_null_calling_super_has_nothing_to_call
+=== CONT  TestDefaultCaseCommentPatternIsAnchored
+=== RUN   TestDefaultCaseCommentPatternIsAnchored/control-exact-comment-excuses
+=== PAUSE TestDefaultCaseCommentPatternIsAnchored/control-exact-comment-excuses
+=== RUN   TestDefaultCaseCommentPatternIsAnchored/trailing-text-does-not-excuse
+=== PAUSE TestDefaultCaseCommentPatternIsAnchored/trailing-text-does-not-excuse
+=== RUN   TestDefaultCaseCommentPatternIsAnchored/leading-text-does-not-excuse
+=== PAUSE TestDefaultCaseCommentPatternIsAnchored/leading-text-does-not-excuse
+=== CONT  TestDefaultCaseFires
+=== RUN   TestDefaultCaseFires/invalid-0
+=== PAUSE TestDefaultCaseFires/invalid-0
+=== RUN   TestDefaultCaseCommentPatternIsAnchored/case-insensitive-still-excuses
+=== PAUSE TestDefaultCaseCommentPatternIsAnchored/case-insensitive-still-excuses
+=== CONT  TestConstructorSuperPointsAtTheRightNode
+=== CONT  TestDefaultCaseLastReportsOnceForTwoDefaults
+=== RUN   TestConstructorSuperPointsAtTheRightNode/a_missing_call_anchors_on_the_constructor,_not_the_class
+=== PAUSE TestConstructorSuperPointsAtTheRightNode/a_missing_call_anchors_on_the_constructor,_not_the_class
+=== RUN   TestConstructorSuperPointsAtTheRightNode/the_constructor_span_stops_at_its_own_closing_brace
+=== PAUSE TestConstructorSuperPointsAtTheRightNode/the_constructor_span_stops_at_its_own_closing_brace
+=== RUN   TestConstructorSuperPointsAtTheRightNode/an_inner_class_reports_at_the_inner_constructor
+=== PAUSE TestConstructorSuperPointsAtTheRightNode/an_inner_class_reports_at_the_inner_constructor
+=== RUN   TestConstructorSuperPointsAtTheRightNode/a_bad_call_anchors_on_the_call_rather_than_the_extends_clause
+=== PAUSE TestConstructorSuperPointsAtTheRightNode/a_bad_call_anchors_on_the_call_rather_than_the_extends_clause
+=== RUN   TestConsistentReturnFires/f(a_=>_{_if_(true)_return;_else_return_false;_})
+=== CONT  TestDefaultCaseStaysSilent
+=== RUN   TestDefaultCaseFires/invalid-1
+=== PAUSE TestDefaultCaseFires/invalid-1
+=== RUN   TestDefaultCaseFires/invalid-2
+=== PAUSE TestDefaultCaseFires/invalid-2
+=== RUN   TestDefaultCaseFires/invalid-3
+=== PAUSE TestDefaultCaseFires/invalid-3
+=== RUN   TestDefaultCaseFires/invalid-4
+=== PAUSE TestDefaultCaseFires/invalid-4
+=== RUN   TestDefaultCaseFires/invalid-5
+=== PAUSE TestDefaultCaseFires/invalid-5
+=== PAUSE TestConsistentReturnFires/f(a_=>_{_if_(true)_return;_else_return_false;_})
+=== RUN   TestDefaultCaseStaysSilent/valid-0
+=== PAUSE TestDefaultCaseStaysSilent/valid-0
+=== RUN   TestDefaultCaseStaysSilent/valid-1
+=== PAUSE TestDefaultCaseStaysSilent/valid-1
+=== RUN   TestDefaultCaseStaysSilent/valid-2
+=== PAUSE TestDefaultCaseStaysSilent/valid-2
+=== RUN   TestDefaultCaseStaysSilent/valid-3
+=== RUN   TestConsistentReturnFires/function_foo()_{_if_(true)_return_true;_return_undefined;_}
+=== PAUSE TestDefaultCaseStaysSilent/valid-3
+=== PAUSE TestConsistentReturnFires/function_foo()_{_if_(true)_return_true;_return_undefined;_}
+=== RUN   TestConsistentReturnFires/function_foo()_{_if_(true)_return_true;_return_void_0;_}
+=== PAUSE TestConsistentReturnFires/function_foo()_{_if_(true)_return_true;_return_void_0;_}
+=== RUN   TestConsistentReturnFires/function_foo()_{_if_(true)_return_undefined;_return_true;_}
+--- PASS: TestDefaultCaseLastReportsOnceForTwoDefaults (0.00s)
+=== CONT  TestDefaultCaseLastFires
+=== RUN   TestDefaultCaseLastFires/switch_(foo)_{_default:_bar();_break;_case_1:_baz();_break;_}
+=== PAUSE TestDefaultCaseLastFires/switch_(foo)_{_default:_bar();_break;_case_1:_baz();_break;_}
+=== RUN   TestDefaultCaseLastFires/switch_(foo)_{_default:_break;_case_1:_break;_}
+=== PAUSE TestDefaultCaseLastFires/switch_(foo)_{_default:_break;_case_1:_break;_}
+=== RUN   TestDefaultCaseLastFires/switch_(foo)_{_default:_break;_case_1:_}
+=== PAUSE TestDefaultCaseLastFires/switch_(foo)_{_default:_break;_case_1:_}
+=== RUN   TestDefaultCaseLastFires/switch_(foo)_{_default:_case_1:_break;_}
+=== PAUSE TestDefaultCaseLastFires/switch_(foo)_{_default:_case_1:_break;_}
+=== RUN   TestDefaultCaseLastFires/switch_(foo)_{_default:_case_1:_}
+=== PAUSE TestDefaultCaseLastFires/switch_(foo)_{_default:_case_1:_}
+=== RUN   TestDefaultCaseLastFires/switch_(foo)_{_default:_break;_case_1:_break;_case_2:_break;_}
+=== PAUSE TestDefaultCaseLastFires/switch_(foo)_{_default:_break;_case_1:_break;_case_2:_break;_}
+=== RUN   TestDefaultCaseLastFires/switch_(foo)_{_default:_case_1:_break;_case_2:_break;_}
+=== PAUSE TestDefaultCaseLastFires/switch_(foo)_{_default:_case_1:_break;_case_2:_break;_}
+=== RUN   TestDefaultCaseLastFires/switch_(foo)_{_default:_case_1:_case_2:_break;_}
+=== PAUSE TestDefaultCaseLastFires/switch_(foo)_{_default:_case_1:_case_2:_break;_}
+=== RUN   TestDefaultCaseLastFires/switch_(foo)_{_default:_case_1:_case_2:_}
+=== PAUSE TestDefaultCaseLastFires/switch_(foo)_{_default:_case_1:_case_2:_}
+=== RUN   TestDefaultCaseLastFires/switch_(foo)_{_case_1:_break;_default:_break;_case_2:_break;_}
+=== PAUSE TestDefaultCaseLastFires/switch_(foo)_{_case_1:_break;_default:_break;_case_2:_break;_}
+=== RUN   TestDefaultCaseLastFires/switch_(foo)_{_case_1:_default:_break;_case_2:_break;_}
+=== PAUSE TestDefaultCaseLastFires/switch_(foo)_{_case_1:_default:_break;_case_2:_break;_}
+=== RUN   TestDefaultCaseLastFires/switch_(foo)_{_case_1:_break;_default:_case_2:_break;_}
+=== PAUSE TestDefaultCaseLastFires/switch_(foo)_{_case_1:_break;_default:_case_2:_break;_}
+=== RUN   TestDefaultCaseLastFires/switch_(foo)_{_case_1:_default:_case_2:_break;_}
+=== PAUSE TestDefaultCaseLastFires/switch_(foo)_{_case_1:_default:_case_2:_break;_}
+=== RUN   TestDefaultCaseLastFires/switch_(foo)_{_case_1:_default:_case_2:_}
+=== PAUSE TestDefaultCaseLastFires/switch_(foo)_{_case_1:_default:_case_2:_}
+=== PAUSE TestConsistentReturnFires/function_foo()_{_if_(true)_return_undefined;_return_true;_}
+=== RUN   TestConsistentReturnFires/function_foo()_{_if_(true)_return_void_0;_return_true;_}
+=== PAUSE TestConsistentReturnFires/function_foo()_{_if_(true)_return_void_0;_return_true;_}
+=== RUN   TestConsistentReturnFires/if_(true)_{_return_1;_}_return;
+=== PAUSE TestConsistentReturnFires/if_(true)_{_return_1;_}_return;
+=== RUN   TestConsistentReturnFires/function_foo()_{_if_(a)_return_true;_}
+=== PAUSE TestConsistentReturnFires/function_foo()_{_if_(a)_return_true;_}
+=== RUN   TestConsistentReturnFires/function__foo()_{_if_(a)_return_true;_}
+=== PAUSE TestConsistentReturnFires/function__foo()_{_if_(a)_return_true;_}
+=== RUN   TestConsistentReturnFires/f(function_foo()_{_if_(a)_return_true;_});
+=== PAUSE TestConsistentReturnFires/f(function_foo()_{_if_(a)_return_true;_});
+=== RUN   TestConsistentReturnFires/f(function()_{_if_(a)_return_true;_});
+=== PAUSE TestConsistentReturnFires/f(function()_{_if_(a)_return_true;_});
+=== RUN   TestConsistentReturnFires/f(()_=>_{_if_(a)_return_true;_});
+=== PAUSE TestConsistentReturnFires/f(()_=>_{_if_(a)_return_true;_});
+=== RUN   TestConsistentReturnFires/var_obj_=_{foo()_{_if_(a)_return_true;_}};
+=== PAUSE TestConsistentReturnFires/var_obj_=_{foo()_{_if_(a)_return_true;_}};
+=== RUN   TestConsistentReturnFires/class_A_{foo()_{_if_(a)_return_true;_}};
+=== PAUSE TestConsistentReturnFires/class_A_{foo()_{_if_(a)_return_true;_}};
+=== RUN   TestConsistentReturnFires/if_(a)_return_true;
+=== PAUSE TestConsistentReturnFires/if_(a)_return_true;
+=== RUN   TestConsistentReturnFires/class_A_{_CapitalizedFunction()_{_if_(a)_return_true;_}_}
+=== PAUSE TestConsistentReturnFires/class_A_{_CapitalizedFunction()_{_if_(a)_return_true;_}_}
+=== RUN   TestConsistentReturnFires/({_constructor()_{_if_(a)_return_true;_}_});
+=== PAUSE TestConsistentReturnFires/({_constructor()_{_if_(a)_return_true;_}_});
+=== CONT  TestDefaultCaseLastReportsTheDefaultClause
+=== RUN   TestDefaultCaseLastReportsTheDefaultClause/switch_(foo)_{_default:_break;_case_1:_break;_}
+=== PAUSE TestDefaultCaseLastReportsTheDefaultClause/switch_(foo)_{_default:_break;_case_1:_break;_}
+=== RUN   TestDefaultCaseLastReportsTheDefaultClause/switch_(foo)_{_case_1:_default:_case_2:_break;_}
+=== PAUSE TestDefaultCaseLastReportsTheDefaultClause/switch_(foo)_{_case_1:_default:_case_2:_break;_}
+=== RUN   TestDefaultCaseLastReportsTheDefaultClause/switch_(foo)_{_case_1:_break;_default:_case_2:_break;_}
+=== PAUSE TestDefaultCaseLastReportsTheDefaultClause/switch_(foo)_{_case_1:_break;_default:_case_2:_break;_}
+=== CONT  TestConstructorSuperRequiresARealValueFromAnExtendsNullConstructor
+=== RUN   TestConstructorSuperRequiresARealValueFromAnExtendsNullConstructor/a_bare_return_yields_the_unbound_this
+=== PAUSE TestConstructorSuperRequiresARealValueFromAnExtendsNullConstructor/a_bare_return_yields_the_unbound_this
+=== RUN   TestConstructorSuperRequiresARealValueFromAnExtendsNullConstructor/a_return_inside_a_nested_function_returns_from_that_function
+=== PAUSE TestConstructorSuperRequiresARealValueFromAnExtendsNullConstructor/a_return_inside_a_nested_function_returns_from_that_function
+=== RUN   TestConstructorSuperPointsAtTheRightNode/a_duplicate_anchors_on_the_second_call,_not_the_first
+=== PAUSE TestConstructorSuperPointsAtTheRightNode/a_duplicate_anchors_on_the_second_call,_not_the_first
+=== CONT  TestConstructorSuperReportsEveryBadCall
+=== RUN   TestConstructorSuperReportsEveryBadCall/extends_null
+=== PAUSE TestConstructorSuperReportsEveryBadCall/extends_null
+=== RUN   TestConstructorSuperReportsEveryBadCall/extends_a_literal
+=== PAUSE TestConstructorSuperReportsEveryBadCall/extends_a_literal
+=== CONT  TestConstructorSuperFindsNoDuplicateAmongUnreachableCalls
+--- PASS: TestConstructorSuperFindsNoDuplicateAmongUnreachableCalls (0.00s)
+=== CONT  TestConstructorSuperDoesNotBlameANestedClassForAnUnconstructableExtends
+--- PASS: TestConstructorSuperDoesNotBlameANestedClassForAnUnconstructableExtends (0.00s)
+=== CONT  TestConstructorSuperDeclinesAConstructorOverloadSignature
+--- PASS: TestConstructorSuperDeclinesAConstructorOverloadSignature (0.00s)
+=== CONT  TestConstructorSuperClassifiesUnconstructableExtends
+=== RUN   TestConstructorSuperClassifiesUnconstructableExtends/undefined
+=== PAUSE TestConstructorSuperClassifiesUnconstructableExtends/undefined
+=== RUN   TestConstructorSuperClassifiesUnconstructableExtends/an_array_literal
+=== PAUSE TestConstructorSuperClassifiesUnconstructableExtends/an_array_literal
+=== RUN   TestConstructorSuperClassifiesUnconstructableExtends/an_object_literal
+=== PAUSE TestConstructorSuperClassifiesUnconstructableExtends/an_object_literal
+=== RUN   TestConstructorSuperClassifiesUnconstructableExtends/a_template_literal
+=== PAUSE TestConstructorSuperClassifiesUnconstructableExtends/a_template_literal
+=== RUN   TestConstructorSuperClassifiesUnconstructableExtends/a_regular_expression
+=== PAUSE TestConstructorSuperClassifiesUnconstructableExtends/a_regular_expression
+=== RUN   TestConstructorSuperClassifiesUnconstructableExtends/a_void_expression
+=== PAUSE TestConstructorSuperClassifiesUnconstructableExtends/a_void_expression
+=== RUN   TestConstructorSuperClassifiesUnconstructableExtends/an_arrow_function
+=== PAUSE TestConstructorSuperClassifiesUnconstructableExtends/an_arrow_function
+=== RUN   TestConstructorSuperClassifiesUnconstructableExtends/a_conditional_of_two_literals
+=== PAUSE TestConstructorSuperClassifiesUnconstructableExtends/a_conditional_of_two_literals
+=== RUN   TestDefaultCaseStaysSilent/valid-4
+=== PAUSE TestDefaultCaseStaysSilent/valid-4
+=== RUN   TestDefaultCaseStaysSilent/valid-5
+=== PAUSE TestDefaultCaseStaysSilent/valid-5
+=== RUN   TestDefaultCaseStaysSilent/valid-6
+=== PAUSE TestDefaultCaseStaysSilent/valid-6
+=== RUN   TestDefaultCaseStaysSilent/valid-7
+=== PAUSE TestDefaultCaseStaysSilent/valid-7
+=== RUN   TestDefaultCaseStaysSilent/valid-8
+=== PAUSE TestDefaultCaseStaysSilent/valid-8
+=== RUN   TestDefaultCaseStaysSilent/valid-9
+=== PAUSE TestDefaultCaseStaysSilent/valid-9
+=== RUN   TestDefaultCaseStaysSilent/valid-10
+=== PAUSE TestDefaultCaseStaysSilent/valid-10
+=== RUN   TestDefaultCaseStaysSilent/valid-11
+=== PAUSE TestDefaultCaseStaysSilent/valid-11
+=== RUN   TestDefaultCaseStaysSilent/valid-12
+=== PAUSE TestDefaultCaseStaysSilent/valid-12
+=== RUN   TestDefaultCaseStaysSilent/valid-13
+=== PAUSE TestDefaultCaseStaysSilent/valid-13
+=== RUN   TestDefaultCaseStaysSilent/valid-14
+=== PAUSE TestDefaultCaseStaysSilent/valid-14
+=== RUN   TestDefaultCaseStaysSilent/valid-15
+=== PAUSE TestDefaultCaseStaysSilent/valid-15
+=== RUN   TestDefaultCaseStaysSilent/valid-16
+=== PAUSE TestDefaultCaseStaysSilent/valid-16
+=== CONT  TestConstructorSuperTreatsLoopBodiesAsOneIteration
+=== RUN   TestConstructorSuperTreatsLoopBodiesAsOneIteration/one_call_reached_twice_is_not_a_duplicate
+=== PAUSE TestConstructorSuperTreatsLoopBodiesAsOneIteration/one_call_reached_twice_is_not_a_duplicate
+=== RUN   TestConstructorSuperTreatsLoopBodiesAsOneIteration/two_calls_in_one_iteration_is_a_duplicate
+=== PAUSE TestConstructorSuperTreatsLoopBodiesAsOneIteration/two_calls_in_one_iteration_is_a_duplicate
+=== RUN   TestConstructorSuperTreatsLoopBodiesAsOneIteration/a_call_before_the_loop_makes_the_loop's_call_a_duplicate
+=== PAUSE TestConstructorSuperTreatsLoopBodiesAsOneIteration/a_call_before_the_loop_makes_the_loop's_call_a_duplicate
+=== CONT  TestConstructorSuperAcceptsAMixedShortCircuit
+=== RUN   TestConstructorSuperAcceptsAMixedShortCircuit/a_conditional_whose_consequent_is_constructable
+=== PAUSE TestConstructorSuperAcceptsAMixedShortCircuit/a_conditional_whose_consequent_is_constructable
+=== RUN   TestConstructorSuperAcceptsAMixedShortCircuit/a_conditional_whose_alternate_is_constructable
+=== PAUSE TestConstructorSuperAcceptsAMixedShortCircuit/a_conditional_whose_alternate_is_constructable
+=== RUN   TestConstructorSuperAcceptsAMixedShortCircuit/an_or_whose_left_operand_is_constructable
+=== PAUSE TestConstructorSuperAcceptsAMixedShortCircuit/an_or_whose_left_operand_is_constructable
+=== CONT  TestConstructorSuperIgnoresCallsInNestedEvaluationContexts
+=== CONT  TestConstructorSuperAcceptsConstructableExtendsOurCodeWrites
+=== CONT  TestConstructorSuperCountsOneFindingPerExtraCall
+=== RUN   TestConstructorSuperIgnoresCallsInNestedEvaluationContexts/a_function_expression
+=== CONT  TestDefaultCaseLastStaysSilent
+=== PAUSE TestConstructorSuperIgnoresCallsInNestedEvaluationContexts/a_function_expression
+=== RUN   TestDefaultCaseLastStaysSilent/switch_(foo)_{}
+=== RUN   TestConstructorSuperIgnoresCallsInNestedEvaluationContexts/an_immediately_invoked_arrow
+=== PAUSE TestDefaultCaseLastStaysSilent/switch_(foo)_{}
+=== PAUSE TestConstructorSuperIgnoresCallsInNestedEvaluationContexts/an_immediately_invoked_arrow
+=== CONT  TestConstructorSuperReportsTheRightOperandOfALogicalOr
+=== RUN   TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_bar();_break;_}
+=== RUN   TestConstructorSuperIgnoresCallsInNestedEvaluationContexts/a_nested_object_method
+--- PASS: TestConstructorSuperCountsOneFindingPerExtraCall (0.00s)
+=== PAUSE TestConstructorSuperIgnoresCallsInNestedEvaluationContexts/a_nested_object_method
+=== PAUSE TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_bar();_break;_}
+=== RUN   TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_break;_}
+=== PAUSE TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_break;_}
+--- PASS: TestConstructorSuperReportsTheRightOperandOfALogicalOr (0.00s)
+=== CONT  TestConstructorSuperReportsTheSecondCallNotTheFirst
+=== RUN   TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_}
+=== PAUSE TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_}
+=== RUN   TestConstructorSuperAcceptsAMixedShortCircuit/a_nullish_coalesce_whose_left_operand_is_constructable
+--- PASS: TestConstructorSuperReportsTheSecondCallNotTheFirst (0.00s)
+=== CONT  TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken
+=== PAUSE TestConstructorSuperAcceptsAMixedShortCircuit/a_nullish_coalesce_whose_left_operand_is_constructable
+=== RUN   TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken/class_A_{_static_foo()_{_if_(a)_return_true;_}_}
+=== RUN   TestConstructorSuperAcceptsConstructableExtendsOurCodeWrites/a_namespaced_identifier
+=== RUN   TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_bar();_break;_case_2:_baz();_break;_}
+=== PAUSE TestConstructorSuperAcceptsConstructableExtendsOurCodeWrites/a_namespaced_identifier
+=== RUN   TestConstructorSuperAcceptsAMixedShortCircuit/a_sequence_whose_last_operand_is_constructable
+=== RUN   TestConstructorSuperAcceptsConstructableExtendsOurCodeWrites/a_subscripted_member
+=== PAUSE TestConstructorSuperAcceptsAMixedShortCircuit/a_sequence_whose_last_operand_is_constructable
+=== PAUSE TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_bar();_break;_case_2:_baz();_break;_}
+=== RUN   TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_break;_case_2:_break;_}
+=== PAUSE TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_break;_case_2:_break;_}
+=== RUN   TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_case_2:_break;_}
+=== PAUSE TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_case_2:_break;_}
+=== RUN   TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_case_2:_}
+=== PAUSE TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_case_2:_}
+=== PAUSE TestConstructorSuperAcceptsConstructableExtendsOurCodeWrites/a_subscripted_member
+=== RUN   TestDefaultCaseLastStaysSilent/switch_(foo)_{_default:_bar();_break;_}
+=== RUN   TestConstructorSuperAcceptsConstructableExtendsOurCodeWrites/a_mixin_call
+=== PAUSE TestDefaultCaseLastStaysSilent/switch_(foo)_{_default:_bar();_break;_}
+=== PAUSE TestConstructorSuperAcceptsConstructableExtendsOurCodeWrites/a_mixin_call
+=== CONT  TestConstructorSuperRendersItsMessages
+=== RUN   TestDefaultCaseLastStaysSilent/switch_(foo)_{_default:_bar();_}
+=== CONT  TestConsistentReturnHandlesATryWithADeclarationAndAFinally
+=== PAUSE TestDefaultCaseLastStaysSilent/switch_(foo)_{_default:_bar();_}
+=== RUN   TestConstructorSuperAcceptsConstructableExtendsOurCodeWrites/a_new_expression
+=== RUN   TestDefaultCaseLastStaysSilent/switch_(foo)_{_default:_break;_}
+=== PAUSE TestConstructorSuperAcceptsConstructableExtendsOurCodeWrites/a_new_expression
+=== PAUSE TestDefaultCaseLastStaysSilent/switch_(foo)_{_default:_break;_}
+=== RUN   TestConstructorSuperAcceptsConstructableExtendsOurCodeWrites/a_tagged_template
+=== PAUSE TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken/class_A_{_static_foo()_{_if_(a)_return_true;_}_}
+=== RUN   TestConstructorSuperRendersItsMessages/missingAll
+=== PAUSE TestConstructorSuperRendersItsMessages/missingAll
+=== RUN   TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken/class_A_{_get_foo()_{_if_(a)_return_true;_}_}
+=== RUN   TestConstructorSuperRendersItsMessages/missingSome
+=== PAUSE TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken/class_A_{_get_foo()_{_if_(a)_return_true;_}_}
+=== RUN   TestDefaultCaseLastStaysSilent/switch_(foo)_{_default:_}
+=== PAUSE TestConstructorSuperRendersItsMessages/missingSome
+=== RUN   TestConstructorSuperRendersItsMessages/duplicate
+=== PAUSE TestConstructorSuperRendersItsMessages/duplicate
+=== RUN   TestConstructorSuperRendersItsMessages/badSuper
+=== PAUSE TestConstructorSuperRendersItsMessages/badSuper
+=== PAUSE TestConstructorSuperAcceptsConstructableExtendsOurCodeWrites/a_tagged_template
+=== RUN   TestConstructorSuperAcceptsConstructableExtendsOurCodeWrites/a_non-null_assertion
+=== PAUSE TestConstructorSuperAcceptsConstructableExtendsOurCodeWrites/a_non-null_assertion
+=== RUN   TestConstructorSuperAcceptsConstructableExtendsOurCodeWrites/an_as_cast
+=== PAUSE TestConstructorSuperAcceptsConstructableExtendsOurCodeWrites/an_as_cast
+=== CONT  TestConsistentReturnAddedCases
+=== RUN   TestConsistentReturnAddedCases/a_static_method_renders_static_before_method
+=== PAUSE TestConsistentReturnAddedCases/a_static_method_renders_static_before_method
+=== RUN   TestConsistentReturnAddedCases/a_private_method_renders_an_unquoted_hash_name
+=== PAUSE TestConsistentReturnAddedCases/a_private_method_renders_an_unquoted_hash_name
+=== CONT  TestConsistentReturnDecoderRoundTrip
+=== RUN   TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken/class_A_{_async_foo()_{_if_(a)_return_true;_}_}
+--- PASS: TestConsistentReturnHandlesATryWithADeclarationAndAFinally (0.00s)
+=== RUN   TestConsistentReturnAddedCases/static_and_private_compose_in_that_order
+=== CONT  TestConstructorSuperStaysSilent
+=== PAUSE TestConsistentReturnAddedCases/static_and_private_compose_in_that_order
+=== RUN   TestConsistentReturnDecoderRoundTrip/an_empty_object
+=== PAUSE TestConsistentReturnDecoderRoundTrip/an_empty_object
+=== PAUSE TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken/class_A_{_async_foo()_{_if_(a)_return_true;_}_}
+=== RUN   TestConsistentReturnDecoderRoundTrip/an_explicit_false
+=== PAUSE TestConsistentReturnDecoderRoundTrip/an_explicit_false
+=== RUN   TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken/class_A_{_*foo()_{_if_(a)_return_true;_}_}
+=== PAUSE TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken/class_A_{_*foo()_{_if_(a)_return_true;_}_}
+=== RUN   TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken/var_o_=_{_async_foo()_{_if_(a)_return_true;_}_};
+=== PAUSE TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken/var_o_=_{_async_foo()_{_if_(a)_return_true;_}_};
+=== RUN   TestConsistentReturnDecoderRoundTrip/an_explicit_true
+=== PAUSE TestConsistentReturnDecoderRoundTrip/an_explicit_true
+=== CONT  TestConsistentReturnStaysSilent
+=== RUN   TestConsistentReturnStaysSilent/function_foo()_{_return;_}
+=== PAUSE TestConsistentReturnStaysSilent/function_foo()_{_return;_}
+=== RUN   TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return;_}
+=== PAUSE TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return;_}
+=== RUN   TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return;_else_return;_}
+=== PAUSE TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return;_else_return;_}
+=== RUN   TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_true;_else_return_false;_}
+=== PAUSE TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_true;_else_return_false;_}
+=== RUN   TestConsistentReturnStaysSilent/f(function()_{_return;_})
+=== PAUSE TestConsistentReturnStaysSilent/f(function()_{_return;_})
+=== PAUSE TestDefaultCaseLastStaysSilent/switch_(foo)_{_default:_}
+=== RUN   TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_break;_default:_break;_}
+=== RUN   TestConsistentReturnStaysSilent/f(function()_{_if_(true)_return;_})
+=== PAUSE TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_break;_default:_break;_}
+=== RUN   TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_break;_default:_}
+=== PAUSE TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_break;_default:_}
+=== RUN   TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_default:_break;_}
+=== PAUSE TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_default:_break;_}
+=== RUN   TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_default:_}
+=== PAUSE TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_default:_}
+=== RUN   TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_baz();_break;_case_2:_quux();_break;_default:_quuux();_break;_}
+=== PAUSE TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_baz();_break;_case_2:_quux();_break;_default:_quuux();_break;_}
+=== RUN   TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_break;_case_2:_break;_default:_break;_}
+=== PAUSE TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_break;_case_2:_break;_default:_break;_}
+=== RUN   TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_break;_case_2:_break;_default:_}
+=== PAUSE TestConsistentReturnStaysSilent/f(function()_{_if_(true)_return;_})
+=== RUN   TestConsistentReturnStaysSilent/f(function()_{_if_(true)_return;_else_return;_})
+=== PAUSE TestConsistentReturnStaysSilent/f(function()_{_if_(true)_return;_else_return;_})
+=== RUN   TestConsistentReturnStaysSilent/f(function()_{_if_(true)_return_true;_else_return_false;_})
+=== PAUSE TestConsistentReturnStaysSilent/f(function()_{_if_(true)_return_true;_else_return_false;_})
+=== RUN   TestConsistentReturnStaysSilent/function_foo()_{_function_bar()_{_return_true;_}_return;_}
+=== PAUSE TestConsistentReturnStaysSilent/function_foo()_{_function_bar()_{_return_true;_}_return;_}
+=== RUN   TestConsistentReturnStaysSilent/function_foo()_{_function_bar()_{_return;_}_return_false;_}
+=== PAUSE TestConsistentReturnStaysSilent/function_foo()_{_function_bar()_{_return;_}_return_false;_}
+=== RUN   TestConsistentReturnStaysSilent/function_Foo()_{_if_(!(this_instanceof_Foo))_return_new_Foo();_}
+=== PAUSE TestConsistentReturnStaysSilent/function_Foo()_{_if_(!(this_instanceof_Foo))_return_new_Foo();_}
+=== RUN   TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_5;_else_return_undefined;_}
+=== PAUSE TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_5;_else_return_undefined;_}
+=== RUN   TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_5;_else_return_void_0;_}
+=== PAUSE TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_5;_else_return_void_0;_}
+=== RUN   TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return;_else_return_undefined;_}
+=== PAUSE TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return;_else_return_undefined;_}
+=== RUN   TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return;_else_return_void_0;_}
+=== PAUSE TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return;_else_return_void_0;_}
+=== RUN   TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_undefined;_else_return;_}
+=== PAUSE TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_undefined;_else_return;_}
+=== RUN   TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_undefined;_else_return_void_0;_}
+=== PAUSE TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_undefined;_else_return_void_0;_}
+=== RUN   TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_void_0;_else_return;_}
+=== PAUSE TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_void_0;_else_return;_}
+=== RUN   TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_void_0;_else_return_undefined;_}
+=== PAUSE TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_void_0;_else_return_undefined;_}
+=== RUN   TestConsistentReturnStaysSilent/var_x_=_()_=>_{__return_{};_};
+=== PAUSE TestConsistentReturnStaysSilent/var_x_=_()_=>_{__return_{};_};
+=== RUN   TestConsistentReturnStaysSilent/if_(true)_{_return_1;_}_return_0;
+=== PAUSE TestConsistentReturnStaysSilent/if_(true)_{_return_1;_}_return_0;
+=== RUN   TestConsistentReturnStaysSilent/class_Foo_{_constructor()_{_if_(true)_return_foo;_}_}
+=== PAUSE TestConsistentReturnStaysSilent/class_Foo_{_constructor()_{_if_(true)_return_foo;_}_}
+=== RUN   TestConsistentReturnStaysSilent/var_Foo_=_class_{_constructor()_{_if_(true)_return_foo;_}_}
+=== PAUSE TestConsistentReturnStaysSilent/var_Foo_=_class_{_constructor()_{_if_(true)_return_foo;_}_}
+=== CONT  TestConstructorSuperFires
+=== RUN   TestConstructorSuperFires/class_A_extends_null_{_constructor()_{_}_}
+=== PAUSE TestConstructorSuperFires/class_A_extends_null_{_constructor()_{_}_}
+=== RUN   TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_}_}
+=== PAUSE TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_}_}
+=== RUN   TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_for_(var_a_of_b)_super.f
+=== PAUSE TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_for_(var_a_of_b)_super.f
+=== RUN   TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_for_(var_i_=_1;_i_<_10;_
+=== PAUSE TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_for_(var_i_=_1;_i_<_10;_
+=== RUN   TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_var_c_=_class_extends_D_
+=== PAUSE TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_var_c_=_class_extends_D_
+=== RUN   TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_var_c_=_()_=>_super();_}
+=== PAUSE TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_var_c_=_()_=>_super();_}
+=== RUN   TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_class_C_extends_D_{_cons
+=== PAUSE TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_class_C_extends_D_{_cons
+=== RUN   TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_var_C_=_class_extends_D_
+=== PAUSE TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_var_C_=_class_extends_D_
+=== RUN   TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_super();_class_C_extends
+=== PAUSE TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_super();_class_C_extends
+=== RUN   TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_super();_var_C_=_class_e
+=== PAUSE TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_super();_var_C_=_class_e
+=== RUN   TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_a_&&_super();_}_}
+=== PAUSE TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_a_&&_super();_}_}
+=== RUN   TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_return;_super();_}_}
+=== PAUSE TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_return;_super();_}_}
+=== RUN   TestConstructorSuperFires/class_Foo_extends_Bar_{_constructor()_{_for_(a_in_b)_for_(c_
+=== PAUSE TestConstructorSuperFires/class_Foo_extends_Bar_{_constructor()_{_for_(a_in_b)_for_(c_
+=== RUN   TestConstructorSuperFires/class_C_extends_D_{_constructor()_{_do_{_something();_}_whil
+=== PAUSE TestConstructorSuperFires/class_C_extends_D_{_constructor()_{_do_{_something();_}_whil
+=== RUN   TestConstructorSuperFires/class_C_extends_D_{_constructor()_{_for_(let_i_=_1;;i++)_{_i
+=== PAUSE TestConstructorSuperFires/class_C_extends_D_{_constructor()_{_for_(let_i_=_1;;i++)_{_i
+=== RUN   TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_if_(a)_super();_}_}
+=== PAUSE TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_if_(a)_super();_}_}
+=== RUN   TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_if_(a);_else_super();_}_
+=== PAUSE TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_if_(a);_else_super();_}_
+=== RUN   TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_switch_(a)_{_case_0:_sup
+=== PAUSE TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_switch_(a)_{_case_0:_sup
+=== RUN   TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_switch_(a)_{_case_0:_bre
+=== PAUSE TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_switch_(a)_{_case_0:_bre
+=== RUN   TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_try_{_super();_}_catch_(
+=== PAUSE TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_try_{_super();_}_catch_(
+=== RUN   TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_try_{_a;_}_catch_(err)_{
+=== PAUSE TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_try_{_a;_}_catch_(err)_{
+=== RUN   TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_if_(a)_return;_super();_
+=== PAUSE TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_if_(a)_return;_super();_
+=== RUN   TestConstructorSuperFires/class_A_extends_B_{_constructor(a)_{_while_(a)_super();_}_}
+=== PAUSE TestConstructorSuperFires/class_A_extends_B_{_constructor(a)_{_while_(a)_super();_}_}
+=== RUN   TestConstructorSuperFires/class_C_extends_D_{_constructor()_{_do_{_super();_}_while_(f
+=== PAUSE TestConstructorSuperFires/class_C_extends_D_{_constructor()_{_do_{_super();_}_while_(f
+=== RUN   TestConstructorSuperFires/class_C_extends_D_{_constructor()_{_while_(foo)_{_if_(bar)_{
+=== PAUSE TestConstructorSuperFires/class_C_extends_D_{_constructor()_{_while_(foo)_{_if_(bar)_{
+=== RUN   TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_while_(condition)_{_if_(
+=== PAUSE TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_while_(condition)_{_if_(
+=== RUN   TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_for_(let_i_=_0;_i_<_10;_
+=== PAUSE TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_for_(let_i_=_0;_i_<_10;_
+=== RUN   TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_do_{_if_(x)_{_super();_}
+=== PAUSE TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_do_{_if_(x)_{_super();_}
+=== RUN   TestConstructorSuperFires/class_A_extends_null_{_constructor()_{_super();_}_}
+=== PAUSE TestConstructorSuperFires/class_A_extends_null_{_constructor()_{_super();_}_}
+=== RUN   TestConstructorSuperFires/class_A_extends_100_{_constructor()_{_super();_}_}
+=== PAUSE TestConstructorSuperFires/class_A_extends_100_{_constructor()_{_super();_}_}
+=== RUN   TestConstructorSuperFires/class_A_extends_'test'_{_constructor()_{_super();_}_}
+=== PAUSE TestConstructorSuperFires/class_A_extends_'test'_{_constructor()_{_super();_}_}
+=== RUN   TestConstructorSuperFires/class_A_extends_(B_=_5)_{_constructor()_{_super();_}_}
+=== PAUSE TestConstructorSuperFires/class_A_extends_(B_=_5)_{_constructor()_{_super();_}_}
+=== RUN   TestConstructorSuperFires/class_A_extends_(B_&&_5)_{_constructor()_{_super();_}_}
+=== PAUSE TestConstructorSuperFires/class_A_extends_(B_&&_5)_{_constructor()_{_super();_}_}
+=== RUN   TestConstructorSuperFires/class_A_extends_(B_&&=_5)_{_constructor()_{_super();_}_}
+=== PAUSE TestConstructorSuperFires/class_A_extends_(B_&&=_5)_{_constructor()_{_super();_}_}
+=== RUN   TestConstructorSuperFires/class_A_extends_(B_+=_C)_{_constructor()_{_super();_}_}
+=== PAUSE TestConstructorSuperFires/class_A_extends_(B_+=_C)_{_constructor()_{_super();_}_}
+=== RUN   TestConstructorSuperFires/class_A_extends_(B_-=_C)_{_constructor()_{_super();_}_}
+=== PAUSE TestConstructorSuperFires/class_A_extends_(B_-=_C)_{_constructor()_{_super();_}_}
+=== RUN   TestConstructorSuperFires/class_A_extends_(B_**=_C)_{_constructor()_{_super();_}_}
+=== PAUSE TestConstructorSuperFires/class_A_extends_(B_**=_C)_{_constructor()_{_super();_}_}
+=== RUN   TestConstructorSuperFires/class_A_extends_(B_|=_C)_{_constructor()_{_super();_}_}
+=== PAUSE TestConstructorSuperFires/class_A_extends_(B_|=_C)_{_constructor()_{_super();_}_}
+=== RUN   TestConstructorSuperFires/class_A_extends_(B_&=_C)_{_constructor()_{_super();_}_}
+=== PAUSE TestConstructorSuperFires/class_A_extends_(B_&=_C)_{_constructor()_{_super();_}_}
+=== RUN   TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_super();_super();_}_}
+=== PAUSE TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_super();_super();_}_}
+=== RUN   TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_super()_||_super();_}_}
+=== PAUSE TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_super()_||_super();_}_}
+=== RUN   TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_if_(a)_super();_super();
+=== PAUSE TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_if_(a)_super();_super();
+=== RUN   TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_switch_(a)_{_case_0:_sup_(2)
+=== PAUSE TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_switch_(a)_{_case_0:_sup_(2)
+=== CONT  TestConstructorSuperHandlesBaseAndNullExtendsSeparately/a_base_class_needs_nothing
+=== RUN   TestConsistentReturnAddedCases/an_async_function_renders_async
+=== PAUSE TestConsistentReturnAddedCases/an_async_function_renders_async
+=== RUN   TestConsistentReturnAddedCases/a_generator_renders_generator
+=== PAUSE TestConsistentReturnAddedCases/a_generator_renders_generator
+=== RUN   TestConsistentReturnAddedCases/async_and_generator_compose_in_that_order
+=== PAUSE TestConsistentReturnAddedCases/async_and_generator_compose_in_that_order
+=== RUN   TestConsistentReturnAddedCases/a_getter_renders_getter_and_not_method
+=== PAUSE TestConsistentReturnAddedCases/a_getter_renders_getter_and_not_method
+=== RUN   TestConsistentReturnAddedCases/a_setter_renders_setter
+=== PAUSE TestConsistentReturnAddedCases/a_setter_renders_setter
+=== RUN   TestConsistentReturnAddedCases/an_object_literal_getter_renders_the_same_as_a_class_one
+=== PAUSE TestConsistentReturnAddedCases/an_object_literal_getter_renders_the_same_as_a_class_one
+=== RUN   TestConsistentReturnAddedCases/a_class_constructor_is_exempt_from_the_end_judgment
+=== PAUSE TestConsistentReturnAddedCases/a_class_constructor_is_exempt_from_the_end_judgment
+=== RUN   TestConsistentReturnAddedCases/a_class_constructor_is_NOT_exempt_from_the_per-return_judgment
+=== PAUSE TestConsistentReturnAddedCases/a_class_constructor_is_NOT_exempt_from_the_per-return_judgment
+=== RUN   TestConsistentReturnAddedCases/a_class_expression_constructor_behaves_the_same_way
+=== PAUSE TestConsistentReturnAddedCases/a_class_expression_constructor_behaves_the_same_way
+=== RUN   TestConsistentReturnAddedCases/the_constructor_name_renders_no_modifiers
+=== PAUSE TestConsistentReturnAddedCases/the_constructor_name_renders_no_modifiers
+=== RUN   TestConsistentReturnAddedCases/an_object_literal_method_named_constructor_is_NOT_exempt
+=== PAUSE TestConsistentReturnAddedCases/an_object_literal_method_named_constructor_is_NOT_exempt
+=== RUN   TestConsistentReturnAddedCases/a_function_expression_on_a_property_renders_as_a_method
+=== PAUSE TestConsistentReturnAddedCases/a_function_expression_on_a_property_renders_as_a_method
+=== RUN   TestConsistentReturnAddedCases/a_class_field_holding_a_function_renders_as_a_method
+=== PAUSE TestConsistentReturnAddedCases/a_class_field_holding_a_function_renders_as_a_method
+=== RUN   TestConsistentReturnAddedCases/a_quoted_key_renders_its_cooked_name
+=== PAUSE TestConsistentReturnAddedCases/a_quoted_key_renders_its_cooked_name
+=== RUN   TestConsistentReturnAddedCases/a_computed_key_whose_value_is_static_renders_it
+=== PAUSE TestConsistentReturnAddedCases/a_computed_key_whose_value_is_static_renders_it
+=== RUN   TestConsistentReturnAddedCases/a_computed_key_whose_value_is_not_static_renders_no_name
+=== PAUSE TestConsistentReturnAddedCases/a_computed_key_whose_value_is_not_static_renders_no_name
+=== RUN   TestConsistentReturnAddedCases/an_async_arrow_renders_async_arrow_function
+=== PAUSE TestConsistentReturnAddedCases/an_async_arrow_renders_async_arrow_function
+=== RUN   TestConsistentReturnAddedCases/a_trailing_throw_makes_the_end_unreachable
+=== PAUSE TestConsistentReturnAddedCases/a_trailing_throw_makes_the_end_unreachable
+=== RUN   TestConsistentReturnAddedCases/an_else-throw_makes_the_end_unreachable
+=== PAUSE TestConsistentReturnAddedCases/an_else-throw_makes_the_end_unreachable
+=== RUN   TestConsistentReturnAddedCases/an_infinite_loop_makes_the_end_unreachable
+=== PAUSE TestConsistentReturnAddedCases/an_infinite_loop_makes_the_end_unreachable
+=== RUN   TestConsistentReturnAddedCases/a_call_that_never_returns_does_not_make_the_end_unreachable
+=== PAUSE TestConsistentReturnAddedCases/a_call_that_never_returns_does_not_make_the_end_unreachable
+=== RUN   TestConsistentReturnAddedCases/a_union_return_type_does_not_exempt_the_function
+=== PAUSE TestConsistentReturnAddedCases/a_union_return_type_does_not_exempt_the_function
+=== RUN   TestConsistentReturnAddedCases/an_ES5_constructor_is_exempt_by_its_capitalised_name
+=== PAUSE TestConsistentReturnAddedCases/an_ES5_constructor_is_exempt_by_its_capitalised_name
+=== RUN   TestConsistentReturnAddedCases/a_leading_underscore_is_not_a_capital
+=== PAUSE TestConsistentReturnAddedCases/a_leading_underscore_is_not_a_capital
+=== RUN   TestConsistentReturnAddedCases/a_capitalised_METHOD_is_not_an_ES5_constructor
+=== PAUSE TestConsistentReturnAddedCases/a_capitalised_METHOD_is_not_an_ES5_constructor
+=== CONT  TestConstructorSuperHandlesBaseAndNullExtendsSeparately/extends_null_returning_an_object_is_the_only_valid_form
+=== RUN   TestConstructorSuperStaysSilent/class_A_{_}
+=== CONT  TestConstructorSuperHandlesBaseAndNullExtendsSeparately/extends_null_with_an_empty_constructor_binds_no_this
+=== CONT  TestConstructorSuperHandlesBaseAndNullExtendsSeparately/extends_null_with_no_constructor_is_fine
+=== CONT  TestDefaultCaseCommentPatternIsAnchored/control-exact-comment-excuses
+=== PAUSE TestConstructorSuperStaysSilent/class_A_{_}
+=== CONT  TestDefaultCaseCommentPatternIsAnchored/leading-text-does-not-excuse
+=== RUN   TestConstructorSuperStaysSilent/class_A_{_constructor()_{_}_}
+=== PAUSE TestConstructorSuperStaysSilent/class_A_{_constructor()_{_}_}
+=== CONT  TestDefaultCaseCommentPatternIsAnchored/case-insensitive-still-excuses
+=== RUN   TestConstructorSuperStaysSilent/class_A_extends_null_{_}
+=== PAUSE TestConstructorSuperStaysSilent/class_A_extends_null_{_}
+=== CONT  TestDefaultCaseCommentPatternIsAnchored/trailing-text-does-not-excuse
+=== RUN   TestConstructorSuperStaysSilent/class_A_extends_B_{_}
+=== PAUSE TestConstructorSuperStaysSilent/class_A_extends_B_{_}
+=== CONT  TestDefaultCaseFires/invalid-0
+--- PASS: TestDefaultCaseCommentPatternIsAnchored (0.00s)
+    --- PASS: TestDefaultCaseCommentPatternIsAnchored/leading-text-does-not-excuse (0.00s)
+    --- PASS: TestDefaultCaseCommentPatternIsAnchored/control-exact-comment-excuses (0.00s)
+    --- PASS: TestDefaultCaseCommentPatternIsAnchored/case-insensitive-still-excuses (0.00s)
+    --- PASS: TestDefaultCaseCommentPatternIsAnchored/trailing-text-does-not-excuse (0.00s)
+=== CONT  TestDefaultCaseFires/invalid-5
+=== RUN   TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_super();_}_}
+=== PAUSE TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_super();_}_}
+=== CONT  TestDefaultCaseFires/invalid-4
+=== CONT  TestConstructorSuperHandlesBaseAndNullExtendsSeparately/extends_null_calling_super_has_nothing_to_call
+=== PAUSE TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_break;_case_2:_break;_default:_}
+=== RUN   TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_case_2:_break;_default:_break;_}
+=== PAUSE TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_case_2:_break;_default:_break;_}
+=== RUN   TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_break;_case_2:_default:_break;_}
+=== PAUSE TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_break;_case_2:_default:_break;_}
+=== CONT  TestDefaultCaseFires/invalid-3
+=== RUN   TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_break;_case_2:_default:_}
+=== PAUSE TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_break;_case_2:_default:_}
+=== RUN   TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_case_2:_default:_}
+=== PAUSE TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_case_2:_default:_}
+=== RUN   TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_if_(true)_{_super();_}_e
+=== PAUSE TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_if_(true)_{_super();_}_e
+=== CONT  TestDefaultCaseFires/invalid-2
+=== CONT  TestDefaultCaseFires/invalid-1
+=== RUN   TestConstructorSuperStaysSilent/class_A_extends_(class_B_{})_{_constructor()_{_super();_}_}
+=== PAUSE TestConstructorSuperStaysSilent/class_A_extends_(class_B_{})_{_constructor()_{_super();_}_}
+=== RUN   TestConstructorSuperStaysSilent/class_A_extends_(B_=_C)_{_constructor()_{_super();_}_}
+=== PAUSE TestConstructorSuperStaysSilent/class_A_extends_(B_=_C)_{_constructor()_{_super();_}_}
+=== RUN   TestConstructorSuperStaysSilent/class_A_extends_(B_&&=_C)_{_constructor()_{_super();_}_}
+=== PAUSE TestConstructorSuperStaysSilent/class_A_extends_(B_&&=_C)_{_constructor()_{_super();_}_}
+=== RUN   TestConstructorSuperStaysSilent/class_A_extends_(B_||=_C)_{_constructor()_{_super();_}_}
+=== PAUSE TestConstructorSuperStaysSilent/class_A_extends_(B_||=_C)_{_constructor()_{_super();_}_}
+=== RUN   TestConstructorSuperStaysSilent/class_A_extends_(B_??=_C)_{_constructor()_{_super();_}_}
+=== CONT  TestDefaultCaseLastFires/switch_(foo)_{_case_1:_default:_case_2:_}
+=== PAUSE TestConstructorSuperStaysSilent/class_A_extends_(B_??=_C)_{_constructor()_{_super();_}_}
+=== RUN   TestConstructorSuperStaysSilent/class_A_extends_(B_||=_5)_{_constructor()_{_super();_}_}
+=== PAUSE TestConstructorSuperStaysSilent/class_A_extends_(B_||=_5)_{_constructor()_{_super();_}_}
+=== RUN   TestConstructorSuperStaysSilent/class_A_extends_(B_??=_5)_{_constructor()_{_super();_}_}
+=== PAUSE TestConstructorSuperStaysSilent/class_A_extends_(B_??=_5)_{_constructor()_{_super();_}_}
+=== CONT  TestDefaultCaseLastFires/switch_(foo)_{_case_1:_default:_case_2:_break;_}
+=== CONT  TestDefaultCaseLastFires/switch_(foo)_{_case_1:_break;_default:_case_2:_break;_}
+=== RUN   TestConstructorSuperStaysSilent/class_A_extends_(B_||_C)_{_constructor()_{_super();_}_}
+=== PAUSE TestConstructorSuperStaysSilent/class_A_extends_(B_||_C)_{_constructor()_{_super();_}_}
+--- PASS: TestDefaultCaseFires (0.00s)
+    --- PASS: TestDefaultCaseFires/invalid-0 (0.00s)
+    --- PASS: TestDefaultCaseFires/invalid-4 (0.00s)
+    --- PASS: TestDefaultCaseFires/invalid-1 (0.00s)
+    --- PASS: TestDefaultCaseFires/invalid-2 (0.00s)
+    --- PASS: TestDefaultCaseFires/invalid-3 (0.00s)
+    --- PASS: TestDefaultCaseFires/invalid-5 (0.00s)
+=== CONT  TestDefaultCaseLastFires/switch_(foo)_{_case_1:_break;_default:_break;_case_2:_break;_}
+=== CONT  TestDefaultCaseLastFires/switch_(foo)_{_default:_bar();_break;_case_1:_baz();_break;_}
+=== RUN   TestConstructorSuperStaysSilent/class_A_extends_(5_&&_B)_{_constructor()_{_super();_}_}
+=== CONT  TestDefaultCaseLastFires/switch_(foo)_{_default:_case_1:_case_2:_}
+=== PAUSE TestConstructorSuperStaysSilent/class_A_extends_(5_&&_B)_{_constructor()_{_super();_}_}
+=== RUN   TestConstructorSuperStaysSilent/class_A_extends_(false_&&_B)_{_constructor()_{_super();_}_}
+=== PAUSE TestConstructorSuperStaysSilent/class_A_extends_(false_&&_B)_{_constructor()_{_super();_}_}
+=== RUN   TestConstructorSuperStaysSilent/class_A_extends_(B_||_5)_{_constructor()_{_super();_}_}
+=== CONT  TestDefaultCaseLastFires/switch_(foo)_{_default:_case_1:_case_2:_break;_}
+=== CONT  TestDefaultCaseLastFires/switch_(foo)_{_default:_case_1:_break;_case_2:_break;_}
+=== PAUSE TestConstructorSuperStaysSilent/class_A_extends_(B_||_5)_{_constructor()_{_super();_}_}
+=== CONT  TestDefaultCaseLastFires/switch_(foo)_{_case_1:_default:_break;_case_2:_break;_}
+=== RUN   TestConstructorSuperStaysSilent/class_A_extends_(B_??_5)_{_constructor()_{_super();_}_}
+=== PAUSE TestConstructorSuperStaysSilent/class_A_extends_(B_??_5)_{_constructor()_{_super();_}_}
+=== RUN   TestConstructorSuperStaysSilent/class_A_extends_(a_?_B_:_C)_{_constructor()_{_super();_}_}
+=== PAUSE TestConstructorSuperStaysSilent/class_A_extends_(a_?_B_:_C)_{_constructor()_{_super();_}_}
+=== RUN   TestConstructorSuperStaysSilent/class_A_extends_(B,_C)_{_constructor()_{_super();_}_}
+=== CONT  TestDefaultCaseLastFires/switch_(foo)_{_default:_case_1:_}
+=== PAUSE TestConstructorSuperStaysSilent/class_A_extends_(B,_C)_{_constructor()_{_super();_}_}
+=== RUN   TestConstructorSuperStaysSilent/class_A_{_constructor()_{_class_B_extends_C_{_constructor()_
+=== CONT  TestDefaultCaseLastFires/switch_(foo)_{_default:_case_1:_break;_}
+=== CONT  TestDefaultCaseLastFires/switch_(foo)_{_default:_break;_case_1:_}
+=== CONT  TestDefaultCaseLastFires/switch_(foo)_{_default:_break;_case_1:_break;_}
+=== CONT  TestConsistentReturnFires/function_foo()_{_if_(true)_return_true;_else_return;_}
+=== PAUSE TestConstructorSuperStaysSilent/class_A_{_constructor()_{_class_B_extends_C_{_constructor()_
+=== CONT  TestDefaultCaseLastReportsTheDefaultClause/switch_(foo)_{_default:_break;_case_1:_break;_}
+=== RUN   TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_super();_class_C_extends
+=== CONT  TestDefaultCaseLastFires/switch_(foo)_{_default:_break;_case_1:_break;_case_2:_break;_}
+=== CONT  TestConstructorSuperRequiresARealValueFromAnExtendsNullConstructor/a_bare_return_yields_the_unbound_this
+=== CONT  TestConsistentReturnFires/({_constructor()_{_if_(a)_return_true;_}_});
+--- PASS: TestDefaultCaseLastFires (0.00s)
+    --- PASS: TestDefaultCaseLastFires/switch_(foo)_{_case_1:_default:_case_2:_} (0.00s)
+    --- PASS: TestDefaultCaseLastFires/switch_(foo)_{_case_1:_break;_default:_case_2:_break;_} (0.00s)
+    --- PASS: TestDefaultCaseLastFires/switch_(foo)_{_case_1:_default:_case_2:_break;_} (0.00s)
+    --- PASS: TestDefaultCaseLastFires/switch_(foo)_{_case_1:_break;_default:_break;_case_2:_break;_} (0.00s)
+    --- PASS: TestDefaultCaseLastFires/switch_(foo)_{_default:_case_1:_case_2:_} (0.00s)
+    --- PASS: TestDefaultCaseLastFires/switch_(foo)_{_default:_case_1:_case_2:_break;_} (0.00s)
+    --- PASS: TestDefaultCaseLastFires/switch_(foo)_{_case_1:_default:_break;_case_2:_break;_} (0.00s)
+    --- PASS: TestDefaultCaseLastFires/switch_(foo)_{_default:_case_1:_} (0.00s)
+    --- PASS: TestDefaultCaseLastFires/switch_(foo)_{_default:_case_1:_break;_case_2:_break;_} (0.00s)
+    --- PASS: TestDefaultCaseLastFires/switch_(foo)_{_default:_bar();_break;_case_1:_baz();_break;_} (0.00s)
+    --- PASS: TestDefaultCaseLastFires/switch_(foo)_{_default:_break;_case_1:_} (0.00s)
+    --- PASS: TestDefaultCaseLastFires/switch_(foo)_{_default:_case_1:_break;_} (0.00s)
+    --- PASS: TestDefaultCaseLastFires/switch_(foo)_{_default:_break;_case_1:_break;_} (0.00s)
+    --- PASS: TestDefaultCaseLastFires/switch_(foo)_{_default:_break;_case_1:_break;_case_2:_break;_} (0.00s)
+=== PAUSE TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_super();_class_C_extends
+=== RUN   TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_super();_class_C_{_const
+=== PAUSE TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_super();_class_C_{_const
+=== CONT  TestConsistentReturnFires/class_A_{foo()_{_if_(a)_return_true;_}};
+=== CONT  TestConsistentReturnFires/class_A_{_CapitalizedFunction()_{_if_(a)_return_true;_}_}
+=== RUN   TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_a_?_super()_:_super();_}
+=== CONT  TestConsistentReturnFires/var_obj_=_{foo()_{_if_(a)_return_true;_}};
+=== CONT  TestConsistentReturnFires/f(()_=>_{_if_(a)_return_true;_});
+=== PAUSE TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_a_?_super()_:_super();_}
+=== RUN   TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_if_(a)_super();_else_sup
+=== CONT  TestConsistentReturnFires/f(function()_{_if_(a)_return_true;_});
+=== PAUSE TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_if_(a)_super();_else_sup
+=== CONT  TestConsistentReturnFires/f(function_foo()_{_if_(a)_return_true;_});
+=== RUN   TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_switch_(a)_{_case_0:_sup
+=== CONT  TestConsistentReturnFires/function__foo()_{_if_(a)_return_true;_}
+=== CONT  TestConsistentReturnFires/function_foo()_{_if_(a)_return_true;_}
+=== CONT  TestConsistentReturnFires/if_(true)_{_return_1;_}_return;
+=== CONT  TestConsistentReturnFires/if_(a)_return_true;
+=== CONT  TestConsistentReturnFires/function_foo()_{_if_(true)_return_void_0;_return_true;_}
+=== CONT  TestConsistentReturnFires/function_foo()_{_if_(true)_return_undefined;_return_true;_}
+=== PAUSE TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_switch_(a)_{_case_0:_sup
+--- PASS: TestConstructorSuperHandlesBaseAndNullExtendsSeparately (0.00s)
+    --- PASS: TestConstructorSuperHandlesBaseAndNullExtendsSeparately/a_base_class_needs_nothing (0.00s)
+    --- PASS: TestConstructorSuperHandlesBaseAndNullExtendsSeparately/extends_null_returning_an_object_is_the_only_valid_form (0.00s)
+    --- PASS: TestConstructorSuperHandlesBaseAndNullExtendsSeparately/extends_null_with_an_empty_constructor_binds_no_this (0.00s)
+    --- PASS: TestConstructorSuperHandlesBaseAndNullExtendsSeparately/extends_null_with_no_constructor_is_fine (0.00s)
+    --- PASS: TestConstructorSuperHandlesBaseAndNullExtendsSeparately/extends_null_calling_super_has_nothing_to_call (0.00s)
+=== CONT  TestConsistentReturnFires/function_foo()_{_if_(true)_return_true;_return_void_0;_}
+=== CONT  TestConsistentReturnFires/function_foo()_{_if_(true)_return_true;_return_undefined;_}
+=== RUN   TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_try_{}_finally_{_super()
+=== PAUSE TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_try_{}_finally_{_super()
+=== RUN   TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_if_(a)_throw_Error();_su
+=== CONT  TestConsistentReturnFires/f(function()_{_if_(true)_return;_else_return_false;_})
+=== CONT  TestConsistentReturnFires/f(function()_{_if_(true)_return_true;_else_return;_})
+=== CONT  TestConsistentReturnFires/function_foo()_{_if_(true)_return;_else_return_false;_}
+=== CONT  TestConsistentReturnFires/var_foo_=_()_=>_{_if_(true)_return_true;_else_return;_}
+=== CONT  TestConstructorSuperPointsAtTheRightNode/a_missing_call_anchors_on_the_constructor,_not_the_class
+=== CONT  TestConsistentReturnFires/f(a_=>_{_if_(true)_return;_else_return_false;_})
+=== CONT  TestConstructorSuperReportsEveryBadCall/extends_null
+=== CONT  TestDefaultCaseLastReportsTheDefaultClause/switch_(foo)_{_case_1:_default:_case_2:_break;_}
+=== CONT  TestConstructorSuperClassifiesUnconstructableExtends/undefined
+--- PASS: TestConsistentReturnFires (0.00s)
+    --- PASS: TestConsistentReturnFires/function_foo()_{_if_(true)_return_true;_else_return;_} (0.00s)
+    --- PASS: TestConsistentReturnFires/({_constructor()_{_if_(a)_return_true;_}_}); (0.00s)
+    --- PASS: TestConsistentReturnFires/class_A_{foo()_{_if_(a)_return_true;_}}; (0.00s)
+    --- PASS: TestConsistentReturnFires/class_A_{_CapitalizedFunction()_{_if_(a)_return_true;_}_} (0.00s)
+    --- PASS: TestConsistentReturnFires/var_obj_=_{foo()_{_if_(a)_return_true;_}}; (0.00s)
+    --- PASS: TestConsistentReturnFires/f(()_=>_{_if_(a)_return_true;_}); (0.00s)
+    --- PASS: TestConsistentReturnFires/f(function()_{_if_(a)_return_true;_}); (0.00s)
+    --- PASS: TestConsistentReturnFires/f(function_foo()_{_if_(a)_return_true;_}); (0.00s)
+    --- PASS: TestConsistentReturnFires/function__foo()_{_if_(a)_return_true;_} (0.00s)
+    --- PASS: TestConsistentReturnFires/function_foo()_{_if_(a)_return_true;_} (0.00s)
+    --- PASS: TestConsistentReturnFires/if_(true)_{_return_1;_}_return; (0.00s)
+    --- PASS: TestConsistentReturnFires/if_(a)_return_true; (0.00s)
+    --- PASS: TestConsistentReturnFires/function_foo()_{_if_(true)_return_void_0;_return_true;_} (0.00s)
+    --- PASS: TestConsistentReturnFires/function_foo()_{_if_(true)_return_true;_return_void_0;_} (0.00s)
+    --- PASS: TestConsistentReturnFires/function_foo()_{_if_(true)_return_undefined;_return_true;_} (0.00s)
+    --- PASS: TestConsistentReturnFires/f(function()_{_if_(true)_return;_else_return_false;_}) (0.00s)
+    --- PASS: TestConsistentReturnFires/f(function()_{_if_(true)_return_true;_else_return;_}) (0.00s)
+    --- PASS: TestConsistentReturnFires/function_foo()_{_if_(true)_return;_else_return_false;_} (0.00s)
+    --- PASS: TestConsistentReturnFires/var_foo_=_()_=>_{_if_(true)_return_true;_else_return;_} (0.00s)
+    --- PASS: TestConsistentReturnFires/function_foo()_{_if_(true)_return_true;_return_undefined;_} (0.00s)
+    --- PASS: TestConsistentReturnFires/f(a_=>_{_if_(true)_return;_else_return_false;_}) (0.00s)
+=== CONT  TestConstructorSuperTreatsLoopBodiesAsOneIteration/one_call_reached_twice_is_not_a_duplicate
+=== CONT  TestConstructorSuperPointsAtTheRightNode/a_duplicate_anchors_on_the_second_call,_not_the_first
+=== CONT  TestConstructorSuperPointsAtTheRightNode/a_bad_call_anchors_on_the_call_rather_than_the_extends_clause
+=== CONT  TestDefaultCaseLastReportsTheDefaultClause/switch_(foo)_{_case_1:_break;_default:_case_2:_break;_}
+=== CONT  TestConstructorSuperPointsAtTheRightNode/an_inner_class_reports_at_the_inner_constructor
+=== CONT  TestDefaultCaseStaysSilent/valid-13
+--- PASS: TestDefaultCaseLastReportsTheDefaultClause (0.00s)
+    --- PASS: TestDefaultCaseLastReportsTheDefaultClause/switch_(foo)_{_default:_break;_case_1:_break;_} (0.00s)
+    --- PASS: TestDefaultCaseLastReportsTheDefaultClause/switch_(foo)_{_case_1:_default:_case_2:_break;_} (0.00s)
+    --- PASS: TestDefaultCaseLastReportsTheDefaultClause/switch_(foo)_{_case_1:_break;_default:_case_2:_break;_} (0.00s)
+=== PAUSE TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_if_(a)_throw_Error();_su
+=== RUN   TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_if_(true)_return_a;_supe
+=== PAUSE TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_if_(true)_return_a;_supe
+=== RUN   TestConstructorSuperStaysSilent/class_A_extends_null_{_constructor()_{_return_a;_}_}
+=== PAUSE TestConstructorSuperStaysSilent/class_A_extends_null_{_constructor()_{_return_a;_}_}
+=== RUN   TestConstructorSuperStaysSilent/class_A_{_constructor()_{_return_a;_}_}
+=== CONT  TestConstructorSuperReportsEveryBadCall/extends_a_literal
+=== PAUSE TestConstructorSuperStaysSilent/class_A_{_constructor()_{_return_a;_}_}
+=== RUN   TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor(a)_{_super();_for_(const_b_o
+=== PAUSE TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor(a)_{_super();_for_(const_b_o
+=== RUN   TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor(a)_{_super();_for_(b_in_a)_(
+=== PAUSE TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor(a)_{_super();_for_(b_in_a)_(
+=== RUN   TestConstructorSuperStaysSilent/class_Foo_extends_Object_{_constructor(method)_{_super();_th
+=== PAUSE TestConstructorSuperStaysSilent/class_Foo_extends_Object_{_constructor(method)_{_super();_th
+=== RUN   TestConstructorSuperStaysSilent/class_A_extends_Object_{_constructor()_{_super();_for_(let_i
+=== PAUSE TestConstructorSuperStaysSilent/class_A_extends_Object_{_constructor()_{_super();_for_(let_i
+--- PASS: TestConstructorSuperReportsEveryBadCall (0.00s)
+    --- PASS: TestConstructorSuperReportsEveryBadCall/extends_null (0.00s)
+    --- PASS: TestConstructorSuperReportsEveryBadCall/extends_a_literal (0.00s)
+=== CONT  TestDefaultCaseStaysSilent/valid-12
+=== RUN   TestConstructorSuperStaysSilent/class_A_extends_Object_{_constructor()_{_super();_for_(;_i_<
+=== CONT  TestDefaultCaseStaysSilent/valid-11
+=== PAUSE TestConstructorSuperStaysSilent/class_A_extends_Object_{_constructor()_{_super();_for_(;_i_<
+=== RUN   TestConstructorSuperStaysSilent/class_A_extends_Object_{_constructor()_{_super();_for_(let_i_(2)
+=== PAUSE TestConstructorSuperStaysSilent/class_A_extends_Object_{_constructor()_{_super();_for_(let_i_(2)
+=== CONT  TestConstructorSuperPointsAtTheRightNode/the_constructor_span_stops_at_its_own_closing_brace
+=== RUN   TestConstructorSuperStaysSilent/class_A_extends_Object_{_constructor()_{_super();_for_(let_i_(3)
+=== PAUSE TestConstructorSuperStaysSilent/class_A_extends_Object_{_constructor()_{_super();_for_(let_i_(3)
+=== RUN   TestConstructorSuperStaysSilent/class_A_extends_Object_{_constructor()_{_super();_for_(let_i_(4)
+=== PAUSE TestConstructorSuperStaysSilent/class_A_extends_Object_{_constructor()_{_super();_for_(let_i_(4)
+=== RUN   TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor(props)_{_super(props);_try_{
+=== PAUSE TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor(props)_{_super(props);_try_{
+--- PASS: TestConstructorSuperPointsAtTheRightNode (0.00s)
+    --- PASS: TestConstructorSuperPointsAtTheRightNode/a_missing_call_anchors_on_the_constructor,_not_the_class (0.00s)
+    --- PASS: TestConstructorSuperPointsAtTheRightNode/a_duplicate_anchors_on_the_second_call,_not_the_first (0.00s)
+    --- PASS: TestConstructorSuperPointsAtTheRightNode/a_bad_call_anchors_on_the_call_rather_than_the_extends_clause (0.00s)
+    --- PASS: TestConstructorSuperPointsAtTheRightNode/an_inner_class_reports_at_the_inner_constructor (0.00s)
+    --- PASS: TestConstructorSuperPointsAtTheRightNode/the_constructor_span_stops_at_its_own_closing_brace (0.00s)
+=== CONT  TestDefaultCaseStaysSilent/valid-10
+=== RUN   TestConstructorSuperStaysSilent/class_A_extends_obj?.prop_{_constructor()_{_super();_}_}
+=== PAUSE TestConstructorSuperStaysSilent/class_A_extends_obj?.prop_{_constructor()_{_super();_}_}
+=== RUN   TestConstructorSuperStaysSilent/class_A_extends_Base_{_constructor(list)_{_for_(const_a_of_l
+=== PAUSE TestConstructorSuperStaysSilent/class_A_extends_Base_{_constructor(list)_{_for_(const_a_of_l
+=== CONT  TestDefaultCaseStaysSilent/valid-8
+=== CONT  TestDefaultCaseStaysSilent/valid-7
+=== CONT  TestDefaultCaseStaysSilent/valid-6
+=== RUN   TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_super();_try_{_throw_new
+=== PAUSE TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_super();_try_{_throw_new
+=== CONT  TestDefaultCaseStaysSilent/valid-5
+=== CONT  TestDefaultCaseStaysSilent/valid-9
+=== CONT  TestDefaultCaseStaysSilent/valid-4
+=== CONT  TestDefaultCaseStaysSilent/valid-3
+=== RUN   TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_try_{_mayThrow();_}_catc
+=== CONT  TestDefaultCaseStaysSilent/valid-2
+=== CONT  TestDefaultCaseStaysSilent/valid-1
+=== PAUSE TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_try_{_mayThrow();_}_catc
+=== CONT  TestConstructorSuperTreatsLoopBodiesAsOneIteration/two_calls_in_one_iteration_is_a_duplicate
+=== CONT  TestConstructorSuperTreatsLoopBodiesAsOneIteration/a_call_before_the_loop_makes_the_loop's_call_a_duplicate
+=== CONT  TestConstructorSuperClassifiesUnconstructableExtends/a_conditional_of_two_literals
+=== CONT  TestConstructorSuperClassifiesUnconstructableExtends/an_arrow_function
+=== CONT  TestConstructorSuperClassifiesUnconstructableExtends/an_object_literal
+=== CONT  TestConstructorSuperClassifiesUnconstructableExtends/a_void_expression
+=== CONT  TestConstructorSuperClassifiesUnconstructableExtends/a_template_literal
+--- PASS: TestConstructorSuperTreatsLoopBodiesAsOneIteration (0.00s)
+    --- PASS: TestConstructorSuperTreatsLoopBodiesAsOneIteration/one_call_reached_twice_is_not_a_duplicate (0.00s)
+    --- PASS: TestConstructorSuperTreatsLoopBodiesAsOneIteration/two_calls_in_one_iteration_is_a_duplicate (0.00s)
+    --- PASS: TestConstructorSuperTreatsLoopBodiesAsOneIteration/a_call_before_the_loop_makes_the_loop's_call_a_duplicate (0.00s)
+=== CONT  TestConstructorSuperClassifiesUnconstructableExtends/a_regular_expression
+=== CONT  TestConstructorSuperClassifiesUnconstructableExtends/an_array_literal
+=== CONT  TestDefaultCaseStaysSilent/valid-14
+=== CONT  TestDefaultCaseStaysSilent/valid-16
+--- PASS: TestConstructorSuperClassifiesUnconstructableExtends (0.00s)
+    --- PASS: TestConstructorSuperClassifiesUnconstructableExtends/undefined (0.00s)
+    --- PASS: TestConstructorSuperClassifiesUnconstructableExtends/a_conditional_of_two_literals (0.00s)
+    --- PASS: TestConstructorSuperClassifiesUnconstructableExtends/an_arrow_function (0.00s)
+    --- PASS: TestConstructorSuperClassifiesUnconstructableExtends/a_void_expression (0.00s)
+    --- PASS: TestConstructorSuperClassifiesUnconstructableExtends/a_template_literal (0.00s)
+    --- PASS: TestConstructorSuperClassifiesUnconstructableExtends/a_regular_expression (0.00s)
+    --- PASS: TestConstructorSuperClassifiesUnconstructableExtends/an_object_literal (0.00s)
+    --- PASS: TestConstructorSuperClassifiesUnconstructableExtends/an_array_literal (0.00s)
+=== CONT  TestConstructorSuperIgnoresCallsInNestedEvaluationContexts/a_function_expression
+=== CONT  TestDefaultCaseStaysSilent/valid-15
+=== CONT  TestConstructorSuperRequiresARealValueFromAnExtendsNullConstructor/a_return_inside_a_nested_function_returns_from_that_function
+=== CONT  TestConstructorSuperIgnoresCallsInNestedEvaluationContexts/a_nested_object_method
+=== CONT  TestConstructorSuperIgnoresCallsInNestedEvaluationContexts/an_immediately_invoked_arrow
+=== CONT  TestConstructorSuperAcceptsAMixedShortCircuit/a_conditional_whose_consequent_is_constructable
+=== CONT  TestConstructorSuperAcceptsAMixedShortCircuit/a_sequence_whose_last_operand_is_constructable
+=== CONT  TestConstructorSuperAcceptsAMixedShortCircuit/a_nullish_coalesce_whose_left_operand_is_constructable
+--- PASS: TestConstructorSuperRequiresARealValueFromAnExtendsNullConstructor (0.00s)
+    --- PASS: TestConstructorSuperRequiresARealValueFromAnExtendsNullConstructor/a_bare_return_yields_the_unbound_this (0.00s)
+    --- PASS: TestConstructorSuperRequiresARealValueFromAnExtendsNullConstructor/a_return_inside_a_nested_function_returns_from_that_function (0.00s)
+=== CONT  TestDefaultCaseStaysSilent/valid-0
+--- PASS: TestConstructorSuperIgnoresCallsInNestedEvaluationContexts (0.00s)
+    --- PASS: TestConstructorSuperIgnoresCallsInNestedEvaluationContexts/a_function_expression (0.00s)
+    --- PASS: TestConstructorSuperIgnoresCallsInNestedEvaluationContexts/a_nested_object_method (0.00s)
+    --- PASS: TestConstructorSuperIgnoresCallsInNestedEvaluationContexts/an_immediately_invoked_arrow (0.00s)
+=== CONT  TestConstructorSuperAcceptsAMixedShortCircuit/a_conditional_whose_alternate_is_constructable
+=== CONT  TestConstructorSuperRendersItsMessages/missingAll
+=== CONT  TestConstructorSuperAcceptsConstructableExtendsOurCodeWrites/a_namespaced_identifier
+=== CONT  TestConstructorSuperAcceptsConstructableExtendsOurCodeWrites/an_as_cast
+=== CONT  TestConstructorSuperRendersItsMessages/badSuper
+--- PASS: TestDefaultCaseStaysSilent (0.00s)
+    --- PASS: TestDefaultCaseStaysSilent/valid-13 (0.00s)
+    --- PASS: TestDefaultCaseStaysSilent/valid-12 (0.00s)
+    --- PASS: TestDefaultCaseStaysSilent/valid-11 (0.00s)
+    --- PASS: TestDefaultCaseStaysSilent/valid-10 (0.00s)
+    --- PASS: TestDefaultCaseStaysSilent/valid-8 (0.00s)
+    --- PASS: TestDefaultCaseStaysSilent/valid-7 (0.00s)
+    --- PASS: TestDefaultCaseStaysSilent/valid-6 (0.00s)
+    --- PASS: TestDefaultCaseStaysSilent/valid-5 (0.00s)
+    --- PASS: TestDefaultCaseStaysSilent/valid-4 (0.00s)
+    --- PASS: TestDefaultCaseStaysSilent/valid-9 (0.00s)
+    --- PASS: TestDefaultCaseStaysSilent/valid-3 (0.00s)
+    --- PASS: TestDefaultCaseStaysSilent/valid-2 (0.00s)
+    --- PASS: TestDefaultCaseStaysSilent/valid-1 (0.00s)
+    --- PASS: TestDefaultCaseStaysSilent/valid-14 (0.00s)
+    --- PASS: TestDefaultCaseStaysSilent/valid-16 (0.00s)
+    --- PASS: TestDefaultCaseStaysSilent/valid-15 (0.00s)
+    --- PASS: TestDefaultCaseStaysSilent/valid-0 (0.00s)
+=== CONT  TestConstructorSuperAcceptsAMixedShortCircuit/an_or_whose_left_operand_is_constructable
+=== CONT  TestConstructorSuperRendersItsMessages/missingSome
+=== CONT  TestConstructorSuperAcceptsConstructableExtendsOurCodeWrites/a_new_expression
+=== CONT  TestConstructorSuperAcceptsConstructableExtendsOurCodeWrites/a_non-null_assertion
+=== CONT  TestConstructorSuperAcceptsConstructableExtendsOurCodeWrites/a_tagged_template
+=== CONT  TestConstructorSuperAcceptsConstructableExtendsOurCodeWrites/a_subscripted_member
+=== CONT  TestConstructorSuperAcceptsConstructableExtendsOurCodeWrites/a_mixin_call
+--- PASS: TestConstructorSuperAcceptsAMixedShortCircuit (0.00s)
+    --- PASS: TestConstructorSuperAcceptsAMixedShortCircuit/a_conditional_whose_consequent_is_constructable (0.00s)
+    --- PASS: TestConstructorSuperAcceptsAMixedShortCircuit/a_nullish_coalesce_whose_left_operand_is_constructable (0.00s)
+    --- PASS: TestConstructorSuperAcceptsAMixedShortCircuit/a_sequence_whose_last_operand_is_constructable (0.00s)
+    --- PASS: TestConstructorSuperAcceptsAMixedShortCircuit/a_conditional_whose_alternate_is_constructable (0.00s)
+    --- PASS: TestConstructorSuperAcceptsAMixedShortCircuit/an_or_whose_left_operand_is_constructable (0.00s)
+=== CONT  TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken/class_A_{_*foo()_{_if_(a)_return_true;_}_}
+=== CONT  TestConsistentReturnDecoderRoundTrip/an_empty_object
+=== CONT  TestConstructorSuperRendersItsMessages/duplicate
+--- PASS: TestConstructorSuperAcceptsConstructableExtendsOurCodeWrites (0.00s)
+    --- PASS: TestConstructorSuperAcceptsConstructableExtendsOurCodeWrites/an_as_cast (0.00s)
+    --- PASS: TestConstructorSuperAcceptsConstructableExtendsOurCodeWrites/a_namespaced_identifier (0.00s)
+    --- PASS: TestConstructorSuperAcceptsConstructableExtendsOurCodeWrites/a_new_expression (0.00s)
+    --- PASS: TestConstructorSuperAcceptsConstructableExtendsOurCodeWrites/a_non-null_assertion (0.00s)
+    --- PASS: TestConstructorSuperAcceptsConstructableExtendsOurCodeWrites/a_tagged_template (0.00s)
+    --- PASS: TestConstructorSuperAcceptsConstructableExtendsOurCodeWrites/a_subscripted_member (0.00s)
+    --- PASS: TestConstructorSuperAcceptsConstructableExtendsOurCodeWrites/a_mixin_call (0.00s)
+=== CONT  TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken/class_A_{_async_foo()_{_if_(a)_return_true;_}_}
+=== CONT  TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken/class_A_{_get_foo()_{_if_(a)_return_true;_}_}
+--- PASS: TestConstructorSuperRendersItsMessages (0.00s)
+    --- PASS: TestConstructorSuperRendersItsMessages/missingAll (0.00s)
+    --- PASS: TestConstructorSuperRendersItsMessages/badSuper (0.00s)
+    --- PASS: TestConstructorSuperRendersItsMessages/missingSome (0.00s)
+    --- PASS: TestConstructorSuperRendersItsMessages/duplicate (0.00s)
+=== CONT  TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken/var_o_=_{_async_foo()_{_if_(a)_return_true;_}_};
+=== CONT  TestConsistentReturnDecoderRoundTrip/an_explicit_false
+=== CONT  TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken/class_A_{_static_foo()_{_if_(a)_return_true;_}_}
+=== CONT  TestConstructorSuperFires/class_A_extends_null_{_constructor()_{_}_}
+=== CONT  TestConsistentReturnStaysSilent/var_Foo_=_class_{_constructor()_{_if_(true)_return_foo;_}_}
+=== CONT  TestConsistentReturnStaysSilent/class_Foo_{_constructor()_{_if_(true)_return_foo;_}_}
+=== CONT  TestConsistentReturnStaysSilent/if_(true)_{_return_1;_}_return_0;
+=== CONT  TestConsistentReturnDecoderRoundTrip/an_explicit_true
+=== CONT  TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_void_0;_else_return_undefined;_}
+=== CONT  TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_void_0;_else_return;_}
+--- PASS: TestConsistentReturnDecoderRoundTrip (0.00s)
+    --- PASS: TestConsistentReturnDecoderRoundTrip/an_empty_object (0.00s)
+    --- PASS: TestConsistentReturnDecoderRoundTrip/an_explicit_false (0.00s)
+    --- PASS: TestConsistentReturnDecoderRoundTrip/an_explicit_true (0.00s)
+=== CONT  TestConsistentReturnStaysSilent/var_x_=_()_=>_{__return_{};_};
+=== CONT  TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_undefined;_else_return;_}
+=== CONT  TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return;_else_return_void_0;_}
+=== CONT  TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return;_else_return_undefined;_}
+=== CONT  TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_5;_else_return_void_0;_}
+--- PASS: TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken (0.00s)
+    --- PASS: TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken/class_A_{_async_foo()_{_if_(a)_return_true;_}_} (0.00s)
+    --- PASS: TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken/class_A_{_get_foo()_{_if_(a)_return_true;_}_} (0.00s)
+    --- PASS: TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken/class_A_{_*foo()_{_if_(a)_return_true;_}_} (0.00s)
+    --- PASS: TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken/var_o_=_{_async_foo()_{_if_(a)_return_true;_}_}; (0.00s)
+    --- PASS: TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken/class_A_{_static_foo()_{_if_(a)_return_true;_}_} (0.00s)
+=== CONT  TestConsistentReturnStaysSilent/function_foo()_{_return;_}
+=== CONT  TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_5;_else_return_undefined;_}
+=== CONT  TestConsistentReturnStaysSilent/function_Foo()_{_if_(!(this_instanceof_Foo))_return_new_Foo();_}
+=== CONT  TestConsistentReturnStaysSilent/function_foo()_{_function_bar()_{_return;_}_return_false;_}
+=== CONT  TestConsistentReturnStaysSilent/function_foo()_{_function_bar()_{_return_true;_}_return;_}
+=== CONT  TestConsistentReturnStaysSilent/f(function()_{_if_(true)_return_true;_else_return_false;_})
+=== CONT  TestConsistentReturnStaysSilent/f(function()_{_if_(true)_return;_else_return;_})
+=== CONT  TestConsistentReturnStaysSilent/f(function()_{_if_(true)_return;_})
+=== CONT  TestConsistentReturnStaysSilent/f(function()_{_return;_})
+=== CONT  TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_true;_else_return_false;_}
+=== CONT  TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return;_else_return;_}
+=== CONT  TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return;_}
+=== CONT  TestConsistentReturnAddedCases/a_static_method_renders_static_before_method
+=== CONT  TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_switch_(a)_{_case_0:_sup_(2)
+=== CONT  TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_if_(a)_super();_super();
+=== CONT  TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_super()_||_super();_}_}
+=== CONT  TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_super();_super();_}_}
+=== CONT  TestConstructorSuperFires/class_A_extends_(B_|=_C)_{_constructor()_{_super();_}_}
+=== CONT  TestConstructorSuperFires/class_A_extends_(B_&=_C)_{_constructor()_{_super();_}_}
+=== CONT  TestConstructorSuperFires/class_A_extends_(B_**=_C)_{_constructor()_{_super();_}_}
+=== CONT  TestConstructorSuperFires/class_A_extends_(B_-=_C)_{_constructor()_{_super();_}_}
+=== CONT  TestConstructorSuperFires/class_A_extends_(B_+=_C)_{_constructor()_{_super();_}_}
+=== CONT  TestConstructorSuperFires/class_A_extends_(B_&&_5)_{_constructor()_{_super();_}_}
+=== CONT  TestConstructorSuperFires/class_A_extends_(B_&&=_5)_{_constructor()_{_super();_}_}
+=== CONT  TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_class_C_extends_D_{_cons
+=== CONT  TestConstructorSuperFires/class_A_extends_(B_=_5)_{_constructor()_{_super();_}_}
+=== CONT  TestConstructorSuperFires/class_A_extends_100_{_constructor()_{_super();_}_}
+=== CONT  TestConstructorSuperFires/class_A_extends_'test'_{_constructor()_{_super();_}_}
+=== CONT  TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_switch_(a)_{_case_0:_bre
+=== CONT  TestConstructorSuperFires/class_A_extends_null_{_constructor()_{_super();_}_}
+=== CONT  TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_for_(let_i_=_0;_i_<_10;_
+=== CONT  TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_while_(condition)_{_if_(
+=== CONT  TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_do_{_if_(x)_{_super();_}
+=== CONT  TestConstructorSuperFires/class_C_extends_D_{_constructor()_{_while_(foo)_{_if_(bar)_{
+=== CONT  TestConstructorSuperFires/class_C_extends_D_{_constructor()_{_do_{_super();_}_while_(f
+=== CONT  TestConstructorSuperFires/class_A_extends_B_{_constructor(a)_{_while_(a)_super();_}_}
+=== CONT  TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_if_(a)_return;_super();_
+=== CONT  TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_try_{_a;_}_catch_(err)_{
+=== CONT  TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_try_{_super();_}_catch_(
+=== CONT  TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_switch_(a)_{_case_0:_sup
+=== CONT  TestConstructorSuperFires/class_Foo_extends_Bar_{_constructor()_{_for_(a_in_b)_for_(c_
+=== CONT  TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_if_(a);_else_super();_}_
+=== CONT  TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_return;_super();_}_}
+=== CONT  TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_if_(a)_super();_}_}
+=== CONT  TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_a_&&_super();_}_}
+=== CONT  TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_super();_var_C_=_class_e
+=== CONT  TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_super();_class_C_extends
+=== CONT  TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_var_C_=_class_extends_D_
+=== CONT  TestConsistentReturnAddedCases/a_computed_key_whose_value_is_static_renders_it
+=== CONT  TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_var_c_=_()_=>_super();_}
+=== CONT  TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_var_c_=_class_extends_D_
+=== CONT  TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_for_(var_i_=_1;_i_<_10;_
+=== CONT  TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_for_(var_a_of_b)_super.f
+=== CONT  TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_}_}
+=== CONT  TestConstructorSuperFires/class_C_extends_D_{_constructor()_{_for_(let_i_=_1;;i++)_{_i
+=== CONT  TestConsistentReturnAddedCases/a_quoted_key_renders_its_cooked_name
+=== CONT  TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_undefined;_else_return_void_0;_}
+=== CONT  TestConsistentReturnAddedCases/a_class_field_holding_a_function_renders_as_a_method
+=== CONT  TestConsistentReturnAddedCases/a_function_expression_on_a_property_renders_as_a_method
+--- PASS: TestConsistentReturnStaysSilent (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/var_Foo_=_class_{_constructor()_{_if_(true)_return_foo;_}_} (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/class_Foo_{_constructor()_{_if_(true)_return_foo;_}_} (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/if_(true)_{_return_1;_}_return_0; (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_void_0;_else_return;_} (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_void_0;_else_return_undefined;_} (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_undefined;_else_return;_} (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/var_x_=_()_=>_{__return_{};_}; (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return;_else_return_void_0;_} (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return;_else_return_undefined;_} (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_5;_else_return_undefined;_} (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_5;_else_return_void_0;_} (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/function_foo()_{_return;_} (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/function_Foo()_{_if_(!(this_instanceof_Foo))_return_new_Foo();_} (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/function_foo()_{_function_bar()_{_return;_}_return_false;_} (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/f(function()_{_if_(true)_return;_else_return;_}) (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/f(function()_{_if_(true)_return_true;_else_return_false;_}) (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/function_foo()_{_function_bar()_{_return_true;_}_return;_} (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/f(function()_{_if_(true)_return;_}) (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/f(function()_{_return;_}) (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return;_} (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return;_else_return;_} (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_true;_else_return_false;_} (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_undefined;_else_return_void_0;_} (0.00s)
+=== CONT  TestConsistentReturnAddedCases/an_object_literal_getter_renders_the_same_as_a_class_one
+=== CONT  TestConsistentReturnAddedCases/the_constructor_name_renders_no_modifiers
+=== CONT  TestConsistentReturnAddedCases/a_class_expression_constructor_behaves_the_same_way
+=== CONT  TestConsistentReturnAddedCases/a_class_constructor_is_NOT_exempt_from_the_per-return_judgment
+=== CONT  TestConsistentReturnAddedCases/a_class_constructor_is_exempt_from_the_end_judgment
+=== CONT  TestConstructorSuperFires/class_C_extends_D_{_constructor()_{_do_{_something();_}_whil
+=== CONT  TestConsistentReturnAddedCases/a_union_return_type_does_not_exempt_the_function
+=== CONT  TestConsistentReturnAddedCases/an_else-throw_makes_the_end_unreachable
+=== CONT  TestConsistentReturnAddedCases/a_call_that_never_returns_does_not_make_the_end_unreachable
+=== CONT  TestConsistentReturnAddedCases/an_infinite_loop_makes_the_end_unreachable
+=== CONT  TestConsistentReturnAddedCases/an_async_function_renders_async
+=== CONT  TestConsistentReturnAddedCases/a_setter_renders_setter
+=== CONT  TestConsistentReturnAddedCases/a_getter_renders_getter_and_not_method
+=== CONT  TestConsistentReturnAddedCases/a_generator_renders_generator
+=== CONT  TestConsistentReturnAddedCases/an_async_arrow_renders_async_arrow_function
+=== CONT  TestConsistentReturnAddedCases/a_trailing_throw_makes_the_end_unreachable
+=== CONT  TestConsistentReturnAddedCases/async_and_generator_compose_in_that_order
+=== CONT  TestConsistentReturnAddedCases/a_private_method_renders_an_unquoted_hash_name
+=== CONT  TestConsistentReturnAddedCases/static_and_private_compose_in_that_order
+=== CONT  TestConsistentReturnAddedCases/a_computed_key_whose_value_is_not_static_renders_no_name
+=== CONT  TestConsistentReturnAddedCases/a_leading_underscore_is_not_a_capital
+=== CONT  TestConsistentReturnAddedCases/an_ES5_constructor_is_exempt_by_its_capitalised_name
+=== CONT  TestConsistentReturnAddedCases/a_capitalised_METHOD_is_not_an_ES5_constructor
+=== CONT  TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_case_2:_default:_}
+--- PASS: TestConstructorSuperFires (0.00s)
+    --- PASS: TestConstructorSuperFires/class_A_extends_null_{_constructor()_{_}_} (0.00s)
+    --- PASS: TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_if_(a)_super();_super(); (0.00s)
+    --- PASS: TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_super()_||_super();_}_} (0.00s)
+    --- PASS: TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_switch_(a)_{_case_0:_sup_(2) (0.00s)
+    --- PASS: TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_super();_super();_}_} (0.00s)
+    --- PASS: TestConstructorSuperFires/class_A_extends_(B_&=_C)_{_constructor()_{_super();_}_} (0.00s)
+    --- PASS: TestConstructorSuperFires/class_A_extends_(B_|=_C)_{_constructor()_{_super();_}_} (0.00s)
+    --- PASS: TestConstructorSuperFires/class_A_extends_(B_-=_C)_{_constructor()_{_super();_}_} (0.00s)
+    --- PASS: TestConstructorSuperFires/class_A_extends_(B_**=_C)_{_constructor()_{_super();_}_} (0.00s)
+    --- PASS: TestConstructorSuperFires/class_A_extends_(B_&&=_5)_{_constructor()_{_super();_}_} (0.00s)
+    --- PASS: TestConstructorSuperFires/class_A_extends_(B_&&_5)_{_constructor()_{_super();_}_} (0.00s)
+    --- PASS: TestConstructorSuperFires/class_A_extends_(B_=_5)_{_constructor()_{_super();_}_} (0.00s)
+    --- PASS: TestConstructorSuperFires/class_A_extends_100_{_constructor()_{_super();_}_} (0.00s)
+    --- PASS: TestConstructorSuperFires/class_A_extends_'test'_{_constructor()_{_super();_}_} (0.00s)
+    --- PASS: TestConstructorSuperFires/class_A_extends_(B_+=_C)_{_constructor()_{_super();_}_} (0.00s)
+    --- PASS: TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_class_C_extends_D_{_cons (0.00s)
+    --- PASS: TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_switch_(a)_{_case_0:_bre (0.00s)
+    --- PASS: TestConstructorSuperFires/class_A_extends_null_{_constructor()_{_super();_}_} (0.00s)
+    --- PASS: TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_while_(condition)_{_if_( (0.00s)
+    --- PASS: TestConstructorSuperFires/class_C_extends_D_{_constructor()_{_do_{_super();_}_while_(f (0.00s)
+    --- PASS: TestConstructorSuperFires/class_C_extends_D_{_constructor()_{_while_(foo)_{_if_(bar)_{ (0.00s)
+    --- PASS: TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_for_(let_i_=_0;_i_<_10;_ (0.00s)
+    --- PASS: TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_do_{_if_(x)_{_super();_} (0.00s)
+    --- PASS: TestConstructorSuperFires/class_A_extends_B_{_constructor(a)_{_while_(a)_super();_}_} (0.00s)
+    --- PASS: TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_if_(a)_return;_super();_ (0.00s)
+    --- PASS: TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_try_{_a;_}_catch_(err)_{ (0.00s)
+    --- PASS: TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_switch_(a)_{_case_0:_sup (0.00s)
+    --- PASS: TestConstructorSuperFires/class_Foo_extends_Bar_{_constructor()_{_for_(a_in_b)_for_(c_ (0.00s)
+    --- PASS: TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_try_{_super();_}_catch_( (0.00s)
+    --- PASS: TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_return;_super();_}_} (0.00s)
+    --- PASS: TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_if_(a)_super();_}_} (0.00s)
+    --- PASS: TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_a_&&_super();_}_} (0.00s)
+    --- PASS: TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_super();_class_C_extends (0.00s)
+    --- PASS: TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_var_C_=_class_extends_D_ (0.00s)
+    --- PASS: TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_var_c_=_()_=>_super();_} (0.00s)
+    --- PASS: TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_if_(a);_else_super();_}_ (0.00s)
+    --- PASS: TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_for_(var_a_of_b)_super.f (0.00s)
+    --- PASS: TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_for_(var_i_=_1;_i_<_10;_ (0.00s)
+    --- PASS: TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_}_} (0.00s)
+    --- PASS: TestConstructorSuperFires/class_C_extends_D_{_constructor()_{_for_(let_i_=_1;;i++)_{_i (0.00s)
+    --- PASS: TestConstructorSuperFires/class_C_extends_D_{_constructor()_{_do_{_something();_}_whil (0.00s)
+    --- PASS: TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_super();_var_C_=_class_e (0.00s)
+    --- PASS: TestConstructorSuperFires/class_A_extends_B_{_constructor()_{_var_c_=_class_extends_D_ (0.00s)
+=== CONT  TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_break;_case_2:_default:_}
+=== CONT  TestDefaultCaseLastStaysSilent/switch_(foo)_{}
+=== CONT  TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_break;_case_2:_default:_break;_}
+=== CONT  TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_case_2:_break;_default:_break;_}
+=== CONT  TestConsistentReturnAddedCases/an_object_literal_method_named_constructor_is_NOT_exempt
+=== CONT  TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_break;_case_2:_break;_default:_break;_}
+=== CONT  TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_baz();_break;_case_2:_quux();_break;_default:_quuux();_break;_}
+=== CONT  TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_default:_}
+--- PASS: TestConsistentReturnAddedCases (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/a_static_method_renders_static_before_method (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/a_computed_key_whose_value_is_static_renders_it (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/a_class_field_holding_a_function_renders_as_a_method (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/a_quoted_key_renders_its_cooked_name (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/a_function_expression_on_a_property_renders_as_a_method (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/a_class_expression_constructor_behaves_the_same_way (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/an_object_literal_getter_renders_the_same_as_a_class_one (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/the_constructor_name_renders_no_modifiers (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/a_class_constructor_is_NOT_exempt_from_the_per-return_judgment (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/a_class_constructor_is_exempt_from_the_end_judgment (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/an_else-throw_makes_the_end_unreachable (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/a_union_return_type_does_not_exempt_the_function (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/a_call_that_never_returns_does_not_make_the_end_unreachable (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/an_async_function_renders_async (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/a_setter_renders_setter (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/a_getter_renders_getter_and_not_method (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/a_generator_renders_generator (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/an_infinite_loop_makes_the_end_unreachable (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/an_async_arrow_renders_async_arrow_function (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/a_trailing_throw_makes_the_end_unreachable (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/a_private_method_renders_an_unquoted_hash_name (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/async_and_generator_compose_in_that_order (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/a_computed_key_whose_value_is_not_static_renders_no_name (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/static_and_private_compose_in_that_order (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/an_ES5_constructor_is_exempt_by_its_capitalised_name (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/a_leading_underscore_is_not_a_capital (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/a_capitalised_METHOD_is_not_an_ES5_constructor (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/an_object_literal_method_named_constructor_is_NOT_exempt (0.00s)
+=== CONT  TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_break;_default:_}
+=== CONT  TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_default:_break;_}
+=== CONT  TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_break;_default:_break;_}
+=== CONT  TestDefaultCaseLastStaysSilent/switch_(foo)_{_default:_}
+=== CONT  TestDefaultCaseLastStaysSilent/switch_(foo)_{_default:_break;_}
+=== CONT  TestDefaultCaseLastStaysSilent/switch_(foo)_{_default:_bar();_break;_}
+=== CONT  TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_case_2:_}
+=== CONT  TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_case_2:_break;_}
+=== CONT  TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_bar();_break;_case_2:_baz();_break;_}
+=== CONT  TestDefaultCaseLastStaysSilent/switch_(foo)_{_default:_bar();_}
+=== CONT  TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_}
+=== CONT  TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_break;_}
+=== CONT  TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_bar();_break;_}
+=== CONT  TestConstructorSuperStaysSilent/class_A_{_}
+=== CONT  TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_a_?_super()_:_super();_}
+=== CONT  TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_break;_case_2:_break;_}
+=== CONT  TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_break;_case_2:_break;_default:_}
+=== CONT  TestConstructorSuperStaysSilent/class_A_extends_(B_??=_5)_{_constructor()_{_super();_}_}
+=== CONT  TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_super();_class_C_{_const
+=== CONT  TestConstructorSuperStaysSilent/class_A_{_constructor()_{_class_B_extends_C_{_constructor()_
+--- PASS: TestDefaultCaseLastStaysSilent (0.00s)
+    --- PASS: TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_case_2:_default:_} (0.00s)
+    --- PASS: TestDefaultCaseLastStaysSilent/switch_(foo)_{} (0.00s)
+    --- PASS: TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_break;_case_2:_default:_break;_} (0.00s)
+    --- PASS: TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_break;_case_2:_default:_} (0.00s)
+    --- PASS: TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_case_2:_break;_default:_break;_} (0.00s)
+    --- PASS: TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_break;_case_2:_break;_default:_break;_} (0.00s)
+    --- PASS: TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_default:_} (0.00s)
+    --- PASS: TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_break;_default:_} (0.00s)
+    --- PASS: TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_baz();_break;_case_2:_quux();_break;_default:_quuux();_break;_} (0.00s)
+    --- PASS: TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_default:_break;_} (0.00s)
+    --- PASS: TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_break;_default:_break;_} (0.00s)
+    --- PASS: TestDefaultCaseLastStaysSilent/switch_(foo)_{_default:_} (0.00s)
+    --- PASS: TestDefaultCaseLastStaysSilent/switch_(foo)_{_default:_bar();_break;_} (0.00s)
+    --- PASS: TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_case_2:_} (0.00s)
+    --- PASS: TestDefaultCaseLastStaysSilent/switch_(foo)_{_default:_break;_} (0.00s)
+    --- PASS: TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_case_2:_break;_} (0.00s)
+    --- PASS: TestDefaultCaseLastStaysSilent/switch_(foo)_{_default:_bar();_} (0.00s)
+    --- PASS: TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_} (0.00s)
+    --- PASS: TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_bar();_break;_case_2:_baz();_break;_} (0.00s)
+    --- PASS: TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_bar();_break;_} (0.00s)
+    --- PASS: TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_break;_} (0.00s)
+    --- PASS: TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_break;_case_2:_break;_} (0.00s)
+    --- PASS: TestDefaultCaseLastStaysSilent/switch_(foo)_{_case_1:_break;_case_2:_break;_default:_} (0.00s)
+=== CONT  TestConstructorSuperStaysSilent/class_A_extends_(B,_C)_{_constructor()_{_super();_}_}
+=== CONT  TestConstructorSuperStaysSilent/class_A_extends_(a_?_B_:_C)_{_constructor()_{_super();_}_}
+=== CONT  TestConstructorSuperStaysSilent/class_A_extends_(B_??_5)_{_constructor()_{_super();_}_}
+=== CONT  TestConstructorSuperStaysSilent/class_A_extends_(B_||_5)_{_constructor()_{_super();_}_}
+=== CONT  TestConstructorSuperStaysSilent/class_A_extends_(false_&&_B)_{_constructor()_{_super();_}_}
+=== CONT  TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_super();_class_C_extends
+=== CONT  TestConstructorSuperStaysSilent/class_A_extends_Object_{_constructor()_{_super();_for_(let_i
+=== CONT  TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_try_{_mayThrow();_}_catc
+=== CONT  TestConstructorSuperStaysSilent/class_A_extends_(B_||_C)_{_constructor()_{_super();_}_}
+=== CONT  TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_super();_try_{_throw_new
+=== CONT  TestConstructorSuperStaysSilent/class_A_extends_Base_{_constructor(list)_{_for_(const_a_of_l
+=== CONT  TestConstructorSuperStaysSilent/class_A_extends_obj?.prop_{_constructor()_{_super();_}_}
+=== CONT  TestConstructorSuperStaysSilent/class_A_extends_Object_{_constructor()_{_super();_for_(let_i_(4)
+=== CONT  TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor(props)_{_super(props);_try_{
+=== CONT  TestConstructorSuperStaysSilent/class_A_extends_Object_{_constructor()_{_super();_for_(let_i_(3)
+=== CONT  TestConstructorSuperStaysSilent/class_A_extends_(5_&&_B)_{_constructor()_{_super();_}_}
+=== CONT  TestConstructorSuperStaysSilent/class_A_extends_Object_{_constructor()_{_super();_for_(let_i_(2)
+=== CONT  TestConstructorSuperStaysSilent/class_A_extends_Object_{_constructor()_{_super();_for_(;_i_<
+=== CONT  TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_if_(true)_{_super();_}_e
+=== CONT  TestConstructorSuperStaysSilent/class_A_extends_(B_||=_5)_{_constructor()_{_super();_}_}
+=== CONT  TestConstructorSuperStaysSilent/class_A_extends_(B_??=_C)_{_constructor()_{_super();_}_}
+=== CONT  TestConstructorSuperStaysSilent/class_A_extends_(B_||=_C)_{_constructor()_{_super();_}_}
+=== CONT  TestConstructorSuperStaysSilent/class_A_extends_(B_&&=_C)_{_constructor()_{_super();_}_}
+=== CONT  TestConstructorSuperStaysSilent/class_A_extends_(class_B_{})_{_constructor()_{_super();_}_}
+=== CONT  TestConstructorSuperStaysSilent/class_A_extends_null_{_constructor()_{_return_a;_}_}
+=== CONT  TestConstructorSuperStaysSilent/class_Foo_extends_Object_{_constructor(method)_{_super();_th
+=== CONT  TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor(a)_{_super();_for_(b_in_a)_(
+=== CONT  TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor(a)_{_super();_for_(const_b_o
+=== CONT  TestConstructorSuperStaysSilent/class_A_{_constructor()_{_return_a;_}_}
+=== CONT  TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_try_{}_finally_{_super()
+=== CONT  TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_if_(a)_throw_Error();_su
+=== CONT  TestConstructorSuperStaysSilent/class_A_extends_null_{_}
+=== CONT  TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_super();_}_}
+=== CONT  TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_if_(true)_return_a;_supe
+=== CONT  TestConstructorSuperStaysSilent/class_A_{_constructor()_{_}_}
+=== CONT  TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_switch_(a)_{_case_0:_sup
+=== CONT  TestConstructorSuperStaysSilent/class_A_extends_(B_=_C)_{_constructor()_{_super();_}_}
+=== CONT  TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_if_(a)_super();_else_sup
+=== CONT  TestConstructorSuperStaysSilent/class_A_extends_B_{_}
+--- PASS: TestConstructorSuperStaysSilent (0.01s)
+    --- PASS: TestConstructorSuperStaysSilent/class_A_{_} (0.00s)
+    --- PASS: TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_a_?_super()_:_super();_} (0.00s)
+    --- PASS: TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_super();_class_C_{_const (0.00s)
+    --- PASS: TestConstructorSuperStaysSilent/class_A_extends_(a_?_B_:_C)_{_constructor()_{_super();_}_} (0.00s)
+    --- PASS: TestConstructorSuperStaysSilent/class_A_extends_(B,_C)_{_constructor()_{_super();_}_} (0.00s)
+    --- PASS: TestConstructorSuperStaysSilent/class_A_extends_(B_??_5)_{_constructor()_{_super();_}_} (0.00s)
+    --- PASS: TestConstructorSuperStaysSilent/class_A_extends_(B_??=_5)_{_constructor()_{_super();_}_} (0.00s)
+    --- PASS: TestConstructorSuperStaysSilent/class_A_extends_(B_||_5)_{_constructor()_{_super();_}_} (0.00s)
+    --- PASS: TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_super();_class_C_extends (0.00s)
+    --- PASS: TestConstructorSuperStaysSilent/class_A_extends_Object_{_constructor()_{_super();_for_(let_i (0.00s)
+    --- PASS: TestConstructorSuperStaysSilent/class_A_extends_(false_&&_B)_{_constructor()_{_super();_}_} (0.00s)
+    --- PASS: TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_try_{_mayThrow();_}_catc (0.00s)
+    --- PASS: TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_super();_try_{_throw_new (0.00s)
+    --- PASS: TestConstructorSuperStaysSilent/class_A_extends_Base_{_constructor(list)_{_for_(const_a_of_l (0.00s)
+    --- PASS: TestConstructorSuperStaysSilent/class_A_extends_(B_||_C)_{_constructor()_{_super();_}_} (0.00s)
+    --- PASS: TestConstructorSuperStaysSilent/class_A_extends_Object_{_constructor()_{_super();_for_(let_i_(4) (0.00s)
+    --- PASS: TestConstructorSuperStaysSilent/class_A_{_constructor()_{_class_B_extends_C_{_constructor()_ (0.00s)
+    --- PASS: TestConstructorSuperStaysSilent/class_A_extends_Object_{_constructor()_{_super();_for_(let_i_(3) (0.00s)
+    --- PASS: TestConstructorSuperStaysSilent/class_A_extends_(5_&&_B)_{_constructor()_{_super();_}_} (0.00s)
+    --- PASS: TestConstructorSuperStaysSilent/class_A_extends_Object_{_constructor()_{_super();_for_(;_i_< (0.00s)
+    --- PASS: TestConstructorSuperStaysSilent/class_A_extends_Object_{_constructor()_{_super();_for_(let_i_(2) (0.00s)
+    --- PASS: TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_if_(true)_{_super();_}_e (0.00s)
+    --- PASS: TestConstructorSuperStaysSilent/class_A_extends_(B_||=_C)_{_constructor()_{_super();_}_} (0.00s)
+    --- PASS: TestConstructorSuperStaysSilent/class_A_extends_(B_||=_5)_{_constructor()_{_super();_}_} (0.00s)
+    --- PASS: TestConstructorSuperStaysSilent/class_A_extends_(B_??=_C)_{_constructor()_{_super();_}_} (0.00s)
+    --- PASS: TestConstructorSuperStaysSilent/class_A_extends_(B_&&=_C)_{_constructor()_{_super();_}_} (0.00s)
+    --- PASS: TestConstructorSuperStaysSilent/class_A_extends_(class_B_{})_{_constructor()_{_super();_}_} (0.00s)
+    --- PASS: TestConstructorSuperStaysSilent/class_A_extends_null_{_constructor()_{_return_a;_}_} (0.00s)
+    --- PASS: TestConstructorSuperStaysSilent/class_Foo_extends_Object_{_constructor(method)_{_super();_th (0.00s)
+    --- PASS: TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor(a)_{_super();_for_(const_b_o (0.00s)
+    --- PASS: TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor(a)_{_super();_for_(b_in_a)_( (0.00s)
+    --- PASS: TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor(props)_{_super(props);_try_{ (0.00s)
+    --- PASS: TestConstructorSuperStaysSilent/class_A_{_constructor()_{_return_a;_}_} (0.00s)
+    --- PASS: TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_if_(a)_throw_Error();_su (0.00s)
+    --- PASS: TestConstructorSuperStaysSilent/class_A_extends_null_{_} (0.00s)
+    --- PASS: TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_try_{}_finally_{_super() (0.00s)
+    --- PASS: TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_super();_}_} (0.00s)
+    --- PASS: TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_if_(true)_return_a;_supe (0.00s)
+    --- PASS: TestConstructorSuperStaysSilent/class_A_{_constructor()_{_}_} (0.00s)
+    --- PASS: TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_switch_(a)_{_case_0:_sup (0.00s)
+    --- PASS: TestConstructorSuperStaysSilent/class_A_extends_(B_=_C)_{_constructor()_{_super();_}_} (0.00s)
+    --- PASS: TestConstructorSuperStaysSilent/class_A_extends_B_{_constructor()_{_if_(a)_super();_else_sup (0.00s)
+    --- PASS: TestConstructorSuperStaysSilent/class_A_extends_B_{_} (0.00s)
+    --- PASS: TestConstructorSuperStaysSilent/class_A_extends_obj?.prop_{_constructor()_{_super();_}_} (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/core	0.019s

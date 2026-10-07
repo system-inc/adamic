@@ -1,0 +1,39 @@
+// canRunOffEnd reports whether control can reach the end of a function body.
+//
+// Upstream's `isAnySegmentReachable(funcInfo.currentSegments)` at the function's exit.
+// `control_flow_graph.Graph.EndReachable` is documented as answering that question, and
+// `array_callback_return` already calls it for the identical purpose.
+//
+// A nil graph answers true, which is the conservative direction: it reports rather than going
+// silent, so a shape the builder cannot model surfaces instead of disappearing.
+//
+// # A measured over-report, in the shelf rather than in this judgment
+//
+// A dry run over the ahra tree reported 141 findings where the installed rule reports 130. The 130
+// agree exactly, same file, same line, same column, same message id, and there are ZERO findings
+// the installed rule produces that this one misses. All 11 extra come from one shape, isolated by
+// bisection down to a minimal pair:
+//
+//	try { const r = g(); return r; } catch (e) { throw e; } finally { k(); }   EndReachable TRUE
+//	try { return 1; }                catch (e) { throw e; } finally { k(); }   EndReachable false
+//	try { const r = g(); return r; } catch (e) { throw e; }                    EndReachable false
+//
+// So a variable declaration inside a `try` that also has a `finally` makes the graph believe
+// control reaches the function's end when every path returns or throws. Removing either the
+// declaration or the `finally` gives the right answer, which is what places the defect in
+// `control_flow_graph` rather than here: this judgment asks one question and the shelf answers it
+// wrongly for that one shape.
+//
+// Not repaired here, and not worked around here either. A workaround would be this judgment
+// disagreeing with the shelf about reachability, which is worse than an over-report: the next rule
+// to ask the same question would get the old answer and nobody would know the two had diverged.
+// Every site is an `async` function with a `try`/`catch`/`finally` in this tree, and each is a real
+// mixed-return function whose end genuinely cannot be reached, so the findings are false positives
+// rather than corruption.
+func canRunOffEnd(node *ast.Node) bool {
+	graph := control_flow_graph.Build(node, control_flow_graph.Hooks[struct{}]{})
+	if graph == nil {
+		return true
+	}
+	return graph.EndReachable
+}

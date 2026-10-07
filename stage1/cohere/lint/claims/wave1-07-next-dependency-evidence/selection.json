@@ -1,0 +1,872 @@
+{
+  "refs": 346,
+  "main": "ef3d907ecdc4c771b016f7d9c52372def057a340",
+  "claim_trees": 16,
+  "claims": {
+    "eqeqeq": [
+      "origin/codex/lint-wave1-01:stage1/cohere/lint/claims/wave1-01-report.md",
+      "origin/codex/lint-wave1-04:stage1/cohere/lint/claims/wave1-04-report.md"
+    ],
+    "no-debugger": [
+      "origin/codex/lint-wave1-01:stage1/cohere/lint/claims/wave1-01-report.md",
+      "origin/codex/lint-wave1-03:stage1/cohere/lint/claims/wave1-03-evidence/REPORT.md",
+      "origin/codex/lint-wave1-03:stage1/cohere/lint/claims/wave1-03.md",
+      "origin/codex/lint-wave1-04:stage1/cohere/lint/claims/wave1-04-report.md",
+      "origin/codex/lint-wave1-07:stage1/cohere/lint/claims/wave1-07-report.md",
+      "origin/codex/lint-wave1-09:stage1/cohere/lint/claims/wave1-09-fourth-report.md",
+      "origin/codex/lint-wave1-09:stage1/cohere/lint/claims/wave1-09-third-report.md"
+    ],
+    "no-duplicate-case": [
+      "origin/codex/lint-wave1-01:stage1/cohere/lint/claims/wave1-01-report.md",
+      "origin/codex/lint-wave1-04:stage1/cohere/lint/claims/wave1-04-report.md"
+    ],
+    "no-empty": [
+      "origin/codex/lint-wave1-01:stage1/cohere/lint/claims/wave1-01-report.md",
+      "origin/codex/lint-wave1-04:stage1/cohere/lint/claims/wave1-04-report.md"
+    ],
+    "no-var": [
+      "origin/codex/lint-wave1-01:stage1/cohere/lint/claims/wave1-01-report.md",
+      "origin/codex/lint-wave1-04:stage1/cohere/lint/claims/wave1-04-report.md"
+    ],
+    "@eslint-community/eslint-comments/require-description": [
+      "origin/codex/lint-wave1-01:stage1/cohere/lint/claims/wave1-01.md",
+      "origin/codex/lint-wave1-02:stage1/cohere/lint/claims/wave1-02-continuation-report.md",
+      "origin/codex/lint-wave1-02:stage1/cohere/lint/claims/wave1-02.md",
+      "origin/codex/lint-wave1-04:stage1/cohere/lint/claims/wave1-04-continuation-report.md",
+      "origin/codex/lint-wave1-04:stage1/cohere/lint/claims/wave1-04.md",
+      "origin/codex/lint-wave1-05:stage1/cohere/lint/claims/wave1-05-evidence/REPORT.md",
+      "origin/codex/lint-wave1-05:stage1/cohere/lint/claims/wave1-05.md",
+      "origin/codex/lint-wave1-06:stage1/cohere/lint/claims/wave1-06-next-evidence/REPORT.md",
+      "origin/codex/lint-wave1-06:stage1/cohere/lint/claims/wave1-06.md",
+      "origin/codex/lint-wave1-07:stage1/cohere/lint/claims/wave1-07.md",
+      "origin/codex/lint-wave1-09:stage1/cohere/lint/claims/wave1-09-next-report.md",
+      "origin/codex/lint-wave1-09:stage1/cohere/lint/claims/wave1-09.md",
+      "origin/codex/lint-wave1-11:stage1/cohere/lint/claims/wave1-11.md"
+    ],
+    "@next/next/google-font-display": [
+      "origin/codex/lint-wave1-01:stage1/cohere/lint/claims/wave1-01.md",
+      "origin/codex/lint-wave1-02:stage1/cohere/lint/claims/wave1-02-continuation-report.md",
+      "origin/codex/lint-wave1-02:stage1/cohere/lint/claims/wave1-02.md",
+      "origin/codex/lint-wave1-04:stage1/cohere/lint/claims/wave1-04-continuation-report.md",
+      "origin/codex/lint-wave1-04:stage1/cohere/lint/claims/wave1-04.md",
+      "origin/codex/lint-wave1-05:stage1/cohere/lint/claims/wave1-05-evidence/REPORT.md",
+      "origin/codex/lint-wave1-05:stage1/cohere/lint/claims/wave1-05.md",
+      "origin/codex/lint-wave1-06:stage1/cohere/lint/claims/wave1-06-next-evidence/REPORT.md",
+      "origin/codex/lint-wave1-06:stage1/cohere/lint/claims/wave1-06.md",
+      "origin/codex/lint-wave1-07:stage1/cohere/lint/claims/wave1-07.md",
+      "origin/codex/lint-wave1-09:stage1/cohere/lint/claims/wave1-09-next-report.md",
+      "origin/codex/lint-wave1-09:stage1/cohere/lint/claims/wave1-09.md",
+      "origin/codex/lint-wave1-11:stage1/cohere/lint/claims/wave1-11.md"
+    ],
+    "@typescript-eslint/consistent-type-assertions": [
+      "origin/codex/lint-wave1-01:stage1/cohere/lint/claims/wave1-01.md"
+    ],
+    "@typescript-eslint/consistent-type-definitions": [
+      "origin/codex/lint-wave1-01:stage1/cohere/lint/claims/wave1-01.md"
+    ],
+    "@typescript-eslint/init-declarations": [
+      "origin/codex/lint-wave1-01:stage1/cohere/lint/claims/wave1-01.md"
+    ],
+    "better-tailwindcss/no-deprecated-classes": [
+      "origin/codex/lint-wave1-01:stage1/cohere/lint/claims/wave1-01.md"
+    ],
+    "better-tailwindcss/no-duplicate-classes": [
+      "origin/codex/lint-wave1-01:stage1/cohere/lint/claims/wave1-01.md"
+    ],
+    "better-tailwindcss/no-unknown-classes": [
+      "origin/codex/lint-wave1-01:stage1/cohere/lint/claims/wave1-01.md"
+    ],
+    "structure/tailwind-no-physical-direction": [
+      "origin/codex/lint-wave1-01:stage1/cohere/lint/claims/wave1-01.md",
+      "origin/codex/lint-wave1-02:stage1/cohere/lint/claims/wave1-02-continuation-report.md",
+      "origin/codex/lint-wave1-02:stage1/cohere/lint/claims/wave1-02.md",
+      "origin/codex/lint-wave1-03:stage1/cohere/lint/claims/wave1-03.md",
+      "origin/codex/lint-wave1-04:stage1/cohere/lint/claims/wave1-04-continuation-report.md",
+      "origin/codex/lint-wave1-04:stage1/cohere/lint/claims/wave1-04.md",
+      "origin/codex/lint-wave1-05:stage1/cohere/lint/claims/wave1-05-evidence/REPORT.md",
+      "origin/codex/lint-wave1-05:stage1/cohere/lint/claims/wave1-05.md",
+      "origin/codex/lint-wave1-06:stage1/cohere/lint/claims/wave1-06-next-evidence/REPORT.md",
+      "origin/codex/lint-wave1-06:stage1/cohere/lint/claims/wave1-06.md",
+      "origin/codex/lint-wave1-07:stage1/cohere/lint/claims/wave1-07.md",
+      "origin/codex/lint-wave1-08:stage1/cohere/lint/claims/wave1-08-next-report.md",
+      "origin/codex/lint-wave1-08:stage1/cohere/lint/claims/wave1-08.md",
+      "origin/codex/lint-wave1-09:stage1/cohere/lint/claims/wave1-09-next-report.md",
+      "origin/codex/lint-wave1-09:stage1/cohere/lint/claims/wave1-09.md",
+      "origin/codex/lint-wave1-10:stage1/cohere/lint/claims/wave1-10-next-report.md",
+      "origin/codex/lint-wave1-10:stage1/cohere/lint/claims/wave1-10.md",
+      "origin/codex/lint-wave1-11:stage1/cohere/lint/claims/wave1-11.md",
+      "origin/codex/lint-wave1-13:stage1/cohere/lint/claims/wave1-13.md",
+      "origin/codex/lint-wave1-15:stage1/cohere/lint/claims/wave1-15-next-report.md",
+      "origin/codex/lint-wave1-15:stage1/cohere/lint/claims/wave1-15.md"
+    ],
+    "@typescript-eslint/no-explicit-any": [
+      "origin/codex/lint-wave1-02:stage1/cohere/lint/claims/wave1-02-report.md",
+      "origin/codex/lint-wave1-02:stage1/cohere/lint/claims/wave1-02.md"
+    ],
+    "@typescript-eslint/no-inferrable-types": [
+      "origin/codex/lint-wave1-02:stage1/cohere/lint/claims/wave1-02-report.md",
+      "origin/codex/lint-wave1-02:stage1/cohere/lint/claims/wave1-02.md"
+    ],
+    "@typescript-eslint/no-restricted-types": [
+      "origin/codex/lint-wave1-02:stage1/cohere/lint/claims/wave1-02-report.md",
+      "origin/codex/lint-wave1-02:stage1/cohere/lint/claims/wave1-02.md"
+    ],
+    "@typescript-eslint/no-non-null-asserted-optional-chain": [
+      "origin/codex/lint-wave1-02:stage1/cohere/lint/claims/wave1-02.md",
+      "origin/codex/lint-wave1-04:stage1/cohere/lint/claims/wave1-04.md",
+      "origin/codex/lint-wave1-05:stage1/cohere/lint/claims/wave1-05-second-evidence/REPORT.md",
+      "origin/codex/lint-wave1-05:stage1/cohere/lint/claims/wave1-05.md",
+      "origin/codex/lint-wave1-07:stage1/cohere/lint/claims/wave1-07.md",
+      "origin/codex/lint-wave1-09:stage1/cohere/lint/claims/wave1-09-fourth-report.md",
+      "origin/codex/lint-wave1-09:stage1/cohere/lint/claims/wave1-09.md",
+      "origin/codex/lint-wave1-12:stage1/cohere/lint/claims/wave1-12-batch4-evidence/REPORT.md",
+      "origin/codex/lint-wave1-12:stage1/cohere/lint/claims/wave1-12.md"
+    ],
+    "@typescript-eslint/no-non-null-assertion": [
+      "origin/codex/lint-wave1-02:stage1/cohere/lint/claims/wave1-02.md",
+      "origin/codex/lint-wave1-04:stage1/cohere/lint/claims/wave1-04.md",
+      "origin/codex/lint-wave1-05:stage1/cohere/lint/claims/wave1-05-second-evidence/REPORT.md",
+      "origin/codex/lint-wave1-05:stage1/cohere/lint/claims/wave1-05.md",
+      "origin/codex/lint-wave1-07:stage1/cohere/lint/claims/wave1-07.md",
+      "origin/codex/lint-wave1-09:stage1/cohere/lint/claims/wave1-09-fourth-report.md",
+      "origin/codex/lint-wave1-09:stage1/cohere/lint/claims/wave1-09.md"
+    ],
+    "@typescript-eslint/no-this-alias": [
+      "origin/codex/lint-wave1-02:stage1/cohere/lint/claims/wave1-02.md",
+      "origin/codex/lint-wave1-04:stage1/cohere/lint/claims/wave1-04.md",
+      "origin/codex/lint-wave1-05:stage1/cohere/lint/claims/wave1-05-second-evidence/REPORT.md",
+      "origin/codex/lint-wave1-05:stage1/cohere/lint/claims/wave1-05.md",
+      "origin/codex/lint-wave1-07:stage1/cohere/lint/claims/wave1-07.md",
+      "origin/codex/lint-wave1-09:stage1/cohere/lint/claims/wave1-09-fourth-report.md",
+      "origin/codex/lint-wave1-09:stage1/cohere/lint/claims/wave1-09.md",
+      "origin/codex/lint-wave1-12:stage1/cohere/lint/claims/wave1-12-batch4-evidence/REPORT.md",
+      "origin/codex/lint-wave1-12:stage1/cohere/lint/claims/wave1-12.md"
+    ],
+    "array-callback-return": [
+      "origin/codex/lint-wave1-02:stage1/cohere/lint/claims/wave1-02.md"
+    ],
+    "arrow-body-style": [
+      "origin/codex/lint-wave1-02:stage1/cohere/lint/claims/wave1-02.md",
+      "origin/codex/lint-wave1-10:stage1/cohere/lint/claims/wave1-10.md"
+    ],
+    "base/consistency-no-bare-throw": [
+      "origin/codex/lint-wave1-02:stage1/cohere/lint/claims/wave1-02.md"
+    ],
+    "@typescript-eslint/no-unused-expressions": [
+      "origin/codex/lint-wave1-03:stage1/cohere/lint/claims/wave1-03-evidence/REPORT.md",
+      "origin/codex/lint-wave1-03:stage1/cohere/lint/claims/wave1-03.md"
+    ],
+    "@typescript-eslint/unified-signatures": [
+      "origin/codex/lint-wave1-03:stage1/cohere/lint/claims/wave1-03-evidence/REPORT.md",
+      "origin/codex/lint-wave1-03:stage1/cohere/lint/claims/wave1-03.md"
+    ],
+    "class-methods-use-this": [
+      "origin/codex/lint-wave1-03:stage1/cohere/lint/claims/wave1-03-evidence/REPORT.md",
+      "origin/codex/lint-wave1-03:stage1/cohere/lint/claims/wave1-03.md"
+    ],
+    "@typescript-eslint/no-unnecessary-type-constraint": [
+      "origin/codex/lint-wave1-03:stage1/cohere/lint/claims/wave1-03-evidence/batch3/REPORT.md",
+      "origin/codex/lint-wave1-03:stage1/cohere/lint/claims/wave1-03-evidence/batch3/typescript-no-unnecessary-type-constraint/README.md",
+      "origin/codex/lint-wave1-03:stage1/cohere/lint/claims/wave1-03.md",
+      "origin/codex/lint-wave1-06:stage1/cohere/lint/claims/wave1-06-fourth-evidence/REPORT.md",
+      "origin/codex/lint-wave1-06:stage1/cohere/lint/claims/wave1-06.md",
+      "origin/codex/lint-wave1-08:stage1/cohere/lint/claims/wave1-08-third-report.md",
+      "origin/codex/lint-wave1-08:stage1/cohere/lint/claims/wave1-08.md",
+      "origin/codex/lint-wave1-12:stage1/cohere/lint/claims/wave1-12-batch4-evidence/REPORT.md",
+      "origin/codex/lint-wave1-12:stage1/cohere/lint/claims/wave1-12.md",
+      "origin/codex/lint-wave1-13:stage1/cohere/lint/claims/wave1-13.md",
+      "origin/codex/lint-wave1-14:stage1/cohere/lint/claims/wave1-14-fourth-report.md",
+      "origin/codex/lint-wave1-14:stage1/cohere/lint/claims/wave1-14.md",
+      "origin/codex/lint-wave1-15:stage1/cohere/lint/claims/wave1-15-third-report.md",
+      "origin/codex/lint-wave1-15:stage1/cohere/lint/claims/wave1-15.md"
+    ],
+    "@typescript-eslint/prefer-as-const": [
+      "origin/codex/lint-wave1-03:stage1/cohere/lint/claims/wave1-03-evidence/batch3/REPORT.md",
+      "origin/codex/lint-wave1-03:stage1/cohere/lint/claims/wave1-03-evidence/batch3/typescript-prefer-as-const/README.md",
+      "origin/codex/lint-wave1-03:stage1/cohere/lint/claims/wave1-03.md",
+      "origin/codex/lint-wave1-08:stage1/cohere/lint/claims/wave1-08-third-report.md",
+      "origin/codex/lint-wave1-08:stage1/cohere/lint/claims/wave1-08.md",
+      "origin/codex/lint-wave1-13:stage1/cohere/lint/claims/wave1-13.md",
+      "origin/codex/lint-wave1-14:stage1/cohere/lint/claims/wave1-14-fourth-report.md",
+      "origin/codex/lint-wave1-14:stage1/cohere/lint/claims/wave1-14.md",
+      "origin/codex/lint-wave1-15:stage1/cohere/lint/claims/wave1-15-third-report.md",
+      "origin/codex/lint-wave1-15:stage1/cohere/lint/claims/wave1-15.md"
+    ],
+    "@typescript-eslint/prefer-enum-initializers": [
+      "origin/codex/lint-wave1-03:stage1/cohere/lint/claims/wave1-03-evidence/batch3/REPORT.md",
+      "origin/codex/lint-wave1-03:stage1/cohere/lint/claims/wave1-03-evidence/batch3/typescript-prefer-enum-initializers/README.md",
+      "origin/codex/lint-wave1-03:stage1/cohere/lint/claims/wave1-03.md",
+      "origin/codex/lint-wave1-08:stage1/cohere/lint/claims/wave1-08-third-report.md",
+      "origin/codex/lint-wave1-08:stage1/cohere/lint/claims/wave1-08.md",
+      "origin/codex/lint-wave1-13:stage1/cohere/lint/claims/wave1-13.md",
+      "origin/codex/lint-wave1-14:stage1/cohere/lint/claims/wave1-14-fourth-report.md",
+      "origin/codex/lint-wave1-14:stage1/cohere/lint/claims/wave1-14.md",
+      "origin/codex/lint-wave1-15:stage1/cohere/lint/claims/wave1-15-third-report.md",
+      "origin/codex/lint-wave1-15:stage1/cohere/lint/claims/wave1-15.md"
+    ],
+    "@next/next/no-assign-module-variable": [
+      "origin/codex/lint-wave1-03:stage1/cohere/lint/claims/wave1-03.md",
+      "origin/codex/lint-wave1-08:stage1/cohere/lint/claims/wave1-08-next-report.md",
+      "origin/codex/lint-wave1-08:stage1/cohere/lint/claims/wave1-08.md",
+      "origin/codex/lint-wave1-13:stage1/cohere/lint/claims/wave1-13.md",
+      "origin/codex/lint-wave1-15:stage1/cohere/lint/claims/wave1-15-next-report.md",
+      "origin/codex/lint-wave1-15:stage1/cohere/lint/claims/wave1-15.md"
+    ],
+    "@typescript-eslint/default-param-last": [
+      "origin/codex/lint-wave1-03:stage1/cohere/lint/claims/wave1-03.md",
+      "origin/codex/lint-wave1-08:stage1/cohere/lint/claims/wave1-08-next-report.md",
+      "origin/codex/lint-wave1-08:stage1/cohere/lint/claims/wave1-08.md",
+      "origin/codex/lint-wave1-13:stage1/cohere/lint/claims/wave1-13.md",
+      "origin/codex/lint-wave1-15:stage1/cohere/lint/claims/wave1-15-next-report.md",
+      "origin/codex/lint-wave1-15:stage1/cohere/lint/claims/wave1-15.md"
+    ],
+    "no-async-promise-executor": [
+      "origin/codex/lint-wave1-03:stage1/cohere/lint/claims/wave1-03.md"
+    ],
+    "no-case-declarations": [
+      "origin/codex/lint-wave1-03:stage1/cohere/lint/claims/wave1-03.md"
+    ],
+    "no-compare-neg-zero": [
+      "origin/codex/lint-wave1-03:stage1/cohere/lint/claims/wave1-03.md"
+    ],
+    "consistent-this": [
+      "origin/codex/lint-wave1-04:stage1/cohere/lint/claims/wave1-04-report.md",
+      "origin/codex/lint-wave1-04:stage1/cohere/lint/claims/wave1-04.md"
+    ],
+    "func-name-matching": [
+      "origin/codex/lint-wave1-04:stage1/cohere/lint/claims/wave1-04-report.md",
+      "origin/codex/lint-wave1-04:stage1/cohere/lint/claims/wave1-04.md"
+    ],
+    "max-classes-per-file": [
+      "origin/codex/lint-wave1-04:stage1/cohere/lint/claims/wave1-04-report.md",
+      "origin/codex/lint-wave1-04:stage1/cohere/lint/claims/wave1-04.md"
+    ],
+    "better-tailwindcss/enforce-consistent-important-position": [
+      "origin/codex/lint-wave1-04:stage1/cohere/lint/claims/wave1-04.md"
+    ],
+    "better-tailwindcss/enforce-consistent-variable-syntax": [
+      "origin/codex/lint-wave1-04:stage1/cohere/lint/claims/wave1-04.md"
+    ],
+    "better-tailwindcss/enforce-consistent-variant-order": [
+      "origin/codex/lint-wave1-04:stage1/cohere/lint/claims/wave1-04.md"
+    ],
+    "no-cond-assign": [
+      "origin/codex/lint-wave1-05:stage1/cohere/lint/claims/wave1-05-evidence/REPORT.md",
+      "origin/codex/lint-wave1-05:stage1/cohere/lint/claims/wave1-05.md"
+    ],
+    "@typescript-eslint/prefer-function-type": [
+      "origin/codex/lint-wave1-05:stage1/cohere/lint/claims/wave1-05.md"
+    ],
+    "@typescript-eslint/prefer-namespace-keyword": [
+      "origin/codex/lint-wave1-05:stage1/cohere/lint/claims/wave1-05.md"
+    ],
+    "@typescript-eslint/triple-slash-reference": [
+      "origin/codex/lint-wave1-05:stage1/cohere/lint/claims/wave1-05.md"
+    ],
+    "better-tailwindcss/no-unnecessary-whitespace": [
+      "origin/codex/lint-wave1-05:stage1/cohere/lint/claims/wave1-05.md"
+    ],
+    "boundaries/dependencies": [
+      "origin/codex/lint-wave1-05:stage1/cohere/lint/claims/wave1-05.md"
+    ],
+    "complexity": [
+      "origin/codex/lint-wave1-05:stage1/cohere/lint/claims/wave1-05.md"
+    ],
+    "max-depth": [
+      "origin/codex/lint-wave1-05:stage1/cohere/lint/claims/wave1-05.md"
+    ],
+    "max-nested-callbacks": [
+      "origin/codex/lint-wave1-05:stage1/cohere/lint/claims/wave1-05.md"
+    ],
+    "no-inner-declarations": [
+      "origin/codex/lint-wave1-06:stage1/cohere/lint/claims/wave1-06-evidence/REPORT.md",
+      "origin/codex/lint-wave1-06:stage1/cohere/lint/claims/wave1-06.md"
+    ],
+    "no-restricted-properties": [
+      "origin/codex/lint-wave1-06:stage1/cohere/lint/claims/wave1-06-evidence/REPORT.md",
+      "origin/codex/lint-wave1-06:stage1/cohere/lint/claims/wave1-06.md"
+    ],
+    "no-self-assign": [
+      "origin/codex/lint-wave1-06:stage1/cohere/lint/claims/wave1-06-evidence/REPORT.md",
+      "origin/codex/lint-wave1-06:stage1/cohere/lint/claims/wave1-06.md"
+    ],
+    "@typescript-eslint/no-unsafe-function-type": [
+      "origin/codex/lint-wave1-06:stage1/cohere/lint/claims/wave1-06-fourth-evidence/REPORT.md",
+      "origin/codex/lint-wave1-06:stage1/cohere/lint/claims/wave1-06.md"
+    ],
+    "@typescript-eslint/no-useless-empty-export": [
+      "origin/codex/lint-wave1-06:stage1/cohere/lint/claims/wave1-06-fourth-evidence/REPORT.md",
+      "origin/codex/lint-wave1-06:stage1/cohere/lint/claims/wave1-06.md"
+    ],
+    "@next/next/no-before-interactive-script-outside-document": [
+      "origin/codex/lint-wave1-06:stage1/cohere/lint/claims/wave1-06-third-evidence/REPORT.md",
+      "origin/codex/lint-wave1-06:stage1/cohere/lint/claims/wave1-06.md",
+      "origin/codex/lint-wave1-12:stage1/cohere/lint/claims/wave1-12-batch3-evidence/REPORT.md",
+      "origin/codex/lint-wave1-12:stage1/cohere/lint/claims/wave1-12.md"
+    ],
+    "@next/next/no-css-tags": [
+      "origin/codex/lint-wave1-06:stage1/cohere/lint/claims/wave1-06-third-evidence/REPORT.md",
+      "origin/codex/lint-wave1-06:stage1/cohere/lint/claims/wave1-06.md",
+      "origin/codex/lint-wave1-12:stage1/cohere/lint/claims/wave1-12-batch3-evidence/REPORT.md",
+      "origin/codex/lint-wave1-12:stage1/cohere/lint/claims/wave1-12.md"
+    ],
+    "@next/next/no-document-import-in-page": [
+      "origin/codex/lint-wave1-06:stage1/cohere/lint/claims/wave1-06-third-evidence/REPORT.md",
+      "origin/codex/lint-wave1-06:stage1/cohere/lint/claims/wave1-06.md",
+      "origin/codex/lint-wave1-12:stage1/cohere/lint/claims/wave1-12-batch3-evidence/REPORT.md",
+      "origin/codex/lint-wave1-12:stage1/cohere/lint/claims/wave1-12.md"
+    ],
+    "no-octal-escape": [
+      "origin/codex/lint-wave1-07:stage1/cohere/lint/claims/wave1-07-completion-report.md"
+    ],
+    "no-script-url": [
+      "origin/codex/lint-wave1-07:stage1/cohere/lint/claims/wave1-07-completion-report.md"
+    ],
+    "no-underscore-dangle": [
+      "origin/codex/lint-wave1-07:stage1/cohere/lint/claims/wave1-07-completion-report.md",
+      "origin/codex/lint-wave1-07:stage1/cohere/lint/claims/wave1-07-report.md",
+      "origin/codex/lint-wave1-07:stage1/cohere/lint/claims/wave1-07.md"
+    ],
+    "no-unexpected-multiline": [
+      "origin/codex/lint-wave1-07:stage1/cohere/lint/claims/wave1-07-completion-report.md"
+    ],
+    "no-unsafe-finally": [
+      "origin/codex/lint-wave1-07:stage1/cohere/lint/claims/wave1-07-completion-report.md"
+    ],
+    "no-unsafe-negation": [
+      "origin/codex/lint-wave1-07:stage1/cohere/lint/claims/wave1-07-completion-report.md",
+      "origin/codex/lint-wave1-07:stage1/cohere/lint/claims/wave1-07-report.md",
+      "origin/codex/lint-wave1-07:stage1/cohere/lint/claims/wave1-07.md"
+    ],
+    "no-unsafe-optional-chaining": [
+      "origin/codex/lint-wave1-07:stage1/cohere/lint/claims/wave1-07-completion-report.md",
+      "origin/codex/lint-wave1-07:stage1/cohere/lint/claims/wave1-07-report.md",
+      "origin/codex/lint-wave1-07:stage1/cohere/lint/claims/wave1-07.md"
+    ],
+    "no-unused-private-class-members": [
+      "origin/codex/lint-wave1-07:stage1/cohere/lint/claims/wave1-07-completion-report.md"
+    ],
+    "no-useless-catch": [
+      "origin/codex/lint-wave1-07:stage1/cohere/lint/claims/wave1-07-completion-report.md"
+    ],
+    "no-useless-concat": [
+      "origin/codex/lint-wave1-07:stage1/cohere/lint/claims/wave1-07-completion-report.md"
+    ],
+    "no-useless-constructor": [
+      "origin/codex/lint-wave1-07:stage1/cohere/lint/claims/wave1-07-completion-report.md"
+    ],
+    "prefer-template": [
+      "origin/codex/lint-wave1-07:stage1/cohere/lint/claims/wave1-07-completion-report.md"
+    ],
+    "react/forward-ref-uses-ref": [
+      "origin/codex/lint-wave1-07:stage1/cohere/lint/claims/wave1-07-completion-report.md"
+    ],
+    "react/jsx-no-comment-textnodes": [
+      "origin/codex/lint-wave1-07:stage1/cohere/lint/claims/wave1-07-completion-report.md"
+    ],
+    "react/no-find-dom-node": [
+      "origin/codex/lint-wave1-07:stage1/cohere/lint/claims/wave1-07-completion-report.md"
+    ],
+    "react/no-is-mounted": [
+      "origin/codex/lint-wave1-07:stage1/cohere/lint/claims/wave1-07-completion-report.md"
+    ],
+    "react/no-redundant-should-component-update": [
+      "origin/codex/lint-wave1-07:stage1/cohere/lint/claims/wave1-07-completion-report.md"
+    ],
+    "no-useless-computed-key": [
+      "origin/codex/lint-wave1-08:stage1/cohere/lint/claims/wave1-08-report.md",
+      "origin/codex/lint-wave1-08:stage1/cohere/lint/claims/wave1-08.md"
+    ],
+    "react-hooks/gating": [
+      "origin/codex/lint-wave1-08:stage1/cohere/lint/claims/wave1-08-report.md",
+      "origin/codex/lint-wave1-08:stage1/cohere/lint/claims/wave1-08.md"
+    ],
+    "react/forbid-foreign-prop-types": [
+      "origin/codex/lint-wave1-08:stage1/cohere/lint/claims/wave1-08-report.md",
+      "origin/codex/lint-wave1-08:stage1/cohere/lint/claims/wave1-08.md"
+    ],
+    "default-case-last": [
+      "origin/codex/lint-wave1-08:stage1/cohere/lint/claims/wave1-08.md",
+      "origin/codex/lint-wave1-13:stage1/cohere/lint/claims/wave1-13.md"
+    ],
+    "default-param-last": [
+      "origin/codex/lint-wave1-08:stage1/cohere/lint/claims/wave1-08.md"
+    ],
+    "for-direction": [
+      "origin/codex/lint-wave1-08:stage1/cohere/lint/claims/wave1-08.md",
+      "origin/codex/lint-wave1-13:stage1/cohere/lint/claims/wave1-13.md"
+    ],
+    "no-constructor-return": [
+      "origin/codex/lint-wave1-08:stage1/cohere/lint/claims/wave1-08.md",
+      "origin/codex/lint-wave1-13:stage1/cohere/lint/claims/wave1-13.md"
+    ],
+    "no-delete-var": [
+      "origin/codex/lint-wave1-08:stage1/cohere/lint/claims/wave1-08.md",
+      "origin/codex/lint-wave1-13:stage1/cohere/lint/claims/wave1-13.md"
+    ],
+    "no-eq-null": [
+      "origin/codex/lint-wave1-08:stage1/cohere/lint/claims/wave1-08.md",
+      "origin/codex/lint-wave1-13:stage1/cohere/lint/claims/wave1-13.md"
+    ],
+    "no-multi-str": [
+      "origin/codex/lint-wave1-08:stage1/cohere/lint/claims/wave1-08.md",
+      "origin/codex/lint-wave1-13:stage1/cohere/lint/claims/wave1-13.md",
+      "origin/codex/lint-wave1-15:stage1/cohere/lint/claims/wave1-15.md"
+    ],
+    "no-nonoctal-decimal-escape": [
+      "origin/codex/lint-wave1-08:stage1/cohere/lint/claims/wave1-08.md",
+      "origin/codex/lint-wave1-13:stage1/cohere/lint/claims/wave1-13.md",
+      "origin/codex/lint-wave1-15:stage1/cohere/lint/claims/wave1-15.md"
+    ],
+    "no-octal": [
+      "origin/codex/lint-wave1-08:stage1/cohere/lint/claims/wave1-08.md",
+      "origin/codex/lint-wave1-13:stage1/cohere/lint/claims/wave1-13.md",
+      "origin/codex/lint-wave1-15:stage1/cohere/lint/claims/wave1-15.md"
+    ],
+    "react/jsx-no-useless-fragment": [
+      "origin/codex/lint-wave1-09:stage1/cohere/lint/claims/wave1-09-report.md",
+      "origin/codex/lint-wave1-09:stage1/cohere/lint/claims/wave1-09.md"
+    ],
+    "react/no-invalid-html-attribute": [
+      "origin/codex/lint-wave1-09:stage1/cohere/lint/claims/wave1-09-report.md",
+      "origin/codex/lint-wave1-09:stage1/cohere/lint/claims/wave1-09.md"
+    ],
+    "react/no-unescaped-entities": [
+      "origin/codex/lint-wave1-09:stage1/cohere/lint/claims/wave1-09-report.md",
+      "origin/codex/lint-wave1-09:stage1/cohere/lint/claims/wave1-09.md"
+    ],
+    "@typescript-eslint/no-dupe-class-members": [
+      "origin/codex/lint-wave1-09:stage1/cohere/lint/claims/wave1-09-third-report.md",
+      "origin/codex/lint-wave1-09:stage1/cohere/lint/claims/wave1-09.md"
+    ],
+    "@typescript-eslint/no-empty-object-type": [
+      "origin/codex/lint-wave1-09:stage1/cohere/lint/claims/wave1-09-third-report.md",
+      "origin/codex/lint-wave1-09:stage1/cohere/lint/claims/wave1-09.md"
+    ],
+    "@typescript-eslint/no-import-type-side-effects": [
+      "origin/codex/lint-wave1-09:stage1/cohere/lint/claims/wave1-09-third-report.md",
+      "origin/codex/lint-wave1-09:stage1/cohere/lint/claims/wave1-09.md"
+    ],
+    "@typescript-eslint/ban-tslint-comment": [
+      "origin/codex/lint-wave1-10:stage1/cohere/lint/claims/wave1-10-next-report.md",
+      "origin/codex/lint-wave1-10:stage1/cohere/lint/claims/wave1-10.md"
+    ],
+    "@typescript-eslint/no-invalid-this": [
+      "origin/codex/lint-wave1-10:stage1/cohere/lint/claims/wave1-10-next-report.md",
+      "origin/codex/lint-wave1-10:stage1/cohere/lint/claims/wave1-10.md"
+    ],
+    "no-invalid-this": [
+      "origin/codex/lint-wave1-10:stage1/cohere/lint/claims/wave1-10-next-report.md"
+    ],
+    "react/no-unsafe": [
+      "origin/codex/lint-wave1-10:stage1/cohere/lint/claims/wave1-10-report.md",
+      "origin/codex/lint-wave1-10:stage1/cohere/lint/claims/wave1-10.md"
+    ],
+    "react/self-closing-comp": [
+      "origin/codex/lint-wave1-10:stage1/cohere/lint/claims/wave1-10-report.md",
+      "origin/codex/lint-wave1-10:stage1/cohere/lint/claims/wave1-10.md"
+    ],
+    "sort-vars": [
+      "origin/codex/lint-wave1-10:stage1/cohere/lint/claims/wave1-10-report.md",
+      "origin/codex/lint-wave1-10:stage1/cohere/lint/claims/wave1-10.md"
+    ],
+    "max-lines": [
+      "origin/codex/lint-wave1-10:stage1/cohere/lint/claims/wave1-10.md"
+    ],
+    "no-extra-bind": [
+      "origin/codex/lint-wave1-10:stage1/cohere/lint/claims/wave1-10.md"
+    ],
+    "adamic/no-definite-assignment": [
+      "origin/codex/lint-wave1-11:stage1/cohere/lint/claims/wave1-11-REPORT.md",
+      "origin/codex/lint-wave1-11:stage1/cohere/lint/claims/wave1-11.md"
+    ],
+    "base/boundary-no-global-container": [
+      "origin/codex/lint-wave1-11:stage1/cohere/lint/claims/wave1-11-REPORT.md",
+      "origin/codex/lint-wave1-11:stage1/cohere/lint/claims/wave1-11.md"
+    ],
+    "base/consistency-no-hand-built-declared-error": [
+      "origin/codex/lint-wave1-11:stage1/cohere/lint/claims/wave1-11-REPORT.md",
+      "origin/codex/lint-wave1-11:stage1/cohere/lint/claims/wave1-11.md"
+    ],
+    "base/security-require-context-access": [
+      "origin/codex/lint-wave1-11:stage1/cohere/lint/claims/wave1-11.md"
+    ],
+    "better-tailwindcss/enforce-canonical-classes": [
+      "origin/codex/lint-wave1-11:stage1/cohere/lint/claims/wave1-11.md"
+    ],
+    "better-tailwindcss/enforce-consistent-class-order": [
+      "origin/codex/lint-wave1-11:stage1/cohere/lint/claims/wave1-11.md"
+    ],
+    "@next/next/google-font-preconnect": [
+      "origin/codex/lint-wave1-12:stage1/cohere/lint/claims/wave1-12-next-evidence/REPORT.md",
+      "origin/codex/lint-wave1-12:stage1/cohere/lint/claims/wave1-12.md"
+    ],
+    "@next/next/inline-script-id": [
+      "origin/codex/lint-wave1-12:stage1/cohere/lint/claims/wave1-12-next-evidence/REPORT.md",
+      "origin/codex/lint-wave1-12:stage1/cohere/lint/claims/wave1-12.md"
+    ],
+    "@next/next/next-script-for-ga": [
+      "origin/codex/lint-wave1-12:stage1/cohere/lint/claims/wave1-12-next-evidence/REPORT.md",
+      "origin/codex/lint-wave1-12:stage1/cohere/lint/claims/wave1-12.md"
+    ],
+    "base/consistency-require-pagination-argument-name": [
+      "origin/codex/lint-wave1-12:stage1/cohere/lint/claims/wave1-12.md"
+    ],
+    "base/correctness-require-orm-column-declare": [
+      "origin/codex/lint-wave1-12:stage1/cohere/lint/claims/wave1-12.md"
+    ],
+    "better-tailwindcss/enforce-shorthand-classes": [
+      "origin/codex/lint-wave1-12:stage1/cohere/lint/claims/wave1-12.md"
+    ],
+    "better-tailwindcss/no-concatenated-classes": [
+      "origin/codex/lint-wave1-12:stage1/cohere/lint/claims/wave1-12.md"
+    ],
+    "better-tailwindcss/no-conflicting-classes": [
+      "origin/codex/lint-wave1-12:stage1/cohere/lint/claims/wave1-12.md"
+    ],
+    "nexus/consistency-no-boolean-outcome": [
+      "origin/codex/lint-wave1-12:stage1/cohere/lint/claims/wave1-12.md"
+    ],
+    "strict": [
+      "origin/codex/lint-wave1-12:stage1/cohere/lint/claims/wave1-12.md"
+    ],
+    "guard-for-in": [
+      "origin/codex/lint-wave1-13:stage1/cohere/lint/claims/wave1-13.md"
+    ],
+    "nexus/consistency-no-for-in": [
+      "origin/codex/lint-wave1-13:stage1/cohere/lint/claims/wave1-13.md"
+    ],
+    "nexus/consistency-no-hand-rolled-delay": [
+      "origin/codex/lint-wave1-13:stage1/cohere/lint/claims/wave1-13.md"
+    ],
+    "nexus/consistency-no-return-void": [
+      "origin/codex/lint-wave1-13:stage1/cohere/lint/claims/wave1-13.md"
+    ],
+    "@typescript-eslint/no-confusing-non-null-assertion": [
+      "origin/codex/lint-wave1-14:stage1/cohere/lint/claims/wave1-14.md"
+    ],
+    "@typescript-eslint/no-duplicate-enum-values": [
+      "origin/codex/lint-wave1-14:stage1/cohere/lint/claims/wave1-14.md"
+    ],
+    "@typescript-eslint/no-dynamic-delete": [
+      "origin/codex/lint-wave1-14:stage1/cohere/lint/claims/wave1-14.md"
+    ],
+    "@typescript-eslint/no-extra-non-null-assertion": [
+      "origin/codex/lint-wave1-14:stage1/cohere/lint/claims/wave1-14.md"
+    ],
+    "@typescript-eslint/no-misused-new": [
+      "origin/codex/lint-wave1-14:stage1/cohere/lint/claims/wave1-14.md"
+    ],
+    "@typescript-eslint/no-unnecessary-parameter-property-assignment": [
+      "origin/codex/lint-wave1-14:stage1/cohere/lint/claims/wave1-14.md"
+    ],
+    "nexus/consistency-no-stuttering-name": [
+      "origin/codex/lint-wave1-14:stage1/cohere/lint/claims/wave1-14.md"
+    ],
+    "nexus/consistency-no-utils-folder": [
+      "origin/codex/lint-wave1-14:stage1/cohere/lint/claims/wave1-14.md"
+    ],
+    "nexus/import-require-module-alias": [
+      "origin/codex/lint-wave1-14:stage1/cohere/lint/claims/wave1-14.md"
+    ],
+    "no-lone-blocks": [
+      "origin/codex/lint-wave1-14:stage1/cohere/lint/claims/wave1-14.md"
+    ],
+    "no-lonely-if": [
+      "origin/codex/lint-wave1-14:stage1/cohere/lint/claims/wave1-14.md"
+    ],
+    "no-loss-of-precision": [
+      "origin/codex/lint-wave1-14:stage1/cohere/lint/claims/wave1-14.md"
+    ],
+    "nexus/import-require-node-namespace": [
+      "origin/codex/lint-wave1-15:stage1/cohere/lint/claims/wave1-15-report.md",
+      "origin/codex/lint-wave1-15:stage1/cohere/lint/claims/wave1-15.md"
+    ],
+    "structure/network-no-invalidate-cache-literal-key": [
+      "origin/codex/lint-wave1-15:stage1/cohere/lint/claims/wave1-15-report.md",
+      "origin/codex/lint-wave1-15:stage1/cohere/lint/claims/wave1-15.md"
+    ],
+    "structure/network-no-string-literal-query": [
+      "origin/codex/lint-wave1-15:stage1/cohere/lint/claims/wave1-15-report.md",
+      "origin/codex/lint-wave1-15:stage1/cohere/lint/claims/wave1-15.md"
+    ],
+    "@next/next/no-head-element": [
+      "origin/codex/stage1-nextjs-lint:stage1/cohere/lint/claims/nextjs.md"
+    ],
+    "@next/next/no-head-import-in-document": [
+      "origin/codex/stage1-nextjs-lint:stage1/cohere/lint/claims/nextjs.md"
+    ],
+    "@next/next/no-html-link-for-pages": [
+      "origin/codex/stage1-nextjs-lint:stage1/cohere/lint/claims/nextjs.md"
+    ],
+    "@next/next/no-img-element": [
+      "origin/codex/stage1-nextjs-lint:stage1/cohere/lint/claims/nextjs.md"
+    ],
+    "@next/next/no-location-assign-relative-destination": [
+      "origin/codex/stage1-nextjs-lint:stage1/cohere/lint/claims/nextjs.md"
+    ],
+    "@next/next/no-page-custom-font": [
+      "origin/codex/stage1-nextjs-lint:stage1/cohere/lint/claims/nextjs.md"
+    ],
+    "@next/next/no-styled-jsx-in-document": [
+      "origin/codex/stage1-nextjs-lint:stage1/cohere/lint/claims/nextjs.md"
+    ],
+    "@next/next/no-sync-scripts": [
+      "origin/codex/stage1-nextjs-lint:stage1/cohere/lint/claims/nextjs.md"
+    ],
+    "@next/next/no-typos": [
+      "origin/codex/stage1-nextjs-lint:stage1/cohere/lint/claims/nextjs.md"
+    ],
+    "@next/next/no-unwanted-polyfillio": [
+      "origin/codex/stage1-nextjs-lint:stage1/cohere/lint/claims/nextjs.md"
+    ]
+  },
+  "queue_definition": "helper-ready then inventory order excluding needs_type_information and binding_only; includes helper-blocked syntax as the original claim defines",
+  "remaining": [
+    "consistent-return",
+    "constructor-super",
+    "default-case",
+    "dot-notation",
+    "id-length",
+    "nexus/boundary-no-internal-import",
+    "nexus/boundary-no-nexus-outside-import",
+    "nexus/boundary-no-project-import",
+    "nexus/import-no-forbidden-source",
+    "nexus/import-require-path-alias",
+    "nexus/localization-no-untranslated-value",
+    "no-constant-condition",
+    "no-control-regex",
+    "no-dupe-class-members",
+    "no-dupe-else-if",
+    "no-empty-function",
+    "no-extra-boolean-cast",
+    "no-extra-label",
+    "no-fallthrough",
+    "no-inline-comments",
+    "no-irregular-whitespace",
+    "no-prototype-builtins",
+    "no-regex-spaces",
+    "no-restricted-exports",
+    "no-restricted-imports",
+    "no-this-before-super",
+    "no-unreachable-loop",
+    "no-unused-labels",
+    "no-useless-call",
+    "no-useless-escape",
+    "no-useless-rename",
+    "object-shorthand",
+    "operator-assignment",
+    "prefer-spread",
+    "react-hooks/config",
+    "react-hooks/error-boundaries",
+    "react-hooks/incompatible-library",
+    "react-hooks/rules-of-hooks",
+    "react-hooks/void-use-memo",
+    "react/default-props-match-prop-types",
+    "react/forbid-dom-props",
+    "react/jsx-curly-brace-presence",
+    "react/jsx-key",
+    "react/jsx-no-duplicate-props",
+    "react/jsx-no-script-url",
+    "react/jsx-no-target-blank",
+    "react/jsx-props-no-spread-multi",
+    "react/no-access-state-in-setstate",
+    "react/no-arrow-function-lifecycle",
+    "react/no-children-prop",
+    "react/no-danger",
+    "react/no-deprecated",
+    "react/no-did-mount-set-state",
+    "react/no-did-update-set-state",
+    "react/no-direct-mutation-state",
+    "react/no-render-return-value",
+    "react/no-set-state",
+    "react/no-string-refs",
+    "react/no-this-in-sfc",
+    "react/no-typos",
+    "react/no-unknown-property",
+    "react/no-unused-class-component-methods",
+    "react/no-unused-state",
+    "react/no-will-update-set-state",
+    "react/prefer-es6-class",
+    "react/prefer-stateless-function",
+    "react/require-optimization",
+    "react/require-render-return",
+    "react/state-in-constructor",
+    "react/void-dom-elements-no-children",
+    "structure/boundary-no-project-theme-value",
+    "structure/consistency-require-matching-file-name",
+    "structure/consistency-require-organized-imports",
+    "structure/import-require-react-namespace",
+    "structure/network-no-direct-fetch",
+    "structure/network-no-forbidden-import",
+    "structure/network-no-invalidate-cache-in-on-success",
+    "structure/network-require-hook-options-parameter",
+    "structure/network-require-hook-request-suffix",
+    "structure/network-require-hook-variables-type",
+    "structure/next-no-near-miss-route-export",
+    "structure/next-no-page-state",
+    "structure/next-require-api-parameter-name",
+    "structure/next-require-page-default-export",
+    "structure/react-component-no-const-assignment",
+    "structure/react-component-no-destructuring",
+    "structure/react-component-no-display-name",
+    "structure/react-component-no-forward-ref",
+    "structure/react-component-no-separate-named-export",
+    "structure/react-component-require-named-export",
+    "structure/react-component-require-properties-parameter",
+    "structure/react-component-require-properties-type-suffix",
+    "structure/react-element-no-anchor",
+    "structure/react-element-no-horizontal-rule",
+    "structure/react-hook-no-destructuring",
+    "structure/react-hook-no-properties-in-dependencies",
+    "structure/react-hook-require-effect-comment",
+    "structure/react-hook-require-result-naming",
+    "structure/storage-no-direct-local-storage",
+    "yoda"
+  ],
+  "origin_ports_skipped": {
+    "react/forward-ref-uses-ref": [
+      "origin/cloud/integrate-s2-1:stage1/cohere/lint/batch8/forward_ref_uses_ref.ts",
+      "origin/codex/stage1-jsx-lint:stage1/cohere/lint/batch8/forward_ref_uses_ref.ts",
+      "origin/codex/stage1-lint-batch8:stage1/cohere/lint/batch8/forward_ref_uses_ref.ts"
+    ],
+    "react/jsx-no-comment-textnodes": [
+      "origin/cloud/integrate-s2-1:stage1/cohere/lint/batch8/jsx_no_comment_textnodes.ts",
+      "origin/codex/stage1-jsx-lint:stage1/cohere/lint/batch8/jsx_no_comment_textnodes.ts",
+      "origin/codex/stage1-lint-batch8:stage1/cohere/lint/batch8/jsx_no_comment_textnodes.ts"
+    ],
+    "react/no-find-dom-node": [
+      "origin/cloud/integrate-s2-1:stage1/cohere/lint/batch8/no_find_dom_node.ts",
+      "origin/codex/stage1-jsx-lint:stage1/cohere/lint/batch8/no_find_dom_node.ts",
+      "origin/codex/stage1-lint-batch8:stage1/cohere/lint/batch8/no_find_dom_node.ts"
+    ],
+    "react/no-is-mounted": [
+      "origin/cloud/integrate-s2-1:stage1/cohere/lint/batch8/no_is_mounted.ts",
+      "origin/codex/stage1-jsx-lint:stage1/cohere/lint/batch8/no_is_mounted.ts",
+      "origin/codex/stage1-lint-batch8:stage1/cohere/lint/batch8/no_is_mounted.ts"
+    ],
+    "no-octal-escape": [
+      "origin/cloud/integrate-s2-1:stage1/cohere/lint/batch8/no_octal_escape.ts",
+      "origin/codex/stage1-jsx-lint:stage1/cohere/lint/batch8/no_octal_escape.ts",
+      "origin/codex/stage1-lint-batch8:stage1/cohere/lint/batch8/no_octal_escape.ts"
+    ],
+    "react/no-redundant-should-component-update": [
+      "origin/cloud/integrate-s2-1:stage1/cohere/lint/batch8/no_redundant_should_component_update.ts",
+      "origin/codex/stage1-jsx-lint:stage1/cohere/lint/batch8/no_redundant_should_component_update.ts",
+      "origin/codex/stage1-lint-batch8:stage1/cohere/lint/batch8/no_redundant_should_component_update.ts"
+    ],
+    "no-unexpected-multiline": [
+      "origin/cloud/integrate-s2-1:stage1/cohere/lint/batch8/no_unexpected_multiline.ts",
+      "origin/codex/stage1-jsx-lint:stage1/cohere/lint/batch8/no_unexpected_multiline.ts",
+      "origin/codex/stage1-lint-batch8:stage1/cohere/lint/batch8/no_unexpected_multiline.ts"
+    ],
+    "no-unused-private-class-members": [
+      "origin/cloud/integrate-s2-1:stage1/cohere/lint/batch8/no_unused_private_class_members.ts",
+      "origin/codex/stage1-jsx-lint:stage1/cohere/lint/batch8/no_unused_private_class_members.ts",
+      "origin/codex/stage1-lint-batch8:stage1/cohere/lint/batch8/no_unused_private_class_members.ts"
+    ],
+    "no-useless-constructor": [
+      "origin/cloud/integrate-s2-1:stage1/cohere/lint/batch8/no_useless_constructor.ts",
+      "origin/codex/stage1-jsx-lint:stage1/cohere/lint/batch8/no_useless_constructor.ts",
+      "origin/codex/stage1-lint-batch8:stage1/cohere/lint/batch8/no_useless_constructor.ts"
+    ],
+    "prefer-template": [
+      "origin/cloud/integrate-s2-1:stage1/cohere/lint/batch8/prefer_template.ts",
+      "origin/codex/stage1-jsx-lint:stage1/cohere/lint/batch8/prefer_template.ts",
+      "origin/codex/stage1-lint-batch8:stage1/cohere/lint/batch8/prefer_template.ts"
+    ],
+    "no-caller": [
+      "origin/codex/stage1-lint-batch2:stage1/cohere/lint/no_caller.ts",
+      "origin/codex/stage1-lint-batch4:stage1/cohere/lint/no_caller.ts"
+    ],
+    "no-empty-character-class": [
+      "origin/codex/stage1-lint-batch2:stage1/cohere/lint/no_empty_character_class.ts",
+      "origin/codex/stage1-lint-batch4:stage1/cohere/lint/no_empty_character_class.ts"
+    ],
+    "no-empty-pattern": [
+      "origin/codex/stage1-lint-batch2:stage1/cohere/lint/no_empty_pattern.ts",
+      "origin/codex/stage1-lint-batch4:stage1/cohere/lint/no_empty_pattern.ts"
+    ],
+    "no-empty-static-block": [
+      "origin/codex/stage1-lint-batch2:stage1/cohere/lint/no_empty_static_block.ts",
+      "origin/codex/stage1-lint-batch4:stage1/cohere/lint/no_empty_static_block.ts"
+    ],
+    "no-ex-assign": [
+      "origin/codex/stage1-lint-batch2:stage1/cohere/lint/no_ex_assign.ts",
+      "origin/codex/stage1-lint-batch4:stage1/cohere/lint/no_ex_assign.ts"
+    ],
+    "no-iterator": [
+      "origin/codex/stage1-lint-batch2:stage1/cohere/lint/no_iterator.ts",
+      "origin/codex/stage1-lint-batch4:stage1/cohere/lint/no_iterator.ts"
+    ],
+    "no-multi-assign": [
+      "origin/codex/stage1-lint-batch2:stage1/cohere/lint/no_multi_assign.ts",
+      "origin/codex/stage1-lint-batch4:stage1/cohere/lint/no_multi_assign.ts"
+    ],
+    "no-proto": [
+      "origin/codex/stage1-lint-batch2:stage1/cohere/lint/no_proto.ts",
+      "origin/codex/stage1-lint-batch4:stage1/cohere/lint/no_proto.ts"
+    ],
+    "no-script-url": [
+      "origin/codex/stage1-lint-batch2:stage1/cohere/lint/no_script_url.ts",
+      "origin/codex/stage1-lint-batch4:stage1/cohere/lint/no_script_url.ts"
+    ],
+    "no-self-compare": [
+      "origin/codex/stage1-lint-batch2:stage1/cohere/lint/no_self_compare.ts",
+      "origin/codex/stage1-lint-batch4:stage1/cohere/lint/no_self_compare.ts"
+    ],
+    "no-unsafe-finally": [
+      "origin/codex/stage1-lint-batch2:stage1/cohere/lint/no_unsafe_finally.ts",
+      "origin/codex/stage1-lint-batch4:stage1/cohere/lint/no_unsafe_finally.ts"
+    ],
+    "no-useless-catch": [
+      "origin/codex/stage1-lint-batch2:stage1/cohere/lint/no_useless_catch.ts",
+      "origin/codex/stage1-lint-batch4:stage1/cohere/lint/no_useless_catch.ts"
+    ],
+    "no-useless-concat": [
+      "origin/codex/stage1-lint-batch2:stage1/cohere/lint/no_useless_concat.ts",
+      "origin/codex/stage1-lint-batch4:stage1/cohere/lint/no_useless_concat.ts"
+    ],
+    "nexus/consistency-no-long-line-comment": [
+      "origin/codex/stage1-lint-batch3:stage1/cohere/lint/lint.ts",
+      "origin/codex/stage1-lint-batch3:stage1/cohere/lint/rules/no_long_line_comment.ts"
+    ],
+    "nexus/consistency-no-shouting": [
+      "origin/codex/stage1-lint-batch3:stage1/cohere/lint/lint.ts",
+      "origin/codex/stage1-lint-batch3:stage1/cohere/lint/rules/no_shouting.ts"
+    ],
+    "nexus/consistency-no-single-line-jsdoc": [
+      "origin/codex/stage1-lint-batch3:stage1/cohere/lint/lint.ts",
+      "origin/codex/stage1-lint-batch3:stage1/cohere/lint/rules/no_single_line_jsdoc.ts"
+    ],
+    "prefer-destructuring": [
+      "origin/codex/stage1-lint-batch3:stage1/cohere/lint/lint.ts",
+      "origin/codex/stage1-lint-batch3:stage1/cohere/lint/rules/prefer_destructuring.ts"
+    ],
+    "nexus/consistency-no-abbreviated-identifier": [
+      "origin/codex/stage1-lint-batch3:stage1/cohere/lint/rules/no_abbreviated_identifier.ts"
+    ],
+    "nexus/consistency-no-ambiguous-identifier": [
+      "origin/codex/stage1-lint-batch3:stage1/cohere/lint/rules/no_ambiguous_identifier.ts"
+    ],
+    "nexus/consistency-no-multiline-arrow-function": [
+      "origin/codex/stage1-lint-batch3:stage1/cohere/lint/rules/no_multiline_arrow_function.ts"
+    ],
+    "one-var": [
+      "origin/codex/stage1-lint-batch3:stage1/cohere/lint/rules/one_var.ts"
+    ],
+    "grouped-accessor-pairs": [
+      "origin/codex/stage1-lint-batch4:stage1/cohere/lint/grouped_accessor_pairs.ts"
+    ],
+    "nexus/consistency-no-screaming-snake-case": [
+      "origin/codex/stage1-lint-batch4:stage1/cohere/lint/nexus_consistency_no_screaming_snake_case.ts"
+    ]
+  },
+  "selected": [
+    "consistent-return",
+    "constructor-super",
+    "default-case"
+  ],
+  "claim_commit": "ae8e7213",
+  "prior_audit_correction": "The previous ready-only audit narrowed the syntax-only definition incorrectly; includes helper-blocked syntax entries again."
+}

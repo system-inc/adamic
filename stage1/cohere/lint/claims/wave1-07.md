@@ -86,3 +86,6 @@ After pushing all existing work and refreshing every origin head, inspected 346 
 3. `default-case`
 
 A fresh executable-source scan also found no origin implementation for these names. These three reservations are pushed before any new rule code. Existing reservations are unchanged. Shared helper prerequisites will be checked before implementation; no shared file is owned by this unit.
+
+
+Corrected continuation outcome: claim ae8e7213 was pushed before code. consistent-return needs consistentreturn.Judge and its control_flow_graph.Build/EndReachable judgment; the two origin graph modules found are type-aware bridge projections unavailable through the stage1 lint RuleContext. This is a shared-helper dependency gap, so the earlier stop instruction applies. No new rule code, parity, mutant or throughput claim is made. constructor-super and default-case remain reserved and unstarted; no further claims taken. See wave1-07-next-blocker-report.md and wave1-07-next-dependency-evidence/ for the corrected selection, source evidence, setup and upstream reference tests.

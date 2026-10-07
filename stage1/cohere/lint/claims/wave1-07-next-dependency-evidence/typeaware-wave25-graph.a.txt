@@ -1,0 +1,27 @@
+import { panic } from 'adamic';
+import { Frames, header } from './frames.ts';
+import type { SyntaxProjection } from './syntax_projection.a';
+export class SyntaxEvent {
+    readonly hook: number; readonly node: number;
+    constructor(hook: number, node: number) { this.hook = hook; this.node = node; }
+}
+export class SyntaxBlock {
+    readonly reachable: boolean; readonly successors: readonly number[]; readonly events: readonly SyntaxEvent[];
+    constructor(frames: Frames) {
+        this.reachable = frames.yes(); this.successors = frames.ids(); const count = frames.natural(); const events: SyntaxEvent[] = [];
+        for(let at = 0; at < count; at++) { events.push(new SyntaxEvent(frames.natural(), frames.natural())); } this.events = events;
+    }
+}
+export class SyntaxControlFlow {
+    readonly blocks: readonly SyntaxBlock[];
+    constructor(syntax: SyntaxProjection, root: number) {
+        const frames = new Frames(syntax.ask(root, 'syntax-control-flow')); header(frames, 'syntax-control-flow'); const count = frames.natural(); const blocks: SyntaxBlock[] = [];
+        for(let at = 0; at < count; at++) { blocks.push(new SyntaxBlock(frames)); } frames.end(); this.blocks = blocks;
+        if(count === 0) { panic('empty control flow graph'); }
+        for(const block of blocks) {
+            for(const next of block.successors) { if(next >= count) { panic('invalid control flow successor'); } }
+            for(const event of block.events) { if(event.hook > 1) { panic('invalid syntax hook'); } syntax.node(event.node); }
+        }
+    }
+    block(index: number): SyntaxBlock { return this.blocks[index] ?? panic('missing control flow block'); }
+}

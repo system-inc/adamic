@@ -1,0 +1,641 @@
+{
+  "searched_stage1_trees": 102,
+  "matches": [
+    [
+      "origin/codex/typeaware-wave-01",
+      "stage1/cohere/typeaware/wave_01_next/syntax_flow_graph.a"
+    ],
+    [
+      "origin/codex/typeaware-wave-25",
+      "stage1/cohere/typeaware/syntax_control_flow.a"
+    ]
+  ],
+  "refs": [
+    {
+      "origin_ref": "origin/apple/bridge",
+      "stage1_tree": "dd36678099e5d687937e461520f95094f1594f5f",
+      "adamic_source_paths": 226,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/claude/adamic-file-input-args-r5tzc1",
+      "stage1_tree": "b917044e99e0bb6c718a275784e6fb315f02aad2",
+      "adamic_source_paths": 56,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/claude/cycle-finder-fresh-writes-ssz3oh",
+      "stage1_tree": "2bca8f11182ed39ce6afd330c841eb3f233e2fa9",
+      "adamic_source_paths": 48,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/claude/port-cohere-second-slice-050g6a",
+      "stage1_tree": "82881acf778df192b5485abb53f1408373124541",
+      "adamic_source_paths": 56,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/claude/port-gitignore-adamic-1bstfd",
+      "stage1_tree": "4c6e183beb324ceb9be06fbdf8f2eb0d02b22b43",
+      "adamic_source_paths": 47,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/claude/release-globals-at-exit-uqmaf6",
+      "stage1_tree": "5eda82d59e6d7761c922a0c2c1480f7b995d5e52",
+      "adamic_source_paths": 16,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/cloud/b2-notyets",
+      "stage1_tree": "57232df68d8880d1400305daf0b983545fcd143d",
+      "adamic_source_paths": 56,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/cloud/base-5d4c801",
+      "stage1_tree": "4f60bd56bf9070f6dc569debc33461e8cf7674f8",
+      "adamic_source_paths": 104,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/cloud/codex-distance-meter",
+      "stage1_tree": "2470b42fb1fe3190b59cdd0a00798f1677b9338f",
+      "adamic_source_paths": 55,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/cloud/codex-generics-values",
+      "stage1_tree": "7577e0ad5438e91d133bfc0be483cc12856d24a0",
+      "adamic_source_paths": 55,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/cloud/grok-class-features-coverage",
+      "stage1_tree": "f42f08deb46bb29dcf4c5070a16a3ca97c7deffe",
+      "adamic_source_paths": 55,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/cloud/grok-regex-cycle-coverage",
+      "stage1_tree": "f470838400bade3470a75302920ed9bc4e35e233",
+      "adamic_source_paths": 66,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/cloud/hx74vgw-alloc",
+      "stage1_tree": "5fd4b1ffdaba1a52f3bdcfe9ee145afe46403f7a",
+      "adamic_source_paths": 16,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/cloud/integrate-12",
+      "stage1_tree": "3bbaece0469d1c2ba3a677d5720eb995d960c985",
+      "adamic_source_paths": 55,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/cloud/integrate-15",
+      "stage1_tree": "093a588d345887f395a89fef8d04e3fa8d9dabdf",
+      "adamic_source_paths": 226,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/cloud/integrate-9",
+      "stage1_tree": "400414fc26d696327d3d14d2759484135ed9ec53",
+      "adamic_source_paths": 48,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/cloud/integrate-s2-1",
+      "stage1_tree": "411d74988f6704bf40686fc8703222c0016e5cbb",
+      "adamic_source_paths": 271,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/call-targets-maythrow",
+      "stage1_tree": "54934b00b64745c65ba9699b621c151e96df2a50",
+      "adamic_source_paths": 104,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/cohere-bump",
+      "stage1_tree": "2ad24b215a3094d80fad7d18e4ee667f0d474eed",
+      "adamic_source_paths": 104,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/host-fs-directory",
+      "stage1_tree": "ff2269e6db5b6ddfbe33c12c46136308a8be8933",
+      "adamic_source_paths": 118,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/lint-harness-dot-a",
+      "stage1_tree": "5829fc8309004d155aee0504a2b16bbc55030b5a",
+      "adamic_source_paths": 251,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/lint-helpers",
+      "stage1_tree": "fca0129a4392942efe79a220f39b07497c3ccc39",
+      "adamic_source_paths": 126,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/lint-helpers-01",
+      "stage1_tree": "164bb551def0804740a5b4dbccb8c841d664f006",
+      "adamic_source_paths": 137,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/lint-helpers-02",
+      "stage1_tree": "dbea630cbfe7bec6b428a079e5978f153fa4aad0",
+      "adamic_source_paths": 133,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/lint-helpers-03",
+      "stage1_tree": "11a5ebfa0d71c5c55b7018b316aea11be6b01dcc",
+      "adamic_source_paths": 135,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/lint-helpers-04",
+      "stage1_tree": "bb9bd4e1f985956031d24b94410c4f30c43f2007",
+      "adamic_source_paths": 147,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/lint-helpers-05",
+      "stage1_tree": "c122c3bb461bc3278495f75ec1588d5432e38d22",
+      "adamic_source_paths": 132,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/lint-inventory",
+      "stage1_tree": "df9b53328d1c727ad46c7080661c641e33aa90c3",
+      "adamic_source_paths": 88,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/lint-registration",
+      "stage1_tree": "0c64a1924802c5ae356e96843126bf4611e2e0d3",
+      "adamic_source_paths": 116,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/lint-wave1-01",
+      "stage1_tree": "713a2e69398469a59b8942e7ec0c9d92a5df3b6a",
+      "adamic_source_paths": 252,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/lint-wave1-02",
+      "stage1_tree": "5047662b5b490161c126456e26ec5cd90a577073",
+      "adamic_source_paths": 144,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/lint-wave1-03",
+      "stage1_tree": "5b9d0f2282cbb9dd337b8ce71a93f36e4ae1bbc0",
+      "adamic_source_paths": 144,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/lint-wave1-04",
+      "stage1_tree": "e828f0df8aaf4803d06596fe11c5c05a4ab98821",
+      "adamic_source_paths": 155,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/lint-wave1-05",
+      "stage1_tree": "51d2f71e4cd6d99762bd5a3106d979d5edbf1d42",
+      "adamic_source_paths": 157,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/lint-wave1-06",
+      "stage1_tree": "80965b3ca31d9ae4d46848bbe320b7a0e4693a9e",
+      "adamic_source_paths": 279,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/lint-wave1-07",
+      "stage1_tree": "4901b88d084b93b698822cee0dab5ac0a3fed483",
+      "adamic_source_paths": 273,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/lint-wave1-08",
+      "stage1_tree": "ed1fce8af2d9e3632bb06160877199dc53ce1c36",
+      "adamic_source_paths": 162,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/lint-wave1-09",
+      "stage1_tree": "b4a9175b59d61a1901543bd5691e4c9bc0002c1c",
+      "adamic_source_paths": 116,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/lint-wave1-10",
+      "stage1_tree": "aefdf6d797f9cca475974e084f6f702de3e4cea2",
+      "adamic_source_paths": 152,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/lint-wave1-11",
+      "stage1_tree": "6cda517a87dfaf29f50f7ecdff524236558a35ed",
+      "adamic_source_paths": 140,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/lint-wave1-12",
+      "stage1_tree": "a98fc6c312fb611f78d51acd6520afdecae13c57",
+      "adamic_source_paths": 160,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/lint-wave1-13",
+      "stage1_tree": "19a0a7312ed1ec09c39ed1e51de444ff5f356d44",
+      "adamic_source_paths": 166,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/lint-wave1-14",
+      "stage1_tree": "3897c64acf7eccf3c4115fd189ac56abc105e62a",
+      "adamic_source_paths": 151,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/lint-wave1-15",
+      "stage1_tree": "4db4770c1bd5774e805c7304049a6b1237c19d98",
+      "adamic_source_paths": 157,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/parser-recovery",
+      "stage1_tree": "fdb2b1e9ae39ab501a79e04cd4fdde8fb320ff42",
+      "adamic_source_paths": 117,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/rename-documentation",
+      "stage1_tree": "5153f36178da9196b01e557fa6b7874b9293e820",
+      "adamic_source_paths": 226,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/stage1-command",
+      "stage1_tree": "17fd8891ca2c9fcfe5f059ffe284a256c77586ba",
+      "adamic_source_paths": 132,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/stage1-css",
+      "stage1_tree": "d77f9ca9fd076484e98d03d89ca7bb766904f4a0",
+      "adamic_source_paths": 84,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/stage1-css-numbers",
+      "stage1_tree": "06840a8c4b0a51812f0559be35ac8fce6f832a7f",
+      "adamic_source_paths": 60,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/stage1-css-printer",
+      "stage1_tree": "7755ae2dc0a04fec1d7911297643f70fabbd5c1d",
+      "adamic_source_paths": 108,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/stage1-css-selector",
+      "stage1_tree": "0c6bdd744ed8741b81f8fe38ee6108813f562490",
+      "adamic_source_paths": 66,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/stage1-estree",
+      "stage1_tree": "775bb89c3b524ac3515be582b9f0b6ceb039716c",
+      "adamic_source_paths": 146,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/stage1-formatter-slice",
+      "stage1_tree": "e67b64ded8d6d994b7568a38efafae618b827e9e",
+      "adamic_source_paths": 58,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/stage1-graphql-printer",
+      "stage1_tree": "849fd56d8cf1cef814b456d098fcdc86dd391a72",
+      "adamic_source_paths": 109,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/stage1-json-format",
+      "stage1_tree": "4edb2f0da2109c3c95cacbd2cc4e944e84b18fdd",
+      "adamic_source_paths": 65,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/stage1-jsx-lint",
+      "stage1_tree": "81f3d0e1562b6e47d08e812c0380091e9619a5eb",
+      "adamic_source_paths": 122,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/stage1-lint-batch2",
+      "stage1_tree": "5d7776092f313bea7c625508d3d18d69ab1fd276",
+      "adamic_source_paths": 136,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/stage1-lint-batch3",
+      "stage1_tree": "98b51b18adfe803afc73991abdfb9710ecfc77b2",
+      "adamic_source_paths": 112,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/stage1-lint-batch4",
+      "stage1_tree": "9cf1a5d805251df9624ee2691dba194393024244",
+      "adamic_source_paths": 133,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/stage1-lint-batch4-typescript",
+      "stage1_tree": "5a1967f82665b5daff72c8aae8a2fdb026a148be",
+      "adamic_source_paths": 111,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/stage1-lint-batch5",
+      "stage1_tree": "4488f033124911e16c4737817b3d78a3019243be",
+      "adamic_source_paths": 123,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/stage1-lint-batch6",
+      "stage1_tree": "895774e9239493d5bb1c85932cd2bb96d016de89",
+      "adamic_source_paths": 118,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/stage1-lint-batch6-perf",
+      "stage1_tree": "4b1cd1236f3c2930ee4f98c81e5ede370ec6b812",
+      "adamic_source_paths": 119,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/stage1-lint-batch8",
+      "stage1_tree": "64629a396d2bcd8fa18c08eb81887e5d843409b6",
+      "adamic_source_paths": 121,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/stage1-lint-output",
+      "stage1_tree": "590d758d3d89b0a785c695ed5e658d839fa36314",
+      "adamic_source_paths": 123,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/stage1-markdown-blocks",
+      "stage1_tree": "94c27a8aa71dd97dd704329e3a627479c6149c94",
+      "adamic_source_paths": 149,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/stage1-markdown-escape",
+      "stage1_tree": "4e84dee75880bb76352cf5827d1769fb3c23fbcf",
+      "adamic_source_paths": 70,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/stage1-nextjs-lint",
+      "stage1_tree": "def9b4d557c3ed91622d8e540be7ec3560951b1a",
+      "adamic_source_paths": 119,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/stage1-ts-printer",
+      "stage1_tree": "6783c3c166ff2f360be2fa61866ec14e52f33e23",
+      "adamic_source_paths": 102,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/stage1-yaml",
+      "stage1_tree": "9276f0145d2549e72a86d9f9e4be2c20968cf4ec",
+      "adamic_source_paths": 162,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/tsgo-c-library",
+      "stage1_tree": "8bce0c793bb2ef54ee5f5a494a51f1a1c1957f05",
+      "adamic_source_paths": 119,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/typeaware-wave-01",
+      "stage1_tree": "83709622c0e150cc79275eafc63c3c090852307c",
+      "adamic_source_paths": 145,
+      "candidate_helper_paths": [
+        "stage1/cohere/typeaware/wave_01_next/syntax_flow_graph.a"
+      ]
+    },
+    {
+      "origin_ref": "origin/codex/typeaware-wave-02",
+      "stage1_tree": "7702f94bee2173199dab4823ac45f431a891ab2d",
+      "adamic_source_paths": 147,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/typeaware-wave-03",
+      "stage1_tree": "2be32395fb6e1bb92f565729a8b0119bc5c3fa9a",
+      "adamic_source_paths": 148,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/typeaware-wave-04",
+      "stage1_tree": "3f162bb487c97b9cb2eecd888a9a01e9f5e7f6fb",
+      "adamic_source_paths": 134,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/typeaware-wave-05",
+      "stage1_tree": "de4f3ad498e52d46d04d743cdc33f9d5e7659393",
+      "adamic_source_paths": 129,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/typeaware-wave-06",
+      "stage1_tree": "996c61d39f9f3764437dda39299f3769ea1385a9",
+      "adamic_source_paths": 136,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/typeaware-wave-07",
+      "stage1_tree": "f397263dd2e7dd0c95272c8d4179d3d41806047c",
+      "adamic_source_paths": 127,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/typeaware-wave-08",
+      "stage1_tree": "885f4b9adddd8d543a1c7c4f4c4cb2e1ef1ca678",
+      "adamic_source_paths": 158,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/typeaware-wave-09",
+      "stage1_tree": "dbf0678844638b353207c43269cfaab49ff59bcc",
+      "adamic_source_paths": 130,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/typeaware-wave-10",
+      "stage1_tree": "d0332336abf5ab9a22a850507692d6755bfb9334",
+      "adamic_source_paths": 131,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/typeaware-wave-11",
+      "stage1_tree": "22173254d0758b55e6bbf1fb080d0f798c3d5938",
+      "adamic_source_paths": 142,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/typeaware-wave-12",
+      "stage1_tree": "9a31973c52eaaeeeb096d21e7939e25a8574a3ab",
+      "adamic_source_paths": 140,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/typeaware-wave-13",
+      "stage1_tree": "1f7ca9c675cdf738f91bd7c5010c281609ebe033",
+      "adamic_source_paths": 137,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/typeaware-wave-14",
+      "stage1_tree": "930924b8fcc8f24fc62f92645547762587230577",
+      "adamic_source_paths": 133,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/typeaware-wave-15",
+      "stage1_tree": "8c53ed6c1678c405a3b3570a96ef8ed21e1a5a06",
+      "adamic_source_paths": 143,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/typeaware-wave-16",
+      "stage1_tree": "7a93ed84f56b25e68154b969c0af00496a25ef5c",
+      "adamic_source_paths": 199,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/typeaware-wave-17",
+      "stage1_tree": "4d0b15c4d0ba42dc84e52d04f40cd74708217bb8",
+      "adamic_source_paths": 139,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/typeaware-wave-18",
+      "stage1_tree": "4afbfec1de4dbaa2899ea6c8608a0c3c7f81c741",
+      "adamic_source_paths": 136,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/typeaware-wave-19",
+      "stage1_tree": "8a2d9aab9af4707383561efbc2fe747348fcd0ef",
+      "adamic_source_paths": 131,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/typeaware-wave-20",
+      "stage1_tree": "fb299fdf284e2cf800c436d84f2bf75e8a452ae1",
+      "adamic_source_paths": 127,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/typeaware-wave-21",
+      "stage1_tree": "1c4d73020aaadca268756dbaeac84d7ff9407ef4",
+      "adamic_source_paths": 139,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/typeaware-wave-22",
+      "stage1_tree": "96397070d1ec62515dc4e5e0589f1c1861c6a8f9",
+      "adamic_source_paths": 140,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/typeaware-wave-23",
+      "stage1_tree": "7ed3ec700db433321d657df74ff040206a207041",
+      "adamic_source_paths": 142,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/typeaware-wave-24",
+      "stage1_tree": "210c203f11e23e1d6979575352541a8b8e30b5f4",
+      "adamic_source_paths": 150,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/typeaware-wave-25",
+      "stage1_tree": "52a408ae97e6902df0e69e3089b4c678219fe228",
+      "adamic_source_paths": 142,
+      "candidate_helper_paths": [
+        "stage1/cohere/typeaware/syntax_control_flow.a"
+      ]
+    },
+    {
+      "origin_ref": "origin/codex/typeaware-wave-26",
+      "stage1_tree": "95a7c63a50f57ff19006c69d3cad7a1cf9029713",
+      "adamic_source_paths": 145,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/typeaware-wave-27",
+      "stage1_tree": "8ed4e7ad64c353bbb0e1f89292353acaab7f4074",
+      "adamic_source_paths": 124,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/typeaware-wave-28",
+      "stage1_tree": "46cb2ed1cc48406f5fc84949b58465871d554959",
+      "adamic_source_paths": 133,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/typeaware-wave-29",
+      "stage1_tree": "9ee376e23394031d5e1e8eec7f01eda52121af5e",
+      "adamic_source_paths": 128,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/typeaware-wave-30",
+      "stage1_tree": "333b9ac7f2731bad1d791a6ce13d8202997c772a",
+      "adamic_source_paths": 174,
+      "candidate_helper_paths": []
+    },
+    {
+      "origin_ref": "origin/codex/typescript-scanner",
+      "stage1_tree": "872d4160dbd909e88be1cf93df23bf2b1c566a10",
+      "adamic_source_paths": 88,
+      "candidate_helper_paths": []
+    }
+  ],
+  "missing_required_symbols": [
+    "consistentreturn.Judge",
+    "control_flow_graph.Build",
+    "control_flow_graph.Graph.EndReachable"
+  ],
+  "candidate_assessment": {
+    "origin/codex/typeaware-wave-25:stage1/cohere/typeaware/syntax_control_flow.a": "Reads syntax.ask(root, syntax-control-flow) into framed Go graph blocks; requires SyntaxProjection.ask, not available in the stage1 lint RuleContext.",
+    "origin/codex/typeaware-wave-01:stage1/cohere/typeaware/wave_01_next/syntax_flow_graph.a": "Reads bindings.rules.ask(root, syntax-flow-graph); requires the type-aware rule bridge, not available in stage1 lint RuleContext."
+  },
+  "blocker": "No compatible stage1 consistentreturn.Judge / control_flow_graph.Build / EndReachable implementation or graph bridge is available in this rule context. The existing bridge-backed projections are not independent Adamic graph builders."
+}
