@@ -1,0 +1,3 @@
+function narrowed(value: string): 'a';
+function narrowed(value: string): string { return value; }
+console.log(narrowed('b'));
