@@ -309,3 +309,37 @@ native syntax delivery. Full atomic and await rules also have unfinished
 implementation, not merely a shared-harness gap. No new claims were taken.
 No new throughput measurements were made for this rebase; previous timings
 remain observations of their recorded versions.
+
+## Atomic escape guard/cache continuation
+
+Added require_atomic_updates/escape.a over supplied symbol/declaration/root and
+capture facts. Adamic decides unresolved/declaration guards, the parameter's
+property exception before a symbol-only memo, memo reuse and the outside-root
+or captured decision. No checker verdict is provided by this helper.
+
+An independent Go overlay parses inner/outer variable and parameter declarations
+and invokes unchanged escapesEnclosingFunction. Sixty-four cases vary nil symbol,
+empty declarations, parameter status, member arm, declaration root and preseeded
+true cache. The binding arm runs first so a false binding memo cannot mask the
+parameter's property exception. Go symbols deliberately have empty names, making
+uncached capture search return false; this tests guard/cache/root ownership and
+does not validate capture discovery or the native captured=true path.
+
+All 64 output lines agree byte for byte under ASan/UBSan/LSan. Removing the
+parameter-property exception produces valid native code, exits zero with empty
+sanitizer stderr and fails only the Go comparison. Exact streams are preserved
+in validation/atomic-escape.
+
+```sh
+source /workspace/adamic-tools/env.sh
+python3 stage1/cohere/typeaware/wave_01_fourth/testdata/verify_atomic_escape.py /workspace/wave01-atomic-escape /workspace/wave-01-fourth-adamic > /tmp/wave01-atomic-escape.log 2>&1
+```
+
+Output: PASS 64 guard/cache cases; sanitizers clean; parameter-arm mutant caught
+by Go bytes. gofmt and git diff --check pass. Current fetched main 39638d9e and
+area tip 7481e0324 are ancestors of this branch, so no rebase was necessary.
+No shared files were edited, no new claims were taken, and no checker handles
+are created by this helper. Full event/CFG collection, binding/root/capture facts,
+deferral integration and diagnostic rendering remain unfinished. Await and
+symbol native integration remain unfinished. Existing full-rule gates were
+unchanged and not rerun for this isolated helper; no full-rule timing is claimed.

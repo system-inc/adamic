@@ -1,0 +1,19 @@
+export class AtomicEscape {
+    readonly memo = new Map<number, boolean>();
+    escapes(symbol: number, declarations: number, parameter: boolean, member: boolean, declaredInside: boolean, captured: boolean): boolean {
+        if(symbol === 0 || declarations === 0) {
+            return false;
+        }
+        // This exception precedes a symbol-only cache because it depends on the arm.
+        if(member && parameter) {
+            return true;
+        }
+        const cached = this.memo.get(symbol);
+        if(cached !== undefined) {
+            return cached;
+        }
+        const escaped = !declaredInside || captured;
+        this.memo.set(symbol, escaped);
+        return escaped;
+    }
+}

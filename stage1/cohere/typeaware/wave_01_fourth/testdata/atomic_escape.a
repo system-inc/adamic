@@ -1,0 +1,14 @@
+import { AtomicEscape } from '../require_atomic_updates/escape.a';
+for(let mode = 0; mode < 64; mode++) {
+    const escape = new AtomicEscape();
+    const symbol = (mode & 32) !== 0 ? 0 : mode + 1;
+    if((mode & 16) !== 0) {
+        escape.memo.set(symbol, true);
+    }
+    const declarations = (mode & 4) !== 0 ? 0 : 1;
+    const parameter = (mode & 1) !== 0;
+    const inside = (mode & 8) !== 0;
+    const binding = escape.escapes(symbol, declarations, parameter, false, inside, false);
+    const member = escape.escapes(symbol, declarations, parameter, (mode & 2) !== 0, inside, false);
+    console.log(`${mode} ${binding} ${member}`);
+}
