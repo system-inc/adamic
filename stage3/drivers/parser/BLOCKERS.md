@@ -1,3 +1,77 @@
+# Memoized namespace rerun: arguments.length first, ten stops behind stubs
+
+Merged namespaces-tsc 47a6fabe into unpushed scratch a0aa1e69, yielding
+e4cc453a. The only merge conflict was oracle/counts.md; both sides' rows
+were retained. No lowering conflict or compiler implementation edit. Compiler
+rebuild passes. All focused namespace tests now pass in 1.181 seconds, including
+the three expectations that failed on the previous merge. The 24-level two-edge
+call graph emits C in 0.064 seconds (previously exceeded 30 seconds); all five
+size/control probes emit C and print `true\n` on Node.
+
+The unchanged validated parser slice now stops at core.ts:525:17:
+`Adamic 0.1 refuses arguments; name the parameters, or take a rest parameter`.
+Unsplit, split and repeated split builds all exit 1 at this exact site, in
+0.917, 0.874 and 0.969 seconds. These are pre-C build attempt times, not clang
+times. No C, binary or cache objects were produced; repeat is not warm.
+The `arguments.length` ruling still needs its compiler implementation; no source
+adaptation was made. The eleven probes remain 9/11 green, rows 1–5, 7–9 and 11.
+All nine native/Node comparisons match and all nine byte mutants are caught.
+Row 8 retains its approved unknown signature; row 10's original process-as-any
+probe still refuses, but adaptation 65 removes that site from the actual slice.
+
+Ordered discovery (locations are in the mirrored slice). Only row 1 is observed
+on the validated slice. Every later row is found behind cumulative scratch-only
+stubs and has no native or Node identity claim:
+
+| Row | Slice site | Exact refusal reason or NotYet detail | Minimal program |
+| --- | --- | --- | --- |
+| 1 | core.ts:525:17, reduceLeft | refuses arguments | native-arguments-length.a |
+| 2 | core.ts:594:5, isArray(value: any) | type predicate return expression is not a trusted check on value | native-array-is-array-any.a |
+| 3 | core.ts:616:97, cast callback parameter | type predicate: there is no body proving this parameter | native-predicate-callback-parameter.a |
+| 4 | debug.ts:429:5, attachFlowNodeDebugInfoWorker | this in a namespace function; qualified and detached calls have different receivers | native-namespace-object-receiver.a |
+| 5 | debug.ts:526:5, enableDebugInfo | same namespace receiver refusal | native-namespace-object-receiver.a |
+| 6 | debug.ts:739:5, DebugTypeMapper | class inside a namespace; constructor registration/initialization not proven | native-namespace-class.a |
+| 7 | debug.ts:50:5, namespace log | namespace merged with a function; callable properties/identity/receivers not represented | native-callable-namespace.a |
+| 8 | debug.ts:80:42, getOwnKeys(assertionCache) | Partial<Record<AssertionKeys, ...>> seen as MapLike; fixed objects and records have different storage | native-partial-record-view.a |
+| 9 | debug.ts:102:56, Debug[name] as AnyFunction | invariant-mutable: wider function view can write void where boolean is read | native-function-any-view.a |
+| 10 | debug.ts:111:9, fail | refuses debugger | native-debugger-statement.a |
+| 11 | debug.ts:161:131, assertIsDefined | predicate normal return has not narrowed value to NonNullable<T> | native-generic-assert-non-nullable.a |
+
+The nine new reductions each run on Node with exit 0 and empty stderr, and each
+reproduces its diagnostic family with C emission exit 1. Rows 4/5 share a
+reduction; row 1 uses the existing arguments probe. Exact diagnostics, Node
+outputs and stub ranges are retained in evidence/front24. The new signature
+probe cuts the body to a loud throw while retaining the predicate callback type.
+The nine original green probes are distinct from these nine red reductions.
+
+Discovery replaced function bodies with loud throws. To cross the callback
+signature refusal, its predicate result was changed to boolean in scratch only.
+To cross the class refusal, DebugTypeMapper became an interface plus a typed,
+checked-undefined prototype value. To cross the callable namespace refusal,
+the unused top-level Debug.log function was renamed parserProofLogStub while its
+namespace remained. Later rows depend on these altered source shapes, so they
+are discovery candidates, not a claim about the eventual unmodified build order.
+The raw diagnostics preserve their exact traversal order. Stopped at ten rows
+behind arguments.length, as requested; no compiler proof bypass and no temporary
+adaptation. Initial discovery attempts repeated an ineffective body-only callback
+stub and then selected a type node incorrectly; those artificial outcomes are
+retained in logs but excluded from this ordered list.
+
+Native acceptance on the 81 files and 10,406 cases remains unreached. The extended
+Node reference is still 36,429,231 bytes, SHA-256
+`686a89adf8f215a92b3751b02b767fb062d6bc285d63bb4e363b60f16395d615`.
+No parser-output byte mutant, C size, clang split/unsplit/warm time, parser binary
+size, perf or native best-of-three user time can be measured without C/binary.
+nproc is 5; previous Node user time is 6.162 seconds, not a fresh measurement.
+No full gate, counts gate, complete oracle or WASI run is claimed.
+
+[Full evidence](evidence/front24/report.json) includes both-mode attempts,
+ordered stops, all eleven probes, minimal reductions and green namespace tests.
+Compiler merge remains scratch-only; only parser-owned evidence and programs
+are committed and pushed.
+
+---
+
 # Namespace reachability rerun: red before C, 9 of 11 probes green
 
 Merged namespaces-tsc 023a1a34 into unpushed scratch 16d0caa7, yielding
