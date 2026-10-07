@@ -5,8 +5,6 @@
 === CONT  TestEnforceConsistentClassOrderReportsMisordering
 === RUN   TestEnforceConsistentClassOrderReportsMisordering/two_classes_reversed
 === PAUSE TestEnforceConsistentClassOrderReportsMisordering/two_classes_reversed
-=== RUN   TestEnforceConsistentClassOrderReportsMisordering/variant_before_base
-=== PAUSE TestEnforceConsistentClassOrderReportsMisordering/variant_before_base
 === CONT  TestEnforceConsistentClassOrderStaysSilent
 === RUN   TestEnforceConsistentClassOrderStaysSilent/already_ordered
 === PAUSE TestEnforceConsistentClassOrderStaysSilent/already_ordered
@@ -21,17 +19,73 @@
 === RUN   TestEnforceConsistentClassOrderStaysSilent/two_unranked_classes,_alphabetical_source_order
 === PAUSE TestEnforceConsistentClassOrderStaysSilent/two_unranked_classes,_alphabetical_source_order
 === RUN   TestEnforceConsistentClassOrderStaysSilent/two_unranked_classes,_reverse-alphabetical_source_order
+=== RUN   TestEnforceConsistentClassOrderReportsMisordering/variant_before_base
+=== PAUSE TestEnforceConsistentClassOrderReportsMisordering/variant_before_base
 === PAUSE TestEnforceConsistentClassOrderStaysSilent/two_unranked_classes,_reverse-alphabetical_source_order
 === RUN   TestEnforceConsistentClassOrderStaysSilent/ordering_the_names_do_not_suggest
 === PAUSE TestEnforceConsistentClassOrderStaysSilent/ordering_the_names_do_not_suggest
-=== RUN   TestEnforceConsistentClassOrderReportsMisordering/unranked_class_written_last
 === RUN   TestEnforceConsistentClassOrderStaysSilent/single_class
-=== PAUSE TestEnforceConsistentClassOrderReportsMisordering/unranked_class_written_last
 === PAUSE TestEnforceConsistentClassOrderStaysSilent/single_class
 === RUN   TestEnforceConsistentClassOrderStaysSilent/duplicate_class_present
 === PAUSE TestEnforceConsistentClassOrderStaysSilent/duplicate_class_present
+=== RUN   TestEnforceConsistentClassOrderStaysSilent/unknown_class_written_first
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent/unknown_class_written_first
+=== RUN   TestEnforceConsistentClassOrderStaysSilent/unrelated_attribute
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent/unrelated_attribute
+=== RUN   TestEnforceConsistentClassOrderStaysSilent/unrelated_callee
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent/unrelated_callee
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/already_ordered
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/ordering_the_names_do_not_suggest
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/duplicate_class_present
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/unknown_class_written_first
+=== NAME  TestEnforceConsistentClassOrderStaysSilent/duplicate_class_present
+    enforce_consistent_class_order_test.go:304: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== NAME  TestEnforceConsistentClassOrderStaysSilent/ordering_the_names_do_not_suggest
+    enforce_consistent_class_order_test.go:304: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/two_unranked_classes,_reverse-alphabetical_source_order
+    enforce_consistent_class_order_test.go:304: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/ring-offset_resolves_to_its_own_root,_not_to_ring
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/two_unranked_classes,_alphabetical_source_order
+=== RUN   TestEnforceConsistentClassOrderReportsMisordering/unranked_class_written_last
+=== NAME  TestEnforceConsistentClassOrderStaysSilent/unknown_class_written_first
+    enforce_consistent_class_order_test.go:304: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/unranked_class_first
+    enforce_consistent_class_order_test.go:304: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/variant_group_kept_together
+    enforce_consistent_class_order_test.go:304: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/base_before_variant
+    enforce_consistent_class_order_test.go:304: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/single_class
+    enforce_consistent_class_order_test.go:304: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/unrelated_callee
+=== NAME  TestEnforceConsistentClassOrderStaysSilent/already_ordered
+    enforce_consistent_class_order_test.go:304: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== NAME  TestEnforceConsistentClassOrderStaysSilent/unrelated_callee
+    enforce_consistent_class_order_test.go:304: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== NAME  TestEnforceConsistentClassOrderStaysSilent/two_unranked_classes,_alphabetical_source_order
+    enforce_consistent_class_order_test.go:304: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/unrelated_attribute
+=== PAUSE TestEnforceConsistentClassOrderReportsMisordering/unranked_class_written_last
+=== NAME  TestEnforceConsistentClassOrderStaysSilent/ring-offset_resolves_to_its_own_root,_not_to_ring
+    enforce_consistent_class_order_test.go:304: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
 === RUN   TestEnforceConsistentClassOrderReportsMisordering/two_unranked_classes_in_non-alphabetical_source_order
+=== NAME  TestEnforceConsistentClassOrderStaysSilent/unrelated_attribute
+    enforce_consistent_class_order_test.go:304: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
 === PAUSE TestEnforceConsistentClassOrderReportsMisordering/two_unranked_classes_in_non-alphabetical_source_order
+--- PASS: TestEnforceConsistentClassOrderStaysSilent (0.00s)
+    --- SKIP: TestEnforceConsistentClassOrderStaysSilent/duplicate_class_present (0.00s)
+    --- SKIP: TestEnforceConsistentClassOrderStaysSilent/ordering_the_names_do_not_suggest (0.00s)
+    --- SKIP: TestEnforceConsistentClassOrderStaysSilent/two_unranked_classes,_reverse-alphabetical_source_order (0.00s)
+    --- SKIP: TestEnforceConsistentClassOrderStaysSilent/unknown_class_written_first (0.00s)
+    --- SKIP: TestEnforceConsistentClassOrderStaysSilent/unranked_class_first (0.00s)
+    --- SKIP: TestEnforceConsistentClassOrderStaysSilent/already_ordered (0.00s)
+    --- SKIP: TestEnforceConsistentClassOrderStaysSilent/variant_group_kept_together (0.00s)
+    --- SKIP: TestEnforceConsistentClassOrderStaysSilent/unrelated_callee (0.00s)
+    --- SKIP: TestEnforceConsistentClassOrderStaysSilent/single_class (0.00s)
+    --- SKIP: TestEnforceConsistentClassOrderStaysSilent/two_unranked_classes,_alphabetical_source_order (0.00s)
+    --- SKIP: TestEnforceConsistentClassOrderStaysSilent/base_before_variant (0.00s)
+    --- SKIP: TestEnforceConsistentClassOrderStaysSilent/ring-offset_resolves_to_its_own_root,_not_to_ring (0.00s)
+    --- SKIP: TestEnforceConsistentClassOrderStaysSilent/unrelated_attribute (0.00s)
 === RUN   TestEnforceConsistentClassOrderReportsMisordering/unknown_class_written_last
 === PAUSE TestEnforceConsistentClassOrderReportsMisordering/unknown_class_written_last
 === RUN   TestEnforceConsistentClassOrderReportsMisordering/several_classes_out_of_order
@@ -41,93 +95,36 @@
 === RUN   TestEnforceConsistentClassOrderReportsMisordering/on_a_variable_surface
 === PAUSE TestEnforceConsistentClassOrderReportsMisordering/on_a_variable_surface
 === CONT  TestEnforceConsistentClassOrderReportsMisordering/two_classes_reversed
-=== RUN   TestEnforceConsistentClassOrderStaysSilent/unknown_class_written_first
-=== PAUSE TestEnforceConsistentClassOrderStaysSilent/unknown_class_written_first
-=== RUN   TestEnforceConsistentClassOrderStaysSilent/unrelated_attribute
-=== PAUSE TestEnforceConsistentClassOrderStaysSilent/unrelated_attribute
-=== RUN   TestEnforceConsistentClassOrderStaysSilent/unrelated_callee
-=== PAUSE TestEnforceConsistentClassOrderStaysSilent/unrelated_callee
-=== CONT  TestEnforceConsistentClassOrderStaysSilent/already_ordered
+=== CONT  TestEnforceConsistentClassOrderReportsMisordering/several_classes_out_of_order
+=== CONT  TestEnforceConsistentClassOrderReportsMisordering/unknown_class_written_last
 === NAME  TestEnforceConsistentClassOrderReportsMisordering/two_classes_reversed
     enforce_consistent_class_order_test.go:201: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
-=== CONT  TestEnforceConsistentClassOrderReportsMisordering/on_a_variable_surface
-=== NAME  TestEnforceConsistentClassOrderStaysSilent/already_ordered
-    enforce_consistent_class_order_test.go:304: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
-=== CONT  TestEnforceConsistentClassOrderStaysSilent/two_unranked_classes,_reverse-alphabetical_source_order
-=== NAME  TestEnforceConsistentClassOrderReportsMisordering/on_a_variable_surface
-    enforce_consistent_class_order_test.go:201: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
-=== NAME  TestEnforceConsistentClassOrderStaysSilent/two_unranked_classes,_reverse-alphabetical_source_order
-    enforce_consistent_class_order_test.go:304: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
-=== CONT  TestEnforceConsistentClassOrderReportsMisordering/unknown_class_written_last
-=== CONT  TestEnforceConsistentClassOrderReportsMisordering/on_a_callee_surface
-    enforce_consistent_class_order_test.go:201: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
-=== NAME  TestEnforceConsistentClassOrderReportsMisordering/unknown_class_written_last
-    enforce_consistent_class_order_test.go:201: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
-=== CONT  TestEnforceConsistentClassOrderReportsMisordering/two_unranked_classes_in_non-alphabetical_source_order
-=== CONT  TestEnforceConsistentClassOrderStaysSilent/two_unranked_classes,_alphabetical_source_order
-=== CONT  TestEnforceConsistentClassOrderStaysSilent/ring-offset_resolves_to_its_own_root,_not_to_ring
-=== NAME  TestEnforceConsistentClassOrderReportsMisordering/two_unranked_classes_in_non-alphabetical_source_order
-    enforce_consistent_class_order_test.go:201: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
-=== CONT  TestEnforceConsistentClassOrderReportsMisordering/several_classes_out_of_order
-=== CONT  TestEnforceConsistentClassOrderStaysSilent/ordering_the_names_do_not_suggest
-=== CONT  TestEnforceConsistentClassOrderStaysSilent/unknown_class_written_first
-=== NAME  TestEnforceConsistentClassOrderStaysSilent/ring-offset_resolves_to_its_own_root,_not_to_ring
-    enforce_consistent_class_order_test.go:304: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
-=== CONT  TestEnforceConsistentClassOrderStaysSilent/unrelated_callee
-    enforce_consistent_class_order_test.go:304: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
-=== CONT  TestEnforceConsistentClassOrderReportsMisordering/unranked_class_written_last
-=== NAME  TestEnforceConsistentClassOrderStaysSilent/ordering_the_names_do_not_suggest
-    enforce_consistent_class_order_test.go:304: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
-=== CONT  TestEnforceConsistentClassOrderStaysSilent/unrelated_attribute
 === NAME  TestEnforceConsistentClassOrderReportsMisordering/several_classes_out_of_order
     enforce_consistent_class_order_test.go:201: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestEnforceConsistentClassOrderReportsMisordering/two_unranked_classes_in_non-alphabetical_source_order
+=== NAME  TestEnforceConsistentClassOrderReportsMisordering/unknown_class_written_last
+    enforce_consistent_class_order_test.go:201: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
 === CONT  TestEnforceConsistentClassOrderReportsMisordering/variant_before_base
-=== NAME  TestEnforceConsistentClassOrderStaysSilent/unrelated_attribute
-    enforce_consistent_class_order_test.go:304: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
-=== CONT  TestEnforceConsistentClassOrderStaysSilent/single_class
-    enforce_consistent_class_order_test.go:304: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
-=== CONT  TestEnforceConsistentClassOrderStaysSilent/duplicate_class_present
+=== CONT  TestEnforceConsistentClassOrderReportsMisordering/on_a_callee_surface
 === NAME  TestEnforceConsistentClassOrderReportsMisordering/variant_before_base
     enforce_consistent_class_order_test.go:201: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
-=== NAME  TestEnforceConsistentClassOrderStaysSilent/duplicate_class_present
-    enforce_consistent_class_order_test.go:304: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== NAME  TestEnforceConsistentClassOrderReportsMisordering/on_a_callee_surface
+    enforce_consistent_class_order_test.go:201: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestEnforceConsistentClassOrderReportsMisordering/on_a_variable_surface
+    enforce_consistent_class_order_test.go:201: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestEnforceConsistentClassOrderReportsMisordering/unranked_class_written_last
+=== NAME  TestEnforceConsistentClassOrderReportsMisordering/two_unranked_classes_in_non-alphabetical_source_order
+    enforce_consistent_class_order_test.go:201: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
 === NAME  TestEnforceConsistentClassOrderReportsMisordering/unranked_class_written_last
     enforce_consistent_class_order_test.go:201: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
-=== CONT  TestEnforceConsistentClassOrderStaysSilent/unranked_class_first
 --- PASS: TestEnforceConsistentClassOrderReportsMisordering (0.00s)
     --- SKIP: TestEnforceConsistentClassOrderReportsMisordering/two_classes_reversed (0.00s)
-    --- SKIP: TestEnforceConsistentClassOrderReportsMisordering/on_a_variable_surface (0.00s)
-    --- SKIP: TestEnforceConsistentClassOrderReportsMisordering/on_a_callee_surface (0.00s)
-    --- SKIP: TestEnforceConsistentClassOrderReportsMisordering/unknown_class_written_last (0.00s)
-    --- SKIP: TestEnforceConsistentClassOrderReportsMisordering/two_unranked_classes_in_non-alphabetical_source_order (0.00s)
     --- SKIP: TestEnforceConsistentClassOrderReportsMisordering/several_classes_out_of_order (0.00s)
+    --- SKIP: TestEnforceConsistentClassOrderReportsMisordering/unknown_class_written_last (0.00s)
     --- SKIP: TestEnforceConsistentClassOrderReportsMisordering/variant_before_base (0.00s)
+    --- SKIP: TestEnforceConsistentClassOrderReportsMisordering/on_a_callee_surface (0.00s)
+    --- SKIP: TestEnforceConsistentClassOrderReportsMisordering/on_a_variable_surface (0.00s)
+    --- SKIP: TestEnforceConsistentClassOrderReportsMisordering/two_unranked_classes_in_non-alphabetical_source_order (0.00s)
     --- SKIP: TestEnforceConsistentClassOrderReportsMisordering/unranked_class_written_last (0.00s)
-=== NAME  TestEnforceConsistentClassOrderStaysSilent/two_unranked_classes,_alphabetical_source_order
-    enforce_consistent_class_order_test.go:304: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
-=== NAME  TestEnforceConsistentClassOrderStaysSilent/unranked_class_first
-    enforce_consistent_class_order_test.go:304: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
-=== CONT  TestEnforceConsistentClassOrderStaysSilent/base_before_variant
-=== CONT  TestEnforceConsistentClassOrderStaysSilent/variant_group_kept_together
-=== NAME  TestEnforceConsistentClassOrderStaysSilent/base_before_variant
-    enforce_consistent_class_order_test.go:304: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
-=== NAME  TestEnforceConsistentClassOrderStaysSilent/variant_group_kept_together
-    enforce_consistent_class_order_test.go:304: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
-=== NAME  TestEnforceConsistentClassOrderStaysSilent/unknown_class_written_first
-    enforce_consistent_class_order_test.go:304: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
---- PASS: TestEnforceConsistentClassOrderStaysSilent (0.00s)
-    --- SKIP: TestEnforceConsistentClassOrderStaysSilent/already_ordered (0.00s)
-    --- SKIP: TestEnforceConsistentClassOrderStaysSilent/two_unranked_classes,_reverse-alphabetical_source_order (0.00s)
-    --- SKIP: TestEnforceConsistentClassOrderStaysSilent/ring-offset_resolves_to_its_own_root,_not_to_ring (0.00s)
-    --- SKIP: TestEnforceConsistentClassOrderStaysSilent/unrelated_callee (0.00s)
-    --- SKIP: TestEnforceConsistentClassOrderStaysSilent/ordering_the_names_do_not_suggest (0.00s)
-    --- SKIP: TestEnforceConsistentClassOrderStaysSilent/unrelated_attribute (0.00s)
-    --- SKIP: TestEnforceConsistentClassOrderStaysSilent/single_class (0.00s)
-    --- SKIP: TestEnforceConsistentClassOrderStaysSilent/duplicate_class_present (0.00s)
-    --- SKIP: TestEnforceConsistentClassOrderStaysSilent/two_unranked_classes,_alphabetical_source_order (0.00s)
-    --- SKIP: TestEnforceConsistentClassOrderStaysSilent/unranked_class_first (0.00s)
-    --- SKIP: TestEnforceConsistentClassOrderStaysSilent/base_before_variant (0.00s)
-    --- SKIP: TestEnforceConsistentClassOrderStaysSilent/variant_group_kept_together (0.00s)
-    --- SKIP: TestEnforceConsistentClassOrderStaysSilent/unknown_class_written_first (0.00s)
 PASS
-ok  	github.com/system-inc/cohere/internal/lint/rules/tailwind	0.009s
+ok  	github.com/system-inc/cohere/internal/lint/rules/tailwind	0.010s

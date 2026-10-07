@@ -27,70 +27,70 @@
 === PAUSE TestEnforceShorthandClassesReports/pair_with_a_leading_marker
 === RUN   TestEnforceShorthandClassesReports/pair_with_a_trailing_marker
 === PAUSE TestEnforceShorthandClassesReports/pair_with_a_trailing_marker
+=== CONT  TestEnforceShorthandClassesReportsEachFamilySeparately
+=== CONT  TestEnforceShorthandClassesSuggestsOnlyClassesThatExist
 === RUN   TestEnforceShorthandClassesReports/pair_with_arbitrary_values
 === PAUSE TestEnforceShorthandClassesReports/pair_with_arbitrary_values
-=== RUN   TestEnforceShorthandClassesReports/pair_behind_an_arbitrary_variant
-=== PAUSE TestEnforceShorthandClassesReports/pair_behind_an_arbitrary_variant
-=== CONT  TestEnforceShorthandClassesReports/logical_inline_pair
-=== CONT  TestEnforceShorthandClassesReportsEachFamilySeparately
+=== NAME  TestEnforceShorthandClassesSuggestsOnlyClassesThatExist
+    enforce_shorthand_classes_test.go:198: no installed tailwindcss on this machine, so there is no design system to ask
+--- SKIP: TestEnforceShorthandClassesSuggestsOnlyClassesThatExist (0.00s)
 === CONT  TestEnforceShorthandClassesReportsOncePerFamily
-=== CONT  TestEnforceShorthandClassesStaysSilent
-=== CONT  TestEnforceShorthandClassesReports/pair_behind_an_arbitrary_variant
+=== RUN   TestEnforceShorthandClassesReports/pair_behind_an_arbitrary_variant
 --- PASS: TestEnforceShorthandClassesReportsEachFamilySeparately (0.00s)
-=== CONT  TestEnforceShorthandClassesReports/pair_with_a_trailing_marker
+=== PAUSE TestEnforceShorthandClassesReports/pair_behind_an_arbitrary_variant
+=== CONT  TestEnforceShorthandClassesStaysSilent
+--- PASS: TestEnforceShorthandClassesReportsOncePerFamily (0.00s)
+=== CONT  TestEnforceShorthandClassesReports/logical_inline_pair
 === RUN   TestEnforceShorthandClassesStaysSilent/values_disagree
-=== CONT  TestEnforceShorthandClassesReports/pair_with_a_leading_marker
+=== CONT  TestEnforceShorthandClassesReports/pair_with_a_trailing_marker
 === PAUSE TestEnforceShorthandClassesStaysSilent/values_disagree
-=== CONT  TestEnforceShorthandClassesReports/negative_pair
 === RUN   TestEnforceShorthandClassesStaysSilent/variants_disagree
 === PAUSE TestEnforceShorthandClassesStaysSilent/variants_disagree
+=== CONT  TestEnforceShorthandClassesReports/pair_behind_an_arbitrary_variant
 === RUN   TestEnforceShorthandClassesStaysSilent/negative_sign_disagrees
 === PAUSE TestEnforceShorthandClassesStaysSilent/negative_sign_disagrees
-=== CONT  TestEnforceShorthandClassesReports/pair_behind_the_same_variant
---- PASS: TestEnforceShorthandClassesReportsOncePerFamily (0.00s)
-=== CONT  TestEnforceShorthandClassesReports/all_four_inset_sides
+=== CONT  TestEnforceShorthandClassesReports/pair_with_arbitrary_values
 === RUN   TestEnforceShorthandClassesStaysSilent/important_marker_disagrees
-=== CONT  TestEnforceShorthandClassesReports/width_and_height
 === PAUSE TestEnforceShorthandClassesStaysSilent/important_marker_disagrees
 === RUN   TestEnforceShorthandClassesStaysSilent/only_one_side_present
-=== CONT  TestEnforceShorthandClassesReports/all_four_margin_sides
-=== CONT  TestEnforceShorthandClassesReports/physical_block_pair
-=== CONT  TestEnforceShorthandClassesSuggestsOnlyClassesThatExist
 === PAUSE TestEnforceShorthandClassesStaysSilent/only_one_side_present
 === RUN   TestEnforceShorthandClassesStaysSilent/shorthand_already_present
 === PAUSE TestEnforceShorthandClassesStaysSilent/shorthand_already_present
 === RUN   TestEnforceShorthandClassesStaysSilent/no_shorthand_candidates_at_all
 === PAUSE TestEnforceShorthandClassesStaysSilent/no_shorthand_candidates_at_all
-=== CONT  TestEnforceShorthandClassesStaysSilent/values_disagree
-=== CONT  TestEnforceShorthandClassesReports/pair_with_arbitrary_values
-=== CONT  TestEnforceShorthandClassesStaysSilent/only_one_side_present
-=== CONT  TestEnforceShorthandClassesStaysSilent/no_shorthand_candidates_at_all
-=== NAME  TestEnforceShorthandClassesSuggestsOnlyClassesThatExist
-    enforce_shorthand_classes_test.go:198: no installed tailwindcss on this machine, so there is no design system to ask
+=== CONT  TestEnforceShorthandClassesReports/width_and_height
+=== CONT  TestEnforceShorthandClassesReports/negative_pair
+=== CONT  TestEnforceShorthandClassesReports/all_four_inset_sides
+=== CONT  TestEnforceShorthandClassesReports/all_four_margin_sides
+=== CONT  TestEnforceShorthandClassesReports/physical_block_pair
+=== CONT  TestEnforceShorthandClassesReports/pair_with_a_leading_marker
 === CONT  TestEnforceShorthandClassesStaysSilent/shorthand_already_present
---- SKIP: TestEnforceShorthandClassesSuggestsOnlyClassesThatExist (0.00s)
-=== CONT  TestEnforceShorthandClassesStaysSilent/negative_sign_disagrees
+=== CONT  TestEnforceShorthandClassesStaysSilent/only_one_side_present
 === CONT  TestEnforceShorthandClassesStaysSilent/important_marker_disagrees
 === CONT  TestEnforceShorthandClassesStaysSilent/variants_disagree
---- PASS: TestEnforceShorthandClassesStaysSilent (0.00s)
-    --- PASS: TestEnforceShorthandClassesStaysSilent/only_one_side_present (0.00s)
-    --- PASS: TestEnforceShorthandClassesStaysSilent/no_shorthand_candidates_at_all (0.00s)
-    --- PASS: TestEnforceShorthandClassesStaysSilent/shorthand_already_present (0.00s)
-    --- PASS: TestEnforceShorthandClassesStaysSilent/negative_sign_disagrees (0.00s)
-    --- PASS: TestEnforceShorthandClassesStaysSilent/values_disagree (0.00s)
-    --- PASS: TestEnforceShorthandClassesStaysSilent/variants_disagree (0.00s)
-    --- PASS: TestEnforceShorthandClassesStaysSilent/important_marker_disagrees (0.00s)
+=== CONT  TestEnforceShorthandClassesStaysSilent/negative_sign_disagrees
+=== CONT  TestEnforceShorthandClassesStaysSilent/no_shorthand_candidates_at_all
+=== CONT  TestEnforceShorthandClassesReports/pair_behind_the_same_variant
 --- PASS: TestEnforceShorthandClassesReports (0.00s)
     --- PASS: TestEnforceShorthandClassesReports/logical_inline_pair (0.00s)
-    --- PASS: TestEnforceShorthandClassesReports/pair_behind_an_arbitrary_variant (0.00s)
-    --- PASS: TestEnforceShorthandClassesReports/pair_with_a_leading_marker (0.00s)
-    --- PASS: TestEnforceShorthandClassesReports/negative_pair (0.00s)
-    --- PASS: TestEnforceShorthandClassesReports/pair_behind_the_same_variant (0.00s)
-    --- PASS: TestEnforceShorthandClassesReports/all_four_inset_sides (0.00s)
-    --- PASS: TestEnforceShorthandClassesReports/all_four_margin_sides (0.00s)
-    --- PASS: TestEnforceShorthandClassesReports/physical_block_pair (0.00s)
-    --- PASS: TestEnforceShorthandClassesReports/width_and_height (0.00s)
-    --- PASS: TestEnforceShorthandClassesReports/pair_with_arbitrary_values (0.00s)
     --- PASS: TestEnforceShorthandClassesReports/pair_with_a_trailing_marker (0.00s)
+    --- PASS: TestEnforceShorthandClassesReports/pair_with_arbitrary_values (0.00s)
+    --- PASS: TestEnforceShorthandClassesReports/pair_behind_an_arbitrary_variant (0.00s)
+    --- PASS: TestEnforceShorthandClassesReports/all_four_inset_sides (0.00s)
+    --- PASS: TestEnforceShorthandClassesReports/negative_pair (0.00s)
+    --- PASS: TestEnforceShorthandClassesReports/width_and_height (0.00s)
+    --- PASS: TestEnforceShorthandClassesReports/physical_block_pair (0.00s)
+    --- PASS: TestEnforceShorthandClassesReports/all_four_margin_sides (0.00s)
+    --- PASS: TestEnforceShorthandClassesReports/pair_with_a_leading_marker (0.00s)
+    --- PASS: TestEnforceShorthandClassesReports/pair_behind_the_same_variant (0.00s)
+=== CONT  TestEnforceShorthandClassesStaysSilent/values_disagree
+--- PASS: TestEnforceShorthandClassesStaysSilent (0.00s)
+    --- PASS: TestEnforceShorthandClassesStaysSilent/only_one_side_present (0.00s)
+    --- PASS: TestEnforceShorthandClassesStaysSilent/shorthand_already_present (0.00s)
+    --- PASS: TestEnforceShorthandClassesStaysSilent/important_marker_disagrees (0.00s)
+    --- PASS: TestEnforceShorthandClassesStaysSilent/variants_disagree (0.00s)
+    --- PASS: TestEnforceShorthandClassesStaysSilent/no_shorthand_candidates_at_all (0.00s)
+    --- PASS: TestEnforceShorthandClassesStaysSilent/negative_sign_disagrees (0.00s)
+    --- PASS: TestEnforceShorthandClassesStaysSilent/values_disagree (0.00s)
 PASS
 ok  	github.com/system-inc/cohere/internal/lint/rules/tailwind	0.011s

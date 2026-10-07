@@ -31,3 +31,21 @@ gofmt -l cmd internal > stage1/cohere/lint/helpers/slot14/evidence/landing-forma
 The first rebase above runs on the helper branch. The separately attempted rule rebase uses git worktree add /workspace/adamic-landing-wave14 codex/lint-wave1-14 followed by git -C /workspace/adamic-landing-wave14 rebase origin/main, then git rebase --abort after the four conflicts. No shared conflict file was resolved or committed. Existing .generated artifacts are excluded. The rebased helper push uses an exact old-tip force-with-lease because the user explicitly requested rebasing already pushed branches; no unrelated branch or unobserved remote change is overwritten.
 
 Post-rebase bounded gate: repository vet exits zero with empty output; gofmt output is empty; filtered external oracle passes in 16.987s. Full repository and live consumer gates are not claimed.
+
+## Latest main recheck
+
+Fetched current main e8ba3d5d81de4d3773c723914fccd4c76248b965. Its entire
+stage1/cohere/lint tree is unchanged from e011f8f6 (git diff --exit-code exits 0).
+The helper evidence branch rebases cleanly again. Both archived comparison
+validators and their compiling mutants pass on all three Adamic paths against Go
+with unchanged case and byte counts. Repository vet passes with empty output;
+the filtered external oracle passes in 13.263s. Missing live consumer fixtures
+remain explicitly excluded from that green comparison claim.
+
+The rule rebase against this exact new main fails again at foundation commit
+29175443 in the same four shared files. See evidence/rule-landing-rebase.log.
+The rebase is aborted and the rule branch stays at 9d2c673b, unlanded and not
+landing-ready. No shared conflict file is resolved or committed. The explicit
+ownership limit still blocks preserving main's thirty rules while migrating
+the five-rule registration foundation. No new helper or rule is claimed, and
+no push targets main or an area branch.
