@@ -170,3 +170,7 @@ Rebased onto fetched area/stage1-lint 7481e0324, containing 50a5f105 and current
 ## Restored environment landing
 
 Rebased onto current area d65a8f931 with current main 39638d9e2. Fresh rule/sanitizer/mutant and runtime checks are green after recovering disk capacity and retrying every affected test. See [LANDING_D65.md](LANDING_D65.md). No new claims; JSX source work remains unfinished.
+
+## Fragment declarations
+
+Ported fragment import/alias/destructure/variable declaration judgments and exact module ancestry; production-Go comparisons pass 1291 records with twelve clean reference mutants across five backends. See [FRAGMENT_DECLARATIONS.md](FRAGMENT_DECLARATIONS.md). Source symbol resolution/adapters remain unfinished; no new claims.

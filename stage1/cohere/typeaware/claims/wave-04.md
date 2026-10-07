@@ -128,3 +128,5 @@ Landing update: rebased onto b8fb957aa with merge topology preserved, adopted ha
 Integration landing update: rebased onto area/stage1-lint 7481e0324, containing required harness integration 50a5f105 and main 39638d9e2. Six completed-rule oracles and partial JSX/parked React/listener checks are green again. Current JSX claims remain reserved and unfinished; no new claims. See ../wave_04_jsx/LANDING_AREA.md.
 
 Restored landing update: rebased onto area d65a8f931 including current main 39638d9e2. Six completed rules, partial JSX/parked React helpers, named listeners and adopted runtime checks pass freshly after disk-space recovery/retries. Current JSX claims remain reserved and unfinished; no additional claims. See ../wave_04_jsx/LANDING_D65.md.
+
+Fragment progress: declaration/import-module judgments now ported and independently checked on actual Go AST controls, including local aliases and object bindings. Source symbol-to-snapshot adapter and final fragment source judgment remain unfinished. Current three JSX claims stay reserved; no new claims. See ../wave_04_jsx/FRAGMENT_DECLARATIONS.md.

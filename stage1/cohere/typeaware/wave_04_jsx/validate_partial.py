@@ -38,7 +38,7 @@ js,_=run('emit',[a.adamic,'js',entry]);(out/'probe.js').write_bytes(js);actual,e
 mutants=[('jsx_fragments','node.start, node.end,','node.start, node.end + 1,'),('jsx_no_undef','first < 97 || first > 122','first < 98 || first > 122'),('jsx_no_constructed_context_values',"case 211: return 'object';","case 211: return 'array';")]
 for folder,before,after in mutants:
  module=own/folder/'rule.a';source=module.read_text();assert source.count(before)==1
- source=source.replace("from '../numeric_tag.a'",f"from '{own}/numeric_tag.a'").replace("from '../syntax_node.a'",f"from '{own}/syntax_node.a'").replace("from '../../diagnostic.ts'",f"from '{own.parent}/diagnostic.ts'").replace("from '../jsx_fragments/rule.a'",f"from '{own}/jsx_fragments/rule.a'")
+ source=re.sub(r"from '(\.[^']+)'",lambda m:"from '"+str((module.parent/m[1]).resolve())+"'",source)
  path=out/(folder+'-mutant.a');path.write_text(source.replace(before,after));probe=out/(folder+'-probe.a');probe.write_text(driver.replace(str(module),str(path)))
  run(folder+'-mutant-build',[a.adamic,'build',probe,'-o',out/(folder+'-mutant'),'--sanitize']);actual,error=run(folder+'-mutant-run',[out/(folder+'-mutant')]);assert actual!=truth and not error,'mutant survived or failed outside comparison'
 # Every absent source adapter refuses explicitly; dropping the refusal is caught.
@@ -48,7 +48,7 @@ for folder,cls in [('jsx_fragments','JsxFragments'),('jsx_no_undef','JsxNoUndef'
  # Removing the refusal compiles and exits zero; the required exit-70 check kills it.
  changed=re.sub(r"panic\(`NotYet:[^`]+`\);",'return;',module.read_text())
  assert changed!=module.read_text()
- changed=changed.replace("from '../numeric_tag.a'",f"from '{own}/numeric_tag.a'").replace("from '../syntax_node.a'",f"from '{own}/syntax_node.a'").replace("from '../../diagnostic.ts'",f"from '{own.parent}/diagnostic.ts'")
+ changed=re.sub(r"from '(\.[^']+)'",lambda m:"from '"+str((module.parent/m[1]).resolve())+"'",changed)
  mutant=out/(folder+'-refusal-mutant.a');mutant.write_text(changed);mutant_probe=out/(folder+'-refusal-mutant-probe.a');mutant_probe.write_text(source.replace(str(module),str(mutant)))
  run(folder+'-refusal-mutant-build',[a.adamic,'build',mutant_probe,'-o',out/(folder+'-refusal-mutant')]);actual,error=run(folder+'-refusal-mutant-run',[out/(folder+'-refusal-mutant')]);assert not actual and not error
 (out/'runs.json').write_text(json.dumps(runs,indent=2)+'\n')

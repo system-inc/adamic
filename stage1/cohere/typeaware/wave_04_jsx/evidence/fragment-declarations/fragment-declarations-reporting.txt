@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage1/cohere/typeaware/wave_04_jsx/validate_partial.py", line 43, in <module>
+    run(folder+'-mutant-build',[a.adamic,'build',probe,'-o',out/(folder+'-mutant'),'--sanitize']);actual,error=run(folder+'-mutant-run',[out/(folder+'-mutant')]);assert actual!=truth and not error,'mutant survived or failed outside comparison'
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/stage1/cohere/typeaware/wave_04_jsx/validate_partial.py", line 11, in run
+    if result.returncode!=expected:raise RuntimeError(str(runs[-1]))
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: {'label': 'jsx_fragments-mutant-build', 'exit': 1, 'stdout_bytes': 0, 'stderr_bytes': 181}

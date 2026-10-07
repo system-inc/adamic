@@ -1,8 +1,9 @@
 import { panic } from 'adamic';
 import { Diagnostic } from '../../diagnostic.ts';
 import type { NumericTag } from '../numeric_tag.a';
+import type { FragmentDeclaration } from './declaration.a';
 export const listenerKinds: readonly string[] = ["JsxElement", "JsxSelfClosingElement", "JsxFragment"];
-// The shared driver hands this rule one numeric-kind node; no parser lookup.
+// Private span fixture used by isolated reporter controls; not a shared parser node.
 export class FragmentNode {
     readonly kind: number;
     readonly start: number;
@@ -25,10 +26,43 @@ export class JsxFragments {
         const argument = tree[node.arguments_[0] ?? -1] ?? panic('missing fragment source argument');
         return (argument.kind === 10 || argument.kind === 14) && argument.text === 'react';
     }
+    importModuleName(node: FragmentDeclaration, declarations: readonly FragmentDeclaration[]): string {
+        const imports = declarations[node.parent];
+        if(imports === undefined || imports.kind !== 'NamedImports') { return ''; }
+        const clause = declarations[imports.parent];
+        if(clause === undefined || clause.kind !== 'ImportClause') { return ''; }
+        const declaration = declarations[clause.parent];
+        if(declaration === undefined || declaration.kind !== 'ImportDeclaration') { return ''; }
+        const module_ = declarations[declaration.moduleSpecifier];
+        if(module_ === undefined || (module_.kind !== 'StringLiteral' && module_.kind !== 'NoSubstitutionTemplateLiteral')) { return ''; }
+        return module_.text;
+    }
+    declarationIsFragment(node: FragmentDeclaration, declarations: readonly FragmentDeclaration[], initializers: readonly NumericTag[]): boolean {
+        // These are declaration semantics reached from a resolved symbol, not JSX relevance checks.
+        switch(node.kind) {
+            case 'ImportSpecifier': {
+                const imported = declarations[node.propertyName >= 0 ? node.propertyName : node.name];
+                return imported !== undefined && imported.kind === 'Identifier' && imported.text === 'Fragment' && this.importModuleName(node,declarations) === 'react';
+            }
+            case 'BindingElement': {
+                const pattern = declarations[node.parent];
+                if(pattern === undefined || pattern.kind !== 'ObjectBindingPattern') { return false; }
+                const variable = declarations[pattern.parent];
+                if(variable === undefined || variable.kind !== 'VariableDeclaration') { return false; }
+                const initializer = initializers[variable.initializer];
+                return initializer !== undefined && this.fragmentSource(initializer,initializers);
+            }
+            case 'VariableDeclaration': {
+                const initializer = initializers[node.initializer];
+                return initializer !== undefined && this.fragmentSource(initializer,initializers);
+            }
+        }
+        return false;
+    }
     report(node: FragmentNode, preferElement: boolean): Diagnostic {
         const id = preferElement ? 'preferPragma' : 'preferFragment';
         const message = preferElement ? "Prefer React.Fragment over fragment shorthand. The named form is the one this file is configured to use, and it is the only spelling that can carry a `key`." : "Prefer fragment shorthand over React.Fragment. The shorthand `<>` says the same thing with less to read, and a named fragment that carries no props is only the long spelling of it.";
         return new Diagnostic('react/jsx-fragments', id, message, node.start, node.end, '');
     }
-    run(node: FragmentNode): void { panic(`NotYet: jsx-fragments node ${node.start} needs shared numeric JSX nodes and checker declaration snapshots`); }
+    run(node: FragmentNode): void { panic(`NotYet: jsx-fragments node ${node.start} needs its source adapter and checker declaration snapshots`); }
 }

@@ -1,0 +1,19 @@
+// Raw declaration links. Kind names describe child declarations, not visitor dispatch.
+export class FragmentDeclaration {
+    readonly kind: string;
+    readonly text: string;
+    readonly parent: number;
+    readonly name: number;
+    readonly propertyName: number;
+    readonly initializer: number;
+    readonly moduleSpecifier: number;
+    constructor(kind: string, text: string, parent: number, name: number, propertyName: number, initializer: number, moduleSpecifier: number) {
+        this.kind = kind;
+        this.text = text;
+        this.parent = parent;
+        this.name = name;
+        this.propertyName = propertyName;
+        this.initializer = initializer;
+        this.moduleSpecifier = moduleSpecifier;
+    }
+}
