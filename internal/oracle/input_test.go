@@ -34,6 +34,7 @@ var inputFixtures = []struct {
 	writes bool
 }{
 	{"internal/oracle/testdata/read_files.a", nil, false, false},
+	{"internal/oracle/testdata/empty-path.a", nil, false, false},
 	{"internal/oracle/testdata/utf8_sweep.a", nil, false, false},
 	{"internal/oracle/testdata/arguments.a", []string{
 		"plain", "", "with space", "héllo 🌍", "--flag=1",
