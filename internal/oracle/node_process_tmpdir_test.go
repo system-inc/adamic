@@ -37,3 +37,19 @@ func TestNodeProcessTmpdir(t *testing.T) {
 	}
 	t.Log("clean tmpdir mutant caught by Node stdout")
 }
+
+func TestNodeProcessOSNamespace(t *testing.T) {
+	t.Parallel()
+	path, binary, script := sanitized(t, "internal/oracle/testdata/node_process_os_namespace.a")
+	truth := onNode(t, path)
+	for _, got := range []run{execute(t, binary), onNode(t, script)} {
+		if difference := disagreement(truth, got); difference != "" {
+			t.Fatalf("%s: %q %q", difference, got.stdout, got.stderr)
+		}
+	}
+	_, mutant := nodeProcessMutant(t, "node_process_os_namespace.a", `ADAMIC_STRING("\n")`, `ADAMIC_STRING("\r\n")`)
+	bad := execute(t, mutant)
+	if bad.exitCode != 0 || len(bad.stderr) != 0 || disagreement(truth, bad) != "stdout differs" {
+		t.Fatal("namespace EOL mutant not caught only by Node bytes")
+	}
+}
