@@ -19,6 +19,11 @@ npm = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(npm)
 TS_COMMIT = '050880ce59e30b356b686bd3144efe24f875ebc8'
 TS_URL = 'https://github.com/microsoft/TypeScript.git'
+LEDGER_SPARSE = ['src', 'scripts']
+LEDGER_SCRIPT = 'scripts/processDiagnosticMessages.mjs'
+LEDGER_DIAGNOSTICS = 'src/compiler/diagnosticMessages.json'
+LEDGER_GENERATED = ['src/compiler/diagnosticInformationMap.generated.ts',
+                    'src/compiler/diagnosticMessages.generated.json']
 CSS_COMMIT = 'cb4b33fba24a8428d00e54be85fc886288a374ea'
 CSS_URL = 'https://github.com/system-inc/prettier.git'
 CSS_SPARSE = ['tests/format/css', 'tests/format/scss', 'tests/format/less',
@@ -26,7 +31,9 @@ CSS_SPARSE = ['tests/format/css', 'tests/format/scss', 'tests/format/less',
 CSS_COUNTS = {'.css': 157, '.scss': 90, '.less': 43}
 PRETTIER_VERSION = '3.9.6'
 SIZE = 100 << 20
-VARIABLES = {'ADAMIC_TYPESCRIPT_SOURCE': 'typescript', 'ADAMIC_CSS_FIXTURES': 'css-fixtures',
+VARIABLES = {'ADAMIC_TYPESCRIPT_SOURCE': 'typescript',
+             'ADAMIC_CYCLE_LEDGER_ROOT': 'cycle-ledger',
+             'ADAMIC_CYCLE_LEDGER_OUTPUT': 'cycle-ledger-output.json', 'ADAMIC_CSS_FIXTURES': 'css-fixtures',
              'ADAMIC_CSSNUMBERS_LIBRARY': 'css-printer', 'ADAMIC_CSSSTRINGS_LIBRARY': 'css-printer',
              'ADAMIC_MARKDOWNINLINE_LIBRARY': 'css-printer/node_modules/prettier',
              'ADAMIC_CSS_LIBRARY': 'css',
@@ -80,11 +87,34 @@ def artifact_digest(directory):
     return cache_key(root_mode=directory.stat().st_mode & 0o777, entries=entries)
 
 
+def stamp_path(directory):
+    # Cache metadata cannot itself make a source checkout untracked or ignored.
+    return directory / '.git' / 'adamic-stamp' if (directory / '.git').is_dir() else directory / '.adamic-stamp'
+
+
+def checkout_pristine(directory, generated=()):
+    if not (directory / '.git').is_dir():
+        return False
+    data = subprocess.check_output(['git', '-C', str(directory), 'status', '--porcelain',
+                                    '--ignored', '--untracked-files=all', '-z'], timeout=60)
+    entries = data.split(b'\0')[:-1]
+    expected = set(generated)
+    observed = set()
+    for entry in entries:
+        if entry[:2] not in {b'??', b'!!'}:
+            return False
+        name = os.fsdecode(entry[3:])
+        if name not in expected:
+            return False
+        observed.add(name)
+    return observed == expected
+
+
 def hit(destination, key):
     if os.environ.get('ADAMIC_GATE_UNCACHED') == '1':
         return False
     try:
-        saved = json.loads((destination / '.adamic-stamp').read_text())
+        saved = json.loads(stamp_path(destination).read_text())
         return saved['key'] == key and saved['tree'] == artifact_digest(destination)
     except (OSError, ValueError, KeyError):
         return False
@@ -92,7 +122,7 @@ def hit(destination, key):
 
 def publish(install, destination, key):
     install.chmod(0o755)
-    (install / '.adamic-stamp').write_text(json.dumps(dict(key=key, tree=artifact_digest(install))))
+    stamp_path(install).write_text(json.dumps(dict(key=key, tree=artifact_digest(install))))
     backup = install.parent / 'previous'
     if destination.exists():
         destination.rename(backup)
@@ -107,7 +137,10 @@ def publish(install, destination, key):
 def typescript(root):
     destination = root / 'typescript'
     key = cache_key(kind='typescript', commit=TS_COMMIT, url=TS_URL, helper=source_hash())
-    if hit(destination, key) and command(['git', '-C', str(destination), 'rev-parse', 'HEAD']) == TS_COMMIT:
+    dirty = destination.exists() and not checkout_pristine(destination)
+    if dirty:
+        print('setup: TypeScript source checkout dirty (tracked, untracked or ignored files); reinstalling', flush=True)
+    if not dirty and hit(destination, key) and command(['git', '-C', str(destination), 'rev-parse', 'HEAD']) == TS_COMMIT:
         return 'skipped (validated exact commit and checkout bytes)'
     with tempfile.TemporaryDirectory(prefix='typescript-', dir=root) as temporary:
         install = Path(temporary) / 'checkout'
@@ -117,9 +150,89 @@ def typescript(root):
         if command(['git', '-C', str(install), 'rev-parse', 'HEAD']) != TS_COMMIT:
             raise ValueError('TypeScript commit integrity mismatch')
         subprocess.run(['git', '-C', str(install), 'fsck', '--full', '--no-reflogs'], check=True, timeout=120)
+        if not checkout_pristine(install):
+            raise ValueError('fresh TypeScript checkout is not pristine')
         publish(install, destination, key)
-    return 'installed (depth-one exact commit, git object integrity checked)'
+    return ('reinstalled dirty checkout' if dirty else 'installed') + ' (depth-one exact commit, Git integrity and pristine status checked)'
 
+
+
+def ledger_key(checkout, node_version):
+    return cache_key(kind='cycle-ledger', commit=TS_COMMIT, url=TS_URL,
+                     sparse=LEDGER_SPARSE, script=file_hash(checkout / LEDGER_SCRIPT),
+                     diagnostics=file_hash(checkout / LEDGER_DIAGNOSTICS),
+                     node=node_version, helper=source_hash())
+
+
+def validate_ledger(checkout):
+    actual = command(['git', '-C', str(checkout), 'rev-parse', 'HEAD'])
+    if actual != TS_COMMIT:
+        raise ValueError(f'cycle ledger source pin: expected {TS_COMMIT}, got {actual}')
+    sparse = command(['git', '-C', str(checkout), 'sparse-checkout', 'list']).splitlines()
+    if sorted(sparse) != sorted(LEDGER_SPARSE):
+        raise ValueError(f'cycle ledger sparse paths: expected {LEDGER_SPARSE}, got {sparse}')
+    # Generated diagnostics and our stamp are ignored/untracked. Tracked source
+    # must remain upstream's original bytes, not the parser's adapted corpus.
+    subprocess.run(['git', '-C', str(checkout), 'diff', '--exit-code', 'HEAD', '--'],
+                   check=True, timeout=60)
+    for name in LEDGER_GENERATED:
+        file = checkout / name
+        if not file.is_file() or file.is_symlink() or not file.stat().st_size:
+            raise ValueError('cycle ledger missing generated diagnostics: ' + name)
+    if not checkout_pristine(checkout, LEDGER_GENERATED):
+        raise ValueError('cycle ledger checkout is not pristine except its two generated diagnostics')
+
+
+def cycle_ledger(root, node):
+    node_version = command([node, '--version'])
+    expected = json.loads((SOURCE / 'node-pin.json').read_text())['version']
+    if node_version != expected:
+        raise ValueError(f'cycle ledger Node pin: expected {expected}, got {node_version}')
+    destination = root / 'cycle-ledger'
+    output = root / VARIABLES['ADAMIC_CYCLE_LEDGER_OUTPUT']
+    # Mutable proof output must never invalidate the immutable input stamp.
+    if output.is_symlink():
+        raise ValueError('cycle ledger output must not be a symlink: ' + str(output))
+    with output.open('ab'):
+        pass
+    if not output.is_file() or not os.access(output, os.W_OK):
+        raise ValueError('cycle ledger output is not writable: ' + str(output))
+    dirty = destination.exists() and not checkout_pristine(destination, LEDGER_GENERATED)
+    if dirty:
+        print('setup: cycle ledger checkout dirty (only the two generated diagnostics are allowed); reinstalling', flush=True)
+    try:
+        key = ledger_key(destination, node_version)
+    except OSError:
+        key = None
+    if not dirty and key is not None and hit(destination, key):
+        validate_ledger(destination)
+        return 'skipped (validated pristine commit, generator, Node and diagnostic bytes)'
+    with tempfile.TemporaryDirectory(prefix='cycle-ledger-', dir=root) as temporary:
+        install = Path(temporary) / 'checkout'
+        subprocess.run(['git', 'init', str(install)], check=True, timeout=30)
+        subprocess.run(['git', '-C', str(install), 'remote', 'add', 'origin', TS_URL],
+                       check=True, timeout=30)
+        subprocess.run(['git', '-C', str(install), 'fetch', '--depth=1', '--filter=blob:none',
+                        'origin', TS_COMMIT], check=True, timeout=600)
+        subprocess.run(['git', '-C', str(install), 'sparse-checkout', 'init', '--cone'],
+                       check=True, timeout=30)
+        subprocess.run(['git', '-C', str(install), 'sparse-checkout', 'set', *LEDGER_SPARSE],
+                       check=True, timeout=60)
+        subprocess.run(['git', '-C', str(install), 'checkout', '--detach', 'FETCH_HEAD'],
+                       check=True, timeout=600)
+        if command(['git', '-C', str(install), 'rev-parse', 'HEAD']) != TS_COMMIT:
+            raise ValueError('cycle ledger source commit integrity mismatch')
+        subprocess.run(['git', '-C', str(install), 'fsck', '--full', '--no-reflogs'],
+                       check=True, timeout=120)
+        key = ledger_key(install, node_version)
+        # Relative input keeps the generated comment identical across installs.
+        subprocess.run([node, LEDGER_SCRIPT, LEDGER_DIAGNOSTICS], cwd=install,
+                       check=True, timeout=120)
+        validate_ledger(install)
+        if ledger_key(install, command([node, '--version'])) != key:
+            raise ValueError('cycle ledger generator inputs changed; rerun setup')
+        publish(install, destination, key)
+    return ('reinstalled dirty checkout' if dirty else 'installed') + ' (pristine exact commit and both generated diagnostics verified)'
 
 
 def css_fixture_key():
@@ -291,6 +404,8 @@ def main():
                      for name in dict.fromkeys(VARIABLES.values()) if (SOURCE / 'gate-inputs' / name).is_dir()]}
     if phase == 'npm':
         tasks['npm'].append(('shared Prettier paths', lambda: shared_prettier(root, node)))
+        # This parallel preparation lane runs only after pinned Node is ready.
+        tasks['npm'].append(('cycle ledger', lambda: cycle_ledger(root, node)))
     for name, action in tasks[phase]:
         started = time.monotonic()
         answer = action()
