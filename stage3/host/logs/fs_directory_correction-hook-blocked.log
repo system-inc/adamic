@@ -1,0 +1,6 @@
+--- FAIL: TestInputAgreesWithNode (0.00s)
+    --- FAIL: TestInputAgreesWithNode/internal/oracle/testdata/node_path_posix.a (0.04s)
+        input_test.go:111: Load: /workspace/adamic/internal/oracle/testdata/node_path_posix.a:1:40: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.051s
+FAIL
