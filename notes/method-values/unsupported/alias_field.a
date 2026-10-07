@@ -1,0 +1,1 @@
+const method = Number.parseInt; const object = { method }; console.log(`${object.method('12')}`);

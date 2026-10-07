@@ -1,0 +1,1 @@
+function get() { const method = Number.parseInt; return method; } console.log(`${get()('12')}`);

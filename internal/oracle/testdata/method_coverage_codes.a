@@ -1,0 +1,6 @@
+/* eslint-disable no-useless-call -- This program tests delayed call and literal apply adapters. */
+const units = String.fromCharCode;
+const points = String.fromCodePoint;
+console.log(units.apply(null, [65, 0xd83c, 0xdf0d]));
+console.log(points.call(undefined, 65, 0x1f30d));
+console.log(`[${units()}]|[${points.apply({}, [])}]`);

@@ -1,0 +1,21 @@
+/* eslint-disable @typescript-eslint/unbound-method -- The oracle calls these intrinsic aliases with receivers proven by the branch. */
+function bound(text: string): () => string {
+    return String.prototype.trimEnd.bind(`${text} `);
+}
+const start = String.prototype.trimStart;
+const lower = String.prototype.toLowerCase;
+const value = String.prototype.valueOf;
+const text = String.prototype.toString;
+const first = start.bind('  left  ');
+const second = lower.bind('ΟΣ STRAẞE');
+const third = value.bind('🌍');
+const fourth = text.bind('held');
+const fifth = bound(' saved');
+console.log(`[${first()}]|${second()}|${third()}|${fourth()}|[${fifth()}]`);
+console.log([0, 1].map(fifth).join('|'));
+function run(callback: () => string): string {
+    return callback();
+}
+console.log(run(third));
+const holder = { callback: fourth };
+console.log(holder.callback());
