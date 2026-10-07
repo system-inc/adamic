@@ -1,0 +1,221 @@
+package lint
+
+import (
+	"bytes"
+	"context"
+	"encoding/json"
+	"fmt"
+	"github.com/system-inc/adamic/internal/javascript"
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native"
+	"io/fs"
+	"os"
+	"path/filepath"
+	"sort"
+	"strings"
+	"testing"
+	"time"
+)
+
+var nextNames = []string{"arrow-body-style", "max-lines", "no-extra-bind"}
+
+func TestNextWitnesses(t *testing.T) {
+	var rows []string
+	for _, name := range nextNames {
+		for _, path := range ownedWitnesses(t, ".", name) {
+			rows = append(rows, path+"\t"+name)
+		}
+	}
+	compare(t, goOracle(t), buildPort(t, ".", true), ".", manifest(t, rows))
+}
+func TestNextUpstream(t *testing.T) {
+	upstream(t)
+	data, err := os.ReadFile("/tmp/lint-wave1-10-next/captured.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	var records map[string]struct {
+		Rule, File, Source string
+		Options            json.RawMessage
+	}
+	if err = json.Unmarshal(data, &records); err != nil {
+		t.Fatal(err)
+	}
+	var keys []string
+	for key := range records {
+		keys = append(keys, key)
+	}
+	sort.Strings(keys)
+	var exclusions map[string]any
+	data, _ = os.ReadFile("rules/max-lines/testdata/parser-exclusions.json")
+	json.Unmarshal(data, &exclusions)
+	var rows []string
+	counts := map[string]int{}
+	for at, key := range keys {
+		if _, excluded := exclusions[key]; excluded {
+			continue
+		}
+		row := records[key]
+		if row.Rule != "arrow-body-style" && row.Rule != "max-lines" && row.Rule != "no-extra-bind" {
+			continue
+		}
+		ext := filepath.Ext(row.File)
+		if ext == "" {
+			ext = ".ts"
+		}
+		path := filepath.Join(t.TempDir(), fmt.Sprintf("next-%d%s", at, ext))
+		os.WriteFile(path, []byte(row.Source), 0644)
+		option := string(row.Options)
+		if option == "" {
+			option = "null"
+		}
+		rows = append(rows, path+"\t"+row.Rule+"\t\t\tfalse\t"+option)
+		counts[row.Rule]++
+	}
+	t.Logf("next upstream counts: %v; two multi-edit rules compare diagnostics only", counts)
+	compare(t, goOracle(t), buildPort(t, ".", true), ".", manifest(t, rows))
+}
+func TestNextCorpus(t *testing.T) {
+	var rows []string
+	for _, base := range []string{filepath.Join(os.Getenv("ADAMIC_TYPESCRIPT_SOURCE"), "src/compiler"), filepath.Join(repository, "stage1")} {
+		err := filepath.WalkDir(base, func(path string, e fs.DirEntry, err error) error {
+			if err != nil {
+				return err
+			}
+			if !e.IsDir() && (strings.HasSuffix(path, ".ts") || strings.HasSuffix(path, ".a")) {
+				path, _ = filepath.Abs(path)
+				for _, name := range nextNames {
+					rows = append(rows, path+"\t"+name)
+				}
+			}
+			return nil
+		})
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
+	t.Logf("next corpus %d files / %d cases; two multi-edit rules compare diagnostics only", len(rows)/3, len(rows))
+	compare(t, goOracle(t), buildPort(t, ".", true), ".", manifest(t, rows))
+}
+func TestNextMutants(t *testing.T) {
+	oracle := goOracle(t)
+	for _, name := range nextNames {
+		t.Run(name, func(t *testing.T) {
+			var change struct{ Name, File, From, To string }
+			data, _ := os.ReadFile(filepath.Join("rules", name, "mutant.json"))
+			if err := json.Unmarshal(data, &change); err != nil {
+				t.Fatal(err)
+			}
+			var rows []string
+			for _, path := range ownedWitnesses(t, ".", name) {
+				rows = append(rows, path+"\t"+name)
+			}
+			path := manifest(t, rows)
+			want := compare(t, oracle, buildPort(t, ".", true), ".", path)
+			directory := mutant(t, change.From, change.To, filepath.Join("rules", name, change.File))
+			for _, side := range []struct {
+				name string
+				run  execution
+			}{{"Node", node(t, directory, path, false)}, {"emitted JavaScript", emitted(t, directory, path)}, {"native", execute(t, "", buildPort(t, directory, true), "--manifest", path)}} {
+				if bytes.Equal(side.run.output, want) {
+					t.Fatalf("%s survived %s", change.Name, side.name)
+				}
+				t.Logf("%s compiled and caught only by output comparison on %s: %s", change.Name, side.name, difference(side.run.output, want))
+			}
+		})
+	}
+}
+
+func TestNextRepairs(t *testing.T) {
+	source, err := filepath.Abs("rules/arrow-body-style/repairs.a")
+	if err != nil {
+		t.Fatal(err)
+	}
+	want, err := os.ReadFile("rules/arrow-body-style/testdata/repairs-answer.txt")
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := load.Load([]string{source})
+	if err != nil {
+		t.Fatal(err)
+	}
+	lowered, err := lower.Lower(context.Background(), program)
+	if err != nil {
+		t.Fatal(err)
+	}
+	binary := filepath.Join(t.TempDir(), "repairs")
+	if err = native.Build(native.C(lowered), binary, native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	js := filepath.Join(t.TempDir(), "repairs.mjs")
+	os.WriteFile(js, []byte(javascript.JavaScript(lowered)), 0644)
+	runner, _ := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	for _, side := range []struct {
+		name string
+		run  execution
+	}{{"Node", execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, source)}, {"emitted JavaScript", execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, js)}, {"native", execute(t, "", binary)}} {
+		if !bytes.Equal(side.run.output, want) {
+			t.Fatalf("%s: %s", side.name, difference(side.run.output, want))
+		}
+		t.Logf("184 independent-parser upstream cases: findings and every disjoint edit identical on %s: %d bytes", side.name, len(want))
+	}
+}
+func TestNextThroughput(t *testing.T) {
+	var paths []string
+	filepath.WalkDir(filepath.Join(os.Getenv("ADAMIC_TYPESCRIPT_SOURCE"), "src/compiler"), func(path string, e fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		if !e.IsDir() && strings.HasSuffix(path, ".ts") {
+			paths = append(paths, path)
+		}
+		return nil
+	})
+	oracle := goOracle(t)
+	binary := buildPort(t, ".", false)
+	for _, rule := range []struct{ name, source string }{
+		{"arrow-body-style", "const f = () => { return 1; };\n"},
+		{"max-lines", "void 0;\n"},
+		{"no-extra-bind", "const f = function() { return 1; }.bind(obj);\n"},
+	} {
+		fixture := filepath.Join(t.TempDir(), "positive.ts")
+		os.WriteFile(fixture, []byte(strings.Repeat(rule.source, 1000)), 0644)
+		var rows []string
+		for _, path := range append(append([]string{}, paths...), fixture) {
+			rows = append(rows, path+"\t"+rule.name)
+		}
+		manifest := manifest(t, rows)
+		var want string
+		best := map[string]time.Duration{}
+		for round := 0; round < 5; round++ {
+			for _, name := range []string{"Go", "Node", "native"} {
+				var run execution
+				switch name {
+				case "Go":
+					run = execute(t, "", oracle, "--manifest", manifest, "--count")
+				case "Node":
+					run = node(t, ".", manifest, true)
+				case "native":
+					run = execute(t, "", binary, "--manifest", manifest, "--count")
+				}
+				output := string(run.output)
+				if want == "" {
+					want = output
+				}
+				if output != want {
+					t.Fatalf("%s count %s != %s", name, output, want)
+				}
+				if best[name] == 0 || run.duration < best[name] {
+					best[name] = run.duration
+				}
+				t.Logf("%s %s round%d count=%s duration=%s", rule.name, name, round, strings.TrimSpace(output), run.duration)
+			}
+		}
+		var count int
+		fmt.Sscan(want, &count)
+		for _, name := range []string{"native", "Node", "Go"} {
+			t.Logf("%s %s %.2f findings/s (%d, %d files, best of five)", rule.name, name, float64(count)/best[name].Seconds(), count, len(rows))
+		}
+	}
+}

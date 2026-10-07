@@ -1,0 +1,66 @@
+=== RUN   TestNextCorpus
+    owned_next_test.go:45: next corpus 230 files / 690 cases; two multi-edit rules compare diagnostics only
+    owned_next_test.go:46: Go, Node, emitted JavaScript, native identical: 37967495 bytes
+--- PASS: TestNextCorpus (83.97s)
+=== RUN   TestNextRepairs
+    owned_next_test.go:63: /workspace/adamic/stage1/cohere/lint/rules/arrow-body-style/repairs.a:29:32: Adamic 0.1 refuses a value without nominal ancestry seen as Edit; construct that class or a subclass; use an interface for structural values (adamic/nominal-class)
+--- FAIL: TestNextRepairs (0.10s)
+=== RUN   TestNextThroughput
+    owned_next_test.go:120: arrow-body-style Go round0 count=1046 duration=226.71859ms
+    owned_next_test.go:120: arrow-body-style Node round0 count=1046 duration=1.752584388s
+    owned_next_test.go:120: arrow-body-style native round0 count=1046 duration=2.681162867s
+    owned_next_test.go:120: arrow-body-style Go round1 count=1046 duration=219.279603ms
+    owned_next_test.go:120: arrow-body-style Node round1 count=1046 duration=1.481853324s
+    owned_next_test.go:120: arrow-body-style native round1 count=1046 duration=2.658117582s
+    owned_next_test.go:120: arrow-body-style Go round2 count=1046 duration=216.647257ms
+    owned_next_test.go:120: arrow-body-style Node round2 count=1046 duration=1.486345699s
+    owned_next_test.go:120: arrow-body-style native round2 count=1046 duration=2.70307462s
+    owned_next_test.go:120: arrow-body-style Go round3 count=1046 duration=230.123892ms
+    owned_next_test.go:120: arrow-body-style Node round3 count=1046 duration=1.49435063s
+    owned_next_test.go:120: arrow-body-style native round3 count=1046 duration=2.639416867s
+    owned_next_test.go:120: arrow-body-style Go round4 count=1046 duration=206.685786ms
+    owned_next_test.go:120: arrow-body-style Node round4 count=1046 duration=1.505676868s
+    owned_next_test.go:120: arrow-body-style native round4 count=1046 duration=2.573840411s
+    owned_next_test.go:126: arrow-body-style native 406.40 findings/s (1046, 78 files, best of five)
+    owned_next_test.go:126: arrow-body-style Node 705.87 findings/s (1046, 78 files, best of five)
+    owned_next_test.go:126: arrow-body-style Go 5060.82 findings/s (1046, 78 files, best of five)
+    owned_next_test.go:120: max-lines Go round0 count=57 duration=200.803373ms
+    owned_next_test.go:120: max-lines Node round0 count=57 duration=987.693447ms
+    owned_next_test.go:120: max-lines native round0 count=57 duration=1.927250427s
+    owned_next_test.go:120: max-lines Go round1 count=57 duration=200.387537ms
+    owned_next_test.go:120: max-lines Node round1 count=57 duration=1.175851691s
+    owned_next_test.go:120: max-lines native round1 count=57 duration=2.965845903s
+    owned_next_test.go:120: max-lines Go round2 count=57 duration=225.456537ms
+    owned_next_test.go:120: max-lines Node round2 count=57 duration=1.026199397s
+    owned_next_test.go:120: max-lines native round2 count=57 duration=1.931079206s
+    owned_next_test.go:120: max-lines Go round3 count=57 duration=205.071418ms
+    owned_next_test.go:120: max-lines Node round3 count=57 duration=964.344443ms
+    owned_next_test.go:120: max-lines native round3 count=57 duration=1.952071574s
+    owned_next_test.go:120: max-lines Go round4 count=57 duration=213.243435ms
+    owned_next_test.go:120: max-lines Node round4 count=57 duration=991.138469ms
+    owned_next_test.go:120: max-lines native round4 count=57 duration=1.966778282s
+    owned_next_test.go:126: max-lines native 29.58 findings/s (57, 78 files, best of five)
+    owned_next_test.go:126: max-lines Node 59.11 findings/s (57, 78 files, best of five)
+    owned_next_test.go:126: max-lines Go 284.45 findings/s (57, 78 files, best of five)
+    owned_next_test.go:120: no-extra-bind Go round0 count=1000 duration=204.474215ms
+    owned_next_test.go:120: no-extra-bind Node round0 count=1000 duration=805.780786ms
+    owned_next_test.go:120: no-extra-bind native round0 count=1000 duration=1.180166569s
+    owned_next_test.go:120: no-extra-bind Go round1 count=1000 duration=196.027478ms
+    owned_next_test.go:120: no-extra-bind Node round1 count=1000 duration=798.015746ms
+    owned_next_test.go:120: no-extra-bind native round1 count=1000 duration=1.300488652s
+    owned_next_test.go:120: no-extra-bind Go round2 count=1000 duration=225.255807ms
+    owned_next_test.go:120: no-extra-bind Node round2 count=1000 duration=858.996097ms
+    owned_next_test.go:120: no-extra-bind native round2 count=1000 duration=1.1664453s
+    owned_next_test.go:120: no-extra-bind Go round3 count=1000 duration=204.336835ms
+    owned_next_test.go:120: no-extra-bind Node round3 count=1000 duration=868.648232ms
+    owned_next_test.go:120: no-extra-bind native round3 count=1000 duration=1.17313666s
+    owned_next_test.go:120: no-extra-bind Go round4 count=1000 duration=186.370606ms
+    owned_next_test.go:120: no-extra-bind Node round4 count=1000 duration=806.923711ms
+    owned_next_test.go:120: no-extra-bind native round4 count=1000 duration=1.146657853s
+    owned_next_test.go:126: no-extra-bind native 872.10 findings/s (1000, 78 files, best of five)
+    owned_next_test.go:126: no-extra-bind Node 1253.11 findings/s (1000, 78 files, best of five)
+    owned_next_test.go:126: no-extra-bind Go 5365.65 findings/s (1000, 78 files, best of five)
+--- PASS: TestNextThroughput (59.65s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	143.724s
+FAIL

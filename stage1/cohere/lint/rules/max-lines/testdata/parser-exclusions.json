@@ -1,0 +1,17 @@
+{
+  "arrow-body-style\tnull\tvar foo = () => { return bar } /* c */ + 1;": {
+    "rule": "arrow-body-style",
+    "source": "var foo = () => { return bar } /* c */ + 1;",
+    "error": "Error: parser slice expected semicolon at 39 in /repository/source/ArrowBodyStyle.ts"
+  },
+  "arrow-body-style\t{\"Mode\":\"AsNeeded\",\"RequireReturnForObjectLiteral\":false}\tfor (a = b => { return c = d in e } ;;);": {
+    "rule": "arrow-body-style",
+    "source": "for (a = b => { return c = d in e } ;;);",
+    "error": "Error: parser slice expected semicolon at 29 in /repository/source/ArrowBodyStyle.ts"
+  },
+  "arrow-body-style\t{\"Mode\":\"AsNeeded\",\"RequireReturnForObjectLiteral\":false}\tfor (a = b => { return c in d ? e : f } ;;);": {
+    "rule": "arrow-body-style",
+    "source": "for (a = b => { return c in d ? e : f } ;;);",
+    "error": "Error: parser slice expected semicolon at 25 in /repository/source/ArrowBodyStyle.ts"
+  }
+}

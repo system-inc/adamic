@@ -1,0 +1,6 @@
+=== RUN   TestNextRepairs
+    owned_next_test.go:145: /workspace/adamic/stage1/cohere/lint/rules/arrow-body-style/repairs.a:20:42: stage 0 can't lower an array of never yet
+--- FAIL: TestNextRepairs (0.15s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	0.160s
+FAIL

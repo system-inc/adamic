@@ -1,0 +1,7 @@
+=== RUN   TestNextRepairs
+    owned_next_test.go:161: 184 independent-parser upstream cases: findings and every disjoint edit identical on Node: 49634 bytes
+    owned_next_test.go:161: 184 independent-parser upstream cases: findings and every disjoint edit identical on emitted JavaScript: 49634 bytes
+    owned_next_test.go:161: 184 independent-parser upstream cases: findings and every disjoint edit identical on native: 49634 bytes
+--- PASS: TestNextRepairs (11.71s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	11.721s

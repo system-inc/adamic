@@ -1,0 +1,12 @@
+{
+  "name": "max-lines",
+  "kinds": [
+    "SourceFile"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleMaxLines",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestMaxLines"
+}

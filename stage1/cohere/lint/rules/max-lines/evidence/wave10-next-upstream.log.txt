@@ -1,0 +1,20 @@
+=== RUN   TestNextWitnesses
+    owned_next_test.go:18: Go, Node, emitted JavaScript, native identical: 5380 bytes
+--- PASS: TestNextWitnesses (21.67s)
+=== RUN   TestNextUpstream
+    lint_test.go:327: cohere cases: 841 unique source/rule/options combinations
+    owned_next_test.go:30: next upstream counts: map[arrow-body-style:111 max-lines:15 no-extra-bind:76]; two multi-edit rules compare diagnostics only
+    owned_next_test.go:31: /tmp/adamic-gate/TestNextUpstream728855057/208/oracle [--manifest /tmp/adamic-gate/TestNextUpstream728855057/212/manifest.txt]: exit status 2
+        panic: invalid corpus /tmp/adamic-gate/TestNextUpstream728855057/046/next-208.ts: [',' expected.]
+        
+        goroutine 1 [running]:
+        main.collect({0x10d2cc9e82e8, 0x3a}, {0x10d2cc85bd40?, 0x1?}, {0x10d2cca44300, 0x6, 0x6})
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:95 +0x765
+        main.run({0x10d2cc9e82e8?, 0x10d2cc9b62c0?}, 0x0, 0x10d2cc9b62c0)
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:45 +0x12f
+        main.main()
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:147 +0x2f7
+--- FAIL: TestNextUpstream (25.01s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	46.687s
+FAIL

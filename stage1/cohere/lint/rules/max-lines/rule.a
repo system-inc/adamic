@@ -1,0 +1,47 @@
+import type { RuleContext } from '../../context.ts';
+import { Finding } from '../../finding.ts';
+import { all } from '../../helpers/comments/all.ts';
+import { unit, goTrim } from '../typescript-ban-tslint-comment/rule.a';
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    blank(text: string): boolean { return goTrim(text.replace(/\ufeff/g, '')) === ''; }
+    visit(index: number): void {
+        const context = this.context;
+        const text = context.source;
+        const maximum = Number(context.settings.read('maximum', context.settings.read('max', context.settings.read('option', '300'))));
+        const skipBlank = context.settings.read('skipblanklines', 'false') === 'true';
+        const skipComments = context.settings.read('skipcomments', 'false') === 'true';
+        const marked = new Array<boolean>(text.length).fill(false);
+        if(skipComments) {
+            for(const comment of all(context.parser, index)) {
+                const end = unit(text, comment.end);
+                for(let at = unit(text, comment.start); at < end; at++) { marked[at] = true; }
+            }
+        }
+        let counted = 0; let excess = 0; let start = 0;
+        for(let end = 0; end <= text.length; end++) {
+            const character = text.slice(end, end + 1);
+            if(end < text.length && !['\r', '\n', '\u2028', '\u2029'].includes(character)) { continue; }
+            if(end === text.length && start === end && end > 0) { break; }
+            const line = text.slice(start, end);
+            let touched = false; let outside = '';
+            if(skipComments) {
+                for(let at = start; at < end; at++) {
+                    if(marked[at] === true) { touched = true; }
+                    else { outside += text.slice(at, at + 1); }
+                }
+            }
+            if(!(skipBlank && this.blank(line)) && !(skipComments && touched && this.blank(outside))) {
+                if(counted === maximum) { excess = start; }
+                counted++;
+            }
+            if(character === '\r' && text.slice(end + 1, end + 2) === '\n') { end++; }
+            start = end + 1;
+        }
+        if(counted <= maximum) { return; }
+        const message = `File has too many lines (${counted}). Maximum allowed is ${maximum}. A file this long holds more than one concern, and a reader has to hold all of them to change any. Split it along a real seam, a concern, a table, a command group, never by line count, and have every caller import the new home directly.`;
+        context.findings.push(new Finding('max-lines', 'exceed', message, excess, text.length, '', '', ''));
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
