@@ -21,6 +21,7 @@ replace (
 )
 
 require (
+	github.com/dlclark/regexp2/v2 v2.5.2
 	github.com/microsoft/TypeScript/tsc/shim/ast v0.0.0
 	github.com/microsoft/TypeScript/tsc/shim/bundled v0.0.0
 	github.com/microsoft/TypeScript/tsc/shim/checker v0.0.0

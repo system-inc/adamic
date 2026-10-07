@@ -203,6 +203,12 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 	mode := strings.Split(question, "\n")[0]
 	out.text(mode)
 	switch mode {
+	case "number-index-type":
+		return p.numberIndexType(out, c, question)
+	case "resolved-signature-equal":
+		return p.resolvedSignatureEqual(out, c, node, file, question)
+	case "regular-expression-syntax":
+		return regularExpressionSyntax(out, question)
 	case "node-symbol-details", "declaration-details", "type-symbol-details", "property-declarations":
 		if err := p.declarationFacts(out, c, node, mode, question); err != nil {
 			return "", err

@@ -1,0 +1,34 @@
+import type { Rules } from './rules.ts';
+import type { Types } from './types.ts';
+import { types } from './facts.ts';
+import { numberLike, unionFlag, intersectionFlag } from './flags.ts';
+import { hasNumberIndex } from './number_index_type.a';
+import { Diagnostic } from './diagnostic.ts';
+export class NoForInArray {
+    readonly rules: Rules;
+    constructor(rules: Rules) { this.rules = rules; }
+    arrayLike(index: number, facts: Types, identity: number): boolean {
+        const type = facts.type(identity);
+        if((type.flags & (unionFlag | intersectionFlag)) !== 0) {
+            return type.parts.some((part) => this.arrayLike(index, facts, part));
+        }
+        if(!hasNumberIndex(this.rules, index, identity)) { return false; }
+        const length = types(this.rules.ask(index, `property-shape\n${identity}\nlength`), 'property-shape');
+        return length.present && (length.root().flags & numberLike) !== 0;
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            const node = this.rules.parser.node(index);
+            if((this.rules.parents[index] ?? -1) < 0 || node.kind !== 'ForInStatement') { continue; }
+            const expression = node.children[node.children.length - 2] ?? -1;
+            const body = node.children[node.children.length - 1] ?? -1;
+            if(expression < 0 || body < 0) { continue; }
+            const facts = types(this.rules.ask(expression, 'type-shape'), 'type-shape');
+            if(this.arrayLike(expression, facts, facts.root().id)) {
+                this.rules.findings.push(new Diagnostic('no-for-in-array', 'forInViolation',
+                    'For-in loops over arrays skips holes, returns indices as strings, and may visit the prototype chain or other enumerable properties. Use a more robust iteration method such as for-of or array.forEach instead.',
+                    this.rules.byte(this.rules.start(node)), this.rules.byte(this.rules.parser.node(body).pos)));
+            }
+        }
+    }
+}

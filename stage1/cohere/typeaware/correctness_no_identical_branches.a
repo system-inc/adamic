@@ -1,0 +1,136 @@
+import type { Rules } from './rules.ts';
+import { types } from './facts.ts';
+import { sameSignature } from './resolved_signature_equal.a';
+import { Diagnostic } from './diagnostic.ts';
+export class NoIdenticalBranches {
+    readonly rules: Rules;
+    constructor(rules: Rules) { this.rules = rules; }
+    gap(start: number, end: number): string[] {
+        const scanner = this.rules.scanner;
+        const tokens: string[] = [];
+        scanner.pos = start;
+        while(scanner.pos < end) {
+            scanner.scan();
+            if(scanner.start >= end || scanner.kind === 'EndOfFile') { break; }
+            tokens.push(scanner.text.slice(scanner.start, scanner.pos));
+        }
+        return tokens;
+    }
+    sameGap(leftStart: number, leftEnd: number, rightStart: number, rightEnd: number): boolean {
+        const left = this.gap(leftStart, leftEnd);
+        const right = this.gap(rightStart, rightEnd);
+        return left.length === right.length && left.every((token, at) => token === right[at]);
+    }
+    sameTokens(leftIndex: number, rightIndex: number): boolean {
+        const left = this.rules.parser.node(leftIndex);
+        const right = this.rules.parser.node(rightIndex);
+        if(left.kind !== right.kind || left.operator !== right.operator || left.children.length !== right.children.length) { return false; }
+        let leftCursor = this.rules.start(left);
+        let rightCursor = this.rules.start(right);
+        if(left.children.length === 0) {
+            return ['ArrayLiteralExpression', 'ObjectLiteralExpression', 'Block', 'EmptyStatement'].includes(left.kind) ?
+                this.sameGap(leftCursor, left.end, rightCursor, right.end) : this.rules.text(left) === this.rules.text(right);
+        }
+        for(let at = 0; at < left.children.length; at++) {
+            const leftChild = left.children[at] ?? -1;
+            const rightChild = right.children[at] ?? -1;
+            const leftNode = this.rules.parser.node(leftChild);
+            const rightNode = this.rules.parser.node(rightChild);
+            if(!this.sameGap(leftCursor, this.rules.start(leftNode), rightCursor, this.rules.start(rightNode)) ||
+                !this.sameTokens(leftChild, rightChild)) { return false; }
+            leftCursor = leftNode.end; rightCursor = rightNode.end;
+        }
+        return this.sameGap(leftCursor, left.end, rightCursor, right.end);
+    }
+    sameType(left: number, right: number): boolean {
+        const a = types(this.rules.ask(left, 'raw-shape'), 'raw-shape').root();
+        const b = types(this.rules.ask(right, 'raw-shape'), 'raw-shape').root();
+        return a.id === b.id || ((a.flags | b.flags) & 131072) !== 0;
+    }
+    intrinsic(index: number): boolean {
+        const node = this.rules.parser.node(index);
+        const tag = this.rules.parser.node(node.children[0] ?? -1);
+        return tag.kind === 'JsxNamespacedName' || tag.kind === 'Identifier' &&
+            (tag.text.charCodeAt(0) >= 97 && tag.text.charCodeAt(0) <= 122 || tag.text.includes('-'));
+    }
+    sameTypes(leftIndex: number, rightIndex: number): boolean {
+        const left = this.rules.parser.node(leftIndex);
+        const right = this.rules.parser.node(rightIndex);
+        if(['CallExpression', 'NewExpression', 'TaggedTemplateExpression', 'JsxOpeningElement', 'JsxSelfClosingElement'].includes(left.kind)) {
+            if(!(['JsxOpeningElement', 'JsxSelfClosingElement'].includes(left.kind) && this.intrinsic(leftIndex)) &&
+                !sameSignature(this.rules, leftIndex, rightIndex)) { return false; }
+            if(left.kind === 'CallExpression' || left.kind === 'NewExpression') {
+                const args: number[] = left.list > 0 ? left.children.slice(left.children.length - left.list) : [];
+                const others: number[] = right.list > 0 ? right.children.slice(right.children.length - right.list) : [];
+                for(let at = 0; at < args.length; at++) {
+                    const argument = this.rules.parser.node(args[at] ?? -1);
+                    if(argument.kind === 'SpreadElement' && !this.sameType(argument.children[0] ?? -1,
+                        this.rules.parser.node(others[at] ?? -1).children[0] ?? -1)) { return false; }
+                }
+            }
+        }
+        if(left.kind === 'BinaryExpression') {
+            const operator = this.rules.parser.node(left.children[1] ?? -1).kind;
+            if(['PlusToken', 'MinusToken', 'AsteriskToken', 'AsteriskAsteriskToken', 'SlashToken', 'PercentToken',
+                'LessThanLessThanToken', 'GreaterThanGreaterThanToken', 'GreaterThanGreaterThanGreaterThanToken',
+                'AmpersandToken', 'BarToken', 'CaretToken', 'LessThanToken', 'GreaterThanToken', 'LessThanEqualsToken',
+                'GreaterThanEqualsToken', 'InKeyword', 'InstanceOfKeyword', 'PlusEqualsToken', 'MinusEqualsToken',
+                'AsteriskEqualsToken', 'AsteriskAsteriskEqualsToken', 'SlashEqualsToken', 'PercentEqualsToken',
+                'LessThanLessThanEqualsToken', 'GreaterThanGreaterThanEqualsToken', 'GreaterThanGreaterThanGreaterThanEqualsToken',
+                'AmpersandEqualsToken', 'BarEqualsToken', 'CaretEqualsToken'].includes(operator) &&
+                (!this.sameType(left.children[0] ?? -1, right.children[0] ?? -1) ||
+                    !this.sameType(left.children[2] ?? -1, right.children[2] ?? -1))) { return false; }
+        }
+        for(let at = 0; at < left.children.length; at++) {
+            if(!this.sameTypes(left.children[at] ?? -1, right.children[at] ?? -1)) { return false; }
+        }
+        return true;
+    }
+    same(left: number, right: number): boolean {
+        return left >= 0 && right >= 0 && this.sameTokens(left, right) && this.sameTypes(left, right);
+    }
+    unwrap(index: number): number {
+        const node = this.rules.parser.node(index);
+        return node.kind === 'Block' && node.children.length === 1 ? node.children[0] ?? index : index;
+    }
+    empty(index: number): boolean {
+        const node = this.rules.parser.node(index);
+        return node.kind === 'EmptyStatement' || node.kind === 'Block' && node.children.length === 0;
+    }
+    visit(index: number): void {
+        const node = this.rules.parser.node(index);
+        const conditional = node.kind === 'ConditionalExpression';
+        const branches = conditional ? node.children.filter((child) =>
+            !['QuestionToken', 'ColonToken'].includes(this.rules.parser.node(child).kind)) : node.children;
+        if(branches.length !== 3) { return; }
+        const left = conditional ? this.rules.skip(branches[1] ?? -1) : this.unwrap(branches[1] ?? -1);
+        const right = conditional ? this.rules.skip(branches[2] ?? -1) : this.unwrap(branches[2] ?? -1);
+        if(!conditional && (this.empty(left) || this.empty(right))) { return; }
+        if(!this.same(left, right)) { return; }
+        let anchor = index;
+        while(true) {
+            let parent = this.rules.parents[anchor] ?? -1;
+            if(conditional) {
+                while(parent >= 0 && this.rules.parser.node(parent).kind === 'ParenthesizedExpression') {
+                    parent = this.rules.parents[parent] ?? -1;
+                }
+            }
+            if(parent < 0 || this.rules.parser.node(parent).kind !== node.kind) { break; }
+            const owner = this.rules.parser.node(parent);
+            const parts = conditional ? owner.children.filter((child) =>
+                !['QuestionToken', 'ColonToken'].includes(this.rules.parser.node(child).kind)) : owner.children;
+            if(parts.length !== 3 || (conditional ? this.rules.skip(parts[2] ?? -1) : parts[2]) !== anchor ||
+                !this.same(conditional ? this.rules.skip(parts[1] ?? -1) : this.unwrap(parts[1] ?? -1), left)) { break; }
+            anchor = parent;
+        }
+        const finding = this.rules.parser.node(anchor);
+        this.rules.findings.push(new Diagnostic('nexus/correctness-no-identical-branches', 'identicalBranches',
+            "Every branch of this conditional does the same thing, so its condition chooses nothing: the code runs the same way whether it is true or false. Usually one branch was meant to differ and a copy was never edited (`highQuality ? 'pro' : 'pro'`). Write the branch that was meant, or, if both really are the same, drop the conditional and keep one copy.",
+            this.rules.byte(this.rules.start(finding)), this.rules.byte(finding.end), ''));
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            if((this.rules.parents[index] ?? -1) >= 0 && ['ConditionalExpression', 'IfStatement'].includes(this.rules.parser.node(index).kind)) { this.visit(index); }
+        }
+    }
+}

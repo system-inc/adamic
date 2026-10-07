@@ -1,0 +1,10 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+export function sameSignature(rules: Rules, left: number, right: number): boolean {
+    const node = rules.parser.node(right);
+    const frames = new Frames(rules.ask(left, `resolved-signature-equal\n${rules.byte(node.pos)}\n${rules.byte(node.end)}\n${node.kind}`));
+    header(frames, 'resolved-signature-equal');
+    const equal = frames.yes();
+    frames.end();
+    return equal;
+}
