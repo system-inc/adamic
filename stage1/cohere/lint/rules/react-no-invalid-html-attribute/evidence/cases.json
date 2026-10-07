@@ -1,0 +1,1478 @@
+[
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "\n        React.createElement('a', {\n          ...rest,\n          href: to,\n        })\n      "
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<Foo rel></Foo>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<Foo.Bar rel=\"alternatex\"></Foo.Bar>;\n"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel=\"alternate alternatex\"></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel=\"alternate alternatex\"></a>;\n"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel=\"alternate\"></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel=\"alternatex alternate\"></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel=\"alternatex\"></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel=\"alternatex\"></a>;\n"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel=\"author\"></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": {
+      "Attributes": [
+        "rel"
+      ]
+    },
+    "sourceText": "<a rel=\"bogus\" />; React.createElement(\"a\", {rel: \"bogus\"});"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": {
+      "Attributes": []
+    },
+    "sourceText": "<a rel=\"bogus\" />; React.createElement(\"a\", {rel: \"bogus\"});"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel=\"bookmark\"></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel=\"canonical\"></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel=\"canonical\"></a>;\n"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel=\"dns-prefetch\"></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel=\"external\"></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel=\"help\"></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel=\"icon\"></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel=\"license\"></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel=\"manifest\"></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel=\"modulepreload\"></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel=\"next\"></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel=\"nofollow\"></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel=\"noopener\"></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel=\"noreferrer\tnoopener\"></a>;\n"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel=\"noreferrer\nnoopener\"></a>;\n"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel=\"noreferrer        noopener\"></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel=\"noreferrer  noopener\"></a>;\n"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel=\"noreferrer noopener   \"></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel=\"noreferrer noopener foobar\"></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel=\"noreferrer\"></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel=\"noreferrer\\tnoopener\"></a>;\n"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel=\"noreferrer  noopener\"></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel=\"opener\"></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel=\"pingback\"></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel=\"preconnect\"></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel=\"prefetch\"></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel=\"preload\"></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel=\"prerender\"></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel=\"prev\"></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel=\"search\"></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel=\"stylesheet\"></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel=\"tag\"></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel={\"        noopener\"}></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel={\" noopener\"}></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel={\"batgo noopener\"}></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel={\"foobar noreferrer noopener\"}></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel={\"noopener        \"}></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel={\"noreferrer noopener foobar\"}></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel={5}></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel={5}></a>;\n"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel={null}></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel={true}></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel={undefined}></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel={{a: \"noreferrer\"}[\"a\"]}></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel={{a: \"noreferrer\"}[\"b\"]}></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel={{}}></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel={{}}></a>;\n"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel></a>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<a rel></a>;\n"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<area rel=\"alternate\"></area>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<area rel=\"author\"></area>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<area rel=\"bookmark\"></area>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<area rel=\"canonical\"></area>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<area rel=\"dns-prefetch\"></area>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<area rel=\"external\"></area>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<area rel=\"help\"></area>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<area rel=\"icon\"></area>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<area rel=\"license\"></area>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<area rel=\"manifest\"></area>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<area rel=\"modulepreload\"></area>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<area rel=\"next\"></area>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<area rel=\"nofollow\"></area>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<area rel=\"noopener\"></area>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<area rel=\"noreferrer\"></area>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<area rel=\"opener\"></area>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<area rel=\"pingback\"></area>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<area rel=\"preconnect\"></area>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<area rel=\"prefetch\"></area>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<area rel=\"preload\"></area>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<area rel=\"prerender\"></area>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<area rel=\"prev\"></area>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<area rel=\"search\"></area>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<area rel=\"stylesheet\"></area>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<area rel=\"tag\"></area>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<form rel=\"\"></form>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<form rel=\"alternate\"></form>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<form rel=\"author\"></form>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<form rel=\"bookmark\"></form>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<form rel=\"canonical\"></form>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<form rel=\"dns-prefetch\"></form>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<form rel=\"external\"></form>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<form rel=\"help\"></form>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<form rel=\"icon\"></form>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<form rel=\"license\"></form>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<form rel=\"manifest\"></form>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<form rel=\"modulepreload\"></form>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<form rel=\"next\"></form>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<form rel=\"nofollow\"></form>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<form rel=\"noopener\"></form>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<form rel=\"noreferrer\"></form>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<form rel=\"opener\"></form>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<form rel=\"pingback\"></form>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<form rel=\"preconnect\"></form>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<form rel=\"prefetch\"></form>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<form rel=\"preload\"></form>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<form rel=\"prerender\"></form>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<form rel=\"prev\"></form>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<form rel=\"search\"></form>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<form rel=\"stylesheet\"></form>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<form rel=\"tag\"></form>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<form rel={callFoo()}></form>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<html rel></html>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<link rel=\"alternate\"></link>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<link rel=\"apple-touch-icon\" sizes=\"120x120\" href=\"apple-touch-icon-120x120.png\" />"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<link rel=\"apple-touch-icon\" sizes=\"152x152\" href=\"apple-touch-icon-152x152.png\" />"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<link rel=\"apple-touch-icon\" sizes=\"180x180\" href=\"apple-touch-icon-180x180.png\" />"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<link rel=\"apple-touch-icon\" sizes=\"60x60\" href=\"apple-touch-icon-60x60.png\" />"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<link rel=\"apple-touch-icon\" sizes=\"76x76\" href=\"apple-touch-icon-76x76.png\" />"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<link rel=\"apple-touch-startup-image\" href=\"iphone5.png\" media=\"(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)\" />"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<link rel=\"apple-touch-startup-image\" href=\"launch.png\" />"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<link rel=\"author\"></link>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<link rel=\"bookmark\"></link>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<link rel=\"canonical\"></link>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<link rel=\"dns-prefetch\"></link>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<link rel=\"external\"></link>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<link rel=\"help\"></link>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<link rel=\"icon\"></link>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<link rel=\"license\"></link>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<link rel=\"manifest\"></link>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<link rel=\"mask-icon\" href=\"/safari-pinned-tab.svg\" color=\"#fff\" />"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<link rel=\"modulepreload\"></link>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<link rel=\"next\"></link>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<link rel=\"nofollow\"></link>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<link rel=\"noopener\"></link>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<link rel=\"noreferrer\"></link>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<link rel=\"opener\"></link>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<link rel=\"pingback\"></link>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<link rel=\"preconnect\"></link>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<link rel=\"prefetch\"></link>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<link rel=\"preload\"></link>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<link rel=\"prerender\"></link>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<link rel=\"prev\"></link>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<link rel=\"search\"></link>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<link rel=\"shortcut  icon\"></link>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<link rel=\"shortcut icon\"></link>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<link rel=\"shortcut\"></link>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<link rel=\"stylesheet\"></link>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<link rel=\"tag\"></link>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<span rel></span>"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "<span rel></span>;\n"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "Preact.createElement(\"a\", { rel: \"alternatex\" });\n"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"Foo\", { rel: \"alternatex\" });\n"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"Foo\", { rel: true })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"a\", { rel() { return 1; } })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"a\", { rel: \"alternate alternatex\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"a\", { rel: \"alternate alternatex\" });\n"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"a\", { rel: \"alternate\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"a\", { rel: \"alternatex alternate\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"a\", { rel: \"alternatex\" })"
+  },
+  {
+    "file": "/repository/source/Gate.ts",
+    "options": null,
+    "sourceText": "React.createElement(\"a\", { rel: \"alternatex\" });\n"
+  },
+  {
+    "file": "/repository/source/Gate.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"a\", { rel: \"alternatex\" });\n"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"a\", { rel: \"alternatex\" });\n"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"a\", { rel: \"author\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"a\", { rel: \"bookmark\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"a\", { rel: \"external\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"a\", { rel: \"help\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"a\", { rel: \"license\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"a\", { rel: \"next\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"a\", { rel: \"nofollow\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"a\", { rel: \"noopener\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"a\", { rel: \"noreferrer\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"a\", { rel: \"opener\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"a\", { rel: \"prev\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"a\", { rel: \"search\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"a\", { rel: \"tag\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"a\", { rel: 1 })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"a\", { rel: [\"alternate alternatex\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"a\", { rel: [\"alternate\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"a\", { rel: [\"alternatex alternate\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"a\", { rel: [\"alternatex\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"a\", { rel: [\"author\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"a\", { rel: [\"bookmark\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"a\", { rel: [\"external\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"a\", { rel: [\"help\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"a\", { rel: [\"license\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"a\", { rel: [\"next\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"a\", { rel: [\"nofollow\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"a\", { rel: [\"noopener\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"a\", { rel: [\"noreferrer\", \"noopener\", \"foobar\" ] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"a\", { rel: [\"noreferrer\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"a\", { rel: [\"opener\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"a\", { rel: [\"prev\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"a\", { rel: [\"search\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"a\", { rel: [\"tag\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"area\", { rel: \"alternate\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"area\", { rel: \"author\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"area\", { rel: \"bookmark\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"area\", { rel: \"external\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"area\", { rel: \"help\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"area\", { rel: \"license\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"area\", { rel: \"next\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"area\", { rel: \"nofollow\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"area\", { rel: \"noopener\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"area\", { rel: \"noreferrer\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"area\", { rel: \"opener\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"area\", { rel: \"prev\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"area\", { rel: \"search\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"area\", { rel: \"tag\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"area\", { rel: [\"alternate\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"area\", { rel: [\"author\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"area\", { rel: [\"bookmark\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"area\", { rel: [\"external\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"area\", { rel: [\"help\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"area\", { rel: [\"license\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"area\", { rel: [\"next\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"area\", { rel: [\"nofollow\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"area\", { rel: [\"noopener\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"area\", { rel: [\"noreferrer\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"area\", { rel: [\"opener\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"area\", { rel: [\"prev\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"area\", { rel: [\"search\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"area\", { rel: [\"tag\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"form\", { rel: \"external\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"form\", { rel: \"help\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"form\", { rel: \"license\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"form\", { rel: \"next\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"form\", { rel: \"nofollow\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"form\", { rel: \"noopener\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"form\", { rel: \"noreferrer\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"form\", { rel: \"opener\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"form\", { rel: \"prev\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"form\", { rel: \"search\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"form\", { rel: [\"external\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"form\", { rel: [\"help\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"form\", { rel: [\"license\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"form\", { rel: [\"next\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"form\", { rel: [\"nofollow\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"form\", { rel: [\"noopener\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"form\", { rel: [\"noreferrer\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"form\", { rel: [\"opener\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"form\", { rel: [\"prev\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"form\", { rel: [\"search\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"form\", { rel: [callFoo()] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"form\", { rel: callFoo() })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"html\", { rel: 1 })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"link\", { rel: \"alternate\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"link\", { rel: \"author\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"link\", { rel: \"canonical\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"link\", { rel: \"dns-prefetch\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"link\", { rel: \"help\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"link\", { rel: \"icon\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"link\", { rel: \"license\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"link\", { rel: \"manifest\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"link\", { rel: \"modulepreload\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"link\", { rel: \"next\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"link\", { rel: \"pingback\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"link\", { rel: \"preconnect\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"link\", { rel: \"prefetch\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"link\", { rel: \"preload\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"link\", { rel: \"prerender\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"link\", { rel: \"prev\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"link\", { rel: \"search\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"link\", { rel: \"shortcut icon\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"link\", { rel: \"stylesheet\" })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"link\", { rel: [\"alternate\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"link\", { rel: [\"author\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"link\", { rel: [\"canonical\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"link\", { rel: [\"dns-prefetch\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"link\", { rel: [\"help\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"link\", { rel: [\"icon\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"link\", { rel: [\"license\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"link\", { rel: [\"manifest\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"link\", { rel: [\"modulepreload\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"link\", { rel: [\"next\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"link\", { rel: [\"pingback\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"link\", { rel: [\"preconnect\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"link\", { rel: [\"prefetch\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"link\", { rel: [\"preload\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"link\", { rel: [\"prerender\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"link\", { rel: [\"prev\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"link\", { rel: [\"search\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"link\", { rel: [\"shortcut icon\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(\"link\", { rel: [\"stylesheet\"] })"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(5, { rel: \"alternatex\" });\n"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "React.createElement(`a`, { rel: \"alternatex\" });\n"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "const k = \"rel\";\nReact.createElement(\"a\", { [k]: \"alternatex\" });\n"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "const p = {};\n<a {...p}></a>;\n"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "const p = {};\nReact.createElement(\"a\", { ...p });\n"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "const tag = \"a\";\nReact.createElement(tag, { rel: \"alternatex\" });\n"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "createElement(\"a\", { rel: \"alternatex\" });\n"
+  },
+  {
+    "file": "/repository/source/NoInvalidHtmlAttribute.tsx",
+    "options": null,
+    "sourceText": "h.createElement(\"a\", { rel: \"alternatex\" });\n"
+  },
+  {
+    "file": "/source.tsx",
+    "options": null,
+    "sourceText": "const a = <div rel=\"nofollow\" />;\nconst b = <link rel=\"shortcut  noopener\" />;\nReact.createElement(\"a\", {rel: \"stylesheet\"});\n"
+  }
+]
