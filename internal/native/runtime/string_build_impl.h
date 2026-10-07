@@ -124,7 +124,7 @@ int adamic_string_equal(const adamic_string *left, const adamic_string *right) {
 	if (left == NULL || right == NULL) {
 		return left == right;
 	}
-	return left->length == right->length && (left->length == 0 || memcmp(left->bytes, right->bytes, left->length) == 0);
+	return left->length == right->length && (left == right || left->length == 0 || memcmp(left->bytes, right->bytes, left->length) == 0);
 }
 
 adamic_string adamic_string_empty = ADAMIC_STRING("");
