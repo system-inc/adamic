@@ -35,7 +35,91 @@ void adamic_apple_let_go(id object) {
 	objc_release(object);
 }
 
+// boxes is the one box each Objective-C object Adamic holds has, by the object, so two crossings of
+// one object are one value (=== holds) and a crossing of an object already held makes nothing. A box
+// leaves it as its last release lets the object go; until then its reference keeps the object, so
+// no other object can come to have its address. Boxes are made and let go of on the main thread.
+//
+// The table is open addressed, probed linearly, its capacity a power of two at most half full, and
+// an entry removed is a tombstone until the table is next rebuilt: a crossing costs a multiply and a
+// probe or two, where a CFDictionary cost more than the message itself.
+typedef struct box_entry {
+	id object;
+	adamic_object *box;
+} box_entry;
+
+static box_entry *boxes;
+static size_t box_capacity, box_used, box_live;
+static adamic_object tombstone;
+
+static size_t box_slot(id object) {
+	return (size_t)(((uintptr_t)object >> 4) * 0x9E3779B97F4A7C15ULL) & (box_capacity - 1);
+}
+
+static adamic_object *box_find(id object) {
+	if (box_capacity == 0) {
+		return NULL;
+	}
+	for (size_t slot = box_slot(object);; slot = (slot + 1) & (box_capacity - 1)) {
+		if (boxes[slot].box == NULL) {
+			return NULL;
+		}
+		if (boxes[slot].object == object && boxes[slot].box != &tombstone) {
+			return boxes[slot].box;
+		}
+	}
+}
+
+static void box_insert(id object, adamic_object *box) {
+	if (2 * (box_used + 1) > box_capacity) {
+		// Rebuilt at twice the live entries (16 at least), dropping the tombstones.
+		box_entry *old = boxes;
+		size_t old_capacity = box_capacity;
+		box_capacity = 16;
+		while (box_capacity < 4 * (box_live + 1)) {
+			box_capacity *= 2;
+		}
+		boxes = calloc(box_capacity, sizeof *boxes);
+		if (boxes == NULL) {
+			static const char message[] = "out of memory";
+			adamic_panic(message, sizeof message - 1);
+		}
+		box_used = 0;
+		for (size_t index = 0; index < old_capacity; index++) {
+			if (old[index].box != NULL && old[index].box != &tombstone) {
+				size_t slot = box_slot(old[index].object);
+				while (boxes[slot].box != NULL) {
+					slot = (slot + 1) & (box_capacity - 1);
+				}
+				boxes[slot] = old[index];
+				box_used++;
+			}
+		}
+		free(old);
+	}
+	size_t slot = box_slot(object);
+	while (boxes[slot].box != NULL && boxes[slot].box != &tombstone) {
+		slot = (slot + 1) & (box_capacity - 1);
+	}
+	if (boxes[slot].box == NULL) {
+		box_used++;
+	}
+	boxes[slot] = (box_entry){object, box};
+	box_live++;
+}
+
+static void box_remove(id object) {
+	for (size_t slot = box_slot(object);; slot = (slot + 1) & (box_capacity - 1)) {
+		if (boxes[slot].object == object && boxes[slot].box != &tombstone) {
+			boxes[slot].box = &tombstone;
+			box_live--;
+			return;
+		}
+	}
+}
+
 static void release_object(void *pointer) {
+	box_remove((id)pointer);
 	objc_release((id)pointer);
 }
 
@@ -74,10 +158,19 @@ adamic_object *adamic_apple_box(id object, bool retained) {
 	if (object == nil) {
 		return NULL;
 	}
+	adamic_object *box = box_find(object);
+	if (box != NULL) {
+		if (retained) {
+			objc_release(object);
+		}
+		return adamic_retain(box);
+	}
 	if (!retained) {
 		objc_retain(object);
 	}
-	return adamic_foreign_new((void *)object, &object_kind);
+	box = adamic_foreign_new((void *)object, &object_kind);
+	box_insert(object, box);
+	return box;
 }
 
 id adamic_apple_unbox(const adamic_object *box) {
@@ -378,6 +471,80 @@ void adamic_apple_block_call(id holder, adamic_value *arguments) {
 	if (adamic_thrown != NULL) {
 		adamic_uncaught();
 	}
+}
+
+// A delegate's class is made the first time an instance is: NSObject's subclass, an instance
+// variable for the object, the compiler's methods, the protocols, and a dealloc that lets the
+// object go.
+static void delegate_dealloc(id self, SEL command) {
+	Ivar held = class_getInstanceVariable(object_getClass(self), "object");
+	adamic_object **object = (adamic_object **)((char *)self + ivar_getOffset(held));
+	if (pthread_main_np()) {
+		adamic_release(*object);
+	} else {
+		dispatch_async_f(dispatch_get_main_queue(), *object, release_closure);
+	}
+	*object = NULL;
+	struct objc_super super = {self, class_getSuperclass(object_getClass(self))};
+	((void (*)(struct objc_super *, SEL))objc_msgSendSuper)(&super, command);
+}
+
+static Class delegate_class(adamic_apple_delegate_class *description) {
+	if (description->made != Nil) {
+		return description->made;
+	}
+	Class class = objc_allocateClassPair((Class)adamic_apple_class("NSObject"), description->name, 0);
+	if (class == Nil) {
+		panic_text("an Objective-C class already has the name the compiler gave a delegate: ", description->name);
+	}
+	class_addIvar(class, "object", sizeof(adamic_object *), 3, "^v");
+	for (size_t index = 0; index < description->method_count; index++) {
+		const adamic_apple_delegate_method *method = &description->methods[index];
+		class_addMethod(class, sel_registerName(method->selector), method->implementation, method->types);
+	}
+	class_addMethod(class, sel_registerName("dealloc"), (IMP)delegate_dealloc, "v@:");
+	for (size_t index = 0; index < description->protocol_count; index++) {
+		// A protocol nothing in the process has used yet isn't registered; conforming is then only
+		// answering its methods, which is what Apple asks of a delegate (respondsToSelector:).
+		Protocol *protocol = objc_getProtocol(description->protocols[index]);
+		if (protocol != NULL) {
+			class_addProtocol(class, protocol);
+		}
+	}
+	objc_registerClassPair(class);
+	description->object_offset = ivar_getOffset(class_getInstanceVariable(class, "object"));
+	description->made = class;
+	return class;
+}
+
+id adamic_apple_delegate(adamic_object *object, adamic_apple_delegate_class *description) {
+	if (object == NULL) {
+		return nil;
+	}
+	id delegate = ((message_object)objc_msgSend)((id)delegate_class(description), sel_registerName("new"));
+	*(adamic_object **)((char *)delegate + description->object_offset) = adamic_retain(object);
+	TAKEN();
+	return delegate;
+}
+
+adamic_object *adamic_apple_delegate_object(id delegate, const adamic_apple_delegate_class *description) {
+	if (!pthread_main_np()) {
+		// Adamic's counts aren't atomic, and a delegate's method answers before Apple goes on, so it
+		// can't wait for the main thread the way a block's closure does.
+		panic_text("Apple called a delegate off the main thread: ", description->name);
+	}
+	return *(adamic_object **)((char *)delegate + description->object_offset);
+}
+
+void adamic_apple_delegate_returned(void) {
+	if (adamic_thrown != NULL) {
+		adamic_uncaught();
+	}
+}
+
+id adamic_apple_give_back(id object) {
+	LET_GO();
+	return objc_autorelease(object);
 }
 
 void adamic_apple_keep(id owner, id kept, const void *key) {

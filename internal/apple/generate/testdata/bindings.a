@@ -1,6 +1,7 @@
 import { FixturePanel } from 'apple/appkit/fixture-panel';
 import { FixtureRecord } from 'apple/foundation/fixture-record';
 import type { FixtureReadable } from 'apple/foundation/fixture-readable';
+import type { FixtureTableSource } from 'apple/foundation/fixture-table-source';
 import { fixtureAdd } from 'apple/foundation/fixture-add';
 import { fixtureCreateText } from 'apple/foundation/fixture-create-text';
 
@@ -26,3 +27,16 @@ const optional = record.optionalText;
 if (optional !== undefined) {
 	console.log(optional);
 }
+
+// An object of the program's own class, handed to Apple as the protocol it implements.
+class Source implements FixtureTableSource {
+	numberOfRows(table: FixtureRecord): number {
+		return table.text.length;
+	}
+
+	fixtureTableTextForRow(table: FixtureRecord, row: number): string | undefined {
+		return row > 0 ? table.text : undefined;
+	}
+}
+record.source = new Source();
+record.source = undefined;

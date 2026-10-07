@@ -101,6 +101,19 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 			return err
 		}
 	}
+	// A delegate is held by the Apple object it's handed to, a slot no declaration shows and no write
+	// can be proven fresh into, since Apple keeps it past the call: one that can reach back to its
+	// holder is a cycle.
+	for _, hold := range l.delegateHolds {
+		if finder.reaches(hold.delegate, cycleNode{proven: hold.holder}) {
+			holder := l.checker.TypeToString(hold.holder)
+			return &Refused{
+				Where: l.program.Where(hold.node),
+				What:  l.checker.TypeToString(hold.delegate) + ", handed to Apple as a delegate the " + holder + " holds from then on, which can reach back to that " + holder + ": a cycle reference counting can't free",
+				Fix:   "hold the " + holder + " weakly where the delegate reaches it (Weak<" + holder + ">, import type { Weak } from 'adamic'), or keep the delegate apart from what it's the delegate of (adamic/cycle-capable)",
+			}
+		}
+	}
 	for local, declared := range l.result.Locals {
 		if !declared.Captured || declared.Global {
 			continue

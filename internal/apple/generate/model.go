@@ -49,6 +49,7 @@ type generator struct {
 	modules       map[string]*module
 	declarations  []naming.Declaration
 	checks        []checkCall
+	implements    []implementCheck
 	importError   error
 }
 type nativeType struct {

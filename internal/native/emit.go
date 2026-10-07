@@ -218,6 +218,8 @@ type emitter struct {
 	// the block types, by their parameters (foreign.go).
 	foreignPrototypes map[string]string
 	blockTypes        map[string]string
+	// delegateClasses are the delegates whose classes are declared so far, by name.
+	delegateClasses map[string]bool
 }
 
 func (e *emitter) line(format string, arguments ...any) {

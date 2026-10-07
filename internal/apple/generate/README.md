@@ -48,7 +48,7 @@ inspection work; it neither links an Apple framework nor emulates one.
 | Class definitions | Naming chooses the class and module. Emit `@objc class`, original-name documentation and callable members. Forward declarations are not exports. A class with no bound constructor has a private constructor, or a protected one when bound subclasses need to extend it. |
 | Class inheritance | Import and extend the bound superclass. Inherited property names are supplied to naming's word-omission protection. |
 | Categories | Merge members into their owning class; do not manufacture a separate runtime class. |
-| Protocols | Export structural interfaces with tagged method signatures, so a protocol's overloads can share a name, and tagged instance properties. Object parameters use the protocol's interface type. Class messages and constructors need a concrete class and are omitted. Optional protocol markers are recovered from source; optional members are omitted because presence cannot be proved. Delegate implementation is outside this generator. |
+| Protocols | Export an interface tagged `@objc protocol <Name>`, whose methods a program's class implements as a delegate (docs/apple.md). Each method takes its arguments in the selector's order, positional, and carries `@objc implement <selector> <arguments> -> <result>` when its types can cross back into Adamic; a required one also keeps its `method` tag, for an object of Apple's that conforms. Optional markers are recovered from source: an optional method is an optional member (`windowShouldClose?(sender: Window): boolean`), left out with its reason when it can't be implemented, never promised present. Swift tells a protocol's methods apart by their labels; a class has one method per name, so where two share a name each folds its labels in (`tableViewObjectValueForRow`), and a folded name that lands on another's becomes its selector's words (`applicationDidUpdateUserActivity`). The check file holds every implement tag to its header with a class conforming to the protocol that implements the method in the bridge's C types, so a conflicting type fails the compile. Class messages and constructors need a concrete class and are omitted. |
 | Explicit Swift names | Read the attribute's source expansion range and balance parentheses to recover `NS_SWIFT_NAME`, including initializer labels. Direct `swift_name("...")` attributes are also read. |
 | Refined declarations | Feed `SwiftPrivateAttr` to naming; keep the original selector in the tag. No handwritten Swift overlay is synthesized. |
 | Availability | Read `API_UNAVAILABLE` or direct `availability(...,unavailable)` attributes. Omit declarations unavailable on the selected platform. Availability for another platform does not suppress a declaration. Unknown attribute spellings fail explicitly. |
@@ -184,7 +184,7 @@ version into a directory of its own.
 ## Evidence
 
 The original fixture headers define a fictional root and APIs. Vendor header
-text was not copied. They produce 17 declaration files plus the header witness,
+text was not copied. They produce 18 declaration files plus the header witness,
 held byte for byte by testdata/golden. They exercise both ordinary and macro
 attribute ranges, assume-nonnull and unannotated pointers, enum expressions,
 custom properties, getter/setter pairs, categories, protocols and an excluded
@@ -195,7 +195,8 @@ a temporary directory and runs `go run ./cmd/adamic c
 internal/apple/generate/testdata/bindings.a` from the repository root with
 `ADAMIC_APPLE_BINDINGS` naming it. The program imports the generated modules,
 constructs objects and calls rectangle, enum, options, nullable-object,
-nullable-string, property, protocol, overloaded and C-function bindings. It
+nullable-string, property, protocol, overloaded and C-function bindings, and
+hands an object of its own class to Apple as a protocol it implements. It
 checks the emitted C for the selectors and conversion routines. This proves
 checking/lowering and C generation, not linking on Linux.
 
@@ -217,6 +218,8 @@ python3 internal/apple/generate/testdata/mutants.py > /tmp/apple-generator-mutan
 | Drop the global type's framework prefix | naming.TestGlobalNameBijection |
 | Read the entire AST before visiting declarations | TestStreamVisitsBeforeEOF |
 | Promise an optional protocol method is present | TestPatterns |
+| Implement a protocol method in a type its header contradicts | TestHeaderWitness |
+| Leave two protocol methods one name | TestPatterns |
 | Permit an import to hide a local export | TestImportNameCollision |
 | Feed a raw struct declarator to the naming layer | TestWrittenTagTypeSpellings |
 | Borrow a consumed parameter | TestPatterns |

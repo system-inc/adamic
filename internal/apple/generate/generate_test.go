@@ -114,9 +114,26 @@ func TestPatterns(t *testing.T) {
 			t.Errorf("panel missing %q", want)
 		}
 	}
+	// A protocol's optional method is an optional member a program's class may implement, never a
+	// message promised present; one whose types can't cross is left out with its reason.
 	readable := files["foundation/fixture-readable.d.ts"]
-	if strings.Contains(readable, "readonly optionalPing:") || !strings.Contains(readable, "optional protocol methods are not proven present") {
-		t.Error("optional protocol method was promised present")
+	if !strings.Contains(readable, "@objc implement optionalPing -> void\n\t\t */\n\t\toptionalPing?(): void;") || strings.Contains(readable, "@objc method optionalPing") {
+		t.Errorf("optional protocol method was promised present, or can't be implemented:\n%s", readable)
+	}
+	source := files["foundation/fixture-table-source.d.ts"]
+	for _, want := range []string{
+		"@objc protocol NSFixtureTableSource",
+		// Required: a message to an object of Apple's, and a method a class implements.
+		"@objc method numberOfRowsInFixtureTable: 0:object -> integer\n\t\t * @objc implement numberOfRowsInFixtureTable: 0:object -> integer\n\t\t */\n\t\tnumberOfRows(table: FixtureRecord): number;",
+		// Two methods Swift names fixtureTable(_:...) fold their labels in, positional.
+		"fixtureTableTextForRow?(table: FixtureRecord, row: number): string | undefined;",
+		"fixtureTableShouldSelectRow?(table: FixtureRecord, row: number): boolean;",
+		"Skipped -[NSFixtureTableSource fixtureTable:finish:]: a program's class can't be handed a block() yet.",
+		"Skipped -[NSFixtureTableSource copyFixtureTable:]: a result its caller owns",
+	} {
+		if !strings.Contains(source, want) {
+			t.Errorf("table source missing %q:\n%s", want, source)
+		}
 	}
 	loose := files["foundation/fixture-loose.d.ts"]
 	if !strings.Contains(loose, "string | undefined") {
@@ -284,10 +301,66 @@ func TestCompilerLowersGeneratedModules(t *testing.T) {
 	if runError != nil {
 		t.Fatalf("go run ./cmd/adamic c: %v\n%s", runError, content)
 	}
-	for _, want := range []string{"objc_msgSend", "NSFixturePanel", "setFrame:display:animate:", "configureMode:style:", "NSFixtureAdd", "adamic_apple_rectangle", "adamic_apple_options", "adamic_apple_string", "NSFixtureCreateText", "objc_release(result);", "showText:", "showCount:", "initWithTitle:", "readText"} {
+	for _, want := range []string{"objc_msgSend", "NSFixturePanel", "setFrame:display:animate:", "configureMode:style:", "NSFixtureAdd", "adamic_apple_rectangle", "adamic_apple_options", "adamic_apple_string", "NSFixtureCreateText", "objc_release(result);", "showText:", "showCount:", "initWithTitle:", "readText", "adamic_apple_delegate(", "AdamicDelegate_Source", "\"numberOfRowsInFixtureTable:\"", "\"fixtureTable:textForRow:\"", "\"q@:@\"", "\"@@:@q\"", "adamic_apple_give_back"} {
 		if !bytes.Contains(content, []byte(want)) {
 			t.Errorf("lowered C missing %q", want)
 		}
+	}
+}
+
+// A delegate the compiler can't hand Apple is refused at compile time: one that can reach back to
+// the object holding it (a cycle neither count sees), and an object of a class naming no Apple
+// protocol, which Apple would only ever see as an object of no methods.
+func TestDelegateRefusals(t *testing.T) {
+	t.Parallel()
+	root, err := filepath.Abs("../../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	directory := t.TempDir()
+	bindings := filepath.Join(directory, "bindings")
+	if err := fixtureOutput(t).Write(bindings); err != nil {
+		t.Fatal(err)
+	}
+	header := "import { FixtureRecord } from 'apple/foundation/fixture-record';\nimport type { FixtureTableSource } from 'apple/foundation/fixture-table-source';\n"
+	for name, test := range map[string]struct{ source, want string }{
+		"cycle": {
+			header + "class Owner implements FixtureTableSource {\n\treadonly record: FixtureRecord;\n\tconstructor(record: FixtureRecord) {\n\t\tthis.record = record;\n\t}\n\tnumberOfRows(table: FixtureRecord): number {\n\t\treturn table.text.length;\n\t}\n}\nconst record = new FixtureRecord({ count: 1 });\nrecord.source = new Owner(record);\n",
+			"refuses Owner, handed to Apple as a delegate the FixtureRecord holds from then on, which can reach back to that FixtureRecord",
+		},
+		"weak": {
+			header + "import type { Weak } from 'adamic';\nclass Owner implements FixtureTableSource {\n\treadonly record: Weak<FixtureRecord>;\n\tconstructor(record: FixtureRecord) {\n\t\tthis.record = record;\n\t}\n\tnumberOfRows(table: FixtureRecord): number {\n\t\treturn table.text.length;\n\t}\n}\nconst record = new FixtureRecord({ count: 1 });\nrecord.source = new Owner(record);\n",
+			"",
+		},
+		"no protocol": {
+			header + "class Plain {\n\tnumberOfRows(table: FixtureRecord): number {\n\t\treturn table.text.length;\n\t}\n}\nconst record = new FixtureRecord({ count: 1 });\nrecord.source = new Plain();\n",
+			"an object of the program's own class handed to Apple without an Apple protocol it implements",
+		},
+		"a result of the wrong type": {
+			header + "class Source implements FixtureTableSource {\n\tnumberOfRows(table: FixtureRecord): string {\n\t\treturn table.text;\n\t}\n}\n",
+			"error TS",
+		},
+	} {
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			program := filepath.Join(t.TempDir(), "main.a")
+			if err := os.WriteFile(program, []byte(test.source), 0o644); err != nil {
+				t.Fatal(err)
+			}
+			command := exec.Command("go", "run", "./cmd/adamic", "c", program)
+			command.Env = append(os.Environ(), "ADAMIC_APPLE_BINDINGS="+bindings)
+			command.Dir = root
+			output, runError := command.CombinedOutput()
+			if test.want == "" {
+				if runError != nil {
+					t.Fatalf("refused a delegate it should take: %v\n%s", runError, output)
+				}
+				return
+			}
+			if runError == nil || !bytes.Contains(output, []byte(test.want)) {
+				t.Fatalf("want a refusal containing %q, got %v:\n%s", test.want, runError, output)
+			}
+		})
 	}
 }
 
@@ -340,7 +413,7 @@ func TestDeclarationKindCollision(t *testing.T) {
 	}
 	for path, wants := range map[string][]string{
 		"foundation/fixture-ambiguous.d.ts":          {"export class FixtureAmbiguous", "takeProtocol(protocol: FixtureAmbiguousProtocol)", "takeClass(value: FixtureAmbiguous)", "protocolValue(): FixtureAmbiguousProtocol;", "import type { FixtureAmbiguousProtocol } from 'apple/foundation/fixture-ambiguous-protocol';"},
-		"foundation/fixture-ambiguous-protocol.d.ts": {"/** NSFixtureAmbiguous */\n\texport interface FixtureAmbiguousProtocol {", "doThing(): void;"},
+		"foundation/fixture-ambiguous-protocol.d.ts": {" * @objc protocol NSFixtureAmbiguous\n\t */\n\texport interface FixtureAmbiguousProtocol {", "doThing(): void;"},
 		"foundation/fixture-element.d.ts":            {"export class FixtureElement", "activate(): void;"},
 		"foundation/fixture-holder.d.ts":             {"readonly element: FixtureElementProtocol;"},
 		"foundation/fixture-element-protocol.d.ts":   {"export interface FixtureElementProtocol {", "describe(): void;"},

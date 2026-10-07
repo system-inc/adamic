@@ -52,6 +52,8 @@ content.addSubview(label);
 content.addSubview(button);
 window.contentView = content;
 console.log(`content view: ${window.contentView === undefined ? 'missing' : 'set'}`);
+// An object Apple hands back is the value Adamic gave it: one object, one value.
+console.log(`same view: ${window.contentView === content}, same application: ${Application.shared === application}, other view: ${window.contentView === label}`);
 
 console.log(`label: ${label.stringValue}`);
 button.performClick(undefined);

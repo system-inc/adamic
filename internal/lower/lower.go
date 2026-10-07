@@ -85,6 +85,14 @@ type lowering struct {
 	// (foreign.go).
 	foreignFunctions map[string]int
 
+	// foreignDelegates are the Objective-C classes made for the program's classes handed to Apple, by
+	// instantiation (foreign_delegate.go).
+	foreignDelegates map[*instance]*ir.Delegate
+
+	// delegateHolds are the delegates handed to Apple, each with what holds it from then on, which
+	// the cycle finder holds to the same rule as a field (cycles.go).
+	delegateHolds []delegateHold
+
 	// strings indexes result.Strings, so a constant used twice is stored once.
 	strings map[string]int
 

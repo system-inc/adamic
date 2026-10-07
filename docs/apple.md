@@ -39,6 +39,7 @@ constructor(options: { readonly contentRectangle: Rectangle; readonly styleMask:
 - `@objc get <selector> -> <result>` and `@objc set <selector> <type>` are a property's getter and setter.
 - `@objc alloc <Class> <selector> <arguments> -> <result>` sends `alloc` to another class, then the init, its result retained: `data.utf8Text()` is `[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]`.
 - `@objc function <symbol> <arguments> -> <result>` is a C function: on its own, as a class's static member, or as an instance member, where the object is its first argument (`CFRunLoopStop(loop)` is `loop.stop()`).
+- `@objc protocol <Protocol>` on an interface names the Objective-C protocol, and `@objc implement <selector> <arguments> -> <result>` on one of its methods says what Apple hands a program's class that implements it, and what it takes back (Delegates, below).
 
 Each argument is `<source>:<type>`, in the selector's order. The source is the Adamic argument's position (`0`), a field of an options object written at the call (`1.styleMask`, or `1.defer?:boolean=no` where the field may be left out), the object the member is called on (`this`), or a constant (`nil`, `yes`, `no`, or a number, `const(4)`). The types:
 
@@ -99,6 +100,37 @@ So ownership stays simple. SwiftUI holds only the shim's objects, by Objective-C
 
 `examples/apple/counter.a` is the app.
 
+## Delegates
+
+An object of the program's own class is handed to Apple where Apple takes a delegate, a data source, any protocol, and Apple calls its methods:
+
+```ts
+class Keeper implements WindowDelegate {
+	asked = 0;
+	windowShouldClose(sender: Window): boolean {
+		this.asked += 1;
+		return this.asked > 1;
+	}
+	windowWillClose(notification: Notification): void {
+		console.log('closing');
+	}
+}
+window.delegate = new Keeper();
+```
+
+A protocol is an interface whose methods take their arguments in the selector's order, each tagged with what crosses: `windowShouldClose?(sender: Window): boolean` is `@objc implement windowShouldClose: 0:object -> boolean`. An optional method is an optional member. Swift tells a protocol's methods apart by their labels (`tableView(_:objectValueFor:row:)` beside `tableView(_:viewFor:row:)`), and a class has one method per name, so where two share a name each folds its labels in: `tableViewObjectValueForRow(tableView, tableColumn, row)`.
+
+The class says which protocols it implements (`implements WindowDelegate`), as an Objective-C class does: Apple asks a delegate what it responds to, and the class's own `implements` is what's answered. An object of a class naming none is refused where it's handed to Apple.
+
+Lowering makes an Objective-C class for the class, the first time one of its objects crosses (`internal/lower/foreign_delegate.go`): NSObject's subclass, conforming to the protocols, with a method for each protocol method the class has, and nothing for the ones it doesn't, so `respondsToSelector:` is the truth. Each method is emitted C (`internal/native/foreign.go`, `delegateClass`) that converts what Apple hands it, calls an ordinary Adamic function lowering made, and gives back its result as Apple takes it. That function calls the class's method, virtually, as any call through the class does, so a subclass's override answers, and every analysis sees the method called as code. Nothing in the program calls the function: Apple does, through the object it was handed.
+
+- **Ownership.** The delegate holds the object, one count, let go of in its `dealloc` (on the main thread). Apple holds a delegate weakly, so the object it's handed to holds it, as it holds an action, one per selector that sets one: setting another, or `undefined`, lets the last go.
+- **Cycles.** A delegate that can reach back to what holds it is a cycle neither count sees, so the cycle finder refuses one, by the rule it holds a field to (`internal/lower/cycles.go`): a `Keeper` with a `window: Window` field can't be that window's delegate. `window: Weak<Window>` can. The rule follows Apple's declared properties, and nearly every Apple class reaches nearly every other through them (an `id` property reaches all of them), so today a delegate that holds any Apple object strongly is refused: it holds them `Weak<...>`. Whether a delegate should instead be held weakly, as AppKit holds one, leaving the program to keep it, is open.
+- **Threads.** Apple calls a delegate's methods on the main thread, where Adamic's counts are kept, and a method answers before Apple goes on, so it can't wait for the main thread as a block's closure does: a call anywhere else panics.
+- **Reading one back.** `window.delegate` reads the Objective-C object Apple holds, the delegate, as an Apple object, not the program's own object that it holds.
+
+`internal/apple/testdata/delegate.a` is held to `delegate.m`, the same classes written in Objective-C: a window that asks twice before closing, a subclass whose override answers through a reference typed as its base, a delegate replaced and one cleared, and a table view's data source. The checks fail when the delegate's `dealloc` keeps its object (58 allocated, 52 freed), when what was kept is never let go of (58, 52), when nothing keeps the delegate (the witness disagrees: AppKit's weak reference finds nothing), when the call isn't virtual, when a boolean result is dropped, and when the delegate doesn't retain its object (the sanitizer stops the program).
+
 ## How a call is compiled
 
 Lowering (`internal/lower/foreign.go`) makes each call an ordinary `ir.Call` of a function whose `ir.Function.Foreign` describes the message: its kind, class, selector, and where each native argument comes from. Its parameters are the receiver, then the values the call evaluates, in the order the source evaluates them, so JavaScript's evaluation order holds. One function is made per class, selector and shape of call.
@@ -120,7 +152,7 @@ The function's IR body only panics, so the JavaScript backend, which can't reach
 
 ## Ownership
 
-- **Objects.** An Objective-C object in Adamic is a foreign value (`runtime/foreign.c`): an object of no fields to everything that looks at objects, so a path that reaches one by name panics rather than reading memory that isn't there, and its last release calls `objc_release`. Every reference parameter of a foreign function is borrowed.
+- **Objects.** An Objective-C object in Adamic is a foreign value (`runtime/foreign.c`): an object of no fields to everything that looks at objects, so a path that reaches one by name panics rather than reading memory that isn't there, and its last release calls `objc_release`. An object has one box while Adamic holds it (`apple.c`, a table by the object's address), so the object Apple hands back is the value Adamic gave it (`window.contentView === content`), and a crossing of an object already held makes nothing. Every reference parameter of a foreign function is borrowed.
 - **A constructed window** is told not to release itself when closed: Adamic's count owns it.
 - **Actions.** A closure given as an action becomes an `AdamicAction`, an `NSObject` subclass made at runtime whose instance variable holds the closure (counted) and whose `adamicAct:` calls it. A control holds its target only weakly, so the action is kept by the object it was given to, as an associated object, and its `dealloc` releases the closure.
 - **Blocks.** A closure given as a block is a block laid out by hand as the block ABI lays one out, no `-fblocks` needed: it starts on the stack of the call it's given to, holds the closure through an object whose count is Objective-C's (safe on any thread), and Apple copies it if it keeps it. Apple calls a block on whatever queue it likes, and Adamic's counts aren't atomic, so the block's invoke only retains what it was given and hands it to the main thread; there the arguments become Adamic values and the closure runs. A block called on the main thread runs at once, so an enumeration finishes before the call that enumerates returns. Entering Adamic from a block off the main thread panics: that's a runtime bug, never a race.
@@ -143,12 +175,11 @@ The test serves JSON from a server of its own and gives every program its addres
 
 A SwiftUI button is pressed by running the block its `Button` holds, in both. SwiftUI's accessibility tree is empty until an assistive client connects, and its buttons aren't `NSButton`s, so nothing in process can reach the button itself: SwiftUI's own tap dispatch is the one step these tests don't exercise.
 
-Each check has been shown to fail: dropping the closure's release in an action's `dealloc` (allocations 47, frees 46), a box that retains what it was handed already retained (47, 46), draining the pool after the counts are reported (47, 46), dropping the last UTF-16 unit of a string coming back (the witness disagrees), never letting go of the `NSString`s made for arguments (73 owed), a block's dispose that keeps its holder (26, 24), a block's deliver that keeps the values it made (26, 23), and a block's invoke that calls Adamic without the hop to the main thread (the program panics), a `State` that doesn't render when it's set (the counter disagrees with its witness), and the shim keeping its buttons' actions past exit (119 allocated, 118 freed).
+Each check has been shown to fail: dropping the closure's release in an action's `dealloc` (allocations 47, frees 46), a box that retains what it was handed already retained (47, 46), draining the pool after the counts are reported (47, 46), dropping the last UTF-16 unit of a string coming back (the witness disagrees), never letting go of the `NSString`s made for arguments (73 owed), a block's dispose that keeps its holder (26, 24), a block's deliver that keeps the values it made (26, 23), and a block's invoke that calls Adamic without the hop to the main thread (the program panics), a `State` that doesn't render when it's set (the counter disagrees with its witness), and the shim keeping its buttons' actions past exit (119 allocated, 118 freed), and for the boxes: a crossing that doesn't look for the object's box (`window.a` disagrees: the content view isn't `===` itself), a box that never leaves the table (the sanitizer finds the freed box used), and a lookup that doesn't compare the object.
 
 ## Not yet
 
-- **Cycles through Apple.** An action's closure that captures something holding the control it's attached to is a cycle neither count can see. The cycle finder will treat what a foreign value holds as a slot that reaches anything unless it's `Weak`, and refuse the closing write, as it does for a map's values; a delegate is the test case.
-- **The rest of the bridge:** blocks that return a value or take a block, struct or enumeration; delegates and `NSObject` subclasses written as Adamic classes; rectangles, enumerations and options as results; options objects passed as a value rather than written at the call; compound assignment to an Apple property.
-- **Identity.** Two boxes of the same object aren't `===` yet.
-- **Retained results.** The release of a result that comes back retained (`alloc`, `new`, `copy`) is one line of emitted C that no check counts yet: dropping it would leak without the owed count noticing.
+- **Cycles through actions.** An action's closure that captures something holding the control it's attached to is a cycle neither count can see. A delegate's is refused (Delegates, above); an action's isn't yet.
+- **The rest of the bridge:** blocks that return a value or take a block, struct or enumeration; an Adamic class that extends an Apple class and overrides its methods (an `NSView` whose `drawRect:` is Adamic's); a delegate called off the main thread (a session's delegate queue), and delegate methods that take a block, a rectangle or an enumeration; rectangles, enumerations and options as results; options objects passed as a value rather than written at the call; compound assignment to an Apple property.
+- **Retained results.** The release of a result that comes back retained (`alloc`, `new`, `copy`) is one line of emitted C that no check counts yet: dropping it would leak without the owed count noticing. So is the release a retained result gives back when its object already has a box (`copy` of an immutable object is the object): the mutant that drops it survives every witness.
 - **The analyses.** A foreign callee is taken as unknown by region planning; the other analyses read its IR body, which only panics, until every analysis asks one place what a call can do (internal/ir/call_targets.go, landing from codex/call-targets), where a foreign callee will answer unknown. That matters beyond ownership: a foreign call can run Adamic code before it returns (`performClick` runs the button's closure), so nothing may assume a variable is unchanged across one. The native side never keeps a value without retaining it, so the counts hold either way.

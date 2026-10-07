@@ -19,6 +19,7 @@ __attribute__((objc_root_class))
 @property(readonly) NSInteger code;
 @end
 FIXTURE_NONNULL_BEGIN
+@protocol NSFixtureTableSource;
 @protocol NSFixtureReadable
 - (NSString *)readText;
 @optional
@@ -49,6 +50,16 @@ FIXTURE_NONNULL_BEGIN
 - (void)variadic:(NSString *)format, ...;
 - (void)takeCallback:(void (*)(NSInteger))callback;
 - (void)takeArray:(double[4])values;
+@property(assign, nullable) id<NSFixtureTableSource> source;
+@end
+@protocol NSFixtureTableSource
+- (NSInteger)numberOfRowsInFixtureTable:(NSFixtureRecord *)table;
+@optional
+- (nullable NSString *)fixtureTable:(NSFixtureRecord *)table textForRow:(NSInteger)row;
+- (BOOL)fixtureTable:(NSFixtureRecord *)table shouldSelectRow:(NSInteger)row;
+- (void)fixtureTableDidReload:(NSFixtureRecord *)table;
+- (void)fixtureTable:(NSFixtureRecord *)table finish:(void (^)(void))done;
+- (NSFixtureRecord *)copyFixtureTable:(NSFixtureRecord *)table;
 @end
 FIXTURE_NONNULL_END
 @interface NSFixtureLoose : NSFixtureRoot

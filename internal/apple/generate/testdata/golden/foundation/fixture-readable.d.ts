@@ -1,13 +1,22 @@
 // Generated from Objective-C declaration facts. Do not edit.
-// Skipped optionalPing: optional protocol methods are not proven present.
 
 declare module 'apple/foundation/fixture-readable' {
-	/** NSFixtureReadable */
+	/**
+	 * NSFixtureReadable
+	 * @objc protocol NSFixtureReadable
+	 */
 	export interface FixtureReadable {
+
+		/**
+		 * -[NSFixtureReadable optionalPing]
+		 * @objc implement optionalPing -> void
+		 */
+		optionalPing?(): void;
 
 		/**
 		 * -[NSFixtureReadable readText]
 		 * @objc method readText -> string
+		 * @objc implement readText -> string
 		 */
 		readText(): string;
 	}

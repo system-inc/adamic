@@ -68,6 +68,35 @@ type NativeType struct {
 
 	// Parameters are a block's: what Apple hands the closure when it calls it.
 	Parameters []NativeType
+
+	// Delegate is a NativeDelegate's class, as Apple sees it.
+	Delegate *Delegate
+}
+
+// Delegate is an Objective-C class made at runtime for one of the program's classes, so an object
+// of it can be handed to Apple as a delegate: an instance holds the object, counted, and each of its
+// methods calls the class's method of the same protocol member.
+type Delegate struct {
+	// Name is the Objective-C class's, unique in the program.
+	Name string
+
+	// Protocols are the Objective-C protocols the class declares it implements.
+	Protocols []string
+
+	Methods []DelegateMethod
+}
+
+// DelegateMethod is one method Apple may call on a delegate.
+type DelegateMethod struct {
+	Selector string
+
+	// Function is what the method calls: an ordinary function whose parameters are the object, then
+	// what Apple hands it, as Adamic holds those, and which calls the class's method. Apple calls it,
+	// so nothing in the program does.
+	Function int
+
+	Parameters []NativeType
+	Returns    NativeType
 }
 
 // NativeKind is a native value's representation.
@@ -111,4 +140,7 @@ const (
 	// NativeBlock is a closure as an Objective-C block that returns nothing: Apple calls it with
 	// Parameters, on whatever thread it likes, and the closure runs on the main thread.
 	NativeBlock
+	// NativeDelegate is an object of one of the program's classes where Apple takes an object: Apple
+	// is handed an instance of Delegate's class, holding the object, whose methods call its methods.
+	NativeDelegate
 )

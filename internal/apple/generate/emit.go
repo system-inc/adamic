@@ -332,11 +332,25 @@ func (g *generator) emitClass(def *definition) (string, error) {
 			}
 		}
 	}
+	var implemented map[*node]string
+	if protocol {
+		implemented = g.protocolNames(def, nodes, accessors)
+	}
 	for _, child := range nodes {
 		if child.Kind != "ObjCMethodDecl" || child.Implicit || accessors[child.Name] && !child.SetterOnly {
 			continue
 		}
-		text, entry, name, isConstructor, err := g.emitMethod(def, child, protocol, initializers, taken(def, !child.Instance, child.Name), inherited[!child.Instance])
+		if protocol {
+			text, err := g.emitProtocolMethod(def, child, implemented[child])
+			if err != nil {
+				return "", err
+			}
+			if text != "" {
+				members = append(members, text)
+			}
+			continue
+		}
+		text, entry, name, isConstructor, err := g.emitMethod(def, child, initializers, taken(def, !child.Instance, child.Name), inherited[!child.Instance])
 		if err != nil {
 			return "", err
 		}
@@ -373,7 +387,8 @@ func (g *generator) emitClass(def *definition) (string, error) {
 	sortMembers(members)
 	var text strings.Builder
 	if protocol {
-		text.WriteString("\t/** " + n.Name + " */\n\texport interface " + def.output.Name + " {\n")
+		text.WriteString(doc(n.Name, []string{"protocol " + n.Name}, "\t"))
+		text.WriteString("\texport interface " + def.output.Name + " {\n")
 	} else {
 		text.WriteString(doc(n.Name, []string{"class " + n.Name}, "\t"))
 		text.WriteString("\texport class " + def.output.Name)
@@ -672,18 +687,7 @@ func signature(out naming.Output, natives []nativeType) (string, string) {
 	}
 	return strings.Join(parameters, ", "), suffix
 }
-func (g *generator) emitMethod(owner *definition, n *node, protocol bool, initializers map[string]bool, values []string, inherited map[string][]member) (string, member, string, bool, error) {
-	if protocol {
-		optional, err := g.protocolOptional(owner.node, n)
-		if err != nil {
-			return "", member{}, "", false, err
-		}
-		if optional {
-			m := g.getModule(owner.output.Module)
-			m.comments = append(m.comments, "// Skipped "+n.Name+": optional protocol methods are not proven present.")
-			return "", member{}, "", false, nil
-		}
-	}
+func (g *generator) emitMethod(owner *definition, n *node, initializers map[string]bool, values []string, inherited map[string][]member) (string, member, string, bool, error) {
 	kind := naming.InstanceMethod
 	if !n.Instance {
 		kind = naming.ClassMethod
@@ -712,10 +716,6 @@ func (g *generator) emitMethod(owner *definition, n *node, protocol bool, initia
 			m.comments = append(m.comments, "// Skipped "+methodOriginal(owner.node.Name, n.Name, n.Instance)+": an ancestor declares "+out.Name+" as a property, which stands.")
 			return "", member{}, "", false, nil
 		}
-	}
-	if protocol && (!n.Instance || constructor) {
-		m.comments = append(m.comments, "// Skipped "+n.Name+": protocol construction and class messages need a concrete class.")
-		return "", member{}, "", false, nil
 	}
 	g.declarations = append(g.declarations, d)
 	for _, native := range append(append([]nativeType{}, natives...), result) {
