@@ -1,0 +1,190 @@
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsRealSites
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsRealSites
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsFires
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsFires
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsStaysSilent
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsStaysSilent
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsRealSites
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsRealSites/ahra_facets_as_it_stood
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsStaysSilent
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_library_file_other_files_import_(AhraOsLifecycleCommandLineInterface.ts)
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_library_file_other_files_import_(AhraOsLifecycleCommandLineInterface.ts)
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_script_without_a_#!_that_another_file_imports
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_script_without_a_#!_that_another_file_imports
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_write_and_exit_in_an_imported_function,_not_followed
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_write_and_exit_in_an_imported_function,_not_followed
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsStaysSilent/an_exit_in_an_exported_function_nothing_runs_at_load
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsStaysSilent/an_exit_in_an_exported_function_nothing_runs_at_load
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_library_with_a_#!_and_no_top-level_work_(ClaudeUsageApi.ts)
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_library_with_a_#!_and_no_top-level_work_(ClaudeUsageApi.ts)
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsStaysSilent/the_exit_comes_before_any_write
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsStaysSilent/the_exit_comes_before_any_write
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsStaysSilent/blockStandardStreams_imported_under_another_name
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsStaysSilent/blockStandardStreams_imported_under_another_name
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsFires
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsFires/a_callback_the_module_hands_on_at_load_(FigmaMcpLauncher.ts)
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsFires/a_callback_the_module_hands_on_at_load_(FigmaMcpLauncher.ts)
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsFires/a_named_const_arrow_handed_on
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsFires/a_named_const_arrow_handed_on
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsRealSites/ahra_facets_as_it_stood
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_helper_in_another_file_that_blocks,_called_first
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_helper_in_another_file_that_blocks,_called_first
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsFires/an_immediately_invoked_function
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsFires/an_immediately_invoked_function
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsRealSites/ahra_facets_fixed
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsFires/a_function_called_by_a_function_called_at_load
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsFires/a_function_called_by_a_function_called_at_load
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsFires/a_main_that_writes_and_exits_before_its_own_block
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsFires/a_main_that_writes_and_exits_before_its_own_block
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsFires/a_shebang_file_that_other_files_import
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsStaysSilent/an_imported_module_that_blocks_while_it_loads
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsStaysSilent/an_imported_module_that_blocks_while_it_loads
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsRealSites/ahra_facets_fixed
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsRealSites/the_forked_shard_worker_as_it_stood
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsRealSites/the_forked_shard_worker_as_it_stood
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsFires/a_shebang_file_that_other_files_import
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsFires/a_local_blockStandardStreams_in_a_file_that_also_imports_Nexus's
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsStaysSilent/an_exit_after_an_await,_in_a_file_that_blocks_later
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsRealSites/the_forked_shard_worker_fixed
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsStaysSilent/an_exit_after_an_await,_in_a_file_that_blocks_later
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_callback,_in_a_file_that_blocks_after_handing_it_on
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_callback,_in_a_file_that_blocks_after_handing_it_on
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsRealSites/the_forked_shard_worker_fixed
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsFires/a_local_blockStandardStreams_in_a_file_that_also_imports_Nexus's
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsFires/another_file's_blockStandardStreams_that_is_not_Nexus's
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsFires/another_file's_blockStandardStreams_that_is_not_Nexus's
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsFires/a_helper_from_a_file_that_imports_Nexus_but_never_blocks
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsFires/a_helper_from_a_file_that_imports_Nexus_but_never_blocks
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsFires/an_exit_after_an_await,_in_a_file_that_never_blocks
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsFires/an_exit_after_an_await,_in_a_file_that_never_blocks
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsFires/a_callback,_in_a_file_that_never_blocks
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsFires/a_callback,_in_a_file_that_never_blocks
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsStaysSilent/Nexus's_function_handed_to_a_call_that_runs_it
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsFires/an_imported_module_whose_function_blocks,_never_called
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsFires/an_imported_module_whose_function_blocks,_never_called
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsFires/a_write_through_process.stdout_at_the_top_level
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsFires/a_write_through_process.stdout_at_the_top_level
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsFires/a_callback_the_module_hands_on_at_load_(FigmaMcpLauncher.ts)
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsFires/another_file's_blockStandardStreams_that_is_not_Nexus's
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsFires/an_imported_module_whose_function_blocks,_never_called
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsStaysSilent/Nexus's_function_handed_to_a_call_that_runs_it
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsRealSites/a_main().catch_script_as_it_stood
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_block_in_the_arguments_of_the_call_that_starts_main
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsRealSites/a_main().catch_script_as_it_stood
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_block_in_the_arguments_of_the_call_that_starts_main
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsRealSites/a_main().catch_script_fixed
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsRealSites/a_main().catch_script_fixed
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_block_in_a_class_static_block,_which_the_graph_does_not_lay_out
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_block_in_a_class_static_block,_which_the_graph_does_not_lay_out
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsRealSites/StructureLintEngineParity_as_it_stood
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsRealSites/StructureLintEngineParity_as_it_stood
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_call_through_a_value_the_checker_cannot_name,_in_a_file_that_can_block
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsRealSites/StructureLintEngineParity_fixed
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsRealSites/StructureLintEngineParity_fixed
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_call_through_a_value_the_checker_cannot_name,_in_a_file_that_can_block
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsRealSites/NewMigration_as_it_stood
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_computed_import()_before_the_exit,_which_may_load_anything
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsRealSites/NewMigration_as_it_stood
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_computed_import()_before_the_exit,_which_may_load_anything
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsRealSites/NewMigration_fixed
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsRealSites/NewMigration_fixed
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_declared_function_whose_body_this_program_cannot_see,_in_a_file_that_can_block
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsRealSites/a_runCommandLineInterface_entry_as_it_stands
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsRealSites/a_runCommandLineInterface_entry_as_it_stands
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_declared_function_whose_body_this_program_cannot_see,_in_a_file_that_can_block
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsRealSites/a_runCommandLineInterface_entry_with_a_guard_that_exits_above_the_hand-off
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsRealSites/a_runCommandLineInterface_entry_with_a_guard_that_exits_above_the_hand-off
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsStaysSilent/the_exit_in_the_write's_own_callback,_the_correct_form
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsStaysSilent/the_exit_in_the_write's_own_callback,_the_correct_form
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsStaysSilent/the_exit_code_set_and_nothing_exiting
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsStaysSilent/the_exit_code_set_and_nothing_exiting
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsFires/an_exit_after_an_await,_in_a_file_that_never_blocks
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsFires/a_callback,_in_a_file_that_never_blocks
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsFires/a_main_that_writes_and_exits_before_its_own_block
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsFires/a_shebang_file_that_other_files_import
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsFires/a_local_blockStandardStreams_in_a_file_that_also_imports_Nexus's
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsFires/an_immediately_invoked_function
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsFires/a_function_called_by_a_function_called_at_load
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsFires/a_named_const_arrow_handed_on
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsFires/a_helper_from_a_file_that_imports_Nexus_but_never_blocks
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsFires/a_write_through_process.stdout_at_the_top_level
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsRealSites/ahra_facets_as_it_stood
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsRealSites/a_runCommandLineInterface_entry_with_a_guard_that_exits_above_the_hand-off
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsRealSites/a_runCommandLineInterface_entry_as_it_stands
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsRealSites/NewMigration_fixed
+--- PASS: TestCorrectnessRequireBlockingStandardStreamsFires (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsFires/a_callback,_in_a_file_that_never_blocks (0.02s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsFires/an_imported_module_whose_function_blocks,_never_called (0.02s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsFires/a_callback_the_module_hands_on_at_load_(FigmaMcpLauncher.ts) (0.02s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsFires/an_exit_after_an_await,_in_a_file_that_never_blocks (0.02s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsFires/another_file's_blockStandardStreams_that_is_not_Nexus's (0.02s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsFires/a_main_that_writes_and_exits_before_its_own_block (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsFires/a_local_blockStandardStreams_in_a_file_that_also_imports_Nexus's (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsFires/a_function_called_by_a_function_called_at_load (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsFires/an_immediately_invoked_function (0.01s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsFires/a_shebang_file_that_other_files_import (0.01s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsFires/a_helper_from_a_file_that_imports_Nexus_but_never_blocks (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsFires/a_named_const_arrow_handed_on (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsFires/a_write_through_process.stdout_at_the_top_level (0.00s)
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsRealSites/NewMigration_as_it_stood
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsRealSites/StructureLintEngineParity_fixed
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsRealSites/StructureLintEngineParity_as_it_stood
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsRealSites/a_main().catch_script_fixed
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsRealSites/a_main().catch_script_as_it_stood
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsRealSites/the_forked_shard_worker_fixed
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsRealSites/the_forked_shard_worker_as_it_stood
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsRealSites/ahra_facets_fixed
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_library_file_other_files_import_(AhraOsLifecycleCommandLineInterface.ts)
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_callback,_in_a_file_that_blocks_after_handing_it_on
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_computed_import()_before_the_exit,_which_may_load_anything
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsStaysSilent/the_exit_code_set_and_nothing_exiting
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsStaysSilent/the_exit_in_the_write's_own_callback,_the_correct_form
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_declared_function_whose_body_this_program_cannot_see,_in_a_file_that_can_block
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsStaysSilent/the_exit_comes_before_any_write
+--- PASS: TestCorrectnessRequireBlockingStandardStreamsRealSites (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsRealSites/ahra_facets_as_it_stood (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsRealSites/a_runCommandLineInterface_entry_with_a_guard_that_exits_above_the_hand-off (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsRealSites/a_runCommandLineInterface_entry_as_it_stands (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsRealSites/NewMigration_as_it_stood (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsRealSites/NewMigration_fixed (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsRealSites/StructureLintEngineParity_as_it_stood (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsRealSites/StructureLintEngineParity_fixed (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsRealSites/a_main().catch_script_as_it_stood (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsRealSites/a_main().catch_script_fixed (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsRealSites/the_forked_shard_worker_fixed (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsRealSites/ahra_facets_fixed (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsRealSites/the_forked_shard_worker_as_it_stood (0.01s)
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsStaysSilent/an_exit_after_an_await,_in_a_file_that_blocks_later
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsStaysSilent/an_imported_module_that_blocks_while_it_loads
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_helper_in_another_file_that_blocks,_called_first
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsStaysSilent/blockStandardStreams_imported_under_another_name
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsStaysSilent/an_exit_in_an_exported_function_nothing_runs_at_load
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_library_with_a_#!_and_no_top-level_work_(ClaudeUsageApi.ts)
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_block_in_a_class_static_block,_which_the_graph_does_not_lay_out
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_call_through_a_value_the_checker_cannot_name,_in_a_file_that_can_block
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_write_and_exit_in_an_imported_function,_not_followed
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_script_without_a_#!_that_another_file_imports
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_block_in_the_arguments_of_the_call_that_starts_main
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsStaysSilent/Nexus's_function_handed_to_a_call_that_runs_it
+--- PASS: TestCorrectnessRequireBlockingStandardStreamsStaysSilent (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_callback,_in_a_file_that_blocks_after_handing_it_on (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_computed_import()_before_the_exit,_which_may_load_anything (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_library_file_other_files_import_(AhraOsLifecycleCommandLineInterface.ts) (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsStaysSilent/the_exit_code_set_and_nothing_exiting (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsStaysSilent/the_exit_in_the_write's_own_callback,_the_correct_form (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_declared_function_whose_body_this_program_cannot_see,_in_a_file_that_can_block (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsStaysSilent/the_exit_comes_before_any_write (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsStaysSilent/an_exit_after_an_await,_in_a_file_that_blocks_later (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsStaysSilent/an_imported_module_that_blocks_while_it_loads (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsStaysSilent/blockStandardStreams_imported_under_another_name (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_helper_in_another_file_that_blocks,_called_first (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsStaysSilent/an_exit_in_an_exported_function_nothing_runs_at_load (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_library_with_a_#!_and_no_top-level_work_(ClaudeUsageApi.ts) (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_call_through_a_value_the_checker_cannot_name,_in_a_file_that_can_block (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_block_in_a_class_static_block,_which_the_graph_does_not_lay_out (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_script_without_a_#!_that_another_file_imports (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_block_in_the_arguments_of_the_call_that_starts_main (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_write_and_exit_in_an_imported_function,_not_followed (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsStaysSilent/Nexus's_function_handed_to_a_call_that_runs_it (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/nexus	0.045s

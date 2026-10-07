@@ -1,0 +1,11 @@
+// A live checker and an existing question control the missing-program-facts probe.
+import { panic, programArguments, readTextFile, tsgoProgram, tsgoInspect, tsgoRelease } from 'adamic';
+const args = programArguments();
+const config = args[0] ?? panic('config');
+const file = args[1] ?? panic('file');
+const question = args[2] ?? panic('question');
+const source = readTextFile(file);
+if(source.kind === 'Error') { panic(source.message); }
+const program = tsgoProgram(config, [file]);
+console.log(tsgoInspect(program, file, 0, source.text.length, 'SourceFile', question));
+tsgoRelease(program);

@@ -1,0 +1,20 @@
+[
+  {
+    "question": "options",
+    "exit": 0,
+    "stdout": "1\n17\noptions1\n1\n",
+    "stderr": ""
+  },
+  {
+    "question": "program-sources",
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: unsupported checker question: program-sources\n"
+  },
+  {
+    "question": "module-resolution-graph",
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: unsupported checker question: module-resolution-graph\n"
+  }
+]

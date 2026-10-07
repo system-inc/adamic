@@ -58,3 +58,10 @@ The first three available rules in the same combined-volume ranking are:
 No matching native implementation on origin/main or origin/codex/tsgo-c-library
 and no active origin claim was found. These three are reserved for this branch.
 This claim update is pushed before writing implementation code.
+
+Released-reservation-aware continuation status: all three new reservations
+remain unimplemented. Work stopped at missing whole-program source/module
+resolution facts under Ahra's restriction on shared-file edits. See
+../WAVE_21_RELEASED_REPORT.md and ../validation-wave-21-released/ for the live
+checker control, explicit refusals, probe mutants and Go production tests.
+No further rules were claimed.
