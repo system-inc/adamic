@@ -1,0 +1,20 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { written } from '../../../../typescript/parser/nodes.ts';
+import { projectRootOf } from './project_root.a';
+const args = programArguments();
+const data = readTextFile(args[0] ?? panic('usage: cases.json'));
+if(data.kind === 'Error') { panic(data.message); }
+const json = new OptionsJson(data.text); const root = json.parse();
+if(root < 0) { panic(json.error); }
+let ordinal = 0;
+for(const row of json.node(root).children) {
+    const config = json.node(json.field(row,'Config')).text;
+    const cwd = json.node(json.field(row,'Cwd')).text;
+    const present = json.node(json.field(row,'Present')).text === 'true';
+    const options = {present,configFilePath:config};
+    const trace: string[] = [];
+    const result = projectRootOf({options: () => { trace.push('options'); return options; }, currentDirectory: () => { trace.push('directory'); return cwd; }});
+    console.log(`${ordinal}\t${written(result)}\t${trace.join(',')}`);
+    ordinal++;
+}

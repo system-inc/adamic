@@ -1,0 +1,36 @@
+=== RUN   TestProjectRootMatchesGo
+    helpers_test.go:195: better-tailwindcss/no-unknown-classes: 26 captured inputs
+    helpers_test.go:195: better-tailwindcss/enforce-consistent-class-order: 50 captured inputs
+    helpers_test.go:195: better-tailwindcss/enforce-consistent-variant-order: 16 captured inputs
+    helpers_test.go:195: better-tailwindcss/no-conflicting-classes: 22 captured inputs
+    helpers_test.go:195: better-tailwindcss/enforce-canonical-classes: 35 captured inputs
+    helpers_test.go:195: better-tailwindcss/enforce-shorthand-classes: 2 captured inputs
+    helpers_test.go:195: 151 fixture inputs plus 2784 controls = 2935 cases
+    helpers_test.go:203: 85445 bytes, 2935 lines identical to actual Go on Node, emitted JS and sanitized native
+--- PASS: TestProjectRootMatchesGo (7.12s)
+=== RUN   TestProjectRootMutants
+    helpers_test.go:208: better-tailwindcss/enforce-canonical-classes: 35 captured inputs
+    helpers_test.go:208: better-tailwindcss/enforce-shorthand-classes: 2 captured inputs
+    helpers_test.go:208: better-tailwindcss/no-unknown-classes: 26 captured inputs
+    helpers_test.go:208: better-tailwindcss/enforce-consistent-class-order: 50 captured inputs
+    helpers_test.go:208: better-tailwindcss/enforce-consistent-variant-order: 16 captured inputs
+    helpers_test.go:208: better-tailwindcss/no-conflicting-classes: 22 captured inputs
+    helpers_test.go:208: 151 fixture inputs plus 2784 controls = 2935 cases
+=== RUN   TestProjectRootMutants/accept_empty_configured_path
+    helpers_test.go:217: accept empty configured path compiled, finished cleanly and was caught only by Go comparison on source Node: line 153 got="152\t.\toptions" Go="152\t\toptions,directory"
+    helpers_test.go:217: accept empty configured path compiled, finished cleanly and was caught only by Go comparison on emitted JavaScript: line 153 got="152\t.\toptions" Go="152\t\toptions,directory"
+    helpers_test.go:217: accept empty configured path compiled, finished cleanly and was caught only by Go comparison on ASan/UBSan native: line 153 got="152\t.\toptions" Go="152\t\toptions,directory"
+=== RUN   TestProjectRootMutants/omit_parent_path_cleaning
+    helpers_test.go:217: omit parent path cleaning compiled, finished cleanly and was caught only by Go comparison on source Node: line 217 got="216\t/server/a/..\toptions" Go="216\t/server\toptions"
+    helpers_test.go:217: omit parent path cleaning compiled, finished cleanly and was caught only by Go comparison on emitted JavaScript: line 217 got="216\t/server/a/..\toptions" Go="216\t/server\toptions"
+    helpers_test.go:217: omit parent path cleaning compiled, finished cleanly and was caught only by Go comparison on ASan/UBSan native: line 217 got="216\t/server/a/..\toptions" Go="216\t/server\toptions"
+=== RUN   TestProjectRootMutants/clean_the_fallback_directory
+    helpers_test.go:217: clean the fallback directory compiled, finished cleanly and was caught only by Go comparison on source Node: line 152 got="151\t.\toptions,directory" Go="151\t\toptions,directory"
+    helpers_test.go:217: clean the fallback directory compiled, finished cleanly and was caught only by Go comparison on emitted JavaScript: line 152 got="151\t.\toptions,directory" Go="151\t\toptions,directory"
+    helpers_test.go:217: clean the fallback directory compiled, finished cleanly and was caught only by Go comparison on ASan/UBSan native: line 152 got="151\t.\toptions,directory" Go="151\t\toptions,directory"
+--- PASS: TestProjectRootMutants (5.63s)
+    --- PASS: TestProjectRootMutants/accept_empty_configured_path (1.41s)
+    --- PASS: TestProjectRootMutants/omit_parent_path_cleaning (1.41s)
+    --- PASS: TestProjectRootMutants/clean_the_fallback_directory (1.41s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from_wave1_04	12.757s

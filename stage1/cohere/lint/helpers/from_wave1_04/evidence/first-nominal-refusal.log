@@ -1,0 +1,31 @@
+=== RUN   TestProjectRootMatchesGo
+    helpers_test.go:195: better-tailwindcss/no-unknown-classes: 26 captured inputs
+    helpers_test.go:195: better-tailwindcss/enforce-consistent-class-order: 50 captured inputs
+    helpers_test.go:195: better-tailwindcss/enforce-consistent-variant-order: 16 captured inputs
+    helpers_test.go:195: better-tailwindcss/no-conflicting-classes: 22 captured inputs
+    helpers_test.go:195: better-tailwindcss/enforce-canonical-classes: 35 captured inputs
+    helpers_test.go:195: better-tailwindcss/enforce-shorthand-classes: 2 captured inputs
+    helpers_test.go:195: 151 fixture inputs plus 2784 controls = 2935 cases
+    helpers_test.go:197: /tmp/adamic-gate/TestProjectRootMatchesGo1713965618/006/main.a:17:50: Adamic 0.1 refuses a value without nominal ancestry seen as RootOptions; construct that class or a subclass; use an interface for structural values (adamic/nominal-class)
+--- FAIL: TestProjectRootMatchesGo (7.20s)
+=== RUN   TestProjectRootMutants
+    helpers_test.go:208: better-tailwindcss/enforce-consistent-class-order: 50 captured inputs
+    helpers_test.go:208: better-tailwindcss/enforce-consistent-variant-order: 16 captured inputs
+    helpers_test.go:208: better-tailwindcss/no-conflicting-classes: 22 captured inputs
+    helpers_test.go:208: better-tailwindcss/enforce-canonical-classes: 35 captured inputs
+    helpers_test.go:208: better-tailwindcss/enforce-shorthand-classes: 2 captured inputs
+    helpers_test.go:208: better-tailwindcss/no-unknown-classes: 26 captured inputs
+    helpers_test.go:208: 151 fixture inputs plus 2784 controls = 2935 cases
+=== RUN   TestProjectRootMutants/accept_empty_configured_path
+    helpers_test.go:212: /tmp/adamic-gate/TestProjectRootMutantsaccept_empty_configured_path2005519787/001/main.a:17:50: Adamic 0.1 refuses a value without nominal ancestry seen as RootOptions; construct that class or a subclass; use an interface for structural values (adamic/nominal-class)
+=== RUN   TestProjectRootMutants/omit_parent_path_cleaning
+    helpers_test.go:212: /tmp/adamic-gate/TestProjectRootMutantsomit_parent_path_cleaning3766130509/001/main.a:17:50: Adamic 0.1 refuses a value without nominal ancestry seen as RootOptions; construct that class or a subclass; use an interface for structural values (adamic/nominal-class)
+=== RUN   TestProjectRootMutants/clean_the_fallback_directory
+    helpers_test.go:212: /tmp/adamic-gate/TestProjectRootMutantsclean_the_fallback_directory979733798/001/main.a:17:50: Adamic 0.1 refuses a value without nominal ancestry seen as RootOptions; construct that class or a subclass; use an interface for structural values (adamic/nominal-class)
+--- FAIL: TestProjectRootMutants (1.54s)
+    --- FAIL: TestProjectRootMutants/accept_empty_configured_path (0.03s)
+    --- FAIL: TestProjectRootMutants/omit_parent_path_cleaning (0.03s)
+    --- FAIL: TestProjectRootMutants/clean_the_fallback_directory (0.04s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from_wave1_04	8.745s
+FAIL

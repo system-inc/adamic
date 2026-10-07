@@ -1,0 +1,1361 @@
+[
+  {
+    "Config": "/tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-unknown-classes",
+    "Source": "const element = <div className=\"ahralia-splash flex\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestClassOrderSortsTemplateRunsLikeThePlugina_template_inside_a3283648553/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestClassOrderSortsTemplateRunsLikeThePlugina_template_inside_a3283648553/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "const element = <div className={`flex ${a ? `items-center block ${b}` : ''}`} />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestNoUnknownClassesReportsTyposon_a_variable_surface2451519884/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestNoUnknownClassesReportsTyposon_a_variable_surface2451519884/001",
+    "File": "Styles.ts",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-unknown-classes",
+    "Source": "const buttonClassName = 'not-a-real-class-xyz';",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceConsistentVariantOrderReportsarbitrary_variant_befor1170093492/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceConsistentVariantOrderReportsarbitrary_variant_befor1170093492/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-variant-order",
+    "Source": "const element = <div className=\"[@media(hover)]:md:flex\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceConsistentVariantOrderStaysSilentsupports_after_a_ps175351690/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceConsistentVariantOrderStaysSilentsupports_after_a_ps175351690/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-variant-order",
+    "Source": "const element = <div className=\"hover:supports-[display:grid]:flex\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestNoUnknownClassesStaysSilentarbitrary_value298307821/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestNoUnknownClassesStaysSilentarbitrary_value298307821/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-unknown-classes",
+    "Source": "const element = <div className=\"w-[13px] h-[calc(100%-3px)]\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestNoUnknownClassesReportsTyposmisspelled_utility1866513174/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestNoUnknownClassesReportsTyposmisspelled_utility1866513174/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-unknown-classes",
+    "Source": "const element = <div className=\"flx items-center\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestNoUnknownClassesStaysSilentunrelated_callee91387435/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestNoUnknownClassesStaysSilentunrelated_callee91387435/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-unknown-classes",
+    "Source": "const value = someOtherFunction('flx');",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestNoConflictingClassesStaysSilentborder_against_border-dashed2538753650/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestNoConflictingClassesStaysSilentborder_against_border-dashed2538753650/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-conflicting-classes",
+    "Source": "const element = <div className=\"border border-dashed\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceCanonicalClassesStaysSilentunrelated_callee2133607775/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceCanonicalClassesStaysSilentunrelated_callee2133607775/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-canonical-classes",
+    "Source": "const value = someOtherFunction('px-4 py-4');",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceConsistentVariantOrderReportsmedia_variant_after_a_p168144258/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceConsistentVariantOrderReportsmedia_variant_after_a_p168144258/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-variant-order",
+    "Source": "const element = <div className=\"hover:sm:flex\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestNoConflictingClassesStaysSilentwidth_and_height877491825/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestNoConflictingClassesStaysSilentwidth_and_height877491825/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-conflicting-classes",
+    "Source": "const element = <div className=\"w-8 h-8\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceConsistentClassOrderReportsMisorderingvariant_before3818136497/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceConsistentClassOrderReportsMisorderingvariant_before3818136497/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "const element = <div className=\"hover:px-8 px-4\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestClassOrderSortsTemplateRunsLikeThePluginboth_runs,_separato2587094273/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestClassOrderSortsTemplateRunsLikeThePluginboth_runs,_separato2587094273/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "const merged = mergeClassNames(`items-center   flex ${x} gap-2   block`);",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceConsistentClassOrderStaysSilentunrelated_callee4011698306/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceConsistentClassOrderStaysSilentunrelated_callee4011698306/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "const value = someOtherFunction('items-center flex');",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestCanonicalMessageNamesTheShorterSpellingp-3px226845560/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestCanonicalMessageNamesTheShorterSpellingp-3px226845560/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-canonical-classes",
+    "Source": "const element = <div className=\"px-[3px] py-[3px]\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceConsistentVariantOrderStaysSilentno_variants925124952/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceConsistentVariantOrderStaysSilentno_variants925124952/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-variant-order",
+    "Source": "const element = <div className=\"flex items-center\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceShorthandClassesSuggestsOnlyClassesThatExist362618002/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceShorthandClassesSuggestsOnlyClassesThatExist362618002/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-shorthand-classes",
+    "Source": "const element = <div className=\"h-screen w-screen\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestCanonicalCollapseOption1968885505/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestCanonicalCollapseOption1968885505/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-canonical-classes",
+    "Source": "const element = <img className=\"w-10 h-10 flex\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestClassOrderOptionsdesc3107485729/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestClassOrderOptionsdesc3107485729/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "export const element = <img className=\"a b\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestNoUnknownClassesReportsTyposanother_root-prefixed_typo3856099169/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestNoUnknownClassesReportsTyposanother_root-prefixed_typo3856099169/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-unknown-classes",
+    "Source": "const element = <div className=\"wfull textcenter\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceCanonicalClassesStaysSilentunrelated_attribute2099241748/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceCanonicalClassesStaysSilentunrelated_attribute2099241748/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-canonical-classes",
+    "Source": "const element = <div title=\"px-4 py-4\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestNoUnknownClassesReportsTyposstylesheet_class_Tailwind_does_3838705430/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestNoUnknownClassesReportsTyposstylesheet_class_Tailwind_does_3838705430/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-unknown-classes",
+    "Source": "const element = <div className=\"ahralia-splash\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceCanonicalClassesReportsCollapsesnegative_margins1370197811/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceCanonicalClassesReportsCollapsesnegative_margins1370197811/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-canonical-classes",
+    "Source": "const element = <div className=\"-mt-1 -mb-1\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestNoUnknownClassesReportsTypostypo_starting_with_a_real_root2727396956/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestNoUnknownClassesReportsTypostypo_starting_with_a_real_root2727396956/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-unknown-classes",
+    "Source": "const element = <div className=\"px4\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestClassOrderFixMatchesThePlugina_wrapped_list_stays_wrapped694842158/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestClassOrderFixMatchesThePlugina_wrapped_list_stays_wrapped694842158/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "const element = <div\n  className=\"items-center\n    flex\n    gap-2\"\n/>;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestNoUnknownClassesStaysSilentgroup_and_peer1449762577/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestNoUnknownClassesStaysSilentgroup_and_peer1449762577/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-unknown-classes",
+    "Source": "const element = <div className=\"group peer\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestClassOrderOptionsasc_is_not_locale_order3708508574/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestClassOrderOptionsasc_is_not_locale_order3708508574/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "export const element = <img className=\"py-24 px-12\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceConsistentClassOrderReportsMisorderingunknown_class_3382431379/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceConsistentClassOrderReportsMisorderingunknown_class_3382431379/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "const element = <div className=\"items-center flex ahralia-splash\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestClassOrderFixturesActuallyRan3373091800/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestClassOrderFixturesActuallyRan3373091800/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "const element = <div className=\"items-center flex\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestNoUnknownClassesStaysSilentgradient_stops3170370428/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestNoUnknownClassesStaysSilentgradient_stops3170370428/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-unknown-classes",
+    "Source": "const element = <div className=\"from-black/70 to-transparent\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestClassOrderOptionsdesc_is_not_locale_order3491355130/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestClassOrderOptionsdesc_is_not_locale_order3491355130/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "export const element = <img className=\"px-12 py-24\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestNoConflictingClassesStaysSilentpadding_and_padding-inline195237637/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestNoConflictingClassesStaysSilentpadding_and_padding-inline195237637/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-conflicting-classes",
+    "Source": "const element = <div className=\"p-4 px-8\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestClassOrderOptionsunknown_classes_at_the_end_keep_their_orde3600163813/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestClassOrderOptionsunknown_classes_at_the_end_keep_their_orde3600163813/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "export const element = <img className=\"cy-24 flex cx-12\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestClassOrderOptionsunknown_classes_sorted_ascending_at_the_st1318653409/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestClassOrderOptionsunknown_classes_sorted_ascending_at_the_st1318653409/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "export const element = <img className=\"flex cy-24 cx-12\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceConsistentVariantOrderStaysSilentunknown_variant728271061/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceConsistentVariantOrderStaysSilentunknown_variant728271061/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-variant-order",
+    "Source": "const element = <div className=\"hover:unknown-variant:text-red-500\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestClassOrderSortsTemplateRunsLikeThePlugina_template_in_a_con643555824/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestClassOrderSortsTemplateRunsLikeThePlugina_template_in_a_con643555824/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "const element = <div className={open ? `items-center flex ${x}` : 'flex'} />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestClassOrderLeavesTemplateRunsThePluginLeavesglued_classes_le2678033277/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestClassOrderLeavesTemplateRunsThePluginLeavesglued_classes_le2678033277/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "const element = <div className={`items-center flex-${grow} block flex ${x}`} />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceCanonicalClassesReportsCollapsescollapse_among_other2510163084/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceCanonicalClassesReportsCollapsescollapse_among_other2510163084/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-canonical-classes",
+    "Source": "const element = <div className=\"flex px-4 items-center py-4 gap-2\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceCanonicalClassesReportsCollapseson_a_callee_surface4034642097/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceCanonicalClassesReportsCollapseson_a_callee_surface4034642097/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-canonical-classes",
+    "Source": "const merged = mergeClassNames('px-4 py-4');",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestCanonicalLogicalOption4145726119/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestCanonicalLogicalOption4145726119/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-canonical-classes",
+    "Source": "const element = <img className=\"mr-2 ml-2\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceConsistentClassOrderReportsMisorderingon_a_callee_su422544930/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceConsistentClassOrderReportsMisorderingon_a_callee_su422544930/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "const merged = mergeClassNames('items-center flex');",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestClassOrderFixMatchesThePlugintwo_classes_reversed2734468249/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestClassOrderFixMatchesThePlugintwo_classes_reversed2734468249/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "const element = <div className=\"items-center flex\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceConsistentClassOrderReportsMisorderingseveral_classe2387416247/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceConsistentClassOrderReportsMisorderingseveral_classe2387416247/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "const element = <div className=\"gap-2 items-center flex\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestNoUnknownClassesStaysSilentvariants3308169990/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestNoUnknownClassesStaysSilentvariants3308169990/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-unknown-classes",
+    "Source": "const element = <div className=\"hover:px-4 sm:hover:flex\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestClassOrderOptionsunknown_classes_sorted_descending_at_the_e242883813/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestClassOrderOptionsunknown_classes_sorted_descending_at_the_e242883813/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "export const element = <img className=\"flex cx-12 cy-24\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceConsistentClassOrderStaysSilentring-offset_resolves_2335796012/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceConsistentClassOrderStaysSilentring-offset_resolves_2335796012/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "const element = <div className=\"focus-visible:ring-1 focus-visible:ring-(--color-content-informative) focus-visible:ring-offset-1 focus-visible:outline-none\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestNoConflictingClassesStaysSilentdivide_against_border3366837638/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestNoConflictingClassesStaysSilentdivide_against_border3366837638/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-conflicting-classes",
+    "Source": "const element = <div className=\"divide-neutral-200 border-neutral-200\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestNoConflictingClassesReportsSymmetricallythree_classes_on_on3720308239/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestNoConflictingClassesReportsSymmetricallythree_classes_on_on3720308239/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-conflicting-classes",
+    "Source": "const element = <div className=\"flex block grid\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestClassOrderSortsTemplateRunsLikeThePlugina_run_before_a_glue300060276/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestClassOrderSortsTemplateRunsLikeThePlugina_run_before_a_glue300060276/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "const element = <div className={`items-center flex px-${size}`} />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestNoUnknownClassesStaysSilentordinary_utilities3820883786/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestNoUnknownClassesStaysSilentordinary_utilities3820883786/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-unknown-classes",
+    "Source": "const element = <div className=\"flex items-center gap-2\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceConsistentClassOrderStaysSilentduplicate_class_prese3674434107/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceConsistentClassOrderStaysSilentduplicate_class_prese3674434107/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "const element = <div className=\"items-center flex flex\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestClassOrderLeavesTemplateRunsThePluginLeavesalready_ordered_1191746527/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestClassOrderLeavesTemplateRunsThePluginLeavesalready_ordered_1191746527/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "const element = <div className={`flex items-center ${x} block gap-2`} />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestNoConflictingClassesStaysSilentunrelated_attribute3513246110/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestNoConflictingClassesStaysSilentunrelated_attribute3513246110/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-conflicting-classes",
+    "Source": "const element = <div title=\"flex block\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestClassOrderOptionsdesc_ignores_the_engine2445940482/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestClassOrderOptionsdesc_ignores_the_engine2445940482/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "export const element = <img className=\"absolute w-full\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestClassOrderSortsTemplateRunsLikeThePlugina_run_after_a_glued2144017477/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestClassOrderSortsTemplateRunsLikeThePlugina_run_after_a_glued2144017477/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "const element = <div className={`px-${size} items-center flex`} />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceConsistentVariantOrderStaysSilenttwo_pseudo_variants3397833961/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceConsistentVariantOrderStaysSilenttwo_pseudo_variants3397833961/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-variant-order",
+    "Source": "const element = <div className=\"hover:focus:underline focus:hover:underline\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceCanonicalClassesStaysSilentsingle_class955802773/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceCanonicalClassesStaysSilentsingle_class955802773/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-canonical-classes",
+    "Source": "const element = <div className=\"ml-2\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestClassOrderMessageNamesTheOrder3086118134/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestClassOrderMessageNamesTheOrder3086118134/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "const element = <div className=\"gap-2 items-center flex\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestNoUnknownClassesStaysSilentarbitrary_property3020504609/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestNoUnknownClassesStaysSilentarbitrary_property3020504609/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-unknown-classes",
+    "Source": "const element = <div className=\"[font:inherit]\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceConsistentVariantOrderReportsarbitrary_value_contain1189046868/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceConsistentVariantOrderReportsarbitrary_value_contain1189046868/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-variant-order",
+    "Source": "const element = <div className=\"has-[:checked]:md:flex\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceCanonicalClassesStaysSilentdifferent_values_on_width1713337499/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceCanonicalClassesStaysSilentdifferent_values_on_width1713337499/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-canonical-classes",
+    "Source": "const element = <div className=\"w-8 h-4\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceCanonicalClassesReportsCollapsesgap_axes1872076443/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceCanonicalClassesReportsCollapsesgap_axes1872076443/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-canonical-classes",
+    "Source": "const element = <div className=\"gap-x-2 gap-y-2\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestNoConflictingClassesStaysSilentshadow_against_ring179460446/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestNoConflictingClassesStaysSilentshadow_against_ring179460446/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-conflicting-classes",
+    "Source": "const element = <div className=\"shadow-lg ring-1\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestNoUnknownClassesReportsTyposon_a_callee_surface1182258967/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestNoUnknownClassesReportsTyposon_a_callee_surface1182258967/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-unknown-classes",
+    "Source": "const merged = mergeClassNames('flx');",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestNoConflictingClassesReportsSymmetricallyon_a_callee_surface1491737081/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestNoConflictingClassesReportsSymmetricallyon_a_callee_surface1491737081/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-conflicting-classes",
+    "Source": "const merged = mergeClassNames('flex block');",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestNoUnknownClassesStaysSilentthis_repositorys_own_utility_un3479489152/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestNoUnknownClassesStaysSilentthis_repositorys_own_utility_un3479489152/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-unknown-classes",
+    "Source": "const element = <div className=\"hover:synthetic-static\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestClassOrderOptionsofficial3716196926/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestClassOrderOptionsofficial3716196926/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "export const element = <img className=\"w-full absolute\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestNoUnknownClassesStaysSilentgroup_with_a_name3747709137/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestNoUnknownClassesStaysSilentgroup_with_a_name3747709137/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-unknown-classes",
+    "Source": "const element = <div className=\"group/item\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestClassOrderOptionsasc1464877579/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestClassOrderOptionsasc1464877579/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "export const element = <img className=\"b a\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestCanonicalCollapseOption1968885505/002/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestCanonicalCollapseOption1968885505/002",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-canonical-classes",
+    "Source": "const element = <img className=\"w-10 h-10 flex\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestClassOrderFixMatchesThePluginseveral_classes,_only_the_move3465251584/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestClassOrderFixMatchesThePluginseveral_classes,_only_the_move3465251584/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "const element = <div className=\"gap-2 items-center flex\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceCanonicalClassesReportsCollapsesfour_margins_collaps2735815094/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceCanonicalClassesReportsCollapsesfour_margins_collaps2735815094/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-canonical-classes",
+    "Source": "const element = <div className=\"mt-1 mb-1 ml-1 mr-1\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestClassOrderFixMatchesThePluginpadding_is_left_for_the_whites2923861556/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestClassOrderFixMatchesThePluginpadding_is_left_for_the_whites2923861556/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "const element = <div className=\"  items-center   flex \" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestNoUnknownClassesStaysSilentthis_repositorys_own_functional3846900506/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestNoUnknownClassesStaysSilentthis_repositorys_own_functional3846900506/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-unknown-classes",
+    "Source": "const element = <div className=\"synthetic-fn-small synthetic-fn-large\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestCanonicalCollapseOption1968885505/003/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestCanonicalCollapseOption1968885505/003",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-canonical-classes",
+    "Source": "const element = <img className=\"w-10 h-10 flex\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceConsistentClassOrderReportsMisorderingon_a_variable_3727435073/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceConsistentClassOrderReportsMisorderingon_a_variable_3727435073/001",
+    "File": "Styles.ts",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "const buttonClassName = 'items-center flex';",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceConsistentVariantOrderNamesBothSpellings2084241731/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceConsistentVariantOrderNamesBothSpellings2084241731/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-variant-order",
+    "Source": "const element = <div className=\"dark:md:flex\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceCanonicalClassesStaysSilentone_side_carries_a_varian1415072775/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceCanonicalClassesStaysSilentone_side_carries_a_varian1415072775/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-canonical-classes",
+    "Source": "const element = <div className=\"px-4 sm:py-4\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestNoConflictingClassesStaysSilentring_against_ring-inset3090431388/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestNoConflictingClassesStaysSilentring_against_ring-inset3090431388/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-conflicting-classes",
+    "Source": "const element = <div className=\"ring-1 ring-inset\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestNoConflictingClassesStaysSilentdifferent_axes_of_margin687552491/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestNoConflictingClassesStaysSilentdifferent_axes_of_margin687552491/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-conflicting-classes",
+    "Source": "const element = <div className=\"mt-2 mb-2\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestNoUnknownClassesStaysSilentunrelated_attribute1096778895/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestNoUnknownClassesStaysSilentunrelated_attribute1096778895/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-unknown-classes",
+    "Source": "const element = <div title=\"flx\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceCanonicalClassesStaysSilentone_side_is_important3789708105/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceCanonicalClassesStaysSilentone_side_is_important3789708105/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-canonical-classes",
+    "Source": "const element = <div className=\"px-4 py-4!\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestNoConflictingClassesReportsSymmetricallytwo_display_utiliti2192045225/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestNoConflictingClassesReportsSymmetricallytwo_display_utiliti2192045225/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-conflicting-classes",
+    "Source": "const element = <div className=\"flex block\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestNoConflictingClassesStaysSilentcontainer_against_w-full883007781/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestNoConflictingClassesStaysSilentcontainer_against_w-full883007781/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-conflicting-classes",
+    "Source": "const element = <div className=\"w-full container\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceConsistentVariantOrderStaysSilentmax-md_after_a_pseu3164132510/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceConsistentVariantOrderStaysSilentmax-md_after_a_pseu3164132510/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-variant-order",
+    "Source": "const element = <div className=\"hover:max-md:flex\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestClassOrderReportsWithoutAFixItCannotPlacean_escape_in_the_l3451079733/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestClassOrderReportsWithoutAFixItCannotPlacean_escape_in_the_l3451079733/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "const merged = mergeClassNames('items-center\\u0020flex');",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestNoUnknownClassesStaysSilentimportance1936628540/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestNoUnknownClassesStaysSilentimportance1936628540/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-unknown-classes",
+    "Source": "const element = <div className=\"px-4!\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestCanonicalMessageNamesTheShorterSpellingborder-x1294834540/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestCanonicalMessageNamesTheShorterSpellingborder-x1294834540/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-canonical-classes",
+    "Source": "const element = <div className=\"border-l border-r\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestCanonicalProposesNoFix3204852287/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestCanonicalProposesNoFix3204852287/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-canonical-classes",
+    "Source": "const element = <div className=\"px-4 py-4\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestClassOrderOptionsunknown_classes_keep_their_order_by_defaul2182675699/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestClassOrderOptionsunknown_classes_keep_their_order_by_defaul2182675699/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "export const element = <img className=\"cy-24 cx-12 flex\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceConsistentClassOrderStaysSilentordering_the_names_do3910075200/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceConsistentClassOrderStaysSilentordering_the_names_do3910075200/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "const element = <div className=\"truncate font-mono text-[10px]\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/003/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/003",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-unknown-classes",
+    "Source": "const element = <div className=\"ahralia-splash flx\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceConsistentClassOrderStaysSilenttwo_unranked_classes,3159510342/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceConsistentClassOrderStaysSilenttwo_unranked_classes,3159510342/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "const element = <div className=\"group peer flex\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestNoConflictingClassesStaysSilentunrelated_properties2893302946/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestNoConflictingClassesStaysSilentunrelated_properties2893302946/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-conflicting-classes",
+    "Source": "const element = <div className=\"flex items-center gap-2\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestClassOrderLeavesTemplateRunsThePluginLeavesa_run_holding_a_2219765335/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestClassOrderLeavesTemplateRunsThePluginLeavesa_run_holding_a_2219765335/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "const element = <div className={`items-center flex flex ${x}`} />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestNoUnknownClassesStaysSilentmulti-rule_component_class3443379700/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestNoUnknownClassesStaysSilentmulti-rule_component_class3443379700/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-unknown-classes",
+    "Source": "const element = <div className=\"container\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceConsistentClassOrderStaysSilentbase_before_variant284667936/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceConsistentClassOrderStaysSilentbase_before_variant284667936/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "const element = <div className=\"px-4 hover:px-8\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestClassOrderSortsTemplateRunsLikeThePlugina_class_glued_after2694302267/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestClassOrderSortsTemplateRunsLikeThePlugina_class_glued_after2694302267/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "const element = <div className={`${x}items-center flex block`} />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestClassOrderOptionsunknown_classes_first_by_default3469763601/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestClassOrderOptionsunknown_classes_first_by_default3469763601/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "export const element = <img className=\"flex unknown\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceConsistentVariantOrderStaysSilentbreakpoint_already_2691363506/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceConsistentVariantOrderStaysSilentbreakpoint_already_2691363506/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-variant-order",
+    "Source": "const element = <div className=\"sm:hover:flex\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestCanonicalLogicalOption4145726119/003/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestCanonicalLogicalOption4145726119/003",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-canonical-classes",
+    "Source": "const element = <img className=\"w-8 h-8\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestCanonicalMessageNamesTheShorterSpellingsize-84195692648/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestCanonicalMessageNamesTheShorterSpellingsize-84195692648/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-canonical-classes",
+    "Source": "const element = <div className=\"w-8 h-8\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceConsistentVariantOrderReportstwo_breakpoints_in_asce1113207465/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceConsistentVariantOrderReportstwo_breakpoints_in_asce1113207465/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-variant-order",
+    "Source": "const element = <div className=\"sm:lg:flex\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceConsistentClassOrderStaysSilentvariant_group_kept_to2005247692/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceConsistentClassOrderStaysSilentvariant_group_kept_to2005247692/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "const element = <div className=\"pointer-events-none hidden md:absolute md:inset-x-0 md:flex md:w-full\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceConsistentClassOrderReportsMisorderingtwo_unranked_c998908724/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceConsistentClassOrderReportsMisorderingtwo_unranked_c998908724/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "const element = <div className=\"flex peer group\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceCanonicalClassesReportsCollapsesborder_edges2993627293/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceCanonicalClassesReportsCollapsesborder_edges2993627293/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-canonical-classes",
+    "Source": "const element = <div className=\"border-l border-r\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestConflictingClassesProposeSuggestionsNotFixes2402856061/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestConflictingClassesProposeSuggestionsNotFixes2402856061/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-conflicting-classes",
+    "Source": "const element = <div className=\"flex block\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceCanonicalClassesReportsCollapsesarbitrary_values3685322635/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceCanonicalClassesReportsCollapsesarbitrary_values3685322635/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-canonical-classes",
+    "Source": "const element = <div className=\"px-[3px] py-[3px]\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceConsistentClassOrderStaysSilenttwo_unranked_classes,4274465217/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceConsistentClassOrderStaysSilenttwo_unranked_classes,4274465217/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "const element = <div className=\"peer group flex\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceConsistentClassOrderStaysSilentunranked_class_first930720736/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceConsistentClassOrderStaysSilentunranked_class_first930720736/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "const element = <div className=\"group flex\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestCanonicalMessageNamesTheShorterSpellingsmp-43861293130/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestCanonicalMessageNamesTheShorterSpellingsmp-43861293130/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-canonical-classes",
+    "Source": "const element = <div className=\"sm:px-4 sm:py-4\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceConsistentClassOrderStaysSilentsingle_class2841752689/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceConsistentClassOrderStaysSilentsingle_class2841752689/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "const element = <div className=\"flex\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestNoConflictingClassesStaysSilentsame_property_under_differen2123550375/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestNoConflictingClassesStaysSilentsame_property_under_differen2123550375/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-conflicting-classes",
+    "Source": "const element = <div className=\"flex hover:block\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestNoConflictingClassesStaysSilentunrelated_callee3954528533/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestNoConflictingClassesStaysSilentunrelated_callee3954528533/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-conflicting-classes",
+    "Source": "const value = someOtherFunction('flex block');",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestClassOrderFixMatchesThePlugina_null_leads_in_source_order1359196364/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestClassOrderFixMatchesThePlugina_null_leads_in_source_order1359196364/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "const element = <div className=\"items-center peer flex ahralia-splash\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceConsistentClassOrderReportsMisorderingtwo_classes_re2054796306/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceConsistentClassOrderReportsMisorderingtwo_classes_re2054796306/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "const element = <div className=\"items-center flex\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceConsistentVariantOrderReportscompound_variant_before17563253/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceConsistentVariantOrderReportscompound_variant_before17563253/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-variant-order",
+    "Source": "const element = <div className=\"group-hover:md:flex\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestNoUnknownClassesReportsTypostwo_unknowns_in_one_literal3263613149/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestNoUnknownClassesReportsTypostwo_unknowns_in_one_literal3263613149/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-unknown-classes",
+    "Source": "const element = <div className=\"flx grd\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceCanonicalClassesReportsCollapsespadding_axes3639857180/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceCanonicalClassesReportsCollapsespadding_axes3639857180/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-canonical-classes",
+    "Source": "const element = <div className=\"px-4 py-4\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceCanonicalClassesStaysSilentdifferent_values2375759087/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceCanonicalClassesStaysSilentdifferent_values2375759087/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-canonical-classes",
+    "Source": "const element = <div className=\"px-4 py-2\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceShorthandClassesSuggestsOnlyClassesThatExist362618002/002/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceShorthandClassesSuggestsOnlyClassesThatExist362618002/002",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-shorthand-classes",
+    "Source": "const element = <div className=\"h-auto w-auto\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceConsistentClassOrderStaysSilentalready_ordered3495288090/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceConsistentClassOrderStaysSilentalready_ordered3495288090/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "const element = <div className=\"flex items-center gap-2\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestNoUnknownClassesReportsTyposinvented_utility1583522279/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestNoUnknownClassesReportsTyposinvented_utility1583522279/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-unknown-classes",
+    "Source": "const element = <div className=\"not-a-real-class-xyz\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceConsistentVariantOrderStaysSilentone_variant1120552628/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceConsistentVariantOrderStaysSilentone_variant1120552628/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-variant-order",
+    "Source": "const element = <div className=\"hover:flex\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestCanonicalMessageNamesTheShorterSpellingp-43955136171/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestCanonicalMessageNamesTheShorterSpellingp-43955136171/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-canonical-classes",
+    "Source": "const element = <div className=\"px-4 py-4\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceConsistentVariantOrderReportstwo_pseudo_variants_kee2199106460/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceConsistentVariantOrderReportstwo_pseudo_variants_kee2199106460/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-variant-order",
+    "Source": "const element = <div className=\"focus:hover:lg:text-red-500\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestNoConflictingClassesReportsSymmetricallyconflict_inside_one4282355500/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestNoConflictingClassesReportsSymmetricallyconflict_inside_one4282355500/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-conflicting-classes",
+    "Source": "const element = <div className=\"hover:flex hover:block\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceConsistentClassOrderReportsMisorderingunranked_class3439271415/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceConsistentClassOrderReportsMisorderingunranked_class3439271415/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "const element = <div className=\"flex group\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestNoUnknownClassesStaysSilentthis_repositorys_own_static_uti166208996/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestNoUnknownClassesStaysSilentthis_repositorys_own_static_uti166208996/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-unknown-classes",
+    "Source": "const element = <div className=\"synthetic-static\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceCanonicalClassesStaysSilentstatics3747456632/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceCanonicalClassesStaysSilentstatics3747456632/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-canonical-classes",
+    "Source": "const element = <div className=\"flex items-center truncate\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceConsistentVariantOrderStaysSilentdark_and_hover_in_e333884420/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceConsistentVariantOrderStaysSilentdark_and_hover_in_e333884420/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-variant-order",
+    "Source": "const element = <div className=\"dark:hover:flex hover:dark:flex\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestCanonicalLogicalOption4145726119/002/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestCanonicalLogicalOption4145726119/002",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-canonical-classes",
+    "Source": "const element = <img className=\"mr-2 ml-2\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceCanonicalClassesReportsCollapseswidth_and_height_int3746735654/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceCanonicalClassesReportsCollapseswidth_and_height_int3746735654/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-canonical-classes",
+    "Source": "const element = <div className=\"w-8 h-8\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceCanonicalClassesReportsCollapsescollapse_under_a_sha86312279/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceCanonicalClassesReportsCollapsescollapse_under_a_sha86312279/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-canonical-classes",
+    "Source": "const element = <div className=\"sm:px-4 sm:py-4\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceConsistentClassOrderStaysSilentunrelated_attribute2475049987/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceConsistentClassOrderStaysSilentunrelated_attribute2475049987/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "const element = <div title=\"items-center flex\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestNoConflictingClassesReportsSymmetricallyon_a_variable_surfa3850964217/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestNoConflictingClassesReportsSymmetricallyon_a_variable_surfa3850964217/001",
+    "File": "Styles.ts",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-conflicting-classes",
+    "Source": "const buttonClassName = 'px-4 px-8';",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceCanonicalClassesReportsCollapsesrounded_corners2633606452/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceCanonicalClassesReportsCollapsesrounded_corners2633606452/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-canonical-classes",
+    "Source": "const element = <div className=\"rounded-tl-md rounded-tr-md\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/002/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/002",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-unknown-classes",
+    "Source": "const element = <div className=\"ahralia-splash flex\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestNoConflictingClassesReportsSymmetricallytwo_alignment_utili977242403/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestNoConflictingClassesReportsSymmetricallytwo_alignment_utili977242403/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-conflicting-classes",
+    "Source": "const element = <div className=\"text-left text-right\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestNoUnknownClassesReportsTyposunknown_variant_on_a_real_utili1737862269/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestNoUnknownClassesReportsTyposunknown_variant_on_a_real_utili1737862269/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-unknown-classes",
+    "Source": "const element = <div className=\"notavariant:flex\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestCanonicalMessageNamesTheShorterSpellingrounded-t-md1037762948/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestCanonicalMessageNamesTheShorterSpellingrounded-t-md1037762948/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-canonical-classes",
+    "Source": "const element = <div className=\"rounded-tl-md rounded-tr-md\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceConsistentClassOrderStaysSilentunknown_class_written1222154487/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceConsistentClassOrderStaysSilentunknown_class_written1222154487/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "const element = <div className=\"ahralia-splash flex items-center\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceCanonicalClassesStaysSilentno_pair_present705968504/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceCanonicalClassesStaysSilentno_pair_present705968504/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-canonical-classes",
+    "Source": "const element = <div className=\"space-x-2 text-left\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestNoConflictingClassesStaysSilentthe_same_class_twice946970738/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestNoConflictingClassesStaysSilentthe_same_class_twice946970738/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-conflicting-classes",
+    "Source": "const element = <div className=\"flex flex\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceConsistentVariantOrderReportsdark_before_a_breakpoin3123193168/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceConsistentVariantOrderReportsdark_before_a_breakpoin3123193168/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-variant-order",
+    "Source": "const element = <div className=\"dark:md:flex\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceCanonicalClassesStaysSilentunrelated_roots4143474752/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceCanonicalClassesStaysSilentunrelated_roots4143474752/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-canonical-classes",
+    "Source": "const element = <div className=\"ml-2 pt-2\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestNoConflictingClassesReportsSymmetricallysame_functional_roo1082929491/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestNoConflictingClassesReportsSymmetricallysame_functional_roo1082929491/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-conflicting-classes",
+    "Source": "const element = <div className=\"px-4 px-8\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestClassOrderReportsWithoutAFixItCannotPlacea_deprecated_class3451441658/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestClassOrderReportsWithoutAFixItCannotPlacea_deprecated_class3451441658/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-consistent-class-order",
+    "Source": "const element = <div className=\"items-center flex-grow\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestNoConflictingClassesStaysSilentone_class522795401/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestNoConflictingClassesStaysSilentone_class522795401/001",
+    "File": "Component.tsx",
+    "Present": true,
+    "Rule": "better-tailwindcss/no-conflicting-classes",
+    "Source": "const element = <div className=\"flex\" />;",
+    "Origin": "real-program"
+  },
+  {
+    "Config": "/tmp/adamic-gate/TestEnforceCanonicalClassesReportsCollapseson_a_variable_surfac823632455/001/tsconfig.json",
+    "Cwd": "/tmp/adamic-gate/TestEnforceCanonicalClassesReportsCollapseson_a_variable_surfac823632455/001",
+    "File": "Styles.ts",
+    "Present": true,
+    "Rule": "better-tailwindcss/enforce-canonical-classes",
+    "Source": "const buttonClassName = 'w-8 h-8';",
+    "Origin": "real-program"
+  }
+]
