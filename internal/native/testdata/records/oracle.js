@@ -1,4 +1,5 @@
-// Node is the independent oracle; each native harness operation has an ordinary JS equivalent.
+// Node is the independent oracle for successful own operations. The record-only missing
+// prototype-member stops are checked separately against their ruled diagnostic and Node's member list.
 const mode = process.argv[2];
 function snapshot(r) {
   console.log(JSON.stringify(Object.keys(r)));
@@ -31,13 +32,28 @@ if (mode === 'semantics') {
   const r = {};
   const names = ['constructor','__defineGetter__','__defineSetter__','hasOwnProperty','__lookupGetter__','__lookupSetter__','isPrototypeOf','propertyIsEnumerable','toString','valueOf','__proto__','toLocaleString','missing','','toStringX'];
   for (const k of names) {
-    console.log(+Object.hasOwn(r,k), +(k in r), +Object.hasOwn(r,k));
+    console.log(+Object.hasOwn(r,k), +Object.hasOwn(r,k), +Object.hasOwn(r,k));
     if(k==='__proto__') define(r,k,7); else r[k]=7;
     console.log(+Object.hasOwn(r,k), +(k in r), r[k]);
     delete r[k];
-    console.log(+Object.hasOwn(r,k), +(k in r));
+    console.log(+Object.hasOwn(r,k), +Object.hasOwn(r,k));
   }
   snapshot(r);
+} else if (mode === 'reads') {
+  const r={hit:42}; define(r,'toString',7);
+  for(const k of ['hit','toString']) console.log(r[k], +Object.hasOwn(r,k), +(k in r));
+  for(const k of ['missing','valueOX','toStrinX','__proto_X','constructoX',
+    'isPrototypeOX','hasOwnPropertX','toLocaleStrinX','__defineGetter_X',
+    '__defineSetter_X','__lookupGetter_X','__lookupSetter_X','propertyIsEnumerablX',
+    '', 'a-long-key-more-than-twenty-bytes','世界🌍']) {
+    console.log(+(r[k]===undefined), +(k in r));
+  }
+  const reference={}; define(reference,'toString',undefined);
+  console.log(+Object.hasOwn(reference,'toString'), +(reference.toString===undefined), +('toString' in reference));
+  reference.toString='owned value'; const held=reference.toString;
+  delete reference.toString;
+  console.log(+Object.hasOwn(reference,'toString'), +Object.hasOwn(reference,'toString'));
+  console.log(JSON.stringify(held));
 } else if (mode === 'references') {
   const r = {};
   for (let i=0;i<10000;i++) r['same'] = 'value';
