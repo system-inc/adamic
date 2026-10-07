@@ -198,3 +198,7 @@ Presence ranks and existing readiness bytes both start immediately after object 
 Kept taste-land truthiness, fallthrough and complete export support; added imported literal labels. Counts regenerated on Linux.
 
 Item 10 interaction with import-cycles: retain the checked runtime read for imported literal labels instead of folding away readiness. The new cycle/main.a program raises ReferenceError on Node and both backends. Focused baseline passed 4.943s; removing Checked was caught by differing exit codes in TestImportCycleLoadTimeReads (4.186s). The first mutant filter selected no tests and was corrected; only the final run is evidence. Whole lower passed 40.419s, counts 41.621s, focused imported cases and vet passed.
+
+### Item 11: arrow-block-view-site
+
+Only counts conflicted; regenerated on Linux (27.582s). Whole lower 23.253s, focused oracle 0.182s and vet passed. Removing the block exclusion was caught by TestArrowBlockStructuralViewRefused at the wrong refusal site (5:33 instead of 5:42). No compiler output failure or stage3 record change. Item 10 whole oracle had only counts mismatches while a later counts generator was running; the checkpoint gate is required to verify this with sequential generation.

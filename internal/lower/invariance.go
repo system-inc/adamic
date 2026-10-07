@@ -536,7 +536,8 @@ func viewSite(node *ast.Node) bool {
 	case ast.KindPropertyDeclaration:
 		return parent.AsPropertyDeclaration().Initializer == node
 	case ast.KindArrowFunction:
-		return parent.AsArrowFunction().Body == node
+		// A block has no value type; its return expressions are separate view sites.
+		return node.Kind != ast.KindBlock && parent.AsArrowFunction().Body == node
 	}
 	return false
 }
