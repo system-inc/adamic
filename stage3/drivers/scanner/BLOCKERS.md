@@ -1,5 +1,15 @@
 # Scanner blockers
 
+## October 7: adaptation 81 preserves the JSX default while widening its type
+
+reScanJsxToken parameter is boolean | undefined = true. Omitted/undefined
+arguments still receive true; false stays false. The initial README incorrectly
+assumed false and was corrected in a separate plan push before implementation.
+Census reason method-signature-style; function widening pending.
+Next exact refusal: scanner:558:9, function taking () => T seen as () => T,
+for tryScan. Combined 59/80-83 baseline passes 106,367 tests without differences;
+Node tokens match. Evidence native81-next-blocker.log.
+
 ## October 7: adaptation 80 makes the flag return type explicit
 
 getNumericLiteralFlags's arrow now declares : TokenFlags; its AND expression
