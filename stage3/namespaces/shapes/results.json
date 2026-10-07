@@ -20,7 +20,7 @@
   {
     "name": "Debug",
     "exit": 1,
-    "stderr": "adamic: /workspace/adamic/stage3/namespaces/shapes/Debug.a:64:30: stage 0 can't lower a call before all runtime namespaces are initialized; put namespaces before executable module code yet\n",
+    "stderr": "adamic: /workspace/adamic/stage3/namespaces/shapes/Debug.a:93:1: stage 0 can't lower a class inside a namespace; namespace constructor registration and initialization are not yet proven yet\n",
     "lowers": false
   },
   {
@@ -38,7 +38,7 @@
   {
     "name": "Parser",
     "exit": 1,
-    "stderr": "adamic: /workspace/adamic/stage3/namespaces/shapes/Parser.a:4:20: stage 0 can't lower a call before all runtime namespaces are initialized; put namespaces before executable module code yet\n",
+    "stderr": "adamic: /workspace/adamic/stage3/namespaces/shapes/Parser.a:237:1: stage 0 can't lower a function without a body yet\n",
     "lowers": false
   },
   {
