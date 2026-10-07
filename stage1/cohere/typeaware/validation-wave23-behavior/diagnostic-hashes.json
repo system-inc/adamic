@@ -1,0 +1,32 @@
+{
+  "controls": {
+    "go": "f8d3f072ab6cfa38b86ff27c0fa63f9605ea2f3b918d2266497b4324c2359539",
+    "native": "f8d3f072ab6cfa38b86ff27c0fa63f9605ea2f3b918d2266497b4324c2359539",
+    "asan": "f8d3f072ab6cfa38b86ff27c0fa63f9605ea2f3b918d2266497b4324c2359539"
+  },
+  "options--allow-named": {
+    "go": "2c7bdeb42688ade0dfab54521f6d6028054c2e902a4d8c3305cbc1a5d6147e3e",
+    "native": "2c7bdeb42688ade0dfab54521f6d6028054c2e902a4d8c3305cbc1a5d6147e3e",
+    "asan": "2c7bdeb42688ade0dfab54521f6d6028054c2e902a4d8c3305cbc1a5d6147e3e"
+  },
+  "options--reject-unbound": {
+    "go": "83a382a66eea411f965028e806657be3ad4c8980341c7d329ae65b5562891d8e",
+    "native": "83a382a66eea411f965028e806657be3ad4c8980341c7d329ae65b5562891d8e",
+    "asan": "83a382a66eea411f965028e806657be3ad4c8980341c7d329ae65b5562891d8e"
+  },
+  "options--allow-named--reject-unbound": {
+    "go": "418795bc55a9dde519851b53d9e2cced87ccada758ee1474e928287304bebf34",
+    "native": "418795bc55a9dde519851b53d9e2cced87ccada758ee1474e928287304bebf34",
+    "asan": "418795bc55a9dde519851b53d9e2cced87ccada758ee1474e928287304bebf34"
+  },
+  "repository": {
+    "go": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "native": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "asan": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  "compiler": {
+    "go": "a144049c847ffa8ebdd980d63258a4f582399b5a5f080fcec5d6c3bc5d487366",
+    "native": "a144049c847ffa8ebdd980d63258a4f582399b5a5f080fcec5d6c3bc5d487366",
+    "asan": "a144049c847ffa8ebdd980d63258a4f582399b5a5f080fcec5d6c3bc5d487366"
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "controls": {
+    "bytes": 75027,
+    "findings": 200,
+    "rules": {
+      "prefer-arrow-callback": 61,
+      "no-useless-backreference": 117,
+      "no-throw-literal": 22
+    },
+    "ids": {
+      "prefer-arrow-callback:preferArrowCallback": 61,
+      "no-useless-backreference:intoNegativeLookaround": 11,
+      "no-useless-backreference:nested": 22,
+      "no-useless-backreference:forward": 55,
+      "no-useless-backreference:disjunctive": 14,
+      "no-useless-backreference:backward": 15,
+      "no-throw-literal:object": 19,
+      "no-throw-literal:undef": 3
+    },
+    "fixes": 128,
+    "suggestions": 0,
+    "roots": 326
+  },
+  "options--allow-named": {
+    "bytes": 72223,
+    "findings": 190,
+    "rules": {
+      "prefer-arrow-callback": 51,
+      "no-useless-backreference": 117,
+      "no-throw-literal": 22
+    },
+    "ids": {
+      "prefer-arrow-callback:preferArrowCallback": 51,
+      "no-useless-backreference:intoNegativeLookaround": 11,
+      "no-useless-backreference:nested": 22,
+      "no-useless-backreference:forward": 55,
+      "no-useless-backreference:disjunctive": 14,
+      "no-useless-backreference:backward": 15,
+      "no-throw-literal:object": 19,
+      "no-throw-literal:undef": 3
+    },
+    "fixes": 107,
+    "suggestions": 0
+  },
+  "options--reject-unbound": {
+    "bytes": 77661,
+    "findings": 210,
+    "rules": {
+      "prefer-arrow-callback": 71,
+      "no-useless-backreference": 117,
+      "no-throw-literal": 22
+    },
+    "ids": {
+      "prefer-arrow-callback:preferArrowCallback": 71,
+      "no-useless-backreference:intoNegativeLookaround": 11,
+      "no-useless-backreference:nested": 22,
+      "no-useless-backreference:forward": 55,
+      "no-useless-backreference:disjunctive": 14,
+      "no-useless-backreference:backward": 15,
+      "no-throw-literal:object": 19,
+      "no-throw-literal:undef": 3
+    },
+    "fixes": 128,
+    "suggestions": 0
+  },
+  "options--allow-named--reject-unbound": {
+    "bytes": 74594,
+    "findings": 199,
+    "rules": {
+      "prefer-arrow-callback": 60,
+      "no-useless-backreference": 117,
+      "no-throw-literal": 22
+    },
+    "ids": {
+      "prefer-arrow-callback:preferArrowCallback": 60,
+      "no-useless-backreference:intoNegativeLookaround": 11,
+      "no-useless-backreference:nested": 22,
+      "no-useless-backreference:forward": 55,
+      "no-useless-backreference:disjunctive": 14,
+      "no-useless-backreference:backward": 15,
+      "no-throw-literal:object": 19,
+      "no-throw-literal:undef": 3
+    },
+    "fixes": 107,
+    "suggestions": 0
+  },
+  "repository": {
+    "bytes": 18485,
+    "findings": 0,
+    "rules": {},
+    "ids": {},
+    "fixes": 0,
+    "suggestions": 0,
+    "roots": 287
+  },
+  "compiler": {
+    "bytes": 5318,
+    "findings": 0,
+    "rules": {},
+    "ids": {},
+    "fixes": 0,
+    "suggestions": 0,
+    "roots": 77
+  }
+}
