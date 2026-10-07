@@ -48,3 +48,18 @@ The final all-origin audit also found description and the three non-null/this-al
 Source environment: `source /workspace/adamic-tools/env.sh`. Run the owned `validate.py` with repeated `--slug` selections, `--work` and the pinned `--compiler` checkout. Redirect output to a `.log` file. Non-JSX command used all seven slugs and `/tmp/wave109-final-all`; React command used all three React slugs in the isolated dependency checkout and `/tmp/wave109-react-final`. Go output is independently produced from the unchanged real rule, never from Adamic. The capture overlay changes only case recording and lossless private-option serialization; it never changes a Go listener or decoder. Snapshotting prevents generated-module changes between backend runs from appearing as language divergences.
 
 `go test ./stage1/cohere/lint/registry -count=1 -v` passed in 0.196s. Its descriptor mutants are in [registry.log](evidence/registry.log); the unit-specific semantic mutants are in each rule's `mutant.json` and evidence/run.log. No execution/type/lowering failure was counted as semantic detection.
+
+## Rule commits
+
+| SHA | Change |
+|---|---|
+| `dbb16ceb` | Port react/jsx-no-useless-fragment |
+| `b6f7fc7a` | Port react/no-invalid-html-attribute |
+| `f9dba2df` | Port react/no-unescaped-entities |
+| `d6ae307a` | Port @typescript-eslint/no-dupe-class-members |
+| `f0175dd1` | Port @typescript-eslint/no-empty-object-type |
+| `ac41c084` | Port @typescript-eslint/no-import-type-side-effects |
+| `0cff8ac0` | Port @typescript-eslint/no-non-null-asserted-optional-chain |
+| `2f7caea6` | Port @typescript-eslint/no-non-null-assertion |
+| `cc7e091a` | Port @typescript-eslint/no-this-alias |
+| `ec7b05fa` | Port @eslint-community/eslint-comments/require-description |
