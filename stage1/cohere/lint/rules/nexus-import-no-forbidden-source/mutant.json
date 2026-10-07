@@ -1,0 +1,6 @@
+{
+  "name": "forbidden_exact_match_widened",
+  "file": "messages.ts",
+  "from": "candidate.source === source",
+  "to": "source.startsWith(candidate.source)"
+}

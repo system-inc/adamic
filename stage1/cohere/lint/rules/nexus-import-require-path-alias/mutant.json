@@ -1,0 +1,6 @@
+{
+  "name": "path_alias_longest_directory_reversed",
+  "file": "paths.ts",
+  "from": "utf8Length(b.directory) - utf8Length(a.directory)",
+  "to": "utf8Length(a.directory) - utf8Length(b.directory)"
+}

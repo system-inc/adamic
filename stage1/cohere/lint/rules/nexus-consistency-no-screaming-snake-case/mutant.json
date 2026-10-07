@@ -1,0 +1,6 @@
+{
+  "name": "screaming_environment_exemption_lost",
+  "file": "rule.ts",
+  "from": "this.context.node(cursor).text === 'process' && sawEnvironment",
+  "to": "this.context.node(cursor).text === 'process' && false"
+}

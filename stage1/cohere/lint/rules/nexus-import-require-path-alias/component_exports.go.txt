@@ -1,0 +1,18 @@
+package nexus
+import ("sort";"reflect";"github.com/microsoft/TypeScript/tsc/shim/core")
+func AdamicAlias(aliases []PathAlias,path string)(string,bool) {
+ for index:=range aliases {aliases[index].Directory=normalizeConfiguredDirectory(aliases[index].Directory)}
+ sort.SliceStable(aliases,func(i,j int)bool{return len(aliases[i].Directory)>len(aliases[j].Directory)})
+ return aliasForPath(aliases,path)
+}
+func AdamicQuoted(original,replacement string)string{return quotedLike(original,replacement)}
+func AdamicDirectory(directory string)string{return normalizeConfiguredDirectory(directory)}
+func AdamicRelative(root,path string)(string,bool){return repositoryRelative(root,path)}
+
+type AdamicMapping struct {Pattern string;Targets []string}
+func AdamicDerived(paths []AdamicMapping,base,root string)[]PathAlias{
+ options:=&core.CompilerOptions{PathsBasePath:base}
+ field:=reflect.ValueOf(options).Elem().FieldByName("Paths");field.Set(reflect.New(field.Type().Elem()))
+ for _,path:=range paths {options.Paths.Set(path.Pattern,path.Targets)}
+ return aliasesFromCompilerPaths(options,base,root)
+}

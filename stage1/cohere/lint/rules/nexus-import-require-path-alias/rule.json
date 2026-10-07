@@ -1,0 +1,14 @@
+{
+  "name": "nexus/import-require-path-alias",
+  "kinds": [
+    "ImportDeclaration",
+    "CallExpression"
+  ],
+  "visit": "visit",
+  "parent": false,
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oraclePathAlias",
+  "upstreamPackage": "nexus",
+  "upstreamTest": "TestImportRequirePathAlias"
+}

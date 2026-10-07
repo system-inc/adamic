@@ -1,0 +1,2896 @@
+[
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "app/shared/Foo",
+    "original": "'old'",
+    "directory": ".",
+    "root": "/repository",
+    "absolute": "/repository/app/shared/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "app/shared/Foo",
+    "original": "\"old\"",
+    "directory": ".",
+    "root": "/repository",
+    "absolute": "/repository/app/shared/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "app/shared/Foo",
+    "original": "`old`",
+    "directory": ".",
+    "root": "/repository",
+    "absolute": "/repository/app/shared/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "app/shared/Foo",
+    "original": "x",
+    "directory": ".",
+    "root": "/repository",
+    "absolute": "/repository/app/shared/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/base/source/Foo",
+    "original": "'old'",
+    "directory": ".",
+    "root": "/repository",
+    "absolute": "/repository/libraries/base/source/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/base/source/Foo",
+    "original": "\"old\"",
+    "directory": ".",
+    "root": "/repository",
+    "absolute": "/repository/libraries/base/source/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/base/source/Foo",
+    "original": "`old`",
+    "directory": ".",
+    "root": "/repository",
+    "absolute": "/repository/libraries/base/source/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/base/source/Foo",
+    "original": "x",
+    "directory": ".",
+    "root": "/repository",
+    "absolute": "/repository/libraries/base/source/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/baseball/Foo",
+    "original": "'old'",
+    "directory": ".",
+    "root": "/repository",
+    "absolute": "/repository/libraries/baseball/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/baseball/Foo",
+    "original": "\"old\"",
+    "directory": ".",
+    "root": "/repository",
+    "absolute": "/repository/libraries/baseball/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/baseball/Foo",
+    "original": "`old`",
+    "directory": ".",
+    "root": "/repository",
+    "absolute": "/repository/libraries/baseball/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/baseball/Foo",
+    "original": "x",
+    "directory": ".",
+    "root": "/repository",
+    "absolute": "/repository/libraries/baseball/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "",
+    "original": "'old'",
+    "directory": ".",
+    "root": "/repository",
+    "absolute": "/repository/"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "",
+    "original": "\"old\"",
+    "directory": ".",
+    "root": "/repository",
+    "absolute": "/repository/"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "",
+    "original": "`old`",
+    "directory": ".",
+    "root": "/repository",
+    "absolute": "/repository/"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "",
+    "original": "x",
+    "directory": ".",
+    "root": "/repository",
+    "absolute": "/repository/"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "app/shared/Foo",
+    "original": "'old'",
+    "directory": "./app",
+    "root": "/repository",
+    "absolute": "/repository/app/shared/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "app/shared/Foo",
+    "original": "\"old\"",
+    "directory": "./app",
+    "root": "/repository",
+    "absolute": "/repository/app/shared/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "app/shared/Foo",
+    "original": "`old`",
+    "directory": "./app",
+    "root": "/repository",
+    "absolute": "/repository/app/shared/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "app/shared/Foo",
+    "original": "x",
+    "directory": "./app",
+    "root": "/repository",
+    "absolute": "/repository/app/shared/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/base/source/Foo",
+    "original": "'old'",
+    "directory": "./app",
+    "root": "/repository",
+    "absolute": "/repository/libraries/base/source/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/base/source/Foo",
+    "original": "\"old\"",
+    "directory": "./app",
+    "root": "/repository",
+    "absolute": "/repository/libraries/base/source/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/base/source/Foo",
+    "original": "`old`",
+    "directory": "./app",
+    "root": "/repository",
+    "absolute": "/repository/libraries/base/source/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/base/source/Foo",
+    "original": "x",
+    "directory": "./app",
+    "root": "/repository",
+    "absolute": "/repository/libraries/base/source/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/baseball/Foo",
+    "original": "'old'",
+    "directory": "./app",
+    "root": "/repository",
+    "absolute": "/repository/libraries/baseball/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/baseball/Foo",
+    "original": "\"old\"",
+    "directory": "./app",
+    "root": "/repository",
+    "absolute": "/repository/libraries/baseball/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/baseball/Foo",
+    "original": "`old`",
+    "directory": "./app",
+    "root": "/repository",
+    "absolute": "/repository/libraries/baseball/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/baseball/Foo",
+    "original": "x",
+    "directory": "./app",
+    "root": "/repository",
+    "absolute": "/repository/libraries/baseball/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "",
+    "original": "'old'",
+    "directory": "./app",
+    "root": "/repository",
+    "absolute": "/repository/"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "",
+    "original": "\"old\"",
+    "directory": "./app",
+    "root": "/repository",
+    "absolute": "/repository/"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "",
+    "original": "`old`",
+    "directory": "./app",
+    "root": "/repository",
+    "absolute": "/repository/"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "",
+    "original": "x",
+    "directory": "./app",
+    "root": "/repository",
+    "absolute": "/repository/"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "app/shared/Foo",
+    "original": "'old'",
+    "directory": "app/",
+    "root": "/repository",
+    "absolute": "/repository/app/shared/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "app/shared/Foo",
+    "original": "\"old\"",
+    "directory": "app/",
+    "root": "/repository",
+    "absolute": "/repository/app/shared/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "app/shared/Foo",
+    "original": "`old`",
+    "directory": "app/",
+    "root": "/repository",
+    "absolute": "/repository/app/shared/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "app/shared/Foo",
+    "original": "x",
+    "directory": "app/",
+    "root": "/repository",
+    "absolute": "/repository/app/shared/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/base/source/Foo",
+    "original": "'old'",
+    "directory": "app/",
+    "root": "/repository",
+    "absolute": "/repository/libraries/base/source/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/base/source/Foo",
+    "original": "\"old\"",
+    "directory": "app/",
+    "root": "/repository",
+    "absolute": "/repository/libraries/base/source/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/base/source/Foo",
+    "original": "`old`",
+    "directory": "app/",
+    "root": "/repository",
+    "absolute": "/repository/libraries/base/source/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/base/source/Foo",
+    "original": "x",
+    "directory": "app/",
+    "root": "/repository",
+    "absolute": "/repository/libraries/base/source/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/baseball/Foo",
+    "original": "'old'",
+    "directory": "app/",
+    "root": "/repository",
+    "absolute": "/repository/libraries/baseball/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/baseball/Foo",
+    "original": "\"old\"",
+    "directory": "app/",
+    "root": "/repository",
+    "absolute": "/repository/libraries/baseball/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/baseball/Foo",
+    "original": "`old`",
+    "directory": "app/",
+    "root": "/repository",
+    "absolute": "/repository/libraries/baseball/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/baseball/Foo",
+    "original": "x",
+    "directory": "app/",
+    "root": "/repository",
+    "absolute": "/repository/libraries/baseball/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "",
+    "original": "'old'",
+    "directory": "app/",
+    "root": "/repository",
+    "absolute": "/repository/"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "",
+    "original": "\"old\"",
+    "directory": "app/",
+    "root": "/repository",
+    "absolute": "/repository/"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "",
+    "original": "`old`",
+    "directory": "app/",
+    "root": "/repository",
+    "absolute": "/repository/"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "",
+    "original": "x",
+    "directory": "app/",
+    "root": "/repository",
+    "absolute": "/repository/"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "app/shared/Foo",
+    "original": "'old'",
+    "directory": "././app///",
+    "root": "/repository",
+    "absolute": "/repository/app/shared/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "app/shared/Foo",
+    "original": "\"old\"",
+    "directory": "././app///",
+    "root": "/repository",
+    "absolute": "/repository/app/shared/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "app/shared/Foo",
+    "original": "`old`",
+    "directory": "././app///",
+    "root": "/repository",
+    "absolute": "/repository/app/shared/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "app/shared/Foo",
+    "original": "x",
+    "directory": "././app///",
+    "root": "/repository",
+    "absolute": "/repository/app/shared/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/base/source/Foo",
+    "original": "'old'",
+    "directory": "././app///",
+    "root": "/repository",
+    "absolute": "/repository/libraries/base/source/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/base/source/Foo",
+    "original": "\"old\"",
+    "directory": "././app///",
+    "root": "/repository",
+    "absolute": "/repository/libraries/base/source/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/base/source/Foo",
+    "original": "`old`",
+    "directory": "././app///",
+    "root": "/repository",
+    "absolute": "/repository/libraries/base/source/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/base/source/Foo",
+    "original": "x",
+    "directory": "././app///",
+    "root": "/repository",
+    "absolute": "/repository/libraries/base/source/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/baseball/Foo",
+    "original": "'old'",
+    "directory": "././app///",
+    "root": "/repository",
+    "absolute": "/repository/libraries/baseball/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/baseball/Foo",
+    "original": "\"old\"",
+    "directory": "././app///",
+    "root": "/repository",
+    "absolute": "/repository/libraries/baseball/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/baseball/Foo",
+    "original": "`old`",
+    "directory": "././app///",
+    "root": "/repository",
+    "absolute": "/repository/libraries/baseball/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/baseball/Foo",
+    "original": "x",
+    "directory": "././app///",
+    "root": "/repository",
+    "absolute": "/repository/libraries/baseball/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "",
+    "original": "'old'",
+    "directory": "././app///",
+    "root": "/repository",
+    "absolute": "/repository/"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "",
+    "original": "\"old\"",
+    "directory": "././app///",
+    "root": "/repository",
+    "absolute": "/repository/"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "",
+    "original": "`old`",
+    "directory": "././app///",
+    "root": "/repository",
+    "absolute": "/repository/"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "",
+    "original": "x",
+    "directory": "././app///",
+    "root": "/repository",
+    "absolute": "/repository/"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "app/shared/Foo",
+    "original": "'old'",
+    "directory": "libraries/base",
+    "root": "/repository",
+    "absolute": "/repository/app/shared/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "app/shared/Foo",
+    "original": "\"old\"",
+    "directory": "libraries/base",
+    "root": "/repository",
+    "absolute": "/repository/app/shared/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "app/shared/Foo",
+    "original": "`old`",
+    "directory": "libraries/base",
+    "root": "/repository",
+    "absolute": "/repository/app/shared/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "app/shared/Foo",
+    "original": "x",
+    "directory": "libraries/base",
+    "root": "/repository",
+    "absolute": "/repository/app/shared/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/base/source/Foo",
+    "original": "'old'",
+    "directory": "libraries/base",
+    "root": "/repository",
+    "absolute": "/repository/libraries/base/source/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/base/source/Foo",
+    "original": "\"old\"",
+    "directory": "libraries/base",
+    "root": "/repository",
+    "absolute": "/repository/libraries/base/source/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/base/source/Foo",
+    "original": "`old`",
+    "directory": "libraries/base",
+    "root": "/repository",
+    "absolute": "/repository/libraries/base/source/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/base/source/Foo",
+    "original": "x",
+    "directory": "libraries/base",
+    "root": "/repository",
+    "absolute": "/repository/libraries/base/source/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/baseball/Foo",
+    "original": "'old'",
+    "directory": "libraries/base",
+    "root": "/repository",
+    "absolute": "/repository/libraries/baseball/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/baseball/Foo",
+    "original": "\"old\"",
+    "directory": "libraries/base",
+    "root": "/repository",
+    "absolute": "/repository/libraries/baseball/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/baseball/Foo",
+    "original": "`old`",
+    "directory": "libraries/base",
+    "root": "/repository",
+    "absolute": "/repository/libraries/baseball/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/baseball/Foo",
+    "original": "x",
+    "directory": "libraries/base",
+    "root": "/repository",
+    "absolute": "/repository/libraries/baseball/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "",
+    "original": "'old'",
+    "directory": "libraries/base",
+    "root": "/repository",
+    "absolute": "/repository/"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "",
+    "original": "\"old\"",
+    "directory": "libraries/base",
+    "root": "/repository",
+    "absolute": "/repository/"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "",
+    "original": "`old`",
+    "directory": "libraries/base",
+    "root": "/repository",
+    "absolute": "/repository/"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "",
+    "original": "x",
+    "directory": "libraries/base",
+    "root": "/repository",
+    "absolute": "/repository/"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "app/shared/Foo",
+    "original": "'old'",
+    "directory": "",
+    "root": "/repository",
+    "absolute": "/repository/app/shared/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "app/shared/Foo",
+    "original": "\"old\"",
+    "directory": "",
+    "root": "/repository",
+    "absolute": "/repository/app/shared/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "app/shared/Foo",
+    "original": "`old`",
+    "directory": "",
+    "root": "/repository",
+    "absolute": "/repository/app/shared/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "app/shared/Foo",
+    "original": "x",
+    "directory": "",
+    "root": "/repository",
+    "absolute": "/repository/app/shared/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/base/source/Foo",
+    "original": "'old'",
+    "directory": "",
+    "root": "/repository",
+    "absolute": "/repository/libraries/base/source/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/base/source/Foo",
+    "original": "\"old\"",
+    "directory": "",
+    "root": "/repository",
+    "absolute": "/repository/libraries/base/source/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/base/source/Foo",
+    "original": "`old`",
+    "directory": "",
+    "root": "/repository",
+    "absolute": "/repository/libraries/base/source/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/base/source/Foo",
+    "original": "x",
+    "directory": "",
+    "root": "/repository",
+    "absolute": "/repository/libraries/base/source/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/baseball/Foo",
+    "original": "'old'",
+    "directory": "",
+    "root": "/repository",
+    "absolute": "/repository/libraries/baseball/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/baseball/Foo",
+    "original": "\"old\"",
+    "directory": "",
+    "root": "/repository",
+    "absolute": "/repository/libraries/baseball/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/baseball/Foo",
+    "original": "`old`",
+    "directory": "",
+    "root": "/repository",
+    "absolute": "/repository/libraries/baseball/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "libraries/baseball/Foo",
+    "original": "x",
+    "directory": "",
+    "root": "/repository",
+    "absolute": "/repository/libraries/baseball/Foo"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "",
+    "original": "'old'",
+    "directory": "",
+    "root": "/repository",
+    "absolute": "/repository/"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "",
+    "original": "\"old\"",
+    "directory": "",
+    "root": "/repository",
+    "absolute": "/repository/"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "",
+    "original": "`old`",
+    "directory": "",
+    "root": "/repository",
+    "absolute": "/repository/"
+  },
+  {
+    "aliases": [
+      {
+        "directory": ".",
+        "alias": "@root"
+      },
+      {
+        "directory": "libraries/base",
+        "alias": "@base"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@source"
+      },
+      {
+        "directory": "libraries/base/source",
+        "alias": "@tie"
+      }
+    ],
+    "path": "",
+    "original": "x",
+    "directory": "",
+    "root": "/repository",
+    "absolute": "/repository/"
+  },
+  {
+    "aliases": [],
+    "path": "x",
+    "original": "",
+    "directory": ".",
+    "root": "/repo",
+    "absolute": "/repo"
+  },
+  {
+    "aliases": [],
+    "path": "x",
+    "original": "",
+    "directory": ".",
+    "root": "/repo",
+    "absolute": "/repository/x"
+  },
+  {
+    "aliases": [],
+    "path": "x",
+    "original": "",
+    "directory": ".",
+    "root": "/repo",
+    "absolute": "/repo/x"
+  },
+  {
+    "aliases": [],
+    "path": "x",
+    "original": "",
+    "directory": ".",
+    "root": "",
+    "absolute": "/x"
+  },
+  {
+    "aliases": [],
+    "path": "",
+    "original": "",
+    "directory": ".",
+    "root": "/repository",
+    "absolute": "/repository",
+    "base": "/repository/libraries/structure",
+    "paths": [
+      {
+        "pattern": "@kept/*",
+        "targets": [
+          "../../kept/*"
+        ]
+      }
+    ]
+  },
+  {
+    "aliases": [],
+    "path": "",
+    "original": "",
+    "directory": ".",
+    "root": "/repository",
+    "absolute": "/repository",
+    "base": "/repository/app",
+    "paths": [
+      {
+        "pattern": "@kept/*",
+        "targets": [
+          "../../kept/*"
+        ]
+      }
+    ]
+  },
+  {
+    "aliases": [],
+    "path": "",
+    "original": "",
+    "directory": ".",
+    "root": "/repository",
+    "absolute": "/repository",
+    "base": "/elsewhere/libraries/structure",
+    "paths": [
+      {
+        "pattern": "@kept/*",
+        "targets": [
+          "../../kept/*"
+        ]
+      }
+    ]
+  },
+  {
+    "aliases": [],
+    "path": "",
+    "original": "",
+    "directory": ".",
+    "root": "/repository",
+    "absolute": "/repository",
+    "base": "/repository/libraries/structure",
+    "paths": [
+      {
+        "pattern": "@root/*",
+        "targets": [
+          "../../*"
+        ]
+      }
+    ]
+  },
+  {
+    "aliases": [],
+    "path": "",
+    "original": "",
+    "directory": ".",
+    "root": "/repository",
+    "absolute": "/repository",
+    "base": "/repository/app",
+    "paths": [
+      {
+        "pattern": "@root/*",
+        "targets": [
+          "../../*"
+        ]
+      }
+    ]
+  },
+  {
+    "aliases": [],
+    "path": "",
+    "original": "",
+    "directory": ".",
+    "root": "/repository",
+    "absolute": "/repository",
+    "base": "/elsewhere/libraries/structure",
+    "paths": [
+      {
+        "pattern": "@root/*",
+        "targets": [
+          "../../*"
+        ]
+      }
+    ]
+  },
+  {
+    "aliases": [],
+    "path": "",
+    "original": "",
+    "directory": ".",
+    "root": "/repository",
+    "absolute": "/repository",
+    "base": "/repository/libraries/structure",
+    "paths": [
+      {
+        "pattern": "@outside/*",
+        "targets": [
+          "../../../*"
+        ]
+      }
+    ]
+  },
+  {
+    "aliases": [],
+    "path": "",
+    "original": "",
+    "directory": ".",
+    "root": "/repository",
+    "absolute": "/repository",
+    "base": "/repository/app",
+    "paths": [
+      {
+        "pattern": "@outside/*",
+        "targets": [
+          "../../../*"
+        ]
+      }
+    ]
+  },
+  {
+    "aliases": [],
+    "path": "",
+    "original": "",
+    "directory": ".",
+    "root": "/repository",
+    "absolute": "/repository",
+    "base": "/elsewhere/libraries/structure",
+    "paths": [
+      {
+        "pattern": "@outside/*",
+        "targets": [
+          "../../../*"
+        ]
+      }
+    ]
+  },
+  {
+    "aliases": [],
+    "path": "",
+    "original": "",
+    "directory": ".",
+    "root": "/repository",
+    "absolute": "/repository",
+    "base": "/repository/libraries/structure",
+    "paths": [
+      {
+        "pattern": "@exact",
+        "targets": [
+          "../../foo.ts"
+        ]
+      }
+    ]
+  },
+  {
+    "aliases": [],
+    "path": "",
+    "original": "",
+    "directory": ".",
+    "root": "/repository",
+    "absolute": "/repository",
+    "base": "/repository/app",
+    "paths": [
+      {
+        "pattern": "@exact",
+        "targets": [
+          "../../foo.ts"
+        ]
+      }
+    ]
+  },
+  {
+    "aliases": [],
+    "path": "",
+    "original": "",
+    "directory": ".",
+    "root": "/repository",
+    "absolute": "/repository",
+    "base": "/elsewhere/libraries/structure",
+    "paths": [
+      {
+        "pattern": "@exact",
+        "targets": [
+          "../../foo.ts"
+        ]
+      }
+    ]
+  },
+  {
+    "aliases": [],
+    "path": "",
+    "original": "",
+    "directory": ".",
+    "root": "/repository",
+    "absolute": "/repository",
+    "base": "/repository/libraries/structure",
+    "paths": [
+      {
+        "pattern": "@fallback/*",
+        "targets": [
+          "../../first/*",
+          "../../second/*"
+        ]
+      }
+    ]
+  },
+  {
+    "aliases": [],
+    "path": "",
+    "original": "",
+    "directory": ".",
+    "root": "/repository",
+    "absolute": "/repository",
+    "base": "/repository/app",
+    "paths": [
+      {
+        "pattern": "@fallback/*",
+        "targets": [
+          "../../first/*",
+          "../../second/*"
+        ]
+      }
+    ]
+  },
+  {
+    "aliases": [],
+    "path": "",
+    "original": "",
+    "directory": ".",
+    "root": "/repository",
+    "absolute": "/repository",
+    "base": "/elsewhere/libraries/structure",
+    "paths": [
+      {
+        "pattern": "@fallback/*",
+        "targets": [
+          "../../first/*",
+          "../../second/*"
+        ]
+      }
+    ]
+  },
+  {
+    "aliases": [],
+    "path": "",
+    "original": "",
+    "directory": ".",
+    "root": "/repository",
+    "absolute": "/repository",
+    "base": "/repository/libraries/structure",
+    "paths": [
+      {
+        "pattern": "legacy-*",
+        "targets": [
+          "../../legacy/*"
+        ]
+      }
+    ]
+  },
+  {
+    "aliases": [],
+    "path": "",
+    "original": "",
+    "directory": ".",
+    "root": "/repository",
+    "absolute": "/repository",
+    "base": "/repository/app",
+    "paths": [
+      {
+        "pattern": "legacy-*",
+        "targets": [
+          "../../legacy/*"
+        ]
+      }
+    ]
+  },
+  {
+    "aliases": [],
+    "path": "",
+    "original": "",
+    "directory": ".",
+    "root": "/repository",
+    "absolute": "/repository",
+    "base": "/elsewhere/libraries/structure",
+    "paths": [
+      {
+        "pattern": "legacy-*",
+        "targets": [
+          "../../legacy/*"
+        ]
+      }
+    ]
+  },
+  {
+    "aliases": [],
+    "path": "",
+    "original": "",
+    "directory": ".",
+    "root": "/repository",
+    "absolute": "/repository",
+    "base": "/repository/libraries/structure",
+    "paths": [
+      {
+        "pattern": "@middle*/*",
+        "targets": [
+          "../../kept/*"
+        ]
+      }
+    ]
+  },
+  {
+    "aliases": [],
+    "path": "",
+    "original": "",
+    "directory": ".",
+    "root": "/repository",
+    "absolute": "/repository",
+    "base": "/repository/app",
+    "paths": [
+      {
+        "pattern": "@middle*/*",
+        "targets": [
+          "../../kept/*"
+        ]
+      }
+    ]
+  },
+  {
+    "aliases": [],
+    "path": "",
+    "original": "",
+    "directory": ".",
+    "root": "/repository",
+    "absolute": "/repository",
+    "base": "/elsewhere/libraries/structure",
+    "paths": [
+      {
+        "pattern": "@middle*/*",
+        "targets": [
+          "../../kept/*"
+        ]
+      }
+    ]
+  },
+  {
+    "aliases": [],
+    "path": "",
+    "original": "",
+    "directory": ".",
+    "root": "/repository",
+    "absolute": "/repository",
+    "base": "/repository/libraries/structure",
+    "paths": [
+      {
+        "pattern": "/*",
+        "targets": [
+          "../../kept/*"
+        ]
+      }
+    ]
+  },
+  {
+    "aliases": [],
+    "path": "",
+    "original": "",
+    "directory": ".",
+    "root": "/repository",
+    "absolute": "/repository",
+    "base": "/repository/app",
+    "paths": [
+      {
+        "pattern": "/*",
+        "targets": [
+          "../../kept/*"
+        ]
+      }
+    ]
+  },
+  {
+    "aliases": [],
+    "path": "",
+    "original": "",
+    "directory": ".",
+    "root": "/repository",
+    "absolute": "/repository",
+    "base": "/elsewhere/libraries/structure",
+    "paths": [
+      {
+        "pattern": "/*",
+        "targets": [
+          "../../kept/*"
+        ]
+      }
+    ]
+  },
+  {
+    "aliases": [],
+    "path": "",
+    "original": "",
+    "directory": ".",
+    "root": "/repository",
+    "absolute": "/repository",
+    "base": "/repository/libraries/structure",
+    "paths": [
+      {
+        "pattern": "@target/*",
+        "targets": [
+          "../../ke*pt/*"
+        ]
+      }
+    ]
+  },
+  {
+    "aliases": [],
+    "path": "",
+    "original": "",
+    "directory": ".",
+    "root": "/repository",
+    "absolute": "/repository",
+    "base": "/repository/app",
+    "paths": [
+      {
+        "pattern": "@target/*",
+        "targets": [
+          "../../ke*pt/*"
+        ]
+      }
+    ]
+  },
+  {
+    "aliases": [],
+    "path": "",
+    "original": "",
+    "directory": ".",
+    "root": "/repository",
+    "absolute": "/repository",
+    "base": "/elsewhere/libraries/structure",
+    "paths": [
+      {
+        "pattern": "@target/*",
+        "targets": [
+          "../../ke*pt/*"
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,23 @@
+package main
+import("encoding/json";"fmt";"os";"strings";"unicode/utf16";rules "github.com/system-inc/cohere/internal/lint/rules/nexus")
+func written(s string) string {
+	var b strings.Builder
+	for _, r := range s {
+		if r >= 32 && r <= 126 && r != '\\' {
+			b.WriteRune(r)
+		} else if r <= 65535 {
+			fmt.Fprintf(&b, `\u%04x`, r)
+		} else {
+			h, l := utf16.EncodeRune(r)
+			fmt.Fprintf(&b, `\u%04x\u%04x`, h, l)
+		}
+	}
+	return b.String()
+}
+
+type Row struct {Aliases []rules.PathAlias;Paths []rules.AdamicMapping;Base string;Path,Root,Absolute,Original,Directory string}
+func main(){raw,err:=os.ReadFile(os.Args[1]);if err!=nil{panic(err)};var rows []Row;if err=json.Unmarshal(raw,&rows);err!=nil{panic(err)}
+ for i,row:=range rows {suggestion,found:=rules.AdamicAlias(row.Aliases,row.Path);inside,valid:=rules.AdamicRelative(row.Root,row.Absolute)
+ fmt.Printf("case %d\nalias\t%t\t%s\nquote\t%s\ndirectory\t%s\nrelative\t%t\t%s\n",i,found,written(suggestion),written(rules.AdamicQuoted(row.Original,suggestion)),written(rules.AdamicDirectory(row.Directory)),valid,written(inside))
+ for _,alias:=range rules.AdamicDerived(row.Paths,row.Base,row.Root){fmt.Printf("derived\t%s\t%s\n",written(alias.Directory),written(alias.Alias))}}
+}

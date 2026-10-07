@@ -1,0 +1,14 @@
+{
+  "name": "nexus/import-no-forbidden-source",
+  "kinds": [
+    "ImportDeclaration",
+    "CallExpression"
+  ],
+  "visit": "visit",
+  "parent": false,
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleForbiddenSource",
+  "upstreamPackage": "nexus",
+  "upstreamTest": "TestImportNoForbiddenSource"
+}

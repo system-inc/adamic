@@ -1,0 +1,32 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../../helpers/options_json.ts';
+import { written } from '../../../../typescript/parser/nodes.ts';
+import { Alias, ordered, aliasFor, quotedLike, normalizeDirectory, relative, CompilerPath, derivedAliases } from './paths.ts';
+const input = readTextFile(programArguments()[0] ?? panic('cases path'));
+if(input.kind === 'Error') { panic(input.message); }
+const data = new OptionsJson(input.text); const root = data.parse();
+function field(row: number, key: string): string { const index = data.field(row, key); return index < 0 ? '' : data.node(index).text; }
+let number = 0;
+for(const row of data.node(root).children) {
+    const aliases: Alias[] = [];
+    const list = data.field(row, 'aliases');
+    for(const item of data.node(list).children) { aliases.push(new Alias(field(item, 'directory'), field(item, 'alias'))); }
+    const suggestion = aliasFor(ordered(aliases), field(row, 'path'));
+    const inside = relative(field(row, 'root'), field(row, 'absolute'));
+    console.log(`case ${number}`); number++;
+    console.log(`alias\t${suggestion !== undefined}\t${written(suggestion ?? '')}`);
+    console.log(`quote\t${written(quotedLike(field(row, 'original'), suggestion ?? ''))}`);
+    console.log(`directory\t${written(normalizeDirectory(field(row, 'directory')))}`);
+    console.log(`relative\t${inside !== undefined}\t${written(inside ?? '')}`);
+    const paths: CompilerPath[] = [];
+    const mappings = data.field(row, 'paths');
+    if(mappings >= 0) {
+        for(const item of data.node(mappings).children) {
+            const targets = data.field(item, 'targets');
+            paths.push(new CompilerPath(field(item, 'pattern'), data.node(targets).children.map(index => data.node(index).text)));
+        }
+    }
+    for(const alias of derivedAliases(paths, field(row, 'base'), field(row, 'root'))) {
+        console.log(`derived\t${written(alias.directory === '' ? '.' : alias.directory)}\t${written(alias.alias)}`);
+    }
+}
