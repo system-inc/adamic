@@ -713,7 +713,17 @@ func (l *lowering) predicateOverloadProven(implementation, overload *ast.Node) b
 // argument evaluation and the implementation call single, then checks both
 // predicate directions against those arguments before the caller can narrow.
 func (l *lowering) predicateOverloadResult(call *ast.CallExpression, value ir.Expression, implementation, overload *ast.Node) (ir.Expression, error) {
+	// Until .a refusal mode exists, .a and .ts share the ruled call-site checks.
+	directions := l.predicateUseDirections(call)
 	if l.predicateOverloadProven(implementation, overload) {
+		l.result.PredicateChecks.Proven += l.predicateDirectionCount(call, predicateEither)
+		return value, nil
+	}
+	unobservable := l.predicateDirectionCount(call, predicateEither&^directions)
+	l.result.PredicateChecks.Proven += unobservable
+	l.result.PredicateChecks.Unobservable += unobservable
+	l.result.PredicateChecks.Checked += l.predicateDirectionCount(call, directions)
+	if directions == 0 {
 		return value, nil
 	}
 	invoked, ok := value.(ir.Call)
@@ -757,8 +767,8 @@ func (l *lowering) predicateOverloadResult(call *ast.CallExpression, value ir.Ex
 	for index, argument := range invoked.Arguments {
 		// Direct emission contextualizes undefined at the callee parameter.
 		// Preserve that representation when passing through wrapper locals.
-		if undefined, ok := argument.(ir.Undefined); ok && index < len(l.result.Functions[invoked.Function].Parameters) {
-			parameter := l.result.Functions[invoked.Function].Parameters[index]
+		if undefined, ok := argument.(ir.Undefined); ok && index < len(l.result.Functions[l.result.CallTargets(invoked)[0]].Parameters) {
+			parameter := l.result.Functions[l.result.CallTargets(invoked)[0]].Parameters[index]
 			undefined.Of = l.result.Locals[parameter].Type
 			argument = undefined
 			invoked.Arguments[index] = argument
@@ -793,14 +803,24 @@ func (l *lowering) predicateOverloadResult(call *ast.CallExpression, value ir.Ex
 	if err != nil {
 		return nil, err
 	}
-	body = append(body, setup...)
 	invalid := ir.Expression(ir.Unary{Operator: ir.Not, Operand: membership})
 	var returned ir.Expression
 	if !assertion {
 		returned = ir.Read{Local: result, Of: ir.Boolean}
-		invalid = ir.Binary{Operator: ir.NotEqual, Left: returned, Right: membership}
+		invalid = predicateDirectionMismatch(returned, membership, directions)
 	}
-	body = append(body, ir.If{Condition: invalid, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}}, ir.Return{Value: returned})
+	checks := append(setup, ir.If{Condition: invalid, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}})
+	if !assertion && directions != predicateEither {
+		observed := returned
+		if directions == predicateFalse {
+			observed = ir.Unary{Operator: ir.Not, Operand: returned}
+		}
+		// An erased direction must not execute target field or element reads.
+		body = append(body, ir.If{Condition: observed, Then: checks})
+	} else {
+		body = append(body, checks...)
+	}
+	body = append(body, ir.Return{Value: returned})
 	l.result.Functions[wrapper].Body = body
 
 	return ir.Call{Function: wrapper, Arguments: invoked.Arguments, Returns: invoked.Type()}, nil
@@ -884,6 +904,11 @@ func (l *lowering) predicateMembership(node *ast.Node, value ir.Expression, sour
 			return nil, nil, l.notYet(node, "a predicate overload without a known array representation")
 		}
 		element := l.checker.GetElementTypeOfArrayType(arraySource)
+		// An identical element contract is already admitted on the source array.
+		// The overload strengthens only presence, not its element view.
+		if checker.Checker_isTypeIdenticalTo(l.checker, l.concrete(element), l.concrete(l.checker.GetElementTypeOfArrayType(target))) {
+			return nil, censusCondition(value), nil
+		}
 		held, known := l.kept(element)
 		if !known || slotless(held) {
 			return nil, nil, l.notYet(node, "a checked predicate overload array element "+l.checker.TypeToString(element))
@@ -931,4 +956,216 @@ func (l *lowering) predicateMembership(node *ast.Node, value ir.Expression, sour
 		}
 	}
 	return nil, nil, l.notYet(node, "checked predicate overload target "+l.checker.TypeToString(target))
+}
+
+// A direction is observable whenever the checker still narrows a value read in
+// its flow region. This includes aliases of the boolean result and continuation
+// flows after return/throw; lexical then/else scanning would miss those reads.
+func (l *lowering) predicateUseDirections(call *ast.CallExpression) predicateTruth {
+	claim := predicateOfSignature(l.checker, l.checker.GetResolvedSignature(call.AsNode()))
+	if claim == nil || int(claim.ParameterIndex()) < 0 || int(claim.ParameterIndex()) >= len(call.Arguments.Nodes) {
+		return predicateEither
+	}
+	argument := ast.SkipParentheses(call.Arguments.Nodes[claim.ParameterIndex()])
+	if argument.Kind != ast.KindIdentifier && argument.Kind != ast.KindPropertyAccessExpression && argument.Kind != ast.KindElementAccessExpression && argument.Kind != ast.KindThisKeyword {
+		// Temporary values cannot be narrowed by a later reference read.
+		return 0
+	}
+	declared := l.checker.GetTypeAtLocation(argument)
+	if argument.Kind == ast.KindIdentifier {
+		declared = l.checker.GetTypeOfSymbol(l.symbol(argument))
+	}
+	var directions predicateTruth
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		if l.predicateSameReference(node, argument) && !ast.IsDeclarationName(node) && !predicateWriteOnly(node) && !ast.IsPartOfTypeNode(node) {
+			actual := l.checker.GetTypeAtLocation(node)
+			if !checker.Checker_isTypeIdenticalTo(l.checker, actual, declared) {
+				if flow := node.FlowNodeData(); flow != nil {
+					candidates := l.predicateFlowDirections(flow.FlowNode, call.AsNode(), argument, map[*ast.FlowNode]bool{})
+					for _, direction := range []predicateTruth{predicateTrue, predicateFalse} {
+						if candidates&direction == 0 {
+							continue
+						}
+						without := l.predicateFlowWithout(flow.FlowNode, call.AsNode(), node, direction)
+						unclaimed := predicateFlowType(l.checker, node, declared, declared, nil, without)
+						if !checker.Checker_isTypeIdenticalTo(l.checker, actual, unclaimed) {
+							directions |= direction
+						}
+					}
+				}
+			}
+		}
+		node.ForEachChild(visit)
+		return false
+	}
+	for _, file := range l.program.Files() {
+		file.AsNode().ForEachChild(visit)
+	}
+	return directions
+}
+
+func (l *lowering) predicateSameReference(a, b *ast.Node) bool {
+	return a != nil && b != nil && predicateMatchingReference(l.checker, b, a)
+}
+
+// Follow the checker's existing graph rather than inventing branch regions.
+func (l *lowering) predicateFlowDirections(flow *ast.FlowNode, call, reference *ast.Node, seen map[*ast.FlowNode]bool) predicateTruth {
+	if flow == nil || seen[flow] {
+		return 0
+	}
+	seen[flow] = true
+	// A replacement kills earlier predicate facts for this reference. Compound
+	// assignments also read the old narrowed value and must keep those checks.
+	if flow.Flags&ast.FlowFlagsAssignment != 0 && l.predicateSameReference(flow.Node, reference) && predicateWriteOnly(flow.Node) {
+		return 0
+	}
+	var result predicateTruth
+	if flow.Flags&ast.FlowFlagsCondition != 0 {
+		truth := flow.Flags&ast.FlowFlagsTrueCondition != 0
+		result |= l.predicateConditionDirection(flow.Node, call, truth, 0)
+	}
+	if flow.Flags&ast.FlowFlagsCall != 0 && flow.Node == call {
+		result |= predicateTrue
+	}
+	result |= l.predicateFlowDirections(flow.Antecedent, call, reference, seen)
+	for list := flow.Antecedents; list != nil; list = list.Next {
+		result |= l.predicateFlowDirections(list.Flow, call, reference, seen)
+	}
+	if flow.Flags&ast.FlowFlagsStart != 0 && flow.Node != nil {
+		if outer := flow.Node.FlowNodeData(); outer != nil {
+			result |= l.predicateFlowDirections(outer.FlowNode, call, reference, seen)
+		}
+	}
+	return result
+}
+
+func (l *lowering) predicateConditionDirection(node, call *ast.Node, truth bool, depth int) predicateTruth {
+	if node == nil || depth > 16 {
+		return 0
+	}
+	node = ast.SkipParentheses(node)
+	if node == call {
+		if truth {
+			return predicateTrue
+		}
+		return predicateFalse
+	}
+	if node.Kind == ast.KindPrefixUnaryExpression && node.AsPrefixUnaryExpression().Operator == ast.KindExclamationToken {
+		return l.predicateConditionDirection(node.AsPrefixUnaryExpression().Operand, call, !truth, depth+1)
+	}
+	if node.Kind == ast.KindBinaryExpression {
+		binary := node.AsBinaryExpression()
+		switch binary.OperatorToken.Kind {
+		case ast.KindAmpersandAmpersandToken, ast.KindBarBarToken:
+			precise := truth == (binary.OperatorToken.Kind == ast.KindAmpersandAmpersandToken)
+			if precise {
+				return l.predicateConditionDirection(binary.Left, call, truth, depth+1) | l.predicateConditionDirection(binary.Right, call, truth, depth+1)
+			}
+			return l.predicateConditionDirection(binary.Left, call, true, depth+1) | l.predicateConditionDirection(binary.Left, call, false, depth+1) | l.predicateConditionDirection(binary.Right, call, true, depth+1) | l.predicateConditionDirection(binary.Right, call, false, depth+1)
+		case ast.KindEqualsToken:
+			return l.predicateConditionDirection(binary.Right, call, truth, depth+1)
+		}
+	}
+	if node.Kind == ast.KindNonNullExpression || node.Kind == ast.KindSatisfiesExpression {
+		return l.predicateConditionDirection(node.Expression(), call, truth, depth+1)
+	}
+	if node.Kind == ast.KindIdentifier {
+		if symbol := l.symbol(node); symbol != nil {
+			for _, declaration := range symbol.Declarations {
+				if declaration.Kind == ast.KindVariableDeclaration && declaration.Parent.Flags&ast.NodeFlagsConst != 0 {
+					return l.predicateConditionDirection(declaration.AsVariableDeclaration().Initializer, call, truth, depth+1)
+				}
+			}
+		}
+	}
+	return 0
+}
+
+func (l *lowering) predicateDirectionCount(call *ast.CallExpression, directions predicateTruth) int {
+	claim := predicateOfSignature(l.checker, l.checker.GetResolvedSignature(call.AsNode()))
+	if claim != nil && claim.Kind() == checker.TypePredicateKindAssertsIdentifier {
+		directions &= predicateTrue
+	}
+	count := 0
+	if directions&predicateTrue != 0 {
+		count++
+	}
+	if directions&predicateFalse != 0 {
+		count++
+	}
+	return count
+}
+
+func predicateDirectionMismatch(returned, membership ir.Expression, directions predicateTruth) ir.Expression {
+	mismatch := ir.Expression(ir.Binary{Operator: ir.NotEqual, Left: returned, Right: membership})
+	if directions == predicateTrue {
+		return ir.Binary{Operator: ir.And, Left: returned, Right: mismatch}
+	}
+	if directions == predicateFalse {
+		return ir.Binary{Operator: ir.And, Left: ir.Unary{Operator: ir.Not, Operand: returned}, Right: mismatch}
+	}
+	return mismatch
+}
+
+func predicateWriteOnly(node *ast.Node) bool {
+	if node == nil || !ast.IsAssignmentTarget(node) {
+		return false
+	}
+	parent := node.Parent
+	for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
+		parent = parent.Parent
+	}
+	return parent != nil && parent.Kind == ast.KindBinaryExpression && parent.AsBinaryExpression().OperatorToken.Kind == ast.KindEqualsToken
+}
+
+// Recompute the read with this call's directional fact removed. Merely finding
+// an ancestor condition would attribute a later, independent guard's narrowing
+// to every earlier call, even after their branches have rejoined.
+// Fresh flow nodes keep the pinned checker's cache and original graph untouched.
+func (l *lowering) predicateFlowWithout(root *ast.FlowNode, call, reference *ast.Node, direction predicateTruth) *ast.FlowNode {
+	memo := map[*ast.FlowNode]*ast.FlowNode{}
+	var clone func(*ast.FlowNode) *ast.FlowNode
+	var list func(*ast.FlowList) *ast.FlowList
+	list = func(original *ast.FlowList) *ast.FlowList {
+		if original == nil {
+			return nil
+		}
+		return &ast.FlowList{Flow: clone(original.Flow), Next: list(original.Next)}
+	}
+	clone = func(original *ast.FlowNode) *ast.FlowNode {
+		if original == nil {
+			return nil
+		}
+		if previous := memo[original]; previous != nil {
+			return previous
+		}
+		copy := &ast.FlowNode{Flags: original.Flags &^ (ast.FlowFlagsShared | ast.FlowFlagsReferenced), Node: original.Node}
+		memo[original] = copy
+		remove := original.Flags&ast.FlowFlagsCall != 0 && original.Node == call && direction == predicateTrue
+		if original.Flags&ast.FlowFlagsCondition != 0 {
+			truth := original.Flags&ast.FlowFlagsTrueCondition != 0
+			remove = l.predicateConditionDirection(original.Node, call, truth, 0)&direction != 0
+		}
+		if remove {
+			copy.Flags, copy.Node = ast.FlowFlagsBranchLabel, nil
+			copy.Antecedents = &ast.FlowList{Flow: clone(original.Antecedent)}
+			return copy
+		}
+		copy.Antecedent, copy.Antecedents = clone(original.Antecedent), list(original.Antecedents)
+		if original.Flags&ast.FlowFlagsStart != 0 && original.Node != nil && original.Node.FlowNodeData() != nil && original.Node.FlowNodeData().FlowNode != nil {
+			// Stable identifier captures inherit the container's flow. Reconstruct
+			// that edge explicitly, without altering its shared AST flow node.
+			if reference.Kind == ast.KindIdentifier || (reference.Kind == ast.KindThisKeyword && ast.IsArrowFunction(original.Node)) {
+				copy.Flags, copy.Node = ast.FlowFlagsBranchLabel, nil
+				copy.Antecedents = &ast.FlowList{Flow: clone(original.Node.FlowNodeData().FlowNode)}
+			}
+		}
+		if original.Flags&ast.FlowFlagsReduceLabel != 0 {
+			data := original.Node.AsFlowReduceLabelData()
+			copy.Node = ast.NewFlowReduceLabelData(clone(data.Target), list(data.Antecedents))
+		}
+		return copy
+	}
+	return clone(root)
 }

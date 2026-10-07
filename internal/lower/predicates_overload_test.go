@@ -27,16 +27,20 @@ func TestPredicateOverloadRuntime(t *testing.T) {
 		{"parser_every_result", "overload declarations loaded\n", "", "", false},
 		{"parser_some_result", "overload declarations loaded\n", "", "", false},
 		{"overload_some", "true:false\n", "", "", false},
-		{"overload_some_empty", "false\n", "", "overload 1 of some result: predicate array is false", true},
+		{"overload_some_empty", "false\n", "", "", false},
+		{"overload_some_false_valid", "undefined\n", "", "", false},
+		{"overload_some_false_read", "array\n", "", "overload 1 of some result: predicate array is false", true},
+		{"overload_some_objects", "1\n", "", "", false},
+		{"overload_some_true_only", "absent\n", "", "", false},
 		{"overload_callback", "true\n", "", "", false},
 		{"overload_erased", "true:false\n", "", "", false},
-		{"overload_checked", "called\ntrue\n", "called\n", "overload 1 of lie result: predicate value is false", true},
-		{"overload_false", "called\nfalse\n", "called\n", "overload 1 of lie result: predicate value is false", true},
-		{"overload_once", "argument\ncalled\ntrue\n", "argument\ncalled\n", "overload 1 of lie result: predicate value is false", true},
+		{"overload_checked", "called\ntext\n", "called\n", "overload 1 of lie result: predicate value is false", true},
+		{"overload_false", "called\n1\n", "called\n", "overload 1 of lie result: predicate value is false", true},
+		{"overload_once", "argument\ncalled\ntrue\n", "", "", false},
 		{"overload_every", "name\ntrue\n", "", "", false},
-		{"overload_array_alias", "called\ntrue\n", "called\n", "overload 1 of corrupt result: predicate array is false", true},
-		{"overload_assertion", "called\nreturned\n", "called\n", "overload 1 of lie result: predicate value is false", true},
-		{"overload_nominal", "called\ntrue\n", "called\n", "overload 1 of lie result: predicate value is false", true},
+		{"overload_array_alias", "called\n1\n", "called\n", "overload 1 of corrupt result: predicate array is false", true},
+		{"overload_assertion", "called\ntext\n", "called\n", "overload 1 of lie result: predicate value is false", true},
+		{"overload_nominal", "called\ntrue\n", "", "", false},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			path, err := filepath.Abs("testdata/predicates/" + probe.name + ".a")
@@ -69,6 +73,19 @@ func TestPredicateOverloadRuntime(t *testing.T) {
 			program, err := lowerSource(t, string(source))
 			if err != nil {
 				t.Fatal(err)
+			}
+			if counts, ok := map[string][3]int{
+				"overload_some_empty":      {2, 0, 2},
+				"overload_some_false_read": {1, 1, 1},
+				"overload_some_true_only":  {1, 1, 1},
+				"overload_checked":         {1, 1, 1},
+				"overload_false":           {1, 1, 1},
+				"overload_assertion":       {0, 1, 0},
+			}[probe.name]; ok {
+				got := program.PredicateChecks
+				if got.Proven != counts[0] || got.Checked != counts[1] || got.Unobservable != counts[2] {
+					t.Fatalf("predicate counts: %+v, want %v (proven, checked, unobservable)", got, counts)
+				}
 			}
 			if probe.name == "overload_erased" {
 				for _, constant := range program.Strings {

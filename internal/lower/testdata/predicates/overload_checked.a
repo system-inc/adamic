@@ -1,3 +1,4 @@
 function lie(value: number | string): value is number;
 function lie(value: number | string): boolean { console.log("called"); return true; }
-console.log(`${lie("text")}`);
+function use(value: number | string): void { if (lie(value)) console.log(`${value}`); }
+use("text");

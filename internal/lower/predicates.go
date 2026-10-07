@@ -337,6 +337,8 @@ func predicateTrueType(c *checker.Checker) *checker.Type {
 // verified helpers and truthiness assertions; tag-only facts use checked views.
 func (l *lowering) predicateRefusal(node *ast.Node) error {
 	if node.Parent.Kind == ast.KindFunctionDeclaration && node.Parent.Body() == nil && l.censusImplementation(node.Parent) != nil {
+		// TODO: .a refusal mode must prove the overload through its implementation
+		// here and refuse an over-promising declaration. .ts keeps call-site checks.
 		return nil
 	}
 	if l.predicateParameter(node) != nil {
@@ -504,3 +506,9 @@ func (l *lowering) predicateArguments(node *ast.Node) error {
 //
 //go:linkname predicateOfSignature github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypePredicateOfSignature
 func predicateOfSignature(receiver *checker.Checker, signature *checker.Signature) *checker.TypePredicate
+
+// Keep reference identity aligned with the pinned checker's flow analysis,
+// including dotted/indexed spellings and stable computed indices.
+//
+//go:linkname predicateMatchingReference github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).isMatchingReference
+func predicateMatchingReference(receiver *checker.Checker, source, target *ast.Node) bool

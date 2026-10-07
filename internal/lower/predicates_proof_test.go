@@ -170,3 +170,102 @@ func TestPredicateOverloadCallback(t *testing.T) {
 		t.Fatalf("want lying overload callback argument refused at call site, got %v", err)
 	}
 }
+
+func TestPredicateUseRegions(t *testing.T) {
+	t.Parallel()
+	prefix := `function some<T>(xs: readonly T[] | undefined): xs is readonly T[];
+function some<T>(xs: readonly T[] | undefined): boolean { return xs !== undefined && xs.length > 0; }
+`
+	for _, probe := range []struct {
+		name, body string
+		want       predicateTruth
+	}{
+		{"unused", `function use(xs: readonly number[] | undefined): void { if (some(xs)) console.log("yes"); else console.log("no"); }`, 0},
+		{"true", `function use(xs: readonly number[] | undefined): void { if (some(xs)) console.log(xs.length.toString()); }`, predicateTrue},
+		{"false", `function use(xs: readonly number[] | undefined): void { if (some(xs)) {} else console.log(xs === undefined ? "no" : "yes"); }`, predicateFalse},
+		{"both", `function use(xs: readonly number[] | undefined): void { if (some(xs)) console.log(xs.length.toString()); else console.log(xs === undefined ? "no" : "yes"); }`, predicateEither},
+		{"return continuation", `function use(xs: readonly number[] | undefined): void { if (!some(xs)) return; console.log(xs.length.toString()); }`, predicateTrue},
+		{"throw continuation", `function use(xs: readonly number[] | undefined): void { if (!some(xs)) throw new Error("no"); console.log(xs.length.toString()); }`, predicateTrue},
+		{"false continuation", `function use(xs: readonly number[] | undefined): void { if (some(xs)) return; console.log(xs === undefined ? "no" : "yes"); }`, predicateFalse},
+		{"const result alias", `function use(xs: readonly number[] | undefined): void { const present = some(xs); if (present) console.log(xs.length.toString()); }`, predicateTrue},
+		{"compound result alias", `function use(xs: readonly number[] | undefined, flag: boolean): void { const present = some(xs) && flag; if (present) console.log(xs.length.toString()); }`, predicateTrue},
+		{"short circuit", `function use(xs: readonly number[] | undefined): void { some(xs) && console.log(xs.length.toString()); }`, predicateTrue},
+		{"closure read", `function use(xs: readonly number[] | undefined): void { if (!some(xs)) return; const later = () => xs.length.toString(); console.log(later()); }`, predicateTrue},
+		{"indexed spelling", `function use(box: { readonly xs: readonly number[] | undefined }): void { if (!some(box.xs)) return; console.log(box["xs"].length.toString()); }`, predicateTrue},
+		{"indexed argument", `function use(box: { readonly xs: readonly number[] | undefined }): void { if (!some(box["xs"])) return; console.log(box.xs.length.toString()); }`, predicateTrue},
+		{"computed index", `function use(arrays: readonly (readonly number[] | undefined)[], index: number): void { if (!some(arrays[index])) return; console.log(arrays[index].length.toString()); }`, predicateTrue},
+		{"loop read", `function use(xs: readonly number[] | undefined): void { while (some(xs)) { console.log(xs.length.toString()); break; } }`, predicateTrue},
+		{"later read", `function use(xs: readonly number[] | undefined): void { if (!some(xs)) return; console.log("later"); console.log(xs.length.toString()); }`, predicateTrue},
+		{"replacement", `function use(xs: readonly number[] | undefined): void { if (!some(xs)) return; xs = [1]; console.log(xs.length.toString()); }`, 0},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			path := filepath.Join(t.TempDir(), "uses.a")
+			if err := os.WriteFile(path, []byte(prefix+probe.body), 0644); err != nil {
+				t.Fatal(err)
+			}
+			program, err := load.Load([]string{path})
+			if err != nil {
+				t.Fatal(err)
+			}
+			file := program.Files()[0]
+			checked, release := program.Checker(context.Background(), file)
+			defer release()
+			l := &lowering{program: program, checker: checked, result: &ir.Program{}}
+			var call *ast.CallExpression
+			var visit ast.Visitor
+			visit = func(node *ast.Node) bool {
+				if node.Kind == ast.KindCallExpression && node.Expression().Kind == ast.KindIdentifier && node.Expression().Text() == "some" {
+					call = node.AsCallExpression()
+				}
+				node.ForEachChild(visit)
+				return false
+			}
+			file.AsNode().ForEachChild(visit)
+			if call == nil {
+				t.Fatal("missing probe call")
+			}
+			if got := l.predicateUseDirections(call); got != probe.want {
+				t.Fatalf("directions %d, want %d", got, probe.want)
+			}
+		})
+	}
+}
+
+func TestPredicateUsesBelongToEachCall(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "separate.a")
+	source := `function some<T>(xs: readonly T[] | undefined): xs is readonly T[];
+function some<T>(xs: readonly T[] | undefined): boolean { return xs !== undefined && xs.length > 0; }
+function use(xs: readonly number[] | undefined): void {
+ if (some(xs)) console.log(xs.length.toString());
+ if (some(xs)) {} else { const later = () => xs === undefined ? "no" : "yes"; console.log(later()); }
+}`
+	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
+		t.Fatal(err)
+	}
+	program, err := load.Load([]string{path})
+	if err != nil {
+		t.Fatal(err)
+	}
+	file := program.Files()[0]
+	checked, release := program.Checker(context.Background(), file)
+	defer release()
+	l := &lowering{program: program, checker: checked}
+	var calls []*ast.CallExpression
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		if node.Kind == ast.KindCallExpression && node.Expression().Kind == ast.KindIdentifier && node.Expression().Text() == "some" {
+			calls = append(calls, node.AsCallExpression())
+		}
+		node.ForEachChild(visit)
+		return false
+	}
+	file.AsNode().ForEachChild(visit)
+	if len(calls) != 2 {
+		t.Fatalf("calls %d", len(calls))
+	}
+	for index, want := range []predicateTruth{predicateTrue, predicateFalse} {
+		if got := l.predicateUseDirections(calls[index]); got != want {
+			t.Fatalf("call %d: directions %d, want %d", index+1, got, want)
+		}
+	}
+}
