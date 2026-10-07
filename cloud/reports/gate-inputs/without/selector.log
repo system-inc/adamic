@@ -1,0 +1,20 @@
+=== RUN   TestThePortParsesAsGoCohereDoes
+=== PAUSE TestThePortParsesAsGoCohereDoes
+=== CONT  TestThePortParsesAsGoCohereDoes
+    selector_test.go:49: Go oracle: === RUN   TestAdamicPortCases
+            adamic_port_side_test.go:157: cohere PCG(2,3) corpus: 20330 unique inputs, 20000 terminating
+            adamic_port_side_test.go:197: 1940 CSS test constants plus fixtures and generated selectors; total 26773
+            adamic_port_side_test.go:214: Go: 267730 selectors in 5.828387961s, 45936 selectors/s; 95460 parsed, 101900 root children
+        --- PASS: TestAdamicPortCases (6.92s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css/selector	6.921s
+    selector_test.go:49: CSS corpus extraction skipped: set ADAMIC_SELECTOR_LIBRARY
+    selector_test.go:49: seed 20261005, 4000 generated selectors
+=== RUN   TestThePortParsesAsGoCohereDoes/as_postcss-selector-parser
+=== PAUSE TestThePortParsesAsGoCohereDoes/as_postcss-selector-parser
+=== CONT  TestThePortParsesAsGoCohereDoes/as_postcss-selector-parser
+    selector_test.go:85: set ADAMIC_SELECTOR_LIBRARY to a directory where `npm install postcss-selector-parser@2.2.3` ran, to compare with the library itself
+--- SKIP: TestThePortParsesAsGoCohereDoes/as_postcss-selector-parser (0.00s)
+--- PASS: TestThePortParsesAsGoCohereDoes (8.10s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/selector	8.112s

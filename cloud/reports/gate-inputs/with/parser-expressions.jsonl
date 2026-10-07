@@ -1,0 +1,9 @@
+{"Time":"2026-10-07T07:25:00.406648338Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/parser"}
+{"Time":"2026-10-07T07:25:00.410991723Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestCompilerExpressionsAgree"}
+{"Time":"2026-10-07T07:25:00.411054738Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestCompilerExpressionsAgree","Output":"=== RUN   TestCompilerExpressionsAgree\n","OutputType":"frame"}
+{"Time":"2026-10-07T07:26:04.069315277Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestCompilerExpressionsAgree","Output":"    parser_test.go:290: 77 whole compiler files, 28836875 identical expression tree bytes\n"}
+{"Time":"2026-10-07T07:26:04.073764524Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestCompilerExpressionsAgree","Output":"--- PASS: TestCompilerExpressionsAgree (63.66s)\n","OutputType":"frame"}
+{"Time":"2026-10-07T07:26:04.073822491Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestCompilerExpressionsAgree","Elapsed":63.66}
+{"Time":"2026-10-07T07:26:04.073875441Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-07T07:26:04.083145624Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"ok  \tgithub.com/system-inc/adamic/stage1/typescript/parser\t63.676s\n"}
+{"Time":"2026-10-07T07:26:04.083207266Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Elapsed":63.677}

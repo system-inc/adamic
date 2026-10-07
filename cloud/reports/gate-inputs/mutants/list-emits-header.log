@@ -1,0 +1,13 @@
+F
+======================================================================
+FAIL: test_dirty_source_and_uncached_equality (__main__.Archive.test_dirty_source_and_uncached_equality)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_gate_inputs.py", line 90, in test_dirty_source_and_uncached_equality
+    self.assertFalse((repo/'.h').exists(), 'Go list must not emit .h into the checkout')
+AssertionError: True is not false : Go list must not emit .h into the checkout
+
+----------------------------------------------------------------------
+Ran 1 test in 0.601s
+
+FAILED (failures=1)

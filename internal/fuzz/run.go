@@ -11,9 +11,9 @@ import (
 	"regexp"
 	"sort"
 	"strings"
-	"syscall"
 	"time"
 
+	"github.com/system-inc/adamic/internal/boundedrun"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -43,12 +43,13 @@ func Prepare(root string, directory string) (*Checkout, error) {
 		return nil, err
 	}
 	checkout := &Checkout{Root: root, directory: directory, adamic: filepath.Join(directory, "adamic")}
-	build := exec.Command("go", "build", "-o", checkout.adamic, "./cmd/adamic")
+	build, release := boundedrun.Command(boundedrun.Build, "go", "build", "-o", checkout.adamic, "./cmd/adamic")
+	defer release()
 	build.Dir = root
 	if output, err := build.CombinedOutput(); err != nil {
 		return nil, fmt.Errorf("fuzz: building adamic in %s: %w\n%s", root, err, output)
 	}
-	checkout.runtime, err = native.RuntimeLibrary(filepath.Join(root, "internal", "native", "runtime"), native.Options{Sanitize: true})
+	checkout.runtime, err = boundedRuntimeLibrary(filepath.Join(root, "internal", "native", "runtime"))
 	if err != nil {
 		return nil, fmt.Errorf("fuzz: compiling the runtime: %w", err)
 	}
@@ -91,6 +92,8 @@ type Outcome struct {
 	Verdict Verdict
 	Key     string
 	Detail  string
+	// Clang is what clang said when it refused the C, whole.
+	Clang   string
 	Node    Run
 	Native  Run
 	Backend Run
@@ -110,33 +113,10 @@ func (c *Checkout) Try(source string, directory string) Outcome {
 
 // TryFile runs a program file three ways, building in directory.
 func (c *Checkout) TryFile(path string, directory string) Outcome {
-	// The C first: the checker's and stage 0's refusals come from here.
-	lowered := execute(directory, nil, 30*time.Second, c.adamic, "c", path)
-	if lowered.ExitCode != 0 || lowered.TimedOut {
-		return compilerRefusal(lowered)
+	binary, failed := c.build(path, directory, true)
+	if failed != nil {
+		return *failed
 	}
-	if err := os.WriteFile(filepath.Join(directory, "main.c"), lowered.Stdout, 0o644); err != nil {
-		return Outcome{Verdict: Finding, Key: "fuzzer", Detail: err.Error()}
-	}
-	javascript := execute(directory, nil, 30*time.Second, c.adamic, "js", path)
-	if javascript.ExitCode != 0 || javascript.TimedOut {
-		return Outcome{Verdict: Finding, Key: "javascript backend failed", Detail: string(javascript.Stderr)}
-	}
-	if err := os.WriteFile(filepath.Join(directory, "program.mjs"), javascript.Stdout, 0o644); err != nil {
-		return Outcome{Verdict: Finding, Key: "fuzzer", Detail: err.Error()}
-	}
-	binary := filepath.Join(directory, "program")
-	arguments := append(append([]string{}, flags...), "-I", filepath.Dir(c.runtime), "-o", binary, filepath.Join(directory, "main.c"))
-	arguments = append(arguments, native.RuntimeLinkFlags(c.runtime)...)
-	arguments = append(arguments, "-lm")
-	if output, err := exec.Command("clang", arguments...).CombinedOutput(); err != nil {
-		key := "clang refused the C"
-		if warning := clangWarning.FindSubmatch(output); warning != nil {
-			key += ": " + string(warning[1])
-		}
-		return Outcome{Verdict: Finding, Key: key, Detail: firstLines(string(output), 12)}
-	}
-
 	oracle := filepath.Join(c.Root, "oracle", "node.mjs")
 	outcome := Outcome{
 		Node:    execute(directory, nil, 20*time.Second, "node", "--disable-warning=ExperimentalWarning", oracle, path),
@@ -144,6 +124,43 @@ func (c *Checkout) TryFile(path string, directory string) Outcome {
 		Backend: execute(directory, nil, 20*time.Second, "node", "--disable-warning=ExperimentalWarning", oracle, filepath.Join(directory, "program.mjs")),
 	}
 	return c.judge(outcome, binary, directory)
+}
+
+// build makes a program file's C and compiles it with clang, and with javascript makes its
+// JavaScript too. It returns the binary, or the outcome a failure comes to.
+func (c *Checkout) build(path string, directory string, javascript bool) (string, *Outcome) {
+	fail := func(outcome Outcome) (string, *Outcome) { return "", &outcome }
+	// The C first: the checker's and stage 0's refusals come from here.
+	lowered := execute(directory, nil, 30*time.Second, c.adamic, "c", path)
+	if lowered.ExitCode != 0 || lowered.TimedOut {
+		return fail(compilerRefusal(lowered))
+	}
+	if err := os.WriteFile(filepath.Join(directory, "main.c"), lowered.Stdout, 0o644); err != nil {
+		return fail(Outcome{Verdict: Finding, Key: "fuzzer", Detail: err.Error()})
+	}
+	if javascript {
+		emitted := execute(directory, nil, 30*time.Second, c.adamic, "js", path)
+		if emitted.ExitCode != 0 || emitted.TimedOut {
+			return fail(Outcome{Verdict: Finding, Key: "javascript backend failed", Detail: string(emitted.Stderr)})
+		}
+		if err := os.WriteFile(filepath.Join(directory, "program.mjs"), emitted.Stdout, 0o644); err != nil {
+			return fail(Outcome{Verdict: Finding, Key: "fuzzer", Detail: err.Error()})
+		}
+	}
+	binary := filepath.Join(directory, "program")
+	arguments := append(append([]string{}, flags...), "-I", filepath.Dir(c.runtime), "-o", binary, filepath.Join(directory, "main.c"))
+	arguments = append(arguments, native.RuntimeLinkFlags(c.runtime)...)
+	arguments = append(arguments, "-lm")
+	clang, release := boundedrun.Command(2*time.Minute, "clang", arguments...)
+	defer release()
+	if output, err := clang.CombinedOutput(); err != nil {
+		key := "clang refused the C"
+		if warning := clangWarning.FindSubmatch(output); warning != nil {
+			key += ": " + string(warning[1])
+		}
+		return fail(Outcome{Verdict: Finding, Key: key, Detail: firstLines(string(output), 12), Clang: string(output)})
+	}
+	return binary, nil
 }
 
 // sanitizerReport finds the kind of report a sanitizer wrote, if any: ASan's error name, or UBSan's
@@ -171,7 +188,7 @@ var javascriptError = regexp.MustCompile(`^adamic: panic: (RangeError|TypeError|
 func (c *Checkout) judge(outcome Outcome, binary string, directory string) Outcome {
 	switch {
 	case outcome.Node.TimedOut:
-		outcome.Verdict, outcome.Key, outcome.Detail = Unfit, "node never finished", ""
+		outcome.Verdict, outcome.Key, outcome.Detail = Unfit, "node never finished", string(outcome.Node.Stderr)
 		return outcome
 	case len(outcome.Node.Stdout) > 1<<20:
 		// A program that prints megabytes isn't one a person can read a difference in, and Node can
@@ -239,7 +256,7 @@ func compilerRefusal(lowered Run) Outcome {
 	stderr := string(lowered.Stderr)
 	switch {
 	case lowered.TimedOut:
-		return Outcome{Verdict: Finding, Key: "compiler never finished"}
+		return Outcome{Verdict: Finding, Key: "compiler never finished", Detail: stderr}
 	case strings.Contains(stderr, "can't lower") && strings.Contains(stderr, "yet"):
 		// The where is the file and line; the what is the part worth counting.
 		what := stderr
@@ -279,16 +296,15 @@ func difference(expected Run, actual Run) string {
 
 // execute runs a command in its own process group, killed whole at the deadline, so a program that
 // loops is stopped rather than orphaned.
+// Retain the established 30s compiler and 20s program limits. The measured
+// mini-fixture compile/Node/native maxima were 77ms/84ms/6ms; generated-program
+// package checks completed in 10.9s, so these limits retain ample margin.
 func execute(directory string, environment []string, limit time.Duration, name string, arguments ...string) Run {
 	ctx, cancel := context.WithTimeout(context.Background(), limit)
 	defer cancel()
-	command := exec.CommandContext(ctx, name, arguments...)
+	command := boundedrun.CommandContext(ctx, name, arguments...)
+	defer boundedrun.Kill(command.Cmd)
 	command.Dir = directory
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error {
-		return syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-	}
-	command.WaitDelay = 5 * time.Second
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
@@ -297,6 +313,9 @@ func execute(directory string, environment []string, limit time.Duration, name s
 	command.Stderr = &stderr
 	err := command.Run()
 	run := Run{Stdout: stdout.Bytes(), Stderr: stderr.Bytes(), TimedOut: ctx.Err() != nil}
+	if run.TimedOut {
+		run.Stderr = append(run.Stderr, []byte(fmt.Sprintf("child %s: deadline exceeded; process group killed\n", name))...)
+	}
 	var exitError *exec.ExitError
 	switch {
 	case err == nil || errors.As(err, &exitError):

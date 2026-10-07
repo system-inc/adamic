@@ -175,6 +175,14 @@ func executionIdentity() (string, error) {
 			}
 		}
 	}
+	if sysroot := effective["WASI_SYSROOT"]; sysroot != "" {
+		// Include linker, archiver and compiler resources as well as sysroot headers/libraries.
+		sdk, err := pathDigest(filepath.Dir(filepath.Dir(sysroot)))
+		if err != nil {
+			return "", err
+		}
+		external["wasi-sdk"] = sdk
+	}
 	sort.Strings(env)
 	defaultWidth, err := pathDigest("/tmp/adamic-markdown-width")
 	if err != nil {

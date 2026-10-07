@@ -1,0 +1,76 @@
+go version go1.27.1 linux/amd64
+v24.19.0
+setup: node ready (73.279s)
+setup: go ready (73.305s)
+setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.013s
+setup: markdown dependencies ready (73.448s)
+setup: submodules ready (73.498s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (73.877s)
+
+added 5 packages in 562ms
+setup: gate input css installed (npm ci, integrity verified); step-duration=1.153s
+
+added 1 package in 953ms
+setup: gate input graphql installed (npm ci, integrity verified); step-duration=1.593s
+
+added 1 package in 536ms
+setup: gate input media-query installed (npm ci, integrity verified); step-duration=0.999s
+npm warn deprecated flatten@1.0.3: flatten is deprecated in favor of utility frameworks such as lodash.
+
+added 8 packages in 563ms
+setup: gate input selector installed (npm ci, integrity verified); step-duration=1.203s
+npm warn deprecated flatten@1.0.3: flatten is deprecated in favor of utility frameworks such as lodash.
+
+added 4 packages in 2s
+setup: gate input values installed (npm ci, integrity verified); step-duration=2.997s
+
+added 1 package in 1s
+setup: gate input json-prettier installed (npm ci, integrity verified); step-duration=2.090s
+
+added 1 package in 881ms
+setup: gate input css-printer installed (npm ci, integrity verified); step-duration=1.871s
+setup: gate npm inputs ready (85.489s)
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: will change to "main" in Git 3.0. To configure the initial branch name
+hint: to use in all of your new repositories, which will suppress this warning,
+hint: call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /workspace/adamic-tools/gate-inputs/typescript-txjq_dym/checkout/.git/
+From https://github.com/microsoft/TypeScript
+ * branch                050880ce59e30b356b686bd3144efe24f875ebc8 -> FETCH_HEAD
+HEAD is now at 050880ce5 Bump version to 6.0.3 and LKG
+setup: gate input TypeScript source installed (depth-one exact commit, git object integrity checked); step-duration=26.123s
+setup: gate input 100 MiB gitignore generated (deterministic 100 MiB, SHA256 verified); step-duration=0.703s
+setup: gate corpora ready (100.296s)
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/../internal/boundedrun/python.py", line 70, in <module>
+    runpy.run_path(script, run_name="__main__")
+  File "<frozen runpy>", line 287, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "/workspace/adamic/cloud/setup-gate-inputs.py", line 210, in <module>
+    main()
+  File "/workspace/adamic/cloud/setup-gate-inputs.py", line 205, in main
+    answer = action()
+             ^^^^^^^^
+  File "/workspace/adamic/cloud/setup-gate-inputs.py", line 200, in <lambda>
+    'archive': [('checker archive', lambda: archive(repository, root))],
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/cloud/setup-gate-inputs.py", line 174, in archive
+    with tempfile.TemporaryDirectory(prefix='checker-', dir=root) as temporary:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 886, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 384, in mkdtemp
+    _os.mkdir(file, 0o700)
+OSError: [Errno 28] No space left on device: '/workspace/adamic-tools/gate-inputs/checker-sry0bm9z'

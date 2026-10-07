@@ -1,0 +1,1449 @@
+[
+  {
+    "name": "11-before-1",
+    "command": "ADAMIC_GATE_UNCACHED=1 /tmp/refusal-main-bin -root /tmp/refusal-main -seed 1 -count 200 -only definite-local,definite-field",
+    "exit": 0,
+    "wall_seconds": 10.033642184999962,
+    "load_before": "4.04 4.04 2.34 1/138 9466",
+    "load_after": "3.57 3.94 2.32 1/138 9475",
+    "build_flags": {
+      "target_commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "writer_commit": "1ac8ea246a0ee89116c7ac72b02b0e914e845862",
+      "nproc": "5",
+      "cpu.max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "build": "go build -trimpath -buildvcs=false",
+      "cached": "no probe cache; ADAMIC_GATE_UNCACHED=1"
+    },
+    "summary": {
+      "Programs": 200,
+      "Boundaries": [
+        {
+          "Name": "yield",
+          "Diagnostic": "yield (generators)",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "yield requires a generator, which is refused first"
+        },
+        {
+          "Name": "with",
+          "Diagnostic": "with",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "loader rejects with in strict modules (TS1101)"
+        },
+        {
+          "Name": "enum",
+          "Diagnostic": "enum",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "loader erasableSyntaxOnly rejects enum (TS1294) before lowering"
+        },
+        {
+          "Name": "method-override",
+          "Diagnostic": "adamic/contravariant-override",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "checkOverrides also guards inheritance member kinds, accessor descriptors and ABI representation; not generated in this 0.1 corpus"
+        },
+        {
+          "Name": "parameter-properties",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "loader erasableSyntaxOnly rejects parameter properties (TS1294)"
+        },
+        {
+          "Name": "overloads",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "implementation signatures are not lowered as overloads; needs a separate diagnostic design"
+        },
+        {
+          "Name": "reopened",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "throw Error/try/catch/finally, inheritance/super/abstract/protected, accessors, for-in on proven plain objects, RegExp/Set/JSON.stringify, Object helpers, arguments/files input opened after 0.1; not promised Refused by current compiler"
+        },
+        {
+          "Name": "library-boundaries",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "symbol/bigint/Date/process/globalThis/Intl and stdin/environment need individual loader/NotYet contracts; not generated"
+        },
+        {
+          "Name": "polymorphic-recursion",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "requires recursive generic instantiation; not generated"
+        },
+        {
+          "Name": "module-boundaries",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "namespace imports, export-star, default declarations and import cycles need multi-module probes; not generated"
+        }
+      ],
+      "Counts": {
+        "refused-as-expected": 200
+      }
+    },
+    "first_finding": null
+  },
+  {
+    "name": "11-after-1",
+    "command": "ADAMIC_GATE_UNCACHED=1 /tmp/refusal-11-bin -root /tmp/refusal-11 -seed 1 -count 200 -only definite-local,definite-field -stop",
+    "exit": 1,
+    "wall_seconds": 0.06822522499999195,
+    "load_before": "3.57 3.94 2.32 1/138 9475",
+    "load_after": "3.57 3.94 2.32 1/138 9483",
+    "build_flags": {
+      "target_commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "writer_commit": "1ac8ea246a0ee89116c7ac72b02b0e914e845862",
+      "nproc": "5",
+      "cpu.max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "build": "go build -trimpath -buildvcs=false",
+      "cached": "no probe cache; ADAMIC_GATE_UNCACHED=1"
+    },
+    "summary": {
+      "Programs": 1,
+      "Boundaries": [
+        {
+          "Name": "yield",
+          "Diagnostic": "yield (generators)",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "yield requires a generator, which is refused first"
+        },
+        {
+          "Name": "with",
+          "Diagnostic": "with",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "loader rejects with in strict modules (TS1101)"
+        },
+        {
+          "Name": "enum",
+          "Diagnostic": "enum",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "loader erasableSyntaxOnly rejects enum (TS1294) before lowering"
+        },
+        {
+          "Name": "method-override",
+          "Diagnostic": "adamic/contravariant-override",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "checkOverrides also guards inheritance member kinds, accessor descriptors and ABI representation; not generated in this 0.1 corpus"
+        },
+        {
+          "Name": "parameter-properties",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "loader erasableSyntaxOnly rejects parameter properties (TS1294)"
+        },
+        {
+          "Name": "overloads",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "implementation signatures are not lowered as overloads; needs a separate diagnostic design"
+        },
+        {
+          "Name": "reopened",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "throw Error/try/catch/finally, inheritance/super/abstract/protected, accessors, for-in on proven plain objects, RegExp/Set/JSON.stringify, Object helpers, arguments/files input opened after 0.1; not promised Refused by current compiler"
+        },
+        {
+          "Name": "library-boundaries",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "symbol/bigint/Date/process/globalThis/Intl and stdin/environment need individual loader/NotYet contracts; not generated"
+        },
+        {
+          "Name": "polymorphic-recursion",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "requires recursive generic instantiation; not generated"
+        },
+        {
+          "Name": "module-boundaries",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "namespace imports, export-star, default declarations and import cycles need multi-module probes; not generated"
+        }
+      ],
+      "Counts": {
+        "accepted": 1,
+        "refused-as-expected": 0
+      }
+    },
+    "first_finding": {
+      "program": 1,
+      "entry": "definite-local",
+      "seconds": 0.061867,
+      "kind": "accepted"
+    }
+  },
+  {
+    "name": "11-before-2",
+    "command": "ADAMIC_GATE_UNCACHED=1 /tmp/refusal-main-bin -root /tmp/refusal-main -seed 1 -count 200 -only definite-local,definite-field",
+    "exit": 0,
+    "wall_seconds": 10.149093135000044,
+    "load_before": "3.57 3.94 2.32 1/138 9483",
+    "load_after": "3.17 3.84 2.31 1/138 9492",
+    "build_flags": {
+      "target_commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "writer_commit": "1ac8ea246a0ee89116c7ac72b02b0e914e845862",
+      "nproc": "5",
+      "cpu.max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "build": "go build -trimpath -buildvcs=false",
+      "cached": "no probe cache; ADAMIC_GATE_UNCACHED=1"
+    },
+    "summary": {
+      "Programs": 200,
+      "Boundaries": [
+        {
+          "Name": "yield",
+          "Diagnostic": "yield (generators)",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "yield requires a generator, which is refused first"
+        },
+        {
+          "Name": "with",
+          "Diagnostic": "with",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "loader rejects with in strict modules (TS1101)"
+        },
+        {
+          "Name": "enum",
+          "Diagnostic": "enum",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "loader erasableSyntaxOnly rejects enum (TS1294) before lowering"
+        },
+        {
+          "Name": "method-override",
+          "Diagnostic": "adamic/contravariant-override",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "checkOverrides also guards inheritance member kinds, accessor descriptors and ABI representation; not generated in this 0.1 corpus"
+        },
+        {
+          "Name": "parameter-properties",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "loader erasableSyntaxOnly rejects parameter properties (TS1294)"
+        },
+        {
+          "Name": "overloads",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "implementation signatures are not lowered as overloads; needs a separate diagnostic design"
+        },
+        {
+          "Name": "reopened",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "throw Error/try/catch/finally, inheritance/super/abstract/protected, accessors, for-in on proven plain objects, RegExp/Set/JSON.stringify, Object helpers, arguments/files input opened after 0.1; not promised Refused by current compiler"
+        },
+        {
+          "Name": "library-boundaries",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "symbol/bigint/Date/process/globalThis/Intl and stdin/environment need individual loader/NotYet contracts; not generated"
+        },
+        {
+          "Name": "polymorphic-recursion",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "requires recursive generic instantiation; not generated"
+        },
+        {
+          "Name": "module-boundaries",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "namespace imports, export-star, default declarations and import cycles need multi-module probes; not generated"
+        }
+      ],
+      "Counts": {
+        "refused-as-expected": 200
+      }
+    },
+    "first_finding": null
+  },
+  {
+    "name": "11-after-2",
+    "command": "ADAMIC_GATE_UNCACHED=1 /tmp/refusal-11-bin -root /tmp/refusal-11 -seed 1 -count 200 -only definite-local,definite-field -stop",
+    "exit": 1,
+    "wall_seconds": 0.06848320500000682,
+    "load_before": "3.17 3.84 2.31 1/138 9492",
+    "load_after": "3.17 3.84 2.31 1/138 9499",
+    "build_flags": {
+      "target_commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "writer_commit": "1ac8ea246a0ee89116c7ac72b02b0e914e845862",
+      "nproc": "5",
+      "cpu.max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "build": "go build -trimpath -buildvcs=false",
+      "cached": "no probe cache; ADAMIC_GATE_UNCACHED=1"
+    },
+    "summary": {
+      "Programs": 1,
+      "Boundaries": [
+        {
+          "Name": "yield",
+          "Diagnostic": "yield (generators)",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "yield requires a generator, which is refused first"
+        },
+        {
+          "Name": "with",
+          "Diagnostic": "with",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "loader rejects with in strict modules (TS1101)"
+        },
+        {
+          "Name": "enum",
+          "Diagnostic": "enum",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "loader erasableSyntaxOnly rejects enum (TS1294) before lowering"
+        },
+        {
+          "Name": "method-override",
+          "Diagnostic": "adamic/contravariant-override",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "checkOverrides also guards inheritance member kinds, accessor descriptors and ABI representation; not generated in this 0.1 corpus"
+        },
+        {
+          "Name": "parameter-properties",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "loader erasableSyntaxOnly rejects parameter properties (TS1294)"
+        },
+        {
+          "Name": "overloads",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "implementation signatures are not lowered as overloads; needs a separate diagnostic design"
+        },
+        {
+          "Name": "reopened",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "throw Error/try/catch/finally, inheritance/super/abstract/protected, accessors, for-in on proven plain objects, RegExp/Set/JSON.stringify, Object helpers, arguments/files input opened after 0.1; not promised Refused by current compiler"
+        },
+        {
+          "Name": "library-boundaries",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "symbol/bigint/Date/process/globalThis/Intl and stdin/environment need individual loader/NotYet contracts; not generated"
+        },
+        {
+          "Name": "polymorphic-recursion",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "requires recursive generic instantiation; not generated"
+        },
+        {
+          "Name": "module-boundaries",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "namespace imports, export-star, default declarations and import cycles need multi-module probes; not generated"
+        }
+      ],
+      "Counts": {
+        "accepted": 1,
+        "refused-as-expected": 0
+      }
+    },
+    "first_finding": {
+      "program": 1,
+      "entry": "definite-local",
+      "seconds": 0.056407,
+      "kind": "accepted"
+    }
+  },
+  {
+    "name": "11-before-3",
+    "command": "ADAMIC_GATE_UNCACHED=1 /tmp/refusal-main-bin -root /tmp/refusal-main -seed 1 -count 200 -only definite-local,definite-field",
+    "exit": 0,
+    "wall_seconds": 11.806025578999993,
+    "load_before": "3.17 3.84 2.31 1/138 9499",
+    "load_after": "3.08 3.80 2.31 2/157 9649",
+    "build_flags": {
+      "target_commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "writer_commit": "1ac8ea246a0ee89116c7ac72b02b0e914e845862",
+      "nproc": "5",
+      "cpu.max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "build": "go build -trimpath -buildvcs=false",
+      "cached": "no probe cache; ADAMIC_GATE_UNCACHED=1"
+    },
+    "summary": {
+      "Programs": 200,
+      "Boundaries": [
+        {
+          "Name": "yield",
+          "Diagnostic": "yield (generators)",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "yield requires a generator, which is refused first"
+        },
+        {
+          "Name": "with",
+          "Diagnostic": "with",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "loader rejects with in strict modules (TS1101)"
+        },
+        {
+          "Name": "enum",
+          "Diagnostic": "enum",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "loader erasableSyntaxOnly rejects enum (TS1294) before lowering"
+        },
+        {
+          "Name": "method-override",
+          "Diagnostic": "adamic/contravariant-override",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "checkOverrides also guards inheritance member kinds, accessor descriptors and ABI representation; not generated in this 0.1 corpus"
+        },
+        {
+          "Name": "parameter-properties",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "loader erasableSyntaxOnly rejects parameter properties (TS1294)"
+        },
+        {
+          "Name": "overloads",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "implementation signatures are not lowered as overloads; needs a separate diagnostic design"
+        },
+        {
+          "Name": "reopened",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "throw Error/try/catch/finally, inheritance/super/abstract/protected, accessors, for-in on proven plain objects, RegExp/Set/JSON.stringify, Object helpers, arguments/files input opened after 0.1; not promised Refused by current compiler"
+        },
+        {
+          "Name": "library-boundaries",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "symbol/bigint/Date/process/globalThis/Intl and stdin/environment need individual loader/NotYet contracts; not generated"
+        },
+        {
+          "Name": "polymorphic-recursion",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "requires recursive generic instantiation; not generated"
+        },
+        {
+          "Name": "module-boundaries",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "namespace imports, export-star, default declarations and import cycles need multi-module probes; not generated"
+        }
+      ],
+      "Counts": {
+        "refused-as-expected": 200
+      }
+    },
+    "first_finding": null
+  },
+  {
+    "name": "11-after-3",
+    "command": "ADAMIC_GATE_UNCACHED=1 /tmp/refusal-11-bin -root /tmp/refusal-11 -seed 1 -count 200 -only definite-local,definite-field -stop",
+    "exit": 1,
+    "wall_seconds": 0.06267709200005811,
+    "load_before": "3.08 3.80 2.31 2/157 9649",
+    "load_after": "3.08 3.80 2.31 2/157 9657",
+    "build_flags": {
+      "target_commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "writer_commit": "1ac8ea246a0ee89116c7ac72b02b0e914e845862",
+      "nproc": "5",
+      "cpu.max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "build": "go build -trimpath -buildvcs=false",
+      "cached": "no probe cache; ADAMIC_GATE_UNCACHED=1"
+    },
+    "summary": {
+      "Programs": 1,
+      "Boundaries": [
+        {
+          "Name": "yield",
+          "Diagnostic": "yield (generators)",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "yield requires a generator, which is refused first"
+        },
+        {
+          "Name": "with",
+          "Diagnostic": "with",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "loader rejects with in strict modules (TS1101)"
+        },
+        {
+          "Name": "enum",
+          "Diagnostic": "enum",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "loader erasableSyntaxOnly rejects enum (TS1294) before lowering"
+        },
+        {
+          "Name": "method-override",
+          "Diagnostic": "adamic/contravariant-override",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "checkOverrides also guards inheritance member kinds, accessor descriptors and ABI representation; not generated in this 0.1 corpus"
+        },
+        {
+          "Name": "parameter-properties",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "loader erasableSyntaxOnly rejects parameter properties (TS1294)"
+        },
+        {
+          "Name": "overloads",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "implementation signatures are not lowered as overloads; needs a separate diagnostic design"
+        },
+        {
+          "Name": "reopened",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "throw Error/try/catch/finally, inheritance/super/abstract/protected, accessors, for-in on proven plain objects, RegExp/Set/JSON.stringify, Object helpers, arguments/files input opened after 0.1; not promised Refused by current compiler"
+        },
+        {
+          "Name": "library-boundaries",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "symbol/bigint/Date/process/globalThis/Intl and stdin/environment need individual loader/NotYet contracts; not generated"
+        },
+        {
+          "Name": "polymorphic-recursion",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "requires recursive generic instantiation; not generated"
+        },
+        {
+          "Name": "module-boundaries",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "namespace imports, export-star, default declarations and import cycles need multi-module probes; not generated"
+        }
+      ],
+      "Counts": {
+        "accepted": 1,
+        "refused-as-expected": 0
+      }
+    },
+    "first_finding": {
+      "program": 1,
+      "entry": "definite-local",
+      "seconds": 0.057233,
+      "kind": "accepted"
+    }
+  },
+  {
+    "name": "12-before-1",
+    "command": "ADAMIC_GATE_UNCACHED=1 /tmp/refusal-main-bin -root /tmp/refusal-main -seed 1 -count 200 -only ts-ignore,ts-expect-error",
+    "exit": 0,
+    "wall_seconds": 12.14532227199993,
+    "load_before": "3.08 3.80 2.31 2/157 9657",
+    "load_after": "2.76 3.69 2.30 1/138 10446",
+    "build_flags": {
+      "target_commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "writer_commit": "1ac8ea246a0ee89116c7ac72b02b0e914e845862",
+      "nproc": "5",
+      "cpu.max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "build": "go build -trimpath -buildvcs=false",
+      "cached": "no probe cache; ADAMIC_GATE_UNCACHED=1"
+    },
+    "summary": {
+      "Programs": 200,
+      "Boundaries": [
+        {
+          "Name": "yield",
+          "Diagnostic": "yield (generators)",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "yield requires a generator, which is refused first"
+        },
+        {
+          "Name": "with",
+          "Diagnostic": "with",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "loader rejects with in strict modules (TS1101)"
+        },
+        {
+          "Name": "enum",
+          "Diagnostic": "enum",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "loader erasableSyntaxOnly rejects enum (TS1294) before lowering"
+        },
+        {
+          "Name": "method-override",
+          "Diagnostic": "adamic/contravariant-override",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "checkOverrides also guards inheritance member kinds, accessor descriptors and ABI representation; not generated in this 0.1 corpus"
+        },
+        {
+          "Name": "parameter-properties",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "loader erasableSyntaxOnly rejects parameter properties (TS1294)"
+        },
+        {
+          "Name": "overloads",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "implementation signatures are not lowered as overloads; needs a separate diagnostic design"
+        },
+        {
+          "Name": "reopened",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "throw Error/try/catch/finally, inheritance/super/abstract/protected, accessors, for-in on proven plain objects, RegExp/Set/JSON.stringify, Object helpers, arguments/files input opened after 0.1; not promised Refused by current compiler"
+        },
+        {
+          "Name": "library-boundaries",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "symbol/bigint/Date/process/globalThis/Intl and stdin/environment need individual loader/NotYet contracts; not generated"
+        },
+        {
+          "Name": "polymorphic-recursion",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "requires recursive generic instantiation; not generated"
+        },
+        {
+          "Name": "module-boundaries",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "namespace imports, export-star, default declarations and import cycles need multi-module probes; not generated"
+        }
+      ],
+      "Counts": {
+        "refused-as-expected": 200
+      }
+    },
+    "first_finding": null
+  },
+  {
+    "name": "12-after-1",
+    "command": "ADAMIC_GATE_UNCACHED=1 /tmp/refusal-12-bin -root /tmp/refusal-12 -seed 1 -count 200 -only ts-ignore,ts-expect-error -stop",
+    "exit": 1,
+    "wall_seconds": 0.059200826000051165,
+    "load_before": "2.76 3.69 2.30 1/138 10446",
+    "load_after": "2.76 3.69 2.30 1/138 10454",
+    "build_flags": {
+      "target_commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "writer_commit": "1ac8ea246a0ee89116c7ac72b02b0e914e845862",
+      "nproc": "5",
+      "cpu.max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "build": "go build -trimpath -buildvcs=false",
+      "cached": "no probe cache; ADAMIC_GATE_UNCACHED=1"
+    },
+    "summary": {
+      "Programs": 1,
+      "Boundaries": [
+        {
+          "Name": "yield",
+          "Diagnostic": "yield (generators)",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "yield requires a generator, which is refused first"
+        },
+        {
+          "Name": "with",
+          "Diagnostic": "with",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "loader rejects with in strict modules (TS1101)"
+        },
+        {
+          "Name": "enum",
+          "Diagnostic": "enum",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "loader erasableSyntaxOnly rejects enum (TS1294) before lowering"
+        },
+        {
+          "Name": "method-override",
+          "Diagnostic": "adamic/contravariant-override",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "checkOverrides also guards inheritance member kinds, accessor descriptors and ABI representation; not generated in this 0.1 corpus"
+        },
+        {
+          "Name": "parameter-properties",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "loader erasableSyntaxOnly rejects parameter properties (TS1294)"
+        },
+        {
+          "Name": "overloads",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "implementation signatures are not lowered as overloads; needs a separate diagnostic design"
+        },
+        {
+          "Name": "reopened",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "throw Error/try/catch/finally, inheritance/super/abstract/protected, accessors, for-in on proven plain objects, RegExp/Set/JSON.stringify, Object helpers, arguments/files input opened after 0.1; not promised Refused by current compiler"
+        },
+        {
+          "Name": "library-boundaries",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "symbol/bigint/Date/process/globalThis/Intl and stdin/environment need individual loader/NotYet contracts; not generated"
+        },
+        {
+          "Name": "polymorphic-recursion",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "requires recursive generic instantiation; not generated"
+        },
+        {
+          "Name": "module-boundaries",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "namespace imports, export-star, default declarations and import cycles need multi-module probes; not generated"
+        }
+      ],
+      "Counts": {
+        "accepted": 1,
+        "refused-as-expected": 0
+      }
+    },
+    "first_finding": {
+      "program": 1,
+      "entry": "ts-ignore",
+      "seconds": 0.053116,
+      "kind": "accepted"
+    }
+  },
+  {
+    "name": "12-before-2",
+    "command": "ADAMIC_GATE_UNCACHED=1 /tmp/refusal-main-bin -root /tmp/refusal-main -seed 1 -count 200 -only ts-ignore,ts-expect-error",
+    "exit": 0,
+    "wall_seconds": 9.7160261329999,
+    "load_before": "2.76 3.69 2.30 1/138 10454",
+    "load_after": "2.49 3.60 2.28 1/142 10466",
+    "build_flags": {
+      "target_commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "writer_commit": "1ac8ea246a0ee89116c7ac72b02b0e914e845862",
+      "nproc": "5",
+      "cpu.max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "build": "go build -trimpath -buildvcs=false",
+      "cached": "no probe cache; ADAMIC_GATE_UNCACHED=1"
+    },
+    "summary": {
+      "Programs": 200,
+      "Boundaries": [
+        {
+          "Name": "yield",
+          "Diagnostic": "yield (generators)",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "yield requires a generator, which is refused first"
+        },
+        {
+          "Name": "with",
+          "Diagnostic": "with",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "loader rejects with in strict modules (TS1101)"
+        },
+        {
+          "Name": "enum",
+          "Diagnostic": "enum",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "loader erasableSyntaxOnly rejects enum (TS1294) before lowering"
+        },
+        {
+          "Name": "method-override",
+          "Diagnostic": "adamic/contravariant-override",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "checkOverrides also guards inheritance member kinds, accessor descriptors and ABI representation; not generated in this 0.1 corpus"
+        },
+        {
+          "Name": "parameter-properties",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "loader erasableSyntaxOnly rejects parameter properties (TS1294)"
+        },
+        {
+          "Name": "overloads",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "implementation signatures are not lowered as overloads; needs a separate diagnostic design"
+        },
+        {
+          "Name": "reopened",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "throw Error/try/catch/finally, inheritance/super/abstract/protected, accessors, for-in on proven plain objects, RegExp/Set/JSON.stringify, Object helpers, arguments/files input opened after 0.1; not promised Refused by current compiler"
+        },
+        {
+          "Name": "library-boundaries",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "symbol/bigint/Date/process/globalThis/Intl and stdin/environment need individual loader/NotYet contracts; not generated"
+        },
+        {
+          "Name": "polymorphic-recursion",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "requires recursive generic instantiation; not generated"
+        },
+        {
+          "Name": "module-boundaries",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "namespace imports, export-star, default declarations and import cycles need multi-module probes; not generated"
+        }
+      ],
+      "Counts": {
+        "refused-as-expected": 200
+      }
+    },
+    "first_finding": null
+  },
+  {
+    "name": "12-after-2",
+    "command": "ADAMIC_GATE_UNCACHED=1 /tmp/refusal-12-bin -root /tmp/refusal-12 -seed 1 -count 200 -only ts-ignore,ts-expect-error -stop",
+    "exit": 1,
+    "wall_seconds": 0.054811499000038566,
+    "load_before": "2.49 3.60 2.28 1/142 10466",
+    "load_after": "2.49 3.60 2.28 1/142 10474",
+    "build_flags": {
+      "target_commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "writer_commit": "1ac8ea246a0ee89116c7ac72b02b0e914e845862",
+      "nproc": "5",
+      "cpu.max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "build": "go build -trimpath -buildvcs=false",
+      "cached": "no probe cache; ADAMIC_GATE_UNCACHED=1"
+    },
+    "summary": {
+      "Programs": 1,
+      "Boundaries": [
+        {
+          "Name": "yield",
+          "Diagnostic": "yield (generators)",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "yield requires a generator, which is refused first"
+        },
+        {
+          "Name": "with",
+          "Diagnostic": "with",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "loader rejects with in strict modules (TS1101)"
+        },
+        {
+          "Name": "enum",
+          "Diagnostic": "enum",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "loader erasableSyntaxOnly rejects enum (TS1294) before lowering"
+        },
+        {
+          "Name": "method-override",
+          "Diagnostic": "adamic/contravariant-override",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "checkOverrides also guards inheritance member kinds, accessor descriptors and ABI representation; not generated in this 0.1 corpus"
+        },
+        {
+          "Name": "parameter-properties",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "loader erasableSyntaxOnly rejects parameter properties (TS1294)"
+        },
+        {
+          "Name": "overloads",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "implementation signatures are not lowered as overloads; needs a separate diagnostic design"
+        },
+        {
+          "Name": "reopened",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "throw Error/try/catch/finally, inheritance/super/abstract/protected, accessors, for-in on proven plain objects, RegExp/Set/JSON.stringify, Object helpers, arguments/files input opened after 0.1; not promised Refused by current compiler"
+        },
+        {
+          "Name": "library-boundaries",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "symbol/bigint/Date/process/globalThis/Intl and stdin/environment need individual loader/NotYet contracts; not generated"
+        },
+        {
+          "Name": "polymorphic-recursion",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "requires recursive generic instantiation; not generated"
+        },
+        {
+          "Name": "module-boundaries",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "namespace imports, export-star, default declarations and import cycles need multi-module probes; not generated"
+        }
+      ],
+      "Counts": {
+        "accepted": 1,
+        "refused-as-expected": 0
+      }
+    },
+    "first_finding": {
+      "program": 1,
+      "entry": "ts-ignore",
+      "seconds": 0.049749,
+      "kind": "accepted"
+    }
+  },
+  {
+    "name": "12-before-3",
+    "command": "ADAMIC_GATE_UNCACHED=1 /tmp/refusal-main-bin -root /tmp/refusal-main -seed 1 -count 200 -only ts-ignore,ts-expect-error",
+    "exit": 0,
+    "wall_seconds": 9.653030355999931,
+    "load_before": "2.49 3.60 2.28 1/142 10474",
+    "load_after": "2.26 3.52 2.27 1/138 10498",
+    "build_flags": {
+      "target_commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "writer_commit": "1ac8ea246a0ee89116c7ac72b02b0e914e845862",
+      "nproc": "5",
+      "cpu.max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "build": "go build -trimpath -buildvcs=false",
+      "cached": "no probe cache; ADAMIC_GATE_UNCACHED=1"
+    },
+    "summary": {
+      "Programs": 200,
+      "Boundaries": [
+        {
+          "Name": "yield",
+          "Diagnostic": "yield (generators)",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "yield requires a generator, which is refused first"
+        },
+        {
+          "Name": "with",
+          "Diagnostic": "with",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "loader rejects with in strict modules (TS1101)"
+        },
+        {
+          "Name": "enum",
+          "Diagnostic": "enum",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "loader erasableSyntaxOnly rejects enum (TS1294) before lowering"
+        },
+        {
+          "Name": "method-override",
+          "Diagnostic": "adamic/contravariant-override",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "checkOverrides also guards inheritance member kinds, accessor descriptors and ABI representation; not generated in this 0.1 corpus"
+        },
+        {
+          "Name": "parameter-properties",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "loader erasableSyntaxOnly rejects parameter properties (TS1294)"
+        },
+        {
+          "Name": "overloads",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "implementation signatures are not lowered as overloads; needs a separate diagnostic design"
+        },
+        {
+          "Name": "reopened",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "throw Error/try/catch/finally, inheritance/super/abstract/protected, accessors, for-in on proven plain objects, RegExp/Set/JSON.stringify, Object helpers, arguments/files input opened after 0.1; not promised Refused by current compiler"
+        },
+        {
+          "Name": "library-boundaries",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "symbol/bigint/Date/process/globalThis/Intl and stdin/environment need individual loader/NotYet contracts; not generated"
+        },
+        {
+          "Name": "polymorphic-recursion",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "requires recursive generic instantiation; not generated"
+        },
+        {
+          "Name": "module-boundaries",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "namespace imports, export-star, default declarations and import cycles need multi-module probes; not generated"
+        }
+      ],
+      "Counts": {
+        "refused-as-expected": 200
+      }
+    },
+    "first_finding": null
+  },
+  {
+    "name": "12-after-3",
+    "command": "ADAMIC_GATE_UNCACHED=1 /tmp/refusal-12-bin -root /tmp/refusal-12 -seed 1 -count 200 -only ts-ignore,ts-expect-error -stop",
+    "exit": 1,
+    "wall_seconds": 0.06355128999996396,
+    "load_before": "2.26 3.52 2.27 1/138 10498",
+    "load_after": "2.26 3.52 2.27 1/138 10507",
+    "build_flags": {
+      "target_commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "writer_commit": "1ac8ea246a0ee89116c7ac72b02b0e914e845862",
+      "nproc": "5",
+      "cpu.max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "build": "go build -trimpath -buildvcs=false",
+      "cached": "no probe cache; ADAMIC_GATE_UNCACHED=1"
+    },
+    "summary": {
+      "Programs": 1,
+      "Boundaries": [
+        {
+          "Name": "yield",
+          "Diagnostic": "yield (generators)",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "yield requires a generator, which is refused first"
+        },
+        {
+          "Name": "with",
+          "Diagnostic": "with",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "loader rejects with in strict modules (TS1101)"
+        },
+        {
+          "Name": "enum",
+          "Diagnostic": "enum",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "loader erasableSyntaxOnly rejects enum (TS1294) before lowering"
+        },
+        {
+          "Name": "method-override",
+          "Diagnostic": "adamic/contravariant-override",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "checkOverrides also guards inheritance member kinds, accessor descriptors and ABI representation; not generated in this 0.1 corpus"
+        },
+        {
+          "Name": "parameter-properties",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "loader erasableSyntaxOnly rejects parameter properties (TS1294)"
+        },
+        {
+          "Name": "overloads",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "implementation signatures are not lowered as overloads; needs a separate diagnostic design"
+        },
+        {
+          "Name": "reopened",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "throw Error/try/catch/finally, inheritance/super/abstract/protected, accessors, for-in on proven plain objects, RegExp/Set/JSON.stringify, Object helpers, arguments/files input opened after 0.1; not promised Refused by current compiler"
+        },
+        {
+          "Name": "library-boundaries",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "symbol/bigint/Date/process/globalThis/Intl and stdin/environment need individual loader/NotYet contracts; not generated"
+        },
+        {
+          "Name": "polymorphic-recursion",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "requires recursive generic instantiation; not generated"
+        },
+        {
+          "Name": "module-boundaries",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "namespace imports, export-star, default declarations and import cycles need multi-module probes; not generated"
+        }
+      ],
+      "Counts": {
+        "accepted": 1,
+        "refused-as-expected": 0
+      }
+    },
+    "first_finding": {
+      "program": 1,
+      "entry": "ts-ignore",
+      "seconds": 0.057858,
+      "kind": "accepted"
+    }
+  },
+  {
+    "name": "main-2000",
+    "command": "ADAMIC_GATE_UNCACHED=1 /tmp/refusal-main-bin -root /tmp/refusal-main -seed 1 -count 2000 -out /tmp/refusal-final-findings",
+    "exit": 1,
+    "wall_seconds": 119.71340528500014,
+    "load_before": "2.26 3.52 2.27 1/138 10507",
+    "load_after": "5.28 3.81 2.50 8/184 11477",
+    "build_flags": {
+      "target_commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "writer_commit": "1ac8ea246a0ee89116c7ac72b02b0e914e845862",
+      "nproc": "5",
+      "cpu.max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "build": "go build -trimpath -buildvcs=false",
+      "cached": "no probe cache; ADAMIC_GATE_UNCACHED=1"
+    },
+    "summary": {
+      "Programs": 2000,
+      "Boundaries": [
+        {
+          "Name": "yield",
+          "Diagnostic": "yield (generators)",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "yield requires a generator, which is refused first"
+        },
+        {
+          "Name": "with",
+          "Diagnostic": "with",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "loader rejects with in strict modules (TS1101)"
+        },
+        {
+          "Name": "enum",
+          "Diagnostic": "enum",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "loader erasableSyntaxOnly rejects enum (TS1294) before lowering"
+        },
+        {
+          "Name": "method-override",
+          "Diagnostic": "adamic/contravariant-override",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "checkOverrides also guards inheritance member kinds, accessor descriptors and ABI representation; not generated in this 0.1 corpus"
+        },
+        {
+          "Name": "parameter-properties",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "loader erasableSyntaxOnly rejects parameter properties (TS1294)"
+        },
+        {
+          "Name": "overloads",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "implementation signatures are not lowered as overloads; needs a separate diagnostic design"
+        },
+        {
+          "Name": "reopened",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "throw Error/try/catch/finally, inheritance/super/abstract/protected, accessors, for-in on proven plain objects, RegExp/Set/JSON.stringify, Object helpers, arguments/files input opened after 0.1; not promised Refused by current compiler"
+        },
+        {
+          "Name": "library-boundaries",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "symbol/bigint/Date/process/globalThis/Intl and stdin/environment need individual loader/NotYet contracts; not generated"
+        },
+        {
+          "Name": "polymorphic-recursion",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "requires recursive generic instantiation; not generated"
+        },
+        {
+          "Name": "module-boundaries",
+          "Diagnostic": "",
+          "Bad": "",
+          "Good": "",
+          "Placement": "",
+          "Boundary": "namespace imports, export-star, default declarations and import cycles need multi-module probes; not generated"
+        }
+      ],
+      "Counts": {
+        "accepted": 160,
+        "not-yet": 162,
+        "refused-as-expected": 1678
+      }
+    },
+    "first_finding": {
+      "program": 1,
+      "entry": "any",
+      "seconds": 0.04972,
+      "kind": "not-yet"
+    }
+  }
+]

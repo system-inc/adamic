@@ -263,3 +263,92 @@ and Markdown whitespace layout (416.56 s). The new type-aware largest unit is
 Lint has 38 units with `TestRulesAgree` largest (192.82 s), and CSS has 17 with
 `TestComposedMemoryChecksCanFail` largest (130.16 s). Bridge has two top-level units;
 `TestBridge` has no enumerable subtests.
+
+## Required WASI coverage
+
+The planner reads test source skip conditions. Direct `os.Getenv` comparisons and local aliases
+of variables whose names contain `WASI` identify required test parents. Their selected children
+inherit the requirement. Unknown predicates, dynamic environment names, `LookupEnv`, globals or
+helpers containing WASI environment reads fail planning and require an audit. Nonstandard getters
+such as `syscall.Getenv`, custom environment calls and named WASI constants also fail closed. The runtime branch's
+`TestWASIAgreesWithNode` and `TestWASIEmission` use the ordinary oracle fixture table, so both are
+enumerated before execution. This list is derived rather than maintained by test name.
+
+When present, `Plan.WASI` names the last shard, its source-derived gates and provisioning command.
+Every required unit belongs to that shard; ordinary work uses the other shards. Provision it with
+`bash cloud/setup.sh --wasi-sdk`, source the printed env file, then export
+`ADAMIC_TEST_WASI=1 ADAMIC_ORACLE_WASI=1`. Setup supplies `WASI_SYSROOT`. This requires the runtime
+setup implementation until it lands on main. The runner refuses missing variables, SDK headers,
+libc, executable SDK clang or its linker before executing shard tests. `TestWASI` gets a separate invocation
+with SDK clang on PATH; native checks retain native clang. Resumed evidence includes the entire SDK
+(header, library, compiler, linker and resources) in its input identity.
+
+Merge reads raw events and rejects every skip within a required unit, including a skipped parent
+of selected children, regardless of the reason. `TestWASIEmission` contains a skip clause for fixtures
+that do not lower. All 363 rows at the audited runtime SHA are marked lowering, so that clause did
+not produce skips in the build mutant. Any future use of it prevents a whole-green verdict under
+this rule. This unit does not edit existing tests to hide skips. A missing-variable preflight refusal produces
+no test evidence. An old or mutated runner that bypasses that check and records skips is rejected
+by merge with the required unit names.
+
+### WASI proof
+
+Fetched and merged `origin/area/developer-tools` at `14e8372816b1d3bf5bcc37ca57336e46d41b7a41`
+with `git merge`, without rebasing. The source audit covered main
+`f8013f0baac41ddc340d76f83bddde38536a8f07` (no WASI gates) and runtime
+`4d86c305dda261768b35687d199c1b2188c7ab71` (seven gated parents). Runtime has 731 required units:
+363 fixture children under each oracle parent and five other top-level tests. The required shard
+is index 7 at count 8. Its new timings are unknown; no healthy complete WASI duration is claimed.
+
+The runtime setup installed SDK 27, with its multiarch `include/wasm32-wasi` header layout.
+The source audit uses lexical AST variable identities so a later, shadowed compiler error cannot
+turn an earlier tool-availability skip into an unrecognized environment predicate.
+
+A detached runtime checkout held the real compiler controls: the anchored request and throwing
+request tests both passed, uncached. The build mutant changed the actual `native.Flags` target from
+`--target=wasm32-wasi` to `--target=wasm64-wasi`, committed at
+`96686785269691a9a1f34dfe2c21ec7726ed8e0a`. The whole required shard produced **38 pass, 731 fail,
+0 skip**. Merge returned red and explicitly named shard 7 and `cmd/adamic::TestWASIRequest`;
+the compiler output says the Wasm64 standard headers are missing. The unchanged native `TestWASI`
+probe and its 36 children passed using their own Wasm32 flags.
+
+The missing-variable mutant at `285113a7b5b0fb7346a49fb2f97a15602013531d` bypassed only the runner's
+preflight, then ran the same required shard with all three WASI variables unset. It produced
+**0 pass, 0 fail, 7 skip** by canonical test name, with 19 raw terminal test events because selected
+fixture parents repeat across selector invocations. Merge returned red, naming required skipped
+units and their actual opt-in skip messages. The final production binary also refused this run
+before creating output evidence.
+
+These two real shard merges also reject the seven absent fleet shards. To isolate the skip verdict
+from those errors, a complete miniature repository supplied a mandatory environment-gated test,
+an ordinary optional skip and placeholder SDK files. Its control merged green (1 pass, 0 fail,
+1 skip). Bypassing preflight and removing the variables merged red (0 pass, 0 fail, 2 skip), with
+**exactly one error**, naming `gateprobe::TestWASIProbe` as a skipped required unit. This miniature
+checks the merger and does not execute wasm.
+
+Thirteen tool tests and focused vet pass. Eleven source-overlay mutants fail their intended tests:
+SDK resume key, mandatory skip verdict, preflight, unknown predicate, each opt-in variable, SDK
+header, libc, executable compiler, multiarch layout and linker. The SDK key mutant is caught by
+changing real sysroot bytes and linker bytes with the environment unchanged. The target and missing
+variable mutations change only detached scratch checkouts; repository test files were not edited.
+
+| Loop | Before | After | Instrument |
+| --- | --- | --- | --- |
+| Required WASI shard, build mutant | Healthy full shard unmeasured | 148.074 s | `ADAMIC_TOOLS= ADAMIC_TEST_WASI=1 ADAMIC_ORACLE_WASI=1 adamic-gate shard -index 7 -count 8 -out <build-mutant>` |
+| Required WASI shard, missing variables | Correct runner refuses to start | 34.645 s with mutated preflight | `env -u ADAMIC_TEST_WASI -u ADAMIC_ORACLE_WASI -u WASI_SYSROOT ADAMIC_TOOLS= adamic-gate shard -index 7 -count 8 -out <skip-mutant>` |
+
+These are correctness experiments, not performance comparisons or healthy shard predictions.
+Both source the setup env file before invoking the command. The uncached build-flags lines are:
+
+```
+commit=96686785269691a9a1f34dfe2c21ec7726ed8e0a nproc=5 cpu.max="400000 100000" go="go version go1.27.1 linux/amd64" clang="clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)" node="v24.19.0" load_before="2.08 6.03 6.93 2/260 213343" load_after="1.64 4.34 6.16 1/263 221308" uncached=1 GOFLAGS="" CGO_ENABLED="" GOMAXPROCS="" width_deps=""
+commit=285113a7b5b0fb7346a49fb2f97a15602013531d nproc=5 cpu.max="400000 100000" go="go version go1.27.1 linux/amd64" clang="clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)" node="v24.19.0" load_before="1.29 6.63 7.17 1/259 211138" load_after="1.56 6.20 7.01 5/261 212609" uncached=1 GOFLAGS="" CGO_ENABLED="" GOMAXPROCS="" width_deps=""
+```
+
+SDK clang identifies itself as `clang version 20.1.8-wasi-sdk` with that same LLVM source revision.
+The small `cmd/adamic-gate/evidence/wasi-evidence.tar.gz` preserves raw logs, summaries, manifests,
+mutant scripts, the isolated merger proof and a verified Git bundle of the exact mutant commits.
+The bundle requires runtime commit `4d86c305` already in the repository; import its two
+`refs/gate-proof/*` references locally and use detached worktrees to inspect them. No proof branch
+was pushed. No full unsharded gate, eight-shard run, healthy full WASI shard or fleet-wide green
+comparison was run on this box.

@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/fixtures/assertions/discriminant-report.py", line 44, in <module>
+    assert len([w for w in r['writes'] if w['file']=='src/compiler/tsbuildPublic.ts' and w['line']==1921 and w['property']=='type'])==1,'lost cached-status retag'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: lost cached-status retag
