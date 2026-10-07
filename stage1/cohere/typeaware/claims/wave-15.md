@@ -97,3 +97,13 @@ lowering, SSA/control-flow analysis, memoization preparation and compilation-uni
 gates. No native implementations were found on the fetched helper branches.
 Ahra's instruction to stop at a non-harness shared gap applies; no shared files
 will be edited. Detailed evidence will be recorded outside the claims directory.
+
+## Fifth reservation parked
+
+Status: parked, per Ahra's updated instruction on 2026-10-07.
+
+- react-hooks/set-state-in-effect: parked on native high-level IR, memoization preparation, capture translation and control dominators.
+- react-hooks/set-state-in-render: parked on native high-level IR, single-assignment setter/capture propagation and unconditional-block analysis.
+- react-hooks/static-components: parked on native high-level IR, phi/instruction taint propagation, capture/compilation gates and JSX support.
+
+Shared cohere analysis modules are being ported on #dnv6f2c; JSX support is landing on area/stage1-lint. Existing code and evidence are pushed at b2468fd978eeb82bfe17742c6c6556db7cc9f0e5, based on current main f8013f0b and green against its declared oracles. These parked claims count as finished for the landing-first cap, not as completed native rule ports. No rule verdicts, full byte agreement, mutants or timings are claimed for these three.
