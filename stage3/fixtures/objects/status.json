@@ -77,7 +77,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "stage3/fixtures/objects/05_polling_array_metadata.a:12:23: Adamic 0.1 refuses a cast the runtime can't check; narrow it instead (===, typeof, a discriminant), or cast a discriminated union to its members (adamic/no-unchecked-cast)"
+      "what": "stage3/fixtures/objects/05_polling_array_metadata.a:12:23: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
     }
   },
   {
@@ -128,7 +128,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "stage3/fixtures/objects/08_loop_state.a:10:13: Adamic 0.1 refuses a value as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      "what": "stage3/fixtures/objects/08_loop_state.a:13:17: Adamic 0.1 refuses a string as a condition; compare it explicitly, like name.length > 0 or count !== 0"
     }
   },
   {
@@ -179,8 +179,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Checker",
-      "what": "stage3/fixtures/objects/14_comment_pending.a:28:13: error TS7029: Fallthrough case in switch."
+      "outcome": "Refused",
+      "what": "stage3/fixtures/objects/14_comment_pending.a:10:19: Adamic 0.1 refuses a definite assignment assertion !; remove ! and initialize it where it is declared or in the constructor, or type it T | undefined"
     }
   },
   {
@@ -279,8 +279,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Checker",
-      "what": "stage3/fixtures/objects/22_nested_optional_calls.a:15:48: error TS7030: Not all code paths return a value."
+      "outcome": "Refused",
+      "what": "stage3/fixtures/objects/22_nested_optional_calls.a:16:33: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
     }
   },
   {
