@@ -1,0 +1,17 @@
+=== RUN   TestWave22FourthAgreement
+    wave_22_fourth_test.go:193: controls: 641 accepted, 3 rejected by independent parser
+    wave_22_fourth_test.go:195: controls: 169502 identical finding bytes; findings 425
+    wave_22_fourth_test.go:206: controls-asan: 169502 identical finding bytes; findings 425
+    wave_22_fourth_test.go:218: numeric-prefix: exit 0, empty stderr, byte oracle catches byte 13494
+    wave_22_fourth_test.go:218: has-own-fix-span: exit 0, empty stderr, byte oracle catches byte 17047
+    wave_22_fourth_test.go:218: spread-parens: exit 0, empty stderr, byte oracle catches byte 292
+    wave_22_fourth_test.go:239: "global-binding\nnode" released handle: panic 70; registry retention checked separately
+    wave_22_fourth_test.go:239: "resolved-name\nObject" released handle: panic 70; registry retention checked separately
+    wave_22_fourth_test.go:239: "symbol-identities" released handle: panic 70; registry retention checked separately
+    wave_22_fourth_test.go:262: repository: 18485 identical finding bytes; findings 0
+    wave_22_fourth_test.go:263: repository-asan: 18485 identical finding bytes; findings 0
+    wave_22_fourth_test.go:262: compiler: 5857 identical finding bytes; findings 0
+    wave_22_fourth_test.go:263: compiler-asan: 5857 identical finding bytes; findings 0
+--- PASS: TestWave22FourthAgreement (126.71s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	126.715s
