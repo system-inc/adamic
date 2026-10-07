@@ -1,0 +1,16 @@
+=== RUN   TestLoadersMatchGoCohere
+=== PAUSE TestLoadersMatchGoCohere
+=== CONT  TestLoadersMatchGoCohere
+    loader_test.go:172: go: downloading github.com/dlclark/regexp2/v2 v2.5.2
+        go: downloading github.com/dlclark/regexp2 v1.11.5
+        === RUN   TestAdamicConfigCases
+            adamic_config_test.go:152: Go: 3.011850s, 0 projects, 0 projects/s; 1354 source files, 450 files/s
+        --- PASS: TestAdamicConfigCases (3.02s)
+        PASS
+        ok  	github.com/system-inc/cohere/command/cohere	3.149s
+    loader_test.go:187: native: line 895: "reference \"/workspace/adamic/cohere/TypeScript/packages/typescript/tsconfig.json\"", Go cohere "file \"/workspace/adamic/cohere/TypeScript/packages/typescript/test/async/api.bench.ts\""
+    loader_test.go:195: baseline must agree before mutants
+--- FAIL: TestLoadersMatchGoCohere (489.70s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/config	489.734s
+FAIL

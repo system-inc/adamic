@@ -1,0 +1,158 @@
+=== RUN   TestInputAgreesWithNode
+=== PAUSE TestInputAgreesWithNode
+=== RUN   TestNodeFSDirectoryMutants
+=== RUN   TestNodeFSDirectoryMutants/resolve
+=== PAUSE TestNodeFSDirectoryMutants/resolve
+=== RUN   TestNodeFSDirectoryMutants/join
+=== PAUSE TestNodeFSDirectoryMutants/join
+=== RUN   TestNodeFSDirectoryMutants/dirname
+=== PAUSE TestNodeFSDirectoryMutants/dirname
+=== RUN   TestNodeFSDirectoryMutants/readdir_order
+=== PAUSE TestNodeFSDirectoryMutants/readdir_order
+=== RUN   TestNodeFSDirectoryMutants/Dirent_name
+=== PAUSE TestNodeFSDirectoryMutants/Dirent_name
+=== RUN   TestNodeFSDirectoryMutants/isFile
+=== PAUSE TestNodeFSDirectoryMutants/isFile
+=== RUN   TestNodeFSDirectoryMutants/isDirectory
+=== PAUSE TestNodeFSDirectoryMutants/isDirectory
+=== RUN   TestNodeFSDirectoryMutants/isSymbolicLink
+=== PAUSE TestNodeFSDirectoryMutants/isSymbolicLink
+=== RUN   TestNodeFSDirectoryMutants/realpath_walk
+=== PAUSE TestNodeFSDirectoryMutants/realpath_walk
+=== RUN   TestNodeFSDirectoryMutants/realpath_native
+=== PAUSE TestNodeFSDirectoryMutants/realpath_native
+=== RUN   TestNodeFSDirectoryMutants/error_code
+=== PAUSE TestNodeFSDirectoryMutants/error_code
+=== RUN   TestNodeFSDirectoryMutants/error_message
+=== PAUSE TestNodeFSDirectoryMutants/error_message
+=== RUN   TestNodeFSDirectoryMutants/getAccessibleFileSystemEntries
+=== PAUSE TestNodeFSDirectoryMutants/getAccessibleFileSystemEntries
+=== RUN   TestNodeFSDirectoryMutants/getDirectories
+=== PAUSE TestNodeFSDirectoryMutants/getDirectories
+=== RUN   TestNodeFSDirectoryMutants/directoryExists
+=== PAUSE TestNodeFSDirectoryMutants/directoryExists
+=== RUN   TestNodeFSDirectoryMutants/realpath
+=== PAUSE TestNodeFSDirectoryMutants/realpath
+=== RUN   TestNodeFSDirectoryMutants/resolvePath
+=== PAUSE TestNodeFSDirectoryMutants/resolvePath
+=== RUN   TestNodeFSDirectoryMutants/isFileSystemCaseSensitive
+=== PAUSE TestNodeFSDirectoryMutants/isFileSystemCaseSensitive
+=== RUN   TestNodeFSDirectoryMutants/readDirectory
+=== PAUSE TestNodeFSDirectoryMutants/readDirectory
+=== CONT  TestNodeFSDirectoryMutants/resolve
+=== CONT  TestNodeFSDirectoryMutants/readDirectory
+=== CONT  TestNodeFSDirectoryMutants/isFileSystemCaseSensitive
+=== CONT  TestNodeFSDirectoryMutants/realpath_walk
+=== CONT  TestNodeFSDirectoryMutants/Dirent_name
+    node_fs_directory_test.go:133: caught only by stdout comparison with Node
+=== CONT  TestNodeFSDirectoryMutants/isSymbolicLink
+=== NAME  TestNodeFSDirectoryMutants/realpath_walk
+    node_fs_directory_test.go:133: caught only by stdout comparison with Node
+=== CONT  TestNodeFSDirectoryMutants/isDirectory
+=== NAME  TestNodeFSDirectoryMutants/resolve
+    node_fs_directory_test.go:133: caught only by stdout comparison with Node
+=== CONT  TestNodeFSDirectoryMutants/isFile
+=== NAME  TestNodeFSDirectoryMutants/isSymbolicLink
+    node_fs_directory_test.go:133: caught only by stdout comparison with Node
+=== CONT  TestNodeFSDirectoryMutants/getDirectories
+=== NAME  TestNodeFSDirectoryMutants/isFileSystemCaseSensitive
+    node_fs_directory_test.go:133: caught only by stdout comparison with Node
+=== CONT  TestNodeFSDirectoryMutants/resolvePath
+=== NAME  TestNodeFSDirectoryMutants/readDirectory
+    node_fs_directory_test.go:133: caught only by stdout comparison with Node
+=== CONT  TestNodeFSDirectoryMutants/realpath
+=== NAME  TestNodeFSDirectoryMutants/isDirectory
+    node_fs_directory_test.go:133: caught only by stdout comparison with Node
+=== CONT  TestNodeFSDirectoryMutants/directoryExists
+=== NAME  TestNodeFSDirectoryMutants/isFile
+    node_fs_directory_test.go:133: caught only by stdout comparison with Node
+=== CONT  TestNodeFSDirectoryMutants/dirname
+=== NAME  TestNodeFSDirectoryMutants/realpath
+    node_fs_directory_test.go:133: caught only by stdout comparison with Node
+=== CONT  TestNodeFSDirectoryMutants/readdir_order
+=== NAME  TestNodeFSDirectoryMutants/directoryExists
+    node_fs_directory_test.go:133: caught only by stdout comparison with Node
+=== CONT  TestNodeFSDirectoryMutants/error_message
+=== NAME  TestNodeFSDirectoryMutants/dirname
+    node_fs_directory_test.go:133: caught only by stdout comparison with Node
+=== CONT  TestNodeFSDirectoryMutants/getAccessibleFileSystemEntries
+=== NAME  TestNodeFSDirectoryMutants/getDirectories
+    node_fs_directory_test.go:133: caught only by stdout comparison with Node
+=== CONT  TestNodeFSDirectoryMutants/error_code
+=== NAME  TestNodeFSDirectoryMutants/resolvePath
+    node_fs_directory_test.go:133: caught only by stdout comparison with Node
+=== CONT  TestNodeFSDirectoryMutants/realpath_native
+=== NAME  TestNodeFSDirectoryMutants/readdir_order
+    node_fs_directory_test.go:133: caught only by stdout comparison with Node
+=== CONT  TestNodeFSDirectoryMutants/join
+=== NAME  TestNodeFSDirectoryMutants/error_message
+    node_fs_directory_test.go:133: caught only by stdout comparison with Node
+=== NAME  TestNodeFSDirectoryMutants/error_code
+    node_fs_directory_test.go:133: caught only by stdout comparison with Node
+=== NAME  TestNodeFSDirectoryMutants/getAccessibleFileSystemEntries
+    node_fs_directory_test.go:133: caught only by stdout comparison with Node
+=== NAME  TestNodeFSDirectoryMutants/realpath_native
+    node_fs_directory_test.go:133: caught only by stdout comparison with Node
+=== NAME  TestNodeFSDirectoryMutants/join
+    node_fs_directory_test.go:133: caught only by stdout comparison with Node
+--- PASS: TestNodeFSDirectoryMutants (0.01s)
+    --- PASS: TestNodeFSDirectoryMutants/Dirent_name (24.65s)
+    --- PASS: TestNodeFSDirectoryMutants/realpath_walk (24.69s)
+    --- PASS: TestNodeFSDirectoryMutants/resolve (25.27s)
+    --- PASS: TestNodeFSDirectoryMutants/isSymbolicLink (0.79s)
+    --- PASS: TestNodeFSDirectoryMutants/isFileSystemCaseSensitive (25.66s)
+    --- PASS: TestNodeFSDirectoryMutants/readDirectory (25.91s)
+    --- PASS: TestNodeFSDirectoryMutants/isDirectory (1.45s)
+    --- PASS: TestNodeFSDirectoryMutants/isFile (1.64s)
+    --- PASS: TestNodeFSDirectoryMutants/realpath (1.78s)
+    --- PASS: TestNodeFSDirectoryMutants/directoryExists (1.66s)
+    --- PASS: TestNodeFSDirectoryMutants/dirname (0.93s)
+    --- PASS: TestNodeFSDirectoryMutants/getDirectories (2.64s)
+    --- PASS: TestNodeFSDirectoryMutants/resolvePath (2.50s)
+    --- PASS: TestNodeFSDirectoryMutants/readdir_order (1.69s)
+    --- PASS: TestNodeFSDirectoryMutants/error_message (1.69s)
+    --- PASS: TestNodeFSDirectoryMutants/error_code (1.48s)
+    --- PASS: TestNodeFSDirectoryMutants/getAccessibleFileSystemEntries (1.79s)
+    --- PASS: TestNodeFSDirectoryMutants/realpath_native (1.52s)
+    --- PASS: TestNodeFSDirectoryMutants/join (0.75s)
+=== RUN   TestNodeFSDirectoryPermissions
+=== PAUSE TestNodeFSDirectoryPermissions
+=== CONT  TestNodeFSDirectoryPermissions
+=== CONT  TestInputAgreesWithNode
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_path_posix.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_path_posix.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_entries.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_entries.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_realpath.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_realpath.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_system.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_system.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_permissions.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_permissions.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_path_posix.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_system.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_realpath.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_entries.a
+--- PASS: TestNodeFSDirectoryPermissions (1.63s)
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_permissions.a
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_entries.a
+    input_test.go:111: gate cache probe miss
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_realpath.a
+    input_test.go:111: gate cache probe miss
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/node_path_posix.a
+    input_test.go:111: gate cache probe miss
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_permissions.a
+    input_test.go:111: gate cache probe miss
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_system.a
+    input_test.go:111: gate cache probe miss
+--- PASS: TestInputAgreesWithNode (0.00s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_entries.a (19.67s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/node_path_posix.a (19.86s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_realpath.a (20.07s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_permissions.a (18.85s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_system.a (20.58s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=5
+ok  	github.com/system-inc/adamic/internal/oracle	50.740s

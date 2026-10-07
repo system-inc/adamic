@@ -1,0 +1,118 @@
+// Directory members of getNodeSystem. Supply the compiler's own matchFiles and cwd provider.
+import { readdirSync, realpathSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { fileStatus } from 'adamic';
+
+export interface FileSystemEntries {
+    readonly files: readonly string[];
+    readonly directories: readonly string[];
+}
+export type MatchFiles = (
+    path: string,
+    extensions: readonly string[] | undefined,
+    excludes: readonly string[] | undefined,
+    includes: readonly string[] | undefined,
+    useCaseSensitiveFileNames: boolean,
+    currentDirectory: string,
+    depth: number | undefined,
+    getFileSystemEntries: (path: string) => FileSystemEntries,
+    realpath: (path: string) => string,
+) => string[];
+
+const emptyNames: readonly string[] = [];
+const emptyFileSystemEntries: FileSystemEntries = { files: emptyNames, directories: emptyNames };
+
+// combinePaths in sys.ts preserves dot components. Lexical join would change a symlink/.. walk.
+function entryPath(path: string, name: string): string {
+    const normalized = path.split('\\').join('/');
+    return normalized.length === 0 ? name : normalized + (normalized.endsWith('/') ? '' : '/') + name;
+}
+
+function compareNames(left: string, right: string): number {
+    return left < right ? -1 : left > right ? 1 : 0;
+}
+
+// REPLACE with the fs_file unit's statSync(path, { throwIfNoEntry: false }).
+// fileStatus already follows symlinks; this private bridge does not define a second statSync.
+function statusType(path: string): string {
+    const status = fileStatus(path);
+    return status.kind === 'Ok' ? status.type : '';
+}
+
+export function directoryExists(path: string): boolean {
+    return statusType(path) === 'directory';
+}
+
+export function getAccessibleFileSystemEntries(path: string): FileSystemEntries {
+    const files: string[] = [];
+    const directories: string[] = [];
+    try {
+        const entries = readdirSync(path.length === 0 ? '.' : path, { withFileTypes: true });
+        for (const entry of entries) {
+            const name = entry.name;
+            if (name === '.' || name === '..') { continue; }
+            if (entry.isSymbolicLink()) {
+                const type = statusType(entryPath(path, name));
+                if (type === 'file') { files.push(name); }
+                else if (type === 'directory') { directories.push(name); }
+            }
+            else if (entry.isFile()) { files.push(name); }
+            else if (entry.isDirectory()) { directories.push(name); }
+        }
+        files.sort(compareNames);
+        directories.sort(compareNames);
+        return { files, directories };
+    }
+    catch {
+        // sys.ts discards the entire listing when any entry operation throws.
+        return emptyFileSystemEntries;
+    }
+}
+
+export function getDirectories(path: string): string[] {
+    return getAccessibleFileSystemEntries(path).directories.slice();
+}
+
+export function realpath(path: string): string {
+    try { return realpathSync.native(path); }
+    catch { return path; }
+}
+
+export function resolvePath(path: string): string {
+    return resolve(path);
+}
+
+// POSIX branch of sys.ts's probe: swap ASCII word-character case in the executing filename,
+// and test the filesystem. Unicode characters outside /\w/ retain their spelling.
+export function isFileSystemCaseSensitive(executingFilePath: string): boolean {
+    let swapped = '';
+    for (const character of executingFilePath) {
+        const code = character.charCodeAt(0);
+        swapped += code >= 65 && code <= 90 ? character.toLowerCase()
+            : code >= 97 && code <= 122 ? character.toUpperCase() : character;
+    }
+    return statusType(swapped) !== 'file';
+}
+
+export interface DirectorySystem {
+    readonly getDirectories: (path: string) => string[];
+    readonly getAccessibleFileSystemEntries: (path: string) => FileSystemEntries;
+    readonly directoryExists: (path: string) => boolean;
+    readonly realpath: (path: string) => string;
+    readonly resolvePath: (path: string) => string;
+    readonly useCaseSensitiveFileNames: boolean;
+    readonly readDirectory: (path: string, extensions?: readonly string[], excludes?: readonly string[], includes?: readonly string[], depth?: number) => string[];
+}
+
+export function createDirectorySystem(executingFilePath: string, getCurrentDirectory: () => string, matchFiles: MatchFiles): DirectorySystem {
+    const useCaseSensitiveFileNames = isFileSystemCaseSensitive(executingFilePath);
+    return {
+        getDirectories: (path) => getDirectories(path),
+        getAccessibleFileSystemEntries: (path) => getAccessibleFileSystemEntries(path),
+        directoryExists: (path) => directoryExists(path),
+        realpath: (path) => realpath(path),
+        resolvePath: (path) => resolvePath(path),
+        useCaseSensitiveFileNames,
+        readDirectory: (path, extensions, excludes, includes, depth) => matchFiles(path, extensions, excludes, includes, useCaseSensitiveFileNames, getCurrentDirectory(), depth, getAccessibleFileSystemEntries, realpath),
+    };
+}
