@@ -177,6 +177,326 @@ The cutter determines frame slots from values and owned environments live across
 
 Exit evidence includes the existing first-unit Node and ownership controls, plus mixed synchronous/async functions, branches/loops, nested awaits with observable operand order, objects/classes/closures and try/catch/finally wherever their suspension ownership is proved. The ordinary graph/trace checks must cover async bodies instead of skipping `Program.Async`; suspension tracing must represent resume and rejection edges. Each newly claimed semantic surface needs its own Node fixtures and failing mutants. A feature still lacking that proof stays explicitly NotYet through the shared pipeline, without an alternate lowerer.
 
+## Unit 2 state-cutting checkpoint, October 7, 2026
+
+Status: **design for compiler review, before implementation**. Branch
+`codex/async-ordinary` starts at `55d2c89b5de849ac3789eb7810200184530eff05`
+and merges `origin/codex/call-targets` at
+`280fc491fa8cfb5fb67cd664444e24e7107ad3a0` first. This section describes the
+replacement pipeline, not features already built. The October 9 landing must
+supply the evidence below. Implementation stops at this checkpoint for review.
+
+### Ordinary IR is the only semantic input
+
+The ordinary function registry, signatures, statement lowerer and expression
+lowerer handle declarations, instance/static methods, arrows and function
+expressions. An ordinary `ir.Function` records whether it is async, its callable
+result (a Promise handle), and the body's result type. `ir.Await` holds an ordinary
+expression operand, its proven payload type, and source location. Await unwraps
+that type; calling an async function does not unwrap it. Closures and virtual
+methods use the existing call representation and receiver/capture rules.
+
+Delete `lowerAsync`, its syntax/grammar helpers, the `hasAsync` early return,
+and the `AsyncProgram` source route. State-machine metadata belongs to ordinary
+functions and is derived from their completed bodies. It contains block/state
+ids, suspension successors and slot layouts, never checker AST nodes. The cutter
+must not import the parser or checker, call a source lowerer, or encode a second
+statement grammar. The ordinary body remains available for the JavaScript
+backend, with native async/await and the same inserted checks. Native emission
+uses derived state metadata but emits ordinary IR operations through the existing
+statement/expression emission. Deleting a route cannot mean copying its emitter
+or copying synchronous feature lowering into an async visitor.
+
+The backend hooks for ordinary function async metadata and `ir.Await` require
+small JavaScript dispatch changes when implementation resumes. Those hooks are
+an integration seam outside this unit's originally listed territory; this
+checkpoint does not edit that backend or the protected native assembly files.
+The compiler must assign that seam before the separate `AsyncProgram` route can
+be removed end to end.
+
+### Normalize evaluation before making suspension edges
+
+One IR normalization pass exposes computations surrounding awaits. It visits
+ordinary IR operands in their established evaluation order, materializes already
+evaluated values as typed temporary locals, and represents the await result as
+another local. Every normalized instruction evaluates without suspension; a
+suspension is a distinct graph terminal. A verifier rejects any residual await
+inside an executable instruction before native emission.
+
+For `combine(first(), await second(), third())`, the normalized order is:
+evaluate and own the first result; evaluate second's operand and subscribe;
+return to the loop; on fulfillment bind the awaited result; evaluate third; call
+combine. A rejection skips third and combine and selects the surrounding
+handler. Method receivers, computed keys, callee values and earlier arguments
+are snapshots too. A property value read before await is retained as a value;
+it is not read again from its possibly changed holder after resume. For an
+assignment, preserve the evaluated destination receiver/key until the store.
+Object spread snapshots occur where ordinary IR requires them, before later
+field initializers. No C operand evaluation order is used to infer source order.
+
+Conditional, optional and short-circuit operations normalize into guarded
+regions so the unselected operand is never evaluated or subscribed. A loop's
+condition, body and update normalize in their original positions; each iteration
+reevaluates its own await operand. For-loop continue still reaches the update,
+while while-loop continue reaches the condition. Break reaches the existing exit.
+Normalization does not move an effect or an inserted check across an await,
+a branch or a potentially throwing operand. Await-free subtrees remain ordinary
+operations. This is an IR transformation, with one shared operand-order visitor,
+not a transcription of the source expression lowerer's feature switches.
+
+### Graph boundary and the shared SSA dependency
+
+Use Adamic's `flow.Function`, blocks, instructions and terminal successor
+adapter. A proposed `Suspend` terminal has a fulfillment successor, a rejection
+successor, and the await operand/result metadata. Its rejection successor is
+present even when no target body has an explicit throw: Promise rejection is
+an independent outcome. Fulfillment defines the result only on its own edge,
+through a dedicated binding block; rejection binds the owned error on its edge.
+The resume entry must not claim the result definition dominates a catch.
+
+Graph maintenance and SSA use cohere's `static_single_assignment` module through
+its `Graph` interface. The adapter supplies entry and block access, instruction
+uses/definitions, successor enumeration, predecessor updates, phi access and
+identifier creation. `Suspend` contributes both logical successors to this
+interface, liveness and dominance. Runtime parking is not an exit in that logical
+graph. All resumed entries are reachable from the original entry through those
+edges. Captured mutable cell contents are not renamed as SSA locals; the stable
+environment/slot identities and explicit snapshot locals are tracked instead.
+
+Observed dependency availability: on October 7, `origin/codex/shared-ssa` was not
+advertised by Adamic's remote. Fetching abbreviated cohere ref `d19d0023` failed
+with `couldn't find remote ref`; that object is absent locally. Fetched cohere
+main `e7cfe4d1` has no `static_single_assignment` directory. Consequently this
+checkpoint assumes the compiler's stated `Graph` contract; it does not claim to
+have verified its Go method signatures. Resolve the exact package path and type
+arguments against `d19d0023` or later when shared-ssa is published, without
+copying its algorithms or pinning cohere backward.
+
+The required call migration is explicit:
+
+| Current Adamic call | After shared-ssa lands |
+| --- | --- |
+| `flow.ReversePostorder(function)` | module `ReversePostorder` on the flow Graph adapter |
+| `flow.MarkPredecessors(function)` | module predecessor maintenance on the adapter |
+| `flow.MarkEvaluationOrder(function)` | module evaluation-order maintenance on the adapter |
+| `flow.Finalize(function)` | the above module operations in that order; use shared-ssa's retained adapter wrapper if supplied |
+| `flow.Construct(function)` | module SSA construction on the adapter |
+| `flow.EliminateRedundantPhis(function)` | module redundant-phi elimination, if not internal to construction |
+| `flow.VerifySSA(function)` | module SSA verifier on the adapter |
+
+The last two names must follow the exported module API rather than inventing
+new exports. No cutter code goes into `graph.go`, `ssa.go`, `ssa_eliminate.go`
+or `ssa_verify.go`, and it reads none of their private bookkeeping. Rebuild
+maintenance facts after block splitting, construct/verify SSA on the normalized
+logical graph, then compute liveness including exceptional successors. Cutting
+adds a state map over those blocks; it does not invalidate the SSA graph. Any
+later graph mutation must rebuild its maintenance and analysis facts.
+
+### Partition blocks without duplicating shared continuations
+
+State zero starts at the ordinary entry. Each fulfillment/rejection binding
+block following a suspension is a region entry. Starting from these entries,
+walk synchronous successor edges without crossing `Suspend`. A join reachable
+from different entries becomes its own region entry; repeat until every block
+belongs to exactly one entry. Promote an entry into a loop when external entries
+would otherwise give that loop multiple owners. This finite procedure only adds
+entries from the finite block set. Number entries deterministically in the
+module's reverse postorder, retaining zero for the eager entry. A state is one
+single-entry region between suspension boundaries; it can contain ordinary
+branches and cycles with no await. Shared joins are emitted once.
+
+An edge inside a region is ordinary control flow. An edge to another region
+without an await is an immediate jump in the same resume invocation, with edge
+copies/cleanup performed first. It neither returns to the scheduler nor creates
+a microtask. Only `Suspend` saves the selected resume state, installs a reaction
+and returns. Completion settles the output and releases task-owned storage.
+This distinction prevents an if/loop join from adding observable Promise turns.
+Phi operands are selected on predecessor edges, before entering the destination;
+loop-carried values and cross-region joins cannot be loaded from an arbitrary
+predecessor or reread from mutable source storage.
+
+The graph verifier checks unique region membership, entry reachability, all
+successors mapped, no residual instruction await, and no bypass of a suspension.
+Trace checks walk eager, park, fulfill/reject and immediate-jump events against
+the same logical graph, rather than skipping ordinary async functions. State
+numbers themselves are not semantic; the selected successor and payload are.
+
+### One environment allocation for captures and suspension storage
+
+Observed `origin/codex/nested-functions` at
+`b15216dabf65ffaa7152f6e64709b7b062ea01a9` exposes
+`ir.AllocateEnvironment{Cells []int}`, `Function.FrameEnvironment`,
+`Local.EnvironmentCell`, and `Local.Preallocated`. Its runtime environment owns
+interior `adamic_cell` slots; retaining a slot retains the whole environment.
+That is the right allocation construct for values live across an await.
+
+Use that single allocation site per enclosing function activation, extending
+its layout metadata for async control storage. Take the union of lexical capture
+slots, values live on either resume edge, operand snapshots, parameters/this
+needed after the eager entry, loop iterator owners, and pending completion/error
+storage. Synthetic private locals use the same slot mechanism as captured state.
+Stable cell addresses survive suspension. Globals themselves are not copied into
+the environment; a read evaluated before suspension has its own owned snapshot.
+Inherited closure environments are retained, never borrowed from the caller's
+stack. Each async invocation has its own activation environment.
+
+The native allocation has one heap header and owner, with the existing
+`adamic_async_frame` prefix followed by slot storage and initialization metadata.
+It must not allocate a separate captured-value environment beside an async frame.
+Synchronous environments use the same IR construct and slot access/destruction
+rules, with no async control prefix. To support both owners, nested-functions'
+currently typed `adamic_environment *` interior-cell owner needs a common heap
+owner pointer (or an equivalent shared owner accessor), with counting routed
+through that owner. This is an internal environment/cell integration change,
+not a Promise ABI change. It touches closure/cell runtime code outside this
+unit's original async-runtime territory and must be coordinated with its owner;
+do not duplicate the representation to avoid that coordination.
+
+A captured source binding and a private spill have different lifetime ends.
+Finish clears output/waiting, private spills, and pending completion; a captured
+binding still reachable by an escaped closure remains initialized until that
+owner is destroyed. Do not clear a captured binding simply because the task
+completed. Per-slot ready/owned bits distinguish not-yet-initialized storage,
+undefined values and moved-out values. Reassignment acquires the new count before
+clearing/releasing the old one. Every cleanup path clears a slot before release.
+Loop-local lexical bindings retain ordinary per-iteration identity; moving a
+binding into suspension storage must not collapse distinct captured iterations.
+
+Async allocation is heap-placed, since the eager call returns before resume.
+Future region analysis may stack-place ordinary nonescaping environments through
+the same allocation construct, but cannot stack-place a suspended activation.
+Initially disable borrowing, lent reads, consuming moves, reuse and statement
+regions for async bodies and any value/statement spanning suspension. Retain
+parameters, receivers, snapshots and inherited environments before eager entry
+returns. This conservative boundary includes values used by catch/cleanup, not
+only the happy-path live set. Unsupported cycle/freshness proofs remain specific
+NotYet or ordinary permanent cycle refusals; protocol provenance exempts only
+audited generated edges, never user captures or payloads.
+
+### Throw edges, resume ownership and the unchanged Promise ABI
+
+Call target lookup is exclusively `Program.CallTargets` for ordinary calls and
+`Program.ClosureTargets` for function-value calls, including virtual methods.
+Use their `CallMayThrow`/`ClosureMayThrow` helpers for synchronous throw effects;
+Unknown closure targets are conservative, not empty. Neither normalization nor
+cutting reads `Call.Function` to decide which body, result obligation or throw
+edge can run. Method overrides and closures returning rejected Promises must be
+represented by the whole target set. The merged `TestCallTargetReaders` guards
+that seam and must remain enabled with no new async allowlist exemption.
+
+Distinguish an error evaluating the await operand, an error from a synchronous
+callee during that evaluation, and rejection delivered by the await reaction.
+Each reaches the lexical handler through its corresponding graph edge. An async
+callee's body error rejects its returned Promise; it does not escape its eager
+call synchronously. A returned Promise can reject even when a body has no throw,
+so suspension rejection edges are unconditional. MayThrow propagation must model
+this call-entry/body distinction while still obtaining targets through the shared
+lookup. No target-specific shortcut can erase a resumption's rejection edge.
+
+On resume, retain/copy a delivered reference or Error into an initialized owned
+slot before the reaction releases its payload owner. Move synchronous pending
+exceptions into the frame's completion storage and clear the exception word
+before returning to the loop. Synchronous callees still use ordinary cleanup
+paths. A caught rejected await enters the same catch as a synchronous throw;
+await in that catch remains NotYet. A non-suspending finally uses ordinary
+completion override/cleanup control flow; await in finally remains NotYet.
+
+Keep unit 1's `adamic_async_promise` fields and the signatures/ownership of
+`adamic_async_new`, `adamic_async_settle`, `adamic_async_await`,
+`adamic_async_cancel`, `adamic_async_run` and `adamic_async_teardown` unchanged.
+Payloads still use `adamic_value` plus the `references` flag; reference payloads
+are ordinary counted objects, class instances, strings or arrays. The frame
+prefix's `resume` and `children` callbacks remain unchanged. Broader slot layout
+is compiler-private tail storage. No change to the host-promises producer ABI
+is proposed. Unit 1 settlement detaches the Promise's reaction list, clears
+frame waiting edges and transfers ownership to queued jobs; cancel and normal
+exit detach/clear without source resumption. Use that exact protocol for the
+new environment. A completed task releases its output edge even when an escaped
+closure still holds the activation, avoiding retention of obsolete protocol roots.
+
+Source cancellation, queued-job cancellation and cancelling pending I/O remain
+NotYet. A pending Promise without host handles is abandoned only at normal loop
+exit, with no execution of source finally, as already specified. The three
+terminal detach paths remain separately leak-tested with their own mutants.
+
+### Evidence required after this review
+
+All new source fixtures are `.a`. Each supported behavior runs as source on
+Node, native under ASan/UBSan and leak checking, and the JavaScript backend.
+Use dynamically built strings/objects for lifetime evidence. Add the following
+independent controls rather than treating one broad fixture as all proofs:
+
+| Surface | Required failing mutant and decisive check |
+| --- | --- |
+| Functions, instance/static methods, arrow/function closures called from sync and async code | wrong target/resume successor or payload; Node output and call-target guard |
+| Sequential awaits and fulfilled/plain awaits | inline or reordered resume; Node eager-prefix/FIFO trace |
+| If/else and while/for with break/continue | wrong branch/update/back edge; Node output and graph trace |
+| Earlier operands, receiver/key/callee snapshots and guarded awaits | reevaluate/move an operand or evaluate an unselected operand; Node effect trace |
+| Try/catch around await, rejected await caught, synchronous operand throws | drop rejection/throw edge or leave exception word set; Node output and graph trace |
+| Objects, classes, arrays, strings and captures live across await | omit an owned retain, spill or slot drop; ASan or LeakSanitizer |
+| Escaped closure observes a binding after task completion | clear captured binding on finish; Node output or ASan |
+| Settle, cancel and never-settled exit cycles | one skip-detach mutant per terminal path, registry roots still removed; LeakSanitizer |
+| Shared environment placement and iteration bindings | borrow caller storage or collapse iteration slots; ASan or Node output |
+| Unsupported suspension/Promise surfaces | change each named NotYet to acceptance or Refused; diagnostic fixture |
+
+Retain the existing provenance-spoof controls and their mutants. Await in catch,
+await in finally, Promise.all, arbitrary Promise executors and thenables remain
+explicit NotYet through the ordinary pipeline. No feature is accepted solely
+because normalization can encounter its node.
+
+After implementation, run the four-package gate, filtered async oracle including
+new fixtures and mutants, exact counts update/check, then the full gate with
+output files. Report actual counts deltas per async fixture, separately from
+merge-only changes to unrelated rows. This design checkpoint adds no fixture
+and predicts no numeric counts delta; record measurements only after generated
+code exists. Full async support and the October 9 gate are not claimed here.
+
+### Checkpoint validation, before implementation
+
+Setup ran with `bash cloud/setup.sh > /tmp/async-ordinary-setup.log 2>&1`,
+then shells sourced `/workspace/adamic-tools/env.sh`. Observed timing lines:
+Go ready 0s, clang ready 0s, Node ready 0s, submodules ready 0s, build cache
+warm 106s, done 106s. `nproc` is 5; cpu.max is `400000 100000`.
+Go 1.27.1, clang 20.1.8 and Node 24.19.0 were used. The initial attempt to
+format the conflict resolution before setup found no `gofmt` on PATH; the
+post-setup repository formatting check is clean.
+
+Commands and observed results, each with output redirected directly to a log:
+
+| Command | Result and log |
+| --- | --- |
+| `go test -count=1 -timeout 30m ./internal/lower ./internal/flow ./internal/ir ./internal/native` | exit 0; lower 30.165s, flow 75.313s, IR 1.458s, native 138.033s; `/tmp/async-ordinary-packages.log` |
+| `ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/async_|TestAsync'` | exit 0, 45.060s; `/tmp/async-ordinary-oracle.log` |
+| `python3 prototypes/async/check_cycles.py` | PASS; `/tmp/async-ordinary-cycles.log`; artifacts `/tmp/adamic-gate/p286ycm-cycles-bwvgx7dx` |
+| `go test -count=1 ./internal/ir -run '^TestCallTargetReaders$'` with temporary direct-read mutant | expected exit 1, unapproved `Call.Function` read; `/tmp/async-ordinary-target-guard-mutant.log` |
+| Same guard command after removing that mutant | exit 0, 0.462s; `/tmp/async-ordinary-target-guard-control.log` |
+| `go vet ./...` | exit 0, empty `/tmp/async-ordinary-vet.log` |
+| `gofmt -l cmd internal` and `git diff --check` | clean |
+
+Nine existing or temporary mutants were run: wrong resumed number (only Node
+stdout), missing dynamic parameter retain (ASan use-after-free), missing
+throw-frame local release (LeakSanitizer), skipped settle detach, skipped cancel
+detach and skipped exit detach (each LeakSanitizer), lost next-link ownership
+(ASan with two observers), inline fulfilled resume (only Node stdout), and the
+compilable direct call-target reader (the merged guard). The temporary Go reader
+was removed before the restored guard run. These establish the inherited
+mechanism and guard, not the proposed cutter or expanded syntax.
+
+The initial counts invocation filtered to the four async fixtures was unsuitable:
+the harness compares the whole table and failed with no changed row values.
+The complete uncached counts check also failed with no changed row values
+(`/tmp/async-ordinary-counts-full.log`, 15.981s). The merge had placed eleven
+inherited rows after concurrency rows instead of before them. Regeneration with
+`go test -count=1 -timeout 30m ./internal/oracle -run '^TestCountsAreRecorded$'
+-args -update-counts` passed in 15.354s and changed only that ordering, with no
+numeric row changes. The complete counts check after repair passed in 14.277s, exit 0
+(`/tmp/async-ordinary-counts-final.log`).
+
+All four async rows are unchanged from `55d2c89`: plain 21/21 allocations/frees,
+three 20/20, nested 22/22 and throw 12/10; retains/releases/peak/regions are also
+unchanged. No new fixture was added. The full gate is deferred until the
+reviewed implementation; this checkpoint does not claim expanded async support.
+
 ## First compiler landing and cycle evidence
 
 The lowering hook in `internal/lower/lower.go` dispatches to new `async.go` after the permanent refusal preflight. `internal/ir/async.go` carries straight-line states separately from synchronous tree bodies; `internal/native/async.go` emits eager starts and queued resume functions, and `internal/javascript/async.go` emits native JavaScript async/await. The native and JavaScript assembly hooks are small. Frames use Adamic's existing heap/header/destruction, not a second reference counter. Reference parameters and awaited strings are retained; all frame fields start zeroed and each local is initialized once, so drop can visit every reference field without a per-state mask. All locals are conservatively retained until frame destruction. Synchronous borrow, freshness, reuse and region optimizations do not run over suspension states. The synchronous SSA/Node path tracer explicitly excludes `Program.Async` rather than claiming an empty trace proves its graph. Suspension-state tracing is NotYet; async semantics are held by the dedicated three-way oracle and ownership mutants.
