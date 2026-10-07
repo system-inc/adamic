@@ -13,8 +13,7 @@
 //     does before comparing with the library.
 //   - The methods come callee first, not in the Go's order: stage 0 takes a call to a method declared
 //     further down for a void one (gitignore's GAPS.md, gap 3).
-//   - The Go's unexported fields are #private fields, and its unexported methods are `private` ones,
-//     since stage 0 doesn't lower a #private method yet (gap 4 in GAPS.md).
+//   - The Go's unexported fields and methods are #private members (gap 4 in GAPS.md is closed).
 
 import { panic } from 'adamic';
 import { alphaNum, type Token } from './tokenize.ts';
@@ -186,107 +185,107 @@ export class Parser {
 
 	// parser.go: tokenAt; currToken, nextToken and prevToken. undefined where upstream's index is out of
 	// range.
-	private tokenAt(index: number): Token | undefined {
+	#tokenAt(index: number): Token | undefined {
 		return this.#tokens[index];
 	}
 
 	// The current token, which every caller reads only while position is inside the tokens, as
 	// upstream's do.
-	private currToken(): Token {
-		return this.tokenAt(this.#position) ?? panic(`no token at ${this.#position} of ${this.#tokens.length}`);
+	#currToken(): Token {
+		return this.#tokenAt(this.#position) ?? panic(`no token at ${this.#position} of ${this.#tokens.length}`);
 	}
 
-	private nextToken(): Token | undefined {
-		return this.tokenAt(this.#position + 1);
+	#nextToken(): Token | undefined {
+		return this.#tokenAt(this.#position + 1);
 	}
 
-	private prevToken(): Token | undefined {
-		return this.tokenAt(this.#position - 1);
+	#prevToken(): Token | undefined {
+		return this.#tokenAt(this.#position - 1);
 	}
 
 	// parser.go: error, which throws a ParserError.
-	private error(message: string, token: Token): void {
+	#error(message: string, token: Token): void {
 		this.#thrown = `ParserError: ${message} at line: ${token.startLine}, column ${token.startColumn}`;
 	}
 
 	// parser.go: typeError, V8's TypeError for reading a property of undefined.
-	private typeError(key: string): void {
+	#typeError(key: string): void {
 		this.#thrown = `TypeError: Cannot read properties of undefined (reading '${key}')`;
 	}
 
 	// A container's children, as the Go's nodes field holds them.
-	private childrenOf(container: ValueNode): ValueNode[] {
+	#childrenOf(container: ValueNode): ValueNode[] {
 		return this.#children[container.id] ?? panic(`no children for a ${container.type}`);
 	}
 
 	// A new container's id, with no children yet.
-	private nextId(): number {
+	#nextId(): number {
 		this.#children.push([]);
 		return this.#children.length - 1;
 	}
 
 	// parser.go: last, Container's `get last`: the current node's last child, or undefined.
-	private last(): ValueNode | undefined {
-		return this.childrenOf(this.#current).at(-1);
+	#last(): ValueNode | undefined {
+		return this.#childrenOf(this.#current).at(-1);
 	}
 
 	// parser.go: newNode.
-	private newNode(node: ValueNode): void {
+	#newNode(node: ValueNode): void {
 		if (this.#spaces !== '') {
 			node.raws.before += this.#spaces;
 			this.#spaces = '';
 		}
 
-		this.childrenOf(this.#current).push(node);
+		this.#childrenOf(this.#current).push(node);
 	}
 
 	// parser.go: colon.
-	private colon(): void {
-		const token = this.currToken();
+	#colon(): void {
+		const token = this.#currToken();
 
-		this.newNode(leaf('colon', token.value, tokenSource(token), token.index));
+		this.#newNode(leaf('colon', token.value, tokenSource(token), token.index));
 
 		this.#position++;
 	}
 
 	// parser.go: comma.
-	private comma(): void {
-		const token = this.currToken();
+	#comma(): void {
+		const token = this.#currToken();
 
-		this.newNode(leaf('comma', token.value, tokenSource(token), token.index));
+		this.#newNode(leaf('comma', token.value, tokenSource(token), token.index));
 
 		this.#position++;
 	}
 
 	// parser.go: comment.
-	private comment(): void {
+	#comment(): void {
 		let inline = false;
-		let value = commentDelimiters(this.currToken().value);
+		let value = commentDelimiters(this.#currToken().value);
 
 		if (this.#loose && value.startsWith('//')) {
 			value = value.slice(2);
 			inline = true;
 		}
 
-		const node = newComment(value, inline, tokenSource(this.currToken()), this.currToken().index);
+		const node = newComment(value, inline, tokenSource(this.#currToken()), this.#currToken().index);
 
-		this.newNode(node);
+		this.#newNode(node);
 		this.#position++;
 	}
 
 	// parser.go: space.
-	private space(): void {
-		const token = this.currToken();
+	#space(): void {
+		const token = this.#currToken();
 		// Handle space before and after the selector
 		// Upstream compares the next token's type with ',' and ')', but comma tokens are typed 'comma',
 		// so only ')' and the last position ever match. The kind is widened to a string to say so, since no
 		// TokenKind is ','.
-		const next = this.nextToken();
+		const next = this.#nextToken();
 		const nextKind: string = next === undefined ? '' : next.kind;
 		if (this.#position === this.#tokens.length - 1 || nextKind === ',' || nextKind === ')') {
-			const currentLast = this.last();
+			const currentLast = this.#last();
 			if (currentLast === undefined) {
-				this.typeError('raws');
+				this.#typeError('raws');
 				return;
 			}
 			currentLast.raws.after += token.value;
@@ -298,17 +297,17 @@ export class Parser {
 	}
 
 	// parser.go: unicodeRange.
-	private unicodeRange(): void {
-		const token = this.currToken();
+	#unicodeRange(): void {
+		const token = this.#currToken();
 
-		this.newNode(leaf('unicode-range', token.value, tokenSource(token), token.index));
+		this.#newNode(leaf('unicode-range', token.value, tokenSource(token), token.index));
 
 		this.#position++;
 	}
 
 	// parser.go: string.
-	private string(): void {
-		const token = this.currToken();
+	#string(): void {
+		const token = this.#currToken();
 		let value = token.value;
 		// rQuote is /^(\"|\')/
 		const quoted = value.startsWith('"') || value.startsWith("'");
@@ -325,14 +324,14 @@ export class Parser {
 
 		node.raws.quote = quote;
 
-		this.newNode(node);
+		this.#newNode(node);
 		this.#position++;
 	}
 
 	// parser.go: splitWord.
-	private splitWord(): void {
-		let nextToken = this.nextToken();
-		let word = this.currToken().value;
+	#splitWord(): void {
+		let nextToken = this.#nextToken();
+		let word = this.#currToken().value;
 
 		// treat css-like groupings differently so they can be inspected,
 		// but don't address them as anything but a word, but allow hex values
@@ -341,9 +340,9 @@ export class Parser {
 			while (nextToken !== undefined && nextToken.kind === 'word') {
 				this.#position++;
 
-				word += this.currToken().value;
+				word += this.#currToken().value;
 
-				nextToken = this.nextToken();
+				nextToken = this.#nextToken();
 			}
 		}
 
@@ -362,7 +361,7 @@ export class Parser {
 			}
 		}
 
-		const currToken = this.currToken();
+		const currToken = this.#currToken();
 		for (let i = 0; i < indices.length; i++) {
 			const ind = indices[i] ?? panic(`index ${i} out of range`);
 			const following = indices[i + 1];
@@ -374,7 +373,7 @@ export class Parser {
 			const nodeSourceIndex = currToken.index + ind;
 
 			if (hasAt.includes(ind)) {
-				node = newAtWord(value.slice(1), nodeSource, nodeSourceIndex, this.nextId());
+				node = newAtWord(value.slice(1), nodeSource, nodeSourceIndex, this.#nextId());
 			} else if (rNumber(currToken.value) >= 0) {
 				const matched = rNumber(value);
 				const unit = matched >= 0 ? value.slice(matched) : value;
@@ -382,76 +381,76 @@ export class Parser {
 				// value.replace(unit, ''): the first occurrence, which is not always the suffix.
 				node = newNumber(replaceFirst(value, unit), nodeSource, nodeSourceIndex, unit);
 			} else if (nextToken !== undefined && nextToken.kind === '(') {
-				node = newFunc(value, nodeSource, nodeSourceIndex, this.nextId());
+				node = newFunc(value, nodeSource, nodeSourceIndex, this.#nextId());
 				this.#cache.push(this.#current);
 			} else {
 				node = newWord(value, nodeSource, nodeSourceIndex, isHex(value), isColor(value));
 			}
 
-			this.newNode(node);
+			this.#newNode(node);
 		}
 
 		this.#position++;
 	}
 
 	// parser.go: word.
-	private word(): void {
-		this.splitWord();
+	#word(): void {
+		this.#splitWord();
 	}
 
 	// parser.go: operator.
-	private operator(): void {
+	#operator(): void {
 		// if a +|- operator is followed by a non-word character (. is allowed) and
 		// is preceded by a non-word character. (5+5)
-		const char = this.currToken().value;
+		const char = this.#currToken().value;
 
 		if (char === '+' || char === '-') {
 			// only inspect if the operator is not the first token, and we're only
 			// within a calc() function: the only spec-valid place for math expressions
 			if (!this.#loose) {
 				if (this.#position > 0) {
-					const previous = this.prevToken() ?? panic('no token before a position past the first');
-					const next = this.nextToken();
+					const previous = this.#prevToken() ?? panic('no token before a position past the first');
+					const next = this.#nextToken();
 					if (this.#current.type === 'func' && this.#current.value === 'calc') {
 						// allow operators to be proceeded by spaces and opening parens
 						if (previous.kind !== 'space' && previous.kind !== '(') {
-							this.error('Syntax Error', this.currToken());
+							this.#error('Syntax Error', this.#currToken());
 							return;
 						}
 						if (next === undefined) {
-							this.typeError('0');
+							this.#typeError('0');
 							return;
 						}
 						if (next.kind !== 'space' && next.kind !== 'word') {
 							// valid: calc(1 - +2)
 							// invalid: calc(1 -+2)
-							this.error('Syntax Error', this.currToken());
+							this.#error('Syntax Error', this.#currToken());
 							return;
 						}
 						if (next.kind === 'word') {
-							const currentLast = this.last();
+							const currentLast = this.#last();
 							if (currentLast === undefined) {
-								this.typeError('type');
+								this.#typeError('type');
 								return;
 							}
 							if (currentLast.type !== 'operator' && currentLast.value !== '(') {
 								// valid: calc(1 - +2)
 								// valid: calc(-0.5 + 2)
 								// invalid: calc(1 -2)
-								this.error('Syntax Error', this.currToken());
+								this.#error('Syntax Error', this.#currToken());
 								return;
 							}
 						}
 					} else {
 						if (next === undefined) {
-							this.typeError('0');
+							this.#typeError('0');
 							return;
 						}
 						if (next.kind === 'space' || next.kind === 'operator' || previous.kind === 'operator') {
 							// if we're not in a function and someone has doubled up on operators,
 							// or they're trying to perform a calc outside of a calc
 							// eg. +-4px or 5+ 5, throw an error
-							this.error('Syntax Error', this.currToken());
+							this.#error('Syntax Error', this.#currToken());
 							return;
 						}
 					}
@@ -459,46 +458,46 @@ export class Parser {
 			}
 
 			if (!this.#loose) {
-				const next = this.nextToken();
+				const next = this.#nextToken();
 				if (next === undefined) {
-					this.typeError('0');
+					this.#typeError('0');
 					return;
 				}
 				if (next.kind === 'word') {
-					this.word();
+					this.#word();
 					return;
 				}
 			} else {
-				const currentLast = this.last();
-				if (this.childrenOf(this.#current).length === 0 || (currentLast !== undefined && currentLast.type === 'operator')) {
-					const next = this.nextToken();
+				const currentLast = this.#last();
+				if (this.#childrenOf(this.#current).length === 0 || (currentLast !== undefined && currentLast.type === 'operator')) {
+					const next = this.#nextToken();
 					if (next === undefined) {
-						this.typeError('0');
+						this.#typeError('0');
 						return;
 					}
 					if (next.kind === 'word') {
-						this.word();
+						this.#word();
 						return;
 					}
 				}
 			}
 		}
 
-		const token = this.currToken();
+		const token = this.#currToken();
 		// Upstream ends the operator where it starts, and takes its sourceIndex from token[4], which is
 		// the end line rather than the index.
 		const node = leaf('operator', token.value, new Source(new Position(token.startLine, token.startColumn), new Position(token.startLine, token.startColumn)), token.endLine);
 
 		this.#position++;
 
-		this.newNode(node);
+		this.#newNode(node);
 	}
 
 	// parser.go: parenOpen.
-	private parenOpen(): void {
+	#parenOpen(): void {
 		let unbalancedCount = 1;
 		let pos = this.#position + 1;
-		const token = this.currToken();
+		const token = this.#currToken();
 
 		// check for balanced parens
 		while (pos < this.#tokens.length && unbalancedCount !== 0) {
@@ -514,13 +513,13 @@ export class Parser {
 		}
 
 		if (unbalancedCount !== 0) {
-			this.error('Expected closing parenthesis', token);
+			this.#error('Expected closing parenthesis', token);
 			return;
 		}
 
 		// ok, all parens are balanced. continue on
 
-		const currentLast = this.last();
+		const currentLast = this.#last();
 
 		if (currentLast !== undefined && currentLast.type === 'func' && currentLast.unbalanced < 0) {
 			currentLast.unbalanced = 0; // ok we're ready to add parens now
@@ -529,13 +528,13 @@ export class Parser {
 
 		this.#current.unbalanced++;
 
-		this.newNode(newParen(token.value, tokenSource(token), token.index));
+		this.#newNode(newParen(token.value, tokenSource(token), token.index));
 
 		this.#position++;
 
 		// url functions get special treatment, and anything between the function
 		// parens get treated as one word, if the contents aren't not a string.
-		const afterParen = this.currToken();
+		const afterParen = this.#currToken();
 		if (
 			this.#current.type === 'func' &&
 			this.#current.unbalanced !== 0 &&
@@ -544,14 +543,14 @@ export class Parser {
 			afterParen.kind !== ')' &&
 			!this.#loose
 		) {
-			let nextToken = this.nextToken();
+			let nextToken = this.#nextToken();
 			let value = afterParen.value;
 			const start = new Position(afterParen.startLine, afterParen.startColumn);
 
 			while (nextToken !== undefined && nextToken.kind !== ')' && this.#current.unbalanced !== 0) {
 				this.#position++;
-				value += this.currToken().value;
-				nextToken = this.nextToken();
+				value += this.#currToken().value;
+				nextToken = this.#nextToken();
 			}
 
 			if (this.#position !== this.#tokens.length - 1) {
@@ -559,17 +558,17 @@ export class Parser {
 				this.#position++;
 
 				// Constructed directly, so unlike splitWord's words it carries no isHex or isColor.
-				const word = this.currToken();
-				this.newNode(leaf('word', value, new Source(start, new Position(word.endLine, word.endColumn)), word.index));
+				const word = this.#currToken();
+				this.#newNode(leaf('word', value, new Source(start, new Position(word.endLine, word.endColumn)), word.index));
 			}
 		}
 	}
 
 	// parser.go: parenClose.
-	private parenClose(): void {
-		const token = this.currToken();
+	#parenClose(): void {
+		const token = this.#currToken();
 
-		this.newNode(newParen(token.value, tokenSource(token), token.index));
+		this.#newNode(newParen(token.value, tokenSource(token), token.index));
 
 		this.#position++;
 
@@ -580,7 +579,7 @@ export class Parser {
 		this.#current.unbalanced--;
 
 		if (this.#current.unbalanced < 0) {
-			this.error('Expected opening parenthesis', token);
+			this.#error('Expected opening parenthesis', token);
 			return;
 		}
 
@@ -592,64 +591,64 @@ export class Parser {
 	}
 
 	// parser.go: parseTokens.
-	private parseTokens(): void {
-		switch (this.currToken().kind) {
+	#parseTokens(): void {
+		switch (this.#currToken().kind) {
 			case 'space':
-				this.space();
+				this.#space();
 				break;
 			case 'colon':
-				this.colon();
+				this.#colon();
 				break;
 			case 'comma':
-				this.comma();
+				this.#comma();
 				break;
 			case 'comment':
-				this.comment();
+				this.#comment();
 				break;
 			case '(':
-				this.parenOpen();
+				this.#parenOpen();
 				break;
 			case ')':
-				this.parenClose();
+				this.#parenClose();
 				break;
 			case 'atword':
 			case 'word':
-				this.word();
+				this.#word();
 				break;
 			case 'operator':
-				this.operator();
+				this.#operator();
 				break;
 			case 'string':
-				this.string();
+				this.#string();
 				break;
 			case 'unicoderange':
-				this.unicodeRange();
+				this.#unicodeRange();
 				break;
 			default:
-				this.word();
+				this.#word();
 				break;
 		}
 	}
 
 	// The tree of a node and everything under it, as the library returns it.
-	private tree(node: ValueNode): ValueTree {
+	#tree(node: ValueNode): ValueTree {
 		let nodes: readonly ValueTree[] = noChildren;
 		if (node.id >= 0) {
-			nodes = this.childrenOf(node).map((child) => this.tree(child));
+			nodes = this.#childrenOf(node).map((child) => this.#tree(child));
 		}
 		return new ValueTree(node, nodes);
 	}
 
 	// parser.go: loop.
-	private loop(): Parsed {
+	#loop(): Parsed {
 		while (this.#position < this.#tokens.length) {
-			this.parseTokens();
+			this.#parseTokens();
 			if (this.#thrown !== '') {
 				return { kind: 'Error', message: this.#thrown };
 			}
 		}
 
-		const currentLast = this.last();
+		const currentLast = this.#last();
 		if (currentLast === undefined) {
 			if (this.#spaces !== '') {
 				this.#current.raws.before += this.#spaces;
@@ -660,11 +659,11 @@ export class Parser {
 
 		this.#spaces = '';
 
-		return { kind: 'Ok', root: this.tree(this.#root) };
+		return { kind: 'Ok', root: this.#tree(this.#root) };
 	}
 
 	// parser.go: parse.
 	parse(): Parsed {
-		return this.loop();
+		return this.#loop();
 	}
 }

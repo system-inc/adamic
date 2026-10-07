@@ -1,0 +1,6 @@
+// From TypeScript 6.0.3, src/compiler/core.ts:17
+// From TypeScript 6.0.3, src/compiler/utilities.ts:10312
+// Census reason: an import cycle
+import { emptyArray } from './core.a';
+import { emptyFileSystemEntries } from './_namespaces/ts.a';
+console.log(`${emptyFileSystemEntries.files.length} ${emptyFileSystemEntries.directories.length} ${emptyFileSystemEntries.files === emptyArray}`);

@@ -97,11 +97,29 @@ func (l *lowering) constantPattern(node *ast.Node, depth int) (string, bool) {
 		if b.OperatorToken.Kind == ast.KindPlusToken {
 			a, ok := l.constantPattern(b.Left, depth+1)
 			c, other := l.constantPattern(b.Right, depth+1)
-			return a + c, ok && other
+			return joinPatternStrings(a, c), ok && other
 		}
 	}
 	return "", false
 }
+
+// joinPatternStrings mirrors adamic_string_put: canonical WTF-8 strings can
+// form a new surrogate pair only at the concatenation boundary.
+func joinPatternStrings(left, right string) string {
+	if len(left) < 3 || len(right) < 3 {
+		return left + right
+	}
+	high, low := left[len(left)-3:], right[:3]
+	if high[0] != 0xed || high[1] < 0xa0 || high[1] > 0xaf || high[2] < 0x80 || high[2] > 0xbf ||
+		low[0] != 0xed || low[1] < 0xb0 || low[1] > 0xbf || low[2] < 0x80 || low[2] > 0xbf {
+		return left + right
+	}
+	highUnit := rune(0xd000) | rune(high[1]&0x3f)<<6 | rune(high[2]&0x3f)
+	lowUnit := rune(0xd000) | rune(low[1]&0x3f)<<6 | rune(low[2]&0x3f)
+	point := 0x10000 + ((highUnit - 0xd800) << 10) + (lowUnit - 0xdc00)
+	return left[:len(left)-3] + string(point) + right[3:]
+}
+
 func (l *lowering) regexBuiltin(node *ast.Node) (ir.Expression, bool, error) {
 	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
 	if l.isLibraryGlobal(callee, "RegExp") {

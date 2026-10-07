@@ -14,10 +14,14 @@ adamic_object *adamic_object_new(const adamic_shape *shape) {
 }
 
 adamic_object *adamic_object_copy(const adamic_object *source) {
-	adamic_object *object = adamic_object_new(source->shape);
-	for (size_t index = 0; index < source->shape->count; index++) {
-		object->slots[index] = source->slots[index];
-		if (source->shape->references[index]) {
+	const adamic_shape *shape = source->class == NULL ? source->shape : source->class->public_shape;
+	adamic_object *object = adamic_object_new(shape);
+	for (size_t position = 0; position < shape->count; position++) {
+		size_t index = adamic_public_index(shape, position);
+		adamic_slot_cache cache = {NULL, 0};
+		const adamic_accessor *accessor = adamic_accessor_find(source, shape->names[index]);
+		object->slots[index] = accessor == NULL ? *adamic_object_field(source, shape->names[index], &cache) : adamic_accessor_get((adamic_object *)source, shape->names[index]);
+		if (shape->references[index] && accessor == NULL) {
 			adamic_retain(object->slots[index].reference);
 		}
 	}
@@ -78,4 +82,34 @@ adamic_closure *adamic_object_callee(const adamic_object *object, const char *na
 	}
 	*method = shape->methods->code[cache->index - shape->count];
 	return NULL;
+}
+
+// A field made as undefined alone holds NULL, whereas number | undefined holds a packed number.
+// The shape decides which union member is live; reading NULL's bits as a double would produce 0.
+adamic_maybe_number adamic_object_maybe_number(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
+	adamic_value *slot = adamic_object_field(object, name, cache);
+	if (object->shape->references[cache->index]) {
+		if (slot->reference != NULL) {
+			static const char message[] = "compiler bug: a numeric field holds a reference";
+			adamic_panic(message, sizeof message - 1);
+		}
+		return (adamic_maybe_number){false, 0.0};
+	}
+	return adamic_maybe_number_unpack(slot->number);
+}
+
+// Cache absence too, with count as the index, without adding a field to the object's shape.
+adamic_value *adamic_object_optional_find(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
+	cache->shape = object->shape;
+	cache->index = object->shape->count;
+	for (size_t index = 0; index < object->shape->count; index++) {
+		if (strcmp(object->shape->names[index], name) == 0) {
+			cache->index = index;
+			break;
+		}
+	}
+	if (cache->index == object->shape->count) {
+		return NULL;
+	}
+	return &((adamic_object *)object)->slots[cache->index];
 }

@@ -28,7 +28,8 @@ func TestInheritanceMemoryPlans(t *testing.T) {
 	t.Parallel()
 	program := inheritanceMemoryProgram(t)
 	regions := planRegions(program)
-	reuse := planReuse(program)
+	_, lending := planElementBorrows(program)
+	reuse := planReuse(program, lending)
 	if len(regions.statements) == 0 {
 		t.Fatal("hierarchy lost every region")
 	}
@@ -50,13 +51,17 @@ func TestInheritanceMemoryPlans(t *testing.T) {
 		if len(targets) < 2 {
 			return
 		}
-		if program.Functions[call.Function].Name == "Reader_size" {
+		names := map[string]bool{}
+		for _, target := range targets {
+			names[program.Functions[target].Name] = true
+		}
+		if names["Reader_size"] {
 			checkedEscape = true
 			if !regions.callEscapes(call, 1) {
 				t.Error("storing override lost from virtual escape summary")
 			}
 		}
-		if program.Functions[call.Function].Name == "Reader_replace" {
+		if names["Reader_replace"] {
 			checkedConvention = true
 			for _, target := range targets {
 				parameter := program.Functions[target].Parameters[1]

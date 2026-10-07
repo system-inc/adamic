@@ -16,6 +16,14 @@ You're working on Adamic: TypeScript whose types are true, compiled to native co
 - `internal/oracle`: the differential test. Every fixture runs three ways: its source on Node (the truth), native under ASan and UBSan, and the JavaScript backend on Node. stdout, stderr and the exit code must match byte for byte, and every program that finishes must leak nothing.
 - `cohere/`: a submodule (cohere, which carries typescript-go). Over HTTPS: `git config submodule.cohere.url https://github.com/system-inc/cohere.git && git submodule update --init --recursive --depth 1`.
 
+## Compiler file ownership
+
+Whole functions are kept together; trace extracted files with `git log --follow -C1% -- <file>`.
+
+- Native emission: `emit.go` owns program assembly and emitter state; `emit_functions.go` signatures, calls and returns; `emit_statements.go` statements and loops; `emit_expressions.go` expression dispatch and operators; `emit_branches.go` short-circuit branches; `emit_ownership.go` retain/release and temporaries; `emit_values.go` C value representations; `emit_locals.go` globals, locals and capture cells; `emit_objects.go` shapes, fields and method thunks; `emit_arrays.go`, `emit_maps.go`, `emit_numbers.go` and `emit_strings.go` own their named areas. Existing `library_*.go`, `regexp.go`, `class_inheritance.go`, `reuse.go` and `region.go` retain their specialized work.
+- Lowering: `lower.go` owns entry orchestration and state; `diagnostics.go` diagnostic types and descriptions; `modules.go` module order and registration; `functions.go` signatures, parameters and bodies; `statements.go` statement dispatch; `locals.go` bindings, captures and constants; `assignments.go` writes and compound updates; `control.go` conditions and loops; `prelude.go` console and panic recognition. Existing expression, class, collection and library files retain their areas.
+- String runtime: `string.c` remains the sole translation unit, including private `string_{build,decode,trim,walk,builder,slice,repeat,search,replace,split}_impl.h` implementations in their original order. These headers own allocation/concatenation, decoding, trimming, unit walking, buffers, slicing, repetition/padding, searching, replacement and splitting respectively. Relative-index and affix entry points stay in `string.c`; existing string cache, sharing, append, case and normalization `.c` files retain their areas. Include implementation headers only from `string.c`, preserving static linkage.
+
 ## The doctrine
 
 - **Never a silent miscompile.** Wrong output that looks right is the worst thing a compiler can do. Every change is held by the oracle against Node.
@@ -42,9 +50,17 @@ main moves.** Ordinary worker gates may use the cache. Keep `-timeout 30m` for t
 
 The input tests drop to uid 65534 when run as root, so TMPDIR must be world-traversable (for example /tmp/adamic-gate, mode 1777) and Node must not live under /root. A new fixture needs its row in internal/oracle/counts.md: `go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts`.
 
+Add a stage 1 lint rule only under `stage1/cohere/lint/rules/<slug>/`. Its directory
+owns `rule.json`, `rule.ts`, messages, its upstream Go `oracle.go` adapter,
+`mutant.json` and raw `testdata/*.ts.txt` witnesses. Omit `order` for new rules.
+Never edit a dispatch, oracle, corpus or copied-file list. Before building the lint
+driver, run `go run ./cmd/lint-registry`; tests regenerate and validate every
+descriptor automatically. Generated `.generated/` registries stay out of Git.
+See `docs/lint-registration.md` for the descriptor and adapter contracts.
+
 Send test output to a log and read the log. Never pipe a test run into `head` or `tail`: it kills the run mid-way and can orphan the fixtures' processes. Tests are parallel by default; a test that can't be says why in a "Not parallel:" comment.
 
-On Linux there's no `leaks` tool: LeakSanitizer (part of ASan there) does that job.
+On Linux there's no `leaks` tool: LeakSanitizer (part of ASan there) does that job. On macOS the leak check is the counted build, whose allocations must be its frees and its values in regions, then `leaks --atExit` on the same binary for malloc memory outside the counts; `leaks` alone can't see a leaked value, since the size-class allocator's chunks stay reachable.
 
 ## Adamic's own code passes Adamic's own gate
 

@@ -1,0 +1,48 @@
+
+Top 20 inclusive instructions (same-name inline records collapsed):
+   758,687,990  99.98% main
+   741,999,542  97.78% adamic_function_50_run
+   606,861,679  79.97% adamic_function_167_Linter_run
+   508,372,100  66.99% adamic_function_180_Linter_walk
+   487,220,709  64.20% adamic_function_187_Linter_additional
+   450,076,213  59.31% adamic_function_198_Linter_warnings
+   303,819,683  40.04% find
+   244,541,775  32.22% adamic_function_197_Linter_commentAnchors
+   244,535,874  32.22% adamic_function_197_Linter_commentAnchors'2
+   198,033,731  26.10% adamic_map_set
+   139,436,605  18.37% adamic_map_get
+   113,001,412  14.89% adamic_function_130_Statements_statement'2
+    97,859,709  12.90% adamic_function_107_Parser_file
+    97,824,329  12.89% adamic_function_130_Statements_statement
+    95,625,354  12.60% adamic_function_0_written
+    90,121,577  11.88% adamic_function_125_Statements_functionDeclaration
+    77,701,346  10.24% adamic_function_38_fold
+    75,761,396   9.98% adamic_string_locate
+    73,538,929   9.69% adamic_release
+    69,222,135   9.12% adamic_string_char_code
+
+Top 20 self instructions (same-name inline records collapsed):
+   303,252,935  39.96% find
+    63,882,339   8.42% adamic_release
+    55,185,061   7.27% adamic_string_locate
+    31,861,320   4.20% adamic_map_set
+    22,221,314   2.93% adamic_string_equal
+    20,587,316   2.71% usable
+    18,478,921   2.44% adamic_string_char_code
+    14,267,619   1.88% adamic_retain
+    12,154,550   1.60% adamic_string_slice
+    11,104,684   1.46% adamic_array_index_of
+    10,653,579   1.40% adamic_array_push
+     9,879,831   1.30% adamic_allocate
+     9,761,126   1.29% adamic_string_append
+     9,683,604   1.28% adamic_function_198_Linter_warnings
+     9,190,770   1.21% adamic_function_32_Scanner_scan
+     8,792,400   1.16% adamic_string_join_halves
+     7,819,245   1.03% free
+     7,202,385   0.95% unit_at
+     6,816,136   0.90% adamic_function_21_Scanner_code
+     6,508,977   0.86% adamic_function_54_Parser_node
+
+{
+  "instructions": 758875429
+}

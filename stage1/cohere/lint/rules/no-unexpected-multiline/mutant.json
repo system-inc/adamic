@@ -1,0 +1,5 @@
+{
+  "name": "no-unexpected-multiline mutant from batch 8",
+  "from": "context.line(start) !== context.line(context.node(expression).end - 1)",
+  "to": "context.line(start) === context.line(context.node(expression).end - 1)"
+}

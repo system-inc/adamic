@@ -1,0 +1,59 @@
+--- reference/forInStatement1.errors.txt
++++ local/forInStatement1.errors.txt
+@@ -0,0 +1,11 @@
++forInStatement1.ts(4,7): error TS2322: Type 'string' is not assignable to type 'number'.
++
++
++==== forInStatement1.ts (1 errors) ====
++    var expr: any;
++    for (var a in expr) {
++    }
++    const adaptation40Mutant: number = "wrong";
++          ~~~~~~~~~~~~~~~~~~
++!!! error TS2322: Type 'string' is not assignable to type 'number'.
++    --- reference/forInStatement1.js
++++ local/forInStatement1.js
+@@ -3,10 +3,13 @@
+ //// [forInStatement1.ts]
+ var expr: any;
+ for (var a in expr) {
+-}
++}
++const adaptation40Mutant: number = "wrong";
++
+ 
+ //// [forInStatement1.js]
+ "use strict";
+ var expr;
+ for (var a in expr) {
+ }
++const adaptation40Mutant = "wrong";
+--- reference/forInStatement1.symbols
++++ local/forInStatement1.symbols
+@@ -8,3 +8,6 @@
+ >a : Symbol(a, Decl(forInStatement1.ts, 1, 8))
+ >expr : Symbol(expr, Decl(forInStatement1.ts, 0, 3))
+ }
++const adaptation40Mutant: number = "wrong";
++>adaptation40Mutant : Symbol(adaptation40Mutant, Decl(forInStatement1.ts, 3, 5))
++
+--- reference/forInStatement1.types
++++ local/forInStatement1.types
+@@ -3,9 +3,17 @@
+ === forInStatement1.ts ===
+ var expr: any;
+ >expr : any
++>     : ^^^
+ 
+ for (var a in expr) {
+ >a : string
+ >  : ^^^^^^
+ >expr : any
++>     : ^^^
+ }
++const adaptation40Mutant: number = "wrong";
++>adaptation40Mutant : number
++>                   : ^^^^^^
++>"wrong" : "wrong"
++>        : ^^^^^^^
++
