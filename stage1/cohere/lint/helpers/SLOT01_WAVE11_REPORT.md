@@ -213,3 +213,9 @@ Rebased without conflicts onto current main 4e0bfda50a19c705a1aac0d9932e08483806
 `go test ./stage1/cohere/lint/helpers -count=1 -v -timeout=20m` passed in 612.473s with 76 top-level passes and eight explicit ownership-blocked skips. All 77 compiled semantic mutants and eight source-only tree mutants were caught; the two expected refusal checks passed. `go vet ./stage1/cohere/lint/helpers` passed. `ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestInputAgreesWithNode$' -count=1 -v -timeout=20m` passed in 6.998s with seven probe misses. Evidence: evidence/slot01-wave11/4e-{oracle,vet,input}.log.
 
 The CollapseCopyNode[] adamic/cycle-capable refusal persists. Native/emitted-JavaScript tree parity and compiled tree mutants remain unverified. The full repository and 17 required-input checks were not run in this bounded worker check; no check or adapter guard was relaxed. No fully green gate, new helper claim or tree readiness credit is asserted.
+
+## Stage-3 main landing refresh on 71d7e491
+
+Rebased without conflicts onto main 71d7e491b3c9724f7a0e2ee754592149e7f9790b, retaining the incoming pinned stage-3 work. This landing changes no helper, compiler or Go fixture input. Previous full helper evidence remains 4e-oracle.log (612.473s, 76 passes and eight blocked skips).
+
+`go test ./stage1/cohere/lint/helpers -run '^TestSlot01Wave11' -count=1 -v -timeout=20m` finished in 31.163s, with all eight source-only mutants caught after Go/Node parity and eight explicit native ownership-blocked skips. `go vet ./stage1/cohere/lint/helpers` passed. Logs: evidence/slot01-wave11/71-{oracle,vet}.log. The CollapseCopyNode[] adamic/cycle-capable refusal persists. Native tree parity, compiled tree mutants and the required-input gate remain unverified. No check was relaxed, no new helper was claimed, and no readiness credit was added.
