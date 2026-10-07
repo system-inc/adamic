@@ -1,0 +1,25 @@
+{
+  "cases": 75,
+  "bytes": 30993,
+  "build_blocked": "see build stderr",
+  "corpus_files": 236,
+  "rates": {
+    "Go": {
+      "seconds": 0.170107640000424,
+      "findings": 28,
+      "findings_per_second": 164.60166045411134
+    },
+    "Node": {
+      "seconds": 0.7925433090003935,
+      "findings": 28,
+      "findings_per_second": 35.329299587823655
+    }
+  },
+  "typescript_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "setup_seconds": 16,
+  "nproc": 5,
+  "comparison_backends": [
+    "Go",
+    "Node"
+  ]
+}

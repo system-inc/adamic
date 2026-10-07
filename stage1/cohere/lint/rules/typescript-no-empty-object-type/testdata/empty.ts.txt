@@ -1,0 +1,4 @@
+interface A {}
+interface B extends A {}
+type C = {};
+type D = A & {};
