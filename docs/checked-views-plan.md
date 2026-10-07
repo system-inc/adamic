@@ -368,3 +368,66 @@ files. Lane 2 remains merged at 0b141c26. Lane 3 c1f4c5a7 is used in an isolated
 measurement worktree rather than merged through those conflicts. The lane 1
 owner must reconcile cast dispatch before a landed/re-greened integration or a
 completion date for its nullish/optional families can be claimed by lane 4.
+
+### Lane 4 selector checkpoint from bc87b103
+
+The user's new work queue is frozen at 213 `(type, field)` pairs and 1,111
+explicit read sites, ranked in lane4/pair-progress.json. It does not silently
+remove branded/intersection or other-owner obligations. The first two pairs,
+Identifier.escapedText and Symbol.escapedName, account for 448 reads and require
+__String brand proof; accepting every runtime string is not that proof.
+
+Lane 4 now supplies runtime/view_unions_mixed.c/.h and
+javascript/view_unions_mixed.go. The entry points are:
+
+- C: adamic_view_mixed_union_select(snapshot,members,count,match,context,
+  expression,declared), returning the selected member index.
+- JavaScript: adamicViewMixedUnionSelect(snapshot,members,match,expression,
+  declared), included through javascript.MixedUnionRuntime().
+
+The snapshot has an explicit logical kind and borrowed normalized payload.
+Logical kinds are neither raw heap kinds nor physical field storage bytes.
+Null and undefined have distinct logical kinds; the selector never manufactures
+that distinction from a null pointer. Shared probes must establish presence,
+readiness and kind before entry. Selection transfers no ownership or readiness
+proof. Convert/retain only after it succeeds, preserving the member contract on
+later field/element/call reads and aliases.
+
+Member records carry logical kind, optional literal constraint and a nonzero
+shared contract id for reference members. The adapter match callback must be a
+complete, pure, non-panicking contract test using shared metadata/probes, never
+getters or callable bodies. Missing reference adapters/contracts and unknown
+logical values do not pass. Failed alternatives allow later members to be tried.
+An unavailable member contract must stay a named read-site NotYet/deferred
+obligation until its adapter is available; it cannot be emitted as a complete
+member that guesses conformance from a heap-kind match.
+
+Additional concrete lane 1 wiring required, alongside lazy admission:
+
+1. Include view_unions_mixed.h in native program assembly, and append
+   javascript.MixedUnionRuntime() to its helper text before field read emission.
+2. Route union-typed reads with complete member descriptors to the selector
+   after the already-evaluated receiver's shared normalized slot probe. Supply
+   expression text and the exact declared union. Apply optional/required field
+   presence and readiness through the common path, not through this selector.
+3. Supply the shared registry member-contract matcher for object/array/Map/
+   callable alternatives. No adapter may panic on a failed alternative or copy
+   readiness traversal into lane 4. Do not admit unsupported deferred bodies.
+4. Feed the selected member id into the existing propagation/read path, retaining
+   transitive checks. Lane 4's four-family component oracle is not authorization
+   to admit source casts before these paths are covered.
+
+The component oracle covers string|number|undefined, string|Identifier, two
+untagged objects with different text contracts, and false|string|undefined.
+Each has source .a Node controls for every member plus a wrong-value exit-70
+pin for both implementations. Six independent release mutations are caught:
+skip member testing, take the first untested member and skip object transitive
+matching, separately in C and JavaScript. This proves selector semantics;
+frontend/source integration remains pending and removes zero pairs.
+
+Planning target for all 213 integrated pairs: October 16, 2026, 17:00 MDT
+(23:00 UTC), conditional on lane 1 lazy admission plus normalized slot probes,
+and the required brand/schema proof support, arriving by October 9. This is a
+conditional working estimate, not an unconditional promise to erase phantom
+brands or admit incomplete dictionaries/callable signatures. Completion evidence
+and remaining pair/read totals are updated at every push.

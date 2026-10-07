@@ -1,0 +1,5738 @@
+{
+  "baseline": "bc87b103",
+  "definition": "Completion requires actual source fixture on both backends, Node member controls, named exit-70 pin and semantic mutants; component coverage removes no pair",
+  "total_pairs": 213,
+  "total_read_sites": 1111,
+  "completed_pairs": 0,
+  "completed_read_sites": 0,
+  "remaining_pairs": 213,
+  "remaining_read_sites": 1111,
+  "pairs": [
+    {
+      "priority": 1,
+      "pair_id": "6997:escapedText",
+      "receiver_type_id": 6997,
+      "type": "Identifier",
+      "field": "escapedText",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 224,
+      "witness": {
+        "file": "src/compiler/utilitiesPublic.ts",
+        "line": 866,
+        "column": 33
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 2,
+      "pair_id": "4329:escapedName",
+      "receiver_type_id": 4329,
+      "type": "Symbol",
+      "field": "escapedName",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 224,
+      "witness": {
+        "file": "src/compiler/debug.ts",
+        "line": 383,
+        "column": 54
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 3,
+      "pair_id": "10524:value",
+      "receiver_type_id": 10524,
+      "type": "EvaluatorResult<string | number | undefined>",
+      "field": "value",
+      "declared_types": [
+        "string | number | undefined"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members"
+      ],
+      "reads": 61,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 11344,
+        "column": 28
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "nullish members"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 4,
+      "pair_id": "11269:type",
+      "receiver_type_id": 11269,
+      "type": "CommandLineOption",
+      "field": "type",
+      "declared_types": [
+        "\"string\" | \"number\" | \"boolean\" | \"object\" | Map<string, string | number> | \"list\" | \"listOrElement\""
+      ],
+      "families": [
+        "object plus primitive union"
+      ],
+      "reads": 33,
+      "witness": {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 1729,
+        "column": 22
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [],
+      "evidence": []
+    },
+    {
+      "priority": 5,
+      "pair_id": "34526:name",
+      "receiver_type_id": 34526,
+      "type": "NamedDeclaration & { name: DeclarationName; }",
+      "field": "name",
+      "declared_types": [
+        "Identifier | ObjectBindingPattern | ArrayBindingPattern | PrivateIdentifier | StringLiteral | NumericLiteral | BigIntLiteral | ElementAccessExpression | ComputedPropertyName | JsxNamespacedName | NoSubstitutionTemplateLiteral | PropertyAccessEntityNameExpression"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 25,
+      "witness": {
+        "file": "src/compiler/utilitiesPublic.ts",
+        "line": 932,
+        "column": 55
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 6,
+      "pair_id": "11268:element",
+      "receiver_type_id": 11268,
+      "type": "CommandLineOptionOfListType",
+      "field": "element",
+      "declared_types": [
+        "CommandLineOptionOfStringType | CommandLineOptionOfNumberType | CommandLineOptionOfBooleanType | CommandLineOptionOfCustomType | TsConfigOnlyOption"
+      ],
+      "families": [
+        "untagged object union"
+      ],
+      "reads": 22,
+      "witness": {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 1896,
+        "column": 13
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [],
+      "evidence": []
+    },
+    {
+      "priority": 7,
+      "pair_id": "6998:externalModuleIndicator",
+      "receiver_type_id": 6998,
+      "type": "SourceFile",
+      "field": "externalModuleIndicator",
+      "declared_types": [
+        "true | Node | undefined"
+      ],
+      "families": [
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "reads": 20,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 2639,
+        "column": 13
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 8,
+      "pair_id": "9761:messageText",
+      "receiver_type_id": 9761,
+      "type": "Diagnostic",
+      "field": "messageText",
+      "declared_types": [
+        "string | DiagnosticMessageChain"
+      ],
+      "families": [
+        "object plus primitive union"
+      ],
+      "reads": 15,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 8827,
+        "column": 27
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [],
+      "evidence": []
+    },
+    {
+      "priority": 9,
+      "pair_id": "7618:escapedText",
+      "receiver_type_id": 7618,
+      "type": "PrivateIdentifier",
+      "field": "escapedText",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 15,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 6360,
+        "column": 51
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 10,
+      "pair_id": "7619:escapedText",
+      "receiver_type_id": 7619,
+      "type": "Identifier | PrivateIdentifier",
+      "field": "escapedText",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 14,
+      "witness": {
+        "file": "src/compiler/utilitiesPublic.ts",
+        "line": 858,
+        "column": 39
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 11,
+      "pair_id": "10871:name",
+      "receiver_type_id": 10871,
+      "type": "ElementWithComputedPropertyName",
+      "field": "name",
+      "declared_types": [
+        "ComputedPropertyName"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 12,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 7620,
+        "column": 35
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 12,
+      "pair_id": "10560:typeOnlyDeclaration",
+      "receiver_type_id": 10560,
+      "type": "SymbolLinks",
+      "field": "typeOnlyDeclaration",
+      "declared_types": [
+        "false | TypeOnlyAliasDeclaration | undefined"
+      ],
+      "families": [
+        "intersection field contract",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "reads": 11,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 4446,
+        "column": 24
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract",
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 13,
+      "pair_id": "38457:literal",
+      "receiver_type_id": 38457,
+      "type": "TypeNode & LiteralTypeNode & { readonly literal: StringLiteral; }",
+      "field": "literal",
+      "declared_types": [
+        "LiteralExpression & StringLiteral"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 11,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 4369,
+        "column": 52
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 14,
+      "pair_id": "9858:[dynamic index]",
+      "receiver_type_id": 9858,
+      "type": "CompilerOptions",
+      "field": "[dynamic index]",
+      "declared_types": [
+        "TsConfigSourceFile | CompilerOptionsValue"
+      ],
+      "families": [
+        "array or tuple contracts",
+        "dictionary contracts",
+        "mixed primitive union",
+        "nullish members",
+        "object plus primitive union"
+      ],
+      "reads": 10,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 9370,
+        "column": 12
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "array or tuple contracts",
+        "dictionary contracts",
+        "nullish members"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 15,
+      "pair_id": "7536:value",
+      "receiver_type_id": 7536,
+      "type": "LiteralType",
+      "field": "value",
+      "declared_types": [
+        "string | number | PseudoBigInt"
+      ],
+      "families": [
+        "mixed primitive union",
+        "object plus primitive union"
+      ],
+      "reads": 10,
+      "witness": {
+        "file": "src/compiler/debug.ts",
+        "line": 644,
+        "column": 102
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [],
+      "evidence": []
+    },
+    {
+      "priority": 16,
+      "pair_id": "10393:escapedName",
+      "receiver_type_id": 10393,
+      "type": "TransientSymbol",
+      "field": "escapedName",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 10,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 1565,
+        "column": 17
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 17,
+      "pair_id": "9170:escapedText",
+      "receiver_type_id": 9170,
+      "type": "MemberName",
+      "field": "escapedText",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 9,
+      "witness": {
+        "file": "src/compiler/parser.ts",
+        "line": 10821,
+        "column": 12
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 18,
+      "pair_id": "89012:0",
+      "receiver_type_id": 89012,
+      "type": "OperationArguments",
+      "field": "0",
+      "declared_types": [
+        "number | Expression | Statement | undefined"
+      ],
+      "families": [
+        "nullish members",
+        "object plus primitive union"
+      ],
+      "reads": 9,
+      "witness": {
+        "file": "src/compiler/transformers/generators.ts",
+        "line": 3049,
+        "column": 35
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "nullish members"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 19,
+      "pair_id": "7642:comment",
+      "receiver_type_id": 7642,
+      "type": "JSDoc",
+      "field": "comment",
+      "declared_types": [
+        "string | NodeArray<JSDocComment> | undefined"
+      ],
+      "families": [
+        "dictionary contracts",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "reads": 8,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 5591,
+        "column": 16
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "dictionary contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 20,
+      "pair_id": "33864:name",
+      "receiver_type_id": 33864,
+      "type": "ParameterPropertyDeclaration",
+      "field": "name",
+      "declared_types": [
+        "Identifier"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 8,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 42245,
+        "column": 92
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 21,
+      "pair_id": "9762:messageText",
+      "receiver_type_id": 9762,
+      "type": "DiagnosticRelatedInformation",
+      "field": "messageText",
+      "declared_types": [
+        "string | DiagnosticMessageChain"
+      ],
+      "families": [
+        "object plus primitive union"
+      ],
+      "reads": 7,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 2482,
+        "column": 19
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [],
+      "evidence": []
+    },
+    {
+      "priority": 22,
+      "pair_id": "9860:useCaseSensitiveFileNames",
+      "receiver_type_id": 9860,
+      "type": "ModuleResolutionHost",
+      "field": "useCaseSensitiveFileNames",
+      "declared_types": [
+        "boolean | (() => boolean) | undefined"
+      ],
+      "families": [
+        "callable contracts",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "reads": 7,
+      "witness": {
+        "file": "src/compiler/moduleNameResolver.ts",
+        "line": 512,
+        "column": 46
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 23,
+      "pair_id": "75216:IntrinsicElements",
+      "receiver_type_id": 75216,
+      "type": "typeof JsxNames",
+      "field": "IntrinsicElements",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 7,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 34017,
+        "column": 54
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 24,
+      "pair_id": "70883:[dynamic index]",
+      "receiver_type_id": 70883,
+      "type": "__String[]",
+      "field": "[dynamic index]",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 6,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 14206,
+        "column": 49
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 25,
+      "pair_id": "8901:comment",
+      "receiver_type_id": 8901,
+      "type": "JSDocImportTag",
+      "field": "comment",
+      "declared_types": [
+        "string | NodeArray<JSDocComment> | undefined"
+      ],
+      "families": [
+        "dictionary contracts",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "reads": 6,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 5559,
+        "column": 20
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "dictionary contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 26,
+      "pair_id": "8815:comment",
+      "receiver_type_id": 8815,
+      "type": "JSDocTypedefTag",
+      "field": "comment",
+      "declared_types": [
+        "string | NodeArray<JSDocComment> | undefined"
+      ],
+      "families": [
+        "dictionary contracts",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "reads": 6,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 5248,
+        "column": 20
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "dictionary contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 27,
+      "pair_id": "46428:value",
+      "receiver_type_id": 46428,
+      "type": "StringLiteralType | NumberLiteralType",
+      "field": "value",
+      "declared_types": [
+        "string | number"
+      ],
+      "families": [
+        "mixed primitive union"
+      ],
+      "reads": 6,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 11175,
+        "column": 46
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [],
+      "evidence": []
+    },
+    {
+      "priority": 28,
+      "pair_id": "101296:buildInfo",
+      "receiver_type_id": 101296,
+      "type": "BuildInfoCacheEntry",
+      "field": "buildInfo",
+      "declared_types": [
+        "false | BuildInfo"
+      ],
+      "families": [
+        "object plus primitive union"
+      ],
+      "reads": 5,
+      "witness": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1449,
+        "column": 16
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [],
+      "evidence": []
+    },
+    {
+      "priority": 29,
+      "pair_id": "33864:parent",
+      "receiver_type_id": 33864,
+      "type": "ParameterPropertyDeclaration",
+      "field": "parent",
+      "declared_types": [
+        "ConstructorDeclaration"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 5,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 2969,
+        "column": 40
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 30,
+      "pair_id": "62718:args",
+      "receiver_type_id": 62718,
+      "type": "PragmaDefinition<string, string, string, string>",
+      "field": "args",
+      "declared_types": [
+        "readonly [PragmaArgumentSpecification<string>] | readonly [PragmaArgumentSpecification<string>, PragmaArgumentSpecification<string>] | readonly [PragmaArgumentSpecification<string>, PragmaArgumentSpecification<string>, PragmaArgumentSpecification<string>] | readonly [PragmaArgumentSpecification<string>, PragmaArgumentSpecification<string>, PragmaArgumentSpecification<string>, PragmaArgumentSpecification<string>] | undefined"
+      ],
+      "families": [
+        "array or tuple contracts",
+        "nullish members",
+        "optional properties",
+        "untagged object union"
+      ],
+      "reads": 5,
+      "witness": {
+        "file": "src/compiler/parser.ts",
+        "line": 10722,
+        "column": 13
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "array or tuple contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 31,
+      "pair_id": "10861:parameters",
+      "receiver_type_id": 10861,
+      "type": "SignatureDeclaration | JSDocSignature",
+      "field": "parameters",
+      "declared_types": [
+        "NodeArray<ParameterDeclaration> | readonly JSDocParameterTag[]"
+      ],
+      "families": [
+        "array or tuple contracts",
+        "dictionary contracts",
+        "untagged object union"
+      ],
+      "reads": 5,
+      "witness": {
+        "file": "src/compiler/utilitiesPublic.ts",
+        "line": 2634,
+        "column": 76
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "array or tuple contracts",
+        "dictionary contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 32,
+      "pair_id": "6849:0",
+      "receiver_type_id": 6849,
+      "type": "(string | number)[]",
+      "field": "0",
+      "declared_types": [
+        "string | number"
+      ],
+      "families": [
+        "mixed primitive union"
+      ],
+      "reads": 4,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 22517,
+        "column": 42
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [],
+      "evidence": []
+    },
+    {
+      "priority": 33,
+      "pair_id": "7615:prefix",
+      "receiver_type_id": 7615,
+      "type": "AutoGenerateInfo",
+      "field": "prefix",
+      "declared_types": [
+        "string | GeneratedNamePart | undefined"
+      ],
+      "families": [
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "reads": 4,
+      "witness": {
+        "file": "src/compiler/transformers/utilities.ts",
+        "line": 427,
+        "column": 67
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 34,
+      "pair_id": "11269:defaultValueDescription",
+      "receiver_type_id": 11269,
+      "type": "CommandLineOption",
+      "field": "defaultValueDescription",
+      "declared_types": [
+        "string | number | boolean | DiagnosticMessage | undefined"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "reads": 4,
+      "witness": {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 259,
+        "column": 44
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 35,
+      "pair_id": "11275:type",
+      "receiver_type_id": 11275,
+      "type": "CommandLineOptionOfStringType | CommandLineOptionOfNumberType | CommandLineOptionOfBooleanType | CommandLineOptionOfCustomType | TsConfigOnlyOption",
+      "field": "type",
+      "declared_types": [
+        "\"string\" | \"number\" | \"boolean\" | \"object\" | Map<string, string | number>"
+      ],
+      "families": [
+        "object plus primitive union"
+      ],
+      "reads": 4,
+      "witness": {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 1896,
+        "column": 13
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [],
+      "evidence": []
+    },
+    {
+      "priority": 36,
+      "pair_id": "97716:next",
+      "receiver_type_id": 97716,
+      "type": "DiagnosticMessageChain | ReusableDiagnosticMessageChain",
+      "field": "next",
+      "declared_types": [
+        "DiagnosticMessageChain[] | ReusableDiagnosticMessageChain[] | undefined"
+      ],
+      "families": [
+        "array or tuple contracts",
+        "nullish members",
+        "optional properties",
+        "untagged object union"
+      ],
+      "reads": 4,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 545,
+        "column": 66
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "array or tuple contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 37,
+      "pair_id": "9228:escapedText",
+      "receiver_type_id": 9228,
+      "type": "Identifier | undefined",
+      "field": "escapedText",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 4,
+      "witness": {
+        "file": "src/compiler/parser.ts",
+        "line": 8397,
+        "column": 13
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 38,
+      "pair_id": "8813:comment",
+      "receiver_type_id": 8813,
+      "type": "JSDocCallbackTag",
+      "field": "comment",
+      "declared_types": [
+        "string | NodeArray<JSDocComment> | undefined"
+      ],
+      "families": [
+        "dictionary contracts",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "reads": 4,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 5314,
+        "column": 20
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "dictionary contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 39,
+      "pair_id": "8875:comment",
+      "receiver_type_id": 8875,
+      "type": "JSDocSeeTag",
+      "field": "comment",
+      "declared_types": [
+        "string | NodeArray<JSDocComment> | undefined"
+      ],
+      "families": [
+        "dictionary contracts",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "reads": 4,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 5369,
+        "column": 20
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "dictionary contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 40,
+      "pair_id": "7637:comment",
+      "receiver_type_id": 7637,
+      "type": "JSDocTemplateTag",
+      "field": "comment",
+      "declared_types": [
+        "string | NodeArray<JSDocComment> | undefined"
+      ],
+      "families": [
+        "dictionary contracts",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "reads": 4,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 5226,
+        "column": 20
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "dictionary contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 41,
+      "pair_id": "10747:isExhaustive",
+      "receiver_type_id": 10747,
+      "type": "NodeLinks",
+      "field": "isExhaustive",
+      "declared_types": [
+        "boolean | 0 | undefined"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members",
+        "optional properties"
+      ],
+      "reads": 4,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 39371,
+        "column": 13
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 42,
+      "pair_id": "65325:extendedConfigPath",
+      "receiver_type_id": 65325,
+      "type": "ParsedTsconfig",
+      "field": "extendedConfigPath",
+      "declared_types": [
+        "string | string[] | undefined"
+      ],
+      "families": [
+        "array or tuple contracts",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "reads": 4,
+      "witness": {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 3434,
+        "column": 9
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "array or tuple contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 43,
+      "pair_id": "6849:1",
+      "receiver_type_id": 6849,
+      "type": "(string | number)[]",
+      "field": "1",
+      "declared_types": [
+        "string | number"
+      ],
+      "families": [
+        "mixed primitive union"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 22550,
+        "column": 78
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [],
+      "evidence": []
+    },
+    {
+      "priority": 44,
+      "pair_id": "97898:1",
+      "receiver_type_id": 97898,
+      "type": "[fileId: IncrementalBuildInfoFileId, signature: [] | EmitSignature]",
+      "field": "1",
+      "declared_types": [
+        "[] | EmitSignature | IncrementalBuildInfoFileId"
+      ],
+      "families": [
+        "array or tuple contracts",
+        "intersection field contract",
+        "mixed primitive union",
+        "object plus primitive union"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 2302,
+        "column": 31
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "array or tuple contracts",
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 45,
+      "pair_id": "6837:0",
+      "receiver_type_id": 6837,
+      "type": "[number, string]",
+      "field": "0",
+      "declared_types": [
+        "string | number"
+      ],
+      "families": [
+        "mixed primitive union"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/debug.ts",
+        "line": 392,
+        "column": 42
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [],
+      "evidence": []
+    },
+    {
+      "priority": 46,
+      "pair_id": "9761:skippedOn",
+      "receiver_type_id": 9761,
+      "type": "Diagnostic",
+      "field": "skippedOn",
+      "declared_types": [
+        "keyof CompilerOptions | undefined"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members",
+        "optional properties"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/program.ts",
+        "line": 5099,
+        "column": 37
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 47,
+      "pair_id": "11591:text",
+      "receiver_type_id": 11591,
+      "type": "EmitHelper",
+      "field": "text",
+      "declared_types": [
+        "string | ((node: EmitHelperUniqueNameCallback) => string)"
+      ],
+      "families": [
+        "callable contracts",
+        "object plus primitive union"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/emitter.ts",
+        "line": 2083,
+        "column": 32
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 48,
+      "pair_id": "10525:value",
+      "receiver_type_id": 10525,
+      "type": "EvaluatorResult<string | number | undefined> | undefined",
+      "field": "value",
+      "declared_types": [
+        "string | number | undefined"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/transformers/ts.ts",
+        "line": 1919,
+        "column": 77
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "nullish members"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 49,
+      "pair_id": "97934:pendingEmit",
+      "receiver_type_id": 97934,
+      "type": "IncrementalBundleEmitBuildInfo",
+      "field": "pendingEmit",
+      "declared_types": [
+        "IncrementalBuildInfoBundlePendingEmit | undefined"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 2282,
+        "column": 33
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "nullish members"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 50,
+      "pair_id": "8883:comment",
+      "receiver_type_id": 8883,
+      "type": "JSDocAugmentsTag",
+      "field": "comment",
+      "declared_types": [
+        "string | NodeArray<JSDocComment> | undefined"
+      ],
+      "families": [
+        "dictionary contracts",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 5346,
+        "column": 20
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "dictionary contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 51,
+      "pair_id": "36586:comment",
+      "receiver_type_id": 36586,
+      "type": "JSDocCallbackTag | JSDocEnumTag | JSDocTypedefTag",
+      "field": "comment",
+      "declared_types": [
+        "string | NodeArray<JSDocComment> | undefined"
+      ],
+      "families": [
+        "dictionary contracts",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 9905,
+        "column": 76
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "dictionary contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 52,
+      "pair_id": "8882:comment",
+      "receiver_type_id": 8882,
+      "type": "JSDocImplementsTag",
+      "field": "comment",
+      "declared_types": [
+        "string | NodeArray<JSDocComment> | undefined"
+      ],
+      "families": [
+        "dictionary contracts",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 5455,
+        "column": 20
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "dictionary contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 53,
+      "pair_id": "10747:jsxImplicitImportContainer",
+      "receiver_type_id": 10747,
+      "type": "NodeLinks",
+      "field": "jsxImplicitImportContainer",
+      "declared_types": [
+        "false | Symbol | undefined"
+      ],
+      "families": [
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 34057,
+        "column": 22
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 54,
+      "pair_id": "10747:jsxNamespace",
+      "receiver_type_id": 10747,
+      "type": "NodeLinks",
+      "field": "jsxNamespace",
+      "declared_types": [
+        "false | Symbol | undefined"
+      ],
+      "families": [
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 34082,
+        "column": 22
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 55,
+      "pair_id": "89012:1",
+      "receiver_type_id": 89012,
+      "type": "OperationArguments",
+      "field": "1",
+      "declared_types": [
+        "number | Expression | Statement | undefined"
+      ],
+      "families": [
+        "nullish members",
+        "object plus primitive union"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/transformers/generators.ts",
+        "line": 3055,
+        "column": 59
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "nullish members"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 56,
+      "pair_id": "64923:[dynamic index]",
+      "receiver_type_id": 64923,
+      "type": "OptionsBase",
+      "field": "[dynamic index]",
+      "declared_types": [
+        "TsConfigSourceFile | CompilerOptionsValue"
+      ],
+      "families": [
+        "array or tuple contracts",
+        "dictionary contracts",
+        "mixed primitive union",
+        "nullish members",
+        "object plus primitive union"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2795,
+        "column": 27
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "array or tuple contracts",
+        "dictionary contracts",
+        "nullish members"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 57,
+      "pair_id": "12956:args",
+      "receiver_type_id": 12956,
+      "type": "PragmaPseudoMapEntry",
+      "field": "args",
+      "declared_types": [
+        "{ arguments: { types?: { value: string; pos: number; end: number; } | undefined; } & { lib?: { value: string; pos: number; end: number; } | undefined; } & { path?: { value: string; pos: number; end: number; } | undefined; } & { \"no-default-lib\"?: string | undefined; } & { \"resolution-mode\"?: string | undefined; } & { preserve?: string | undefined; }; range: CommentRange; } | { arguments: { path: string; } & { name?: string | undefined; }; range: CommentRange; } | { arguments: { name: string; }; range: CommentRange; } | { arguments: never; range: CommentRange; } | { arguments: never; range: CommentRange; } | { arguments: { factory: string; }; range: CommentRange; } | { arguments: { factory: string; }; range: CommentRange; } | { arguments: { factory: string; }; range: CommentRange; } | { arguments: { factory: string; }; range: CommentRange; }"
+      ],
+      "families": [
+        "untagged object union"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/parser.ts",
+        "line": 10604,
+        "column": 35
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [],
+      "evidence": []
+    },
+    {
+      "priority": 58,
+      "pair_id": "65708:originalPath",
+      "receiver_type_id": 65708,
+      "type": "Resolved",
+      "field": "originalPath",
+      "declared_types": [
+        "string | true | undefined"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members",
+        "optional properties"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/moduleNameResolver.ts",
+        "line": 241,
+        "column": 10
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 59,
+      "pair_id": "97181:messageText",
+      "receiver_type_id": 97181,
+      "type": "ReusableDiagnosticRelatedInformation",
+      "field": "messageText",
+      "declared_types": [
+        "string | ReusableDiagnosticMessageChain"
+      ],
+      "families": [
+        "intersection field contract",
+        "object plus primitive union"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 608,
+        "column": 31
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 60,
+      "pair_id": "75216:IntrinsicAttributes",
+      "receiver_type_id": 75216,
+      "type": "typeof JsxNames",
+      "field": "IntrinsicAttributes",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 22898,
+        "column": 56
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 61,
+      "pair_id": "8654:keyPropertyName",
+      "receiver_type_id": 8654,
+      "type": "UnionType",
+      "field": "keyPropertyName",
+      "declared_types": [
+        "__String | undefined"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union",
+        "nullish members",
+        "optional properties"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 28038,
+        "column": 13
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract",
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 62,
+      "pair_id": "94285:useCaseSensitiveFileNames",
+      "receiver_type_id": 94285,
+      "type": "WatchFactoryHost",
+      "field": "useCaseSensitiveFileNames",
+      "declared_types": [
+        "boolean | (() => boolean)"
+      ],
+      "families": [
+        "callable contracts",
+        "object plus primitive union"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/watchUtilities.ts",
+        "line": 741,
+        "column": 23
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 63,
+      "pair_id": "95121:trace",
+      "receiver_type_id": 95121,
+      "type": "(CompilerHost | ProgramHost<T>) & { onUnRecoverableConfigFileDiagnostic?: DiagnosticReporter | undefined; }",
+      "field": "trace",
+      "declared_types": [
+        "((s: string) => void) | ((s: string) => void) | undefined"
+      ],
+      "families": [
+        "callable contracts",
+        "nullish members",
+        "optional properties",
+        "untagged object union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/program.ts",
+        "line": 5120,
+        "column": 16
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 64,
+      "pair_id": "104295:left",
+      "receiver_type_id": 104295,
+      "type": "BindablePropertyAssignmentExpression & (DynamicNamedDeclaration | DynamicNamedBinaryExpression)",
+      "field": "left",
+      "declared_types": [
+        "PropertyAccessEntityNameExpression | BindableElementAccessExpression | (ElementAccessExpression & { readonly expression: BindableStaticNameExpression; })"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/binder.ts",
+        "line": 3426,
+        "column": 72
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 65,
+      "pair_id": "84561:name",
+      "receiver_type_id": 84561,
+      "type": "BindingElement & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+      "field": "name",
+      "declared_types": [
+        "Identifier"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 373,
+        "column": 46
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 66,
+      "pair_id": "97267:outSignature",
+      "receiver_type_id": 97267,
+      "type": "BuilderProgramStateWithDefinedProgram",
+      "field": "outSignature",
+      "declared_types": [
+        "EmitSignature | undefined"
+      ],
+      "families": [
+        "array or tuple contracts",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 1275,
+        "column": 27
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "array or tuple contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 67,
+      "pair_id": "101296:latestChangedDtsTime",
+      "receiver_type_id": 101296,
+      "type": "BuildInfoCacheEntry",
+      "field": "latestChangedDtsTime",
+      "declared_types": [
+        "false | Date | undefined"
+      ],
+      "families": [
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1871,
+        "column": 9
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 68,
+      "pair_id": "79434:name",
+      "receiver_type_id": 79434,
+      "type": "ClassElement | ParameterPropertyDeclaration",
+      "field": "name",
+      "declared_types": [
+        "Identifier | PrivateIdentifier | StringLiteral | NumericLiteral | BigIntLiteral | ComputedPropertyName | NoSubstitutionTemplateLiteral | undefined"
+      ],
+      "families": [
+        "intersection field contract",
+        "nullish members",
+        "optional properties",
+        "untagged object union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 47282,
+        "column": 30
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract",
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 69,
+      "pair_id": "8617:resolvedConstraintOfDistributive",
+      "receiver_type_id": 8617,
+      "type": "ConditionalType",
+      "field": "resolvedConstraintOfDistributive",
+      "declared_types": [
+        "false | Type | undefined"
+      ],
+      "families": [
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 15219,
+        "column": 13
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 70,
+      "pair_id": "71273:exportClause",
+      "receiver_type_id": 71273,
+      "type": "ExportDeclaration & { readonly exportClause: NamedExports; }",
+      "field": "exportClause",
+      "declared_types": [
+        "NamedExports"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 9513,
+        "column": 53
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 71,
+      "pair_id": "34691:escapedText",
+      "receiver_type_id": 34691,
+      "type": "Identifier",
+      "field": "escapedText",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 44924,
+        "column": 88
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 72,
+      "pair_id": "97866:0",
+      "receiver_type_id": 97866,
+      "type": "IncrementalBuildInfoDiagnosticOfFile",
+      "field": "0",
+      "declared_types": [
+        "readonly ReusableDiagnostic[] | IncrementalBuildInfoFileId"
+      ],
+      "families": [
+        "array or tuple contracts",
+        "intersection field contract",
+        "object plus primitive union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 2384,
+        "column": 53
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "array or tuple contracts",
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 73,
+      "pair_id": "97866:1",
+      "receiver_type_id": 97866,
+      "type": "IncrementalBuildInfoDiagnosticOfFile",
+      "field": "1",
+      "declared_types": [
+        "readonly ReusableDiagnostic[] | IncrementalBuildInfoFileId"
+      ],
+      "families": [
+        "array or tuple contracts",
+        "intersection field contract",
+        "object plus primitive union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 2384,
+        "column": 64
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "array or tuple contracts",
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 74,
+      "pair_id": "97954:[dynamic index]",
+      "receiver_type_id": 97954,
+      "type": "IncrementalBuildInfoRoot[]",
+      "field": "[dynamic index]",
+      "declared_types": [
+        "IncrementalBuildInfoRoot"
+      ],
+      "families": [
+        "array or tuple contracts",
+        "intersection field contract",
+        "object plus primitive union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 1413,
+        "column": 22
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "array or tuple contracts",
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 75,
+      "pair_id": "97892:signature",
+      "receiver_type_id": 97892,
+      "type": "IncrementalMultiFileEmitBuildInfoBuilderStateFileInfo",
+      "field": "signature",
+      "declared_types": [
+        "string | false | undefined"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 2232,
+        "column": 18
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "nullish members"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 76,
+      "pair_id": "8881:comment",
+      "receiver_type_id": 8881,
+      "type": "JSDocAuthorTag",
+      "field": "comment",
+      "declared_types": [
+        "string | NodeArray<JSDocComment> | undefined"
+      ],
+      "families": [
+        "dictionary contracts",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/parser.ts",
+        "line": 1073,
+        "column": 21
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "dictionary contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 77,
+      "pair_id": "59046:comment",
+      "receiver_type_id": 59046,
+      "type": "JSDocEnumTag | JSDocReturnTag | JSDocTypeTag | JSDocThisTag | JSDocThrowsTag | JSDocSatisfiesTag | JSDocOverloadTag",
+      "field": "comment",
+      "declared_types": [
+        "string | NodeArray<JSDocComment> | undefined"
+      ],
+      "families": [
+        "dictionary contracts",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/parser.ts",
+        "line": 1212,
+        "column": 17
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "dictionary contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 78,
+      "pair_id": "8900:comment",
+      "receiver_type_id": 8900,
+      "type": "JSDocOverloadTag",
+      "field": "comment",
+      "declared_types": [
+        "string | NodeArray<JSDocComment> | undefined"
+      ],
+      "families": [
+        "dictionary contracts",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 5330,
+        "column": 20
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "dictionary contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 79,
+      "pair_id": "59441:comment",
+      "receiver_type_id": 59441,
+      "type": "JSDocParameterTag | JSDocPropertyTag",
+      "field": "comment",
+      "declared_types": [
+        "string | NodeArray<JSDocComment> | undefined"
+      ],
+      "families": [
+        "dictionary contracts",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/parser.ts",
+        "line": 1206,
+        "column": 17
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "dictionary contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 80,
+      "pair_id": "8880:comment",
+      "receiver_type_id": 8880,
+      "type": "JSDocPropertyTag",
+      "field": "comment",
+      "declared_types": [
+        "string | NodeArray<JSDocComment> | undefined"
+      ],
+      "families": [
+        "dictionary contracts",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 5292,
+        "column": 20
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "dictionary contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 81,
+      "pair_id": "7638:comment",
+      "receiver_type_id": 7638,
+      "type": "JSDocTag",
+      "field": "comment",
+      "declared_types": [
+        "string | NodeArray<JSDocComment> | undefined"
+      ],
+      "families": [
+        "dictionary contracts",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 49073,
+        "column": 45
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "dictionary contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 82,
+      "pair_id": "59519:comment",
+      "receiver_type_id": 59519,
+      "type": "JSDocUnknownTag | JSDocClassTag | JSDocPublicTag | JSDocPrivateTag | JSDocProtectedTag | JSDocReadonlyTag | JSDocDeprecatedTag | JSDocOverrideTag",
+      "field": "comment",
+      "declared_types": [
+        "string | NodeArray<JSDocComment> | undefined"
+      ],
+      "families": [
+        "dictionary contracts",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/parser.ts",
+        "line": 1221,
+        "column": 20
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "dictionary contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 83,
+      "pair_id": "37515:peerDependencies",
+      "receiver_type_id": 37515,
+      "type": "PackageJsonInfoContents",
+      "field": "peerDependencies",
+      "declared_types": [
+        "string | false | undefined"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/moduleNameResolver.ts",
+        "line": 2415,
+        "column": 9
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "nullish members"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 84,
+      "pair_id": "37515:resolvedEntrypoints",
+      "receiver_type_id": 37515,
+      "type": "PackageJsonInfoContents",
+      "field": "resolvedEntrypoints",
+      "declared_types": [
+        "false | string[] | undefined"
+      ],
+      "families": [
+        "array or tuple contracts",
+        "nullish members",
+        "object plus primitive union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/moduleNameResolver.ts",
+        "line": 2235,
+        "column": 23
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "array or tuple contracts",
+        "nullish members"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 85,
+      "pair_id": "37515:versionPaths",
+      "receiver_type_id": 37515,
+      "type": "PackageJsonInfoContents",
+      "field": "versionPaths",
+      "declared_types": [
+        "false | VersionPaths | undefined"
+      ],
+      "families": [
+        "nullish members",
+        "object plus primitive union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/moduleNameResolver.ts",
+        "line": 2408,
+        "column": 9
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "nullish members"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 86,
+      "pair_id": "84493:name",
+      "receiver_type_id": 84493,
+      "type": "ParameterDeclaration & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+      "field": "name",
+      "declared_types": [
+        "Identifier"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 341,
+        "column": 46
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 87,
+      "pair_id": "55713:escapedText",
+      "receiver_type_id": 55713,
+      "type": "PrivateIdentifier",
+      "field": "escapedText",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 24388,
+        "column": 54
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 88,
+      "pair_id": "95857:emitBuildInfo",
+      "receiver_type_id": 95857,
+      "type": "Program | T",
+      "field": "emitBuildInfo",
+      "declared_types": [
+        "((writeFile?: WriteFileCallback | undefined, cancellationToken?: CancellationToken | undefined) => EmitResult) | ((writeFile?: WriteFileCallback | undefined, cancellationToken?: CancellationToken | undefined) => EmitResult)"
+      ],
+      "families": [
+        "callable contracts",
+        "untagged object union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/program.ts",
+        "line": 5069,
+        "column": 13
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 89,
+      "pair_id": "95857:getCompilerOptions",
+      "receiver_type_id": 95857,
+      "type": "Program | T",
+      "field": "getCompilerOptions",
+      "declared_types": [
+        "(() => CompilerOptions) | (() => CompilerOptions)"
+      ],
+      "families": [
+        "callable contracts",
+        "untagged object union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/program.ts",
+        "line": 5065,
+        "column": 21
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 90,
+      "pair_id": "67044:1",
+      "receiver_type_id": 67044,
+      "type": "readonly [kind?: \"paths\" | \"node_modules\" | \"redirect\" | \"relative\" | \"ambient\" | undefined, specifiers?: readonly string[] | undefined, moduleFile?: SourceFile | undefined, modulePaths?: readonly ModulePath[] | undefined, cache?: ModuleSpecifierCache | undefined]",
+      "field": "1",
+      "declared_types": [
+        "readonly string[] | SourceFile | \"paths\" | ModuleSpecifierCache | \"node_modules\" | \"redirect\" | \"relative\" | \"ambient\" | readonly ModulePath[] | undefined"
+      ],
+      "families": [
+        "array or tuple contracts",
+        "nullish members",
+        "object plus primitive union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/moduleSpecifiers.ts",
+        "line": 332,
+        "column": 12
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "array or tuple contracts",
+        "nullish members"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 91,
+      "pair_id": "97615:outSignature",
+      "receiver_type_id": 97615,
+      "type": "Readonly<ReusableBuilderProgramState>",
+      "field": "outSignature",
+      "declared_types": [
+        "EmitSignature | undefined"
+      ],
+      "families": [
+        "array or tuple contracts",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 332,
+        "column": 30
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "array or tuple contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 92,
+      "pair_id": "6998:localJsxFragmentNamespace",
+      "receiver_type_id": 6998,
+      "type": "SourceFile",
+      "field": "localJsxFragmentNamespace",
+      "declared_types": [
+        "__String | undefined"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union",
+        "nullish members",
+        "optional properties"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 2441,
+        "column": 25
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract",
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 93,
+      "pair_id": "6998:localJsxNamespace",
+      "receiver_type_id": 6998,
+      "type": "SourceFile",
+      "field": "localJsxNamespace",
+      "declared_types": [
+        "__String | undefined"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union",
+        "nullish members",
+        "optional properties"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 2487,
+        "column": 13
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract",
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 94,
+      "pair_id": "420:[dynamic index]",
+      "receiver_type_id": 420,
+      "type": "typeof Debug",
+      "field": "[dynamic index]",
+      "declared_types": [
+        "(<T>(a: T, b: T, msg?: string | undefined, msg2?: string | undefined, stackCrawlMark?: AnyFunction | undefined) => void) | ((message?: string | undefined, stackCrawlMark?: AnyFunction | undefined) => never) | ((a: number, b: number, stackCrawlMark?: AnyFunction | undefined) => void) | ((expression: unknown, message?: string | undefined, verboseDebugInfo?: string | (() => string) | undefined, stackCrawlMark?: AnyFunction | undefined) => asserts expression) | (<T>(value: T | null | undefined, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined) => T) | ((func: AnyFunction) => string) | ((level: LogLevel) => boolean) | typeof log | (() => AssertionLevel) | ((level: AssertionLevel) => void) | ((level: AssertionLevel) => boolean) | ((node: Node, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined) => never) | ((a: number, b: number, msg?: string | undefined, stackCrawlMark?: AnyFunction | undefined) => void) | ((a: number, b: number, stackCrawlMark?: AnyFunction | undefined) => void) | (<T>(value: T, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined) => asserts value is NonNullable<T>) | { <T extends Node>(value: NodeArray<T>, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts value is NodeArray<T>; <T>(value: readonly T[], message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts value is readonly NonNullable<T>[]; } | (<T, A extends readonly T[]>(value: A, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined) => A) | ((member: never, message?: string, stackCrawlMark?: AnyFunction | undefined) => never) | { <T extends Node, U extends T>(nodes: NodeArray<T>, test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts nodes is NodeArray<U>; <T extends Node, U extends T>(nodes: readonly T[], test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts nodes is readonly U[]; <T extends Node, U extends T>(nodes: NodeArray<T> | undefined, test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts nodes is NodeArray<U> | undefined; <T extends Node, U extends T>(nodes: readonly T[] | undefined, test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts nodes is readonly U[] | undefined; (nodes: readonly Node[], test: ((node: Node) => boolean) | undefined, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): void; } | { <T extends Node, U extends T>(node: T | undefined, test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts node is U; (node: Node | undefined, test: ((node: Node) => boolean) | undefined, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): void; } | { <T extends Node, U extends T>(node: T | undefined, test: (node: Node) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts node is Exclude<T, U>; (node: Node | undefined, test: ((node: Node) => boolean) | undefined, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): void; } | { <T extends Node, U extends T>(node: T, test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts node is U; <T extends Node, U extends T>(node: T | undefined, test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts node is U | undefined; (node: Node | undefined, test: ((node: Node) => boolean) | undefined, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): void; } | { <T extends Node, K extends SyntaxKind>(node: T, kind: K, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts node is Extract<T, { readonly kind: K; }>; <T extends Node, K extends SyntaxKind>(node: T | undefined, kind: K, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts node is Extract<T, { readonly kind: K; }> | undefined; (node: Node | undefined, kind: SyntaxKind | undefined, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): void; } | ((node: Node | undefined, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined) => asserts node is undefined) | (<T>(value: unknown) => asserts value is T) | ((symbol: Symbol) => string) | ((value: number | undefined, enumObject: any, isFlags?: boolean | undefined) => string) | ((kind: SyntaxKind | undefined) => string) | ((kind: SnippetKind | undefined) => string) | ((kind: ScriptKind | undefined) => string) | ((flags: NodeFlags | undefined) => string) | ((flags: NodeCheckFlags | undefined) => string) | ((flags: ModifierFlags | undefined) => string) | ((flags: TransformFlags | undefined) => string) | ((flags: EmitFlags | undefined) => string) | ((flags: SymbolFlags | undefined) => string) | ((flags: TypeFlags | undefined) => string) | ((flags: SignatureFlags | undefined) => string) | ((flags: ObjectFlags | undefined) => string) | ((flags: FlowFlags | undefined) => string) | ((result: RelationComparisonResult | undefined) => string) | ((mode: CheckMode | undefined) => string) | ((mode: SignatureCheckMode | undefined) => string) | ((facts: TypeFacts | undefined) => string) | ((flowNode: FlowNode) => FlowNode) | ((array: NodeArray<Node>) => void) | (() => void) | ((varianceFlags: VarianceFlags) => string) | ((mapper: TypeMapper) => TypeMapper) | ((flowNode: FlowNode) => void) | ((flowNode: FlowNode) => string)"
+      ],
+      "families": [
+        "callable contracts",
+        "untagged object union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/debug.ts",
+        "line": 169,
+        "column": 49
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 95,
+      "pair_id": "75216:Element",
+      "receiver_type_id": 75216,
+      "type": "typeof JsxNames",
+      "field": "Element",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 34285,
+        "column": 27
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 96,
+      "pair_id": "75216:IntrinsicClassAttributes",
+      "receiver_type_id": 75216,
+      "type": "typeof JsxNames",
+      "field": "IntrinsicClassAttributes",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 22899,
+        "column": 61
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 97,
+      "pair_id": "75216:JSX",
+      "receiver_type_id": 75216,
+      "type": "typeof JsxNames",
+      "field": "JSX",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 34094,
+        "column": 113
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 98,
+      "pair_id": "77441:Fragment",
+      "receiver_type_id": 77441,
+      "type": "typeof ReactNames",
+      "field": "Fragment",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 37535,
+        "column": 46
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 99,
+      "pair_id": "10782:escapedName",
+      "receiver_type_id": 10782,
+      "type": "UniqueESSymbolType",
+      "field": "escapedName",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 11172,
+        "column": 16
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 100,
+      "pair_id": "87263:name",
+      "receiver_type_id": 87263,
+      "type": "VariableDeclaration & { name: Identifier; }",
+      "field": "name",
+      "declared_types": [
+        "Identifier"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/transformers/jsx.ts",
+        "line": 111,
+        "column": 20
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 101,
+      "pair_id": "84436:name",
+      "receiver_type_id": 84436,
+      "type": "VariableDeclaration & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+      "field": "name",
+      "declared_types": [
+        "Identifier"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 311,
+        "column": 46
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 102,
+      "pair_id": "94312:[dynamic index]",
+      "receiver_type_id": 94312,
+      "type": "WatchFactory<X, Y>",
+      "field": "[dynamic index]",
+      "declared_types": [
+        "((file: string, callback: FileWatcherCallback, pollingInterval: PollingInterval, options: WatchOptions | undefined, detailInfo1: X, detailInfo2?: Y | undefined) => FileWatcher) | ((directory: string, callback: DirectoryWatcherCallback, flags: WatchDirectoryFlags, options: WatchOptions | undefined, detailInfo1: X, detailInfo2?: Y | undefined) => FileWatcher)"
+      ],
+      "families": [
+        "callable contracts",
+        "untagged object union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/watchUtilities.ts",
+        "line": 736,
+        "column": 13
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 103,
+      "pair_id": "95121:getCurrentDirectory",
+      "receiver_type_id": 95121,
+      "type": "(CompilerHost | ProgramHost<T>) & { onUnRecoverableConfigFileDiagnostic?: DiagnosticReporter | undefined; }",
+      "field": "getCurrentDirectory",
+      "declared_types": [
+        "(() => string) | (() => string)"
+      ],
+      "families": [
+        "callable contracts",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/program.ts",
+        "line": 5118,
+        "column": 36
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 104,
+      "pair_id": "95121:useCaseSensitiveFileNames",
+      "receiver_type_id": 95121,
+      "type": "(CompilerHost | ProgramHost<T>) & { onUnRecoverableConfigFileDiagnostic?: DiagnosticReporter | undefined; }",
+      "field": "useCaseSensitiveFileNames",
+      "declared_types": [
+        "(() => boolean) | (() => boolean)"
+      ],
+      "families": [
+        "callable contracts",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/program.ts",
+        "line": 5117,
+        "column": 36
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 105,
+      "pair_id": "69509:moduleReference",
+      "receiver_type_id": 69509,
+      "type": "(ImportEqualsDeclaration & { moduleReference: ExternalModuleReference; }) | undefined",
+      "field": "moduleReference",
+      "declared_types": [
+        "ExternalModuleReference"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 4749,
+        "column": 17
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 106,
+      "pair_id": "80951:name",
+      "receiver_type_id": 80951,
+      "type": "(NamedDeclaration & { name: DeclarationName; }) | undefined",
+      "field": "name",
+      "declared_types": [
+        "Identifier | ObjectBindingPattern | ArrayBindingPattern | PrivateIdentifier | StringLiteral | NumericLiteral | BigIntLiteral | ElementAccessExpression | ComputedPropertyName | JsxNamespacedName | NoSubstitutionTemplateLiteral | PropertyAccessEntityNameExpression"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 12269,
+        "column": 56
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 107,
+      "pair_id": "89105:[dynamic index]",
+      "receiver_type_id": 89105,
+      "type": "(OperationArguments | undefined)[]",
+      "field": "[dynamic index]",
+      "declared_types": [
+        "OperationArguments | undefined"
+      ],
+      "families": [
+        "array or tuple contracts",
+        "nullish members",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/transformers/generators.ts",
+        "line": 3047,
+        "column": 22
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "array or tuple contracts",
+        "nullish members"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 108,
+      "pair_id": "79411:name",
+      "receiver_type_id": 79411,
+      "type": "(PropertyAssignment & { readonly name: Identifier; }) | (BindingElement & { readonly name: Identifier; readonly initializer: Expression; readonly dotDotDotToken: undefined; }) | (PropertyDeclaration & { ...; })",
+      "field": "name",
+      "declared_types": [
+        "Identifier | PrivateIdentifier | StringLiteral | NumericLiteral | BigIntLiteral | ComputedPropertyName | NoSubstitutionTemplateLiteral"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 47073,
+        "column": 135
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 109,
+      "pair_id": "6849:2",
+      "receiver_type_id": 6849,
+      "type": "(string | number)[]",
+      "field": "2",
+      "declared_types": [
+        "string | number"
+      ],
+      "families": [
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 22570,
+        "column": 177
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [],
+      "evidence": []
+    },
+    {
+      "priority": 110,
+      "pair_id": "69494:literal",
+      "receiver_type_id": 69494,
+      "type": "(TypeNode & LiteralTypeNode & { readonly literal: StringLiteral; }) | undefined",
+      "field": "literal",
+      "declared_types": [
+        "LiteralExpression & StringLiteral"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 4745,
+        "column": 17
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 111,
+      "pair_id": "97898:0",
+      "receiver_type_id": 97898,
+      "type": "[fileId: IncrementalBuildInfoFileId, signature: [] | EmitSignature]",
+      "field": "0",
+      "declared_types": [
+        "[] | EmitSignature | IncrementalBuildInfoFileId"
+      ],
+      "families": [
+        "array or tuple contracts",
+        "intersection field contract",
+        "mixed primitive union",
+        "object plus primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 2299,
+        "column": 40
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "array or tuple contracts",
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 112,
+      "pair_id": "79083:1",
+      "receiver_type_id": 79083,
+      "type": "[K, V[]]",
+      "field": "1",
+      "declared_types": [
+        "K | V[]"
+      ],
+      "families": [
+        "array or tuple contracts",
+        "generic field contract",
+        "object plus primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 44585,
+        "column": 13
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "array or tuple contracts",
+        "generic field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 113,
+      "pair_id": "6837:1",
+      "receiver_type_id": 6837,
+      "type": "[number, string]",
+      "field": "1",
+      "declared_types": [
+        "string | number"
+      ],
+      "families": [
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/debug.ts",
+        "line": 392,
+        "column": 64
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [],
+      "evidence": []
+    },
+    {
+      "priority": 114,
+      "pair_id": "7987:build",
+      "receiver_type_id": 7987,
+      "type": "{ major?: number | undefined; minor?: number | undefined; patch?: number | undefined; prerelease?: string | readonly string[] | undefined; build?: string | readonly string[] | undefined; }",
+      "field": "build",
+      "declared_types": [
+        "string | readonly string[] | undefined"
+      ],
+      "families": [
+        "array or tuple contracts",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/semver.ts",
+        "line": 128,
+        "column": 13
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "array or tuple contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 115,
+      "pair_id": "7987:prerelease",
+      "receiver_type_id": 7987,
+      "type": "{ major?: number | undefined; minor?: number | undefined; patch?: number | undefined; prerelease?: string | readonly string[] | undefined; build?: string | readonly string[] | undefined; }",
+      "field": "prerelease",
+      "declared_types": [
+        "string | readonly string[] | undefined"
+      ],
+      "families": [
+        "array or tuple contracts",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/semver.ts",
+        "line": 127,
+        "column": 13
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "array or tuple contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 116,
+      "pair_id": "70885:name",
+      "receiver_type_id": 70885,
+      "type": "{ name: __String; oldSymbol: Symbol; }",
+      "field": "name",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 8307,
+        "column": 64
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 117,
+      "pair_id": "95259:onProgramCreateComplete",
+      "receiver_type_id": 95259,
+      "type": "{ onProgramCreateComplete: (_?: unknown) => void; fileExists: (file: string) => boolean; directoryExists?: undefined; } | { onProgramCreateComplete: () => void; fileExists: (file: string) => boolean; directoryExists: ((path: string) => boolean) | undefined; }",
+      "field": "onProgramCreateComplete",
+      "declared_types": [
+        "((_?: unknown) => void) | (() => void)"
+      ],
+      "families": [
+        "callable contracts",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/program.ts",
+        "line": 1725,
+        "column": 13
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 118,
+      "pair_id": "98368:affected",
+      "receiver_type_id": 98368,
+      "type": "{ result: readonly Diagnostic[]; affected: SourceFile | Program; }",
+      "field": "affected",
+      "declared_types": [
+        "SourceFile | Program"
+      ],
+      "families": [
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 2203,
+        "column": 17
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [],
+      "evidence": []
+    },
+    {
+      "priority": 119,
+      "pair_id": "8172:performance",
+      "receiver_type_id": 8172,
+      "type": "{ shouldWriteNativeEvents: boolean; performance: Performance; } | { shouldWriteNativeEvents: boolean; performance: Performance; }",
+      "field": "performance",
+      "declared_types": [
+        "import(\"/tmp/views-mixed-typescript/src/compiler/performanceCore\").Performance | import(\"node:perf_hooks\").Performance"
+      ],
+      "families": [
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/performanceCore.ts",
+        "line": 64,
+        "column": 38
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [],
+      "evidence": []
+    },
+    {
+      "priority": 120,
+      "pair_id": "56454:name",
+      "receiver_type_id": 56454,
+      "type": "AccessorDeclaration & { readonly name: Identifier | StringLiteral | NumericLiteral | BigIntLiteral | ComputedPropertyName | NoSubstitutionTemplateLiteral; }",
+      "field": "name",
+      "declared_types": [
+        "Identifier | StringLiteral | NumericLiteral | BigIntLiteral | ComputedPropertyName | NoSubstitutionTemplateLiteral"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/factory/utilities.ts",
+        "line": 368,
+        "column": 58
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 121,
+      "pair_id": "103520:name",
+      "receiver_type_id": 103520,
+      "type": "ActiveLabel",
+      "field": "name",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/binder.ts",
+        "line": 1609,
+        "column": 17
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 122,
+      "pair_id": "67321:name",
+      "receiver_type_id": 67321,
+      "type": "AmbientModuleDeclaration & { name: StringLiteral; }",
+      "field": "name",
+      "declared_types": [
+        "StringLiteral"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/moduleSpecifiers.ts",
+        "line": 922,
+        "column": 16
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 123,
+      "pair_id": "64997:[dynamic index]",
+      "receiver_type_id": 64997,
+      "type": "BuildOptions",
+      "field": "[dynamic index]",
+      "declared_types": [
+        "CompilerOptionsValue"
+      ],
+      "families": [
+        "array or tuple contracts",
+        "dictionary contracts",
+        "mixed primitive union",
+        "nullish members",
+        "object plus primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 334,
+        "column": 75
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "array or tuple contracts",
+        "dictionary contracts",
+        "nullish members"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 124,
+      "pair_id": "78328:name",
+      "receiver_type_id": 78328,
+      "type": "ClassElement & NamedDeclaration & { name: DeclarationName; }",
+      "field": "name",
+      "declared_types": [
+        "Identifier | PrivateIdentifier | StringLiteral | NumericLiteral | BigIntLiteral | ComputedPropertyName | NoSubstitutionTemplateLiteral"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 44510,
+        "column": 134
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 125,
+      "pair_id": "11270:0",
+      "receiver_type_id": 11270,
+      "type": "CommandLineOption[]",
+      "field": "0",
+      "declared_types": [
+        "CommandLineOption"
+      ],
+      "families": [
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2943,
+        "column": 24
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [],
+      "evidence": []
+    },
+    {
+      "priority": 126,
+      "pair_id": "9930:[dynamic index]",
+      "receiver_type_id": 9930,
+      "type": "DiagnosticArguments",
+      "field": "[dynamic index]",
+      "declared_types": [
+        "string | number"
+      ],
+      "families": [
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 8584,
+        "column": 90
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [],
+      "evidence": []
+    },
+    {
+      "priority": 127,
+      "pair_id": "11106:messageText",
+      "receiver_type_id": 11106,
+      "type": "DiagnosticWithDetachedLocation",
+      "field": "messageText",
+      "declared_types": [
+        "string | DiagnosticMessageChain"
+      ],
+      "families": [
+        "object plus primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 8651,
+        "column": 22
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [],
+      "evidence": []
+    },
+    {
+      "priority": 128,
+      "pair_id": "9760:messageText",
+      "receiver_type_id": 9760,
+      "type": "DiagnosticWithLocation",
+      "field": "messageText",
+      "declared_types": [
+        "string | DiagnosticMessageChain"
+      ],
+      "families": [
+        "object plus primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 1631,
+        "column": 173
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [],
+      "evidence": []
+    },
+    {
+      "priority": 129,
+      "pair_id": "6994:constantValue",
+      "receiver_type_id": 6994,
+      "type": "EmitNode",
+      "field": "constantValue",
+      "declared_types": [
+        "string | number | undefined"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members",
+        "optional properties"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 7440,
+        "column": 9
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 130,
+      "pair_id": "6995:constantValue",
+      "receiver_type_id": 6995,
+      "type": "EmitNode | undefined",
+      "field": "constantValue",
+      "declared_types": [
+        "string | number | undefined"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members",
+        "optional properties"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/factory/emitNode.ts",
+        "line": 234,
+        "column": 12
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 131,
+      "pair_id": "100911:version",
+      "receiver_type_id": 100911,
+      "type": "FilePresentOnHost | FilePresenceUnknownOnHost",
+      "field": "version",
+      "declared_types": [
+        "string | false"
+      ],
+      "families": [
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/watchPublic.ts",
+        "line": 816,
+        "column": 13
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [],
+      "evidence": []
+    },
+    {
+      "priority": 132,
+      "pair_id": "7186:circular",
+      "receiver_type_id": 7186,
+      "type": "FlowGraphNode",
+      "field": "circular",
+      "declared_types": [
+        "boolean | \"circularity\""
+      ],
+      "families": [
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/debug.ts",
+        "line": 949,
+        "column": 55
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [],
+      "evidence": []
+    },
+    {
+      "priority": 133,
+      "pair_id": "73313:parameters",
+      "receiver_type_id": 73313,
+      "type": "FunctionExpression | ArrowFunction | MethodDeclaration | GetAccessorDeclaration | SetAccessorDeclaration | ... 8 more ... | JSDocSignature",
+      "field": "parameters",
+      "declared_types": [
+        "NodeArray<ParameterDeclaration> | readonly JSDocParameterTag[]"
+      ],
+      "families": [
+        "array or tuple contracts",
+        "dictionary contracts",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 16524,
+        "column": 41
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "array or tuple contracts",
+        "dictionary contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 134,
+      "pair_id": "7612:escapedText",
+      "receiver_type_id": 7612,
+      "type": "GeneratedIdentifier",
+      "field": "escapedText",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 6327,
+        "column": 44
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 135,
+      "pair_id": "9185:escapedText",
+      "receiver_type_id": 9185,
+      "type": "GeneratedPrivateIdentifier",
+      "field": "escapedText",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 6351,
+        "column": 51
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 136,
+      "pair_id": "46232:escapedText",
+      "receiver_type_id": 46232,
+      "type": "Identifier",
+      "field": "escapedText",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 7942,
+        "column": 43
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 137,
+      "pair_id": "97937:fileInfos",
+      "receiver_type_id": 97937,
+      "type": "IncrementalBuildInfo",
+      "field": "fileInfos",
+      "declared_types": [
+        "readonly IncrementalMultiFileEmitBuildInfoFileInfo[] | readonly IncrementalBundleEmitBuildInfoFileInfo[]"
+      ],
+      "families": [
+        "array or tuple contracts",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 2407,
+        "column": 5
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "array or tuple contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 138,
+      "pair_id": "97934:outSignature",
+      "receiver_type_id": 97934,
+      "type": "IncrementalBundleEmitBuildInfo",
+      "field": "outSignature",
+      "declared_types": [
+        "EmitSignature | undefined"
+      ],
+      "families": [
+        "array or tuple contracts",
+        "nullish members",
+        "object plus primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 2281,
+        "column": 27
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "array or tuple contracts",
+        "nullish members"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 139,
+      "pair_id": "94190:program",
+      "receiver_type_id": 94190,
+      "type": "IsIgnoredFileFromWildCardWatchingInput",
+      "field": "program",
+      "declared_types": [
+        "readonly string[] | Program | BuilderProgram | undefined"
+      ],
+      "families": [
+        "array or tuple contracts",
+        "nullish members",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/watchUtilities.ts",
+        "line": 578,
+        "column": 5
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "array or tuple contracts",
+        "nullish members"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 140,
+      "pair_id": "8814:comment",
+      "receiver_type_id": 8814,
+      "type": "JSDocEnumTag",
+      "field": "comment",
+      "declared_types": [
+        "string | NodeArray<JSDocComment> | undefined"
+      ],
+      "families": [
+        "dictionary contracts",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 5542,
+        "column": 20
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "dictionary contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 141,
+      "pair_id": "92180:comment",
+      "receiver_type_id": 92180,
+      "type": "JSDocEnumTag | JSDocReturnTag | JSDocTypeTag | JSDocThisTag | JSDocThrowsTag | JSDocSatisfiesTag",
+      "field": "comment",
+      "declared_types": [
+        "string | NodeArray<JSDocComment> | undefined"
+      ],
+      "families": [
+        "dictionary contracts",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/emitter.ts",
+        "line": 4131,
+        "column": 26
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "dictionary contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 142,
+      "pair_id": "92175:comment",
+      "receiver_type_id": 92175,
+      "type": "JSDocImplementsTag | JSDocAugmentsTag",
+      "field": "comment",
+      "declared_types": [
+        "string | NodeArray<JSDocComment> | undefined"
+      ],
+      "families": [
+        "dictionary contracts",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/emitter.ts",
+        "line": 4172,
+        "column": 26
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "dictionary contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 143,
+      "pair_id": "8878:comment",
+      "receiver_type_id": 8878,
+      "type": "JSDocParameterTag",
+      "field": "comment",
+      "declared_types": [
+        "string | NodeArray<JSDocComment> | undefined"
+      ],
+      "families": [
+        "dictionary contracts",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 5270,
+        "column": 20
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "dictionary contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 144,
+      "pair_id": "8879:comment",
+      "receiver_type_id": 8879,
+      "type": "JSDocPropertyLikeTag",
+      "field": "comment",
+      "declared_types": [
+        "string | NodeArray<JSDocComment> | undefined"
+      ],
+      "families": [
+        "dictionary contracts",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/emitter.ts",
+        "line": 4261,
+        "column": 26
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "dictionary contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 145,
+      "pair_id": "8890:comment",
+      "receiver_type_id": 8890,
+      "type": "JSDocUnknownTag",
+      "field": "comment",
+      "declared_types": [
+        "string | NodeArray<JSDocComment> | undefined"
+      ],
+      "families": [
+        "dictionary contracts",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 5523,
+        "column": 20
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "dictionary contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 146,
+      "pair_id": "9477:escapedText",
+      "receiver_type_id": 9477,
+      "type": "LeftHandSideExpression & Identifier",
+      "field": "escapedText",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 38035,
+        "column": 62
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 147,
+      "pair_id": "67303:name",
+      "receiver_type_id": 67303,
+      "type": "ModuleDeclaration & { name: StringLiteral; }",
+      "field": "name",
+      "declared_types": [
+        "StringLiteral"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/moduleSpecifiers.ts",
+        "line": 884,
+        "column": 16
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 148,
+      "pair_id": "67308:name",
+      "receiver_type_id": 67308,
+      "type": "ModuleDeclaration & { name: StringLiteral; } & AmbientModuleDeclaration",
+      "field": "name",
+      "declared_types": [
+        "StringLiteral"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/moduleSpecifiers.ts",
+        "line": 881,
+        "column": 141
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 149,
+      "pair_id": "66000:getGlobalTypingsCacheLocation",
+      "receiver_type_id": 66000,
+      "type": "ModuleResolutionHost | ModuleSpecifierResolutionHost",
+      "field": "getGlobalTypingsCacheLocation",
+      "declared_types": [
+        "(() => string | undefined) | (() => string | undefined) | undefined"
+      ],
+      "families": [
+        "callable contracts",
+        "nullish members",
+        "optional properties",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/moduleNameResolver.ts",
+        "line": 3056,
+        "column": 25
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 150,
+      "pair_id": "53493:escapedText",
+      "receiver_type_id": 53493,
+      "type": "Mutable<Identifier>",
+      "field": "escapedText",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 1338,
+        "column": 13
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 151,
+      "pair_id": "77241:slice",
+      "receiver_type_id": 77241,
+      "type": "never[] | NodeArray<Expression>",
+      "field": "slice",
+      "declared_types": [
+        "((start?: number | undefined, end?: number | undefined) => never[]) | ((start?: number | undefined, end?: number | undefined) => Expression[])"
+      ],
+      "families": [
+        "callable contracts",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 36289,
+        "column": 35
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 152,
+      "pair_id": "8174:clearMarks",
+      "receiver_type_id": 8174,
+      "type": "Performance | Performance",
+      "field": "clearMarks",
+      "declared_types": [
+        "((name?: string | undefined) => void) | ((markName?: string | undefined) => void)"
+      ],
+      "families": [
+        "callable contracts",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/performanceCore.ts",
+        "line": 80,
+        "column": 16
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 153,
+      "pair_id": "8174:clearMeasures",
+      "receiver_type_id": 8174,
+      "type": "Performance | Performance",
+      "field": "clearMeasures",
+      "declared_types": [
+        "((name?: string | undefined) => void) | ((measureName?: string | undefined) => void)"
+      ],
+      "families": [
+        "callable contracts",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/performanceCore.ts",
+        "line": 81,
+        "column": 16
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 154,
+      "pair_id": "8174:mark",
+      "receiver_type_id": 8174,
+      "type": "Performance | Performance",
+      "field": "mark",
+      "declared_types": [
+        "((name: string) => void) | ((markName: string, markOptions?: PerformanceMarkOptions | undefined) => PerformanceMark)"
+      ],
+      "families": [
+        "callable contracts",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/performanceCore.ts",
+        "line": 78,
+        "column": 16
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 155,
+      "pair_id": "8174:measure",
+      "receiver_type_id": 8174,
+      "type": "Performance | Performance",
+      "field": "measure",
+      "declared_types": [
+        "((name: string, startMark?: string | undefined, endMark?: string | undefined) => void) | { (measureName: string, startMark?: string | undefined, endMark?: string | undefined): PerformanceMeasure; (measureName: string, options: PerformanceMeasureOptions, endMark?: string | undefined): PerformanceMeasure; }"
+      ],
+      "families": [
+        "callable contracts",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/performanceCore.ts",
+        "line": 79,
+        "column": 16
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 156,
+      "pair_id": "8174:now",
+      "receiver_type_id": 8174,
+      "type": "Performance | Performance",
+      "field": "now",
+      "declared_types": [
+        "(() => number) | (() => number)"
+      ],
+      "families": [
+        "callable contracts",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/performanceCore.ts",
+        "line": 72,
+        "column": 62
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 157,
+      "pair_id": "94213:getCompilerOptions",
+      "receiver_type_id": 94213,
+      "type": "Program | BuilderProgram",
+      "field": "getCompilerOptions",
+      "declared_types": [
+        "(() => CompilerOptions) | (() => CompilerOptions)"
+      ],
+      "families": [
+        "callable contracts",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/program.ts",
+        "line": 644,
+        "column": 29
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 158,
+      "pair_id": "94213:getConfigFileParsingDiagnostics",
+      "receiver_type_id": 94213,
+      "type": "Program | BuilderProgram",
+      "field": "getConfigFileParsingDiagnostics",
+      "declared_types": [
+        "(() => readonly Diagnostic[]) | (() => readonly Diagnostic[])"
+      ],
+      "families": [
+        "callable contracts",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/program.ts",
+        "line": 638,
+        "column": 41
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 159,
+      "pair_id": "94213:getDeclarationDiagnostics",
+      "receiver_type_id": 94213,
+      "type": "Program | BuilderProgram",
+      "field": "getDeclarationDiagnostics",
+      "declared_types": [
+        "((sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined) => readonly DiagnosticWithLocation[]) | ((sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined) => readonly DiagnosticWithLocation[])"
+      ],
+      "families": [
+        "callable contracts",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/program.ts",
+        "line": 645,
+        "column": 45
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 160,
+      "pair_id": "94213:getGlobalDiagnostics",
+      "receiver_type_id": 94213,
+      "type": "Program | BuilderProgram",
+      "field": "getGlobalDiagnostics",
+      "declared_types": [
+        "((cancellationToken?: CancellationToken | undefined) => readonly Diagnostic[]) | ((cancellationToken?: CancellationToken | undefined) => readonly Diagnostic[])"
+      ],
+      "families": [
+        "callable contracts",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/program.ts",
+        "line": 641,
+        "column": 41
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 161,
+      "pair_id": "94213:getOptionsDiagnostics",
+      "receiver_type_id": 94213,
+      "type": "Program | BuilderProgram",
+      "field": "getOptionsDiagnostics",
+      "declared_types": [
+        "((cancellationToken?: CancellationToken | undefined) => readonly Diagnostic[]) | ((cancellationToken?: CancellationToken | undefined) => readonly Diagnostic[])"
+      ],
+      "families": [
+        "callable contracts",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/program.ts",
+        "line": 639,
+        "column": 41
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 162,
+      "pair_id": "94213:getSemanticDiagnostics",
+      "receiver_type_id": 94213,
+      "type": "Program | BuilderProgram",
+      "field": "getSemanticDiagnostics",
+      "declared_types": [
+        "{ (sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined): readonly Diagnostic[]; (sourceFile: SourceFile | undefined, cancellationToken: CancellationToken | undefined, nodesToCheck: Node[]): readonly Diagnostic[]; } | ((sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined) => readonly Diagnostic[])"
+      ],
+      "families": [
+        "callable contracts",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/program.ts",
+        "line": 642,
+        "column": 41
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 163,
+      "pair_id": "94213:getSyntacticDiagnostics",
+      "receiver_type_id": 94213,
+      "type": "Program | BuilderProgram",
+      "field": "getSyntacticDiagnostics",
+      "declared_types": [
+        "((sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined) => readonly DiagnosticWithLocation[]) | ((sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined) => readonly Diagnostic[])"
+      ],
+      "families": [
+        "callable contracts",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/program.ts",
+        "line": 640,
+        "column": 41
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 164,
+      "pair_id": "99762:emit",
+      "receiver_type_id": 99762,
+      "type": "Program | T",
+      "field": "emit",
+      "declared_types": [
+        "{ (targetSourceFile?: SourceFile | undefined, writeFile?: WriteFileCallback | undefined, cancellationToken?: CancellationToken | undefined, emitOnlyDtsFiles?: boolean | undefined, customTransformers?: CustomTransformers | undefined): EmitResult; (targetSourceFile?: SourceFile | undefined, writeFile?: WriteFileCallback | undefined, cancellationToken?: CancellationToken | undefined, emitOnly?: boolean | EmitOnly | undefined, customTransformers?: CustomTransformers | undefined, forceDtsEmit?: boolean | undefined, skipBuildInfo?: boolean | undefined): EmitResult; } | ((targetSourceFile?: SourceFile | undefined, writeFile?: WriteFileCallback | undefined, cancellationToken?: CancellationToken | undefined, emitOnlyDtsFiles?: boolean | undefined, customTransformers?: CustomTransformers | undefined) => EmitResult)"
+      ],
+      "families": [
+        "callable contracts",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/watch.ts",
+        "line": 609,
+        "column": 11
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 165,
+      "pair_id": "99724:getCompilerOptions",
+      "receiver_type_id": 99724,
+      "type": "Program | T",
+      "field": "getCompilerOptions",
+      "declared_types": [
+        "(() => CompilerOptions) | (() => CompilerOptions)"
+      ],
+      "families": [
+        "callable contracts",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/watch.ts",
+        "line": 339,
+        "column": 21
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 166,
+      "pair_id": "99762:getCompilerOptions",
+      "receiver_type_id": 99762,
+      "type": "Program | T",
+      "field": "getCompilerOptions",
+      "declared_types": [
+        "(() => CompilerOptions) | (() => CompilerOptions)"
+      ],
+      "families": [
+        "callable contracts",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/watch.ts",
+        "line": 577,
+        "column": 21
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 167,
+      "pair_id": "99762:getConfigFileParsingDiagnostics",
+      "receiver_type_id": 99762,
+      "type": "Program | T",
+      "field": "getConfigFileParsingDiagnostics",
+      "declared_types": [
+        "(() => readonly Diagnostic[]) | (() => readonly Diagnostic[])"
+      ],
+      "families": [
+        "callable contracts",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/watch.ts",
+        "line": 580,
+        "column": 28
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 168,
+      "pair_id": "99762:getCurrentDirectory",
+      "receiver_type_id": 99762,
+      "type": "Program | T",
+      "field": "getCurrentDirectory",
+      "declared_types": [
+        "(() => string) | (() => string)"
+      ],
+      "families": [
+        "callable contracts",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/watch.ts",
+        "line": 615,
+        "column": 28
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 169,
+      "pair_id": "95857:getDeclarationDiagnostics",
+      "receiver_type_id": 95857,
+      "type": "Program | T",
+      "field": "getDeclarationDiagnostics",
+      "declared_types": [
+        "((sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined) => readonly DiagnosticWithLocation[]) | ((sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined) => readonly DiagnosticWithLocation[])"
+      ],
+      "families": [
+        "callable contracts",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/program.ts",
+        "line": 5084,
+        "column": 23
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 170,
+      "pair_id": "99762:getDeclarationDiagnostics",
+      "receiver_type_id": 99762,
+      "type": "Program | T",
+      "field": "getDeclarationDiagnostics",
+      "declared_types": [
+        "((sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined) => readonly DiagnosticWithLocation[]) | ((sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined) => readonly DiagnosticWithLocation[])"
+      ],
+      "families": [
+        "callable contracts",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/watch.ts",
+        "line": 601,
+        "column": 42
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 171,
+      "pair_id": "95857:getGlobalDiagnostics",
+      "receiver_type_id": 95857,
+      "type": "Program | T",
+      "field": "getGlobalDiagnostics",
+      "declared_types": [
+        "((cancellationToken?: CancellationToken | undefined) => readonly Diagnostic[]) | ((cancellationToken?: CancellationToken | undefined) => readonly Diagnostic[])"
+      ],
+      "families": [
+        "callable contracts",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/program.ts",
+        "line": 5079,
+        "column": 12
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 172,
+      "pair_id": "99762:getGlobalDiagnostics",
+      "receiver_type_id": 99762,
+      "type": "Program | T",
+      "field": "getGlobalDiagnostics",
+      "declared_types": [
+        "((cancellationToken?: CancellationToken | undefined) => readonly Diagnostic[]) | ((cancellationToken?: CancellationToken | undefined) => readonly Diagnostic[])"
+      ],
+      "families": [
+        "callable contracts",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/watch.ts",
+        "line": 590,
+        "column": 38
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 173,
+      "pair_id": "95857:getOptionsDiagnostics",
+      "receiver_type_id": 95857,
+      "type": "Program | T",
+      "field": "getOptionsDiagnostics",
+      "declared_types": [
+        "((cancellationToken?: CancellationToken | undefined) => readonly Diagnostic[]) | ((cancellationToken?: CancellationToken | undefined) => readonly Diagnostic[])"
+      ],
+      "families": [
+        "callable contracts",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/program.ts",
+        "line": 5077,
+        "column": 12
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 174,
+      "pair_id": "99762:getOptionsDiagnostics",
+      "receiver_type_id": 99762,
+      "type": "Program | T",
+      "field": "getOptionsDiagnostics",
+      "declared_types": [
+        "((cancellationToken?: CancellationToken | undefined) => readonly Diagnostic[]) | ((cancellationToken?: CancellationToken | undefined) => readonly Diagnostic[])"
+      ],
+      "families": [
+        "callable contracts",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/watch.ts",
+        "line": 587,
+        "column": 34
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 175,
+      "pair_id": "95857:getSemanticDiagnostics",
+      "receiver_type_id": 95857,
+      "type": "Program | T",
+      "field": "getSemanticDiagnostics",
+      "declared_types": [
+        "{ (sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined): readonly Diagnostic[]; (sourceFile: SourceFile | undefined, cancellationToken: CancellationToken | undefined, nodesToCheck: Node[]): readonly Diagnostic[]; } | ((sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined) => readonly Diagnostic[])"
+      ],
+      "families": [
+        "callable contracts",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/program.ts",
+        "line": 5080,
+        "column": 12
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 176,
+      "pair_id": "99762:getSemanticDiagnostics",
+      "receiver_type_id": 99762,
+      "type": "Program | T",
+      "field": "getSemanticDiagnostics",
+      "declared_types": [
+        "{ (sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined): readonly Diagnostic[]; (sourceFile: SourceFile | undefined, cancellationToken: CancellationToken | undefined, nodesToCheck: Node[]): readonly Diagnostic[]; } | ((sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined) => readonly Diagnostic[])"
+      ],
+      "families": [
+        "callable contracts",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/watch.ts",
+        "line": 593,
+        "column": 42
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 177,
+      "pair_id": "99724:getSourceFiles",
+      "receiver_type_id": 99724,
+      "type": "Program | T",
+      "field": "getSourceFiles",
+      "declared_types": [
+        "(() => readonly SourceFile[]) | (() => readonly SourceFile[])"
+      ],
+      "families": [
+        "callable contracts",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/watch.ts",
+        "line": 344,
+        "column": 17
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 178,
+      "pair_id": "95857:getSyntacticDiagnostics",
+      "receiver_type_id": 95857,
+      "type": "Program | T",
+      "field": "getSyntacticDiagnostics",
+      "declared_types": [
+        "((sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined) => readonly DiagnosticWithLocation[]) | ((sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined) => readonly Diagnostic[])"
+      ],
+      "families": [
+        "callable contracts",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/program.ts",
+        "line": 5078,
+        "column": 12
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 179,
+      "pair_id": "99762:getSyntacticDiagnostics",
+      "receiver_type_id": 99762,
+      "type": "Program | T",
+      "field": "getSyntacticDiagnostics",
+      "declared_types": [
+        "((sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined) => readonly DiagnosticWithLocation[]) | ((sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined) => readonly Diagnostic[])"
+      ],
+      "families": [
+        "callable contracts",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/watch.ts",
+        "line": 582,
+        "column": 30
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 180,
+      "pair_id": "84413:name",
+      "receiver_type_id": 84413,
+      "type": "PropertyAssignment & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+      "field": "name",
+      "declared_types": [
+        "Identifier"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 265,
+        "column": 75
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 181,
+      "pair_id": "69241:parent",
+      "receiver_type_id": 69241,
+      "type": "PropertyDeclaration | ParameterPropertyDeclaration",
+      "field": "parent",
+      "declared_types": [
+        "ClassDeclaration | ClassExpression | ConstructorDeclaration"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 3186,
+        "column": 84
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 182,
+      "pair_id": "11686:configurable",
+      "receiver_type_id": 11686,
+      "type": "PropertyDescriptorAttributes",
+      "field": "configurable",
+      "declared_types": [
+        "boolean | Expression | undefined"
+      ],
+      "families": [
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 6552,
+        "column": 75
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 183,
+      "pair_id": "11686:enumerable",
+      "receiver_type_id": 11686,
+      "type": "PropertyDescriptorAttributes",
+      "field": "enumerable",
+      "declared_types": [
+        "boolean | Expression | undefined"
+      ],
+      "families": [
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 6551,
+        "column": 73
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 184,
+      "pair_id": "11686:writable",
+      "receiver_type_id": 11686,
+      "type": "PropertyDescriptorAttributes",
+      "field": "writable",
+      "declared_types": [
+        "boolean | Expression | undefined"
+      ],
+      "families": [
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 6554,
+        "column": 84
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 185,
+      "pair_id": "37465:0",
+      "receiver_type_id": 37465,
+      "type": "readonly [DiagnosticMessage, readonly [string]] | readonly [DiagnosticMessage, readonly [string, string]]",
+      "field": "0",
+      "declared_types": [
+        "DiagnosticMessage | readonly [string] | readonly [string, string]"
+      ],
+      "families": [
+        "array or tuple contracts",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 845,
+        "column": 13
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "array or tuple contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 186,
+      "pair_id": "37465:1",
+      "receiver_type_id": 37465,
+      "type": "readonly [DiagnosticMessage, readonly [string]] | readonly [DiagnosticMessage, readonly [string, string]]",
+      "field": "1",
+      "declared_types": [
+        "DiagnosticMessage | readonly [string] | readonly [string, string]"
+      ],
+      "families": [
+        "array or tuple contracts",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 846,
+        "column": 16
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "array or tuple contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 187,
+      "pair_id": "67044:0",
+      "receiver_type_id": 67044,
+      "type": "readonly [kind?: \"paths\" | \"node_modules\" | \"redirect\" | \"relative\" | \"ambient\" | undefined, specifiers?: readonly string[] | undefined, moduleFile?: SourceFile | undefined, modulePaths?: readonly ModulePath[] | undefined, cache?: ModuleSpecifierCache | undefined]",
+      "field": "0",
+      "declared_types": [
+        "readonly string[] | SourceFile | \"paths\" | ModuleSpecifierCache | \"node_modules\" | \"redirect\" | \"relative\" | \"ambient\" | readonly ModulePath[] | undefined"
+      ],
+      "families": [
+        "array or tuple contracts",
+        "nullish members",
+        "object plus primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/moduleSpecifiers.ts",
+        "line": 332,
+        "column": 33
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "array or tuple contracts",
+        "nullish members"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 188,
+      "pair_id": "99705:1",
+      "receiver_type_id": 99705,
+      "type": "readonly [ReportFileInError | undefined, number]",
+      "field": "1",
+      "declared_types": [
+        "number | ReportFileInError | undefined"
+      ],
+      "families": [
+        "nullish members",
+        "object plus primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/watch.ts",
+        "line": 310,
+        "column": 59
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "nullish members"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 189,
+      "pair_id": "97913:[dynamic index]",
+      "receiver_type_id": 97913,
+      "type": "readonly IncrementalBuildInfoRoot[]",
+      "field": "[dynamic index]",
+      "declared_types": [
+        "IncrementalBuildInfoRoot"
+      ],
+      "families": [
+        "array or tuple contracts",
+        "intersection field contract",
+        "object plus primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 2412,
+        "column": 29
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "array or tuple contracts",
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 190,
+      "pair_id": "98493:forEach",
+      "receiver_type_id": 98493,
+      "type": "readonly IncrementalMultiFileEmitBuildInfoFileInfo[] | readonly IncrementalBundleEmitBuildInfoFileInfo[]",
+      "field": "forEach",
+      "declared_types": [
+        "((callbackfn: (value: IncrementalBundleEmitBuildInfoFileInfo, index: number, array: readonly IncrementalBundleEmitBuildInfoFileInfo[]) => void, thisArg?: any) => void) | ((callbackfn: (value: IncrementalMultiFileEmitBuildInfoFileInfo, index: number, array: readonly IncrementalMultiFileEmitBuildInfoFileInfo[]) => void, thisArg?: any) => void)"
+      ],
+      "families": [
+        "callable contracts",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 2407,
+        "column": 5
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 191,
+      "pair_id": "97617:outSignature",
+      "receiver_type_id": 97617,
+      "type": "Readonly<ReusableBuilderProgramState> | undefined",
+      "field": "outSignature",
+      "declared_types": [
+        "EmitSignature | undefined"
+      ],
+      "families": [
+        "array or tuple contracts",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 331,
+        "column": 53
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "array or tuple contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 192,
+      "pair_id": "43118:forEach",
+      "receiver_type_id": 43118,
+      "type": "ReadonlyMap<K, U> | ReadonlySet<K> | undefined",
+      "field": "forEach",
+      "declared_types": [
+        "((callbackfn: (value: U, key: K, map: ReadonlyMap<K, U>) => void, thisArg?: any) => void) | ((callbackfn: (value: K, value2: K, set: ReadonlySet<K>) => void, thisArg?: any) => void)"
+      ],
+      "families": [
+        "callable contracts",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 8257,
+        "column": 5
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 193,
+      "pair_id": "43047:has",
+      "receiver_type_id": 43047,
+      "type": "ReadonlyMap<K, U> | ReadonlySet<K> | undefined",
+      "field": "has",
+      "declared_types": [
+        "((key: K) => boolean) | ((value: K) => boolean)"
+      ],
+      "families": [
+        "callable contracts",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 8219,
+        "column": 14
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 194,
+      "pair_id": "97180:skippedOn",
+      "receiver_type_id": 97180,
+      "type": "ReusableDiagnostic",
+      "field": "skippedOn",
+      "declared_types": [
+        "keyof CompilerOptions | undefined"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members",
+        "optional properties"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 579,
+        "column": 28
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 195,
+      "pair_id": "97181:file",
+      "receiver_type_id": 97181,
+      "type": "ReusableDiagnosticRelatedInformation",
+      "field": "file",
+      "declared_types": [
+        "string | false | undefined"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 601,
+        "column": 13
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "nullish members"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 196,
+      "pair_id": "97200:info",
+      "receiver_type_id": 97200,
+      "type": "ReusableRepopulateInfoChain",
+      "field": "info",
+      "declared_types": [
+        "RepopulateDiagnosticChainInfo"
+      ],
+      "families": [
+        "object plus primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 610,
+        "column": 112
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [],
+      "evidence": []
+    },
+    {
+      "priority": 197,
+      "pair_id": "99547:forEach",
+      "receiver_type_id": 99547,
+      "type": "Set<ResolutionWithFailedLookupLocations> | Map<string, ResolutionWithFailedLookupLocations>",
+      "field": "forEach",
+      "declared_types": [
+        "((callbackfn: (value: ResolutionWithFailedLookupLocations, value2: ResolutionWithFailedLookupLocations, set: Set<ResolutionWithFailedLookupLocations>) => void, thisArg?: any) => void) | ((callbackfn: (value: ResolutionWithFailedLookupLocations, key: string, map: Map<string, ResolutionWithFailedLookupLocations>) => void, thisArg?: any) => void)"
+      ],
+      "families": [
+        "callable contracts",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/resolutionCache.ts",
+        "line": 1478,
+        "column": 9
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "callable contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 198,
+      "pair_id": "10862:parameters",
+      "receiver_type_id": 10862,
+      "type": "SignatureDeclaration | JSDocSignature | undefined",
+      "field": "parameters",
+      "declared_types": [
+        "NodeArray<ParameterDeclaration> | readonly JSDocParameterTag[]"
+      ],
+      "families": [
+        "array or tuple contracts",
+        "dictionary contracts",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 36469,
+        "column": 31
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "array or tuple contracts",
+        "dictionary contracts"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 199,
+      "pair_id": "101527:buildOrder",
+      "receiver_type_id": 101527,
+      "type": "SolutionBuilderState<T>",
+      "field": "buildOrder",
+      "declared_types": [
+        "AnyBuildOrder | undefined"
+      ],
+      "families": [
+        "array or tuple contracts",
+        "nullish members",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 656,
+        "column": 12
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "array or tuple contracts",
+        "nullish members"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 200,
+      "pair_id": "8588:escapedName",
+      "receiver_type_id": 8588,
+      "type": "Symbol | undefined",
+      "field": "escapedName",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 38412,
+        "column": 20
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 201,
+      "pair_id": "10560:typeOnlyExportStarName",
+      "receiver_type_id": 10560,
+      "type": "SymbolLinks",
+      "field": "typeOnlyExportStarName",
+      "declared_types": [
+        "__String | undefined"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union",
+        "nullish members",
+        "optional properties"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 4472,
+        "column": 98
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract",
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 202,
+      "pair_id": "48896:comment",
+      "receiver_type_id": 48896,
+      "type": "T",
+      "field": "comment",
+      "declared_types": [
+        "string | NodeArray<JSDocComment> | undefined"
+      ],
+      "families": [
+        "dictionary contracts",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 5483,
+        "column": 20
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "dictionary contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 203,
+      "pair_id": "48940:comment",
+      "receiver_type_id": 48940,
+      "type": "T",
+      "field": "comment",
+      "declared_types": [
+        "string | NodeArray<JSDocComment> | undefined"
+      ],
+      "families": [
+        "dictionary contracts",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 5509,
+        "column": 20
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "dictionary contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 204,
+      "pair_id": "665:[dynamic index]",
+      "receiver_type_id": 665,
+      "type": "T[][] | readonly (T | readonly T[] | undefined)[]",
+      "field": "[dynamic index]",
+      "declared_types": [
+        "T | readonly T[] | T[] | undefined"
+      ],
+      "families": [
+        "array or tuple contracts",
+        "generic field contract",
+        "nullish members",
+        "object plus primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/core.ts",
+        "line": 378,
+        "column": 19
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "array or tuple contracts",
+        "generic field contract",
+        "nullish members"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 205,
+      "pair_id": "88461:name",
+      "receiver_type_id": 88461,
+      "type": "ThisCapturingVariableDeclaration",
+      "field": "name",
+      "declared_types": [
+        "Identifier & GeneratedIdentifier & { readonly escapedText: { __escapedIdentifier: void; } & \"__this\"; }"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 1505,
+        "column": 17
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 206,
+      "pair_id": "75216:ElementAttributesPropertyNameContainer",
+      "receiver_type_id": 75216,
+      "type": "typeof JsxNames",
+      "field": "ElementAttributesPropertyNameContainer",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 34162,
+        "column": 57
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 207,
+      "pair_id": "75216:ElementChildrenAttributeNameContainer",
+      "receiver_type_id": 75216,
+      "type": "typeof JsxNames",
+      "field": "ElementChildrenAttributeNameContainer",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 34170,
+        "column": 57
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 208,
+      "pair_id": "75216:ElementClass",
+      "receiver_type_id": 75216,
+      "type": "typeof JsxNames",
+      "field": "ElementClass",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 34279,
+        "column": 33
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 209,
+      "pair_id": "75216:ElementType",
+      "receiver_type_id": 75216,
+      "type": "typeof JsxNames",
+      "field": "ElementType",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 34153,
+        "column": 65
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 210,
+      "pair_id": "75216:LibraryManagedAttributes",
+      "receiver_type_id": 75216,
+      "type": "typeof JsxNames",
+      "field": "LibraryManagedAttributes",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 34148,
+        "column": 65
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 211,
+      "pair_id": "40625:parent",
+      "receiver_type_id": 40625,
+      "type": "TypeParameterDeclaration & { parent: JSDocTemplateTag; }",
+      "field": "parent",
+      "declared_types": [
+        "JSDocTemplateTag"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 4832,
+        "column": 32
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 212,
+      "pair_id": "46230:typeName",
+      "receiver_type_id": 46230,
+      "type": "TypeReferenceNode & { typeName: Identifier; }",
+      "field": "typeName",
+      "declared_types": [
+        "Identifier"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 7942,
+        "column": 43
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract"
+      ],
+      "evidence": []
+    },
+    {
+      "priority": 213,
+      "pair_id": "10933:propertyName",
+      "receiver_type_id": 10933,
+      "type": "WideningContext",
+      "field": "propertyName",
+      "declared_types": [
+        "__String | undefined"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union",
+        "nullish members",
+        "optional properties"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 25949,
+        "column": 64
+      },
+      "state": "pending source integration",
+      "completed_read_sites": 0,
+      "other_families": [
+        "intersection field contract",
+        "nullish members",
+        "optional properties"
+      ],
+      "evidence": []
+    }
+  ]
+}

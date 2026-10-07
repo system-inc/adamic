@@ -2,8 +2,12 @@ package oracle
 
 import (
 	"context"
+	"github.com/system-inc/adamic/internal/javascript"
+	"github.com/system-inc/adamic/internal/native"
+	"os"
 	"path/filepath"
 	"reflect"
+	"strconv"
 	"strings"
 	"testing"
 
@@ -111,3 +115,137 @@ func dropLane4HelperView(program *ir.Program) int {
 	}
 	return dropped
 }
+
+// The selector is held to source Node here independently of frontend admission.
+// These normalized snapshots are a component oracle, not unlocked pair claims.
+func TestCheckedViewMixedSelection(t *testing.T) {
+	binary := filepath.Join(t.TempDir(), "mixed-selection")
+	if err := native.Build(mixedSelectionC, binary, native.Options{}); err != nil {
+		t.Fatal(err)
+	}
+	sanitized := filepath.Join(t.TempDir(), "mixed-selection-sanitized")
+	if err := native.Build(mixedSelectionC, sanitized, native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	for _, sample := range []struct{ name, stdout, nodeWrong, declared, found string }{
+		{"string-number-undefined", "string:word\nnumber:42\nundefined:undefined\n", "boolean:true\n", "string | number | undefined", "boolean"},
+		{"string-object", "string:word\nobject:name\n", "object:42\n", "string | Identifier", "object"},
+		{"untagged-objects", "Left:name\nRight:42\n", "Right:true\n", "Left | Right", "object"},
+		{"false-string-undefined", "boolean:false\nstring:word\nundefined:undefined\n", "boolean:true\n", "false | string | undefined", "boolean"},
+	} {
+		t.Run(sample.name, func(t *testing.T) {
+			path, err := filepath.Abs("../../stage3/interface-downcasts/lane4/selection-fixtures/" + sample.name + "-good.a")
+			if err != nil {
+				t.Fatal(err)
+			}
+			want := run{stdout: []byte(sample.stdout)}
+			if difference := disagreement(want, onNode(t, path)); difference != "" {
+				t.Fatal("source Node: " + difference)
+			}
+			for _, got := range []run{execute(t, binary, sample.name, "good"), execute(t, sanitized, sample.name, "good"), mixedSelectionJavaScript(t, sample.name, "good")} {
+				if difference := disagreement(want, got); difference != "" {
+					t.Fatalf("%s; got %#v", difference, got)
+				}
+			}
+			path = strings.Replace(path, "-good.a", "-wrong.a", 1)
+			if difference := disagreement(run{stdout: []byte(sample.nodeWrong)}, onNode(t, path)); difference != "" {
+				t.Fatal("wrong source Node: " + difference)
+			}
+			want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: view.value matches no member of " + sample.declared + "; expected " + sample.declared + ", found " + sample.found + "\n")}
+			for _, got := range []run{execute(t, binary, sample.name, "wrong"), executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, sanitized, sample.name, "wrong"), mixedSelectionJavaScript(t, sample.name, "wrong")} {
+				if difference := disagreement(want, got); difference != "" {
+					t.Fatalf("%s; got %#v", difference, got)
+				}
+			}
+		})
+	}
+}
+
+func mixedSelectionJavaScript(t *testing.T, family, variant string) run {
+	t.Helper()
+	path := filepath.Join(t.TempDir(), "selection.mjs")
+	source := "import {panic} from 'adamic';\n" + javascript.MixedUnionRuntime() + mixedSelectionJavaScriptCases + "\nprobe(" + strconv.Quote(family) + ", " + strconv.Quote(variant) + ");\n"
+	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
+		t.Fatal(err)
+	}
+	return onNode(t, path)
+}
+
+const mixedSelectionJavaScriptCases = `
+const kind = value => value === undefined ? 'undefined' : value === null ? 'null' : typeof value;
+const match = (member, snapshot) => { const descriptor=Object.getOwnPropertyDescriptor(snapshot.value,'text'); return descriptor !== undefined && Object.hasOwn(descriptor,'value') && typeof descriptor.value === (member.contract === 1 ? 'string' : 'number'); };
+const probe = (family, variant) => {
+ let members, values, declared;
+ if (family === 'string-number-undefined') {
+  members=[{kind:'string'},{kind:'number'},{kind:'undefined'}]; values=variant==='good'?['word',42,undefined]:[true];declared='string | number | undefined';
+ } else if (family === 'string-object') {
+  members=[{kind:'string'},{kind:'object',contract:1}]; values=variant==='good'?['word',{text:'name'}]:[{text:42}];declared='string | Identifier';
+ } else if (family === 'untagged-objects') {
+  members=[{kind:'object',contract:1},{kind:'object',contract:2}];values=variant==='good'?[{text:'name'},{text:42}]:[{text:true}];declared='Left | Right';
+ } else {
+  members=[{kind:'boolean',literal:true,value:false},{kind:'string'},{kind:'undefined'}];values=variant==='good'?[false,'word',undefined]:[true];declared='false | string | undefined';
+ }
+ for (const value of values) {
+  const selected=adamicViewMixedUnionSelect({kind:kind(value),value},members,match,'view.value',declared);
+  const prefix=family==='untagged-objects'?(selected===0?'Left':'Right'):members[selected].kind;
+  console.log(prefix+':'+String(typeof value==='object'?value.text:value));
+ }
+};
+`
+
+const mixedSelectionC = `
+#include "view_unions_mixed.h"
+#include <stdio.h>
+#include <string.h>
+static adamic_string word = ADAMIC_STRING("word");
+static adamic_string name = ADAMIC_STRING("name");
+typedef struct sample_object { adamic_view_union_value text; } sample_object;
+static bool matches(void *context, const adamic_view_union_member *member, const adamic_view_union_value *value) {
+ (void)context;
+ const sample_object *object=value->payload.reference;
+ return object->text.kind==(member->contract==1?adamic_view_union_string:adamic_view_union_number);
+}
+static void show(const char *prefix, adamic_view_union_value value) {
+ if(value.kind==adamic_view_union_object){const sample_object *object=value.payload.reference;value=object->text;}
+ printf("%s:",prefix);
+ switch(value.kind){
+ case adamic_view_union_string: {const adamic_string *s=value.payload.reference;printf("%.*s",(int)s->length,s->bytes);break;}
+ case adamic_view_union_number:printf("%g",value.payload.number);break;
+ case adamic_view_union_boolean:printf("%s",value.payload.boolean?"true":"false");break;
+ case adamic_view_union_undefined:printf("undefined");break;
+ default:printf("unsupported");break;
+ }
+ printf("\n");
+}
+int main(int argc,char **argv){
+ if(argc!=3)return 2;
+ const char *family=argv[1];bool wrong=strcmp(argv[2],"wrong")==0;
+ sample_object text={{adamic_view_union_string,{.reference=&name}}};
+ sample_object number={{adamic_view_union_number,{.number=42}}};
+ sample_object boolean={{adamic_view_union_boolean,{.boolean=true}}};
+ adamic_view_union_member members[3]={0};adamic_view_union_value values[3]={0};size_t count=0,amount=0;const char *declared=NULL;
+ if(strcmp(family,"string-number-undefined")==0){
+  members[0].kind=adamic_view_union_string;members[1].kind=adamic_view_union_number;members[2].kind=adamic_view_union_undefined;count=3;
+  values[0]=(adamic_view_union_value){adamic_view_union_string,{.reference=&word}};values[1]=(adamic_view_union_value){adamic_view_union_number,{.number=42}};values[2]=(adamic_view_union_value){adamic_view_union_undefined,{.reference=NULL}};amount=3;declared="string | number | undefined";
+  if(wrong){values[0]=(adamic_view_union_value){adamic_view_union_boolean,{.boolean=true}};amount=1;}
+ }else if(strcmp(family,"string-object")==0){
+  members[0].kind=adamic_view_union_string;members[1].kind=adamic_view_union_object;members[1].contract=1;count=2;
+  values[0]=(adamic_view_union_value){adamic_view_union_string,{.reference=&word}};values[1]=(adamic_view_union_value){adamic_view_union_object,{.reference=&text}};amount=2;declared="string | Identifier";
+  if(wrong){values[0]=(adamic_view_union_value){adamic_view_union_object,{.reference=&number}};amount=1;}
+ }else if(strcmp(family,"untagged-objects")==0){
+  members[0].kind=adamic_view_union_object;members[0].contract=1;members[1].kind=adamic_view_union_object;members[1].contract=2;count=2;
+  values[0]=(adamic_view_union_value){adamic_view_union_object,{.reference=&text}};values[1]=(adamic_view_union_value){adamic_view_union_object,{.reference=&number}};amount=2;declared="Left | Right";
+  if(wrong){values[0]=(adamic_view_union_value){adamic_view_union_object,{.reference=&boolean}};amount=1;}
+ }else{
+  members[0]=(adamic_view_union_member){adamic_view_union_boolean,true,{.boolean=false},0};members[1].kind=adamic_view_union_string;members[2].kind=adamic_view_union_undefined;count=3;
+  values[0]=(adamic_view_union_value){adamic_view_union_boolean,{.boolean=false}};values[1]=(adamic_view_union_value){adamic_view_union_string,{.reference=&word}};values[2]=(adamic_view_union_value){adamic_view_union_undefined,{.reference=NULL}};amount=3;declared="false | string | undefined";
+  if(wrong){values[0].payload.boolean=true;amount=1;}
+ }
+ for(size_t i=0;i<amount;i++){
+  size_t selected=adamic_view_mixed_union_select(&values[i],members,count,matches,NULL,"view.value",declared);
+  const char *prefix=strcmp(family,"untagged-objects")==0?(selected==0?"Left":"Right"):adamic_view_union_kind_name(members[selected].kind);
+  show(prefix,values[i]);
+ }
+ return 0;
+}
+`
