@@ -1,0 +1,17 @@
+// Cut from TypeScript 6.0.3 parser.ts:1472-1499. The factory contracts are driver support.
+namespace Parser {
+    const factory = {
+        createNodeArray: (elements: number[]): number[] => elements,
+        createNumericLiteral: (value: number): string => `number:${value}`,
+        createLiteralLikeNode: (value: number): string => `other:${value}`,
+    };
+    var {
+        createNodeArray: factoryCreateNodeArray,
+        createNumericLiteral: factoryCreateNumericLiteral,
+    } = factory;
+    export function run(): void {
+        console.log(factoryCreateNodeArray([1, 2, 3]).join(','));
+        console.log(factoryCreateNumericLiteral(7));
+    }
+}
+Parser.run();

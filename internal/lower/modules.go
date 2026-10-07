@@ -81,6 +81,10 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 							return err
 						}
 						l.result.Locals[local].Global = true
+						if namespaceVariable(list) && list.Flags&ast.NodeFlagsBlockScoped == 0 {
+							l.result.Locals[local].NamespaceVar = true
+							l.result.Locals[local].NamespaceState = true
+						}
 					}
 					continue
 				}
