@@ -57,3 +57,5 @@ The counter claim remains explicitly blocked. Under the later parking continuati
 Additional supplied-node CFG helpers are now delivered: [constant truthiness](TRUTHINESS.md) and [nested label collection](LABELS.md). Both cover all four consumer fixture AST families on actual Go, source Node, emitted JavaScript and sanitized native. Each removes one more dependency for each consumer, zero final blockers.
 
 The effective-now regex instruction is applied to the earlier normalizer: its hand-written equivalents are replaced by literal translations from codex/lint-regex. Actual Go/source Node/emitted JS/sanitized native still match 9,364 cases, with all three compiling semantic mutants caught. See [REGEX-MIGRATION.md](REGEX-MIGRATION.md) for provenance and final scoped verification.
+
+Ordered decorator expression delegation is delivered in [DECORATORS.md](DECORATORS.md), with exact actual-Go coverage boundaries and two compiling mutants. Full owned suite PASS 123.469s, vet clean.

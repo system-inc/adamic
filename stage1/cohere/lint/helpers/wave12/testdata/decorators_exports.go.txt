@@ -1,0 +1,23 @@
+package control_flow_graph
+import "github.com/microsoft/TypeScript/tsc/shim/ast"
+var adamicDecoratorObserve bool
+var adamicDecoratorDepth int
+var adamicDecoratorCalls []*ast.Node
+func (b *Builder[E]) expr(node *ast.Node) {
+    if adamicDecoratorObserve && adamicDecoratorDepth == 0 { adamicDecoratorCalls = append(adamicDecoratorCalls, node) }
+    adamicDecoratorDepth++
+    b.adamicOriginalExpr(node)
+    adamicDecoratorDepth--
+}
+func AdamicDecoratorCalls(node *ast.Node) []*ast.Node {
+    b := &Builder[int]{}
+    b.cur = b.newBlock()
+    b.cur.hasIncoming = true
+    b.cur.Reachable = true
+    adamicDecoratorCalls = nil
+    adamicDecoratorDepth = 0
+    adamicDecoratorObserve = true
+    b.decorators(node)
+    adamicDecoratorObserve = false
+    return adamicDecoratorCalls
+}

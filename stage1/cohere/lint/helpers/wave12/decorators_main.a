@@ -1,0 +1,17 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { decorators, type Decorator } from './control_flow_decorators.a';
+const file = readTextFile(programArguments()[0] ?? panic('missing corpus'));
+if(file.kind === 'Error') { panic(file.message); }
+const json = new OptionsJson(file.text);
+const root = json.parse();
+if(root < 0) { panic(json.error); }
+for(const item of json.node(root).children) {
+    const entries: Decorator<number>[] = [];
+    for(const expression of json.node(item).children) { entries.push({expression: json.node(expression).number}); }
+    const observed: number[] = [];
+    decorators({decorators: entries}, (expression: number): void => { observed.push(expression); });
+    let line = `${observed.length}`;
+    for(const expression of observed) { line += `|${expression}`; }
+    console.log(line);
+}

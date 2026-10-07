@@ -1,0 +1,8 @@
+// Go control_flow_graph.Builder.decorators, with the expression walker supplied by its caller.
+export interface Decorator<E> { readonly expression: E; }
+export interface DecoratedNode<E> { readonly decorators: readonly Decorator<E>[]; }
+export function decorators<E>(node: DecoratedNode<E>, visitExpression: (expression: E) => void): void {
+    for(const decorator of node.decorators) {
+        visitExpression(decorator.expression);
+    }
+}
