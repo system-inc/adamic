@@ -1,0 +1,5 @@
+{
+  "from": "if(tags === undefined) { this.report(index, 'neverValid', [value, 'rel']); }",
+  "to": "if(tags === undefined) { return; }",
+  "name": "react-no-invalid-html-attribute listener suppressed"
+}
