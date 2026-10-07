@@ -18,6 +18,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/compiler"
 	"github.com/microsoft/TypeScript/tsc/shim/core"
 	"github.com/microsoft/TypeScript/tsc/shim/tsoptions"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 	"github.com/microsoft/TypeScript/tsc/shim/vfs/osvfs"
 	"github.com/system-inc/cohere/internal/lint/rule"
 	rules "github.com/system-inc/cohere/internal/lint/rules/typescript"
@@ -57,17 +58,18 @@ func main() {
 		panic(err)
 	}
 	started := time.Now()
-	host := compiler.NewCachedFSCompilerHost(filepath.ToSlash(filepath.Dir(configPath)), bundled.WrapFS(osvfs.FS()), bundled.LibPath(), nil, nil, nil)
-	config, diagnostics := tsoptions.GetParsedCommandLineOfConfigFile(filepath.ToSlash(configPath), nil, nil, host, nil)
+	fs := bundled.WrapFS(osvfs.FS())
+	host := compiler.NewCachedFSCompilerHost(fs, bundled.LibPath(), nil, nil, nil)
+	config, diagnostics := tsoptions.GetParsedCommandLineOfConfigFile(tspath.RootedFilePathFromAbsolute(filepath.ToSlash(configPath)), nil, nil, fs, nil)
 	if config == nil || len(diagnostics) > 0 || len(config.Errors) > 0 {
 		panic("invalid tsconfig")
 	}
-	roots := make([]string, len(paths))
+	roots := make([]tspath.RootedFilePath, len(paths))
 	for i, path := range paths {
 		if !filepath.IsAbs(path) {
 			path = filepath.Join(filepath.Dir(configPath), path)
 		}
-		roots[i] = filepath.ToSlash(path)
+		roots[i] = tspath.RootedFilePathFromAbsolute(filepath.ToSlash(path))
 	}
 	program := compiler.NewProgram(compiler.ProgramOptions{Config: config.WithFileNames(roots), Host: host, SingleThreaded: core.TSTrue})
 	// Force checker pool initialization into load, just as the native bridge does.
