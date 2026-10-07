@@ -1,0 +1,4 @@
+export function splitThemeKey(key: string): string[] {
+ if(!key.startsWith('--')) { return []; }
+ return key.slice(2).split('-');
+}

@@ -1,0 +1,3 @@
+export function joinSegments(segments: readonly string[]): string {
+ return segments.join('-');
+}

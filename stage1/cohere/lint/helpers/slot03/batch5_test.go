@@ -1,0 +1,116 @@
+package slot03
+
+import (
+	"bytes"
+	"context"
+	"encoding/json"
+	"github.com/system-inc/adamic/internal/javascript"
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+	"os"
+	"path/filepath"
+	"strings"
+	"testing"
+)
+
+func batch5Oracle(t *testing.T) (string, []byte) {
+	t.Helper()
+	verifyCoverageAt(t, "batch5/testdata", []string{"/collapse.splitThemeKey", "/collapse.joinSegments", "/collapse.breakpointGroupOrder"})
+	root, _ := filepath.Abs("../../../../../cohere")
+	here, _ := filepath.Abs("batch5/testdata")
+	directory := t.TempDir()
+	virtual := filepath.Join(root, "adamic_slot03_batch5.go")
+	overlay := filepath.Join(directory, "overlay.json")
+
+	data, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: filepath.Join(here, "oracle.go"), filepath.Join(root, "internal/lint/rules/tailwind/collapse/adamic_slot03_batch5.go"): filepath.Join(here, "collapse_export.go")}})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err = os.WriteFile(overlay, data, 0644); err != nil {
+		t.Fatal(err)
+	}
+	binary := filepath.Join(directory, "oracle")
+	command(t, root, "go", "build", "-overlay="+overlay, "-o", binary, virtual)
+	cases := filepath.Join(directory, "cases.json")
+	want := command(t, "", binary, filepath.Join(here, "sources.jsonl.gz"), cases)
+	return cases, want
+}
+
+// Not parallel: native sanitizer builds and large fixture observations bound memory.
+func TestBatch5Helpers(t *testing.T) {
+	cases, want := batch5Oracle(t)
+	entry, _ := filepath.Abs("batch5/main.a")
+	runner, _ := filepath.Abs("../../../../../oracle/node.mjs")
+	for _, got := range [][]byte{command(t, "", "node", "--disable-warning=ExperimentalWarning", runner, entry, cases), command(t, "", build(t, entry), cases), command(t, "", "node", "--disable-warning=ExperimentalWarning", runner, batch5JavaScript(t, entry), cases)} {
+		if !bytes.Equal(got, want) {
+			mismatch(t, got, want)
+		}
+	}
+	t.Logf("%d lines match real Go, Node source, emitted JavaScript and sanitized native", bytes.Count(want, []byte{'\n'}))
+}
+
+// Not parallel: compiling semantic variants run serially with sanitizer observations.
+func TestBatch5Mutants(t *testing.T) {
+	cases, want := batch5Oracle(t)
+	for _, mutant := range []struct{ file, old, new, prefix string }{
+		{"split_theme_key.a", "key.startsWith('--')", "key.startsWith('-')", ""},
+		{"split_theme_key.a", "return key.slice(2).split('-');", "return key.slice(2).split('-').filter(segment => segment !== '');", ""},
+		{"split_theme_key.a", "return key.slice(2).split('-');", "const existing = splitCache.get(key); if(existing !== undefined) { return existing; } const parts = key.slice(2).split('-'); splitCache.set(key, parts); return parts;", "const splitCache = new Map<string, string[]>();\n"},
+		{"join_segments.a", "segments.join('-')", "segments.join('')", ""},
+		{"breakpoint_group_order.a", "registration.name === 'sm'", "registration.name === 'lg'", ""},
+		{"breakpoint_group_order.a", "let index = 0; index < registrations.length; index++", "let index = registrations.length - 1; index >= 0; index--", ""},
+	} {
+		t.Run(mutant.file, func(t *testing.T) {
+			scratch := t.TempDir()
+			for _, file := range []string{"split_theme_key.a", "join_segments.a", "breakpoint_group_order.a", "main.a"} {
+				data, err := os.ReadFile(filepath.Join("batch5", file))
+				if err != nil {
+					t.Fatal(err)
+				}
+				text := string(data)
+				if file == mutant.file {
+					if strings.Count(text, mutant.old) != 1 {
+						t.Fatal("mutant anchor changed")
+					}
+					text = mutant.prefix + strings.Replace(text, mutant.old, mutant.new, 1)
+				}
+				if file == "main.a" {
+					reader, _ := filepath.Abs("../options_json.ts")
+					text = strings.ReplaceAll(text, "../../options_json.ts", filepath.ToSlash(reader))
+				}
+				if err = os.WriteFile(filepath.Join(scratch, file), []byte(text), 0644); err != nil {
+					t.Fatal(err)
+				}
+			}
+			got := command(t, "", build(t, filepath.Join(scratch, "main.a")), cases)
+			if bytes.Equal(got, want) {
+				t.Fatal("semantic mutant survived")
+			}
+			a, b := strings.Split(string(got), "\n"), strings.Split(string(want), "\n")
+			for i := 0; i < len(a) && i < len(b); i++ {
+				if a[i] != b[i] {
+					t.Logf("compiled semantic mutant caught at line %d: got %q Go %q", i+1, a[i], b[i])
+					return
+				}
+			}
+			t.Fatal("no changed output line")
+		})
+	}
+}
+
+func batch5JavaScript(t *testing.T, entry string) string {
+	t.Helper()
+	program, err := load.Load([]string{entry})
+	if err != nil {
+		t.Fatal(err)
+	}
+	ir, err := lower.Lower(context.Background(), program)
+	if err != nil {
+		t.Fatal(err)
+	}
+	path := filepath.Join(t.TempDir(), "helper.mjs")
+	if err = os.WriteFile(path, []byte(javascript.JavaScript(ir)), 0644); err != nil {
+		t.Fatal(err)
+	}
+	return path
+}

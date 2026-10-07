@@ -1,0 +1,41 @@
+import {programArguments, readTextFile, panic} from 'adamic';
+import {OptionsJson} from '../../options_json.ts';
+import {splitThemeKey} from './split_theme_key.a';
+import {joinSegments} from './join_segments.a';
+import {breakpointGroupOrder, type VariantRegistration} from './breakpoint_group_order.a';
+const input = readTextFile(programArguments()[0] ?? panic('missing cases'));
+if(input.kind === 'Error') { panic(input.message); }
+const json = new OptionsJson(input.text);
+const root = json.parse();
+if(root < 0) { panic(json.error); }
+function render(text: string): string {
+ let result = '';
+ for(let index = 0; index < text.length; index++) { result += `${text.charCodeAt(index)},`; }
+ return result;
+}
+function renderSegments(segments: readonly string[]): string {
+ const output: string[] = [];
+ for(const segment of segments) { output.push(render(segment)); }
+ return `${segments.length}:` + output.join('|');
+}
+for(const row of json.node(json.field(root, 'texts')).children) {
+ const text = json.node(row).text;
+ const segments = splitThemeKey(text);
+ console.log(renderSegments(segments));
+ console.log(render(joinSegments(segments)));
+ if(segments.length > 0) { segments[0] = 'changed'; }
+ console.log(renderSegments(splitThemeKey(text)));
+}
+for(const row of json.node(json.field(root, 'segments')).children) {
+ const segments: string[] = [];
+ for(const child of json.node(row).children) { segments.push(json.node(child).text); }
+ console.log(render(joinSegments(segments)));
+}
+for(const row of json.node(json.field(root, 'registrations')).children) {
+ const registrations: VariantRegistration[] = [];
+ for(const child of json.node(row).children) {
+  registrations.push({name: json.node(json.field(child, 'name')).text, order: json.node(json.field(child, 'order')).number});
+ }
+ const result = breakpointGroupOrder(registrations);
+ console.log(`${result.order}:${result.found}`);
+}

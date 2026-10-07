@@ -1,0 +1,10 @@
+export type VariantRegistration = {readonly name: string; readonly order: number};
+export type BreakpointGroup = {readonly order: number; readonly found: boolean};
+// The caller supplies the actual generated framework registrations.
+export function breakpointGroupOrder(registrations: readonly VariantRegistration[]): BreakpointGroup {
+ for(let index = 0; index < registrations.length; index++) {
+  const registration = registrations[index];
+  if(registration !== undefined && registration.name === 'sm') { return {order: registration.order, found: true}; }
+ }
+ return {order: 0, found: false};
+}

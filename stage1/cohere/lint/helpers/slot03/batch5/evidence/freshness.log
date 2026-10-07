@@ -1,0 +1,7 @@
+=== RUN   TestBatch5Mutants
+=== RUN   TestBatch5Mutants/split_theme_key.a#02
+    batch5_test.go:92: compiled semantic mutant caught at line 288: got "1:99,104,97,110,103,101,100," Go "1:"
+--- PASS: TestBatch5Mutants (1.95s)
+    --- PASS: TestBatch5Mutants/split_theme_key.a#02 (1.67s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot03	1.962s

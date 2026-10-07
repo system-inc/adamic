@@ -1,0 +1,22 @@
+=== RUN   TestBatch5Helpers
+    batch5_test.go:49: 11571 lines match real Go, Node source, emitted JavaScript and sanitized native
+--- PASS: TestBatch5Helpers (3.54s)
+=== RUN   TestBatch5Mutants
+=== RUN   TestBatch5Mutants/split_theme_key.a
+    batch5_test.go:85: compiled semantic mutant caught at line 283: got "1:" Go "0:"
+=== RUN   TestBatch5Mutants/split_theme_key.a#01
+    batch5_test.go:85: compiled semantic mutant caught at line 286: got "0:" Go "1:"
+=== RUN   TestBatch5Mutants/join_segments.a
+    batch5_test.go:85: compiled semantic mutant caught at line 290: got "0," Go "0,45,"
+=== RUN   TestBatch5Mutants/breakpoint_group_order.a
+    batch5_test.go:85: compiled semantic mutant caught at line 9639: got "2:true" Go "0:false"
+=== RUN   TestBatch5Mutants/breakpoint_group_order.a#01
+    batch5_test.go:85: compiled semantic mutant caught at line 9641: got "23:true" Go "-17:true"
+--- PASS: TestBatch5Mutants (7.32s)
+    --- PASS: TestBatch5Mutants/split_theme_key.a (1.56s)
+    --- PASS: TestBatch5Mutants/split_theme_key.a#01 (1.36s)
+    --- PASS: TestBatch5Mutants/join_segments.a (1.25s)
+    --- PASS: TestBatch5Mutants/breakpoint_group_order.a (1.48s)
+    --- PASS: TestBatch5Mutants/breakpoint_group_order.a#01 (1.41s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot03	10.860s
