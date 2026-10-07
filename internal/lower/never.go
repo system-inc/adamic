@@ -65,6 +65,11 @@ func (l *lowering) neverExpression(node *ast.Node) (ir.Expression, error) {
 		}
 	}
 	of := ir.Number
+	if node.Kind == ast.KindIdentifier && (node.Parent == nil || node.Parent.Kind != ast.KindVariableDeclaration) {
+		if local, known := l.local(node); known {
+			of = l.result.Locals[local].Type
+		}
+	}
 	contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone)
 	if contextual == nil {
 		contextual = l.impliedTarget(node)
@@ -73,7 +78,9 @@ func (l *lowering) neverExpression(node *ast.Node) (ir.Expression, error) {
 		contextual = l.checker.GetTypeAtLocation(node.Parent)
 	}
 	if contextual != nil {
-		if representation, known := l.representation(contextual); known {
+		if l.concrete(contextual).Flags()&checker.TypeFlagsNever != 0 {
+			of = ir.Number
+		} else if representation, known := l.representation(contextual); known {
 			of = representation
 		}
 	}

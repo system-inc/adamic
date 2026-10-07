@@ -72,3 +72,27 @@ func TestNeverReadKinds(t *testing.T) {
 		})
 	}
 }
+
+func TestNeverCondition(t *testing.T) {
+	t.Parallel()
+	path := filepath.Join(t.TempDir(), "condition.a")
+	source := "let flag: boolean = false;\nfunction change(): void { flag = true; }\nchange();\nif (flag) {\n    if (flag) { console.log('continued'); }\n}\n"
+	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
+		t.Fatal(err)
+	}
+	observed := onNode(t, path)
+	if observed.exitCode != 0 || string(observed.stdout) != "continued\n" || len(observed.stderr) != 0 {
+		t.Fatalf("Node: %#v", observed)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := run{exitCode: 70, stderr: []byte("adamic: panic: unreachable expression flag at condition.a:5:9\n")}
+	actual, _ := nativelyUncached(t, program)
+	for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+		if difference := disagreement(want, got); difference != "" {
+			t.Errorf("%s: exit %d, stdout %q, stderr %q", difference, got.exitCode, got.stdout, got.stderr)
+		}
+	}
+}
