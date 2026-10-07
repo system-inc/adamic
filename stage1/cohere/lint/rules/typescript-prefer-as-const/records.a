@@ -1,0 +1,33 @@
+import { panic } from 'adamic';
+import { written } from '../../../../typescript/parser/nodes.ts';
+export class Edit {
+    readonly start: number; readonly end: number; readonly text: string;
+    constructor(start: number, end: number, text: string) { this.start = start; this.end = end; this.text = text; }
+    render(offsets: readonly number[], kind: string): string {
+        return `${kind} ${offsets[this.start] ?? panic('edit start outside source')} ${offsets[this.end] ?? panic('edit end outside source')}\t${written(this.text)}\n`;
+    }
+}
+export class Suggestion {
+    readonly id: string; readonly message: string; readonly edits: Edit[] = [];
+    constructor(id: string, message: string) { this.id = id; this.message = message; }
+}
+export class Diagnostic {
+    readonly rule: string; readonly id: string; readonly message: string; readonly start: number; readonly end: number;
+    readonly fixes: Edit[] = []; readonly suggestions: Suggestion[] = [];
+    constructor(rule: string, id: string, message: string, start: number, end: number) {
+        this.rule = rule; this.id = id; this.message = message; this.start = start; this.end = end;
+    }
+    render(offsets: readonly number[], source: string, path: string): string {
+        const start = offsets[this.start] ?? panic('diagnostic start outside source');
+        const end = offsets[this.end] ?? panic('diagnostic end outside source');
+        const prefix = source.slice(0, this.start); const line = prefix.split('\n').length;
+        const column = start - (offsets[prefix.lastIndexOf('\n') + 1] ?? 0) + 1;
+        let result = `${path}:${line}:${column}\n  ${this.rule}  ${this.message}\n\nrange ${start} ${end} ${this.id}\n`;
+        for(const fix of this.fixes) result += fix.render(offsets, 'fix');
+        for(const suggestion of this.suggestions) {
+            result += `suggestion ${suggestion.id}\t${written(suggestion.message)}\n`;
+            for(const edit of suggestion.edits) result += edit.render(offsets, 'edit');
+        }
+        return result;
+    }
+}

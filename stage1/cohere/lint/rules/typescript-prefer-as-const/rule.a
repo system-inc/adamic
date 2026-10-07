@@ -1,0 +1,57 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import { Diagnostic, Edit } from './records.a';
+import { message } from './messages.a';
+export class Rule {
+    readonly context: RuleContext; readonly records: Diagnostic[] = [];
+    constructor(context: RuleContext) { this.context = context; }
+    matches(type: number, value: number): boolean {
+        if(type < 0 || value < 0) return false;
+        const context = this.context;
+        if(context.node(type).kind !== 'LiteralType') return false;
+        const literal = context.node(type).children[0] ?? -1;
+        if(literal < 0) return false;
+        const node = context.node(literal); const initializer = context.node(value);
+        return ['StringLiteral', 'NumericLiteral'].includes(node.kind) && initializer.kind === node.kind && initializer.text === node.text;
+    }
+    analyze(index: number): void {
+        const context = this.context; const node = context.node(index);
+        if(node.kind === 'AsExpression') {
+            const value = node.children[0] ?? -1; const type = node.children[1] ?? -1;
+            if(!this.matches(type, value)) return;
+            const record = new Diagnostic('@typescript-eslint/prefer-as-const', 'preferAsConst', message, context.start(type), context.node(type).end);
+            record.fixes.push(new Edit(record.start, record.end, 'const')); this.records.push(record); return;
+        }
+        if(node.kind !== 'VariableDeclaration' && node.kind !== 'PropertyDeclaration') return;
+        let name = -1; let type = -1; let value = -1; let colon = -1;
+        for(const child of node.children) {
+            const kind = context.node(child).kind;
+            if(['QuestionToken', 'ExclamationToken'].includes(kind)) return;
+            if(name < 0 && !['Decorator', 'PublicKeyword', 'PrivateKeyword', 'ProtectedKeyword', 'ReadonlyKeyword', 'StaticKeyword', 'DeclareKeyword', 'AbstractKeyword', 'OverrideKeyword', 'AccessorKeyword'].includes(kind)) name = child;
+            context.scanner.pos = context.node(child).end;
+            const following = context.scanner.scan();
+            if(following === 'ColonToken') colon = context.scanner.start;
+            if(colon >= 0 && context.start(child) > colon && type < 0) type = child;
+            if(following === 'EqualsToken') {
+                const position = node.children.indexOf(child); value = node.children[position + 1] ?? -1;
+            }
+        }
+        if(!this.matches(type, value)) return;
+        const record = new Diagnostic('@typescript-eslint/prefer-as-const', 'preferAsConst', message, context.start(type), context.node(type).end);
+        if(node.kind === 'PropertyDeclaration' || (name >= 0 && context.node(name).kind === 'Identifier')) {
+            record.fixes.push(new Edit(colon, context.node(type).end, ''));
+            record.fixes.push(new Edit(context.node(value).end, context.node(value).end, ' as const'));
+        }
+        this.records.push(record);
+    }
+    visit(index: number): void {
+        const previous = this.records.length; this.analyze(index);
+        if(this.records.length === previous) return;
+        const record = this.records[this.records.length - 1] ?? panic('missing diagnostic');
+        if(record.fixes.length > 1) panic('prefer-as-const requires complete repair renderer');
+        const fix = record.fixes[0];
+        this.context.report(this.context.node(index).kind === 'AsExpression' ? this.context.node(index).children[1] ?? -1 : this.context.node(index).children[1] ?? -1,
+            record.rule, record.id, record.message, fix === undefined ? '' : 'fix', fix === undefined ? '' : fix.text, '');
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
