@@ -2,6 +2,9 @@ import { panic } from 'adamic';
 import type { Rules } from './rules.ts';
 import { Diagnostic } from './diagnostic.ts';
 import { regexpBinding } from './regexp_binding.a';
+// Numeric SyntaxKind values from the pinned TypeScript parser: CallExpression, NewExpression.
+export const listenerKinds: readonly number[] = [213, 214];
+
 export class NoInvalidRegexp {
     readonly rules: Rules;
     readonly allowed: string[] = [];

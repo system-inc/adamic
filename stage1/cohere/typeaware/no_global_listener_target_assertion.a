@@ -8,6 +8,9 @@ import { CheckerFacts } from './checker_facts.ts';
 import { nonnullableShape } from './nonnullable_shape.a';
 import { Diagnostic } from './diagnostic.ts';
 
+// Numeric SyntaxKind values from the pinned TypeScript parser: CallExpression.
+export const listenerKinds: readonly number[] = [213];
+
 export class NoGlobalListenerTargetAssertion {
     readonly rules: Rules;
     readonly bindings: Bindings;

@@ -1,6 +1,9 @@
 import type { Rules } from './rules.ts';
 import { SymbolsInScope } from './symbols_in_scope.a';
 import { Diagnostic } from './diagnostic.ts';
+// Numeric SyntaxKind values from the pinned TypeScript parser: LabeledStatement.
+export const listenerKinds: readonly number[] = [256];
+
 export class NoLabelVar {
     readonly rules: Rules;
     constructor(rules: Rules) {

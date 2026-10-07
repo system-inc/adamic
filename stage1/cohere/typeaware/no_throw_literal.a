@@ -1,6 +1,9 @@
 import type { Rules } from './rules.ts';
 import { Diagnostic } from './diagnostic.ts';
 import { throwIsGlobal } from './throw_binding.a';
+// Numeric SyntaxKind values from the pinned TypeScript parser: ThrowStatement.
+export const listenerKinds: readonly number[] = [257];
+
 export class NoThrowLiteral {
     readonly rules: Rules;
     constructor(rules: Rules) {

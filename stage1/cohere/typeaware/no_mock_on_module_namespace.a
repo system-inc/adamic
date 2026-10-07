@@ -3,6 +3,9 @@ import { Diagnostic } from './diagnostic.ts';
 import { CallDeclarationChain } from './call_declaration_chain.a';
 import { NamespaceBinding } from './namespace_binding.a';
 
+// Numeric SyntaxKind values from the pinned TypeScript parser: CallExpression.
+export const listenerKinds: readonly number[] = [213];
+
 export class NoMockOnModuleNamespace {
     readonly rules: Rules;
     constructor(rules: Rules) {

@@ -3,6 +3,9 @@ import type { Rules } from './rules.ts';
 import { Diagnostic } from './diagnostic.ts';
 import { Suggestion } from './suggestion.ts';
 import { Repair } from './repair.ts';
+// Numeric SyntaxKind values from the pinned TypeScript parser: RegularExpressionLiteral.
+export const listenerKinds: readonly number[] = [13];
+
 export class MisleadingCharacter {
     readonly value: number;
     readonly start: number;

@@ -3,6 +3,9 @@ import { Bindings } from './bindings.ts';
 import { CallbackSymbol } from './callback_symbol.a';
 import { Diagnostic } from './diagnostic.ts';
 import { Repair } from './repair.ts';
+// Numeric SyntaxKind values from the pinned TypeScript parser: FunctionExpression.
+export const listenerKinds: readonly number[] = [218];
+
 export class ArrowCallbackFrame {
     usesThis = false;
     usesSuper = false;

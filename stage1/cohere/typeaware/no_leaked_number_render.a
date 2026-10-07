@@ -7,6 +7,9 @@ import { baseConstraintShape } from './base_constraint_shape.a';
 import { Diagnostic } from './diagnostic.ts';
 
 // Verdicts are decline=0, silent=1, leaks=2, decided entirely in Adamic.
+// Numeric SyntaxKind values from the pinned TypeScript parser: JsxExpression.
+export const listenerKinds: readonly number[] = [294];
+
 export class NoLeakedNumberRender {
     readonly rules: Rules;
     constructor(rules: Rules) {

@@ -1,6 +1,9 @@
 import { panic } from 'adamic';
 import type { Rules } from './rules.ts';
 import { Diagnostic } from './diagnostic.ts';
+// Numeric SyntaxKind values from the pinned TypeScript parser: RegularExpressionLiteral.
+export const listenerKinds: readonly number[] = [13];
+
 export class BackreferenceNode {
     readonly kind: number;
     readonly negative: boolean;

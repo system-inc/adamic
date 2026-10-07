@@ -9,6 +9,9 @@ import { DeclarationContract } from './declaration_contract.a';
 import { Frames, header } from './frames.ts';
 import { Repair } from './repair.ts';
 
+// Numeric SyntaxKind values from the pinned TypeScript parser: Parameter, BindingElement.
+export const listenerKinds: readonly number[] = [169, 208];
+
 export class DefaultTarget {
     readonly graph: Types;
     readonly type: TypeFact;

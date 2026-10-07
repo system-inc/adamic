@@ -1,0 +1,15 @@
+no_leaked_number_render.a [294] PASS: independent pinned Go enum
+no_throw_literal.a [257] PASS: independent pinned Go enum
+no_label_var.a [256] PASS: independent pinned Go enum
+no_mock_on_module_namespace.a [213] PASS: independent pinned Go enum
+no_useless_backreference.a [13] PASS: independent pinned Go enum
+no_invalid_regexp.a [213, 214] PASS: independent pinned Go enum
+no_global_listener_target_assertion.a [213] PASS: independent pinned Go enum
+require_array_sort_compare.a [213] PASS: independent pinned Go enum
+no_misleading_character_class.a [13] PASS: independent pinned Go enum
+prefer_find.a [212, 213] PASS: independent pinned Go enum
+no_useless_default_assignment.a [169, 208] PASS: independent pinned Go enum
+prefer_arrow_callback.a [218] PASS: independent pinned Go enum
+listener mutant: arrow FunctionExpression 218 -> CallExpression 213 caught by independent enum check; current driver ignores declarations, so findings alone cannot catch it
+origin refs 479 HIR search exit 1 matches 0
+
