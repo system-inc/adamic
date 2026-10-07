@@ -1,0 +1,14 @@
+export class ResponseBinding {
+    readonly name: number;
+    readonly symbol: number;
+    readonly root: number;
+    readonly producer: number;
+    readonly references: number[] = [];
+    dropped = false;
+    constructor(name: number, symbol: number, root: number, producer: number) {
+        this.name = name;
+        this.symbol = symbol;
+        this.root = root;
+        this.producer = producer;
+    }
+}

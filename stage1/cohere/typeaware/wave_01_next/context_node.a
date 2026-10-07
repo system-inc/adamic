@@ -1,0 +1,20 @@
+import type { Frames } from '../frames.ts';
+
+export class ContextNode {
+    readonly kind: string;
+    readonly start: number;
+    readonly end: number;
+    readonly flags: number;
+    readonly nameKind: string;
+    readonly name: string;
+    readonly global: boolean;
+    constructor(frames: Frames) {
+        this.kind = frames.field();
+        this.start = frames.natural();
+        this.end = frames.natural();
+        this.flags = frames.natural();
+        this.nameKind = frames.field();
+        this.name = frames.field();
+        this.global = frames.yes();
+    }
+}

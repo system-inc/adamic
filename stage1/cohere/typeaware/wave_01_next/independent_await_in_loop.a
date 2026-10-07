@@ -1,0 +1,787 @@
+import { panic } from 'adamic';
+import type { Context } from './context.a';
+import { Syntax } from './syntax.a';
+import type { Bindings } from '../bindings.ts';
+import { Diagnostic } from '../diagnostic.ts';
+import { foreignBindings } from './foreign_bindings.a';
+import { loopHeader } from './loop_header.a';
+import { LoopPath } from './loop_path.a';
+const message =
+    'This loop awaits once per item, so the items run one after another, yet nothing carries from one iteration to the next: the awaited work reads only the item, its index and values the loop never changes, no outer variable is reassigned, nothing leaves the loop on an awaited result, and nothing prints, reports progress or sleeps between iterations. Start them together with `await Promise.all(items.map(async (item) => ...))`, or through a bounded concurrency helper when the collection can be large or the far side rate-limits. If the order is deliberate, say so where it lives: `// cohere-disable-next-line nexus/performance-no-independent-await-in-loop -- <why it is sequential>`.';
+export class IndependentAwaitInLoop {
+    readonly context: Context;
+    readonly foreign = new Map<string, Bindings>();
+    readonly orderedBodies = new Map<string, boolean>();
+    readonly tainted = new Set<number>();
+    readonly mutated: LoopPath[] = [];
+    readonly reads: LoopPath[] = [];
+    readonly sinkRoots = new Set<number>();
+    readonly headers = new Map<number, number[]>();
+    loop = -1;
+    body = -1;
+    collection = -1;
+    indexSymbol = 0;
+    constructor(fileContext: Context) {
+        this.context = fileContext;
+    }
+    parens(index: number): number {
+        let current = index;
+        const syntaxTree = this.context.syntax;
+        while(syntaxTree.kind(current) === 'ParenthesizedExpression') {
+            current = syntaxTree.child(current, 0);
+        }
+        return current;
+    }
+    header(index: number): number[] {
+        if(!this.headers.has(index)) {
+            this.headers.set(index, loopHeader(this.context, index));
+        }
+        return this.headers.get(index) ?? panic('missing loop header');
+    }
+    initializer(loop: number): number {
+        const syntaxTree = this.context.syntax;
+        return syntaxTree.child(loop, syntaxTree.kind(syntaxTree.child(loop, 0)) === 'AwaitKeyword' ? 1 : 0);
+    }
+    iterable(loop: number): number {
+        const syntaxTree = this.context.syntax;
+        return syntaxTree.child(loop, syntaxTree.kind(syntaxTree.child(loop, 0)) === 'AwaitKeyword' ? 2 : 1);
+    }
+    segments(index: number, syntaxTree: Syntax): string[] {
+        const node = syntaxTree.skip(index, false);
+        const kind = syntaxTree.kind(node);
+        if(kind === 'Identifier') {
+            return [syntaxTree.node(node).text];
+        }
+        if(kind === 'ThisKeyword') {
+            return ['this'];
+        }
+        if(kind === 'PropertyAccessExpression') {
+            const base = this.segments(syntaxTree.child(node, 0), syntaxTree);
+            if(base.length > 0) {
+                base.push(syntaxTree.member(node));
+            }
+            return base;
+        }
+        return [];
+    }
+    root(index: number): number {
+        const syntaxTree = this.context.syntax;
+        const node = syntaxTree.skip(index, false);
+        if(['Identifier', 'ThisKeyword'].includes(syntaxTree.kind(node))) {
+            return node;
+        }
+        return syntaxTree.kind(node) === 'PropertyAccessExpression' ? this.root(syntaxTree.child(node, 0)) : -1;
+    }
+    outer(index: number): boolean {
+        if(index < 0) {
+            return false;
+        }
+        const syntaxTree = this.context.syntax;
+        if(syntaxTree.kind(index) === 'ThisKeyword') {
+            return true;
+        }
+        const facts = this.context.facts(
+            index,
+            syntaxTree.kind(syntaxTree.parent(index)) === 'ShorthandPropertyAssignment' ? 'shorthand' : 'node',
+        );
+        const loop = syntaxTree.node(this.loop);
+        const ruleRunner = this.context.bindings.rules;
+        return !facts.declarations.some(
+            (declaration) =>
+                declaration.path === ruleRunner.path &&
+                declaration.node.start >= ruleRunner.byte(loop.pos) &&
+                declaration.node.end <= ruleRunner.byte(loop.end),
+        );
+    }
+    shape(index: number): boolean {
+        const syntaxTree = this.context.syntax;
+        this.loop = index;
+        this.body = syntaxTree.last(index);
+        this.indexSymbol = 0;
+        this.tainted.clear();
+        if(syntaxTree.kind(index) === 'ForOfStatement') {
+            if(syntaxTree.kind(syntaxTree.child(index, 0)) === 'AwaitKeyword') {
+                return false;
+            }
+            this.collection = this.iterable(index);
+            return this.body >= 0;
+        }
+        if(syntaxTree.kind(index) !== 'ForStatement' || syntaxTree.node(index).children.length !== 4) {
+            return false;
+        }
+        const list = syntaxTree.child(index, 0);
+        if(syntaxTree.kind(list) !== 'VariableDeclarationList' || syntaxTree.node(list).children.length !== 1) {
+            return false;
+        }
+        const declaration = syntaxTree.child(list, 0);
+        const name = syntaxTree.name(declaration);
+        if(syntaxTree.kind(name) !== 'Identifier' || syntaxTree.initializer(declaration) < 0) {
+            return false;
+        }
+        const condition = this.parens(syntaxTree.child(index, 1));
+        if(syntaxTree.kind(condition) !== 'BinaryExpression' || syntaxTree.operator(condition) !== 'LessThanToken') {
+            return false;
+        }
+        const left = this.parens(syntaxTree.child(condition, 0));
+        const right = this.parens(syntaxTree.last(condition));
+        if(
+            syntaxTree.kind(left) !== 'Identifier' ||
+            syntaxTree.node(left).text !== syntaxTree.node(name).text ||
+            syntaxTree.kind(right) !== 'PropertyAccessExpression' ||
+            syntaxTree.member(right) !== 'length'
+        ) {
+            return false;
+        }
+        const increment = this.parens(syntaxTree.child(index, 2));
+        const incrementKind = syntaxTree.kind(increment);
+        const operand = this.parens(syntaxTree.child(increment, 0));
+        const target =
+            syntaxTree.kind(operand) === 'Identifier' && syntaxTree.node(operand).text === syntaxTree.node(name).text;
+        const numeric = this.parens(syntaxTree.last(increment));
+        if(
+            !target ||
+            !(
+                (['PrefixUnaryExpression', 'PostfixUnaryExpression'].includes(incrementKind) &&
+                    syntaxTree.operator(increment) === 'PlusPlusToken') ||
+                (incrementKind === 'BinaryExpression' &&
+                    syntaxTree.operator(increment) === 'PlusEqualsToken' &&
+                    syntaxTree.kind(numeric) === 'NumericLiteral' &&
+                    syntaxTree.node(numeric).text === '1')
+            )
+        ) {
+            return false;
+        }
+        this.indexSymbol = this.context.symbol(name);
+        this.collection = syntaxTree.child(right, 0);
+        return this.indexSymbol !== 0;
+    }
+    awaitsItem(index: number): boolean {
+        const syntaxTree = this.context.syntax;
+        const operand = syntaxTree.skip(index, false);
+        if(syntaxTree.kind(operand) === 'Identifier' && syntaxTree.kind(this.loop) === 'ForOfStatement') {
+            const initializer = syntaxTree.node(this.initializer(this.loop));
+            const ruleRunner = this.context.bindings.rules;
+            return this.context
+                .facts(operand)
+                .declarations.some(
+                    (declaration) =>
+                        declaration.node.start >= ruleRunner.byte(initializer.pos) &&
+                        declaration.node.end <= ruleRunner.byte(initializer.end),
+                );
+        }
+        if(syntaxTree.kind(operand) === 'ElementAccessExpression' && this.indexSymbol !== 0) {
+            const argument = syntaxTree.skip(syntaxTree.last(operand), false);
+            const collection = this.segments(this.collection, syntaxTree);
+            return (
+                syntaxTree.kind(argument) === 'Identifier' &&
+                this.context.symbol(argument) === this.indexSymbol &&
+                collection.length > 0 &&
+                this.segments(syntaxTree.child(operand, 0), syntaxTree).join('.') === collection.join('.')
+            );
+        }
+        return false;
+    }
+    holdsAwait(index: number, owned: boolean): boolean {
+        const syntaxTree = this.context.syntax;
+        if(index < 0 || syntaxTree.boundary(index)) {
+            return false;
+        }
+        const kind = syntaxTree.kind(index);
+        if(kind === 'AwaitExpression' && owned && !this.awaitsItem(syntaxTree.child(index, 0))) {
+            return true;
+        }
+        if(kind === 'VariableDeclarationList' && owned && syntaxTree.node(index).semantic === '6') {
+            return true;
+        }
+        if(kind === 'ForStatement') {
+            const header = this.header(index);
+            return (
+                this.holdsAwait(header[0] ?? -1, owned) ||
+                this.holdsAwait(header[1] ?? -1, false) ||
+                this.holdsAwait(header[2] ?? -1, false) ||
+                this.holdsAwait(syntaxTree.last(index), false)
+            );
+        }
+        if(['ForOfStatement', 'ForInStatement'].includes(kind)) {
+            return (
+                (owned &&
+                    kind === 'ForOfStatement' &&
+                    syntaxTree.kind(syntaxTree.child(index, 0)) === 'AwaitKeyword') ||
+                this.holdsAwait(this.iterable(index), owned) ||
+                this.holdsAwait(this.initializer(index), false) ||
+                this.holdsAwait(syntaxTree.last(index), false)
+            );
+        }
+        if(['WhileStatement', 'DoStatement'].includes(kind)) {
+            return syntaxTree.node(index).children.some((child) => this.holdsAwait(child, false));
+        }
+        return syntaxTree.node(index).children.some((child) => this.holdsAwait(child, owned));
+    }
+    ordered(index: number, syntaxTree: Syntax, narrow: boolean): boolean {
+        const callee = syntaxTree.skip(index, false);
+        const kind = syntaxTree.kind(callee);
+        let name: string;
+        let receiver: string[] = [];
+        if(kind === 'Identifier') {
+            name = syntaxTree.node(callee).text;
+        }
+        else if(kind === 'PropertyAccessExpression') {
+            name = syntaxTree.member(callee);
+            receiver = this.segments(syntaxTree.child(callee, 0), syntaxTree);
+        }
+        else {
+            return false;
+        }
+        const last = (receiver[receiver.length - 1] ?? '').toLowerCase();
+        if(
+            narrow &&
+            (['setTimeout', 'setInterval', 'setImmediate'].includes(name) ||
+                (receiver[0] === 'console' && ['error', 'warn', 'debug', 'trace', 'assert'].includes(name)) ||
+                (receiver[0] === 'process' && receiver[1] === 'stderr') ||
+                (last.includes('log') && ['error', 'warn', 'debug', 'trace'].includes(name)))
+        ) {
+            return false;
+        }
+        const lower = name.toLowerCase();
+        return (
+            receiver[0] === 'console' ||
+            (receiver[0] === 'process' && ['stdout', 'stderr'].includes(receiver[1] ?? '')) ||
+            [
+                'setTimeout',
+                'setInterval',
+                'setImmediate',
+                'write',
+                'writeSync',
+                'appendFile',
+                'appendFileSync',
+            ].includes(name) ||
+            ['sleep', 'delay', 'wait', 'pause', 'throttle', 'backoff', 'ratelimit', 'print'].some((prefix) =>
+                lower.startsWith(prefix),
+            ) ||
+            lower.includes('progress') ||
+            lower.includes('spinner') ||
+            last.includes('progress') ||
+            last.includes('spinner') ||
+            (last.includes('log') && ['log', 'info', 'warn', 'error', 'debug', 'trace'].includes(name)) ||
+            (kind === 'Identifier' && name === 'log')
+        );
+    }
+    bodyOrdered(index: number, syntaxTree: Syntax): boolean {
+        if(index < 0 || syntaxTree.kind(index) === 'CatchClause') {
+            return false;
+        }
+        if(syntaxTree.kind(index) === 'CallExpression' && this.ordered(syntaxTree.child(index, 0), syntaxTree, true)) {
+            return true;
+        }
+        return syntaxTree.node(index).children.some((child) => this.bodyOrdered(child, syntaxTree));
+    }
+    calleeOrdered(index: number): boolean {
+        const fileContext = this.context;
+        const syntaxTree = fileContext.syntax;
+        const callee = syntaxTree.skip(index, false);
+        const name =
+            syntaxTree.kind(callee) === 'Identifier'
+                ? callee
+                : syntaxTree.kind(callee) === 'PropertyAccessExpression'
+                  ? syntaxTree.last(callee)
+                  : -1;
+        if(name < 0) {
+            return false;
+        }
+        for(const declaration of fileContext.facts(name, 'alias').declarations) {
+            if(declaration.ambient) {
+                continue;
+            }
+            let bindings = fileContext.bindings;
+            if(declaration.path !== bindings.rules.path) {
+                if(!this.foreign.has(declaration.path)) {
+                    this.foreign.set(declaration.path, foreignBindings(bindings.rules.program, declaration.path));
+                }
+                bindings = this.foreign.get(declaration.path) ?? panic('missing callee source');
+            }
+            const foreign = new Syntax(bindings);
+            let body = -1;
+            if(
+                ['FunctionDeclaration', 'MethodDeclaration', 'FunctionExpression', 'ArrowFunction'].includes(
+                    declaration.node.kind,
+                ) &&
+                declaration.bodyKind !== ''
+            ) {
+                body =
+                    bindings.spans.get(`${declaration.bodyKind}:${declaration.bodyStart}:${declaration.bodyEnd}`) ??
+                    panic('callee body absent from native tree');
+            }
+            if(['VariableDeclaration', 'PropertyDeclaration'].includes(declaration.node.kind)) {
+                const node =
+                    bindings.spans.get(`${declaration.node.kind}:${declaration.node.start}:${declaration.node.end}`) ??
+                    panic('callee declaration absent from native tree');
+                const initializer = foreign.skip(foreign.initializer(node), false);
+                if(['ArrowFunction', 'FunctionExpression'].includes(foreign.kind(initializer))) {
+                    body = foreign.body(initializer);
+                }
+            }
+            if(body < 0) {
+                continue;
+            }
+            const key = `${declaration.path}:${body}`;
+            if(!this.orderedBodies.has(key)) {
+                this.orderedBodies.set(key, this.bodyOrdered(body, foreign));
+            }
+            if(this.orderedBodies.get(key) === true) {
+                return true;
+            }
+        }
+        return false;
+    }
+    orderedEffect(index: number, insideFunction: boolean, insideCatch: boolean): boolean {
+        const syntaxTree = this.context.syntax;
+        const kind = syntaxTree.kind(index);
+        if(kind === 'YieldExpression' && !insideFunction) {
+            return true;
+        }
+        if(
+            kind === 'CallExpression' &&
+            (this.ordered(syntaxTree.child(index, 0), syntaxTree, insideCatch) ||
+                this.calleeOrdered(syntaxTree.child(index, 0)))
+        ) {
+            return true;
+        }
+        return syntaxTree
+            .node(index)
+            .children.some((child) =>
+                this.orderedEffect(
+                    child,
+                    insideFunction || syntaxTree.boundary(index),
+                    insideCatch || kind === 'CatchClause',
+                ),
+            );
+    }
+    readSegments(index: number): string[] {
+        const syntaxTree = this.context.syntax;
+        const segments = this.segments(index, syntaxTree);
+        let current = index;
+        while(true) {
+            let parent = syntaxTree.parent(current);
+            while(['ParenthesizedExpression', 'NonNullExpression'].includes(syntaxTree.kind(parent))) {
+                current = parent;
+                parent = syntaxTree.parent(current);
+            }
+            if(syntaxTree.kind(parent) !== 'PropertyAccessExpression' || syntaxTree.child(parent, 0) !== current) {
+                return segments;
+            }
+            segments.push(syntaxTree.member(parent));
+            current = parent;
+        }
+    }
+    propertyTarget(index: number): number {
+        const syntaxTree = this.context.syntax;
+        const target = syntaxTree.skip(index, false);
+        if(syntaxTree.kind(target) === 'PropertyAccessExpression' && this.outer(this.root(target))) {
+            return target;
+        }
+        const object = syntaxTree.child(target, 0);
+        return syntaxTree.kind(target) === 'ElementAccessExpression' && this.outer(this.root(object)) ? object : -1;
+    }
+    sinkMethod(name: string): boolean {
+        if(['push', 'unshift', 'set', 'add', 'append', 'delete'].includes(name)) {
+            return true;
+        }
+        return ['add', 'append', 'insert'].some(
+            (prefix) =>
+                name.startsWith(prefix) &&
+                name.length > prefix.length &&
+                name.charCodeAt(prefix.length) >= 65 &&
+                name.charCodeAt(prefix.length) <= 90,
+        );
+    }
+    sink(target: number): void {
+        const root = this.root(target);
+        if(root < 0 || !this.outer(root)) {
+            return;
+        }
+        this.mutated.push(new LoopPath(this.segments(target, this.context.syntax), root));
+        this.sinkRoots.add(root);
+    }
+    state(index: number, insideFunction: boolean): boolean {
+        const syntaxTree = this.context.syntax;
+        const kind = syntaxTree.kind(index);
+        const node = syntaxTree.node(index);
+        if(kind === 'VariableDeclarationList' && !insideFunction && node.semantic === '0') {
+            return true;
+        }
+        if(kind === 'BinaryExpression' && syntaxTree.assignment(syntaxTree.operator(index))) {
+            const target = this.propertyTarget(syntaxTree.child(index, 0));
+            if(target >= 0) {
+                if(syntaxTree.operator(index) !== 'EqualsToken') {
+                    return true;
+                }
+                this.sink(target);
+            }
+        }
+        if(
+            ['PrefixUnaryExpression', 'PostfixUnaryExpression'].includes(kind) &&
+            ['PlusPlusToken', 'MinusMinusToken'].includes(syntaxTree.operator(index)) &&
+            this.propertyTarget(syntaxTree.child(index, 0)) >= 0
+        ) {
+            return true;
+        }
+        if(kind === 'DeleteExpression') {
+            const target = this.propertyTarget(syntaxTree.child(index, 0));
+            if(target >= 0) {
+                this.sink(target);
+            }
+        }
+        if(kind === 'CallExpression') {
+            const callee = syntaxTree.skip(syntaxTree.child(index, 0), false);
+            if(syntaxTree.kind(callee) === 'PropertyAccessExpression') {
+                const receiver = syntaxTree.child(callee, 0);
+                const method = syntaxTree.member(callee);
+                if(this.outer(this.root(receiver))) {
+                    if(['pop', 'shift', 'splice', 'next', 'read', 'sort', 'reverse'].includes(method)) {
+                        return true;
+                    }
+                    if(this.sinkMethod(method)) {
+                        this.sink(receiver);
+                    }
+                }
+                if(method === 'assign' && this.segments(receiver, syntaxTree).join('.') === 'Object') {
+                    this.sink(syntaxTree.child(index, 1));
+                }
+            }
+        }
+        if(kind === 'Identifier' && !syntaxTree.nameOnly(index)) {
+            if(syntaxTree.writes(index)) {
+                if(this.outer(index) || (this.indexSymbol !== 0 && this.context.symbol(index) === this.indexSymbol)) {
+                    return true;
+                }
+            }
+            else if(this.outer(index)) {
+                this.reads.push(new LoopPath(this.readSegments(index), index));
+            }
+        }
+        if(kind === 'ThisKeyword') {
+            this.reads.push(new LoopPath(this.readSegments(index), index));
+        }
+        return node.children.some((child) => this.state(child, insideFunction || syntaxTree.boundary(index)));
+    }
+    collectionReads(index: number): void {
+        const syntaxTree = this.context.syntax;
+        if(
+            (syntaxTree.kind(index) === 'Identifier' && !syntaxTree.nameOnly(index)) ||
+            syntaxTree.kind(index) === 'ThisKeyword'
+        ) {
+            this.reads.push(new LoopPath(this.readSegments(index), index));
+        }
+        for(const child of syntaxTree.node(index).children) {
+            this.collectionReads(child);
+        }
+    }
+    carries(): boolean {
+        this.mutated.splice(0, this.mutated.length);
+        this.reads.splice(0, this.reads.length);
+        this.sinkRoots.clear();
+        if(this.state(this.body, false)) {
+            return true;
+        }
+        if(this.mutated.length === 0) {
+            return false;
+        }
+        this.collectionReads(this.collection);
+        for(const sink of this.mutated) {
+            for(const read of this.reads) {
+                if(this.sinkRoots.has(read.root) || sink.segments.length === 0 || read.segments.length === 0) {
+                    continue;
+                }
+                let overlaps = true;
+                for(let at = 0; at < Math.min(sink.segments.length, read.segments.length); at++) {
+                    if(sink.segments[at] !== read.segments[at]) {
+                        overlaps = false;
+                        break;
+                    }
+                }
+                if(overlaps) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    contains(index: number, taint: boolean, before = -1): boolean {
+        const syntaxTree = this.context.syntax;
+        if(index < 0 || syntaxTree.boundary(index)) {
+            return false;
+        }
+        if(syntaxTree.kind(index) === 'AwaitExpression' && (before < 0 || syntaxTree.node(index).pos < before)) {
+            return true;
+        }
+        if(
+            taint &&
+            syntaxTree.kind(index) === 'Identifier' &&
+            !syntaxTree.nameOnly(index) &&
+            this.tainted.has(this.context.symbol(index))
+        ) {
+            return true;
+        }
+        return syntaxTree.node(index).children.some((child) => this.contains(child, taint, before));
+    }
+    mark(index: number): boolean {
+        const syntaxTree = this.context.syntax;
+        if(index < 0) {
+            return false;
+        }
+        if(syntaxTree.kind(index) === 'Identifier') {
+            const symbol = this.context.facts(index).id;
+            if(symbol !== 0 && !this.tainted.has(symbol)) {
+                this.tainted.add(symbol);
+                return true;
+            }
+            return false;
+        }
+        let changed = false;
+        for(const child of syntaxTree.node(index).children) {
+            if(
+                syntaxTree.kind(index) === 'BindingElement' &&
+                syntaxTree.kind(child) === 'Identifier' &&
+                syntaxTree.initializer(index) === child
+            ) {
+                continue;
+            }
+            changed = this.mark(child) || changed;
+        }
+        return changed;
+    }
+    taint(index: number): boolean {
+        const syntaxTree = this.context.syntax;
+        if(index < 0 || syntaxTree.boundary(index)) {
+            return false;
+        }
+        let changed = false;
+        const kind = syntaxTree.kind(index);
+        if(kind === 'VariableDeclaration' && this.contains(syntaxTree.initializer(index), true)) {
+            changed = this.mark(syntaxTree.name(index));
+        }
+        if(
+            kind === 'BinaryExpression' &&
+            syntaxTree.assignment(syntaxTree.operator(index)) &&
+            this.contains(syntaxTree.last(index), true)
+        ) {
+            changed = this.mark(syntaxTree.child(index, 0)) || changed;
+        }
+        if(kind === 'CatchClause' && this.contains(syntaxTree.child(syntaxTree.parent(index), 0), false)) {
+            const parameter = syntaxTree.child(index, 0);
+            if(syntaxTree.kind(parameter) === 'VariableDeclaration') {
+                changed = this.mark(syntaxTree.name(parameter)) || changed;
+            }
+        }
+        if(['ForOfStatement', 'ForInStatement'].includes(kind) && this.contains(this.iterable(index), true)) {
+            changed = this.mark(this.initializer(index)) || changed;
+        }
+        for(const child of syntaxTree.node(index).children) {
+            changed = this.taint(child) || changed;
+        }
+        return changed;
+    }
+    catchClause(index: number): number {
+        return (
+            this.context.syntax
+                .node(index)
+                .children.find((child) => this.context.syntax.kind(child) === 'CatchClause') ?? -1
+        );
+    }
+    exits(index: number): boolean {
+        const syntaxTree = this.context.syntax;
+        const kind = syntaxTree.kind(index);
+        if(kind === 'ReturnStatement') {
+            return true;
+        }
+        if(kind === 'ThrowStatement') {
+            let child = index;
+            for(
+                let parent = syntaxTree.parent(child);
+                parent >= 0 && child !== this.body;
+                parent = syntaxTree.parent(child)
+            ) {
+                if(
+                    syntaxTree.kind(parent) === 'TryStatement' &&
+                    syntaxTree.child(parent, 0) === child &&
+                    this.catchClause(parent) >= 0
+                ) {
+                    return false;
+                }
+                child = parent;
+            }
+            return true;
+        }
+        const label = syntaxTree.child(index, 0);
+        const isBreak = kind === 'BreakStatement';
+        if(label < 0) {
+            for(let parent = syntaxTree.parent(index); parent >= 0; parent = syntaxTree.parent(parent)) {
+                if(parent === this.loop) {
+                    return isBreak;
+                }
+                if(syntaxTree.loop(parent) || (isBreak && syntaxTree.kind(parent) === 'SwitchStatement')) {
+                    return false;
+                }
+            }
+            return false;
+        }
+        for(
+            let parent = syntaxTree.parent(index);
+            parent >= 0 && parent !== this.loop;
+            parent = syntaxTree.parent(parent)
+        ) {
+            if(
+                syntaxTree.kind(parent) === 'LabeledStatement' &&
+                syntaxTree.node(syntaxTree.child(parent, 0)).text === syntaxTree.node(label).text
+            ) {
+                return false;
+            }
+        }
+        for(
+            let parent = syntaxTree.parent(this.loop);
+            syntaxTree.kind(parent) === 'LabeledStatement';
+            parent = syntaxTree.parent(parent)
+        ) {
+            if(syntaxTree.node(syntaxTree.child(parent, 0)).text === syntaxTree.node(label).text) {
+                return isBreak;
+            }
+        }
+        return true;
+    }
+    jump(index: number): boolean {
+        return ['BreakStatement', 'ContinueStatement', 'ReturnStatement', 'ThrowStatement'].includes(
+            this.context.syntax.kind(index),
+        );
+    }
+    siblingJump(index: number, limit: number): boolean {
+        const syntaxTree = this.context.syntax;
+        if(syntaxTree.boundary(index)) {
+            return false;
+        }
+        return (
+            (this.jump(index) && this.guarded(index, limit, false)) ||
+            syntaxTree.node(index).children.some((child) => this.siblingJump(child, limit))
+        );
+    }
+    earlier(parent: number, child: number): boolean {
+        const syntaxTree = this.context.syntax;
+        for(const sibling of syntaxTree.node(parent).children) {
+            if(syntaxTree.kind(parent) === 'CaseClause' && sibling === syntaxTree.child(parent, 0)) {
+                continue;
+            }
+            if(sibling === child || syntaxTree.node(sibling).pos >= syntaxTree.node(child).pos) {
+                return false;
+            }
+            if(this.siblingJump(sibling, sibling)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    guarded(index: number, limit: number, siblings: boolean): boolean {
+        const syntaxTree = this.context.syntax;
+        if(
+            ['ReturnStatement', 'ThrowStatement'].includes(syntaxTree.kind(index)) &&
+            this.contains(syntaxTree.child(index, 0), true)
+        ) {
+            return true;
+        }
+        let child = index;
+        for(let parent = syntaxTree.parent(child); parent >= 0 && child !== limit; parent = syntaxTree.parent(child)) {
+            const kind = syntaxTree.kind(parent);
+            if(['IfStatement', 'WhileStatement'].includes(kind) && this.contains(syntaxTree.child(parent, 0), true)) {
+                return true;
+            }
+            if(kind === 'DoStatement' && this.contains(syntaxTree.last(parent), true)) {
+                return true;
+            }
+            if(kind === 'ForStatement' && this.contains(this.header(parent)[1] ?? -1, true)) {
+                return true;
+            }
+            if(['ForOfStatement', 'ForInStatement'].includes(kind) && this.contains(this.iterable(parent), true)) {
+                return true;
+            }
+            if(['CaseClause', 'DefaultClause'].includes(kind)) {
+                const caseBlock = syntaxTree.parent(parent);
+                const statement = syntaxTree.parent(caseBlock);
+                if(
+                    this.contains(syntaxTree.child(statement, 0), true) ||
+                    syntaxTree
+                        .node(caseBlock)
+                        .children.some(
+                            (clause) =>
+                                syntaxTree.kind(clause) === 'CaseClause' &&
+                                this.contains(syntaxTree.child(clause, 0), true),
+                        )
+                ) {
+                    return true;
+                }
+            }
+            if(kind === 'CatchClause' && this.contains(syntaxTree.child(syntaxTree.parent(parent), 0), false)) {
+                return true;
+            }
+            if(
+                kind === 'TryStatement' &&
+                syntaxTree.child(parent, 0) === child &&
+                this.catchClause(parent) >= 0 &&
+                this.contains(child, false, syntaxTree.node(index).pos)
+            ) {
+                return true;
+            }
+            if(siblings && ['Block', 'CaseClause', 'DefaultClause'].includes(kind) && this.earlier(parent, child)) {
+                return true;
+            }
+            child = parent;
+        }
+        return false;
+    }
+    exitTainted(index: number): boolean {
+        const syntaxTree = this.context.syntax;
+        if(syntaxTree.boundary(index)) {
+            return false;
+        }
+        return (
+            (this.jump(index) && this.exits(index) && this.guarded(index, this.body, true)) ||
+            syntaxTree.node(index).children.some((child) => this.exitTainted(child))
+        );
+    }
+    run(): void {
+        const ruleRunner = this.context.bindings.rules;
+        const syntaxTree = this.context.syntax;
+        for(let index = 0; index < ruleRunner.parser.nodes.length; index++) {
+            if(
+                !['ForOfStatement', 'ForStatement'].includes(syntaxTree.kind(index)) ||
+                !this.shape(index) ||
+                !this.holdsAwait(this.body, true) ||
+                this.orderedEffect(this.body, false, false) ||
+                this.carries()
+            ) {
+                continue;
+            }
+            for(let pass = 0; pass < 8; pass++) {
+                if(!this.taint(this.body)) {
+                    break;
+                }
+            }
+            if(this.exitTainted(this.body)) {
+                continue;
+            }
+            const start = ruleRunner.start(syntaxTree.node(index));
+            let end = ruleRunner.start(syntaxTree.node(this.body));
+            const source = ruleRunner.parser.scanner.text;
+            while(end > start && [' ', '\t', '\r', '\n'].includes(source.slice(end - 1, end))) {
+                end--;
+            }
+            ruleRunner.findings.push(
+                new Diagnostic(
+                    'nexus/performance-no-independent-await-in-loop',
+                    'independentAwaitInLoop',
+                    message,
+                    ruleRunner.byte(start),
+                    ruleRunner.byte(end),
+                    '',
+                ),
+            );
+        }
+    }
+}

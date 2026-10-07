@@ -1,0 +1,225 @@
+import type { ParseNode } from '../../../typescript/parser/nodes.ts';
+import { referenceAccess } from './reference_access.a';
+import type { Bindings } from '../bindings.ts';
+
+export class Syntax {
+    readonly bindings: Bindings;
+    constructor(bindings: Bindings) {
+        this.bindings = bindings;
+    }
+    node(index: number): ParseNode {
+        return this.bindings.rules.parser.node(index);
+    }
+    kind(index: number): string {
+        return index < 0 ? '' : this.node(index).kind;
+    }
+    parent(index: number): number {
+        return this.bindings.parent(index);
+    }
+    child(index: number, at: number): number {
+        return index < 0 ? -1 : (this.node(index).children[at] ?? -1);
+    }
+    last(index: number): number {
+        return index < 0 ? -1 : (this.node(index).children[this.node(index).children.length - 1] ?? -1);
+    }
+    skip(index: number, all = true): number {
+        let current = index;
+        while(
+            (all
+                ? [
+                      'ParenthesizedExpression',
+                      'NonNullExpression',
+                      'AsExpression',
+                      'SatisfiesExpression',
+                      'TypeAssertionExpression',
+                  ]
+                : ['ParenthesizedExpression', 'NonNullExpression']
+            ).includes(this.kind(current))
+        ) {
+            current = this.kind(current) === 'TypeAssertionExpression' ? this.last(current) : this.child(current, 0);
+        }
+        return current;
+    }
+    outer(index: number): number {
+        let current = index;
+        let parent = this.parent(current);
+        while(
+            [
+                'ParenthesizedExpression',
+                'NonNullExpression',
+                'AsExpression',
+                'SatisfiesExpression',
+                'TypeAssertionExpression',
+            ].includes(this.kind(parent))
+        ) {
+            current = parent;
+            parent = this.parent(current);
+        }
+        return current;
+    }
+    name(index: number): number {
+        return index < 0 ? -1 : this.bindings.shape.name(index);
+    }
+    initializer(index: number): number {
+        return index < 0 ? -1 : this.bindings.shape.initializer(index);
+    }
+    member(index: number): string {
+        const kind = this.kind(index);
+        const name = this.last(index);
+        if(kind === 'PropertyAccessExpression') {
+            return name < 0 ? '' : this.node(name).text;
+        }
+        if(
+            kind === 'ElementAccessExpression' &&
+            ['StringLiteral', 'NoSubstitutionTemplateLiteral', 'NumericLiteral'].includes(this.kind(this.skip(name)))
+        ) {
+            return this.node(this.skip(name)).text;
+        }
+        return '';
+    }
+    boundary(index: number): boolean {
+        return this.bindings.functionKind(this.kind(index)) || this.kind(index) === 'ClassStaticBlockDeclaration';
+    }
+    root(index: number): boolean {
+        return (
+            this.kind(index) === 'SourceFile' ||
+            this.boundary(index) ||
+            (this.kind(index) === 'PropertyDeclaration' && this.initializer(index) >= 0)
+        );
+    }
+    rootOf(index: number): number {
+        let child = index;
+        let decorator = -1;
+        for(let parent = this.parent(child); parent >= 0; parent = this.parent(parent)) {
+            if(this.kind(parent) === 'Decorator') {
+                decorator = parent;
+            }
+            if(this.kind(parent) === 'SourceFile') {
+                return parent;
+            }
+            if(
+                this.root(parent) &&
+                this.name(parent) !== child &&
+                (this.kind(parent) !== 'PropertyDeclaration' || this.initializer(parent) === child) &&
+                (this.kind(parent) !== 'ClassStaticBlockDeclaration' || this.last(parent) === child) &&
+                !(decorator >= 0 && (this.parent(decorator) === parent || this.parent(decorator) === child))
+            ) {
+                return parent;
+            }
+            child = parent;
+        }
+        return -1;
+    }
+    inType(index: number, limit = -1): boolean {
+        for(let parent = this.parent(index); parent >= 0 && parent !== limit; parent = this.parent(parent)) {
+            if(this.kind(parent) === 'TypeQuery') {
+                return true;
+            }
+        }
+        return false;
+    }
+    operator(index: number): string {
+        return this.kind(index) === 'BinaryExpression' ? this.kind(this.child(index, 1)) : this.node(index).operator;
+    }
+    assignment(operator: string): boolean {
+        return [
+            'EqualsToken',
+            'PlusEqualsToken',
+            'MinusEqualsToken',
+            'AsteriskEqualsToken',
+            'SlashEqualsToken',
+            'PercentEqualsToken',
+            'AsteriskAsteriskEqualsToken',
+            'LessThanLessThanEqualsToken',
+            'GreaterThanGreaterThanEqualsToken',
+            'GreaterThanGreaterThanGreaterThanEqualsToken',
+            'AmpersandEqualsToken',
+            'BarEqualsToken',
+            'CaretEqualsToken',
+            'AmpersandAmpersandEqualsToken',
+            'BarBarEqualsToken',
+            'QuestionQuestionEqualsToken',
+        ].includes(operator);
+    }
+    parameters(index: number): number[] {
+        return this.node(index).children.filter((child) => this.kind(child) === 'Parameter');
+    }
+    body(index: number): number {
+        if(this.boundary(index)) {
+            return this.last(index);
+        }
+        return -1;
+    }
+    loop(index: number): boolean {
+        return ['ForStatement', 'ForOfStatement', 'ForInStatement', 'WhileStatement', 'DoStatement'].includes(
+            this.kind(index),
+        );
+    }
+    typeKind(kind: string): boolean {
+        return (
+            kind.endsWith('Type') ||
+            [
+                'TypeReference',
+                'TypeQuery',
+                'QualifiedName',
+                'TypeLiteral',
+                'TypePredicate',
+                'TypeParameter',
+                'TypeAliasDeclaration',
+                'InterfaceDeclaration',
+            ].includes(kind)
+        );
+    }
+    nameOnly(index: number): boolean {
+        const parent = this.parent(index);
+        const kind = this.kind(parent);
+        if(parent < 0) {
+            return true;
+        }
+        if(kind === 'PropertyAccessExpression') {
+            return this.last(parent) === index;
+        }
+        if(
+            ['BreakStatement', 'ContinueStatement', 'LabeledStatement', 'JsxAttribute', 'QualifiedName'].includes(kind)
+        ) {
+            return true;
+        }
+        if(kind === 'ShorthandPropertyAssignment') {
+            return false;
+        }
+        const flags = referenceAccess(this.bindings.rules, index);
+        return flags[1] === true || flags[2] === true;
+    }
+    writes(index: number): boolean {
+        const parent = this.parent(index);
+        if(this.kind(parent) === 'PropertyAccessExpression' && this.last(parent) === index) {
+            return false;
+        }
+        let current = index;
+        while(this.parent(current) >= 0) {
+            const next = this.parent(current);
+            const kind = this.kind(next);
+            if(
+                [
+                    'SpreadElement',
+                    'SpreadAssignment',
+                    'ArrayLiteralExpression',
+                    'ObjectLiteralExpression',
+                    'ParenthesizedExpression',
+                ].includes(kind)
+            ) {
+                current = next;
+                continue;
+            }
+            if(kind === 'PropertyAssignment') {
+                if(this.last(next) !== current) {
+                    return false;
+                }
+                current = next;
+                continue;
+            }
+            return referenceAccess(this.bindings.rules, current)[0] === true;
+        }
+        return referenceAccess(this.bindings.rules, current)[0] === true;
+    }
+}

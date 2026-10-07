@@ -1,0 +1,284 @@
+import type { Context } from './context.a';
+import { Diagnostic } from '../diagnostic.ts';
+import { types } from '../facts.ts';
+import { Frames, header } from '../frames.ts';
+
+const message =
+    "This child process never gets an `'error'` listener. When the program is missing (ENOENT), cannot run (EACCES), or the process table is full (EAGAIN), node emits `'error'` on the ChildProcess instead of throwing at the call, and an `'error'` event with no listener throws \"Unhandled 'error' event\" and kills this whole process. Attach `child.on('error', ...)` in the same tick as the spawn, and decide there what a failed spawn means: reject, log, or fall back.";
+export class ChildProcessErrorListener {
+    readonly context: Context;
+    readonly verdicts = new Map<number, boolean>();
+    constructor(fileContext: Context) {
+        this.context = fileContext;
+    }
+    producer(index: number): boolean {
+        const declaration = this.context.facts(index, 'signature').declarations[0];
+        if(declaration === undefined || declaration.node.kind !== 'FunctionDeclaration') {
+            return false;
+        }
+        let name = declaration.node.name;
+        let offset = 0;
+        if(
+            declaration.parents[offset]?.kind !== 'ModuleBlock' ||
+            declaration.parents[offset + 1]?.kind !== 'ModuleDeclaration'
+        ) {
+            return false;
+        }
+        let module = declaration.parents[offset + 1];
+        if(name === '__promisify__' && module?.nameKind === 'Identifier') {
+            name = module.name;
+            offset += 2;
+            if(
+                declaration.parents[offset]?.kind !== 'ModuleBlock' ||
+                declaration.parents[offset + 1]?.kind !== 'ModuleDeclaration'
+            ) {
+                return false;
+            }
+            module = declaration.parents[offset + 1];
+        }
+        return (
+            module?.nameKind === 'StringLiteral' &&
+            ['child_process', 'node:child_process'].includes(module.name) &&
+            ['spawn', 'fork'].includes(name)
+        );
+    }
+    parens(index: number): number {
+        const syntaxTree = this.context.syntax;
+        let current = index;
+        while(syntaxTree.kind(current) === 'ParenthesizedExpression') {
+            current = syntaxTree.child(current, 0);
+        }
+        return current;
+    }
+    namesError(call: number): boolean {
+        const fileContext = this.context;
+        const syntaxTree = fileContext.syntax;
+        const event = this.parens(syntaxTree.child(call, 1));
+        if(event < 0) {
+            return true;
+        }
+        if(['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(syntaxTree.kind(event))) {
+            return syntaxTree.node(event).text === 'error';
+        }
+        const facts = types(fileContext.bindings.rules.ask(event, 'raw-shape'), 'raw-shape');
+        if(!facts.present) {
+            return true;
+        }
+        for(const part of facts.parts(facts.root())) {
+            if((facts.type(part).flags & 1024) === 0) {
+                return true;
+            }
+            const frames = new Frames(fileContext.bindings.rules.ask(event, `literal-value\n${part}`));
+            header(frames, 'literal-value');
+            const kind = frames.field();
+            const value = frames.field();
+            frames.end();
+            if(kind === 'string' && value === 'error') {
+                return true;
+            }
+        }
+        return false;
+    }
+    follow(index: number): number[] {
+        const syntaxTree = this.context.syntax;
+        let current = index;
+        while(true) {
+            current = syntaxTree.outer(current);
+            const parent = syntaxTree.parent(current);
+            const kind = syntaxTree.kind(parent);
+            if(parent < 0) {
+                return [2, -1];
+            }
+            if(['PropertyAccessExpression', 'ElementAccessExpression'].includes(kind)) {
+                if(syntaxTree.child(parent, 0) !== current) {
+                    return [2, -1];
+                }
+                const member = syntaxTree.member(parent);
+                if(member === '') {
+                    return [2, -1];
+                }
+                const registers = ['on', 'once', 'addListener', 'prependListener', 'prependOnceListener'].includes(
+                    member,
+                );
+                if(!registers && !['off', 'removeListener', 'removeAllListeners', 'setMaxListeners'].includes(member)) {
+                    return [0, -1];
+                }
+                const call = syntaxTree.parent(parent);
+                if(syntaxTree.kind(call) !== 'CallExpression' || syntaxTree.child(call, 0) !== parent) {
+                    return [2, -1];
+                }
+                if(registers && this.namesError(call)) {
+                    return [1, -1];
+                }
+                current = call;
+                continue;
+            }
+            if(['ExpressionStatement', 'VoidExpression', 'TypeOfExpression'].includes(kind)) {
+                return [0, -1];
+            }
+            if(kind === 'PrefixUnaryExpression' && syntaxTree.operator(parent) === 'ExclamationToken') {
+                return [0, -1];
+            }
+            if(
+                ['IfStatement', 'WhileStatement', 'ConditionalExpression'].includes(kind) &&
+                syntaxTree.child(parent, 0) === current
+            ) {
+                return [0, -1];
+            }
+            if(kind === 'DoStatement' && syntaxTree.last(parent) === current) {
+                return [0, -1];
+            }
+            if(kind === 'BinaryExpression') {
+                const operator = syntaxTree.operator(parent);
+                if(
+                    [
+                        'EqualsEqualsEqualsToken',
+                        'ExclamationEqualsEqualsToken',
+                        'EqualsEqualsToken',
+                        'ExclamationEqualsToken',
+                    ].includes(operator)
+                ) {
+                    return [0, -1];
+                }
+                if(
+                    ['InstanceOfKeyword', 'AmpersandAmpersandToken'].includes(operator) &&
+                    syntaxTree.child(parent, 0) === current
+                ) {
+                    return [0, -1];
+                }
+                const target = this.parens(syntaxTree.child(parent, 0));
+                if(
+                    operator === 'EqualsToken' &&
+                    syntaxTree.last(parent) === current &&
+                    syntaxTree.kind(target) === 'Identifier'
+                ) {
+                    return [3, target];
+                }
+            }
+            if(
+                kind === 'VariableDeclaration' &&
+                syntaxTree.initializer(parent) === current &&
+                syntaxTree.kind(syntaxTree.name(parent)) === 'Identifier'
+            ) {
+                return [3, syntaxTree.name(parent)];
+            }
+            return [2, -1];
+        }
+    }
+    handled(bound: number): boolean {
+        const fileContext = this.context;
+        const syntaxTree = fileContext.syntax;
+        const facts = fileContext.facts(bound);
+        const cached = this.verdicts.get(facts.id);
+        if(cached !== undefined) {
+            return cached;
+        }
+        const names = new Set<number>();
+        let handled = facts.declarations.length === 0;
+        for(const declaration of facts.declarations) {
+            if(
+                declaration.path !== fileContext.bindings.rules.path ||
+                !['Parameter', 'VariableDeclaration'].includes(declaration.node.kind) ||
+                declaration.node.nameKind !== 'Identifier'
+            ) {
+                handled = true;
+                break;
+            }
+            const index = fileContext.locate(declaration.node.kind, declaration.node.start, declaration.node.end);
+            names.add(syntaxTree.name(index));
+            if(declaration.node.kind === 'VariableDeclaration') {
+                const list = syntaxTree.parent(index);
+                const statement = syntaxTree.parent(list);
+                if(syntaxTree.kind(list) !== 'VariableDeclarationList') {
+                    handled = true;
+                    break;
+                }
+                if(
+                    syntaxTree.kind(statement) === 'VariableStatement' &&
+                    (syntaxTree.node(statement).children.some((child) => syntaxTree.kind(child) === 'ExportKeyword') ||
+                        (syntaxTree.kind(syntaxTree.parent(statement)) === 'SourceFile' && !declaration.external))
+                ) {
+                    handled = true;
+                    break;
+                }
+            }
+        }
+        if(!handled) {
+            for(let index = 0; index < fileContext.bindings.rules.parser.nodes.length; index++) {
+                if(
+                    syntaxTree.kind(index) !== 'Identifier' ||
+                    syntaxTree.node(index).text !== syntaxTree.node(bound).text ||
+                    names.has(index)
+                ) {
+                    continue;
+                }
+                const parentKind = syntaxTree.kind(syntaxTree.parent(index));
+                if(['ShorthandPropertyAssignment', 'ExportSpecifier'].includes(parentKind)) {
+                    if(
+                        fileContext.facts(index, parentKind === 'ExportSpecifier' ? 'export' : 'shorthand').id ===
+                        facts.id
+                    ) {
+                        handled = true;
+                        break;
+                    }
+                    continue;
+                }
+                if(fileContext.facts(index).id !== facts.id) {
+                    continue;
+                }
+                let typePosition = syntaxTree.parent(index);
+                while(syntaxTree.kind(typePosition) === 'QualifiedName') {
+                    typePosition = syntaxTree.parent(typePosition);
+                }
+                if(syntaxTree.kind(typePosition) === 'TypeQuery') {
+                    continue;
+                }
+                const outer = syntaxTree.outer(index);
+                const parent = syntaxTree.parent(outer);
+                if(
+                    syntaxTree.kind(parent) === 'BinaryExpression' &&
+                    syntaxTree.child(parent, 0) === outer &&
+                    syntaxTree.assignment(syntaxTree.operator(parent))
+                ) {
+                    continue;
+                }
+                if((this.follow(index)[0] ?? 0) !== 0) {
+                    handled = true;
+                    break;
+                }
+            }
+        }
+        this.verdicts.set(facts.id, handled);
+        return handled;
+    }
+    run(): void {
+        const fileContext = this.context;
+        const syntaxTree = fileContext.syntax;
+        const ruleRunner = fileContext.bindings.rules;
+        for(let index = 0; index < ruleRunner.parser.nodes.length; index++) {
+            if(syntaxTree.kind(index) !== 'CallExpression' || !this.producer(index)) {
+                continue;
+            }
+            const fate = this.follow(index);
+            const result = fate[0] ?? 2;
+            const bound = fate[1] ?? -1;
+            if(
+                result === 1 ||
+                result === 2 ||
+                (result === 3 && (fileContext.facts(bound).id === 0 || this.handled(bound)))
+            ) {
+                continue;
+            }
+            ruleRunner.findings.push(
+                new Diagnostic(
+                    'nexus/correctness-require-child-process-error-listener',
+                    'childProcessWithoutErrorListener',
+                    message,
+                    ruleRunner.byte(ruleRunner.start(syntaxTree.node(index))),
+                    ruleRunner.byte(syntaxTree.node(index).end),
+                    '',
+                ),
+            );
+        }
+    }
+}

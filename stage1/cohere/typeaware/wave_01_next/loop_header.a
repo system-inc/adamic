@@ -1,0 +1,20 @@
+import type { Context } from './context.a';
+import { Frames, header } from '../frames.ts';
+export function loopHeader(fileContext: Context, index: number): number[] {
+    const frames = new Frames(fileContext.bindings.rules.ask(index, 'loop-header'));
+    header(frames, 'loop-header');
+    const slots: number[] = [];
+    for(let at = 0; at < 3; at++) {
+        if(frames.yes()) {
+            const kind = frames.field();
+            const start = frames.natural();
+            const end = frames.natural();
+            slots.push(fileContext.locate(kind, start, end));
+        }
+        else {
+            slots.push(-1);
+        }
+    }
+    frames.end();
+    return slots;
+}

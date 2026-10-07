@@ -1,0 +1,762 @@
+[
+  {
+    "path": "/workspace/wave-01-next-final/control-000.a",
+    "rule": "correctness_require_child_process_error_listener",
+    "case": "a detached open, unreferenced"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-001.a",
+    "rule": "correctness_require_child_process_error_listener",
+    "case": "a call on its own"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-002.a",
+    "rule": "correctness_require_child_process_error_listener",
+    "case": "stored and never referenced"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-003.a",
+    "rule": "correctness_require_child_process_error_listener",
+    "case": "awaited through a promise that listens only for exit"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-004.a",
+    "rule": "correctness_require_child_process_error_listener",
+    "case": "a chain of other listeners"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-005.a",
+    "rule": "correctness_require_child_process_error_listener",
+    "case": "a listener on a stream of the child, not on the child"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-006.a",
+    "rule": "correctness_require_child_process_error_listener",
+    "case": "fork"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-007.a",
+    "rule": "correctness_require_child_process_error_listener",
+    "case": "a named import from the bare module name"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-008.a",
+    "rule": "correctness_require_child_process_error_listener",
+    "case": "an event variable whose literal types exclude error"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-009.a",
+    "rule": "correctness_require_child_process_error_listener",
+    "case": "reads that let the child go nowhere"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-010.a",
+    "rule": "correctness_require_child_process_error_listener",
+    "case": "a removal chain, still the child"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-011.a",
+    "rule": "correctness_require_child_process_error_listener",
+    "case": "a let assigned twice, neither handled"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-012.a",
+    "rule": "correctness_require_child_process_error_listener",
+    "case": "a listener on another variable of the same name"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-013.a",
+    "rule": "correctness_require_child_process_error_listener",
+    "case": "through parentheses, a non-null assertion and a cast"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-014.a",
+    "rule": "correctness_require_child_process_error_listener",
+    "case": "a detached open with an error listener"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-015.a",
+    "rule": "correctness_require_child_process_error_listener",
+    "case": "stored, listened to, and returned"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-016.a",
+    "rule": "correctness_require_child_process_error_listener",
+    "case": "once, addListener, prependListener and prependOnceListener"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-017.a",
+    "rule": "correctness_require_child_process_error_listener",
+    "case": "error at the end of a chain"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-018.a",
+    "rule": "correctness_require_child_process_error_listener",
+    "case": "a template literal event and an element access"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-019.a",
+    "rule": "correctness_require_child_process_error_listener",
+    "case": "an event typed as any string"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-020.a",
+    "rule": "correctness_require_child_process_error_listener",
+    "case": "an event union that includes error"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-021.a",
+    "rule": "correctness_require_child_process_error_listener",
+    "case": "a listener attached inside a closure"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-022.a",
+    "rule": "correctness_require_child_process_error_listener",
+    "case": "returned to the caller"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-023.a",
+    "rule": "correctness_require_child_process_error_listener",
+    "case": "handed to a function"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-024.a",
+    "rule": "correctness_require_child_process_error_listener",
+    "case": "stored in an object, an array and a property"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-025.a",
+    "rule": "correctness_require_child_process_error_listener",
+    "case": "copied into another variable"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-026.a",
+    "rule": "correctness_require_child_process_error_listener",
+    "case": "exported, by modifier and by specifier"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-027.a",
+    "rule": "correctness_require_child_process_error_listener",
+    "case": "a conditional and a logical expression around the call"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-028.a",
+    "rule": "correctness_require_child_process_error_listener",
+    "case": "destructured"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-029.a",
+    "rule": "correctness_require_child_process_error_listener",
+    "case": "a listener method handed on uncalled"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-030.a",
+    "rule": "correctness_require_child_process_error_listener",
+    "case": "a let assigned twice, handled once"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-031.a",
+    "rule": "correctness_require_child_process_error_listener",
+    "case": "exec and execFile, which attach their own error listener"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-032.a",
+    "rule": "correctness_require_child_process_error_listener",
+    "case": "spawnSync, which returns no emitter"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-033.a",
+    "rule": "correctness_require_child_process_error_listener",
+    "case": "a local function named spawn"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-034.a",
+    "rule": "correctness_require_response_status_check",
+    "case": "the platform fetch, parsed and returned"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-035.a",
+    "rule": "correctness_require_response_status_check",
+    "case": "fetch reached through globalThis"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-036.a",
+    "rule": "correctness_require_response_status_check",
+    "case": "the base API request"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-037.a",
+    "rule": "correctness_require_response_status_check",
+    "case": "a body read inline, on a Response nothing else can see"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-038.a",
+    "rule": "correctness_require_response_status_check",
+    "case": "a then callback that parses"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-039.a",
+    "rule": "correctness_require_response_status_check",
+    "case": "a body field tested in place of the status"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-040.a",
+    "rule": "correctness_require_response_status_check",
+    "case": "a check on one branch only"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-041.a",
+    "rule": "correctness_require_response_status_check",
+    "case": "a catch that returns normally"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-042.a",
+    "rule": "correctness_require_response_status_check",
+    "case": "the body streamed"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-043.a",
+    "rule": "correctness_require_response_status_check",
+    "case": "a loop that never leaves, so only the next turn ends the Response"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-044.a",
+    "rule": "correctness_require_response_status_check",
+    "case": "a Response awaited as a statement"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-045.a",
+    "rule": "correctness_require_response_status_check",
+    "case": "a Response kept and never referenced"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-046.a",
+    "rule": "correctness_require_response_status_check",
+    "case": "a module-level fetch"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-047.a",
+    "rule": "correctness_require_response_status_check",
+    "case": "checked before the parse"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-048.a",
+    "rule": "correctness_require_response_status_check",
+    "case": "parsed, then checked before the data is used"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-049.a",
+    "rule": "correctness_require_response_status_check",
+    "case": "a status read on every path"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-050.a",
+    "rule": "correctness_require_response_status_check",
+    "case": "checked in the ternary that parses"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-051.a",
+    "rule": "correctness_require_response_status_check",
+    "case": "the status short-circuits ahead of the stream"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-052.a",
+    "rule": "correctness_require_response_status_check",
+    "case": "read to be thrown, never trusted"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-053.a",
+    "rule": "correctness_require_response_status_check",
+    "case": "handed to a helper"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-054.a",
+    "rule": "correctness_require_response_status_check",
+    "case": "returned to the caller"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-055.a",
+    "rule": "correctness_require_response_status_check",
+    "case": "stored in an object"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-056.a",
+    "rule": "correctness_require_response_status_check",
+    "case": "a closure reads it, and the graph cannot say when"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-057.a",
+    "rule": "correctness_require_response_status_check",
+    "case": "a then callback that checks"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-058.a",
+    "rule": "correctness_require_response_status_check",
+    "case": "the status read inline"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-059.a",
+    "rule": "correctness_require_response_status_check",
+    "case": "headers only, read and kept"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-060.a",
+    "rule": "correctness_require_response_status_check",
+    "case": "a local function named fetch"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-061.a",
+    "rule": "correctness_require_response_status_check",
+    "case": "a wrapper that already throws on failure"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-062.a",
+    "rule": "correctness_require_response_status_check",
+    "case": "a destructured Response"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-063.a",
+    "rule": "correctness_require_response_status_check",
+    "case": "an unawaited fetch statement, a floating promise and not this rule's"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-064.a",
+    "rule": "correctness_require_response_status_check",
+    "case": "a request method on another NetworkService class"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-065.a",
+    "rule": "correctness_require_response_status_check",
+    "case": "the parse method handed on uncalled"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-066.a",
+    "rule": "correctness_require_response_status_check",
+    "case": "a clone handed on"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-067.a",
+    "rule": "correctness_require_response_status_check",
+    "case": "each fetch in a loop checked"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-068.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a for-of pushing each awaited result"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-069.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "the indexed form with i++"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-070.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "the indexed form with ++i"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-071.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "the indexed form with i += 1, reading the index as a value too"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-072.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "an element write into an outer record"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-073.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a Map set"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-074.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a loop-invariant outer value read by the await"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-075.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a validation throw that reads no awaited value"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-076.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a continue on an awaited value, which only skips this item"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-077.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a catch that records and continues"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-078.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a break that leaves only an inner switch"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-079.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a throw caught inside the body"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-080.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a body-local let reassigned within the iteration"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-081.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a property of the loop's own item written from the await"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-082.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "an awaited Promise.all inside the body is still one wait per item"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-083.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "an await on a nested loop's iterable belongs to the outer loop"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-084.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "an await on a value computed from the item, not the item itself"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-085.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a called function that reports failure only from its catch"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-086.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a called function whose only console call is an error report"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-087.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a called function whose setTimeout is a request timeout"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-088.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a catch in the body that warns about the one item that failed"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-089.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a sink by prefix whose receiver the body never reads back"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-090.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a nested for await waits inside this loop's iteration"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-091.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "an await using disposes once per iteration"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-092.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a cache on this filled while a different member of this is awaited"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-093.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a method named like a sink prefix but lower-case after it"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-094.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a while"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-095.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a do-while"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-096.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a for await"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-097.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a for-in"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-098.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a for bounded by an attempt count"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-099.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a for with no header"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-100.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "an indexed for bounded with <="
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-101.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a for bounded by a property that is not a length"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-102.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "an indexed for stepping by two"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-103.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "an await only on the for-of iterable"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-104.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "an await only inside a callback written in the body"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-105.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "an await only inside a nested while, which does not report either"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-106.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "the indexed form writing its index in the body"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-107.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "an outer variable reassigned from the await"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-108.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "an outer counter incremented"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-109.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "an outer accumulator added to"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-110.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "an outer property incremented"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-111.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "an outer property added to"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-112.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "an outer binding written by destructuring"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-113.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a var declared in the body"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-114.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a collection read back in the body"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-115.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "an Object.assign target read back"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-116.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a set consulted before it is filled"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-117.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a queue that grows while it is walked"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-118.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a stack consumed by the body"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-119.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "an outer property written and read back as a cursor"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-120.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a return on an awaited value, which is find-first"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-121.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a break on a value derived from the await"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-122.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a throw on a value derived from the await"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-123.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a return from a bare catch whose try awaits"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-124.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "an unconditional return of the awaited value"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-125.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "an unconditional throw built from an awaited value"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-126.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a return inside a nested while whose test reads an awaited value"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-127.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a return under a case whose label reads an awaited value"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-128.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a flag set from the caught error and read after the try"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-129.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "an exit on a value an inner loop carries backward from an await"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-130.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a rethrow from a catch whose try awaits"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-131.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a return inside a try that awaits first and swallows failure"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-132.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a labeled continue to an outer loop on an awaited value"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-133.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "an unconditional break reached only past an awaited continue"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-134.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a break inside a switch on an awaited value that names this loop"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-135.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "console output"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-136.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a write to stdout"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-137.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a sleep between items"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-138.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a setTimeout delay"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-139.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a progress callback"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-140.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a logger call"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-141.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "an append to one file"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-142.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "console output inside a callback the iteration runs"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-143.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a stdout cursor move"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-144.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "progress output from a catch in the body"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-145.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a print call"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-146.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "awaiting the for-of item itself"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-147.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "awaiting the indexed element itself"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-148.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a called function that prints progress"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-149.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a called arrow function that prints progress"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-150.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a called function that paces itself"
+  },
+  {
+    "path": "/workspace/wave-01-next-final/control-151.a",
+    "rule": "performance_no_independent_await_in_loop",
+    "case": "a shared document built page by page and handed to the await"
+  }
+]

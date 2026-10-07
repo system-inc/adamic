@@ -1,0 +1,29 @@
+import type { Context } from './context.a';
+import { Frames, header } from '../frames.ts';
+import { FlowBlock } from './flow_block.a';
+import { FlowEvent } from './flow_event.a';
+export function syntaxFlowGraph(fileContext: Context, root: number): FlowBlock[] {
+    const frames = new Frames(fileContext.bindings.rules.ask(root, 'syntax-flow-graph'));
+    header(frames, 'syntax-flow-graph');
+    frames.yes();
+    const count = frames.natural();
+    const blocks: FlowBlock[] = [];
+    for(let at = 0; at < count; at++) {
+        const reachable = frames.yes();
+        const final = frames.yes();
+        frames.yes();
+        const successors = frames.ids();
+        const eventCount = frames.natural();
+        const flowEvents: FlowEvent[] = [];
+        for(let event = 0; event < eventCount; event++) {
+            const write = frames.yes();
+            const kind = frames.field();
+            const start = frames.natural();
+            const end = frames.natural();
+            flowEvents.push(new FlowEvent(fileContext.locate(kind, start, end), write));
+        }
+        blocks.push(new FlowBlock(reachable, final, successors, flowEvents));
+    }
+    frames.end();
+    return blocks;
+}

@@ -1,0 +1,11 @@
+export class FlowEvent {
+    readonly node: number;
+    readonly write: boolean;
+    binding = -1;
+    use = 0;
+    report = -1;
+    constructor(node: number, write: boolean) {
+        this.node = node;
+        this.write = write;
+    }
+}

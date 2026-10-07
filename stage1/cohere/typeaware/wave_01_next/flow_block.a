@@ -1,0 +1,13 @@
+import type { FlowEvent } from './flow_event.a';
+export class FlowBlock {
+    readonly reachable: boolean;
+    readonly final: boolean;
+    readonly successors: readonly number[];
+    readonly events: readonly FlowEvent[];
+    constructor(reachable: boolean, final: boolean, successors: readonly number[], flowEvents: readonly FlowEvent[]) {
+        this.reachable = reachable;
+        this.final = final;
+        this.successors = successors;
+        this.events = flowEvents;
+    }
+}

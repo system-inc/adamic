@@ -1,0 +1,397 @@
+import { panic } from 'adamic';
+import type { Context } from './context.a';
+import { Diagnostic } from '../diagnostic.ts';
+import { ResponseBinding } from './response_binding.a';
+import type { FlowEvent } from './flow_event.a';
+import type { FlowBlock } from './flow_block.a';
+import { syntaxFlowGraph } from './syntax_flow_graph.a';
+const bodyMessage =
+    'This reads the body of a fetch Response on a path where neither `.ok` nor `.status` is read. fetch does not throw on an HTTP error, so a 401 or 500 body is parsed here and used as data (an error object returned as a task list, a failure cached as a success). Check `response.ok` before trusting the body, and throw or return the failure when it is false.';
+const discardMessage =
+    'This awaits a fetch Response and drops it. fetch does not throw on an HTTP error, so a request that fails with a 400 or 500 runs on as if it succeeded. Keep the Response and check `response.ok`, and throw or return the failure when it is false.';
+export class ResponseStatusCheck {
+    readonly context: Context;
+    readonly bindings: ResponseBinding[] = [];
+    constructor(fileContext: Context) {
+        this.context = fileContext;
+    }
+    parens(index: number): number {
+        let current = index;
+        while(this.context.syntax.kind(current) === 'ParenthesizedExpression') {
+            current = this.context.syntax.child(current, 0);
+        }
+        return current;
+    }
+    producer(index: number): boolean {
+        const fileContext = this.context;
+        const syntaxTree = fileContext.syntax;
+        if(syntaxTree.kind(index) !== 'CallExpression') {
+            return false;
+        }
+        const callee = this.parens(syntaxTree.child(index, 0));
+        const kind = syntaxTree.kind(callee);
+        const name =
+            kind === 'Identifier' ? callee : kind === 'PropertyAccessExpression' ? syntaxTree.last(callee) : -1;
+        if(
+            syntaxTree.kind(name) !== 'Identifier' ||
+            !['fetch', 'request', 'baseApiRequest'].includes(syntaxTree.node(name).text)
+        ) {
+            return false;
+        }
+        const declarations = fileContext.facts(name).declarations;
+        if(declarations.length === 0) {
+            return false;
+        }
+        if(syntaxTree.node(name).text === 'fetch') {
+            return declarations.every(
+                (declaration) =>
+                    declaration.node.kind === 'FunctionDeclaration' &&
+                    declaration.ambient &&
+                    ((declaration.parents[0]?.kind === 'SourceFile' && !declaration.external) ||
+                        (declaration.parents[0]?.kind === 'ModuleBlock' && declaration.parents[1]?.global === true)),
+            );
+        }
+        return (
+            kind === 'PropertyAccessExpression' &&
+            declarations.every(
+                (declaration) =>
+                    declaration.node.kind === 'MethodDeclaration' &&
+                    declaration.parents[0]?.kind === 'ClassDeclaration' &&
+                    ((declaration.parents[0]?.name === 'NetworkService' &&
+                        declaration.path.endsWith('/source/services/network/NetworkService.ts')) ||
+                        (declaration.parents[0]?.name === 'NetworkServiceRequestExecutor' &&
+                            declaration.path.endsWith(
+                                '/source/services/network/internal/NetworkServiceRequestExecutor.ts',
+                            ))),
+            )
+        );
+    }
+    classify(index: number): number[] {
+        const syntaxTree = this.context.syntax;
+        const outer = syntaxTree.outer(index);
+        const parent = syntaxTree.parent(outer);
+        if(
+            !['PropertyAccessExpression', 'ElementAccessExpression'].includes(syntaxTree.kind(parent)) ||
+            syntaxTree.child(parent, 0) !== outer
+        ) {
+            return [3, -1];
+        }
+        const member = syntaxTree.member(parent);
+        if(['ok', 'status', 'statusText'].includes(member)) {
+            return [2, -1];
+        }
+        if(member === 'body') {
+            return [1, parent];
+        }
+        if(['json', 'text', 'arrayBuffer', 'blob', 'formData', 'bytes'].includes(member)) {
+            const call = syntaxTree.parent(parent);
+            return syntaxTree.kind(call) === 'CallExpression' && syntaxTree.child(call, 0) === parent
+                ? [1, call]
+                : [3, -1];
+        }
+        return ['headers', 'url', 'redirected', 'type', 'bodyUsed'].includes(member) ? [0, -1] : [3, -1];
+    }
+    report(index: number, body: boolean): void {
+        const ruleRunner = this.context.bindings.rules;
+        const node = this.context.syntax.node(index);
+        ruleRunner.findings.push(
+            new Diagnostic(
+                'nexus/correctness-require-response-status-check',
+                body ? 'bodyReadWithoutStatusCheck' : 'responseDiscarded',
+                body ? bodyMessage : discardMessage,
+                ruleRunner.byte(ruleRunner.start(node)),
+                ruleRunner.byte(node.end),
+                '',
+            ),
+        );
+    }
+    trackAwait(index: number): boolean {
+        const fileContext = this.context;
+        const syntaxTree = fileContext.syntax;
+        let declaration = syntaxTree.parent(index);
+        while(syntaxTree.kind(declaration) === 'ParenthesizedExpression') {
+            declaration = syntaxTree.parent(declaration);
+        }
+        const name = syntaxTree.name(declaration);
+        const list = syntaxTree.parent(declaration);
+        const root = syntaxTree.rootOf(declaration);
+        if(
+            syntaxTree.kind(declaration) !== 'VariableDeclaration' ||
+            this.parens(syntaxTree.initializer(declaration)) !== index ||
+            syntaxTree.kind(name) !== 'Identifier' ||
+            syntaxTree.kind(list) !== 'VariableDeclarationList' ||
+            !['2', '6'].includes(syntaxTree.node(list).semantic) ||
+            root < 0
+        ) {
+            return false;
+        }
+        const symbol = fileContext.facts(name).id;
+        if(symbol === 0) {
+            return false;
+        }
+        this.bindings.push(new ResponseBinding(name, symbol, root, index));
+        return true;
+    }
+    trackThen(index: number): void {
+        const fileContext = this.context;
+        const syntaxTree = fileContext.syntax;
+        const callee = this.parens(syntaxTree.child(index, 0));
+        if(
+            syntaxTree.kind(callee) !== 'PropertyAccessExpression' ||
+            syntaxTree.member(callee) !== 'then' ||
+            !this.producer(this.parens(syntaxTree.child(callee, 0)))
+        ) {
+            return;
+        }
+        const callback = this.parens(syntaxTree.child(index, 1));
+        if(!['ArrowFunction', 'FunctionExpression'].includes(syntaxTree.kind(callback))) {
+            return;
+        }
+        const parameter = syntaxTree.parameters(callback)[0] ?? -1;
+        const name = syntaxTree.name(parameter);
+        if(
+            syntaxTree.kind(name) !== 'Identifier' ||
+            syntaxTree.initializer(parameter) >= 0 ||
+            syntaxTree.node(parameter).children.some((child) => syntaxTree.kind(child) === 'DotDotDotToken')
+        ) {
+            return;
+        }
+        const symbol = fileContext.facts(name).id;
+        if(symbol !== 0) {
+            this.bindings.push(new ResponseBinding(name, symbol, callback, index));
+        }
+    }
+    run(): void {
+        const fileContext = this.context;
+        const syntaxTree = fileContext.syntax;
+        for(let index = 0; index < fileContext.bindings.rules.parser.nodes.length; index++) {
+            const kind = syntaxTree.kind(index);
+            if(kind === 'ExpressionStatement') {
+                const awaited = this.parens(syntaxTree.child(index, 0));
+                if(
+                    syntaxTree.kind(awaited) === 'AwaitExpression' &&
+                    this.producer(this.parens(syntaxTree.child(awaited, 0)))
+                ) {
+                    this.report(index, false);
+                }
+            }
+            if(
+                kind === 'AwaitExpression' &&
+                this.producer(this.parens(syntaxTree.child(index, 0))) &&
+                !this.trackAwait(index)
+            ) {
+                const classified = this.classify(index);
+                if(classified[0] === 1) {
+                    this.report(classified[1] ?? panic('missing body report'), true);
+                }
+            }
+            if(kind === 'CallExpression') {
+                this.trackThen(index);
+            }
+        }
+        const roots = new Set<number>();
+        for(const binding of this.bindings) {
+            roots.add(binding.root);
+        }
+        for(const root of roots) {
+            this.analyze(
+                root,
+                this.bindings.filter((binding) => binding.root === root),
+            );
+        }
+    }
+    resolve(index: number, bindings: readonly ResponseBinding[]): number {
+        const syntaxTree = this.context.syntax;
+        if(
+            syntaxTree.kind(index) !== 'Identifier' ||
+            bindings.some((binding) => binding.name === index) ||
+            !bindings.some((binding) => syntaxTree.node(binding.name).text === syntaxTree.node(index).text)
+        ) {
+            return -1;
+        }
+        const symbol = this.context.symbol(index);
+        let result = -1;
+        for(let at = 0; at < bindings.length; at++) {
+            if(bindings[at]?.symbol === symbol) {
+                result = at;
+            }
+        }
+        return result;
+    }
+    collect(index: number, root: number, nested: boolean, bindings: readonly ResponseBinding[]): void {
+        const syntaxTree = this.context.syntax;
+        const at = this.resolve(index, bindings);
+        const binding = bindings[at];
+        if(binding !== undefined && !syntaxTree.inType(index, root)) {
+            if(nested) {
+                binding.dropped = true;
+            }
+            else {
+                binding.references.push(index);
+            }
+        }
+        const inner = nested || (index !== root && syntaxTree.root(index));
+        for(const child of syntaxTree.node(index).children) {
+            this.collect(child, root, inner, bindings);
+        }
+    }
+    analyze(root: number, bindings: readonly ResponseBinding[]): void {
+        this.collect(root, root, false, bindings);
+        for(const binding of bindings) {
+            if(!binding.dropped && binding.references.length === 0) {
+                this.report(binding.producer, false);
+                binding.dropped = true;
+            }
+        }
+        const graph = syntaxFlowGraph(this.context, root);
+        const walked = new Set<number>();
+        for(const block of graph) {
+            for(const event of block.events) {
+                if(event.write) {
+                    for(let at = 0; at < bindings.length; at++) {
+                        if(bindings[at]?.name === event.node && bindings[at]?.dropped === false) {
+                            event.binding = at;
+                        }
+                    }
+                }
+                else {
+                    const at = this.resolve(event.node, bindings);
+                    const binding = bindings[at];
+                    if(binding === undefined || binding.dropped || this.context.syntax.inType(event.node, root)) {
+                        continue;
+                    }
+                    walked.add(event.node);
+                    const classified = this.classify(event.node);
+                    if(classified[0] !== 0) {
+                        event.binding = at;
+                        event.use = classified[0] ?? 3;
+                        event.report = classified[1] ?? -1;
+                    }
+                }
+            }
+        }
+        for(let at = 0; at < bindings.length; at++) {
+            const binding = bindings[at];
+            if(
+                binding === undefined ||
+                binding.dropped ||
+                binding.references.some((reference) => !walked.has(reference))
+            ) {
+                continue;
+            }
+            this.unchecked(graph, at);
+        }
+    }
+    walk(
+        graph: readonly FlowBlock[],
+        starts: readonly number[][],
+        visit: (block: number, index: number) => boolean,
+        complete: (block: number) => void,
+    ): void {
+        const queue = starts.slice();
+        const entered = new Set<number>();
+        let at = 0;
+        while(at < queue.length) {
+            const position = queue[at] ?? panic('missing flow position');
+            at += 1;
+            const blockIndex = position[0] ?? panic('missing flow block');
+            const block = graph[blockIndex] ?? panic('missing flow block');
+            let stopped = false;
+            for(let event = position[1] ?? 0; event < block.events.length; event++) {
+                if(!visit(blockIndex, event)) {
+                    stopped = true;
+                    break;
+                }
+            }
+            if(stopped) {
+                continue;
+            }
+            complete(blockIndex);
+            for(const next of block.successors) {
+                if(graph[next]?.reachable === true && !entered.has(next)) {
+                    entered.add(next);
+                    queue.push([next, 0]);
+                }
+            }
+        }
+    }
+    bodyEvent(event: FlowEvent): boolean {
+        return !event.write && event.use === 1;
+    }
+    finalBlock(graph: readonly FlowBlock[], block: number): boolean {
+        return graph[block]?.final === true;
+    }
+    noCompletion(): void {
+        /* No completion action before a candidate read. */
+    }
+    unchecked(graph: readonly FlowBlock[], binding: number): void {
+        const starts: number[][] = [];
+        const candidates: number[][] = [];
+        for(let block = 0; block < graph.length; block++) {
+            if(graph[block]?.reachable !== true) {
+                continue;
+            }
+            const flowEvents = (graph[block] ?? panic('missing flow block')).events;
+            for(let at = 0; at < flowEvents.length; at++) {
+                if(flowEvents[at]?.binding === binding && flowEvents[at]?.write === true) {
+                    starts.push([block, at + 1]);
+                }
+            }
+        }
+        this.walk(
+            graph,
+            starts,
+            (block, at) => {
+                const event = (graph[block] ?? panic('missing flow block')).events[at] ?? panic('missing flow event');
+                if(event.binding !== binding) {
+                    return true;
+                }
+                if(!this.bodyEvent(event)) {
+                    return false;
+                }
+                candidates.push([block, at]);
+                return true;
+            },
+            () => {
+                this.noCompletion();
+            },
+        );
+        const reported = new Set<number>();
+        for(const candidate of candidates) {
+            const blockIndex = candidate[0] ?? panic('missing flow block');
+            const at = candidate[1] ?? panic('missing flow event');
+            const report =
+                ((graph[blockIndex] ?? panic('missing flow block')).events[at] ?? panic('missing flow event')).report ??
+                panic('missing flow report');
+            if(reported.has(report)) {
+                continue;
+            }
+            let unchecked = false;
+            this.walk(
+                graph,
+                [[blockIndex, at + 1]],
+                (block, index) => {
+                    const event =
+                        (graph[block] ?? panic('missing flow block')).events[index] ?? panic('missing flow event');
+                    if(event.binding !== binding || unchecked) {
+                        return !unchecked;
+                    }
+                    if(event.write) {
+                        unchecked = true;
+                        return false;
+                    }
+                    return this.bodyEvent(event);
+                },
+                (block) => {
+                    if(this.finalBlock(graph, block)) {
+                        unchecked = true;
+                    }
+                },
+            );
+            if(unchecked) {
+                reported.add(report);
+                this.report(report, true);
+            }
+        }
+    }
+}

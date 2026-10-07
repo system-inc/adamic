@@ -1,0 +1,9 @@
+import type { Rules } from '../rules.ts';
+import { Frames, header } from '../frames.ts';
+export function referenceAccess(ruleRunner: Rules, index: number): readonly boolean[] {
+    const frames = new Frames(ruleRunner.ask(index, 'reference-access'));
+    header(frames, 'reference-access');
+    const result = [frames.yes(), frames.yes(), frames.yes()];
+    frames.end();
+    return result;
+}

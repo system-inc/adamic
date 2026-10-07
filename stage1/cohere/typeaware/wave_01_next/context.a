@@ -1,0 +1,29 @@
+import { panic } from 'adamic';
+import type { Bindings } from '../bindings.ts';
+import { SymbolContext } from './symbol_context.a';
+import type { Syntax } from './syntax.a';
+
+export class Context {
+    readonly bindings: Bindings;
+    readonly syntax: Syntax;
+    readonly cache = new Map<string, SymbolContext>();
+    constructor(bindings: Bindings, syntaxTree: Syntax) {
+        this.bindings = bindings;
+        this.syntax = syntaxTree;
+    }
+    facts(index: number, operation = 'node'): SymbolContext {
+        const key = `${index}:${operation}`;
+        if(!this.cache.has(key)) {
+            this.cache.set(key, new SymbolContext(this.bindings.rules, index, operation));
+        }
+        return this.cache.get(key) ?? panic('missing declaration facts');
+    }
+    symbol(index: number): number {
+        const operation =
+            this.syntax.kind(this.syntax.parent(index)) === 'ShorthandPropertyAssignment' ? 'shorthand' : 'node';
+        return this.facts(index, operation).id;
+    }
+    locate(kind: string, start: number, end: number): number {
+        return this.bindings.spans.get(`${kind}:${start}:${end}`) ?? panic('compiler node absent from native tree');
+    }
+}

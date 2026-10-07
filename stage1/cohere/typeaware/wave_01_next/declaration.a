@@ -1,0 +1,29 @@
+import type { Frames } from '../frames.ts';
+import { ContextNode } from './context_node.a';
+
+export class Declaration {
+    readonly path: string;
+    readonly ambient: boolean;
+    readonly external: boolean;
+    readonly node: ContextNode;
+    readonly bodyKind: string;
+    readonly bodyStart: number;
+    readonly bodyEnd: number;
+    readonly parents: readonly ContextNode[];
+    constructor(frames: Frames) {
+        this.path = frames.field();
+        this.ambient = frames.yes();
+        this.external = frames.yes();
+        this.node = new ContextNode(frames);
+        const body = frames.yes();
+        this.bodyKind = body ? frames.field() : '';
+        this.bodyStart = body ? frames.natural() : 0;
+        this.bodyEnd = body ? frames.natural() : 0;
+        const count = frames.natural();
+        const parents: ContextNode[] = [];
+        for(let at = 0; at < count; at++) {
+            parents.push(new ContextNode(frames));
+        }
+        this.parents = parents;
+    }
+}

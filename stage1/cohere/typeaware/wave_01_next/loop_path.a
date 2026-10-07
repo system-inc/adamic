@@ -1,0 +1,8 @@
+export class LoopPath {
+    readonly segments: readonly string[];
+    readonly root: number;
+    constructor(segments: readonly string[], root: number) {
+        this.segments = segments;
+        this.root = root;
+    }
+}
