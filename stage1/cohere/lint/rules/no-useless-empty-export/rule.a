@@ -1,5 +1,5 @@
 import type { RuleContext } from '../../context.ts';
-import { message } from './messages.ts';
+import { message } from './messages.a';
 
 export class Rule {
     readonly context: RuleContext;
