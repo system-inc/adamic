@@ -113,3 +113,24 @@ are rejected or report NotYet instead of silently receiving a fabricated
 runtime namespace. All currently supported Node hosts are ambient declarations,
 so they have no source module body to schedule; general graph evaluation for a
 future builtin implemented in Adamic is not established by these fixtures.
+
+Feature branch update after integration-boundary correction
+
+No push or merge was made into main or an area/ branch. Only
+codex/require-builtins was pushed. origin/main at e8ba3d5 was merged into
+this feature branch without conflicts in merge commit
+1ea8d98747a539cc98a44f2629ffbd457432d4b6.
+
+Post-merge validation (output retained under /tmp):
+- go test -count=1 -timeout=30m ./internal/load ./internal/lower
+  ./internal/flow ./internal/fresh: exit 1. Load, lower and flow pass;
+  fresh still fails TestEveryWriteIsRecordedAndKnown because ir.NodeFSFile
+  is unknown, across dependency import fixtures and require_fs.a.
+  Log: /tmp/require-builtins-merged-packages.log.
+- go test -count=1 -timeout=30m ./internal/oracle -run
+  'TestRequire|TestNodeFSFileAgreesWithNode|TestCountsAreRecorded|TestDevirtualize':
+  exit 0, 36.446s. Log: /tmp/require-builtins-merged-oracle.log.
+- go vet ./...: exit 0; formatting and git diff --check have no output.
+
+The branch is not fully green. The inherited freshness failure and the
+previously documented host and typing limitations remain; none was bypassed.
