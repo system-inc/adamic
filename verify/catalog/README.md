@@ -1,22 +1,23 @@
-Built 9 production-only reverse patches and a clean-worktree checker under verify/catalog.
-Target main: e011f8f60899586d6373a5ccb07335ad82cfbf3c; branch: devtools/regression-catalog.
-Commands: each exact fixture command passed on main and failed with its patch in three interleaved rounds; the whole oracle control passed.
-Mutants: nine historical faults killed by their recorded oracle fixtures; six checker probes reject a wrong diagnostic, a drifted hunk, an already-red control, a test-file patch, a missing fixture and a cached command.
-Not covered: seven requested entries are skipped with evidence below; no compiler fixes, fixtures, result caches or repository-wide performance claims were added.
+Built 11 production-only reverse patches and a named-Go-test checker under verify/catalog.
+Targets: original oracle evidence on e011f8f60899586d6373a5ccb07335ad82cfbf3c; new refusal entries on e8ba3d5d81de4d3773c723914fccd4c76248b965. Branch: devtools/regression-catalog.
+Commands: original oracle pairs passed clean and failed patched; new named lowerer tests do the same in three interleaved rounds.
+Mutants: nine original faults and two refusal faults caught; named checker probes reject extra failures, missing required subtests, wrong diagnostics and invalid command patterns/counts.
+Not covered: entries 10 and 13-16 remain skipped. Entry 07 needs a patch refresh after main replaced its virtual-call guard with CallTargets. No compiler or test files changed.
 
-The catalog targets the origin/main fetched at the start. All patches apply independently, change only non-test production code, and were restored after each run. Each whole-package run uses `ADAMIC_GATE_UNCACHED=1 go test -json -count=1 -timeout 30m ./internal/oracle`. Complete logs are in [logs](logs/); JSON events retain all passing and failing test names and diagnostics.
+The original nine oracle patches and observations target the origin/main fetched for the initial catalog. Their whole-package counts below remain historical observations on e011f8f, not refreshed measurements on newer main. All patches apply independently, change only non-test production code, and were restored after each run. Each whole-package run uses `ADAMIC_GATE_UNCACHED=1 go test -json -count=1 -timeout 30m ./internal/oracle`. Complete logs are in [logs](logs/); JSON events retain all passing and failing test names and diagnostics.
 
-`catalog.json` is a sixteen-row array. A verified row records one primary fixture command, all fixtures added with the fix, adaptation notes, the exact failing comparison line, three control/mutant observations and a whole-package failure inventory. Skipped rows have no patch or invented oracle command.
+`catalog.json` is a sixteen-row array. `command` is the authoritative, shell-quoted `go test` invocation with an exact anchored `-run` pattern. `expected_tests` names every required failing test or subtest; all must fail, and failures outside those tests and their reporting parents are rejected. `expected_failure_line` supplies the diagnostic. The checker sets `ADAMIC_GATE_UNCACHED=1` and uses `-count=1`. Legacy `test_command`, `test_args`, fixture and evidence fields remain for the original records. Skipped rows have a null command and a reason.
 
 Run `source /workspace/adamic-tools/env.sh` on this machine, or source the environment file printed by `bash cloud/setup.sh` on another machine, then:
 
 ```sh
-verify/catalog/check.sh e011f8f60899586d6373a5ccb07335ad82cfbf3c
+verify/catalog/check.sh origin/main
+verify/catalog/check.sh origin/main --entry 11
 ```
 
-The checker checks patch applicability, runs the unchanged fixture command on a clean control, applies the patch, and requires that exact fixture to fail with the recorded diagnostic. Source line-number drift is ignored; diagnostic text is exact. It restores the patch between entries and removes only its own disposable worktree. Logs stay in the printed temporary directory. Patch drift reports `no-longer-applies (needs a refresh)`. A red control or a different failure is an investigation result and makes the checker exit 1, never a successful reproduction.
+The checker checks patch applicability, runs the named Go test command on a clean control, applies the patch, and requires every expected test to fail with the recorded diagnostic. Source line-number drift is ignored; diagnostic text is exact. It restores the patch between entries and removes only its own disposable worktree. Logs stay in the printed temporary directory. Patch drift reports `no-longer-applies (needs a refresh)`. A red control or a different failure is an investigation result and makes the checker exit 1, never a successful reproduction.
 
-The whole oracle control exited 0 with no failed tests. The table below counts failed native comparison fixtures separately from failed fixture subtests anywhere in the package, including counted builds. Counts-table row changes are separate because `TestCountsAreRecorded` reports them at its parent rather than failing each fixture subtest. Total detecting fixtures is the distinct union of failed fixture subtests and changed count rows. The complete lists, including failures in mutant self-tests, are in each row's `whole_oracle` object.
+On the original e011f8f target, the whole oracle control exited 0 with no failed tests. The table below counts failed native comparison fixtures separately from failed fixture subtests anywhere in the package, including counted builds. Counts-table row changes are separate because `TestCountsAreRecorded` reports them at its parent rather than failing each fixture subtest. Total detecting fixtures is the distinct union of failed fixture subtests and changed count rows. The complete lists, including failures in mutant self-tests, are in each row's `whole_oracle` object.
 
 | Number | Name | Fix | Primary fixture | Expected failure line | Native fixtures failing | Distinct failed fixture subtests | Changed count rows | Total detecting fixtures |
 |---|---|---|---|---|---:|---:|---:|---:|
@@ -66,8 +67,6 @@ The shared-slice append fix is `7b6f9864cd22db4c9629b2d62aa4c08c2f2637b7`, found
 | Number | Name | Commit | Reason skipped |
 |---|---|---|---|
 | 10 | override-representation | `1f964412352567fca5ee39482205217706a078b2` | Not an ancestor of target main; its oracle fixture override_same_representation.a is a supported neighbor, not a failing refusal probe. The actual regressions are lowerer refusal tests. |
-| 11 | refuse-definite-assignment | `84e6752a9e0c9c4d5a7c33dff3e915408ec2bf0f` | Fix is on main but adds only internal/lower/definite_assignment_test.go inline probes, no oracle fixture or Node comparison. Cannot meet the required oracle command without changing tests. |
-| 12 | refuse-suppression-directives | `921afc46fd7872cc0d0953147c3021bbec66c679` | Fix is on main but adds only internal/lower/suppression_directives_test.go inline probes, no oracle fixture or Node comparison. Cannot meet the required oracle command without changing tests. |
 | 13 | typeof-null | `8aa2f91c1d199a95fd64d92733bf093b8df2dd65` | Fix and its oracle fixtures are not on target main. Main already has the pre-fix typeOf implementation; there is no fix to undo on this target. |
 | 14 | constructor-arrow-this | `0cf467cdef1fba747a5b0019bf6f2f1b7651d30c` | Fix is not on target main and adds only lowerer refusal tests, no oracle fixture. Main already lacks the arrow capture refusal. |
 | 15 | class-instance-key | `f914cea29787df2a506d36d2f80bd0f5ff77d78a` | Fix and its oracle fixtures are not on target main. Main already uses representation-based instantiation keys, so cannot undo the absent fix. |
@@ -123,7 +122,7 @@ Targeted invocation durations below are best of three interleaved clean/patched 
 
 09 build flags: commit `e011f8f60899586d6373a5ccb07335ad82cfbf3c`; nproc `5`; cgroup cpu.max `400000 100000`; `go version go1.27.1 linux/amd64`; `clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)`; node `v24.19.0`; uncached oracle results. Clean load before/after `7.57 6.94 4.70 7/212 21103` / `7.36 6.91 4.71 2/206 21194`; patched load before/after `7.36 6.91 4.71 2/206 21195` / `7.36 6.91 4.71 2/206 21278`. Harness builds: C11 strict warnings, `-ffp-contract=off -fno-optimize-sibling-calls`, release `-O2`, sanitizer `-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all`, separate leak checks; no changed Go flags.
 
-Final checker output:
+Original checker output on e011f8f:
 
 ```text
 target e011f8f60899586d6373a5ccb07335ad82cfbf3c
@@ -165,3 +164,58 @@ Additional checker probes passed
 ```
 
 Validation scope: complete oracle package on clean main and once per each of the nine reverse patches, each primary fixture in three interleaved control/mutant pairs, checker negative probes and final clean-worktree check. The full repository gate was not run: this unit adds verification artifacts only.
+
+Named lowerer entries on e8ba3d5d81de4d3773c723914fccd4c76248b965:
+
+| Entry | Command | Recorded failure line | Required failing subtests |
+|---|---|---|---:|
+| 11 | `go test -count=1 ./internal/lower -run '^TestDefiniteAssignmentIsRefused$'` | `definite_assignment_test.go:22: got <nil>, want definite assignment refusal` | 4 |
+| 12 | `go test -count=1 ./internal/lower -run '^TestSuppressionDirectivesAreRefused$'` | `suppression_directives_test.go:23: got <nil>, want directive refusal` | 24 |
+
+Each new command passed without its patch and failed with it in three interleaved rounds. The whole lowerer control passed; each whole-package mutant run failed only its named refusal test family, with all four definite-assignment cases and all twenty-four suppression cases failing. Test sources and fixtures are unchanged. Complete output is in `logs/named-*.log`, and full failure-name inventories are in `whole_lowerer`.
+
+Entry 10 was rechecked after `git fetch origin`: `git merge-base --is-ancestor 1f96441 origin/main` returned 1 for e8ba3d5d81de4d3773c723914fccd4c76248b965, so it remains skipped as requested. The entry 07 patch retains its original e011f8f target and evidence. New main replaces the mutated expression with a loop over `CallTargets`; the checker reports patch drift rather than attributing another bug to this historical fix.
+
+`--entry NN` filters before creating the test loop. The entry-10 CLI probe printed only that skip and its wall time. Each entry wall time covers patch checks, its clean control, patched test and restoration; worktree/submodule setup is outside it. Skips also print wall time. The checker prints commit/toolchain/build context and load before/after for these invocation observations. They are not before/after performance benchmarks. Go JSON output is decoded for diagnostic matching while its raw log is retained.
+
+| Loop | Before (control), best of 3 | After (reverse patch), best of 3 | Instrument |
+|---|---:|---:|---|
+| 11 | 1.766s | 1.793s | `ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/lower -run '^TestDefiniteAssignmentIsRefused$'` |
+| 12 | 2.329s | 2.350s | `ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/lower -run '^TestSuppressionDirectivesAreRefused$'` |
+
+11 build flags: commit `e8ba3d5d81de4d3773c723914fccd4c76248b965`; nproc `5`; cgroup cpu.max `400000 100000`; `go version go1.27.1 linux/amd64`; `clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)`; Node `v24.19.0`; `go test -count=1`; GOFLAGS ``; `ADAMIC_GATE_UNCACHED=1`. Clean load before/after `5.84 4.08 4.05 1/219 122610` / `5.45 4.03 4.03 1/219 122662`; mutant load before/after `5.45 4.03 4.03 1/219 122663` / `5.45 4.03 4.03 1/219 122713`. These lowerer tests do not build native binaries.
+
+12 build flags: commit `e8ba3d5d81de4d3773c723914fccd4c76248b965`; nproc `5`; cgroup cpu.max `400000 100000`; `go version go1.27.1 linux/amd64`; `clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)`; Node `v24.19.0`; `go test -count=1`; GOFLAGS ``; `ADAMIC_GATE_UNCACHED=1`. Clean load before/after `4.46 3.88 3.98 1/219 122945` / `4.51 3.90 3.99 1/219 122998`; mutant load before/after `4.55 3.92 3.99 1/219 123109` / `4.55 3.92 3.99 1/219 123160`. These lowerer tests do not build native binaries.
+
+Named checker probes used the actual definite-assignment mutation. JSON output was accepted with all four expected failures. Injecting an unrelated failing test, requiring a missing subtest, or changing the expected diagnostic was rejected. Unanchored patterns and `-count=2` were rejected before running Go. The last probe checks the repeat count; specifying `-count=2` itself does not enable a cache.
+
+```text
+11 refuse-definite-assignment: applies-and-fails-as-recorded
+Actual JSON Go test command: accepted with all four expected failing subtests
+11 refuse-definite-assignment: applies-but-failure-not-as-recorded (needs investigation)
+Unrelated failing test output mutant: rejected only by unexpected-test check
+11 refuse-definite-assignment: applies-but-failure-not-as-recorded (needs investigation)
+Missing required failing subtest mutant: rejected
+11 refuse-definite-assignment: applies-but-failure-not-as-recorded (needs investigation)
+Wrong named-test diagnostic mutant: rejected
+Unanchored pattern mutant: rejected
+Cached Go command mutant: rejected
+Named checker probes passed; worktree restored
+Label clarification: the "Cached Go command" probe changed -count=1 to -count=2. This is an incorrect repeat count, not an enabled cache. The repeat-count guard rejected it.
+```
+
+Resumed toolchain setup output:
+
+```text
+go version go1.27.1 linux/amd64
+setup: go ready (0s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0s)
+v24.19.0
+setup: node ready (0s)
+setup: submodules ready (0s)
+setup: build cache warm (45s)
+setup: done in 45s on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB
+```
+
+The new validation scope is the two named commands in three clean/mutant rounds, the complete lowerer package clean and under each refusal patch, actual JSON and negative checker probes, and CLI entry selection. No new oracle sweep or full repository gate was run for this extension. After pushing this branch, the checker is run against the latest fetched origin/main and its output is reported in the handoff.

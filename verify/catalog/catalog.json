@@ -124,7 +124,11 @@
       ],
       "detecting_fixture_count": 1,
       "only_fix_fixture_family_detects": true
-    }
+    },
+    "command": "go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^shared_slice_append[.]a$'",
+    "expected_tests": [
+      "TestNativeAgreesWithNode/internal/oracle/testdata/shared_slice_append.a"
+    ]
   },
   {
     "number": 2,
@@ -261,7 +265,11 @@
       ],
       "detecting_fixture_count": 2,
       "only_fix_fixture_family_detects": true
-    }
+    },
+    "command": "go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^throw_keeps_old_value[.]a$'",
+    "expected_tests": [
+      "TestNativeAgreesWithNode/internal/oracle/testdata/throw_keeps_old_value.a"
+    ]
   },
   {
     "number": 3,
@@ -446,7 +454,11 @@
       ],
       "detecting_fixture_count": 27,
       "only_fix_fixture_family_detects": false
-    }
+    },
+    "command": "go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_defined_lent[.]a$'",
+    "expected_tests": [
+      "TestNativeAgreesWithNode/internal/oracle/testdata/borrow_defined_lent.a"
+    ]
   },
   {
     "number": 4,
@@ -573,7 +585,11 @@
       ],
       "detecting_fixture_count": 1,
       "only_fix_fixture_family_detects": true
-    }
+    },
+    "command": "go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_element_super_move[.]a$'",
+    "expected_tests": [
+      "TestNativeAgreesWithNode/internal/oracle/testdata/borrow_element_super_move.a"
+    ]
   },
   {
     "number": 5,
@@ -708,7 +724,11 @@
       ],
       "detecting_fixture_count": 2,
       "only_fix_fixture_family_detects": true
-    }
+    },
+    "command": "go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^reuse_spread_method_alias[.]a$'",
+    "expected_tests": [
+      "TestNativeAgreesWithNode/internal/oracle/testdata/reuse_spread_method_alias.a"
+    ]
   },
   {
     "number": 6,
@@ -834,7 +854,11 @@
       ],
       "detecting_fixture_count": 1,
       "only_fix_fixture_family_detects": true
-    }
+    },
+    "command": "go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^regions_constructor_capture[.]a$'",
+    "expected_tests": [
+      "TestNativeAgreesWithNode/internal/oracle/testdata/regions_constructor_capture.a"
+    ]
   },
   {
     "number": 7,
@@ -963,7 +987,11 @@
       ],
       "detecting_fixture_count": 2,
       "only_fix_fixture_family_detects": false
-    }
+    },
+    "command": "go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_element_virtual_store[.]a$'",
+    "expected_tests": [
+      "TestNativeAgreesWithNode/internal/oracle/testdata/borrow_element_virtual_store.a"
+    ]
   },
   {
     "number": 8,
@@ -1115,7 +1143,11 @@
       ],
       "detecting_fixture_count": 4,
       "only_fix_fixture_family_detects": true
-    }
+    },
+    "command": "go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^e4eec87_f1_field_narrowed[.]a$'",
+    "expected_tests": [
+      "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_field_narrowed.a"
+    ]
   },
   {
     "number": 9,
@@ -1255,7 +1287,11 @@
       ],
       "detecting_fixture_count": 2,
       "only_fix_fixture_family_detects": true
-    }
+    },
+    "command": "go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^e4eec87_u01_undefined_field_widened[.]a$'",
+    "expected_tests": [
+      "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_u01_undefined_field_widened.a"
+    ]
   },
   {
     "number": 10,
@@ -1263,12 +1299,13 @@
     "area": "representation",
     "fix_commit": "1f964412352567fca5ee39482205217706a078b2",
     "fixture": "internal/oracle/testdata/override_same_representation.a",
-    "main_sha": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+    "main_sha": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
     "status": "skipped",
-    "reason": "Not an ancestor of target main; its oracle fixture override_same_representation.a is a supported neighbor, not a failing refusal probe. The actual regressions are lowerer refusal tests.",
+    "reason": "Fix 1f96441 is still not an ancestor of origin/main (e8ba3d5d81de4d3773c723914fccd4c76248b965); leave skipped pending integration.",
     "patch": null,
     "test_command": null,
-    "expected_failure_line": null
+    "expected_failure_line": null,
+    "command": null
   },
   {
     "number": 11,
@@ -1276,12 +1313,126 @@
     "area": "refusal",
     "fix_commit": "84e6752a9e0c9c4d5a7c33dff3e915408ec2bf0f",
     "fixture": "internal/lower/definite_assignment_test.go",
-    "main_sha": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
-    "status": "skipped",
-    "reason": "Fix is on main but adds only internal/lower/definite_assignment_test.go inline probes, no oracle fixture or Node comparison. Cannot meet the required oracle command without changing tests.",
-    "patch": null,
-    "test_command": null,
-    "expected_failure_line": null
+    "main_sha": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+    "status": "verified",
+    "patch": "11-refuse-definite-assignment.patch",
+    "test_command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/lower -run '^TestDefiniteAssignmentIsRefused$'",
+    "expected_failure_line": "definite_assignment_test.go:22: got <nil>, want definite assignment refusal",
+    "command": "go test -count=1 ./internal/lower -run '^TestDefiniteAssignmentIsRefused$'",
+    "test_args": [
+      "go",
+      "test",
+      "-count=1",
+      "./internal/lower",
+      "-run",
+      "^TestDefiniteAssignmentIsRefused$"
+    ],
+    "expected_tests": [
+      "TestDefiniteAssignmentIsRefused/definite-field-assigned.a",
+      "TestDefiniteAssignmentIsRefused/definite-field.a",
+      "TestDefiniteAssignmentIsRefused/definite-local-assigned.a",
+      "TestDefiniteAssignmentIsRefused/definite-local.a"
+    ],
+    "adaptation": "Reverse only the production refusal check.",
+    "targeted_runs": [
+      {
+        "round": 1,
+        "before": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/lower -run '^TestDefiniteAssignmentIsRefused$'",
+          "exit_code": 0,
+          "elapsed_seconds": 154.969,
+          "load_before": "0.63 1.58 3.34 1/218 121604",
+          "load_after": "6.16 4.09 4.05 1/219 122536",
+          "log": "logs/named-11-control-1.log",
+          "failed_tests": []
+        },
+        "after": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/lower -run '^TestDefiniteAssignmentIsRefused$'",
+          "exit_code": 1,
+          "elapsed_seconds": 9.149,
+          "load_before": "6.16 4.09 4.05 2/219 122537",
+          "load_after": "5.84 4.08 4.05 1/219 122609",
+          "log": "logs/named-11-mutant-1.log",
+          "failed_tests": [
+            "TestDefiniteAssignmentIsRefused",
+            "TestDefiniteAssignmentIsRefused/definite-local-assigned.a",
+            "TestDefiniteAssignmentIsRefused/definite-field.a",
+            "TestDefiniteAssignmentIsRefused/definite-field-assigned.a",
+            "TestDefiniteAssignmentIsRefused/definite-local.a"
+          ]
+        }
+      },
+      {
+        "round": 2,
+        "before": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/lower -run '^TestDefiniteAssignmentIsRefused$'",
+          "exit_code": 0,
+          "elapsed_seconds": 1.766,
+          "load_before": "5.84 4.08 4.05 1/219 122610",
+          "load_after": "5.45 4.03 4.03 1/219 122662",
+          "log": "logs/named-11-control-2.log",
+          "failed_tests": []
+        },
+        "after": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/lower -run '^TestDefiniteAssignmentIsRefused$'",
+          "exit_code": 1,
+          "elapsed_seconds": 1.793,
+          "load_before": "5.45 4.03 4.03 1/219 122663",
+          "load_after": "5.45 4.03 4.03 1/219 122713",
+          "log": "logs/named-11-mutant-2.log",
+          "failed_tests": [
+            "TestDefiniteAssignmentIsRefused",
+            "TestDefiniteAssignmentIsRefused/definite-local.a",
+            "TestDefiniteAssignmentIsRefused/definite-field.a",
+            "TestDefiniteAssignmentIsRefused/definite-local-assigned.a",
+            "TestDefiniteAssignmentIsRefused/definite-field-assigned.a"
+          ]
+        }
+      },
+      {
+        "round": 3,
+        "before": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/lower -run '^TestDefiniteAssignmentIsRefused$'",
+          "exit_code": 0,
+          "elapsed_seconds": 2.038,
+          "load_before": "5.45 4.03 4.03 1/219 122714",
+          "load_after": "5.45 4.03 4.03 1/219 122765",
+          "log": "logs/named-11-control-3.log",
+          "failed_tests": []
+        },
+        "after": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/lower -run '^TestDefiniteAssignmentIsRefused$'",
+          "exit_code": 1,
+          "elapsed_seconds": 1.817,
+          "load_before": "5.45 4.03 4.03 1/219 122766",
+          "load_after": "5.09 3.98 4.01 1/219 122818",
+          "log": "logs/named-11-mutant-3.log",
+          "failed_tests": [
+            "TestDefiniteAssignmentIsRefused",
+            "TestDefiniteAssignmentIsRefused/definite-local-assigned.a",
+            "TestDefiniteAssignmentIsRefused/definite-field-assigned.a",
+            "TestDefiniteAssignmentIsRefused/definite-local.a",
+            "TestDefiniteAssignmentIsRefused/definite-field.a"
+          ]
+        }
+      }
+    ],
+    "whole_lowerer": {
+      "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./internal/lower",
+      "exit_code": 1,
+      "elapsed_seconds": 15.24,
+      "load_before": "4.60 3.96 4.00 1/219 123244",
+      "load_after": "4.69 4.01 4.02 1/220 123332",
+      "log": "logs/named-11-whole-lower-mutant.log",
+      "failed_tests": [
+        "TestDefiniteAssignmentIsRefused",
+        "TestDefiniteAssignmentIsRefused/definite-field.a",
+        "TestDefiniteAssignmentIsRefused/definite-field-assigned.a",
+        "TestDefiniteAssignmentIsRefused/definite-local-assigned.a",
+        "TestDefiniteAssignmentIsRefused/definite-local.a"
+      ]
+    },
+    "timing_environment": "environment-named-tests.json"
   },
   {
     "number": 12,
@@ -1289,12 +1440,226 @@
     "area": "refusal",
     "fix_commit": "921afc46fd7872cc0d0953147c3021bbec66c679",
     "fixture": "internal/lower/suppression_directives_test.go",
-    "main_sha": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
-    "status": "skipped",
-    "reason": "Fix is on main but adds only internal/lower/suppression_directives_test.go inline probes, no oracle fixture or Node comparison. Cannot meet the required oracle command without changing tests.",
-    "patch": null,
-    "test_command": null,
-    "expected_failure_line": null
+    "main_sha": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+    "status": "verified",
+    "patch": "12-refuse-suppression-directives.patch",
+    "test_command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/lower -run '^TestSuppressionDirectivesAreRefused$'",
+    "expected_failure_line": "suppression_directives_test.go:23: got <nil>, want directive refusal",
+    "command": "go test -count=1 ./internal/lower -run '^TestSuppressionDirectivesAreRefused$'",
+    "test_args": [
+      "go",
+      "test",
+      "-count=1",
+      "./internal/lower",
+      "-run",
+      "^TestSuppressionDirectivesAreRefused$"
+    ],
+    "expected_tests": [
+      "TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_@ts-expect-error_*/_",
+      "TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_prose__*_@ts-expect-error_*/_",
+      "TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//*_@ts-expect-error_*/_",
+      "TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a///_@ts-expect-error_",
+      "TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_@ts-expect-error_*/_",
+      "TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_prose__*_@ts-expect-error_*/_",
+      "TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//*_@ts-expect-error_*/_",
+      "TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a///_@ts-expect-error_",
+      "TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_@ts-expect-error_*/_",
+      "TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_prose__*_@ts-expect-error_*/_",
+      "TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//*_@ts-expect-error_*/_",
+      "TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a///_@ts-expect-error_",
+      "TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_@ts-ignore_*/_",
+      "TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_prose__*_@ts-ignore_*/_",
+      "TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//*_@ts-ignore_*/_",
+      "TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a///_@ts-ignore_",
+      "TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_@ts-ignore_*/_",
+      "TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_prose__*_@ts-ignore_*/_",
+      "TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//*_@ts-ignore_*/_",
+      "TestSuppressionDirectivesAreRefused/@ts-ignore/call.a///_@ts-ignore_",
+      "TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_@ts-ignore_*/_",
+      "TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_prose__*_@ts-ignore_*/_",
+      "TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//*_@ts-ignore_*/_",
+      "TestSuppressionDirectivesAreRefused/@ts-ignore/number.a///_@ts-ignore_"
+    ],
+    "adaptation": "Reverse only the production refusal check and its now-unused imports.",
+    "targeted_runs": [
+      {
+        "round": 1,
+        "before": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/lower -run '^TestSuppressionDirectivesAreRefused$'",
+          "exit_code": 0,
+          "elapsed_seconds": 2.46,
+          "load_before": "5.09 3.98 4.01 1/219 122819",
+          "load_after": "5.09 3.98 4.01 1/219 122871",
+          "log": "logs/named-12-control-1.log",
+          "failed_tests": []
+        },
+        "after": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/lower -run '^TestSuppressionDirectivesAreRefused$'",
+          "exit_code": 1,
+          "elapsed_seconds": 9.125,
+          "load_before": "5.09 3.98 4.01 1/219 122872",
+          "load_after": "4.46 3.88 3.98 1/219 122944",
+          "log": "logs/named-12-mutant-1.log",
+          "failed_tests": [
+            "TestSuppressionDirectivesAreRefused",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/number.a///_@ts-ignore_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a///_@ts-expect-error_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_prose__*_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_prose__*_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a///_@ts-ignore_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//*_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//*_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_prose__*_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//*_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a///_@ts-expect-error_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//*_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//*_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/call.a///_@ts-ignore_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//*_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_prose__*_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_prose__*_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_prose__*_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a///_@ts-expect-error_"
+          ]
+        }
+      },
+      {
+        "round": 2,
+        "before": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/lower -run '^TestSuppressionDirectivesAreRefused$'",
+          "exit_code": 0,
+          "elapsed_seconds": 2.329,
+          "load_before": "4.46 3.88 3.98 1/219 122945",
+          "load_after": "4.51 3.90 3.99 1/219 122998",
+          "log": "logs/named-12-control-2.log",
+          "failed_tests": []
+        },
+        "after": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/lower -run '^TestSuppressionDirectivesAreRefused$'",
+          "exit_code": 1,
+          "elapsed_seconds": 2.369,
+          "load_before": "4.51 3.90 3.99 2/219 122999",
+          "load_after": "4.51 3.90 3.99 1/219 123056",
+          "log": "logs/named-12-mutant-2.log",
+          "failed_tests": [
+            "TestSuppressionDirectivesAreRefused",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a///_@ts-expect-error_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/number.a///_@ts-ignore_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_prose__*_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_prose__*_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//*_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//*_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_prose__*_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//*_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/call.a///_@ts-ignore_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a///_@ts-expect-error_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_prose__*_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//*_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//*_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a///_@ts-expect-error_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_prose__*_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a///_@ts-ignore_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_prose__*_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//*_@ts-expect-error_*/_"
+          ]
+        }
+      },
+      {
+        "round": 3,
+        "before": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/lower -run '^TestSuppressionDirectivesAreRefused$'",
+          "exit_code": 0,
+          "elapsed_seconds": 2.339,
+          "load_before": "4.51 3.90 3.99 1/219 123057",
+          "load_after": "4.55 3.92 3.99 1/219 123108",
+          "log": "logs/named-12-control-3.log",
+          "failed_tests": []
+        },
+        "after": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/lower -run '^TestSuppressionDirectivesAreRefused$'",
+          "exit_code": 1,
+          "elapsed_seconds": 2.35,
+          "load_before": "4.55 3.92 3.99 1/219 123109",
+          "load_after": "4.55 3.92 3.99 1/219 123160",
+          "log": "logs/named-12-mutant-3.log",
+          "failed_tests": [
+            "TestSuppressionDirectivesAreRefused",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/number.a///_@ts-ignore_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a///_@ts-expect-error_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//*_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a///_@ts-ignore_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//*_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_prose__*_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//*_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_prose__*_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//*_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a///_@ts-expect-error_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_prose__*_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//*_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_prose__*_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/call.a///_@ts-ignore_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_prose__*_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a///_@ts-expect-error_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//*_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_prose__*_@ts-expect-error_*/_"
+          ]
+        }
+      }
+    ],
+    "whole_lowerer": {
+      "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./internal/lower",
+      "exit_code": 1,
+      "elapsed_seconds": 15.218,
+      "load_before": "4.69 4.01 4.02 1/220 123334",
+      "load_after": "4.08 3.91 3.99 1/221 123414",
+      "log": "logs/named-12-whole-lower-mutant.log",
+      "failed_tests": [
+        "TestSuppressionDirectivesAreRefused",
+        "TestSuppressionDirectivesAreRefused/@ts-ignore/number.a///_@ts-ignore_",
+        "TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_prose__*_@ts-expect-error_*/_",
+        "TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a///_@ts-expect-error_",
+        "TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_@ts-expect-error_*/_",
+        "TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//*_@ts-expect-error_*/_",
+        "TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_@ts-expect-error_*/_",
+        "TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_prose__*_@ts-expect-error_*/_",
+        "TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//*_@ts-expect-error_*/_",
+        "TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_prose__*_@ts-expect-error_*/_",
+        "TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a///_@ts-expect-error_",
+        "TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//*_@ts-expect-error_*/_",
+        "TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_@ts-ignore_*/_",
+        "TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_@ts-expect-error_*/_",
+        "TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a///_@ts-expect-error_",
+        "TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_prose__*_@ts-ignore_*/_",
+        "TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_@ts-ignore_*/_",
+        "TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_prose__*_@ts-ignore_*/_",
+        "TestSuppressionDirectivesAreRefused/@ts-ignore/call.a///_@ts-ignore_",
+        "TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//*_@ts-ignore_*/_",
+        "TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_prose__*_@ts-ignore_*/_",
+        "TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//*_@ts-ignore_*/_",
+        "TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a///_@ts-ignore_",
+        "TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//*_@ts-ignore_*/_",
+        "TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_@ts-ignore_*/_"
+      ]
+    },
+    "timing_environment": "environment-named-tests.json"
   },
   {
     "number": 13,
@@ -1307,7 +1672,8 @@
     "reason": "Fix and its oracle fixtures are not on target main. Main already has the pre-fix typeOf implementation; there is no fix to undo on this target.",
     "patch": null,
     "test_command": null,
-    "expected_failure_line": null
+    "expected_failure_line": null,
+    "command": null
   },
   {
     "number": 14,
@@ -1320,7 +1686,8 @@
     "reason": "Fix is not on target main and adds only lowerer refusal tests, no oracle fixture. Main already lacks the arrow capture refusal.",
     "patch": null,
     "test_command": null,
-    "expected_failure_line": null
+    "expected_failure_line": null,
+    "command": null
   },
   {
     "number": 15,
@@ -1333,7 +1700,8 @@
     "reason": "Fix and its oracle fixtures are not on target main. Main already uses representation-based instantiation keys, so cannot undo the absent fix.",
     "patch": null,
     "test_command": null,
-    "expected_failure_line": null
+    "expected_failure_line": null,
+    "command": null
   },
   {
     "number": 16,
@@ -1346,6 +1714,7 @@
     "reason": "Supplied SHA changes only whitespace in a log. Nearby cbcc765c adds coverage, no compiler fix; mutable_kind_guard.a is an unresolved disagreement kept under notes, absent from main and from the registered oracle fixtures.",
     "patch": null,
     "test_command": null,
-    "expected_failure_line": null
+    "expected_failure_line": null,
+    "command": null
   }
 ]
