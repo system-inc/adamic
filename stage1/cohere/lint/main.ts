@@ -2,7 +2,6 @@ import { panic, programArguments, readTextFile } from 'adamic';
 import { written } from '../../typescript/parser/nodes.ts';
 import { Parser } from '../../typescript/parser/parser.ts';
 import { Scanner } from '../../typescript/scanner/scanner.ts';
-import { Settings } from './settings.ts';
 import { Linter } from './lint.ts';
 import { Settings } from './settings.ts';
 
@@ -17,10 +16,16 @@ function run(row: string, countOnly: boolean): number {
     const scanner = new Scanner(source.text);
     const settings = new Settings();
     settings.load(fields[5] ?? '');
-    const mode = settings.read('mode', fields[2] ?? '');
-    const nullPolicy = settings.read('null', fields[3] ?? '');
-    const allowCatch = settings.read('allowemptycatch', fields[4] === 'true' ? 'true' : 'false') === 'true';
-    const linter = new Linter(source.text, parser, scanner, fields[1] ?? 'all', mode, nullPolicy, allowCatch, settings);
+    const linter = new Linter(
+        source.text,
+        parser,
+        scanner,
+        fields[1] ?? 'all',
+        settings.read('mode', fields[2] ?? ''),
+        settings.read('null', fields[3] ?? ''),
+        settings.read('allowemptycatch', fields[4] === 'true' ? 'true' : 'false') === 'true',
+        settings,
+    );
     linter.run();
     if(countOnly) {
         return linter.findings.length;
