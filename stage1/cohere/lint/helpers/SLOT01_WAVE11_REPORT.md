@@ -177,3 +177,11 @@ At the user's explicit instruction, rebased onto origin/area/stage1-lint d65a8f9
 Setup completed in 96s; Go/clang/Node/submodules were ready at 1s and cache warming completed at 96s. nproc=5. The full helper oracle command `go test ./stage1/cohere/lint/helpers -count=1 -v -timeout=20m` passed in 608.885s: 76 top-level passes, eight explicit ownership-blocked skips, 77 compiled semantic mutant catches, two expected refusal checks and eight source-only tree mutant catches. `go vet ./stage1/cohere/lint/helpers` passed. `ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestInputAgreesWithNode$' -count=1 -v -timeout=20m` passed in 6.512s. Logs: evidence/slot01-wave11/area-{oracle,vet,input,setup}.log.
 
 The same CollapseCopyNode[] adamic/cycle-capable ownership refusal remains after integrating the shared harness. No tree native/emitted-JavaScript parity or compiled tree mutant is credited. No further helper is claimed, no readiness credit is added, and no full repository gate was run.
+
+## Landing refresh on b84a9d93
+
+Rebased without conflicts onto origin/area/stage1-lint b84a9d9314b65d3d0261ee017e233287b4f071da, containing main c7991b90. Incoming predicate, proven-relation and record changes are retained. No shared source was edited. Pre-report head: 6d97058fe8cc4b4dddfa71affdc94276604b01ea.
+
+`go test ./stage1/cohere/lint/helpers -count=1 -v -timeout=20m` passed in 609.715s with 76 top-level passes and eight explicit ownership-blocked skips. All 77 compiled semantic mutants and eight source-only tree mutants were caught; the two expected refusal checks passed. `go vet ./stage1/cohere/lint/helpers` passed. `ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestInputAgreesWithNode$' -count=1 -v -timeout=20m` passed in 10.461s. Logs: evidence/slot01-wave11/b84-{oracle,vet,input}.log.
+
+The tree-helper CollapseCopyNode[] adamic/cycle-capable refusal persists, so native/emitted-JavaScript tree parity and compiled tree mutants remain unverified. This is not a fully green gate. The full repository and 17 required-input correctness checks were not run in this bounded worker verification. No required-input check was skipped, weakened or deleted by this work. No new helper is claimed and no tree readiness credit is added.
