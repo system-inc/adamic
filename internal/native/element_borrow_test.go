@@ -106,3 +106,21 @@ func TestCallTargetsElementBorrowPlan(t *testing.T) {
 		}
 	}
 }
+
+// Builtin identity operations have no mutation of their own; user code in their
+// operands still ends a borrow, including an Error message that removes an item.
+func TestBuiltinErrorBorrowEffects(t *testing.T) {
+	message := ir.StringConstant{}
+	error := ir.BuiltinError{Kind: 1, Message: message}
+	for _, expression := range []ir.Expression{error, ir.ErrorIs{Value: error, Kind: 1}} {
+		if changes(&ir.Program{}, nil, []ir.Statement{ir.Evaluate{Value: expression}}) {
+			t.Errorf("harmless builtin error operation changes arrays: %T", expression)
+		}
+	}
+	invalidates := ir.CallClosure{Closure: ir.MakeClosure{}, Returns: ir.String}
+	for _, expression := range []ir.Expression{ir.BuiltinError{Kind: 1, Message: invalidates}, ir.ErrorIs{Value: ir.CallClosure{Closure: ir.MakeClosure{}, Returns: ir.Object}, Kind: 1}} {
+		if !changes(&ir.Program{}, nil, []ir.Statement{ir.Evaluate{Value: expression}}) {
+			t.Errorf("builtin error operand call did not end borrow: %T", expression)
+		}
+	}
+}
