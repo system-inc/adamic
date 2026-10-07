@@ -1,0 +1,282 @@
+=== RUN   TestNoUnnecessaryTypeConstraintFires
+=== PAUSE TestNoUnnecessaryTypeConstraintFires
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim
+=== RUN   TestNoUnnecessaryTypeConstraintPointsAtTheParameterName
+=== PAUSE TestNoUnnecessaryTypeConstraintPointsAtTheParameterName
+=== CONT  TestNoUnnecessaryTypeConstraintFires
+=== RUN   TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any,_U>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any,_U>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any,_U>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any,_U>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T,_U_extends_any>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T,_U_extends_any>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintPointsAtTheParameterName
+=== RUN   TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/function_data<T_extends_any>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/function_data<T_extends_any>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/function_data<T,_U_extends_any>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/function_data<T,_U_extends_any>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/const_data_=_<Element_extends_unknown>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/const_data_=_<Element_extends_unknown>()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/const_data_=_<T_extends_any,_U_extends_any>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/const_data_=_<T_extends_any,_U_extends_any>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/function_data<T_extends_any>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T,_U>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T,_U>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_number>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_number>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_number_|_string>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/const_data_=_<Element_extends_unknown>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/const_data_=_<T_extends_any,_U_extends_any>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/function_data<T,_U_extends_any>()_{}
+--- PASS: TestNoUnnecessaryTypeConstraintPointsAtTheParameterName (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/function_data<T_extends_any>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/const_data_=_<Element_extends_unknown>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/const_data_=_<T_extends_any,_U_extends_any>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/function_data<T,_U_extends_any>()_{} (0.00s)
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_number_|_string>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_any_|_number>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_any_|_number>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/type_X_=_any;_function_data<T_extends_X>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/type_X_=_any;_function_data<T_extends_X>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T,_>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T,_>()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T,_U>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T,_U>()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T_extends_number>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T_extends_number>()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T_extends_number_|_string>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T_extends_number_|_string>()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_{}>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_{}>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_object>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_object>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_never>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_never>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_void>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_void>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_(any)>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_(any)>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_(unknown)>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_(unknown)>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any,_U_extends_T>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any,_U_extends_T>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,_>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,_>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_,_>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_,_>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_=_unknown>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_=_unknown>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,_U_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,_U_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_unknown>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_unknown>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.ts
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.ts
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.mts
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.mts
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.cts
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.cts
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_/*_comment_*/,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_/*_comment_*/,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_/*_comment_*/>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_/*_comment_*/>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_unknown>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_unknown>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/class_Data<T_extends_unknown>_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/class_Data<T_extends_unknown>_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_Data_=_class<T_extends_unknown>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_Data_=_class<T_extends_unknown>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/class_Data_{_member<T_extends_unknown>()_{}_}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/class_Data_{_member<T_extends_unknown>()_{}_}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_Data_=_class_{_member<T_extends_unknown>()_{}_};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_Data_=_class_{_member<T_extends_unknown>()_{}_};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/interface_Data<T_extends_unknown>_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/interface_Data<T_extends_unknown>_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/type_Data<T_extends_unknown>_=_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/type_Data<T_extends_unknown>_=_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_(unknown)>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_(any)>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_void>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_never>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_object>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_{}>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T_extends_number_|_string>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T_extends_number>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T,_U>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T,_>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/type_X_=_any;_function_data<T_extends_X>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_any_|_number>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.cts
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,_>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintFires/function_data<T,_U_extends_any>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/function_data<T,_U_extends_any>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_number>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/interface_Data<T_extends_unknown>_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T,_U>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_number_|_string>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_Data_=_class<T_extends_unknown>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_Data_=_class_{_member<T_extends_unknown>()_{}_};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/class_Data_{_member<T_extends_unknown>()_{}_}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_unknown>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.mts
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.ts
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T,_U_extends_any>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any,_U_extends_T>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_unknown>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_/*_comment_*/,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/type_Data<T_extends_unknown>_=_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+--- PASS: TestNoUnnecessaryTypeConstraintStaysSilent (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_(unknown)>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_(any)>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_void>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_never>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_object>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_{}>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T_extends_number_|_string>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T_extends_number>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T,_U>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T,_>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/type_X_=_any;_function_data<T_extends_X>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_any_|_number>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T,_U>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_number_|_string>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_number>()_{} (0.00s)
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_=_unknown>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any,_U_extends_T>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any,_U_extends_T>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,_U_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any>()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_,_>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,_>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,_>()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_,>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_,>()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_,_>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_,_>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_/*_comment_*/>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_=_unknown>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_=_unknown>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/class_Data<T_extends_unknown>_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,_U_extends_any>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,_U_extends_any>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any,_U>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_unknown>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_unknown>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any>()_=>_{};#01
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any>()_=>_{};#01
+=== RUN   TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_unknown>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_unknown>()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintFires/class_Data<T_extends_unknown>_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/class_Data<T_extends_unknown>_{}
+=== RUN   TestNoUnnecessaryTypeConstraintFires/const_Data_=_class<T_extends_unknown>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/const_Data_=_class<T_extends_unknown>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintFires/class_Data_{_member<T_extends_unknown>()_{}_}
+--- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.cts (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,_>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/interface_Data<T_extends_unknown>_{}_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_Data_=_class<T_extends_unknown>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_Data_=_class_{_member<T_extends_unknown>()_{}_};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/class_Data_{_member<T_extends_unknown>()_{}_}_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_unknown>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.mts (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.ts (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T,_U_extends_any>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any,_U_extends_T>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_unknown>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_=_unknown>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,_U_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_,_>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_/*_comment_*/,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/class_Data<T_extends_unknown>_{}_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/type_Data<T_extends_unknown>_=_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_/*_comment_*/>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any,_U>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/class_Data_{_member<T_extends_unknown>()_{}_}
+=== RUN   TestNoUnnecessaryTypeConstraintFires/const_Data_=_class_{_member<T_extends_unknown>()_{}_};
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/const_Data_=_class_{_member<T_extends_unknown>()_{}_};
+=== RUN   TestNoUnnecessaryTypeConstraintFires/interface_Data<T_extends_unknown>_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/interface_Data<T_extends_unknown>_{}
+=== RUN   TestNoUnnecessaryTypeConstraintFires/type_Data<T_extends_unknown>_=_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/type_Data<T_extends_unknown>_=_{};
+=== CONT  TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintFires/type_Data<T_extends_unknown>_=_{};
+=== CONT  TestNoUnnecessaryTypeConstraintFires/interface_Data<T_extends_unknown>_{}
+=== CONT  TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_=_unknown>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintFires/class_Data<T_extends_unknown>_{}
+=== CONT  TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_,_>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintFires/const_Data_=_class_{_member<T_extends_unknown>()_{}_};
+=== CONT  TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_unknown>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_,>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,_>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any>()_=>_{};#01
+=== CONT  TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_unknown>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintFires/class_Data_{_member<T_extends_unknown>()_{}_}
+=== CONT  TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,_U_extends_any>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintFires/const_Data_=_class<T_extends_unknown>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any,_U_extends_T>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintFires/function_data<T,_U_extends_any>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any,_U>()_{}
+--- PASS: TestNoUnnecessaryTypeConstraintFires (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/type_Data<T_extends_unknown>_=_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/interface_Data<T_extends_unknown>_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/class_Data<T_extends_unknown>_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_=_unknown>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_,_>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_unknown>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_,>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,_>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any>()_=>_{};#01 (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/const_Data_=_class_{_member<T_extends_unknown>()_{}_}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_unknown>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/class_Data_{_member<T_extends_unknown>()_{}_} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any,_U_extends_T>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/const_Data_=_class<T_extends_unknown>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/function_data<T,_U_extends_any>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,_U_extends_any>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any,_U>()_{} (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/typescript	0.010s
