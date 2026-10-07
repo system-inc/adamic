@@ -15,7 +15,8 @@ for (const file of files) {
     fs.mkdirSync(path.dirname(target), { recursive: true });
     fs.copyFileSync(path.join(after, "src/compiler", file), target);
 }
-const site = sites.find(site => site.action === "assert");
+const site = sites.find(site => site.action === "assert" &&
+    (!process.env.MUTANT_FILE || site.file === process.env.MUTANT_FILE));
 if (!site) throw new Error("no required assertion to mutate");
 const target = path.join(mutant, "src/compiler", site.file);
 const text = fs.readFileSync(target, "utf8");

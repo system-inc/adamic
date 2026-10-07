@@ -7,10 +7,10 @@ This adapter follows adaptation 30's parsed-expression plus occurrence ledger. S
 [sites.json](sites.json) records each reviewed occurrence, its class, action, and one-line invariant or decline reason. Coordinates are documentation, never edit offsets. Pure stores and intentionally optional reads are declined. Existing upstream assertions need no adaptation. The ledger grows in three pushed waves:
 
 - [Wave A](proof/a/README.md): emitter.ts and sourcemap.ts.
-- Wave B: transformers/ts.ts, es2015.ts and declarations.ts.
+- [Wave B](proof/b/README.md): transformers/ts.ts, es2015.ts and declarations.ts.
 - Wave C: transformer.ts, visitorPublic.ts and remaining transformers recursively.
 
-Run `node adapt.cjs <tree>` with `NODE_PATH` pointing at stock typescript@6.0.3. `node adapt.cjs --check <tree>` validates contracts without writing. `node verify.cjs <before> <after>` compares emitted JavaScript, verifies site contracts and checks idempotence. `node mutant.cjs <before> <after> <new-mutant-tree>` proves the JavaScript and contract checks can fail. `bash census.sh <tree> <output>` runs the unchanged Adamic loader through a temporary Go overlay and retains full diagnostic chains for TS2345, TS18048, TS2532, TS2322 and TS2538.
+Run `node adapt.cjs <tree>` with `NODE_PATH` pointing at stock typescript@6.0.3. `node adapt.cjs --check <tree>` validates contracts without writing. `node verify.cjs <before> <after>` compares emitted JavaScript, verifies site contracts and checks idempotence. `MUTANT_FILE=owned-file node mutant.cjs <before> <after> <new-mutant-tree>` proves the JavaScript and contract checks can fail. `bash census.sh <tree> <output>` runs the unchanged Adamic loader through a temporary Go overlay and retains full diagnostic chains for TS2345, TS18048, TS2532, TS2322 and TS2538.
 
 Proof trees contain 00, 10, 30 and 33, leaving 20 out. No TypeScript source is committed. The stock oracle builds upstream and runs the default suites against its checked-in baselines. Per-wave proof directories retain census tables, every remaining finding with its reason, oracle reports and baseline diff, idempotence, JavaScript verification and mutant results.
 
