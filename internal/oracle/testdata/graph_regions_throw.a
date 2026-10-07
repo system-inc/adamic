@@ -1,0 +1,15 @@
+interface Link { readonly label: string; next: Link | undefined; }
+function build(index: number): Link {
+ const first: Link = { label: `throw${index}`, next: undefined };
+ const second: Link = { label: `other${index}`, next: first };
+ first.next = second;
+ return first;
+}
+function fail(): void { throw new Error(`failure${4}`); }
+function frame(): void {
+ const only = build(4);
+ try { console.log(only.label); fail(); }
+ finally { console.log(`finally ${only.next?.label ?? '-'}`); }
+}
+try { frame(); } catch (error) { if (error instanceof Error) console.log(error.message); }
+console.log('caught');

@@ -37,6 +37,15 @@ var fixtures = []struct {
 	// the check, so the native binary is held to the JavaScript backend, which does.
 	checked bool
 }{
+	{"internal/oracle/testdata/graph_regions_weak_mixed.a", true, false},
+	{"internal/oracle/testdata/graph_regions_structural_literal.a", true, false},
+	{"internal/oracle/testdata/graph_regions_counted_container.a", true, false},
+	{"internal/oracle/testdata/weak_region_review.a", true, false},
+	{"internal/oracle/testdata/graph_regions_throw.a", true, false},
+	{"internal/oracle/testdata/graph_regions_static_private.a", true, false},
+	{"internal/oracle/testdata/graph_regions_generic_capture.a", true, false},
+	{"internal/oracle/testdata/graph_regions_nested_self.a", true, false},
+	{"internal/oracle/testdata/graph_regions_nested_disjoint.a", true, false},
 	{"internal/oracle/testdata/graph_regions_entries.a", true, false},
 	{"internal/oracle/testdata/graph_regions/million.a", true, false},
 	{"internal/oracle/testdata/graph_regions_accessor.a", true, false},

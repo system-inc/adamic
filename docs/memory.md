@@ -1019,6 +1019,68 @@ anchors remain the service design described above; no tsc scanner/parser
 measurement or native tsc compilation is claimed by this unit.
 
 
+### Compiler review of 42e2a35
+
+This continuation merges main at `39638d9` before adding review evidence. No
+production emission or ownership logic changed. Stores in a program with graph
+types use `adamic_graph_hold` and `adamic_graph_drop`, including stores whose
+static slot type is counted. Those helpers inspect both objects' actual headers.
+Two actual graph members merge and have no per-edge count; either counted side
+uses the normal retain/release boundary. Locals, parameters, returns and globals
+use `adamic_retain`/`adamic_release`; heap.c dispatches those from the actual
+header, resolving an interior closure-cell pointer to its owner first. Container
+stores likewise inspect their actual headers. Weak handles remain counted and
+hide their target without retaining it.
+
+Allocation adoption is still selected statically, before the object is
+published. It is not safe to retrofit a graph prefix onto an aliased counted
+allocation. `graph_regions_structural_literal.a` has an inferred literal return
+with no contextual graph annotation, then a structural Link view and a self
+edge. Its whole-program allocation is selected as graph; the lower test checks
+that exact ObjectLiteral IR, and the executable checks teardown. Conversely,
+`graph_regions_counted_container.a` returns a counted Box holding a graph cycle
+after its builder's locals disappear. The lower test proves Box is counted and
+the runtime test reads both nodes before dropping Box. This evidence separates
+allocation classification from runtime boundary dispatch; it does not claim
+arbitrary runtime promotion. An intersection-return version of the first probe
+was refused by existing intersection-return lowering, so the running witness
+uses the inferred return.
+
+Every registered graph fixture now requires allocations equal frees plus
+statement-region allocations, as well as a region-free report and its recorded
+counts. This is independent of merely finding GraphTypes. The accepted lower
+cases have these executable witnesses, each compared to Node and the JavaScript
+backend, and run in native release, ASan/UBSan and LeakSanitizer builds:
+
+| Accepted case | Running witness |
+|---|---|
+| Parent, self link, captures, arrays, map values/keys, sets, map of sets, subtypes, generic instantiations and indirect generic capture | graph_regions_regression_01 through 12 |
+| Generic Tie capture | graph_regions_generic_capture |
+| Inherited private, plain and generic fields | graph_regions_regression_13 through 15 |
+| Static self, child constructor, interface and private field | graph_regions_static, static_parent, static_interface, static_private |
+| Accessor and literal method captures | graph_regions_accessor, literal_method |
+| Nested self and disjoint captures | graph_regions_nested_self, nested_disjoint |
+| Readonly constructor and every fresh refusal carried by regions | fresh_refused/ctor_readonly and all 43 probes in TestFreshWriteProbesUseRegions |
+
+Witnesses retain the ownership cycle with finite behavior. In particular the
+recursive accessor is constructed and dropped without invoking the recursive
+getter; the self and generic capture witnesses use bounded reads.
+
+`weak_region_review.a` closes the parent/child shape with Weak and has no graph
+types: eight allocations, eight frees, no region report. The mixed fixture adds
+an unrelated strong self cycle so Weak is also exercised while graph emission
+helpers are enabled. `graph_regions_throw.a` unwinds a frame holding the only
+outside reference after a finally reads its peer. It must report exactly one
+region teardown and ten allocations/ten frees.
+
+Concurrency has a concrete limitation: current main has no parallelMap export,
+lowering or task runtime. `refusals/graph_regions_parallel.a` passes a graph node
+to that API and TestGraphParallelMapIsUnavailable pins the named checker error
+`has no exported member 'parallelMap'`. This refuses all uses of the unavailable
+API; it is not a graph-specific transfer proof or an executed parallel task.
+The existing runtime shared-region merge refusal remains tested. A task-boundary
+sharing check still needs the real concurrency API; threads remain design only.
+
 ## Arenas
 
 Some work allocates a lot and frees it all at once: one request, one file checked by cohere. For that, an arena: allocations bump a pointer, and the arena frees everything in one go at the end. A value allocated in an arena must not outlive it, and proving that is escape analysis. The lowering IR's aliasing analysis (#5jck546) is where that comes from. Arenas are for stage 1 (cohere in Adamic), where cohere's own measurements already show that with the collector off, fresh allocation is the cost.

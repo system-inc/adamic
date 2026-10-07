@@ -5,6 +5,7 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"testing"
 )
@@ -93,6 +94,19 @@ func TestGraphRegionsCountsAndFree(t *testing.T) {
 			result := execute(t, name, args...)
 			if result.exitCode != 0 || !graphRegionLine.Match(result.stderr) {
 				t.Fatalf("region free missing: %d %s", result.exitCode, result.stderr)
+			}
+			counts := countsLine.FindSubmatch(result.stderr)
+			if counts == nil {
+				t.Fatal("missing heap counts")
+			}
+			allocations, _ := strconv.Atoi(string(counts[1]))
+			frees, _ := strconv.Atoi(string(counts[2]))
+			arenas, _ := strconv.Atoi(string(counts[6]))
+			if allocations != frees+arenas {
+				t.Fatalf("accepted graph leaked: %s", result.stderr)
+			}
+			if strings.HasSuffix(fixture.path, "graph_regions_throw.a") && len(graphRegionLine.FindAll(result.stderr, -1)) != 1 {
+				t.Fatalf("throw must free its region exactly once: %s", result.stderr)
 			}
 			t.Logf("%s", fmt.Sprintf("%s\n%s", row, result.stderr))
 		})
