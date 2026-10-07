@@ -1,0 +1,8 @@
+=== RUN   TestHistoricalCSSDegradedPasses
+=== PAUSE TestHistoricalCSSDegradedPasses
+=== CONT  TestHistoricalCSSDegradedPasses
+    degraded_test.go:110: historical CSS degraded passes survived
+--- FAIL: TestHistoricalCSSDegradedPasses (0.00s)
+FAIL
+exit status 1
+FAIL	mutant	0.003s

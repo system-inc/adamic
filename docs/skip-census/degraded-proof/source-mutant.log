@@ -1,0 +1,8 @@
+=== RUN   TestDegradedSourceAndDrift
+=== PAUSE TestDegradedSourceAndDrift
+=== CONT  TestDegradedSourceAndDrift
+    degraded_test.go:25: want five diagnostic sites: []
+--- FAIL: TestDegradedSourceAndDrift (0.00s)
+FAIL
+exit status 1
+FAIL	mutant	0.002s

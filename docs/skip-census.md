@@ -64,3 +64,29 @@ To update the table, scan and review changes, retaining explicit classifications
 and providers. Do not blindly classify new skips as measurement. Run the census
 test after editing. `ADAMIC_SKIP_CENSUS_ROOT` lets the scanning test inspect a
 scratch source copy for mutation proofs while retaining the checked-in table.
+
+## Degraded inputs under a passing test
+
+The same AST inventory records `kind: "degraded-input"` for testing Log/Logf
+and fmt Print/Printf/Println or Fprint variants directed to stdout, stderr or
+`t.Output()`. It resolves constant text, concatenation and local aliases.
+A diagnostic matches when a line names an ADAMIC_ variable and contains
+`set ADAMIC_`, `not checked`, or `absent`. `variables` records the named inputs.
+Only required-input and not-applicable are valid classifications for this kind;
+each requires a provision or an explicit applicability reason.
+
+Skip identities retain their original condition hash. Diagnostic identities also
+hash the kind and message, so two logs under the same guard remain distinct.
+Lines and columns do not participate in identity. Internal AST columns keep
+same-line calls distinct while deriving opt-in annotations.
+
+CheckLog counts these diagnostics when their emitting test passes. It prints
+class, package, test, site identity, kind and named variables. Repeated output
+from one site in one execution is counted once. Unknown and ambiguous diagnostics
+fail closed. A known testdata overlay message can be attributed to the parent
+package test that forwards its output; rewritten overlay filenames do not matter.
+Go formatting substitutions are supported for diagnostic matching.
+Package output from fmt is associated conservatively with active tests; paused
+tests are excluded. Output chunks are reassembled before matching. The ordinary
+gate verdict remains responsible for tests that fail or runs that never finish.
+This is a declared diagnostic vocabulary, not arbitrary inference from prose.

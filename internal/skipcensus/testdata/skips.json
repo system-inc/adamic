@@ -532,7 +532,7 @@
     "file": "stage1/cohere/css/css_test.go",
     "test": "TestThePortParsesAsGoCohereDoes",
     "id": "TestThePortParsesAsGoCohereDoes:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc",
-    "line": 147,
+    "line": 148,
     "condition": "library == \"\"",
     "reads": [
       "os.Getenv(\"ADAMIC_CSS_FIXTURES\")",
@@ -557,7 +557,7 @@
     "file": "stage1/cohere/css/css_test.go",
     "test": "TestCSSThroughput",
     "id": "TestCSSThroughput:4f7695919100a8f192d2010d1445c8cf009fb0993b381a9fd014403ff103c479",
-    "line": 424,
+    "line": 405,
     "condition": "os.Getenv(\"ADAMIC_CSS_BENCH\") == \"\"",
     "reads": [
       "os.Getenv(\"ADAMIC_CSS_BENCH\")",
@@ -737,6 +737,32 @@
     ]
   },
   {
+    "kind": "degraded-input",
+    "variables": [
+      "ADAMIC_CSS_FIXTURES"
+    ],
+    "file": "stage1/cohere/css/testdata/cohere_side_test.go",
+    "test": "TestAdamicPortCases",
+    "id": "TestAdamicPortCases:f79a66b328336911eb6b48f69e9e0a8d8301d9e349c9bae81c369bd90b6b36a9",
+    "line": 116,
+    "condition": "!(request.Fixtures != \"\")",
+    "reads": [
+      "filepath.WalkDir(\"..\", func(path string, entry fs.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif !entry.IsDir() && strings.HasSuffix(path, \"_test.go\") && !strings.HasPrefix(entry.Name(), \"adamic_\") {\n\t\tpaths = append(paths, path)\n\t}\n\treturn nil\n})",
+      "filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.IsDir() {\n\t\tif entry.Name() == \".git\" || entry.Name() == \"node_modules\" {\n\t\t\treturn filepath.SkipDir\n\t\t}\n\t\treturn nil\n\t}\n\text := strings.ToLower(filepath.Ext(path))\n\tif ext != \".css\" && ext != \".scss\" && ext != \".less\" {\n\t\treturn nil\n\t}\n\tdata, err := os.ReadFile(path)\n\tif err != nil {\n\t\treturn err\n\t}\n\tif !utf8.Valid(data) {\n\t\treturn fmt.Errorf(\"%s is not UTF-8\", path)\n\t}\n\ttexts = append(texts, string(data))\n\tfiles[ext]++\n\treturn nil\n})",
+      "os.Getenv(\"ADAMIC_PORT_REQUEST\")",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestAdamicPortCases"
+    ],
+    "message": "\"Prettier fixtures absent; set ADAMIC_CSS_FIXTURES\"",
+    "class": "required-input",
+    "provides": "ADAMIC_CSS_FIXTURES must name the external Prettier fixture checkout/root containing the CSS, SCSS and Less corpus. The parent CSS harness passes this path in request.Fixtures to the cohere overlay, which walks that corpus. Providing only the checked-in CSS fixture does not cover it.",
+    "opt_in_on": [
+      "ADAMIC_PORT_REQUEST"
+    ]
+  },
+  {
     "file": "stage1/cohere/css/testdata/compose_side_test.go",
     "test": "TestAdamicCompositionCases",
     "id": "TestAdamicCompositionCases:071bee04ebc1306585f9ad6a0a4aa5333046920fcb7bc52d74b659e6bbc9199d",
@@ -779,6 +805,57 @@
     ]
   },
   {
+    "kind": "degraded-input",
+    "variables": [
+      "ADAMIC_CSSNUMBERS_LIBRARY"
+    ],
+    "file": "stage1/cohere/cssnumbers/port_test.go",
+    "test": "TestCSSNumbers",
+    "id": "TestCSSNumbers:b5719386f7bbcd1d52fc2e4f5debae846db277c8c5303dd3b4cecf7fc4a8c9a1",
+    "line": 240,
+    "condition": "!(library != \"\")",
+    "reads": [
+      "filepath.WalkDir(root, func(path string, entry os.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.IsDir() {\n\t\tif entry.Name() == \".git\" {\n\t\t\treturn filepath.SkipDir\n\t\t}\n\t\treturn nil\n\t}\n\tswitch strings.ToLower(filepath.Ext(path)) {\n\tcase \".css\", \".scss\", \".less\":\n\t\tb, e := os.ReadFile(path)\n\t\tif e != nil {\n\t\t\treturn e\n\t\t}\n\t\ttexts = append(texts, string(b))\n\t\tpaths = append(paths, path)\n\t}\n\treturn nil\n})",
+      "os.Getenv(\"ADAMIC_CSSNUMBERS_KEEP\")",
+      "os.Getenv(\"ADAMIC_CSSNUMBERS_LIBRARY\")",
+      "os.ReadFile(\"../cssstrings/strings.ts\")",
+      "os.ReadFile(\"main.ts\")",
+      "os.ReadFile(\"numbers.ts\")",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestCSSNumbers"
+    ],
+    "message": "\"external library not checked: set ADAMIC_CSSNUMBERS_LIBRARY\"",
+    "class": "required-input",
+    "provides": "ADAMIC_CSSNUMBERS_LIBRARY names the npm reference-library project used by stage1/cohere/cssnumbers/testdata/library.mjs; the correctness gate must supply its pinned prettier@3.9.6 package."
+  },
+  {
+    "kind": "degraded-input",
+    "variables": [
+      "ADAMIC_CSSSTRINGS_LIBRARY"
+    ],
+    "file": "stage1/cohere/cssstrings/port_test.go",
+    "test": "TestCSSStrings",
+    "id": "TestCSSStrings:29ed5923d2bff9dc694c6120c9111b1f5961176481b2b9f67f427fdbb368d1fe",
+    "line": 227,
+    "condition": "!(library != \"\")",
+    "reads": [
+      "filepath.WalkDir(root, func(path string, entry os.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.IsDir() {\n\t\tif entry.Name() == \".git\" {\n\t\t\treturn filepath.SkipDir\n\t\t}\n\t\treturn nil\n\t}\n\tswitch strings.ToLower(filepath.Ext(path)) {\n\tcase \".css\", \".scss\", \".less\":\n\t\tb, e := os.ReadFile(path)\n\t\tif e != nil {\n\t\t\treturn e\n\t\t}\n\t\ttexts = append(texts, string(b))\n\t\tpaths = append(paths, path)\n\t}\n\treturn nil\n})",
+      "os.Getenv(\"ADAMIC_CSSSTRINGS_KEEP\")",
+      "os.Getenv(\"ADAMIC_CSSSTRINGS_LIBRARY\")",
+      "os.ReadFile(\"main.ts\")",
+      "os.ReadFile(\"strings.ts\")",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestCSSStrings"
+    ],
+    "message": "\"external library not checked: set ADAMIC_CSSSTRINGS_LIBRARY\"",
+    "class": "required-input",
+    "provides": "ADAMIC_CSSSTRINGS_LIBRARY names the npm reference-library project used by stage1/cohere/cssstrings/testdata/library.mjs; the correctness gate must supply its pinned prettier@3.9.6 package."
+  },
+  {
     "file": "stage1/cohere/formatfiles/testdata/cohere_side_test.go",
     "test": "TestAdamicPortCases",
     "id": "TestAdamicPortCases:4fd418791213190c8c02147c8709ae05919a7aa60a46f77c98fc6a9fcb512052",
@@ -803,7 +880,7 @@
     "file": "stage1/cohere/gitignore/gitignore_test.go",
     "test": "TestThePortAnswersAsGoCohereAndGitDo",
     "id": "TestThePortAnswersAsGoCohereAndGitDo:68752ca2a247f74d2d7b51fe076036de06132b339bf05879e5e516bf32d3bb94",
-    "line": 158,
+    "line": 159,
     "condition": "mutant.needsLargest && !largest()",
     "reads": [
       "os.Getenv(\"ADAMIC_GITIGNORE_KEEP\")",
@@ -853,7 +930,7 @@
     "file": "stage1/cohere/graphql/graphql_test.go",
     "test": "TestThePortParsesAsGoCohereDoes",
     "id": "TestThePortParsesAsGoCohereDoes:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc",
-    "line": 112,
+    "line": 113,
     "condition": "library == \"\"",
     "reads": [
       "os.Getenv(\"ADAMIC_GRAPHQL_KEEP\")",
@@ -984,7 +1061,7 @@
     "file": "stage1/cohere/json/port_test.go",
     "test": "TestPortMatchesGoCohere",
     "id": "TestPortMatchesGoCohere:ee535c3d3183e33fe838ac8ca2e7a2a832dbe40bcd69f212f57435d41212143d",
-    "line": 223,
+    "line": 204,
     "condition": "os.Getenv(\"ADAMIC_JSON_NODE_ONLY\") != \"\"",
     "reads": [
       "filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.IsDir() && entry.Name() == \".git\" {\n\t\treturn filepath.SkipDir\n\t}\n\tif entry.IsDir() || !strings.HasSuffix(entry.Name(), \".json\") {\n\t\treturn nil\n\t}\n\tencoded, err := os.ReadFile(path)\n\tif err != nil {\n\t\treturn err\n\t}\n\tif !utf8.Valid(encoded) {\n\t\treturn fmt.Errorf(\"non-UTF-8 corpus file %s: decoding needs its own oracle\", path)\n\t}\n\trelative, err := filepath.Rel(root, path)\n\tif err != nil {\n\t\treturn err\n\t}\n\trelative = filepath.ToSlash(relative)\n\tgroup := \"Adamic\"\n\tif strings.HasPrefix(relative, \"cohere/\") {\n\t\tgroup = \"cohere\"\n\t}\n\tif strings.HasPrefix(relative, \"cohere/TypeScript/\") {\n\t\tgroup = \"TypeScript\"\n\t}\n\tgroups[group]++\n\tcases = append(cases, textCase{relative, string(encoded)})\n\treturn nil\n})",
@@ -1005,7 +1082,7 @@
     "file": "stage1/cohere/json/port_test.go",
     "test": "TestAdditionalJSONBoundaries",
     "id": "TestAdditionalJSONBoundaries:ee535c3d3183e33fe838ac8ca2e7a2a832dbe40bcd69f212f57435d41212143d",
-    "line": 350,
+    "line": 331,
     "condition": "os.Getenv(\"ADAMIC_JSON_NODE_ONLY\") != \"\"",
     "reads": [
       "os.Getenv(\"ADAMIC_JSON_ARTIFACTS\")",
@@ -1161,10 +1238,36 @@
     ]
   },
   {
+    "kind": "degraded-input",
+    "variables": [
+      "ADAMIC_MARKDOWNINLINE_LIBRARY"
+    ],
+    "file": "stage1/cohere/markdowninline/port_test.go",
+    "test": "TestMarkdownInline",
+    "id": "TestMarkdownInline:67941e3c5a28e20bc5bce62986868902f3b9b32489996f051e5680b97f11a2ca",
+    "line": 246,
+    "condition": "!(library != \"\")",
+    "reads": [
+      "filepath.WalkDir(root, func(path string, entry os.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.IsDir() {\n\t\tif entry.Name() == \".git\" {\n\t\t\treturn filepath.SkipDir\n\t\t}\n\t\treturn nil\n\t}\n\tswitch strings.ToLower(filepath.Ext(path)) {\n\tcase \".md\", \".markdown\", \".mdown\", \".mkd\":\n\t\tb, e := os.ReadFile(path)\n\t\tif e != nil {\n\t\t\treturn e\n\t\t}\n\t\ttexts = append(texts, string(b))\n\t\tpaths = append(paths, path)\n\t}\n\treturn nil\n})",
+      "os.Getenv(\"ADAMIC_MARKDOWNINLINE_KEEP\")",
+      "os.Getenv(\"ADAMIC_MARKDOWNINLINE_LIBRARY\")",
+      "os.ReadFile(\"classes.ts\")",
+      "os.ReadFile(\"inline.ts\")",
+      "os.ReadFile(\"main.ts\")",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestMarkdownInline"
+    ],
+    "message": "\"external library not checked: set ADAMIC_MARKDOWNINLINE_LIBRARY\"",
+    "class": "required-input",
+    "provides": "ADAMIC_MARKDOWNINLINE_LIBRARY names the npm reference-library project used by stage1/cohere/markdowninline/testdata/library.mjs; the correctness gate must supply its pinned prettier@3.9.6 package."
+  },
+  {
     "file": "stage1/cohere/mediaquery/mediaquery_test.go",
     "test": "TestThePortParsesAsGoCohereDoes",
     "id": "TestThePortParsesAsGoCohereDoes:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc",
-    "line": 94,
+    "line": 95,
     "condition": "library == \"\"",
     "reads": [
       "os.Getenv(\"ADAMIC_MEDIAQUERY_KEEP\")",
@@ -1211,7 +1314,7 @@
     "file": "stage1/cohere/selector/selector_test.go",
     "test": "TestThePortParsesAsGoCohereDoes",
     "id": "TestThePortParsesAsGoCohereDoes:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc",
-    "line": 85,
+    "line": 86,
     "condition": "library == \"\"",
     "reads": [
       "os.Getenv(\"ADAMIC_SELECTOR_KEEP\")",
@@ -1233,10 +1336,39 @@
     ]
   },
   {
+    "kind": "degraded-input",
+    "variables": [
+      "ADAMIC_SELECTOR_LIBRARY"
+    ],
+    "file": "stage1/cohere/selector/selector_test.go",
+    "test": "askedCases",
+    "id": "TestSelectorThroughput,TestThePortParsesAsGoCohereDoes:ebfb11c27327b3fa0010843b0912e3405c0364019d08bb9229f6be0d056698f8",
+    "line": 179,
+    "condition": "!(library != \"\")",
+    "reads": [
+      "os.Getenv(\"ADAMIC_SELECTOR_KEEP\")",
+      "os.Getenv(\"ADAMIC_SELECTOR_LIBRARY\")",
+      "os.Getenv(\"COHERE_SELECTOR_GENERATED\")",
+      "os.Getenv(\"COHERE_SELECTOR_SEED\")",
+      "os.ReadFile(answersPath)",
+      "os.ReadFile(casesPath)"
+    ],
+    "callers": [
+      "TestSelectorThroughput",
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "message": "\"CSS corpus extraction skipped: set ADAMIC_SELECTOR_LIBRARY\"",
+    "class": "required-input",
+    "provides": "ADAMIC_SELECTOR_LIBRARY names the pinned postcss-selector-parser@2.2.3 npm project; askedCases extracts its external CSS corpus. See docs/gate-inputs.md.",
+    "opt_in_on": [
+      "ADAMIC_SELECTOR_BENCH"
+    ]
+  },
+  {
     "file": "stage1/cohere/selector/selector_test.go",
     "test": "TestSelectorThroughput",
     "id": "TestSelectorThroughput:bd045f17a47b90e4aa936cce7744f4c65a82b6b0a6aa7320868b549e63b7af2d",
-    "line": 407,
+    "line": 388,
     "condition": "os.Getenv(\"ADAMIC_SELECTOR_BENCH\") == \"\"",
     "reads": [
       "os.Getenv(\"ADAMIC_SELECTOR_BENCH\")",
@@ -1262,7 +1394,7 @@
     "file": "stage1/cohere/selector/selector_test.go",
     "test": "TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars",
     "id": "TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc",
-    "line": 460,
+    "line": 441,
     "condition": "library == \"\"",
     "reads": [
       "os.Getenv(\"ADAMIC_SELECTOR_LIBRARY\")"
@@ -1320,6 +1452,66 @@
     ]
   },
   {
+    "kind": "degraded-input",
+    "variables": [
+      "ADAMIC_TYPESCRIPT_SOURCE"
+    ],
+    "file": "stage1/cohere/typeaware/suite_test.go",
+    "test": "TestSixRuleAgreementAndMutants",
+    "id": "TestSixRuleAgreementAndMutants:b3bde9a28ca7a10aa21ca5d18f287a7e2543495bcfeeb10c1d072d70525a7305",
+    "line": 352,
+    "condition": "corpus == \"\"",
+    "reads": [
+      "filepath.WalkDir(filepath.Join(corpus, \"src/compiler\"), func(path string, entry fs.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif !entry.IsDir() && strings.HasSuffix(path, \".ts\") {\n\t\tpaths = append(paths, path)\n\t}\n\treturn nil\n})",
+      "os.Getenv(\"ADAMIC_SIX_ARTIFACTS\")",
+      "os.Getenv(\"ADAMIC_TYPEAWARE_BENCH\")",
+      "os.Getenv(\"ADAMIC_TYPESCRIPT_SOURCE\")",
+      "os.ReadFile(entry)",
+      "os.ReadFile(filepath.Join(repository, \"stage1/cohere/typeaware/facts.ts\"))",
+      "os.ReadFile(filepath.Join(repository, \"stage1/cohere/typeaware/parameters.ts\"))",
+      "os.ReadFile(filepath.Join(repository, \"stage1/cohere/typeaware/types.ts\"))",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestSixRuleAgreementAndMutants"
+    ],
+    "message": "\"compiler corpus skipped: set ADAMIC_TYPESCRIPT_SOURCE\"",
+    "class": "required-input",
+    "provides": "ADAMIC_TYPESCRIPT_SOURCE names the pinned TypeScript v6.0.3 compiler checkout, including src/compiler/*.ts. Without it the type-aware corpus verification degrades. See docs/gate-inputs.md.",
+    "opt_in_off": [
+      "ADAMIC_TYPESCRIPT_SOURCE"
+    ]
+  },
+  {
+    "kind": "degraded-input",
+    "variables": [
+      "ADAMIC_TYPESCRIPT_SOURCE"
+    ],
+    "file": "stage1/cohere/typeaware/typeaware_test.go",
+    "test": "TestTypeAwareAgreementAndMutants",
+    "id": "TestTypeAwareAgreementAndMutants:b3bde9a28ca7a10aa21ca5d18f287a7e2543495bcfeeb10c1d072d70525a7305",
+    "line": 359,
+    "condition": "corpus == \"\"",
+    "reads": [
+      "filepath.WalkDir(filepath.Join(corpus, \"src/compiler\"), func(path string, entry fs.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif !entry.IsDir() && strings.HasSuffix(path, \".ts\") {\n\t\tabsolute, err := filepath.Abs(path)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tpaths = append(paths, absolute)\n\t}\n\treturn nil\n})",
+      "os.Getenv(\"ADAMIC_TYPEAWARE_ARTIFACTS\")",
+      "os.Getenv(\"ADAMIC_TYPEAWARE_BENCH\")",
+      "os.Getenv(\"ADAMIC_TYPESCRIPT_SOURCE\")",
+      "os.ReadFile(costEntry)",
+      "os.ReadFile(entry)",
+      "os.ReadFile(original)"
+    ],
+    "callers": [
+      "TestTypeAwareAgreementAndMutants"
+    ],
+    "message": "\"compiler corpus skipped: set ADAMIC_TYPESCRIPT_SOURCE\"",
+    "class": "required-input",
+    "provides": "ADAMIC_TYPESCRIPT_SOURCE names the pinned TypeScript v6.0.3 compiler checkout, including src/compiler/*.ts. Without it the type-aware corpus verification degrades. See docs/gate-inputs.md.",
+    "opt_in_off": [
+      "ADAMIC_TYPESCRIPT_SOURCE"
+    ]
+  },
+  {
     "file": "stage1/cohere/values/testdata/cohere_side_test.go",
     "test": "TestAdamicPortCases",
     "id": "TestAdamicPortCases:071bee04ebc1306585f9ad6a0a4aa5333046920fcb7bc52d74b659e6bbc9199d",
@@ -1343,7 +1535,7 @@
     "file": "stage1/cohere/values/values_test.go",
     "test": "TestThePortParsesAsGoCohereDoes",
     "id": "TestThePortParsesAsGoCohereDoes:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc",
-    "line": 102,
+    "line": 103,
     "condition": "library == \"\"",
     "reads": [
       "os.Getenv(\"ADAMIC_VALUES_KEEP\")",

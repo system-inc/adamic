@@ -3,7 +3,6 @@ package skipcensus
 
 import (
 	"bytes"
-	"crypto/sha256"
 	"encoding/json"
 	"fmt"
 	"go/ast"
@@ -19,6 +18,9 @@ import (
 )
 
 type Row struct {
+	column    int
+	Kind      string   `json:"kind,omitempty"`
+	Variables []string `json:"variables,omitempty"`
 	File      string   `json:"file"`
 	Test      string   `json:"test"`
 	ID        string   `json:"id"`
@@ -158,21 +160,18 @@ func Scan(root string) ([]Row, error) {
 					return
 				}
 				if call, ok := n.(*ast.CallExpr); ok {
-					if sel, ok := call.Fun.(*ast.SelectorExpr); ok && (sel.Sel.Name == "Skip" || sel.Sel.Name == "Skipf" || sel.Sel.Name == "SkipNow") {
-						// Recognize testing receivers by their declared type, including arbitrary names.
-						isTesting := testingReceiver(set, sel.X, testingAlias, map[*ast.Object]bool{})
-						if isTesting {
-							condition := strings.Join(guards, " && ")
-							if condition == "" {
-								condition = "true"
-							}
-							sum := sha256.Sum256([]byte(condition))
-							message := ""
-							if len(call.Args) > 0 {
-								message = printed(set, call.Args[0])
-							}
-							rows = append(rows, Row{File: relative, Test: f.Name.Name, ID: fmt.Sprintf("%s:%x", f.Name.Name, sum[:]), Line: set.Position(call.Pos()).Line, Condition: condition, Message: message})
+					kind, message, variables := censusCall(set, call, testingAlias, tree)
+					if kind != "" {
+						condition := strings.Join(guards, " && ")
+						if condition == "" {
+							condition = "true"
 						}
+						if kind == "skip" {
+							kind = ""
+						}
+						row := Row{column: set.Position(call.Pos()).Column, Kind: kind, Variables: variables, File: relative, Test: f.Name.Name, Line: set.Position(call.Pos()).Line, Condition: condition, Message: message}
+						row.ID = identity(row, f.Name.Name)
+						rows = append(rows, row)
 					}
 				}
 				ast.Inspect(n, func(child ast.Node) bool {
@@ -242,8 +241,7 @@ func Scan(root string) ([]Row, error) {
 		}
 		row.Callers = unique(row.Callers)
 		if len(row.Callers) > 0 {
-			sum := sha256.Sum256([]byte(row.Condition))
-			row.ID = fmt.Sprintf("%s:%x", strings.Join(row.Callers, ","), sum[:])
+			row.ID = identity(*row, strings.Join(row.Callers, ","))
 		}
 	}
 	if err := optInAnnotations(root, rows); err != nil {
@@ -288,6 +286,12 @@ func Validate(actual, declared []Row) error {
 		case "required-input", "measurement", "not-applicable", "opt-in-lane":
 		default:
 			return fmt.Errorf("invalid class for %s", k)
+		}
+		if r.Kind != "" && r.Kind != "degraded-input" {
+			return fmt.Errorf("invalid kind for %s", k)
+		}
+		if r.Kind == "degraded-input" && (len(r.Variables) == 0 || r.Class != "required-input" && r.Class != "not-applicable") {
+			return fmt.Errorf("degraded-input %s must name its input and be required-input or not-applicable", k)
 		}
 		if len(r.OptInOn) > 0 && r.Class != "required-input" {
 			return fmt.Errorf("skip after opt-in %s (%s) must be required-input", k, strings.Join(r.OptInOn, ", "))
