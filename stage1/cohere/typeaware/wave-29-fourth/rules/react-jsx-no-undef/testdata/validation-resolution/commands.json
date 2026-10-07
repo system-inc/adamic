@@ -11,7 +11,7 @@
       "/workspace/adamic/cohere/adamic_wave29_undef_resolution.go"
     ],
     "exit": 0,
-    "ns": 2608346955
+    "ns": 99145911
   },
   {
     "name": "go",
@@ -22,19 +22,19 @@
       "/workspace/wave29-undef-resolution-wired/profile.json"
     ],
     "exit": 0,
-    "ns": 55087083
+    "ns": 43335046
   },
   {
     "name": "native-build",
     "args": [
-      "/workspace/wave29-b8fb-adamic",
+      "/workspace/wave29-resolution-adamic",
       "build",
       "/workspace/adamic/stage1/cohere/typeaware/wave-29-fourth/rules/react-jsx-no-undef/testdata/resolution_probe.a",
       "-o",
       "/workspace/wave29-undef-resolution-wired/native"
     ],
     "exit": 0,
-    "ns": 178891439
+    "ns": 165544169
   },
   {
     "name": "native",
@@ -43,7 +43,7 @@
       "/workspace/wave29-undef-resolution-wired/facts.frames"
     ],
     "exit": 0,
-    "ns": 1456858
+    "ns": 1683094
   },
   {
     "name": "node",
@@ -55,17 +55,17 @@
       "/workspace/wave29-undef-resolution-wired/facts.frames"
     ],
     "exit": 0,
-    "ns": 75381324
+    "ns": 72405342
   },
   {
     "name": "javascript-build",
     "args": [
-      "/workspace/wave29-b8fb-adamic",
+      "/workspace/wave29-resolution-adamic",
       "js",
       "/workspace/adamic/stage1/cohere/typeaware/wave-29-fourth/rules/react-jsx-no-undef/testdata/resolution_probe.a"
     ],
     "exit": 0,
-    "ns": 37742585
+    "ns": 37406031
   },
   {
     "name": "javascript",
@@ -77,12 +77,12 @@
       "/workspace/wave29-undef-resolution-wired/facts.frames"
     ],
     "exit": 0,
-    "ns": 37538644
+    "ns": 37998919
   },
   {
     "name": "asan-build",
     "args": [
-      "/workspace/wave29-b8fb-adamic",
+      "/workspace/wave29-resolution-adamic",
       "build",
       "/workspace/adamic/stage1/cohere/typeaware/wave-29-fourth/rules/react-jsx-no-undef/testdata/resolution_probe.a",
       "-o",
@@ -90,7 +90,7 @@
       "--sanitize"
     ],
     "exit": 0,
-    "ns": 406782628
+    "ns": 342605059
   },
   {
     "name": "asan",
@@ -99,19 +99,19 @@
       "/workspace/wave29-undef-resolution-wired/facts.frames"
     ],
     "exit": 0,
-    "ns": 11422096
+    "ns": 9900366
   },
   {
     "name": "globals-build",
     "args": [
-      "/workspace/wave29-b8fb-adamic",
+      "/workspace/wave29-resolution-adamic",
       "build",
       "/workspace/wave29-undef-resolution-wired/mutant-globals/probe.a",
       "-o",
       "/workspace/wave29-undef-resolution-wired/mutant-globals/native"
     ],
     "exit": 0,
-    "ns": 170578072
+    "ns": 162595403
   },
   {
     "name": "globals",
@@ -120,19 +120,19 @@
       "/workspace/wave29-undef-resolution-wired/facts.frames"
     ],
     "exit": 0,
-    "ns": 1453918
+    "ns": 1685077
   },
   {
     "name": "commonjs-build",
     "args": [
-      "/workspace/wave29-b8fb-adamic",
+      "/workspace/wave29-resolution-adamic",
       "build",
       "/workspace/wave29-undef-resolution-wired/mutant-commonjs/probe.a",
       "-o",
       "/workspace/wave29-undef-resolution-wired/mutant-commonjs/native"
     ],
     "exit": 0,
-    "ns": 190889040
+    "ns": 162048968
   },
   {
     "name": "commonjs",
@@ -141,19 +141,19 @@
       "/workspace/wave29-undef-resolution-wired/facts.frames"
     ],
     "exit": 0,
-    "ns": 4525252
+    "ns": 1359388
   },
   {
     "name": "declaration-build",
     "args": [
-      "/workspace/wave29-b8fb-adamic",
+      "/workspace/wave29-resolution-adamic",
       "build",
       "/workspace/wave29-undef-resolution-wired/mutant-declaration/probe.a",
       "-o",
       "/workspace/wave29-undef-resolution-wired/mutant-declaration/native"
     ],
     "exit": 0,
-    "ns": 212650622
+    "ns": 161752239
   },
   {
     "name": "declaration",
@@ -162,19 +162,19 @@
       "/workspace/wave29-undef-resolution-wired/facts.frames"
     ],
     "exit": 0,
-    "ns": 1544675
+    "ns": 2423494
   },
   {
     "name": "checker-build",
     "args": [
-      "/workspace/wave29-b8fb-adamic",
+      "/workspace/wave29-resolution-adamic",
       "build",
       "/workspace/wave29-undef-resolution-wired/mutant-checker/probe.a",
       "-o",
       "/workspace/wave29-undef-resolution-wired/mutant-checker/native"
     ],
     "exit": 0,
-    "ns": 183541826
+    "ns": 165800218
   },
   {
     "name": "checker",
@@ -183,19 +183,19 @@
       "/workspace/wave29-undef-resolution-wired/facts.frames"
     ],
     "exit": 0,
-    "ns": 1474019
+    "ns": 1655112
   },
   {
     "name": "resolved-build",
     "args": [
-      "/workspace/wave29-b8fb-adamic",
+      "/workspace/wave29-resolution-adamic",
       "build",
       "/workspace/wave29-undef-resolution-wired/mutant-resolved/probe.a",
       "-o",
       "/workspace/wave29-undef-resolution-wired/mutant-resolved/native"
     ],
     "exit": 0,
-    "ns": 165400202
+    "ns": 162682324
   },
   {
     "name": "resolved",
@@ -204,19 +204,19 @@
       "/workspace/wave29-undef-resolution-wired/facts.frames"
     ],
     "exit": 0,
-    "ns": 2243202
+    "ns": 1607130
   },
   {
     "name": "message-build",
     "args": [
-      "/workspace/wave29-b8fb-adamic",
+      "/workspace/wave29-resolution-adamic",
       "build",
       "/workspace/wave29-undef-resolution-wired/mutant-message/probe.a",
       "-o",
       "/workspace/wave29-undef-resolution-wired/mutant-message/native"
     ],
     "exit": 0,
-    "ns": 204392664
+    "ns": 164226955
   },
   {
     "name": "message",
@@ -225,19 +225,19 @@
       "/workspace/wave29-undef-resolution-wired/facts.frames"
     ],
     "exit": 0,
-    "ns": 2074659
+    "ns": 1661431
   },
   {
     "name": "positions-build",
     "args": [
-      "/workspace/wave29-b8fb-adamic",
+      "/workspace/wave29-resolution-adamic",
       "build",
       "/workspace/wave29-undef-resolution-wired/mutant-positions/probe.a",
       "-o",
       "/workspace/wave29-undef-resolution-wired/mutant-positions/native"
     ],
     "exit": 0,
-    "ns": 178460478
+    "ns": 171021328
   },
   {
     "name": "positions",
@@ -246,6 +246,6 @@
       "/workspace/wave29-undef-resolution-wired/facts.frames"
     ],
     "exit": 0,
-    "ns": 1492878
+    "ns": 1761592
   }
 ]

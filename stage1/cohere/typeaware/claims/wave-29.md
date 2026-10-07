@@ -150,3 +150,7 @@ source/option/checker controls, with seven compiling mutants caught. Existing
 79-case JSX comparisons remain green. Shared checker acquisition/registration
 still prevents a full source port; no new claim is taken. See
 [resolution report](../wave-29-fourth/rules/react-jsx-no-undef/RESOLUTION_REPORT.md).
+
+The undef follow-up is also rebased onto main 39638d9e2, retaining harness
+41eb6eab2. A rebuilt compiler re-green the 148-case resolution comparison and
+79-case JSX kernels, including all compiling mutants, after rebase. No new claim.
