@@ -10,7 +10,7 @@ import (
 
 // Register only members with real lowering and runtime support. Host units add
 // their names during init; the default is a named NotYet, never erased code.
-var implementedNodeMembers = map[string]bool{"node:console.log": true, "node:console.error": true, "node:console.console": true}
+var implementedNodeMembers = map[string]bool{"node:console.Console.log": true, "node:console.Console.error": true, "node:console.console": true}
 
 func RegisterNodeLibraryMembers(names ...string) {
 	for _, name := range names {
@@ -39,7 +39,11 @@ func (l *lowering) nodeLibraryMember(node *ast.Node) string {
 			return ""
 		}
 		module := ""
+		owners := []string{}
 		for parent := declaration.Parent; parent != nil; parent = parent.Parent {
+			if (parent.Kind == ast.KindClassDeclaration || parent.Kind == ast.KindInterfaceDeclaration) && parent.Name() != nil {
+				owners = append([]string{parent.Name().Text()}, owners...)
+			}
 			if parent.Kind == ast.KindModuleDeclaration && parent.Name() != nil && parent.Name().Kind == ast.KindStringLiteral {
 				module = parent.Name().Text()
 				break
@@ -51,7 +55,7 @@ func (l *lowering) nodeLibraryMember(node *ast.Node) string {
 		if !strings.HasPrefix(module, "node:") {
 			module = "node:" + module
 		}
-		return module + "." + symbol.Name
+		return strings.Join(append([]string{module}, append(owners, symbol.Name)...), ".")
 	}
 	return ""
 }
