@@ -1,0 +1,112 @@
+{
+  "rounds": [
+    {
+      "corpus": "compiler",
+      "round": 1,
+      "native": {
+        "seconds": 3.396640073002345,
+        "sha256": "e940d25193f84b9d9a2631c1c83d0a52a5f5b90a7246811d12445a1b08ffebcf",
+        "bytes": 4933,
+        "timing": "tsgo: load_ns=353973627 query_ns=218179764 queries=189 first_query_ns=46554 run_ns=3017877723\n"
+      },
+      "go": {
+        "seconds": 0.5188081640008022,
+        "sha256": "e940d25193f84b9d9a2631c1c83d0a52a5f5b90a7246811d12445a1b08ffebcf",
+        "bytes": 4933,
+        "timing": "cohere: load_ns=331539701 rule_ns=104957036 run_ns=167049734\n"
+      }
+    },
+    {
+      "corpus": "compiler",
+      "round": 2,
+      "go": {
+        "seconds": 0.42616820900002494,
+        "sha256": "e940d25193f84b9d9a2631c1c83d0a52a5f5b90a7246811d12445a1b08ffebcf",
+        "bytes": 4933,
+        "timing": "cohere: load_ns=330097926 rule_ns=49255165 run_ns=81132548\n"
+      },
+      "native": {
+        "seconds": 3.129016925999167,
+        "sha256": "e940d25193f84b9d9a2631c1c83d0a52a5f5b90a7246811d12445a1b08ffebcf",
+        "bytes": 4933,
+        "timing": "tsgo: load_ns=325764904 query_ns=224579440 queries=189 first_query_ns=25501 run_ns=2783024257\n"
+      }
+    },
+    {
+      "corpus": "compiler",
+      "round": 3,
+      "native": {
+        "seconds": 3.193845699999656,
+        "sha256": "e940d25193f84b9d9a2631c1c83d0a52a5f5b90a7246811d12445a1b08ffebcf",
+        "bytes": 4933,
+        "timing": "tsgo: load_ns=346376758 query_ns=222157911 queries=189 first_query_ns=36836 run_ns=2823186950\n"
+      },
+      "go": {
+        "seconds": 0.4270920290000504,
+        "sha256": "e940d25193f84b9d9a2631c1c83d0a52a5f5b90a7246811d12445a1b08ffebcf",
+        "bytes": 4933,
+        "timing": "cohere: load_ns=323573722 rule_ns=55551600 run_ns=88220441\n"
+      }
+    },
+    {
+      "corpus": "repository",
+      "round": 1,
+      "native": {
+        "seconds": 0.47687995200249134,
+        "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+        "bytes": 18485,
+        "timing": "tsgo: load_ns=109393478 query_ns=17729637 queries=404 first_query_ns=22027 run_ns=359161739\n"
+      },
+      "go": {
+        "seconds": 0.13428506199852563,
+        "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+        "bytes": 18485,
+        "timing": "cohere: load_ns=112267677 rule_ns=5551989 run_ns=13059783\n"
+      }
+    },
+    {
+      "corpus": "repository",
+      "round": 2,
+      "go": {
+        "seconds": 0.12747389699870837,
+        "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+        "bytes": 18485,
+        "timing": "cohere: load_ns=105201184 rule_ns=6468189 run_ns=14485116\n"
+      },
+      "native": {
+        "seconds": 0.4912646480006515,
+        "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+        "bytes": 18485,
+        "timing": "tsgo: load_ns=119674148 query_ns=19568529 queries=404 first_query_ns=26171 run_ns=362868255\n"
+      }
+    },
+    {
+      "corpus": "repository",
+      "round": 3,
+      "native": {
+        "seconds": 0.5140125880025153,
+        "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+        "bytes": 18485,
+        "timing": "tsgo: load_ns=124815799 query_ns=19162909 queries=404 first_query_ns=25670 run_ns=381259933\n"
+      },
+      "go": {
+        "seconds": 0.12290717599898926,
+        "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+        "bytes": 18485,
+        "timing": "cohere: load_ns=102671172 rule_ns=6014518 run_ns=12288485\n"
+      }
+    }
+  ],
+  "summary": {
+    "compiler": {
+      "native_median_seconds": 3.193845699999656,
+      "go_median_seconds": 0.4270920290000504,
+      "ratio": 7.478120599622053
+    },
+    "repository": {
+      "native_median_seconds": 0.4912646480006515,
+      "go_median_seconds": 0.12747389699870837,
+      "ratio": 3.853845058221051
+    }
+  }
+}
