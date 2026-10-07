@@ -1,0 +1,14 @@
+{
+  "name": "eqeqeq",
+  "order": 3,
+  "kinds": [
+    "BinaryExpression"
+  ],
+  "visit": "visit",
+  "oracle": "oracleEqeqeq",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestEqeqeq",
+  "factory": "create",
+  "class": "Rule",
+  "parent": false
+}

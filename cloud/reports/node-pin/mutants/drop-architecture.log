@@ -1,0 +1,13 @@
+F
+======================================================================
+FAIL: test_every_key_component (cloud.test_node_setup.NodeSetup.test_every_key_component) (component='architecture')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_node_setup.py", line 37, in test_every_key_component
+    self.assertNotEqual(before, node.installation_key(**dict(inputs, **{component: 'changed'})), component)
+AssertionError: '396212ff725fc1d79b13dcb5b1b47ca0650d3cebf880557eece82abbfd9d7fc2' == '396212ff725fc1d79b13dcb5b1b47ca0650d3cebf880557eece82abbfd9d7fc2' : architecture
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)

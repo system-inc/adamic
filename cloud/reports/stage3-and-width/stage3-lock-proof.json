@@ -1,0 +1,26 @@
+[
+  {
+    "command": [
+      "bash",
+      "cloud/setup.sh"
+    ],
+    "name": "stage3-lock-warm",
+    "lock_sha256": "d7a3ae81b884b59bf3bd617519eb6f04d3d682a83cb803429a2f6ceb9db1a079"
+  },
+  {
+    "command": [
+      "bash",
+      "cloud/setup.sh"
+    ],
+    "name": "stage3-lock-changed",
+    "lock_sha256": "3ab7270c061bed9e6bbb08140a4071c36d54017d474c79edda134ecbed626f06"
+  },
+  {
+    "command": [
+      "bash",
+      "cloud/setup.sh"
+    ],
+    "name": "stage3-lock-restored",
+    "lock_sha256": "d7a3ae81b884b59bf3bd617519eb6f04d3d682a83cb803429a2f6ceb9db1a079"
+  }
+]

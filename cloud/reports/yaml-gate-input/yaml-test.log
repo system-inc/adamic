@@ -1,0 +1,5 @@
+=== RUN   TestLexerMatchesGo
+    lexer_test.go:231: 36 repository files; 8732 complete/chunked cases; 4181796 answer bytes: Go, native, Node source, emitted JavaScript, yaml 2.9.0 identical
+--- PASS: TestLexerMatchesGo (10.03s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/yaml	10.037s

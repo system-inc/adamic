@@ -1,0 +1,13 @@
+F
+======================================================================
+FAIL: test_every_key_component (cloud.test_node_setup.NodeSetup.test_every_key_component) (component='checksum')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_node_setup.py", line 37, in test_every_key_component
+    self.assertNotEqual(before, node.installation_key(**dict(inputs, **{component: 'changed'})), component)
+AssertionError: '53fb7f306857a8dc2a483ae9b3ca1fa5b35e0eb511e1e17991fe570dede5baad' == '53fb7f306857a8dc2a483ae9b3ca1fa5b35e0eb511e1e17991fe570dede5baad' : checksum
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)

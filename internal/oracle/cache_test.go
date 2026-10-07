@@ -21,6 +21,7 @@ import (
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/nodepin"
 )
 
 // A result is evidence, not a saved verdict: ordinary fixture comparisons and counts still run.
@@ -449,6 +450,12 @@ func cacheProbe(t *testing.T, path string, program *ir.Program, external string,
 }
 
 func TestMain(main *testing.M) {
+	path, err := nodepin.Check()
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+	fmt.Fprintf(os.Stderr, "oracle: node %s at %s\n", nodepin.Version, path)
 	status := main.Run()
 	if gate.cache != nil {
 		for index, kind := range resultKinds {

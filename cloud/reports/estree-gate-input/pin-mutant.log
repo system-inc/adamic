@@ -1,0 +1,19 @@
+F
+======================================================================
+FAIL: test_shared_formatter_pins_and_integrity (tests.Inputs.test_shared_formatter_pins_and_integrity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_gate_inputs.py", line 44, in test_shared_formatter_pins_and_integrity
+    self.assertEqual(manifest['dependencies'][name], version)
+AssertionError: '6.0.2' != '6.0.3'
+- 6.0.2
+?     ^
++ 6.0.3
+?     ^
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+PASS: wrong TypeScript pin mutant caught
