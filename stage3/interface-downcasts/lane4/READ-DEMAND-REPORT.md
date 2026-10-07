@@ -1,5 +1,5 @@
 Built: explicit read-demand inventory, shared lane 3 receiver queries, and both-backend helper guards; lazy admission remains unfinished.
-Commits: ce2545e4 pushed the first table before further work; the receiver/oracle follow-up is recorded in branch history.
+Commits: ce2545e4 pushed the first table before further work; 3f3cab73 pushed the shared receiver evidence and helper oracle.
 Commands: 66,960 exact spans/12,181 pairs audit passes; helper oracle passes in 3.142s; oracle vet and diff checks pass.
 Mutants: removing the helper read guard runs valid native/JavaScript code and is caught; trusting an Unknown helper receiver is caught by the measurement audit.
 Uncovered: exact view propagation, implicit spread/rest/destructuring-assignment reads, missing-support attribution, lazy contracts, nullish/optional completion date and current-main landing.
@@ -64,6 +64,13 @@ at its read location, with the exact type message pinned. This is conservative
 compile refusal and current scalar helper-check evidence, not a lazy union pass.
 The artifact mutant sets that shared helper receiver's retain_check to false;
 the independent audit rejects it without relying on a changed aggregate count.
+
+A separate unread-unsupported.a observation proves the eager frontier rather
+than inferring it only from code. Its payload is valid and the helper reads only
+ready. Source Node prints true, but both backend compilers refuse at the cast:
+checked view field unread of type string | number. Exact outputs are in
+unread-observations.json. The observer records current behavior rather than
+making premature cast refusal a required future behavior.
 
 Current admission is eager in this branch and lane 1 9b85eada: viewObjectFields
 walks every descendant, viewContract builds all children, and a global field-name

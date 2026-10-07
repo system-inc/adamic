@@ -187,7 +187,12 @@ Observed in the current lane 4 branch and fetched lane 1 9b85eada:
 recursive `viewContract` children. Both propagate unsupported-child failures.
 There is also a whole-program scan keyed by field name, rather than reaching
 receiver identity. Supported runtime payload checks are lazy, but compile-time
-contract admission is not. An unread unsupported descendant can refuse a cast.
+contract admission is not. An unread unsupported descendant can refuse a cast. The
+`unread-unsupported.a` control reads only `ready` and has a valid unread
+`string | number` value. Source Node prints true; both backend compilers refuse
+at its cast with `checked view field unread of type string | number`.
+`unread-observations.json` pins both refusals. This is an observation of the
+current eager frontier, not a desired lazy-admission test.
 
 Required lane 1 integration: reserve unsupported/deferred child descriptors
 without admitting their payloads; cast admission checks the target tag; every
