@@ -48,3 +48,17 @@ The origin audit covered 310 refs and 27 claim/report documents, excluding
 nested evidence. No selected name occurs in main's lint source modules.
 The inventory rules array is scanned in order, excluding needs_type_information
 and binding_only entries. This update is pushed before writing code.
+
+## Fourth batch, October 7
+
+After pushing all work and fetching every origin head, claim:
+
+1. @typescript-eslint/no-unnecessary-type-constraint
+2. @typescript-eslint/no-unsafe-function-type
+3. @typescript-eslint/no-useless-empty-export
+
+All helper-ready entries are named in origin claim documents. The audit
+covered 320 refs. These are the first syntax inventory rules
+without a claim or main lint-source reference. Inventory order is retained;
+needs_type_information and binding_only entries are excluded. This update
+is pushed before implementation. Earlier reservations remain.
