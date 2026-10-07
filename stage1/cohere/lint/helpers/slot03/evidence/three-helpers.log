@@ -1,0 +1,19 @@
+=== RUN   TestSlot03HelpersMatchCohere
+    slot03_test.go:86: 1115085 name/rune verdict lines match Go, Node source and sanitized native
+--- PASS: TestSlot03HelpersMatchCohere (8.83s)
+=== RUN   TestSlot03HelperMutants
+=== RUN   TestSlot03HelperMutants/component_base_name.a
+    slot03_test.go:135: compiled semantic mutant caught at line 159: got "false" Go "true"
+=== RUN   TestSlot03HelperMutants/tailwind_space.a
+    slot03_test.go:135: compiled semantic mutant caught at line 847: got "false" Go "true"
+=== RUN   TestSlot03HelperMutants/listener_kinds.a
+    slot03_test.go:135: compiled semantic mutant caught at line 1114948: got "JsxAttribute,CallExpression,StringLiteral" Go "JsxAttribute,CallExpression,VariableDeclaration"
+=== RUN   TestSlot03HelperMutants/listener_kinds.aconst_sharedKinds:_string[]_=_['JsxAttribute',_'CallExpression',_'VariableDeclaration'];_
+    slot03_test.go:135: compiled semantic mutant caught at line 1114949: got "StringLiteral,CallExpression,VariableDeclaration" Go "JsxAttribute,CallExpression,VariableDeclaration"
+--- PASS: TestSlot03HelperMutants (10.06s)
+    --- PASS: TestSlot03HelperMutants/component_base_name.a (1.77s)
+    --- PASS: TestSlot03HelperMutants/tailwind_space.a (1.66s)
+    --- PASS: TestSlot03HelperMutants/listener_kinds.a (1.50s)
+    --- PASS: TestSlot03HelperMutants/listener_kinds.aconst_sharedKinds:_string[]_=_['JsxAttribute',_'CallExpression',_'VariableDeclaration'];_ (2.07s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot03	18.903s
