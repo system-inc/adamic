@@ -1,0 +1,43 @@
+{
+  "go": "go1.27.1",
+  "unicode": "17.0.0",
+  "transitions": 2994,
+  "sha256": "d99020a201eb4799ee9555d81ee3859ac508319c766f00cc5812f0e6f6da16c6",
+  "consumers": [
+    {
+      "rule": "@next/next/no-html-link-for-pages",
+      "files": [
+        "next/no_html_link_for_pages_test.go"
+      ],
+      "literals": 386,
+      "runes": 6560
+    },
+    {
+      "rule": "@typescript-eslint/no-empty-object-type",
+      "files": [
+        "typescript/no_empty_object_type_test.go",
+        "typescript/no_empty_object_type_corpus_test.go",
+        "typescript/no_empty_object_type_corpus_data_test.go"
+      ],
+      "literals": 448,
+      "runes": 10878
+    },
+    {
+      "rule": "no-restricted-exports",
+      "files": [
+        "core/no_restricted_exports_test.go"
+      ],
+      "literals": 483,
+      "runes": 7914
+    },
+    {
+      "rule": "no-restricted-imports",
+      "files": [
+        "core/no_restricted_imports_test.go",
+        "core/no_restricted_imports_matcher_test.go"
+      ],
+      "literals": 4438,
+      "runes": 56227
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+=== RUN   TestSimpleFold
+    fold_test.go:99: 1195698 queries, four consumer families, go1.27.1 Unicode 17.0.0, 2994 transitions
+    fold_test.go:101: /workspace/adamic/stage1/cohere/lint/helpers/from-wave1-10/fold_main.a:23:21: error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.
+        /workspace/adamic/stage1/cohere/lint/helpers/from-wave1-10/fold_main.a:4:50: error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.
+        /workspace/adamic/stage1/cohere/lint/helpers/from-wave1-10/fold_main.a:5:89: error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.
+--- FAIL: TestSimpleFold (0.37s)
+=== RUN   TestSimpleFoldMutant
+    fold_test.go:110: 1195698 queries, four consumer families, go1.27.1 Unicode 17.0.0, 2994 transitions
+    fold_test.go:128: /tmp/adamic-gate/TestSimpleFoldMutant1731012036/007/fold_main.a:23:21: error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.
+        /tmp/adamic-gate/TestSimpleFoldMutant1731012036/007/fold_main.a:4:50: error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.
+        /tmp/adamic-gate/TestSimpleFoldMutant1731012036/007/fold_main.a:5:89: error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.
+--- FAIL: TestSimpleFoldMutant (0.27s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from-wave1-10	0.642s
+FAIL

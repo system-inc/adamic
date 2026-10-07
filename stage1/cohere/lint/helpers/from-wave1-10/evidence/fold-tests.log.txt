@@ -1,0 +1,14 @@
+=== RUN   TestSimpleFold
+    fold_test.go:99: 1195698 queries, four consumer families, go1.27.1 Unicode 17.0.0, 2994 transitions
+    fold_test.go:106: runtime 0 matched 8047532 bytes
+    fold_test.go:106: runtime 1 matched 8047532 bytes
+    fold_test.go:106: runtime 2 matched 8047532 bytes
+--- PASS: TestSimpleFold (5.37s)
+=== RUN   TestSimpleFoldMutant
+    fold_test.go:110: 1195698 queries, four consumer families, go1.27.1 Unicode 17.0.0, 2994 transitions
+    fold_test.go:133: runtime 0 maximum_fold_selected compiled, exited with empty stderr, caught only by Go byte comparison
+    fold_test.go:133: runtime 1 maximum_fold_selected compiled, exited with empty stderr, caught only by Go byte comparison
+    fold_test.go:133: runtime 2 maximum_fold_selected compiled, exited with empty stderr, caught only by Go byte comparison
+--- PASS: TestSimpleFoldMutant (5.27s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from-wave1-10	10.656s

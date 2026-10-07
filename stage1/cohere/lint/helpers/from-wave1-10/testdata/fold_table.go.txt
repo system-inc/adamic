@@ -1,0 +1,7 @@
+package main
+import("encoding/json";"os";"runtime";"unicode")
+func main(){
+ from,to:=[]int{},[]int{}
+ for r:=rune(0);r<=unicode.MaxRune;r++ { next:=unicode.SimpleFold(r);if next!=r { from=append(from,int(r));to=append(to,int(next)) } }
+ if err:=json.NewEncoder(os.Stdout).Encode(map[string]any{"from":from,"to":to,"go":runtime.Version(),"unicode":unicode.Version});err!=nil{panic(err)}
+}

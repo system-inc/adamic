@@ -1,0 +1,11 @@
+package main
+import("bufio";"encoding/json";"fmt";"os";regexp "github.com/system-inc/cohere/internal/lint/ecmascript/regexp")
+func main(){
+ out:=bufio.NewWriter(os.Stdout)
+ for r:=rune(0);r<=0x110000;r++ { fmt.Fprintln(out,regexp.AdamicSimpleFold(r)) }
+ for _,r:=range []rune{-2147483648,-1048576,-1,1114113,2097151,2147483647} {fmt.Fprintln(out,regexp.AdamicSimpleFold(r))}
+ data,err:=os.ReadFile(os.Args[1]);if err!=nil{panic(err)}
+ var cases []string;if err=json.Unmarshal(data,&cases);err!=nil{panic(err)}
+ for _,s:=range cases {for _,r:=range s {fmt.Fprintln(out,regexp.AdamicSimpleFold(r))}}
+ if err=out.Flush();err!=nil{panic(err)}
+}

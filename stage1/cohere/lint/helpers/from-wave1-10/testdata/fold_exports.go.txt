@@ -1,0 +1,2 @@
+package regexp
+func AdamicSimpleFold(r rune) rune { return simpleFold(r) }
