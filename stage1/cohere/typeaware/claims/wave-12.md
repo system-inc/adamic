@@ -16,3 +16,20 @@ and repository-all.counts, sorts by descending total then lexical rule name,
 and excludes the sixteen volume-suite and ten coverage-suite ports.
 Fetched every origin branch and checked stage1 claim files and matching port
 filenames before this commit. No competing claim or port was found.
+
+## Continuation after completing the first three
+
+The first three are implemented and pushed in `6f852293`, with evidence in
+`1a1be27f`. After fetching all origin heads, these are the first three entries
+in the combined VOLUME_REPORT ranking neither ported on main/the bridge branch
+nor claimed under the claims directory on any origin branch:
+
+- `nexus/correctness-no-process-exit-after-output` (0 compiler, 0 repository).
+- `nexus/correctness-no-uncleared-race-timeout` (0 compiler, 0 repository).
+- `nexus/correctness-require-blocking-standard-streams` (0 compiler, 0 repository).
+
+The audit inspected 324 origin refs, with 98 ranking names claimed and 25
+matching port names on main/the bridge branch; 74 entries remained. Exact
+module filename checks across all origin branches found no competing ports.
+This claim update is pushed before implementation. Existing shared harness and
+registration generator files will not be edited.
