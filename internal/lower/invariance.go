@@ -96,6 +96,14 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 	if len(fromSignatures) > 0 && len(toSignatures) > 0 {
 		// A function seen as another is handed the other's arguments, and its results are seen as
 		// the other's: each a view of its own.
+		if l.censusNeverRestSignature(toSignatures[0]) {
+			source := l.checker.GetReturnTypeOfSignature(fromSignatures[0])
+			target := l.checker.GetReturnTypeOfSignature(toSignatures[0])
+			if !l.checker.IsTypeAssignableTo(source, target) {
+				return &widening{source: source, target: target}
+			}
+			return l.widened(source, target, visited)
+		}
 		fromParameters, toParameters := fromSignatures[0].Parameters(), toSignatures[0].Parameters()
 		for index := 0; index < len(fromParameters) && index < len(toParameters); index++ {
 			takes, given := l.censusCallableParameterType(fromParameters[index]), l.censusCallableParameterType(toParameters[index])

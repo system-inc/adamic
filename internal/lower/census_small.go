@@ -337,3 +337,26 @@ func censusCondition(value ir.Expression) ir.Expression {
 	}
 	return ir.NumberCall{Function: "toBoolean", Arguments: []ir.Expression{value}}
 }
+
+// A never-rest signature is an erased callable marker. No ordinary argument can
+// inhabit its rest element; storage compares results without pairing parameters.
+func (l *lowering) censusNeverRestSignature(signature *checker.Signature) bool {
+	parameters := signature.Parameters()
+	if len(parameters) != 1 {
+		return false
+	}
+	rest := false
+	for _, declaration := range parameters[0].Declarations {
+		if declaration.Kind == ast.KindParameter && declaration.AsParameterDeclaration().DotDotDotToken != nil {
+			rest = true
+		}
+	}
+	if !rest {
+		return false
+	}
+	parameter := l.concrete(l.checker.GetTypeOfSymbol(parameters[0]))
+	if l.checker.IsArrayType(parameter) {
+		parameter = l.checker.GetElementTypeOfArrayType(parameter)
+	}
+	return parameter.Flags()&checker.TypeFlagsNever != 0
+}
