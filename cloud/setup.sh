@@ -12,7 +12,9 @@
 # Nothing here is needed on a Mac: Xcode's clang and leaks already do this job there.
 set -euo pipefail
 
-repository=$(cd "$(timeout --verbose --kill-after=1s 30 dirname "$0")/.." && pwd)
+scriptDirectory=${BASH_SOURCE[0]%/*}
+[ "$scriptDirectory" != "${BASH_SOURCE[0]}" ] || scriptDirectory=.
+repository=$(cd -- "$scriptDirectory/.." && pwd)
 # shellcheck source=../internal/boundedrun/shell.sh
 source "$repository/internal/boundedrun/shell.sh"
 # Even local utility children get a bound; a network filesystem can stall them.
@@ -141,10 +143,17 @@ step "submodules ready"
 
 # Downloads and the sanitizer check do not need each other's results. Build only after all
 # have succeeded; wait for every child even when one fails, so no installer outlives setup.
-prepareGo & goProcess=$!
-prepareClang & clangProcess=$!
-prepareNode & nodeProcess=$!
-prepareSubmodules & submoduleProcess=$!
+# Bound the preparation shells as well as their individual children. Observed
+# complete setup was 32.8s; 30m also allows cold downloads and toolchain work.
+export started repository tools gate run markdownDependencies goArchitecture nodeArchitecture llvmArchitecture ADAMIC_BOUNDED_REPORT
+export -f bounded step prepareGo prepareClang prepareNode prepareSubmodules
+for boundedTool in cat awk mkdir install mktemp realpath uname ls sort dirname ln mv grep nproc sha256sum cut head; do
+ export -f "$boundedTool"
+done
+bounded 1800 bash -c "set -euo pipefail; prepareGo" & goProcess=$!
+bounded 1800 bash -c "set -euo pipefail; prepareClang" & clangProcess=$!
+bounded 1800 bash -c "set -euo pipefail; prepareNode" & nodeProcess=$!
+bounded 1800 bash -c "set -euo pipefail; prepareSubmodules" & submoduleProcess=$!
 failed=0
 for process in "$goProcess" "$clangProcess" "$nodeProcess" "$submoduleProcess"; do
 	wait "$process" || failed=1

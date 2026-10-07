@@ -15,9 +15,22 @@ bounded() {
   whole=${cap%%.*}
   if (( 10#$whole < limit )); then limit=$cap; fi
  fi
- timeout --kill-after=1s "$limit" "$@" || status=$?
- if [ "$status" = 124 ] || [ "$status" = 137 ]; then
-  echo "child $1: deadline ${limit} exceeded; process group killed" >&"$ADAMIC_BOUNDED_REPORT"
- fi
+ # Keep the timeout leader alive after TERM. GNU timeout otherwise cancels
+ # --kill-after when that leader exits, orphaning TERM-ignoring grandchildren.
+ # Explicit stdin inheritance preserves tar and other pipeline consumers.
+ timeout --kill-after=1s "$limit" bash -c '
+  limit=$1 report=$2
+  shift 2
+  expired=0
+  child_name=$1
+  on_deadline() { expired=1; printf "child %s: deadline %s exceeded; killing process group\n" "$child_name" "$limit" >&"$report"; }
+  trap on_deadline TERM
+  command "$@" <&0 & child=$!
+  wait "$child"; status=$?
+  if [ "$expired" = 1 ]; then
+   while :; do sleep 1; done
+  fi
+  exit "$status"
+ ' bounded-child "$limit" "$ADAMIC_BOUNDED_REPORT" "$@" || status=$?
  return "$status"
 }
