@@ -1,0 +1,20 @@
+import type { Rules } from './rules.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { CoreReferences } from './core_references.a';
+const message = "This calls `new %s()`. %s is a function that returns a primitive and throws a TypeError when constructed, so this line fails at runtime every time it is reached. Call it without `new`.";
+export class NoNewNativeNonconstructor {
+    readonly rules: Rules;
+    readonly references: CoreReferences;
+    constructor(rules: Rules, references: CoreReferences) { this.rules = rules; this.references = references; }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            const node = this.rules.parser.node(index);
+            if(node.kind !== 'NewExpression') { continue; }
+            const calleeIndex = node.children[0] ?? -1;
+            const callee = this.rules.parser.node(calleeIndex);
+            const name = callee.text;
+            if(callee.kind !== 'Identifier' || !["Symbol", "BigInt"].includes(name) || !this.references.global(calleeIndex)) { continue; }
+            this.rules.findings.push(new Diagnostic('no-new-native-nonconstructor', 'noNewNativeNonconstructor', message.replace('%s', name).replace('%s', name), this.rules.byte(this.rules.start(callee)), this.rules.byte(callee.end), ''));
+        }
+    }
+}
