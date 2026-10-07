@@ -1,0 +1,1722 @@
+--- FAIL: TestJSONDecodeValidationMutants (0.00s)
+    library_json_decode_mutant_test.go:81: open ../../internal/native/runtime/json_decode.c: no such file or directory
+--- FAIL: TestJSONDecodeParserMutants (0.00s)
+    library_json_decode_mutant_test.go:137: open ../../internal/native/runtime/json_decode.c: no such file or directory
+--- FAIL: TestJSONDecodeErrorLeakMutant (0.00s)
+    library_json_decode_mutant_test.go:174: open ../../internal/native/runtime/json_decode.c: no such file or directory
+--- FAIL: TestJSONDecodeFieldPresenceMutants (0.00s)
+    library_json_decode_mutant_test.go:207: open ../../internal/native/runtime/json_decode.c: no such file or directory
+--- FAIL: TestJSONDecodeEmptyFieldsMutant (0.00s)
+    --- FAIL: TestJSONDecodeEmptyFieldsMutant/json_decode_empty_tuple.a (0.00s)
+        library_json_decode_mutant_test.go:258: Load: load: no file at /internal/oracle/testdata/json_decode_empty_tuple.a
+    --- FAIL: TestJSONDecodeEmptyFieldsMutant/json_decode_empty_object.a (0.00s)
+        library_json_decode_mutant_test.go:258: Load: load: no file at /internal/oracle/testdata/json_decode_empty_object.a
+--- FAIL: TestJSONDecode (0.00s)
+    --- FAIL: TestJSONDecode/json_decode_coverage_arrays.a (0.00s)
+        library_json_decode_test.go:32: Load: load: no file at /internal/oracle/testdata/json_decode_coverage_arrays.a
+    --- FAIL: TestJSONDecode/json_decode_coverage_shapes.a (0.00s)
+        library_json_decode_test.go:32: Load: load: no file at /internal/oracle/testdata/json_decode_coverage_shapes.a
+    --- FAIL: TestJSONDecode/json_decode_coverage_depth_extra.a (0.00s)
+        library_json_decode_test.go:32: Load: load: no file at /internal/oracle/testdata/json_decode_coverage_depth_extra.a
+    --- FAIL: TestJSONDecode/json_decode_coverage_unicode_tag.a (0.00s)
+        library_json_decode_test.go:32: Load: load: no file at /internal/oracle/testdata/json_decode_coverage_unicode_tag.a
+    --- FAIL: TestJSONDecode/json_decode_coverage_nested.a (0.00s)
+        library_json_decode_test.go:32: Load: load: no file at /internal/oracle/testdata/json_decode_coverage_nested.a
+    --- FAIL: TestJSONDecode/json_decode_coverage_grammar.a (0.00s)
+        library_json_decode_test.go:32: Load: load: no file at /internal/oracle/testdata/json_decode_coverage_grammar.a
+    --- FAIL: TestJSONDecode/json_decode_coverage_unions.a (0.00s)
+        library_json_decode_test.go:32: Load: load: no file at /internal/oracle/testdata/json_decode_coverage_unions.a
+    --- FAIL: TestJSONDecode/json_decode_coverage_tags.a (0.00s)
+        library_json_decode_test.go:32: Load: load: no file at /internal/oracle/testdata/json_decode_coverage_tags.a
+    --- FAIL: TestJSONDecode/json_decode_coverage_layouts.a (0.00s)
+        library_json_decode_test.go:32: Load: load: no file at /internal/oracle/testdata/json_decode_coverage_layouts.a
+    --- FAIL: TestJSONDecode/json_decode_coverage_empty.a (0.00s)
+        library_json_decode_test.go:32: Load: load: no file at /internal/oracle/testdata/json_decode_coverage_empty.a
+    --- FAIL: TestJSONDecode/json_decode_coverage_calls.a (0.00s)
+        library_json_decode_test.go:32: Load: load: no file at /internal/oracle/testdata/json_decode_coverage_calls.a
+    --- FAIL: TestJSONDecode/json_decode_coverage_object_scalar.a (0.00s)
+        library_json_decode_test.go:32: Load: load: no file at /internal/oracle/testdata/json_decode_coverage_object_scalar.a
+    --- FAIL: TestJSONDecode/json_decode_supplement.a (0.00s)
+        library_json_decode_test.go:32: Load: load: no file at /internal/oracle/testdata/json_decode_supplement.a
+    --- FAIL: TestJSONDecode/json_decode_scalars.a (0.00s)
+        library_json_decode_test.go:32: Load: load: no file at /internal/oracle/testdata/json_decode_scalars.a
+    --- FAIL: TestJSONDecode/json_decode_objects.a (0.00s)
+        library_json_decode_test.go:32: Load: load: no file at /internal/oracle/testdata/json_decode_objects.a
+    --- FAIL: TestJSONDecode/json_decode_grammar.a (0.00s)
+        library_json_decode_test.go:32: Load: load: no file at /internal/oracle/testdata/json_decode_grammar.a
+    --- FAIL: TestJSONDecode/json_decode_depth.a (0.00s)
+        library_json_decode_test.go:32: Load: load: no file at /internal/oracle/testdata/json_decode_depth.a
+    --- FAIL: TestJSONDecode/json_decode_empty_tuple.a (0.00s)
+        library_json_decode_test.go:32: Load: load: no file at /internal/oracle/testdata/json_decode_empty_tuple.a
+    --- FAIL: TestJSONDecode/json_decode_empty_object.a (0.00s)
+        library_json_decode_test.go:32: Load: load: no file at /internal/oracle/testdata/json_decode_empty_object.a
+--- FAIL: TestJSONEncodeNativeMutants (0.00s)
+    library_json_encode_mutant_test.go:18: open ../../internal/native/runtime/json_encode.c: no such file or directory
+--- FAIL: TestJSONEncodePlainStringifyMutant (0.00s)
+    library_json_encode_mutant_test.go:69: Load: load: no file at /internal/oracle/testdata/json_encode_differences.a
+--- FAIL: TestJSONEncodeNativeStringMetadata (0.00s)
+    library_json_encode_mutant_test.go:95: open ../../internal/native/runtime/json_encode.c: no such file or directory
+--- FAIL: TestJSONEncode (0.00s)
+    --- FAIL: TestJSONEncode/json_encode_scalars.a (0.00s)
+        library_json_encode_test.go:34: Load: load: no file at /internal/oracle/testdata/json_encode_scalars.a
+    --- FAIL: TestJSONEncode/json_encode_objects.a (0.00s)
+        library_json_encode_test.go:34: Load: load: no file at /internal/oracle/testdata/json_encode_objects.a
+    --- FAIL: TestJSONEncode/json_encode_unions.a (0.00s)
+        library_json_encode_test.go:34: Load: load: no file at /internal/oracle/testdata/json_encode_unions.a
+    --- FAIL: TestJSONEncode/json_encode_differences.a (0.00s)
+        library_json_encode_test.go:34: Load: load: no file at /internal/oracle/testdata/json_encode_differences.a
+    --- FAIL: TestJSONEncode/json_encode_depth.a (0.00s)
+        library_json_encode_test.go:34: Load: load: no file at /internal/oracle/testdata/json_encode_depth.a
+--- FAIL: TestJSONEncodeRefusals (0.30s)
+    --- FAIL: TestJSONEncodeRefusals/class (0.00s)
+        library_json_encode_test.go:74: open ../../internal/oracle/testdata/json_encode_class_notyet.a: no such file or directory
+--- FAIL: TestJSONEncodeStringifyWitness (0.00s)
+    --- FAIL: TestJSONEncodeStringifyWitness/json_encode_scalars.a (0.00s)
+        library_json_encode_test.go:142: load: no file at /internal/oracle/testdata/json_encode_scalars.a
+    --- FAIL: TestJSONEncodeStringifyWitness/json_encode_objects.a (0.00s)
+        library_json_encode_test.go:142: load: no file at /internal/oracle/testdata/json_encode_objects.a
+    --- FAIL: TestJSONEncodeStringifyWitness/json_encode_unions.a (0.00s)
+        library_json_encode_test.go:142: load: no file at /internal/oracle/testdata/json_encode_unions.a
+    --- FAIL: TestJSONEncodeStringifyWitness/json_encode_depth.a (0.00s)
+        library_json_encode_test.go:142: load: no file at /internal/oracle/testdata/json_encode_depth.a
+--- FAIL: TestJSONEncodePinnedDifferences (0.00s)
+    library_json_encode_test.go:163: load: no file at /internal/oracle/testdata/json_encode_differences.a
+--- FAIL: TestJSONEncodeNonfinitePinned (0.05s)
+    library_json_encode_test.go:196: open ../../internal/native/native.go: no such file or directory
+--- FAIL: TestLibraryMapSetIteratorCopiesRefused (0.00s)
+    --- FAIL: TestLibraryMapSetIteratorCopiesRefused/map_keys_spread (0.00s)
+        library_map_set_iterator_test.go:33: open ../../internal/native/native.go: no such file or directory
+    --- FAIL: TestLibraryMapSetIteratorCopiesRefused/map_keys_assign (0.00s)
+        library_map_set_iterator_test.go:33: open ../../internal/native/native.go: no such file or directory
+    --- FAIL: TestLibraryMapSetIteratorCopiesRefused/map_values_spread (0.00s)
+        library_map_set_iterator_test.go:33: open ../../internal/native/native.go: no such file or directory
+    --- FAIL: TestLibraryMapSetIteratorCopiesRefused/map_values_assign (0.00s)
+        library_map_set_iterator_test.go:33: open ../../internal/native/native.go: no such file or directory
+    --- FAIL: TestLibraryMapSetIteratorCopiesRefused/map_entries_spread (0.00s)
+        library_map_set_iterator_test.go:33: open ../../internal/native/native.go: no such file or directory
+    --- FAIL: TestLibraryMapSetIteratorCopiesRefused/map_entries_assign (0.00s)
+        library_map_set_iterator_test.go:33: open ../../internal/native/native.go: no such file or directory
+    --- FAIL: TestLibraryMapSetIteratorCopiesRefused/set_keys_spread (0.00s)
+        library_map_set_iterator_test.go:33: open ../../internal/native/native.go: no such file or directory
+    --- FAIL: TestLibraryMapSetIteratorCopiesRefused/set_keys_assign (0.00s)
+        library_map_set_iterator_test.go:33: open ../../internal/native/native.go: no such file or directory
+    --- FAIL: TestLibraryMapSetIteratorCopiesRefused/set_values_spread (0.00s)
+        library_map_set_iterator_test.go:33: open ../../internal/native/native.go: no such file or directory
+    --- FAIL: TestLibraryMapSetIteratorCopiesRefused/set_values_assign (0.00s)
+        library_map_set_iterator_test.go:33: open ../../internal/native/native.go: no such file or directory
+    --- FAIL: TestLibraryMapSetIteratorCopiesRefused/set_entries_spread (0.00s)
+        library_map_set_iterator_test.go:33: open ../../internal/native/native.go: no such file or directory
+    --- FAIL: TestLibraryMapSetIteratorCopiesRefused/set_entries_assign (0.00s)
+        library_map_set_iterator_test.go:33: open ../../internal/native/native.go: no such file or directory
+--- FAIL: TestLibraryMapSetMutants (0.00s)
+    --- FAIL: TestLibraryMapSetMutants/union (0.00s)
+        library_map_set_test.go:35: Load: load: no file at /internal/oracle/testdata/library_map_set.a
+    --- FAIL: TestLibraryMapSetMutants/groupBy (0.00s)
+        library_map_set_test.go:35: Load: load: no file at /internal/oracle/testdata/library_map_set_group_by.a
+    --- FAIL: TestLibraryMapSetMutants/size (0.00s)
+        library_map_set_test.go:35: Load: load: no file at /internal/oracle/testdata/library_map_set_keys.a
+    --- FAIL: TestLibraryMapSetMutants/forEach (0.00s)
+        library_map_set_test.go:35: Load: load: no file at /internal/oracle/testdata/library_map_set_construct.a
+    --- FAIL: TestLibraryMapSetMutants/constructors (0.00s)
+        library_map_set_test.go:35: Load: load: no file at /internal/oracle/testdata/library_map_set_construct.a
+    --- FAIL: TestLibraryMapSetMutants/iterators (0.00s)
+        library_map_set_test.go:35: Load: load: no file at /internal/oracle/testdata/library_map_set_iterators.a
+    --- FAIL: TestLibraryMapSetMutants/keys (0.00s)
+        library_map_set_test.go:35: Load: load: no file at /internal/oracle/testdata/library_map_set_keys.a
+    --- FAIL: TestLibraryMapSetMutants/isDisjointFrom (0.00s)
+        library_map_set_test.go:35: Load: load: no file at /internal/oracle/testdata/library_map_set.a
+    --- FAIL: TestLibraryMapSetMutants/isSupersetOf (0.00s)
+        library_map_set_test.go:35: Load: load: no file at /internal/oracle/testdata/library_map_set.a
+    --- FAIL: TestLibraryMapSetMutants/isSubsetOf (0.00s)
+        library_map_set_test.go:35: Load: load: no file at /internal/oracle/testdata/library_map_set.a
+    --- FAIL: TestLibraryMapSetMutants/symmetricDifference (0.00s)
+        library_map_set_test.go:35: Load: load: no file at /internal/oracle/testdata/library_map_set.a
+    --- FAIL: TestLibraryMapSetMutants/difference (0.00s)
+        library_map_set_test.go:35: Load: load: no file at /internal/oracle/testdata/library_map_set.a
+    --- FAIL: TestLibraryMapSetMutants/intersection (0.00s)
+        library_map_set_test.go:35: Load: load: no file at /internal/oracle/testdata/library_map_set.a
+--- FAIL: TestLiteralOptionalOracleCatchesMutant (0.00s)
+    literal_optional_test.go:29: Load: load: no file at /internal/oracle/testdata/e4eec87_u02_optional_absent.a
+--- FAIL: TestLiteralUndefinedOracleCatchesMutant (0.00s)
+    --- FAIL: TestLiteralUndefinedOracleCatchesMutant/e4eec87_u03_discriminated_undefined.a (0.00s)
+        literal_undefined_test.go:33: Load: load: no file at /internal/oracle/testdata/e4eec87_u03_discriminated_undefined.a
+    --- FAIL: TestLiteralUndefinedOracleCatchesMutant/e4eec87_u01_undefined_field_widened.a (0.00s)
+        literal_undefined_test.go:33: Load: load: no file at /internal/oracle/testdata/e4eec87_u01_undefined_field_widened.a
+--- FAIL: TestOct6InheritanceMutants (0.00s)
+    --- FAIL: TestOct6InheritanceMutants/forget_override_inherited_past_second_level (0.00s)
+        oct6_mutant_test.go:62: Load: load: no file at /internal/oracle/testdata/class_oct6_deep.a
+    --- FAIL: TestOct6InheritanceMutants/lose_fourth_level_ancestry (0.00s)
+        oct6_mutant_test.go:62: Load: load: no file at /internal/oracle/testdata/class_oct6_deep.a
+--- FAIL: TestArrayWithBoundsMutant (0.00s)
+    library_array_mutant_test.go:135: Load: load: no file at /internal/oracle/testdata/library_array_with.a
+--- FAIL: TestFreshWriteProbesStayRefused (0.00s)
+    fresh_test.go:26: found only 0 probes
+--- FAIL: TestJSONStringifyOracleCatchesKeyOrder (0.07s)
+    oracle_test.go:485: open ../../internal/native/native.go: no such file or directory
+--- FAIL: TestAPromptComesBeforeTheRead (0.00s)
+    output_test.go:233: open ../../internal/native/native.go: no such file or directory
+--- FAIL: TestClosedStdoutEndsAsOnNode (0.00s)
+    --- FAIL: TestClosedStdoutEndsAsOnNode/internal/oracle/testdata/large_output.a (0.00s)
+        output_test.go:131: open ../../internal/native/native.go: no such file or directory
+    --- FAIL: TestClosedStdoutEndsAsOnNode/internal/oracle/testdata/interleaved.a (0.00s)
+        output_test.go:131: open ../../internal/native/native.go: no such file or directory
+    --- FAIL: TestClosedStdoutEndsAsOnNode/internal/oracle/testdata/output_then_panic.a (0.00s)
+        output_test.go:131: open ../../internal/native/native.go: no such file or directory
+--- FAIL: TestTheOracleCatchesOneByte (0.00s)
+    oracle_test.go:648: Load: load: no file at /dedication/dedication.a
+--- FAIL: TestOct6ReleaseMutant (0.00s)
+    oct6_mutant_test.go:88: Load: load: no file at /internal/oracle/testdata/class_oct6_release.a
+--- FAIL: TestWeakReadsUndefinedOnceFreed (0.00s)
+    --- FAIL: TestWeakReadsUndefinedOnceFreed/internal/oracle/testdata/weak/freed.a (0.00s)
+        weak_test.go:46: Load: load: no file at /internal/oracle/testdata/weak/freed.a
+    --- FAIL: TestWeakReadsUndefinedOnceFreed/internal/oracle/testdata/weak/narrowed.a (0.00s)
+        weak_test.go:46: Load: load: no file at /internal/oracle/testdata/weak/narrowed.a
+    --- FAIL: TestWeakReadsUndefinedOnceFreed/internal/oracle/testdata/weak/reuse.a (0.00s)
+        weak_test.go:46: Load: load: no file at /internal/oracle/testdata/weak/reuse.a
+    --- FAIL: TestWeakReadsUndefinedOnceFreed/internal/oracle/testdata/weak/probe_chain.a (0.00s)
+        weak_test.go:46: Load: load: no file at /internal/oracle/testdata/weak/probe_chain.a
+--- FAIL: TestMathNumberOracleCatchesMutants (0.00s)
+    --- FAIL: TestMathNumberOracleCatchesMutants/clz32 (0.00s)
+        library_math_number_test.go:31: Load: load: no file at /internal/oracle/testdata/library_math_number_math.a
+    --- FAIL: TestMathNumberOracleCatchesMutants/prototype (0.00s)
+        library_math_number_test.go:31: Load: load: no file at /internal/oracle/testdata/library_math_number_prototype.a
+    --- FAIL: TestMathNumberOracleCatchesMutants/own_property (0.00s)
+        library_math_number_test.go:31: Load: load: no file at /internal/oracle/testdata/library_math_number_convert.a
+    --- FAIL: TestMathNumberOracleCatchesMutants/conversion (0.00s)
+        library_math_number_test.go:31: Load: load: no file at /internal/oracle/testdata/library_math_number_convert.a
+    --- FAIL: TestMathNumberOracleCatchesMutants/constants (0.00s)
+        library_math_number_test.go:31: Load: load: no file at /internal/oracle/testdata/library_math_number_math.a
+    --- FAIL: TestMathNumberOracleCatchesMutants/imul (0.00s)
+        library_math_number_test.go:31: Load: load: no file at /internal/oracle/testdata/library_math_number_math.a
+    --- FAIL: TestMathNumberOracleCatchesMutants/fround (0.00s)
+        library_math_number_test.go:31: Load: load: no file at /internal/oracle/testdata/library_math_number_math.a
+--- FAIL: TestASignalLeavesWhatWasPrinted (0.00s)
+    --- FAIL: TestASignalLeavesWhatWasPrinted/terminated (0.00s)
+        output_test.go:299: open ../../internal/native/native.go: no such file or directory
+    --- FAIL: TestASignalLeavesWhatWasPrinted/hangup (0.00s)
+        output_test.go:299: open ../../internal/native/native.go: no such file or directory
+    --- FAIL: TestASignalLeavesWhatWasPrinted/interrupt (0.00s)
+        output_test.go:299: open ../../internal/native/native.go: no such file or directory
+--- FAIL: TestLibraryStringMutants (0.00s)
+    --- FAIL: TestLibraryStringMutants/conversion (0.00s)
+        library_string_test.go:28: Load: load: no file at /internal/oracle/testdata/library_string_conversion.a
+    --- FAIL: TestLibraryStringMutants/raw (0.00s)
+        library_string_test.go:28: Load: load: no file at /internal/oracle/testdata/library_string_raw.a
+    --- FAIL: TestLibraryStringMutants/replace (0.00s)
+        library_string_test.go:28: Load: load: no file at /internal/oracle/testdata/library_string_existing.a
+    --- FAIL: TestLibraryStringMutants/normalize (0.00s)
+        library_string_test.go:28: Load: load: no file at /internal/oracle/testdata/library_string_existing.a
+    --- FAIL: TestLibraryStringMutants/fromCharCode (0.00s)
+        library_string_test.go:28: Load: load: no file at /internal/oracle/testdata/library_string_existing.a
+    --- FAIL: TestLibraryStringMutants/concat (0.00s)
+        library_string_test.go:28: Load: load: no file at /internal/oracle/testdata/library_string_indices.a
+    --- FAIL: TestLibraryStringMutants/substring (0.00s)
+        library_string_test.go:28: Load: load: no file at /internal/oracle/testdata/library_string_indices.a
+    --- FAIL: TestLibraryStringMutants/codePointAt (0.00s)
+        library_string_test.go:28: Load: load: no file at /internal/oracle/testdata/library_string_indices.a
+    --- FAIL: TestLibraryStringMutants/at (0.00s)
+        library_string_test.go:28: Load: load: no file at /internal/oracle/testdata/library_string_indices.a
+    --- FAIL: TestLibraryStringMutants/charAt (0.00s)
+        library_string_test.go:28: Load: load: no file at /internal/oracle/testdata/library_string_indices.a
+    --- FAIL: TestLibraryStringMutants/prototype (0.00s)
+        library_string_test.go:28: Load: load: no file at /internal/oracle/testdata/library_string_prototype.a
+    --- FAIL: TestLibraryStringMutants/rawTemplate (0.00s)
+        library_string_test.go:28: Load: load: no file at /internal/oracle/testdata/library_string_raw.a
+--- FAIL: TestArrayFamilyMutants (0.00s)
+    --- FAIL: TestArrayFamilyMutants/iterator_index (0.00s)
+        library_array_mutant_test.go:65: Load: load: no file at /internal/oracle/testdata/library_array_iterators.a
+    --- FAIL: TestArrayFamilyMutants/reverse_callback_order (0.00s)
+        library_array_mutant_test.go:65: Load: load: no file at /internal/oracle/testdata/library_array_find_last.a
+    --- FAIL: TestArrayFamilyMutants/default_sort_ordering (0.00s)
+        library_array_mutant_test.go:65: Load: load: no file at /internal/oracle/testdata/library_array_copy.a
+    --- FAIL: TestArrayFamilyMutants/copy_reversal (0.00s)
+        library_array_mutant_test.go:65: Load: load: no file at /internal/oracle/testdata/library_array_copy.a
+    --- FAIL: TestArrayFamilyMutants/search_direction (0.00s)
+        library_array_mutant_test.go:65: Load: load: no file at /internal/oracle/testdata/library_array_search.a
+    --- FAIL: TestArrayFamilyMutants/copyWithin_write (0.00s)
+        library_array_mutant_test.go:65: Load: load: no file at /internal/oracle/testdata/library_array_copy_within.a
+    --- FAIL: TestArrayFamilyMutants/flat_order (0.00s)
+        library_array_mutant_test.go:65: Load: load: no file at /internal/oracle/testdata/library_array_flat.a
+    --- FAIL: TestArrayFamilyMutants/spliced_copy (0.00s)
+        library_array_mutant_test.go:65: Load: load: no file at /internal/oracle/testdata/library_array_spliced.a
+    --- FAIL: TestArrayFamilyMutants/flatMap_order (0.00s)
+        library_array_mutant_test.go:65: Load: load: no file at /internal/oracle/testdata/library_array_flat_map.a
+    --- FAIL: TestArrayFamilyMutants/with_replacement (0.00s)
+        library_array_mutant_test.go:65: Load: load: no file at /internal/oracle/testdata/library_array_with.a
+    --- FAIL: TestArrayFamilyMutants/method_metadata (0.00s)
+        library_array_mutant_test.go:65: Load: load: no file at /internal/oracle/testdata/library_array_metadata.a
+    --- FAIL: TestArrayFamilyMutants/join_separator (0.00s)
+        library_array_mutant_test.go:65: Load: load: no file at /internal/oracle/testdata/library_array_join.a
+--- FAIL: TestInputAgreesWithNode (0.00s)
+    --- FAIL: TestInputAgreesWithNode/internal/oracle/testdata/read_files.a (0.00s)
+        input_test.go:110: lstat ../../internal/oracle/testdata/reading: no such file or directory
+    --- FAIL: TestInputAgreesWithNode/internal/oracle/testdata/walk.a (0.00s)
+        input_test.go:110: lstat ../../internal/oracle/testdata/reading: no such file or directory
+    --- FAIL: TestInputAgreesWithNode/internal/oracle/testdata/write_files.a (0.00s)
+        input_test.go:110: lstat ../../internal/oracle/testdata/reading: no such file or directory
+    --- FAIL: TestInputAgreesWithNode/internal/oracle/testdata/read_arguments.a (0.00s)
+        input_test.go:110: lstat ../../internal/oracle/testdata/reading: no such file or directory
+    --- FAIL: TestInputAgreesWithNode/internal/oracle/testdata/arguments.a (0.00s)
+        input_test.go:110: lstat ../../internal/oracle/testdata/reading: no such file or directory
+    --- FAIL: TestInputAgreesWithNode/internal/oracle/testdata/utf8_sweep.a (0.00s)
+        input_test.go:110: lstat ../../internal/oracle/testdata/reading: no such file or directory
+--- FAIL: TestSmallStacksStillPanic (0.00s)
+    --- FAIL: TestSmallStacksStillPanic/1024_KiB (0.00s)
+        stack_test.go:102: open ../../internal/native/native.go: no such file or directory
+    --- FAIL: TestSmallStacksStillPanic/256_KiB (0.00s)
+        stack_test.go:102: open ../../internal/native/native.go: no such file or directory
+    --- FAIL: TestSmallStacksStillPanic/512_KiB (0.00s)
+        stack_test.go:102: open ../../internal/native/native.go: no such file or directory
+--- FAIL: TestLongArgumentsLeaveTheStackItsLimit (0.00s)
+    --- FAIL: TestLongArgumentsLeaveTheStackItsLimit/arguments (0.00s)
+        stack_test.go:36: open ../../internal/native/native.go: no such file or directory
+    --- FAIL: TestLongArgumentsLeaveTheStackItsLimit/environment (0.00s)
+        stack_test.go:36: open ../../internal/native/native.go: no such file or directory
+    --- FAIL: TestLongArgumentsLeaveTheStackItsLimit/arguments_alone (0.00s)
+        stack_test.go:36: open ../../internal/native/native.go: no such file or directory
+--- FAIL: TestFileWritesLandInNodesOrder (0.00s)
+    --- FAIL: TestFileWritesLandInNodesOrder/internal/oracle/testdata/write_stdout_order.a (0.00s)
+        output_test.go:208: open ../../internal/native/native.go: no such file or directory
+    --- FAIL: TestFileWritesLandInNodesOrder/internal/oracle/testdata/write_stderr_order.a (0.00s)
+        output_test.go:208: open ../../internal/native/native.go: no such file or directory
+--- FAIL: TestOneFileHoldsNodesOrder (0.00s)
+    --- FAIL: TestOneFileHoldsNodesOrder/internal/oracle/testdata/interleaved.a (0.00s)
+        output_test.go:83: open ../../internal/native/native.go: no such file or directory
+    --- FAIL: TestOneFileHoldsNodesOrder/internal/oracle/testdata/status_of_stdout.a (0.00s)
+        output_test.go:83: open ../../internal/native/native.go: no such file or directory
+--- FAIL: TestNativeAgreesWithNode (0.02s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/call_targets_element.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/call_targets_element.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/gaps.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/gaps.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/collections.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/collections.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/prompt_then_read.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/prompt_then_read.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/write_stderr_order.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/write_stderr_order.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/write_stdout_order.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/write_stdout_order.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/replace_all_large.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/replace_all_large.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/concat_too_long.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/concat_too_long.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/optional_strings.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/optional_strings.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/stack_forever.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/stack_forever.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/stack_tail_call.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/stack_tail_call.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/maybe_collections.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/maybe_collections.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_group_by.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_map_set_group_by.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_construct.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_map_set_construct.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_iterators.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_map_set_iterators.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_keys.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_map_set_keys.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_map_set.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/set_maybe_numbers.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/set_maybe_numbers.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/sets.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/sets.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/trig_reduction.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/trig_reduction.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/interleaved.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/interleaved.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/output_then_panic.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/output_then_panic.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/large_output.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/large_output.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/lent_reads.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/lent_reads.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/spread_undefined.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/spread_undefined.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/throw_global_move.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/throw_global_move.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/throw_in_writes.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/throw_in_writes.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/throw_keeps_old_value_variants.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/throw_keeps_old_value_variants.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/throw_keeps_old_value.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/throw_keeps_old_value.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/move_throw.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/move_throw.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/borrow_element_super_move.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/borrow_element_super_move.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/borrow_element_virtual_move.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/borrow_element_virtual_move.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/borrow_element_virtual_store.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/borrow_element_virtual_store.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/borrow_element_throw.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/borrow_element_throw.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/borrow_element.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/borrow_element.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/regions_constructor_capture.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/regions_constructor_capture.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/regions_throw.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/regions_throw.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/regions.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/regions.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/reuse_weak_after_reuse.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/reuse_weak_after_reuse.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/reuse_weak_during_spread.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/reuse_weak_during_spread.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/reuse_global_sibling.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/reuse_global_sibling.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/reuse_forward.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/reuse_forward.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/reuse_arrays.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/reuse_arrays.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/reuse.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/reuse.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/spread_snapshot.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/spread_snapshot.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/borrow_map_overwrite.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/borrow_map_overwrite.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/set_undefined.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/set_undefined.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/optional_class_method.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/optional_class_method.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/class_as_interface.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/class_as_interface.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/writes_in_try.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/writes_in_try.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/borrow_defined_lent_field.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/borrow_defined_lent_field.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/borrow_defined_lent.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/borrow_defined_lent.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/borrow_reassigned.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/borrow_reassigned.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/size_class_churn.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/size_class_churn.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/ascii_scan.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/ascii_scan.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/inherited_static_field_read.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/inherited_static_field_read.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/class_layouts.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/class_layouts.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/long_literals.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/long_literals.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/string_positions.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/string_positions.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/normalize_form.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/normalize_form.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/normalize.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/normalize.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/write_after_shrink.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/write_after_shrink.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/exceptions_empty.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/exceptions_empty.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/long_chain.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/long_chain.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/number_edges.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/number_edges.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/adversarial_iteration.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/adversarial_iteration.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/adversarial_exits.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/adversarial_exits.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/adversarial_order.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/adversarial_order.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/stack_overflow.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/stack_overflow.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/pad_too_long.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/pad_too_long.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/string_too_long.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/string_too_long.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/string_limits.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/string_limits.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/map_zero_keys.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/map_zero_keys.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/undefined_elements.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/undefined_elements.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/case_mapping.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/case_mapping.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/maybe_number_slots.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/maybe_number_slots.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/unions.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/unions.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/maybe_boolean_panic.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/maybe_boolean_panic.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/maybe_booleans.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/maybe_booleans.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/undefined_strings.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/undefined_strings.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/undefined_keys.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/undefined_keys.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/tuples_kept.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/tuples_kept.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/invariance_readonly.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/invariance_readonly.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/panic_in_try.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/panic_in_try.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/named_function_values.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/named_function_values.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/param_assigned_in_try.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/param_assigned_in_try.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/reuse_foreach_global.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/reuse_foreach_global.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/finally_leaves.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/finally_leaves.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/closures_throw_uncaught.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/closures_throw_uncaught.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/closures_throw.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/closures_throw.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/exceptions_uncaught.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/exceptions_uncaught.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/exceptions.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/exceptions.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/weak_narrowed.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/weak_narrowed.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/fresh_calls.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/fresh_calls.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_cycle_weak.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/regexp_cycle_weak.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/fresh_writes.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/fresh_writes.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/fresh_parser.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/fresh_parser.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/doubly_linked.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/doubly_linked.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/weak_parent.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/weak_parent.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/array_from_undefined.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/array_from_undefined.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/array_from_length.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/array_from_length.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/array_from.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/array_from.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/fill_length.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/fill_length.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/fills.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/fills.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/splices.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/splices.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/sort_top_level.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/sort_top_level.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_compared.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/narrowed_compared.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_numbers.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/narrowed_numbers.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_fields.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/narrowed_fields.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_methods.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/narrowed_methods.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_writes.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/narrowed_writes.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_reads.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/narrowed_reads.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/splice_empty.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/splice_empty.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/method_closures.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/method_closures.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/self_assignments.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/self_assignments.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/find_index_shrinks.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/find_index_shrinks.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/find_shrinks.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/find_shrinks.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/map_shrinks.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/map_shrinks.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/unused_parameters.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/unused_parameters.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/timsort.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/timsort.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/sort_releases.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/sort_releases.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/sorts.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/sorts.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/map_iteration.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/map_iteration.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/optional_numbers.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/optional_numbers.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/radix_range.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/radix_range.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/radixes.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/radixes.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/precision_range.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/precision_range.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/number_formats.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/number_formats.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/navigation.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/navigation.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_math_number_prototype.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_math_number_prototype.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_math_number_math.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_math_number_math.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/number_parsing.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/number_parsing.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/strings_more.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/strings_more.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/search_halves.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/search_halves.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/defaults.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/defaults.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/maybe_numbers.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/maybe_numbers.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/spreads.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/spreads.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/searches.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/searches.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/visits.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/visits.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/string_index.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/string_index.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/read_order.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/read_order.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/updates.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/updates.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/cast_fails.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/cast_fails.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/casts.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/casts.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/writes_past_end.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/writes_past_end.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/writes.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/writes.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/indexing.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/indexing.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/local_console.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/local_console.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/closures.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/closures.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/classes.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/classes.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/sorting.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/sorting.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/lone_surrogates.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/lone_surrogates.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/maps_and_text.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/maps_and_text.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/panic.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/panic.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/modules/main.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/modules/main.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_cycle_closures.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/regexp_cycle_closures.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/objects.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/objects.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/dead_zone.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/dead_zone.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/effects.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/effects.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/functions.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/functions.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/shadowing.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/shadowing.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/booleans.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/booleans.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/loops.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/loops.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/bitwise_sweep.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/bitwise_sweep.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/numbers.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/numbers.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/strings.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/strings.a
+    --- FAIL: TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/10_unicode.ts (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/load/testdata/0.1/compile/10_unicode.ts
+    --- FAIL: TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/09_tree.ts (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/load/testdata/0.1/compile/09_tree.ts
+    --- FAIL: TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/08_results.ts (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/load/testdata/0.1/compile/08_results.ts
+    --- FAIL: TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/07_modules/main.ts (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/load/testdata/0.1/compile/07_modules/main.ts
+    --- FAIL: TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/06_stack.ts (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/load/testdata/0.1/compile/06_stack.ts
+    --- FAIL: TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/05_wordcount.ts (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/load/testdata/0.1/compile/05_wordcount.ts
+    --- FAIL: TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/04_closures.ts (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/load/testdata/0.1/compile/04_closures.ts
+    --- FAIL: TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/03_shapes.ts (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/load/testdata/0.1/compile/03_shapes.ts
+    --- FAIL: TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/02_fizzbuzz.ts (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/load/testdata/0.1/compile/02_fizzbuzz.ts
+    --- FAIL: TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/01_hello.ts (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/load/testdata/0.1/compile/01_hello.ts
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_globals_typeof.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_globals_typeof.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_globals.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_globals.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in_live.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_for_in_live.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in_keys.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_for_in_keys.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_for_in.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_fnexpr_loops.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_fnexpr_loops.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_fnexpr_store.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_fnexpr_store.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_fnexpr_recurse.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_fnexpr_recurse.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_function_expressions.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_function_expressions.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_replacer.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/json_stringify_replacer.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_keys.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/json_stringify_keys.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_indent.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/json_stringify_indent.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_undefined.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/json_stringify_undefined.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_numbers.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/json_stringify_numbers.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_escapes.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/json_stringify_escapes.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_options.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/json_stringify_options.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_values.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/json_stringify_values.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_scalars.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/json_stringify_scalars.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_find_last.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_array_find_last.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_copy.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_array_copy.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_search.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_array_search.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_copy_within.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_array_copy_within.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_spliced.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_array_spliced.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_flat.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_array_flat.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_flat_map.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_array_flat_map.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_with.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_array_with.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_metadata.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_array_metadata.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_iterators.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_array_iterators.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_join.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_array_join.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_subclass_holder.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/class_oct6_subclass_holder.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_release.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/class_oct6_release.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_parameters.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/class_oct6_parameters.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_deep.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/class_oct6_deep.a
+    --- FAIL: TestNativeAgreesWithNode/cmd/adamic/testdata/wasi/request.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /cmd/adamic/testdata/wasi/request.a
+    --- FAIL: TestNativeAgreesWithNode/dedication/dedication.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /dedication/dedication.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_object_own.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_object_own.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_object_same.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_object_same.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_object_freeze_assign.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_object_freeze_assign.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_object_freeze_alias.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_object_freeze_alias.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_object_assign_fields.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_object_assign_fields.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_cycle_collections.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/regexp_cycle_collections.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_object_order.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_object_order.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_object_freeze_write.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_object_freeze_write.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_object_freeze.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_object_freeze.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_object_assign.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_object_assign.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_object_has_own.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_object_has_own.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_object_is.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_object_is.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_object_keys.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_object_keys.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/call_targets_sort.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/call_targets_sort.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/call_targets_closure.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/call_targets_closure.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/call_targets_reuse.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/call_targets_reuse.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/call_targets_region.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/call_targets_region.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_cycle_fields.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/regexp_cycle_fields.a
+    --- FAIL: TestNativeAgreesWithNode/internal/fresh/testdata/regexp_tree.ts (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/fresh/testdata/regexp_tree.ts
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/proven_upcasts.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/proven_upcasts.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/proven_satisfies.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/proven_satisfies.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/proven_assertions.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/proven_assertions.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/proven_class_guards.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/proven_class_guards.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/proven_guards.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/proven_guards.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/object_prototype.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/object_prototype.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/override_same_representation.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/override_same_representation.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_conditional.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/047cb0d_n_conditional.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_paren.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/047cb0d_n_paren.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_arrayindex.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/047cb0d_n_arrayindex.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_optional.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/047cb0d_n_optional.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_template.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/047cb0d_n_template.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_typeof.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/047cb0d_n_typeof.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_coalesce.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/047cb0d_n_coalesce.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_numparam.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/047cb0d_n_numparam.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_param.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/047cb0d_n_param.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_element_method.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/047cb0d_n_element_method.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_element.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/047cb0d_n_element.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_element_plain.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/047cb0d_n_element_plain.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_field_present.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/e4eec87_f1_field_present.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_alias_narrowed.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/e4eec87_f1_alias_narrowed.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_class_narrowed.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/e4eec87_f1_class_narrowed.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_field_narrowed.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/e4eec87_f1_field_narrowed.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_u01_undefined_field_widened.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/e4eec87_u01_undefined_field_widened.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_u03_discriminated_undefined.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/e4eec87_u03_discriminated_undefined.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/literal_optional_shapes.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/literal_optional_shapes.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_u02_optional_absent.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/e4eec87_u02_optional_absent.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_iterator_exhausted.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_map_set_iterator_exhausted.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_iterator_number_hash.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_map_set_iterator_number_hash.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/json_encode_depth.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/json_encode_depth.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/json_encode_differences.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/json_encode_differences.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/json_encode_unions.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/json_encode_unions.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/json_encode_objects.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/json_encode_objects.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/json_encode_scalars.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/json_encode_scalars.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_empty_object.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/json_decode_empty_object.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_empty_tuple.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/json_decode_empty_tuple.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_layouts.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/json_decode_coverage_layouts.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_depth.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/json_decode_depth.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_grammar.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/json_decode_grammar.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_objects.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/json_decode_objects.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_scalars.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/json_decode_scalars.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_supplement.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/json_decode_supplement.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_object_scalar.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/json_decode_coverage_object_scalar.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_calls.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/json_decode_coverage_calls.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_empty.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/json_decode_coverage_empty.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_tags.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/json_decode_coverage_tags.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_unions.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/json_decode_coverage_unions.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_grammar.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/json_decode_coverage_grammar.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_nested.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/json_decode_coverage_nested.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_unicode_tag.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/json_decode_coverage_unicode_tag.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_depth_extra.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/json_decode_coverage_depth_extra.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_shapes.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/json_decode_coverage_shapes.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_arrays.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/json_decode_coverage_arrays.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/user_iterators_rest_tdz.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/user_iterators_rest_tdz.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/user_iterators.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/user_iterators.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/devirtualize.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/devirtualize.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_conditional.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/class_inheritance_conditional.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_interface.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/class_inheritance_interface.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_generic.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/class_inheritance_generic.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_memory.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/class_inheritance_memory.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/class_identity.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/class_identity.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_order.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/class_inheritance_order.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_exceptions.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/class_inheritance_exceptions.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/class_inheritance.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/class_features_distinct.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/class_features_distinct.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/class_features_retained.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/class_features_retained.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/class_features_twice.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/class_features_twice.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/class_features_accessors.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/class_features_accessors.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/class_features_private.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/class_features_private.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/class_features_static_private.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/class_features_static_private.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/class_features_static.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/class_features_static.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_split_pair_pattern.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/regexp_split_pair_pattern.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_unicode.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/regexp_unicode.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_search.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/regexp_search.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_match.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/regexp_match.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_exec.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/regexp_exec.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_split.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/regexp_split.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/regexp_replace.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_null_narrowed.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/regexp_null_narrowed.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replaceall_nonglobal.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/regexp_replaceall_nonglobal.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_matchall_nonglobal.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/regexp_matchall_nonglobal.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/sweeps/regexp_methods.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/sweeps/regexp_methods.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/regexp.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/regexp.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/has_own.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/has_own.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_next.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_map_set_next.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_groupby_keys.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_map_set_groupby_keys.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_zeros.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_map_set_zeros.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_setops.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_map_set_setops.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_visit.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_map_set_visit.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_string_existing.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_string_existing.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_string_raw.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_string_raw.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_string_indices.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_string_indices.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_string_prototype.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_string_prototype.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_string_conversion.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_string_conversion.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/try_assignments.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/try_assignments.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/reuse_spread_method_alias.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/reuse_spread_method_alias.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/reuse_spread_method.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/reuse_spread_method.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/reuse_throw.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/reuse_throw.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/reuse_lent_global.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/reuse_lent_global.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/reuse_narrowed.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/reuse_narrowed.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/integer_format.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/integer_format.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/search_from_sweep.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/search_from_sweep.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/shared_slice_append.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/shared_slice_append.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/string_append.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/string_append.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/shared_slices.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/shared_slices.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/search_from.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/search_from.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/utf8_view_fails.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/utf8_view_fails.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/utf8_view.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/utf8_view.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/spread_calls.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/spread_calls.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/undefined_references.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/undefined_references.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/generic_values.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/generic_values.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/generic_method_return.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/generic_method_return.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/generic_functions.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/generic_functions.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/tuple_values.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/tuple_values.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/bitwise.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/bitwise.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/from_code_point_fails.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/from_code_point_fails.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/from_codes.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/from_codes.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/return_panic_fires.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/return_panic_fires.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/return_panic.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/return_panic.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/declared_later.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/declared_later.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/power_of_two_string.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/power_of_two_string.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/normalize_long_marks.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/normalize_long_marks.a
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_math_number_convert.a (0.00s)
+        oracle_test.go:587: Load: load: no file at /internal/oracle/testdata/library_math_number_convert.a
+--- FAIL: TestCountsAreRecorded (0.18s)
+    --- FAIL: TestCountsAreRecorded/fixtures (0.01s)
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/call_targets_element.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/call_targets_element.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/from_codes.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/from_codes.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/return_panic_fires.a (0.01s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/return_panic_fires.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/return_panic.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/return_panic.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/declared_later.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/declared_later.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/normalize_long_marks.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/normalize_long_marks.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/gaps.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/gaps.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/collections.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/collections.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/write_stderr_order.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/write_stderr_order.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/write_stdout_order.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/write_stdout_order.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/replace_all_large.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/replace_all_large.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/concat_too_long.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/concat_too_long.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/optional_strings.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/optional_strings.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/stack_forever.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/stack_forever.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/stack_tail_call.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/stack_tail_call.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/maybe_collections.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/maybe_collections.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/power_of_two_string.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/power_of_two_string.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_group_by.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_map_set_group_by.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_construct.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_map_set_construct.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_iterators.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_map_set_iterators.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_keys.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_map_set_keys.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/prompt_then_read.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/prompt_then_read.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_maybe_numbers.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/set_maybe_numbers.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/sets.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/sets.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/trig_reduction.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/trig_reduction.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/interleaved.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/interleaved.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/output_then_panic.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/output_then_panic.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/large_output.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/large_output.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_map_set.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/lent_reads.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/lent_reads.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/spread_undefined.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/spread_undefined.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/throw_global_move.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/throw_global_move.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/throw_in_writes.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/throw_in_writes.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/throw_keeps_old_value_variants.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/throw_keeps_old_value_variants.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/throw_keeps_old_value.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/throw_keeps_old_value.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/move_throw.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/move_throw.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_element_super_move.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/borrow_element_super_move.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_element_virtual_move.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/borrow_element_virtual_move.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_element_virtual_store.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/borrow_element_virtual_store.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_element_throw.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/borrow_element_throw.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_element.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/borrow_element.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/regions_constructor_capture.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/regions_constructor_capture.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/regions_throw.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/regions_throw.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/regions.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/regions.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_weak_after_reuse.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/reuse_weak_after_reuse.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_weak_during_spread.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/reuse_weak_during_spread.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_global_sibling.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/reuse_global_sibling.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_forward.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/reuse_forward.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/walk.a (0.00s)
+            counts_test.go:152: Load: load: no file at /internal/oracle/testdata/walk.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/write_files.a (0.00s)
+            counts_test.go:152: Load: load: no file at /internal/oracle/testdata/write_files.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/read_arguments.a (0.00s)
+            counts_test.go:152: Load: load: no file at /internal/oracle/testdata/read_arguments.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/arguments.a (0.00s)
+            counts_test.go:152: Load: load: no file at /internal/oracle/testdata/arguments.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/utf8_sweep.a (0.00s)
+            counts_test.go:152: Load: load: no file at /internal/oracle/testdata/utf8_sweep.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/read_files.a (0.00s)
+            counts_test.go:152: Load: load: no file at /internal/oracle/testdata/read_files.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_cycle_weak.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/regexp_cycle_weak.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_cycle_closures.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/regexp_cycle_closures.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_cycle_collections.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/regexp_cycle_collections.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_cycle_fields.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/regexp_cycle_fields.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/fresh/testdata/regexp_tree.ts (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/fresh/testdata/regexp_tree.ts
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/proven_upcasts.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/proven_upcasts.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/proven_satisfies.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/proven_satisfies.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/proven_assertions.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/proven_assertions.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/proven_class_guards.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/proven_class_guards.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/proven_guards.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/proven_guards.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/object_prototype.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/object_prototype.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/override_same_representation.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/override_same_representation.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_conditional.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/047cb0d_n_conditional.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_paren.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/047cb0d_n_paren.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_optional.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/047cb0d_n_optional.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_template.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/047cb0d_n_template.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_typeof.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/047cb0d_n_typeof.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_coalesce.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/047cb0d_n_coalesce.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_numparam.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/047cb0d_n_numparam.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_param.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/047cb0d_n_param.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_element_method.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/047cb0d_n_element_method.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_element.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/047cb0d_n_element.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_element_plain.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/047cb0d_n_element_plain.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_arrayindex.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/047cb0d_n_arrayindex.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/e4eec87_f1_alias_narrowed.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/e4eec87_f1_alias_narrowed.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/e4eec87_f1_class_narrowed.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/e4eec87_f1_class_narrowed.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_decode_depth.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/json_decode_depth.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/e4eec87_f1_field_present.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/e4eec87_f1_field_present.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/e4eec87_f1_field_narrowed.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/e4eec87_f1_field_narrowed.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/e4eec87_u01_undefined_field_widened.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/e4eec87_u01_undefined_field_widened.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/e4eec87_u03_discriminated_undefined.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/e4eec87_u03_discriminated_undefined.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/literal_optional_shapes.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/literal_optional_shapes.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/e4eec87_u02_optional_absent.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/e4eec87_u02_optional_absent.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_iterator_exhausted.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_map_set_iterator_exhausted.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_iterator_number_hash.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_map_set_iterator_number_hash.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_encode_depth.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/json_encode_depth.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_encode_differences.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/json_encode_differences.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_encode_unions.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/json_encode_unions.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_encode_objects.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/json_encode_objects.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_encode_scalars.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/json_encode_scalars.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_decode_empty_object.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/json_decode_empty_object.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_decode_empty_tuple.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/json_decode_empty_tuple.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_decode_grammar.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/json_decode_grammar.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_decode_objects.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/json_decode_objects.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_decode_scalars.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/json_decode_scalars.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_decode_supplement.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/json_decode_supplement.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_decode_coverage_object_scalar.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/json_decode_coverage_object_scalar.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_decode_coverage_calls.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/json_decode_coverage_calls.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_decode_coverage_empty.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/json_decode_coverage_empty.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_decode_coverage_layouts.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/json_decode_coverage_layouts.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_decode_coverage_tags.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/json_decode_coverage_tags.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_decode_coverage_unions.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/json_decode_coverage_unions.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_decode_coverage_grammar.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/json_decode_coverage_grammar.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_decode_coverage_nested.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/json_decode_coverage_nested.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_decode_coverage_unicode_tag.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/json_decode_coverage_unicode_tag.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_decode_coverage_depth_extra.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/json_decode_coverage_depth_extra.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_decode_coverage_shapes.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/json_decode_coverage_shapes.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_decode_coverage_arrays.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/json_decode_coverage_arrays.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/user_iterators_rest_tdz.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/user_iterators_rest_tdz.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/user_iterators.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/user_iterators.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/devirtualize.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/devirtualize.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_inheritance_conditional.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/class_inheritance_conditional.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_inheritance_interface.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/class_inheritance_interface.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_inheritance_generic.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/class_inheritance_generic.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_inheritance_memory.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/class_inheritance_memory.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_identity.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/class_identity.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_inheritance_order.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/class_inheritance_order.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_inheritance_exceptions.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/class_inheritance_exceptions.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_inheritance.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/class_inheritance.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_features_distinct.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/class_features_distinct.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_features_retained.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/class_features_retained.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_features_twice.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/class_features_twice.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_features_accessors.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/class_features_accessors.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_features_private.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/class_features_private.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_features_static_private.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/class_features_static_private.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_features_static.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/class_features_static.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_split_pair_pattern.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/regexp_split_pair_pattern.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_unicode.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/regexp_unicode.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_search.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/regexp_search.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_match.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/regexp_match.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_exec.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/regexp_exec.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_split.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/regexp_split.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_replace.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/regexp_replace.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_null_narrowed.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/regexp_null_narrowed.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_replaceall_nonglobal.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/regexp_replaceall_nonglobal.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_matchall_nonglobal.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/regexp_matchall_nonglobal.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/sweeps/regexp_methods.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/sweeps/regexp_methods.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/regexp.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_zeros.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_map_set_zeros.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/has_own.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/has_own.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_next.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_map_set_next.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_groupby_keys.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_map_set_groupby_keys.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_setops.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_map_set_setops.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_visit.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_map_set_visit.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_string_existing.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_string_existing.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_string_raw.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_string_raw.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_string_indices.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_string_indices.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_string_prototype.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_string_prototype.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_string_conversion.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_string_conversion.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/try_assignments.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/try_assignments.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_spread_method_alias.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/reuse_spread_method_alias.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_spread_method.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/reuse_spread_method.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_lent_global.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/reuse_lent_global.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_narrowed.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/reuse_narrowed.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_throw.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/reuse_throw.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/integer_format.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/integer_format.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/search_from_sweep.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/search_from_sweep.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/shared_slice_append.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/shared_slice_append.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_append.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/string_append.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/shared_slices.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/shared_slices.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/search_from.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/search_from.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/utf8_view_fails.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/utf8_view_fails.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/utf8_view.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/utf8_view.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/spread_calls.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/spread_calls.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/undefined_references.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/undefined_references.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/generic_values.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/generic_values.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/generic_method_return.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/generic_method_return.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/generic_functions.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/generic_functions.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/tuple_values.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/tuple_values.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/bitwise.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/bitwise.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/from_code_point_fails.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/from_code_point_fails.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/radixes.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/radixes.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/defaults.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/defaults.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_arrays.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/reuse_arrays.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/reuse.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/spread_snapshot.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/spread_snapshot.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_map_overwrite.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/borrow_map_overwrite.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_undefined.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/set_undefined.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/optional_class_method.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/optional_class_method.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_as_interface.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/class_as_interface.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/writes_in_try.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/writes_in_try.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_defined_lent_field.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/borrow_defined_lent_field.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_defined_lent.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/borrow_defined_lent.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_reassigned.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/borrow_reassigned.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/size_class_churn.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/size_class_churn.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/ascii_scan.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/ascii_scan.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/inherited_static_field_read.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/inherited_static_field_read.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_layouts.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/class_layouts.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/long_literals.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/long_literals.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_positions.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/string_positions.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/normalize_form.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/normalize_form.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/normalize.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/normalize.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/write_after_shrink.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/write_after_shrink.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/long_chain.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/long_chain.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/number_edges.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/number_edges.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/adversarial_iteration.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/adversarial_iteration.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/adversarial_exits.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/adversarial_exits.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/adversarial_order.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/adversarial_order.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/pad_too_long.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/pad_too_long.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_too_long.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/string_too_long.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_limits.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/string_limits.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_zero_keys.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/map_zero_keys.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/undefined_elements.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/undefined_elements.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/case_mapping.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/case_mapping.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/maybe_number_slots.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/maybe_number_slots.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/unions.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/unions.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/maybe_boolean_panic.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/maybe_boolean_panic.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/maybe_booleans.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/maybe_booleans.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/undefined_strings.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/undefined_strings.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/undefined_keys.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/undefined_keys.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/tuples_kept.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/tuples_kept.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/invariance_readonly.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/invariance_readonly.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/panic_in_try.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/panic_in_try.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/named_function_values.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/named_function_values.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/param_assigned_in_try.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/param_assigned_in_try.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_foreach_global.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/reuse_foreach_global.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/finally_leaves.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/finally_leaves.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/closures_throw_uncaught.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/closures_throw_uncaught.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/closures_throw.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/closures_throw.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/exceptions_empty.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/exceptions_empty.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/exceptions_uncaught.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/exceptions_uncaught.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/exceptions.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/exceptions.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/weak_narrowed.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/weak_narrowed.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/fresh_calls.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/fresh_calls.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/fresh_writes.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/fresh_writes.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/fresh_parser.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/fresh_parser.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/doubly_linked.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/doubly_linked.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/weak_parent.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/weak_parent.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/array_from_undefined.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/array_from_undefined.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/array_from_length.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/array_from_length.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/array_from.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/array_from.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/fill_length.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/fill_length.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/fills.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/fills.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/splices.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/splices.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/sort_top_level.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/sort_top_level.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/narrowed_compared.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/narrowed_compared.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/narrowed_numbers.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/narrowed_numbers.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/narrowed_fields.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/narrowed_fields.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/narrowed_methods.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/narrowed_methods.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/narrowed_writes.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/narrowed_writes.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/narrowed_reads.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/narrowed_reads.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/splice_empty.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/splice_empty.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/method_closures.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/method_closures.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/self_assignments.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/self_assignments.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/find_index_shrinks.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/find_index_shrinks.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/find_shrinks.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/find_shrinks.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_shrinks.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/map_shrinks.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/unused_parameters.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/unused_parameters.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/timsort.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/timsort.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/sort_releases.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/sort_releases.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/sorts.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/sorts.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_iteration.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/map_iteration.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/optional_numbers.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/optional_numbers.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/radix_range.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/radix_range.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/precision_range.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/precision_range.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/number_formats.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/number_formats.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/navigation.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/navigation.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_math_number_prototype.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_math_number_prototype.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_math_number_convert.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_math_number_convert.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_math_number_math.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_math_number_math.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/number_parsing.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/number_parsing.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/strings_more.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/strings_more.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/search_halves.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/search_halves.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_fnexpr_loops.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_fnexpr_loops.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/maybe_numbers.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/maybe_numbers.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/spreads.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/spreads.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/searches.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/searches.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/visits.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/visits.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_index.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/string_index.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/read_order.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/read_order.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/updates.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/updates.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/cast_fails.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/cast_fails.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/casts.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/casts.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/writes_past_end.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/writes_past_end.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/writes.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/writes.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/indexing.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/indexing.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/local_console.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/local_console.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/closures.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/closures.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/classes.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/classes.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/sorting.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/sorting.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/lone_surrogates.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/lone_surrogates.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/maps_and_text.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/maps_and_text.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/panic.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/panic.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/modules/main.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/modules/main.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/objects.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/objects.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/dead_zone.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/dead_zone.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/effects.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/effects.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/functions.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/functions.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/shadowing.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/shadowing.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/booleans.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/booleans.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/loops.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/loops.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/bitwise_sweep.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/bitwise_sweep.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/numbers.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/numbers.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/strings.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/strings.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/10_unicode.ts (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/load/testdata/0.1/compile/10_unicode.ts
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/09_tree.ts (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/load/testdata/0.1/compile/09_tree.ts
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/08_results.ts (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/load/testdata/0.1/compile/08_results.ts
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/07_modules/main.ts (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/load/testdata/0.1/compile/07_modules/main.ts
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/06_stack.ts (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/load/testdata/0.1/compile/06_stack.ts
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/05_wordcount.ts (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/load/testdata/0.1/compile/05_wordcount.ts
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/04_closures.ts (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/load/testdata/0.1/compile/04_closures.ts
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/03_shapes.ts (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/load/testdata/0.1/compile/03_shapes.ts
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/02_fizzbuzz.ts (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/load/testdata/0.1/compile/02_fizzbuzz.ts
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/01_hello.ts (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/load/testdata/0.1/compile/01_hello.ts
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_globals_typeof.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_globals_typeof.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_globals.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_globals.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_for_in_live.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_for_in_live.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_for_in_keys.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_for_in_keys.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_for_in.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_for_in.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_join.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_array_join.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_fnexpr_store.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_fnexpr_store.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_fnexpr_recurse.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_fnexpr_recurse.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_function_expressions.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_function_expressions.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_replacer.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/json_stringify_replacer.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_keys.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/json_stringify_keys.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_indent.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/json_stringify_indent.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_undefined.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/json_stringify_undefined.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_numbers.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/json_stringify_numbers.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_escapes.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/json_stringify_escapes.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_options.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/json_stringify_options.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_values.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/json_stringify_values.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_scalars.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/json_stringify_scalars.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_find_last.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_array_find_last.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_copy.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_array_copy.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_search.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_array_search.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_copy_within.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_array_copy_within.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_spliced.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_array_spliced.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_flat.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_array_flat.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_flat_map.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_array_flat_map.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_with.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_array_with.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_metadata.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_array_metadata.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_iterators.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_array_iterators.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_assign_fields.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_object_assign_fields.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_oct6_subclass_holder.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/class_oct6_subclass_holder.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_oct6_release.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/class_oct6_release.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_oct6_parameters.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/class_oct6_parameters.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_oct6_deep.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/class_oct6_deep.a
+        --- FAIL: TestCountsAreRecorded/fixtures/cmd/adamic/testdata/wasi/request.a (0.00s)
+            counts_test.go:143: Load: load: no file at /cmd/adamic/testdata/wasi/request.a
+        --- FAIL: TestCountsAreRecorded/fixtures/dedication/dedication.a (0.00s)
+            counts_test.go:143: Load: load: no file at /dedication/dedication.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_own.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_object_own.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_same.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_object_same.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_freeze_assign.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_object_freeze_assign.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_freeze_alias.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_object_freeze_alias.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_is.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_object_is.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_order.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_object_order.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_freeze_write.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_object_freeze_write.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_freeze.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_object_freeze.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_assign.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_object_assign.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_has_own.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_object_has_own.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/call_targets_closure.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/call_targets_closure.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_keys.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/library_object_keys.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/call_targets_sort.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/call_targets_sort.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/call_targets_reuse.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/call_targets_reuse.a
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/call_targets_region.a (0.00s)
+            counts_test.go:143: Load: load: no file at /internal/oracle/testdata/call_targets_region.a
+--- FAIL: TestJSONTypesMissingBinary (0.00s)
+    --- FAIL: TestJSONTypesMissingBinary/unset (0.06s)
+        json_types_test.go:106: missing helper must name "missing ADAMIC_ORACLE_JSON_TYPES": exit=1 stdout="" stderr="node:internal/modules/cjs/loader:1520\n  throw err;\n  ^\n\nError: Cannot find module '/oracle/node.mjs'\n    at Module._resolveFilename (node:internal/modules/cjs/loader:1517:15)\n    at wrapResolveFilename (node:internal/modules/cjs/loader:1071:27)\n    at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1095:10)\n    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1122:12)\n    at Module._load (node:internal/modules/cjs/loader:1294:5)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47 {\n  code: 'MODULE_NOT_FOUND',\n  requireStack: []\n}\n\nNode.js v24.19.0\n"
+    --- FAIL: TestJSONTypesMissingBinary/missing (0.06s)
+        json_types_test.go:106: missing helper must name "missing or non-executable json_types binary /tmp/adamic-gate/TestJSONTypesMissingBinary3585333744/002/missing-json-types": exit=1 stdout="" stderr="node:internal/modules/cjs/loader:1520\n  throw err;\n  ^\n\nError: Cannot find module '/oracle/node.mjs'\n    at Module._resolveFilename (node:internal/modules/cjs/loader:1517:15)\n    at wrapResolveFilename (node:internal/modules/cjs/loader:1071:27)\n    at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1095:10)\n    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1122:12)\n    at Module._load (node:internal/modules/cjs/loader:1294:5)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47 {\n  code: 'MODULE_NOT_FOUND',\n  requireStack: []\n}\n\nNode.js v24.19.0\n"
+--- FAIL: TestLoopCountersAgreeWithNode (0.48s)
+    counters_test.go:226: open ../../internal/native/native.go: no such file or directory
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0

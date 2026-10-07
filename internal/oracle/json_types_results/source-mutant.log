@@ -1,0 +1,23 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_scalars.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_scalars.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_scalars.a
+    oracle_test.go:599: gate cache node miss
+    oracle_test.go:599: gate cache node miss
+    oracle_test.go:488: gate cache native miss
+    oracle_test.go:481: gate cache native miss
+    oracle_test.go:620: stdout differs
+        node:   exit 0, stdout "json_types source mutant\n0.10000000000000001 10\n0.0000000000000000 -Infinity\nInfinity 0\n1.2345678901234568e+29 8.1000000729e-30\n4.9406564584124654e-324 Infinity\n1.7976931348623157e+308 5.562684646268003e-309\n9007199254740992.0 1.1102230246251565e-16\nlength 5\n104\n101\n108\n108\n111\nlength 1\n55296\nlength 1\n56320\nlength 2\n55356\n57101\nlength 2\n55356\n57101\nlength 9\n34\n92\n47\n8\n12\n10\n13\n9\n0\ntrue\nfalse\nat $: expected boolean, found number\nat $: expected boolean, found null\nOk\nOk\nOk\nError\nError\nOk\nOk\nError\nOk\nError\nError\nError\nError\nError\nError\nOk\nOk\nError\nat $: expected \"\\uD800\", found string\nOk\n", stderr ""
+        native: exit 0, stdout "0.10000000000000001 10\n0.0000000000000000 -Infinity\nInfinity 0\n1.2345678901234568e+29 8.1000000729e-30\n4.9406564584124654e-324 Infinity\n1.7976931348623157e+308 5.562684646268003e-309\n9007199254740992.0 1.1102230246251565e-16\nlength 5\n104\n101\n108\n108\n111\nlength 1\n55296\nlength 1\n56320\nlength 2\n55356\n57101\nlength 2\n55356\n57101\nlength 9\n34\n92\n47\n8\n12\n10\n13\n9\n0\ntrue\nfalse\nat $: expected boolean, found number\nat $: expected boolean, found null\nOk\nOk\nOk\nError\nError\nOk\nOk\nError\nOk\nError\nError\nError\nError\nError\nError\nOk\nOk\nError\nat $: expected \"\\uD800\", found string\nOk\n", stderr ""
+    oracle_test.go:626: JavaScript backend: stdout differs
+        node:    exit 0, stdout "json_types source mutant\n0.10000000000000001 10\n0.0000000000000000 -Infinity\nInfinity 0\n1.2345678901234568e+29 8.1000000729e-30\n4.9406564584124654e-324 Infinity\n1.7976931348623157e+308 5.562684646268003e-309\n9007199254740992.0 1.1102230246251565e-16\nlength 5\n104\n101\n108\n108\n111\nlength 1\n55296\nlength 1\n56320\nlength 2\n55356\n57101\nlength 2\n55356\n57101\nlength 9\n34\n92\n47\n8\n12\n10\n13\n9\n0\ntrue\nfalse\nat $: expected boolean, found number\nat $: expected boolean, found null\nOk\nOk\nOk\nError\nError\nOk\nOk\nError\nOk\nError\nError\nError\nError\nError\nError\nOk\nOk\nError\nat $: expected \"\\uD800\", found string\nOk\n", stderr ""
+        backend: exit 0, stdout "0.10000000000000001 10\n0.0000000000000000 -Infinity\nInfinity 0\n1.2345678901234568e+29 8.1000000729e-30\n4.9406564584124654e-324 Infinity\n1.7976931348623157e+308 5.562684646268003e-309\n9007199254740992.0 1.1102230246251565e-16\nlength 5\n104\n101\n108\n108\n111\nlength 1\n55296\nlength 1\n56320\nlength 2\n55356\n57101\nlength 2\n55356\n57101\nlength 9\n34\n92\n47\n8\n12\n10\n13\n9\n0\ntrue\nfalse\nat $: expected boolean, found number\nat $: expected boolean, found null\nOk\nOk\nOk\nError\nError\nOk\nOk\nError\nOk\nError\nError\nError\nError\nError\nError\nOk\nOk\nError\nat $: expected \"\\uD800\", found string\nOk\n", stderr ""
+    oracle_test.go:495: gate cache native hit
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_scalars.a (0.53s)
+FAIL
+gate cache: native hits=1 misses=2
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
