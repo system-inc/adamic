@@ -1,0 +1,109 @@
+import type { Bindings } from './bindings.ts';
+import { SymbolLineage, symbolIdentity } from './symbol_lineage.a';
+import { Diagnostic } from './diagnostic.ts';
+
+const message = 'This calls a caller-supplied function inside a `try` that guards a JSON parse, and the `catch` throws the caught error away. An error the callback throws is caught there and handled as if the text had not parsed: the real error is lost and the line is blamed. Parse inside the `try` and call the callback after it, or use `parseJson` and branch on its outcome.';
+
+export class CallbackInParseTry {
+    readonly bindings: Bindings;
+    constructor(bindings: Bindings) { this.bindings = bindings; }
+    catchDiscards(index: number): boolean {
+        const rules = this.bindings.rules; const node = rules.parser.node(index);
+        const variable = node.children.find((child) => rules.parser.node(child).kind === 'VariableDeclaration') ?? -1;
+        if(variable < 0) { return true; }
+        const name = this.bindings.shape.name(variable);
+        if(name < 0 || rules.parser.node(name).kind !== 'Identifier') { return false; }
+        const symbol = symbolIdentity(rules, name);
+        if(symbol === 0) { return false; }
+        const block = node.children.find((child) => rules.parser.node(child).kind === 'Block') ?? -1;
+        return block >= 0 && !this.reads(block, symbol, rules.parser.node(name).text);
+    }
+    reads(index: number, symbol: number, name: string): boolean {
+        const node = this.bindings.rules.parser.node(index);
+        if(node.kind === 'Identifier' && node.text === name) {
+            const resolved = symbolIdentity(this.bindings.rules, index);
+            if(resolved === 0 || resolved === symbol) { return true; }
+        }
+        return node.children.some((child) => this.reads(child, symbol, name));
+    }
+    parse(index: number): boolean {
+        const rules = this.bindings.rules; const callee = rules.skip(rules.parser.node(index).children[0] ?? -1);
+        const node = rules.parser.node(callee);
+        if(node.kind === 'Identifier') {
+            const lineage = new SymbolLineage(rules, callee);
+            return lineage.declarations.length > 0 && lineage.declarations.every((item) =>
+                item.kind === 'FunctionDeclaration' && item.name === 'parseJsonOrThrow' &&
+                item.file.endsWith('/source/structured-text/json/Json.ts'));
+        }
+        if(node.kind !== 'PropertyAccessExpression') { return false; }
+        const name = node.children[1] ?? -1;
+        if(name < 0 || rules.parser.node(name).kind !== 'Identifier') { return false; }
+        const lineage = new SymbolLineage(rules, name);
+        return lineage.declarations.length > 0 && lineage.declarations.every((item) =>
+            item.kind === 'MethodSignature' && item.name === 'parse' &&
+            item.parentKind === 'InterfaceDeclaration' && item.parentName === 'JSON' &&
+            item.declarationFile && item.kinds[0] === 'InterfaceDeclaration' &&
+            ((item.kinds[1] === 'SourceFile' && item.external[1] === false) ||
+             (item.kinds[1] === 'ModuleBlock' && item.kinds[2] === 'ModuleDeclaration' && item.augmentation[2] === true)));
+    }
+    executor(parameter: number): boolean {
+        const rules = this.bindings.rules; const executor = this.bindings.parent(parameter);
+        if(executor < 0 || !['ArrowFunction', 'FunctionExpression'].includes(rules.parser.node(executor).kind)) { return false; }
+        const parameters = rules.parser.node(executor).children.filter((child) => rules.parser.node(child).kind === 'Parameter');
+        if(parameters[0] !== parameter && parameters[1] !== parameter) { return false; }
+        let argument = executor; let outer = this.bindings.parent(argument);
+        while(outer >= 0 && rules.parser.node(outer).kind === 'ParenthesizedExpression') { argument = outer; outer = this.bindings.parent(outer); }
+        if(outer < 0 || rules.parser.node(outer).kind !== 'NewExpression') { return false; }
+        const node = rules.parser.node(outer);
+        if(node.list < 1 || node.children[node.children.length - node.list] !== argument) { return false; }
+        const constructor = rules.skip(node.children[0] ?? -1);
+        if(rules.parser.node(constructor).kind !== 'Identifier' || rules.parser.node(constructor).text !== 'Promise') { return false; }
+        const lineage = new SymbolLineage(rules, constructor);
+        return lineage.declarations.length > 0 && lineage.declarations.every((item) => item.globalVariable());
+    }
+    callback(index: number): boolean {
+        const rules = this.bindings.rules;
+        let callee = rules.parser.node(index).children[0] ?? -1;
+        while(['ParenthesizedExpression', 'NonNullExpression'].includes(rules.parser.node(callee).kind)) { callee = rules.parser.node(callee).children[0] ?? -1; }
+        if(rules.parser.node(callee).kind !== 'Identifier') { return false; }
+        const lineage = new SymbolLineage(rules, callee);
+        if(lineage.declarations.length !== 1 || lineage.calls === 0) { return false; }
+        const declarations = this.bindings.declarations(callee);
+        if(declarations.length !== 1) { return false; }
+        let parameter = declarations[0] ?? -1;
+        while(parameter >= 0 && ['BindingElement', 'ObjectBindingPattern', 'ArrayBindingPattern'].includes(rules.parser.node(parameter).kind)) { parameter = this.bindings.parent(parameter); }
+        return parameter >= 0 && rules.parser.node(parameter).kind === 'Parameter' && !this.executor(parameter);
+    }
+    guarded(index: number, calls: number[]): void {
+        const rules = this.bindings.rules; const node = rules.parser.node(index);
+        if(this.bindings.functionKind(node.kind) || node.kind === 'ClassStaticBlockDeclaration' ||
+            (node.kind === 'PropertyDeclaration' && this.bindings.shape.initializer(index) >= 0)) { return; }
+        if(node.kind === 'TryStatement') {
+            const caught = node.children.find((child) => rules.parser.node(child).kind === 'CatchClause') ?? -1;
+            if(caught >= 0) {
+                for(const child of node.children) { if(child !== node.children[0]) { this.guarded(child, calls); } }
+                return;
+            }
+        }
+        if(node.kind === 'CallExpression') { calls.push(index); }
+        for(const child of node.children) { this.guarded(child, calls); }
+    }
+    run(): void {
+        const rules = this.bindings.rules;
+        for(let index = 0; index < rules.parser.nodes.length; index++) {
+            const node = rules.parser.node(index);
+            if(node.kind !== 'TryStatement' || this.bindings.parent(index) < 0) { continue; }
+            const caught = node.children.find((child) => rules.parser.node(child).kind === 'CatchClause') ?? -1;
+            if(caught < 0 || !this.catchDiscards(caught)) { continue; }
+            const calls: number[] = []; this.guarded(node.children[0] ?? -1, calls);
+            const callbacks: number[] = []; let parses = false;
+            for(const call of calls) { if(this.parse(call)) { parses = true; } else if(this.callback(call)) { callbacks.push(call); } }
+            if(!parses) { continue; }
+            for(const call of callbacks) {
+                const subject = rules.parser.node(call);
+                rules.findings.push(new Diagnostic('nexus/correctness-no-callback-in-parse-try', 'callbackInParseTry', message,
+                    rules.byte(rules.start(subject)), rules.byte(subject.end), ''));
+            }
+        }
+    }
+}

@@ -1,0 +1,47 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+
+export class LineageDeclaration {
+    readonly file: string; readonly kind: string; readonly start: number; readonly end: number;
+    readonly declarationFile: boolean; readonly defaultLibrary: boolean;
+    readonly parentKind: string; readonly parentName: string; readonly name: string;
+    readonly kinds: readonly string[]; readonly external: readonly boolean[]; readonly augmentation: readonly boolean[];
+    constructor(file: string, kind: string, start: number, end: number, declarationFile: boolean, defaultLibrary: boolean,
+        parentKind: string, parentName: string, name: string, kinds: readonly string[], external: readonly boolean[], augmentation: readonly boolean[]) {
+        this.file = file; this.kind = kind; this.start = start; this.end = end; this.declarationFile = declarationFile;
+        this.defaultLibrary = defaultLibrary; this.parentKind = parentKind; this.parentName = parentName; this.name = name;
+        this.kinds = kinds; this.external = external; this.augmentation = augmentation;
+    }
+    globalVariable(): boolean {
+        const offset = this.kind === 'VariableDeclaration' ? 2 : 0;
+        return this.declarationFile && ((this.kinds[offset] === 'SourceFile' && this.external[offset] === false) ||
+            (this.kinds[offset] === 'ModuleBlock' && this.kinds[offset + 1] === 'ModuleDeclaration' && this.augmentation[offset + 1] === true));
+    }
+}
+export class SymbolLineage {
+    readonly declarations: readonly LineageDeclaration[]; readonly identity: number; readonly calls: number;
+    constructor(rules: Rules, index: number, followAlias = true) {
+        const frames = new Frames(rules.ask(index, followAlias ? 'symbol-lineage' : 'symbol-lineage\nraw')); header(frames, 'symbol-lineage');
+        const declarations: LineageDeclaration[] = []; let identity = 0;
+        if(frames.yes()) {
+            identity = frames.natural(); const length = frames.natural();
+            for(let at = 0; at < length; at++) {
+                const file = frames.field(); const kind = frames.field(); const start = frames.natural(); const end = frames.natural();
+                const declarationFile = frames.yes(); const library = frames.yes(); const parentKind = frames.field(); const parentName = frames.field();
+                frames.natural(); frames.natural(); const tags = frames.natural();
+                for(let tag = 0; tag < tags; tag++) { frames.field(); frames.field(); frames.natural(); frames.natural(); frames.field(); }
+                const parameters = frames.natural(); for(let parameter = 0; parameter < parameters; parameter++) { frames.field(); }
+                const name = frames.field(); const kinds: string[] = []; const external: boolean[] = []; const augmentation: boolean[] = [];
+                const count = frames.natural();
+                for(let ancestor = 0; ancestor < count; ancestor++) { kinds.push(frames.field()); frames.natural(); external.push(frames.yes()); augmentation.push(frames.yes()); }
+                declarations.push(new LineageDeclaration(file, kind, start, end, declarationFile, library, parentKind, parentName, name, kinds, external, augmentation));
+            }
+        }
+        this.calls = frames.natural(); frames.end(); this.identity = identity; this.declarations = declarations;
+    }
+}
+export function symbolIdentity(rules: Rules, index: number): number {
+    const frames = new Frames(rules.ask(index, 'symbol-identities')); header(frames, 'symbol-identities');
+    const own = frames.natural(); frames.natural(); frames.yes(); frames.natural(); const shorthand = frames.natural(); frames.end();
+    return shorthand === 0 ? own : shorthand;
+}

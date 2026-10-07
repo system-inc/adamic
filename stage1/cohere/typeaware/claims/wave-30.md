@@ -19,3 +19,7 @@ and does not occur there. This leaves 172 ranked candidates.
 Fetched all origin heads and checked stage1 source paths and claim documents
 before this claim. No conflicting port or claim was found for these rules.
 No implementation was written before this claim commit.
+
+Completion status: the ISO-date-cut and callback-in-parse-try rules are implemented.
+The lost-update rule is unimplemented and its claim is released for reassignment.
+See ../WAVE_30_REPORT.md for evidence and limits.

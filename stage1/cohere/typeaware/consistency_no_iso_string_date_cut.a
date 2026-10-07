@@ -1,0 +1,108 @@
+import type { Bindings } from './bindings.ts';
+import { SymbolLineage } from './symbol_lineage.a';
+import { Diagnostic } from './diagnostic.ts';
+
+const message = "This cuts a `toISOString()` string down to its date part. `toISOString()` is always UTC, so the cut is the UTC calendar day whether or not that was the day meant, and in Utah the UTC day turns over at 5 pm in winter and 6 pm in summer: an evening run gets tomorrow. Say the zone instead: `dateIso8601(date, 'UTC')` from `@nexus/source/time/FormatTime` when the UTC day is meant, or `dateIso8601(date, userTimeZone())` with `userTimeZone` from `@nexus/source/time/TimeZones` when the local day is meant.";
+
+export class IsoStringDateCut {
+    readonly bindings: Bindings;
+    constructor(bindings: Bindings) { this.bindings = bindings; }
+    callee(index: number): number {
+        const rules = this.bindings.rules;
+        if(index < 0 || rules.parser.node(index).kind !== 'CallExpression') { return -1; }
+        const callee = rules.skip(rules.parser.node(index).children[0] ?? -1);
+        if(rules.parser.node(callee).kind !== 'PropertyAccessExpression') { return -1; }
+        const name = rules.parser.node(callee).children[1] ?? -1;
+        return name >= 0 && rules.parser.node(name).kind === 'Identifier' ? callee : -1;
+    }
+    method(index: number): string {
+        const callee = this.callee(index);
+        return callee < 0 ? '' : this.bindings.rules.parser.node(this.bindings.rules.parser.node(callee).children[1] ?? -1).text;
+    }
+    receiver(index: number): number {
+        const callee = this.callee(index);
+        return callee < 0 ? -1 : this.bindings.rules.skip(this.bindings.rules.parser.node(callee).children[0] ?? -1);
+    }
+    integer(index: number): number {
+        if(index < 0) { return -1; }
+        const rules = this.bindings.rules;
+        const node = rules.parser.node(rules.skip(index));
+        if(node.kind !== 'NumericLiteral' || node.text.length === 0) { return -1; }
+        // strconv.Atoi uses decimal syntax rather than JavaScript numeric spelling.
+        const text = node.text;
+        let at = text.startsWith('+') ? 1 : 0;
+        if(at === text.length) { return -1; }
+        let value = 0;
+        for(; at < text.length; at++) {
+            const digit = text.charCodeAt(at) - 48;
+            if(digit < 0 || digit > 9) { return -1; }
+            value = value * 10 + digit;
+        }
+        return Number.isSafeInteger(value) ? value : -1;
+    }
+    iso(index: number): boolean {
+        const rules = this.bindings.rules;
+        let expression = index;
+        if(rules.parser.node(expression).kind === 'Identifier') {
+            const symbol = new SymbolLineage(rules, expression, false);
+            if(symbol.declarations.length !== 1) { return false; }
+            const declarations = this.bindings.declarations(expression);
+            const declaration = declarations[0] ?? -1;
+            if(declarations.length !== 1 || declaration < 0 || rules.parser.node(declaration).kind !== 'VariableDeclaration') { return false; }
+            const name = this.bindings.shape.name(declaration);
+            const parent = this.bindings.parent(declaration);
+            if(name < 0 || rules.parser.node(name).kind !== 'Identifier' || parent < 0 ||
+                rules.parser.node(parent).kind !== 'VariableDeclarationList' || rules.parser.node(parent).semantic !== '2') { return false; }
+            expression = this.bindings.shape.initializer(declaration);
+            if(expression < 0) { return false; }
+            expression = rules.skip(expression);
+        }
+        if(this.method(expression) !== 'toISOString' || rules.parser.node(expression).list !== 0) { return false; }
+        const callee = this.callee(expression);
+        const name = rules.parser.node(callee).children[1] ?? -1;
+        const symbol = new SymbolLineage(rules, name, false);
+        return symbol.identity !== 0 && symbol.declarations.some((declaration) => declaration.defaultLibrary) &&
+            symbol.declarations.some((declaration) => declaration.parentKind === 'InterfaceDeclaration' && declaration.parentName === 'Date');
+    }
+    split(index: number): boolean {
+        const rules = this.bindings.rules;
+        if(this.method(index) !== 'split' || rules.parser.node(index).list !== 1) { return false; }
+        const arguments_ = rules.parser.node(index).children.slice(-1);
+        const separator = rules.parser.node(arguments_[0] ?? -1);
+        return ['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(separator.kind) && separator.text === 'T' && this.iso(this.receiver(index));
+    }
+    report(index: number): void {
+        const rules = this.bindings.rules; const node = rules.parser.node(index);
+        rules.findings.push(new Diagnostic('nexus/consistency-no-iso-string-date-cut', 'isoStringCutToDate', message,
+            rules.byte(rules.start(node)), rules.byte(node.end), ''));
+    }
+    run(): void {
+        const rules = this.bindings.rules;
+        for(let index = 0; index < rules.parser.nodes.length; index++) {
+            if(this.bindings.parent(index) < 0) { continue; }
+            const node = rules.parser.node(index);
+            if(node.kind === 'CallExpression' && node.list === 2) {
+                const arguments_ = node.children.slice(-2);
+                const first = this.integer(arguments_[0] ?? -1); const second = this.integer(arguments_[1] ?? -1);
+                if(first < 0 || second < 0) { continue; }
+                const method = this.method(index);
+                let start = first; let end = second;
+                if(method === 'substring') { start = Math.min(first, second); end = Math.max(first, second); }
+                else if(method === 'substr') { end = first + second; }
+                else if(method !== 'slice') { continue; }
+                if(start < end && end <= 10 && this.iso(this.receiver(index))) { this.report(index); }
+            }
+            else if(node.kind === 'ElementAccessExpression' && this.integer(node.children[1] ?? -1) === 0 &&
+                this.split(rules.skip(node.children[0] ?? -1))) { this.report(index); }
+            else if(node.kind === 'VariableDeclaration') {
+                const name = this.bindings.shape.name(index); const initializer = this.bindings.shape.initializer(index);
+                if(name < 0 || initializer < 0 || rules.parser.node(name).kind !== 'ArrayBindingPattern') { continue; }
+                const first = rules.parser.node(name).children[0] ?? -1;
+                if(first < 0 || rules.parser.node(first).kind !== 'BindingElement' || this.bindings.shape.name(first) < 0 ||
+                    rules.parser.node(first).children.some((child) => rules.parser.node(child).kind === 'DotDotDotToken')) { continue; }
+                const split = rules.skip(initializer);
+                if(this.split(split)) { this.report(split); }
+            }
+        }
+    }
+}
