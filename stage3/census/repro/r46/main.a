@@ -1,0 +1,1 @@
+interface Value { count: number; } class Empty implements Value {}
