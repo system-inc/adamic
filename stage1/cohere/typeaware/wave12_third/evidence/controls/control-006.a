@@ -1,0 +1,2 @@
+export {};
+import {Function,Symbol,String} from './ambient';Function();new Symbol();new String();

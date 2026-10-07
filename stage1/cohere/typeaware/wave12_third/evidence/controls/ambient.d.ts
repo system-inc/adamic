@@ -1,0 +1,1 @@
+export declare class Function{};export declare class Symbol{};export declare class String{};

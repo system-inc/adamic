@@ -1,0 +1,9 @@
+=== RUN   TestAgreement
+    agreement_test.go:74: no_new_func_test.go: 44 literal reference rows
+    agreement_test.go:74: no_new_native_nonconstructor_test.go: 14 literal reference rows
+    agreement_test.go:74: no_new_wrappers_test.go: 25 literal reference rows
+    agreement_test.go:82: controls mismatch byte 67: native "ave-12/third/attempt2/modules/control-000.a\n15\t21\t@typescript-eslint/no-new-native-nonconstructor\tnoNewNativeNonconstructor\tThis calls `new Symbol()`. Symbol is a function that returns a primitive and throws a TypeError when constructed, so this line fails at runtime every time it is reached. Call i" Go "ave-12/third/attempt2/modules/control-000.a\n15\t21\tno-new-native-nonconstructor\tnoNewNativeNonconstructor\tThis calls `new Symbol()`. Symbol is a function that returns a primitive and throws a TypeError when constructed, so this line fails at runtime every time it is reached. Call it without `new`.\t0\t"
+--- FAIL: TestAgreement (27.93s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware/wave12_third	27.931s
+FAIL

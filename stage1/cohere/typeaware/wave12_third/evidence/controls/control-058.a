@@ -1,0 +1,2 @@
+export {};
+function bar() { return function BigInt() {}; } var baz = new BigInt(9007199254740991);

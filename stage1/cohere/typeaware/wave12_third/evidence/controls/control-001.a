@@ -1,0 +1,2 @@
+export {};
+new (Symbol)('x');new ((BigInt))(1);new (String)('x');new ((Boolean))(0);(Function)('x');

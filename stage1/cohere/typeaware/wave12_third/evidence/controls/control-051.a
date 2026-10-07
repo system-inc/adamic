@@ -1,0 +1,4 @@
+export {};
+declare const foo: any;
+foo.Function.call(null);
+

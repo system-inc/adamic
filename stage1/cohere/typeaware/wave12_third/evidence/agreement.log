@@ -1,0 +1,18 @@
+=== RUN   TestAgreement
+    agreement_test.go:75: no_new_func_test.go: 44 literal reference rows
+    agreement_test.go:75: no_new_native_nonconstructor_test.go: 14 literal reference rows
+    agreement_test.go:75: no_new_wrappers_test.go: 25 literal reference rows
+    agreement_test.go:83: controls: 25839 identical finding bytes; findings 56
+    agreement_test.go:91: controls-asan: 25839 identical finding bytes; findings 56
+    agreement_test.go:128: no_new_func.a mutant exits 0, empty stderr, byte comparison catches byte 1411
+    agreement_test.go:128: no_new_native_nonconstructor.a mutant exits 0, empty stderr, byte comparison catches byte 61
+    agreement_test.go:128: no_new_wrappers.a mutant exits 0, empty stderr, byte comparison catches byte 577
+    agreement_test.go:141: declaration-file raw question mutant exits 0, empty stderr, byte comparison catches byte 61
+    agreement_test.go:160: new question rejects released handles with panic 70; registry retention mutant exits 0 and is caught
+    agreement_test.go:173: compiler: 5010 identical finding bytes; findings 0
+    agreement_test.go:174: compiler-asan: 5010 identical finding bytes; findings 0
+    agreement_test.go:173: repository: 18485 identical finding bytes; findings 0
+    agreement_test.go:174: repository-asan: 18485 identical finding bytes; findings 0
+--- PASS: TestAgreement (113.03s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware/wave12_third	113.028s
