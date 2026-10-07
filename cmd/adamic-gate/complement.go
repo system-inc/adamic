@@ -133,4 +133,6 @@ func complementOwns(p plan, index int, r result) bool {
 	return false
 }
 
-func schedulingIdentity(identity string, jobs int) string { return digestJSON([]any{identity, jobs}) }
+func schedulingIdentity(identity string, jobs int, parallel ...int) string {
+	return digestJSON([]any{identity, jobs, parallel})
+}
