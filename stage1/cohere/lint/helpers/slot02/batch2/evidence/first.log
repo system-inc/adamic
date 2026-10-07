@@ -1,0 +1,22 @@
+=== RUN   TestSlot02Batch2
+    slot02_batch2_test.go:75: tailwind.*ClassLiteralReader.ClassLiteralsIn: 10 consumers with actual runtime capture
+    slot02_batch2_test.go:75: tailwind.SplitClasses: 10 consumers with actual runtime capture
+    slot02_batch2_test.go:75: react.IsNamespacedMember: 10 consumers with actual runtime capture
+    slot02_batch2_test.go:84: /tmp/adamic-gate/TestSlot02Batch239478555/003/oracle [/tmp/adamic-gate/TestSlot02Batch239478555/001/cases.json]: exit status 2
+        panic: fileName should be normalized and absolute: "Component.tsx"
+        
+        goroutine 1 [running]:
+        github.com/microsoft/TypeScript/tsc/internal/ast.(*NodeFactory).NewSourceFile(0x1f1ad199ea10, {{0x1f1ad19bdf30, 0xd}, {0x1f1ad19bdf30, 0xd}, {0x0, 0x0}}, {0x1f1ad18bdb30, 0x30}, 0x1f1ad19d5100, ...)
+        	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:2528 +0x24e
+        github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseSourceFileWorker(0x1f1ad199ea08)
+        	/workspace/adamic/cohere/TypeScript/tsc/internal/parser/parser.go:449 +0x2a7
+        github.com/microsoft/TypeScript/tsc/internal/parser.ParseSourceFile({{0x1f1ad19bdf30, 0xd}, {0x1f1ad19bdf30, 0xd}, {0x0, 0x0}}, {0x1f1ad18bdb30, 0x30}, 0x4)
+        	/workspace/adamic/cohere/TypeScript/tsc/internal/parser/parser.go:143 +0x14b
+        github.com/microsoft/TypeScript/tsc/shim/parser.ParseSourceFile(...)
+        	/workspace/adamic/cohere/TypeScript-shim/parser/shim.go:16
+        main.main()
+        	/workspace/adamic/cohere/adamic_slot02_batch2.go:90 +0x7b7
+--- FAIL: TestSlot02Batch2 (9.90s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers	9.905s
+FAIL

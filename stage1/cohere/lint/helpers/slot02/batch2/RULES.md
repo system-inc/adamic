@@ -46,4 +46,3 @@ Thirty dependency entries across twenty distinct rules are removed. None loses i
 - `structure/react-component-require-properties-parameter`
 - `structure/react-hook-no-properties-in-dependencies`
 - `structure/react-hook-require-effect-comment`
-

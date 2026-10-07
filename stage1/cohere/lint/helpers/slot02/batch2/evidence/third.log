@@ -1,0 +1,21 @@
+=== RUN   TestSlot02Batch2
+    slot02_batch2_test.go:75: tailwind.*ClassLiteralReader.ClassLiteralsIn: 10 consumers with actual runtime capture
+    slot02_batch2_test.go:75: tailwind.SplitClasses: 10 consumers with actual runtime capture
+    slot02_batch2_test.go:75: react.IsNamespacedMember: 10 consumers with actual runtime capture
+    slot02_batch2_test.go:100: 813 captured inputs; 559 distinct parsed sources; 10303 node projections; 232 split texts; 10304 literal projections; 1114112 separator candidates
+    slot02_batch2_test.go:129: Actual Go, Node source, emitted JavaScript and ASan/UBSan native agree
+=== RUN   TestSlot02Batch2/namespace_guard
+    slot02_batch2_test.go:173: compiled semantic mutant caught at line 433: got "true:1:useState"; Go "false:0:"
+=== RUN   TestSlot02Batch2/drop_partial_fields
+    slot02_batch2_test.go:173: compiled semantic mutant caught at line 30915: got "split:2"; Go "split:1"
+=== RUN   TestSlot02Batch2/Unicode_whitespace
+    slot02_batch2_test.go:173: compiled semantic mutant caught at line 30927: got "split:1"; Go "split:2"
+=== RUN   TestSlot02Batch2/shared_slice
+    slot02_batch2_test.go:173: compiled semantic mutant caught at line 31591: got "literals:1:false:0"; Go "literals:1:true:0"
+--- PASS: TestSlot02Batch2 (41.02s)
+    --- PASS: TestSlot02Batch2/namespace_guard (6.92s)
+    --- PASS: TestSlot02Batch2/drop_partial_fields (9.33s)
+    --- PASS: TestSlot02Batch2/Unicode_whitespace (7.00s)
+    --- PASS: TestSlot02Batch2/shared_slice (6.45s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers	41.024s
