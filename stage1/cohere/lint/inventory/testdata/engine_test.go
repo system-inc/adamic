@@ -121,7 +121,7 @@ func TestRegisteredCorpusControl(t *testing.T) {
 }
 
 func parseControl(source string) *tsast.SourceFile {
-	return tsparser.ParseSourceFile(tsast.SourceFileParseOptions{FileName: "/control.ts", Path: tspath.Path("/control.ts")}, source, core.ScriptKindTS)
+	return tsparser.ParseSourceFile(tsast.SourceFileParseOptions{FileName: tspath.RootedFilePathFromAbsolute("/control.ts"), PathKey: tspath.CaseSensitive.PathKey(tspath.RootedPathFromAbsolute("/control.ts"))}, source, core.ScriptKindTS)
 }
 func findRegistration(name string) rule.Registration {
 	for _, r := range rule.Registered() {
@@ -145,7 +145,7 @@ func TestBranchEvidenceRequiresExecutableSelector(t *testing.T) {
 	}
 }
 
-func TestAdamicCorpusRequiresExplicitBridge(t *testing.T) {
+func TestAdamicCorpusUsesCompleteProgram(t *testing.T) {
 	directory := t.TempDir()
 	check := func(extension string) error {
 		source := filepath.Join(directory, "control"+extension)
@@ -169,10 +169,23 @@ func TestAdamicCorpusRequiresExplicitBridge(t *testing.T) {
 	if err := check(".ts"); err != nil {
 		t.Fatalf("TypeScript control failed: %v", err)
 	}
-	if err := check(".a"); err == nil {
-		t.Fatal("cohere now supports .a: remove the unknown-count fallback and measure the complete program")
-	} else {
-		t.Logf("explicit .a boundary: %v", err)
+	if err := check(".a"); err != nil {
+		t.Fatalf("Adamic program failed: %v", err)
+	}
+	source := filepath.Join(directory, "control.a")
+	if err := os.WriteFile(source, []byte("const value: number = 1;"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	registration := findRegistration("@typescript-eslint/unbound-method")
+	items := []entry{}
+	for _, subject := range rule.Registered() {
+		items = append(items, entry{Name: subject.Rule.Name, Repository: emptyFrequency()})
+	}
+	measureCorpus(directory, directory, "repository", []string{source}, items)
+	for _, item := range items {
+		if item.Name == registration.Rule.Name && (item.Repository.Count == nil || item.Repository.Offered != 1) {
+			t.Fatalf("Adamic program was not measured: %#v", item.Repository)
+		}
 	}
 }
 
@@ -184,5 +197,17 @@ func TestFailedFamilyCannotBeMarkedPassed(t *testing.T) {
 	}
 	if !familyPassed([]byte("ok  \t"+rulesPrefix+"core\t1s"), "core") {
 		t.Fatal("passing family not recognized")
+	}
+}
+
+func TestInventoryFileNameBytes(t *testing.T) {
+	file := parseControl("const value = 1;")
+	subject := rule.Registration{Rule: rule.Rule{Run: func(rule.Context, any) rule.Listeners {
+		panic("path probe")
+	}}}
+	report := emptyFrequency()
+	measured(subject, file, nil, &report)
+	if len(report.Failures) != 1 || report.Failures[0] != "/control.ts: path probe" {
+		t.Fatalf("inventory path bytes changed: %#v", report.Failures)
 	}
 }
