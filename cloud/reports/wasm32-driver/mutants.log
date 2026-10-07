@@ -1,0 +1,91 @@
+wasm-mutant-cpu.log
+--- FAIL: TestWASIRefusesUnsupportedOptions (0.00s)
+    target_test.go:27: accepted {Target:wasm32-wasi Sanitize:false Count:false cpu:native slabs:false}
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.006s
+FAIL
+
+wasm-mutant-duplicate-target.log
+adamic: native: sanitizers are not supported for wasm32-wasi
+adamic: native: sanitizers are not supported for wasm32-wasi
+usage:
+  adamic types <file.a|file.ts>...
+  adamic c <file.a|file.ts>
+  adamic js <file.a|file.ts>
+  adamic build [--target wasm32-wasi] <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>]
+usage:
+  adamic types <file.a|file.ts>...
+  adamic c <file.a|file.ts>
+  adamic js <file.a|file.ts>
+  adamic build [--target wasm32-wasi] <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>]
+adamic: load: no file at missing.a
+--- FAIL: TestBuildTargetParsing (0.00s)
+    target_test.go:25: [build missing.a -o out --target wasm32-wasi --target wasm32-wasi]: got 1, want usage error (2)
+FAIL
+FAIL	github.com/system-inc/adamic/cmd/adamic	0.005s
+FAIL
+
+wasm-mutant-invalid-sysroot.log
+--- FAIL: TestWASIRefusesUnsupportedOptions (0.00s)
+    target_test.go:36: accepted nonexistent sysroot
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.004s
+FAIL
+
+wasm-mutant-macro.log
+--- FAIL: TestWASITargetFlags (0.00s)
+    target_test.go:15: missing -DADAMIC_TARGET_WASI=1 in -std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls --target=wasm32-wasi --sysroot=/tmp/adamic-gate/TestWASITargetFlags955838067/001 -mno-atomics -O2
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.017s
+FAIL
+
+wasm-mutant-missing-sysroot.log
+--- FAIL: TestWASIRefusesUnsupportedOptions (0.00s)
+    target_test.go:32: missing sysroot: native: WASI_SYSROOT is not a directory: 
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.004s
+FAIL
+
+wasm-mutant-sanitize.log
+--- FAIL: TestWASIRefusesUnsupportedOptions (0.00s)
+    target_test.go:27: accepted {Target:wasm32-wasi Sanitize:true Count:false cpu: slabs:false}
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.005s
+FAIL
+
+wasm-mutant-target-name.log
+adamic: native: sanitizers are not supported for wasm32-wasi
+adamic: native: sanitizers are not supported for wasm32-wasi
+adamic: native: unsupported target "unknown"
+--- FAIL: TestBuildTargetParsing (0.00s)
+    target_test.go:25: [build --target unknown missing.a -o out.wasm]: got 1, want usage error (2)
+FAIL
+FAIL	github.com/system-inc/adamic/cmd/adamic	0.005s
+FAIL
+
+wasm-mutant-target-prefix.log
+usage:
+  adamic types <file.a|file.ts>...
+  adamic c <file.a|file.ts>
+  adamic js <file.a|file.ts>
+  adamic build [--target wasm32-wasi] <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>]
+--- FAIL: TestBuildTargetParsing (0.00s)
+    target_test.go:16: [build --target wasm32-wasi missing.a -o out.wasm --sanitize]: got 2, want unsupported options (1)
+FAIL
+FAIL	github.com/system-inc/adamic/cmd/adamic	0.004s
+FAIL
+
+wasm-mutant-tsgo-archive.log
+--- FAIL: TestWASIRejectsTSGoArchive (0.00s)
+    target_test.go:47: got exit 1 and "adamic: load: no file at missing.a\n"
+FAIL
+FAIL	github.com/system-inc/adamic/cmd/adamic	0.004s
+FAIL
+
+wasm-mutant-unknown-target.log
+--- FAIL: TestWASIRefusesUnsupportedOptions (0.00s)
+    target_test.go:27: accepted {Target:unknown Sanitize:false Count:false cpu: slabs:false}
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.004s
+FAIL
+

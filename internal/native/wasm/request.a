@@ -1,0 +1,24 @@
+// A fresh tree dies in the declaration's statement region. The response string lives on the heap.
+interface Work {
+	readonly left: Work | undefined;
+	readonly right: Work | undefined;
+}
+
+function build(depth: number): Work {
+	if (depth === 0) {
+		return { left: undefined, right: undefined };
+	}
+	return { left: build(depth - 1), right: build(depth - 1) };
+}
+
+function count(work: Work | undefined): number {
+	return work === undefined ? 0 : 1 + count(work.left) + count(work.right);
+}
+
+export function handleRequest(request: string): string {
+	const total = count(build(5));
+	return `hello ${request}: ${total}`;
+}
+
+// Keeps the handler reachable in today's executable-only C backend.
+handleRequest('warmup');
