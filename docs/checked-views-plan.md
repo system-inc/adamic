@@ -1,4 +1,4 @@
-# Checked views: three-worker plan
+# Checked views: worker plan
 
 Ruled by @system_adamic. Lane 1 stays with the interface-downcasts worker on
 `codex/interface-downcasts`; due October 8 at 18:00 MDT, **00:00 UTC October 9**.
@@ -265,3 +265,60 @@ Working estimate for lane 1 nullish plus optional: October 8 22:00 UTC (16:00 MD
 with native null/undefined separation and mutation/alias parity still a risk.
 This is an estimate, not a completion claim; each family is pushed only after its
 both-backend oracle and semantic mutants pass.
+
+
+## Lane 5 callable handoff after c898009b
+
+The lead moved callable work to lane 5 on codex/views-callables, starting from
+c898009b. Lane 2 now owns native arrays only, including array intrinsics and
+mutation; its current integration branch is codex/views-arrays-callables-parser.
+The earlier combined array/callable shares and territories above are historical.
+Lane 2 will not edit callable files or certification hooks further. Lane 1 owns
+the cast merge conflict and will push lazy admission with Lane 2's tip merged;
+Lane 2 merges that SHA rather than resolving that conflict locally.
+
+Lane 5 owns internal/lower/view_callables.go and its tests,
+internal/native/view_callables.go, internal/javascript/view_callables.go, and
+internal/native/runtime/view_callables.c/.h. The callable fixtures currently live
+under stage3/interface-downcasts/lane2; future callable fixtures should use a lane5
+subdirectory. checked_views_callables_test.go contains the existing callable
+oracles as well as the parser array probes; leave it to lane 5 and add subsequent
+array tests in separate array-owned oracle files to avoid concurrent edits.
+
+Existing callable integration points at c898009b:
+
+- buildViewCallableContract registers viewCallableContractHook in init and interns
+  a ViewCallable/Closure kind contract. It does not build argument/result contracts
+  or certify arbitrary signatures; construct signatures remain NotYet.
+- viewCallableFieldUses, called by viewObjectFields, currently scans same-named
+  implementations and escaping reads across the module graph. It requires a body
+  and viewSignatureCompatible, which checks strict parameters/results and writable
+  relations. It is a conservative predecessor to per-read allocation certification.
+- viewCallableCall/checkViewCallableSignature pin the refusal naming the member:
+  its signature cannot be checked at runtime and no compatible implementation is
+  proven. Runtime function kind never supplies signatureProven.
+- viewProvenClassCast is invoked by deferredViewCast in view_cast_preflight.go.
+  Its current tag-to-construction scan requires every matching construction to
+  have the compatible nominal class identity before free method dispatch.
+- Native emitViewCallableRead calls adamic_view_callable. The runtime distinguishes
+  an own closure from a shape method and preserves readiness/kind checks and this.
+  JavaScript emitViewCallableProperty uses emitViewCallableRead/Call and the
+  adamicViewCallableRead/Call helper text, preserving explicit method receivers.
+- Shared metadata uses ViewContract.Kind=ViewCallable, Of=Closure and
+  Property.Method/Of/View/ViewContract and Readiness. Lane 1 owns the shared
+  dispatch/readiness wiring.
+
+Array elements whose declared type is callable remain a dependency on lane 5:
+viewArrayContract delegates the element to the common builder callback, while the
+current viewArrayFields uses viewCallableCall for an unproven element signature.
+Lane 2 may check an element's physical closure kind, but will not interpret that
+kind as a compatible callable signature. Array intrinsic contracts remain lane 2;
+user-defined function-valued array elements and fields remain lane 5.
+
+Read-based callable demand is 308 type/field pairs and 1,503 source reads in the
+pinned full compiler, from the c898009b-following census at 2de6d1ba. These are
+partial demand, not successful lowerings or a claim every read is blocked. Exact
+pairs and source witnesses are in stage3/interface-downcasts/lane2/read-census.
+Existing controls include function-field, class-method, callable missing/kind/
+uninitialized fixtures and the pinned opaque-signature refusal. The previous
+signature mutant was caught; its evidence is retained in parser-return-logs.
