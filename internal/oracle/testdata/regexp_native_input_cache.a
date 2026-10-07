@@ -1,0 +1,22 @@
+// Cached views preserve UTF-16 units, supplementary points and lone surrogates.
+let text = 'é🌍\ud800a';
+const unit = /./gs;
+const point = /./gsu;
+let units = '';
+for (const m of text.matchAll(unit)) units += `${m.index}:${m[0].length},`;
+let points = '';
+for (const m of text.matchAll(point)) points += `${m.index}:${m[0].length},`;
+console.log(units);
+console.log(points);
+console.log(`${/\ud800/.test(text)} ${/🌍/u.test(text)} ${text.charCodeAt(2)}`);
+// test does not retain the input. Appending to its sole owner must invalidate the view.
+let grown = '';
+for (let i = 0; i < 40; i++) grown += 'é';
+console.log(`${/x$/.test(grown)}`);
+grown += '🌍x';
+console.log(`${/x$/.test(grown)} ${/🌍x$/u.test(grown)} ${grown.length}`);
+const suffix = grown.slice(39);
+console.log(`${suffix.search(/x/)} ${suffix.match(/./gu)?.length}`);
+text += 'b';
+console.log(`${text.replace(/a/g, '$&!')} ${text.split(/a/).length}`);
+console.log(`${/x/.exec('') === null} ${/x/.test('')}`);

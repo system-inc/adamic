@@ -1,0 +1,1 @@
+interface Slot { value?: number; } const slot: Slot = {value: undefined}; console.log(String(slot.value));
