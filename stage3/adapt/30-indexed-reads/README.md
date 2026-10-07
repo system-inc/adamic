@@ -1,8 +1,9 @@
-# Required indexed reads, core and parser/scanner/factory partitions
+# Required indexed reads, core, parser/scanner/factory, debug and path partitions
 
 The adapter covers the three core/utilities files plus parser.ts, scanner.ts,
-and all ten factory files. The cumulative ledger has 190 required-read
-assertions, four U-zero operands, and 79 declines; per-wave evidence follows.
+all ten factory files, debug.ts, and path.ts. The cumulative ledger has 227
+required-read assertions, four U-zero operands, and 89 declines across 17 files;
+per-wave evidence follows. The parser slice ownership audit remains incomplete.
 
 The first wave changed `src/compiler/core.ts`, `utilities.ts`, and
 `utilitiesPublic.ts` in TypeScript 6.0.3, pinned at
@@ -47,6 +48,12 @@ ledger rather than blanket-asserting every indexed expression.
 - Pin expression occurrence counts, not historical source offsets. Type-import
   adaptation changes columns; parse the current text, validate all files before
   writing, and reject site drift rather than guessing a replacement location.
+
+## Wave 3 ownership notice
+
+Program partition: adaptation 30 now owns `src/compiler/debug.ts` and
+`src/compiler/path.ts`; remove these two files from partition 32. Slice closure
+coverage is being audited against the published 30/31/32/33 ownership lists.
 
 ## Tree and scope
 
@@ -542,3 +549,149 @@ listed when encountered in the possibly-undefined inventory, but not adapted.
 | parser.ts:10787:26 | `pragma.args[i]` | U-loop | assert | The bounded loop selects a populated argument-definition entry in the pragma metadata. |
 | parser.ts:10788:14 | `args[i]` | U-parallel | decline | The missing-argument test explicitly accepts absence for an optional pragma definition. |
 | parser.ts:10794:33 | `args[i]` | U-parallel | decline | The nearby argument test permits missing optional arguments and the original indexed dictionary write forwards that value. |
+
+## Third wave: debug, path, and slice coverage
+
+Program partition: adaptation 30 owns **debug.ts and path.ts**, moved from 32
+by the user's instruction. No other partition's files were changed. The new
+47 ledger entries comprise 37 assertions and nine declines in these two files,
+plus one newly discovered decline in utilities.ts's unknown-returning option
+query. The original 273 ledger entries remain identical.
+
+Graph connector rows and cells are allocated and zero-filled, so their reads
+are U-grid required values, including the reads in compound assignments.
+Grid rows are allocated but their graph-node cells are deliberately sparse;
+assert the row at its existing evaluation point and decline the optional cell.
+Path component arrays carry a populated root string, including the empty
+relative root; component skipping and root truthiness tests stay unchanged.
+
+Further audit rule: inspect top-level union TypeFlags, not the printed type
+text. Undefined can be hidden by an alias, or appear inside a callback type
+without making the callback optional. This found one omitted optional lookup,
+utilities.ts:9402, which now has an explicit decline.
+
+### Census and proof
+
+The unchanged Adamic loader checked 78 compiler roots on the tree with 00, 10
+and 30 only; 20 remains excluded. `census.sh <tree> <out> --wave3` scopes these
+two files, retaining every requested code and full diagnostic chain.
+
+| File | TS2345 | TS18048 | TS2532 | TS2322 | TS2538 | Total |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| debug.ts before | 4 | 12 | 18 | 3 | 0 | 37 |
+| debug.ts after | 0 | 0 | 0 | 1 | 0 | 1 |
+| path.ts before | 5 | 1 | 0 | 1 | 0 | 7 |
+| path.ts after | 0 | 0 | 0 | 0 | 0 | 0 |
+| **Total before** | **9** | **13** | **18** | **4** | **0** | **44** |
+| **Total after** | **0** | **0** | **0** | **1** | **0** | **1** |
+
+The remaining TS2322 at debug.ts:171 is the deliberate write of undefined to
+the assertion cache, not a required indexed read. It needs an honest optional
+value declaration and is outside this adaptation.
+
+Default `stage3/oracle/run.sh` passed **106,367 tests, 0 failing, 0 pending**,
+with all runners, no test filter, four workers, and light=false. The baseline
+diff is **0 bytes**. Install/build/tests exited 0 and took 4.889/10.429/231.925s;
+total 247.304s. `wave3-oracle-report.json` records the exact commands. No baseline
+was accepted or changed. Native tsc, lint, and browser integrations were not run.
+
+`verify.cjs` passed stock emitted-JavaScript byte comparison, site contracts,
+and idempotence for all 17 files. The actual second adapter CLI run made zero
+edits, and fresh `apply.sh` discovery produced identical hashes in all 17
+files. `wave3-proof.json` retains these hashes and counts. Toolchain setup:
+Go 0s, clang 0s, Node 0s, submodules 0s, build cache 30s, total 30s; nproc 5,
+CPU quota 4. Test and verification output went to `/tmp/stage3-indexed-wave3-*`
+logs. Full before/after/mutant diagnostic chains are checked in as wave3 JSON.
+
+The new required-read mutant changes debug.ts:1059:48 from
+`columns[node.level]!` to `(columns[node.level] ?? 0)`. The census **misses it**:
+still one finding, with identical diagnostics. Stock emitted JavaScript changes
+and the site contract reports `required read defaulted: debug.ts:1059:48`; both
+exit 1. The default oracle was not rerun on this mutant. A separate scanner
+mutant changes `map[0]!` to `(map[0] ?? 0)` and regenerates its slice manifest;
+the new slice audit rejects it with `required assertion missing:
+src/compiler/scanner.ts:360`, exit 1. Neither mutant is retained.
+
+### Slice audit and stopping point
+
+Fetched scanner-proof at `21cad99e86bef769d29d86710ee71a9d5600726a`. Its
+`stage3/slice/slice.cjs` emitted both requested entries immediately, so no
+20-minute retry was needed to obtain the slices. The createScanner entry plus
+ScriptTarget/SyntaxKind reaches eight files and 91 declarations. The
+createSourceFile entry reaches 78 files and 5,121 declarations through namespace
+references; this is the observed output of the published tool, not a claim that
+the parser has a compact dependency closure.
+
+`slice-audit.cjs <full-tree> <slice.json> <report.json>` checks each source span's
+SHA-256, identifies reached indexed expressions at their original positions,
+and joins them to the expression/occurrence ledger. It distinguishes pure stores
+and top-level undefined unions. A present type alone does not prove runtime
+density; an unowned optional expression is a review candidate, not automatically
+a required read. The whole-tree site contract independently validates declines
+and U-zero shapes. Both complete audit reports are checked in.
+
+Scanner: **29 indexed expressions, zero unresolved candidates**. All are in
+core.ts, scanner.ts, or utilities.ts, which 30 covers. Its remaining files
+(commandLineParser.ts's reached target declaration, corePublic.ts's interface,
+the generated diagnostics, and types.ts) have no reached indexed expressions.
+Debug's reached assertions have none either.
+
+Parser: **1,715 indexed expressions, zero unreviewed candidates within 30**,
+but **988 possibly-undefined review candidates outside 30**. The published
+branches do not supply adapters or file ownership lists for 31, 32, and 33.
+I have not verified those partitions' coverage or assigned additional unowned
+files: without their ownership lists, doing so could duplicate another worker's
+partition. This part is incomplete. The audit preserves each candidate and its
+file so the next pass can join the ownership lists without another survey.
+
+### Third-wave site ledger
+
+| Site | Read | Class | Action | Invariant or decline reason |
+| --- | --- | --- | --- | --- |
+| debug.ts:168:36 | `assertionCache[key]` | U-table | decline | Cleared cache slots are explicitly undefined; the following cachedFunc !== undefined guard handles them. |
+| debug.ts:378:28 | `match[1]` | U-regex | assert | A successful literal function-name regexp requires its nonempty capture 1. |
+| debug.ts:392:42 | `members[0]` | U-endpoint | assert | getEnumMembers pushes populated number/name tuples; the nonzero length branch selects its populated first tuple. |
+| debug.ts:392:64 | `members[0]` | U-endpoint | assert | getEnumMembers pushes populated number/name tuples; the nonzero length branch selects its populated first tuple. |
+| debug.ts:996:29 | `links[id]` | U-table | decline | The graph cache legitimately misses; the following !graphNode branch allocates and records its node. |
+| debug.ts:1059:48 | `columns[node.level]` | U-position | assert | fill initializes every width to zero; computed node levels are nonnegative and below the computed graph height. |
+| debug.ts:1071:35 | `children[i]` | U-loop | assert | getChildren pushes populated graph nodes and the loop bounds their dense list. |
+| debug.ts:1110:36 | `switchStatement.caseBlock.clauses[i]` | U-loop | assert | The flow switch range comes from populated parser clauses and bounds the active clause interval. |
+| debug.ts:1137:17 | `grid[node.level][node.lane]` | U-grid | decline | This is an unchanged pure cell store; only its required allocated row read receives an assertion. |
+| debug.ts:1137:17 | `grid[node.level]` | U-grid | assert | The column-width map allocates every grid row; node.level selects a row within graph height. |
+| debug.ts:1140:35 | `children[i]` | U-loop | assert | getChildren pushes populated graph nodes and the loop bounds their dense list. |
+| debug.ts:1145:21 | `connectors[node.level][child.lane]` | U-grid | assert | Every connector row and cell is filled with zero; node level and child lane are within the computed graph dimensions. |
+| debug.ts:1145:21 | `connectors[node.level]` | U-grid | assert | Every connector row and cell is filled with zero; node level and child lane are within the computed graph dimensions. |
+| debug.ts:1148:21 | `connectors[node.level][node.lane]` | U-grid | assert | Every connector row and cell is filled with zero; the node level and lane are within graph dimensions. |
+| debug.ts:1148:21 | `connectors[node.level]` | U-grid | assert | Every connector row and cell is filled with zero; the node level and lane are within graph dimensions. |
+| debug.ts:1152:36 | `parents[i]` | U-loop | assert | getParents pushes populated graph nodes and the loop bounds their dense list. |
+| debug.ts:1156:21 | `connectors[node.level - 1][parent.lane]` | U-grid | assert | A node with parents has positive level; its preceding connector row and each parent lane are allocated and zero-filled. |
+| debug.ts:1156:21 | `connectors[node.level - 1]` | U-grid | assert | A node with parents has positive level; its preceding connector row and each parent lane are allocated and zero-filled. |
+| debug.ts:1163:47 | `connectors[column - 1][lane]` | U-grid | assert | column > 0 selects an allocated preceding connector row; the bounded lane selects its zero-filled cell. |
+| debug.ts:1163:47 | `connectors[column - 1]` | U-grid | assert | column > 0 selects an allocated preceding connector row; the bounded lane selects its zero-filled cell. |
+| debug.ts:1164:46 | `connectors[column][lane - 1]` | U-grid | assert | The bounded column selects an allocated connector row; lane > 0 selects its zero-filled predecessor cell. |
+| debug.ts:1164:46 | `connectors[column]` | U-grid | assert | The bounded column selects an allocated connector row; lane > 0 selects its zero-filled predecessor cell. |
+| debug.ts:1165:37 | `connectors[column][lane]` | U-grid | assert | Both nested loop bounds select an allocated connector row and zero-filled cell. |
+| debug.ts:1165:37 | `connectors[column]` | U-grid | assert | Both nested loop bounds select an allocated connector row and zero-filled cell. |
+| debug.ts:1169:25 | `connectors[column]` | U-grid | assert | The nested loop bounds select an allocated connector row for the unchanged cell store. |
+| debug.ts:1176:39 | `connectors[column][lane]` | U-grid | assert | The bounded column and lane select an allocated connector row and populated numeric cell. |
+| debug.ts:1176:39 | `connectors[column]` | U-grid | assert | The bounded column and lane select an allocated connector row and populated numeric cell. |
+| debug.ts:1178:34 | `grid[column][lane]` | U-grid | decline | Grid cells are intentionally sparse; the following node guard or absence test handles missing cells. |
+| debug.ts:1178:34 | `grid[column]` | U-grid | assert | The bounded column (or guarded next column) selects an allocated grid row, while its cell remains legitimately optional. |
+| debug.ts:1181:58 | `columnWidths[column]` | U-parallel | assert | The bounded grid column selects the corresponding initialized column-width entry. |
+| debug.ts:1188:58 | `columnWidths[column]` | U-parallel | assert | The bounded grid column selects the corresponding initialized column-width entry. |
+| debug.ts:1192:98 | `grid[column + 1][lane]` | U-grid | decline | Grid cells are intentionally sparse; the following node guard or absence test handles missing cells. |
+| debug.ts:1192:98 | `grid[column + 1]` | U-grid | assert | The bounded column (or guarded next column) selects an allocated grid row, while its cell remains legitimately optional. |
+| debug.ts:1199:17 | `lanes[lane]` | U-position | assert | lanes is filled with empty strings and writeLane receives a lane within the render loop bounds. |
+| path.ts:515:18 | `pathComponents[0]` | U-endpoint | decline | The original truthiness test handles an empty or absent root, and the repeated guarded read already narrows; keep both reads. |
+| path.ts:540:22 | `components[0]` | U-endpoint | assert | some excludes an empty list; parsed path components always begin with a populated root string, possibly empty. |
+| path.ts:542:27 | `components[i]` | U-loop | decline | The next !component guard explicitly skips empty or absent components. |
+| path.ts:547:21 | `reduced[reduced.length - 1]` | U-endpoint | decline | The original equality comparison tolerates absence without requiring a value. |
+| path.ts:552:22 | `reduced[0]` | U-endpoint | decline | The root truthiness test intentionally distinguishes empty relative roots; no dereference requires presence. |
+| path.ts:912:42 | `aComponents[i]` | U-parallel | assert | Both normalized path component lists are populated and i is below their shared minimum length. |
+| path.ts:912:58 | `bComponents[i]` | U-parallel | assert | Both normalized path component lists are populated and i is below their shared minimum length. |
+| path.ts:986:31 | `parentComponents[i]` | U-parallel | assert | Parsed component lists are populated and the child-length guard covers every bounded parent index. |
+| path.ts:986:52 | `childComponents[i]` | U-parallel | assert | Parsed component lists are populated and the child-length guard covers every bounded parent index. |
+| path.ts:1016:52 | `fromComponents[start]` | U-parallel | assert | Both populated parsed component lists bound start before canonicalizing the shared position. |
+| path.ts:1017:50 | `toComponents[start]` | U-parallel | assert | Both populated parsed component lists bound start before canonicalizing the shared position. |
+| path.ts:1076:28 | `pathComponents[0]` | U-endpoint | assert | getPathComponentsRelativeTo returns a populated root-first list in either branch, including an empty root for relative paths. |
+| utilities.ts:9402:9 | `options[option.name]` | U-table | decline | The unknown-returning option query deliberately forwards an absent option; its consumers decide defaults or compare absence. |
