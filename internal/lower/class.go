@@ -169,7 +169,7 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 			if ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
 				continue
 			}
-			methodName := methodKey(member, lowered.class)
+			methodName := l.methodKey(member, lowered.class)
 			if accessorMember(member) {
 				l.registerAccessor(lowered.class, member, len(l.result.Functions))
 			}
@@ -217,7 +217,7 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 		if !classFunction(member) || ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
 			continue
 		}
-		method := lowered.methods[methodKey(member, lowered.class)]
+		method := lowered.methods[l.methodKey(member, lowered.class)]
 		if err := l.signature(method, member, l.thisLocal(method)); err != nil {
 			return nil, err
 		}
@@ -232,7 +232,7 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 		if !classFunction(member) || ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
 			continue
 		}
-		method := lowered.methods[methodKey(member, lowered.class)]
+		method := lowered.methods[l.methodKey(member, lowered.class)]
 		if member.Body() == nil {
 			continue
 		}
