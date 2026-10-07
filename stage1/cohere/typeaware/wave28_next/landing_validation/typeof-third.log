@@ -1,0 +1,26 @@
+=== RUN   TestThirdBatch
+    third_test.go:57: control sources 322, Go syntax-valid 321; all source inputs remain in comparison
+    third_test.go:58: controls: 66596 identical finding bytes; findings 181
+    third_test.go:64: no-throw-literal positive findings 18
+    third_test.go:64: no-useless-backreference positive findings 106
+    third_test.go:64: prefer-arrow-callback positive findings 57
+    checks_test.go:48: mutant throw exited zero, empty stderr, comparison caught byte 5193
+    checks_test.go:48: mutant backreference exited zero, empty stderr, comparison caught byte 925
+    checks_test.go:48: mutant arrow-fix exited zero, empty stderr, comparison caught byte 3659
+    checks_test.go:52: controls-asan: 66596 identical finding bytes; findings 181
+    checks_test.go:61: repository: 18485 identical finding bytes; findings 0
+    checks_test.go:62: repository-asan: 18485 identical finding bytes; findings 0
+    checks_test.go:69: repository round 0 native 625.807375ms Go 313.250378ms
+    checks_test.go:69: repository round 1 native 586.567113ms Go 261.935358ms
+    checks_test.go:69: repository round 2 native 531.201007ms Go 315.153542ms
+    checks_test.go:61: compiler: 5010 identical finding bytes; findings 0
+    checks_test.go:62: compiler-asan: 5010 identical finding bytes; findings 0
+    checks_test.go:69: compiler round 0 native 5.276248544s Go 909.108779ms
+    checks_test.go:69: compiler round 1 native 5.465597081s Go 1.108415804s
+    checks_test.go:69: compiler round 2 native 4.808791893s Go 913.567988ms
+    checks_test.go:97: released: panic 70, no sanitizer findings
+    checks_test.go:97: released-asan: panic 70, no sanitizer findings
+    checks_test.go:103: released registry mutant exited zero; required panic assertion catches it
+--- PASS: TestThirdBatch (256.05s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware/wave28_third	256.076s
