@@ -26,6 +26,12 @@ func TestRefusalPassRulings(t *testing.T) {
 				t.Fatal(err)
 			}
 			_, err = lowerSource(t, string(source))
+			if (strings.HasPrefix(filepath.Base(path), "record") || filepath.Base(path) == "observe-record.a") && filepath.Base(path) != "record-operation-permanent-priority.a" {
+				if err != nil {
+					t.Fatalf("own-key record now supported: %v", err)
+				}
+				return
+			}
 			var refused *Refused
 			var notYet *NotYet
 			var got string

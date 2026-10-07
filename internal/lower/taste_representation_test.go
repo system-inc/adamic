@@ -21,6 +21,13 @@ func TestTasteRepresentationLimitsStayExplicit(t *testing.T) {
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			_, err := lowerSource(t, probe.source)
+			if probe.name == "explicit any" {
+				var refused *Refused
+				if !errors.As(err, &refused) || refused.What != "any" {
+					t.Fatalf("want explicit any refusal, got %v", err)
+				}
+				return
+			}
 			var notYet *NotYet
 			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), probe.reason) {
 				t.Fatalf("want NotYet %q, got %v", probe.reason, err)

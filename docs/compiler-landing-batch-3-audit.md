@@ -202,3 +202,19 @@ Item 10 interaction with import-cycles: retain the checked runtime read for impo
 ### Item 11: arrow-block-view-site
 
 Only counts conflicted; regenerated on Linux (27.582s). Whole lower 23.253s, focused oracle 0.182s and vet passed. Removing the block exclusion was caught by TestArrowBlockStructuralViewRefused at the wrong refusal site (5:33 instead of 5:42). No compiler output failure or stage3 record change. Item 10 whole oracle had only counts mismatches while a later counts generator was running; the checkpoint gate is required to verify this with sequential generation.
+
+## Item 12 stage3 audit
+
+Only stage0 changed. Bytes outside every stage0 field, including all Node observations, match the prior tip exactly. Current Node and compiling native checks were required by the updater.
+
+| Fixture | Before | After | Reason |
+|---|---|---|---|
+| predicates/10_nullish.a | Refused: stage3/fixtures/predicates/10_nullish.a:6:5: Adamic 0.1 refuses a type predicate whose return is not proven (the body's true narrowing does not match null \| undefined); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate) | Refused: stage3/fixtures/predicates/10_nullish.a:5:31: Adamic 0.1 refuses any; name the proven type, or use unknown and narrow it | Permanent unsafe declaration checks precede lowering; implemented own-key records remain supported. |
+
+### Item 12: refusal-pass-rulings interactions
+
+Combined the incoming unsafe-declaration and class-merge pass with every existing pragma, predicate, discriminant, cast, record-storage, enum, Node and method check. Legacy Record guards apply only where own-key storage is unsupported; nine old Record probes now run in the independent Node oracle. Explicit any is permanently Refused; readonly unsupported storage stays NotYet with its type named. First whole lower failed three stale expectations; corrected whole lower passed 37.024s. Six mutants (class merge, Function annotation, any, eval, expando, Function constructor) each failed pinned refusal tests; restored baseline passed.
+
+The unknown-narrowing counts merge had placed weak rows at filesystem indices. Corrected the weak offset and regenerated on Linux; all six weak rows and all filesystem rows survive. Restoring the offset collision failed TestCountsAreRecorded (60.295s). Final generation passed 29.032s before the gate.
+
+Checkpoint 12: uncached oracle 350.222s, lower 121.680s, native 272.100s and stage3 50.471s passed. Flow failed only because its positive-program glob included the new deliberately refused arrow_block_structural.a; that probe remains covered by TestArrowBlockStructuralViewRefused and is excluded from graph tracing. Full flow is being rerun. No production output disagreement. Logs: /tmp/landing-batch-3-checkpoint-12.log and /tmp/landing-batch-3-12-*.log.
