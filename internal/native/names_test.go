@@ -164,8 +164,8 @@ func TestImportedSpecializationsHaveSourceIdentity(t *testing.T) {
 	entry := filepath.Join(directory, "main.a")
 	sources := map[string]string{
 		entry:                           `import { Box as A } from './a.a'; import { Box as B } from './b.a'; class Holder<T> { readonly value: T; constructor(value: T) { this.value = value; } get(): T { return this.value; } } const first = new Holder<A>(new A(10)); const second = new Holder<B>(new B(10)); console.log(first.get().read().toString()); console.log(second.get().read().toString());`,
-		filepath.Join(directory, "a.a"): `export class Box { readonly value: number; constructor(value: number) { this.value = value; } read(): number { return this.value; } }`,
-		filepath.Join(directory, "b.a"): `export class Box { readonly value: number; constructor(value: number) { this.value = value; } read(): number { return this.value + 1; } }`,
+		filepath.Join(directory, "a.a"): `export class Box { private readonly first = 0; readonly value: number; constructor(value: number) { this.value = value; } read(): number { return this.value; } }`,
+		filepath.Join(directory, "b.a"): `export class Box { private readonly second = 0; readonly value: number; constructor(value: number) { this.value = value; } read(): number { return this.value + 1; } }`,
 	}
 	for path, source := range sources {
 		if err := os.WriteFile(path, []byte(source), 0644); err != nil {
