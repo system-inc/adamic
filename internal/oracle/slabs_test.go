@@ -15,7 +15,7 @@ import (
 // slab chunks stay reachable, so LeakSanitizer cannot account for individual slots.
 func TestNativeSlabsAgreeWithNode(t *testing.T) {
 	if runtime.GOOS == "darwin" {
-		t.Skip("Linux is the gate of record: Node on arm64 macOS fuses multiply-adds for atanh in navigation.a (#myatdyv)")
+		t.Skip("Linux is the gate of record; macOS Node fuses multiply-adds, so navigation.a differs there (#myatdyv), and this lane gets its own Linux shard")
 	}
 	if runtime.GOOS != "linux" {
 		t.Skip("the slab lane has its own Linux gate shard")
