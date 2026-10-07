@@ -1,8 +1,8 @@
-Built: no new helpers; helper branch rebased onto current origin/main e8ba3d5d and revalidated; rule rebase attempted and blocked by shared-file conflicts.
-Commits: helper rebase head ee606e1f plus this report commit; preserved rule head 89d25f6f; helper origin before rebase 5ee3b523.
-Commands: three owned helper go tests PASS 30.965s, 56.047s and 31.473s; owned go vet PASS, empty output; setup 128s, nproc 5.
-Mutants: all twelve retained semantic mutants compile, finish cleanly and differ from Go on source Node, emitted JavaScript and sanitized native; 4,470 baseline cases compare 820,676 bytes.
-Not covered: rule oracle on current main, full repository gate, whole-rule integration; no new claim because the rule branch is neither landed nor landing-ready.
+Built: three retained helpers unchanged; both owned branches rebased onto origin/main c01907a7; no new claim.
+Commits: rule branch pushed at edb799134; helper rebase head 65508f3f followed by this evidence commit.
+Commands: all three owned helper go tests and vet PASS again on c01907a7; 4,470 cases and 820,676 matching Go bytes; prior setup 128s, nproc 5.
+Mutants: all twelve retained helper semantic mutants compile, finish cleanly and are caught on source Node, emitted JavaScript and sanitized native; seventeen rule mutants also caught freshly.
+Not covered: full repository gate, normal rule harness integration, full Go rule parity on eleven parser/adapter exclusions; no new helper claim while these exceed the only-harness parking condition.
 
 ## Landing state
 
@@ -34,3 +34,9 @@ The work-in-progress cap remains active because of that rule branch. No helper e
 ## Current main follow-up
 
 Rebased cleanly onto origin/main f8013f0baac41ddc340d76f83bddde38536a8f07. The same three owned helper packages passed uncached go test -count=1 -v -timeout=10m and go vet. All 4,470 baseline cases and twelve semantic mutants passed their comparisons on source Node, emitted JavaScript and sanitized native. The rule rebase was retried against this main and encountered the same four shared-file conflicts at registration commit 291754439; aborted without shared edits. No new claims, numeric listener changes or full gate followed the blocker. Current output is retained in evidence/current-helper-tests.log, current-helper-vet.log and current-rule-rebase.log.
+
+## Current parking assessment on c01907a7
+
+The new parking instruction allowed replaying only the 29 owned rule commits and retaining current main shared files. That branch is now rebased and pushed at edb7991340b30ba4dc260d6a864cdcc36d4d074e. Its supported corpus and all seventeen compiling mutants passed; fresh current-main witness/mutant runs also passed after main advanced to c01907a7036a22c2ea7ee686ed5fe4c6cd4bbc06. Compiler and stage1 inputs did not change between f8013f0b and c01907a7; the new Stage 3 oracle hook was not run. The owned rule PARKING_REPORT.md retains details and throughput. Shared registration remains absent on main, and eleven parser/adapter exclusions prevent a claim of full Go parity beyond that harness gap. No new helper is claimed under the only-harness condition.
+
+The helper branch also rebased cleanly to c01907a7. All three owned helper tests were rerun with -count=1 -v -timeout=10m, all twelve semantic mutants caught on all three modes, and owned helper go vet passed with empty output. New logs are evidence/c019-helper-tests.log and evidence/c019-helper-vet.log. All historical sections above describe earlier observed states.
