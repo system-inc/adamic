@@ -1,0 +1,473 @@
+{
+  "typescript": "6.0.3",
+  "files": 0,
+  "owners": [
+    {
+      "file": "src/compiler/types.ts",
+      "declaration": "EvaluatorResult",
+      "member": "value",
+      "references": 65,
+      "copies": [],
+      "aliases": [],
+      "writes": [],
+      "escapes": [],
+      "where": "src/compiler/types.ts:6264:5"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "declaration": "SearchResult",
+      "member": "value",
+      "references": 25,
+      "copies": [],
+      "aliases": [
+        {
+          "declaration": "src/compiler/moduleNameResolver.ts:1847:9",
+          "member": "value",
+          "reads": [
+            "src/compiler/moduleNameResolver.ts:1861:37",
+            "src/compiler/moduleNameResolver.ts:1863:79",
+            "src/compiler/moduleNameResolver.ts:1865:13",
+            "src/compiler/moduleNameResolver.ts:1882:15",
+            "src/compiler/moduleNameResolver.ts:1903:9",
+            "src/compiler/moduleNameResolver.ts:1904:9"
+          ],
+          "rebindings": [
+            "src/compiler/moduleNameResolver.ts:1851:9",
+            "src/compiler/moduleNameResolver.ts:1856:9"
+          ],
+          "writes": [],
+          "escapes": []
+        }
+      ],
+      "writes": [],
+      "escapes": [],
+      "where": "src/compiler/moduleNameResolver.ts:3408:26"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "declaration": "nodeModuleNameResolverWorker.tryResolve",
+      "returnMember": true,
+      "member": "isExternalLibraryImport",
+      "references": 4,
+      "copies": [],
+      "aliases": [],
+      "writes": [],
+      "escapes": [],
+      "where": "src/compiler/moduleNameResolver.ts:1913:115"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "declaration": "ParsedPatterns",
+      "member": "matchableStringSet",
+      "references": 0,
+      "copies": [
+        "src/compiler/utilities.ts:10325:46"
+      ],
+      "aliases": [],
+      "writes": [],
+      "escapes": [],
+      "where": "src/compiler/utilities.ts:10218:5"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "declaration": "ParsedPatterns",
+      "member": "patterns",
+      "references": 0,
+      "copies": [
+        "src/compiler/utilities.ts:10325:46"
+      ],
+      "aliases": [],
+      "writes": [],
+      "escapes": [],
+      "where": "src/compiler/utilities.ts:10219:5"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "declaration": "Resolved",
+      "member": "originalPath",
+      "references": 3,
+      "copies": [],
+      "aliases": [],
+      "writes": [],
+      "escapes": [],
+      "where": "src/compiler/moduleNameResolver.ts:168:5"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "declaration": "ModuleResolutionState",
+      "member": "reportDiagnostic",
+      "references": 1,
+      "copies": [
+        "src/compiler/moduleNameResolver.ts:2446:36"
+      ],
+      "aliases": [],
+      "writes": [],
+      "escapes": [],
+      "where": "src/compiler/moduleNameResolver.ts:329:5"
+    },
+    {
+      "file": "src/compiler/moduleSpecifiers.ts",
+      "declaration": "ModuleSpecifierResult",
+      "member": "kind",
+      "references": 2,
+      "copies": [
+        "src/services/codefixes/importFixes.ts:1271:87",
+        "src/services/codefixes/importFixes.ts:1271:87"
+      ],
+      "aliases": [],
+      "writes": [],
+      "escapes": [],
+      "where": "src/compiler/moduleSpecifiers.ts:380:5"
+    },
+    {
+      "file": "src/compiler/moduleSpecifiers.ts",
+      "declaration": "ModuleSpecifierResult",
+      "member": "moduleSpecifiers",
+      "references": 3,
+      "copies": [
+        "src/services/codefixes/importFixes.ts:1271:87",
+        "src/services/codefixes/importFixes.ts:1271:87"
+      ],
+      "aliases": [],
+      "writes": [],
+      "escapes": [],
+      "where": "src/compiler/moduleSpecifiers.ts:381:5"
+    },
+    {
+      "file": "src/compiler/moduleSpecifiers.ts",
+      "declaration": "ModuleSpecifierResult",
+      "member": "computedWithoutCache",
+      "references": 0,
+      "copies": [
+        "src/services/codefixes/importFixes.ts:1271:87",
+        "src/services/codefixes/importFixes.ts:1271:87"
+      ],
+      "aliases": [],
+      "writes": [],
+      "escapes": [],
+      "where": "src/compiler/moduleSpecifiers.ts:382:5"
+    }
+  ],
+  "parameters": [
+    {
+      "file": "src/compiler/utilities.ts",
+      "function": "createDiagnosticForRange",
+      "parameter": "range",
+      "where": "src/compiler/utilities.ts:2491:66",
+      "writes": [],
+      "escapes": [],
+      "dependencies": [
+        {
+          "where": "src/compiler/utilities.ts:2491:66",
+          "reads": [
+            "src/compiler/utilities.ts:2494:16",
+            "src/compiler/utilities.ts:2495:17",
+            "src/compiler/utilities.ts:2495:29"
+          ],
+          "writes": [],
+          "escapes": [],
+          "calls": []
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "function": "nodeIsSynthesized",
+      "parameter": "range",
+      "where": "src/compiler/utilities.ts:5625:35",
+      "writes": [],
+      "escapes": [],
+      "dependencies": [
+        {
+          "where": "src/compiler/utilities.ts:5625:35",
+          "reads": [
+            "src/compiler/utilities.ts:5626:34",
+            "src/compiler/utilities.ts:5627:34"
+          ],
+          "writes": [],
+          "escapes": [],
+          "calls": []
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "function": "moveRangeEnd",
+      "parameter": "range",
+      "where": "src/compiler/utilities.ts:7858:30",
+      "writes": [],
+      "escapes": [],
+      "dependencies": [
+        {
+          "where": "src/compiler/utilities.ts:7858:30",
+          "reads": [
+            "src/compiler/utilities.ts:7859:24"
+          ],
+          "writes": [],
+          "escapes": [],
+          "calls": []
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "function": "moveRangePos",
+      "parameter": "range",
+      "where": "src/compiler/utilities.ts:7870:30",
+      "writes": [],
+      "escapes": [],
+      "dependencies": [
+        {
+          "where": "src/compiler/utilities.ts:7870:30",
+          "reads": [
+            "src/compiler/utilities.ts:7871:29"
+          ],
+          "writes": [],
+          "escapes": [],
+          "calls": []
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "function": "rangeIsOnSingleLine",
+      "parameter": "range",
+      "where": "src/compiler/utilities.ts:7915:37",
+      "writes": [],
+      "escapes": [],
+      "dependencies": [
+        {
+          "where": "src/compiler/utilities.ts:7915:37",
+          "reads": [],
+          "writes": [],
+          "escapes": [],
+          "calls": [
+            "src/compiler/utilities.ts:7934:50",
+            "src/compiler/utilities.ts:7934:79"
+          ]
+        },
+        {
+          "where": "src/compiler/utilities.ts:7934:50",
+          "reads": [],
+          "writes": [],
+          "escapes": [],
+          "calls": [
+            "src/compiler/utilities.ts:7965:41"
+          ]
+        },
+        {
+          "where": "src/compiler/utilities.ts:7965:41",
+          "reads": [
+            "src/compiler/utilities.ts:7966:34",
+            "src/compiler/utilities.ts:7966:80"
+          ],
+          "writes": [],
+          "escapes": [],
+          "calls": []
+        },
+        {
+          "where": "src/compiler/utilities.ts:7934:79",
+          "reads": [
+            "src/compiler/utilities.ts:7935:107"
+          ],
+          "writes": [],
+          "escapes": [],
+          "calls": []
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "function": "rangeStartIsOnSameLineAsRangeEnd",
+      "parameter": "range1",
+      "where": "src/compiler/utilities.ts:7934:50",
+      "writes": [],
+      "escapes": [],
+      "dependencies": [
+        {
+          "where": "src/compiler/utilities.ts:7934:50",
+          "reads": [],
+          "writes": [],
+          "escapes": [],
+          "calls": [
+            "src/compiler/utilities.ts:7965:41"
+          ]
+        },
+        {
+          "where": "src/compiler/utilities.ts:7965:41",
+          "reads": [
+            "src/compiler/utilities.ts:7966:34",
+            "src/compiler/utilities.ts:7966:80"
+          ],
+          "writes": [],
+          "escapes": [],
+          "calls": []
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "function": "rangeStartIsOnSameLineAsRangeEnd",
+      "parameter": "range2",
+      "where": "src/compiler/utilities.ts:7934:79",
+      "writes": [],
+      "escapes": [],
+      "dependencies": [
+        {
+          "where": "src/compiler/utilities.ts:7934:79",
+          "reads": [
+            "src/compiler/utilities.ts:7935:107"
+          ],
+          "writes": [],
+          "escapes": [],
+          "calls": []
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "function": "getStartPositionOfRange",
+      "parameter": "range",
+      "where": "src/compiler/utilities.ts:7965:41",
+      "writes": [],
+      "escapes": [],
+      "dependencies": [
+        {
+          "where": "src/compiler/utilities.ts:7965:41",
+          "reads": [
+            "src/compiler/utilities.ts:7966:34",
+            "src/compiler/utilities.ts:7966:80"
+          ],
+          "writes": [],
+          "escapes": [],
+          "calls": []
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "function": "emitDetachedComments",
+      "parameter": "node",
+      "where": "src/compiler/utilities.ts:7017:5",
+      "writes": [],
+      "escapes": [],
+      "dependencies": [
+        {
+          "where": "src/compiler/utilities.ts:7017:5",
+          "reads": [
+            "src/compiler/utilities.ts:7029:13",
+            "src/compiler/utilities.ts:7030:68",
+            "src/compiler/utilities.ts:7035:57",
+            "src/compiler/utilities.ts:7064:90",
+            "src/compiler/utilities.ts:7069:57"
+          ],
+          "writes": [],
+          "escapes": [],
+          "calls": [
+            "src/compiler/utilities.ts:6938:95"
+          ]
+        },
+        {
+          "where": "src/compiler/utilities.ts:6938:95",
+          "reads": [
+            "src/compiler/utilities.ts:6939:65"
+          ],
+          "writes": [],
+          "escapes": [],
+          "calls": []
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "function": "emitNewLineBeforeLeadingComments",
+      "parameter": "node",
+      "where": "src/compiler/utilities.ts:6938:95",
+      "writes": [],
+      "escapes": [],
+      "dependencies": [
+        {
+          "where": "src/compiler/utilities.ts:6938:95",
+          "reads": [
+            "src/compiler/utilities.ts:6939:65"
+          ],
+          "writes": [],
+          "escapes": [],
+          "calls": []
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "function": "parseErrorAtRange",
+      "parameter": "range",
+      "where": "src/compiler/parser.ts:2172:32",
+      "writes": [],
+      "escapes": [],
+      "dependencies": [
+        {
+          "where": "src/compiler/parser.ts:2172:32",
+          "reads": [
+            "src/compiler/parser.ts:2173:22",
+            "src/compiler/parser.ts:2173:33"
+          ],
+          "writes": [],
+          "escapes": [],
+          "calls": []
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/factory/utilities.ts",
+      "function": "createMemberAccessForPropertyName",
+      "parameter": "location",
+      "where": "src/compiler/factory/utilities.ts:188:119",
+      "writes": [],
+      "escapes": [],
+      "dependencies": [
+        {
+          "where": "src/compiler/factory/utilities.ts:188:119",
+          "reads": [],
+          "writes": [],
+          "escapes": [],
+          "calls": [
+            "src/compiler/factory/utilitiesPublic.ts:10:61"
+          ]
+        },
+        {
+          "where": "src/compiler/factory/utilitiesPublic.ts:10:61",
+          "reads": [
+            "src/compiler/factory/utilitiesPublic.ts:11:12",
+            "src/compiler/factory/utilitiesPublic.ts:11:49",
+            "src/compiler/factory/utilitiesPublic.ts:11:63"
+          ],
+          "writes": [],
+          "escapes": [],
+          "calls": []
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/factory/utilitiesPublic.ts",
+      "function": "setTextRange",
+      "parameter": "location",
+      "public": true,
+      "where": "src/compiler/factory/utilitiesPublic.ts:10:61",
+      "writes": [],
+      "escapes": [],
+      "dependencies": [
+        {
+          "where": "src/compiler/factory/utilitiesPublic.ts:10:61",
+          "reads": [
+            "src/compiler/factory/utilitiesPublic.ts:11:12",
+            "src/compiler/factory/utilitiesPublic.ts:11:49",
+            "src/compiler/factory/utilitiesPublic.ts:11:63"
+          ],
+          "writes": [],
+          "escapes": [],
+          "calls": []
+        }
+      ]
+    }
+  ]
+}
