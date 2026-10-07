@@ -26,6 +26,8 @@ func (e *emitter) nodeHostCall(call ir.NodeHostCall) string {
 		}
 	} else {
 		switch call.Member {
+		case "symlinkSync":
+			code = fmt.Sprintf("adamic_node_fs_symlink(%s, %s)", arguments[0], arguments[1])
 		case "readdirSync":
 			options := "NULL"
 			if len(arguments) > 1 {

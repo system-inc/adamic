@@ -1,0 +1,32 @@
+import { programArguments } from 'adamic';
+import { symlinkSync, unlinkSync, statSync, writeFileSync, mkdirSync, readdirSync } from 'node:fs';
+const root = programArguments()[0] ?? '';
+function failure(error: Error): void {
+    const errno: NodeJS.ErrnoException = error;
+    console.log(`${errno.code ?? ''}: ${error.message.replace(root, '<dir>')}`);
+}
+writeFileSync(root + '/target', 'héllo 🌍');
+mkdirSync(root + '/directory');
+symlinkSync('target', root + '/default');
+symlinkSync('target', root + '/file', 'file');
+symlinkSync('directory', root + '/dir', 'dir');
+symlinkSync('target', root + '/junction', 'junction');
+symlinkSync('target', root + '/null', null);
+symlinkSync('target', root + '/undefined', undefined);
+symlinkSync('missing', root + '/broken');
+for (const name of ['default', 'file', 'dir', 'junction', 'null', 'undefined', 'broken']) {
+    const stat = statSync(root + '/' + name, {throwIfNoEntry: false});
+    console.log(`${name} ${stat !== undefined && stat.isFile()} ${stat !== undefined && stat.isDirectory()}`);
+}
+console.log(readdirSync(root, {withFileTypes: true}).filter(entry => entry.isSymbolicLink()).map(entry => entry.name).join('|'));
+try { symlinkSync('target', root + '/default'); } catch (error) { if (error instanceof Error) failure(error); }
+try { symlinkSync('target', root + '/missing/link'); } catch (error) { if (error instanceof Error) failure(error); }
+try { symlinkSync('', root + '/empty'); } catch (error) { if (error instanceof Error) failure(error); }
+try { symlinkSync('a\0b', root + '/nul'); } catch (error) { if (error instanceof Error) failure(error); }
+try { symlinkSync('target', 'a\0b'); } catch (error) { if (error instanceof Error) failure(error); }
+try { symlinkSync('a\0b', 'c\0d'); } catch (error) { if (error instanceof Error) failure(error); }
+try { symlinkSync('target', root + '/locked/link'); } catch (error) { if (error instanceof Error) {
+    failure(error);
+    console.log(error.message.includes('permission denied') ? ': permission denied' : ': unexpected');
+} }
+for (const name of ['default', 'file', 'dir', 'junction', 'null', 'undefined', 'broken']) unlinkSync(root + '/' + name);
