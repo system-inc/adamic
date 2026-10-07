@@ -58,7 +58,7 @@ func main() {
 		case strings.HasSuffix(row.Name, ".js"):
 			kind = core.ScriptKindJS
 		}
-		file := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: "/corpus/" + row.Name, Path: tspath.Path("/corpus/" + row.Name)}, row.Source, kind)
+		file := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: tspath.RootedFilePathFromAbsolute("/corpus/" + row.Name), PathKey: tspath.CaseSensitive.PathKey(tspath.RootedPathFromAbsolute("/corpus/" + row.Name))}, row.Source, kind)
 		if astMode {
 			offsets := make(map[int]int)
 			unit := 0
