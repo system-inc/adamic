@@ -1,0 +1,13 @@
+normal-build exit 0 seconds 0.615552
+normal exit 0 seconds 0.003742
+normal identical bytes 19791
+sanitized-build exit 0 seconds 1.569778
+sanitized exit 0 seconds 0.064784
+sanitized identical bytes 19791
+mutant-build exit 0 seconds 1.346857
+mutant exit 0 seconds 0.007656
+native suggestion edit mutant caught byte 1434
+js-build exit 0 seconds 0.266233
+source exit 0 seconds 0.164373
+emitted exit 0 seconds 0.064305
+PASS native literal token judgments and suggestion edits; source parsing is verified separately by verify_literals.py

@@ -1,0 +1,62 @@
+stage0 exit 0 seconds 0.461687
+checker-archive exit 0 seconds 9.768212
+label-var-build exit 0 seconds 12.095842
+oracle-build exit 0 seconds 0.11962
+fixtures-build exit 0 seconds 0.055051
+fixtures exit 0 seconds 0.001692
+controls-filter exit 0 seconds 0.069481
+controls parser supported 34 rejected 1
+controls-go exit 0 seconds 0.076886
+controls-native exit 0 seconds 0.084856
+controls identical bytes 7700 b'findings 18'
+checker-asan-archive exit 0 seconds 9.394515
+label-var-asan-build exit 0 seconds 24.410751
+controls-asan-go exit 0 seconds 0.076382
+controls-asan-native exit 0 seconds 0.195196
+controls-asan identical bytes 7700 b'findings 18'
+label-var-mutant-build exit 0 seconds 6.461216
+label-var-mutant-run exit 0 seconds 0.073508
+label-var mutant caught only by Go bytes
+checker-fact-mutant-archive exit 0 seconds 5.584084
+fact-mutant-build exit 0 seconds 7.451954
+fact-mutant-run exit 0 seconds 0.078428
+scope-value-symbols mutant caught only by Go bytes
+released-build exit 0 seconds 3.045315
+released-run exit 70 seconds 0.087405
+checker-retained-archive exit 0 seconds 5.801229
+released-mutant-build exit 0 seconds 3.428429
+released-mutant-run exit 0 seconds 0.083608
+retained handle mutant caught by required panic 70
+compiler-go exit 0 seconds 0.438143
+compiler-native exit 0 seconds 1.722963
+compiler identical bytes 7859 b'findings 0'
+compiler-asan-go exit 0 seconds 0.490914
+compiler-asan-native exit 0 seconds 6.997607
+compiler-asan identical bytes 7859 b'findings 0'
+compiler-bench-0-go exit 0 seconds 0.327141
+compiler-bench-0-native exit 0 seconds 1.524095
+compiler-bench-0 identical bytes 7859 b'findings 0'
+compiler-bench-1-go exit 0 seconds 0.362458
+compiler-bench-1-native exit 0 seconds 1.552034
+compiler-bench-1 identical bytes 7859 b'findings 0'
+compiler-bench-2-go exit 0 seconds 0.298436
+compiler-bench-2-native exit 0 seconds 1.652714
+compiler-bench-2 identical bytes 7859 b'findings 0'
+compiler medians 1.5520338289970823 0.32714055700125755
+repository-go exit 0 seconds 0.142869
+repository-native exit 0 seconds 0.241456
+repository identical bytes 18485 b'findings 0'
+repository-asan-go exit 0 seconds 0.155782
+repository-asan-native exit 0 seconds 0.923061
+repository-asan identical bytes 18485 b'findings 0'
+repository-bench-0-go exit 0 seconds 0.239746
+repository-bench-0-native exit 0 seconds 0.3449
+repository-bench-0 identical bytes 18485 b'findings 0'
+repository-bench-1-go exit 0 seconds 0.205477
+repository-bench-1-native exit 0 seconds 0.259189
+repository-bench-1 identical bytes 18485 b'findings 0'
+repository-bench-2-go exit 0 seconds 0.152326
+repository-bench-2-native exit 0 seconds 0.252224
+repository-bench-2 identical bytes 18485 b'findings 0'
+repository medians 0.25918919099785853 0.20547747100135894
+PASS label-var independent full bytes, mutants, stale handles, sanitizers
