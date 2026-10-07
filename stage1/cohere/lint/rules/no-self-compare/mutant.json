@@ -1,0 +1,5 @@
+{
+  "name": "self-comparison-equality-reversed",
+  "from": "this.context.signature(left) === this.context.signature(right)",
+  "to": "this.context.signature(left) !== this.context.signature(right)"
+}
