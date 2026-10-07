@@ -44,16 +44,7 @@ func (e *emitter) functionBody(function ir.Function) {
 	e.function = &function
 	e.functionDepth = len(e.scopes)
 	e.scopes = append(e.scopes, nil)
-	// WASI has an engine call stack separate from its linear-memory stack. Keep an addressed,
-	// volatile frame even when a function otherwise needs only wasm locals, so the linear limit
-	// fires first. Its address is checked directly, preventing scalar replacement of the array.
-	e.line("#ifdef ADAMIC_TARGET_WASI")
-	e.line("volatile unsigned char adamic_stack_frame[32];")
-	e.line("adamic_stack_frame[0] = 0;")
-	e.line("adamic_stack_frame[31] = 0;")
-	e.line("if ((uintptr_t)adamic_stack_frame < adamic_stack_limit) adamic_stack_overflow();")
-	e.line("#endif")
-	// Preserve the runtime entry check on both targets, including future WASI depth guards.
+	// Recursion that runs out of stack panics, as Node's does, rather than crashing (stack.c).
 	e.line("ADAMIC_CHECK_STACK();")
 	if function.Closure {
 		e.line("(void)self;")
