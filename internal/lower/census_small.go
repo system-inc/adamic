@@ -13,6 +13,9 @@ func (l *lowering) censusRestParameter(declaration, parameter *ast.Node) error {
 	if declaration.Kind != ast.KindFunctionDeclaration || len(declaration.TypeParameters()) != 0 {
 		return l.notYet(parameter, "a rest parameter outside a nongeneric named function")
 	}
+	if l.result.Functions[l.functionIndex].Closure {
+		return l.notYet(parameter, "a rest parameter in a named closure")
+	}
 	parameters := declaration.Parameters()
 	if parameters[len(parameters)-1] != parameter {
 		return l.notYet(parameter, "a rest parameter before another parameter")
@@ -170,4 +173,32 @@ func (l *lowering) censusOverloads(implementation *ast.Node) error {
 		}
 	}
 	return nil
+}
+
+// Calls use the resolved overload's result representation, even when the
+// implementation proves a narrower result. A plain false must become a present
+// boolean | undefined, and a scalar result must be boxed when the caller sees a union.
+func (l *lowering) censusOverloadResult(call *ast.CallExpression, value ir.Expression) (ir.Expression, error) {
+	symbol := l.symbol(ast.SkipParentheses(call.Expression))
+	overloaded := false
+	if symbol != nil {
+		for _, declaration := range symbol.Declarations {
+			if declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() == nil && l.censusImplementation(declaration) != nil {
+				overloaded = true
+				break
+			}
+		}
+	}
+	if !overloaded || value.Type() == 0 {
+		return value, nil
+	}
+	of, err := l.typeOf(call.AsNode())
+	if err != nil {
+		return nil, err
+	}
+	value = fit(value, of)
+	if value.Type() != of {
+		return nil, l.notYet(call.AsNode(), "an overload result requiring another representation")
+	}
+	return value, nil
 }

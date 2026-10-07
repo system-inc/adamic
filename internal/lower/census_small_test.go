@@ -47,3 +47,21 @@ console.log(pick('files'));
 		t.Fatalf("expected the computed finite-key access boundary, got %v", err)
 	}
 }
+
+func TestCensusRestMutableElements(t *testing.T) {
+	_, err := lowerSource(t, `interface Animal { readonly name: string; }
+interface Dog extends Animal { readonly bark: string; }
+interface House { pet: Animal; }
+interface DogHouse { pet: Dog; }
+function replace(...houses: House[]): void { for (const house of houses) { house.pet = { name: 'cat' }; } }
+const houses: DogHouse[] = [{ pet: { name: 'dog', bark: 'woof' } }];
+const first = houses[0] ?? { pet: { name: 'fallback', bark: 'fallback' } };
+replace(...houses);
+console.log(first.pet.bark);
+`)
+	var refused *Refused
+	if !errors.As(err, &refused) {
+		t.Fatalf("a rest copy still shares mutable elements; expected refusal, got %v", err)
+	}
+	t.Logf("rest element relation: %v", refused)
+}

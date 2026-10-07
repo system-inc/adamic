@@ -22,11 +22,11 @@ func init() {
 		path    string
 		lowers  bool
 		checked bool
-	}{"internal/oracle/testdata/census_small_optional_stopped.a", false, false}, struct {
+	}{"internal/oracle/testdata/census_small_stopped/census_small_optional_stopped.a", false, false}, struct {
 		path    string
 		lowers  bool
 		checked bool
-	}{"internal/oracle/testdata/census_small_default_stopped.a", false, false})
+	}{"internal/oracle/testdata/census_small_stopped/census_small_default_stopped.a", false, false})
 }
 
 // Stopped families still have an independent oracle for the untouched source bodies.
@@ -37,7 +37,7 @@ func TestCensusSmallStoppedSourceOnNode(t *testing.T) {
 		{"census_small_default_stopped.a", "one/two\nmissing\none/[^/]*\n(?:one(?:/[^./])?)?\none/(?:[^./][^/]*)?\n"},
 	} {
 		t.Run(probe.file, func(t *testing.T) {
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", probe.file))
+			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/census_small_stopped", probe.file))
 			if err != nil {
 				t.Fatal(err)
 			}
