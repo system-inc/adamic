@@ -24,27 +24,51 @@
     }
   },
   {
-    "file": "cloud/reports/host-proof-combined/probes/08_rest_parameter.a",
-    "source": "function combinePaths(path: string, ...paths: (string | undefined)[]): string { return path; } console.log(combinePaths('a', 'b'));",
+    "file": "cloud/reports/host-proof-combined/probes/08_explicit_any.a",
+    "source": "let stat: any; console.log(String(stat));",
     "native": {
       "exit": 1,
-      "diagnostic": "adamic: /workspace/adamic/cloud/reports/host-proof-combined/probes/08_rest_parameter.a:1:37: stage 0 can't lower a parameter that isn't a plain name yet\n"
+      "diagnostic": "adamic: /workspace/adamic/cloud/reports/host-proof-combined/probes/08_explicit_any.a:1:5: stage 0 can't lower a value of type any yet\n"
     },
     "javascript": {
       "exit": 1,
-      "diagnostic": "adamic: /workspace/adamic/cloud/reports/host-proof-combined/probes/08_rest_parameter.a:1:37: stage 0 can't lower a parameter that isn't a plain name yet\n"
+      "diagnostic": "adamic: /workspace/adamic/cloud/reports/host-proof-combined/probes/08_explicit_any.a:1:5: stage 0 can't lower a value of type any yet\n"
+    }
+  },
+  {
+    "file": "cloud/reports/host-proof-combined/probes/08_rest_parameter.a",
+    "source": "function combinePaths(path: string, ...paths: (string | undefined)[]): string { return path; } console.log(combinePaths('a', 'b'));",
+    "native": {
+      "exit": 0,
+      "diagnostic": ""
+    },
+    "javascript": {
+      "exit": 0,
+      "diagnostic": ""
+    }
+  },
+  {
+    "file": "cloud/reports/host-proof-combined/probes/10_date_string.a",
+    "source": "console.log(String(new Date(0)));",
+    "native": {
+      "exit": 1,
+      "diagnostic": "adamic: /workspace/adamic/cloud/reports/host-proof-combined/probes/10_date_string.a:1:20: stage 0 can't lower String conversion of an object, array, map or function (ToPrimitive is not lowered) yet\n"
+    },
+    "javascript": {
+      "exit": 1,
+      "diagnostic": "adamic: /workspace/adamic/cloud/reports/host-proof-combined/probes/10_date_string.a:1:20: stage 0 can't lower String conversion of an object, array, map or function (ToPrimitive is not lowered) yet\n"
     }
   },
   {
     "file": "cloud/reports/host-proof-combined/probes/10_optional_call.a",
     "source": "function getTime(): Date | undefined { return new Date(0); } console.log(String(getTime()?.getTime()));",
     "native": {
-      "exit": 1,
-      "diagnostic": "adamic: /workspace/adamic/cloud/reports/host-proof-combined/probes/10_optional_call.a:1:81: stage 0 can't lower a call through ?. (an optional call) yet\n"
+      "exit": 0,
+      "diagnostic": ""
     },
     "javascript": {
-      "exit": 1,
-      "diagnostic": "adamic: /workspace/adamic/cloud/reports/host-proof-combined/probes/10_optional_call.a:1:81: stage 0 can't lower a call through ?. (an optional call) yet\n"
+      "exit": 0,
+      "diagnostic": ""
     }
   },
   {
@@ -75,12 +99,12 @@
     "file": "cloud/reports/host-proof-combined/probes/13_method_shorthand.a",
     "source": "function directoryExists(path: string): boolean { return true; } const system = { directoryExists, createDirectory(path: string): void { if (!system.directoryExists(path)) console.log(path); } }; system.createDirectory('x');",
     "native": {
-      "exit": 1,
-      "diagnostic": "adamic: /workspace/adamic/cloud/reports/host-proof-combined/probes/13_method_shorthand.a:1:83: stage 0 can't lower reading directoryExists yet\n"
+      "exit": 0,
+      "diagnostic": ""
     },
     "javascript": {
-      "exit": 1,
-      "diagnostic": "adamic: /workspace/adamic/cloud/reports/host-proof-combined/probes/13_method_shorthand.a:1:83: stage 0 can't lower reading directoryExists yet\n"
+      "exit": 0,
+      "diagnostic": ""
     }
   },
   {
@@ -99,12 +123,12 @@
     "file": "cloud/reports/host-proof-combined/probes/18_optional_method_parameter.a",
     "source": "const system = { exit(code?: number): void { console.log(String(code)); } }; system.exit(0);",
     "native": {
-      "exit": 1,
-      "diagnostic": "adamic: /workspace/adamic/cloud/reports/host-proof-combined/probes/18_optional_method_parameter.a:1:23: stage 0 can't lower a function value with an optional parameter yet\n"
+      "exit": 0,
+      "diagnostic": ""
     },
     "javascript": {
-      "exit": 1,
-      "diagnostic": "adamic: /workspace/adamic/cloud/reports/host-proof-combined/probes/18_optional_method_parameter.a:1:23: stage 0 can't lower a function value with an optional parameter yet\n"
+      "exit": 0,
+      "diagnostic": ""
     }
   },
   {
@@ -148,7 +172,7 @@
     "source": "function narrowed(value: number | string | undefined): number { if (typeof value === 'number') return value!; return 1; } console.log(String(narrowed(0)));",
     "native": {
       "exit": 1,
-      "diagnostic": "adamic: native: clang failed: exit status 1\n/tmp/adamic-gate/adamic-build-4173259983/main.c:19:28: error: invalid operands to binary expression ('double' and 'void *')\n   19 |                 if (!(adamic_temporary_1 != NULL)) {\n      |                       ~~~~~~~~~~~~~~~~~~ ^  ~~~~\n1 error generated.\n\n"
+      "diagnostic": "adamic: native: clang failed: exit status 1\n/tmp/adamic-gate/adamic-build-1053939341/main.c:19:28: error: invalid operands to binary expression ('double' and 'void *')\n   19 |                 if (!(adamic_temporary_1 != NULL)) {\n      |                       ~~~~~~~~~~~~~~~~~~ ^  ~~~~\n1 error generated.\n\n"
     },
     "javascript": {
       "exit": 0,
@@ -157,7 +181,7 @@
   },
   {
     "file": "cloud/reports/host-proof-combined/probes/null_classifier.a",
-    "source": "function tag(value: unknown): string { return typeof value; }\nconsole.log(tag(null));\nconsole.log(tag(undefined));",
+    "source": "function tag(value: unknown): string { return typeof value; }\nconsole.log(tag(null));\nconsole.log(tag(undefined));\nfunction truth(value: unknown): boolean { return !!value; }\nconsole.log(String(truth(null)));",
     "native": {
       "exit": 0,
       "diagnostic": ""

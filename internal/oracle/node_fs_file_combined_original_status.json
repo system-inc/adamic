@@ -88,11 +88,11 @@
     "nodeMatches": true,
     "native": {
       "stage": "NotYet",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/08_getDirectories.a:143:44: stage 0 can't lower a parameter that isn't a plain name yet\n"
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/08_getDirectories.a:172:17: stage 0 can't lower a value of type any yet\n"
     },
     "javascript": {
       "stage": "NotYet",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/08_getDirectories.a:143:44: stage 0 can't lower a parameter that isn't a plain name yet\n"
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/08_getDirectories.a:172:17: stage 0 can't lower a value of type any yet\n"
     }
   },
   {
@@ -114,11 +114,11 @@
     "nodeMatches": true,
     "native": {
       "stage": "NotYet",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/10_getModifiedTime.a:31:24: stage 0 can't lower a call through ?. (an optional call) yet\n"
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/10_getModifiedTime.a:32:24: stage 0 can't lower String conversion of an object, array, map or function (ToPrimitive is not lowered) yet\n"
     },
     "javascript": {
       "stage": "NotYet",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/10_getModifiedTime.a:31:24: stage 0 can't lower a call through ?. (an optional call) yet\n"
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/10_getModifiedTime.a:32:24: stage 0 can't lower String conversion of an object, array, map or function (ToPrimitive is not lowered) yet\n"
     }
   },
   {
@@ -219,36 +219,42 @@
     "file": "18_exit_0.a",
     "nodeMatches": true,
     "native": {
-      "stage": "NotYet",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/18_exit_0.a:21:6: stage 0 can't lower a function value with an optional parameter yet\n"
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
     },
     "javascript": {
-      "stage": "NotYet",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/18_exit_0.a:21:6: stage 0 can't lower a function value with an optional parameter yet\n"
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
     }
   },
   {
     "file": "19_exit_1.a",
     "nodeMatches": true,
     "native": {
-      "stage": "NotYet",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/19_exit_1.a:21:6: stage 0 can't lower a function value with an optional parameter yet\n"
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
     },
     "javascript": {
-      "stage": "NotYet",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/19_exit_1.a:21:6: stage 0 can't lower a function value with an optional parameter yet\n"
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
     }
   },
   {
     "file": "20_exit_2.a",
     "nodeMatches": true,
     "native": {
-      "stage": "NotYet",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/20_exit_2.a:21:6: stage 0 can't lower a function value with an optional parameter yet\n"
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
     },
     "javascript": {
-      "stage": "NotYet",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/20_exit_2.a:21:6: stage 0 can't lower a function value with an optional parameter yet\n"
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
     }
   },
   {

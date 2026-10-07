@@ -15,14 +15,14 @@
     "adapted": {
       "native": {
         "stage": "NotYet",
-        "diagnostic": "adamic: /tmp/fs-combined-47-final/fixtures/01_readFile_utf8.a:43:20: stage 0 can't lower an array of never yet\n"
+        "diagnostic": "adamic: /tmp/fs-combined-rest-47-final/fixtures/01_readFile_utf8.a:43:20: stage 0 can't lower an array of never yet\n"
       },
       "javascript": {
         "stage": "NotYet",
-        "diagnostic": "adamic: /tmp/fs-combined-47-final/fixtures/01_readFile_utf8.a:43:20: stage 0 can't lower an array of never yet\n"
+        "diagnostic": "adamic: /tmp/fs-combined-rest-47-final/fixtures/01_readFile_utf8.a:43:20: stage 0 can't lower an array of never yet\n"
       }
     },
-    "rerunAfterHostBlockers": false
+    "rerunAfterHostBlockers2606e8b4": true
   },
   {
     "file": "02_readFile_utf16le.a",
@@ -49,7 +49,7 @@
         "agrees": true
       }
     },
-    "rerunAfterHostBlockers": false
+    "rerunAfterHostBlockers2606e8b4": true
   },
   {
     "file": "03_readFile_utf16be.a",
@@ -76,7 +76,7 @@
         "agrees": true
       }
     },
-    "rerunAfterHostBlockers": false
+    "rerunAfterHostBlockers2606e8b4": true
   },
   {
     "file": "04_readFile_missing.a",
@@ -103,7 +103,7 @@
         "agrees": true
       }
     },
-    "rerunAfterHostBlockers": false
+    "rerunAfterHostBlockers2606e8b4": true
   },
   {
     "file": "05_writeFile.a",
@@ -128,7 +128,7 @@
         "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/05_writeFile.a:37:30: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
       }
     },
-    "rerunAfterHostBlockers": false
+    "rerunAfterHostBlockers2606e8b4": true
   },
   {
     "file": "06_fileExists.a",
@@ -153,7 +153,7 @@
         "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/06_fileExists.a:52:21: stage 0 can't lower a BinaryExpression with a string and a boolean yet\n"
       }
     },
-    "rerunAfterHostBlockers": false
+    "rerunAfterHostBlockers2606e8b4": true
   },
   {
     "file": "07_directoryExists.a",
@@ -178,7 +178,7 @@
         "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/07_directoryExists.a:52:21: stage 0 can't lower a BinaryExpression with a string and a boolean yet\n"
       }
     },
-    "rerunAfterHostBlockers": false
+    "rerunAfterHostBlockers2606e8b4": true
   },
   {
     "file": "08_getDirectories.a",
@@ -186,24 +186,24 @@
     "original": {
       "native": {
         "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/08_getDirectories.a:143:44: stage 0 can't lower a parameter that isn't a plain name yet\n"
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/08_getDirectories.a:172:17: stage 0 can't lower a value of type any yet\n"
       },
       "javascript": {
         "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/08_getDirectories.a:143:44: stage 0 can't lower a parameter that isn't a plain name yet\n"
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/08_getDirectories.a:172:17: stage 0 can't lower a value of type any yet\n"
       }
     },
     "adapted": {
       "native": {
         "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/08_getDirectories.a:143:44: stage 0 can't lower a parameter that isn't a plain name yet\n"
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/08_getDirectories.a:172:17: stage 0 can't lower a value of type any yet\n"
       },
       "javascript": {
         "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/08_getDirectories.a:143:44: stage 0 can't lower a parameter that isn't a plain name yet\n"
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/08_getDirectories.a:172:17: stage 0 can't lower a value of type any yet\n"
       }
     },
-    "rerunAfterHostBlockers": false
+    "rerunAfterHostBlockers2606e8b4": true
   },
   {
     "file": "09_realpath.a",
@@ -232,7 +232,7 @@
         "agrees": true
       }
     },
-    "rerunAfterHostBlockers": false
+    "rerunAfterHostBlockers2606e8b4": true
   },
   {
     "file": "10_getModifiedTime.a",
@@ -240,24 +240,24 @@
     "original": {
       "native": {
         "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/10_getModifiedTime.a:31:24: stage 0 can't lower a call through ?. (an optional call) yet\n"
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/10_getModifiedTime.a:32:24: stage 0 can't lower String conversion of an object, array, map or function (ToPrimitive is not lowered) yet\n"
       },
       "javascript": {
         "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/10_getModifiedTime.a:31:24: stage 0 can't lower a call through ?. (an optional call) yet\n"
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/10_getModifiedTime.a:32:24: stage 0 can't lower String conversion of an object, array, map or function (ToPrimitive is not lowered) yet\n"
       }
     },
     "adapted": {
       "native": {
         "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/10_getModifiedTime.a:31:24: stage 0 can't lower a call through ?. (an optional call) yet\n"
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/10_getModifiedTime.a:32:24: stage 0 can't lower String conversion of an object, array, map or function (ToPrimitive is not lowered) yet\n"
       },
       "javascript": {
         "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/10_getModifiedTime.a:31:24: stage 0 can't lower a call through ?. (an optional call) yet\n"
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/10_getModifiedTime.a:32:24: stage 0 can't lower String conversion of an object, array, map or function (ToPrimitive is not lowered) yet\n"
       }
     },
-    "rerunAfterHostBlockers": false
+    "rerunAfterHostBlockers2606e8b4": true
   },
   {
     "file": "11_setModifiedTime.a",
@@ -286,7 +286,7 @@
         "agrees": true
       }
     },
-    "rerunAfterHostBlockers": false
+    "rerunAfterHostBlockers2606e8b4": true
   },
   {
     "file": "12_deleteFile.a",
@@ -315,7 +315,7 @@
         "agrees": true
       }
     },
-    "rerunAfterHostBlockers": false
+    "rerunAfterHostBlockers2606e8b4": true
   },
   {
     "file": "13_createDirectory.a",
@@ -333,14 +333,14 @@
     "adapted": {
       "native": {
         "stage": "Refused",
-        "diagnostic": "adamic: /tmp/fs-combined-47-final/fixtures/13_createDirectory.a:76:30: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+        "diagnostic": "adamic: /tmp/fs-combined-rest-47-final/fixtures/13_createDirectory.a:76:30: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
       },
       "javascript": {
         "stage": "Refused",
-        "diagnostic": "adamic: /tmp/fs-combined-47-final/fixtures/13_createDirectory.a:76:30: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+        "diagnostic": "adamic: /tmp/fs-combined-rest-47-final/fixtures/13_createDirectory.a:76:30: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
       }
     },
-    "rerunAfterHostBlockers": false
+    "rerunAfterHostBlockers2606e8b4": true
   },
   {
     "file": "14_getCurrentDirectory.a",
@@ -365,7 +365,7 @@
         "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:10:28: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function callback() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)\n"
       }
     },
-    "rerunAfterHostBlockers": false
+    "rerunAfterHostBlockers2606e8b4": true
   },
   {
     "file": "15_getExecutingFilePath.a",
@@ -394,7 +394,7 @@
         "agrees": true
       }
     },
-    "rerunAfterHostBlockers": false
+    "rerunAfterHostBlockers2606e8b4": true
   },
   {
     "file": "16_getEnvironmentVariable.a",
@@ -423,7 +423,7 @@
         "agrees": true
       }
     },
-    "rerunAfterHostBlockers": false
+    "rerunAfterHostBlockers2606e8b4": true
   },
   {
     "file": "17_write.a",
@@ -452,82 +452,94 @@
         "agrees": true
       }
     },
-    "rerunAfterHostBlockers": true
+    "rerunAfterHostBlockers2606e8b4": true
   },
   {
     "file": "18_exit_0.a",
     "source": "unchanged control",
     "original": {
       "native": {
-        "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/18_exit_0.a:21:6: stage 0 can't lower a function value with an optional parameter yet\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       },
       "javascript": {
-        "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/18_exit_0.a:21:6: stage 0 can't lower a function value with an optional parameter yet\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       }
     },
     "adapted": {
       "native": {
-        "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/18_exit_0.a:21:6: stage 0 can't lower a function value with an optional parameter yet\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       },
       "javascript": {
-        "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/18_exit_0.a:21:6: stage 0 can't lower a function value with an optional parameter yet\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       }
     },
-    "rerunAfterHostBlockers": true
+    "rerunAfterHostBlockers2606e8b4": true
   },
   {
     "file": "19_exit_1.a",
     "source": "unchanged control",
     "original": {
       "native": {
-        "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/19_exit_1.a:21:6: stage 0 can't lower a function value with an optional parameter yet\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       },
       "javascript": {
-        "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/19_exit_1.a:21:6: stage 0 can't lower a function value with an optional parameter yet\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       }
     },
     "adapted": {
       "native": {
-        "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/19_exit_1.a:21:6: stage 0 can't lower a function value with an optional parameter yet\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       },
       "javascript": {
-        "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/19_exit_1.a:21:6: stage 0 can't lower a function value with an optional parameter yet\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       }
     },
-    "rerunAfterHostBlockers": true
+    "rerunAfterHostBlockers2606e8b4": true
   },
   {
     "file": "20_exit_2.a",
     "source": "unchanged control",
     "original": {
       "native": {
-        "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/20_exit_2.a:21:6: stage 0 can't lower a function value with an optional parameter yet\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       },
       "javascript": {
-        "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/20_exit_2.a:21:6: stage 0 can't lower a function value with an optional parameter yet\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       }
     },
     "adapted": {
       "native": {
-        "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/20_exit_2.a:21:6: stage 0 can't lower a function value with an optional parameter yet\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       },
       "javascript": {
-        "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/20_exit_2.a:21:6: stage 0 can't lower a function value with an optional parameter yet\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       }
     },
-    "rerunAfterHostBlockers": true
+    "rerunAfterHostBlockers2606e8b4": true
   },
   {
     "file": "21_createHash.a",
@@ -556,7 +568,7 @@
         "agrees": true
       }
     },
-    "rerunAfterHostBlockers": true
+    "rerunAfterHostBlockers2606e8b4": true
   },
   {
     "file": "22_createHash_fallback.a",
@@ -581,7 +593,7 @@
         "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/22_createHash_fallback.a:20:1: stage 0 can't lower a function without a body yet\n"
       }
     },
-    "rerunAfterHostBlockers": true
+    "rerunAfterHostBlockers2606e8b4": true
   },
   {
     "file": "23_newLine.a",
@@ -610,7 +622,7 @@
         "agrees": true
       }
     },
-    "rerunAfterHostBlockers": false
+    "rerunAfterHostBlockers2606e8b4": true
   },
   {
     "file": "24_useCaseSensitiveFileNames.a",
@@ -635,7 +647,7 @@
         "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/24_useCaseSensitiveFileNames.a:48:12: stage 0 can't lower regex replacement other than a string yet\n"
       }
     },
-    "rerunAfterHostBlockers": false
+    "rerunAfterHostBlockers2606e8b4": true
   },
   {
     "file": "25_readDirectory.a",
@@ -660,6 +672,6 @@
         "diagnostic": "stage3/fixtures/host/25_readDirectory.a:1001:23: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:1041:17: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/host/25_readDirectory.a:1046:21: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/host/25_readDirectory.a:408:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:430:21: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:449:29: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:513:31: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:543:5: error TS2322: Type '(string | undefined)[]' is not assignable to type 'string[]'.\n  Type 'string | undefined' is not assignable to type 'string'.\n    Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/25_readDirectory.a:587:5: error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.\nstage3/fixtures/host/25_readDirectory.a:588:5: error TS2322: Type 'T | undefined' is not assignable to type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:613:54: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/25_readDirectory.a:709:34: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:851:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:879:31: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\n"
       }
     },
-    "rerunAfterHostBlockers": false
+    "rerunAfterHostBlockers2606e8b4": true
   }
 ]

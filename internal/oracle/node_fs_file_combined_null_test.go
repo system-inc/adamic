@@ -32,22 +32,28 @@ func TestNodeFSFileCombinedNullClassifier(t *testing.T) {
 	if difference := disagreement(truth, got); difference != "" {
 		t.Fatal(difference)
 	}
-	mutated := strings.ReplaceAll(source, "adamic_union_typeof(", "mutant_union_typeof(")
-	if mutated == source {
-		t.Fatal("mutant changed nothing")
+	for _, mutant := range []struct{ name, function, helper string }{
+		{"typeof_null", "adamic_union_typeof", `static adamic_string *mutant_union_typeof(const adamic_heap *value, bool null) { if (value == &adamic_null) { return &adamic_typeof_undefined; } return adamic_union_typeof(value, null); }`},
+		{"truthy_null", "adamic_census_to_boolean", `static bool mutant_census_to_boolean(const adamic_heap *value) { if (value == &adamic_null) { return true; } return adamic_census_to_boolean(value); }`},
+	} {
+		t.Run(mutant.name, func(t *testing.T) {
+			mutated := strings.ReplaceAll(source, mutant.function+"(", "mutant_"+strings.TrimPrefix(mutant.function, "adamic_")+"(")
+			if mutated == source {
+				t.Fatal("mutant changed nothing")
+			}
+			mutated = strings.Replace(mutated, `#include "adamic.h"`, `#include "adamic.h"`+"\n"+mutant.helper, 1)
+			binary := filepath.Join(t.TempDir(), "mutant")
+			if err := native.Build(mutated, binary, native.Options{Sanitize: true}); err != nil {
+				t.Fatal(err)
+			}
+			got := executeWith(t, environment, binary)
+			if got.exitCode != 0 || len(got.stderr) != 0 {
+				t.Fatalf("mutant failed outside comparison: %+v", got)
+			}
+			if difference := disagreement(truth, got); difference != "stdout differs" {
+				t.Fatalf("mutant caught by %q", difference)
+			}
+			t.Log("caught only by Node stdout; sanitizers and leaks clean")
+		})
 	}
-	helper := `static adamic_string *mutant_union_typeof(const adamic_heap *value, bool null) { if (value == &adamic_null) { return &adamic_typeof_undefined; } return adamic_union_typeof(value, null); }`
-	mutated = strings.Replace(mutated, `#include "adamic.h"`, `#include "adamic.h"`+"\n"+helper, 1)
-	binary := filepath.Join(t.TempDir(), "mutant")
-	if err := native.Build(mutated, binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
-	}
-	got = executeWith(t, environment, binary)
-	if got.exitCode != 0 || len(got.stderr) != 0 {
-		t.Fatalf("mutant failed outside comparison: %+v", got)
-	}
-	if difference := disagreement(truth, got); difference != "stdout differs" {
-		t.Fatalf("mutant caught by %q", difference)
-	}
-	t.Log("null becomes undefined: caught only by Node stdout; sanitizers and leaks clean")
 }

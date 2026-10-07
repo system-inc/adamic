@@ -5,11 +5,11 @@
     "adaptedSourceSha256": "98c869fbf8510df95dba2ce004f539d65422768013914c552dca5b78a11c2c77",
     "native": {
       "stage": "NotYet",
-      "diagnostic": "adamic: /tmp/fs-combined-47-final/fixtures/01_readFile_utf8.a:43:20: stage 0 can't lower an array of never yet\n"
+      "diagnostic": "adamic: /tmp/fs-combined-rest-47-final/fixtures/01_readFile_utf8.a:43:20: stage 0 can't lower an array of never yet\n"
     },
     "javascript": {
       "stage": "NotYet",
-      "diagnostic": "adamic: /tmp/fs-combined-47-final/fixtures/01_readFile_utf8.a:43:20: stage 0 can't lower an array of never yet\n"
+      "diagnostic": "adamic: /tmp/fs-combined-rest-47-final/fixtures/01_readFile_utf8.a:43:20: stage 0 can't lower an array of never yet\n"
     },
     "nodeMutantCaught": true
   },
@@ -67,11 +67,11 @@
     "adaptedSourceSha256": "f937fe2575d55b2f1a88d19b1ce4232fb036fb3eb40190e6d1fc708708d88514",
     "native": {
       "stage": "Refused",
-      "diagnostic": "adamic: /tmp/fs-combined-47-final/fixtures/13_createDirectory.a:76:30: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+      "diagnostic": "adamic: /tmp/fs-combined-rest-47-final/fixtures/13_createDirectory.a:76:30: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
     },
     "javascript": {
       "stage": "Refused",
-      "diagnostic": "adamic: /tmp/fs-combined-47-final/fixtures/13_createDirectory.a:76:30: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+      "diagnostic": "adamic: /tmp/fs-combined-rest-47-final/fixtures/13_createDirectory.a:76:30: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
     },
     "nodeMutantCaught": true
   }

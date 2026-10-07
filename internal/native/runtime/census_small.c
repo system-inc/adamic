@@ -1,7 +1,7 @@
 #include "adamic.h"
 
 bool adamic_census_to_boolean(const adamic_heap *value) {
-    if (value == NULL) return false;
+    if (value == NULL || value == &adamic_null) return false;
     switch (value->kind) {
     case adamic_kind_number: {
         double number = ((const adamic_number_box *)value)->number;
