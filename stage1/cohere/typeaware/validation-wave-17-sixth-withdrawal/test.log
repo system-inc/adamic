@@ -1,0 +1,16 @@
+=== RUN   TestWave17SixthAgreementAndMutants
+    wave_17_sixth_test.go:142: 308 controls: 49823 identical bytes; native=48.676469ms Go=90.157172ms
+    wave_17_sixth_test.go:145: controls-asan: 49823 identical finding bytes; findings 190
+    wave_17_sixth_test.go:151: ignoreStateless: 39813 identical bytes
+    wave_17_sixth_test.go:180: no_namespace mutant exits 0, empty stderr; Go comparison catches byte 7794
+    wave_17_sixth_test.go:180: no_danger_with_children mutant exits 0, empty stderr; Go comparison catches byte 46
+    wave_17_sixth_test.go:180: no_multi_comp mutant exits 0, empty stderr; Go comparison catches byte 2382
+    wave_17_sixth_test.go:189: binding-declarations rejects released checker handle: panic 70
+    wave_17_sixth_test.go:197: retained registry mutant exits 0, empty stderr; required panic 70 catches it
+    wave_17_sixth_test.go:217: repository: 18485 identical finding bytes; findings 0
+    wave_17_sixth_test.go:218: repository-asan: 18485 identical finding bytes; findings 0
+    wave_17_sixth_test.go:217: compiler: 5318 identical finding bytes; findings 0
+    wave_17_sixth_test.go:218: compiler-asan: 5318 identical finding bytes; findings 0
+--- PASS: TestWave17SixthAgreementAndMutants (126.11s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	126.122s

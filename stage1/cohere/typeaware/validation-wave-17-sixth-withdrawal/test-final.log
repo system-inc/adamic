@@ -1,0 +1,16 @@
+=== RUN   TestWave17SixthAgreementAndMutants
+    wave_17_sixth_test.go:151: 309 controls: 50136 identical bytes; native=52.162238ms Go=77.088458ms
+    wave_17_sixth_test.go:139: controls-asan: 50136 identical bytes; findings 193; native=152.393199ms Go=82.804341ms
+    wave_17_sixth_test.go:160: ignoreStateless: 39859 identical bytes
+    wave_17_sixth_test.go:189: no_namespace mutant exits 0, empty stderr; Go comparison catches byte 7794
+    wave_17_sixth_test.go:189: no_danger_with_children mutant exits 0, empty stderr; Go comparison catches byte 46
+    wave_17_sixth_test.go:189: no_multi_comp mutant exits 0, empty stderr; Go comparison catches byte 2382
+    wave_17_sixth_test.go:198: binding-declarations rejects released checker handle: panic 70
+    wave_17_sixth_test.go:206: retained registry mutant exits 0, empty stderr; required panic 70 catches it
+    wave_17_sixth_test.go:139: repository: 18485 identical bytes; findings 0; native=424.306628ms Go=139.101954ms
+    wave_17_sixth_test.go:139: repository-asan: 18485 identical bytes; findings 0; native=1.619081864s Go=144.768781ms
+    wave_17_sixth_test.go:139: compiler: 5318 identical bytes; findings 0; native=2.650575615s Go=337.354615ms
+    wave_17_sixth_test.go:139: compiler-asan: 5318 identical bytes; findings 0; native=11.058714624s Go=365.359881ms
+--- PASS: TestWave17SixthAgreementAndMutants (108.26s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	108.263s
