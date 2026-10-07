@@ -21,12 +21,21 @@ const config=ts.parseJsonConfigFileContent(read.config,ts.sys,path.dirname(confi
 const program=ts.createProgram(config.fileNames,config.options);
 const checker=program.getTypeChecker();assert.equal(ts.getPreEmitDiagnostics(program).length,0);
 
-const family=process.argv[6]||'objects';assert.ok(['objects','interfaces'].includes(family));
+const family=process.argv[6]||'objects';assert.ok(['objects','interfaces','object-unions'].includes(family));
 const parts=t=>t.isUnion()?t.types:[t];
 const callable=t=>parts(t).some(p=>checker.getSignaturesOfType(p,ts.SignatureKind.Call).length || checker.getSignaturesOfType(p,ts.SignatureKind.Construct).length);
 const scalar=t=>parts(t).every(p=>!!(p.flags&(ts.TypeFlags.String|ts.TypeFlags.StringLiteral|ts.TypeFlags.Number|ts.TypeFlags.NumberLiteral|ts.TypeFlags.Boolean|ts.TypeFlags.BooleanLiteral))) && (parts(t).every(p=>p.flags&ts.TypeFlags.StringLike) || parts(t).every(p=>p.flags&ts.TypeFlags.NumberLike) || parts(t).every(p=>p.flags&ts.TypeFlags.BooleanLike));
 const iface=t=>!!(t.objectFlags&ts.ObjectFlags.Interface) || !!(t.objectFlags&ts.ObjectFlags.Reference && t.target?.objectFlags&ts.ObjectFlags.Interface);
 function contract(t,seen=new Set(),descendant=false) {
+ if(family==='object-unions' && t.isUnion() && !scalar(t)) {
+  if(seen.has(t))return undefined;seen.add(t);
+  if(!t.types.every(p=>p.flags&ts.TypeFlags.Object))return 'NotYet: nullish or mixed union';
+  const common=checker.getPropertiesOfType(t);
+  const finite=p=>{const v=checker.getTypeOfSymbolAtLocation(p,p.valueDeclaration||p.declarations?.[0]);return !(p.flags&ts.SymbolFlags.Optional) && parts(v).every(x=>x.flags&(ts.TypeFlags.StringLiteral|ts.TypeFlags.NumberLiteral|ts.TypeFlags.BooleanLiteral));};
+  if(!common.some(finite))return 'NotYet: object union without finite tag';
+  for(const member of t.types){const failure=contract(member,seen,true);if(failure)return failure;}
+  return undefined;
+ }
  if(seen.has(t))return undefined;seen.add(t);
  if(family==='objects' && descendant && iface(t))return 'NotYet: interface descendant';
  if(t.objectFlags & ts.ObjectFlags.Class || t.objectFlags & ts.ObjectFlags.Reference && t.target?.objectFlags & ts.ObjectFlags.Class)return 'NotYet: nominal class field';
@@ -37,7 +46,10 @@ function contract(t,seen=new Set(),descendant=false) {
   if(p.flags & ts.SymbolFlags.Optional)return 'NotYet: optional field';
   if(callable(field))return 'Refused: callable members';
   if(scalar(field))continue;
-  if(!(field.flags&ts.TypeFlags.Object))return 'NotYet: union, nullish, intersection or generic field';
+  if(!(field.flags&ts.TypeFlags.Object)) {
+   if(family==='object-unions' && field.isUnion()) {const failure=contract(field,seen,true);if(failure)return failure;continue;}
+   return 'NotYet: union, nullish, intersection or generic field';
+  }
   if(checker.isArrayType(field)||checker.isTupleType(field))return 'NotYet: array field';
   if(!checker.getPropertiesOfType(field).length)return 'NotYet: empty structural object field';
   const failure=contract(field,seen,true);if(failure)return failure;
@@ -53,7 +65,7 @@ for(const file of program.getSourceFiles()) {
    if(original) {
     assert.equal(node.getText(file),original.text);const target=checker.getTypeFromTypeNode(node.type);
     const hasCallable=callable(target)||checker.getPropertiesOfType(target).some(p=>callable(checker.getTypeOfSymbolAtLocation(p,node)));
-    const reason=hasCallable?'Refused: callable members':checker.isArrayType(target)||checker.isTupleType(target)?'NotYet: array view':contract(target)||'target contract eligible';
+    const reason=family==='object-unions' && target.isUnion()?'NotYet: union cast target':hasCallable?'Refused: callable members':checker.isArrayType(target)||checker.isTupleType(target)?'NotYet: array view':contract(target)||'target contract eligible';
     rows.push({file:original.file,line:original.line,start:original.start,end:original.end,text:original.text,kind:tagged.has(key)?'tagged':'untagged',target_type:original.target_type,reason});lookup.delete(key);
    }
   }

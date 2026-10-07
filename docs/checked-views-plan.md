@@ -211,4 +211,8 @@ Register from the lane-owned files' init functions, and use the builder callback
 for element/argument/result contracts. Hook implementations intern their returned
 contract in the same program registry. Lane 1 owns dispatch and broader read-path
 wiring; registering a handler alone does not claim array/callable reads are implemented.
-Current union roots have Unknown descriptors until the union family is complete.
+Tagged object-union field contracts now carry ViewUnion member ids and shared
+field contracts. Nullish/mixed union contracts remain unsupported. Property.ViewTypeID
+preserves the checker type id so readiness finalization can resolve a contract
+interned after an earlier function body was lowered. Lane 3 must still retain checks
+for zero/Unknown contracts; physical shape ids do not certify these logical types.

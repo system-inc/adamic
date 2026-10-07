@@ -1,8 +1,8 @@
-Built: lane 1 object and named-interface transitive views, inherited/recursive contracts and shared readiness; union family remains in progress.
-Commits: plan 4dbf3b6a, main merge 00d6006a, objects df7bc5da; interface checkpoint follows on this feature branch only.
-Commands and outputs: full lower PASS 10.706s; uncached interface/object oracle and count regeneration PASS 28.141s; four new rows, no old row changed.
-Mutants: field/readiness/type removal, no-proof erasure, object/interface transitivity and double evaluation are pinned by semantic assertions, never clang or sanitizers.
-Not covered: optional/nullish/mixed unions, array/callable integration, proof erasure or timings; complete tsc sites remain 0/1,758 and 0/1,178.
+Built: lane 1 transitive objects/interfaces and tagged object-union fields with readiness; the complete union family is not finished.
+Commits: plan 4dbf3b6a, main merge 00d6006a, objects df7bc5da, interfaces 94cf7156; tagged object-union subset checkpoint follows.
+Commands and outputs: final lower/IR PASS 22.076s/23.033s; broad uncached Node/view oracle PASS 87.320s; counts PASS 32.737s; scoped vet PASS, four new rows only.
+Mutants: dropped field/readiness/type, no-proof erasure, object/interface transitivity, union membership and double evaluation caught by semantic assertions with valid C.
+Not covered: null/undefined/mixed and optional unions, union cast targets, arrays/callables, erasure and timings; complete tsc sites remain 0/1,758 and 0/1,178.
 
 No main or area branch was pushed or merged into. Both dependency merges were into
 `codex/interface-downcasts`; only that feature branch was pushed. The unit is still
@@ -409,3 +409,50 @@ primitive-mutants.py; scoped lower/oracle vet. Outputs are lane1-interfaces-*.lo
 The interface-specific production mutant skips named-descendant registration;
 valid release C then prints false instead of the independently pinned failure.
 The full repository adapter gate and release benchmark were not run.
+
+## Tagged object-union field subset, not full union completion
+
+The child read validates an object's common finite discriminant before returning
+the checked child. Tagged narrowing preserves every member's payload checks.
+Contracts carry the full member graph, not just the common properties. Readiness
+remains the non-null worker's state. A logical checker type id on property reads
+allows finalization to resolve contracts interned after a function was lowered.
+Native and JavaScript hold the receiver once and preserve object identity.
+
+Four source fixtures exercise a valid member, malformed member payload, a missing
+tag and an invalid tag. The invalid-tag field is read in an earlier function body
+and observed only with typeof afterward: skipping the union membership check
+makes valid C finish with object instead of the pinned exit-70 failure. This
+proves the check at child read, independently of subsequent payload accesses.
+The other seven production mutants were rerun and caught; sources restore in
+finally. The four new counted rows are the only count changes.
+
+The 2,936-site object-unions-contract-sites.json audit has no eligible complete
+targets and no unmatched spans. This is a target-contract rejection upper bound,
+not a claim to have compiled full tsc source. First blockers are listed in
+object-unions-contract-summary.json. The new explicit root-union-target bucket
+contains 261 tagged and 25 untagged sites; those had previously fallen through to
+common-field blockers. Recursive traversal also changes which nested blocker is
+seen first, so differences in reason rows are not new successfully lowered sites.
+Complete supported sites remain zero in both buckets.
+
+Exact commands: go test ./internal/lower ./internal/ir -count=1 -timeout 30m;
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run
+'TestCheckedViewObjectUnions|TestCheckedViewInterfaces|TestCheckedViewObjects|TestCountsAreRecorded'
+-count=1 -timeout 30m -args -update-counts; primitive-mutants.py; scoped
+lower/IR/native/JavaScript/oracle vet; pinned object-unions target audit. Logs are
+lane1-object-unions-*.log. Initial native tag-slot emission used a nonexistent
+string member; corrected it to the runtime's reference member before any pass or
+mutant claim. No clang failure counts as mutant evidence.
+
+Remaining union work: preserve null versus undefined in actual runtime values,
+validate mixed scalar members before physical conversion, permit optional absence
+while retaining reserved-slot readiness failures, and cover aliases/conversions
+and root union casts. No broad union admission is enabled ahead of those checks.
+No performance benchmark or retained-read share is claimed. Full repository adapter
+gate was not rerun. This checkpoint is not ready as complete ruling (c).
+
+Final restored-source count/family check PASS 25.857s. Final full touched lower/IR
+packages PASS 22.076s/23.033s and broad uncached ordinary source Node plus view,
+default-cast, required-field and readiness regressions PASS 87.320s. The complete
+repository adapter gate remains unrun; these are package and oracle checks.

@@ -28,6 +28,9 @@ func (e *emitter) viewField(property ir.Property) string {
 		}
 		e.line("if (!(%s)) adamic_view_literal_failure(%s, %s, %d, %s);", strings.Join(tests, " || "), cString(property.View), cString(name), property.Of, slot)
 	}
+	if property.Of == ir.Object {
+		e.viewObjectUnion(property, value)
+	}
 	if property.Of.IsReference() {
 		return e.own(property.Of, fmt.Sprintf("adamic_retain((%s)%s)", cType(property.Of), value))
 	}

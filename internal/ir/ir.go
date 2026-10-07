@@ -311,6 +311,7 @@ type (
 		ViewType     string
 		ViewAllowed  []Expression
 		ViewContract ViewContractID
+		ViewTypeID   int
 		// Readiness is the source expression for a checked field read, empty when proven ready.
 		Readiness string
 		Object    Expression

@@ -10,6 +10,9 @@ import (
 // field too: returning or aliasing that object must not lose the checks on its reads.
 // Interface descendants share the same data checks, including inherited fields.
 func (l *lowering) viewObjectFields(node *ast.Node, target *checker.Type, fields map[string]bool, seen map[*checker.Type]bool, descendant bool) error {
+	if target.Flags()&checker.TypeFlagsUnion != 0 {
+		return l.viewUnionFields(node, target, fields, seen)
+	}
 	if descendant && viewInterfaceType(target) {
 		return l.viewInterfaceFields(node, target, fields, seen)
 	}
@@ -46,6 +49,14 @@ func (l *lowering) viewObjectFields(node *ast.Node, target *checker.Type, fields
 }
 
 func viewDataType(target *checker.Type) bool {
+	if target.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range target.Types() {
+			if !viewDataType(member) {
+				return false
+			}
+		}
+		return true
+	}
 	return interfaceScalar(target) || target.Flags()&checker.TypeFlagsObject != 0
 }
 

@@ -1418,3 +1418,17 @@ The complete-target rejection audit still proves zero complete eligible sites:
 partition of the original direct-contract lane shares. Remaining first blockers
 are recorded per site in interfaces-contract-sites.json. This is a contract audit,
 not a successful whole-file lowering measurement.
+
+### Tagged object-union field subset
+
+A read of an object-union field checks its required finite common discriminant
+before returning the child. A subsequent tag comparison can narrow that checked
+child, but all payload reads remain checked. The contract graph retains member ids,
+not just common fields. Both backends evaluate the receiver once and preserve
+identity. Contract links on earlier function reads resolve after cast registration.
+
+This is a subset checkpoint, not completion of the union family. Null and undefined
+are still conflated by existing reference representations; checked views that need
+them remain NotYet until a distinct representation is implemented. Mixed scalar
+unions, optional fields, union cast targets and unsupported aliases remain gaps.
+No complete tsc target becomes eligible in the renewed object-unions audit.

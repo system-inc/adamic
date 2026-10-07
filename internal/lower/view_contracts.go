@@ -46,15 +46,24 @@ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewCo
 	} else {
 		contract.Kind = ir.ViewObject
 	}
-	// Union roots currently retain Unknown: common fields are not a certificate for
-	// each member's fields. Lane 1's union family will build the full member graph.
+	// A union retains each member contract; common fields are not a certificate
+	// for the other fields of any selected member.
 	if target.Flags()&checker.TypeFlagsUnion != 0 && !interfaceScalar(target) {
-		contract.Kind = ir.ViewUnknown
+		contract.Kind = ir.ViewUnion
 	}
 	id := ir.ViewContractID(len(l.result.ViewContracts) + 1)
 	l.result.ViewContracts = append(l.result.ViewContracts, contract)
 	l.result.ViewContractTypes[int(target.Id())] = id
-	if contract.Kind == ir.ViewObject {
+	if contract.Kind == ir.ViewUnion {
+		for _, member := range target.Types() {
+			child, err := build(member)
+			if err != nil {
+				return 0, err
+			}
+			contract.Members = append(contract.Members, child)
+		}
+	}
+	if contract.Kind == ir.ViewObject || contract.Kind == ir.ViewUnion {
 		for _, property := range l.checker.GetPropertiesOfType(target) {
 			child, err := build(l.checker.GetTypeOfSymbol(property))
 			if err != nil {
