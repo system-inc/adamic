@@ -15,3 +15,25 @@ VOLUME_REPORT.md's combined checker-dependent counts:
 Fetched all origin heads and inspected stage1/cohere claim files and named rule
 port files before claiming. No existing claim or named port for these rules was
 found. No rule was skipped.
+
+## Continuation 1
+
+Requested on October 7, 2026; same branch, after pushing all original work.
+Fetched all 320 origin refs and inspected every typeaware claim blob. Selection
+uses VOLUME_REPORT.md's linked validation-volume combined counts descending,
+with lexical ties, excluding the ports on origin/codex/tsgo-c-library and
+origin/main and rules named in any origin claim file.
+
+The first three eligible rules are reserved here before implementation:
+
+| Rule | Compiler | Repository | Total |
+| --- | ---: | ---: | ---: |
+| nexus/correctness-no-collection-misuse | 0 | 0 | 0 |
+| nexus/correctness-no-discarded-outcome | 0 | 0 | 0 |
+| nexus/correctness-no-discarded-pure-result | 0 | 0 | 0 |
+
+All preceding ranked rules were already ported or named in an origin claim.
+These three names occur only in inventory/skip-types records on the base and
+main, with no native implementation or typeaware claim. Existing reservations
+remain excluded even where their claim documents describe incomplete work.
+Positive controls and byte-oracle mutants are required despite zero volume.
