@@ -25,14 +25,14 @@ renderWhenStateChanges(() => {
 	host.render(body());
 });
 const window = new Window({ contentRectangle: { x: 0, y: 0, width: 300, height: 200 }, styleMask: ['Titled'], backing: 'Buffered', defer: true });
-window.contentView = host.view;
+window.contentView = host.view();
 
-console.log(`size: ${host.fittingWidth} by ${host.fittingHeight}`);
+console.log(`size: ${host.fittingWidth()} by ${host.fittingHeight()}`);
 console.log(`pressed: ${host.press('Add one')}, count: ${count.value}`);
 console.log(`pressed: ${host.press('Add one')}, count: ${count.value}`);
 console.log(`missing: ${host.press('Subtract one')}, count: ${count.value}`);
 for (let index = 0; index < 8; index++) {
 	host.press('Add one');
 }
-console.log(`count: ${count.value}, size: ${host.fittingWidth} by ${host.fittingHeight}`);
+console.log(`count: ${count.value}, size: ${host.fittingWidth()} by ${host.fittingHeight()}`);
 window.close();
