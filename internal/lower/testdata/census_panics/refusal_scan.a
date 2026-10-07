@@ -1,0 +1,2 @@
+enum Kind { A }
+const table = { [Kind.A]: 'a' } satisfies Partial<Record<Kind, string>>;

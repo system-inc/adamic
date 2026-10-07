@@ -169,7 +169,13 @@ func relationFieldExpression(origin *ast.Node, name string) *ast.Node {
 		return nil
 	}
 	for _, property := range origin.AsObjectLiteralExpression().Properties.Nodes {
-		if property.Kind == ast.KindPropertyAssignment && property.Name().Text() == name {
+		if property.Kind != ast.KindPropertyAssignment {
+			continue
+		}
+		key := property.Name()
+		// Computed keys have no Node.Text. They supply no exact field origin;
+		// object lowering still checks whether their names are supported.
+		if (ast.IsIdentifier(key) || key.Kind == ast.KindStringLiteral) && key.Text() == name {
 			return property.AsPropertyAssignment().Initializer
 		}
 	}
