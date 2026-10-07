@@ -36,3 +36,17 @@ with lexical ties, are reserved on this same branch:
 This claim update is pushed before code. New sources use .a. Changes stay in
 this unit's rule directories; shared harness and registration generator are
 owned by codex/lint-harness-dot-a and will not be edited.
+
+## Continuation withdrawn after concurrent-claim refresh
+
+A second all-head fetch found concurrent claims for all three continuation
+rules. Wave 02's claim 958c5c2f was committed at 2026-10-07T00:59:43Z,
+before this branch's 24667c85 at 2026-10-07T01:00:59Z. Wave 09 yields all
+three continuation reservations and takes no replacements. The original
+prefer-const, radix and non-nullable-type-assertion-style ports remain complete.
+
+Work performed before the collision was observed is saved as an explicitly
+withdrawn experiment in ../wave09_next, with no shared registration edits.
+The timeout port passed independent full-byte controls and both corpora using
+a temporary checker registration overlay. The other two rules are partial,
+not completed ports. See ../wave09_next/REPORT.md for gaps and evidence.
