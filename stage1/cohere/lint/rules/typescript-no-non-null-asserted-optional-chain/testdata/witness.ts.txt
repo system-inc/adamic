@@ -1,0 +1,3 @@
+declare const foo: any;
+export const result = (foo?.bar)!;
+export const valid = foo?.bar!.baz;

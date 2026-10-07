@@ -1,0 +1,12 @@
+{
+  "name": "@typescript-eslint/no-non-null-asserted-optional-chain",
+  "kinds": [
+    "NonNullExpression"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleAssertedOptionalChain",
+  "upstreamPackage": "typescript",
+  "upstreamTest": "TestNoNonNullAssertedOptionalChain"
+}
