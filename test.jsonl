@@ -68747,3 +68747,8 @@
 {"Time":"2026-10-07T23:28:50.595393373Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestMutants/protocol_width_confuses_Number_with_parseFloat","Elapsed":38.38}
 {"Time":"2026-10-07T23:28:50.595399752Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestMutants/return_and_throw_lose_their_keyword"}
 {"Time":"2026-10-07T23:28:50.595402416Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestMutants/return_and_throw_lose_their_keyword","Output":"=== CONT  TestMutants/return_and_throw_lose_their_keyword\n","OutputType":"frame"}
+{"Time":"2026-10-07T23:29:36.245279274Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDecoratedExports","Output":"    exports_test.go:21: 6 decorated exports, 5151 bytes match Go\n"}
+{"Time":"2026-10-07T23:29:36.248090416Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDecoratedExports","Output":"--- PASS: TestDecoratedExports (63.38s)\n","OutputType":"frame"}
+{"Time":"2026-10-07T23:29:36.248221463Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDecoratedExports","Elapsed":63.38}
+{"Time":"2026-10-07T23:29:36.248230888Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDecoratedExportMutant"}
+{"Time":"2026-10-07T23:29:36.248234523Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDecoratedExportMutant","Output":"=== RUN   TestDecoratedExportMutant\n","OutputType":"frame"}
