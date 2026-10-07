@@ -4,6 +4,8 @@ Checks: 19 landing steps, 100 required external passing events, zero skips; 637 
 Mutants: all twelve rule witnesses plus dispatch, listener, fact, library, ownership, record and external comparison mutants caught.
 Not covered: three parked hook analyses, four production bridge routes, shared checker context, own emitted-JavaScript parity and the full repository gate.
 
+Superseded landing refresh: [DRIVER_LANDING_REPORT.md](DRIVER_LANDING_REPORT.md).
+
 The audit ran after the green proof was pushed to codex/typeaware-wave-07.
 Current origin/main c7991b900362796aefd111474e65eb5398e91953 and
 origin/area/stage1-lint b84a9d9314b65d3d0261ee017e233287b4f071da

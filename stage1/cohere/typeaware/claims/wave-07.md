@@ -230,3 +230,9 @@ c7991b900; all 19 owned landing steps and 100 required external test events pass
 with zero skips or failures. Twelve existing ports rerun; three hook claims remain
 parked for native IR, SSA and capture analysis. No additional rules claimed.
 See wave07_jsx/LATEST_LANDING_REPORT.md and its pinned evidence.
+
+Generated-driver refresh: rebased onto area/stage1-lint b46914832, containing
+main c7991b900; all 19 landing steps, JSX/listener/library proofs and 100 external
+passing events re-green with zero skips or failures. No additional claims.
+The three hook claims remain parked for native IR, SSA and capture analysis.
+Fresh source/evidence pins and blockers: wave07_jsx/DRIVER_LANDING_REPORT.md.

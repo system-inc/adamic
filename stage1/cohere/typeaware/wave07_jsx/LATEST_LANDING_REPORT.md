@@ -4,6 +4,8 @@ Checks: 19 landing steps and 16 external root checks pass; 100 external passing 
 Mutants: twelve rule mutants, dispatch/listener/fact/library/ownership guards, nine record mutants and external comparison witnesses caught.
 Not covered: three parked React analyses, four production bridge routes, shared checker context, own emitted-JavaScript parity and the full repository gate.
 
+Superseded landing refresh: [DRIVER_LANDING_REPORT.md](DRIVER_LANDING_REPORT.md).
+
 ## Landing and checks
 
 Rebased onto origin/area/stage1-lint b84a9d9314b65d3d0261ee017e233287b4f071da,
