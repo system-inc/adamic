@@ -203,3 +203,12 @@ native bytes. The clean-running emitted-JavaScript mismatch mutant is caught.
 No implementation, harness or skip condition changes, and no new rules claimed.
 Other packages' required external checks are not represented as run. See
 ../WAVE_30_REQUIRED_INPUT_REPORT.md and validation-wave-30-required-input/.
+
+Landing-first predicate refresh: main advanced to c7991b900 and the lint area
+includes it at b84a9d931. Rebased all 34 own commits cleanly, retained the new
+proven-predicate/relation lowering and record runtime, and reran all twelve own
+gates plus the required pinned-input compiler/stage1 comparison. All pass, along
+with five uncached Node fixtures, inherited lowering/refusal and record-runtime
+mutants, and vet. Shared checker-context gap and partial/PARKED statuses remain
+unchanged. No new claims or implementation edits. See
+../WAVE_30_PREDICATE_LANDING_REPORT.md and its exact rebase/validation evidence.
