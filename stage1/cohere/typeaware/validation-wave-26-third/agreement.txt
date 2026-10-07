@@ -1,0 +1,21 @@
+=== RUN   TestWave26ThirdAgreementAndMutants
+    wave_26_third_test.go:117: controls: 28705 identical finding bytes; findings 45
+    wave_26_third_test.go:125: controls-asan: 28705 identical finding bytes; findings 45
+    wave_26_third_test.go:136: eval mutant: exit 0, empty stderr, byte oracle catches byte 3817
+    wave_26_third_test.go:136: extend mutant: exit 0, empty stderr, byte oracle catches byte 11247
+    wave_26_third_test.go:136: function mutant: exit 0, empty stderr, byte oracle catches byte 18228
+    wave_26_third_test.go:150: syntax question mutant: exit 0, empty stderr, byte oracle catches byte 9277
+    wave_26_third_test.go:150: origin question mutant: exit 0, empty stderr, byte oracle catches byte 1290
+    wave_26_third_test.go:161: repository: 18485 identical finding bytes; findings 0
+    wave_26_third_test.go:162: repository-asan: 18485 identical finding bytes; findings 0
+    wave_26_third_test.go:170: repository whole process native 796.472636ms Go 197.211054ms; native phases tsgo: load_ns=116947587 query_ns=232033914 queries=920 first_query_ns=1234275 run_ns=668727998
+        ; Go phases cohere: load_ns=103897873 rule_ns=9922601 run_ns=73032340
+    wave_26_third_test.go:161: compiler: 5318 identical finding bytes; findings 0
+    wave_26_third_test.go:162: compiler-asan: 5318 identical finding bytes; findings 0
+    wave_26_third_test.go:170: compiler whole process native 6.96474526s Go 651.137223ms; native phases tsgo: load_ns=393613660 query_ns=1901555810 queries=9267 first_query_ns=33234 run_ns=6522631078
+        ; Go phases cohere: load_ns=431978902 rule_ns=88457863 run_ns=188825133
+    wave_26_third_test.go:181: released handle: panic 70, invalid or released checker handle
+    wave_26_third_test.go:186: released-registry mutant: exit 0, required panic 70 catches it
+--- PASS: TestWave26ThirdAgreementAndMutants (172.99s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	172.997s
