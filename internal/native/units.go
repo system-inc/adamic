@@ -163,7 +163,7 @@ func splitDeclarations(source string) ([]cDeclaration, error) {
 		if declaration.name == ";" && limit >= 3 {
 			declaration.name = declaration.tokens[limit-2].text
 		}
-		if declaration.name != "main" && (!strings.HasPrefix(declaration.name, "adamic_") || declaration.tokens[0].text != "static") {
+		if declaration.name != "main" && (!cName.MatchString(declaration.name) || declaration.tokens[0].text != "static") {
 			return nil, fmt.Errorf("native: split: unsupported declaration near %q", declaration.tokens[0].text)
 		}
 		declarations = append(declarations, declaration)
