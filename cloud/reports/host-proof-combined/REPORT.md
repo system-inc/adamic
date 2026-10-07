@@ -30,7 +30,7 @@ Final additions: Buffer fallback ccb8a69 via merge 469bb8b9; exact audited adapt
 | 22_createHash_fallback.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 23_newLine.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 24_useCaseSensitiveFileNames.a | Agrees | Agrees | Agrees | Agrees | None | None |
-| 25_readDirectory.a | Checker | Checker | Refused | Refused | overload type predicate without proving body at 628:59 | Compiler |
+| 25_readDirectory.a | Checker | Checker | Refused | Refused | debugger at 691:5 | Adaptation / language ruling |
 
 Fixture 25 passes checking on both backends. Exact next diagnostic:
 ```
@@ -226,3 +226,25 @@ Verified one-line probe in probes/25_overload_predicate.a on both backends, same
 Targeted lower empty-array and unknown-array tests PASS 0.234s. Incoming focused Node oracle and both semantic runtime mutants PASS 2.177s: empty-array-falsy and shared-fresh-number-array mutants finish with exit 0 and no sanitizer errors, caught solely by Node stdout. The incoming scalar fallback test assumed scalar OR was unsupported; this combined proof already supports it via taste-not-soundness. Reconciled its assertion to require accepted scalar truthiness and forbid the array-specific Coalesce representation. Both backends agree with Node (`7 missing 2 present`) on the scalar probe. Widening the array-only condition to all scalar OR fails that assertion; source restored. Initial direct JS probe failed to resolve the runtime module, then passed with oracle/node.mjs; the tool failure is retained in the logs. No production semantic workaround added.
 
 No full repository gate, full counts regeneration, flow rerun or WASI rerun in this compiler-only step; no runtime calls added. Previous four flow failures remain the recorded logical-assignment blockers. Only proof branch pushed; no main/area push, force or rebase.
+
+## Proven-predicate recount
+
+Merged compiler a58ba402 with a merge commit; exact audited fixture tree remains 0d11046e. Required prior host/compiler merges retained. 25 passes the bodyless overloaded some predicate declaration and advances to Refused on both backends at 691:5:
+
+```
+adamic: /workspace/adamic/stage3/fixtures/host/25_readDirectory.a:691:5: Adamic 0.1 refuses debugger; remove it
+```
+
+Verified one-line source `debugger;` refuses at 1:1 on both backends. It is in Debug.fail, a source adaptation/language ruling item; no debugger workaround or fixture edit invented. 08 and 14 retain their default-sort and capture-cycle refusals.
+
+Merge reconciliation preserves packed atomic slot caches by deriving field indices from actual slot pointers, retains initialized-bit updates after every store, keeps tagged field-view metadata across spread/reuse, preserves truthiness, Array.isArray flow and census predicate marker proofs, and retains host/async registrations. No new libc/POSIX call added. Incoming checked-view/runtime code is tested by native/JS oracle checks.
+
+Targeted lower predicate/condition/callback/empty-array/unknown-array/phantom tests PASS 13.956s, including TestPredicateOverloadRuntime. Checked cast runtime mutants and tree/object-spread oracles PASS 1.277s. Executed mutants: skip tag caught by exit, wrong tag caught by exit, twice operand caught solely by Node stdout with clean exit/sanitizers. Required-field primitive and operand-once checks PASS. Broad field-view test command FAIL 17.380s in three top-level tests, all before IR construction:
+
+- TestNarrowedFieldUsesSharedReadiness: readiness-identifier.a:4:65, readiness-identifier-uninitialized.a:3:85 (exact undefined); readiness-number.a:4:55, readiness-number-uninitialized.a:3:71 (exact null).
+- TestViewFieldInheritedStaticReadiness: non_null_static_initialized.a:1:38 (exact undefined).
+- TestDefaultTaggedSourceViews: default-staged.a:4:70, default-boxed-write.a:3:79, default-read-before-set.a:3:57 (exact undefined).
+
+Each collision says `Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined` (or null), followed by `declare the variable optional and assign undefined`. These incoming initializer fixtures are incompatible with the earlier exact-nullish ruling retained in this proof; no compiler policy changed to make them pass. Other tested field-view cases pass. Full repository gate, flow rerun, full Linux counts regeneration and macOS not run in this step. Only proof branch pushed, no main/area push, force or rebase.
+
+Final recount: all 25 adapted and all 25 pristine fixtures freshly rerun on both backends: 22/25 adapted and 16/25 pristine agree byte-for-byte with Node. Final WASI host leg PASS 18.748s, compiling the complete updated runtime archive. Logs fs_predicate_final_*.log.

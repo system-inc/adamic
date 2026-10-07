@@ -394,8 +394,12 @@ func (e *emitter) statement(at *ir.Statement) {
 	case ir.Panic:
 		e.line("panic(%s);", e.value(statement.Message))
 	case ir.SetProperty:
+		if e.program.CheckedFields[statement.Name] && !statement.Define && !statement.Uninitialized {
+			e.line("adamicViewWrite(%s, %s, %s, %d);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), statement.Value.Type())
+			break
+		}
 		if statement.Define || statement.Uninitialized {
-			e.line("adamicDefineField(%s, %s, %s, %t, %t);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), !strings.HasPrefix(statement.Name, "#"), !statement.Uninitialized)
+			e.line("adamicDefineField(%s, %s, %s, %t, %t, %d);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), !strings.HasPrefix(statement.Name, "#"), !statement.Uninitialized, statement.Value.Type())
 		} else {
 			e.line("adamicWriteField(%s, %s, %s);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value))
 		}
@@ -759,6 +763,7 @@ func (e *emitter) value(expression ir.Expression) string {
 			}
 			return "[" + strings.Join(elements, ", ") + "]"
 		}
+		spreadValue := ""
 		fields := []string{}
 		if len(expression.Methods) > 0 {
 			fields = append(fields, "__proto__: "+e.prototype(expression.Methods))
@@ -767,6 +772,10 @@ func (e *emitter) value(expression ir.Expression) string {
 			spread := e.value(expression.Spread)
 			if expression.SpreadReadiness != "" {
 				spread = "adamicSpreadFields(" + spread + ", " + quote(expression.SpreadReadiness) + ")"
+			}
+			if len(e.program.CheckedFields) != 0 {
+				spreadValue = spread
+				spread = "adamicSpreadSource"
 			}
 			fields = append(fields, "..."+spread)
 		}
@@ -786,6 +795,20 @@ func (e *emitter) value(expression ir.Expression) string {
 		if len(unready) > 0 {
 			object = "adamicUninitializedFields(" + object + ", [" + strings.Join(unready, ", ") + "])"
 		}
+		if len(e.program.CheckedFields) != 0 {
+			types := []string{}
+			for _, field := range expression.Fields {
+				types = append(types, quote(field.Name)+": "+fmt.Sprint(field.Value.Type()))
+			}
+			parentTypes := ""
+			if spreadValue != "" {
+				parentTypes = "...adamicFieldRepresentations.get(adamicSpreadSource), "
+			}
+			object = "adamicRecordFieldTypes(" + object + ", {" + parentTypes + strings.Join(types, ", ") + "})"
+			if spreadValue != "" {
+				object = "((adamicSpreadSource) => " + object + ")(" + spreadValue + ")"
+			}
+		}
 		return object
 	case ir.PhantomMember:
 		operator := "["
@@ -794,6 +817,13 @@ func (e *emitter) value(expression ir.Expression) string {
 		}
 		return "(" + e.value(expression.Value) + ")" + operator + quote(expression.Name) + "]"
 	case ir.Property:
+		if expression.View != "" {
+			expected := expression.ViewType
+			if expected == "" {
+				expected = map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Array: "array", ir.Map: "Map"}[expression.Of]
+			}
+			return fmt.Sprintf("adamicViewField(%s, %s, %s, %d, %s, [%s])", e.value(expression.Object), quote(expression.Name), quote(expression.View), expression.Of, quote(expected), e.values(expression.ViewAllowed))
+		}
 		if expression.Readiness != "" {
 			return fmt.Sprintf("adamicReadField(%s, %s, %s, %t, %t)", e.value(expression.Object), quote(expression.Name), quote(expression.Readiness), expression.Optional, expression.Absent)
 		}
@@ -978,6 +1008,9 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.StringIndex:
 		return e.value(expression.Value) + "[" + e.value(expression.Index) + "]"
 	case ir.CheckedCast:
+		if expression.CheckedFields {
+			return "adamicCheckedViewCast(" + e.value(expression.Value) + ", " + quote(expression.Field) + ", " + fmt.Sprint(expression.FieldType) + ", [" + e.values(expression.Allowed) + "], " + quote(expression.Message) + ")"
+		}
 		return "adamicCast(" + e.value(expression.Value) + ", " + quote(expression.Field) + ", [" + e.values(expression.Allowed) + "], " + quote(expression.Message) + ")"
 	case ir.ArrayPop:
 		return e.value(expression.Array) + ".pop()"

@@ -553,7 +553,10 @@ func (e *emitter) reused(literal ir.ObjectLiteral) (string, bool) {
 	e.taking = outer
 	for index, field := range literal.Fields {
 		slot := e.temporary()
-		e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), e.cache())
+		cache := e.cache()
+		e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), cache)
+		e.line("adamic_object_field_types(%s)[(size_t)(%s - %s->slots)] = %d;", object, slot, object, field.Value.Type())
+		e.line("adamic_object_initialized(%s)[(size_t)(%s - %s->slots)] = %d;", object, slot, object, map[bool]int{true: 0, false: 1}[field.Uninitialized])
 		if field.Value.Type().IsReference() {
 			// A field moved out of a unique object left NULL behind, and releasing that is nothing.
 			e.line("adamic_release(%s->reference);", slot)

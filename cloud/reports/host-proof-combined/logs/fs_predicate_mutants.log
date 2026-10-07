@@ -1,0 +1,29 @@
+=== RUN   TestInterfaceCastRuntimeMutants
+=== RUN   TestInterfaceCastRuntimeMutants/skip_tag
+    interface_cast_test.go:93: gate cache node miss
+    interface_cast_test.go:95: gate cache node miss
+    oracle_test.go:629: gate cache native miss
+    interface_cast_test.go:130: caught skip tag: exit codes differ; expected exit 70 stdout "casting\n", mutant exit 0 stdout "casting\notherother\n" stderr ""
+    oracle_test.go:636: gate cache native hit
+=== RUN   TestInterfaceCastRuntimeMutants/wrong_tag
+    interface_cast_test.go:93: gate cache node miss
+    oracle_test.go:629: gate cache native miss
+    interface_cast_test.go:130: caught wrong tag: exit codes differ; expected exit 0 stdout "idid\n42\ntexttext\n5\ntrue\nonce2\ncalls 2\n", mutant exit 70 stdout "idid\n42\ntexttext\n5\n" stderr "adamic: panic: cast failed: this Node is not a Identifier\n"
+=== RUN   TestInterfaceCastRuntimeMutants/twice_operand
+    interface_cast_test.go:93: gate cache node hit
+    oracle_test.go:629: gate cache native miss
+    interface_cast_test.go:130: caught twice operand: stdout differs; expected exit 0 stdout "idid\n42\ntexttext\n5\ntrue\nonce2\ncalls 2\n", mutant exit 0 stdout "idid\n42\ntexttext\n5\ntrue\nonce3\ncalls 3\n" stderr ""
+    oracle_test.go:636: gate cache native hit
+--- PASS: TestInterfaceCastRuntimeMutants (1.22s)
+    --- PASS: TestInterfaceCastRuntimeMutants/skip_tag (0.44s)
+    --- PASS: TestInterfaceCastRuntimeMutants/wrong_tag (0.42s)
+    --- PASS: TestInterfaceCastRuntimeMutants/twice_operand (0.36s)
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+--- PASS: TestNativeAgreesWithNode (0.04s)
+PASS
+gate cache: native hits=2 misses=3
+gate cache: node hits=1 misses=3
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.277s

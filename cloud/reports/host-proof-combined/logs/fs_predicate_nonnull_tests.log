@@ -1,0 +1,284 @@
+=== RUN   TestImpossibleNonNullFixturesAreRefused
+=== PAUSE TestImpossibleNonNullFixturesAreRefused
+=== RUN   TestPossibleNonNullStopsAtAssertion
+=== PAUSE TestPossibleNonNullStopsAtAssertion
+=== RUN   TestWASIInputAgreesWithNode
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/node_process_host.a
+    wasi_host_test.go:65: target refusal: wasm32-wasi refuses process.platform: WASI has no Node host platform; use a native Node host target
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/node_process_performance.a
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/node_process_performance_core.a
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/node_process_system.a
+    wasi_host_test.go:65: target refusal: wasm32-wasi refuses process.argv: WASI has no executable paths; use a native Node host target
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/read_files.a
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/realpath.a
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/empty-path.a
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/utf8_sweep.a
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/arguments.a
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/read_arguments.a
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/write_files.a
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/walk.a
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/node_buffer_input.a
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_symlink.a
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/node_path_posix.a
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/node_path_basename.a
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/node_path_relative.a
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_entries.a
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_realpath.a
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_system.a
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_stat_options.a
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_permissions.a
+--- PASS: TestWASIInputAgreesWithNode (20.06s)
+    --- SKIP: TestWASIInputAgreesWithNode/internal/oracle/testdata/node_process_host.a (0.34s)
+    --- PASS: TestWASIInputAgreesWithNode/internal/oracle/testdata/node_process_performance.a (7.98s)
+    --- PASS: TestWASIInputAgreesWithNode/internal/oracle/testdata/node_process_performance_core.a (1.14s)
+    --- SKIP: TestWASIInputAgreesWithNode/internal/oracle/testdata/node_process_system.a (0.25s)
+    --- PASS: TestWASIInputAgreesWithNode/internal/oracle/testdata/read_files.a (0.31s)
+    --- PASS: TestWASIInputAgreesWithNode/internal/oracle/testdata/realpath.a (0.27s)
+    --- PASS: TestWASIInputAgreesWithNode/internal/oracle/testdata/empty-path.a (0.30s)
+    --- PASS: TestWASIInputAgreesWithNode/internal/oracle/testdata/utf8_sweep.a (0.35s)
+    --- PASS: TestWASIInputAgreesWithNode/internal/oracle/testdata/arguments.a (0.28s)
+    --- PASS: TestWASIInputAgreesWithNode/internal/oracle/testdata/read_arguments.a (0.31s)
+    --- PASS: TestWASIInputAgreesWithNode/internal/oracle/testdata/write_files.a (0.34s)
+    --- PASS: TestWASIInputAgreesWithNode/internal/oracle/testdata/walk.a (0.33s)
+    --- PASS: TestWASIInputAgreesWithNode/internal/oracle/testdata/node_buffer_input.a (0.58s)
+    --- PASS: TestWASIInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_symlink.a (0.61s)
+    --- PASS: TestWASIInputAgreesWithNode/internal/oracle/testdata/node_path_posix.a (0.60s)
+    --- PASS: TestWASIInputAgreesWithNode/internal/oracle/testdata/node_path_basename.a (0.55s)
+    --- PASS: TestWASIInputAgreesWithNode/internal/oracle/testdata/node_path_relative.a (0.55s)
+    --- PASS: TestWASIInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_entries.a (0.61s)
+    --- PASS: TestWASIInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_realpath.a (0.75s)
+    --- PASS: TestWASIInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_system.a (0.89s)
+    --- PASS: TestWASIInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_stat_options.a (1.47s)
+    --- PASS: TestWASIInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_permissions.a (1.24s)
+=== RUN   TestWASIHostRuntimeRefusals
+=== RUN   TestWASIHostRuntimeRefusals/mkdtemp
+=== RUN   TestWASIHostRuntimeRefusals/pid
+=== RUN   TestWASIHostRuntimeRefusals/platform
+=== RUN   TestWASIHostRuntimeRefusals/columns
+=== RUN   TestWASIHostRuntimeRefusals/memory_usage
+=== RUN   TestWASIHostRuntimeRefusals/argv
+=== RUN   TestWASIHostRuntimeRefusals/open
+=== RUN   TestWASIHostRuntimeRefusals/mkdir
+=== RUN   TestWASIHostRuntimeRefusals/utimes
+--- PASS: TestWASIHostRuntimeRefusals (1.66s)
+    --- PASS: TestWASIHostRuntimeRefusals/mkdtemp (0.20s)
+    --- PASS: TestWASIHostRuntimeRefusals/pid (0.16s)
+    --- PASS: TestWASIHostRuntimeRefusals/platform (0.24s)
+    --- PASS: TestWASIHostRuntimeRefusals/columns (0.24s)
+    --- PASS: TestWASIHostRuntimeRefusals/memory_usage (0.16s)
+    --- PASS: TestWASIHostRuntimeRefusals/argv (0.19s)
+    --- PASS: TestWASIHostRuntimeRefusals/open (0.16s)
+    --- PASS: TestWASIHostRuntimeRefusals/mkdir (0.18s)
+    --- PASS: TestWASIHostRuntimeRefusals/utimes (0.14s)
+=== RUN   TestWASIFileAgreesWithNode
+=== RUN   TestWASIFileAgreesWithNode/read
+=== RUN   TestWASIFileAgreesWithNode/open
+    wasi_host_test.go:152: target refusal: file creation permission bits are not supported
+=== RUN   TestWASIFileAgreesWithNode/write
+=== RUN   TestWASIFileAgreesWithNode/close
+=== RUN   TestWASIFileAgreesWithNode/write_file
+    wasi_host_test.go:152: target refusal: file creation permission bits are not supported
+=== RUN   TestWASIFileAgreesWithNode/exists
+=== RUN   TestWASIFileAgreesWithNode/stat
+    wasi_host_test.go:152: target refusal: fs.utimesSync timestamp precision or range is unavailable
+=== RUN   TestWASIFileAgreesWithNode/mkdir
+    wasi_host_test.go:152: target refusal: directory creation permission bits are not supported
+=== RUN   TestWASIFileAgreesWithNode/unlink
+=== RUN   TestWASIFileAgreesWithNode/utimes
+    wasi_host_test.go:152: target refusal: fs.utimesSync timestamp precision or range is unavailable
+=== RUN   TestWASIFileAgreesWithNode/date
+=== RUN   TestWASIFileAgreesWithNode/system
+    wasi_host_test.go:152: target refusal: fs.utimesSync timestamp precision or range is unavailable
+=== RUN   TestWASIFileAgreesWithNode/buffer
+=== RUN   TestWASIFileAgreesWithNode/read_sync
+=== RUN   TestWASIFileAgreesWithNode/write_buffer
+    wasi_host_test.go:152: target refusal: file creation permission bits are not supported
+=== RUN   TestWASIFileAgreesWithNode/mkdtemp
+    wasi_host_test.go:148: target refusal: wasm32-wasi refuses fs.mkdtempSync: WASI has no temporary directory creation; use a native Node host target
+=== RUN   TestWASIFileAgreesWithNode/rm
+--- PASS: TestWASIFileAgreesWithNode (10.93s)
+    --- PASS: TestWASIFileAgreesWithNode/read (0.56s)
+    --- SKIP: TestWASIFileAgreesWithNode/open (0.65s)
+    --- PASS: TestWASIFileAgreesWithNode/write (0.67s)
+    --- PASS: TestWASIFileAgreesWithNode/close (1.31s)
+    --- SKIP: TestWASIFileAgreesWithNode/write_file (0.93s)
+    --- PASS: TestWASIFileAgreesWithNode/exists (0.46s)
+    --- SKIP: TestWASIFileAgreesWithNode/stat (0.58s)
+    --- SKIP: TestWASIFileAgreesWithNode/mkdir (0.49s)
+    --- PASS: TestWASIFileAgreesWithNode/unlink (0.48s)
+    --- SKIP: TestWASIFileAgreesWithNode/utimes (1.23s)
+    --- PASS: TestWASIFileAgreesWithNode/date (0.44s)
+    --- SKIP: TestWASIFileAgreesWithNode/system (0.57s)
+    --- PASS: TestWASIFileAgreesWithNode/buffer (0.53s)
+    --- PASS: TestWASIFileAgreesWithNode/read_sync (0.51s)
+    --- SKIP: TestWASIFileAgreesWithNode/write_buffer (0.48s)
+    --- SKIP: TestWASIFileAgreesWithNode/mkdtemp (0.22s)
+    --- PASS: TestWASIFileAgreesWithNode/rm (0.82s)
+=== RUN   TestWASIEmptySymlinkAgreesWithNode
+    wasi_symlink_test.go:24: gate cache node miss
+=== RUN   TestWASIEmptySymlinkAgreesWithNode/control/
+    wasi_symlink_test.go:79: Node and runtime: stdout "ENOENT\n-2\nENOENT: no such file or directory, symlink '' -> 'adamic-empty-symlink-link'\n"
+=== RUN   TestWASIEmptySymlinkAgreesWithNode/control/wasm32-wasi
+    wasi_symlink_test.go:79: Node and runtime: stdout "ENOENT\n-2\nENOENT: no such file or directory, symlink '' -> 'adamic-empty-symlink-link'\n"
+=== NAME  TestWASIEmptySymlinkAgreesWithNode
+    wasi_symlink_test.go:89: removed-adapter mutant caught by Node comparison: stdout "EINVAL\n-22\nEINVAL: invalid argument, symlink '' -> 'adamic-empty-symlink-link'\n"
+--- PASS: TestWASIEmptySymlinkAgreesWithNode (17.45s)
+    --- PASS: TestWASIEmptySymlinkAgreesWithNode/control/ (0.10s)
+    --- PASS: TestWASIEmptySymlinkAgreesWithNode/control/wasm32-wasi (0.26s)
+=== CONT  TestImpossibleNonNullFixturesAreRefused
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_capture.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_capture.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_field.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_field.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_parameter.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_parameter.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_store.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_store.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_scanner_initialized.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_scanner_initialized.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_static_uninitialized.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_static_uninitialized.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_catch.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_catch.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_field.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_field.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_map_entry.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_map_entry.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_assign_read.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_assign_read.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_exception.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_exception.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_loop.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_loop.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_static.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_static.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_initialized.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_initialized.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_literal_statement.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_literal_statement.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_static_initialized.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_static_initialized.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_assign.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_assign.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_entries.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_entries.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_initialized.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_initialized.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_literal_return.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_literal_return.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_append.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_append.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_default.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_default.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_iteration.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_iteration.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_spread.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_spread.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_alias.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_alias.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_field_initialized.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_field_initialized.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_read.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_read.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_values.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_values.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_literal_assignment.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_literal_assignment.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_const.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_const.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_interface.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_interface.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_optional.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_optional.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_refuse_undefined.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_refuse_undefined.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_refuse_null.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_refuse_null.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_refuse_undefined.ts
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_refuse_undefined.ts
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_refuse_null.ts
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_refuse_null.ts
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_capture.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_literal_return.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_const.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_alias.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_undefined.ts
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_spread.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_null.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_undefined.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_iteration.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_optional.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_interface.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_default.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_append.a
+=== CONT  TestPossibleNonNullStopsAtAssertion
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_null.ts
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_exception.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_initialized.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_entries.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_assign.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_static_initialized.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_literal_statement.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_initialized.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_static.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_loop.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_static_uninitialized.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_assign_read.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_map_entry.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_field.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_catch.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_store.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_scanner_initialized.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_parameter.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_values.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_literal_assignment.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_read.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_field_initialized.a
+=== NAME  TestPossibleNonNullStopsAtAssertion
+    non_null_impossible_test.go:103: gate cache node miss
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_field.a
+--- PASS: TestImpossibleNonNullFixturesAreRefused (0.00s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_literal_return.a (0.10s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_const.a (0.15s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_capture.a (0.16s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_alias.a (0.18s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_refuse_undefined.ts (0.19s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_spread.a (0.06s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_refuse_null.a (0.14s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_iteration.a (0.11s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_optional.a (0.12s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_interface.a (0.11s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_refuse_undefined.a (0.15s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_default.a (0.10s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_refuse_null.ts (0.14s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_append.a (0.16s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_exception.a (0.15s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_initialized.a (0.10s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_assign.a (0.05s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_entries.a (0.09s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_static_initialized.a (0.10s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_literal_statement.a (0.14s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_static.a (0.14s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_initialized.a (0.17s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_loop.a (0.10s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_static_uninitialized.a (0.13s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_map_entry.a (0.11s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_field.a (0.15s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_assign_read.a (0.17s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_uninitialized_catch.a (0.16s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_parameter.a (0.10s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_scanner_initialized.a (0.11s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_store.a (0.17s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_values.a (0.14s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_read.a (0.13s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_field_initialized.a (0.12s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_literal_assignment.a (0.15s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_deinitialize_field.a (0.10s)
+=== NAME  TestPossibleNonNullStopsAtAssertion
+    non_null_impossible_test.go:120: gate cache node miss
+--- PASS: TestPossibleNonNullStopsAtAssertion (1.40s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=3
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	51.857s

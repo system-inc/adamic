@@ -59,6 +59,26 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 	if err := l.parallelPreflight(module); err != nil {
 		return err
 	}
+	// Validate arguments before visiting their annotations, so a failed contract
+	// names the actual argument and parameter even for an inline arrow.
+	var contractError error
+	var contracts ast.Visitor
+	contracts = func(node *ast.Node) bool {
+		if contractError != nil {
+			return true
+		}
+		if node.Kind == ast.KindCallExpression {
+			contractError = l.predicateArguments(node)
+		}
+		if contractError == nil {
+			node.ForEachChild(contracts)
+		}
+		return contractError != nil
+	}
+	module.AsNode().ForEachChild(contracts)
+	if contractError != nil {
+		return contractError
+	}
 	var found error
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
@@ -101,7 +121,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			return true
 		}
 		if node.Kind == ast.KindTypePredicate {
-			if err := l.provePredicate(node); err != nil {
+			if err := l.predicateRefusal(node); err != nil {
 				found = err
 				return true
 			}
@@ -123,7 +143,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				found = err
 				return true
 			}
-			checkedCast = len(proof.allowed) > 0 || len(proof.classes) > 0
+			checkedCast = proof.interfaceView || len(proof.allowed) > 0 || len(proof.classes) > 0
 		}
 		if node.Kind == ast.KindBinaryExpression {
 			if refused, isRefused := refusedOperators[node.AsBinaryExpression().OperatorToken.Kind]; isRefused && !(logicalAssignment(node.AsBinaryExpression().OperatorToken.Kind) && nonNullAssignmentTarget(node.AsBinaryExpression().Left) != nil) {
