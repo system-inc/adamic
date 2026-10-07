@@ -1,0 +1,9 @@
+[detached HEAD 2c708d195] Record unified harness rebase and dynamic regex blocker
+ Date: Wed Oct 7 05:25:18 2026 +0000
+ 6 files changed, 152 insertions(+)
+ create mode 100644 stage1/cohere/lint/rules/typescript-no-this-alias/HARNESS_REPORT.md
+ create mode 100644 stage1/cohere/lint/rules/typescript-no-this-alias/evidence/harness-ab70/fetch.log
+ create mode 100644 stage1/cohere/lint/rules/typescript-no-this-alias/evidence/harness-ab70/history.log
+ create mode 100644 stage1/cohere/lint/rules/typescript-no-this-alias/evidence/harness-ab70/rebase.log
+ create mode 100644 stage1/cohere/lint/rules/typescript-no-this-alias/evidence/harness-ab70/registry.log
+ create mode 100644 stage1/cohere/lint/rules/typescript-no-this-alias/evidence/harness-ab70/rules.log

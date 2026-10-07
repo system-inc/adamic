@@ -1,0 +1,51 @@
+From https://github.com/system-inc/adamic
+   237022087..756f089bb  area/library            -> origin/area/library
+   f89a6a713..67cf1945e  area/platforms          -> origin/area/platforms
+   f40ea763f..c31cbeb9c  cloud/integrate-16      -> origin/cloud/integrate-16
+   892bcbc68..30a00a761  cloud/integrate-r-1     -> origin/cloud/integrate-r-1
+ * [new branch]          codex/concurrency-area  -> origin/codex/concurrency-area
+   4eb5187c2..74498e487  codex/decode-ascii      -> origin/codex/decode-ascii
+   22ba5638e..2aa008767  codex/lint-helpers-05   -> origin/codex/lint-helpers-05
+ + 951f226bc...5bfbd34e2 codex/lint-helpers-from-codex-lint-wave1-03 -> origin/codex/lint-helpers-from-codex-lint-wave1-03  (forced update)
+ + 38392a1ca...dfa823098 codex/lint-helpers-from-codex/lint-wave1-02 -> origin/codex/lint-helpers-from-codex/lint-wave1-02  (forced update)
+   44a0ba625..e3d73ccd8  codex/lint-helpers-from-codex/lint-wave1-04 -> origin/codex/lint-helpers-from-codex/lint-wave1-04
+   a8051e259..b5cfa1246  codex/lint-helpers-from-codex/lint-wave1-09 -> origin/codex/lint-helpers-from-codex/lint-wave1-09
+ + 65890c010...4528670c7 codex/lint-helpers-from-codex/lint-wave1-10 -> origin/codex/lint-helpers-from-codex/lint-wave1-10  (forced update)
+ + 10706aa02...ae46c7450 codex/lint-helpers-from-codex/lint-wave1-11 -> origin/codex/lint-helpers-from-codex/lint-wave1-11  (forced update)
+ + f24b1c8dd...739c5677f codex/lint-helpers-from-codex/lint-wave1-15 -> origin/codex/lint-helpers-from-codex/lint-wave1-15  (forced update)
+ + 0dc3da7a8...f70eb4dfc codex/lint-helpers-from-lint-wave1-01 -> origin/codex/lint-helpers-from-lint-wave1-01  (forced update)
+ + 8395351de...fcea688aa codex/lint-helpers-from-lint-wave1-05 -> origin/codex/lint-helpers-from-lint-wave1-05  (forced update)
+ + 6982efe8d...a055d8d1c codex/lint-helpers-from-lint-wave1-08 -> origin/codex/lint-helpers-from-lint-wave1-08  (forced update)
+ + d896e1cfc...876616bf8 codex/lint-helpers-from-lint-wave1-12 -> origin/codex/lint-helpers-from-lint-wave1-12  (forced update)
+ + 94c8e5995...c88a20178 codex/lint-helpers-from-lint-wave1-13 -> origin/codex/lint-helpers-from-lint-wave1-13  (forced update)
+ + 092de10ce...0a642ff72 codex/lint-wave1-01     -> origin/codex/lint-wave1-01  (forced update)
+   3ab4199cf..1cb4def8d  codex/lint-wave1-02-land -> origin/codex/lint-wave1-02-land
+ + c8a711a28...b92a6d40c codex/lint-wave1-05     -> origin/codex/lint-wave1-05  (forced update)
+ + b2400cfab...0d7906c37 codex/lint-wave1-07     -> origin/codex/lint-wave1-07  (forced update)
+ + f8fe1e402...f8d1aba6b codex/lint-wave1-10     -> origin/codex/lint-wave1-10  (forced update)
+ + b833f85ab...230677ab2 codex/lint-wave1-11     -> origin/codex/lint-wave1-11  (forced update)
+   7f9925437..0ea61b9af  codex/lint-wave1-12     -> origin/codex/lint-wave1-12
+ + b6ae2ce0f...4a97dd6de codex/lint-wave1-13     -> origin/codex/lint-wave1-13  (forced update)
+ + d89d6234a...835064497 codex/lint-wave1-15     -> origin/codex/lint-wave1-15  (forced update)
+   68c70c098..d6d6ca451  codex/runtime-statics   -> origin/codex/runtime-statics
+ + b4b945f8a...17ae29f7a codex/typeaware-wave-01 -> origin/codex/typeaware-wave-01  (forced update)
+ + 41c8dbc94...816163b99 codex/typeaware-wave-02 -> origin/codex/typeaware-wave-02  (forced update)
+ + adb2e9077...24561b6ed codex/typeaware-wave-05 -> origin/codex/typeaware-wave-05  (forced update)
+   667e6a47a..e3cc4b474  codex/typeaware-wave-11 -> origin/codex/typeaware-wave-11
+   fa0053aa4..eef97d622  codex/typeaware-wave-12 -> origin/codex/typeaware-wave-12
+   14713630a..72ce121c2  codex/typeaware-wave-17 -> origin/codex/typeaware-wave-17
+   14ba089fb..2cfdc1e5c  codex/typeaware-wave-18 -> origin/codex/typeaware-wave-18
+ + 9aac2e636...adb87bd69 codex/typeaware-wave-21 -> origin/codex/typeaware-wave-21  (forced update)
+   989bbd50a..f8cae5767  codex/typeaware-wave-24 -> origin/codex/typeaware-wave-24
+ + 075657d19...ee0afe366 codex/typeaware-wave-27 -> origin/codex/typeaware-wave-27  (forced update)
+ + e67fc456a...8129225d9 codex/typeaware-wave-28 -> origin/codex/typeaware-wave-28  (forced update)
+ + 6cb68954f...1c5f4605a codex/typeaware-wave-29 -> origin/codex/typeaware-wave-29  (forced update)
+ * [new branch]          codex/wasm-release-flags -> origin/codex/wasm-release-flags
+ * [new branch]          devtools/gate-fleet     -> origin/devtools/gate-fleet
+ * [new branch]          devtools/parallel-schedules -> origin/devtools/parallel-schedules
+   807faa40d..146e72c93  devtools/setup-fast     -> origin/devtools/setup-fast
+ * [new branch]          devtools/slab-quarantine -> origin/devtools/slab-quarantine
+ * [new branch]          devtools/with-runtime   -> origin/devtools/with-runtime
+ * [new branch]          gate-logs/2e165469ec95/merge -> origin/gate-logs/2e165469ec95/merge
+   ab70f38d4..41eb6eab2  lint-rules/harness      -> origin/lint-rules/harness
+ * [new branch]          runtime/area-take-decode -> origin/runtime/area-take-decode
