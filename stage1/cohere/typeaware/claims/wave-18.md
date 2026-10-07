@@ -228,3 +228,14 @@ parked reporters, uncached Node including runtime search, and vet pass.
 Four named analysis claims remain parked. Refreshed 433-head audit of
 all 197 ranked rules finds no unclaimed entry. No new claim made.
 See wave_18_component_props/LANDING_D65A_REPORT.md and validation-d65a.
+
+## Landing on current main through area b84a9d931
+
+Rebased onto lint area b84a9d931 containing current fetched main c7991b900.
+All six owned suites pass together in 864.739s; rebuilt standalone groups,
+sanitizers, released handles, mutants, parked reporters, shared harness,
+uncached Node including new proof fixtures, and vet pass. No selected test
+skipped; the full gate and its external correctness checks were not run.
+Four named analysis claims remain parked. The refreshed 455-head audit
+finds zero unclaimed ranked rules; no new claim made. See
+wave_18_component_props/LANDING_B84A_REPORT.md and validation-b84a.
