@@ -164,7 +164,7 @@ func TestMarkdownTextSplitting(t *testing.T) {
 		}
 		t.Logf("%s %.1f texts/s, startup, decoding and output included", side.name, float64(3*len(inputs))/time.Since(started).Seconds())
 	}
-	command = bounded(t, "go", "run", "./stage1/cohere/markdownblocks/tools/generate_classes", "-check")
+	command = bounded(t, "go", "run", "./stage1/cohere/markdownblocks/tools/generate_classes", "-check", "-formatter", cohereFormatter(t, root))
 	command.Dir = root
 	if output, e := command.CombinedOutput(); e != nil {
 		t.Fatalf("regeneration %v %s", e, output)

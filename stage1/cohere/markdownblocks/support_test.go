@@ -58,6 +58,19 @@ func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
 	return command
 }
 
+// cohereFormatter builds cohere from the pinned submodule for the generators' -check runs, which format
+// what they generate with it. A formatter outside the repository is a binary the gate doesn't have.
+func cohereFormatter(t *testing.T, root string) string {
+	t.Helper()
+	binary := filepath.Join(t.TempDir(), "cohere")
+	command := bounded(t, "go", "build", "-buildvcs=false", "-o", binary, "./command/cohere")
+	command.Dir = filepath.Join(root, "cohere")
+	if output, err := command.CombinedOutput(); err != nil {
+		t.Fatalf("building cohere: %v\n%s", err, output)
+	}
+	return binary
+}
+
 func execute(t *testing.T, environment []string, name string, arguments ...string) run {
 	t.Helper()
 	command := bounded(t, name, arguments...)

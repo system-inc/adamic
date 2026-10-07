@@ -179,7 +179,7 @@ func TestMarkdownSourceDecoding(t *testing.T) {
 		}
 		t.Logf("%s %.1f texts/s, startup, decoding, serialization and stdout included", side.name, float64(3*len(inputs))/time.Since(started).Seconds())
 	}
-	command = bounded(t, "go", "run", "./stage1/cohere/markdownblocks/tools/generate_entities", "-check")
+	command = bounded(t, "go", "run", "./stage1/cohere/markdownblocks/tools/generate_entities", "-check", "-formatter", cohereFormatter(t, root))
 	command.Dir = root
 	if output, err := command.CombinedOutput(); err != nil {
 		t.Fatalf("regeneration %v %s", err, output)

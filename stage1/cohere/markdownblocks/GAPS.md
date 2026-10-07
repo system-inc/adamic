@@ -558,10 +558,18 @@ line-oriented approximation is the same parser. No compiler files were modified.
 
 ```sh
 source /workspace/adamic-tools/env.sh
-ADAMIC_MARKDOWNBLOCKS_FORK=/tmp/adamic-markdown-blocks-fork \
+ADAMIC_MARKDOWNBLOCKS_CENSUS=1 \
+  ADAMIC_MARKDOWNWIDTH_DEPS=/tmp/adamic-markdown-width \
+  ADAMIC_MARKDOWNBLOCKS_FORK=/tmp/adamic-markdown-blocks-fork \
   ADAMIC_MARKDOWNBLOCKS_KEEP=/tmp/markdown-blocks-audit \
   go test -count=1 -v -timeout=30m ./stage1/cohere/markdownblocks > /tmp/markdown-blocks-test.log 2>&1
 ```
+
+`ADAMIC_MARKDOWNBLOCKS_CENSUS` widens the corpus from this unit's own Markdown files to every
+Markdown file in the repository and its submodules, which is the census this file reports. It is
+opt-in because that set moves with every commit and cohere bump, so the gate runs without it.
+`ADAMIC_MARKDOWNWIDTH_DEPS` names an npm install of emoji-regex 10.6.0, get-east-asian-width 1.6.0
+and narrow-emojis 0.0.3; without it the width oracle skips, until #xq2ecw6 installs it on the gate.
 
 Install the original fork in that scratch directory by copying the exact
 `cohere/internal/format/prettier/bundles/` tree from the pinned submodule. The
