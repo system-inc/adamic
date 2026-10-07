@@ -76,3 +76,21 @@ nine-rule validation remains in the earlier wave reports. The same wave's setup
 passed: Go/clang/Node/submodules ready 0s, build cache warm and done 116s;
 nproc 5. This stop does not assert that a future parser or integrated harness
 cannot handle JSX; it records the refusal of the current branch's parser.
+
+## Resume check after the next fetch
+
+Fetched every origin head again on 2026-10-07. JSX support now exists on
+origin/codex/stage1-jsx-lint, implemented by e715ef4a and documented by
+a8a62d62. Its report was read whole. This is an available integration
+dependency, rather than a claim that no parser implementation exists.
+The parser source blob on this branch, origin/main and
+origin/codex/lint-harness-dot-a is still identical; the JSX branch differs.
+Using its implementation requires shared parser and scanner changes outside
+this unit's permitted rule directories. No such changes were imported.
+
+Replayed the same frozen native probe and independent Go oracle after fetching:
+native still exits 70 on the self-closing tag; Go exits 0 with the same single
+staticComponents finding. Exact commands, outputs, ref tips and parser blob
+identities are retained in evidence/resume-2026-10-07.json. These are blocker
+observations, not a new rule gate or mutant result. The fourth batch stays
+pending, no further claims were made, and earlier nine-rule results stand.
