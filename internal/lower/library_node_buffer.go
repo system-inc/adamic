@@ -17,7 +17,7 @@ func nodeBufferModule(symbol *ast.Symbol) string {
 	}
 	for _, declaration := range symbol.Declarations {
 		source := ast.GetSourceFileOfNode(declaration)
-		if source == nil || !strings.Contains(strings.ReplaceAll(source.FileName(), "\\", "/"), "/@types/node/") {
+		if source == nil || !strings.Contains(strings.ReplaceAll(string(source.FileName()), "\\", "/"), "/@types/node/") {
 			continue
 		}
 		for parent := declaration; parent != nil; parent = parent.Parent {

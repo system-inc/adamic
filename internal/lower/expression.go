@@ -39,7 +39,7 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		for _, info := range l.checker.GetIndexInfosOfType(proven) {
 			if declaration := info.Declaration(); declaration != nil {
 				file := ast.GetSourceFileOfNode(declaration)
-				if load.IsLibrary(file) && strings.Contains(file.AsSourceFile().FileName(), ".regexp.") {
+				if load.IsLibrary(file) && strings.Contains(string(file.AsSourceFile().FileName()), ".regexp.") {
 					regex = true
 				}
 			}

@@ -94,6 +94,9 @@ func castMembers(proven *checker.Type) []*checker.Type {
 }
 
 func (l *lowering) castProof(node *ast.Node) (castProof, error) {
+	if l.nodeRequirePerformanceProjection(node) {
+		return castProof{}, nil
+	}
 	as := node.AsAsExpression()
 	if as.Type.Kind == ast.KindTypeReference && ast.IsIdentifier(as.Type.AsTypeReferenceNode().TypeName) && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
 		return castProof{}, nil

@@ -39,7 +39,7 @@ func (l *lowering) nodeFSFileBufferArgument(node *ast.Node) bool {
 	}
 	for _, declaration := range symbol.Declarations {
 		file := ast.GetSourceFileOfNode(declaration)
-		if load.IsNodeLibrary(file) && strings.HasSuffix(file.FileName(), "/fs.d.ts") {
+		if load.IsNodeLibrary(file) && strings.HasSuffix(string(file.FileName()), "/fs.d.ts") {
 			return true
 		}
 	}

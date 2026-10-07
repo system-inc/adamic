@@ -21,7 +21,7 @@ func (l *lowering) recordElement(t *checker.Type) *checker.Type {
 	for _, info := range infos {
 		if declaration := info.Declaration(); declaration != nil {
 			file := ast.GetSourceFileOfNode(declaration)
-			if load.IsLibrary(file) && strings.Contains(file.AsSourceFile().FileName(), ".regexp.") {
+			if load.IsLibrary(file) && strings.Contains(string(file.AsSourceFile().FileName()), ".regexp.") {
 				return nil
 			}
 		}
