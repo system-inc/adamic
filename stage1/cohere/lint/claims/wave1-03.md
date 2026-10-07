@@ -73,3 +73,20 @@ shared-file territory exception question has not been answered. No approval is
 inferred and no shared compatibility changes are applied. Full commands, raw
 logs, findings/s and coverage limits are in
 ../rules/structure-tailwind-no-physical-direction/REPORT.md.
+
+## Continuation batch 3
+
+Fetched origin/main ef3d907ecdc4c771b016f7d9c52372def057a340 after pushing
+all previous work. All 46 helper-ready names now occur in origin claim Markdown.
+From the inventory's syntax ready for AST/API adaptation queue, the first three
+names neither implemented on main nor mentioned in any origin claim are:
+
+1. @typescript-eslint/no-unnecessary-type-constraint
+2. @typescript-eslint/prefer-as-const
+3. @typescript-eslint/prefer-enum-initializers
+
+The search examined 39 distinct claim Markdown blobs, including reports under
+the claims directory, across all fetched origin refs. These three are reserved
+here before any implementation. Same branch and .a source requirement apply.
+The existing shared .a registration limitation is still recorded; no approval
+for shared edits is inferred from this continuation instruction.
