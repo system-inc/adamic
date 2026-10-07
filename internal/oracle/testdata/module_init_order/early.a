@@ -1,0 +1,4 @@
+function name(): 'Zero' { return 'Zero'; }
+function read(): number { return Pending[name()]; }
+console.log(`${read()}`);
+enum Pending { Zero }

@@ -91,20 +91,11 @@ func TestEnumLimitsStayLoud(t *testing.T) {
 	t.Parallel()
 	for _, source := range []string{
 		"enum E { A = Math.floor(2) }",
-		"enum E { A } enum E { B = 1 }",
 		"declare enum E { A }",
+		"enum E { A } enum E { B = 1 }",
 		"declare enum E { A = 0 }",
 		"enum E { A = 1 / 0 }",
-		"function read(): number { return E.A; } read(); enum E { A }",
-		"function read(): number { return E.A; } function call(): number { return read(); } call(); enum E { A }",
-		"[1].map(() => E.A); enum E { A }",
 		"function run(): void { enum E { A } }",
-		"function read(): number { return E.A; } const alias = read; alias(); enum E { A }",
-		"const box = { read: (): number => E.A }; box.read(); enum E { A }",
-		"function read(e: E = E.A): void {} read(); enum E { A }",
-		"function read(): number { return E.A; } let alias = (): number => 1; alias = read; alias(); enum E { A }",
-		"function read(): number { return E.A; } let alias = (): number => 1; alias = read; [1].map(alias); enum E { A }",
-		"function read(): number { return E.A; } class C { static readonly value = read(); } enum E { A }",
 	} {
 		_, err := lowerSource(t, source)
 		var notYet *NotYet
@@ -163,5 +154,23 @@ func TestEnumIdentityAcrossModules(t *testing.T) {
 	var refused *Refused
 	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "enum-members") {
 		t.Fatalf("got %v, want closed enum identity refusal", err)
+	}
+}
+
+func TestEarlyEnumCallsLowerWithReadinessChecks(t *testing.T) {
+	for _, source := range []string{
+		"function read(): number { return E.A; } read(); enum E { A }",
+		"function read(): number { return E.A; } function call(): number { return read(); } call(); enum E { A }",
+		"[1].map(() => E.A); enum E { A }",
+		"function read(): number { return E.A; } const alias = read; alias(); enum E { A }",
+		"const box = { read: (): number => E.A }; box.read(); enum E { A }",
+		"function read(e: E = E.A): void {} read(); enum E { A }",
+		"function read(): number { return E.A; } let alias = (): number => 1; alias = read; alias(); enum E { A }",
+		"function read(): number { return E.A; } let alias = (): number => 1; alias = read; [1].map(alias); enum E { A }",
+		"function read(): number { return E.A; } class C { static readonly value = read(); } enum E { A }",
+	} {
+		if _, err := lowerSource(t, source); err != nil {
+			t.Fatal(err)
+		}
 	}
 }

@@ -1,0 +1,5 @@
+function name(): 'Zero' { return 'Zero'; }
+class Box { readonly value = Pending[name()]; }
+const box = new Box();
+enum Pending { Zero }
+console.log(`${box.value}`);
