@@ -1,0 +1,9 @@
+// Invoked after the handed node's tag has yielded a resolvable reference.
+// These are checker facts, not a Go lint verdict.
+export function shouldReport(checkerAvailable: boolean, resolved: boolean, declaredInFile: boolean, allowGlobals: boolean, fileName: string): boolean {
+    if(!checkerAvailable) { return false; }
+    if(resolved && (allowGlobals || fileName.endsWith('.cjs') || declaredInFile)) { return false; }
+    return true;
+}
+export const messageId = 'jsxIdentifierNotDefined';
+export const message = 'This JSX tag names a component that has no declaration in scope, so React receives `undefined` where a component was meant and throws at render rather than at build. Almost always a misspelling or a missing import. Import the component, or fix the spelling to match the binding you meant.';

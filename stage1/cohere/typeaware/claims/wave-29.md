@@ -140,3 +140,13 @@ checker context are unchanged, so prior owned oracle/mutant evidence remains
 applicable; it was not rerun for this focused shared update. Checker-backed
 source, parked analysis and dynamic-RegExp gaps remain. No new claim is taken.
 See [harness report](../wave-29-fourth/HARNESS_41EB6EAB2_REPORT.md).
+
+## Undef resolution follow-up
+
+Ported the remaining jsx-no-undef resolution/current-file/global/cjs decision
+and exact message into the handed-node kernel. Production Go callbacks agree
+with native, source Node, emitted JavaScript and sanitizer output over 148
+source/option/checker controls, with seven compiling mutants caught. Existing
+79-case JSX comparisons remain green. Shared checker acquisition/registration
+still prevents a full source port; no new claim is taken. See
+[resolution report](../wave-29-fourth/rules/react-jsx-no-undef/RESOLUTION_REPORT.md).

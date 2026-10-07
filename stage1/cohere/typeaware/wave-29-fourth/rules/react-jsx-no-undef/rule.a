@@ -1,3 +1,4 @@
+import { shouldReport } from './resolution.a';
 import { RawNode, RawTree } from '../../raw_nodes.a';
 import { Identifier, PropertyAccessExpression } from '../../syntax_kinds.a';
 export const listenerKinds: readonly string[] = ["JsxOpeningElement", "JsxSelfClosingElement"];
@@ -17,4 +18,11 @@ export function reference(tree: RawTree, opening: RawNode): number {
         tag = tree.get(tag.a);
     }
     return tag.kind === Identifier ? tag.id : -1;
+}
+
+// Only the handed opening node and its related tag are read; checker integration
+// supplies resolution/declaration facts without evaluating the lint rule in Go.
+export function unresolvedReference(tree: RawTree, opening: RawNode, checkerAvailable: boolean, resolved: boolean, declaredInFile: boolean, allowGlobals: boolean, fileName: string): number {
+    const found = reference(tree, opening);
+    return found >= 0 && shouldReport(checkerAvailable, resolved, declaredInFile, allowGlobals, fileName) ? found : -1;
 }

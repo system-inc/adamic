@@ -1,0 +1,35 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { Frames } from '../../../../frames.ts';
+import { byteOffsets } from '../positions.a';
+import { unresolvedReference } from '../rule.a';
+import { RawNode, RawTree } from '../../../raw_nodes.a';
+import { Identifier, JsxSelfClosingElement } from '../../../syntax_kinds.a';
+import { messageId, message } from '../resolution.a';
+const input = readTextFile(programArguments()[0] ?? panic('missing resolution facts'));
+if(input.kind === 'Error') { panic(input.message); }
+const frames = new Frames(input.text);
+const count = frames.natural();
+let findings = 0;
+for(let index = 0; index < count; index++) {
+    const fileName = frames.field();
+    const source = frames.field();
+    const checkerAvailable = frames.yes();
+    const allowGlobals = frames.yes();
+    const identifier = frames.yes();
+    const name = frames.field();
+    const resolved = frames.yes();
+    const declaredInFile = frames.yes();
+    const start = frames.natural();
+    const end = frames.natural();
+    console.log(`file	${fileName}`);
+    const opening = new RawNode(0, JsxSelfClosingElement, '', -1, 1, -1, 0);
+    const tag = new RawNode(1, identifier ? Identifier : 0, name, 0, -1, -1, 0);
+    const tree = new RawTree([opening, tag]);
+    if(unresolvedReference(tree, opening, checkerAvailable, resolved, declaredInFile, allowGlobals, fileName) >= 0) {
+        const offsets = byteOffsets(source);
+        console.log(`${offsets[start] ?? panic('missing start')}	${offsets[end] ?? panic('missing end')}	react/jsx-no-undef	${messageId}	${message}	0	0`);
+        findings++;
+    }
+}
+frames.end();
+console.log(`findings ${findings}`);

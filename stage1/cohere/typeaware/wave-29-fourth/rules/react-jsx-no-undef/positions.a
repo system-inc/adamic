@@ -1,0 +1,16 @@
+import { panic } from 'adamic';
+// Shared offset algorithm isolated here to keep the test kernel free of checker intrinsics.
+export function byteOffsets(source: string): number[] {
+    const offsets: number[] = [0];
+    let bytes = 0;
+    for(let index = 0; index < source.length; index++) {
+        const code = source.codePointAt(index) ?? panic('missing source code point');
+        if(code > 65535) {
+            offsets.push(bytes);
+            index++;
+        }
+        bytes += code < 128 ? 1 : code < 2048 ? 2 : code < 65536 ? 3 : 4;
+        offsets.push(bytes);
+    }
+    return offsets;
+}
