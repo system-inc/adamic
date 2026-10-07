@@ -1,0 +1,26 @@
+import { SyntaxBindings, SyntaxNode } from './numeric_syntax_bindings.a';
+import { JsxFragments, kinds as fragmentKinds } from './rules/react-jsx-fragments/rule.a';
+import { JsxNoUndef, kinds as undefKinds } from './rules/react-jsx-no-undef/rule.a';
+import { NoArrayIndexKey, kinds as indexKinds } from './rules/react-no-array-index-key/rule.a';
+export class Driver {
+    readonly context: SyntaxBindings;
+    readonly fragments: JsxFragments; readonly undef: JsxNoUndef; readonly indices: NoArrayIndexKey;
+    readonly listeners = new Map<number, number[]>();
+    constructor(context: SyntaxBindings) {
+        this.context = context; this.fragments = new JsxFragments(context); this.undef = new JsxNoUndef(context); this.indices = new NoArrayIndexKey(context);
+        for(const kind of fragmentKinds) { this.listeners.set(kind, [1]); }
+        for(const kind of undefKinds) { const handlers: number[] = this.listeners.get(kind) ?? []; handlers.push(2); this.listeners.set(kind, handlers); }
+        for(const kind of indexKinds) { const handlers: number[] = this.listeners.get(kind) ?? []; handlers.push(3); this.listeners.set(kind, handlers); }
+    }
+    visit(node: SyntaxNode): void {
+        const handlers = this.listeners.get(node.kind);
+        if(handlers !== undefined) {
+            for(const handler of handlers) {
+                if(handler === 1) { this.fragments.visit(node); }
+                else if(handler === 2) { this.undef.visit(node); }
+                else if(handler === 3) { this.indices.visit(node); }
+            }
+        }
+        for(const child of node.children) { this.visit(this.context.node(child)); }
+    }
+}

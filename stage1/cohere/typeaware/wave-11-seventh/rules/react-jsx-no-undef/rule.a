@@ -1,0 +1,21 @@
+import { SyntaxBindings, SyntaxNode } from '../../numeric_syntax_bindings.a';
+import { Identifier, JsxOpeningElement, JsxSelfClosingElement, PropertyAccessExpression } from '../../syntax_kinds.a';
+
+export const kinds: readonly number[] = [JsxOpeningElement, JsxSelfClosingElement];
+export class JsxNoUndef {
+    readonly context: SyntaxBindings;
+    constructor(context: SyntaxBindings) { this.context = context; }
+    visit(node: SyntaxNode): void {
+        let reference = this.context.node(node.tag);
+        if(reference.kind === Identifier) {
+            if(reference.text === '' || reference.text.includes('-')) { return; }
+            const first = reference.text.charCodeAt(0);
+            if(first >= 97 && first <= 122) { return; }
+        } else if(reference.kind === PropertyAccessExpression) {
+            while(reference.kind === PropertyAccessExpression) { reference = this.context.node(reference.expression); }
+            if(reference.kind !== Identifier) { return; }
+        } else { return; }
+        if(reference.symbol && (this.context.path.endsWith('.cjs') || reference.bindings.some((binding) => binding.file === this.context.path))) { return; }
+        this.context.report('react/jsx-no-undef', 'jsxIdentifierNotDefined', 'This JSX tag names a component that has no declaration in scope, so React receives `undefined` where a component was meant and throws at render rather than at build. Almost always a misspelling or a missing import. Import the component, or fix the spelling to match the binding you meant.', reference);
+    }
+}

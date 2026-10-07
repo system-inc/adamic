@@ -203,6 +203,7 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 	mode := strings.Split(question, "\n")[0]
 	out.text(mode)
 	switch mode {
+	case "numeric-syntax-bindings": return p.numericSyntaxBindings(out, c, node, question)
 	case "symbol-declaration-provenance":
 		return p.symbolDeclarationProvenance(out, question)
 	case "declaration-lineage":

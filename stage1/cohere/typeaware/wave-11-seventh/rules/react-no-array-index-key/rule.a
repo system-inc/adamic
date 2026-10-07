@@ -1,0 +1,80 @@
+import { SyntaxBindings, SyntaxNode } from '../../numeric_syntax_bindings.a';
+import { AmpersandAmpersandToken, ArrowFunction, BarBarToken, BinaryExpression, CallExpression, FunctionExpression, Identifier, ImportSpecifier, JsxAttribute, JsxExpression, ObjectLiteralExpression, Parameter, PropertyAccessExpression, PropertyAssignment, QuestionQuestionToken, SourceFile, StringLiteral, TemplateExpression, TemplateSpan } from '../../syntax_kinds.a';
+
+export const kinds: readonly number[] = [SourceFile];
+export class NoArrayIndexKey {
+    readonly context: SyntaxBindings;
+    readonly indices: string[] = [];
+    constructor(context: SyntaxBindings) { this.context = context; }
+    index(node: SyntaxNode): boolean { return node.kind === Identifier && this.indices.includes(node.text); }
+    report(node: SyntaxNode): void {
+        this.context.report('react/no-array-index-key', 'noArrayIndex', 'This key is the array index the item happens to sit at, which is not an identity. When the list is reordered, filtered or has an item inserted, the same key lands on a different item, so React reuses the wrong element and whatever state that element held goes with it: a checked box, a focused input, a half-typed value. Nothing errors, so the bug surfaces later as state attached to the wrong row. Key on something belonging to the item instead, usually its identifier.', node);
+    }
+    logical(operator: number): boolean { return [AmpersandAmpersandToken, BarBarToken, QuestionQuestionToken].includes(operator); }
+    binary(node: SyntaxNode): number {
+        if(this.index(node)) { return 1; }
+        if(node.kind !== BinaryExpression || this.logical(node.operator)) { return 0; }
+        return this.binary(this.context.node(node.left)) + this.binary(this.context.node(node.right));
+    }
+    key(node: SyntaxNode): void {
+        if(this.index(node)) { this.report(node); return; }
+        if(node.kind === TemplateExpression) {
+            for(const index of node.children) { const span = this.context.node(index); if(span.kind === TemplateSpan && this.index(this.context.node(span.expression))) { this.report(node); } }
+        } else if(node.kind === BinaryExpression) {
+            if(this.logical(node.operator)) { return; }
+            const count = this.binary(node); for(let at = 0; at < count; at++) { this.report(node); }
+        } else if(node.kind === CallExpression) {
+            const callee = this.context.node(node.expression);
+            if(callee.kind === PropertyAccessExpression) {
+                const name = this.context.node(callee.name);
+                if(this.index(this.context.node(callee.expression)) && name.kind === Identifier && name.text === 'toString') { this.report(node); }
+                return;
+            }
+            const argument = this.context.node(node.arguments[0] ?? 0);
+            if(callee.kind === Identifier && callee.text === 'String' && this.index(argument)) { this.report(argument); }
+        }
+    }
+    factory(callee: SyntaxNode): boolean {
+        if(callee.kind === PropertyAccessExpression) {
+            const receiver = this.context.node(callee.expression); const name = this.context.node(callee.name);
+            return receiver.kind === Identifier && receiver.text === 'React' && name.kind === Identifier && (name.text === 'createElement' || name.text === 'cloneElement');
+        }
+        return callee.kind === Identifier && callee.bindings.some((binding) => binding.kind === ImportSpecifier && binding.moduleKind === StringLiteral && binding.moduleText === 'react');
+    }
+    create(node: SyntaxNode): boolean {
+        if(!this.factory(this.context.node(node.expression)) || node.arguments.length < 2) { return false; }
+        const props = this.context.node(node.arguments[1] ?? 0);
+        if(this.indices.length === 0 || props.kind !== ObjectLiteralExpression) { return true; }
+        for(const index of props.children) {
+            const property = this.context.node(index); const name = this.context.node(property.name);
+            if(property.kind === PropertyAssignment && name.kind === Identifier && name.text === 'key') { this.key(this.context.node(property.initializer)); }
+        }
+        return true;
+    }
+    parameter(node: SyntaxNode): string {
+        const callee = this.context.node(node.expression); const method = this.context.node(callee.name);
+        if(callee.kind !== PropertyAccessExpression || method.kind !== Identifier) { return ''; }
+        const methods = ['every', 'filter', 'find', 'findIndex', 'flatMap', 'forEach', 'map', 'reduce', 'reduceRight', 'some'];
+        if(!methods.includes(method.text)) { return ''; }
+        const receiver = this.context.node(callee.expression); const inner = this.context.node(receiver.expression);
+        const children = (method.text === 'map' || method.text === 'forEach') && ((receiver.kind === Identifier && receiver.text === 'Children') || (receiver.kind === PropertyAccessExpression && inner.kind === Identifier && inner.text === 'React'));
+        const callback = this.context.node(node.arguments[children ? 1 : 0] ?? 0);
+        if(callback.kind !== ArrowFunction && callback.kind !== FunctionExpression) { return ''; }
+        const position = method.text === 'reduce' || method.text === 'reduceRight' ? 2 : 1;
+        const parameter = this.context.node(callback.parameters[position] ?? 0); const name = this.context.node(parameter.name);
+        return parameter.kind === Parameter && parameter.initializer === 0 && !parameter.rest && name.kind === Identifier ? name.text : '';
+    }
+    // The production SourceFile listener owns this recursive enter/exit stack.
+    visit(node: SyntaxNode): void { this.walk(node); }
+    walk(node: SyntaxNode): void {
+        let pushed = false;
+        if(node.kind === CallExpression) {
+            if(!this.create(node)) { const name = this.parameter(node); if(name !== '') { this.indices.push(name); pushed = true; } }
+        } else if(node.kind === JsxAttribute && this.indices.length > 0) {
+            const name = this.context.node(node.name); const initializer = this.context.node(node.initializer);
+            if(name.kind === Identifier && name.text === 'key' && initializer.kind === JsxExpression) { this.key(this.context.node(initializer.expression)); }
+        }
+        for(const child of node.children) { this.walk(this.context.node(child)); }
+        if(pushed) { this.indices.pop(); }
+    }
+}

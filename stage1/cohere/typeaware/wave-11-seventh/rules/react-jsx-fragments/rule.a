@@ -1,0 +1,40 @@
+import { SyntaxBindings, SyntaxNode } from '../../numeric_syntax_bindings.a';
+import { BindingElement, CallExpression, Identifier, ImportClause, ImportDeclaration, ImportSpecifier, JsxElement, JsxFragment, JsxSelfClosingElement, NamedImports, NoSubstitutionTemplateLiteral, ObjectBindingPattern, PropertyAccessExpression, StringLiteral, Unknown, VariableDeclaration } from '../../syntax_kinds.a';
+
+export const kinds: readonly number[] = [JsxElement, JsxSelfClosingElement, JsxFragment];
+export class JsxFragments {
+    readonly context: SyntaxBindings;
+    constructor(context: SyntaxBindings) { this.context = context; }
+    source(node: SyntaxNode): boolean {
+        const expression = this.context.node(node.expression); const name = this.context.node(node.name);
+        if(node.kind === Identifier) { return node.text === 'React'; }
+        if(node.kind === PropertyAccessExpression) { return expression.kind === Identifier && expression.text === 'React' && name.kind === Identifier && name.text === 'Fragment'; }
+        if(node.kind === CallExpression) {
+            const first = this.context.node(node.arguments[0] ?? 0);
+            return expression.kind === Identifier && expression.text === 'require' && (first.kind === StringLiteral || first.kind === NoSubstitutionTemplateLiteral) && first.text === 'react';
+        }
+        return false;
+    }
+    fragment(node: SyntaxNode): boolean {
+        if(node.kind === PropertyAccessExpression) {
+            const expression = this.context.node(node.expression); const name = this.context.node(node.name);
+            return expression.kind === Identifier && expression.text === 'React' && name.kind === Identifier && name.text === 'Fragment';
+        }
+        if(node.kind !== Identifier) { return false; }
+        for(const binding of node.bindings) {
+            if(binding.kind === ImportSpecifier && binding.importedKind === Identifier && binding.importedText === 'Fragment' && binding.parentKind === NamedImports && binding.grandKind === ImportClause && binding.greatKind === ImportDeclaration && (binding.moduleKind === StringLiteral || binding.moduleKind === NoSubstitutionTemplateLiteral) && binding.moduleText === 'react') { return true; }
+            if(binding.kind === VariableDeclaration || (binding.kind === BindingElement && binding.parentKind === ObjectBindingPattern && binding.grandKind === VariableDeclaration)) {
+                if(this.source(this.context.node(binding.initializer))) { return true; }
+            }
+        }
+        return false;
+    }
+    visit(node: SyntaxNode): void {
+        // Default syntax mode. Named fragments carrying any prop stay named.
+        const opening = node.kind === JsxElement ? this.context.node(node.opening) : node;
+        if(node.kind === JsxFragment || opening.kind === Unknown) { return; }
+        const attributes = this.context.node(opening.attributes);
+        if(!this.fragment(this.context.node(opening.tag)) || attributes.children.length > 0) { return; }
+        this.context.report('react/jsx-fragments', 'preferFragment', 'Prefer fragment shorthand over React.Fragment. The shorthand `<>` says the same thing with less to read, and a named fragment that carries no props is only the long spelling of it.', node);
+    }
+}
