@@ -158,22 +158,62 @@ void adamic_binding_check_27(NSFixtureRecord * _Nonnull receiver, id argument0) 
 }
 
 void adamic_binding_check_28(NSFixtureRecord * _Nonnull receiver, id argument0) {
-	[receiver takeObject:argument0];
+	[receiver setSource:argument0];
 }
 
-void adamic_binding_check_29(NSFixtureRecord * _Nonnull receiver, id argument0) {
-	[receiver takeProtocol:argument0];
+void adamic_binding_check_29(NSFixtureRecord * _Nonnull receiver) {
+	id result = [receiver source];
+	(void)result;
 }
 
 void adamic_binding_check_30(NSFixtureRecord * _Nonnull receiver, id argument0) {
+	[receiver takeObject:argument0];
+}
+
+void adamic_binding_check_31(NSFixtureRecord * _Nonnull receiver, id argument0) {
+	[receiver takeProtocol:argument0];
+}
+
+void adamic_binding_check_32(NSFixtureRecord * _Nonnull receiver, id argument0) {
 	[receiver takeText:argument0];
 }
 
-void adamic_binding_check_31(NSFixtureRecord * _Nonnull receiver, void (^argument0)(id)) {
+void adamic_binding_check_33(NSFixtureRecord * _Nonnull receiver, void (^argument0)(id)) {
 	[receiver withCompletion:argument0];
 }
 
-void adamic_binding_check_32(void) {
+void adamic_binding_check_34(void) {
 	id result = [NSFixtureRoot alloc];
 	(void)result;
 }
+
+void adamic_binding_check_35(id<NSFixtureTableSource> _Nonnull receiver, id argument0) {
+	_Static_assert(__builtin_types_compatible_p(long, __typeof__([receiver numberOfRowsInFixtureTable:argument0])) || __builtin_types_compatible_p(long long, __typeof__([receiver numberOfRowsInFixtureTable:argument0])), "numberOfRowsInFixtureTable: result ABI");
+	long result = [receiver numberOfRowsInFixtureTable:argument0];
+	(void)result;
+}
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprotocol"
+#pragma clang diagnostic ignored "-Wobjc-protocol-property-synthesis"
+#pragma clang diagnostic ignored "-Wobjc-property-implementation"
+__attribute__((objc_root_class))
+@interface AdamicImplementCheck0 <NSFixtureReadable>
+@end
+@implementation AdamicImplementCheck0
+- (void)optionalPing { }
+- (id)readText { return 0; }
+@end
+_Static_assert(__builtin_types_compatible_p(long, NSInteger) || __builtin_types_compatible_p(long long, NSInteger), "fixtureTable:shouldSelectRow: implemented ABI");
+_Static_assert(__builtin_types_compatible_p(long, NSInteger) || __builtin_types_compatible_p(long long, NSInteger), "fixtureTable:textForRow: implemented ABI");
+_Static_assert(__builtin_types_compatible_p(long, NSInteger) || __builtin_types_compatible_p(long long, NSInteger), "numberOfRowsInFixtureTable: implemented ABI");
+__attribute__((objc_root_class))
+@interface AdamicImplementCheck1 <NSFixtureTableSource>
+@end
+@implementation AdamicImplementCheck1
+- (BOOL)fixtureTable:(id)argument0 shouldSelectRow:(NSInteger)argument1 { return 0; }
+- (id)fixtureTable:(id)argument0 textForRow:(NSInteger)argument1 { return 0; }
+- (void)fixtureTableDidReload:(id)argument0 { }
+- (NSInteger)numberOfRowsInFixtureTable:(id)argument0 { return 0; }
+@end
+#pragma clang diagnostic pop

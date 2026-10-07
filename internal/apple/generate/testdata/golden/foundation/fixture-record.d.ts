@@ -12,6 +12,7 @@
 declare module 'apple/foundation/fixture-record' {
 	import type { FixtureReadable } from 'apple/foundation/fixture-readable';
 	import type { FixtureRoot } from 'apple/foundation/fixture-root';
+	import type { FixtureTableSource } from 'apple/foundation/fixture-table-source';
 
 	/**
 	 * NSFixtureRecord
@@ -73,6 +74,13 @@ declare module 'apple/foundation/fixture-record' {
 		 * @objc method readText -> string
 		 */
 		readText(): string;
+
+		/**
+		 * -[NSFixtureRecord source], -[NSFixtureRecord setSource:]
+		 * @objc get source -> object?
+		 * @objc set setSource: object?
+		 */
+		source: FixtureTableSource | undefined;
 
 		/**
 		 * -[NSFixtureRecord takeObject:]

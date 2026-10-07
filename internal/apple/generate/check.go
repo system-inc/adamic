@@ -151,6 +151,7 @@ func (g *generator) emitCheck() (string, error) {
 		}
 		text.WriteString("}\n")
 	}
+	g.emitImplementChecks(&text)
 	return text.String(), nil
 }
 func checkKey(call checkCall) string {

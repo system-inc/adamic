@@ -29,6 +29,10 @@ import (
 //	                                                  alloc sent to another class, then the init,
 //	                                                  its result retained ([[NSString alloc]
 //	                                                  initWithData:...] for data.utf8Text())
+//	@objc implement <selector> <arguments> -> <result>
+//	                                                  a protocol's method a program's class may
+//	                                                  implement, which Apple calls with those
+//	                                                  (foreign_delegate.go)
 //
 // Each argument is <source>:<type>, in the selector's order. The source is the Adamic argument's
 // position (0), a field of an options object written at the call (1.styleMask, or 1.defer?=no
@@ -105,7 +109,7 @@ func parseForeignTag(text string) (foreignTag, error) {
 		tag.retained = tag.kind == "alloc"
 	}
 	switch tag.kind {
-	case "class":
+	case "class", "protocol":
 		return tag, nil
 	case "init":
 		tag.retained = true
@@ -121,7 +125,7 @@ func parseForeignTag(text string) (foreignTag, error) {
 		tag.arguments = []foreignSource{{position: 0, native: native}}
 		tag.returns = ir.NativeType{Kind: ir.NativeVoid}
 		return tag, nil
-	case "static", "method", "get", "function", "alloc", "send":
+	case "static", "method", "get", "function", "alloc", "send", "implement":
 	default:
 		return tag, fmt.Errorf("%s is not a tag kind", tag.kind)
 	}
@@ -475,6 +479,7 @@ func (l *lowering) foreignSend(node *ast.Node, tag foreignTag, receiver *ast.Nod
 
 	// Where each native argument's value is: a parameter, by the source's position and field.
 	parameters := map[string]int{}
+	written := map[string]*ast.Node{}
 	used := map[int]bool{}
 	for _, source := range tag.arguments {
 		if source.position >= 0 {
@@ -495,6 +500,7 @@ func (l *lowering) foreignSend(node *ast.Node, tag foreignTag, receiver *ast.Nod
 				return nil, err
 			}
 			parameters[strconv.Itoa(position)] = len(values)
+			written[strconv.Itoa(position)] = argument
 			values, types, shape = append(values, value), append(types, value.Type()), append(shape, strconv.Itoa(position))
 			continue
 		}
@@ -521,6 +527,7 @@ func (l *lowering) foreignSend(node *ast.Node, tag foreignTag, receiver *ast.Nod
 			}
 			key := strconv.Itoa(position) + "." + property.Name().Text()
 			parameters[key] = len(values)
+			written[key] = initializer
 			values, types, shape = append(values, value), append(types, value.Type()), append(shape, key)
 		}
 	}
@@ -547,6 +554,22 @@ func (l *lowering) foreignSend(node *ast.Node, tag foreignTag, receiver *ast.Nod
 				if source.native.Kind == ir.NativeBlock && source.field == "" && source.position < len(arguments) {
 					if err := l.foreignBlockFits(arguments[source.position], source.native); err != nil {
 						return nil, err
+					}
+				}
+				if source.native.Kind == ir.NativeObject {
+					delegate, isDelegate, err := l.foreignDelegate(written[key])
+					if err != nil {
+						return nil, err
+					}
+					if isDelegate {
+						argument.Type = ir.NativeType{Kind: ir.NativeDelegate, Nullable: source.native.Nullable, Delegate: delegate}
+						shape[parameter] += "=" + delegate.Name
+						// What keeps it: the object messaged, or for a class's message or new, what it makes.
+						holder := node
+						if receiver != nil && foreign.Kind == ir.InstanceMessage {
+							holder = receiver
+						}
+						l.delegateHolds = append(l.delegateHolds, delegateHold{delegate: l.checker.GetTypeAtLocation(written[key]), holder: l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(holder)), node: written[key]})
 					}
 				}
 			case !source.optional:

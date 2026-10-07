@@ -380,6 +380,80 @@ void adamic_apple_block_call(id holder, adamic_value *arguments) {
 	}
 }
 
+// A delegate's class is made the first time an instance is: NSObject's subclass, an instance
+// variable for the object, the compiler's methods, the protocols, and a dealloc that lets the
+// object go.
+static void delegate_dealloc(id self, SEL command) {
+	Ivar held = class_getInstanceVariable(object_getClass(self), "object");
+	adamic_object **object = (adamic_object **)((char *)self + ivar_getOffset(held));
+	if (pthread_main_np()) {
+		adamic_release(*object);
+	} else {
+		dispatch_async_f(dispatch_get_main_queue(), *object, release_closure);
+	}
+	*object = NULL;
+	struct objc_super super = {self, class_getSuperclass(object_getClass(self))};
+	((void (*)(struct objc_super *, SEL))objc_msgSendSuper)(&super, command);
+}
+
+static Class delegate_class(adamic_apple_delegate_class *description) {
+	if (description->made != Nil) {
+		return description->made;
+	}
+	Class class = objc_allocateClassPair((Class)adamic_apple_class("NSObject"), description->name, 0);
+	if (class == Nil) {
+		panic_text("an Objective-C class already has the name the compiler gave a delegate: ", description->name);
+	}
+	class_addIvar(class, "object", sizeof(adamic_object *), 3, "^v");
+	for (size_t index = 0; index < description->method_count; index++) {
+		const adamic_apple_delegate_method *method = &description->methods[index];
+		class_addMethod(class, sel_registerName(method->selector), method->implementation, method->types);
+	}
+	class_addMethod(class, sel_registerName("dealloc"), (IMP)delegate_dealloc, "v@:");
+	for (size_t index = 0; index < description->protocol_count; index++) {
+		// A protocol nothing in the process has used yet isn't registered; conforming is then only
+		// answering its methods, which is what Apple asks of a delegate (respondsToSelector:).
+		Protocol *protocol = objc_getProtocol(description->protocols[index]);
+		if (protocol != NULL) {
+			class_addProtocol(class, protocol);
+		}
+	}
+	objc_registerClassPair(class);
+	description->object_offset = ivar_getOffset(class_getInstanceVariable(class, "object"));
+	description->made = class;
+	return class;
+}
+
+id adamic_apple_delegate(adamic_object *object, adamic_apple_delegate_class *description) {
+	if (object == NULL) {
+		return nil;
+	}
+	id delegate = ((message_object)objc_msgSend)((id)delegate_class(description), sel_registerName("new"));
+	*(adamic_object **)((char *)delegate + description->object_offset) = adamic_retain(object);
+	TAKEN();
+	return delegate;
+}
+
+adamic_object *adamic_apple_delegate_object(id delegate, const adamic_apple_delegate_class *description) {
+	if (!pthread_main_np()) {
+		// Adamic's counts aren't atomic, and a delegate's method answers before Apple goes on, so it
+		// can't wait for the main thread the way a block's closure does.
+		panic_text("Apple called a delegate off the main thread: ", description->name);
+	}
+	return *(adamic_object **)((char *)delegate + description->object_offset);
+}
+
+void adamic_apple_delegate_returned(void) {
+	if (adamic_thrown != NULL) {
+		adamic_uncaught();
+	}
+}
+
+id adamic_apple_give_back(id object) {
+	LET_GO();
+	return objc_autorelease(object);
+}
+
 void adamic_apple_keep(id owner, id kept, const void *key) {
 	objc_setAssociatedObject(owner, key, kept, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }

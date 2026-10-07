@@ -69,6 +69,7 @@ func (e *emitter) foreignBody(function ir.Function) {
 	types := []string{}
 	cleanups := []string{}
 	actions := []string{}
+	delegates := []string{}
 	for index, argument := range foreign.Arguments {
 		name := fmt.Sprintf("native_%d", index)
 		given := argument.Parameter >= 0
@@ -128,6 +129,16 @@ func (e *emitter) foreignBody(function ir.Function) {
 			e.line("adamic_apple_block_start(&%s, %s, &%s_descriptor, (void (*)(void))%s_invoke);", name, parameter(argument), block, block)
 			natives, types = append(natives, "(id)&"+name), append(types, "id")
 			cleanups = append(cleanups, "adamic_apple_block_end(&"+name+");")
+			continue
+		case ir.NativeDelegate:
+			// An object of the program's class: an instance of the class made for it, holding it.
+			if !given {
+				e.line("id %s = nil;", name)
+			} else {
+				e.line("id %s = adamic_apple_delegate(%s, &%s);", name, parameter(argument), e.delegateClass(argument.Type.Delegate))
+				delegates = append(delegates, name)
+			}
+			natives, types = append(natives, name), append(types, "id")
 			continue
 		case ir.NativeAction:
 			// One closure is two native arguments: the target that calls it, and its action.
@@ -189,6 +200,14 @@ func (e *emitter) foreignBody(function ir.Function) {
 		// A control holds its target weakly: the object it's given to holds it from here on.
 		e.line("adamic_apple_keep(%s, %s, &%s);", owner, action, selector)
 		e.line("adamic_apple_let_go(%s);", action)
+	}
+	for _, delegate := range delegates {
+		// Apple holds a delegate weakly too: the object it's given to holds it, one per selector that
+		// sets one, so setting another (or undefined) lets the last go.
+		e.line("adamic_apple_keep(%s, %s, (const void *)%s);", owner, delegate, selector)
+		e.line("if (%s != nil) {", delegate)
+		e.line("\tadamic_apple_let_go(%s);", delegate)
+		e.line("}")
 	}
 	for _, cleanup := range cleanups {
 		e.line("%s", cleanup)
@@ -329,6 +348,121 @@ func (e *emitter) blockFunctions(block ir.NativeType) string {
 	fmt.Fprintf(&builder, "static const adamic_apple_block_descriptor %s_descriptor = {0, sizeof(adamic_apple_block), adamic_apple_block_copy, adamic_apple_block_dispose, %s, NULL};", name, cString(signature))
 	e.declarations = append(e.declarations, builder.String())
 	return name
+}
+
+// delegateClass declares, once for each delegate, its class's description and a method for each
+// protocol method the program's class has: each converts what Apple hands it into Adamic values,
+// calls the function lowering made for it with the object the delegate holds, and gives back its
+// result as Apple takes it. It returns the description's name.
+func (e *emitter) delegateClass(delegate *ir.Delegate) string {
+	name := "adamic_delegate_" + cIdentifier.ReplaceAllString(delegate.Name, "")
+	if e.delegateClasses == nil {
+		e.delegateClasses = map[string]bool{}
+	}
+	if e.delegateClasses[delegate.Name] {
+		return name
+	}
+	e.delegateClasses[delegate.Name] = true
+	var builder strings.Builder
+	entries := []string{}
+	encodings := map[ir.NativeKind]string{ir.NativeVoid: "v", ir.NativeDouble: "d", ir.NativeInteger: "q", ir.NativeUnsigned: "Q", ir.NativeBoolean: "B"}
+	encoding := func(native ir.NativeType) string {
+		if code, known := encodings[native.Kind]; known {
+			return code
+		}
+		return "@"
+	}
+	fmt.Fprintf(&builder, "static adamic_apple_delegate_class %s;\n\n", name)
+	for index, method := range delegate.Methods {
+		implementation := fmt.Sprintf("%s_%d", name, index)
+		what := cString(delegate.Name + " " + method.Selector)
+		parameters := []string{"id self", "SEL command"}
+		types := encoding(method.Returns) + "@:"
+		converted, releases, arguments := []string{}, []string{}, []string{"object"}
+		for position, native := range method.Parameters {
+			parameters = append(parameters, fmt.Sprintf("%s p%d", nativeCType(native), position))
+			types += encoding(native)
+			value := ""
+			switch native.Kind {
+			case ir.NativeObject:
+				value = fmt.Sprintf("adamic_apple_box(p%d, false)", position)
+				if !native.Nullable {
+					value = fmt.Sprintf("adamic_apple_box(adamic_apple_present(p%d, %s), false)", position, what)
+				}
+				releases = append(releases, fmt.Sprintf("\tadamic_release(a%d);", position))
+			case ir.NativeString:
+				value = fmt.Sprintf("p%d == nil ? NULL : adamic_apple_string_from(p%d)", position, position)
+				if !native.Nullable {
+					value = fmt.Sprintf("adamic_apple_string_from(adamic_apple_present(p%d, %s))", position, what)
+				}
+				releases = append(releases, fmt.Sprintf("\tadamic_release(a%d);", position))
+			case ir.NativeBoolean:
+				value = fmt.Sprintf("p%d != NO", position)
+			default:
+				value = fmt.Sprintf("(double)p%d", position)
+			}
+			converted = append(converted, fmt.Sprintf("\t%s a%d = %s;", cType(adamicTypeOf(native)), position, value))
+			arguments = append(arguments, fmt.Sprintf("a%d", position))
+		}
+		fmt.Fprintf(&builder, "static %s %s(%s) {\n\t(void)command;\n", nativeCType(method.Returns), implementation, strings.Join(parameters, ", "))
+		fmt.Fprintf(&builder, "\tadamic_object *object = adamic_apple_delegate_object(self, &%s);\n", name)
+		for _, line := range converted {
+			builder.WriteString(line + "\n")
+		}
+		call := fmt.Sprintf("%s(%s)", e.functionName(method.Function), strings.Join(arguments, ", "))
+		if method.Returns.Kind == ir.NativeVoid {
+			fmt.Fprintf(&builder, "\t%s;\n", call)
+		} else {
+			fmt.Fprintf(&builder, "\t%s result = %s;\n", cType(adamicTypeOf(method.Returns)), call)
+		}
+		for _, line := range releases {
+			builder.WriteString(line + "\n")
+		}
+		builder.WriteString("\tadamic_apple_delegate_returned();\n")
+		switch method.Returns.Kind {
+		case ir.NativeVoid:
+		case ir.NativeBoolean:
+			builder.WriteString("\treturn result ? YES : NO;\n")
+		case ir.NativeDouble:
+			builder.WriteString("\treturn result;\n")
+		case ir.NativeInteger:
+			builder.WriteString("\treturn adamic_apple_integer(result);\n")
+		case ir.NativeUnsigned:
+			builder.WriteString("\treturn adamic_apple_unsigned(result);\n")
+		case ir.NativeString:
+			// Made for Apple and autoreleased, as a method's result is.
+			builder.WriteString("\tid native = result == NULL ? nil : adamic_apple_give_back(adamic_apple_string(result));\n\tadamic_release(result);\n\treturn native;\n")
+		default:
+			builder.WriteString("\tid native = result == NULL ? nil : objc_autorelease(objc_retain(adamic_apple_unbox(result)));\n\tadamic_release(result);\n\treturn native;\n")
+		}
+		builder.WriteString("}\n\n")
+		entries = append(entries, fmt.Sprintf("{%s, (IMP)%s, %s}", cString(method.Selector), implementation, cString(types)))
+	}
+	protocols := []string{}
+	for _, protocol := range delegate.Protocols {
+		protocols = append(protocols, cString(protocol))
+	}
+	fmt.Fprintf(&builder, "static const char *const %s_protocols[] = {%s};\n", name, strings.Join(append(protocols, "NULL"), ", "))
+	if len(entries) == 0 {
+		entries = append(entries, "{NULL, NULL, NULL}")
+	}
+	fmt.Fprintf(&builder, "static const adamic_apple_delegate_method %s_methods[] = {%s};\n", name, strings.Join(entries, ", "))
+	fmt.Fprintf(&builder, "static adamic_apple_delegate_class %s = {%s, %d, %s_protocols, %d, %s_methods, Nil, 0};\n", name, cString(delegate.Name), len(delegate.Protocols), name, len(delegate.Methods), name)
+	e.declarations = append(e.declarations, builder.String())
+	return name
+}
+
+// adamicTypeOf is how a native value is held in Adamic, as lowering's adamicType says.
+func adamicTypeOf(native ir.NativeType) ir.Type {
+	switch native.Kind {
+	case ir.NativeDouble, ir.NativeInteger, ir.NativeUnsigned:
+		return ir.Number
+	case ir.NativeBoolean:
+		return ir.Boolean
+	case ir.NativeString:
+		return ir.String
+	}
+	return ir.Object
 }
 
 // swiftUIShim is swiftui.swift compiled to an object, cached under the user cache directory by the

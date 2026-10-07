@@ -5,7 +5,7 @@ import subprocess
 
 mutants = [
     ("declaration-kind-collision-hidden", "internal/apple/generate/model.go",
-     "if old.declaration.Kind != d.Kind {", "if old.declaration.Kind != d.Kind && false {", "TestDeclarationKindCollision"),
+     "old != nil && old.declaration.Kind != d.Kind {", "old != nil && old.declaration.Kind != d.Kind && false {", "TestDeclarationKindCollision"),
     ("consumed-parameter-borrowed", "internal/apple/generate/emit.go",
      'if has(p, "NSConsumedAttr") || has(p, "CFConsumedAttr") {', 'if (has(p, "NSConsumedAttr") || has(p, "CFConsumedAttr")) && false {', "TestPatterns"),
     ("manual-release-bound", "internal/apple/generate/emit.go",
@@ -21,6 +21,10 @@ mutants = [
      "if g.importError != nil {", "if g.importError != nil && false {", "TestImportNameCollision"),
     ("optional-protocol-method-promised", "internal/apple/generate/model.go",
      "return optional > required, nil", "return optional > required && false, nil", "TestPatterns"),
+    ("implemented-type-unchecked", "internal/apple/generate/protocol.go",
+     'body := " return 0; "', 'body := " return 0; "\n\t\t\tif result == "BOOL" {\n\t\t\t\tresult = "long"\n\t\t\t}', "TestHeaderWitness"),
+    ("folded-names-shared", "internal/apple/generate/protocol.go",
+     "if len(selectors[name]) > 1 {", "if len(selectors[name]) > 1 && false {", "TestPatterns"),
     ("one-parameter-nullability-dropped", "internal/apple/generate/emit.go",
      "natives = append(natives, native)",
      'if n.Name == "takeText:" { native.tag = "string"; native.adamic = "string" }\n\t\tnatives = append(natives, native)', "TestPatterns"),

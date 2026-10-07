@@ -13,6 +13,7 @@
 // libobjc's own retain and release, the ones ARC calls: stable, and cheaper than a message.
 id objc_retain(id object);
 void objc_release(id object);
+id objc_autorelease(id object);
 
 // adamic_apple_rectangle is a CGRect, laid out as CGRect is on a 64-bit Apple platform, where CGFloat
 // is a double: so it crosses objc_msgSend exactly as one, without Core Graphics' header.
@@ -132,5 +133,43 @@ void *adamic_apple_call_new(size_t size);
 void adamic_apple_call_free(void *call);
 void adamic_apple_on_main(void *call, void (*deliver)(void *));
 void adamic_apple_block_call(id holder, adamic_value *arguments);
+
+// A delegate is an object of the program's own class handed to Apple (docs/apple.md, "Delegates"):
+// Apple gets an instance of an Objective-C class made for that class at runtime, a subclass of
+// NSObject conforming to the protocols the class names, whose one instance variable holds the object
+// (counted) and whose methods are the compiler's, one per protocol method the class has
+// (internal/native/foreign.go). Each method calls the class's through an ordinary function.
+typedef struct adamic_apple_delegate_method {
+	const char *selector;
+	IMP implementation;
+	const char *types;
+} adamic_apple_delegate_method;
+
+typedef struct adamic_apple_delegate_class {
+	const char *name;
+	size_t protocol_count;
+	const char *const *protocols;
+	size_t method_count;
+	const adamic_apple_delegate_method *methods;
+	// made is the class, once the first instance needs it.
+	Class made;
+	ptrdiff_t object_offset;
+} adamic_apple_delegate_class;
+
+// adamic_apple_delegate is an instance of description's class holding object, retained for the caller
+// to let go of, or nil for undefined.
+id adamic_apple_delegate(adamic_object *object, adamic_apple_delegate_class *description);
+
+// adamic_apple_delegate_object is the object a delegate holds, borrowed for the method Apple called.
+// Apple calls a delegate on the main thread, where Adamic's counts are kept; anywhere else panics.
+adamic_object *adamic_apple_delegate_object(id delegate, const adamic_apple_delegate_class *description);
+
+// adamic_apple_delegate_returned ends a delegate's method: what Adamic threw is uncaught, since
+// nothing in Objective-C can catch it.
+void adamic_apple_delegate_returned(void);
+
+// adamic_apple_give_back is an object a conversion made (adamic_apple_string), handed to Apple as a
+// method's result: autoreleased, as a method's result is, and no longer owed.
+id adamic_apple_give_back(id object);
 
 #endif
