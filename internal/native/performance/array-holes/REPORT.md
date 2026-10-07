@@ -244,3 +244,25 @@ Lower passed in 0.812s; oracle passed in 36.192s. This includes the ten accepted
 fixtures with sanitizers, native release, JavaScript, Linux LeakSanitizer and
 31 independently executed Node refusal sources. The conservative alias and
 nullable checks pass. No Array operation implementation changed in p2b.
+
+## p2b Array test262 before and after
+
+Both runs use test262 c8c798898646638cd0c24879f8e0374e847e7d74,
+Node 24.19.0, and the same command:
+
+go run ./cmd/adamic-test262 -test262 /tmp/array-holes-test262
+-adapt -jobs 4 built-ins/Array
+
+The before checkout is exactly 047e857 in /tmp/array-holes-p2b-base;
+the after checkout contains merge 14b3d1bc and the unchanged Array implementation.
+
+| Checkout | Pass | Fail / disagreements | Refused | Crashed | Skipped | Total |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| 047e857 before | 125 | 0 | 2339 | 8 | 610 | 3082 |
+| Merged Array implementation after | 126 | 0 | 2338 | 8 | 610 | 3082 |
+
+Both complete per-directory tables are committed in evidence/p2b-test262-*.log.gz.
+The eight crashes remain the inherited indexOf/lastIndexOf clang failures listed
+above, not agreements. No runtime failure was reported as a disagreement.
+Successful observations may use the existing content-addressed cache; these
+worker runs do not claim the uncached integration gate.
