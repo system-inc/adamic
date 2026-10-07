@@ -292,3 +292,7 @@ Checkpoint 20: full uncached oracle 351.673s, flow 264.101s, lower 120.158s, nat
 ### Item 21: flow-stale-comments
 
 Clean merge efdd7e7f7. Comments only: preserve React/cohere provenance while documenting Adamic continuation/evaluation order and exception flow. Formatting and vet passed; Linux counts passed 27.317s unchanged; whole flow and dry guard passed (see /tmp/landing-batch-3-21-test.log). No executable checks added and no stage3 record change.
+
+### Item 22: escape-hatches
+
+Resolved document add/add by retaining the complete landed document, including main's accepted decisions and later evidence. Incoming .a probes and measurement tools retained. No compiler behavior changed. Vet passed, Linux counts 26.831s unchanged, whole lower 23.875s passed; no stage3 change or new check requiring a mutant. Historical escape-hatch findings remain labeled observations of their recorded commit.
