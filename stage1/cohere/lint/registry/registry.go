@@ -20,7 +20,11 @@ import (
 )
 
 type Descriptor struct {
-	Parent          bool     `json:"parent,omitempty"`
+	Parent bool `json:"parent,omitempty"`
+	// Node opts a rule into being handed the node it listens to, as `visit(node, index[, parent])`, rather
+	// than refetching it from its index. Every rule moves to it in #93z4yv7's codemod, and then the field
+	// goes: until then a rule without it keeps `visit(index[, parent])`.
+	Node            bool     `json:"node,omitempty"`
 	Factory         string   `json:"factory"`
 	Class           string   `json:"class"`
 	Name            string   `json:"name"`
@@ -228,9 +232,17 @@ func Render(descriptors []Descriptor) (typescript, golang []byte) {
 		fmt.Fprintf(&ts, "import { %s as create%d, type %s as Rule%d } from '../rules/%s/%s';\n", d.Factory, i, d.Class, i, d.Slug, d.Module)
 		fmt.Fprintf(&goSource, "{%s(), %sOptions},\n", d.Oracle, d.Oracle)
 	}
+	// The generated driver is a port of cohere's fused walk (internal/types/program/walk.go): one walk per
+	// file, a rule called only on the kinds it declares, and the selection decided once per file rather
+	// than per node. cohere indexes a table of listeners by kind; here the table is a generated switch
+	// with direct calls, which measured cheaper in native Adamic than calling through function values
+	// (#93z4yv7). selectedN is whether rule N runs on this file, read once from the context.
 	ts.WriteString("export class RuleSet {\n    readonly context: RuleContext;\n")
 	for i := range descriptors {
 		fmt.Fprintf(&ts, "    readonly rule%d: Rule%d;\n", i, i)
+	}
+	for i := range descriptors {
+		fmt.Fprintf(&ts, "    readonly selected%d: boolean;\n", i)
 	}
 	ts.WriteString("    constructor(context: RuleContext")
 	for i := range descriptors {
@@ -240,22 +252,25 @@ func Render(descriptors []Descriptor) (typescript, golang []byte) {
 	for i := range descriptors {
 		fmt.Fprintf(&ts, "        this.rule%d = rule%d;\n", i, i)
 	}
+	for i, d := range descriptors {
+		fmt.Fprintf(&ts, "        this.selected%d = context.enabled('%s');\n", i, d.Name)
+	}
 	ts.WriteString("    }\n")
 	goSource.WriteString("} }\n")
 	for _, hook := range []string{"prepare", "finish"} {
-		fmt.Fprintf(&ts, "    %s(root: number): void {\n        const context = this.context;\n", hook)
+		fmt.Fprintf(&ts, "    %s(root: number): void {\n", hook)
 		for i, d := range descriptors {
 			name := d.Prepare
 			if hook == "finish" {
 				name = d.Finish
 			}
 			if name != "" {
-				fmt.Fprintf(&ts, "    if(context.enabled('%s')) { this.rule%d.%s(root); }\n", d.Name, i, name)
+				fmt.Fprintf(&ts, "    if(this.selected%d) { this.rule%d.%s(root); }\n", i, i, name)
 			}
 		}
 		ts.WriteString("}\n")
 	}
-	ts.WriteString("    visit(index: number, parent: number): void {\n        const context = this.context;\n        switch(context.node(index).kind) {\n")
+	ts.WriteString("    visit(index: number, parent: number): void {\n        const node = this.context.node(index);\n        switch(node.kind) {\n")
 	buckets := map[string][]int{}
 	for i, d := range descriptors {
 		for _, kind := range d.Kinds {
@@ -272,10 +287,13 @@ func Render(descriptors []Descriptor) (typescript, golang []byte) {
 		for _, i := range buckets[kind] {
 			d := descriptors[i]
 			arguments := "index"
+			if d.Node {
+				arguments = "node, index"
+			}
 			if d.Parent {
 				arguments += ", parent"
 			}
-			fmt.Fprintf(&ts, "            if(context.enabled('%s')) { this.rule%d.%s(%s); }\n", d.Name, i, d.Visit, arguments)
+			fmt.Fprintf(&ts, "            if(this.selected%d) { this.rule%d.%s(%s); }\n", i, i, d.Visit, arguments)
 		}
 		ts.WriteString("            break;\n")
 	}
