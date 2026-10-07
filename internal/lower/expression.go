@@ -216,6 +216,9 @@ func (l *lowering) includesNull(proven *checker.Type) bool {
 // expression lowers a value. What's kept weakly (a Weak<Target> variable, field, element or map value)
 // is read here as its target, so no value of a Weak type goes further; keeping one is fit's WeakOf.
 func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
+	if value, handled, err := l.methodObservation(node); handled {
+		return value, err
+	}
 	if err := l.libraryIteratorUnsupportedUse(node); err != nil {
 		return nil, err
 	}

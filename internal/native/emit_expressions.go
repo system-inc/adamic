@@ -119,6 +119,8 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 			e.checkThrown()
 		}
 		return result
+	case ir.MethodPresence:
+		return e.methodPresence(expression)
 	case ir.HasAccessor:
 		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_accessor_find(%s, %s) != NULL", e.value(expression.Object), cString(expression.Name)))
 	case ir.InstanceOf:

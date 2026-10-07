@@ -268,10 +268,13 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 	table := "NULL"
 	methodNames, thunks := []string{}, []string{}
 	for _, method := range methods {
+		methodNames = append(methodNames, cString(method.Name))
 		if !e.dispatchable(method.Function) {
+			// Presence does not need a callable thunk. Keep the name even when
+			// this signature cannot be called through an adamic_value slot.
+			thunks = append(thunks, "NULL")
 			continue
 		}
-		methodNames = append(methodNames, cString(method.Name))
 		thunks = append(thunks, e.methodThunk(method.Function))
 	}
 	if len(thunks) > 0 {
@@ -300,7 +303,7 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 // dispatchable reports whether a class's method can be called through an interface: each value it
 // takes and gives fits an adamic_value. One that doesn't (a union) can't be
 // passed to a function value either (lower's callClosure says not yet), so no call through an
-// interface reaches it with one, and it's left out of its class's table.
+// interface reaches it with one. Its name remains in the table for presence tests.
 func (e *emitter) dispatchable(function int) bool {
 	method := e.program.Functions[function]
 	slotless := func(valueType ir.Type) bool { return valueType == ir.Union }
