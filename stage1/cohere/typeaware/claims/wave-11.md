@@ -228,3 +228,28 @@ registry mutant are caught. All fifteen earlier ports and metadata passed their
 landing rechecks on c01907a7; four React analysis claims remain parked, not ports.
 No additional reservations are made. Evidence, exact timings and uncovered
 options/emitted-JavaScript/CJS paths are in ../wave-11-seventh/REPORT.md.
+
+
+## Eighth batch claim
+
+All eighteen native production-default reservations are tested and pushed at
+242f4172 on current main c01907a7. Four React analysis claims remain parked.
+Explicit all-heads fetch audited 569 origin refs, 554 distinct trees and 34
+reservation documents. JSON available inventories are excluded from reservations.
+The first three remaining by combined volume, lexical ties, are reserved here
+before implementation:
+
+1. `react/no-danger-with-children`
+2. `react/no-multi-comp`
+3. `react/no-namespace`
+
+All have zero recorded compiler/repository volume. Main and bridge references
+are inventory/count records, not native ports, and no origin claim names them.
+Their production implementations use syntax walks and binding declarations,
+not native HIR, SSA or capture analysis. New Adamic files are .a, numeric
+rule.json kinds are mandatory, and callback dispatch passes the relevant node.
+Any Go regexp must become a JS RegExp literal using the shared translation row
+when present; these three rules have no Go regexp. The new shared finding model
+ab70f38d4 is on origin/lint-rules/harness and is not yet on current main; shared
+harness and generator files remain outside this worker's territory.
+Selection evidence and reconstruction are in ../wave-11-eighth/selection/.
