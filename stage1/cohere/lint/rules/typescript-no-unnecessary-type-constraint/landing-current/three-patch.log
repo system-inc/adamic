@@ -1,0 +1,15 @@
+patching file stage1/cohere/lint/registry/registry.go
+patching file stage1/cohere/lint/lint_test.go
+Hunk #1 succeeded at 16 with fuzz 2 (offset -1 lines).
+Hunk #2 succeeded at 44 (offset -1 lines).
+Hunk #3 succeeded at 271 (offset -5 lines).
+Hunk #4 succeeded at 291 with fuzz 1 (offset -5 lines).
+Hunk #5 succeeded at 301 (offset -5 lines).
+Hunk #6 FAILED at 325.
+Hunk #7 succeeded at 356 with fuzz 1 (offset 12 lines).
+Hunk #8 succeeded at 400 (offset 24 lines).
+Hunk #9 succeeded at 439 (offset 25 lines).
+Hunk #10 succeeded at 661 (offset 189 lines).
+Hunk #11 FAILED at 495.
+2 out of 11 hunks FAILED -- saving rejects to file stage1/cohere/lint/lint_test.go.rej
+patching file stage1/cohere/lint/profile_test.go

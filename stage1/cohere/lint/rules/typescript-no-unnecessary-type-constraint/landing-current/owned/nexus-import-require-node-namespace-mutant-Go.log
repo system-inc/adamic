@@ -1,0 +1,64 @@
+case 0
+finding 0 37 requireNodePrefix	Node built-in 'fs' must use the 'node:' prefix, which says the module is Node's rather than a package that happens to share its name. Use: import * as NodeFileSystem from 'node:fs'
+fix 32 36	'node:fs'
+fixed	import * as NodeFileSystem from 'node:fs';\u000a
+case 1
+fixed	import * as NodeChildProcess from 'node:child_process';\u000a
+case 2
+finding 0 37 requireNodePrefix	Node built-in 'fs' must use the 'node:' prefix, which says the module is Node's rather than a package that happens to share its name. Use: import * as NodeFileSystem from 'node:fs'
+fix 32 36	'node:fs'
+fixed	import * as NodeFileSystem from 'node:fs';\u000a
+case 3
+fixed	import * as NodeFileSystem from 'node:fs';\u000a
+case 4
+fixed	import * as NodeFileSystemPromises from 'node:fs/promises';\u000a
+case 5
+fixed	import * as NodeOperatingSystem from 'node:os';\u000a
+case 6
+finding 7 14 requireCorrectAlias	Node namespace alias must be 'NodeChildProcess', got 'cp'. The alias is the Node-prefixed expansion of the module, so a reader forty lines down knows what they are looking at without finding the import. Use: import * as NodeChildProcess from 'node:child_process'
+fixed	import * as cp from 'node:child_process';\u000a
+case 7
+finding 0 25 requireNodePrefix	Node built-in 'fs' must use the 'node:' prefix, which says the module is Node's rather than a package that happens to share its name. Use: import * as NodeFileSystem from 'node:fs'
+fix 20 24	'node:fs'
+finding 7 14 requireCorrectAlias	Node namespace alias must be 'NodeFileSystem', got 'fs'. The alias is the Node-prefixed expansion of the module, so a reader forty lines down knows what they are looking at without finding the import. Use: import * as NodeFileSystem from 'node:fs'
+fixed	import * as fs from 'node:fs';\u000a
+case 8
+finding 7 14 requireCorrectAlias	Node namespace alias must be 'NodeFileSystem', got 'fs'. The alias is the Node-prefixed expansion of the module, so a reader forty lines down knows what they are looking at without finding the import. Use: import * as NodeFileSystem from 'node:fs'
+fixed	import * as fs from 'node:fs';\u000a
+case 9
+finding 7 15 requireCorrectAlias	Node namespace alias must be 'NodeFileSystemPromises', got 'fsp'. The alias is the Node-prefixed expansion of the module, so a reader forty lines down knows what they are looking at without finding the import. Use: import * as NodeFileSystemPromises from 'node:fs/promises'
+fixed	import * as fsp from 'node:fs/promises';\u000a
+case 10
+finding 0 25 requireNamespaceImport	Node built-in 'node:fs' must use a namespace import, so every call site says which module it came from. Use: import * as NodeFileSystem from 'node:fs'
+fixed	import fs from 'node:fs';\u000a
+case 11
+fixed	import pathBrowserify from 'path-browserify';\u000a
+case 12
+fixed	import react from 'react';\u000a
+case 13
+finding 0 39 requireNamespaceImport	Node built-in 'node:fs' must use a namespace import, so every call site says which module it came from. Use: import * as NodeFileSystem from 'node:fs'
+fixed	import { readFileSync } from 'node:fs';\u000a
+case 14
+fixed	import { thing } from './local-module';\u000a
+case 15
+finding 0 33 requireNamespaceImport	Node built-in 'node:path' must use a namespace import, so every call site says which module it came from. Use: import * as NodePath from 'node:path'
+fixed	import NodePath from 'node:path';\u000a
+case 16
+finding 7 26 requireCorrectAlias	Node namespace alias must be 'NodeFileSystemPromises', got 'NodeFileSystem'. The alias is the Node-prefixed expansion of the module, so a reader forty lines down knows what they are looking at without finding the import. Use: import * as NodeFileSystemPromises from 'node:fs/promises'
+fixed	import * as NodeFileSystem from 'node:fs/promises';\u000a
+case 17
+finding 0 50 requireNodePrefix	Node built-in 'child_process' must use the 'node:' prefix, which says the module is Node's rather than a package that happens to share its name. Use: import * as NodeChildProcess from 'node:child_process'
+fix 34 49	'node:child_process'
+fixed	import * as NodeChildProcess from 'node:child_process';\u000a
+case 18
+finding 0 30 requireNodePrefix	Node built-in 'fs' must use the 'node:' prefix, which says the module is Node's rather than a package that happens to share its name. Use: import * as NodeFileSystem from 'node:fs'
+fix 25 29	'node:fs'
+finding 12 19 requireCorrectAlias	Node namespace alias must be 'NodeFileSystem', got 'fs'. The alias is the Node-prefixed expansion of the module, so a reader forty lines down knows what they are looking at without finding the import. Use: import * as NodeFileSystem from 'node:fs'
+finding 38 49 requireCorrectAlias	Node namespace alias must be 'NodeOperatingSystem', got 'System'. The alias is the Node-prefixed expansion of the module, so a reader forty lines down knows what they are looking at without finding the import. Use: import * as NodeOperatingSystem from 'node:os'
+finding 66 85 requireNamespaceImport	Node built-in 'node:path' must use a namespace import, so every call site says which module it came from. Use: import * as NodePath from 'node:path'
+fixed	import type * as fs from 'node:fs'; import * as System from 'node:os'; import 'node:path';
+case 19
+finding 0 25 requireNodePrefix	Node built-in 'fs' must use the 'node:' prefix, which says the module is Node's rather than a package that happens to share its name. Use: import * as NodeFileSystem from 'node:fs'
+fix 20 24	'node:fs'
+finding 7 14 requireCorrectAlias	Node namespace alias must be 'NodeFileSystem', got 'fs'. The alias is the Node-prefixed expansion of the module, so a reader forty lines down knows what they are looking at without finding the import. Use: import * as NodeFileSystem from 'node:fs'
+fixed	import * as fs from 'node:fs';\u000a

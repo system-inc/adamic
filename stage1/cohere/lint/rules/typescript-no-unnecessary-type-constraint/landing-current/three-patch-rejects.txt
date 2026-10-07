@@ -1,0 +1,53 @@
+--- stage1/cohere/lint/lint_test.go
++++ stage1/cohere/lint/lint_test.go
+@@ -325,14 +335,38 @@
+ 		if len(row.Options) > 0 {
+ 			options = string(row.Options)
+ 		}
+-		rows = append(rows, fmt.Sprintf("%s\t%s\t\t\tfalse\t%s", path, row.Rule, options))
+-	}
+-	if len(rows) < 150 {
++		counts[row.Rule]++
++        rows = append(rows, fmt.Sprintf("%s\t%s\t\t\tfalse\t%s", path, row.Rule, options))
++	}
++	if jsxGaps != 1 { t.Fatalf("expected exactly one pinned JSX parser gap, got %d",jsxGaps) }
++    for name, count := range counts { t.Logf("captured %s: %d cases",name,count) }
++    if len(rows) < 150 {
+ 		t.Fatalf("capture unexpectedly small: %d cases", len(rows))
+ 	}
+ 	t.Logf("cohere cases: %d unique source/rule/options combinations", len(rows))
+ 	return rows
+ }
++func emitted(t *testing.T, directory, path string) execution {
++	t.Helper()
++	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
++	if err != nil {
++		t.Fatal(err)
++	}
++	lowered, err := lower.Lower(context.Background(), program)
++	if err != nil {
++		t.Fatal(err)
++	}
++	js := filepath.Join(t.TempDir(), "main.mjs")
++	if err := os.WriteFile(js, []byte(javascript.JavaScript(lowered)), 0644); err != nil {
++		t.Fatal(err)
++	}
++	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
++	if err != nil {
++		t.Fatal(err)
++	}
++	return execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, js, "--manifest", path)
++}
++
+ func compare(t *testing.T, oracle, binary, directory, path string) []byte {
+ 	t.Helper()
+ 	want := execute(t, "", oracle, "--manifest", path)
+@@ -495,7 +533,7 @@
+ 		if err != nil {
+ 			return err
+ 		}
+-		if !entry.IsDir() && strings.HasSuffix(path, ".ts") {
++		if !entry.IsDir() && (strings.HasSuffix(path, ".ts") || strings.HasSuffix(path, ".a")) {
+ 			rows = append(rows, path)
+ 		}
+ 		return nil

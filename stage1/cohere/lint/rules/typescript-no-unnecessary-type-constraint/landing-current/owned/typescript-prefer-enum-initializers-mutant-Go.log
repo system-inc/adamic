@@ -1,0 +1,276 @@
+case 0
+fixed	\u000aenum Direction {\u000a  Up = 'Up',\u000a  Down = 'Down',\u000a}\u000a    
+case 1
+finding 33 37 defineInitializer	The value of the member 'Down' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to Down = 1
+edit 33 37	Down = 1
+applied	\u000aenum Direction {\u000a  Up = 'Up',\u000a  Down = 1,\u000a}\u000a      
+suggestion defineInitializerSuggestion	Can be fixed to Down = 2
+edit 33 37	Down = 2
+applied	\u000aenum Direction {\u000a  Up = 'Up',\u000a  Down = 2,\u000a}\u000a      
+suggestion defineInitializerSuggestion	Can be fixed to Down = 'Down'
+edit 33 37	Down = 'Down'
+applied	\u000aenum Direction {\u000a  Up = 'Up',\u000a  Down = 'Down',\u000a}\u000a      
+fixed	\u000aenum Direction {\u000a  Up = 'Up',\u000a  Down,\u000a}\u000a      
+case 2
+fixed	\u000aenum Direction {\u000a  Up = 1,\u000a  Down = 2,\u000a}\u000a    
+case 3
+fixed	\u000aenum Direction {\u000a  Up = 1,\u000a}\u000a    
+case 4
+finding 20 22 defineInitializer	The value of the member 'Up' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to Up = 0
+edit 20 22	Up = 0
+applied	\u000aenum Direction {\u000a  Up = 0,\u000a  Down = 'Down',\u000a}\u000a      
+suggestion defineInitializerSuggestion	Can be fixed to Up = 1
+edit 20 22	Up = 1
+applied	\u000aenum Direction {\u000a  Up = 1,\u000a  Down = 'Down',\u000a}\u000a      
+suggestion defineInitializerSuggestion	Can be fixed to Up = 'Up'
+edit 20 22	Up = 'Up'
+applied	\u000aenum Direction {\u000a  Up = 'Up',\u000a  Down = 'Down',\u000a}\u000a      
+fixed	\u000aenum Direction {\u000a  Up,\u000a  Down = 'Down',\u000a}\u000a      
+case 5
+finding 20 22 defineInitializer	The value of the member 'Up' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to Up = 0
+edit 20 22	Up = 0
+applied	\u000aenum Direction {\u000a  Up = 0,\u000a  Down,\u000a}\u000a      
+suggestion defineInitializerSuggestion	Can be fixed to Up = 1
+edit 20 22	Up = 1
+applied	\u000aenum Direction {\u000a  Up = 1,\u000a  Down,\u000a}\u000a      
+suggestion defineInitializerSuggestion	Can be fixed to Up = 'Up'
+edit 20 22	Up = 'Up'
+applied	\u000aenum Direction {\u000a  Up = 'Up',\u000a  Down,\u000a}\u000a      
+finding 26 30 defineInitializer	The value of the member 'Down' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to Down = 1
+edit 26 30	Down = 1
+applied	\u000aenum Direction {\u000a  Up,\u000a  Down = 1,\u000a}\u000a      
+suggestion defineInitializerSuggestion	Can be fixed to Down = 2
+edit 26 30	Down = 2
+applied	\u000aenum Direction {\u000a  Up,\u000a  Down = 2,\u000a}\u000a      
+suggestion defineInitializerSuggestion	Can be fixed to Down = 'Down'
+edit 26 30	Down = 'Down'
+applied	\u000aenum Direction {\u000a  Up,\u000a  Down = 'Down',\u000a}\u000a      
+fixed	\u000aenum Direction {\u000a  Up,\u000a  Down,\u000a}\u000a      
+case 6
+finding 20 22 defineInitializer	The value of the member 'Up' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to Up = 0
+edit 20 22	Up = 0
+applied	\u000aenum Direction {\u000a  Up = 0,\u000a}\u000a      
+suggestion defineInitializerSuggestion	Can be fixed to Up = 1
+edit 20 22	Up = 1
+applied	\u000aenum Direction {\u000a  Up = 1,\u000a}\u000a      
+suggestion defineInitializerSuggestion	Can be fixed to Up = 'Up'
+edit 20 22	Up = 'Up'
+applied	\u000aenum Direction {\u000a  Up = 'Up',\u000a}\u000a      
+fixed	\u000aenum Direction {\u000a  Up,\u000a}\u000a      
+case 7
+fixed	\u000aenum Direction {}\u000a    
+case 8
+finding 17 19 defineInitializer	The value of the member 'Up' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to Up = 0
+edit 17 19	Up = 0
+applied	const enum D {\u000a  Up = 0,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to Up = 1
+edit 17 19	Up = 1
+applied	const enum D {\u000a  Up = 1,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to Up = 'Up'
+edit 17 19	Up = 'Up'
+applied	const enum D {\u000a  Up = 'Up',\u000a}
+fixed	const enum D {\u000a  Up,\u000a}
+case 9
+finding 19 21 defineInitializer	The value of the member 'Up' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to Up = 0
+edit 19 21	Up = 0
+applied	declare enum D {\u000a  Up = 0,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to Up = 1
+edit 19 21	Up = 1
+applied	declare enum D {\u000a  Up = 1,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to Up = 'Up'
+edit 19 21	Up = 'Up'
+applied	declare enum D {\u000a  Up = 'Up',\u000a}
+fixed	declare enum D {\u000a  Up,\u000a}
+case 10
+finding 11 19 defineInitializer	The value of the member ''quoted'' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to 'quoted' = 0
+edit 11 19	'quoted' = 0
+applied	enum D {\u000a  'quoted' = 0,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to 'quoted' = 1
+edit 11 19	'quoted' = 1
+applied	enum D {\u000a  'quoted' = 1,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to 'quoted' = ''quoted''
+edit 11 19	'quoted' = ''quoted''
+applied	enum D {\u000a  'quoted' = ''quoted'',\u000a}
+fixed	enum D {\u000a  'quoted',\u000a}
+case 11
+fixed	enum D {\u000a  A = 'a'.length,\u000a}
+case 12
+fixed	enum D {\u000a  A = 1 << 0,\u000a}
+case 13
+finding 20 21 defineInitializer	The value of the member 'B' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to B = 1
+edit 20 21	B = 1
+applied	enum D {\u000a  A = 1,\u000a  B = 1,\u000a  C,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to B = 2
+edit 20 21	B = 2
+applied	enum D {\u000a  A = 1,\u000a  B = 2,\u000a  C,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to B = 'B'
+edit 20 21	B = 'B'
+applied	enum D {\u000a  A = 1,\u000a  B = 'B',\u000a  C,\u000a}
+finding 25 26 defineInitializer	The value of the member 'C' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to C = 2
+edit 25 26	C = 2
+applied	enum D {\u000a  A = 1,\u000a  B,\u000a  C = 2,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to C = 3
+edit 25 26	C = 3
+applied	enum D {\u000a  A = 1,\u000a  B,\u000a  C = 3,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to C = 'C'
+edit 25 26	C = 'C'
+applied	enum D {\u000a  A = 1,\u000a  B,\u000a  C = 'C',\u000a}
+fixed	enum D {\u000a  A = 1,\u000a  B,\u000a  C,\u000a}
+case 14
+finding 11 12 defineInitializer	The value of the member 'A' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to A = 0
+edit 11 12	A = 0
+applied	enum D {\u000a  A = 0,\u000a  B = 1,\u000a  C,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to A = 1
+edit 11 12	A = 1
+applied	enum D {\u000a  A = 1,\u000a  B = 1,\u000a  C,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to A = 'A'
+edit 11 12	A = 'A'
+applied	enum D {\u000a  A = 'A',\u000a  B = 1,\u000a  C,\u000a}
+finding 25 26 defineInitializer	The value of the member 'C' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to C = 2
+edit 25 26	C = 2
+applied	enum D {\u000a  A,\u000a  B = 1,\u000a  C = 2,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to C = 3
+edit 25 26	C = 3
+applied	enum D {\u000a  A,\u000a  B = 1,\u000a  C = 3,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to C = 'C'
+edit 25 26	C = 'C'
+applied	enum D {\u000a  A,\u000a  B = 1,\u000a  C = 'C',\u000a}
+fixed	enum D {\u000a  A,\u000a  B = 1,\u000a  C,\u000a}
+case 15
+finding 11 12 defineInitializer	The value of the member 'A' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to A = 0
+edit 11 12	A = 0
+applied	enum D {\u000a  A = 0,\u000a  B,\u000a  C,\u000a  D2,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to A = 1
+edit 11 12	A = 1
+applied	enum D {\u000a  A = 1,\u000a  B,\u000a  C,\u000a  D2,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to A = 'A'
+edit 11 12	A = 'A'
+applied	enum D {\u000a  A = 'A',\u000a  B,\u000a  C,\u000a  D2,\u000a}
+finding 16 17 defineInitializer	The value of the member 'B' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to B = 1
+edit 16 17	B = 1
+applied	enum D {\u000a  A,\u000a  B = 1,\u000a  C,\u000a  D2,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to B = 2
+edit 16 17	B = 2
+applied	enum D {\u000a  A,\u000a  B = 2,\u000a  C,\u000a  D2,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to B = 'B'
+edit 16 17	B = 'B'
+applied	enum D {\u000a  A,\u000a  B = 'B',\u000a  C,\u000a  D2,\u000a}
+finding 21 22 defineInitializer	The value of the member 'C' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to C = 2
+edit 21 22	C = 2
+applied	enum D {\u000a  A,\u000a  B,\u000a  C = 2,\u000a  D2,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to C = 3
+edit 21 22	C = 3
+applied	enum D {\u000a  A,\u000a  B,\u000a  C = 3,\u000a  D2,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to C = 'C'
+edit 21 22	C = 'C'
+applied	enum D {\u000a  A,\u000a  B,\u000a  C = 'C',\u000a  D2,\u000a}
+finding 26 28 defineInitializer	The value of the member 'D2' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to D2 = 3
+edit 26 28	D2 = 3
+applied	enum D {\u000a  A,\u000a  B,\u000a  C,\u000a  D2 = 3,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to D2 = 4
+edit 26 28	D2 = 4
+applied	enum D {\u000a  A,\u000a  B,\u000a  C,\u000a  D2 = 4,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to D2 = 'D2'
+edit 26 28	D2 = 'D2'
+applied	enum D {\u000a  A,\u000a  B,\u000a  C,\u000a  D2 = 'D2',\u000a}
+fixed	enum D {\u000a  A,\u000a  B,\u000a  C,\u000a  D2,\u000a}
+case 16
+fixed	enum D {\u000a  Up = 'Up',\u000a  Down = 'Down',\u000a}
+case 17
+finding 11 23 defineInitializer	The value of the member '['computed']' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to ['computed'] = 0
+edit 11 23	['computed'] = 0
+applied	enum D {\u000a  ['computed'] = 0,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to ['computed'] = 1
+edit 11 23	['computed'] = 1
+applied	enum D {\u000a  ['computed'] = 1,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to ['computed'] = '['computed']'
+edit 11 23	['computed'] = '['computed']'
+applied	enum D {\u000a  ['computed'] = '['computed']',\u000a}
+fixed	enum D {\u000a  ['computed'],\u000a}
+case 18
+finding 9 11 defineInitializer	The value of the member 'Up' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to Up = 0
+edit 9 11	Up = 0
+applied	enum D { Up = 0 }
+suggestion defineInitializerSuggestion	Can be fixed to Up = 1
+edit 9 11	Up = 1
+applied	enum D { Up = 1 }
+suggestion defineInitializerSuggestion	Can be fixed to Up = 'Up'
+edit 9 11	Up = 'Up'
+applied	enum D { Up = 'Up' }
+fixed	enum D { Up }
+case 19
+finding 18 20 defineInitializer	The value of the member 'Up' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to Up = 0
+edit 18 20	Up = 0
+applied	export enum D {\u000a  Up = 0,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to Up = 1
+edit 18 20	Up = 1
+applied	export enum D {\u000a  Up = 1,\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to Up = 'Up'
+edit 18 20	Up = 'Up'
+applied	export enum D {\u000a  Up = 'Up',\u000a}
+fixed	export enum D {\u000a  Up,\u000a}
+case 20
+finding 29 31 defineInitializer	The value of the member 'Up' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to Up = 0
+edit 29 31	Up = 0
+applied	namespace N {\u000a  enum D {\u000a    Up = 0,\u000a  }\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to Up = 1
+edit 29 31	Up = 1
+applied	namespace N {\u000a  enum D {\u000a    Up = 1,\u000a  }\u000a}
+suggestion defineInitializerSuggestion	Can be fixed to Up = 'Up'
+edit 29 31	Up = 'Up'
+applied	namespace N {\u000a  enum D {\u000a    Up = 'Up',\u000a  }\u000a}
+fixed	namespace N {\u000a  enum D {\u000a    Up,\u000a  }\u000a}
+case 21
+finding 17 18 defineInitializer	The value of the member 'B' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to B = 1
+edit 17 18	B = 1
+applied	enum D { A = 10, B = 1, 'quoted' }
+suggestion defineInitializerSuggestion	Can be fixed to B = 2
+edit 17 18	B = 2
+applied	enum D { A = 10, B = 2, 'quoted' }
+suggestion defineInitializerSuggestion	Can be fixed to B = 'B'
+edit 17 18	B = 'B'
+applied	enum D { A = 10, B = 'B', 'quoted' }
+finding 20 28 defineInitializer	The value of the member ''quoted'' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to 'quoted' = 2
+edit 20 28	'quoted' = 2
+applied	enum D { A = 10, B, 'quoted' = 2 }
+suggestion defineInitializerSuggestion	Can be fixed to 'quoted' = 3
+edit 20 28	'quoted' = 3
+applied	enum D { A = 10, B, 'quoted' = 3 }
+suggestion defineInitializerSuggestion	Can be fixed to 'quoted' = ''quoted''
+edit 20 28	'quoted' = ''quoted''
+applied	enum D { A = 10, B, 'quoted' = ''quoted'' }
+fixed	enum D { A = 10, B, 'quoted' }
+case 22
+finding 9 11 defineInitializer	The value of the member 'Up' should be explicitly defined.
+suggestion defineInitializerSuggestion	Can be fixed to Up = 0
+edit 9 11	Up = 0
+applied	enum D { Up = 0 }\u000a
+suggestion defineInitializerSuggestion	Can be fixed to Up = 1
+edit 9 11	Up = 1
+applied	enum D { Up = 1 }\u000a
+suggestion defineInitializerSuggestion	Can be fixed to Up = 'Up'
+edit 9 11	Up = 'Up'
+applied	enum D { Up = 'Up' }\u000a
+fixed	enum D { Up }\u000a

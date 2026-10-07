@@ -1,0 +1,41 @@
+case 0
+finding 0 10 multilineString	This string is continued onto the next line with a trailing backslash, which the language accepts and almost no reader expects. Whatever indentation the next line carries goes into the value, so the string changes meaning when somebody reformats the file, and the backslash has to be the last character on its line or the file stops parsing. Concatenation or a template literal says the same thing without either hazard.
+fixed	'foo\u005c\u000dbar';
+case 1
+finding 0 12 multilineString	This string is continued onto the next line with a trailing backslash, which the language accepts and almost no reader expects. Whatever indentation the next line carries goes into the value, so the string changes meaning when somebody reformats the file, and the backslash has to be the last character on its line or the file stops parsing. Concatenation or a template literal says the same thing without either hazard.
+fixed	'foo\u005c\u2028bar';
+case 2
+finding 0 11 multilineString	This string is continued onto the next line with a trailing backslash, which the language accepts and almost no reader expects. Whatever indentation the next line carries goes into the value, so the string changes meaning when somebody reformats the file, and the backslash has to be the last character on its line or the file stops parsing. Concatenation or a template literal says the same thing without either hazard.
+fixed	'foo\u005c\u2029ar';
+case 3
+finding 5 23 multilineString	This string is continued onto the next line with a trailing backslash, which the language accepts and almost no reader expects. Whatever indentation the next line carries goes into the value, so the string changes meaning when somebody reformats the file, and the backslash has to be the last character on its line or the file stops parsing. Concatenation or a template literal says the same thing without either hazard.
+fixed	test('Line 1 \u005c\u000a Line 2');
+case 4
+fixed	var a = 'Line 1 Line 2';
+case 5
+finding 8 26 multilineString	This string is continued onto the next line with a trailing backslash, which the language accepts and almost no reader expects. Whatever indentation the next line carries goes into the value, so the string changes meaning when somebody reformats the file, and the backslash has to be the last character on its line or the file stops parsing. Concatenation or a template literal says the same thing without either hazard.
+fixed	var a = 'Line 1 \u005c\u000a Line 2';
+case 6
+fixed	var a = 'Line 1 \u005cn Line 2';
+case 7
+finding 8 13 multilineString	This string is continued onto the next line with a trailing backslash, which the language accepts and almost no reader expects. Whatever indentation the next line carries goes into the value, so the string changes meaning when somebody reformats the file, and the backslash has to be the last character on its line or the file stops parsing. Concatenation or a template literal says the same thing without either hazard.
+fixed	var a = 'a\u005c\u000a';
+case 8
+fixed	var a = 'a\u005cnb\u005cnc';
+case 9
+fixed	var a = /foo/;
+case 10
+fixed	var a = 12;
+case 11
+fixed	var a = `Line 1\u000aLine 2`;
+case 12
+fixed	var a = tag`Line 1\u000aLine 2`;
+case 13
+finding 8 26 multilineString	This string is continued onto the next line with a trailing backslash, which the language accepts and almost no reader expects. Whatever indentation the next line carries goes into the value, so the string changes meaning when somebody reformats the file, and the backslash has to be the last character on its line or the file stops parsing. Concatenation or a template literal says the same thing without either hazard.
+fixed	var x = 'Line 1 \u005c\u000a Line 2'
+case 14
+finding 8 26 multilineString	This string is continued onto the next line with a trailing backslash, which the language accepts and almost no reader expects. Whatever indentation the next line carries goes into the value, so the string changes meaning when somebody reformats the file, and the backslash has to be the last character on its line or the file stops parsing. Concatenation or a template literal says the same thing without either hazard.
+fixed	var a = 'Line 1 \u005c\u000a Line 2';
+case 15
+finding 8 20 multilineString	This string is continued onto the next line with a trailing backslash, which the language accepts and almost no reader expects. Whatever indentation the next line carries goes into the value, so the string changes meaning when somebody reformats the file, and the backslash has to be the last character on its line or the file stops parsing. Concatenation or a template literal says the same thing without either hazard.
+fixed	var x = 'foo\u005c\u2029bar';\u000a

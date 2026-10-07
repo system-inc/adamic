@@ -1,0 +1,36 @@
+case 0
+fixed	declare const networkService: { cache: { invalidate(key: unknown): void } };\u000adeclare const UserCacheKey: string;\u000adeclare const PostCacheKey: string;\u000adeclare const id: string;\u000adeclare const direct: { invalidate(key: unknown): void };\u000aexport function run() {\u000a    direct.invalidate('users');\u000a}\u000a
+case 1
+fixed	declare const networkService: { cache: { invalidate(key: unknown): void } };\u000adeclare const UserCacheKey: string;\u000adeclare const PostCacheKey: string;\u000adeclare const id: string;\u000adeclare const holder: { store: { invalidate(key: unknown): void } };\u000aexport function run() {\u000a    holder.store.invalidate('users');\u000a}\u000a
+case 2
+fixed	declare const networkService: { cache: { invalidate(key: unknown): void } };\u000adeclare const UserCacheKey: string;\u000adeclare const PostCacheKey: string;\u000adeclare const id: string;\u000adeclare const store: { cache: { invalidate(key: unknown): void } };\u000aexport function run() {\u000a    store.cache.invalidate('users');\u000a}\u000a
+case 3
+fixed	declare const networkService: { cache: { invalidate(key: unknown): void } };\u000adeclare const UserCacheKey: string;\u000adeclare const PostCacheKey: string;\u000adeclare const id: string;\u000adeclare const svc: { cache: { clear(key: unknown): void } };\u000aexport function run() {\u000a    svc.cache.clear('users');\u000a}\u000a
+case 4
+fixed	declare const networkService: { cache: { invalidate(key: unknown): void } };\u000adeclare const UserCacheKey: string;\u000adeclare const PostCacheKey: string;\u000adeclare const id: string;\u000adeclare function log(message: string): void;\u000aexport function run() {\u000a    log('users');\u000a}\u000a
+case 5
+fixed	declare const networkService: { cache: { invalidate(key: unknown): void } };\u000adeclare const UserCacheKey: string;\u000adeclare const PostCacheKey: string;\u000adeclare const id: string;\u000aexport const Value = 1;\u000a
+case 6
+fixed	declare const networkService: { cache: { invalidate(key: unknown): void } };\u000adeclare const UserCacheKey: string;\u000adeclare const PostCacheKey: string;\u000adeclare const id: string;\u000aexport function run() {\u000a    networkService.cache.invalidate('users');\u000a}\u000a
+case 7
+fixed	declare const networkService: { cache: { invalidate(key: unknown): void } };\u000adeclare const UserCacheKey: string;\u000adeclare const PostCacheKey: string;\u000adeclare const id: string;\u000aexport function run() {\u000a    networkService.cache.invalidate(UserCacheKey);\u000a}\u000a
+case 8
+fixed	declare const networkService: { cache: { invalidate(key: unknown): void } };\u000adeclare const UserCacheKey: string;\u000adeclare const PostCacheKey: string;\u000adeclare const id: string;\u000aexport function run() {\u000a    networkService.cache.invalidate(['users', 'posts']);\u000a}\u000a
+case 9
+fixed	declare const networkService: { cache: { invalidate(key: unknown): void } };\u000adeclare const UserCacheKey: string;\u000adeclare const PostCacheKey: string;\u000adeclare const id: string;\u000aexport function run() {\u000a    networkService.cache.invalidate([UserCacheKey, 'posts', PostCacheKey]);\u000a}\u000a
+case 10
+fixed	declare const networkService: { cache: { invalidate(key: unknown): void } };\u000adeclare const UserCacheKey: string;\u000adeclare const PostCacheKey: string;\u000adeclare const id: string;\u000aexport function run() {\u000a    networkService.cache.invalidate([UserCacheKey, PostCacheKey]);\u000a}\u000a
+case 11
+fixed	declare const networkService: { cache: { invalidate(key: unknown): void } };\u000adeclare const UserCacheKey: string;\u000adeclare const PostCacheKey: string;\u000adeclare const id: string;\u000aexport function run() {\u000a    networkService.cache.invalidate([]);\u000a}\u000a
+case 12
+fixed	declare const networkService: { cache: { invalidate(key: unknown): void } };\u000adeclare const UserCacheKey: string;\u000adeclare const PostCacheKey: string;\u000adeclare const id: string;\u000aexport function run() {\u000a    networkService.cache.invalidate([`users-${id}`]);\u000a}\u000a
+case 13
+fixed	declare const networkService: { cache: { invalidate(key: unknown): void } };\u000adeclare const UserCacheKey: string;\u000adeclare const PostCacheKey: string;\u000adeclare const id: string;\u000aexport function run() {\u000a    networkService.cache.invalidate(`users-${id}`);\u000a}\u000a
+case 14
+fixed	declare const networkService: { cache: { invalidate(key: unknown): void } };\u000adeclare const UserCacheKey: string;\u000adeclare const PostCacheKey: string;\u000adeclare const id: string;\u000aexport function run() {\u000a    networkService.cache.invalidate(`users`);\u000a}\u000a
+case 15
+fixed	declare const networkService: { cache: { invalidate(key: unknown): void } };\u000adeclare const UserCacheKey: string;\u000adeclare const PostCacheKey: string;\u000adeclare const id: string;\u000aexport function run() {\u000a    networkService.cache.invalidate(undefined);\u000a}\u000a
+case 16
+fixed	(client.cache).invalidate<string>((['users', (`posts-${id}`), , ...others]));
+case 17
+fixed	service.cache.invalidate(['users', `posts-${id}`]);\u000a

@@ -1,0 +1,174 @@
+case 0
+finding 18 20 nonoctalDecimalEscape	This is a `\u005c8` or `\u005c9` escape, which the language only still accepts as a legacy web-compatibility feature. It means the bare digit, so the backslash does nothing, and in strict mode or a module it is a syntax error rather than a quiet no-op. Whichever was intended, the digit or a literal backslash, saying it directly is the version that keeps meaning the same thing everywhere.
+suggestion nonoctalDecimalEscape	Replace `\u005c8` with `8` if the digit is what was meant. The escape already means exactly that, so this changes nothing at runtime.
+edit 18 20	8
+applied	export const A = "8";\u000a
+suggestion nonoctalDecimalEscape	Replace `\u005c8` with `\u005c\u005c8` if a literal backslash before the digit is what was meant. This one does change the string.
+edit 18 20	\u005c\u005c8
+applied	export const A = "\u005c\u005c8";\u000a
+fixed	export const A = "\u005c8";\u000a
+case 1
+fixed	export const A = '';\u000a
+case 2
+fixed	export const A = '8';\u000a
+case 3
+fixed	export const A = '9';\u000a
+case 4
+fixed	export const A = '\u005c0';\u000a
+case 5
+fixed	export const A = '\u005c08';\u000a
+case 6
+fixed	export const A = '\u005c1';\u000a
+case 7
+fixed	export const A = '\u005c19';\u000a
+case 8
+finding 20 22 nonoctalDecimalEscape	This is a `\u005c8` or `\u005c9` escape, which the language only still accepts as a legacy web-compatibility feature. It means the bare digit, so the backslash does nothing, and in strict mode or a module it is a syntax error rather than a quiet no-op. Whichever was intended, the digit or a literal backslash, saying it directly is the version that keeps meaning the same thing everywhere.
+suggestion nonoctalDecimalEscape	Replace `\u005c0\u005c9` with `\u005cu00009`, which matches the same characters without turning the repair into a legacy octal escape.
+edit 18 22	\u005cu00009
+applied	export const A = '\u005cu00009';\u000a
+suggestion nonoctalDecimalEscape	Replace `\u005c9` with `\u005cu0039`, keeping the digit and leaving the null escape before it alone.
+edit 20 22	\u005cu0039
+applied	export const A = '\u005c1\u005cu0039';\u000a
+suggestion nonoctalDecimalEscape	Replace `\u005c9` with `\u005c\u005c9` if a literal backslash before the digit is what was meant. This one does change the string.
+edit 20 22	\u005c\u005c9
+applied	export const A = '\u005c1\u005c\u005c9';\u000a
+fixed	export const A = '\u005c1\u005c9';\u000a
+case 9
+fixed	export const A = '\u005c7';\u000a
+case 10
+finding 18 20 nonoctalDecimalEscape	This is a `\u005c8` or `\u005c9` escape, which the language only still accepts as a legacy web-compatibility feature. It means the bare digit, so the backslash does nothing, and in strict mode or a module it is a syntax error rather than a quiet no-op. Whichever was intended, the digit or a literal backslash, saying it directly is the version that keeps meaning the same thing everywhere.
+suggestion nonoctalDecimalEscape	Replace `\u005c8` with `8` if the digit is what was meant. The escape already means exactly that, so this changes nothing at runtime.
+edit 18 20	8
+applied	export const A = '8';\u000a
+suggestion nonoctalDecimalEscape	Replace `\u005c8` with `\u005c\u005c8` if a literal backslash before the digit is what was meant. This one does change the string.
+edit 18 20	\u005c\u005c8
+applied	export const A = '\u005c\u005c8';\u000a
+fixed	export const A = '\u005c8';\u000a
+case 11
+finding 18 20 nonoctalDecimalEscape	This is a `\u005c8` or `\u005c9` escape, which the language only still accepts as a legacy web-compatibility feature. It means the bare digit, so the backslash does nothing, and in strict mode or a module it is a syntax error rather than a quiet no-op. Whichever was intended, the digit or a literal backslash, saying it directly is the version that keeps meaning the same thing everywhere.
+suggestion nonoctalDecimalEscape	Replace `\u005c8` with `8` if the digit is what was meant. The escape already means exactly that, so this changes nothing at runtime.
+edit 18 20	8
+applied	export const A = '8\u005c\u005c9';\u000a
+suggestion nonoctalDecimalEscape	Replace `\u005c8` with `\u005c\u005c8` if a literal backslash before the digit is what was meant. This one does change the string.
+edit 18 20	\u005c\u005c8
+applied	export const A = '\u005c\u005c8\u005c\u005c9';\u000a
+fixed	export const A = '\u005c8\u005c\u005c9';\u000a
+case 12
+finding 18 20 nonoctalDecimalEscape	This is a `\u005c8` or `\u005c9` escape, which the language only still accepts as a legacy web-compatibility feature. It means the bare digit, so the backslash does nothing, and in strict mode or a module it is a syntax error rather than a quiet no-op. Whichever was intended, the digit or a literal backslash, saying it directly is the version that keeps meaning the same thing everywhere.
+suggestion nonoctalDecimalEscape	Replace `\u005c9` with `9` if the digit is what was meant. The escape already means exactly that, so this changes nothing at runtime.
+edit 18 20	9
+applied	export const A = '9';\u000a
+suggestion nonoctalDecimalEscape	Replace `\u005c9` with `\u005c\u005c9` if a literal backslash before the digit is what was meant. This one does change the string.
+edit 18 20	\u005c\u005c9
+applied	export const A = '\u005c\u005c9';\u000a
+fixed	export const A = '\u005c9';\u000a
+case 13
+fixed	export const A = '\u005c\u005c8';\u000a
+case 14
+fixed	export const A = '\u005c\u005c9';\u000a
+case 15
+finding 20 22 nonoctalDecimalEscape	This is a `\u005c8` or `\u005c9` escape, which the language only still accepts as a legacy web-compatibility feature. It means the bare digit, so the backslash does nothing, and in strict mode or a module it is a syntax error rather than a quiet no-op. Whichever was intended, the digit or a literal backslash, saying it directly is the version that keeps meaning the same thing everywhere.
+suggestion nonoctalDecimalEscape	Replace `\u005c0\u005c8` with `\u005cu00008`, which matches the same characters without turning the repair into a legacy octal escape.
+edit 18 22	\u005cu00008
+applied	export const A = '\u005cu00008';\u000a
+suggestion nonoctalDecimalEscape	Replace `\u005c8` with `\u005cu0038`, keeping the digit and leaving the null escape before it alone.
+edit 20 22	\u005cu0038
+applied	export const A = '\u005c\u005c\u005cu0038';\u000a
+suggestion nonoctalDecimalEscape	Replace `\u005c8` with `\u005c\u005c8` if a literal backslash before the digit is what was meant. This one does change the string.
+edit 20 22	\u005c\u005c8
+applied	export const A = '\u005c\u005c\u005c\u005c8';\u000a
+fixed	export const A = '\u005c\u005c\u005c8';\u000a
+case 16
+fixed	export const A = '\u005c\u005c\u005c\u005c9';\u000a
+case 17
+finding 22 24 nonoctalDecimalEscape	This is a `\u005c8` or `\u005c9` escape, which the language only still accepts as a legacy web-compatibility feature. It means the bare digit, so the backslash does nothing, and in strict mode or a module it is a syntax error rather than a quiet no-op. Whichever was intended, the digit or a literal backslash, saying it directly is the version that keeps meaning the same thing everywhere.
+suggestion nonoctalDecimalEscape	Replace `\u005c0\u005c9` with `\u005cu00009`, which matches the same characters without turning the repair into a legacy octal escape.
+edit 20 24	\u005cu00009
+applied	export const A = '\u005c\u005c\u005cu00009';\u000a
+suggestion nonoctalDecimalEscape	Replace `\u005c9` with `\u005cu0039`, keeping the digit and leaving the null escape before it alone.
+edit 22 24	\u005cu0039
+applied	export const A = '\u005c\u005c\u005c\u005c\u005cu0039';\u000a
+suggestion nonoctalDecimalEscape	Replace `\u005c9` with `\u005c\u005c9` if a literal backslash before the digit is what was meant. This one does change the string.
+edit 22 24	\u005c\u005c9
+applied	export const A = '\u005c\u005c\u005c\u005c\u005c\u005c9';\u000a
+fixed	export const A = '\u005c\u005c\u005c\u005c\u005c9';\u000a
+case 18
+fixed	export const A = '\u005c\u005c\u005cx38';\u000a
+case 19
+finding 20 22 nonoctalDecimalEscape	This is a `\u005c8` or `\u005c9` escape, which the language only still accepts as a legacy web-compatibility feature. It means the bare digit, so the backslash does nothing, and in strict mode or a module it is a syntax error rather than a quiet no-op. Whichever was intended, the digit or a literal backslash, saying it directly is the version that keeps meaning the same thing everywhere.
+suggestion nonoctalDecimalEscape	Replace `\u005c0\u005c8` with `\u005cu00008`, which matches the same characters without turning the repair into a legacy octal escape.
+edit 18 22	\u005cu00008
+applied	export const A = '\u005cu00008';\u000a
+suggestion nonoctalDecimalEscape	Replace `\u005c8` with `\u005cu0038`, keeping the digit and leaving the null escape before it alone.
+edit 20 22	\u005cu0038
+applied	export const A = '\u005cn\u005cu0038';\u000a
+suggestion nonoctalDecimalEscape	Replace `\u005c8` with `\u005c\u005c8` if a literal backslash before the digit is what was meant. This one does change the string.
+edit 20 22	\u005c\u005c8
+applied	export const A = '\u005cn\u005c\u005c8';\u000a
+fixed	export const A = '\u005cn\u005c8';\u000a
+case 20
+fixed	export const A = '\u005ct9';\u000a
+case 21
+fixed	export const A = '\u005cx99';\u000a
+case 22
+finding 19 21 nonoctalDecimalEscape	This is a `\u005c8` or `\u005c9` escape, which the language only still accepts as a legacy web-compatibility feature. It means the bare digit, so the backslash does nothing, and in strict mode or a module it is a syntax error rather than a quiet no-op. Whichever was intended, the digit or a literal backslash, saying it directly is the version that keeps meaning the same thing everywhere.
+suggestion nonoctalDecimalEscape	Replace `\u005c9` with `9` if the digit is what was meant. The escape already means exactly that, so this changes nothing at runtime.
+edit 19 21	9
+applied	export const A = 'f9';\u000a
+suggestion nonoctalDecimalEscape	Replace `\u005c9` with `\u005c\u005c9` if a literal backslash before the digit is what was meant. This one does change the string.
+edit 19 21	\u005c\u005c9
+applied	export const A = 'f\u005c\u005c9';\u000a
+fixed	export const A = 'f\u005c9';\u000a
+case 23
+fixed	export const A = 'foo';\u000a
+case 24
+fixed	export const A = 'foo8';\u000a
+case 25
+finding 21 23 nonoctalDecimalEscape	This is a `\u005c8` or `\u005c9` escape, which the language only still accepts as a legacy web-compatibility feature. It means the bare digit, so the backslash does nothing, and in strict mode or a module it is a syntax error rather than a quiet no-op. Whichever was intended, the digit or a literal backslash, saying it directly is the version that keeps meaning the same thing everywhere.
+suggestion nonoctalDecimalEscape	Replace `\u005c8` with `8` if the digit is what was meant. The escape already means exactly that, so this changes nothing at runtime.
+edit 21 23	8
+applied	export const A = 'foo8bar';\u000a
+suggestion nonoctalDecimalEscape	Replace `\u005c8` with `\u005c\u005c8` if a literal backslash before the digit is what was meant. This one does change the string.
+edit 21 23	\u005c\u005c8
+applied	export const A = 'foo\u005c\u005c8bar';\u000a
+fixed	export const A = 'foo\u005c8bar';\u000a
+case 26
+finding 21 23 nonoctalDecimalEscape	This is a `\u005c8` or `\u005c9` escape, which the language only still accepts as a legacy web-compatibility feature. It means the bare digit, so the backslash does nothing, and in strict mode or a module it is a syntax error rather than a quiet no-op. Whichever was intended, the digit or a literal backslash, saying it directly is the version that keeps meaning the same thing everywhere.
+suggestion nonoctalDecimalEscape	Replace `\u005c9` with `9` if the digit is what was meant. The escape already means exactly that, so this changes nothing at runtime.
+edit 21 23	9
+applied	export const A = 'foo9';\u000a
+suggestion nonoctalDecimalEscape	Replace `\u005c9` with `\u005c\u005c9` if a literal backslash before the digit is what was meant. This one does change the string.
+edit 21 23	\u005c\u005c9
+applied	export const A = 'foo\u005c\u005c9';\u000a
+fixed	export const A = 'foo\u005c9';\u000a
+case 27
+finding 24 26 nonoctalDecimalEscape	This is a `\u005c8` or `\u005c9` escape, which the language only still accepts as a legacy web-compatibility feature. It means the bare digit, so the backslash does nothing, and in strict mode or a module it is a syntax error rather than a quiet no-op. Whichever was intended, the digit or a literal backslash, saying it directly is the version that keeps meaning the same thing everywhere.
+suggestion nonoctalDecimalEscape	Replace `\u005c0\u005c8` with `\u005cu00008`, which matches the same characters without turning the repair into a legacy octal escape.
+edit 22 26	\u005cu00008
+applied	// \ud83d\udc8e\u000aconst text = '\u005cu00008\u005c9';
+suggestion nonoctalDecimalEscape	Replace `\u005c8` with `\u005cu0038`, keeping the digit and leaving the null escape before it alone.
+edit 24 26	\u005cu0038
+applied	// \ud83d\udc8e\u000aconst text = '\u005c0\u005cu0038\u005c9';
+suggestion nonoctalDecimalEscape	Replace `\u005c8` with `\u005c\u005c8` if a literal backslash before the digit is what was meant. This one does change the string.
+edit 24 26	\u005c\u005c8
+applied	// \ud83d\udc8e\u000aconst text = '\u005c0\u005c\u005c8\u005c9';
+finding 26 28 nonoctalDecimalEscape	This is a `\u005c8` or `\u005c9` escape, which the language only still accepts as a legacy web-compatibility feature. It means the bare digit, so the backslash does nothing, and in strict mode or a module it is a syntax error rather than a quiet no-op. Whichever was intended, the digit or a literal backslash, saying it directly is the version that keeps meaning the same thing everywhere.
+suggestion nonoctalDecimalEscape	Replace `\u005c9` with `9` if the digit is what was meant. The escape already means exactly that, so this changes nothing at runtime.
+edit 26 28	9
+applied	// \ud83d\udc8e\u000aconst text = '\u005c0\u005c89';
+suggestion nonoctalDecimalEscape	Replace `\u005c9` with `\u005c\u005c9` if a literal backslash before the digit is what was meant. This one does change the string.
+edit 26 28	\u005c\u005c9
+applied	// \ud83d\udc8e\u000aconst text = '\u005c0\u005c8\u005c\u005c9';
+fixed	// \ud83d\udc8e\u000aconst text = '\u005c0\u005c8\u005c9';
+case 28
+finding 20 22 nonoctalDecimalEscape	This is a `\u005c8` or `\u005c9` escape, which the language only still accepts as a legacy web-compatibility feature. It means the bare digit, so the backslash does nothing, and in strict mode or a module it is a syntax error rather than a quiet no-op. Whichever was intended, the digit or a literal backslash, saying it directly is the version that keeps meaning the same thing everywhere.
+suggestion nonoctalDecimalEscape	Replace `\u005c0\u005c9` with `\u005cu00009`, which matches the same characters without turning the repair into a legacy octal escape.
+edit 18 22	\u005cu00009
+applied	export const A = '\u005cu00009';\u000a
+suggestion nonoctalDecimalEscape	Replace `\u005c9` with `\u005cu0039`, keeping the digit and leaving the null escape before it alone.
+edit 20 22	\u005cu0039
+applied	export const A = '\u005c1\u005cu0039';\u000a
+suggestion nonoctalDecimalEscape	Replace `\u005c9` with `\u005c\u005c9` if a literal backslash before the digit is what was meant. This one does change the string.
+edit 20 22	\u005c\u005c9
+applied	export const A = '\u005c1\u005c\u005c9';\u000a
+fixed	export const A = '\u005c1\u005c9';\u000a

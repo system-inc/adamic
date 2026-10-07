@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/tmp/adamic-wave15-rules-landing/stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validate.py", line 31, in <module>
+    subprocess.run(["patch", "--batch", "-p1", "-d", str(scratch),
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['patch', '--batch', '-p1', '-d', '/tmp/wave15-landing-current-three', '-i', '/tmp/adamic-wave15-rules-landing/stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/compatibility.patch']' returned non-zero exit status 1.

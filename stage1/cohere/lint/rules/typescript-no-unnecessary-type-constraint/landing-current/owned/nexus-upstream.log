@@ -1,0 +1,90 @@
+=== RUN   TestImportRequireNodeNamespaceFires
+=== PAUSE TestImportRequireNodeNamespaceFires
+=== RUN   TestImportRequireNodeNamespaceStaysSilent
+=== PAUSE TestImportRequireNodeNamespaceStaysSilent
+=== RUN   TestExpectedAlias
+=== PAUSE TestExpectedAlias
+=== RUN   TestTheNodePrefixFixWritesTheSpecifierItPromises
+=== PAUSE TestTheNodePrefixFixWritesTheSpecifierItPromises
+=== RUN   TestImportRequireNodeNamespaceNamesTheModuleAndPointsWhereTheOriginalDoes
+=== PAUSE TestImportRequireNodeNamespaceNamesTheModuleAndPointsWhereTheOriginalDoes
+=== CONT  TestImportRequireNodeNamespaceFires
+=== RUN   TestImportRequireNodeNamespaceFires/default_import_of_a_built-in
+=== PAUSE TestImportRequireNodeNamespaceFires/default_import_of_a_built-in
+=== RUN   TestImportRequireNodeNamespaceFires/named_import_of_a_built-in
+=== PAUSE TestImportRequireNodeNamespaceFires/named_import_of_a_built-in
+=== RUN   TestImportRequireNodeNamespaceFires/namespace_import_with_a_lowercase_alias
+=== PAUSE TestImportRequireNodeNamespaceFires/namespace_import_with_a_lowercase_alias
+=== RUN   TestImportRequireNodeNamespaceFires/namespace_import_missing_the_node_prefix
+=== PAUSE TestImportRequireNodeNamespaceFires/namespace_import_missing_the_node_prefix
+=== RUN   TestImportRequireNodeNamespaceFires/missing_prefix_and_wrong_alias_together
+=== PAUSE TestImportRequireNodeNamespaceFires/missing_prefix_and_wrong_alias_together
+=== RUN   TestImportRequireNodeNamespaceFires/underscored_module_name_expands_to_PascalCase
+=== PAUSE TestImportRequireNodeNamespaceFires/underscored_module_name_expands_to_PascalCase
+=== RUN   TestImportRequireNodeNamespaceFires/subpath_export_has_its_own_alias
+=== PAUSE TestImportRequireNodeNamespaceFires/subpath_export_has_its_own_alias
+=== CONT  TestImportRequireNodeNamespaceFires/default_import_of_a_built-in
+=== CONT  TestImportRequireNodeNamespaceNamesTheModuleAndPointsWhereTheOriginalDoes
+=== RUN   TestImportRequireNodeNamespaceNamesTheModuleAndPointsWhereTheOriginalDoes/a_default_import_names_its_own_module_and_alias
+=== PAUSE TestImportRequireNodeNamespaceNamesTheModuleAndPointsWhereTheOriginalDoes/a_default_import_names_its_own_module_and_alias
+=== RUN   TestImportRequireNodeNamespaceNamesTheModuleAndPointsWhereTheOriginalDoes/an_alias_names_what_it_should_be_and_what_it_is
+=== PAUSE TestImportRequireNodeNamespaceNamesTheModuleAndPointsWhereTheOriginalDoes/an_alias_names_what_it_should_be_and_what_it_is
+=== RUN   TestImportRequireNodeNamespaceNamesTheModuleAndPointsWhereTheOriginalDoes/a_missing_prefix_names_the_module
+=== PAUSE TestImportRequireNodeNamespaceNamesTheModuleAndPointsWhereTheOriginalDoes/a_missing_prefix_names_the_module
+=== CONT  TestImportRequireNodeNamespaceNamesTheModuleAndPointsWhereTheOriginalDoes/a_default_import_names_its_own_module_and_alias
+=== CONT  TestTheNodePrefixFixWritesTheSpecifierItPromises
+--- PASS: TestTheNodePrefixFixWritesTheSpecifierItPromises (0.00s)
+=== CONT  TestExpectedAlias
+--- PASS: TestExpectedAlias (0.00s)
+=== CONT  TestImportRequireNodeNamespaceStaysSilent
+=== RUN   TestImportRequireNodeNamespaceStaysSilent/canonical_namespace_import
+=== PAUSE TestImportRequireNodeNamespaceStaysSilent/canonical_namespace_import
+=== RUN   TestImportRequireNodeNamespaceStaysSilent/expanded_abbreviation
+=== PAUSE TestImportRequireNodeNamespaceStaysSilent/expanded_abbreviation
+=== RUN   TestImportRequireNodeNamespaceStaysSilent/underscored_module,_correct_alias
+=== PAUSE TestImportRequireNodeNamespaceStaysSilent/underscored_module,_correct_alias
+=== RUN   TestImportRequireNodeNamespaceStaysSilent/subpath_export,_correct_alias
+=== PAUSE TestImportRequireNodeNamespaceStaysSilent/subpath_export,_correct_alias
+=== RUN   TestImportRequireNodeNamespaceStaysSilent/a_third-party_package_is_not_a_built-in
+=== PAUSE TestImportRequireNodeNamespaceStaysSilent/a_third-party_package_is_not_a_built-in
+=== RUN   TestImportRequireNodeNamespaceStaysSilent/a_relative_import_is_not_a_built-in
+=== PAUSE TestImportRequireNodeNamespaceStaysSilent/a_relative_import_is_not_a_built-in
+=== RUN   TestImportRequireNodeNamespaceStaysSilent/a_package_whose_name_begins_with_a_built-in
+=== PAUSE TestImportRequireNodeNamespaceStaysSilent/a_package_whose_name_begins_with_a_built-in
+=== CONT  TestImportRequireNodeNamespaceStaysSilent/canonical_namespace_import
+=== CONT  TestImportRequireNodeNamespaceFires/subpath_export_has_its_own_alias
+=== CONT  TestImportRequireNodeNamespaceFires/underscored_module_name_expands_to_PascalCase
+=== CONT  TestImportRequireNodeNamespaceFires/missing_prefix_and_wrong_alias_together
+=== CONT  TestImportRequireNodeNamespaceFires/namespace_import_missing_the_node_prefix
+=== CONT  TestImportRequireNodeNamespaceFires/namespace_import_with_a_lowercase_alias
+=== CONT  TestImportRequireNodeNamespaceFires/named_import_of_a_built-in
+=== CONT  TestImportRequireNodeNamespaceStaysSilent/a_third-party_package_is_not_a_built-in
+=== CONT  TestImportRequireNodeNamespaceNamesTheModuleAndPointsWhereTheOriginalDoes/an_alias_names_what_it_should_be_and_what_it_is
+--- PASS: TestImportRequireNodeNamespaceFires (0.00s)
+    --- PASS: TestImportRequireNodeNamespaceFires/default_import_of_a_built-in (0.00s)
+    --- PASS: TestImportRequireNodeNamespaceFires/subpath_export_has_its_own_alias (0.00s)
+    --- PASS: TestImportRequireNodeNamespaceFires/underscored_module_name_expands_to_PascalCase (0.00s)
+    --- PASS: TestImportRequireNodeNamespaceFires/missing_prefix_and_wrong_alias_together (0.00s)
+    --- PASS: TestImportRequireNodeNamespaceFires/namespace_import_missing_the_node_prefix (0.00s)
+    --- PASS: TestImportRequireNodeNamespaceFires/namespace_import_with_a_lowercase_alias (0.00s)
+    --- PASS: TestImportRequireNodeNamespaceFires/named_import_of_a_built-in (0.00s)
+=== CONT  TestImportRequireNodeNamespaceStaysSilent/subpath_export,_correct_alias
+=== CONT  TestImportRequireNodeNamespaceStaysSilent/underscored_module,_correct_alias
+=== CONT  TestImportRequireNodeNamespaceStaysSilent/a_package_whose_name_begins_with_a_built-in
+=== CONT  TestImportRequireNodeNamespaceStaysSilent/a_relative_import_is_not_a_built-in
+=== CONT  TestImportRequireNodeNamespaceNamesTheModuleAndPointsWhereTheOriginalDoes/a_missing_prefix_names_the_module
+=== CONT  TestImportRequireNodeNamespaceStaysSilent/expanded_abbreviation
+--- PASS: TestImportRequireNodeNamespaceStaysSilent (0.00s)
+    --- PASS: TestImportRequireNodeNamespaceStaysSilent/canonical_namespace_import (0.00s)
+    --- PASS: TestImportRequireNodeNamespaceStaysSilent/subpath_export,_correct_alias (0.00s)
+    --- PASS: TestImportRequireNodeNamespaceStaysSilent/a_package_whose_name_begins_with_a_built-in (0.00s)
+    --- PASS: TestImportRequireNodeNamespaceStaysSilent/underscored_module,_correct_alias (0.00s)
+    --- PASS: TestImportRequireNodeNamespaceStaysSilent/a_relative_import_is_not_a_built-in (0.00s)
+    --- PASS: TestImportRequireNodeNamespaceStaysSilent/expanded_abbreviation (0.00s)
+    --- PASS: TestImportRequireNodeNamespaceStaysSilent/a_third-party_package_is_not_a_built-in (0.00s)
+--- PASS: TestImportRequireNodeNamespaceNamesTheModuleAndPointsWhereTheOriginalDoes (0.00s)
+    --- PASS: TestImportRequireNodeNamespaceNamesTheModuleAndPointsWhereTheOriginalDoes/a_default_import_names_its_own_module_and_alias (0.00s)
+    --- PASS: TestImportRequireNodeNamespaceNamesTheModuleAndPointsWhereTheOriginalDoes/a_missing_prefix_names_the_module (0.01s)
+    --- PASS: TestImportRequireNodeNamespaceNamesTheModuleAndPointsWhereTheOriginalDoes/an_alias_names_what_it_should_be_and_what_it_is (0.01s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/nexus	0.071s

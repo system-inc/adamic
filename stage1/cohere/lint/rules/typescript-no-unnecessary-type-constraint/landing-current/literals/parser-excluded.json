@@ -1,0 +1,96 @@
+[
+  {
+    "Rule": "no-multi-str",
+    "File": "/repository/source/MultiStr.tsx",
+    "Source": "var a = <div attr='Line 1 \\\n Line 2' />;",
+    "Outcome": "Clean"
+  },
+  {
+    "Rule": "no-multi-str",
+    "File": "/repository/source/MultiStr.tsx",
+    "Source": "var a = <div {...'Line 1 \\\n Line 2'} />;",
+    "Outcome": "Clean"
+  },
+  {
+    "Rule": "no-multi-str",
+    "File": "/repository/source/MultiStr.tsx",
+    "Source": "var a = <div {...{a: 'Line 1 \\\n Line 2'}} />;",
+    "Outcome": "Findings",
+    "Findings": [
+      {
+        "line": 1,
+        "column": 22,
+        "endLine": 2,
+        "endColumn": 9,
+        "messageId": "multilineString",
+        "message": "This string is continued onto the next line with a trailing backslash, which the language accepts and almost no reader expects. Whatever indentation the next line carries goes into the value, so the string changes meaning when somebody reformats the file, and the backslash has to be the last character on its line or the file stops parsing. Concatenation or a template literal says the same thing without either hazard."
+      }
+    ]
+  },
+  {
+    "Rule": "no-multi-str",
+    "File": "/repository/source/MultiStr.tsx",
+    "Source": "var a = <div>{'Line 1 \\\n Line 2'}</div>;",
+    "Outcome": "Clean"
+  },
+  {
+    "Rule": "no-multi-str",
+    "File": "/repository/source/MultiStr.tsx",
+    "Source": "var a = <div attr={'Line 1 \\\n Line 2'} />;",
+    "Outcome": "Clean"
+  },
+  {
+    "Rule": "no-octal",
+    "File": "/repository/source/Octal.ts",
+    "Source": "var a = 01.5;",
+    "Outcome": "Findings",
+    "Findings": [
+      {
+        "line": 1,
+        "column": 9,
+        "endLine": 1,
+        "endColumn": 11,
+        "messageId": "noOctal",
+        "message": "This number is written in the legacy octal form, a bare leading zero, so `0755` is 493 rather than seven hundred fifty five. The zero is easy to miss and the value the program runs with is not the one the digits appear to spell. The form is also a syntax error in strict mode and in every module, so the same literal is silently reinterpreted in one file and rejected outright in another. Write `0o755` when octal is meant, which says so, or drop the leading zero when it is not."
+      }
+    ]
+  },
+  {
+    "Rule": "no-octal",
+    "File": "/repository/source/Octal.ts",
+    "Source": "var a = 0755n;",
+    "Outcome": "Findings",
+    "Findings": [
+      {
+        "line": 1,
+        "column": 9,
+        "endLine": 1,
+        "endColumn": 13,
+        "messageId": "noOctal",
+        "message": "This number is written in the legacy octal form, a bare leading zero, so `0755` is 493 rather than seven hundred fifty five. The zero is easy to miss and the value the program runs with is not the one the digits appear to spell. The form is also a syntax error in strict mode and in every module, so the same literal is silently reinterpreted in one file and rejected outright in another. Write `0o755` when octal is meant, which says so, or drop the leading zero when it is not."
+      }
+    ]
+  },
+  {
+    "Rule": "no-multi-str",
+    "File": "/repository/source/MultiStr.tsx",
+    "Source": "var a = <div>\n<h1>Wat</h1>\n</div>;",
+    "Outcome": "Clean"
+  },
+  {
+    "Rule": "no-octal",
+    "File": "/repository/source/Octal.ts",
+    "Source": "var a = 0777.5;",
+    "Outcome": "Findings",
+    "Findings": [
+      {
+        "line": 1,
+        "column": 9,
+        "endLine": 1,
+        "endColumn": 13,
+        "messageId": "noOctal",
+        "message": "This number is written in the legacy octal form, a bare leading zero, so `0755` is 493 rather than seven hundred fifty five. The zero is easy to miss and the value the program runs with is not the one the digits appear to spell. The form is also a syntax error in strict mode and in every module, so the same literal is silently reinterpreted in one file and rejected outright in another. Write `0o755` when octal is meant, which says so, or drop the leading zero when it is not."
+      }
+    ]
+  }
+]

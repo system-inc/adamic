@@ -1,0 +1,15 @@
+JSX/recovered-syntax exclusions: 9
+Captured original asserted tests: {"no-multi-str": 15, "no-nonoctal-decimal-escape": 27, "no-octal": 28}
+Nine excluded inputs explicitly refused on all three backends; Go succeeds.
+fixtures: Go/Node/emitted JavaScript/sanitized native identical, 26425 bytes
+Corpus: 346 files, 1038 file/rule pairs
+corpus: Go/Node/emitted JavaScript/sanitized native identical, 39640224 bytes
+no-multi-str mutant caught on Node: successful compile and exit, differing output only
+no-multi-str mutant caught on JavaScript: successful compile and exit, differing output only
+no-multi-str mutant caught on native: successful compile and exit, differing output only
+no-nonoctal-decimal-escape mutant caught on Node: successful compile and exit, differing output only
+no-nonoctal-decimal-escape mutant caught on JavaScript: successful compile and exit, differing output only
+no-nonoctal-decimal-escape mutant caught on native: successful compile and exit, differing output only
+no-octal mutant caught on Node: successful compile and exit, differing output only
+no-octal mutant caught on JavaScript: successful compile and exit, differing output only
+no-octal mutant caught on native: successful compile and exit, differing output only
