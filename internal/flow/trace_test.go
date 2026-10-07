@@ -545,3 +545,24 @@ func frames(run run) []sequence {
 	}
 	return append(done, stack...)
 }
+
+// Hold suspension edges to executed Node paths, independently of SSA construction.
+func TestAsyncTraceRejectsWrongSuspensionEdge(t *testing.T) {
+	t.Parallel()
+	run := traced(t, "../oracle/testdata/async_control.a")
+	if problems := walk(run.graphs, run.marked, run.events); len(problems) != 0 {
+		t.Fatalf("control graph rejects Node: %v", problems)
+	}
+	changed := 0
+	for _, graph := range run.graphs {
+		for _, block := range graph.Blocks {
+			if terminal, ok := block.Terminal.(*Suspend); ok {
+				terminal.Fulfilled = terminal.Rejected
+				changed++
+			}
+		}
+	}
+	if changed == 0 || len(walk(run.graphs, run.marked, run.events)) == 0 {
+		t.Fatal("wrong suspension edge survived Node path check")
+	}
+}

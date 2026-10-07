@@ -601,8 +601,8 @@ statement, expression, store and exception emitters remain shared. JavaScript
 uses Async metadata, Await/PromiseValue dispatch and loop Test; tracedAwait is
 instrumentation-only, with Suspend/Resume options preserving activation traces.
 
-Fourteen async source fixtures run through the Node/native/JavaScript oracle.
-The ten additions cover control flow, operand order, methods, closures, owned
+Sixteen async source fixtures run through the Node/native/JavaScript oracle.
+The twelve additions cover control flow, operand order, methods, closures, owned
 reference values, caught rejection and synchronous throws, escaped captures,
 awaited loop tests/updates, spread snapshots and receiver snapshots. Current
 compiler mutants cover wrong resumed payload (Node stdout), missing dynamic
@@ -636,6 +636,8 @@ Counts (allocations/frees, retains/releases, peak; every async row has 0 regions
 | conditions | new | 53/53, 129/168, 13 |
 | snapshots | new | 48/48, 92/153, 28 |
 | receiver | new | 30/30, 65/100, 17 |
+| mutation | new | 15/15, 31/51, 14 |
+| catch_return | new | 18/18, 33/59, 12 |
 
 The throw fixture intentionally exits through fatal root rejection; its separate
 consumed-rejection harness checks balanced cleanup. Unrelated counts changed
@@ -646,6 +648,53 @@ routing, async for-of/switch, captured per-iteration cells, structural-method
 operands containing awaits, boolean-or-undefined slots, Promise.all, arbitrary
 executors, thenables and Promise adoption. Host services and source cancellation
 remain separate units. The broad ordinary async surface is implemented, but the
-approved checkpoint's non-suspending finally routing, per-surface mutants and
+approved checkpoint's non-suspending finally routing and
 shared-module reconciliation are not yet complete; this section does not claim
 the entire October 9 bar is met.
+
+
+### Further implementation evidence before the main reconciliation
+
+Expanded wrong-fulfillment mutants for control, operand order, instance/static
+methods, arrow/function closures and awaited loop tests are caught only by Node
+stdout. Reordering the first operand snapshot after an eager async operand, and
+routing rejection through fulfillment, are likewise caught only by Node stdout.
+String, object, class and array private-slot drop mutants are each caught by
+LSan. Clearing an escaped captured binding at finish is caught by sanitizers;
+the first attempted metadata mutant failed to compile and is not counted as a
+kill. The replacement edits only generated completion cleanup and compiles.
+Generated shared-environment abandonment controls with a private async closure
+retaining its parent pass on cancel and never-settled exit; each omission of the
+cleanup callback leaks and is caught by LSan, after joining the loop thread.
+
+The new queued-mutation fixture makes an async callee mutate its caller's object
+after suspension. Omitting Suspend's escaped mutation effect fails the independent
+Node range check: the mutation at order 5 lies outside [2, 4). The restored
+control passes. Redirecting fulfillment to the rejection successor fails Node's
+graph path check. Removing Promise payload traversal accepts a user back-reference
+and fails the cycle refusal test. Turning Promise gaps into Refused fails named
+NotYet controls; changing normalization failures into Refused independently
+fails await-in-catch and await-in-finally controls. All temporary Go mutants were
+restored. The numeric-only condition mutant initially survived because its
+changes canceled out; the boolean-fulfillment mutant is the failing control.
+
+A return inside a try with no finally previously traversed an empty return block,
+which loses its payload for graph emission. Build now returns directly whenever
+no open finally needs completion routing. async_catch_return.a checks fulfilled
+and rejected return-await plus a catch return. Its three-way oracle passes.
+Non-suspending finally remains NotYet: the existing flow Choose deliberately
+overapproximates possible completions and has no exact completion discriminator
+for native graph emission. It needs a shared completion representation rather
+than a second async-only lowering of finally.
+
+The first complete four-package implementation gate passes: lower 75.132s,
+flow 210.100s, IR 7.171s, native 426.002s, in
+/tmp/async-ordinary-packages-final.log. The return-routing changes trigger a fresh
+gate rather than treating that earlier result as final. Counts regeneration with
+both final new fixtures passes in 102.428s. The full uncached gate exposes the
+freshness integration seam: internal/fresh recognizes neither Await nor
+PromiseValue, so its known-write check fails. It also detects a counts-table
+snapshot changed by adding fixtures during that run. A narrow conservative patch
+for internal/fresh/fresh.go is prepared at /tmp/async-ordinary-fresh-seam.patch;
+that territory extension is requested and not assumed. A green final full gate
+is not claimed until that seam and main reconciliation are complete.

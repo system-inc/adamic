@@ -51,6 +51,8 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/async_conditions.a", true, false},
 	{"internal/oracle/testdata/async_snapshots.a", true, false},
 	{"internal/oracle/testdata/async_receiver.a", true, false},
+	{"internal/oracle/testdata/async_mutation.a", true, false},
+	{"internal/oracle/testdata/async_catch_return.a", true, false},
 
 	{"internal/oracle/testdata/library_object_keys.a", true, false},
 	{"internal/oracle/testdata/library_object_is.a", true, false},

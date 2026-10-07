@@ -1,0 +1,11 @@
+async function change(box: { text: string }): Promise<void> {
+    await Promise.resolve();
+    box.text = `${box.text}:changed`;
+}
+async function run(seed: string): Promise<string> {
+    const box = { text: `${seed}:before` };
+    const pending = change(box);
+    await pending;
+    return box.text;
+}
+console.log(await run(`seed${8}`));

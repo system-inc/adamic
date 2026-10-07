@@ -1,6 +1,8 @@
 package oracle
 
 import (
+	"fmt"
+	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/native"
 	"path/filepath"
 	"regexp"
@@ -101,7 +103,7 @@ func TestAsyncThrowReleasesFrame(t *testing.T) {
 
 // Each callable and control-flow surface must expose a wrong fulfillment payload to Node.
 func TestAsyncExpandedChecksCatchMutants(t *testing.T) {
-	for _, fixture := range []string{"async_control", "async_operand_order", "async_methods", "async_closures", "async_conditions"} {
+	for _, fixture := range []string{"async_control", "async_operand_order", "async_methods", "async_closures", "async_conditions", "async_catch_return"} {
 		t.Run(fixture, func(t *testing.T) {
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", fixture+".a"))
 			if err != nil {
@@ -113,6 +115,9 @@ func TestAsyncExpandedChecksCatchMutants(t *testing.T) {
 			}
 			control := native.C(program)
 			code := strings.ReplaceAll(control, "resumed.number", "(resumed.number + 1)")
+			if fixture == "async_conditions" {
+				code = strings.ReplaceAll(code, "resumed.boolean", "(!resumed.boolean)")
+			}
 			if code == control {
 				t.Fatal("no numeric suspension payload to mutate")
 			}
@@ -125,5 +130,239 @@ func TestAsyncExpandedChecksCatchMutants(t *testing.T) {
 				t.Fatalf("Node output did not exclusively catch fulfillment mutant: %+v", result)
 			}
 		})
+	}
+}
+
+func TestAsyncOperandAndRejectionMutants(t *testing.T) {
+	for _, fixture := range []string{"async_operand_order", "async_catches"} {
+		t.Run(fixture, func(t *testing.T) {
+			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", fixture+".a"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			program, err := lowered(t, path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			var code string
+			if fixture == "async_operand_order" {
+				changed := false
+				for index := range program.Functions {
+					function := &program.Functions[index]
+					if function.Name != "run" {
+						continue
+					}
+					positions := map[string]int{}
+					for position, statement := range function.Body {
+						declaration, ok := statement.(ir.Declare)
+						if !ok {
+							continue
+						}
+						call, ok := declaration.Value.(ir.Call)
+						if !ok {
+							continue
+						}
+						for _, target := range program.CallTargets(call) {
+							positions[program.Functions[target].Name] = position
+						}
+					}
+					first, hasFirst := positions["first"]
+					second, hasSecond := positions["second"]
+					if hasFirst && hasSecond {
+						function.Body[first], function.Body[second] = function.Body[second], function.Body[first]
+						changed = true
+					}
+				}
+				if !changed {
+					t.Fatal("missing earlier operand snapshot")
+				}
+				code = native.C(program)
+			} else {
+				control := native.C(program)
+				code = strings.ReplaceAll(control, "if (rejected)", "if (false && rejected)")
+				if code == control {
+					t.Fatal("missing rejection dispatch")
+				}
+			}
+			binary := filepath.Join(t.TempDir(), "mutant")
+			if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+				t.Fatal(err)
+			}
+			result := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
+			if disagreement(onNode(t, path), result) != "stdout differs" || result.exitCode != 0 || len(result.stderr) != 0 {
+				t.Fatalf("Node did not exclusively catch operand/rejection mutant: %+v", result)
+			}
+		})
+	}
+}
+
+func TestAsyncReferenceSlotDropMutants(t *testing.T) {
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/async_live_values.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	control := native.C(program)
+	checked := 0
+	for index, function := range program.Functions {
+		if function.Name != "live" {
+			continue
+		}
+		for slot, local := range function.FrameEnvironment {
+			name := program.Locals[local].Name
+			if name != "text" && name != "object" && name != "box" && name != "array" {
+				continue
+			}
+			checked++
+			t.Run(name, func(t *testing.T) {
+				start := strings.Index(control, fmt.Sprintf("static void adamic_async_finish_%d(", index))
+				end := start + strings.Index(control[start:], "\n}\n")
+				original := fmt.Sprintf("adamic_release(adamic_slot_%d);", slot)
+				body := control[start:end]
+				changed := strings.Replace(body, original, fmt.Sprintf("(void)adamic_slot_%d;", slot), 1)
+				if changed == body {
+					t.Fatal("missing owned reference slot drop")
+				}
+				code := control[:start] + changed + control[end:]
+				binary := filepath.Join(t.TempDir(), "mutant")
+				if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+					t.Fatal(err)
+				}
+				result := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
+				if result.exitCode == 0 || !strings.Contains(string(result.stderr), "LeakSanitizer: detected memory leaks") {
+					t.Fatalf("reference slot drop mutant survived: %+v", result)
+				}
+			})
+		}
+	}
+	if checked != 4 {
+		t.Fatalf("checked %d reference kinds, want 4", checked)
+	}
+}
+
+// A private async closure holds its parent's environment while both are suspended.
+// Join the loop thread before LSan, so stale activation pointers cannot hide a cycle.
+func TestAsyncGeneratedAbandonment(t *testing.T) {
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/async_escaped_capture.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	control := native.C(program)
+	start := strings.Index(control, "int main(")
+	if start < 0 {
+		t.Fatal("missing main")
+	}
+	control = control[:start]
+	control = strings.Replace(control, "#include \"async.h\"", "#include \"async.h\"\n#include <pthread.h>\nstatic adamic_async_promise *adamic_test_pending;", 1)
+	settle := regexp.MustCompile(`adamic_async_settle\((adamic_temporary_[0-9]+), \(adamic_value\)\{\.number = 0\}, false, false\);`)
+	changed := settle.ReplaceAllString(control, "adamic_test_pending = $1;")
+	if changed == control {
+		t.Fatal("missing settled void await")
+	}
+	control = changed
+	target := ""
+	for index, function := range program.Functions {
+		if function.Name == "local" {
+			target = fmt.Sprintf("adamic_function_%d_local", index)
+		}
+	}
+	if target == "" {
+		t.Fatal("missing local callable")
+	}
+	for _, mode := range []string{"cancel", "exit"} {
+		for _, mutant := range []bool{false, true} {
+			t.Run(fmt.Sprintf("%s/mutant=%t", mode, mutant), func(t *testing.T) {
+				code := control
+				if mutant {
+					callback := regexp.MustCompile(`(static void adamic_async_abandon_[0-9]+\(adamic_async_frame \*base\) \{ )adamic_async_finish_[0-9]+\(\(void \*\)base\);`)
+					code = callback.ReplaceAllString(code, "${1}(void)base;")
+					if code == control {
+						t.Fatal("missing abandonment detach callback")
+					}
+				}
+				action := ""
+				if mode == "cancel" {
+					action = "adamic_async_cancel(adamic_test_pending);"
+				}
+				code += fmt.Sprintf(`
+static void *adamic_test_loop(void *unused) {
+    (void)unused;
+    adamic_string *seed = adamic_string_from_number(12345);
+    adamic_async_promise *root = %s(seed);
+    adamic_release(seed);
+    if (!adamic_test_pending) return (void *)1;
+    %s
+    adamic_test_pending = NULL;
+    adamic_release(root);
+    adamic_async_run();
+    adamic_heap_thread_end();
+    return NULL;
+}
+int main(void) {
+    pthread_t thread;
+    if (pthread_create(&thread, NULL, adamic_test_loop, NULL) != 0) return 2;
+    void *result;
+    if (pthread_join(thread, &result) != 0 || result) return 2;
+    return 0;
+}
+`, target, action)
+				binary := filepath.Join(t.TempDir(), "abandon")
+				if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+					t.Fatal(err)
+				}
+				result := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
+				if mutant {
+					if result.exitCode == 0 || !strings.Contains(string(result.stderr), "LeakSanitizer: detected memory leaks") {
+						t.Fatalf("abandonment detach mutant survived: %+v", result)
+					}
+				} else if result.exitCode != 0 || len(result.stderr) != 0 {
+					t.Fatalf("generated abandonment leaked: %+v", result)
+				}
+			})
+		}
+	}
+}
+
+func TestAsyncCapturedBindingSurvivesFinishMutant(t *testing.T) {
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/async_escaped_capture.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	control := native.C(program)
+	code := control
+	for index, function := range program.Functions {
+		if function.Name != "make" {
+			continue
+		}
+		for slot, local := range function.FrameEnvironment {
+			if program.Locals[local].Name != "held" || !program.Locals[local].Captured {
+				continue
+			}
+			marker := fmt.Sprintf("static void adamic_async_finish_%d(adamic_generated_frame_%d *frame) {\n", index, index)
+			detach := fmt.Sprintf(" void *adamic_test_captured = frame->cells[%d].value.reference; frame->cells[%d].value.reference = NULL; adamic_release(adamic_test_captured);\n", slot, slot)
+			code = strings.Replace(code, marker, marker+detach, 1)
+		}
+	}
+	if code == control {
+		t.Fatal("no escaped captured binding to clear")
+	}
+	binary := filepath.Join(t.TempDir(), "mutant")
+	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	result := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
+	if result.exitCode == 0 || (!strings.Contains(string(result.stderr), "runtime error:") && !strings.Contains(string(result.stderr), "AddressSanitizer")) {
+		t.Fatalf("cleared captured binding survived sanitizer: %+v", result)
 	}
 }

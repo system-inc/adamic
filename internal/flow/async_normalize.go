@@ -61,7 +61,6 @@ type asyncNormalizer struct {
 	failure  error
 }
 
-var asyncExpressionType = reflect.TypeOf((*ir.Expression)(nil)).Elem()
 var awaitType = reflect.TypeOf(ir.Await{})
 
 func containsAwait(value reflect.Value) bool {

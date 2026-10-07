@@ -1,0 +1,10 @@
+async function result(fail: boolean): Promise<number> {
+    try {
+        if (fail) { return await Promise.reject<number>(new Error(`failure${4}`)); }
+        return await Promise.resolve(12);
+    } catch (error) {
+        if (error instanceof Error) { console.log(error.message); }
+        return 9;
+    }
+}
+console.log(`${await result(false)}:${await result(true)}`);

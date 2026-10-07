@@ -197,7 +197,7 @@ func (b *builder) statement(at *ir.Statement) {
 		b.emit(at, 0, statement.Value, b.uses(statement.Value), b.defines(statement.Local))
 	case ir.Return:
 		b.emit(at, 0, statement.Value, b.uses(statement.Value), nil)
-		if len(b.attempts) == 0 {
+		if !slices.ContainsFunc(b.attempts, func(attempt *attempt) bool { return attempt.finally != nil }) {
 			b.terminate(&Return{})
 			break
 		}

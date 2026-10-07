@@ -15,13 +15,6 @@ func (e *emitter) asyncFunction(index int) string {
 	graph := flow.Build(e.program, index)
 	regions := flow.CutAsync(graph)
 	cells := slices.Clone(function.FrameEnvironment)
-	for local, declared := range e.program.Locals {
-		if !declared.Global && declared.Function == index && !slices.Contains(cells, local) {
-			cells = append(cells, local)
-		}
-	}
-	slices.Sort(cells)
-	function.FrameEnvironment = cells
 	e.asyncSlots = map[int]int{}
 	for position, local := range cells {
 		e.asyncSlots[local] = position

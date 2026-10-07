@@ -32,6 +32,7 @@ func TestAsyncGapsNameTheMissingPiece(t *testing.T) {
 		{"async function f(): Promise<void> { await Promise.all([Promise.resolve(1)]); }\nawait f();", "Promise.all"},
 		{"async function f(): Promise<void> { try { throw new Error('why'); } catch { await Promise.resolve(); } }\nawait f();", "await in catch or finally"},
 		{"async function f(): Promise<void> { try { await Promise.resolve(); } finally { await Promise.resolve(); } }\nawait f();", "await in catch or finally"},
+		{"async function f(): Promise<number> { try { return await Promise.resolve(1); } finally { console.log('clean'); } }\nawait f();", "async finally completion routing"},
 		{"async function f(): Promise<void> { const value = await Promise.resolve(); }\nawait f();", "type void"},
 		{"async function f(): Promise<number> { return Promise.resolve(1); }\nawait f();", "Promise adoption"},
 		{"async function f(): Promise<number> { return await {then(resolve: (value: number) => void): void { resolve(1); }}; }\nawait f();", "thenables"},
