@@ -59,7 +59,7 @@ func releaseFixturesAgreeWithNode(t *testing.T, existing bool) {
 				expected = onJavaScriptBackend(t, program)
 			}
 			if expected.exitCode != 0 {
-				t.Skipf("finishing fixtures only: Node exit %d", expected.exitCode)
+				t.Fatalf("finishing fixtures only: Node exit %d", expected.exitCode)
 			}
 			var actual run
 			if existing {

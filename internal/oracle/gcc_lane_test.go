@@ -81,7 +81,7 @@ func TestGCCAgreesWithNode(t *testing.T) {
 				t.Errorf("inserted check did not fire: exit %d", actual.exitCode)
 			}
 			if sanitize && oracle.exitCode == 0 {
-				report := leakSanitizer(t, binary)
+				report := leakChecked(t, code, binary)
 				gccLaneRecord(t, "leaks.json", report)
 				if report != "" {
 					t.Errorf("leaks: %s", report)

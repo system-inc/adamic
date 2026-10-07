@@ -243,6 +243,9 @@ func compilerManifest(t *testing.T) (string, int) {
 	t.Helper()
 	source := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
 	if source == "" {
+		if os.Getenv("ADAMIC_PARSER_BENCH") == "1" {
+			t.Fatalf("set ADAMIC_TYPESCRIPT_SOURCE to the pinned v6.0.3 checkout")
+		}
 		t.Skip("set ADAMIC_TYPESCRIPT_SOURCE to the pinned v6.0.3 checkout")
 	}
 	output, err := exec.Command("git", "-C", source, "rev-parse", "HEAD").Output()

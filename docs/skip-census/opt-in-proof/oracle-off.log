@@ -1,0 +1,12 @@
+oracle: node v24.19.0 at /workspace/adamic-tools/bin/node
+=== RUN   TestNativeReleaseFlagsAgreeWithNode
+    release_flags_test.go:18: set ADAMIC_RELEASE_LANE=1 for the full shipping-build lane
+--- SKIP: TestNativeReleaseFlagsAgreeWithNode (0.00s)
+=== RUN   TestNativeExistingReleaseAgreesWithNode
+    release_flags_test.go:28: set ADAMIC_RELEASE_MEASURE=1 for the timing control
+--- SKIP: TestNativeExistingReleaseAgreesWithNode (0.00s)
+=== RUN   TestWASIEmission
+    wasi_test.go:117: set ADAMIC_ORACLE_WASI=1
+--- SKIP: TestWASIEmission (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/internal/oracle	0.007s

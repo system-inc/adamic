@@ -21,11 +21,11 @@ func TestWASI(t *testing.T) {
 	}
 	sysroot := os.Getenv("WASI_SYSROOT")
 	if sysroot == "" {
-		t.Skip("WASI toolchain missing: WASI_SYSROOT is not set")
+		t.Fatalf("WASI toolchain missing: WASI_SYSROOT is not set")
 	}
 	for _, tool := range []string{"clang", "node", "go"} {
 		if _, err := exec.LookPath(tool); err != nil {
-			t.Skipf("WASI toolchain missing: %s: %v", tool, err)
+			t.Fatalf("WASI toolchain missing: %s: %v", tool, err)
 		}
 	}
 	directory := t.TempDir()
@@ -38,11 +38,11 @@ func TestWASI(t *testing.T) {
 	probe := filepath.Join(directory, "probe.c")
 	writeWASIFile(t, probe, "#include <stdlib.h>\nint main(void) { void *p = malloc(16); free(p); return 0; }\n")
 	if output, err := exec.Command("clang", append(append([]string{}, flags...), probe, "-o", filepath.Join(directory, "probe.wasm"))...).CombinedOutput(); err != nil {
-		t.Skipf("WASI toolchain missing or unusable (sysroot, linker, builtins): %v\n%s", err, output)
+		t.Fatalf("WASI toolchain missing or unusable (sysroot, linker, builtins): %v\n%s", err, output)
 	}
 	if output, err := exec.Command("node", "--disable-warning=ExperimentalWarning", "--input-type=module", "-e",
 		"import {WASI} from 'node:wasi'; import {registerHooks} from 'node:module'; new WASI({version:'preview1'}); if (!registerHooks || Number(process.versions.node.split('.')[0]) < 24) process.exit(1)").CombinedOutput(); err != nil {
-		t.Skipf("WASI toolchain missing: Node 24 with node:wasi and source oracle hooks required: %v\n%s", err, output)
+		t.Fatalf("WASI toolchain missing: Node 24 with node:wasi and source oracle hooks required: %v\n%s", err, output)
 	}
 	// Compile every translation unit without the generated-C unused warnings exemptions.
 	files, err := readRuntime(runtime, "runtime")

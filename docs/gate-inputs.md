@@ -1,7 +1,7 @@
 # Inputs the correctness gate must provide
 
 This is the setup worker's inventory for the AST census at area/developer-tools
-`bf35c1cbf0cfba856abb081d094da7a1946c8e4d`. A missing correctness input is
+`10e709cef5b6190c42fe8249f83d2cde20f5a402`, with the post-opt-in rule applied. A missing correctness input is
 `required-input`, including debug bypasses and harness request files. Benchmark
 and profile switches belong to `measurement` and do not satisfy verification.
 The machine-readable declaration is
@@ -71,10 +71,20 @@ including headers and wasm32-wasi libraries. The SDK's sibling `bin/clang`,
 linker and compiler builtins must be usable; the integration test also looks up
 clang, node and go on PATH and probes a real WASI build. Node v24.19.0 must
 provide node:wasi and node:module registerHooks. Missing switches, tools,
-sysroot or failed prerequisite probes are required-input skips. The gate's
+sysroot or failed prerequisite probes are required inputs. Once opted in,
+TestWASI reports missing sysroot, PATH tools, failed compiler probes and Node
+probes with Fatalf and preserves their diagnostic text. Put
+`/path/to/wasi-sdk/bin` before the native clang directory on PATH: having only
+the WASI sysroot is insufficient when native clang lacks WASI builtins. The gate's
 WASI plan assigns these to its required shard rather than treating opt-out as
-successful verification. Fixtures explicitly marked as not lowering are a
-lane scope exclusion, with NotYet checked separately by the WASI oracle.
+successful verification. After opting in, emission fixtures marked as not
+lowering fail rather than skip; the shard must satisfy its selected scope.
+
+The optional release lane similarly fails when a selected fixture does not
+finish on Node. Parser performance comparisons opted in with
+`ADAMIC_PARSER_BENCH=1` fail if `ADAMIC_TYPESCRIPT_SOURCE` is absent, using the
+same pinned v6.0.3 checkout described above. Opting into a measurement does not
+make its missing inputs an acceptable skip.
 
 Node v24.19.0 is now enforced by internal/nodepin and setup verifies its archive
 against `cloud/node-pin.json`; the earlier observation that Node patch versions

@@ -249,25 +249,65 @@ func TestHistoricalPlainSkips(t *testing.T) {
 	t.Log("skips=33 required-input=17 unknown=0; TestWholeCompilerAgrees included")
 }
 
-func TestReleaseLaneSkippedFixture(t *testing.T) {
+func TestFormattedSkipReason(t *testing.T) {
 	t.Parallel()
-	table, err := os.Open("testdata/skips.json")
-	if err != nil {
-		t.Fatal(err)
-	}
-	defer table.Close()
-	rows, err := Load(table)
-	if err != nil {
-		t.Fatal(err)
-	}
+	rows := []Row{{File: "internal/oracle/release_flags_test.go", ID: "guard", Class: "opt-in-lane", Callers: []string{"TestNativeReleaseFlagsAgreeWithNode"}, Message: `"off"`}, {File: "internal/oracle/release_flags_test.go", ID: "prerequisite", Class: "required-input", Callers: []string{"TestNativeReleaseFlagsAgreeWithNode"}, Message: `"finishing fixtures only: Node exit %d"`}}
 	log := `{"Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeReleaseFlagsAgreeWithNode/panic.a","Output":"    release_flags_test.go:62: finishing fixtures only: Node exit 70\n"}
 {"Action":"skip","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeReleaseFlagsAgreeWithNode/panic.a"}`
 	var output bytes.Buffer
-	if err := CheckLog(strings.NewReader(log), &output, rows); err != nil || !strings.Contains(output.String(), "opt-in-lane\t") || !strings.Contains(output.String(), "skips=1 required-input=0 unknown=0") {
+	if err := CheckLog(strings.NewReader(log), &output, rows); err == nil || !strings.Contains(output.String(), "required-input\t") || !strings.Contains(output.String(), "skips=1 required-input=1 unknown=0") {
 		t.Fatalf("release scope skip: %v\n%s", err, &output)
 	}
 	// Numeric formatting must not turn arbitrary reasons into declared skips.
 	if err := CheckLog(strings.NewReader(strings.Replace(log, "Node exit 70", "Node exit missing", 1)), &output, rows); err == nil {
 		t.Fatal("unrecognized release reason passed")
+	}
+}
+
+func TestOptInClassification(t *testing.T) {
+	t.Parallel()
+	for _, variable := range []string{"ADAMIC_NEW_LANE", "OTHER_BENCHMARK", "PROFILE_DIRECTORY"} {
+		t.Run(variable, func(t *testing.T) {
+			source := `package probe
+import("os";"testing")
+const key = "` + variable + `"
+func TestProbe(t *testing.T) { enabled:=os.Getenv(key); if enabled != "1" { t.Skip("off") }; t.Run("inner",func(t *testing.T){ helper(t) }) }
+func helper(t *testing.T) { if os.Getenv("CORPUS") == "" {t.Skip("missing corpus")} }
+`
+			rows, err := Scan(scratch(t, source))
+			if err != nil {
+				t.Fatal(err)
+			}
+			if len(rows) != 2 {
+				t.Fatalf("expected two skips: %+v", rows)
+			}
+			declared := declare(rows)
+			for i := range declared {
+				if declared[i].Test == "TestProbe" {
+					declared[i].Class = "not-applicable"
+					if !strings.Contains(strings.Join(declared[i].OptInOff, ","), variable) {
+						t.Fatal("off guard lost")
+					}
+				} else {
+					if !strings.Contains(strings.Join(declared[i].OptInOn, ","), variable) {
+						t.Fatal("enabled context lost through helper")
+					}
+				}
+			}
+			if err := Validate(rows, declared); err != nil {
+				t.Fatal(err)
+			}
+			for _, class := range []string{"not-applicable", "measurement", "opt-in-lane"} {
+				mutant := append([]Row{}, declared...)
+				for i := range mutant {
+					if mutant[i].Test == "helper" {
+						mutant[i].Class = class
+					}
+				}
+				if err := Validate(rows, mutant); err == nil || !strings.Contains(err.Error(), "must be required-input") {
+					t.Fatalf("enabled prerequisite classified as %s survived: %v", class, err)
+				}
+			}
+		})
 	}
 }

@@ -129,7 +129,7 @@ func TestWASIEmission(t *testing.T) {
 			}
 			program, err := lowered(t, path)
 			if !fixture.lowers {
-				t.Skip("fixture does not lower")
+				t.Fatalf("fixture does not lower")
 			}
 			if err != nil {
 				t.Fatal(err)
