@@ -9,7 +9,9 @@ for (const value of [0, 0.1 + 0.2, 1e21, 5e-324, -0, 9007199254740993, -1e-7, 1.
 for (const value of [NaN, Infinity, -Infinity]) {
  const text = encodeJson<number>(value);
  console.log(text);
- // JSON's null cannot round-trip to number under decodeJson's non-null schema.
+ // Nonfinite values are excluded from round trips; the independent witness
+ // still compares their encoded text with Node JSON.stringify. Keep decodeJson
+ // rejecting null: changing null support is a separate language decision.
  if (decodeJson<number>(text).kind !== 'Error') panic('nonfinite JSON must fail numeric decode');
 }
 for (const value of ['quote"slash\\', '\b\f\n\r\t\u0000\u001f', '\u2028', '🌍', '\ud800', '\udc00', '\ud800\ud800\udc00\udc00', 'built'.repeat(20)]) {

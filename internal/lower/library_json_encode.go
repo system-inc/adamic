@@ -16,7 +16,8 @@ func (l *lowering) encodeJson(node *ast.Node) (ir.Expression, bool, error) {
 	}
 	// A structural view can widen an unboxed scalar slot to a boxed union.
 	// Existing layouts record reference ownership, not complete scalar types.
-	// Refuse before emission until that metadata crosses every container boundary.
+	// This unit deliberately uses compile-time NotYet for mixed scalar unions
+	// inside containers; runtime shape metadata changes belong to another unit.
 	for _, parent := range schema.Nodes {
 		if parent.Kind == "object" || parent.Kind == "tuple" {
 			for _, field := range parent.Fields {
