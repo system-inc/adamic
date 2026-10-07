@@ -1,6 +1,7 @@
 package oracle
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
@@ -50,7 +51,12 @@ func TestNodeFSDirectorySymlinkMutants(t *testing.T) {
 						t.Fatalf("%s: %s Node=%q got=%q stderr=%q", name, difference, truth.stdout, observation.stdout, observation.stderr)
 					}
 				}
-				if leaked := inputLeaks(t, prepare("leaks"), program, binary); leaked != "" {
+				leakRun := 0
+				prepareLeaks := func() inputRun {
+					leakRun++
+					return prepare(fmt.Sprintf("leaks-%d", leakRun))
+				}
+				if leaked := inputLeaks(t, prepareLeaks, program, binary); leaked != "" {
 					t.Fatal(leaked)
 				}
 			}

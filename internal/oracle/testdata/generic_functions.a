@@ -1,7 +1,7 @@
-// Generic functions, lowered once for each set of what their type arguments are held as: by inference
+// Generic functions, lowered once for each set of checker type arguments: by inference
 // from arguments and from the result, by explicit type arguments, through arrays, tuples and a
-// callback, a generic calling another with its own type parameter, and recursion, polymorphic
-// included, which reaches a fixed point because an array of anything is held as one array.
+// callback, a generic calling another with its own type parameter, and ordinary recursion.
+// Unbounded polymorphic recursion is refused separately by the lowering tests.
 function identity<Item>(item: Item): Item {
 	return item;
 }
@@ -47,6 +47,6 @@ const [name, age] = pair('Kirk', 42);
 console.log(`${name} ${age} ${pair(1, 'x')[1]}`);
 
 function nest<Item>(item: Item, depth: number): number {
-	return depth === 0 ? 0 : 1 + nest([item], depth - 1);
+	return depth === 0 ? 0 : 1 + nest(item, depth - 1);
 }
 console.log(`${nest(1, 3)} ${nest('a', 0)}`);

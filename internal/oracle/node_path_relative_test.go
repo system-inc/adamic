@@ -44,7 +44,7 @@ func TestNodePathRelativeRuntime(t *testing.T) {
 			t.Errorf("%s: %s", name, difference)
 		}
 	}
-	if leaked := inputLeaks(t, how, program, binary); leaked != "" {
+	if leaked := inputLeaks(t, func() inputRun { return how }, program, binary); leaked != "" {
 		t.Fatal(leaked)
 	}
 	source := strings.ReplaceAll(native.C(program), "adamic_node_path_relative(", "mutant_relative(")

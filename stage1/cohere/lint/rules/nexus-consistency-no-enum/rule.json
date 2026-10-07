@@ -1,0 +1,13 @@
+{
+  "name": "nexus/consistency-no-enum",
+  "kinds": [
+    "EnumDeclaration"
+  ],
+  "visit": "visit",
+  "node": true,
+  "oracle": "oracleConsistencyNoEnum",
+  "upstreamPackage": "nexus",
+  "upstreamTest": "TestConsistencyNoEnum",
+  "factory": "create",
+  "class": "Rule"
+}
