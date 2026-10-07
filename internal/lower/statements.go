@@ -45,6 +45,9 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 			if local, ok := l.locals[l.symbol(node.Name())]; ok && l.result.Locals[local].NestedFunction != 0 {
 				return nil, nil
 			}
+			if len(node.TypeParameters()) > 0 {
+				return l.nestedGenericFunction(node)
+			}
 			return nil, l.notYet(node, "a block-scoped nested function declaration")
 		}
 		// Lowered already, by declareModule.
