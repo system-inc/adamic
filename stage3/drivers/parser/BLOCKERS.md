@@ -1,3 +1,30 @@
+# Row 5 phantom-array brand rerun: red before native emission
+
+Merged phantom-brands a73f93c5 into scratch 444d57b1, producing unpushed
+4bda8003. Compiler rebuild succeeds. The unchanged minimal
+native-sorted-array-brand.a still refuses at 7:12 with adamic/no-unchecked-cast.
+Node prints `2\n`, exit 0, empty stderr. No native binary/output was emitted,
+so the native comparison and native-output byte mutant could not run.
+
+Focused `go test ./internal/lower -run TestPhantomArray -count=1` fails (1.171s).
+Required and optional brand cast tests hit the same legacy cast refusal; other
+proof-boundary tests receive that refusal instead of their expected diagnostics.
+See evidence/front14/tests.log for every failure. No focused test pass is claimed.
+
+Code inspection: refusals.go invokes castProof before expression lowering;
+castProof calls phantomCast, but the new phantomArrayCast dispatch is in cast.go.
+The merged preflight still rejects the probe before reaching that dispatch.
+The preflight was not bypassed. Lowering merge conflicts and exact ancestry are
+recorded in evidence/front14/report.json and scratch-merge.diff. Compiler changes
+remain scratch-only. No temporary source adaptation was added.
+
+Full-slice builds and both native references are held until the row-2 castProof
+ordering fix arrives, as requested. Row 2 remains the last observed first stop;
+this probe-only run does not establish a new slice stop or rerun the eleven-probe
+count. Native JSDoc and error-recovery acceptance remain unverified.
+
+---
+
 # Array views and generic empty fallback rerun: red at the legacy cast preflight
 
 Both requested fixes are in unpushed scratch 444d57b1: views-arrays-callables
