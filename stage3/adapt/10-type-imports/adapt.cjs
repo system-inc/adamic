@@ -9,7 +9,7 @@ const path = require("node:path");
 function main() {
     if (process.argv.length !== 3) throw new Error("usage: node adapt.cjs <tree>");
     const tree = path.resolve(process.argv[2]);
-    const ts = require(process.env.CENSUS_TYPESCRIPT || require.resolve("typescript", { paths: [tree, __dirname] }));
+    const ts = require(process.env.CENSUS_TYPESCRIPT || "typescript");
     if (ts.version !== "6.0.3") throw new Error(`want stock typescript@6.0.3, got ${ts.version}`);
     const directory = path.join(tree, "src/compiler");
     const roots = ts.sys.readDirectory(directory, [".ts"], undefined, ["**/*"]).sort();

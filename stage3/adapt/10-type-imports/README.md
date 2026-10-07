@@ -15,9 +15,10 @@ export CENSUS_TYPESCRIPT=/workspace/type-imports/npm/node_modules/typescript/lib
 node stage3/adapt/10-type-imports/adapt.cjs <tree>
 ```
 
-Without `CENSUS_TYPESCRIPT`, the script resolves `typescript` from the target
-checkout or this directory. It rejects every version except 6.0.3. The pinned
-upstream build dependencies use 5.9.3, so they cannot supply this dependency.
+Without `CENSUS_TYPESCRIPT`, the script uses `require("typescript")`, honoring
+the stock compiler supplied through `NODE_PATH` by `stage3/apply.sh`. It rejects
+every version except 6.0.3. The target checkout's upstream build dependencies
+use 5.9.3 and are not searched for the adaptation dependency.
 The adaptation does not install packages, generate diagnostics, or build tsc.
 
 The roots are the current `src/compiler/**/*.ts` files, including the generated
@@ -55,7 +56,8 @@ Input: https://github.com/microsoft/TypeScript.git, tag `v6.0.3`, commit
 `050880ce59e30b356b686bd3144efe24f875ebc8`. Adamic base is `ef3d907`, with census
 `429c117` merged first on `codex/stage3-type-imports`. No TypeScript source is
 committed here. `stage3/source.json`, `stage3/apply.sh`, and the shared baseline
-oracle belong to the separate base worker and were not implemented here.
+oracle were implemented by the separate base worker. The follow-up below merges
+and exercises that pipeline without changing its scripts.
 
 On the original 77-source population: **3,718 imports in 71 files**, zero exports,
 zero declined sites. `git diff --shortstat` reports **71 files changed, 3,718
@@ -203,11 +205,88 @@ clang 20.1.8, Node 24.19.0. Setup succeeded.
 
 ## Limits
 
-The complete TypeScript suite and Adamic uncached integration gate were not run.
+The initial proof above used a filtered TypeScript suite. The follow-up below
+runs the complete default oracle suites. Adamic's uncached integration gate
+was not run.
 The named re-export path has a direct probe, since this pinned corpus has no such
 findings. Default/namespace type-import conversion is intentionally declined.
-No native tsc, latent lowering blockers, future earlier-adaptation combinations,
-shared apply pipeline, or shared baseline oracle is claimed by this unit. The
+No native tsc, latent lowering blockers, or future earlier-adaptation combinations
+are claimed by this unit. The
 adapter reparses current text and never assumes pinned line numbers. All
 verification caches, upstream sources, logs, and mutant copies are outside the
-Adamic repository under `/workspace/type-imports` and `/tmp`.
+Adamic repository under `/workspace/type-imports`, `/tmp`, and the base pipeline
+cache at `~/.cache/adamic-stage3`.
+
+## Base pipeline integration follow-up
+
+Merged base pipeline commit `8728405` through merge `3fa6403`. Changed only the
+adapter's dependency lookup to `require("typescript")` by default, honoring the
+stock 6.0.3 installed and exposed through `NODE_PATH` by apply. The explicit
+`CENSUS_TYPESCRIPT` override remains available for the earlier standalone proof.
+`stage3/apply.sh`, `apply.py`, and the oracle scripts are unchanged.
+
+The following commands ran strictly sequentially, with fresh apply and oracle
+output directories and no oracle runner or test filters:
+
+```sh
+source /workspace/adamic-tools/env.sh
+stage3/apply.sh /workspace/type-imports/pipeline-adapted > /tmp/type-imports-pipeline-apply.log 2>&1
+stage3/oracle/run.sh /workspace/type-imports/pipeline-adapted /workspace/type-imports/pipeline-oracle > /tmp/type-imports-pipeline-oracle.log 2>&1
+/workspace/type-imports/census /workspace/type-imports/pipeline-adapted/src/compiler /workspace/type-imports/pipeline-census.jsonl > /tmp/type-imports-pipeline-census.log 2>&1
+```
+
+Apply exited 0 and reported 72 files, 3,719 imports, zero exports, zero declined
+sites. This includes the generated diagnostics import. The regenerated
+`stage3/patch-set.md` row is:
+
+```text
+| 10-type-imports | 72 | 3719 | 3719 |
+```
+
+The total row is also 72 files, 3,719 lines added, 3,719 lines removed; 00-setup
+remains zero. Those rows describe the tree immediately after apply.
+
+`/workspace/type-imports/pipeline-oracle/report.json` reports:
+
+```json
+{
+  "status": "pass",
+  "runners": "all",
+  "tests": null,
+  "workers": 4,
+  "counts": { "passing": 106367, "failing": 0, "pending": 0 },
+  "baseline_diffs": [],
+  "wall_seconds": 331.761
+}
+```
+
+All phase exits were 0: install 2.274s, build 22.156s, tests 307.278s. The actual
+npm test command was `npm test -- --workers=4 --lint=false --no-colors`;
+package.json supplies `--light=false`. `baseline.diff` in that results directory
+is **empty, 0 bytes**. No baseline was accepted or updated. No container OOM
+or OOM-kill event was recorded during the oracle run.
+
+The census on the **post-oracle tree** exited 0: 81 per-file attempts, 78 source
+roots in the whole program, 2,834 whole-program diagnostics, **TS1484 count 1**.
+Its single TS1484 is:
+
+```text
+src/compiler/diagnosticInformationMap.generated.ts:4:30: TS1484: 'DiagnosticMessage' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+```
+
+This is a pipeline regeneration finding, not one of the original 3,718 imports:
+upstream's ordinary build reruns `scripts/processDiagnosticMessages.mjs`, whose
+output includes `import { DiagnosticCategory, DiagnosticMessage } ...`. That
+replaces the inline modifier added by apply to the generated source. The other
+3,718 modifiers remain in place. The prepared population also includes the
+generated source and installed upstream dependencies, so its total is not the
+original unprepared 77-root population's 2,851.
+
+No adaptation was reapplied between oracle and census, and the generator and
+pipeline were not patched to hide this result. Thus the default oracle is green,
+but **the post-build tree does not have zero TS1484 findings**. Keeping that tree
+at zero requires preserving or reapplying the generated-file annotation after
+upstream regeneration, or a separate generator adaptation. The earlier mutants
+remain the independently caught checks documented above; this follow-up did not
+rerun them. Lint, browser integration, ESLint rule tests, Adamic's uncached gate,
+and native tsc remain outside this default oracle's coverage.
