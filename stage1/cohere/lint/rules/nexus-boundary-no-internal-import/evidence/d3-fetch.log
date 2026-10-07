@@ -1,0 +1,57 @@
+From https://github.com/system-inc/adamic
+   3b9023b66..738b16f17  area/compiler           -> origin/area/compiler
+   664a608d3..30be6f1f4  area/developer-tools    -> origin/area/developer-tools
+   633a70f51..0fa400ac0  area/platforms          -> origin/area/platforms
+   14504c7a4..94a9c832b  area/runtime            -> origin/area/runtime
+   c7991b900..b6b1538b0  area/stage1-format      -> origin/area/stage1-format
+   b46914832..d3a37422c  area/stage1-lint        -> origin/area/stage1-lint
+   d3ac7ff95..f85306ea8  area/stage3             -> origin/area/stage3
+   fee2a54f5..cb2c256aa  cloud/integrate-c-1     -> origin/cloud/integrate-c-1
+   9f0ba875b..e07948c25  cloud/integrate-l-1     -> origin/cloud/integrate-l-1
+ * [new branch]          cloud/integrate-owr-1   -> origin/cloud/integrate-owr-1
+ * [new branch]          cloud/integrate-owr-on-stack -> origin/cloud/integrate-owr-on-stack
+   d699a74b6..04358ad25  cloud/integrate-r-1     -> origin/cloud/integrate-r-1
+ + 68b6a6583...801edcc3c codex/lint-helpers-02   -> origin/codex/lint-helpers-02  (forced update)
+ + 5ec901841...b3f1eb203 codex/lint-helpers-03   -> origin/codex/lint-helpers-03  (forced update)
+ + f6598c046...3ab03bc33 codex/lint-helpers-04   -> origin/codex/lint-helpers-04  (forced update)
+   4a65e5a6d..8f70f184b  codex/lint-helpers-05   -> origin/codex/lint-helpers-05
+ + c5031531d...d8d4b9ff9 codex/lint-helpers-from-lint-wave1-12 -> origin/codex/lint-helpers-from-lint-wave1-12  (forced update)
+ + 740baa0f7...45ce7c74f codex/lint-wave1-12     -> origin/codex/lint-wave1-12  (forced update)
+   370349804..586aaf960  codex/release-lto       -> origin/codex/release-lto
+ * [new branch]          codex/release-pgo       -> origin/codex/release-pgo
+   a429306a0..8dd68052a  codex/stage3-parser-proof -> origin/codex/stage3-parser-proof
+ + 4cfc94339...d5592e70d codex/typeaware-wave-01 -> origin/codex/typeaware-wave-01  (forced update)
+ + 19ced5a0d...371be2d99 codex/typeaware-wave-02 -> origin/codex/typeaware-wave-02  (forced update)
+ + e2dc8c6c3...4c2b3629a codex/typeaware-wave-03 -> origin/codex/typeaware-wave-03  (forced update)
+ + d2e8b4e75...45beca6a7 codex/typeaware-wave-04 -> origin/codex/typeaware-wave-04  (forced update)
+ + d4f7992fa...5a10a1bf5 codex/typeaware-wave-05 -> origin/codex/typeaware-wave-05  (forced update)
+ + 8d5768959...84f664385 codex/typeaware-wave-06 -> origin/codex/typeaware-wave-06  (forced update)
+ + 2f20ff56a...deb8aa1bc codex/typeaware-wave-07 -> origin/codex/typeaware-wave-07  (forced update)
+ + 6fd96e1fa...970fdeabd codex/typeaware-wave-08 -> origin/codex/typeaware-wave-08  (forced update)
+   931d319f5..88212dee8  codex/typeaware-wave-09 -> origin/codex/typeaware-wave-09
+ + 69ea3dc61...77031a7df codex/typeaware-wave-10 -> origin/codex/typeaware-wave-10  (forced update)
+ + 93919b169...ec8a9695e codex/typeaware-wave-14 -> origin/codex/typeaware-wave-14  (forced update)
+ + c5f66692b...feb502642 codex/typeaware-wave-16 -> origin/codex/typeaware-wave-16  (forced update)
+ + bf5df4afd...ec35dbb36 codex/typeaware-wave-17 -> origin/codex/typeaware-wave-17  (forced update)
+ + db0bd3dba...d3589cb9e codex/typeaware-wave-18 -> origin/codex/typeaware-wave-18  (forced update)
+ + 1eab77c27...c4a1baa4a codex/typeaware-wave-20 -> origin/codex/typeaware-wave-20  (forced update)
+   0b1552c2d..d3bbc1d8e  codex/typeaware-wave-22 -> origin/codex/typeaware-wave-22
+ + d8eee9f5e...f521eac1b codex/typeaware-wave-23 -> origin/codex/typeaware-wave-23  (forced update)
+ + ae81f0be5...e3a684b76 codex/typeaware-wave-24 -> origin/codex/typeaware-wave-24  (forced update)
+ + f4731c585...82662353f codex/typeaware-wave-25 -> origin/codex/typeaware-wave-25  (forced update)
+ + 32268860d...29f333cd8 codex/typeaware-wave-29 -> origin/codex/typeaware-wave-29  (forced update)
+ + ffdac802d...7cbb62c3c codex/typeaware-wave-30 -> origin/codex/typeaware-wave-30  (forced update)
+ * [new branch]          compiler/landing-batch-2 -> origin/compiler/landing-batch-2
+   a66ff9ad1..829b8a62d  compiler/stage3-front   -> origin/compiler/stage3-front
+ * [new branch]          compiler/taste-land     -> origin/compiler/taste-land
+   36f99309f..774d0cacf  devtools/gcc-lane       -> origin/devtools/gcc-lane
+ * [new branch]          devtools/generator-coverage -> origin/devtools/generator-coverage
+ * [new branch]          devtools/refusal-catalog-predicate -> origin/devtools/refusal-catalog-predicate
+ * [new branch]          gate-logs/7f0164cfd257/20261007T082555/shard-2 -> origin/gate-logs/7f0164cfd257/20261007T082555/shard-2
+ * [new branch]          gate-logs/7f0164cfd257/20261007T082555/shard-6 -> origin/gate-logs/7f0164cfd257/20261007T082555/shard-6
+ * [new branch]          gate-logs/7f0164cfd257/20261007T082555/shard-7 -> origin/gate-logs/7f0164cfd257/20261007T082555/shard-7
+ * [new branch]          library/merge-main-b6b1538 -> origin/library/merge-main-b6b1538
+ * [new branch]          lint-fix/logical-assignment-never -> origin/lint-fix/logical-assignment-never
+   1435b5eda..6b7fb255f  lint-fix/mutation-aliasing -> origin/lint-fix/mutation-aliasing
+   c7991b900..b6b1538b0  main                    -> origin/main
+ * [new branch]          runtime/read-all-defined -> origin/runtime/read-all-defined

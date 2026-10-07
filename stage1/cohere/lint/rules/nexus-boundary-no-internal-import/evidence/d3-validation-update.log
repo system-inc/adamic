@@ -1,0 +1,34 @@
+Updating b46914832..d3a37422c
+Fast-forward
+ internal/ir/ir.go                                |   6 +-
+ internal/lower/expression.go                     |  12 +-
+ internal/lower/typeof.go                         |  31 +++++
+ internal/native/emit_expressions.go              |  29 +----
+ internal/native/emit_slots.go                    |  64 +++++++++++
+ internal/native/runtime/adamic.h                 |   7 +-
+ internal/native/runtime/class_static.c           |  10 --
+ internal/native/runtime/union.c                  |   8 +-
+ internal/native/union.go                         |  24 ++--
+ internal/oracle/counts.md                        |   7 ++
+ internal/oracle/oracle_test.go                   |   1 +
+ internal/oracle/testdata/typeof_dispatch.a       |  32 ++++++
+ internal/oracle/testdata/typeof_null.a           |  10 ++
+ internal/oracle/testdata/typeof_null_compare.a   |  29 +++++
+ internal/oracle/testdata/typeof_null_roll.a      |   1 +
+ internal/oracle/testdata/typeof_null_slots.a     |  29 +++++
+ internal/oracle/testdata/typeof_null_switch.a    |  52 +++++++++
+ internal/oracle/testdata/typeof_string_literal.a |   1 +
+ internal/oracle/typeof_dispatch_test.go          |  96 ++++++++++++++++
+ internal/oracle/typeof_null_test.go              | 140 +++++++++++++++++++++++
+ 20 files changed, 534 insertions(+), 55 deletions(-)
+ create mode 100644 internal/lower/typeof.go
+ create mode 100644 internal/native/emit_slots.go
+ create mode 100644 internal/oracle/testdata/typeof_dispatch.a
+ create mode 100644 internal/oracle/testdata/typeof_null.a
+ create mode 100644 internal/oracle/testdata/typeof_null_compare.a
+ create mode 100644 internal/oracle/testdata/typeof_null_roll.a
+ create mode 100644 internal/oracle/testdata/typeof_null_slots.a
+ create mode 100644 internal/oracle/testdata/typeof_null_switch.a
+ create mode 100644 internal/oracle/testdata/typeof_string_literal.a
+ create mode 100644 internal/oracle/typeof_dispatch_test.go
+ create mode 100644 internal/oracle/typeof_null_test.go
