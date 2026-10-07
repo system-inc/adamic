@@ -15,6 +15,7 @@ import (
 	"time"
 )
 
+// Expected rows are the first unequal stdout lines from port and testdata/oracle.go with --whole --recovery.
 // FirstDifference records exact canonical rows, including diagnostic text and
 // byte positions, rather than accepting any failure under a case's name.
 type lintCaseDifference struct {
@@ -57,7 +58,7 @@ func lintCaseCheck(file string, expected *lintCaseExpectation, port, oracle []by
 		return nil
 	}
 	if diff == nil {
-		return fmt.Errorf("listed case now matches %s: remove its expected.json entry", file)
+		return fmt.Errorf("listed case now matches %s: remove its .expected.json sidecar", file)
 	}
 	if *diff != expected.FirstDifference {
 		return fmt.Errorf("first difference changed %s: got %+v, recorded %+v", file, *diff, expected.FirstDifference)
@@ -129,30 +130,35 @@ func lintCaseSides(t *testing.T, directory, binary, path string) []struct {
 	}
 }
 
-func TestLintCases(t *testing.T) {
-	data, err := os.ReadFile("testdata/lint_cases/expected.json")
+// A missing sidecar promises exact agreement. A present sidecar is one object,
+// named <case stem>.expected.json, with the same file name as its TS/TSX case.
+func lintCaseReadExpectation(t *testing.T, file string) *lintCaseExpectation {
+	t.Helper()
+	stem := strings.TrimSuffix(file, filepath.Ext(file))
+	path := filepath.Join("testdata/lint_cases", stem+".expected.json")
+	data, err := os.ReadFile(path)
+	if errors.Is(err, os.ErrNotExist) {
+		return nil
+	}
 	if err != nil {
 		t.Fatal(err)
 	}
-	var entries []lintCaseExpectation
+	var entry lintCaseExpectation
 	decoder := json.NewDecoder(bytes.NewReader(data))
 	decoder.DisallowUnknownFields()
-	if err := decoder.Decode(&entries); err != nil {
-		t.Fatal(err)
+	if err := decoder.Decode(&entry); err != nil {
+		t.Fatalf("%s: %v", path, err)
 	}
 	if err := decoder.Decode(new(any)); err != io.EOF {
-		t.Fatalf("expected.json must contain exactly one JSON array: %v", err)
+		t.Fatalf("%s must contain exactly one JSON object: %v", path, err)
 	}
-	expected := map[string]lintCaseExpectation{}
-	for _, entry := range entries {
-		if filepath.Base(entry.File) != entry.File || entry.FoundBy == "" || entry.FirstDifference.Line < 1 {
-			t.Fatalf("invalid expectation: %+v", entry)
-		}
-		if _, exists := expected[entry.File]; exists {
-			t.Fatalf("duplicate expectation: %s", entry.File)
-		}
-		expected[entry.File] = entry
+	if entry.File != file || entry.FoundBy == "" || entry.FirstDifference.Line < 1 {
+		t.Fatalf("invalid expectation %s: %+v", path, entry)
 	}
+	return &entry
+}
+
+func TestLintCases(t *testing.T) {
 	files, err := os.ReadDir("testdata/lint_cases")
 	if err != nil {
 		t.Fatal(err)
@@ -163,37 +169,48 @@ func TestLintCases(t *testing.T) {
 	}
 	oracle := goOracle(t)
 	binary := buildPort(t, directory, true)
+	// Orphan sidecars and two cases sharing a stem must not pass silently.
+	stems := map[string]string{}
+	for _, file := range files {
+		if file.IsDir() || !(strings.HasSuffix(file.Name(), ".ts") || strings.HasSuffix(file.Name(), ".tsx")) {
+			continue
+		}
+		stem := strings.TrimSuffix(file.Name(), filepath.Ext(file.Name()))
+		if previous, exists := stems[stem]; exists {
+			t.Fatalf("cases share an expectation path: %s and %s", previous, file.Name())
+		}
+		stems[stem] = file.Name()
+	}
+	for _, file := range files {
+		if strings.HasSuffix(file.Name(), ".expected.json") {
+			if _, exists := stems[strings.TrimSuffix(file.Name(), ".expected.json")]; !exists {
+				t.Fatalf("sidecar without case: %s", file.Name())
+			}
+		}
+	}
 	count := 0
 	for _, file := range files {
 		if file.IsDir() || !(strings.HasSuffix(file.Name(), ".ts") || strings.HasSuffix(file.Name(), ".tsx")) {
 			continue
 		}
 		count++
-		entry, listed := expected[file.Name()]
-		delete(expected, file.Name())
 		t.Run(file.Name(), func(t *testing.T) {
 			path, err := filepath.Abs(filepath.Join("testdata/lint_cases", file.Name()))
 			if err != nil {
 				t.Fatal(err)
 			}
 			want := execute(t, "", oracle, path, "--whole", "--recovery").output
-			var expectation *lintCaseExpectation
-			if listed {
-				expectation = &entry
-			}
+			expectation := lintCaseReadExpectation(t, file.Name())
 			for _, side := range lintCaseSides(t, directory, binary, path) {
 				if err := lintCaseCheck(file.Name(), expectation, side.output, want); err != nil {
 					t.Errorf("%s: %v", side.name, err)
 				}
 			}
-			t.Logf("listed=%t, oracle bytes=%d", listed, len(want))
+			t.Logf("listed=%t, oracle bytes=%d", expectation != nil, len(want))
 		})
 	}
 	if count == 0 {
 		t.Fatal("no lint parser cases")
-	}
-	if len(expected) != 0 {
-		t.Fatalf("expectations without case files: %+v", expected)
 	}
 }
 
