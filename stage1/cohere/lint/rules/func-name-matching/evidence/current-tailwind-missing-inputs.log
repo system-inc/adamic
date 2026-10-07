@@ -1,0 +1,51 @@
+=== RUN   TestSourceNodeParity
+    source_node_test.go:16: better-tailwindcss/enforce-consistent-important-position upstream unique configurations=16
+    source_node_test.go:16: better-tailwindcss/enforce-consistent-variable-syntax upstream unique configurations=14
+    source_node_test.go:16: better-tailwindcss/enforce-consistent-variant-order upstream unique configurations=15
+    source_node_test.go:27: exit=exit status 2 stderr=panic: ADAMIC_TAILWIND_PACKAGE is required for a non-vacuous variant oracle
+        
+        goroutine 1 [running]:
+        main.variantProgram({{0xccfe60, 0x33}, 0x1c93400, {0x0, 0x0}, 0x0, 0x11, {0x0, 0x0}, 0x0}, ...)
+        	/workspace/adamic/cohere/adamic_wave104_variant_program.go:44 +0x805
+        main.variantFacts({0x3bbe2888cc80, 0x40}, {0x3bbe2888ccfd, 0x4})
+        	/workspace/adamic/cohere/adamic_wave104_variant_program.go:63 +0xf5
+        main.main()
+        	/workspace/adamic/cohere/adamic_wave104_oracle.go:170 +0x4df
+         stdout=
+--- FAIL: TestSourceNodeParity (17.09s)
+=== RUN   TestRulesAndSuggestions
+    validation_test.go:511: /tmp/adamic-gate/TestRulesAndSuggestions1616678661/001/rules/tailwind-important-position/surface.a:41:132: stage 0 can't lower RegExp with a nonconstant pattern yet
+--- FAIL: TestRulesAndSuggestions (3.12s)
+=== RUN   TestOwnedMutants
+    validation_test.go:538: exit=exit status 2 stderr=panic: ADAMIC_TAILWIND_PACKAGE is required for a non-vacuous variant oracle
+        
+        goroutine 1 [running]:
+        main.variantProgram({{0xccfe60, 0x33}, 0x1c93400, {0x0, 0x0}, 0x0, 0x11, {0x0, 0x0}, 0x0}, ...)
+        	/workspace/adamic/cohere/adamic_wave104_variant_program.go:44 +0x805
+        main.variantFacts({0x1c9f2ea310a0, 0x3a}, {0x0, 0x0})
+        	/workspace/adamic/cohere/adamic_wave104_variant_program.go:63 +0xf5
+        main.main()
+        	/workspace/adamic/cohere/adamic_wave104_oracle.go:170 +0x4df
+         stdout=
+--- FAIL: TestOwnedMutants (2.74s)
+=== RUN   TestCompilerAndStage1
+    validation_test.go:602: /tmp/adamic-gate/TestCompilerAndStage12682636359/001/rules/tailwind-important-position/surface.a:41:132: stage 0 can't lower RegExp with a nonconstant pattern yet
+--- FAIL: TestCompilerAndStage1 (3.09s)
+=== RUN   TestThroughput
+    validation_test.go:607: ADAMIC_LINT_BENCH=1
+--- SKIP: TestThroughput (0.00s)
+=== RUN   TestJsxProjectedSemanticsAndParserBlocker
+    validation_test.go:657: /tmp/adamic-gate/TestJsxProjectedSemanticsAndParserBlocker1032943157/001/rules/tailwind-important-position/surface.a:41:132: stage 0 can't lower RegExp with a nonconstant pattern yet
+--- FAIL: TestJsxProjectedSemanticsAndParserBlocker (2.85s)
+=== RUN   TestExplicitProviderRefusals
+    validation_test.go:689: /tmp/adamic-gate/TestExplicitProviderRefusals1433034041/001/rules/tailwind-important-position/surface.a:41:132: stage 0 can't lower RegExp with a nonconstant pattern yet
+--- FAIL: TestExplicitProviderRefusals (2.97s)
+=== RUN   TestConfiguredCallees
+    validation_test.go:746: /tmp/adamic-gate/TestConfiguredCallees1421688033/001/rules/tailwind-important-position/surface.a:41:132: stage 0 can't lower RegExp with a nonconstant pattern yet
+--- FAIL: TestConfiguredCallees (2.98s)
+=== RUN   TestPositiveThroughput
+    validation_test.go:764: ADAMIC_LINT_BENCH=1
+--- SKIP: TestPositiveThroughput (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/rules/tailwind-important-position	34.843s
+FAIL

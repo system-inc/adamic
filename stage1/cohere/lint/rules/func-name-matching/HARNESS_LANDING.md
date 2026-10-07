@@ -136,3 +136,21 @@ Both branches include the pinned area's current-main merge. The helper branch
 is green; this rule branch is explicitly blocked and cannot count as landing-ready
 under the special shared-harness parking rule, because the harness has landed.
 No push to main or any area branch is made. No additional claims are made.
+
+Recheck after required-input instruction, 2026-10-07:
+All origin heads were fetched explicitly. Main 39638d9e2 and area d65a8f931
+are unchanged and already ancestors of both pushed worker branches. No rebase
+is necessary. A stale ignored registry initially excluded the owned Tailwind
+ports and let production compilation succeed; that result adds no evidence.
+After go run ./cmd/lint-registry, production JavaScript compilation again
+refuses surface.a:41:132, RegExp with a nonconstant pattern.
+
+With ADAMIC_TAILWIND_PACKAGE=/tmp/wave104-tailwind/node_modules/tailwindcss and
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/lint-wave1-04-typescript, the owned filtered run
+TestSourceNodeParity|TestRulesAndSuggestions finishes FAIL 7.298s: source Node
+passes all 52 rows and 27,103 bytes in 4.49s, backend compilation refuses the
+runtime pattern in 2.80s. An initial full owned run omitted those input variables
+and fails its required-input guards; that is not green and is retained. No
+correctness check is skipped, relaxed or deleted to obtain a green result.
+The seventeen repository-wide required-input checks were not run; this unit
+stops at its reproduced unowned lowerer blocker without claiming another helper.
