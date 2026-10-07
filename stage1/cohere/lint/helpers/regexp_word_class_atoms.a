@@ -1,0 +1,15 @@
+export interface RegexpRewriteOptions { readonly ignoreCase: boolean; readonly unicode: boolean; readonly multiline: boolean; readonly dotAll: boolean; }
+export interface RegexpClassAtom { kind: number; low: number; high: number; text: string; }
+export function regexpWordClassAtoms(options: RegexpRewriteOptions): RegexpClassAtom[] {
+    const atoms: RegexpClassAtom[] = [
+        { kind: 1, low: 48, high: 57, text: '' },
+        { kind: 1, low: 65, high: 90, text: '' },
+        { kind: 0, low: 95, high: 0, text: '' },
+        { kind: 1, low: 97, high: 122, text: '' }
+    ];
+    if (options.ignoreCase && options.unicode) {
+        atoms.push({ kind: 0, low: 383, high: 0, text: '' });
+        atoms.push({ kind: 0, low: 8490, high: 0, text: '' });
+    }
+    return atoms;
+}

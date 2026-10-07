@@ -1,0 +1,40 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from './options_json.ts';
+import { regexpWordClassAtoms } from './regexp_word_class_atoms.a';
+import type { RegexpClassAtom, RegexpRewriteOptions } from './regexp_word_class_atoms.a';
+import { regexpNonWordClassAtoms } from './regexp_nonword_class_atoms.a';
+import { regexpWordBoundary } from './regexp_word_boundary.a';
+function printAtoms(atoms: readonly RegexpClassAtom[]): void {
+    console.log(`${atoms.length}`);
+    for (const atom of atoms) { console.log(`${atom.kind}:${atom.low}:${atom.high}`); console.log(atom.text); }
+}
+const args = programArguments();
+const file = readTextFile(args[0] ?? panic('fixture path'));
+if (file.kind === 'Error') { panic(file.message); }
+for (const line of file.text.split('\n')) {
+    if (line === '') { continue; }
+    const json = new OptionsJson(line);
+    const root = json.parse();
+    if (root < 0) { panic(json.error); }
+    const row = json.node(root).children;
+    const bits = Number(json.node(row[0] ?? panic('flags')).text);
+    const options: RegexpRewriteOptions = { ignoreCase: (bits & 1) !== 0, unicode: (bits & 2) !== 0, multiline: (bits & 4) !== 0, dotAll: (bits & 8) !== 0 };
+    if (args[1] === 'boundary') {
+        const negated = json.node(row[1] ?? panic('negated')).text === 'true';
+        const word = json.node(row[2] ?? panic('word')).text;
+        const calls: number[] = [];
+        const result = regexpWordBoundary(negated, options, given => {
+            const flags = (given.ignoreCase ? 1 : 0) | (given.unicode ? 2 : 0) | (given.multiline ? 4 : 0) | (given.dotAll ? 8 : 0);
+            calls.push(flags); return word;
+        });
+        console.log(result); console.log(`${calls.length}`); for (const flags of calls) { console.log(`${flags}`); }
+    } else if (args[1] === 'word') {
+        const first = regexpWordClassAtoms(options); printAtoms(first);
+        const atom = first[0] ?? panic('first atom'); atom.low = 99999;
+        printAtoms(regexpWordClassAtoms(options));
+    } else {
+        const first = regexpNonWordClassAtoms(options); printAtoms(first);
+        const atom = first[0] ?? panic('first atom'); atom.low = 99999;
+        printAtoms(regexpNonWordClassAtoms(options));
+    }
+}

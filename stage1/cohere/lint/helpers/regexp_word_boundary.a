@@ -1,0 +1,6 @@
+import type { RegexpRewriteOptions } from './regexp_word_class_atoms.a';
+export function regexpWordBoundary(negated: boolean, options: RegexpRewriteOptions, wordCharacters: (options: RegexpRewriteOptions) => string): string {
+    const word = wordCharacters(options);
+    if (negated) { return '(?:(?<=' + word + ')(?=' + word + ')|(?<!' + word + ')(?!' + word + '))'; }
+    return '(?:(?<!' + word + ')(?=' + word + ')|(?<=' + word + ')(?!' + word + '))';
+}

@@ -1,0 +1,49 @@
+{
+  "branches": [
+    "origin/codex/lint-helpers",
+    "origin/codex/lint-helpers-01",
+    "origin/codex/lint-helpers-02",
+    "origin/codex/lint-helpers-03",
+    "origin/codex/lint-helpers-04",
+    "origin/codex/lint-helpers-05",
+    "origin/codex/lint-helpers-from-codex-lint-wave1-03",
+    "origin/codex/lint-helpers-from-codex-lint-wave1-14",
+    "origin/codex/lint-helpers-from-codex/lint-wave1-04",
+    "origin/codex/lint-helpers-from-codex/lint-wave1-06",
+    "origin/codex/lint-helpers-from-codex/lint-wave1-09",
+    "origin/codex/lint-helpers-from-codex/lint-wave1-10",
+    "origin/codex/lint-helpers-from-codex/lint-wave1-11",
+    "origin/codex/lint-helpers-from-codex/lint-wave1-15",
+    "origin/codex/lint-helpers-from-lint-wave1-01",
+    "origin/codex/lint-helpers-from-lint-wave1-05",
+    "origin/codex/lint-helpers-from-lint-wave1-08",
+    "origin/codex/lint-helpers-from-lint-wave1-12",
+    "origin/codex/lint-helpers-from-lint-wave1-13"
+  ],
+  "matches": [
+    {
+      "branch": "origin/codex/lint-helpers-01",
+      "file": "stage1/cohere/lint/helpers/claims/01.md",
+      "symbols": [
+        "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.wordClassAtoms",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.nonWordClassAtoms",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.wordBoundary"
+      ]
+    },
+    {
+      "branch": "origin/codex/lint-helpers-04",
+      "file": "stage1/cohere/lint/helpers/claims/04.md",
+      "symbols": [
+        "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.wordBoundary"
+      ]
+    }
+  ],
+  "resolution": {
+    "retained": "slot01",
+    "slot01_claim": "74dfcf68",
+    "slot01_time": "2026-10-07T04:48:20Z",
+    "slot04_later_claim": "f2d65497",
+    "slot04_time": "2026-10-07T04:49:03Z",
+    "reason": "Earlier by forty-three seconds"
+  }
+}

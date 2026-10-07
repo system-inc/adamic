@@ -1,0 +1,16 @@
+import { regexpWordClassAtoms } from './regexp_word_class_atoms.a';
+import type { RegexpClassAtom, RegexpRewriteOptions } from './regexp_word_class_atoms.a';
+export function regexpNonWordClassAtoms(options: RegexpRewriteOptions): RegexpClassAtom[] {
+    const atoms: RegexpClassAtom[] = [];
+    let next = 0;
+    for (const word of regexpWordClassAtoms(options)) {
+        const high = word.kind === 1 ? word.high : word.low;
+        if (next < word.low) {
+            const last = word.low - 1;
+            atoms.push({ kind: next === last ? 0 : 1, low: next, high: next === last ? 0 : last, text: '' });
+        }
+        next = high + 1;
+    }
+    atoms.push({ kind: 1, low: next, high: 1114111, text: '' });
+    return atoms;
+}

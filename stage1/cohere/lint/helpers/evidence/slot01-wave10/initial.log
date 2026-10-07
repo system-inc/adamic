@@ -1,0 +1,32 @@
+=== RUN   TestSlot01Wave10Word
+    slot01_wave10_test.go:155: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/next/no_html_link_for_pages_test.go: 280 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/typescript/no_empty_object_type_test.go: 47 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/core/no_restricted_exports_test.go: 177 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/core/no_restricted_imports_test.go: 414 string inputs
+        918 fixture strings; 14768 word queries, all sixteen flag combinations and fresh-result probes
+    slot01_wave10_test.go:155: 295360 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave10_test.go:155: compiled regexp_word_class_atoms.a mutant caught at output line 19: got "6", Go "4"
+--- PASS: TestSlot01Wave10Word (3.93s)
+=== RUN   TestSlot01Wave10NonWord
+    slot01_wave10_test.go:160: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/next/no_html_link_for_pages_test.go: 280 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/typescript/no_empty_object_type_test.go: 47 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/core/no_restricted_exports_test.go: 177 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/core/no_restricted_imports_test.go: 414 string inputs
+        918 fixture strings; 14768 nonword queries, all sixteen flag combinations and fresh-result probes
+    slot01_wave10_test.go:160: 354432 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave10_test.go:160: compiled regexp_nonword_class_atoms.a mutant caught at output line 10: got "1:123:65535", Go "1:123:1114111"
+--- PASS: TestSlot01Wave10NonWord (3.89s)
+=== RUN   TestSlot01Wave10Boundary
+    slot01_wave10_test.go:165: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/next/no_html_link_for_pages_test.go: 280 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/typescript/no_empty_object_type_test.go: 47 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/core/no_restricted_exports_test.go: 177 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/core/no_restricted_imports_test.go: 414 string inputs
+        918 fixture strings; 29536 boundary queries, all sixteen flag combinations and fresh-result probes
+    slot01_wave10_test.go:165: 88608 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave10_test.go:165: compiled regexp_word_boundary.a mutant caught at output line 1: got "(?:(?<=[0-9A-Z\\u005fa-z])(?=[0-9A-Z\\u005fa-z])|(?<![0-9A-Z\\u005fa-z])(?![0-9A-Z\\u005fa-z]))", Go "(?:(?<![0-9A-Z\\u005fa-z])(?=[0-9A-Z\\u005fa-z])|(?<=[0-9A-Z\\u005fa-z])(?![0-9A-Z\\u005fa-z]))"
+--- PASS: TestSlot01Wave10Boundary (4.69s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers	12.521s
