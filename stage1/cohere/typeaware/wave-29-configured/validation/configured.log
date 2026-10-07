@@ -1,0 +1,5 @@
+configured inputs 246 bytes 65481 sha256 a83bc63a4e05ee2f94b1cc3a50eb0f38578330b0ea6f6413348e1356b55cfb73 findings 194
+denylist mutant compiled, exit 0, empty stderr; bytes differ
+match mutant compiled, exit 0, empty stderr; bytes differ
+ASan/UBSan/LeakSanitizer bytes agree; empty stderr
+regexp gap reproduced: compile exit 1

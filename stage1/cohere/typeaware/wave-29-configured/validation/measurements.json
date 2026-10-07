@@ -1,0 +1,83 @@
+{
+  "configured-go": {
+    "bytes": 65481,
+    "sha256": "a83bc63a4e05ee2f94b1cc3a50eb0f38578330b0ea6f6413348e1356b55cfb73",
+    "tail": "findings 194"
+  },
+  "configured-native": {
+    "bytes": 65481,
+    "sha256": "a83bc63a4e05ee2f94b1cc3a50eb0f38578330b0ea6f6413348e1356b55cfb73",
+    "tail": "findings 194"
+  },
+  "configured-asan-native": {
+    "bytes": 65481,
+    "sha256": "a83bc63a4e05ee2f94b1cc3a50eb0f38578330b0ea6f6413348e1356b55cfb73",
+    "tail": "findings 194"
+  },
+  "configured-denylist-mutant": {
+    "bytes": 32736,
+    "sha256": "0289de71764e4e2ea19daa4939d2293fcd8272b46044ece7245494579b98a4c2",
+    "tail": "findings 79",
+    "first_difference": 52
+  },
+  "configured-match-mutant": {
+    "bytes": 79948,
+    "sha256": "080fb480619a6785961cb7fd500ed33f7bb877aae16641cd543b2be580e38b4b",
+    "tail": "findings 254",
+    "first_difference": 45861
+  },
+  "default-controls-go": {
+    "bytes": 9922,
+    "sha256": "764e06ee6d17645508c93b2aa5082384c339262c6502e0fb523033b408c04ea7",
+    "tail": "findings 15"
+  },
+  "default-controls-native": {
+    "bytes": 9922,
+    "sha256": "764e06ee6d17645508c93b2aa5082384c339262c6502e0fb523033b408c04ea7",
+    "tail": "findings 15"
+  },
+  "default-controls-asan-native": {
+    "bytes": 9922,
+    "sha256": "764e06ee6d17645508c93b2aa5082384c339262c6502e0fb523033b408c04ea7",
+    "tail": "findings 15"
+  },
+  "default-compiler-go": {
+    "bytes": 5241,
+    "sha256": "c69891e5509c241ba35139af8e62e1c6b378491b453232cf22294c87af1056ce",
+    "tail": "findings 0"
+  },
+  "default-compiler-native": {
+    "bytes": 5241,
+    "sha256": "c69891e5509c241ba35139af8e62e1c6b378491b453232cf22294c87af1056ce",
+    "tail": "findings 0"
+  },
+  "default-compiler-asan-native": {
+    "bytes": 5241,
+    "sha256": "c69891e5509c241ba35139af8e62e1c6b378491b453232cf22294c87af1056ce",
+    "tail": "findings 0"
+  },
+  "default-repository-go": {
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "tail": "findings 0"
+  },
+  "default-repository-native": {
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "tail": "findings 0"
+  },
+  "default-repository-asan-native": {
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "tail": "findings 0"
+  },
+  "source_sha256": {
+    "stage1/cohere/typeaware/id_denylist.a": "ea511747cdcad5a7f9902c98aa49eccdce3627b47761f39e3e40756111ff3a36",
+    "stage1/cohere/typeaware/id_match.a": "b0b22d5afe45065714bacd59a3ec25eee354d21d7f43771e8eee358610299572",
+    "stage1/cohere/typeaware/wave-29-configured/runner.a": "5ebcc7fdeac0c552bfb76809a868e3d750a14d14b87b20acf621b0ba64c103a7",
+    "stage1/cohere/typeaware/wave-29-configured/check.py": "cf280ba0fa6db6160f0629ef1809dee88b9e93ed9db24514a27669736554e402",
+    "stage1/cohere/typeaware/wave-29-configured/testdata/extract.go": "223f070606a828b412f21a1b3f82ec175747585a6b11ba5bc5933fa5a8e1bb54",
+    "stage1/cohere/typeaware/wave-29-configured/testdata/oracle.go": "48a3da6030875403550c51f870752cd7e2361f2275ee6abb77af451efa49586f",
+    "stage1/cohere/typeaware/wave-29-configured/gaps/regexp.a": "2b56ba79195e99c368b20c50efb726a0fa4434691744ffbc18ea0efb71510e67"
+  }
+}

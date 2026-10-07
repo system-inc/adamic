@@ -1,0 +1,189 @@
+[
+  {
+    "name": "stage0",
+    "argv": [
+      "go",
+      "build",
+      "-o",
+      "/workspace/wave29-configured-final/adamic",
+      "./cmd/adamic"
+    ],
+    "exit": 0,
+    "ns": 1498440130
+  },
+  {
+    "name": "archive",
+    "argv": [
+      "go",
+      "build",
+      "-buildmode=c-archive",
+      "-o",
+      "/workspace/wave29-configured-final/checker.a",
+      "./bridge/tsgo/archive"
+    ],
+    "exit": 0,
+    "ns": 1734356233
+  },
+  {
+    "name": "extract",
+    "argv": [
+      "go",
+      "run",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-configured/testdata/extract.go",
+      "/workspace/adamic"
+    ],
+    "exit": 0,
+    "ns": 133189799
+  },
+  {
+    "name": "oracle-build",
+    "argv": [
+      "go",
+      "build",
+      "-overlay",
+      "/workspace/wave29-configured-final/overlay.json",
+      "-o",
+      "/workspace/wave29-configured-final/oracle",
+      "/workspace/adamic/cohere/adamic_wave29_configured_oracle.go"
+    ],
+    "exit": 0,
+    "ns": 2129594459
+  },
+  {
+    "name": "native-build",
+    "argv": [
+      "/workspace/wave29-configured-final/adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-configured/runner.a",
+      "-o",
+      "/workspace/wave29-configured-final/native",
+      "--tsgo",
+      "/workspace/wave29-configured-final/checker.a"
+    ],
+    "exit": 0,
+    "ns": 4614788852
+  },
+  {
+    "name": "go",
+    "argv": [
+      "/workspace/wave29-configured-final/oracle",
+      "/workspace/wave29-configured-final/tsconfig.json",
+      "/workspace/wave29-configured-final/manifest",
+      "/workspace/wave29-configured-final/fixtures.json"
+    ],
+    "exit": 0,
+    "ns": 94749980
+  },
+  {
+    "name": "native",
+    "argv": [
+      "/workspace/wave29-configured-final/native",
+      "/workspace/wave29-configured-final/tsconfig.json",
+      "/workspace/wave29-configured-final/manifest",
+      "/workspace/wave29-configured-final/profiles"
+    ],
+    "exit": 0,
+    "ns": 71319090
+  },
+  {
+    "name": "denylist-build",
+    "argv": [
+      "/workspace/wave29-configured-final/adamic",
+      "build",
+      "/workspace/wave29-configured-final/denylist-mutant/runner.a",
+      "-o",
+      "/workspace/wave29-configured-final/denylist",
+      "--tsgo",
+      "/workspace/wave29-configured-final/checker.a"
+    ],
+    "exit": 0,
+    "ns": 4406999465
+  },
+  {
+    "name": "denylist",
+    "argv": [
+      "/workspace/wave29-configured-final/denylist",
+      "/workspace/wave29-configured-final/tsconfig.json",
+      "/workspace/wave29-configured-final/manifest",
+      "/workspace/wave29-configured-final/profiles"
+    ],
+    "exit": 0,
+    "ns": 61465408
+  },
+  {
+    "name": "match-build",
+    "argv": [
+      "/workspace/wave29-configured-final/adamic",
+      "build",
+      "/workspace/wave29-configured-final/match-mutant/runner.a",
+      "-o",
+      "/workspace/wave29-configured-final/match",
+      "--tsgo",
+      "/workspace/wave29-configured-final/checker.a"
+    ],
+    "exit": 0,
+    "ns": 4312433309
+  },
+  {
+    "name": "match",
+    "argv": [
+      "/workspace/wave29-configured-final/match",
+      "/workspace/wave29-configured-final/tsconfig.json",
+      "/workspace/wave29-configured-final/manifest",
+      "/workspace/wave29-configured-final/profiles"
+    ],
+    "exit": 0,
+    "ns": 82529756
+  },
+  {
+    "name": "asan-archive",
+    "argv": [
+      "go",
+      "build",
+      "-buildmode=c-archive",
+      "-o",
+      "/workspace/wave29-configured-final/asan-checker.a",
+      "./bridge/tsgo/archive"
+    ],
+    "exit": 0,
+    "ns": 1659017560
+  },
+  {
+    "name": "asan-build",
+    "argv": [
+      "/workspace/wave29-configured-final/adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-configured/runner.a",
+      "-o",
+      "/workspace/wave29-configured-final/asan-native",
+      "--tsgo",
+      "/workspace/wave29-configured-final/asan-checker.a",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "ns": 11976818397
+  },
+  {
+    "name": "asan",
+    "argv": [
+      "/workspace/wave29-configured-final/asan-native",
+      "/workspace/wave29-configured-final/tsconfig.json",
+      "/workspace/wave29-configured-final/manifest",
+      "/workspace/wave29-configured-final/profiles"
+    ],
+    "exit": 0,
+    "ns": 126374110
+  },
+  {
+    "name": "regexp-gap",
+    "argv": [
+      "/workspace/wave29-configured-final/adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-configured/gaps/regexp.a",
+      "-o",
+      "/workspace/wave29-configured-final/regexp-gap"
+    ],
+    "exit": 1,
+    "ns": 33653840
+  }
+]
