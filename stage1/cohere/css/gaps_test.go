@@ -12,7 +12,7 @@ import (
 
 func TestEachGapStandsWhereGapsMdSaysItDoes(t *testing.T) {
 	for _, gap := range []struct{ path, stdout, refusal string }{
-		{"gaps/2_array_shift.ts", "a\n1\n", "inherited library member shift read as an own field"},
+		{"gaps/2_array_shift.ts", "a\n1\n", "the library method shift"},
 		{"gaps/3_optional_boolean_condition.ts", "important\n", "a boolean | undefined as a condition"},
 		{"gaps/4_empty_array_union.ts", "0\n", "an array of never"},
 		{"gaps/5_repeat_in_try.ts", "a\n", "a try around repeat"},

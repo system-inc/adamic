@@ -16,8 +16,8 @@ Readonly recursive ownership is unchanged; no fields were made Weak.
 ## 2. Array shift
 
 [gaps/2_array_shift.ts](gaps/2_array_shift.ts) prints `a` and `1` on Node. Adamic
-refuses `inherited library member shift read as an own field`: this unsupported
-method must not become a load from a nonexistent own slot. The parser reads the
+reports NotYet, `stage 0 can't lower the library method shift yet`: this
+unsupported method must not become a load from a nonexistent own slot. The parser reads the
 front token and removes it with `splice(0, 1)` instead.
 
 ## 3. Optional boolean conditions
