@@ -98,7 +98,7 @@ func TestRegExpRunnerNode(t *testing.T) {
 	// an Error where the test requires TypeError. That is not a sound pass.
 	one = classify("built-ins/RegExp/wrong-constructor.js", `assert.throws(TypeError, () => { throw new TypeError("type"); });`, true)
 	one.Program = program(`assertThrows("TypeError", () => { throw new Error("type"); });`)
-	if got := e.attempt(one); got.Kind != outcomeRefused || !strings.Contains(got.Reason, "constructor-identity") {
+	if got := e.attempt(one); got.Kind != outcomeFail {
 		t.Fatalf("wrong constructor accepted: %+v", got)
 	}
 	// An unexpected capture must not be ignored by the adapted validator.

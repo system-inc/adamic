@@ -48,4 +48,5 @@ The wider protocol unit resumes after this standalone matcher commit is pushed.
 Final observations: initial oracle/count control passed in 2.644s; the hoisting
 mutant failed in 60.681s with the required stdout witness; restored fixture and
 complete recorded-counts gate passed in 67.494s. Runtime diff after restoration
-is empty. Logs are checked in alongside this report.
+is empty. The full logs are archived alongside this report on codex/regex-protocol;
+50a1dc8 records the fixture, Node output, totals, and reproducible mutant.

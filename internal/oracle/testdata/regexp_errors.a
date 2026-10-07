@@ -1,0 +1,33 @@
+// Constructor identity is independent of writable diagnostic names.
+try {
+ throw new TypeError('wrong kind');
+} catch (error) {
+ if (error instanceof Error) {
+  error.name = 'SyntaxError';
+  console.log(`${error.constructor === TypeError}:${error.constructor === SyntaxError}:${error.constructor === Error}`);
+  console.log(`${error instanceof TypeError}:${error instanceof SyntaxError}:${error instanceof Error}`);
+ }
+}
+function invalid(): RegExp { return new RegExp('(', 'u'); }
+let finallyCount = 0;
+try {
+ try { invalid(); } finally { finallyCount += 1; }
+} catch (error) {
+ if (error instanceof Error) console.log(`${error.constructor === SyntaxError}:${error.constructor === TypeError}:${finallyCount}`);
+}
+try { throw new SyntaxError('syntax'); } catch (error) {
+ if (error instanceof Error) console.log(`${SyntaxError === error.constructor}:${error.constructor !== Error}`);
+}
+
+try { throw new RangeError('kind'); } catch (error) {
+ if (error instanceof Error) console.log(`${error.constructor === RangeError}:${error.constructor === Error}:${error.name}`);
+}
+try { throw new ReferenceError('kind'); } catch (error) {
+ if (error instanceof Error) console.log(`${error.constructor === ReferenceError}:${error.constructor === Error}:${error.name}`);
+}
+try { throw new EvalError('kind'); } catch (error) {
+ if (error instanceof Error) console.log(`${error.constructor === EvalError}:${error.constructor === Error}:${error.name}`);
+}
+try { throw new URIError('kind'); } catch (error) {
+ if (error instanceof Error) console.log(`${error.constructor === URIError}:${error.constructor === Error}:${error.name}`);
+}

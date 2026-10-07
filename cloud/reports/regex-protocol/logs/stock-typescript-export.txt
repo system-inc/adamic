@@ -1,0 +1,5 @@
+=== RUN   TestRegExpProtocolTypeScriptAudit
+    regexp_protocol_audit_test.go:46: exported 223 adapted diagnostic programs
+--- PASS: TestRegExpProtocolTypeScriptAudit (0.22s)
+PASS
+ok  	github.com/system-inc/adamic/cmd/adamic-test262	0.226s

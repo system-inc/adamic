@@ -1,0 +1,26 @@
+const re = /a/g;
+let calls = 0;
+console.log('a_a'.replace(re, (whole: string): string => {
+ console.log(`${calls}:${re.lastIndex}:${whole}`);
+ calls++;
+ re.lastIndex = 17;
+ return whole.toUpperCase();
+}));
+console.log(`${calls}:${re.lastIndex}`);
+console.log('aba'.replaceAll(/a/g, (): string => 'X'));
+console.log(/a/[Symbol.replace]('aba', (whole: string): string => whole + '!'));
+console.log(RegExp.prototype[Symbol.replace].call(/a/g, 'aba', (whole: string): string => whole.toUpperCase()));
+console.log('🌍'.replace(/(?:)/gu, (): string => '-'));
+try {
+ 'aa'.replace(/a/g, (whole: string): string => { throw new TypeError(whole); });
+} catch (error) {
+ if (error instanceof Error) console.log(`${error.constructor === TypeError}:${error.message}`);
+} finally { console.log('finally'); }
+try {
+ 'aa'.replaceAll(/a/, (): string => 'b');
+} catch (error) {
+ if (error instanceof Error) console.log(`${error.constructor === TypeError}:${error.message}`);
+}
+
+console.log('z'.replace(/a/g, (): string => { console.log('unreachable'); return 'x'; }));
+console.log(/(?:)/u[Symbol.replace]('🌍', (): string => '-'));
