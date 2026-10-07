@@ -14,7 +14,7 @@ console.log(`policy: ${application.setActivationPolicy('Accessory')}`);
 const window = new Window({ contentRectangle: { x: 40, y: 40, width: 320, height: 200 }, styleMask: ['Titled', 'Closable', 'Resizable'], backing: 'Buffered', defer: true });
 console.log(`untitled: [${window.title}]`);
 window.title = 'Adamic';
-console.log(`title: ${window.title}`);
+console.log(`title: ${window.title} (${window.title.length} units, ${window.title.charCodeAt(5)} last)`);
 
 // Non-ASCII and astral text crosses as UTF-16, and so does a lone surrogate, unit for unit.
 window.title = 'Ken ✓ 𝔸';
