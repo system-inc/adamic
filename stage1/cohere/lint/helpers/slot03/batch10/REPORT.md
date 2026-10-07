@@ -1,7 +1,7 @@
 Built isURL, isAbsoluteSize and isRelativeSize in separate .a files: twelve dependency edges across four rules.
-Commits: landing-ready prior tip 760155c on main e8ba3d5; URL claim 4f5c75f and replacement claim 5ae67b6 pushed before source; implementation follows the gate.
-Commands: final focused four-way gate PASS 7.934s and 1,071 lines; final thirty-helper regression PASS 346.152s, 2,988,068 lines; vet/format clean; six uncached input fixtures PASS 1.473s; capture byte-identical.
-Mutants: five new compiling semantic variants caught; all sixty-four owned variants and the missing-consumer mutant caught in the final regression.
+Commits: rebased implementation 6af2fab41eb185e728ec479107ea2d2c28d81e34 on main f8013f0baac41ddc340d76f83bddde38536a8f07; landing evidence pushed at 6cc92eb; original published claims 4f5c75f and 5ae67b6 preceded source.
+Commands: current-main thirty-helper gate PASS 360.138s, 2,988,068 lines; inherited helpers PASS 70.699s; vet/format clean; six uncached input probes PASS 9.425s; capture byte-identical.
+Mutants: five new variants caught; all sixty-four owned semantic variants, four inherited shared variants and the missing-consumer mutant caught again on current main.
 Not covered: full repository gate, whole-rule integration, arbitrary malformed UTF-8/UTF-16 adapters and unavailable external live Tailwind/corpora.
 
 ## Landing and claim race
@@ -147,3 +147,19 @@ Cohere pin 715ba94f3608a6500086b1076ce5cb7e51b836db; nproc=5, cgroup quota 40000
 - TestSlot03HelperMutants/listener_kinds.a/shared-list; at line 1114949: got "StringLiteral,CallExpression,VariableDeclaration" Go "JsxAttribute,CallExpression,VariableDeclaration"
 
 Main advanced to f8013f0 during the gate. The implementation is committed before rebasing; current-main landing validation is recorded separately after the rebase. No main or area branch is pushed.
+
+## Current-main landing evidence
+
+Main advanced from e8ba3d5 to f8013f0 during the pre-rebase gate. After committing the finished batch, all forty-one branch commits rebased cleanly onto f8013f0. The implementation tip is 6af2fab41eb185e728ec479107ea2d2c28d81e34. No helper source or shared file needed a fix. Earlier e8ba3d5 gates remain historical observations, not evidence on current main.
+
+With the setup environment sourced, the current-main command is:
+
+go test ./stage1/cohere/lint/helpers ./stage1/cohere/lint/helpers/slot03 -count=1 -v -timeout=20m > stage1/cohere/lint/helpers/slot03/batch10/evidence/landing-final.log 2>&1
+
+Both packages pass: inherited helpers 70.699s and all thirty owned helpers 360.138s. The owned package compares 2,988,068 Go/source-Node/sanitized-native lines; batches three through ten also compare emitted JavaScript. All sixty-four owned compiling semantic variants and the missing-consumer mutant are caught. The inherited package reruns its four separate compiling mutants and ten refusal cases. Exact current-main witnesses are in landing-final.log; no withdrawn digit/prefix variants are in this final table.
+
+Current-main go vet ./... and gofmt -l cmd internal stage1/cohere/lint/helpers/slot03 have empty landing-vet.log and landing-gofmt.log, exit 0. ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestInputAgreesWithNode$' -count=1 -v -timeout=20m passes in 9.425s, zero cache hits and six probe misses, in landing-oracle.log.
+
+Landing evidence was pushed at 6cc92eb only to codex/lint-helpers-03, using a force-with-lease against the last published claim 5ae67b6 after the user-required rebase. No main or area branch was pushed. The first report-updater attempt failed on Go output spacing before changing the narrative; the logs were published successfully and this documentation update corrects the narrative. Source and test results are unchanged.
+
+The full repository gate, whole-rule integration, malformed adapters and external installed Tailwind/corpora remain outside these passing package gates.
