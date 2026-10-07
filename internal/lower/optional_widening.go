@@ -3,7 +3,14 @@ package lower
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	_ "unsafe"
 )
+
+// Use the checker through its submodule, as the existing instantiation bridges do.
+// The generated shim does not yet expose this normalization entry point.
+//
+//go:linkname reducedOptionalSource github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getReducedType
+func reducedOptionalSource(receiver *checker.Checker, source *checker.Type) *checker.Type
 
 // optionalWidening names the relation whose optional field could be hidden by a structural view.
 // This is independent of mutable invariance: even a readonly optional field can lie on a read.
@@ -16,6 +23,12 @@ type optionalWidening struct {
 
 func (l *lowering) optionalWidened(source, target *checker.Type, skip map[string]bool, visited map[[2]*checker.Type]bool) *optionalWidening {
 	if source == nil || target == nil {
+		return nil
+	}
+	// An impossible relation constituent cannot hide an optional property. This
+	// reduction says nothing about whether the outer expression is unreachable.
+	source = reducedOptionalSource(l.checker, source)
+	if source.Flags()&checker.TypeFlagsNever != 0 {
 		return nil
 	}
 	if weak := l.weakTarget(source); weak != nil {

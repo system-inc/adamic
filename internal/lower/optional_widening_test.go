@@ -153,3 +153,19 @@ func TestOptionalWideningWholeProgram(t *testing.T) {
 		})
 	}
 }
+
+// The coverage reproducer has an inhabited outer value and an impossible union arm.
+// Exercise the relation pass directly: declare supplies no runtime initializer.
+func TestOptionalWideningReducedSource(t *testing.T) {
+	program, err := load.Load([]string{"testdata/reduced_optional_union.a"})
+	if err != nil {
+		t.Fatal(err)
+	}
+	file := program.Files()[0]
+	checker, release := program.Checker(context.Background(), file)
+	defer release()
+	l := &lowering{checker: checker, program: program}
+	if err := l.refuse(file); err != nil {
+		t.Fatal(err)
+	}
+}
