@@ -19,3 +19,4 @@ codex/dot-a	the .a rename codemod; run once, never merged (compiler, Oct 6 23:25
 codex/stage3-contracts	superseded by codex/stage3-contracts-ledger (typescript, Oct 6 23:20)
 codex/workers-split	its one commit is in codex/workers-split-boundary by patch (platforms, Oct 6 23:18)
 codex/no-shared-lists	dropped: 11 hours stale and cross-cutting; filed to redo from main with integration in a quiet window (compiler, Oct 7 00:45)
+codex/lint-cost-split	dead for lint: runtime's kind-listener prototype, closed by cohere_lint_rules as the lever the harness took (cohere_lint, Oct 7 04:34)
