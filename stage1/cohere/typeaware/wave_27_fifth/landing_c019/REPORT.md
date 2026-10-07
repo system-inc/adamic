@@ -129,3 +129,11 @@ published default-option oracle. Full repository tests and the other inherited
 rule gates were not run. No protected compiler, shared parser, registration
 generator or shared test harness file was edited. The shared Go dispatcher
 changes one physical registration line; new facts live in their own Go/.a files.
+
+## Final selection after publishing
+
+Fetched all origin heads after publishing f26b60fae. The audit covers 565 origin
+refs, 197 ranked rules and 33 Markdown claim records. Only eight unclaimed entries
+remain, all React-family rules covered by the parking instruction. There are no
+eligible next rules, so no further claim is made. Current main remains c01907a7
+and the owned branch contains it. final-selection.json records the eight names.
