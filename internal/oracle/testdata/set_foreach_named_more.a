@@ -1,0 +1,63 @@
+// Named Set callbacks: delete a later element, append, keep both parameters, reassign the first, throw.
+function key(index: number): string { return `key${index}`; }
+
+let kept: string[] = [];
+
+function filled(): Set<string> {
+	const collection = new Set<string>();
+	for (let index = 0; index < 8; index += 1) {
+		collection.add(key(index));
+	}
+	return collection;
+}
+
+function deleteLater(item: string, current: string, owner: Set<string>): void {
+	if (current === "key0") { owner.delete(key(1)); }
+	kept.push(item);
+	kept.push(current);
+	console.log(`later ${item} ${current} ${item === current} ${owner.size}`);
+}
+
+function append(item: string, current: string, owner: Set<string>): void {
+	if (current === "key0") {
+		owner.delete(current);
+		owner.add(key(8));
+	}
+	kept.push(current);
+	console.log(`append ${item} ${current} ${owner.size}`);
+}
+
+function reassignFirst(item: string, current: string, owner: Set<string>): void {
+	owner.delete(current);
+	console.log(`first ${item} ${current} ${item === current}`);
+	item = `${item}/reassigned`;
+	kept.push(current);
+	kept.push(item);
+	console.log(`reassigned ${item} ${current}`);
+}
+
+function throwBorrowed(item: string, current: string, owner: Set<string>): void {
+	owner.delete(current);
+	kept.push(item);
+	kept.push(current);
+	throw new Error(`deleted ${current} ${item}`);
+}
+
+function run(name: string, visit: (item: string, current: string, owner: Set<string>) => void): void {
+	kept = [];
+	const collection = filled();
+	try {
+		collection.forEach(visit);
+	} catch (error) {
+		console.log(error instanceof Error ? error.message : "unexpected");
+	}
+	console.log(`${name} kept ${kept.join(",")} remaining ${collection.size}`);
+	const after: string[] = [];
+	collection.forEach((item) => { after.push(item); });
+	console.log(`${name} after ${after.join(",")}`);
+}
+
+run("later", deleteLater);
+run("append", append);
+run("reassignFirst", reassignFirst);
+run("throw", throwBorrowed);

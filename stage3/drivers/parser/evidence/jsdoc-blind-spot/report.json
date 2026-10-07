@@ -1,0 +1,23 @@
+{
+  "node": {
+    "bytes": 35456964,
+    "sha256": "2014ef06f9db928b50d001787c44e490bbdbd8ecd9e912d3f676d58148ffefc5",
+    "exit": 0,
+    "stderr_bytes": 0
+  },
+  "mutant": {
+    "bytes": 35456964,
+    "sha256": "8dbdb58ef8125993b36bb93af30b9cfc233786b886489ef2b014002ece466246",
+    "exit": 0,
+    "stderr_bytes": 0,
+    "caught_by": "cmp of complete preorder dump; both Node executions exited zero"
+  },
+  "mutation": "parseJSDocCommentWorker.doJSDocScan: tagsArray becomes undefined; parse consumes tags but returns none",
+  "files": 81,
+  "legacy_full_comparison_exit": 0,
+  "positive_tag_control": {
+    "baseline": "1 1\n",
+    "dropped_tags": "1 0\n"
+  },
+  "scope": "Legacy dump prints zero attached JSDoc nodes or tags and no jsDocDiagnostics"
+}

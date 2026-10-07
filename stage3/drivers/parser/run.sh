@@ -69,10 +69,18 @@ assert a[0] == b[0] == 'Identifier' and a[1] == b[1] and int(b[2]) == int(a[2]) 
 assert before.split('\t')[1:] == after.split('\t')[1:]
 rows['mutation'] = {'line': line, 'before': before, 'after': after, 'changed_lines': 1}
 rows['files'] = len((out / 'manifest').read_text().splitlines())
+rows['schema'] = 'parser-preorder-with-jsdoc-v2'
+rows['coverage'] = {
+    'jsdoc_nodes': sum(line.startswith('JSDoc ') for line in normal),
+    'tag_nodes': sum('\ttagName ' in line for line in normal),
+    'type_expressions': sum(line.startswith('JSDocTypeExpression ') for line in normal),
+    'jsdoc_diagnostics': sum(line.startswith('jsDocDiagnostic ') for line in normal),
+}
 rows['mutant'] ['caught_by'] = 'cmp of complete preorder dump; both Node executions exited zero'
 (out / 'report.json').write_text(json.dumps(rows, indent=2) + '\n')
 print(json.dumps(rows, indent=2))
 PY
+python3 "$here/jsdoc-mutants.py" "$tree" "$inputs" "$out/jsdoc-mutants" --baseline "$out/node.dump" > "$out/jsdoc-mutants.log" 2>&1
 if [ -n "$native" ]; then
     "$native" "$inputs" "$out/manifest" > "$out/native.dump" 2> "$out/native.stderr"
     cmp "$out/node.dump" "$out/native.dump" > "$out/native-comparison.log" 2>&1
