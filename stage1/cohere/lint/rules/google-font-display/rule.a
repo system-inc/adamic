@@ -1,0 +1,57 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import { decode } from './entities.a';
+import { googleFontDisplayMissing, googleFontDisplayNotRecommended } from './messages.a';
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    adapter(): void {
+        if(!this.context.source.includes('<')) { return; }
+        for(const node of this.context.parser.nodes) {
+            if(node.kind === 'JsxOpeningElement' || node.kind === 'JsxSelfClosingElement' || node.kind === 'JsxOpeningFragment') { return; }
+        }
+        panic('NotYet: stage-1 JSX parser adapter');
+    }
+    attribute(index: number, wanted: string, insensitive: boolean): number {
+        for(const child of this.context.node(index).children) {
+            const attributes = this.context.node(child);
+            if(attributes.kind !== 'JsxAttributes') { continue; }
+            for(const property of attributes.children) {
+                const node = this.context.node(property);
+                const name = node.children[0] ?? -1;
+                if(node.kind !== 'JsxAttribute' || name < 0 || this.context.node(name).kind !== 'Identifier') { continue; }
+                const text = this.context.node(name).text;
+                if((insensitive ? text.toLowerCase() : text) === wanted) { return property; }
+            }
+        }
+        return -1;
+    }
+    value(attribute: number): string[] {
+        if(attribute < 0) { return []; }
+        const index = this.context.node(attribute).children[1] ?? -1;
+        return index >= 0 && this.context.node(index).kind === 'StringLiteral' ? [decode(this.context.node(index).text)] : [];
+    }
+    prepare(root: number): void { this.adapter(); }
+    visit(index: number): void {
+        const tag = this.context.node(index).children[0] ?? -1;
+        if(tag < 0 || this.context.node(tag).kind !== 'Identifier' || this.context.node(tag).text !== 'link') { return; }
+        const href = this.value(this.attribute(index, 'href', true));
+        if(href.length === 0) { return; }
+        const reference = href[0] ?? '';
+        if(!reference.startsWith('https://fonts.googleapis.com/css')) { return; }
+        let display = '';
+        let found = false;
+        const query = reference.indexOf('?');
+        if(query >= 0) {
+            for(const pair of reference.slice(query + 1).split('&')) {
+                const equals = pair.indexOf('=');
+                if(equals >= 0 && pair.slice(0, equals) === 'display') { display = pair.slice(equals + 1); found = true; break; }
+            }
+        }
+        if(!found) { this.context.report(index, '@next/next/google-font-display', 'googleFontDisplayMissing', googleFontDisplayMissing, '', '', ''); }
+        else if(['auto', 'block', 'fallback'].includes(display)) {
+            this.context.report(index, '@next/next/google-font-display', 'googleFontDisplayNotRecommended', googleFontDisplayNotRecommended, '', '', '');
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
