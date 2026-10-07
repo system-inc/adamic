@@ -61,6 +61,8 @@ type plan struct {
 	RequiredVariables []string
 	Environment       *environmentRequirement
 	Archive           *archiveRequirement `json:",omitempty"`
+	PackageSeconds    map[string]float64  `json:",omitempty"`
+	Frozen            *frozenIdentity     `json:",omitempty"`
 }
 type event struct {
 	Action, Package, Test, Output string
@@ -139,7 +141,7 @@ func run(args []string) error {
 		if err := flags.Parse(args[1:]); err != nil {
 			return err
 		}
-		p, err := makePlan(*count)
+		p, err := makeFrozenPlan(*count)
 		if err != nil {
 			return err
 		}
@@ -153,6 +155,7 @@ func run(args []string) error {
 		jobs := flags.Int("jobs", 0, "legacy package job override; must agree with an explicit concurrency setting")
 		budget := flags.String("concurrency", defaultConcurrency, "auto or JOBSxPARALLEL, for example 4x1 or 2x2")
 		resume := flags.Bool("resume", false, "reuse complete package evidence for identical execution inputs")
+		frozen := flags.String("plan", "", "frozen plan JSON; validate instead of rediscovering packages")
 		scratch := flags.String("scratch", "/workspace/adamic-gate-scratch", "disk-backed scratch root outside the repository")
 		if err := flags.Parse(args[1:]); err != nil {
 			return err
@@ -162,14 +165,30 @@ func run(args []string) error {
 			return err
 		}
 		packageJobs, testParallel, concurrencySetting = configured.Jobs, configured.Parallel, configured.Setting
-		return shard(*index, *count, *out, *scratch, *resume)
+		if *frozen != "" {
+			explicitCount := false
+			flags.Visit(func(f *flag.Flag) {
+				if f.Name == "count" {
+					explicitCount = true
+				}
+			})
+			if !explicitCount {
+				var header plan
+				if err := loadJSON(*frozen, &header); err != nil {
+					return err
+				}
+				*count = header.Count
+			}
+		}
+		return shardWithPlan(*index, *count, *out, *scratch, *resume, *frozen)
 	case "merge":
 		flags := flag.NewFlagSet("merge", flag.ContinueOnError)
 		out := flags.String("out", "merged", "merged evidence directory")
+		frozen := flags.String("plan", "", "frozen plan JSON; validate instead of rediscovering packages")
 		if err := flags.Parse(args[1:]); err != nil {
 			return err
 		}
-		return merge(flags.Args(), *out)
+		return mergeWithPlan(flags.Args(), *out, *frozen)
 	case "compare":
 		if len(args) != 3 {
 			return errors.New("compare <merged directory or JSON> <unsharded JSON log or git:remote:gate-logs/sha/plain>")
@@ -547,6 +566,7 @@ func makePlan(count int) (plan, error) {
 		return p, err
 	}
 	p.Shards = predictions(p, weights)
+	p.PackageSeconds = packagePredictions(p, weights)
 	p.Digest = planDigest(p)
 	return p, nil
 }
@@ -678,6 +698,9 @@ func buildFlags(commit, before, after string) string {
 	return fmt.Sprintf("concurrency=%q package_jobs=%d test_parallel=%d effective_parallel=%d budget=%d commit=%s nproc=%s cpu.max=%q go=%q clang=%q node=%q load_before=%q load_after=%q uncached=1 GOFLAGS=%q CGO_ENABLED=%q GOMAXPROCS=%q width_deps=%q", c.Setting, c.Jobs, c.Parallel, c.EffectiveParallel, c.Budget, commit, processorCount(), quota, get("go", "version"), get("clang", "--version"), get("node", "--version"), before, after, os.Getenv("GOFLAGS"), os.Getenv("CGO_ENABLED"), os.Getenv("GOMAXPROCS"), os.Getenv("ADAMIC_MARKDOWNWIDTH_DEPS"))
 }
 func shard(index, count int, out, scratch string, resume bool) error {
+	return shardWithPlan(index, count, out, scratch, resume, "")
+}
+func shardWithPlan(index, count int, out, scratch string, resume bool, frozen string) error {
 	started := time.Now()
 	beforeLoad := loadAverage()
 	if out == "" || index < 0 || index >= count {
@@ -721,7 +744,7 @@ func shard(index, count int, out, scratch string, resume bool) error {
 	if err := os.Setenv("TMPDIR", root); err != nil {
 		return err
 	}
-	p, err := makePlan(count)
+	p, err := consumePlan(frozen, count, index)
 	if err != nil {
 		return err
 	}
@@ -853,7 +876,7 @@ func shard(index, count int, out, scratch string, resume bool) error {
 	for pkg := range byPackage {
 		pkgs = append(pkgs, pkg)
 	}
-	sort.Strings(pkgs)
+	sortPackages(p, index, pkgs)
 	fmt.Printf("shard %d disk before=%d bytes scratch=%s /tmp_free=%d bytes /tmp_tmpfs=%t\n", index, beforeDisk, root, free("/tmp"), tmpfs("/tmp"))
 	runPackage := func(pkg string) error {
 		packageDir := filepath.Join(out, "packages", shortHash(pkg))
@@ -977,6 +1000,7 @@ func shard(index, count int, out, scratch string, resume bool) error {
 	close(jobs)
 	workers.Wait()
 	// Aggregate only after workers finish, in stable package order. Checkpoints are durable earlier.
+	sort.Strings(pkgs)
 	for _, pkg := range pkgs {
 		directory := filepath.Join(out, "packages", shortHash(pkg))
 		if err := appendFile(raw, filepath.Join(directory, "test.jsonl")); err != nil {
@@ -1155,6 +1179,9 @@ func validateResults(expected plan, index int, results []result, produced map[st
 }
 
 func merge(dirs []string, out string) error {
+	return mergeWithPlan(dirs, out, "")
+}
+func mergeWithPlan(dirs []string, out, frozen string) error {
 	if len(dirs) == 0 {
 		return errors.New("merge requires shard directories")
 	}
@@ -1166,7 +1193,7 @@ func merge(dirs []string, out string) error {
 		}
 		summaries = append(summaries, s)
 	}
-	expected, err := makePlan(summaries[0].Plan.Count)
+	expected, err := consumePlan(frozen, summaries[0].Plan.Count, -1)
 	if err != nil {
 		return err
 	}
