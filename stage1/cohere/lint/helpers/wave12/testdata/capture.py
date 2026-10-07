@@ -49,7 +49,7 @@ func normalizeValueFunctionArgument(argument string) string {
     names = []
     for file in ['enforce_canonical_classes_test.go','enforce_consistent_class_order_test.go','enforce_consistent_variant_order_test.go','enforce_shorthand_classes_test.go','no_conflicting_classes_test.go','no_unknown_classes_test.go']:
         names.extend(re.findall(r'^func (Test\w+)\(', (COHERE/'internal/lint/rules/tailwind'/file).read_text(), re.MULTILINE))
-    pattern = '^(' + '|'.join(names) + ')$' 
+    pattern = '^(' + '|'.join(names) + ')$'
     with (HERE.parent/'evidence/consumers.log').open('w') as log:
         subprocess.run(['go','test','-overlay='+str(mapping),'./internal/lint/rules/tailwind','-run',pattern,'-count=1','-v','-timeout=15m'],cwd=COHERE,env=environment,stdout=log,stderr=subprocess.STDOUT,check=True)
     with (HERE.parent/'evidence/utility.log').open('w') as log:

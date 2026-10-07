@@ -1,5 +1,5 @@
 Built: value-function argument normalization in one .a helper file for six Tailwind consumers.
-Commits: ownership 61519ec4 was pushed before code; implementation commit follows this report.
+Commits: ownership 61519ec4 was pushed before code; implementation 32a101a8.
 Checks: 9,364 cases / 309,422 bytes match Go, Node source, emitted JavaScript and sanitized native; package PASS 9.092s, vet clean, uncached oracle PASS 6.398s.
 Mutants: namespace suffix, crossing newline and nested-key insertion all compiled and were caught only by comparison on all three backends, rows 8, 168 and 12.
 Uncovered: missing repository-specific fixtures, arbitrary raw invalid UTF-8, complete repository gate and whole rule port/finding parity; zero final helper blockers removed alone.

@@ -1,0 +1,22 @@
+=== RUN   TestNormalizationMatchesGo
+    normalization_test.go:94: 9364 cases and 309422 UTF-16 observation bytes match actual Go, source Node, ASan/UBSan native and emitted JavaScript
+--- PASS: TestNormalizationMatchesGo (2.30s)
+=== RUN   TestNormalizationMutants
+=== RUN   TestNormalizationMutants/namespace-suffix
+    normalization_test.go:129: backend 0 compiled semantic mutant caught only by Go comparison at row 8
+    normalization_test.go:129: backend 1 compiled semantic mutant caught only by Go comparison at row 8
+    normalization_test.go:129: backend 2 compiled semantic mutant caught only by Go comparison at row 8
+=== RUN   TestNormalizationMutants/newline-crossing
+    normalization_test.go:129: backend 0 compiled semantic mutant caught only by Go comparison at row 168
+    normalization_test.go:129: backend 1 compiled semantic mutant caught only by Go comparison at row 168
+    normalization_test.go:129: backend 2 compiled semantic mutant caught only by Go comparison at row 168
+=== RUN   TestNormalizationMutants/nested-key-join
+    normalization_test.go:129: backend 0 compiled semantic mutant caught only by Go comparison at row 12
+    normalization_test.go:129: backend 1 compiled semantic mutant caught only by Go comparison at row 12
+    normalization_test.go:129: backend 2 compiled semantic mutant caught only by Go comparison at row 12
+--- PASS: TestNormalizationMutants (6.78s)
+    --- PASS: TestNormalizationMutants/namespace-suffix (2.50s)
+    --- PASS: TestNormalizationMutants/newline-crossing (2.01s)
+    --- PASS: TestNormalizationMutants/nested-key-join (1.96s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/wave12	9.092s
