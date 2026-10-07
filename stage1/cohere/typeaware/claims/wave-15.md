@@ -28,3 +28,9 @@ The first three remaining names, all with combined volume zero, are:
 
 Reserved for this continuation before implementation. Inventory/count records
 were excluded from implementation checks.
+
+Continuation status after Ahra's correction: the global-listener and module-
+namespace mock ports are implemented and validated. The leaked-number-render
+reservation is blocked by missing JSX parser support on this branch; no port
+is claimed for it. No additional rules will be reserved. See the continuation
+report outside this claims directory for the exact refusal and evidence.

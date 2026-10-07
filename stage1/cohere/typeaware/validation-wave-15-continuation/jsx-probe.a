@@ -1,0 +1,2 @@
+import {Parser} from '/workspace/adamic/stage1/typescript/parser/parser.ts';
+const parser=new Parser('declare const count:number;const child=<p>{count && \'x\'}</p>;','control.tsx');console.log(`${parser.file()}`);

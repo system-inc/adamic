@@ -1,0 +1,26 @@
+=== RUN   TestWave15ContinuationAgreementAndMutants
+    wave_15_continuation_test.go:61: controls: 6987 identical finding bytes; findings 11
+    wave_15_continuation_test.go:64: controls-asan: 6987 identical finding bytes; findings 11
+    wave_15_continuation_test.go:67: controls-commonjs: 4320 identical finding bytes; findings 6
+    wave_15_continuation_test.go:67: controls-nodenext: 4320 identical finding bytes; findings 6
+    wave_15_continuation_test.go:67: controls-preserve: 6987 identical finding bytes; findings 11
+    wave_15_continuation_test.go:67: controls-es2020: 6987 identical finding bytes; findings 11
+=== RUN   TestWave15ContinuationAgreementAndMutants/listener
+    wave_15_continuation_test.go:110: listener: exit 0, independent Go bytes catch byte 2954
+=== RUN   TestWave15ContinuationAgreementAndMutants/mock
+    wave_15_continuation_test.go:110: mock: exit 0, independent Go bytes catch byte 48
+=== NAME  TestWave15ContinuationAgreementAndMutants
+    wave_15_continuation_test.go:122: repository: 18485 identical finding bytes; findings 0
+    wave_15_continuation_test.go:123: repository-asan: 18485 identical finding bytes; findings 0
+    wave_15_continuation_test.go:131: repository native=238.270135ms Go=112.095915ms; tsgo: load_ns=68021073 query_ns=0 queries=0 first_query_ns=0 run_ns=166231911
+         cohere: load_ns=57380092 rule_ns=1086256 run_ns=44235069
+    wave_15_continuation_test.go:122: compiler: 5318 identical finding bytes; findings 0
+    wave_15_continuation_test.go:123: compiler-asan: 5318 identical finding bytes; findings 0
+    wave_15_continuation_test.go:131: compiler native=1.628083733s Go=274.906415ms; tsgo: load_ns=236071111 query_ns=0 queries=0 first_query_ns=0 run_ns=1377745953
+         cohere: load_ns=217687300 rule_ns=2245328 run_ns=44135134
+    wave_15_continuation_test.go:143: released handle: panic 70, invalid or released checker handle
+--- PASS: TestWave15ContinuationAgreementAndMutants (50.59s)
+    --- PASS: TestWave15ContinuationAgreementAndMutants/listener (4.94s)
+    --- PASS: TestWave15ContinuationAgreementAndMutants/mock (5.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	50.591s
