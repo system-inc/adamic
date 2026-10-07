@@ -249,8 +249,9 @@ Decision by @system_adamic: opt in by initializer shape, never by the evaluated
 values. Every member must have an explicit initializer: `0`, `1 << n` with a
 numeric literal `n` from 0 to 30, or an `|` expression whose leaves are members
 of this same enum. Parentheses do not change the shape. Implicit `0, 1, 2`,
-bare nonzero literals, direct member aliases and arithmetic initializers keep
-an enum closed and switch-exhaustive under the preceding rules.
+bare nonzero literals and arithmetic initializers keep an enum closed and
+switch-exhaustive under the preceding rules. The source-fixture follow-up below
+also admits direct same-enum aliases, whose values cannot add bits.
 
 ```ts
 enum Flags { None = 0, A = 1 << 0, B = 1 << 1, High = 1 << 30 }
@@ -402,3 +403,83 @@ Only retains and releases changed. All fixture paths are under
 | regexp_null_narrowed.a | 7 | 8 | 5 | 5 |
 | regexp_exec.a | 81 | 82 | 159 | 160 |
 | regexp_unicode.a | 99 | 101 | 86 | 88 |
+
+
+## TypeScript source fixtures
+
+Merged `codex/stage3-fixtures-enums` at `671e1fd` with merge commit `df351a6`.
+The thirteen upstream fixtures remain unchanged. The audited before count was
+6 Compiles, 5 Refused and 2 Checker. The observed after count is 7 Compiles,
+4 Refused and 2 Checker. All seven native observations match source Node on
+stdout, stderr and exit code. Exact observations are in
+[implementation-results.json](../stage3/fixtures/enums/implementation-results.json).
+
+Same-enum member aliases now preserve flag classification. Every declaration
+still needs explicit qualifying initializers and every member value remains a
+non-negative int32. A const for-of binding over a fresh inline array of proven
+flags also preserves its domain when TypeScript infers number[]. An aliased
+mutable array, a mutable loop binding, an unproven element and a different enum
+cannot acquire that proof. Shorthand fields resolve their value symbol, rather
+than the field symbol, and use the same domain checks as explicit fields.
+These changes make `04_parse_tree_mask.a` compile without changing its source.
+
+Name enumeration over a runtime enum and its typeof aliases now lowers through
+`for...in`. Its fixed shape includes numeric reverse keys, sorted as JavaScript
+integer keys, followed by forward member names in declaration order. String
+enums have forward names only. `enums_names.a` holds these rules to Node.
+This support does not admit an arbitrary any object or inherited unknown keys.
+
+The six remaining boundaries and their required adaptations are documented in
+[the fixture report](../stage3/fixtures/enums/README.md#implementation-follow-up).
+`05` and `09` need a signed-mask contract or a source adaptation. `06` needs
+an invariant flag field rather than a generic mutable cast. `07` needs a
+readonly Map view and an explicit sparse-table representation. `08` and `11`
+need typed reflection and checked reads instead of any and unchecked indexing.
+
+The merge had four conflicts. `lower.go` retains both enum initialization
+preflight and accessor-name registration. `class_inheritance.go` retains both
+enum identity/invariance and recursive nominal checks. `refusals.go` retains
+both enum-specific and definite-assignment refusals. `counts.md` retains both
+branches' rows; counts are regenerated for the combined fixture set.
+
+The full uncached `TestNativeAgreesWithNode` suite and the six boundary tests
+passed in 108.586s (native hits 0, Node hits 0). All seven real compiling fixtures
+and the name-enumeration fixture run source Node, generated JavaScript, native
+release, ASan/UBSan and LeakSanitizer. Full lower/load tests passed in 37.094s
+and 2.151s. The permanent name-ordering mutant passed in 0.485s: it compiled and
+exited 0 with empty stderr, and only Node stdout comparison caught its error.
+
+Six temporary compiler mutants were restored after each run and caught by
+assertion failures, with no build failures counted:
+
+| Mutant | Named catch |
+| --- | --- |
+| Disable direct alias classification | TestFlagEnumMemberAliases |
+| Accept a foreign enum alias | TestFlagEnumAliasBoundaries |
+| Skip inline iterable element proofs | TestFlagEnumAliasBoundaries |
+| Preserve a mutable loop binding's proof | TestFlagEnumAliasBoundaries |
+| Skip shorthand value/domain proof | TestFlagEnumInlineIteration |
+| Disable enum-object for-in origin proof | TestEnumNameEnumeration |
+
+Logs are `/tmp/stage3-enums-{oracle-restored,packages,mutants,permanent-mutant-restored}.log`.
+Setup's first warm build overlapped the unresolved merge and failed on conflict
+markers. After resolution, setup passed: Go, clang, Node and submodules ready
+at 0s; cache warm and total at 125s; nproc 5, quota four CPUs. The complete Go
+repository test gate and the complete TypeScript compiler remain untested.
+
+Counts regeneration passed in 16.205s and adds eight rows, the seven compilable
+source fixtures and `enums_names.a`. No existing numeric counts changed.
+`class_inheritance_conditional.a` moved in table order only. Vet, gofmt and
+whitespace outputs are empty.
+
+```sh
+source /workspace/adamic-tools/env.sh
+go test ./internal/lower ./internal/load -count=1 -timeout 30m > /tmp/stage3-enums-packages.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestStage3EnumBoundaries|TestNativeAgreesWithNode' -count=1 -v -timeout 30m > /tmp/stage3-enums-oracle-restored.log 2>&1
+go test ./internal/oracle -run 'TestEnumNameEnumerationMutant|TestStage3EnumBoundaries' -count=1 -v -timeout 30m > /tmp/stage3-enums-permanent-mutant-restored.log 2>&1
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m -args -update-counts > /tmp/stage3-enums-counts-update-restored.log 2>&1
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m > /tmp/stage3-enums-counts-verify.log 2>&1
+go vet ./... > /tmp/stage3-enums-vet-restored.log 2>&1
+gofmt -l cmd internal > /tmp/stage3-enums-format-restored.log
+git diff --check > /tmp/stage3-enums-diff-restored.log
+```

@@ -398,7 +398,7 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 			return nil
 		}
 		own, contextual = l.checker.GetTypeAtLocation(node.Name()), l.checker.GetTypeOfSymbol(property)
-		found = l.widened(own, contextual, map[[2]*checker.Type]bool{})
+		found = l.freshOrWidened(node.Name(), own, contextual)
 	case node.Kind == ast.KindSpreadAssignment:
 		// { ...kennel } copies kennel's fields, not what they hold: each field not written again after
 		// it is kennel's value seen as the literal's field.

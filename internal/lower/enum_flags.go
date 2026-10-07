@@ -50,10 +50,8 @@ func (l *lowering) flagLiteral(node *ast.Node, value float64) bool {
 
 func (l *lowering) flagInitializer(node, declaration *ast.Node, memberAllowed bool) bool {
 	node = ast.SkipParentheses(node)
-	if memberAllowed {
-		if member := l.enumMember(node); member != nil {
-			return member.Parent == declaration
-		}
+	if member := l.enumMember(node); member != nil {
+		return member.Parent == declaration
 	}
 	if l.flagLiteral(node, 0) && !memberAllowed {
 		return true
@@ -125,10 +123,25 @@ func (l *lowering) flagDomainSeen(node *ast.Node, target *ast.Symbol, seen map[*
 	}
 	proven := l.checker.GetTypeAtLocation(node)
 	if proven.Flags()&checker.TypeFlagsEnumLike == 0 && ast.IsIdentifier(node) {
-		symbol := l.symbol(node)
+		symbol := l.flagValueSymbol(node)
 		if symbol != nil && symbol.ValueDeclaration != nil {
 			declaration := symbol.ValueDeclaration
 			if declaration.Kind == ast.KindVariableDeclaration && declaration.Parent.Flags&ast.NodeFlagsConst != 0 && !seen[declaration] {
+				// A fresh inline iterable of primitives has no alias that can replace an element.
+				// The const binding receives only those proven values, even if tsc infers number[].
+				if loop := declaration.Parent.Parent; loop != nil && loop.Kind == ast.KindForOfStatement {
+					iterable := ast.SkipParentheses(loop.AsForInOrOfStatement().Expression)
+					if iterable.Kind == ast.KindArrayLiteralExpression {
+						seen[declaration] = true
+						defer delete(seen, declaration)
+						for _, element := range iterable.AsArrayLiteralExpression().Elements.Nodes {
+							if !l.flagDomainSeen(element, target, seen) {
+								return false
+							}
+						}
+						return true
+					}
+				}
 				if initializer := declaration.AsVariableDeclaration().Initializer; initializer != nil {
 					seen[declaration] = true
 					result := l.flagDomainSeen(initializer, target, seen)
@@ -202,11 +215,26 @@ func (l *lowering) flagMemberWidened(node *ast.Node, contextual *checker.Type) *
 	if target.Flags()&checker.TypeFlagsEnumLike == 0 || !l.flagEnum(l.enumIdentity(target)) || l.flagTarget(target) != nil {
 		return nil
 	}
-	if symbol := l.symbol(node); symbol != nil {
+	if symbol := l.flagValueSymbol(node); symbol != nil {
 		declared := l.checker.GetTypeOfSymbol(symbol)
 		if l.flagTarget(declared) != nil {
 			return &widening{source: declared, target: target, enum: true}
 		}
 	}
 	return nil
+}
+
+// Shorthand names denote a field symbol at the syntax node, but the proof belongs to its value.
+func (l *lowering) flagValueSymbol(node *ast.Node) *ast.Symbol {
+	if node.Parent != nil && node.Parent.Kind == ast.KindShorthandPropertyAssignment {
+		symbol := l.checker.GetShorthandAssignmentValueSymbol(node.Parent)
+		if symbol != nil && symbol.Flags&ast.SymbolFlagsAlias != 0 {
+			symbol = l.checker.GetAliasedSymbol(symbol)
+		}
+		if symbol != nil {
+			return l.checker.GetExportSymbolOfSymbol(symbol)
+		}
+		return nil
+	}
+	return l.symbol(node)
 }

@@ -87,3 +87,45 @@ func TestFlagEnumLiteralSpellings(t *testing.T) {
 		t.Fatal(err)
 	}
 }
+
+func TestFlagEnumMemberAliases(t *testing.T) {
+	t.Parallel()
+	_, err := lowerSource(t, "enum Flags { None = 0, A = 1 << 0, B = 1 << 1, Alias = A, Qualified = Flags.B } const flags: Flags = Flags.Alias | Flags.Qualified;")
+	if err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestEnumNameEnumeration(t *testing.T) {
+	t.Parallel()
+	_, err := lowerSource(t, "enum Names { A, B, Alias = B } const names = Names; for (const name in names) { console.log(name); }")
+	if err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestFlagEnumInlineIteration(t *testing.T) {
+	t.Parallel()
+	_, err := lowerSource(t, flagDeclaration+"function use(box: { flags: Flags }): void {} for (const flags of [Flags.None, Flags.A | Flags.B]) { use({flags}); }")
+	if err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestFlagEnumAliasBoundaries(t *testing.T) {
+	t.Parallel()
+	for _, source := range []string{
+		"enum Other { A = 1 << 0 } enum Flags { None = 0, A = 1 << 0, Alias = Other.A } const flags: Flags = Flags.A | Flags.Alias;",
+		flagDeclaration + "for (const flags of [Flags.A, 99]) { const value: Flags = flags; }",
+		flagDeclaration + "const numbers: number[] = [Flags.A]; numbers.push(99); for (const flags of numbers) { const value: Flags = flags; }",
+		flagDeclaration + "for (let flags of [Flags.A | Flags.B]) { flags = 99; const value: Flags = flags; }",
+		flagDeclaration + "const combined = Flags.A | Flags.B; function use(box: { flags: Flags.A }): void {} use({flags: combined});",
+		flagDeclaration + "interface Node { flags: Flags } type Mutable<T> = { -readonly [K in keyof T]: T[K] }; function set<T extends Node>(node: T, flags: Flags): void { (node as Mutable<T>).flags = flags; }",
+	} {
+		_, err := lowerSource(t, source)
+		var refused *Refused
+		if !errors.As(err, &refused) {
+			t.Fatalf("want Refused, got %v for %s", err, source)
+		}
+	}
+}
