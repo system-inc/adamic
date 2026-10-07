@@ -9,15 +9,18 @@
 
 adamic_object *adamic_thrown;
 
-static const char *const error_names[] = {"name", "message", "code"};
-static const bool error_references[] = {true, true, true};
-static const adamic_shape error_shape = {3, error_names, error_references, NULL};
+static const char *const error_names[] = {"name", "message"};
+static const bool error_references[] = {true, true};
+static const adamic_shape error_shape = {2, error_names, error_references, NULL};
 static adamic_string error_name = ADAMIC_STRING("Error");
 
 adamic_object *adamic_error_new(adamic_string *message) {
 	adamic_object *error = adamic_object_new(&error_shape);
 	error->slots[0].reference = adamic_retain(&error_name);
 	error->slots[1].reference = adamic_retain(message);
+	// Producer evidence: Error owns these strings; optional code is absent.
+	adamic_object_field_types(error)[0] = 3;
+	adamic_object_field_types(error)[1] = 3;
 	return error;
 }
 
