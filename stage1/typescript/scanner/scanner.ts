@@ -932,6 +932,49 @@ export class Scanner {
         this.kind = 'RegularExpressionLiteral';
     }
 
+    // Extend the already scanned identifier with JSX's dash name parts.
+    scanJsxIdentifier(): void {
+        if(this.kind !== 'Identifier' && !this.kind.endsWith('Keyword') && this.kind !== 'PrivateIdentifier') {
+            return;
+        }
+        const start = this.pos;
+        while(this.code() === 45 || isIdentifierPart(this.code())) {
+            this.advance(this.code());
+        }
+        this.value += this.text.slice(start, this.pos);
+        this.kind = keywords.get(this.value) ?? 'Identifier';
+    }
+    // Attribute strings preserve backslashes, entities and line endings.
+    scanJsxAttributeValue(): void {
+        this.fullStart = this.pos;
+        while(isSpace(this.code()) || isLineBreak(this.code())) {
+            this.advance(this.code());
+        }
+        this.start = this.pos;
+        const quote = this.code();
+        if(quote !== 34 && quote !== 39) {
+            this.scan();
+            return;
+        }
+        if(quote === 39) {
+            this.flags |= 65536;
+        }
+        this.pos++;
+        const start = this.pos;
+        while(this.pos < this.text.length && this.code() !== quote) {
+            this.advance(this.code());
+        }
+        this.value = this.text.slice(start, this.pos);
+        if(this.pos === this.text.length) {
+            this.flags |= 4;
+            this.error(1002);
+        }
+        else {
+            this.pos++;
+        }
+        this.kind = 'StringLiteral';
+    }
+
     scanJsx(): string {
         this.start = this.pos;
         this.fullStart = this.pos;

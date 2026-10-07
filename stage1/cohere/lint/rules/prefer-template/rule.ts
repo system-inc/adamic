@@ -1,0 +1,213 @@
+import { SuggestionEdit } from '../../suggestions.a';
+import { space } from '../../context.ts';
+import type { RuleContext } from '../../context.ts';
+import { messagePreferTemplateUnexpectedStringConcatenation } from './messages.ts';
+function tokenStart(context: RuleContext, index: number): number {
+    let position = context.node(index).pos;
+    const end = context.node(index).end;
+    while(position < end) {
+        if(space(context.source.slice(position, position + 1))) {
+            position++;
+            continue;
+        }
+        if(context.source.slice(position, position + 2) === '//') {
+            while(position < end && context.source.slice(position, position + 1) !== '\n') {
+                position++;
+            }
+            continue;
+        }
+        if(context.source.slice(position, position + 2) === '/*') {
+            position += 2;
+            while(position + 1 < end && context.source.slice(position, position + 2) !== '*/') {
+                position++;
+            }
+            position += 2;
+            continue;
+        }
+        break;
+    }
+    return position;
+}
+function tokenText(context: RuleContext, index: number): string {
+    return context.source.slice(tokenStart(context, index), context.node(index).end);
+}
+function triviaText(context: RuleContext, index: number): string {
+    let position = context.node(index).pos;
+    while(space(context.source.slice(position, position + 1))) {
+        position++;
+    }
+    return context.source.slice(position, context.node(index).end);
+}
+function concatenation(context: RuleContext, index: number): boolean {
+    return context.kind(index) === 'BinaryExpression' && context.kind(context.child(index, 1)) === 'PlusToken';
+}
+function string(context: RuleContext, index: number): boolean {
+    return ['StringLiteral', 'NoSubstitutionTemplateLiteral', 'TemplateExpression'].includes(context.kind(index));
+}
+function contains(context: RuleContext, index: number, strings: boolean): boolean {
+    const node = context.unwrap(index);
+    if(concatenation(context, node)) {
+        return contains(context, context.child(node, 0), strings) || contains(context, context.child(node, 2), strings);
+    }
+    return strings ? string(context, node) : !string(context, node);
+}
+function legacy(context: RuleContext, index: number): boolean {
+    const node = context.unwrap(index);
+    if(concatenation(context, node)) {
+        return legacy(context, context.child(node, 0)) || legacy(context, context.child(node, 2));
+    }
+    if(context.kind(node) !== 'StringLiteral') {
+        return false;
+    }
+    const raw = context.source.slice(context.node(node).pos, context.node(node).end);
+    for(let position = 0; position < raw.length; position++) {
+        if(raw.slice(position, position + 1) !== '\\') {
+            continue;
+        }
+        const digit = raw.slice(position + 1, position + 2);
+        const following = raw.slice(position + 2, position + 3);
+        if((digit >= '1' && digit <= '9') || (digit === '0' && following >= '0' && following <= '9')) {
+            return true;
+        }
+        position++;
+    }
+    return false;
+}
+function escape(inner: string): string {
+    let result = '';
+    for(let position = 0; position < inner.length;) {
+        let count = 0;
+        while(inner.slice(position, position + 1) === '\\') {
+            result += '\\';
+            count++;
+            position++;
+        }
+        const character = inner.slice(position, position + 1);
+        if(
+            (character === '`' || (character === '$' && inner.slice(position + 1, position + 2) === '{')) &&
+            count % 2 === 0
+        ) {
+            result += '\\';
+        }
+        result += character;
+        position++;
+    }
+    return result;
+}
+function curly(context: RuleContext, index: number, end: boolean): boolean {
+    const node = context.unwrap(index);
+    // Go deliberately asks startsWithCurly of the right concat, even in its end test.
+    if(concatenation(context, node)) {
+        return curly(context, context.child(node, end ? 2 : 0), false);
+    }
+    if(context.kind(node) === 'TemplateExpression') {
+        const raw = triviaText(context, node);
+        return end ? raw.endsWith('}`') : raw.startsWith('`${');
+    }
+    return context.kind(node) !== 'StringLiteral' && context.kind(node) !== 'NoSubstitutionTemplateLiteral';
+}
+function build(context: RuleContext, index: number, before: string, after: string): string {
+    const node = context.unwrap(index);
+    const kind = context.kind(node);
+    if(kind === 'StringLiteral') {
+        const raw = tokenText(context, node);
+        const quote = raw.slice(0, 1);
+        return `\`${escape(raw.slice(1, -1)).split(`\\${quote}`).join(quote)}\``;
+    }
+    if(kind === 'NoSubstitutionTemplateLiteral' || kind === 'TemplateExpression') {
+        return triviaText(context, node);
+    }
+    if(concatenation(context, node) && contains(context, node, true)) {
+        const left = context.child(node, 0);
+        const right = context.child(node, 2);
+        const plus = tokenStart(context, context.child(node, 1));
+        const beforePlus = context.source.slice(context.node(left).end, plus);
+        const afterPlus = context.source.slice(plus + 1, tokenStart(context, right));
+        if(curly(context, left, true)) {
+            return (
+                build(context, left, before, beforePlus + afterPlus).slice(0, -1) +
+                build(context, right, '', after).slice(1)
+            );
+        }
+        if(curly(context, right, false)) {
+            return (
+                build(context, left, before, '').slice(0, -1) +
+                build(context, right, beforePlus + afterPlus, after).slice(1)
+            );
+        }
+        return `${build(context, left, before, '') + beforePlus}+${afterPlus}${build(context, right, after, '')}`;
+    }
+    return `\`\${${before}${tokenText(context, node)}${after}}\``;
+}
+export function preferTemplate(context: RuleContext, reported: Set<number>, index: number): void {
+    if(!string(context, index) || !concatenation(context, context.parent(index))) {
+        return;
+    }
+    let top = context.parent(index);
+    while(context.parent(top) >= 0) {
+        let parent = context.parent(top);
+        if(context.kind(parent) === 'ParenthesizedExpression') {
+            parent = context.parent(parent);
+            if(!concatenation(context, parent)) {
+                break;
+            }
+        }
+        if(!concatenation(context, parent)) {
+            break;
+        }
+        top = parent;
+    }
+    if(reported.has(top)) {
+        return;
+    }
+    reported.add(top);
+    if(!contains(context, top, false)) {
+        return;
+    }
+    if(legacy(context, top)) {
+        context.reportNode(
+            top,
+            'prefer-template',
+            'unexpectedStringConcatenation',
+            messagePreferTemplateUnexpectedStringConcatenation,
+        );
+        return;
+    }
+    let replacement = build(context, top, '', '');
+    let parent = context.parent(top);
+    while(context.kind(parent) === 'ParenthesizedExpression') {
+        parent = context.parent(parent);
+    }
+    if(context.kind(parent) === 'ExpressionStatement') {
+        let position = tokenStart(context, top) - 1;
+        while(position >= 0 && space(context.source.slice(position, position + 1))) {
+            position--;
+        }
+        if(position >= 0 && ![';', '{', '}'].includes(context.source.slice(position, position + 1))) {
+            replacement = `;${replacement}`;
+        }
+    }
+    context.reportNode(
+        top,
+        'prefer-template',
+        'unexpectedStringConcatenation',
+        messagePreferTemplateUnexpectedStringConcatenation,
+        [new SuggestionEdit(tokenStart(context, top), context.node(top).end, replacement)],
+    );
+}
+
+export class Rule {
+    readonly context: RuleContext;
+    // reported holds the concatenations already reported in this file, so a chain is reported once.
+    readonly reported = new Set<number>();
+    constructor(context: RuleContext) {
+        this.context = context;
+    }
+    visit(index: number): void {
+        preferTemplate(this.context, this.reported, index);
+    }
+}
+
+export function create(context: RuleContext): Rule {
+    return new Rule(context);
+}

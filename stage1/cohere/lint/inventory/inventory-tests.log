@@ -1,0 +1,21 @@
+=== RUN   TestInventoryEngine
+    main_test.go:43: === RUN   TestTransitiveSiblingAndMethodDependencies
+        --- PASS: TestTransitiveSiblingAndMethodDependencies (0.00s)
+        === RUN   TestHelperRankingCountsRulesOnce
+        --- PASS: TestHelperRankingCountsRulesOnce (0.00s)
+        === RUN   TestUnknownFrequencyIsNotZero
+        --- PASS: TestUnknownFrequencyIsNotZero (0.00s)
+        === RUN   TestRegisteredCorpusControl
+        --- PASS: TestRegisteredCorpusControl (0.00s)
+        === RUN   TestBranchEvidenceRequiresExecutableSelector
+        --- PASS: TestBranchEvidenceRequiresExecutableSelector (0.00s)
+        === RUN   TestAdamicCorpusRequiresExplicitBridge
+            adamic_inventory_test.go:175: explicit .a boundary: program: the tsconfig named 1 files but only 0 matched the program's own paths. This is a path-canonicalization mismatch, not an empty project: the compiler lowercases Path() on a case-insensitive filesystem while the config keeps its original casing. Linting the 0 that matched would silently skip the other 1.
+        --- PASS: TestAdamicCorpusRequiresExplicitBridge (0.07s)
+        === RUN   TestFailedFamilyCannotBeMarkedPassed
+        --- PASS: TestFailedFamilyCannotBeMarkedPassed (0.00s)
+        PASS
+        ok  	command-line-arguments	0.090s
+--- PASS: TestInventoryEngine (7.80s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/inventory	7.802s

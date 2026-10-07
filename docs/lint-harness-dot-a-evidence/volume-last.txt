@@ -1,0 +1,30 @@
+=== RUN   TestVolumeMutants
+=== RUN   TestVolumeMutants/interface_accepts_type_suffix
+    volume_test.go:55: interface accepts type suffix caught on Node: case 0 line 6: port "/tmp/adamic-gate/TestVolumeMutants1539984007/001/volume.ts:1:75", Go "/tmp/adamic-gate/TestVolumeMutants1539984007/001/volume.ts:1:41"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestVolumeMutants1539984007/001/volume.ts:1:11
+          nexus/consistency-require-type-suffix  Interface "Bare" should end in "Interface", "Properties", or "Options". Rename to "BareInterface", "BareProperties" if it shapes React component props, or "BareOptions" if it is an options or config bag.
+        
+        range 10 14 noInterfaceSuffix 			10 14
+        /tmp/adamic-gate/TestVolumeMutants1539984007/001/volume.ts:1:41
+          nexus/consistency-require-type-suffix  Interface "WrongType" should end in "Interface", "Properties", or "Options". Rename to "WrongTypeInterface", "WrongTypeProperties" if it shapes React component props, or "WrongTypeOptions" if it is an options or config bag.
+        
+        range 40 49 noInterfaceSuffix 			40 49
+        /tmp/adamic-gate/TestVolumeMutants1539984007/001/volume.ts:1:75
+    volume_test.go:55: interface accepts type suffix caught on native: case 0 line 6: port "/tmp/adamic-gate/TestVolumeMutants1539984007/001/volume.ts:1:75", Go "/tmp/adamic-gate/TestVolumeMutants1539984007/001/volume.ts:1:41"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestVolumeMutants1539984007/001/volume.ts:1:11
+          nexus/consistency-require-type-suffix  Interface "Bare" should end in "Interface", "Properties", or "Options". Rename to "BareInterface", "BareProperties" if it shapes React component props, or "BareOptions" if it is an options or config bag.
+        
+        range 10 14 noInterfaceSuffix 			10 14
+        /tmp/adamic-gate/TestVolumeMutants1539984007/001/volume.ts:1:41
+          nexus/consistency-require-type-suffix  Interface "WrongType" should end in "Interface", "Properties", or "Options". Rename to "WrongTypeInterface", "WrongTypeProperties" if it shapes React component props, or "WrongTypeOptions" if it is an options or config bag.
+        
+        range 40 49 noInterfaceSuffix 			40 49
+        /tmp/adamic-gate/TestVolumeMutants1539984007/001/volume.ts:1:75
+--- PASS: TestVolumeMutants (20.99s)
+    --- PASS: TestVolumeMutants/interface_accepts_type_suffix (18.74s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	21.008s
