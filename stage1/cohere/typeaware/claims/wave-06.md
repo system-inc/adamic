@@ -38,3 +38,19 @@ directories; existing shared harness and registration generator stay untouched.
 The continuation rules are complete; native implementations and complete byte
 comparison evidence are in `wave_06_next/REPORT.md` and `wave_06_next/validation/`.
 No further rules are reserved by this claim.
+
+## Second continuation claim
+
+All six earlier rules are complete, tested and pushed through
+`d7f911f4ac3b789ddd26d1e0cd974cadf8e787e0`. A fresh all-heads origin fetch
+examined 341 remote refs, 33 distinct Markdown claim blobs, 197 ranked rules,
+117 claimed rules and 25 ranked ports on main or the bridge base.
+The first three remaining entries in descending combined volume with lexical
+ties are reserved here before implementation:
+
+1. `no-new-func` (0 compiler, 0 repository)
+2. `no-new-native-nonconstructor` (0 compiler, 0 repository)
+3. `no-new-wrappers` (0 compiler, 0 repository)
+
+Implementations and validation will remain in an owned `wave_06_constructors/`
+directory. No additional rules are claimed.
