@@ -145,3 +145,6 @@ Numeric listener continuation: all thirteen owned modules now export pinned nume
 
 
 Rule JSON continuation: wave21_rules/<module>/rule.json now declares the Go listener kinds for all thirteen owned modules, checked against unmodified production Go maps alongside native numeric exports under normal and ASAN builds. This is inactive metadata, not source-handler registration. Shared numeric ParseNode/handed-node integration and native React HIR lowering remain missing. The harness branch now handles .a and suggestions. React reservations remain retained; no new claims. See ../WAVE_21_RULE_JSON_REPORT.md.
+
+
+Current-main landing continuation: rebased onto f8013f0ba with all 24 patches unchanged. Seven owned wave-21 suites, five inherited bridge suites, expanded external Node oracle and checker/vet passed again, including all rule/listener/adjacency mutants and guards. React source ports remain partial and their reservations are retained. No new claim. See ../WAVE_21_F801_LANDING_REPORT.md and ../validation-wave-21-f801/.
