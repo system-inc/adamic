@@ -1,0 +1,1 @@
+const source = {count: 1}; const value = {label: "x", ...source}; console.log(String(value.count));

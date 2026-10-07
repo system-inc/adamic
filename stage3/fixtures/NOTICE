@@ -1,8 +1,9 @@
 TypeScript
-Copyright (c) Microsoft Corporation.
+Copyright (c) Microsoft Corporation. All rights reserved.
 
-The host fixtures contain code from TypeScript 6.0.3,
+Fixture source excerpts derive from TypeScript 6.0.3,
 https://github.com/microsoft/TypeScript, commit
 050880ce59e30b356b686bd3144efe24f875ebc8.
-TypeScript is licensed under the Apache License, Version 2.0.
-See https://github.com/microsoft/TypeScript/blob/v6.0.3/LICENSE.txt.
+Licensed under the Apache License, Version 2.0.
+See the Apache-2.0 text in ../../LICENSE-APACHE.
+Fixtures extract original functions and add standalone drivers.

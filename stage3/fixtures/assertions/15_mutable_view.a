@@ -1,0 +1,15 @@
+// From TypeScript 6.0.3, src/compiler/utilities.ts:10644
+// Census reason: type assertion sites
+// Support types and driver are reduced scaffolding; the upstream function is unchanged.
+
+interface ReadonlyTextRange { readonly pos: number; readonly end: number; }
+interface TextRange { pos: number; end: number; }
+
+export function setTextRangePos<T extends ReadonlyTextRange>(range: T, pos: number): T {
+    (range as TextRange).pos = pos;
+    return range;
+}
+
+const range: ReadonlyTextRange = { pos: 1, end: 9 };
+console.log(String(setTextRangePos(range, 4).pos));
+console.log(String(range.pos));

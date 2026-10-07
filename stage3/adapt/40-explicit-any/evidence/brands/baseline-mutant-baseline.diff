@@ -1,0 +1,8 @@
+--- reference/api/typescript.d.ts
++++ local/api/typescript.d.ts
+@@ -11446,5 +11446,3 @@
+     function transform<T extends Node>(source: T | T[], transformers: TransformerFactory<T>[], compilerOptions?: CompilerOptions): TransformationResult<T>;
+ }
+ export = ts;
+-
+-type UnreviewedBrandBaselineMutant = string;

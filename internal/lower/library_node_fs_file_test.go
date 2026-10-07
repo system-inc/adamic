@@ -63,7 +63,7 @@ func TestNodeFSFileNamespaceImport(t *testing.T) {
 }
 
 func TestNodeFSFileQualifiedErrorType(t *testing.T) {
-	if _, err := lowerSource(t, `import type {Stats} from 'node:fs'; const error=new Error('plain'); const code=(error as NodeJS.ErrnoException).code; console.log(code??'missing');`); err != nil {
+	if _, err := lowerSource(t, `import type {Stats} from 'node:fs'; const error=new Error('plain'); const failure:NodeJS.ErrnoException=error; const code=failure.code; console.log(code??'missing');`); err != nil {
 		t.Fatal(err)
 	}
 }

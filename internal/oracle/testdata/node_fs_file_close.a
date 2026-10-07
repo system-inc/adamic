@@ -11,4 +11,5 @@ try { writeSync(fd,'closed'); } catch(error) { if (error instanceof Error) { fai
 try { closeSync(-1); } catch(error) { if (error instanceof Error) { failure(error); } }
 
 const plain=new Error('plain');
-console.log(`plain-code=${(plain as NodeJS.ErrnoException).code ?? 'missing'}`);
+const plainErrno: NodeJS.ErrnoException = plain;
+console.log(`plain-code=${plainErrno.code ?? 'missing'}`);

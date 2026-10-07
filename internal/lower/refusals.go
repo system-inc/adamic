@@ -31,7 +31,6 @@ var refusals = map[ast.Kind]refusal{
 	ast.KindVoidExpression:    {"the void operator", "evaluate the expression as a statement"},
 	ast.KindIndexSignature:    {"an index signature", "use a Map, which keeps keys in the order they were added"},
 	ast.KindExportAssignment:  {"export default", "export by name: one name for one thing"},
-	ast.KindTypePredicate:     {"a type predicate", "narrow where you use it, with ===, typeof or instanceof (adamic/no-type-predicate)"},
 	ast.KindNonNullExpression: {"the non-null assertion !", "write ?? panic('why it can't be missing'), or narrow and handle the missing case"},
 }
 
@@ -79,6 +78,12 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		if refused, isRefused := refusals[node.Kind]; isRefused {
 			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
 			return true
+		}
+		if node.Kind == ast.KindTypePredicate {
+			if err := l.provePredicate(node); err != nil {
+				found = err
+				return true
+			}
 		}
 		var assertion *ast.Node
 		if node.Kind == ast.KindPropertyDeclaration {
