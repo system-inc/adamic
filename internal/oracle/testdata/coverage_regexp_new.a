@@ -1,0 +1,2 @@
+const copy = { ...new RegExp('a', 'g') };
+console.log(Object.keys(copy).join(','));

@@ -1,0 +1,306 @@
+[
+  {
+    "program": "internal/oracle/testdata/coverage_error_call.a",
+    "node": {
+      "exit": 0,
+      "stdout": "\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/coverage_error_call.a:1:15: stage 0 can't lower reading Error yet\nexit status 1\n"
+    },
+    "native": null
+  },
+  {
+    "program": "internal/oracle/testdata/coverage_error_construct.a",
+    "node": {
+      "exit": 0,
+      "stdout": "\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/coverage_error_construct.a:2:16: stage 0 can't lower spreading an Error (its name and message aren't own enumerable fields) yet\nexit status 1\n"
+    },
+    "native": null
+  },
+  {
+    "program": "internal/oracle/testdata/coverage_error_mutated.a",
+    "node": {
+      "exit": 0,
+      "stdout": "Custom replacement\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/coverage_error_mutated.a:4:16: stage 0 can't lower spreading an Error (its name and message aren't own enumerable fields) yet\nexit status 1\n"
+    },
+    "native": null
+  },
+  {
+    "program": "internal/oracle/testdata/coverage_error_optional.a",
+    "node": {
+      "exit": 0,
+      "stdout": "absent\nabsent\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/coverage_error_optional.a:2:19: stage 0 can't lower spreading an Error (its name and message aren't own enumerable fields) yet\nexit status 1\n"
+    },
+    "native": null
+  },
+  {
+    "program": "internal/oracle/testdata/coverage_error_view_return.a",
+    "node": {
+      "exit": 0,
+      "stdout": "undefined undefined\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/coverage_error_view_return.a:3:16: stage 0 can't lower spreading through an object view (an Error may be hidden by the view) yet\nexit status 1\n"
+    },
+    "native": null
+  },
+  {
+    "program": "internal/oracle/testdata/coverage_plain_view.a",
+    "node": {
+      "exit": 0,
+      "stdout": "plain replacement original\nliteral own own\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "plain replacement original\nliteral own own\n",
+      "stderr": ""
+    }
+  },
+  {
+    "program": "internal/oracle/testdata/coverage_regexp_call.a",
+    "node": {
+      "exit": 0,
+      "stdout": "\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/coverage_regexp_call.a:1:16: stage 0 can't lower spreading a RegExp or its iterator yet\nexit status 1\n"
+    },
+    "native": null
+  },
+  {
+    "program": "internal/oracle/testdata/coverage_regexp_literal.a",
+    "node": {
+      "exit": 0,
+      "stdout": "\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/coverage_regexp_literal.a:3:16: stage 0 can't lower spreading a RegExp or its iterator yet\nexit status 1\n"
+    },
+    "native": null
+  },
+  {
+    "program": "internal/oracle/testdata/coverage_regexp_new.a",
+    "node": {
+      "exit": 0,
+      "stdout": "\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/coverage_regexp_new.a:1:16: stage 0 can't lower spreading a RegExp or its iterator yet\nexit status 1\n"
+    },
+    "native": null
+  },
+  {
+    "program": "internal/oracle/testdata/coverage_regexp_view.a",
+    "node": {
+      "exit": 0,
+      "stdout": "\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/coverage_regexp_view.a:3:19: stage 0 can't lower spreading through an object view (a RegExp or its iterator may be hidden by the view) yet\nexit status 1\n"
+    },
+    "native": null
+  },
+  {
+    "program": "internal/oracle/testdata/coverage_uncaught_custom_empty.a",
+    "node": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: Custom\n"
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: Custom\n"
+    }
+  },
+  {
+    "program": "internal/oracle/testdata/coverage_uncaught_custom_message.a",
+    "node": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: Custom1: changed 2\n"
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: Custom1: changed 2\n"
+    }
+  },
+  {
+    "program": "internal/oracle/testdata/coverage_uncaught_default_empty.a",
+    "node": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: Error\n"
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: Error\n"
+    }
+  },
+  {
+    "program": "internal/oracle/testdata/coverage_uncaught_empty_changed.a",
+    "node": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: changed 3\n"
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: changed 3\n"
+    }
+  },
+  {
+    "program": "internal/oracle/testdata/coverage_uncaught_no_argument.a",
+    "node": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: Error\n"
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: Error\n"
+    }
+  },
+  {
+    "program": "internal/oracle/testdata/coverage_view_array.a",
+    "node": {
+      "exit": 0,
+      "stdout": "0,1\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/coverage_view_array.a:3:19: stage 0 can't lower spreading through an object view (a value with a different native representation may be hidden by the view) yet\nexit status 1\n"
+    },
+    "native": null
+  },
+  {
+    "program": "internal/oracle/testdata/coverage_view_boolean.a",
+    "node": {
+      "exit": 0,
+      "stdout": "\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/coverage_view_boolean.a:3:19: stage 0 can't lower spreading through an object view (a value with a different native representation may be hidden by the view) yet\nexit status 1\n"
+    },
+    "native": null
+  },
+  {
+    "program": "internal/oracle/testdata/coverage_view_closure.a",
+    "node": {
+      "exit": 0,
+      "stdout": "\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/coverage_view_closure.a:3:19: stage 0 can't lower spreading through an object view (a value with a different native representation may be hidden by the view) yet\nexit status 1\n"
+    },
+    "native": null
+  },
+  {
+    "program": "internal/oracle/testdata/coverage_view_number.a",
+    "node": {
+      "exit": 0,
+      "stdout": "\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/coverage_view_number.a:3:19: stage 0 can't lower spreading through an object view (a value with a different native representation may be hidden by the view) yet\nexit status 1\n"
+    },
+    "native": null
+  },
+  {
+    "program": "internal/oracle/testdata/coverage_view_string.a",
+    "node": {
+      "exit": 0,
+      "stdout": "0,1,2,3\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/coverage_view_string.a:3:19: stage 0 can't lower spreading through an object view (a value with a different native representation may be hidden by the view) yet\nexit status 1\n"
+    },
+    "native": null
+  }
+]

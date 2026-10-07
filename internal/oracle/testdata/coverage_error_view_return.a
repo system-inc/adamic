@@ -1,0 +1,4 @@
+interface Shown { readonly name: string; readonly message: string; }
+function make(): Shown { return new Error('bad'); }
+const copy = { ...make() };
+console.log(`${copy.name} ${copy.message}`);

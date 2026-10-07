@@ -1,0 +1,9 @@
+try {
+ throw new Error('initial');
+} catch (error) {
+ if (error instanceof Error) {
+  error.name = 'Custom';
+  error.message = '';
+  throw error;
+ }
+}
