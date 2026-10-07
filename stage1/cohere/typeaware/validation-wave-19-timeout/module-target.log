@@ -1,0 +1,6 @@
+=== RUN   TestWave19ResolvedCalleeAndProgramModules
+    declaration_ancestry_test.go:173: wrong resolved module edge
+--- FAIL: TestWave19ResolvedCalleeAndProgramModules (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/bridge/tsgo/checker	0.050s
+FAIL

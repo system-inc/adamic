@@ -1,0 +1,20 @@
+=== RUN   TestWave19TimeoutPendingRegistration
+    wave_19_timeout_test.go:105: 18 production table controls; 49 controls total
+    wave_19_timeout_test.go:108: controls: 15417 identical finding bytes; findings 24
+    wave_19_timeout_test.go:114: controls-asan: 15417 identical finding bytes; findings 24
+    wave_19_timeout_test.go:142: timeout mutant: exit 0, empty stderr, Go bytes catch byte 45
+    wave_19_timeout_test.go:164: compiler: 5241 identical finding bytes; findings 0
+    wave_19_timeout_test.go:165: compiler-asan: 5241 identical finding bytes; findings 0
+    wave_19_timeout_test.go:170: compiler Go whole process 0.402865s; cohere: load_ns=328790311 rule_ns=2732159 run_ns=45655585
+    wave_19_timeout_test.go:170: compiler native whole process 2.098467s; tsgo: load_ns=340548561 query_ns=0 queries=0 first_query_ns=0 run_ns=1740300391
+    wave_19_timeout_test.go:164: repository: 18485 identical finding bytes; findings 0
+    wave_19_timeout_test.go:165: repository-asan: 18485 identical finding bytes; findings 0
+    wave_19_timeout_test.go:170: repository Go whole process 0.178689s; cohere: load_ns=81761312 rule_ns=665363 run_ns=71655421
+    wave_19_timeout_test.go:170: repository native whole process 0.300900s; tsgo: load_ns=86201051 query_ns=0 queries=0 first_query_ns=0 run_ns=208237331
+    wave_19_timeout_test.go:180: released handle correctly refused
+    wave_19_timeout_test.go:212: released-registry mutant: exit 0; required panic check kills it
+    wave_19_timeout_test.go:219: unregistered production archive explicitly refuses declaration-ancestry; this is the integration blocker
+    wave_19_timeout_test.go:230: ancestry dispatch is pending integration; comparisons above use only a scratch Go build overlay
+--- PASS: TestWave19TimeoutPendingRegistration (95.91s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	95.918s

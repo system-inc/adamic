@@ -1,0 +1,6 @@
+=== RUN   TestWave19ResolvedCalleeAndProgramModules
+    declaration_ancestry_test.go:141: wrong resolved callee: ["1" "resolved-callee" "1" "0" "1" "/tmp/adamic-gate/TestWave19ResolvedCalleeAndProgramModules453144205/001/input.a" "0" "1" "FunctionDeclaration" "35" "74" "0" "1" "Block" "59" "74" "import {value} from './dependency';export function helper(){return value;}helper();export {};"]
+--- FAIL: TestWave19ResolvedCalleeAndProgramModules (0.01s)
+FAIL
+FAIL	github.com/system-inc/adamic/bridge/tsgo/checker	0.020s
+FAIL

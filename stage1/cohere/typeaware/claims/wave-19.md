@@ -37,3 +37,11 @@ ancestry/global-augmentation, resolved callee declaration and program module-gra
 facts; registering new question files requires the shared facts.go dispatch,
 which Ahra's correction forbids editing outside owned rule files. Stopped without
 editing shared files. See ../WAVE_19_NEXT_REPORT.md for the exact blocker.
+
+Continuation checkpoint f8ef4017: no-uncleared-race-timeout is implemented and
+verified using a scratch registration overlay. Its production bridge registration
+is still pending. Isolated declaration-ancestry, resolved-callee and program-modules
+facts and Adamic decoders are prepared and contract-tested. The other two rule
+implementations remain unfinished; no additional rules have been claimed.
+The actual production archive's unsupported-question refusal is now tested.
+See ../WAVE_19_TIMEOUT_REPORT.md for evidence and the unapplied registration patch.
