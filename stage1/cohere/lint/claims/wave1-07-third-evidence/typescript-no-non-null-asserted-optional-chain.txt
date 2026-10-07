@@ -1,0 +1,4 @@
+@typescript-eslint/no-non-null-asserted-optional-chain finding 10 19 noNonNullOptionalChain
+suggestion suggestRemovingNonNull edits 1
+edit 18 19 ""
+shared oracle rejects this with: unexpected suggestion shape

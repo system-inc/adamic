@@ -56,3 +56,6 @@ on every origin branch and main's source leaves these first syntax-only entries:
 Inventory evidence JSON that enumerates a rule with `claims: []` is not a claim;
 these names occur only in such selection ledgers, not reservations. Main remains
 `ef3d907ecdc4c771b016f7d9c52372def057a340`. This reservation is pushed before code.
+
+Outcome: no-this-alias is a bounded .a candidate; both assertion rules need shared
+suggestion edit support. Reservations remain. See wave1-07-third-report.md.

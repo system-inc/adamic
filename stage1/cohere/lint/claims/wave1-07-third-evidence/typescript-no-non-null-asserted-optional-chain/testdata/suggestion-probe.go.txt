@@ -1,0 +1,47 @@
+package main
+
+import (
+	"fmt"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/core"
+	"github.com/microsoft/TypeScript/tsc/shim/parser"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
+	"github.com/system-inc/cohere/internal/lint/rule"
+	rules "github.com/system-inc/cohere/internal/lint/rules/typescript"
+	"os"
+)
+
+func main() {
+	source := "const r = foo?.bar!;"
+	path := "/tmp/subject.ts"
+	file := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: path, Path: tspath.Path(path)}, source, core.ScriptKindTS)
+	subject := rules.NoNonNullAssertedOptionalChain
+	count := 0
+	incompatible := false
+	listener := subject.Run(rule.Context{SourceFile: file, FileCache: rule.NewFileCache(), Report: func(d rule.Diagnostic) {
+		count++
+		fmt.Printf("%s finding %d %d %s\n", subject.Name, d.Range.Pos(), d.Range.End(), d.Message.Id)
+		for _, s := range d.Suggestions {
+			fmt.Printf("suggestion %s edits %d\n", s.Message.Id, len(s.Fixes))
+			for _, f := range s.Fixes {
+				fmt.Printf("edit %d %d %q\n", f.Range.Pos(), f.Range.End(), f.Text)
+			}
+			if len(s.Fixes) != 1 || s.Fixes[0].Range != d.Range {
+				incompatible = true
+			}
+		}
+	}}, nil)
+	var walk func(*ast.Node)
+	walk = func(n *ast.Node) {
+		if visit := listener[n.Kind]; visit != nil {
+			visit(n)
+		}
+		n.ForEachChild(func(child *ast.Node) bool { walk(child); return false })
+	}
+	walk(file.AsNode())
+	if count != 1 || !incompatible {
+		fmt.Fprintln(os.Stderr, "suggestion gap changed")
+		os.Exit(1)
+	}
+	fmt.Println("shared oracle rejects this with: unexpected suggestion shape")
+}

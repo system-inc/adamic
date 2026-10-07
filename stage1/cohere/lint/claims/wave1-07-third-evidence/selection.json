@@ -1,0 +1,13 @@
+{
+  "origin_refs": 320,
+  "main": "ef3d907ecdc4c771b016f7d9c52372def057a340",
+  "inventory": "73ac2eb0963e1a4166eaa0fbd160203f11dcdbdf",
+  "helper_ready_original": 46,
+  "syntax_only": 287,
+  "selected": [
+    "@typescript-eslint/no-non-null-asserted-optional-chain",
+    "@typescript-eslint/no-non-null-assertion",
+    "@typescript-eslint/no-this-alias"
+  ],
+  "selection_note": "All original helper-ready names reserved. These three appear in selection ledgers with claims: [], not actual claim Markdown. Main volume_messages includes no-non-null-assertion messages but git grep finds no executable implementation for it. Claim effa075c pushed before any implementation."
+}

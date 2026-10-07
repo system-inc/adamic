@@ -1,0 +1,5 @@
+@typescript-eslint/no-non-null-assertion finding 10 14 noNonNull
+suggestion suggestOptionalChain edits 2
+edit 13 14 ""
+edit 14 15 "?."
+shared oracle rejects this with: unexpected suggestion shape
