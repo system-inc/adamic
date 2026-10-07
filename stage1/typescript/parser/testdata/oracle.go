@@ -159,7 +159,7 @@ func run(out *bufio.Writer, path string, countOnly bool, whole bool) int {
 	if strings.HasSuffix(path, ".jsx") {
 		script = core.ScriptKindJSX
 	}
-	f := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: tspath.RootedFilePathFromAbsolute(path), PathKey: tspath.CaseSensitive.PathKey(tspath.RootedPathFromAbsolute(path))}, string(text), script)
+	f := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: tspath.RootedFilePathFromAbsolute(path)}, string(text), script)
 	obsoleteOnly := obsoleteAssertions && len(f.Diagnostics()) > 0
 	for _, d := range f.Diagnostics() {
 		if d.Code() != 2880 {
