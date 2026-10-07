@@ -200,7 +200,10 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
 	}
 	instance.initializer = len(l.result.Functions)
 	initializer := instance.initializer
-	l.result.Functions = append(l.result.Functions, ir.Function{Name: l.result.Functions[index].Name + "_initialize"})
+	source := l.functionSource(declaration)
+	source.Role = "initialize"
+	source.Declaration = append(append([]string{}, source.Declaration...), "initialize")
+	l.result.Functions = append(l.result.Functions, ir.Function{Name: l.result.Functions[index].Name + "_initialize", Source: source})
 	this := l.thisLocal(initializer)
 	outerThis, outerIndex, outerFunction := l.this, l.functionIndex, l.function
 	context := l.result.Functions[initializer]
@@ -334,7 +337,7 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
 		wrapper.Body = append([]ir.Statement{ir.Declare{Local: this, Value: ir.ObjectLiteral{Fields: fields, Class: instance.class, Methods: instance.methodList()}}}, body.Body...)
 		wrapper.Body = append(wrapper.Body, ir.Return{Value: ir.Read{Local: this, Of: ir.Object}})
 		l.result.Functions[index] = wrapper
-		l.result.Functions[initializer] = ir.Function{Name: body.Name}
+		l.result.Functions[initializer] = ir.Function{Name: body.Name, Source: body.Source}
 		return nil
 	}
 	// The public constructor owns its object, including when an initializer throws.
@@ -823,7 +826,7 @@ func (l *lowering) classIdentity(declaration *ast.Node) int {
 		}
 	}
 	identity := len(l.result.Classes) + 1
-	l.result.Classes = append(l.result.Classes, ir.Class{Name: declaration.Name().Text() + "_identity", Definition: definition, Constructor: -1})
+	l.result.Classes = append(l.result.Classes, ir.Class{Source: l.functionSource(declaration), Name: declaration.Name().Text() + "_identity", Definition: definition, Constructor: -1})
 	if l.instances == nil {
 		l.instances = map[string]*instance{}
 	}

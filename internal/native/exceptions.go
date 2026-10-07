@@ -1,8 +1,6 @@
 package native
 
 import (
-	"fmt"
-
 	"github.com/system-inc/adamic/internal/ir"
 )
 
@@ -135,9 +133,8 @@ func (e *emitter) innerHandlers(depth int) int {
 //	rethrow:;           with a finally: the pending error held while finally runs, then on outward
 //	done:;
 func (e *emitter) tryStatement(statement ir.Try) {
-	e.temporaries++
-	number := e.temporaries
-	landing, rethrow, done := fmt.Sprintf("adamic_landing_%d", number), fmt.Sprintf("adamic_rethrow_%d", number), fmt.Sprintf("adamic_done_%d", number)
+	name := e.temporary()
+	landing, rethrow, done := name+"_landing", name+"_rethrow", name+"_done"
 	if !statement.HasCatch {
 		// Without a catch, a throw in the body goes straight to the finally that runs on the way out.
 		landing = rethrow

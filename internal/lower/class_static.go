@@ -81,7 +81,7 @@ func (l *lowering) staticInstance(declaration *ast.Node) (*instance, error) {
 		}
 	}
 	lowered := &instance{static: true, constructor: -1, initializer: -1, superReady: -1, class: len(l.result.Classes) + 1, base: base, methods: map[string]int{}, slots: map[string]int{}}
-	metadata := ir.Class{Name: declaration.Name().Text() + "_static", Constructor: -1, Static: true}
+	metadata := ir.Class{Source: l.functionSource(declaration), Name: declaration.Name().Text() + "_static", Constructor: -1, Static: true}
 	if base != nil {
 		parent := l.result.Classes[base.class-1]
 		metadata.Base = base.class

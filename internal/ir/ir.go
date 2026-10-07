@@ -13,6 +13,9 @@ type Program struct {
 	// Source is the entry file's base name, as written, for the header of what the backends emit.
 	Source string
 
+	// MainModules preserves module boundaries after lowering concatenates Main.
+	MainModules []MainModule
+
 	// Strings are the program's string constants, as UTF-8, in first-use order.
 	Strings []string
 
@@ -42,6 +45,7 @@ type Program struct {
 
 // Class is a class instantiation. Base is zero for a root; Methods has the base slots as a prefix.
 type Class struct {
+	Source SourceIdentity
 	// Definition is the erased source identity, shared by distinct native layouts.
 	Definition   int
 	Name         string
@@ -65,7 +69,8 @@ type Accessor struct {
 
 // Function is a function declaration.
 type Function struct {
-	Name string
+	Name   string
+	Source SourceIdentity
 
 	// Parameters are locals, in order.
 	Parameters []int
@@ -162,8 +167,9 @@ func (t Type) IsReference() bool {
 
 // Local is a variable: its name as written, for reading the output, and its type.
 type Local struct {
-	Name string
-	Type Type
+	Name   string
+	Source SourceIdentity
+	Type   Type
 
 	// Global is a variable declared at the module's top level, which functions can read and write.
 	Global bool
@@ -1146,4 +1152,24 @@ func (p *Program) HasInheritance() bool {
 		}
 	}
 	return false
+}
+
+// SourceIdentity is independent of the order declarations are lowered.
+// Module is relative to the entry file's directory (the program root).
+// Declaration holds class/function ancestry. Anonymous functions are indexed within
+// their enclosing declaration; repeated same-spelling declarations have a local collision suffix.
+// Specialization distinguishes concrete instantiations of the same declaration.
+type SourceIdentity struct {
+	Module         string
+	Declaration    []string
+	Specialization string
+	// Role distinguishes generated adapters from same-spelling source declarations.
+	Role string
+}
+
+// MainModule records a module's contiguous statements, in ECMAScript execution order.
+// Any prefix of Main not covered by these counts is compiler-generated initialization.
+type MainModule struct {
+	Module     string
+	Statements int
 }

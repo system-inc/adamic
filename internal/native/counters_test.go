@@ -47,7 +47,7 @@ func TestFunctionCountersDoNotMove(t *testing.T) {
 		if got := changed[strings.Index(changed, "\nint main("):]; got != main {
 			t.Fatalf("adding %T moved main\nbefore:\n%s\nafter:\n%s", added, main, got)
 		}
-		cache := "static adamic_slot_cache adamic_cache_" + name + "_1;"
+		cache := "static adamic_slot_cache " + stableName("adamic_cache", "slot", name) + "_1;"
 		if !strings.Contains(changed, cache) {
 			t.Fatalf("later function cache moved: missing %s", cache)
 		}

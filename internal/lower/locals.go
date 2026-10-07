@@ -103,6 +103,7 @@ func (l *lowering) noteLocal(local int, proven *checker.Type, node *ast.Node) {
 		l.localTypes, l.localNodes = map[int]*checker.Type{}, map[int]*ast.Node{}
 	}
 	l.localTypes[local], l.localNodes[local] = l.concrete(proven), node
+	l.result.Locals[local].Source = l.sourceIdentity(node)
 	if l.instance != nil {
 		l.instance.templates = append(l.instance.templates, template{local: local, proven: proven})
 	}
