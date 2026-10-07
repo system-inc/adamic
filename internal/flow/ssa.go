@@ -22,8 +22,9 @@
 // Dominance is still what CORRECTNESS is stated against - see `VerifySSA` - but it is computed
 // there, over this graph, for checking rather than for construction.
 //
-// (cohere's comment here also covers its other control-flow graph and the doubled `finally`. Adamic
-// has neither: 0.1 has no `try`.)
+// cohere's comment here also covers its other control-flow graph and the doubled `finally`.
+// Adamic represents exception edges with MayThrow and Throw. Build uses one shared finally block
+// and a Choose terminal for its possible exits, rather than doubling the finally.
 //
 // # The one property everything rests on
 //

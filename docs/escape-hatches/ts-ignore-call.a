@@ -1,0 +1,4 @@
+function value(): number { return 2; }
+// @ts-ignore
+const b: boolean = value();
+console.log(`${b}`);

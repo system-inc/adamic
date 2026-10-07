@@ -1,0 +1,2 @@
+class Box { n!: number; constructor() { this.n = 2; } }
+console.log(`${new Box().n + 1}`);

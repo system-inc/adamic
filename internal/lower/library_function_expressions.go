@@ -12,11 +12,11 @@ func (l *lowering) functionExpression(node *ast.Node) (ir.Expression, error) {
 		return nil, l.notYet(node, "a generator function expression")
 	}
 	if len(node.TypeParameters()) != 0 {
-		return nil, l.notYet(node, "a generic function expression")
+		return nil, l.notYet(node, "a generic function expression (declare a generic function at module scope and call it with concrete type arguments)")
 	}
 	for _, parameter := range node.Parameters() {
 		if ast.IsIdentifier(parameter.Name()) && parameter.Name().Text() == "this" {
-			return nil, l.notYet(parameter, "a function expression with a this parameter (dynamic receivers are not implemented)")
+			return nil, l.notYet(parameter, "a function expression with a this parameter (dynamic receivers are not implemented) (take the receiver as an explicit named parameter instead of this)")
 		}
 	}
 	var invalid error
@@ -30,7 +30,7 @@ func (l *lowering) functionExpression(node *ast.Node) (ir.Expression, error) {
 			return false
 		}
 		if inner.Kind == ast.KindThisKeyword && !ast.IsPartOfTypeNode(inner) {
-			invalid = &Refused{Where: l.program.Where(inner), What: "this in a function expression", Fix: "dynamic receivers are not implemented; capture a named object, or use an arrow in a method"}
+			invalid = &Refused{Where: l.program.Where(inner), What: "this in a function expression", Fix: "dynamic receivers are not implemented; capture a named object, or use an arrow in a method (adamic/no-dynamic-this)"}
 			return true
 		}
 		return inner.ForEachChild(visit)

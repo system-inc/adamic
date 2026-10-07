@@ -1,0 +1,29 @@
+// Every pair reaches the operators through variables rather than constant folding.
+const values = [
+	0, -0, 1, -1, 2, -2, 0.5, -0.5, 1.5, -1.5,
+	2147483647, -2147483647, 2147483648, -2147483648,
+	2147483647.5, -2147483648.5, 4294967295, -4294967295, 4294967296, -4294967296,
+	9007199254740991, -9007199254740991, 9007199254740992, -9007199254740992,
+	9007199254740994, -9007199254740994, 1e21, -1e21, 1e300, -1e300,
+	5e-324, -5e-324, NaN, Infinity, -Infinity,
+];
+for (const left of values) {
+	console.log(`not ${left} ${~left} ${Object.is(~left, -0)}`);
+	for (const right of values) {
+		const remainder = left % right;
+		console.log(`% ${left} ${right} ${remainder} ${Object.is(remainder, -0)}`);
+		console.log(`bits ${left & right} ${left | right} ${left ^ right} ${left << right} ${left >> right} ${left >>> right}`);
+		// Pure nesting must keep the bits, including >>>'s unsigned number result.
+		console.log(`nested ${~(left & right)} ${(left | right) ^ ~left} ${(left >>> right) >> right} ${(left >> right) >>> right} ${(left << right) & ~right}`);
+	}
+}
+// Calls forbid fusion: their side effects must still see the old left operand.
+let value = -1;
+function change(): number {
+	value = 8;
+	return 1;
+}
+console.log(`order ${(value & 7) | change()} ${value}`);
+let remainder = -4;
+remainder %= 2;
+console.log(`compound ${Object.is(remainder, -0)}`);

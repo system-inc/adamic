@@ -25,7 +25,7 @@ func (l *lowering) tsgo(node *ast.Node) (ir.Expression, bool, error) {
 		return nil, false, nil
 	}
 	if !l.program.TSGoEnabled() {
-		return nil, true, &Refused{Where: l.program.Where(node), What: "an unlinked typescript-go library call", Fix: "build with --tsgo <checker archive>"}
+		return nil, true, &Refused{Where: l.program.Where(node), What: "an unlinked typescript-go library call", Fix: "build with --tsgo <checker archive> (adamic/tsgo-link)"}
 	}
 	arguments := []ir.Expression{}
 	for _, argument := range node.AsCallExpression().Arguments.Nodes {

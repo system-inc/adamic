@@ -1,0 +1,28 @@
+// Calls exercise the unfused runtime operators and preserve both operand snapshots.
+let state = 2147483647;
+let trace = '';
+function take(value: number): number {
+	trace += `${value},`;
+	state = -2147483648;
+	return value;
+}
+for (const value of [2147483647, -2147483648, -0, NaN, Infinity, -Infinity, 0.5, -1.5, 9007199254740992]) {
+	trace = '';
+	console.log(`${~take(value)} ${take(value) & take(3)} ${take(value) | take(3)} ${take(value) ^ take(3)}`);
+	console.log(`${take(value) << take(33)} ${take(value) >> take(33)} ${take(value) >>> take(32)}`);
+	const remainder = take(value) % take(-2);
+	console.log(`${remainder} ${Object.is(remainder, -0)} ${trace}`);
+	state = value;
+	console.log(`${state ^ take(1)} ${state}`);
+	state = value;
+	console.log(`${(state >>> 0) + 0.5 + take(1)} ${state}`);
+}
+function captured(): void {
+	let value = -2147483648;
+	const change = (): number => { value = 0.5; return 1; };
+	console.log(`${~(value | change())} ${value}`);
+	value = -4;
+	value %= change();
+	console.log(`${value} ${Object.is(value, -0)}`);
+}
+captured();

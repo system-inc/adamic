@@ -1,0 +1,21 @@
+// Remainder compound writes read their old dividend before the divisor call mutates it.
+interface Box { value: number; }
+const box: Box = { value: -2147483648 };
+let trace = '';
+function target(): Box { trace += 'target '; return box; }
+function divisor(): number { trace += `${box.value} `; box.value = 99; return -2; }
+target().value %= divisor();
+console.log(`${trace}${box.value} ${Object.is(box.value, -0)}`);
+const values = [-2147483648];
+function change(): number { values[0] = 99; return 2; }
+if (values[0] !== undefined) {
+	values[0] %= change();
+	console.log(`${values[0]} ${Object.is(values[0], -0)}`);
+}
+for (const left of [-0, -2147483648, 2147483647, 9007199254740992, -9007199254740992]) {
+	for (const right of [-0, 0, 0.5, -1.5, 2, -2, 9007199254740992, NaN, Infinity]) {
+		let result = left;
+		result %= right;
+		console.log(`${left} ${right} ${result} ${Object.is(result, -0)} ${1 / result}`);
+	}
+}

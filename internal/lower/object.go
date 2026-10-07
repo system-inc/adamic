@@ -47,14 +47,14 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 		case ast.KindPropertyAssignment, ast.KindShorthandPropertyAssignment:
 			name := property.Name()
 			if (ast.IsIdentifier(name) || name.Kind == ast.KindStringLiteral) && name.Text() == iteratorSlot {
-				return nil, l.notYet(property, "a string field with the reserved iterator slot name")
+				return nil, l.notYet(property, "a string field with the reserved iterator slot name (rename the string field; use [Symbol.iterator] only for an iterator method)")
 			}
 			fieldName, known := l.methodName(property)
 			if !known {
-				return nil, l.notYet(name, "a computed field name")
+				return nil, l.notYet(name, "a computed field name (spell the field name as an identifier or string literal)")
 			}
 			if property.Kind == ast.KindPropertyAssignment && fieldName == "__proto__" {
-				return nil, &Refused{Where: l.program.Where(property), What: "__proto__ in an object literal", Fix: "JavaScript changes the prototype instead of making an own field; Adamic objects have fixed shapes and no prototype mutation"}
+				return nil, &Refused{Where: l.program.Where(property), What: "__proto__ in an object literal", Fix: "JavaScript changes the prototype instead of making an own field; Adamic objects have fixed shapes and no prototype mutation (adamic/no-prototype-mutation)"}
 			}
 			var value ir.Expression
 			var err error
@@ -67,7 +67,7 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 				return nil, err
 			}
 			if literal.Spread != nil && !l.hasProperty(node.AsObjectLiteralExpression().Properties.Nodes[0].AsSpreadAssignment().Expression, fieldName) {
-				return nil, l.notYet(property, "a spread that adds a field the source doesn't have")
+				return nil, l.notYet(property, "a spread that adds a field the source doesn't have (construct a literal with all fields written explicitly instead of spreading)")
 			}
 			if declared := l.declaredField(node, fieldName); declared != 0 && !slotless(declared) {
 				// Store the value as the member's slot holds it, rather than the initializer's type.
@@ -324,7 +324,7 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	// A library declaration proves a prototype member exists, never an own slot. Keep this
 	// guard in lowering too, even when the up-front unbound-method pass has already refused it.
 	if l.inheritedLibraryMember(node) && !l.regexRuntimeProperty(access.Expression, name) && name != "length" && name != "size" && !(l.isLibraryType(l.checker.GetTypeAtLocation(access.Expression), "Error") && (name == "name" || name == "message")) {
-		return nil, l.prototypeRead(node, name)
+		return nil, l.prototypeRead(node, name, l.memberSymbol(node))
 	}
 	if err := l.erasedLiteralMethod(node); err != nil {
 		return nil, err
@@ -349,7 +349,7 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		// A tuple is held as an object of its elements, "0", "1", ..., read by index; an array's
 		// methods aren't fields of it, and reading them as fields would find nothing. Its length is
 		// read below (tupleLength).
-		return nil, l.notYet(node, "."+name+" on a tuple")
+		return nil, l.notYet(node, "."+name+" on a tuple (copy the tuple elements into a typed array before using array members)")
 	}
 	object, err := l.expression(access.Expression)
 	if err != nil {
@@ -444,7 +444,7 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 			declared := l.checker.GetTypeOfSymbol(field)
 			observed := l.checker.GetTypeAtLocation(node)
 			if !l.classAssignable(declared, observed) {
-				return nil, &Refused{Where: l.program.Where(node), What: "a narrowed accessor reread, which can return a different value", Fix: "read the getter into a local once, then narrow and use that local"}
+				return nil, &Refused{Where: l.program.Where(node), What: "a narrowed accessor reread, which can return a different value", Fix: "read the getter into a local once, then narrow and use that local (adamic/accessor-reread)"}
 			}
 		}
 		of, err := l.typeOf(node)
@@ -566,7 +566,7 @@ var mathFunctions = map[string]int{
 // refusedRandom refuses Math.random for good in 0.1: a program's output would no longer be a function
 // of its source, and the oracle compares it with Node's byte for byte (docs/0.1.md).
 func refusedRandom(l *lowering, node *ast.Node) error {
-	return &Refused{Where: l.program.Where(node), What: "Math.random", Fix: "0.1 programs are deterministic, so the oracle can hold them to Node; compute the values you need, with a generator of your own seeded by a constant"}
+	return &Refused{Where: l.program.Where(node), What: "Math.random", Fix: "0.1 programs are deterministic, so the oracle can hold them to Node; compute the values you need, with a generator of your own seeded by a constant (adamic/deterministic)"}
 }
 
 // builtin lowers a call to Math or a number's toFixed. isBuiltin is false for any other call.
@@ -806,15 +806,15 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 	}
 	initializer := statement.Initializer
 	if initializer.Kind != ast.KindVariableDeclarationList || initializer.Flags&ast.NodeFlagsBlockScoped == 0 {
-		return nil, l.notYet(initializer, "a for...of that doesn't declare its variable with const or let")
+		return nil, l.notYet(initializer, "a for...of that doesn't declare its variable with const or let (declare one loop binding with for (const value of source))")
 	}
 	declarations := initializer.AsVariableDeclarationList().Declarations.Nodes
 	if len(declarations) != 1 {
-		return nil, l.notYet(initializer, "a for...of declaring more than one variable")
+		return nil, l.notYet(initializer, "a for...of declaring more than one variable (declare one loop binding and declare additional locals in the body)")
 	}
 	name := declarations[0].Name()
 	if !ast.IsIdentifier(name) && name.Kind != ast.KindArrayBindingPattern {
-		return nil, l.notYet(initializer, "a for...of destructuring an object")
+		return nil, l.notYet(initializer, "a for...of destructuring an object (bind the element to a name, then read its fields in the body)")
 	}
 	if plan, err := l.planIteration(statement.Expression); err != nil {
 		return nil, err
@@ -900,7 +900,7 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 			}
 			bound := binding.AsBindingElement()
 			if !ast.IsIdentifier(binding.Name()) || bound.Initializer != nil || bound.DotDotDotToken != nil {
-				return nil, l.notYet(binding, "a destructured name that isn't plain")
+				return nil, l.notYet(binding, "a destructured name that isn't plain (bind the element to a name and destructure it in separate statements)")
 			}
 			local, err := l.declareLocal(binding.Name())
 			if err != nil {
@@ -937,7 +937,7 @@ func (l *lowering) forOfMap(node *ast.Node, iterable ir.Expression, iterated *as
 	case part == "entries" && name.Kind == ast.KindArrayBindingPattern:
 		elements := name.AsBindingPattern().Elements.Nodes
 		if len(elements) > 2 {
-			return nil, l.notYet(name, "destructuring more than a key and a value")
+			return nil, l.notYet(name, "destructuring more than a key and a value (destructure only [key, value])")
 		}
 		for index, binding := range elements {
 			if skipped(binding) {
@@ -945,7 +945,7 @@ func (l *lowering) forOfMap(node *ast.Node, iterable ir.Expression, iterated *as
 			}
 			bound := binding.AsBindingElement()
 			if !ast.IsIdentifier(binding.Name()) || bound.Initializer != nil || bound.DotDotDotToken != nil {
-				return nil, l.notYet(binding, "a destructured name that isn't plain")
+				return nil, l.notYet(binding, "a destructured name that isn't plain (bind [key, value] as plain names and handle defaults in the body)")
 			}
 			local, err := l.declareLocal(binding.Name())
 			if err != nil {
@@ -1037,14 +1037,14 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 	if name == "map" {
 		arguments := node.AsCallExpression().Arguments.Nodes
 		if len(arguments) != 1 {
-			return nil, true, l.notYet(node, "map with other than one callback")
+			return nil, true, l.notYet(node, "map with other than one callback (pass one callback: items.map((value) => mappedValue))")
 		}
 		callback, err := l.expression(arguments[0])
 		if err != nil {
 			return nil, true, err
 		}
 		if callback.Type() != ir.Closure {
-			return nil, true, l.notYet(arguments[0], "map with a callback that isn't a function")
+			return nil, true, l.notYet(arguments[0], "map with a callback that isn't a function (pass a function or arrow callback)")
 		}
 		result, err := l.elementType(node)
 		if err != nil {
@@ -1209,18 +1209,18 @@ var visits = map[string]struct{}{"forEach": {}, "filter": {}, "some": {}, "every
 func (l *lowering) arrayVisit(node *ast.Node, array ir.Expression, element ir.Type, name string) (ir.Expression, bool, error) {
 	arguments := node.AsCallExpression().Arguments.Nodes
 	if len(arguments) != 1 {
-		return nil, true, l.notYet(node, name+" with other than one callback")
+		return nil, true, l.notYet(node, name+" with other than one callback (pass one function or arrow callback)")
 	}
 	callback, err := l.expression(arguments[0])
 	if err != nil {
 		return nil, true, err
 	}
 	if callback.Type() != ir.Closure {
-		return nil, true, l.notYet(arguments[0], name+" with a callback that isn't a function")
+		return nil, true, l.notYet(arguments[0], name+" with a callback that isn't a function (pass a function or arrow callback)")
 	}
 	signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(arguments[0]), checker.SignatureKindCall)
 	if len(signatures) != 1 {
-		return nil, true, l.notYet(arguments[0], name+" with an overloaded callback")
+		return nil, true, l.notYet(arguments[0], name+" with an overloaded callback (wrap the callback in an arrow with one concrete signature)")
 	}
 	var returns ir.Type
 	if result := l.checker.GetReturnTypeOfSignature(signatures[0]); result.Flags()&checker.TypeFlagsVoid == 0 {
@@ -1230,7 +1230,7 @@ func (l *lowering) arrayVisit(node *ast.Node, array ir.Expression, element ir.Ty
 		}
 	}
 	if name != "forEach" && returns != ir.Boolean {
-		return nil, true, &Refused{Where: l.program.Where(arguments[0]), What: "a " + name + " callback that doesn't return a boolean", Fix: "return a comparison, like word.length > 0: 0.1 has no truthiness"}
+		return nil, true, &Refused{Where: l.program.Where(arguments[0]), What: "a " + name + " callback that doesn't return a boolean", Fix: "return a comparison, like word.length > 0: 0.1 has no truthiness (strict-boolean-expressions)"}
 	}
 	return ir.ArrayVisit{Method: name, Array: array, Callback: callback, Element: element, Returns: returns}, true, nil
 }
@@ -1240,17 +1240,17 @@ func (l *lowering) arrayVisit(node *ast.Node, array ir.Expression, element ir.Ty
 func (l *lowering) arrayReduce(node *ast.Node, array ir.Expression, element ir.Type) (ir.Expression, bool, error) {
 	arguments := node.AsCallExpression().Arguments.Nodes
 	if len(arguments) == 1 {
-		return nil, true, &Refused{Where: l.program.Where(node), What: "reduce without an initial value", Fix: "pass one, like reduce((sum, value) => sum + value, 0): without it, an empty array throws"}
+		return nil, true, &Refused{Where: l.program.Where(node), What: "reduce without an initial value", Fix: "pass one, like reduce((sum, value) => sum + value, 0): without it, an empty array throws (adamic/reduce-initial)"}
 	}
 	if len(arguments) != 2 {
-		return nil, true, l.notYet(node, "reduce with other than a callback and an initial value")
+		return nil, true, l.notYet(node, "reduce with other than a callback and an initial value (pass a callback and an initial value: items.reduce((sum, value) => sum + value, 0))")
 	}
 	callback, err := l.expression(arguments[0])
 	if err != nil {
 		return nil, true, err
 	}
 	if callback.Type() != ir.Closure {
-		return nil, true, l.notYet(arguments[0], "reduce with a callback that isn't a function")
+		return nil, true, l.notYet(arguments[0], "reduce with a callback that isn't a function (pass a function or arrow as the first argument)")
 	}
 	initial, err := l.expression(arguments[1])
 	if err != nil {
@@ -1531,7 +1531,7 @@ func (l *lowering) stringCall(node *ast.Node, receiver *ast.Node, name string) (
 func (l *lowering) arraySort(node *ast.Node, array ir.Expression, element ir.Type) (ir.Expression, bool, error) {
 	arguments := node.AsCallExpression().Arguments.Nodes
 	if len(arguments) == 0 {
-		return nil, true, &Refused{Where: l.program.Where(node), What: "sort without a comparator", Fix: "pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"}
+		return nil, true, &Refused{Where: l.program.Where(node), What: "sort without a comparator", Fix: "pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9] (adamic/sort-comparator)"}
 	}
 	comparator := ast.SkipParentheses(arguments[0])
 	function, isFunction := l.functions[l.symbol(comparator)]
@@ -1543,16 +1543,16 @@ func (l *lowering) arraySort(node *ast.Node, array ir.Expression, element ir.Typ
 		}
 		signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(comparator), checker.SignatureKindCall)
 		if callback.Type() != ir.Closure || len(signatures) != 1 {
-			return nil, true, l.notYet(comparator, "a comparator that isn't a function")
+			return nil, true, l.notYet(comparator, "a comparator that isn't a function (pass a comparator function with one concrete signature)")
 		}
 		if returns, _ := l.representation(l.checker.GetReturnTypeOfSignature(signatures[0])); returns != ir.Number {
-			return nil, true, l.notYet(comparator, "a comparator that doesn't return a number")
+			return nil, true, l.notYet(comparator, "a comparator that doesn't return a number (return a numeric ordering from the comparator, for example (a, b) => a - b for numbers)")
 		}
 		return ir.ArraySort{Array: array, Callback: callback, Element: element}, true, nil
 	}
 	declared := l.result.Functions[function]
 	if declared.Returns != ir.Number || len(declared.Parameters) != 2 || l.result.Locals[declared.Parameters[0]].Type != element || l.result.Locals[declared.Parameters[1]].Type != element {
-		return nil, true, l.notYet(comparator, "a comparator that doesn't take two elements and return a number")
+		return nil, true, l.notYet(comparator, "a comparator that doesn't take two elements and return a number (use a comparator taking two elements and returning a number)")
 	}
 	return ir.ArraySort{Array: array, Comparator: function, Element: element}, true, nil
 }
@@ -1563,7 +1563,7 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 	access := node.AsElementAccessExpression()
 	index := ast.SkipParentheses(access.ArgumentExpression)
 	if l.inheritedLibraryMember(node) && !l.regexRuntimeProperty(access.Expression, index.Text()) {
-		return nil, l.prototypeRead(node, index.Text())
+		return nil, l.prototypeRead(node, index.Text(), l.memberSymbol(node))
 	}
 	optional := access.QuestionDotToken != nil
 	if !optional && node.Flags&ast.NodeFlagsOptionalChain != 0 {

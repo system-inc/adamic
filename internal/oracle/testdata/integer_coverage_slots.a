@@ -1,0 +1,20 @@
+// Pure non-bitwise leaves fall back to ordinary value emission before conversion.
+interface Box { value: number; }
+function inspect(value: number | undefined): void {
+	const box: Box = { value: value ?? -2147483648 };
+	const elements = [box.value];
+	const map = new Map<string, number>();
+	map.set('v', box.value);
+	console.log(`${~box.value} ${(elements[0] ?? 0) >>> 0} ${(map.get('v') ?? 0) ^ box.value}`);
+	console.log(`${Math.abs(box.value) & 7} ${Number('2147483648.5') | box.value} ${'A'.charCodeAt(0) << (box.value & 31)}`);
+	box.value %= -2;
+	console.log(`${box.value} ${Object.is(box.value, -0)}`);
+	if (elements[0] !== undefined) {
+		elements[0] %= -2;
+		console.log(`${elements[0]} ${Object.is(elements[0], -0)}`);
+	}
+}
+for (const value of [2147483647, -2147483648, -0, NaN, Infinity, -Infinity, 1.5, 9007199254740992]) {
+	inspect(value);
+}
+inspect(undefined);

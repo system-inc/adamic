@@ -1,0 +1,3 @@
+const x: { readonly n: number; readonly s: string } = { n: 1, s: 'ok' };
+const y = x as { readonly n: number };
+console.log(`${y.n}`);
