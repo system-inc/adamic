@@ -1011,7 +1011,7 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 // class's, an interface's, or a function value in a field): the call goes through the object's
 // methods, which stops at undefined as JavaScript's chain does (ir.Property's Method).
 func (l *lowering) optionalCall(call *ast.Node) error {
-	if call.Flags&ast.NodeFlagsOptionalChain == 0 {
+	if call.Flags&ast.NodeFlagsOptionalChain == 0 || l.isOptionalJoin(call) {
 		return nil
 	}
 	callee := ast.SkipParentheses(call.AsCallExpression().Expression)
