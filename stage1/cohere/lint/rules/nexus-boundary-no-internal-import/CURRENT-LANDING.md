@@ -1,3 +1,11 @@
+Built: named listener declarations and literal boolean-outcome suffix regex retained, with the rule branch rebased onto current origin/main b8fb957aa839a9e8cb0b54279dd9864fa317bd30.
+Commits: previous pushed rule 0ea61b9af7aede044c6d8f82eea96cd177ca32de; rebased implementation 79ed6a17bc1a17f445cb4daad5c56471dbd73eb7 before this evidence commit; helper sibling pushed 876616bf89a7019967b817bf135cafb66cd08a86.
+Checks: owned rule package PASS 56.795s and vet clean; supported-domain aggregate PASS 519.733s, 3,016 cases over 314 compiler/stage1 sources, 118,907,067 identical actual Go/source Node/emitted JS/sanitized-native finding/fix bytes.
+Mutants: all 17 named-domain Unknown controls, the valid Unknown descriptor control, 10 aggregate semantic controls including suffix regex disabled, and the resolved-path mutation are caught again by their actual-Go comparisons after clean compilation/execution.
+Uncovered: shared default profile/registration/supplied-node API and eight incomplete JSX/Tailwind candidates remain parked; exact helper counter and the full repository gate remain blocked or outside the passing scope; no new helper was claimed.
+
+Current detailed evidence: B8FB-LANDING.md and b8fb-*.log. Earlier landing history follows.
+
 Built: converted all 17 owned supplemental listener declarations to registry kind names and replaced boolean-outcome's manual suffix matcher with the shared-table RegExp literal.
 Commits: previous rule tip 7f99254378ee9fd8b50f4cfd9aa18cebe5291b2d; refreshed helper sibling 2b917cbb24fa112ddf8537814e7790f91e4877a2; this rule refresh is committed next on codex/lint-wave1-12.
 Checks: 17 named listener domains / 1,201 bytes and nine rule.json domains agree with actual Go on Node, emitted JS and sanitized native; independent owned package PASS 45.219s; aggregate PASS 523.434s with 3,016 cases / 118,907,067 identical findings/fix bytes; vet clean.
