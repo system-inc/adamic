@@ -1,5 +1,7 @@
 import { panic, programArguments, readTextFile } from 'adamic';
 import { OptionsJson } from './options_json.ts';
+import { reactEs6ComponentClass, type ReactClassNode } from './react_es6_component_class.a';
+interface ClassFixtureNode extends ReactClassNode { readonly componentBase: boolean; }
 import { structureFileContext } from './structure_file_context.a';
 const args = programArguments();
 const file = readTextFile(args[0] ?? panic('fixture path'));
@@ -9,6 +11,22 @@ for (const line of file.text.split('\n')) {
     const reader = new OptionsJson(line);
     const root = reader.parse();
     if (root < 0) { panic(reader.error); }
+    if (args[1] === 'class') {
+        const nodes: ClassFixtureNode[] = [];
+        for (const row of reader.node(root).children) {
+            const fields = reader.node(row).children;
+            const kind = reader.node(fields[0] ?? panic('kind')).text;
+            const expression = reader.node(fields[1] ?? panic('expression')).number;
+            const heritage = reader.node(fields[2] ?? panic('heritage')).children.map(child => reader.node(child).number);
+            const types = reader.node(fields[3] ?? panic('types')).children.map(child => reader.node(child).number);
+            const componentBase = reader.node(fields[4] ?? panic('base verdict')).text === 'true';
+            nodes.push({ kind, expression, heritage, types, componentBase });
+        }
+        for (let index = -1; index < nodes.length; index++) {
+            console.log(`${reactEs6ComponentClass(nodes, index, expression => nodes[expression]?.componentBase ?? false)}`);
+        }
+        continue;
+    }
     const context = structureFileContext(reader.node(root).text);
     console.log(`${context.isReactFile} ${context.isSpecialNextJsFile} ${context.isNetworkServiceFile} ${context.isLinkComponentFile} ${context.isHorizontalRuleComponentFile} ${context.isInLibrariesStructure} ${context.isPageFile} ${context.isLayoutFile} ${context.isLocalStorageServiceFile}`);
 }

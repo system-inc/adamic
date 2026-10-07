@@ -11,6 +11,11 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/core"
+	"github.com/microsoft/TypeScript/tsc/shim/parser"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
+	"github.com/system-inc/cohere/internal/lint/ecmascript/react"
 	"github.com/system-inc/cohere/internal/lint/rules/structure"
 )
 
@@ -40,6 +45,8 @@ func main() {
 			}
 		}
 	}
+	sources = append(sources, "Component", "PureComponent", "component", "pureComponent", "PureComponentX", "Component.PureComponent", " Component", "Component ", "Ｃomponent")
+	sources = append(sources, `class Plain {} class A extends Component {} class B extends React.PureComponent {} const E = class extends Component {}; class Wrong implements Component {} class Lower extends react.Component {} class Computed extends React["Component"] {} class P extends (React.Component) {} class R extends (React).Component {}`)
 	fixtureCount := 0
 	for _, path := range paths {
 		file, err := goparser.ParseFile(token.NewFileSet(), path, nil, 0)
@@ -104,6 +111,10 @@ func main() {
 		fixtureCount += found
 	}
 	for _, path := range sources {
+		if os.Args[4] == "class" {
+			writeClass(path, encode, expected)
+			continue
+		}
 		must(encode.Encode(path))
 		c := structure.FileContextFor(path)
 		fmt.Fprintf(expected, "%t %t %t %t %t %t %t %t %t\n", c.IsReactFile, c.IsSpecialNextJsFile, c.IsNetworkServiceFile, c.IsLinkComponentFile, c.IsHorizontalRuleComponentFile, c.IsInLibrariesStructure, c.IsPageFile, c.IsLayoutFile, c.IsLocalStorageServiceFile)
@@ -113,5 +124,59 @@ func main() {
 func must(err error) {
 	if err != nil {
 		panic(err)
+	}
+}
+
+func writeClass(source string, encode *json.Encoder, expected *os.File) {
+	file := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: "/fixture.tsx", Path: tspath.Path("/fixture.tsx")}, source, core.ScriptKindTSX)
+	if file == nil {
+		panic("parser returned nil")
+	}
+	nodes := []*ast.Node{}
+	ids := map[*ast.Node]int{nil: -1}
+	var visit func(*ast.Node)
+	visit = func(node *ast.Node) {
+		if _, ok := ids[node]; ok {
+			return
+		}
+		ids[node] = len(nodes)
+		nodes = append(nodes, node)
+		node.ForEachChild(func(child *ast.Node) bool { visit(child); return false })
+	}
+	visit(file.AsNode())
+	list := func(raw *ast.NodeList) []int {
+		result := []int{}
+		if raw != nil {
+			for _, node := range raw.Nodes {
+				result = append(result, ids[node])
+			}
+		}
+		return result
+	}
+	rows := [][]any{}
+	for _, node := range nodes {
+		kind := "Other"
+		expression := -1
+		heritage, types := []int{}, []int{}
+		switch node.Kind {
+		case ast.KindClassDeclaration:
+			kind = "ClassDeclaration"
+			heritage = list(node.AsClassDeclaration().HeritageClauses)
+		case ast.KindClassExpression:
+			kind = "ClassExpression"
+			heritage = list(node.AsClassExpression().HeritageClauses)
+		case ast.KindHeritageClause:
+			kind = "HeritageClause"
+			types = list(node.AsHeritageClause().Types)
+		case ast.KindExpressionWithTypeArguments:
+			kind = "ExpressionWithTypeArguments"
+			expression = ids[node.AsExpressionWithTypeArguments().Expression]
+		}
+		rows = append(rows, []any{kind, expression, heritage, types, react.AdamicComponentBase(node)})
+	}
+	must(encode.Encode(rows))
+	fmt.Fprintln(expected, react.IsEs6ComponentClass(nil))
+	for _, node := range nodes {
+		fmt.Fprintln(expected, react.IsEs6ComponentClass(node))
 	}
 }

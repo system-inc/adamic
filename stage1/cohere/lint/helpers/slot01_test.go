@@ -17,7 +17,7 @@ import (
 
 const contextDependency = "github.com/system-inc/cohere/internal/lint/rules/structure.FileContextFor"
 
-func slot01Fixture(t *testing.T) (string, []byte) {
+func slot01Fixture(t *testing.T, dependency string, consumers int, mode string) (string, []byte) {
 	t.Helper()
 	var readiness struct {
 		Remaining []struct {
@@ -35,7 +35,7 @@ func slot01Fixture(t *testing.T) (string, []byte) {
 	root, _ := filepath.Abs("../../../../cohere")
 	var paths []string
 	for _, rule := range readiness.Remaining {
-		if !slicesContain(rule.RemainingHelpers, contextDependency) {
+		if !slicesContain(rule.RemainingHelpers, dependency) {
 			continue
 		}
 		namespace, name, has := strings.Cut(rule.Rule, "/")
@@ -59,7 +59,7 @@ func slot01Fixture(t *testing.T) (string, []byte) {
 		}
 		paths = append(paths, path)
 	}
-	if len(paths) != 18 {
+	if len(paths) != consumers {
 		t.Fatalf("consumer ledger drift: %d", len(paths))
 	}
 	directory := t.TempDir()
@@ -69,8 +69,9 @@ func slot01Fixture(t *testing.T) (string, []byte) {
 		t.Fatal(err)
 	}
 	source, _ := filepath.Abs("testdata/slot01_oracle.go")
+	bridge, _ := filepath.Abs("testdata/slot01_react.go")
 	virtual := filepath.Join(root, "adamic_slot01_oracle.go")
-	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{virtual: source}})
+	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{virtual: source, filepath.Join(root, "internal/lint/ecmascript/react/adamic_slot01.go"): bridge}})
 	overlayPath := filepath.Join(directory, "overlay.json")
 	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
 		t.Fatal(err)
@@ -79,7 +80,7 @@ func slot01Fixture(t *testing.T) (string, []byte) {
 	run(t, root, "go", "build", "-overlay="+overlayPath, "-o", binary, virtual)
 	cases := filepath.Join(directory, "cases.jsonl")
 	expected := filepath.Join(directory, "expected.log")
-	cmd := exec.Command(binary, manifestPath, cases, expected)
+	cmd := exec.Command(binary, manifestPath, cases, expected, mode)
 	log, err := os.Create(filepath.Join(directory, "generation.log"))
 	if err != nil {
 		t.Fatal(err)
@@ -127,24 +128,31 @@ func slot01Build(t *testing.T, entry string) string {
 	return binary
 }
 func TestSlot01FileContextMatchesCohere(t *testing.T) {
-	cases, want := slot01Fixture(t)
+	slot01Check(t, contextDependency, 18, "context", "structure_file_context.a", "fileName.split('\\\\').join('/')", "fileName")
+}
+
+func TestSlot01Es6ComponentClassMatchesCohere(t *testing.T) {
+	slot01Check(t, "github.com/system-inc/cohere/internal/lint/ecmascript/react.IsEs6ComponentClass", 14, "class", "react_es6_component_class.a", "node.kind !== 'ClassExpression'", "true")
+}
+
+func slot01Check(t *testing.T, dependency string, consumers int, mode, mutantFile, old, replacement string) {
+	cases, want := slot01Fixture(t, dependency, consumers, mode)
 	entry, _ := filepath.Abs("slot01_main.a")
 	runner, _ := filepath.Abs("../../../../oracle/node.mjs")
-	compare(t, run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, entry, cases), want)
-	compare(t, run(t, "", slot01Build(t, entry), cases), want)
+	compare(t, run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, entry, cases, mode), want)
+	compare(t, run(t, "", slot01Build(t, entry), cases, mode), want)
 	t.Logf("%d Go answers matched Node and sanitized native", bytes.Count(want, []byte("\n")))
 	directory := t.TempDir()
-	for _, file := range []string{"slot01_main.a", "structure_file_context.a", "options_json.ts"} {
+	for _, file := range []string{"slot01_main.a", "structure_file_context.a", "react_es6_component_class.a", "options_json.ts"} {
 		data, err := os.ReadFile(file)
 		if err != nil {
 			t.Fatal(err)
 		}
-		if file == "structure_file_context.a" {
-			old := "fileName.split('\\\\').join('/')"
+		if file == mutantFile {
 			if strings.Count(string(data), old) != 1 {
 				t.Fatal("mutant anchor drift")
 			}
-			data = []byte(strings.Replace(string(data), old, "fileName", 1))
+			data = []byte(strings.Replace(string(data), old, replacement, 1))
 		}
 		if file == "slot01_main.a" {
 			data = []byte(strings.ReplaceAll(string(data), "./options_json.ts", "./options_json.a"))
@@ -156,9 +164,9 @@ func TestSlot01FileContextMatchesCohere(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
-	mutant := run(t, "", slot01Build(t, filepath.Join(directory, "slot01_main.a")), cases)
+	mutant := run(t, "", slot01Build(t, filepath.Join(directory, "slot01_main.a")), cases, mode)
 	if bytes.Equal(mutant, want) {
-		t.Fatal("compiled path separator mutant survived")
+		t.Fatal("compiled semantic mutant survived")
 	}
-	t.Log("compiled path separator mutant caught by Go output comparison")
+	t.Logf("compiled %s mutant caught by Go output comparison", mutantFile)
 }
