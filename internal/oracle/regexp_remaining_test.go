@@ -16,6 +16,10 @@ func init() {
 		path            string
 		lowers, checked bool
 	}{"internal/oracle/testdata/regexp_surrogate_limit_refused.a", false, false})
+	fixtures = append(fixtures, struct {
+		path            string
+		lowers, checked bool
+	}{"internal/oracle/testdata/regexp_surrogate_nested_limit_refused.a", false, false})
 }
 
 var updateSurrogateCounts = flag.Bool("update-regexp-surrogate-counts", false, "update only surrogate fixture counts")

@@ -55,3 +55,9 @@ random cases, all three modes, zero disagreements; 89 random inputs retain
 the existing explicit V8 compatibility refusals. V8 edge cases 2659, all modes,
 zero disagreements. Regular-eligible extracted executions 127018 (six more
 now take the VM fallback). Go package 7.092s, native package 100.876s.
+
+Follow-up: numeric-limit safety examines compiled assertion instructions instead
+of pattern substrings. Nested negative assertions cannot evade the guard.
+New refused witness /(?!(?:\W))/u with a double-array limit is recorded.
+The surrogate fixtures and complete methods sweep pass after this change:
+go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(regexp_surrogate|sweeps)' -count=1 -v
