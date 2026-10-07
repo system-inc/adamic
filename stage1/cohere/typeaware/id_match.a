@@ -1,12 +1,107 @@
 import type { Rules } from './rules.ts';
+import { Diagnostic } from './diagnostic.ts';
 import { panic } from 'adamic';
+import { IdDenylist } from './id_denylist.a';
 
-// Go's default Pattern is nil and registers no listeners.
+export interface IdMatchFlags {
+    readonly properties: boolean;
+    readonly classFields: boolean;
+    readonly onlyDeclarations: boolean;
+    readonly ignoreDestructuring: boolean;
+}
+const defaults: IdMatchFlags = { properties: false, classFields: false, onlyDeclarations: false, ignoreDestructuring: false };
+
+// The branch lacks a native RegExp implementation. Configured callers must supply
+// a matcher for the Go pattern; all AST judgments and reports are native here.
 export class IdMatch {
     readonly rules: Rules;
     constructor(rules: Rules) { this.rules = rules; }
     run(pattern = ''): void {
-        if(pattern !== '') { panic('id-match configured options are not yet ported'); }
+        if(pattern !== '') { panic('id-match needs a native Go-compatible regexp matcher; use runConfigured with a matcher'); }
         if(pattern === '') { return; }
+    }
+    effective(index: number): number {
+        const shapes = new IdDenylist(this.rules);
+        const parent = shapes.parent(index);
+        return shapes.kind(parent) === 'PropertyAccessExpression' ? shapes.parent(parent) : parent;
+    }
+    declaration(index: number): boolean {
+        const kind = index < 0 ? '' : this.rules.parser.node(index).kind;
+        return kind === 'VariableDeclaration' || kind === 'FunctionDeclaration';
+    }
+    ordinary(index: number, flags: IdMatchFlags): boolean {
+        if(index < 0) { return false; }
+        const kind = this.rules.parser.node(index).kind;
+        return (!flags.onlyDeclarations || this.declaration(index)) && kind !== 'CallExpression' && kind !== 'NewExpression';
+    }
+    check(index: number, flags: IdMatchFlags): boolean {
+        const shapes = new IdDenylist(this.rules);
+        const parent = shapes.parent(index);
+        const kind = shapes.kind(parent);
+        const node = this.rules.parser.node(index);
+        const name = node.text;
+        if(node.kind === 'PrivateIdentifier') { return kind !== 'PropertyDeclaration' || flags.classFields; }
+        if(parent < 0 || shapes.global(index) || shapes.importAttribute(index) || kind === 'MetaProperty') { return false; }
+        if(kind === 'PropertyAccessExpression') {
+            if(!flags.properties) { return false; }
+            const object = shapes.child(parent, 0);
+            if(shapes.kind(object) === 'Identifier' && this.rules.parser.node(object).text === name) { return true; }
+            const effective = this.effective(index);
+            if(shapes.kind(effective) !== 'BinaryExpression' || shapes.kind(shapes.child(effective, 1)) !== 'EqualsToken') { return false; }
+            const left = shapes.child(effective, 0);
+            if(shapes.kind(left) === 'PropertyAccessExpression') {
+                const property = shapes.child(left, 1);
+                if(property >= 0 && this.rules.parser.node(property).text === name) { return true; }
+            }
+            const right = shapes.child(effective, 2);
+            return right >= 0 && shapes.kind(right) !== 'PropertyAccessExpression';
+        }
+        const object = shapes.parent(parent);
+        if(kind === 'PropertyAssignment' && shapes.kind(object) === 'ObjectLiteralExpression' &&
+            shapes.child(parent, 0) === index && !shapes.destructuring(object)) { return flags.properties; }
+        if(kind === 'BindingElement') {
+            const binding = shapes.bindingName(parent);
+            if(binding !== index) { return false; }
+            if(shapes.kind(object) === 'ArrayBindingPattern') { return this.ordinary(this.effective(index), flags); }
+            const rest = shapes.kind(shapes.child(parent, 0)) === 'DotDotDotToken';
+            const property = rest ? -1 : shapes.child(parent, 0);
+            const renamed = property >= 0 && property !== binding && shapes.kind(property) === 'Identifier' &&
+                this.rules.parser.node(property).text !== name;
+            if(flags.ignoreDestructuring && !rest && !renamed) { return false; }
+            if(!flags.properties && !rest) { return false; }
+            let declaration = parent;
+            while(declaration >= 0 && !['VariableDeclaration', 'FunctionDeclaration', 'Parameter'].includes(shapes.kind(declaration))) {
+                declaration = shapes.parent(declaration);
+            }
+            return !flags.onlyDeclarations || this.declaration(declaration);
+        }
+        if((kind === 'PropertyAssignment' || kind === 'ShorthandPropertyAssignment') &&
+            shapes.kind(object) === 'ObjectLiteralExpression' && shapes.destructuring(object)) {
+            let renamed = false;
+            if(kind === 'PropertyAssignment') {
+                if(shapes.child(parent, 1) !== index) { return false; }
+                const property = shapes.child(parent, 0);
+                renamed = shapes.kind(property) !== 'Identifier' || this.rules.parser.node(property).text !== name;
+            }
+            else if(shapes.child(parent, 0) !== index) { return false; }
+            return !flags.ignoreDestructuring || renamed;
+        }
+        if(kind === 'ImportSpecifier') { return shapes.child(parent, this.rules.parser.node(parent).children.length - 1) === index; }
+        if(kind === 'ImportClause' || kind === 'NamespaceImport') { return shapes.child(parent, 0) === index; }
+        if(kind === 'PropertyDeclaration') { return flags.classFields; }
+        return this.ordinary(this.effective(index), flags);
+    }
+    runConfigured(pattern: string, matches: (name: string) => boolean, flags: IdMatchFlags = defaults): void {
+        if(pattern.length === 0) { return; }
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            const node = this.rules.parser.node(index);
+            if(node.kind !== 'Identifier' && node.kind !== 'PrivateIdentifier') { continue; }
+            const privateName = node.kind === 'PrivateIdentifier';
+            const name = privateName && node.text.startsWith('#') ? node.text.slice(1) : node.text;
+            if(!this.check(index, flags) || matches(name)) { continue; }
+            this.rules.findings.push(new Diagnostic('id-match', privateName ? 'notMatchPrivate' : 'notMatch',
+                `Identifier '${node.text}' does not match the pattern '${pattern}'. A naming convention is enforced here so that a reader can tell what kind of thing a name refers to without looking it up. ${privateName
+                    ? 'Rename this private field to fit the pattern.' : 'Rename it to fit the pattern.'}`, this.rules.byte(this.rules.start(node)), this.rules.byte(node.end), ''));
+        }
     }
 }

@@ -1,0 +1,69 @@
+import { panic, programArguments, readTextFile, tsgoProgram, tsgoRelease } from 'adamic';
+import { written } from '../../../typescript/parser/nodes.ts';
+import { Parser } from '../../../typescript/parser/parser.ts';
+import { Scanner } from '../../../typescript/scanner/scanner.ts';
+import { UnaryMinus, byteOffsets } from '../unary_minus.ts';
+import { Rules } from '../rules.ts';
+import { IdDenylist } from '../id_denylist.a';
+import { IdMatch } from '../id_match.a';
+
+
+const args = programArguments();
+const config = args[0] ?? panic('usage: wave_29.a tsconfig manifest [--count]');
+const manifest = readTextFile(args[1] ?? panic('missing manifest'));
+if(manifest.kind === 'Error') {
+    panic(manifest.message);
+}
+const paths = manifest.text.split('\n').filter((path) => path !== '');
+const program = tsgoProgram(config, paths);
+const profiles = readTextFile(args[2] ?? panic('missing configured profiles'));
+if(profiles.kind === 'Error') { panic(profiles.message); }
+const settings = profiles.text.split('\n').filter((line) => line !== '');
+if(settings.length !== paths.length) { panic('profile length mismatch'); }
+let slot = 0;
+let findings = 0;
+for(const path of paths) {
+    const source = readTextFile(path);
+    if(source.kind === 'Error') {
+        panic(source.message);
+    }
+    const parser = new Parser(source.text, path);
+    const scanner = new Scanner(source.text);
+    const offsets = byteOffsets(source.text);
+    const unary = new UnaryMinus(program, path, parser, scanner, offsets);
+    const linter = new Rules(program, path, parser, scanner, offsets, unary);
+    const root = parser.file();
+    for(let at = 0; at < parser.nodes.length; at++) {
+        linter.parents.push(-1);
+    }
+    linter.links(root, -1);
+    const fields = (settings[slot] ?? panic('missing profile')).split('\t');
+    slot++;
+    if(fields[0] === 'id-denylist') {
+        new IdDenylist(linter).run((fields[1] ?? '').split(',').filter((name) => name !== ''));
+    }
+    else {
+        // Test-only exact implementation of the selected Go pattern. It is not
+        // a replacement for the missing general native regexp engine.
+        const pattern = fields[1] ?? '';
+        if(pattern !== '^[^_]+$') { panic('test matcher only supports ^[^_]+$'); }
+        const flags = fields[2] ?? '';
+        new IdMatch(linter).runConfigured(pattern, (name) => name.length > 0 && !name.includes('_'), {
+            properties: flags.includes('p'), classFields: flags.includes('c'),
+            onlyDeclarations: flags.includes('o'), ignoreDestructuring: flags.includes('i'),
+        });
+    }
+    for(const finding of linter.findings) {
+        finding.sortKey = finding.written();
+    }
+    linter.findings.sort((left, right) => left.sortKey < right.sortKey ? -1 : left.sortKey > right.sortKey ? 1 : 0);
+    findings += linter.findings.length;
+    if(!args.includes('--count')) {
+        console.log(`file\t${written(path)}`);
+        for(const finding of linter.findings) {
+            console.log(finding.written());
+        }
+    }
+}
+console.log(`findings ${findings}`);
+tsgoRelease(program);

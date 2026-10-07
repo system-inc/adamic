@@ -1,0 +1,2 @@
+const pattern = new RegExp('^[^_]+$', 'u');
+console.log(pattern.test('name') ? 'match' : 'miss');
