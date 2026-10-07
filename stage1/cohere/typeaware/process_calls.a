@@ -99,7 +99,8 @@ export class ProcessCalls {
                 context.names[1] !== 'Process' ||
                 context.kinds[2] !== 'ModuleBlock' ||
                 context.kinds[3] !== 'ModuleDeclaration' ||
-                context.names[3] !== 'NodeJS'
+                context.names[3] !== 'NodeJS' ||
+                context.nameKinds[3] !== 'Identifier'
             ) {
                 return false;
             }

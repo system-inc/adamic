@@ -13,6 +13,7 @@ export class AstContext {
     readonly starts: number[] = [];
     readonly ends: number[] = [];
     readonly names: string[] = [];
+    readonly nameKinds: string[] = [];
     readonly global: boolean[] = [];
     readonly constant: boolean[] = [];
     readonly ambient: boolean[] = [];
@@ -41,6 +42,7 @@ export class AstContext {
             this.ends.push(frames.natural());
             frames.natural();
             this.names.push(frames.field());
+            this.nameKinds.push(frames.field());
             this.global.push(frames.yes());
             this.constant.push(frames.yes());
             this.ambient.push(frames.yes());

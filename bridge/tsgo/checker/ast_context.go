@@ -62,13 +62,16 @@ func (p *Program) astContext(out *fields, node *ast.Node, question string) (stri
 			out.number(uint64(current.End()))
 			out.number(uint64(current.Flags))
 			name := ""
+			nameKind := ""
 			if declared := current.Name(); declared != nil {
+				nameKind = strings.TrimPrefix(declared.Kind.String(), "Kind")
 				switch declared.Kind {
 				case ast.KindIdentifier, ast.KindPrivateIdentifier, ast.KindStringLiteral, ast.KindNumericLiteral, ast.KindNoSubstitutionTemplateLiteral:
 					name = declared.Text()
 				}
 			}
 			out.text(name)
+			out.text(nameKind)
 			out.yes(ast.IsGlobalScopeAugmentation(current))
 			out.yes(current.Flags&ast.NodeFlagsConst != 0)
 			out.yes(current.Flags&ast.NodeFlagsAmbient != 0)

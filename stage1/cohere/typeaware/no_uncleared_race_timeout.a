@@ -152,7 +152,20 @@ export class NoUnclearedRaceTimeout {
     }
     visit(index: number, executor: number): void {
         const node = this.rules.parser.node(index);
-        if(this.bindings.functionKind(node.kind) || ['ClassDeclaration', 'ClassExpression'].includes(node.kind)) {
+        if(
+            this.bindings.functionKind(node.kind) ||
+            [
+                'MethodSignature',
+                'CallSignature',
+                'JSDocSignature',
+                'ConstructSignature',
+                'IndexSignature',
+                'FunctionType',
+                'ConstructorType',
+                'ClassDeclaration',
+                'ClassExpression',
+            ].includes(node.kind)
+        ) {
             return;
         }
         if(node.kind === 'CallExpression' && this.globalTimer(index) && this.lost(executor, index)) {
