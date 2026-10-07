@@ -356,6 +356,32 @@ The visitor uses an interface method signature. Current main refuses a class
 prototype method called through a property-style function view as erasing its
 prototype origin; this unit does not change that lowering rule.
 
+### Borrowed array loops, October 7, 2026
+
+An array `for...of` borrows its iterator and reference elements when its array
+is an unchanged, uncaptured local or parameter of the same function, and its
+binding is unchanged and uncaptured. The complete body must neither remove
+array elements through any alias nor keep the element: immutable local aliases
+are followed, and storing, returning, capturing, mutating, or passing them to
+an owning or unknown parameter stops borrowing. Patterns, maps, regex iterators,
+and freshly allocated string iteration stay on their existing owning paths.
+The array is marked as lending, so reuse cannot move its owner into a consuming
+call. Each borrowed binding is marked `Borrowed`; its scope has no count to drop,
+on normal exit, break, continue, return, or throw.
+
+On the same visitor, eight rounds now count 1,354 retains and 1,360 releases;
+four rounds count 850 and 856. Both traversal counts are 504/504 = 1 per node,
+down from 2.984127. Removing the iterator and element counts eliminates 2,000
+pairs over 1,008 visits. Allocations and frees remain 192 and peak remains 161.
+The one remaining traversal pair is the owned return of `childNodes`.
+
+`borrow_for_of_store.a` replaces the element's source slot and then pushes the
+loop binding into another array. Forcing that binding to borrow is caught by
+ASan heap-use-after-free at the push, before it can acquire its own count.
+The independent mutant was restored; its complete log is
+`/tmp/borrow-step2-mutant.log`. The visitor's borrowed binding and C without its
+retain or release are also held by `TestVisitorLoopsBorrow`.
+
 ## Cycles: found by the compiler, broken by Weak
 
 Reference counting can't free a cycle, and a garbage collector is refused (no cycle collector, ever: decided by @system_adamic, task #gsz351g). What's known:

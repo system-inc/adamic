@@ -34,6 +34,11 @@ func planElementBorrows(program *ir.Program) (map[*ir.Statement]bool, map[int]bo
 		var statements func([]ir.Statement)
 		statements = func(list []ir.Statement) {
 			for position := range list {
+				if loop, ok := list[position].(ir.ForOf); ok && borrowableLoop(program, index, loop, assigned, changing) {
+					program.Locals[loop.Local].Borrowed = true
+					source, _ := variableRead(loop.Iterable)
+					lending[source.Local] = true
+				}
 				if declare, ok := list[position].(ir.Declare); ok && borrowable(program, index, declare, assigned) && !changes(program, changing, list[position+1:]) {
 					borrows[&list[position]] = true
 					program.Locals[declare.Local].Borrowed = true
@@ -221,4 +226,24 @@ func (e *emitter) borrowElement(declare ir.Declare) {
 		e.hold(owner)
 	}
 	e.end()
+}
+
+// borrowableLoop requires a stable array local and a body that cannot keep the
+// element or remove elements through any alias. Lending prevents reuse from
+// moving the array's owner into a consuming call while its elements borrow.
+func borrowableLoop(program *ir.Program, function int, loop ir.ForOf, assigned, changing map[int]bool) bool {
+	if loop.Iterable.Type() != ir.Array || loop.Pattern != nil || loop.RegexIterator || loop.MapPart != "" || !lendable(loop.Element) {
+		return false
+	}
+	element := program.Locals[loop.Local]
+	if element.Global || element.Captured || element.Function != function || assigned[loop.Local] {
+		return false
+	}
+	source, ok := variableRead(loop.Iterable)
+	if !ok {
+		return false
+	}
+	array := program.Locals[source.Local]
+	return !array.Global && !array.Captured && array.Function == function && !assigned[source.Local] &&
+		!changes(program, changing, loop.Body) && parameterOnlyRead(program, loop.Body, loop.Local)
 }

@@ -54,3 +54,32 @@ func TestBorrowConventionJoinsEveryTarget(t *testing.T) {
 		t.Fatal("unknown function value borrowed")
 	}
 }
+
+func TestVisitorLoopsBorrow(t *testing.T) {
+	t.Parallel()
+	loaded, err := load.Load([]string{"../oracle/testdata/borrow_visitor.a"})
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lower.Lower(context.Background(), loaded)
+	if err != nil {
+		t.Fatal(err)
+	}
+	generated := C(program)
+	found := false
+	for local, declared := range program.Locals {
+		if declared.Name == "child" {
+			found = true
+			if !declared.Borrowed {
+				t.Error("visitor element is owned")
+			}
+			name := (&emitter{program: program}).localName(local)
+			if strings.Contains(generated, "adamic_release("+name+");") || strings.Contains(generated, "adamic_retain("+name+")") {
+				t.Error("visitor element is counted")
+			}
+		}
+	}
+	if !found {
+		t.Fatal("visitor has no child binding")
+	}
+}

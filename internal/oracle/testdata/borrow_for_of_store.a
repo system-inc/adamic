@@ -1,0 +1,10 @@
+function probe(): void {
+ const source = ['loop' + String(1), 'loop' + String(2)];
+ const kept: string[] = [];
+ for (const item of source) {
+  source[0] = 'replacement' + String(3);
+  kept.push(item);
+ }
+ console.log(kept.join(','));
+}
+probe();
