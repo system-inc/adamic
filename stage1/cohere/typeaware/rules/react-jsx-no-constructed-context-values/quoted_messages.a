@@ -1,0 +1,29 @@
+import { Rule, Input } from './rule.a';
+import { Value } from './numeric_constructions.a';
+const rule = new Rule();
+const lines: string[] = [];
+const n0 = new Input(); n0.tagKind = 211; n0.propertyKind = 79; n0.propertyName = "Provider"; n0.nearestFunctionKind = 262; n0.nearestFunctionName = "Quoted0"; n0.valueIndex = 0;
+const id0 = new Value(); id0.kind = 79; id0.name = "élève"; id0.line = 1; id0.nearestFunction = 0; id0.declarationFactsReady = true; id0.declarations.push(1);
+const decl0 = new Value(); decl0.kind = 260; decl0.first = 2; decl0.nearestFunction = 0;
+const obj0 = new Value(); obj0.kind = 210; obj0.start = 37; obj0.end = 39; obj0.line = 1;
+n0.values.push(id0); n0.values.push(decl0); n0.values.push(obj0);
+const f0 = rule.visit(n0); if(f0 !== undefined) { lines.push(f0.written()); }
+const n1 = new Input(); n1.tagKind = 211; n1.propertyKind = 79; n1.propertyName = "Provider"; n1.nearestFunctionKind = 262; n1.nearestFunctionName = "Quoted1"; n1.valueIndex = 0;
+const id1 = new Value(); id1.kind = 79; id1.name = "a‌b"; id1.line = 2; id1.nearestFunction = 1; id1.declarationFactsReady = true; id1.declarations.push(1);
+const decl1 = new Value(); decl1.kind = 260; decl1.first = 2; decl1.nearestFunction = 1;
+const obj1 = new Value(); obj1.kind = 210; obj1.start = 118; obj1.end = 120; obj1.line = 2;
+n1.values.push(id1); n1.values.push(decl1); n1.values.push(obj1);
+const f1 = rule.visit(n1); if(f1 !== undefined) { lines.push(f1.written()); }
+const n2 = new Input(); n2.tagKind = 211; n2.propertyKind = 79; n2.propertyName = "Provider"; n2.nearestFunctionKind = 262; n2.nearestFunctionName = "Quoted2"; n2.valueIndex = 0;
+const id2 = new Value(); id2.kind = 79; id2.name = "x‍y"; id2.line = 3; id2.nearestFunction = 2; id2.declarationFactsReady = true; id2.declarations.push(1);
+const decl2 = new Value(); decl2.kind = 260; decl2.first = 2; decl2.nearestFunction = 2;
+const obj2 = new Value(); obj2.kind = 210; obj2.start = 197; obj2.end = 199; obj2.line = 3;
+n2.values.push(id2); n2.values.push(decl2); n2.values.push(obj2);
+const f2 = rule.visit(n2); if(f2 !== undefined) { lines.push(f2.written()); }
+const n3 = new Input(); n3.tagKind = 211; n3.propertyKind = 79; n3.propertyName = "Provider"; n3.nearestFunctionKind = 262; n3.nearestFunctionName = "Quoted3"; n3.valueIndex = 0;
+const id3 = new Value(); id3.kind = 79; id3.name = "𐐀a"; id3.line = 4; id3.nearestFunction = 3; id3.declarationFactsReady = true; id3.declarations.push(1);
+const decl3 = new Value(); decl3.kind = 260; decl3.first = 2; decl3.nearestFunction = 3;
+const obj3 = new Value(); obj3.kind = 210; obj3.start = 276; obj3.end = 278; obj3.line = 4;
+n3.values.push(id3); n3.values.push(decl3); n3.values.push(obj3);
+const f3 = rule.visit(n3); if(f3 !== undefined) { lines.push(f3.written()); }
+for(const line of lines.sort((left, right) => left < right ? -1 : left > right ? 1 : 0)) { console.log(line); }

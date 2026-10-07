@@ -1,0 +1,12 @@
+import { programArguments } from 'adamic';
+import { quotedName } from './quoted_name.a';
+if(programArguments().includes('--surrogate')) { console.log(quotedName(String.fromCharCode(55296))); }
+else {
+    for(let point = 0; point <= 1114111; point++) {
+        if(point >= 55296 && point <= 57343) { continue; }
+        console.log(quotedName(String.fromCodePoint(point)));
+    }
+    for(const name of ['', 'élève', 'a\u200cb', 'x\u200dy', '𐐀a', 'quote"slash\\', '\n\t']) {
+        console.log(quotedName(name));
+    }
+}

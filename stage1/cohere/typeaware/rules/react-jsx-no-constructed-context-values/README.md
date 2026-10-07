@@ -7,4 +7,4 @@ The numeric adapter now also judges parenthesized/as expressions, conditional an
 
 Class judgments now use Input.classFactsReady, Input.classIndex and Input.nearestFunctionParentKind. Raw class/heritage/type nodes are linked by Value.children and Value.first. Methods/accessors/constructors and property-bound arrows consult the enclosing class; its name does not determine component status.
 
-Component function names now use the JS RegExp literal /^\p{Lu}/u, matching Go unicode.IsUpper across every code point. Quoted non-ASCII variable names in identifier messages remain a separate unsupported case.
+Component function names now use the JS RegExp literal /^\p{Lu}/u, matching Go unicode.IsUpper across every code point. Quoted variable names now use Go-compatible rendering, verified over every Unicode scalar value and complete production findings. See QUOTED_NAMES_REPORT.md.

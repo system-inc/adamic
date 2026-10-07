@@ -1,5 +1,6 @@
 import { panic } from 'adamic';
 import { Diagnostic } from '../../diagnostic.ts';
+import { quotedName } from './quoted_name.a';
 
 const componentCapital = /^\p{Lu}/u;
 import { Value, constructionOf, resolvesToCreateContext, isComponentClass } from './numeric_constructions.a';
@@ -72,12 +73,7 @@ export class Rule {
             let prefix = `The ${label} passed as the value prop to the Context provider (at line ${value.line})`;
             if(usage !== undefined) {
                 const name = usage.kind === 79 ? usage.name : '';
-                for(let index = 0; index < name.length; index++) {
-                    if(name.charCodeAt(index) < 32 || name.charCodeAt(index) >= 127 || name.charCodeAt(index) === 34 || name.charCodeAt(index) === 92) {
-                        panic('constructed-context requires Go quoted identifier rendering');
-                    }
-                }
-                prefix = `The "${name}" ${label} (at line ${value.line}) passed as the value prop to the Context provider (at line ${usage.line})`;
+                prefix = `The ${quotedName(name)} ${label} (at line ${value.line}) passed as the value prop to the Context provider (at line ${usage.line})`;
             }
             return new Diagnostic('jsx-no-constructed-context-values', id,
                 `${prefix} changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a ${remedy} hook so the identity is stable between renders.`,

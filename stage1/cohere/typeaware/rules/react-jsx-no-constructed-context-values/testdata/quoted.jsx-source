@@ -1,0 +1,4 @@
+function Quoted0() { const élève = {}; return <Ctx.Provider value={élève}/>; }
+function Quoted1() { const a‌b = {}; return <Ctx.Provider value={a‌b}/>; }
+function Quoted2() { const x‍y = {}; return <Ctx.Provider value={x‍y}/>; }
+function Quoted3() { const 𐐀a = {}; return <Ctx.Provider value={𐐀a}/>; }
