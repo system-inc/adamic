@@ -150,3 +150,15 @@ parent/scope relationships and checker name resolution, with no dependency on
 native high-level IR, single-assignment construction or capture analysis. Whole
 production sources are read before implementation. The claim-selection evidence
 is wave-16-seventh-selection.json.gz. This update is pushed before rule code.
+
+Seventh-set implementation status: jsx-fragments and jsx-no-undef pass the
+owned native differential suite. jsx-no-constructed-context-values has its
+construction and memo dependency/return/escape paths ported and agreeing over
+the single-file controls, but remains **blocked**, not parked or complete, on
+the cross-file native arena adapter. Building that adapter reaches a shared
+parser constructor-escape refusal. The rule explicitly refuses when a resolved
+callee body is in another file. The raw resolved-signature question is supplied
+in its own Go and Adamic files using an isolated build registration overlay.
+No shared parser, compiler, generator or harness edits were made. No further
+claims will be taken while this blocker remains. See wave16_seventh/REPORT.md
+for final landing baseline and validation evidence.

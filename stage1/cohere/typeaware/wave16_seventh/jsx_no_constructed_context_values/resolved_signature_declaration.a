@@ -1,0 +1,22 @@
+import { panic } from 'adamic';
+import { Frames, header } from '../../frames.ts';
+import { Context } from '../context.a';
+import { Node } from '../node.a';
+export class SignatureDeclaration {
+    readonly index: number;
+    readonly asynchronous: boolean;
+    readonly generator: boolean;
+    constructor(index: number, asynchronous: boolean, generator: boolean) {
+        this.index = index; this.asynchronous = asynchronous; this.generator = generator;
+    }
+}
+export function resolvedSignatureDeclaration(context: Context, node: Node): SignatureDeclaration {
+    const frames = new Frames(context.ask(node, 'wave16-resolved-signature-declaration'));
+    header(frames, 'wave16-resolved-signature-declaration');
+    if(!frames.yes()) {frames.end(); return new SignatureDeclaration(-1, false, false);}
+    const path = frames.field(), kind = frames.field(), start = frames.natural(), end = frames.natural();
+    const asynchronous = frames.yes(), generator = frames.yes(); frames.end();
+    if(path !== context.rules.path) panic('NotYet: cross-file context-value callee arena is blocked by the shared parser constructor refusal');
+    const index = context.spans.get(`${kind}:${start}:${end}`) ?? panic('resolved context-value callee absent from native arena');
+    return new SignatureDeclaration(index, asynchronous, generator);
+}

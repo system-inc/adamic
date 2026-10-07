@@ -1,0 +1,111 @@
+import { panic, tsgoInspect } from 'adamic';
+import type { Rules } from '../rules.ts';
+import { Diagnostic } from '../diagnostic.ts';
+import { Frames, header } from '../frames.ts';
+import { Node } from './node.a';
+import { K, kindIndex } from './syntax_kinds.a';
+
+export class Binding {
+    readonly present: boolean;
+    readonly flags: number;
+    readonly local: readonly number[];
+    readonly total: number;
+    constructor(present: boolean, flags: number, local: readonly number[], total: number) {
+        this.present = present;
+        this.flags = flags;
+        this.local = local;
+        this.total = total;
+    }
+}
+export class Context {
+    readonly rules: Rules;
+    readonly nodes: Node[] = [];
+    readonly spans = new Map<string, number>();
+    readonly bindings = new Map<number, Binding>();
+    readonly names: Map<string, number>;
+    constructor(rules: Rules) {
+        this.rules = rules;
+        this.names = kindIndex();
+        for(let index = 0; index < rules.parser.nodes.length; index++) {
+            const raw = rules.parser.node(index);
+            const kind = this.names.get(raw.kind) ?? 0;
+            const node = new Node(index, kind, raw.kind, raw.pos, rules.start(raw), raw.end,
+                raw.children, raw.text, this.names.get(raw.operator) ?? 0,
+                raw.semantic, raw.list, raw.optional);
+            this.nodes.push(node);
+            this.spans.set(`${raw.kind}:${rules.byte(raw.pos)}:${rules.byte(raw.end)}`, index);
+        }
+    }
+    node(index: number): Node {
+        return this.nodes[index] ?? panic('missing numeric JSX node');
+    }
+    kind(index: number): number {
+        return index < 0 ? 0 : this.node(index).kind;
+    }
+    parent(index: number): number {
+        return this.rules.parents[index] ?? -1;
+    }
+    last(node: Node): number {
+        return node.children[node.children.length - 1] ?? -1;
+    }
+    skip(index: number): number {
+        let at = index;
+        while(this.kind(at) === K.ParenthesizedExpression) at = this.node(at).children[0] ?? -1;
+        return at;
+    }
+    unwrap(index: number): number {
+        let at = index;
+        while([K.ParenthesizedExpression, K.AsExpression, K.SatisfiesExpression, K.NonNullExpression].includes(this.kind(at)))
+            at = this.node(at).children[0] ?? -1;
+        return at;
+    }
+    source(node: Node): string {
+        return this.sourceText(node).slice(node.start, node.end);
+    }
+    sourceText(node: Node): string {return this.rules.scanner.text;}
+    ask(node: Node, question: string): string {
+        this.rules.queries++;
+        return tsgoInspect(this.rules.program, this.rules.path, this.rules.byte(node.pos),
+            this.rules.byte(node.end), node.hint, question);
+    }
+    binding(node: Node): Binding {
+        if(this.bindings.has(node.index)) return this.bindings.get(node.index) ?? panic('missing binding');
+        const frames = new Frames(this.ask(node, 'binding-declarations'));
+        header(frames, 'binding-declarations');
+        const present = frames.yes();
+        let flags = 0, total = 0;
+        const local: number[] = [];
+        if(present) {
+            flags = frames.natural();
+            total = frames.natural();
+            for(let at = 0; at < total; at++) {
+                const path = frames.field();
+                const kind = frames.field();
+                const start = frames.natural(), end = frames.natural();
+                if(path === this.rules.path)
+                    local.push(this.spans.get(`${kind}:${start}:${end}`) ?? panic('checker declaration absent from numeric JSX tree'));
+            }
+        }
+        frames.end();
+        const result = new Binding(present, flags, local, total);
+        this.bindings.set(node.index, result);
+        return result;
+    }
+    report(node: Node, rule: string, id: string, message: string): void {
+        this.rules.findings.push(new Diagnostic(rule, id, message,
+            this.rules.byte(node.start), this.rules.byte(node.end), 'react/'));
+    }
+    functionKind(kind: number): boolean {
+        return [K.FunctionDeclaration, K.FunctionExpression, K.ArrowFunction, K.MethodDeclaration,
+            K.GetAccessor, K.SetAccessor, K.Constructor, K.CallSignature, K.ConstructSignature,
+            K.IndexSignature, K.FunctionType, K.ConstructorType, K.MethodSignature].includes(kind);
+    }
+    nearest(index: number): number {
+        let at = this.parent(index);
+        while(at >= 0) {
+            if(this.functionKind(this.kind(at))) return at;
+            at = this.parent(at);
+        }
+        return -1;
+    }
+}

@@ -1,0 +1,76 @@
+import { Context } from '../context.a';
+import { Node } from '../node.a';
+import { K } from '../syntax_kinds.a';
+
+export class JsxFragments {
+    readonly context: Context;
+    readonly element: boolean;
+    constructor(context: Context, element: boolean) {
+        this.context = context;
+        this.element = element;
+    }
+    initializer(node: Node): number {
+        const c = this.context;
+        const child = c.last(node);
+        if(child < 0) return -1;
+        let at = c.node(child).pos - 1;
+        const source = c.sourceText(node);
+        while(at >= node.pos && [' ', '\t', '\r', '\n'].includes(source.slice(at, at + 1))) at--;
+        return source.slice(at, at + 1) === '=' ? child : -1;
+    }
+    named(index: number): boolean {
+        const c = this.context;
+        if(c.kind(index) !== K.PropertyAccessExpression) return false;
+        const node = c.node(index);
+        const left = node.children[0] ?? -1, right = c.last(node);
+        return c.kind(left) === K.Identifier && c.node(left).text === 'React' &&
+            c.kind(right) === K.Identifier && c.node(right).text === 'Fragment';
+    }
+    source(index: number): boolean {
+        const c = this.context;
+        if(c.kind(index) === K.Identifier) return c.node(index).text === 'React';
+        if(this.named(index)) return true;
+        if(c.kind(index) !== K.CallExpression) return false;
+        const node = c.node(index);
+        const callee = node.children[0] ?? -1;
+        const argument = node.children[node.children.length - node.list] ?? -1;
+        return c.kind(callee) === K.Identifier && c.node(callee).text === 'require' && node.list > 0 &&
+            [K.StringLiteral, K.NoSubstitutionTemplateLiteral].includes(c.kind(argument)) && c.node(argument).text === 'react';
+    }
+    declaration(index: number): boolean {
+        const c = this.context;
+        const node = c.node(index);
+        if(node.kind === K.VariableDeclaration) return this.source(this.initializer(node));
+        if(node.kind === K.BindingElement) {
+            const pattern = c.parent(index), variable = c.parent(pattern);
+            return c.kind(pattern) === K.ObjectBindingPattern && c.kind(variable) === K.VariableDeclaration &&
+                this.source(this.initializer(c.node(variable)));
+        }
+        if(node.kind !== K.ImportSpecifier) return false;
+        const imported = node.children.find((child) => c.kind(child) === K.Identifier) ?? -1;
+        if(imported < 0 || c.node(imported).text !== 'Fragment') return false;
+        const named = c.parent(index), clause = c.parent(named), declaration = c.parent(clause);
+        if(c.kind(named) !== K.NamedImports || c.kind(clause) !== K.ImportClause || c.kind(declaration) !== K.ImportDeclaration) return false;
+        return c.node(declaration).children.some((child) =>
+            [K.StringLiteral, K.NoSubstitutionTemplateLiteral].includes(c.kind(child)) && c.node(child).text === 'react');
+    }
+    fragment(index: number): boolean {
+        const c = this.context;
+        if(this.named(index)) return true;
+        return c.kind(index) === K.Identifier && c.binding(c.node(index)).local.some((decl) => this.declaration(decl));
+    }
+    visit(node: Node): void {
+        const c = this.context;
+        if(node.kind === K.JsxFragment) {
+            if(this.element) c.report(node, 'jsx-fragments', 'preferPragma',
+                'Prefer React.Fragment over fragment shorthand. The named form is the one this file is configured to use, and it is the only spelling that can carry a `key`.');
+            return;
+        }
+        if(this.element) return;
+        const opening = node.kind === K.JsxElement ? c.node(node.children[0] ?? -1) : node;
+        const attributes = c.last(opening);
+        if(attributes >= 0 && c.node(attributes).children.length > 0) return;
+        if(this.fragment(opening.children[0] ?? -1)) c.report(node, 'jsx-fragments', 'preferFragment',
+            'Prefer fragment shorthand over React.Fragment. The shorthand `<>` says the same thing with less to read, and a named fragment that carries no props is only the long spelling of it.');
+    }
+}

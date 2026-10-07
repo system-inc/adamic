@@ -1,0 +1,156 @@
+import { panic, readTextFile, tsgoInspect } from 'adamic';
+import type { Rules } from '../rules.ts';
+import { Diagnostic } from '../diagnostic.ts';
+import { Frames, header } from '../frames.ts';
+import { Node } from './node.a';
+import { K, kindIndex } from './syntax_kinds.a';
+import { Parser as JsxParser } from '../wave16_jsx_parser.a';
+import { Scanner } from '../../../typescript/scanner/scanner.ts';
+import { byteOffsets } from '../unary_minus.ts';
+
+class Source {
+    readonly text: string;
+    readonly offsets: readonly number[];
+    constructor(text: string, offsets: readonly number[]) {this.text = text; this.offsets = offsets;}
+}
+
+
+export class Binding {
+    readonly present: boolean;
+    readonly flags: number;
+    readonly local: readonly number[];
+    readonly total: number;
+    constructor(present: boolean, flags: number, local: readonly number[], total: number) {
+        this.present = present;
+        this.flags = flags;
+        this.local = local;
+        this.total = total;
+    }
+}
+export class Context {
+    readonly rules: Rules;
+    readonly nodes: Node[] = [];
+    readonly spans = new Map<string, number>();
+    readonly bindings = new Map<number, Binding>();
+    readonly names: Map<string, number>;
+    readonly origins: string[] = [];
+    readonly parents: number[] = [];
+    readonly sources = new Map<string, Source>();
+    constructor(rules: Rules) {
+        this.rules = rules;
+        this.names = kindIndex();
+        this.sources.set(rules.path, new Source(rules.scanner.text, rules.offsets));
+        for(let index = 0; index < rules.parser.nodes.length; index++) {
+            const raw = rules.parser.node(index);
+            const kind = this.names.get(raw.kind) ?? 0;
+            const node = new Node(index, kind, raw.kind, raw.pos, rules.start(raw), raw.end,
+                raw.children, raw.text, this.names.get(raw.operator) ?? 0,
+                raw.semantic, raw.list, raw.optional);
+            this.nodes.push(node);
+            this.origins.push(rules.path);
+            this.parents.push(rules.parents[index] ?? -1);
+            this.spans.set(`${rules.path}:${raw.kind}:${rules.byte(raw.pos)}:${rules.byte(raw.end)}`, index);
+        }
+    }
+    node(index: number): Node {
+        return this.nodes[index] ?? panic('missing numeric JSX node');
+    }
+    kind(index: number): number {
+        return index < 0 ? 0 : this.node(index).kind;
+    }
+    parent(index: number): number {
+        return this.parents[index] ?? -1;
+    }
+    last(node: Node): number {
+        return node.children[node.children.length - 1] ?? -1;
+    }
+    skip(index: number): number {
+        let at = index;
+        while(this.kind(at) === K.ParenthesizedExpression) at = this.node(at).children[0] ?? -1;
+        return at;
+    }
+    unwrap(index: number): number {
+        let at = index;
+        while([K.ParenthesizedExpression, K.AsExpression, K.SatisfiesExpression, K.NonNullExpression].includes(this.kind(at)))
+            at = this.node(at).children[0] ?? -1;
+        return at;
+    }
+    source(node: Node): string {
+        return this.sourceText(node).slice(node.start, node.end);
+    }
+    origin(node: Node): string {return this.origins[node.index] ?? panic('missing node source');}
+    sourceText(node: Node): string {return (this.sources.get(this.origin(node)) ?? panic('missing source')).text;}
+    byte(node: Node, position: number): number {
+        return (this.sources.get(this.origin(node)) ?? panic('missing source')).offsets[position] ?? panic('position outside source');
+    }
+    load(path: string): void {
+        if(this.sources.has(path)) return;
+        const source = readTextFile(path);
+        if(source.kind === 'Error') panic(source.message);
+        const parser = new JsxParser(source.text, path);
+        const root = parser.file();
+        const scanner = new Scanner(source.text), offsets = byteOffsets(source.text);
+        this.sources.set(path, new Source(source.text, offsets));
+        const base = this.nodes.length;
+        for(let index = 0; index < parser.nodes.length; index++) {
+            const raw = parser.node(index);
+            scanner.pos = raw.pos; scanner.scan();
+            const children = raw.children.map((child) => base + child);
+            this.nodes.push(new Node(base + index, this.names.get(raw.kind) ?? 0, raw.kind,
+                raw.pos, scanner.start, raw.end, children, raw.text, this.names.get(raw.operator) ?? 0,
+                raw.semantic, raw.list, raw.optional));
+            this.origins.push(path); this.parents.push(-1);
+            this.spans.set(`${path}:${raw.kind}:${offsets[raw.pos] ?? -1}:${offsets[raw.end] ?? -1}`, base + index);
+        }
+        this.link(base + root, -1);
+    }
+    link(index: number, parent: number): void {
+        this.parents[index] = parent;
+        for(const child of this.node(index).children) this.link(child, index);
+    }
+    ask(node: Node, question: string): string {
+        this.rules.queries++;
+        return tsgoInspect(this.rules.program, this.origin(node), this.byte(node, node.pos),
+            this.byte(node, node.end), node.hint, question);
+    }
+    binding(node: Node): Binding {
+        if(this.bindings.has(node.index)) return this.bindings.get(node.index) ?? panic('missing binding');
+        const frames = new Frames(this.ask(node, 'binding-declarations'));
+        header(frames, 'binding-declarations');
+        const present = frames.yes();
+        let flags = 0, total = 0;
+        const local: number[] = [];
+        if(present) {
+            flags = frames.natural();
+            total = frames.natural();
+            for(let at = 0; at < total; at++) {
+                const path = frames.field();
+                const kind = frames.field();
+                const start = frames.natural(), end = frames.natural();
+                if(path === this.origin(node))
+                    local.push(this.spans.get(`${path}:${kind}:${start}:${end}`) ?? panic('checker declaration absent from numeric JSX tree'));
+            }
+        }
+        frames.end();
+        const result = new Binding(present, flags, local, total);
+        this.bindings.set(node.index, result);
+        return result;
+    }
+    report(node: Node, rule: string, id: string, message: string): void {
+        this.rules.findings.push(new Diagnostic(rule, id, message,
+            this.rules.byte(node.start), this.rules.byte(node.end), 'react/'));
+    }
+    functionKind(kind: number): boolean {
+        return [K.FunctionDeclaration, K.FunctionExpression, K.ArrowFunction, K.MethodDeclaration,
+            K.GetAccessor, K.SetAccessor, K.Constructor, K.CallSignature, K.ConstructSignature,
+            K.IndexSignature, K.FunctionType, K.ConstructorType, K.MethodSignature].includes(kind);
+    }
+    nearest(index: number): number {
+        let at = this.parent(index);
+        while(at >= 0) {
+            if(this.functionKind(this.kind(at))) return at;
+            at = this.parent(at);
+        }
+        return -1;
+    }
+}

@@ -1,0 +1,33 @@
+import { Context } from '../context.a';
+import { Node } from '../node.a';
+import { K } from '../syntax_kinds.a';
+
+export class JsxNoUndef {
+    readonly context: Context;
+    readonly allowGlobals: boolean;
+    constructor(context: Context, allowGlobals: boolean) {
+        this.context = context;
+        this.allowGlobals = allowGlobals;
+    }
+    visit(node: Node): void {
+        const c = this.context;
+        let reference = node.children[0] ?? -1;
+        if(c.kind(reference) === K.Identifier) {
+            const name = c.node(reference).text;
+            if(name === '' || name.includes('-')) return;
+            const first = name.charCodeAt(0);
+            if(first >= 97 && first <= 122) return;
+        }
+        else if(c.kind(reference) === K.PropertyAccessExpression) {
+            while(c.kind(reference) === K.PropertyAccessExpression)
+                reference = c.node(reference).children[0] ?? -1;
+            if(c.kind(reference) !== K.Identifier) return;
+        }
+        else return;
+        const target = c.node(reference);
+        const binding = c.binding(target);
+        if(binding.present && (this.allowGlobals || c.rules.path.endsWith('.cjs') || binding.local.length > 0)) return;
+        c.report(target, 'jsx-no-undef', 'jsxIdentifierNotDefined',
+            'This JSX tag names a component that has no declaration in scope, so React receives `undefined` where a component was meant and throws at render rather than at build. Almost always a misspelling or a missing import. Import the component, or fix the spelling to match the binding you meant.');
+    }
+}

@@ -1,0 +1,166 @@
+import { capital } from '../unicode.a';
+import { Context } from '../context.a';
+import { Node } from '../node.a';
+import { K } from '../syntax_kinds.a';
+import { JsxFragments } from '../jsx_fragments/rule.a';
+
+export class Construction {
+    readonly label: string;
+    readonly index: number;
+    readonly usage: number;
+    constructor(label: string, index: number, usage: number) {
+        this.label = label;
+        this.index = index;
+        this.usage = usage;
+    }
+}
+export class ConstructionCore {
+    readonly context: Context;
+    readonly declarations: JsxFragments;
+    constructor(context: Context) {
+        this.context = context;
+        this.declarations = new JsxFragments(context, false);
+    }
+    provider(index: number): boolean {
+        const c = this.context;
+        if(c.kind(index) === K.PropertyAccessExpression) {
+            const name = c.last(c.node(index));
+            return c.kind(name) === K.Identifier && c.node(name).text === 'Provider';
+        }
+        if(c.kind(index) !== K.Identifier) return false;
+        for(const declaration of c.binding(c.node(index)).local) {
+            if(c.kind(declaration) !== K.VariableDeclaration) continue;
+            const initialized = c.skip(this.declarations.initializer(c.node(declaration)));
+            if(c.kind(initialized) !== K.CallExpression) continue;
+            const callee = c.skip(c.node(initialized).children[0] ?? -1);
+            if(c.kind(callee) === K.Identifier && c.node(callee).text === 'createContext') return true;
+            if(c.kind(callee) !== K.PropertyAccessExpression) continue;
+            const name = c.last(c.node(callee)), receiver = c.skip(c.node(callee).children[0] ?? -1);
+            if(c.kind(name) === K.Identifier && c.node(name).text === 'createContext' &&
+                c.kind(receiver) === K.Identifier && c.node(receiver).text === 'React') return true;
+        }
+        return false;
+    }
+    value(attributes: number): number {
+        const c = this.context;
+        if(c.kind(attributes) !== K.JsxAttributes) return -1;
+        for(const index of c.node(attributes).children) {
+            const node = c.node(index);
+            if(node.kind !== K.JsxAttribute) continue;
+            const name = node.children[0] ?? -1;
+            if(c.kind(name) !== K.Identifier || c.node(name).text !== 'value') continue;
+            const initialized = node.children[1] ?? -1;
+            return c.kind(initialized) === K.JsxExpression ? c.node(initialized).children[0] ?? -1 : -1;
+        }
+        return -1;
+    }
+    constructionLabel(kind: number): string {
+        let label = '';
+        if(kind === K.ObjectLiteralExpression) label = 'object';
+        else if(kind === K.ArrayLiteralExpression) label = 'array';
+        else if([K.ArrowFunction, K.FunctionExpression].includes(kind)) label = 'function expression';
+        else if(kind === K.ClassExpression) label = 'class expression';
+        else if(kind === K.NewExpression) label = 'new expression';
+        else if(kind === K.RegularExpressionLiteral) label = 'regular expression';
+        else if([K.JsxElement, K.JsxSelfClosingElement].includes(kind)) label = 'JSX element';
+        else if(kind === K.JsxFragment) label = 'JSX fragment';
+        return label;
+    }
+    construction(index: number, depth: number): Construction | undefined {
+        const c = this.context;
+        if(index < 0 || depth > 16) return undefined;
+        const node = c.node(index);
+        const label = this.constructionLabel(node.kind);
+        if(label !== '') return new Construction(label, index, -1);
+        if([K.ParenthesizedExpression, K.AsExpression, K.SatisfiesExpression].includes(node.kind))
+            return this.construction(node.children[0] ?? -1, depth + 1);
+        if(node.kind === K.ConditionalExpression)
+            return this.construction(node.children[2] ?? -1, depth + 1) ?? this.construction(node.children[4] ?? -1, depth + 1);
+        if(node.kind === K.BinaryExpression) {
+            const operator = c.kind(node.children[1] ?? -1);
+            if(operator >= K.EqualsToken && operator <= K.CaretEqualsToken) {
+                const found = this.construction(node.children[2] ?? -1, depth + 1);
+                return found === undefined ? undefined : new Construction('assignment expression', found.index, index);
+            }
+            if([K.AmpersandAmpersandToken, K.BarBarToken, K.QuestionQuestionToken].includes(operator))
+                return this.construction(node.children[0] ?? -1, depth + 1) ?? this.construction(node.children[2] ?? -1, depth + 1);
+            return undefined;
+        }
+        if(node.kind === K.PropertyAccessExpression) {
+            const receiver = node.children[0] ?? -1;
+            const found = this.construction(receiver, depth + 1);
+            return found === undefined ? undefined : new Construction(found.label, found.index, receiver);
+        }
+        if(node.kind !== K.Identifier) return undefined;
+        const binding = c.binding(node);
+        const declaration = binding.local[binding.local.length - 1] ?? -1;
+        if(declaration < 0 || c.nearest(declaration) !== c.nearest(index)) return undefined;
+        if(c.kind(declaration) === K.FunctionDeclaration) return new Construction('function declaration', declaration, index);
+        if(c.kind(declaration) !== K.VariableDeclaration) return undefined;
+        const found = this.construction(this.declarations.initializer(c.node(declaration)), depth + 1);
+        return found === undefined ? undefined : new Construction(found.label, found.index, index);
+    }
+    capital(name: string): boolean {return capital(name);}
+    name(node: Node): string {
+        for(const child of node.children) {
+            if(this.context.kind(child) === K.Identifier) return this.context.node(child).text;
+        }
+        return '';
+    }
+    bindingComponent(index: number): boolean {
+        const c = this.context;
+        const parent = c.parent(index);
+        if(c.kind(parent) === K.VariableDeclaration) return this.capital(this.name(c.node(parent)));
+        return c.kind(parent) === K.CallExpression && this.bindingComponent(parent);
+    }
+    classComponent(index: number): boolean {
+        const c = this.context;
+        let at = c.parent(index);
+        while(at >= 0) {
+            const node = c.node(at);
+            if([K.ClassDeclaration, K.ClassExpression].includes(node.kind)) {
+                for(const clause of node.children) {
+                    if(c.kind(clause) !== K.HeritageClause) continue;
+                    for(const type of c.node(clause).children) {
+                        if(c.kind(type) !== K.ExpressionWithTypeArguments) continue;
+                        const expression = c.node(type).children[0] ?? -1;
+                        if(c.kind(expression) === K.Identifier && ['Component', 'PureComponent'].includes(c.node(expression).text)) return true;
+                        if(c.kind(expression) !== K.PropertyAccessExpression) continue;
+                        const receiver = c.skip(c.node(expression).children[0] ?? -1), name = c.last(c.node(expression));
+                        if(c.kind(receiver) === K.Identifier && c.node(receiver).text === 'React' && c.kind(name) === K.Identifier &&
+                            ['Component', 'PureComponent'].includes(c.node(name).text)) return true;
+                    }
+                }
+                return false;
+            }
+            at = c.parent(at);
+        }
+        return false;
+    }
+    component(index: number): boolean {
+        const c = this.context;
+        let at = c.parent(index);
+        while(at >= 0) {
+            const node = c.node(at);
+            if(node.kind === K.FunctionDeclaration) return this.capital(this.name(node));
+            if([K.FunctionExpression, K.ArrowFunction].includes(node.kind))
+                return c.kind(c.parent(at)) === K.PropertyDeclaration ? this.classComponent(c.parent(at)) : this.bindingComponent(at);
+            if([K.MethodDeclaration, K.GetAccessor, K.SetAccessor, K.Constructor, K.PropertyDeclaration].includes(node.kind))
+                return this.classComponent(at);
+            at = c.parent(at);
+        }
+        return false;
+    }
+    line(node: Node): number {
+        let line = 1;
+        const text = this.context.sourceText(node);
+        for(let at = 0; at < node.start; at++) {
+            const code = text.charCodeAt(at);
+            if([10, 13, 8232, 8233].includes(code)) {
+                if(code === 13 && text.charCodeAt(at + 1) === 10) at++;
+                line++;
+            }
+        }
+        return line;
+    }
+}

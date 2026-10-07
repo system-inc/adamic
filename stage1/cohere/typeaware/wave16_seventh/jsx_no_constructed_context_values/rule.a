@@ -1,0 +1,35 @@
+import { quoted } from '../unicode.a';
+import { Context } from '../context.a';
+import { Node } from '../node.a';
+import { K } from '../syntax_kinds.a';
+import { ConstructionCore } from './construction.a';
+import { Stability } from './stability.a';
+export class JsxNoConstructedContextValues {
+    readonly context: Context;
+    readonly core: ConstructionCore;
+    constructor(context: Context) {this.context = context; this.core = new ConstructionCore(context);}
+    visit(node: Node): void {
+        const c = this.context;
+        if(!this.core.provider(node.children[0] ?? -1)) return;
+        const value = this.core.value(c.last(node));
+        if(value < 0 || !this.core.component(node.index)) return;
+        const found = this.core.construction(value, 0);
+        if(found === undefined) {
+            new Stability(this.core).check(value, node);
+            return;
+        }
+        const functionValue = ['function expression', 'function declaration'].includes(found.label);
+        const remedy = functionValue ? 'useCallback' : 'useMemo';
+        const suffix = functionValue ? 'Func' : '';
+        let id = `defaultMsg${suffix}`;
+        let beginning = `The ${found.label} passed as the value prop to the Context provider (at line ${this.core.line(c.node(found.index))})`;
+        if(found.usage >= 0) {
+            const usage = c.node(found.usage);
+            const name = usage.kind === K.Identifier ? usage.text : '';
+            id = `withIdentifierMsg${suffix}`;
+            beginning = `The ${quoted(name)} ${found.label} (at line ${this.core.line(c.node(found.index))}) passed as the value prop to the Context provider (at line ${this.core.line(usage)})`;
+        }
+        c.report(c.node(found.index), 'jsx-no-constructed-context-values', id,
+            `${beginning} changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a ${remedy} hook so the identity is stable between renders.`);
+    }
+}

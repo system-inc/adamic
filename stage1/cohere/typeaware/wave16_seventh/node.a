@@ -1,0 +1,31 @@
+// This value is handed to listeners. Parser nodes are read only once by the adapter.
+export class Node {
+    readonly index: number;
+    readonly kind: number;
+    readonly hint: string;
+    readonly pos: number;
+    readonly start: number;
+    readonly end: number;
+    readonly children: readonly number[];
+    readonly text: string;
+    readonly operator: number;
+    readonly semantic: string;
+    readonly list: number;
+    readonly optional: boolean;
+    constructor(index: number, kind: number, hint: string, pos: number, start: number,
+                end: number, children: readonly number[], text: string, operator: number,
+                semantic: string, list: number, optional: boolean) {
+        this.index = index;
+        this.kind = kind;
+        this.hint = hint;
+        this.pos = pos;
+        this.start = start;
+        this.end = end;
+        this.children = children;
+        this.text = text;
+        this.operator = operator;
+        this.semantic = semantic;
+        this.list = list;
+        this.optional = optional;
+    }
+}
