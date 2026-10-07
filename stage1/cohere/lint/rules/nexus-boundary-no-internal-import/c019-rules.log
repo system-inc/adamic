@@ -1,0 +1,239 @@
+=== RUN   TestExtractedDecisions
+    decision_test.go:86: ten manually extracted decision cases, 1963 identical bytes, Go/source Node/emitted JS/sanitized native
+=== RUN   TestExtractedDecisions/next-google-font-preconnect
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 0
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 1
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 2
+=== RUN   TestExtractedDecisions/next-no-css-tags
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 0
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 1
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 2
+=== RUN   TestExtractedDecisions/next-inline-script-id
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 0
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 1
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 2
+=== RUN   TestExtractedDecisions/next-next-script-for-ga
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 0
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 1
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 2
+=== RUN   TestExtractedDecisions/next-no-before-interactive-script-outside-document
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 0
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 1
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 2
+--- PASS: TestExtractedDecisions (8.84s)
+    --- PASS: TestExtractedDecisions/next-google-font-preconnect (0.83s)
+    --- PASS: TestExtractedDecisions/next-no-css-tags (0.67s)
+    --- PASS: TestExtractedDecisions/next-inline-script-id (0.73s)
+    --- PASS: TestExtractedDecisions/next-next-script-for-ga (0.70s)
+    --- PASS: TestExtractedDecisions/next-no-before-interactive-script-outside-document (0.76s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/rules/next-google-font-preconnect	8.852s
+=== RUN   TestTailwindDecisions
+    decision_test.go:112: all decision cases agree, 121355 identical bytes, Go/Node/emitted JS/sanitized native
+=== RUN   TestTailwindDecisions/better-tailwindcss-enforce-shorthand-classes
+    decision_test.go:146: compiling clean mutant killed only by comparison, side 0
+    decision_test.go:146: compiling clean mutant killed only by comparison, side 1
+    decision_test.go:146: compiling clean mutant killed only by comparison, side 2
+=== RUN   TestTailwindDecisions/better-tailwindcss-no-concatenated-classes
+    decision_test.go:146: compiling clean mutant killed only by comparison, side 0
+    decision_test.go:146: compiling clean mutant killed only by comparison, side 1
+    decision_test.go:146: compiling clean mutant killed only by comparison, side 2
+=== RUN   TestTailwindDecisions/better-tailwindcss-no-conflicting-classes
+    decision_test.go:146: compiling clean mutant killed only by comparison, side 0
+    decision_test.go:146: compiling clean mutant killed only by comparison, side 1
+    decision_test.go:146: compiling clean mutant killed only by comparison, side 2
+--- PASS: TestTailwindDecisions (20.48s)
+    --- PASS: TestTailwindDecisions/better-tailwindcss-enforce-shorthand-classes (4.19s)
+    --- PASS: TestTailwindDecisions/better-tailwindcss-no-concatenated-classes (3.71s)
+    --- PASS: TestTailwindDecisions/better-tailwindcss-no-conflicting-classes (4.39s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/rules/better-tailwindcss-enforce-shorthand-classes	20.487s
+=== RUN   TestSharedNexusParserGaps
+    gaps_test.go:56: actual Go reports on all three blocked fixtures: internal-recovery outsideInternal Only files inside the folder that owns this 'internal' directory may import from it. An internal folder is the one place a module may keep something it is free to change without warning, and that freedom lasts exactly as long as nobody outside reaches in.
+        project-recovery forbiddenProjectImport A framework library must not import from '@project', except the specifiers named in this rule's allowed option. A library reaching into arbitrary project code inverts the dependency: the framework starts depending on the thing that depends on it.
+        outside-top-level-await forbiddenOutsideImport Nexus must not import from '@project', '@structure', or '@base'. Nexus is the layer they are all built on, so a reach upward makes the foundation depend on what rests on it, and the cycle only shows up as a build failure in whichever project imports nexus first.
+    gaps_test.go:85: internal-recovery source Node exits 70: adamic: panic: parser slice unsupported primary Unknown at 87 in /repo/source/other/Thing.ts
+    gaps_test.go:85: internal-recovery emitted JavaScript exits 70: adamic: panic: parser slice unsupported primary Unknown at 87 in /repo/source/other/Thing.ts
+    gaps_test.go:85: internal-recovery sanitized native exits 70: adamic: panic: parser slice unsupported primary Unknown at 87 in /repo/source/other/Thing.ts
+    gaps_test.go:85: project-recovery source Node exits 70: adamic: panic: parser slice unsupported primary Unknown at 84 in /repo/libraries/base/source/Thing.ts
+    gaps_test.go:85: project-recovery emitted JavaScript exits 70: adamic: panic: parser slice unsupported primary Unknown at 84 in /repo/libraries/base/source/Thing.ts
+    gaps_test.go:85: project-recovery sanitized native exits 70: adamic: panic: parser slice unsupported primary Unknown at 84 in /repo/libraries/base/source/Thing.ts
+    gaps_test.go:85: outside-top-level-await source Node exits 70: adamic: panic: parser slice expected semicolon at 21 in /repository/libraries/nexus/code-quality/Thing.ts
+    gaps_test.go:85: outside-top-level-await emitted JavaScript exits 70: adamic: panic: parser slice expected semicolon at 21 in /repository/libraries/nexus/code-quality/Thing.ts
+    gaps_test.go:85: outside-top-level-await sanitized native exits 70: adamic: panic: parser slice expected semicolon at 21 in /repository/libraries/nexus/code-quality/Thing.ts
+--- PASS: TestSharedNexusParserGaps (31.77s)
+=== RUN   TestNumericListenerDeclarations
+    listeners_test.go:52: 17 numeric listener declarations, 741 bytes, match actual Go listener keys on source Node, emitted JavaScript and ASan/UBSan native
+=== RUN   TestNumericListenerDeclarations/base-correctness-require-orm-column-declare
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNumericListenerDeclarations/nexus-consistency-no-boolean-outcome
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNumericListenerDeclarations/next-google-font-preconnect
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNumericListenerDeclarations/next-inline-script-id
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNumericListenerDeclarations/next-next-script-for-ga
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNumericListenerDeclarations/next-no-before-interactive-script-outside-document
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNumericListenerDeclarations/next-no-css-tags
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNumericListenerDeclarations/next-no-document-import-in-page
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNumericListenerDeclarations/typescript-no-non-null-asserted-optional-chain
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNumericListenerDeclarations/typescript-no-this-alias
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNumericListenerDeclarations/typescript-no-unnecessary-type-constraint
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNumericListenerDeclarations/better-tailwindcss-enforce-shorthand-classes
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNumericListenerDeclarations/better-tailwindcss-no-concatenated-classes
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNumericListenerDeclarations/better-tailwindcss-no-conflicting-classes
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNumericListenerDeclarations/nexus-boundary-no-internal-import
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNumericListenerDeclarations/nexus-boundary-no-nexus-outside-import
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNumericListenerDeclarations/nexus-boundary-no-project-import
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+--- PASS: TestNumericListenerDeclarations (14.42s)
+    --- PASS: TestNumericListenerDeclarations/base-correctness-require-orm-column-declare (0.40s)
+    --- PASS: TestNumericListenerDeclarations/nexus-consistency-no-boolean-outcome (0.38s)
+    --- PASS: TestNumericListenerDeclarations/next-google-font-preconnect (0.50s)
+    --- PASS: TestNumericListenerDeclarations/next-inline-script-id (0.39s)
+    --- PASS: TestNumericListenerDeclarations/next-next-script-for-ga (0.36s)
+    --- PASS: TestNumericListenerDeclarations/next-no-before-interactive-script-outside-document (0.40s)
+    --- PASS: TestNumericListenerDeclarations/next-no-css-tags (0.41s)
+    --- PASS: TestNumericListenerDeclarations/next-no-document-import-in-page (0.40s)
+    --- PASS: TestNumericListenerDeclarations/typescript-no-non-null-asserted-optional-chain (0.41s)
+    --- PASS: TestNumericListenerDeclarations/typescript-no-this-alias (0.41s)
+    --- PASS: TestNumericListenerDeclarations/typescript-no-unnecessary-type-constraint (0.45s)
+    --- PASS: TestNumericListenerDeclarations/better-tailwindcss-enforce-shorthand-classes (0.44s)
+    --- PASS: TestNumericListenerDeclarations/better-tailwindcss-no-concatenated-classes (0.41s)
+    --- PASS: TestNumericListenerDeclarations/better-tailwindcss-no-conflicting-classes (0.44s)
+    --- PASS: TestNumericListenerDeclarations/nexus-boundary-no-internal-import (0.42s)
+    --- PASS: TestNumericListenerDeclarations/nexus-boundary-no-nexus-outside-import (0.42s)
+    --- PASS: TestNumericListenerDeclarations/nexus-boundary-no-project-import (0.41s)
+=== RUN   TestResolvedImportPaths
+    paths_test.go:88: 399 path resolutions agree across Go/Node/emitted JS/sanitized native, 6861 bytes
+    paths_test.go:108: path mutant compiles and runs cleanly; caught only by comparison side 0
+    paths_test.go:108: path mutant compiles and runs cleanly; caught only by comparison side 1
+    paths_test.go:108: path mutant compiles and runs cleanly; caught only by comparison side 2
+--- PASS: TestResolvedImportPaths (2.14s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/rules/nexus-boundary-no-internal-import	48.353s
+=== RUN   TestDeterministicRegeneration
+=== PAUSE TestDeterministicRegeneration
+=== RUN   TestDescriptorRejections
+=== PAUSE TestDescriptorRejections
+=== RUN   TestDuplicateOracleAdapter
+=== PAUSE TestDuplicateOracleAdapter
+=== CONT  TestDeterministicRegeneration
+=== CONT  TestDuplicateOracleAdapter
+=== CONT  TestDescriptorRejections
+=== RUN   TestDescriptorRejections/duplicate_public_name
+=== PAUSE TestDescriptorRejections/duplicate_public_name
+=== RUN   TestDescriptorRejections/unknown_field
+=== PAUSE TestDescriptorRejections/unknown_field
+=== RUN   TestDescriptorRejections/missing_named_export
+=== PAUSE TestDescriptorRejections/missing_named_export
+=== RUN   TestDescriptorRejections/bad_kind
+=== PAUSE TestDescriptorRejections/bad_kind
+=== RUN   TestDescriptorRejections/missing_oracle_export
+=== PAUSE TestDescriptorRejections/missing_oracle_export
+=== RUN   TestDescriptorRejections/no_listener
+=== PAUSE TestDescriptorRejections/no_listener
+=== RUN   TestDescriptorRejections/missing_factory
+=== PAUSE TestDescriptorRejections/missing_factory
+=== RUN   TestDescriptorRejections/missing_class
+=== PAUSE TestDescriptorRejections/missing_class
+=== RUN   TestDescriptorRejections/missing_finish_hook
+=== PAUSE TestDescriptorRejections/missing_finish_hook
+=== RUN   TestDescriptorRejections/unsafe_public_name
+=== PAUSE TestDescriptorRejections/unsafe_public_name
+=== CONT  TestDescriptorRejections/duplicate_public_name
+=== CONT  TestDescriptorRejections/no_listener
+=== CONT  TestDescriptorRejections/missing_finish_hook
+=== NAME  TestDeterministicRegeneration
+    registry_test.go:44: better-tailwindcss-enforce-shorthand-classes: missing rule descriptor
+=== NAME  TestDescriptorRejections/duplicate_public_name
+    registry_test.go:117: mutant survived or wrong failure: better-tailwindcss-enforce-shorthand-classes: missing rule descriptor
+=== CONT  TestDescriptorRejections/unsafe_public_name
+=== NAME  TestDuplicateOracleAdapter
+    registry_test.go:145: duplicate adapter mutant survived: better-tailwindcss-enforce-shorthand-classes: missing rule descriptor
+--- FAIL: TestDuplicateOracleAdapter (0.07s)
+=== CONT  TestDescriptorRejections/bad_kind
+--- FAIL: TestDeterministicRegeneration (0.07s)
+=== CONT  TestDescriptorRejections/missing_oracle_export
+=== NAME  TestDescriptorRejections/missing_finish_hook
+    registry_test.go:117: mutant survived or wrong failure: better-tailwindcss-enforce-shorthand-classes: missing rule descriptor
+=== NAME  TestDescriptorRejections/unsafe_public_name
+    registry_test.go:117: mutant survived or wrong failure: better-tailwindcss-enforce-shorthand-classes: missing rule descriptor
+=== CONT  TestDescriptorRejections/missing_named_export
+=== NAME  TestDescriptorRejections/no_listener
+    registry_test.go:117: mutant survived or wrong failure: better-tailwindcss-enforce-shorthand-classes: missing rule descriptor
+=== NAME  TestDescriptorRejections/bad_kind
+    registry_test.go:117: mutant survived or wrong failure: better-tailwindcss-enforce-shorthand-classes: missing rule descriptor
+=== CONT  TestDescriptorRejections/unknown_field
+=== CONT  TestDescriptorRejections/missing_class
+=== CONT  TestDescriptorRejections/missing_factory
+=== NAME  TestDescriptorRejections/unknown_field
+    registry_test.go:117: mutant survived or wrong failure: better-tailwindcss-enforce-shorthand-classes: missing rule descriptor
+=== NAME  TestDescriptorRejections/missing_factory
+    registry_test.go:117: mutant survived or wrong failure: better-tailwindcss-enforce-shorthand-classes: missing rule descriptor
+=== NAME  TestDescriptorRejections/missing_named_export
+    registry_test.go:117: mutant survived or wrong failure: better-tailwindcss-enforce-shorthand-classes: missing rule descriptor
+=== NAME  TestDescriptorRejections/missing_oracle_export
+    registry_test.go:117: mutant survived or wrong failure: better-tailwindcss-enforce-shorthand-classes: missing rule descriptor
+=== NAME  TestDescriptorRejections/missing_class
+    registry_test.go:117: mutant survived or wrong failure: better-tailwindcss-enforce-shorthand-classes: missing rule descriptor
+--- FAIL: TestDescriptorRejections (0.00s)
+    --- FAIL: TestDescriptorRejections/duplicate_public_name (0.06s)
+    --- FAIL: TestDescriptorRejections/missing_finish_hook (0.08s)
+    --- FAIL: TestDescriptorRejections/no_listener (0.09s)
+    --- FAIL: TestDescriptorRejections/unsafe_public_name (0.03s)
+    --- FAIL: TestDescriptorRejections/bad_kind (0.03s)
+    --- FAIL: TestDescriptorRejections/unknown_field (0.03s)
+    --- FAIL: TestDescriptorRejections/missing_factory (0.04s)
+    --- FAIL: TestDescriptorRejections/missing_named_export (0.08s)
+    --- FAIL: TestDescriptorRejections/missing_oracle_export (0.09s)
+    --- FAIL: TestDescriptorRejections/missing_class (0.08s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/registry	0.185s
+FAIL

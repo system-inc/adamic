@@ -1,6 +1,6 @@
 Parked under the explicit October 7 instruction from @system_adamic.
 
-Branch: codex/lint-wave1-12. Current main: f8013f0baac41ddc340d76f83bddde38536a8f07. Implementation and oracle evidence tip: 0fd6e03841db65fc43ba2122d6d4b72986b99308. Main, implementation and pinned inputs are unchanged since the successful current-main comparison recorded in F801-LANDING.md. No code change is made by this parking note.
+Branch: codex/lint-wave1-12. Current main: c01907a7036a22c2ea7ee686ed5fe4c6cd4bbc06. Earlier oracle evidence tip: 0fd6e03841db65fc43ba2122d6d4b72986b99308. The branch is now rebased onto c01907a7 and rechecked: independent owned packages pass, the aggregate supported-domain comparison passes in 457.911s with all nine semantic mutants caught again. CURRENT-LANDING.md and c019-*.log hold the fresh evidence. Compiler, lint implementation and pinned cohere inputs remain unchanged across this main advance. No code change is made by this parking note.
 
 Supported-domain Go findings/fixes match source Node, emitted JavaScript and sanitized native over 3,016 fixture/witness/compiler/stage1 cases, 118,905,738 bytes. All nine semantic mutants are caught by output comparison on every backend. Independent decision/path packages and all 17 numeric listener declarations pass with their compiling controls. Complete commands, successful logs and rejected/interrupted attempts remain in F801-LANDING.md and f801-*.log.
 
