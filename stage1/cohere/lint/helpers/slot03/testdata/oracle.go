@@ -27,6 +27,7 @@ func main() {
 	scan.Buffer(make([]byte, 4096), 16<<20)
 	names := map[string]bool{}
 	points := map[int]bool{}
+	kinds := map[string]bool{}
 	for scan.Scan() {
 		var row struct{ File, Source string }
 		must(json.Unmarshal(scan.Bytes(), &row))
@@ -46,6 +47,7 @@ func main() {
 			if n == nil {
 				return false
 			}
+			kinds[strings.TrimPrefix(n.Kind.String(), "Kind")] = true
 			switch n.Kind {
 			case ast.KindIdentifier, ast.KindStringLiteral, ast.KindPrivateIdentifier:
 				names[n.Text()] = true
@@ -72,7 +74,12 @@ func main() {
 		values = append(values, point)
 	}
 	sort.Ints(values)
-	data, err := json.Marshal(map[string]any{"names": list, "spaces": values})
+	candidates := []string{}
+	for kind := range kinds {
+		candidates = append(candidates, kind)
+	}
+	sort.Strings(candidates)
+	data, err := json.Marshal(map[string]any{"names": list, "spaces": values, "listenerCandidates": candidates})
 	must(err)
 	must(os.WriteFile(os.Args[2], data, 0644))
 	for _, name := range list {
@@ -84,6 +91,29 @@ func main() {
 	for point := 0; point <= 0x10ffff; point++ {
 		fmt.Println(tailwind.AdamicIsSpace(rune(point)))
 	}
+	render := func(kinds []ast.Kind) string {
+		names := []string{}
+		for _, kind := range kinds {
+			names = append(names, strings.TrimPrefix(kind.String(), "Kind"))
+		}
+		return strings.Join(names, ",")
+	}
+	first := tailwind.ListenerKinds()
+	fmt.Println(render(first))
+	first[0] = ast.KindStringLiteral
+	fmt.Println(render(tailwind.ListenerKinds()))
+	first = append(first, ast.KindIdentifier)
+	fmt.Println(render(tailwind.ListenerKinds()))
+	for _, candidate := range candidates {
+		match := false
+		for _, kind := range tailwind.ListenerKinds() {
+			if strings.TrimPrefix(kind.String(), "Kind") == candidate {
+				match = true
+			}
+		}
+		fmt.Println(match)
+	}
+
 }
 func must(err error) {
 	if err != nil {

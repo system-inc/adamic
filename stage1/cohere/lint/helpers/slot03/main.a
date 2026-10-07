@@ -1,5 +1,6 @@
 import { panic, programArguments, readTextFile } from 'adamic';
 import { OptionsJson } from '../options_json.ts';
+import { listenerKinds } from './listener_kinds.a';
 import { isTailwindSpace } from './tailwind_space.a';
 import { isComponentBaseName } from './component_base_name.a';
 const argumentsList = programArguments();
@@ -16,3 +17,13 @@ for(const item of json.node(json.field(root, 'spaces')).children) {
     console.log(`${isTailwindSpace(json.node(item).number)}`);
 }
 for(let point = 0; point <= 0x10ffff; point++) { console.log(`${isTailwindSpace(point)}`); }
+
+const firstKinds = listenerKinds();
+console.log(firstKinds.join(','));
+firstKinds[0] = 'StringLiteral';
+console.log(listenerKinds().join(','));
+firstKinds.push('Identifier');
+console.log(listenerKinds().join(','));
+for(const item of json.node(json.field(root, 'listenerCandidates')).children) {
+    console.log(`${listenerKinds().includes(json.node(item).text)}`);
+}

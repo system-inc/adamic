@@ -1,0 +1,4 @@
+// Go tailwind.ListenerKinds, in subscription order. Each caller owns its fresh list.
+export function listenerKinds(): string[] {
+    return ['JsxAttribute', 'CallExpression', 'VariableDeclaration'];
+}
