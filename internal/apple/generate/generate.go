@@ -27,8 +27,10 @@ type File struct {
 type Output struct {
 	Files []File
 	Check []byte
-	// Leaves is the cycle finder's leaf table, with its derivation (leaves.go).
+	// Leaves is the cycle finder's leaf table, with its derivation (leaves.go), and Holds what every
+	// other class may hold, by the same derivation.
 	Leaves []byte
+	Holds  []byte
 }
 
 // Generate is the loader-facing library entry. The caller owns clang's stream
@@ -143,11 +145,14 @@ func RunClang(ctx context.Context, clang string, arguments []string, configurati
 // LeavesFile is where Write puts the leaf table, beside the bindings, for the cycle finder.
 const LeavesFile = "leaves.txt"
 
+// HoldsFile is where Write puts what every class that isn't a leaf may hold.
+const HoldsFile = "holds.txt"
+
 // Write writes paths in canonical order. Generation, validation and clang's
 // successful exit have completed before this function can be called.
 func (o Output) Write(directory string) error {
 	files := append([]File{}, o.Files...)
-	files = append(files, File{Path: "bindings-check.m", Content: o.Check}, File{Path: LeavesFile, Content: o.Leaves})
+	files = append(files, File{Path: "bindings-check.m", Content: o.Check}, File{Path: LeavesFile, Content: o.Leaves}, File{Path: HoldsFile, Content: o.Holds})
 	sort.Slice(files, func(i, j int) bool { return files[i].Path < files[j].Path })
 	for _, file := range files {
 		clean := filepath.Clean(filepath.FromSlash(file.Path))

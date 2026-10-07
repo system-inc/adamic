@@ -52,7 +52,9 @@ type generator struct {
 	implements    []implementCheck
 	// bound is every method a binding sends, -[Class selector], what leaves.go counts a program can
 	// hand an instance.
-	bound       map[string]bool
+	bound map[string]bool
+	// holdsTable is what leaves derives every non-leaf class holds (leaves.go).
+	holdsTable  []byte
 	importError error
 }
 type nativeType struct {

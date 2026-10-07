@@ -92,6 +92,7 @@ func (g *generator) build() (Output, error) {
 	}
 	output.Check = []byte(check)
 	output.Leaves = g.leaves()
+	output.Holds = g.holdsTable
 	return output, nil
 }
 

@@ -93,6 +93,12 @@ type lowering struct {
 	// the cycle finder holds to the same rule as a field (cycles.go).
 	delegateHolds []delegateHold
 
+	// appleTypes are the classes and protocols the program's binding files declare, by Objective-C
+	// name, and appleHanded the types of the closures the program hands Apple as blocks and actions:
+	// what the cycle finder follows into when an Apple object may hold one (cycles.go).
+	appleTypes  map[string]*checker.Type
+	appleHanded []*checker.Type
+
 	// strings indexes result.Strings, so a constant used twice is stored once.
 	strings map[string]int
 

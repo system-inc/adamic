@@ -167,6 +167,17 @@ func (p *Program) Files() []*ast.SourceFile {
 	return p.files
 }
 
+// AppleFiles is the program's binding files for Apple's frameworks: the apple/ modules it loaded.
+func (p *Program) AppleFiles() []*ast.SourceFile {
+	files := []*ast.SourceFile{}
+	for _, sourceFile := range p.compiler.GetSourceFiles() {
+		if IsApple(sourceFile) {
+			files = append(files, sourceFile)
+		}
+	}
+	return files
+}
+
 // Checker returns the checker that owns a file, and the function that releases it.
 func (p *Program) Checker(ctx context.Context, sourceFile *ast.SourceFile) (*checker.Checker, func()) {
 	return p.compiler.GetTypeCheckerForFile(ctx, sourceFile)
