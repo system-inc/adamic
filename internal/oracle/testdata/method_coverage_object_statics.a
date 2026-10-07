@@ -1,0 +1,15 @@
+/* eslint-disable no-useless-call -- This program tests delayed call and literal apply adapters. */
+const same = Object.is;
+const own = Object.hasOwn;
+const frozen = Object.isFrozen;
+const keys = Object.keys;
+const values = Object.values;
+const entries = Object.entries;
+const object = { '2': 2, x: 3, '1': 1 };
+console.log(`${same.call(null, NaN, NaN)} ${same.apply(undefined, [-0, 0])}`);
+console.log(`${own(object, 'x')} ${frozen.apply(null, [object])} ${frozen(1)}`);
+console.log(keys.apply(null, [object]).join('|'));
+console.log(values(object).join('|'));
+for(const [key, value] of entries(object)) {
+    console.log(`${key}=${value}`);
+}

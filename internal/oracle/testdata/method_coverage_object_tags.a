@@ -1,0 +1,16 @@
+/* eslint-disable @typescript-eslint/unbound-method -- The oracle calls these intrinsic aliases with receivers proven by the branch. */
+/* eslint-disable no-useless-call -- This program tests delayed call and literal apply adapters. */
+const tag = Object.prototype.toString;
+function declared(): number {
+    return 1;
+}
+const arrow = (): number => 2;
+console.log(tag.apply(new Map<string, number>(), []));
+console.log(tag.call(new Set<number>()));
+console.log(tag.call(declared));
+console.log(tag.apply(arrow, []));
+console.log(tag.apply(null, []));
+class Box {
+    value = 1;
+}
+console.log(tag.call(new Box()));

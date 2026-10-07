@@ -1,0 +1,1 @@
+const values: (number | string)[] = [1, 'two']; console.log(values.map(String).join('|'));
