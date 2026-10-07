@@ -129,3 +129,14 @@ queue, the first three names absent from main ports and all origin claims are:
 
 This update is pushed before writing these rules. Shared integration/JSX limits
 for previous claims remain documented rather than treated as matching results.
+
+### Batch 4 outcome
+
+All three have owned .a implementations, descriptors, witnesses and compiling
+semantic mutants. 113 comparable cases plus 176 compiler/stage1 files per rule
+match Go on source Node, emitted JavaScript and sanitized native. All three
+mutants are caught solely by output comparison on all paths. A decorated invalid
+executor fixture remains an explicitly proven shared-parser recovery gap;
+case-declaration suggestions retain both edits and registered execution refuses
+the installed serializer's unsupported shape. Raw evidence and observed
+findings/s are in ../rules/no-async-promise-executor/REPORT.md.

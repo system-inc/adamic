@@ -1,0 +1,531 @@
+case 0
+fixed	Promise(async () => {})
+case 1
+fixed	const p = new Promise
+case 2
+/tmp/lint-wave1-03-next-final/case-2.ts:1:19
+  no-async-promise-executor  This Promise executor is `async`, which silently discards the errors it is there to catch. A rejection thrown inside an async executor becomes a rejection of the executor's own promise, which nothing holds, so the constructed Promise never settles and the error surfaces as an unhandled rejection instead of reaching the `reject` parameter. Needing `await` here usually means the `new Promise` wrapper is unnecessary.
+
+shape 18 23 noAsyncPromiseExecutor fixes=0 suggestions=0
+fixed	new (((Promise)))(async () => {})
+case 3
+/tmp/lint-wave1-03-next-final/case-3.ts:1:15
+  no-async-promise-executor  This Promise executor is `async`, which silently discards the errors it is there to catch. A rejection thrown inside an async executor becomes a rejection of the executor's own promise, which nothing holds, so the constructed Promise never settles and the error surfaces as an unhandled rejection instead of reaching the `reject` parameter. Needing `await` here usually means the `new Promise` wrapper is unnecessary.
+
+shape 14 19 noAsyncPromiseExecutor fixes=0 suggestions=0
+fixed	new (Promise)(async () => {})
+case 4
+fixed	new Foo(async (resolve, reject) => {})
+case 5
+/tmp/lint-wave1-03-next-final/case-5.ts:2:11
+  no-async-promise-executor  This Promise executor is `async`, which silently discards the errors it is there to catch. A rejection thrown inside an async executor becomes a rejection of the executor's own promise, which nothing holds, so the constructed Promise never settles and the error surfaces as an unhandled rejection instead of reaching the `reject` parameter. Needing `await` here usually means the `new Promise` wrapper is unnecessary.
+
+shape 23 28 noAsyncPromiseExecutor fixes=0 suggestions=0
+fixed	new Promise(\u000a  /* c */ async () => {})
+case 6
+/tmp/lint-wave1-03-next-final/case-6.ts:1:15
+  no-async-promise-executor  This Promise executor is `async`, which silently discards the errors it is there to catch. A rejection thrown inside an async executor becomes a rejection of the executor's own promise, which nothing holds, so the constructed Promise never settles and the error surfaces as an unhandled rejection instead of reaching the `reject` parameter. Needing `await` here usually means the `new Promise` wrapper is unnecessary.
+
+shape 14 19 noAsyncPromiseExecutor fixes=0 suggestions=0
+fixed	new Promise(  async () => {})
+case 7
+/tmp/lint-wave1-03-next-final/case-7.ts:1:17
+  no-async-promise-executor  This Promise executor is `async`, which silently discards the errors it is there to catch. A rejection thrown inside an async executor becomes a rejection of the executor's own promise, which nothing holds, so the constructed Promise never settles and the error surfaces as an unhandled rejection instead of reaching the `reject` parameter. Needing `await` here usually means the `new Promise` wrapper is unnecessary.
+
+shape 16 21 noAsyncPromiseExecutor fixes=0 suggestions=0
+fixed	new Promise(((((async () => {})))))
+case 8
+fixed	new Promise((resolve, reject) => { void (async () => { await x; })(); })
+case 9
+fixed	new Promise((resolve, reject) => {})
+case 10
+fixed	new Promise((resolve, reject) => {}, async function unrelated() {})
+case 11
+fixed	new Promise()
+case 12
+fixed	new Promise(...args)
+case 13
+/tmp/lint-wave1-03-next-final/case-14.ts:1:13
+  no-async-promise-executor  This Promise executor is `async`, which silently discards the errors it is there to catch. A rejection thrown inside an async executor becomes a rejection of the executor's own promise, which nothing holds, so the constructed Promise never settles and the error surfaces as an unhandled rejection instead of reaching the `reject` parameter. Needing `await` here usually means the `new Promise` wrapper is unnecessary.
+
+shape 12 17 noAsyncPromiseExecutor fixes=0 suggestions=0
+fixed	new Promise(async (resolve, reject) => {})
+case 14
+/tmp/lint-wave1-03-next-final/case-15.ts:1:13
+  no-async-promise-executor  This Promise executor is `async`, which silently discards the errors it is there to catch. A rejection thrown inside an async executor becomes a rejection of the executor's own promise, which nothing holds, so the constructed Promise never settles and the error surfaces as an unhandled rejection instead of reaching the `reject` parameter. Needing `await` here usually means the `new Promise` wrapper is unnecessary.
+
+shape 12 17 noAsyncPromiseExecutor fixes=0 suggestions=0
+fixed	new Promise(async function (resolve, reject) {})
+case 15
+/tmp/lint-wave1-03-next-final/case-16.ts:1:13
+  no-async-promise-executor  This Promise executor is `async`, which silently discards the errors it is there to catch. A rejection thrown inside an async executor becomes a rejection of the executor's own promise, which nothing holds, so the constructed Promise never settles and the error surfaces as an unhandled rejection instead of reaching the `reject` parameter. Needing `await` here usually means the `new Promise` wrapper is unnecessary.
+
+shape 12 17 noAsyncPromiseExecutor fixes=0 suggestions=0
+fixed	new Promise(async function foo(resolve, reject) {})
+case 16
+/tmp/lint-wave1-03-next-final/case-17.ts:1:13
+  no-async-promise-executor  This Promise executor is `async`, which silently discards the errors it is there to catch. A rejection thrown inside an async executor becomes a rejection of the executor's own promise, which nothing holds, so the constructed Promise never settles and the error surfaces as an unhandled rejection instead of reaching the `reject` parameter. Needing `await` here usually means the `new Promise` wrapper is unnecessary.
+
+shape 12 17 noAsyncPromiseExecutor fixes=0 suggestions=0
+fixed	new Promise(async function* g(resolve, reject) {})
+case 17
+fixed	new Promise(class { async run() {} })
+case 18
+fixed	new Promise(function (resolve, reject) {}, async () => {})
+case 19
+fixed	new Promise({ async run() {} })
+case 20
+fixed	new Promise.resolve(async () => {})
+case 21
+fixed	new foo.Promise(async () => {})
+case 22
+fixed	new promise(async () => {})
+case 23
+/tmp/lint-wave1-03-next-final/case-24.ts:1:43
+  no-case-declarations  A `let`, `const`, `class`, or `function` declared directly in a case clause is scoped to the whole switch, not to this arm. Every other arm can see the binding, but only this arm initializes it, so a sibling arm that reaches it throws on a binding that appears to be in scope. Wrap this clause's body in braces to scope the binding to the arm that declares it.
+
+shape 42 75 unexpected fixes=0 suggestions=1
+suggestion addBraces	Wrap the clause body in braces.
+edit 42 42	{ 
+edit 82 82	 }
+fixed	async function g() { switch (a) { case 1: await using resource = acquire(); break; } }
+case 24
+fixed	const outside = 1; switch (a) { case 1: break; }
+case 25
+/tmp/lint-wave1-03-next-final/case-26.ts:4:5
+  no-case-declarations  A `let`, `const`, `class`, or `function` declared directly in a case clause is scoped to the whole switch, not to this arm. Every other arm can see the binding, but only this arm initializes it, so a sibling arm that reaches it throws on a binding that appears to be in scope. Wrap this clause's body in braces to scope the binding to the arm that declares it.
+
+shape 54 73 unexpected fixes=0 suggestions=1
+suggestion addBraces	Wrap the clause body in braces.
+edit 54 54	{ 
+edit 84 84	 }
+fixed	switch (a) {\u000a  case 1:\u000a    // explain the binding\u000a    const reported = 2;\u000a    break;\u000a}
+case 26
+/tmp/lint-wave1-03-next-final/case-27.ts:3:5
+  no-case-declarations  A `let`, `const`, `class`, or `function` declared directly in a case clause is scoped to the whole switch, not to this arm. Every other arm can see the binding, but only this arm initializes it, so a sibling arm that reaches it throws on a binding that appears to be in scope. Wrap this clause's body in braces to scope the binding to the arm that declares it.
+
+shape 27 41 unexpected fixes=0 suggestions=1
+suggestion addBraces	Wrap the clause body in braces.
+edit 27 27	{ 
+edit 74 74	 }
+/tmp/lint-wave1-03-next-final/case-27.ts:4:5
+  no-case-declarations  A `let`, `const`, `class`, or `function` declared directly in a case clause is scoped to the whole switch, not to this arm. Every other arm can see the binding, but only this arm initializes it, so a sibling arm that reaches it throws on a binding that appears to be in scope. Wrap this clause's body in braces to scope the binding to the arm that declares it.
+
+shape 46 63 unexpected fixes=0 suggestions=1
+suggestion addBraces	Wrap the clause body in braces.
+edit 27 27	{ 
+edit 74 74	 }
+fixed	switch (a) {\u000a  case 1:\u000a    let first = 1;\u000a    const second = 2;\u000a    break;\u000a}
+case 27
+fixed	switch (a) { case 1: (() => { const x = 1; })(); break; }
+case 28
+fixed	switch (a) { case 1: break; }
+case 29
+/tmp/lint-wave1-03-next-final/case-30.ts:1:30
+  no-case-declarations  A `let`, `const`, `class`, or `function` declared directly in a case clause is scoped to the whole switch, not to this arm. Every other arm can see the binding, but only this arm initializes it, so a sibling arm that reaches it throws on a binding that appears to be in scope. Wrap this clause's body in braces to scope the binding to the arm that declares it.
+
+shape 29 39 unexpected fixes=0 suggestions=1
+suggestion addBraces	Wrap the clause body in braces.
+edit 29 29	{ 
+edit 39 39	 }
+fixed	switch (a) { case 1: case 2: let x = 1; }
+case 30
+fixed	switch (a) { case 1: case 2: {} }
+case 31
+/tmp/lint-wave1-03-next-final/case-32.ts:1:22
+  no-case-declarations  A `let`, `const`, `class`, or `function` declared directly in a case clause is scoped to the whole switch, not to this arm. Every other arm can see the binding, but only this arm initializes it, so a sibling arm that reaches it throws on a binding that appears to be in scope. Wrap this clause's body in braces to scope the binding to the arm that declares it.
+
+shape 21 31 unexpected fixes=0 suggestions=1
+suggestion addBraces	Wrap the clause body in braces.
+edit 21 21	{ 
+edit 38 38	 }
+fixed	switch (a) { case 1: class C {} break; }
+case 32
+/tmp/lint-wave1-03-next-final/case-33.ts:1:22
+  no-case-declarations  A `let`, `const`, `class`, or `function` declared directly in a case clause is scoped to the whole switch, not to this arm. Every other arm can see the binding, but only this arm initializes it, so a sibling arm that reaches it throws on a binding that appears to be in scope. Wrap this clause's body in braces to scope the binding to the arm that declares it.
+
+shape 21 33 unexpected fixes=0 suggestions=1
+suggestion addBraces	Wrap the clause body in braces.
+edit 21 21	{ 
+edit 40 40	 }
+fixed	switch (a) { case 1: const x = 1; break; }
+case 33
+fixed	switch (a) { case 1: declare const d: number; break; }
+case 34
+fixed	switch (a) { case 1: enum E { A } namespace N {} break; }
+case 35
+fixed	switch (a) { case 1: for (const x of xs) {} break; }
+case 36
+/tmp/lint-wave1-03-next-final/case-37.ts:1:22
+  no-case-declarations  A `let`, `const`, `class`, or `function` declared directly in a case clause is scoped to the whole switch, not to this arm. Every other arm can see the binding, but only this arm initializes it, so a sibling arm that reaches it throws on a binding that appears to be in scope. Wrap this clause's body in braces to scope the binding to the arm that declares it.
+
+shape 21 36 unexpected fixes=0 suggestions=1
+suggestion addBraces	Wrap the clause body in braces.
+edit 21 21	{ 
+edit 43 43	 }
+fixed	switch (a) { case 1: function f() {} break; }
+case 37
+fixed	switch (a) { case 1: if (a) { const x = 1; } break; }
+case 38
+/tmp/lint-wave1-03-next-final/case-39.ts:1:22
+  no-case-declarations  A `let`, `const`, `class`, or `function` declared directly in a case clause is scoped to the whole switch, not to this arm. Every other arm can see the binding, but only this arm initializes it, so a sibling arm that reaches it throws on a binding that appears to be in scope. Wrap this clause's body in braces to scope the binding to the arm that declares it.
+
+shape 21 38 unexpected fixes=0 suggestions=1
+suggestion addBraces	Wrap the clause body in braces.
+edit 21 21	{ 
+edit 45 45	 }
+fixed	switch (a) { case 1: let x = 1, y = 2; break; }
+case 39
+/tmp/lint-wave1-03-next-final/case-40.ts:1:22
+  no-case-declarations  A `let`, `const`, `class`, or `function` declared directly in a case clause is scoped to the whole switch, not to this arm. Every other arm can see the binding, but only this arm initializes it, so a sibling arm that reaches it throws on a binding that appears to be in scope. Wrap this clause's body in braces to scope the binding to the arm that declares it.
+
+shape 21 31 unexpected fixes=0 suggestions=1
+suggestion addBraces	Wrap the clause body in braces.
+edit 21 21	{ 
+edit 38 38	 }
+/tmp/lint-wave1-03-next-final/case-40.ts:1:48
+  no-case-declarations  A `let`, `const`, `class`, or `function` declared directly in a case clause is scoped to the whole switch, not to this arm. Every other arm can see the binding, but only this arm initializes it, so a sibling arm that reaches it throws on a binding that appears to be in scope. Wrap this clause's body in braces to scope the binding to the arm that declares it.
+
+shape 47 59 unexpected fixes=0 suggestions=1
+suggestion addBraces	Wrap the clause body in braces.
+edit 47 47	{ 
+edit 66 66	 }
+fixed	switch (a) { case 1: let x = 1; break; case 2: const y = 2; break; }
+case 40
+/tmp/lint-wave1-03-next-final/case-41.ts:1:22
+  no-case-declarations  A `let`, `const`, `class`, or `function` declared directly in a case clause is scoped to the whole switch, not to this arm. Every other arm can see the binding, but only this arm initializes it, so a sibling arm that reaches it throws on a binding that appears to be in scope. Wrap this clause's body in braces to scope the binding to the arm that declares it.
+
+shape 21 31 unexpected fixes=0 suggestions=1
+suggestion addBraces	Wrap the clause body in braces.
+edit 21 21	{ 
+edit 38 38	 }
+fixed	switch (a) { case 1: let x = 1; break; }
+case 41
+/tmp/lint-wave1-03-next-final/case-42.ts:1:22
+  no-case-declarations  A `let`, `const`, `class`, or `function` declared directly in a case clause is scoped to the whole switch, not to this arm. Every other arm can see the binding, but only this arm initializes it, so a sibling arm that reaches it throws on a binding that appears to be in scope. Wrap this clause's body in braces to scope the binding to the arm that declares it.
+
+shape 21 31 unexpected fixes=0 suggestions=1
+suggestion addBraces	Wrap the clause body in braces.
+edit 21 21	{ 
+edit 51 51	 }
+/tmp/lint-wave1-03-next-final/case-42.ts:1:33
+  no-case-declarations  A `let`, `const`, `class`, or `function` declared directly in a case clause is scoped to the whole switch, not to this arm. Every other arm can see the binding, but only this arm initializes it, so a sibling arm that reaches it throws on a binding that appears to be in scope. Wrap this clause's body in braces to scope the binding to the arm that declares it.
+
+shape 32 44 unexpected fixes=0 suggestions=1
+suggestion addBraces	Wrap the clause body in braces.
+edit 21 21	{ 
+edit 51 51	 }
+fixed	switch (a) { case 1: let x = 1; const y = 2; break; }
+case 42
+/tmp/lint-wave1-03-next-final/case-43.ts:1:43
+  no-case-declarations  A `let`, `const`, `class`, or `function` declared directly in a case clause is scoped to the whole switch, not to this arm. Every other arm can see the binding, but only this arm initializes it, so a sibling arm that reaches it throws on a binding that appears to be in scope. Wrap this clause's body in braces to scope the binding to the arm that declares it.
+
+shape 42 52 unexpected fixes=0 suggestions=1
+suggestion addBraces	Wrap the clause body in braces.
+edit 42 42	{ 
+edit 59 59	 }
+fixed	switch (a) { case 1: switch (b) { case 2: let x = 1; break; } break; }
+case 43
+fixed	switch (a) { case 1: type T = string; interface I { value: T } break; }
+case 44
+/tmp/lint-wave1-03-next-final/case-45.ts:1:22
+  no-case-declarations  A `let`, `const`, `class`, or `function` declared directly in a case clause is scoped to the whole switch, not to this arm. Every other arm can see the binding, but only this arm initializes it, so a sibling arm that reaches it throws on a binding that appears to be in scope. Wrap this clause's body in braces to scope the binding to the arm that declares it.
+
+shape 21 48 unexpected fixes=0 suggestions=1
+suggestion addBraces	Wrap the clause body in braces.
+edit 21 21	{ 
+edit 55 55	 }
+fixed	switch (a) { case 1: using resource = acquire(); break; }
+case 45
+fixed	switch (a) { case 1: var x = 1; break; }
+case 46
+fixed	switch (a) { case 1: { class C {} break; } }
+case 47
+fixed	switch (a) { case 1: { const x = 1; break; } }
+case 48
+fixed	switch (a) { case 1: { function f() {} break; } }
+case 49
+fixed	switch (a) { case 1: { let x = 1; break; } }
+case 50
+/tmp/lint-wave1-03-next-final/case-51.ts:1:25
+  no-case-declarations  A `let`, `const`, `class`, or `function` declared directly in a case clause is scoped to the whole switch, not to this arm. Every other arm can see the binding, but only this arm initializes it, so a sibling arm that reaches it throws on a binding that appears to be in scope. Wrap this clause's body in braces to scope the binding to the arm that declares it.
+
+shape 24 39 unexpected fixes=0 suggestions=1
+suggestion addBraces	Wrap the clause body in braces.
+edit 21 21	{ 
+edit 46 46	 }
+fixed	switch (a) { case 1: {} function f() {} break; }
+case 51
+/tmp/lint-wave1-03-next-final/case-52.ts:1:23
+  no-case-declarations  A `let`, `const`, `class`, or `function` declared directly in a case clause is scoped to the whole switch, not to this arm. Every other arm can see the binding, but only this arm initializes it, so a sibling arm that reaches it throws on a binding that appears to be in scope. Wrap this clause's body in braces to scope the binding to the arm that declares it.
+
+shape 22 32 unexpected fixes=0 suggestions=1
+suggestion addBraces	Wrap the clause body in braces.
+edit 22 22	{ 
+edit 39 39	 }
+fixed	switch (a) { default: let x = 1; break; }
+case 52
+fixed	switch (a) { default: var x = 1; break; }
+case 53
+fixed	switch (a) {}
+case 54
+/tmp/lint-wave1-03-next-final/case-55.ts:1:1
+  no-compare-neg-zero  Comparing against `-0` with `===`: every comparison operator treats `-0` and `0` as the same number, so this is true for positive zero too and does not test what it looks like it tests. `Object.is(x, -0)` is the only comparison that distinguishes them.
+
+shape 0 9 unexpected fixes=0 suggestions=0
+fixed	-0 === -0;
+case 55
+fixed	'-0' === x;
+case 56
+fixed	-1 === x;
+case 57
+fixed	0 !== x;
+case 58
+fixed	0 <= x;
+case 59
+fixed	0 === x;
+case 60
+fixed	0 >= x;
+case 61
+fixed	Object.is(x, -0);
+case 62
+fixed	x != 0;
+case 63
+fixed	x ** -0;
+case 64
+fixed	x + -0;
+case 65
+fixed	x < 0;
+case 66
+fixed	x = -0;
+case 67
+fixed	x == '-0';
+case 68
+fixed	x == 0;
+case 69
+fixed	x === '0';
+case 70
+fixed	x === (-0 as number);
+case 71
+fixed	x === (-0 satisfies number);
+case 72
+fixed	x === (-0, y);
+case 73
+fixed	x === +(-0);
+case 74
+fixed	x === -(-0);
+case 75
+fixed	x === -0n;
+case 76
+fixed	x === -1;
+case 77
+fixed	x === 0;
+case 78
+fixed	x > 0;
+case 79
+fixed	x instanceof -0;
+case 80
+/tmp/lint-wave1-03-next-final/case-81.ts:1:1
+  no-compare-neg-zero  Comparing against `-0` with `!=`: every comparison operator treats `-0` and `0` as the same number, so this is true for positive zero too and does not test what it looks like it tests. `Object.is(x, -0)` is the only comparison that distinguishes them.
+
+shape 0 7 unexpected fixes=0 suggestions=0
+fixed	-0 != x;
+case 81
+/tmp/lint-wave1-03-next-final/case-82.ts:1:1
+  no-compare-neg-zero  Comparing against `-0` with `!==`: every comparison operator treats `-0` and `0` as the same number, so this is true for positive zero too and does not test what it looks like it tests. `Object.is(x, -0)` is the only comparison that distinguishes them.
+
+shape 0 8 unexpected fixes=0 suggestions=0
+fixed	-0 !== x;
+case 82
+/tmp/lint-wave1-03-next-final/case-83.ts:1:1
+  no-compare-neg-zero  Comparing against `-0` with `<`: every comparison operator treats `-0` and `0` as the same number, so this is true for positive zero too and does not test what it looks like it tests. `Object.is(x, -0)` is the only comparison that distinguishes them.
+
+shape 0 6 unexpected fixes=0 suggestions=0
+fixed	-0 < x;
+case 83
+/tmp/lint-wave1-03-next-final/case-84.ts:1:1
+  no-compare-neg-zero  Comparing against `-0` with `<=`: every comparison operator treats `-0` and `0` as the same number, so this is true for positive zero too and does not test what it looks like it tests. `Object.is(x, -0)` is the only comparison that distinguishes them.
+
+shape 0 7 unexpected fixes=0 suggestions=0
+fixed	-0 <= x;
+case 84
+/tmp/lint-wave1-03-next-final/case-85.ts:1:1
+  no-compare-neg-zero  Comparing against `-0` with `==`: every comparison operator treats `-0` and `0` as the same number, so this is true for positive zero too and does not test what it looks like it tests. `Object.is(x, -0)` is the only comparison that distinguishes them.
+
+shape 0 7 unexpected fixes=0 suggestions=0
+fixed	-0 == x;
+case 85
+/tmp/lint-wave1-03-next-final/case-86.ts:1:1
+  no-compare-neg-zero  Comparing against `-0` with `===`: every comparison operator treats `-0` and `0` as the same number, so this is true for positive zero too and does not test what it looks like it tests. `Object.is(x, -0)` is the only comparison that distinguishes them.
+
+shape 0 8 unexpected fixes=0 suggestions=0
+fixed	-0 === x;
+case 86
+/tmp/lint-wave1-03-next-final/case-87.ts:1:1
+  no-compare-neg-zero  Comparing against `-0` with `>`: every comparison operator treats `-0` and `0` as the same number, so this is true for positive zero too and does not test what it looks like it tests. `Object.is(x, -0)` is the only comparison that distinguishes them.
+
+shape 0 6 unexpected fixes=0 suggestions=0
+fixed	-0 > x;
+case 87
+/tmp/lint-wave1-03-next-final/case-88.ts:1:1
+  no-compare-neg-zero  Comparing against `-0` with `>=`: every comparison operator treats `-0` and `0` as the same number, so this is true for positive zero too and does not test what it looks like it tests. `Object.is(x, -0)` is the only comparison that distinguishes them.
+
+shape 0 7 unexpected fixes=0 suggestions=0
+fixed	-0 >= x;
+case 88
+/tmp/lint-wave1-03-next-final/case-89.ts:1:1
+  no-compare-neg-zero  Comparing against `-0` with `!=`: every comparison operator treats `-0` and `0` as the same number, so this is true for positive zero too and does not test what it looks like it tests. `Object.is(x, -0)` is the only comparison that distinguishes them.
+
+shape 0 7 unexpected fixes=0 suggestions=0
+fixed	x != -0;
+case 89
+/tmp/lint-wave1-03-next-final/case-90.ts:1:1
+  no-compare-neg-zero  Comparing against `-0` with `!==`: every comparison operator treats `-0` and `0` as the same number, so this is true for positive zero too and does not test what it looks like it tests. `Object.is(x, -0)` is the only comparison that distinguishes them.
+
+shape 0 8 unexpected fixes=0 suggestions=0
+fixed	x !== -0;
+case 90
+/tmp/lint-wave1-03-next-final/case-91.ts:1:1
+  no-compare-neg-zero  Comparing against `-0` with `<`: every comparison operator treats `-0` and `0` as the same number, so this is true for positive zero too and does not test what it looks like it tests. `Object.is(x, -0)` is the only comparison that distinguishes them.
+
+shape 0 6 unexpected fixes=0 suggestions=0
+fixed	x < -0;
+case 91
+/tmp/lint-wave1-03-next-final/case-92.ts:1:1
+  no-compare-neg-zero  Comparing against `-0` with `<=`: every comparison operator treats `-0` and `0` as the same number, so this is true for positive zero too and does not test what it looks like it tests. `Object.is(x, -0)` is the only comparison that distinguishes them.
+
+shape 0 7 unexpected fixes=0 suggestions=0
+fixed	x <= -0;
+case 92
+/tmp/lint-wave1-03-next-final/case-93.ts:1:1
+  no-compare-neg-zero  Comparing against `-0` with `==`: every comparison operator treats `-0` and `0` as the same number, so this is true for positive zero too and does not test what it looks like it tests. `Object.is(x, -0)` is the only comparison that distinguishes them.
+
+shape 0 7 unexpected fixes=0 suggestions=0
+fixed	x == -0;
+case 93
+/tmp/lint-wave1-03-next-final/case-94.ts:1:1
+  no-compare-neg-zero  Comparing against `-0` with `===`: every comparison operator treats `-0` and `0` as the same number, so this is true for positive zero too and does not test what it looks like it tests. `Object.is(x, -0)` is the only comparison that distinguishes them.
+
+shape 0 8 unexpected fixes=0 suggestions=0
+fixed	x === -0;
+case 94
+/tmp/lint-wave1-03-next-final/case-95.ts:1:1
+  no-compare-neg-zero  Comparing against `-0` with `>`: every comparison operator treats `-0` and `0` as the same number, so this is true for positive zero too and does not test what it looks like it tests. `Object.is(x, -0)` is the only comparison that distinguishes them.
+
+shape 0 6 unexpected fixes=0 suggestions=0
+fixed	x > -0;
+case 95
+/tmp/lint-wave1-03-next-final/case-96.ts:1:1
+  no-compare-neg-zero  Comparing against `-0` with `>=`: every comparison operator treats `-0` and `0` as the same number, so this is true for positive zero too and does not test what it looks like it tests. `Object.is(x, -0)` is the only comparison that distinguishes them.
+
+shape 0 7 unexpected fixes=0 suggestions=0
+fixed	x >= -0;
+case 96
+/tmp/lint-wave1-03-next-final/case-97.ts:1:1
+  no-compare-neg-zero  Comparing against `-0` with `===`: every comparison operator treats `-0` and `0` as the same number, so this is true for positive zero too and does not test what it looks like it tests. `Object.is(x, -0)` is the only comparison that distinguishes them.
+
+shape 0 15 unexpected fixes=0 suggestions=0
+/tmp/lint-wave1-03-next-final/case-97.ts:1:1
+  no-compare-neg-zero  Comparing against `-0` with `===`: every comparison operator treats `-0` and `0` as the same number, so this is true for positive zero too and does not test what it looks like it tests. `Object.is(x, -0)` is the only comparison that distinguishes them.
+
+shape 0 8 unexpected fixes=0 suggestions=0
+fixed	x === -0 === -0;
+case 97
+/tmp/lint-wave1-03-next-final/case-98.ts:1:1
+  no-compare-neg-zero  Comparing against `-0` with `===`: every comparison operator treats `-0` and `0` as the same number, so this is true for positive zero too and does not test what it looks like it tests. `Object.is(x, -0)` is the only comparison that distinguishes them.
+
+shape 0 12 unexpected fixes=0 suggestions=0
+fixed	((-0)) === x;
+case 98
+/tmp/lint-wave1-03-next-final/case-99.ts:1:1
+  no-compare-neg-zero  Comparing against `-0` with `!==`: every comparison operator treats `-0` and `0` as the same number, so this is true for positive zero too and does not test what it looks like it tests. `Object.is(x, -0)` is the only comparison that distinguishes them.
+
+shape 0 20 unexpected fixes=0 suggestions=0
+fixed	x !== (((-(((0))))));
+case 99
+/tmp/lint-wave1-03-next-final/case-100.ts:1:1
+  no-compare-neg-zero  Comparing against `-0` with `===`: every comparison operator treats `-0` and `0` as the same number, so this is true for positive zero too and does not test what it looks like it tests. `Object.is(x, -0)` is the only comparison that distinguishes them.
+
+shape 0 10 unexpected fixes=0 suggestions=0
+fixed	x === (-0);
+case 100
+/tmp/lint-wave1-03-next-final/case-101.ts:1:1
+  no-compare-neg-zero  Comparing against `-0` with `===`: every comparison operator treats `-0` and `0` as the same number, so this is true for positive zero too and does not test what it looks like it tests. `Object.is(x, -0)` is the only comparison that distinguishes them.
+
+shape 0 38 unexpected fixes=0 suggestions=0
+fixed	x === (/* before */ - /* after */ (0));
+case 101
+/tmp/lint-wave1-03-next-final/case-102.ts:1:1
+  no-compare-neg-zero  Comparing against `-0` with `===`: every comparison operator treats `-0` and `0` as the same number, so this is true for positive zero too and does not test what it looks like it tests. `Object.is(x, -0)` is the only comparison that distinguishes them.
+
+shape 0 10 unexpected fixes=0 suggestions=0
+fixed	x === -(0);
+case 102
+/tmp/lint-wave1-03-next-final/case-103.ts:1:1
+  no-compare-neg-zero  Comparing against `-0` with `===`: every comparison operator treats `-0` and `0` as the same number, so this is true for positive zero too and does not test what it looks like it tests. `Object.is(x, -0)` is the only comparison that distinguishes them.
+
+shape 0 9 unexpected fixes=0 suggestions=0
+fixed	x === -.0;
+case 103
+/tmp/lint-wave1-03-next-final/case-104.ts:1:1
+  no-compare-neg-zero  Comparing against `-0` with `===`: every comparison operator treats `-0` and `0` as the same number, so this is true for positive zero too and does not test what it looks like it tests. `Object.is(x, -0)` is the only comparison that distinguishes them.
+
+shape 0 10 unexpected fixes=0 suggestions=0
+fixed	x === -0.0;
+case 104
+/tmp/lint-wave1-03-next-final/case-105.ts:1:1
+  no-compare-neg-zero  Comparing against `-0` with `===`: every comparison operator treats `-0` and `0` as the same number, so this is true for positive zero too and does not test what it looks like it tests. `Object.is(x, -0)` is the only comparison that distinguishes them.
+
+shape 0 9 unexpected fixes=0 suggestions=0
+fixed	x === -00;
+case 105
+/tmp/lint-wave1-03-next-final/case-106.ts:1:1
+  no-compare-neg-zero  Comparing against `-0` with `===`: every comparison operator treats `-0` and `0` as the same number, so this is true for positive zero too and does not test what it looks like it tests. `Object.is(x, -0)` is the only comparison that distinguishes them.
+
+shape 0 10 unexpected fixes=0 suggestions=0
+fixed	x === -0_0;
+case 106
+/tmp/lint-wave1-03-next-final/case-107.ts:1:1
+  no-compare-neg-zero  Comparing against `-0` with `===`: every comparison operator treats `-0` and `0` as the same number, so this is true for positive zero too and does not test what it looks like it tests. `Object.is(x, -0)` is the only comparison that distinguishes them.
+
+shape 0 10 unexpected fixes=0 suggestions=0
+fixed	x === -0b0;
+case 107
+/tmp/lint-wave1-03-next-final/case-108.ts:1:1
+  no-compare-neg-zero  Comparing against `-0` with `===`: every comparison operator treats `-0` and `0` as the same number, so this is true for positive zero too and does not test what it looks like it tests. `Object.is(x, -0)` is the only comparison that distinguishes them.
+
+shape 0 11 unexpected fixes=0 suggestions=0
+fixed	x === -0e10;
+case 108
+/tmp/lint-wave1-03-next-final/case-109.ts:1:1
+  no-compare-neg-zero  Comparing against `-0` with `===`: every comparison operator treats `-0` and `0` as the same number, so this is true for positive zero too and does not test what it looks like it tests. `Object.is(x, -0)` is the only comparison that distinguishes them.
+
+shape 0 10 unexpected fixes=0 suggestions=0
+fixed	x === -0o0;
+case 109
+/tmp/lint-wave1-03-next-final/case-110.ts:1:1
+  no-compare-neg-zero  Comparing against `-0` with `===`: every comparison operator treats `-0` and `0` as the same number, so this is true for positive zero too and does not test what it looks like it tests. `Object.is(x, -0)` is the only comparison that distinguishes them.
+
+shape 0 10 unexpected fixes=0 suggestions=0
+fixed	x === -0x0;
+case 110
+/tmp/lint-wave1-03-next-final/no-async-promise-executor-witness.ts:1:13
+  no-async-promise-executor  This Promise executor is `async`, which silently discards the errors it is there to catch. A rejection thrown inside an async executor becomes a rejection of the executor's own promise, which nothing holds, so the constructed Promise never settles and the error surfaces as an unhandled rejection instead of reaching the `reject` parameter. Needing `await` here usually means the `new Promise` wrapper is unnecessary.
+
+shape 12 17 noAsyncPromiseExecutor fixes=0 suggestions=0
+fixed	new Promise(async () => {});\u000a
+case 111
+/tmp/lint-wave1-03-next-final/no-case-declarations-witness.ts:1:21
+  no-case-declarations  A `let`, `const`, `class`, or `function` declared directly in a case clause is scoped to the whole switch, not to this arm. Every other arm can see the binding, but only this arm initializes it, so a sibling arm that reaches it throws on a binding that appears to be in scope. Wrap this clause's body in braces to scope the binding to the arm that declares it.
+
+shape 20 32 unexpected fixes=0 suggestions=1
+suggestion addBraces	Wrap the clause body in braces.
+edit 20 20	{ 
+edit 39 39	 }
+fixed	switch(x) { case 1: const a = 1; break; }\u000a
+case 112
+/tmp/lint-wave1-03-next-final/no-compare-neg-zero-witness.ts:1:1
+  no-compare-neg-zero  Comparing against `-0` with `===`: every comparison operator treats `-0` and `0` as the same number, so this is true for positive zero too and does not test what it looks like it tests. `Object.is(x, -0)` is the only comparison that distinguishes them.
+
+shape 0 8 unexpected fixes=0 suggestions=0
+fixed	x === -0;\u000a
