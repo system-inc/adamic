@@ -1,0 +1,13 @@
+Built three .a helpers: leadingInteger, findTailwindPackageRoot and CompareBreakpoints.
+Implementation commits c3b9b8af, e998e268, 3f8a48dc; each claim was pushed first.
+Full helper package PASS 72.676s; vet clean; filtered oracle PASS 5.730s; source Node, emitted JavaScript and sanitized native match actual Go for each helper.
+Minus-sign, early-walk-stop and comparator-operand mutants compile and execute cleanly; byte comparison catches each on all three runtimes.
+Uncovered: full rule findings, final blocker removal and integrated Program cache; next selected cache is blocked and released, not implemented.
+
+Each helper removes one recorded dependency from six better-tailwindcss rules: enforce-canonical-classes, enforce-consistent-class-order, enforce-consistent-variant-order, enforce-shorthand-classes, no-conflicting-classes and no-unknown-classes. Eighteen entries are removed across six distinct consumers, zero last blockers alone. Names, corpus sizes, hashes, callback dependencies, platform limits and reproduction are in LEADING_REPORT.md, PACKAGE_REPORT.md and COMPARE_REPORT.md. The frozen readiness inventory and shared README are untouched.
+
+Command: source /workspace/adamic-tools/env.sh; go test ./stage1/cohere/lint/helpers -count=1 -v -timeout=20m > /tmp/w05-helper-final-tests.log 2>&1. The complete inherited helper checks, four inherited semantic mutants, message refusal controls and new helper comparisons/mutants passed. go vet ./stage1/cohere/lint/helpers > /tmp/w05-helper-vet.log 2>&1 passed. go test ./internal/oracle -run '^TestTheOracleCatchesOneByte$' -count=1 > /tmp/w05-helper-oracle.log 2>&1 passed. No complete repository gate claimed. Setup readiness lines were 0s each; cache warm and total 80s, nproc 5. Full logs retained under evidence/.
+
+Native Go-width values use two unsigned words rather than approximate floating-point integers. The comparator's externally owned bucket helper is an explicit callback, with real Go facts used for isolated validation. The package walker uses the pinned POSIX semantics and an explicit file-existence callback. No whole rule is marked implemented because of these helpers.
+
+The attempted FindEntryPoint claim was withdrawn before implementation in favor of an earlier owner. After all three completed helpers were pushed, the next highest-count unclaimed helper, DesignSystemForProgram, was claimed and inspected. CACHE_BLOCKER.md records absent Program/recording-filesystem/load-result and synchronization APIs and the failed Mutex build probe. Its claim is released; no unsupported cache stub is shipped. Other unclaimed helpers remain.

@@ -1,0 +1,4 @@
+import { Mutex } from 'adamic';
+const mutex = new Mutex();
+mutex.lock();
+mutex.unlock();

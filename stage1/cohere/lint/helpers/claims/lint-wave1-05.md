@@ -24,3 +24,7 @@ Withdrawn: FindEntryPoint. The all-origin refresh revealed an earlier claim on c
 4. github.com/system-inc/cohere/internal/lint/rules/tailwind.DesignSystemForProgram
    Intended file: tailwind_design_system_for_program.a. Six remaining consumers.
    Third helper is tested and pushed in 3f8a48dc; entire helper package PASS in 72.676s. Refetched all 418 origin refs and inspected 17 distinct claim blobs. This program-keyed cache is unclaimed and ties the highest count at six. Claim precedes implementation or a concrete blocker report. Must preserve nil-program errors, identity rather than path keys, failed-result caching and synchronization across parallel callers; the full Program/filesystem/load-result contracts are prerequisites, not placeholders.
+
+Withdrawn: DesignSystemForProgram. No cache implementation delivered. Program/recording-filesystem/load-result and mutex APIs are absent from this base; the raw probe fails TS2305. See ../wave05/CACHE_BLOCKER.md. This reservation is released so a worker with those prerequisites can take it.
+
+Final active ownership: leadingInteger, findTailwindPackageRoot and CompareBreakpoints, all tested and pushed. FindEntryPoint and DesignSystemForProgram are withdrawn. No further helper is claimed.
