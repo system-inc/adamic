@@ -1,4 +1,11 @@
 {
     "extends": ["cohere:typescript"],
-    "ignorePatterns": ["internal/load/testdata/0.1/refuse/**", "stage1/**/gaps/**", "review/**"]
+    "ignorePatterns": ["internal/load/testdata/0.1/refuse/**", "stage1/**/gaps/**", "review/**"],
+    "overrides": [
+        {
+            "files": ["**/*.ts", "**/*.a"],
+            "rules": { "logical-assignment-operators": ["error", "never"] },
+            "reason": "Adamic stage 0 still refuses logical assignment operators (internal/lower/refusals.go:44) until codex/taste-not-soundness lands; ruling 6 on #bw3xg7c makes them legal Adamic with JavaScript semantics, and this entry is removed when it does."
+        }
+    ]
 }
