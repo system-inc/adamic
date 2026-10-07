@@ -1,0 +1,60 @@
+file	/workspace/wave-18-validation-final/control-000.a
+27	34	@typescript-eslint/await-thenable	await	Unexpected `await` of a non-Promise (non-"Thenable") value.	0	1	removeAwait	Remove unnecessary `await`.	1	27	32	
+62	75	@typescript-eslint/await-thenable	await	Unexpected `await` of a non-Promise (non-"Thenable") value.	0	1	removeAwait	Remove unnecessary `await`.	1	62	67	
+77	89	@typescript-eslint/await-thenable	await	Unexpected `await` of a non-Promise (non-"Thenable") value.	0	1	removeAwait	Remove unnecessary `await`.	1	77	82	
+file	/workspace/wave-18-validation-final/control-001.a
+106	113	@typescript-eslint/await-thenable	await	Unexpected `await` of a non-Promise (non-"Thenable") value.	0	1	removeAwait	Remove unnecessary `await`.	1	106	111	
+file	/workspace/wave-18-validation-final/control-002.a
+95	102	@typescript-eslint/await-thenable	await	Unexpected `await` of a non-Promise (non-"Thenable") value.	0	1	removeAwait	Remove unnecessary `await`.	1	95	100	
+file	/workspace/wave-18-validation-final/control-003.a
+150	159	@typescript-eslint/await-thenable	await	Unexpected `await` of a non-Promise (non-"Thenable") value.	0	1	removeAwait	Remove unnecessary `await`.	1	150	155	
+file	/workspace/wave-18-validation-final/control-004.a
+26	53	@typescript-eslint/await-thenable	forAwaitOfNonAsyncIterable	Unexpected `for await...of` of a value that is not async iterable.	0	1	convertToOrdinaryFor	Convert to an ordinary `for...of` loop.	1	30	35	
+57	99	@typescript-eslint/await-thenable	forAwaitOfNonAsyncIterable	Unexpected `for await...of` of a value that is not async iterable.	0	1	convertToOrdinaryFor	Convert to an ordinary `for...of` loop.	1	61	66	
+file	/workspace/wave-18-validation-final/control-005.a
+file	/workspace/wave-18-validation-final/control-006.a
+91	92	@typescript-eslint/await-thenable	awaitUsingOfNonAsyncDisposable	Unexpected `await using` of a value that is not async disposable.	0	1	removeAwait	Remove unnecessary `await`.	1	77	82	
+file	/workspace/wave-18-validation-final/control-007.a
+85	86	@typescript-eslint/await-thenable	awaitUsingOfNonAsyncDisposable	Unexpected `await using` of a value that is not async disposable.	0	0
+93	94	@typescript-eslint/await-thenable	awaitUsingOfNonAsyncDisposable	Unexpected `await using` of a value that is not async disposable.	0	0
+file	/workspace/wave-18-validation-final/control-008.a
+131	132	@typescript-eslint/await-thenable	invalidPromiseAggregatorInput	Unexpected iterable of non-Promise (non-"Thenable") values passed to promise aggregator.	0	0
+71	72	@typescript-eslint/await-thenable	invalidPromiseAggregatorInput	Unexpected iterable of non-Promise (non-"Thenable") values passed to promise aggregator.	0	0
+file	/workspace/wave-18-validation-final/control-009.a
+121	125	@typescript-eslint/await-thenable	invalidPromiseAggregatorInput	Unexpected iterable of non-Promise (non-"Thenable") values passed to promise aggregator.	0	0
+141	142	@typescript-eslint/await-thenable	invalidPromiseAggregatorInput	Unexpected iterable of non-Promise (non-"Thenable") values passed to promise aggregator.	0	0
+165	167	@typescript-eslint/await-thenable	invalidPromiseAggregatorInput	Unexpected iterable of non-Promise (non-"Thenable") values passed to promise aggregator.	0	0
+file	/workspace/wave-18-validation-final/control-010.a
+133	134	@typescript-eslint/await-thenable	invalidPromiseAggregatorInput	Unexpected iterable of non-Promise (non-"Thenable") values passed to promise aggregator.	0	0
+file	/workspace/wave-18-validation-final/control-011.a
+49	70	@typescript-eslint/await-thenable	await	Unexpected `await` of a non-Promise (non-"Thenable") value.	0	1	removeAwait	Remove unnecessary `await`.	1	49	54	
+file	/workspace/wave-18-validation-final/control-012.a
+20	25	@typescript-eslint/class-literal-property-style	preferFieldStyle	This getter does nothing but return a literal, so it pays a function call on every read to express a constant. A `readonly` field says the same thing, cannot be reassigned, and lets the compiler and a reader see the value at the declaration.	0	0
+42	48	@typescript-eslint/class-literal-property-style	preferFieldStyle	This getter does nothing but return a literal, so it pays a function call on every read to express a constant. A `readonly` field says the same thing, cannot be reassigned, and lets the compiler and a reader see the value at the declaration.	0	1	preferFieldStyleSuggestion	Replace the getter with a readonly field holding the same literal.	1	38	71	readonly string:string = 'x';
+75	79	@typescript-eslint/class-literal-property-style	preferFieldStyle	This getter does nothing but return a literal, so it pays a function call on every read to express a constant. A `readonly` field says the same thing, cannot be reassigned, and lets the compiler and a reader see the value at the declaration.	0	0
+99	102	@typescript-eslint/class-literal-property-style	preferFieldStyle	This getter does nothing but return a literal, so it pays a function call on every read to express a constant. A `readonly` field says the same thing, cannot be reassigned, and lets the compiler and a reader see the value at the declaration.	0	0
+file	/workspace/wave-18-validation-final/control-013.a
+117	118	@typescript-eslint/class-literal-property-style	preferFieldStyle	This getter does nothing but return a literal, so it pays a function call on every read to express a constant. A `readonly` field says the same thing, cannot be reassigned, and lets the compiler and a reader see the value at the declaration.	0	0
+34	35	@typescript-eslint/class-literal-property-style	preferFieldStyle	This getter does nothing but return a literal, so it pays a function call on every read to express a constant. A `readonly` field says the same thing, cannot be reassigned, and lets the compiler and a reader see the value at the declaration.	0	1	preferFieldStyleSuggestion	Replace the getter with a readonly field holding the same literal.	1	16	64	public static readonly x   :   number   = 1;
+77	78	@typescript-eslint/class-literal-property-style	preferFieldStyle	This getter does nothing but return a literal, so it pays a function call on every read to express a constant. A `readonly` field says the same thing, cannot be reassigned, and lets the compiler and a reader see the value at the declaration.	0	1	preferFieldStyleSuggestion	Replace the getter with a readonly field holding the same literal.	1	65	102	private readonly p /* c */ = 'p';
+file	/workspace/wave-18-validation-final/control-014.a
+98	106	@typescript-eslint/class-literal-property-style	preferFieldStyle	This getter does nothing but return a literal, so it pays a function call on every read to express a constant. A `readonly` field says the same thing, cannot be reassigned, and lets the compiler and a reader see the value at the declaration.	0	0
+file	/workspace/wave-18-validation-final/control-015.a
+87	94	@typescript-eslint/class-literal-property-style	preferFieldStyle	This getter does nothing but return a literal, so it pays a function call on every read to express a constant. A `readonly` field says the same thing, cannot be reassigned, and lets the compiler and a reader see the value at the declaration.	0	0
+file	/workspace/wave-18-validation-final/control-016.a
+120	123	@typescript-eslint/class-literal-property-style	preferFieldStyle	This getter does nothing but return a literal, so it pays a function call on every read to express a constant. A `readonly` field says the same thing, cannot be reassigned, and lets the compiler and a reader see the value at the declaration.	0	0
+15	16	@typescript-eslint/class-literal-property-style	preferFieldStyle	This getter does nothing but return a literal, so it pays a function call on every read to express a constant. A `readonly` field says the same thing, cannot be reassigned, and lets the compiler and a reader see the value at the declaration.	0	0
+64	65	@typescript-eslint/class-literal-property-style	preferFieldStyle	This getter does nothing but return a literal, so it pays a function call on every read to express a constant. A `readonly` field says the same thing, cannot be reassigned, and lets the compiler and a reader see the value at the declaration.	0	0
+file	/workspace/wave-18-validation-final/control-017.a
+157	158	@typescript-eslint/class-literal-property-style	preferFieldStyle	This getter does nothing but return a literal, so it pays a function call on every read to express a constant. A `readonly` field says the same thing, cannot be reassigned, and lets the compiler and a reader see the value at the declaration.	0	0
+77	78	@typescript-eslint/class-literal-property-style	preferFieldStyle	This getter does nothing but return a literal, so it pays a function call on every read to express a constant. A `readonly` field says the same thing, cannot be reassigned, and lets the compiler and a reader see the value at the declaration.	0	0
+file	/workspace/wave-18-validation-final/control-018.a
+115	118	@typescript-eslint/class-literal-property-style	preferFieldStyle	This getter does nothing but return a literal, so it pays a function call on every read to express a constant. A `readonly` field says the same thing, cannot be reassigned, and lets the compiler and a reader see the value at the declaration.	0	0
+70	71	@typescript-eslint/class-literal-property-style	preferFieldStyle	This getter does nothing but return a literal, so it pays a function call on every read to express a constant. A `readonly` field says the same thing, cannot be reassigned, and lets the compiler and a reader see the value at the declaration.	0	0
+88	95	@typescript-eslint/class-literal-property-style	preferFieldStyle	This getter does nothing but return a literal, so it pays a function call on every read to express a constant. A `readonly` field says the same thing, cannot be reassigned, and lets the compiler and a reader see the value at the declaration.	0	0
+file	/workspace/wave-18-validation-final/control-019.a
+119	120	@typescript-eslint/class-literal-property-style	preferFieldStyle	This getter does nothing but return a literal, so it pays a function call on every read to express a constant. A `readonly` field says the same thing, cannot be reassigned, and lets the compiler and a reader see the value at the declaration.	0	0
+140	141	@typescript-eslint/class-literal-property-style	preferFieldStyle	This getter does nothing but return a literal, so it pays a function call on every read to express a constant. A `readonly` field says the same thing, cannot be reassigned, and lets the compiler and a reader see the value at the declaration.	0	0
+74	75	@typescript-eslint/class-literal-property-style	preferFieldStyle	This getter does nothing but return a literal, so it pays a function call on every read to express a constant. A `readonly` field says the same thing, cannot be reassigned, and lets the compiler and a reader see the value at the declaration.	0	0
+95	96	@typescript-eslint/class-literal-property-style	preferFieldStyle	This getter does nothing but return a literal, so it pays a function call on every read to express a constant. A `readonly` field says the same thing, cannot be reassigned, and lets the compiler and a reader see the value at the declaration.	0	0
+findings 39

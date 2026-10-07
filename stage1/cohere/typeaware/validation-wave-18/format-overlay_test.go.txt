@@ -1,0 +1,11 @@
+package native
+import("testing";"os";"path/filepath";"github.com/system-inc/cohere/internal/format/formatoptions")
+func TestWave18Format(t *testing.T){
+root:="/workspace/adamic/stage1/cohere/typeaware"
+f:=Formatter{Options:formatoptions.Default()}
+for _,name:=range []string{"await_thenable.a","class_literal_property_style.a","iteration_type_facts.a","base_member_facts.a","wave_18_suite.a"}{
+p:=filepath.Join(root,name);b,e:=os.ReadFile(p);if e!=nil{t.Fatal(e)}
+s,e:=f.Format(p+".ts",string(b));if e!=nil{t.Fatal(e)}
+s2,e:=f.Format(p+".ts",s);if e!=nil||s2!=s{t.Fatalf("format not stable %s %v",name,e)}
+if e=os.WriteFile(p,[]byte(s),0644);e!=nil{t.Fatal(e)};t.Log(name,"formatted and stable")
+}}

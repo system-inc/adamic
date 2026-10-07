@@ -1,0 +1,44 @@
+[
+  {
+    "round": 0,
+    "engine": "native",
+    "seconds": 0.020745653000062703,
+    "stdout": "findings 38\n",
+    "stderr": "tsgo: load_ns=14266148 query_ns=2032780 queries=165 first_query_ns=28754 run_ns=4229124\n"
+  },
+  {
+    "round": 0,
+    "engine": "go",
+    "seconds": 0.026311528000064754,
+    "stdout": "findings 38\n",
+    "stderr": "cohere: load_ns=12414057 rule_ns=1059032 run_ns=5436620\n"
+  },
+  {
+    "round": 1,
+    "engine": "go",
+    "seconds": 0.024083980999989762,
+    "stdout": "findings 38\n",
+    "stderr": "cohere: load_ns=12473808 rule_ns=1030758 run_ns=3365348\n"
+  },
+  {
+    "round": 1,
+    "engine": "native",
+    "seconds": 0.02139501499993912,
+    "stdout": "findings 38\n",
+    "stderr": "tsgo: load_ns=15232159 query_ns=1671360 queries=165 first_query_ns=91268 run_ns=3894657\n"
+  },
+  {
+    "round": 2,
+    "engine": "native",
+    "seconds": 0.0209761809999236,
+    "stdout": "findings 38\n",
+    "stderr": "tsgo: load_ns=14857982 query_ns=1589128 queries=165 first_query_ns=60531 run_ns=3961940\n"
+  },
+  {
+    "round": 2,
+    "engine": "go",
+    "seconds": 0.02469115800010968,
+    "stdout": "findings 38\n",
+    "stderr": "cohere: load_ns=11262948 rule_ns=886286 run_ns=4769741\n"
+  }
+]

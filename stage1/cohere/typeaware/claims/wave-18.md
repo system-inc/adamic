@@ -18,3 +18,7 @@ not used for this wave's positions.
 
 Fetched every origin branch before claiming. No matching claim or named native
 port file was found under stage1/cohere on those refs. No rule was skipped.
+
+Implementation status: await-thenable and class-literal-property-style default
+ports are complete in adea6fbe. The Next rule remains blocked on absent native
+JSX parsing; WAVE_18_REPORT.md records a Go-positive native-refusal measurement.

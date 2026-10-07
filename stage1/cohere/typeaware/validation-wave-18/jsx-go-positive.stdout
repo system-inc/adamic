@@ -1,0 +1,3 @@
+file	/workspace/wave-18-validation-final/title-positive.tsx
+54	58	@next/next/no-title-in-document-head	noTitleInDocumentHead	A <title> here is emitted once for every page in the application, because the `Head` from `next/document` renders the shared document shell rather than a page. A page that then sets its own title competes with this one and which wins depends on order. Set the title per page, with `Head` from `next/head`.	0	0
+findings 1
