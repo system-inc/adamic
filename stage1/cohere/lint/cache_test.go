@@ -431,13 +431,23 @@ func lintCompiler(t *testing.T) string {
 	}
 	return lintKey("compiler", parts)
 }
+func lintPortOptions(directory string, sanitize bool) native.Options {
+	options := native.Options{Sanitize: sanitize}
+	if _, err := os.Stat(filepath.Join(directory, ".selected-rule")); err == nil && !*ruleWhole && os.Getenv("ADAMIC_GATE_UNCACHED") != "1" {
+		options.Split = true
+		options.Jobs = runtime.GOMAXPROCS(0)
+	}
+	return options
+}
+
 func lintPortKey(t *testing.T, directory string, sanitize bool) string {
+	options := lintPortOptions(directory, sanitize)
 	prepareRegistry(t, directory)
-	library, err := native.RuntimeLibrary("", native.Options{Sanitize: sanitize})
+	library, err := native.RuntimeLibrary("", options)
 	if err != nil {
 		t.Fatal(err)
 	}
-	return lintKey("port", map[string]string{"modules": lintModules(t, filepath.Join(directory, "main.ts")), "compiler": lintCompiler(t), "runtime": filepath.Base(filepath.Dir(library)), "context": lintContext(t), "flags": strings.Join(native.Flags(native.Options{Sanitize: sanitize}), "\x00")})
+	return lintKey("port", map[string]string{"modules": lintModules(t, filepath.Join(directory, "main.ts")), "compiler": lintCompiler(t), "runtime": filepath.Base(filepath.Dir(library)), "context": lintContext(t), "split": fmt.Sprint(options.Split), "jobs": fmt.Sprint(options.Jobs), "flags": strings.Join(native.Flags(options), "\x00")})
 }
 func buildPort(t *testing.T, directory string, sanitize bool) string {
 	t.Helper()
@@ -446,7 +456,7 @@ func buildPort(t *testing.T, directory string, sanitize bool) string {
 	}
 	key := lintPortKey(t, directory, sanitize)
 	return lintArtifact(t, "port", key, func() string {
-		path := buildPortUncached(t, directory, sanitize)
+		path := buildPortOptionsUncached(t, directory, lintPortOptions(directory, sanitize))
 		if lintPortKey(t, directory, sanitize) != key {
 			t.Fatal("port inputs changed during build; retry")
 		}

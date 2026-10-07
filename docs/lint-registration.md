@@ -176,7 +176,7 @@ Artifacts and observations live below `os.UserCacheDir()/adamic/lint/`:
 | Go oracle binary | Cohere HEAD, binary working-tree diff, nested submodule identities/diffs, untracked bytes, oracle overlay, generated Go registry, every adapter, Go version, GOOS/GOARCH |
 | Upstream capture | Same cohere identity, capture overlay and harness, upstream package, test filter and exact public rule name |
 | Go observations | Oracle key, complete manifest fields and every referenced source byte |
-| Sanitized native port | Actual imported module names/bytes, generated registry, all `internal/**` bytes, `go.mod`, `go.sum` or its absence, executing compiler identity, native flags and runtime library key |
+| Sanitized native port | Actual imported module names/bytes, generated registry, all `internal/**` bytes, `go.mod`, `go.sum` or its absence, executing compiler identity, native flags, whole/split mode, split job count and runtime library key |
 | Emitted JavaScript build | Module graph, compiler source and executable identity |
 | Source Node / emitted JavaScript observations | Module bytes, Node version, manifest fields and referenced source bytes |
 
@@ -205,3 +205,24 @@ The optional test flag `-rule-byte-change` appends exactly one space to `rule.a`
 or `rule.ts` in the private snapshot for measurement, preserving owned files.
 See [the check evidence](../stage1/cohere/lint/check-evidence/REPORT.md) for commands,
 measurements, build flags, mutant failures and coverage limits.
+
+The selected-rule fast path uses the opt-in native split compiler with
+`Options{Split: true, Jobs: runtime.GOMAXPROCS(0)}`. Correct and owned-mutant
+native builds run concurrently. Both retain ASan/UBSan and the ordinary flags.
+The compiler caches preprocessed function-group objects under `adamic/units/`;
+see [CLANG_UNITS.md](../internal/native/CLANG_UNITS.md) for dependencies and
+limitations. A shared declaration or numbering change can invalidate every unit.
+
+The lint harness clears the inherited `ADAMIC_NATIVE_SPLIT` switch and selects
+split mode through the API. Full-registration builds and
+`ADAMIC_GATE_UNCACHED=1` always use ordinary whole-file compilation.
+`TestSplitWholeParity` compares the complete three-rule corpora byte for byte
+against a freshly built whole-file native witness, also checking Go, Node and
+emitted JavaScript. `TestSelectedRuleParity` separately checks full registration.
+
+For paired measurement, `-rule-whole` uses the ordinary compiler and sequential
+correct/mutant builds. `-rule-helper-change` adds a used identity helper to the
+private rule snapshot, exercising declaration and numbering changes without
+editing the checkout. It can also be passed to `TestSplitWholeParity`.
+See [split evidence](../stage1/cohere/lint/split-evidence/REPORT.md) for paired
+cold, byte-edit, unchanged and helper-edit timings and actual object counts.

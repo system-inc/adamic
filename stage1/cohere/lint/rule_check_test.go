@@ -8,11 +8,15 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"sync"
 	"testing"
 	"time"
 
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
+
+var ruleWhole = flag.Bool("rule-whole", false, "benchmark the ordinary whole-file compiler")
+var ruleHelperChange = flag.Bool("rule-helper-change", false, "benchmark a private snapshot with an additional identity helper")
 
 var ruleByteChange = flag.Bool("rule-byte-change", false, "benchmark a private snapshot with one extra space in the selected module")
 
@@ -40,6 +44,24 @@ func selectedPortMutation(t *testing.T, d registry.Descriptor, from, to, target 
 	if *ruleByteChange {
 		path := filepath.Join(directory, "rules", d.Slug, d.Module)
 		if err := os.WriteFile(path, []byte(lintBytes(t, path)+" "), 0644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if *ruleHelperChange {
+		path := filepath.Join(directory, "rules", d.Slug, d.Module)
+		source := lintBytes(t, path)
+		source = strings.Replace(source, "export class Rule", "function lintCheckHelper(value: number): number { return value; }\n\nexport class Rule", 1)
+		start := strings.Index(source, "    visit(")
+		if start < 0 {
+			t.Fatal("helper edit requires visit")
+		}
+		offset := strings.Index(source[start:], "{\n")
+		if offset < 0 || !strings.Contains(source, "function lintCheckHelper(") {
+			t.Fatal("helper edit requires a class and visit body")
+		}
+		body := offset + start + 2
+		source = source[:body] + "        index = lintCheckHelper(index);\n" + source[body:]
+		if err := os.WriteFile(path, []byte(source), 0644); err != nil {
 			t.Fatal(err)
 		}
 	}
@@ -119,11 +141,19 @@ func TestRule(t *testing.T) {
 		fmt.Printf("| total | %.3f |\n", time.Since(started).Seconds())
 	}()
 	var d registry.Descriptor
-	var directory, oracle, binary, module, path string
+	var directory, mutated, oracle, binary, mutantBinary, module, path string
+	var change struct{ Name, File, From, To string }
 	var rows, owned, recovery []string
 	phase("validate and snapshot", func() {
 		d = selectedDescriptor(t, *ruleSlug)
 		directory = selectedPort(t, d)
+		if err := json.Unmarshal([]byte(lintBytes(t, filepath.Join("rules", d.Slug, "mutant.json"))), &change); err != nil {
+			t.Fatal(err)
+		}
+		if change.File == "" {
+			change.File = d.Module
+		}
+		mutated = selectedPortMutation(t, d, change.From, change.To, filepath.Join("rules", d.Slug, change.File))
 		rows, owned = ruleRows(t, d)
 	})
 	phase("Go oracle", func() { oracle = goOracleFrom(t, directory) })
@@ -145,7 +175,21 @@ func TestRule(t *testing.T) {
 			}
 		}
 	})
-	phase("sanitized port build", func() { binary = buildPort(t, directory, true) })
+	phase("sanitized correct and mutant port builds", func() {
+		if *ruleWhole {
+			binary = buildPort(t, directory, true)
+			mutantBinary = buildPort(t, mutated, true)
+			return
+		}
+		var pending sync.WaitGroup
+		pending.Add(2)
+		go func() { defer pending.Done(); binary = buildPort(t, directory, true) }()
+		go func() { defer pending.Done(); mutantBinary = buildPort(t, mutated, true) }()
+		pending.Wait()
+		if t.Failed() {
+			t.FailNow()
+		}
+	})
 	phase("explicit recovery refusals", func() {
 		for _, row := range recovery {
 			checkRecoveryRefusal(t, oracle, binary, directory, row)
@@ -154,18 +198,9 @@ func TestRule(t *testing.T) {
 	phase("emitted JavaScript build", func() { module = emittedJavaScript(t, directory) })
 	phase("Go Node JavaScript native comparison", func() { compareWithJavaScript(t, oracle, binary, directory, path, module) })
 	phase("owned mutant", func() {
-		var change struct{ Name, File, From, To string }
-		if err := json.Unmarshal([]byte(lintBytes(t, filepath.Join("rules", d.Slug, "mutant.json"))), &change); err != nil {
-			t.Fatal(err)
-		}
-		if change.File == "" {
-			change.File = d.Module
-		}
-		mutated := selectedPortMutation(t, d, change.From, change.To, filepath.Join("rules", d.Slug, change.File))
 		// Keep today's exact mutant corpus, including all-rule inherited rows.
 		mutantPath := manifest(t, append(stableRows(t, generated(t)), owned...))
 		want := execute(t, "", oracle, "--manifest", mutantPath).output
-		mutantBinary := buildPort(t, mutated, true)
 		for _, side := range []struct {
 			Name   string
 			Result execution

@@ -134,6 +134,10 @@ func goOracleFromUncached(t *testing.T, sourceRoot string) string {
 }
 
 func buildPortUncached(t *testing.T, directory string, sanitize bool) string {
+	return buildPortOptionsUncached(t, directory, native.Options{Sanitize: sanitize})
+}
+
+func buildPortOptionsUncached(t *testing.T, directory string, options native.Options) string {
 	t.Helper()
 	prepareRegistry(t, directory)
 	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
@@ -147,10 +151,10 @@ func buildPortUncached(t *testing.T, directory string, sanitize bool) string {
 	binary := filepath.Join(t.TempDir(), "scanner")
 	source := native.C(lowered)
 	started := time.Now()
-	if err := native.Build(source, binary, native.Options{Sanitize: sanitize}); err != nil {
+	if err := native.Build(source, binary, options); err != nil {
 		t.Fatal(err)
 	}
-	t.Logf("clang main.c plus cached runtime link: %.3fs; flags=%v", time.Since(started).Seconds(), native.Flags(native.Options{Sanitize: sanitize}))
+	t.Logf("clang build: %.3fs; split=%t jobs=%d flags=%v", time.Since(started).Seconds(), options.Split, options.Jobs, native.Flags(options))
 	return binary
 }
 
