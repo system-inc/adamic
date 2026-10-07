@@ -275,9 +275,9 @@ func (e *emitter) loop(statement ir.Loop) {
 	e.line("}")
 }
 
-// forOf emits for (const element of array). The array is held (retained) for the whole loop, as
-// JavaScript's iterator holds it even if the variable naming it is reassigned, and its length is read
-// again before each pass. Over a map, what's held is an iterator, which holds the map and keeps it
+// forOf emits for (const element of array). Unless the element borrow proof keeps the array
+// alive in its variable, the iterator holds its own count even if that variable is reassigned.
+// Its length is read again before each pass. Over a map, an iterator holds the map and keeps it
 // from compacting until every way out of the loop has let go of it.
 func (e *emitter) forOf(statement ir.ForOf) {
 	e.line("{")
@@ -290,10 +290,15 @@ func (e *emitter) forOf(statement ir.ForOf) {
 	overRegex := statement.RegexIterator
 	if overMap {
 		e.line("adamic_map_iterator *%s = adamic_map_iterate(%s);", held, iterable)
+	} else if e.elementBorrows[e.at] {
+		// The same proof lends both the element and the array. Neither owns a count here.
+		e.line("%s %s = %s;", cType(statement.Iterable.Type()), held, iterable)
 	} else {
-		e.line("%s %s = adamic_retain(%s);", cType(statement.Iterable.Type()), held, iterable)
+		e.line("%s %s = %s;", cType(statement.Iterable.Type()), held, e.kept(iterable))
 	}
-	e.hold(held)
+	if !e.elementBorrows[e.at] {
+		e.hold(held)
+	}
 	e.end()
 	index := e.temporary()
 	size := e.temporary()
@@ -365,7 +370,11 @@ func (e *emitter) forOf(statement ir.ForOf) {
 		if statement.Element.IsReference() {
 			element = fmt.Sprintf("(%s)%s", cType(statement.Element), element)
 		}
-		e.declareLocal(statement.Local, element, false)
+		if e.elementBorrows[e.at] {
+			e.line("%s %s = %s;", cType(statement.Element), e.localName(statement.Local), element)
+		} else {
+			e.declareLocal(statement.Local, element, false)
+		}
 	}
 	for index := range statement.Body {
 		e.statementAt(&statement.Body[index])

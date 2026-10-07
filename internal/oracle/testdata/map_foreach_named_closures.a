@@ -1,0 +1,56 @@
+// Named callbacks over closure keys. Reassigning the parameter must not free the one the caller kept.
+function make(label: string): () => string {
+	const text = `${label}`;
+	return () => text;
+}
+
+let kept: (() => string)[] = [];
+let later: () => string = () => "missing";
+
+function filled(): Map<() => string, () => string> {
+	const collection = new Map<() => string, () => string>();
+	later = make("k1");
+	collection.set(make("k0"), make("v0"));
+	collection.set(later, make("v1"));
+	collection.set(make("k2"), make("v2"));
+	return collection;
+}
+
+function deleteLater(item: () => string, current: () => string, owner: Map<() => string, () => string>): void {
+	if (current() === "k0") { owner.delete(later); }
+	kept.push(current);
+	kept.push(item);
+	console.log(`later ${current()} ${item()} ${owner.size}`);
+}
+
+function reassignKey(item: () => string, current: () => string, owner: Map<() => string, () => string>): void {
+	owner.delete(current);
+	kept.push(current);
+	console.log(`key ${current()} ${item()}`);
+	const renamed = `${current()}/reassigned`;
+	current = () => renamed;
+	console.log(`reassigned ${current()}`);
+}
+
+function throwBorrowed(item: () => string, current: () => string, owner: Map<() => string, () => string>): void {
+	owner.delete(current);
+	kept.push(current);
+	kept.push(item);
+	throw new Error(`deleted ${current()} ${item()}`);
+}
+
+function run(name: string, visit: (item: () => string, current: () => string, owner: Map<() => string, () => string>) => void): void {
+	kept = [];
+	const collection = filled();
+	try {
+		collection.forEach(visit);
+	} catch (error) {
+		console.log(error instanceof Error ? error.message : "unexpected");
+	}
+	console.log(`${name} kept ${kept.map((item) => item()).join(",")} remaining ${collection.size}`);
+	collection.forEach((item, current) => { console.log(`${name} after ${current()} ${item()}`); });
+}
+
+run("later", deleteLater);
+run("reassign", reassignKey);
+run("throw", throwBorrowed);
