@@ -1,3 +1,15 @@
+# Error recovery blind spot: first checkpoint
+
+Existing extended driver on Node alone, pinned TypeScript parser cases.
+800 cases without any @filename directive, 245 parse diagnostic rows, 63183 nodes; 20 cases with explicit filename directives excluded.
+Raw single-file contents and paths preserved. No driver edits for this probe.
+The 81 compiler inputs exercise zero parse diagnostic rows, so their equality
+does not establish error recovery. Details: evidence/recovery-blind-spot.
+Status: syntax tree and parse diagnostics identical on Node, JSDoc unverified,
+error recovery unverified.
+
+---
+
 # Extended dump acceptance checks: fourth checkpoint
 
 The full adapted compiler and unchanged validated slice were compared again:
