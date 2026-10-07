@@ -1,0 +1,2217 @@
+{
+  "schema": 1,
+  "sourceSnapshot": "evidence/after.json",
+  "tokens": 207,
+  "files": 28,
+  "classes": [
+    {
+      "id": "json",
+      "name": "JSON and config value pipeline",
+      "siteIds": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        98,
+        118,
+        119,
+        173,
+        180
+      ],
+      "count": 38,
+      "rule": "Unknown plus checked narrowing at genuinely untyped JSON/API boundaries; propagate validated recursive JSON/config value types through the internal pipeline.",
+      "observation": "Config parsing and option validation, package.json, sourcemaps and JSON.parse. Boundary sites are 9, 10, 19, 29, 30, 98, 119 and 180: config/read APIs, public config converters, parsed package data, sourcemap guard and JSON.parse result. Other sites carry these values, construct JSON-shaped values, or validate them; they are not independent untyped host inputs. Recovery can produce undefined. parseOwnConfigOfJson and raw config merging read/write fields without proving the input object and each field shape. Existing truthiness and hasProperty checks do not establish those contracts. Whole-class unknown substitution would require runtime checks or expose consumer errors; declaring every value JSON would also falsely restrict public API inputs before validation.",
+      "typeOnlyCandidate": false
+    },
+    {
+      "id": "brands",
+      "name": "Nominal and phantom markers",
+      "siteIds": [
+        1,
+        2,
+        3,
+        62,
+        63,
+        96,
+        97,
+        103,
+        142,
+        147,
+        148,
+        149,
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        179
+      ],
+      "count": 36,
+      "rule": "Real type: undefined for absent phantom marker values, preserving marker keys and optionality; audit all construction, reads and assignability before applying.",
+      "observation": "Marker properties on branded primitives, arrays, AST families and SymbolLinks, including two cache-key markers without Brand suffix. This is distinct from JSON and overload signatures. No replacement is proved in this classification: changing marker value types can affect assignability and public declarations even though annotations erase.",
+      "typeOnlyCandidate": true
+    },
+    {
+      "id": "enum-display",
+      "name": "Enum and namespace display reflection",
+      "siteIds": [
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        91,
+        106
+      ],
+      "count": 23,
+      "rule": "Real type: numeric-enum reflection map with string-or-number values, and the actual typeof namespace/enum at each owner.",
+      "observation": "formatEnum and its cache reflect numeric enum objects; getEnumMembers filters typeof value === number. Namespace casts refer to known enum exports. FileIncludeKind indexes a real reverse enum map. These are not arbitrary untyped host objects.",
+      "typeOnlyCandidate": true
+    },
+    {
+      "id": "timer",
+      "name": "Timer handles and variadic timer forwarding",
+      "siteIds": [
+        123,
+        124,
+        125,
+        128,
+        131,
+        132,
+        133,
+        134,
+        135,
+        143,
+        200,
+        201,
+        202,
+        203,
+        204,
+        205
+      ],
+      "count": 16,
+      "rule": "Generic parameters for the host timer handle and argument tuple, carried together through registration, storage, callback and cancellation declarations.",
+      "observation": "Includes five callback/rest argument tokens and eleven opaque timer handle tokens. System and WatchHost timer contracts are host-polymorphic; forwarding an opaque handle does not justify unknown plus invented runtime narrowing. A blanket Node timer type would exclude other supported hosts.",
+      "typeOnlyCandidate": true
+    },
+    {
+      "id": "constructors",
+      "name": "Incomplete runtime constructors and storage initialization",
+      "siteIds": [
+        4,
+        183,
+        184,
+        185,
+        186,
+        187,
+        188,
+        189,
+        190,
+        191,
+        192
+      ],
+      "count": 11,
+      "rule": "Decline until constructor return and staged initialization contracts are modeled at their owners.",
+      "observation": "NodeLinks construction, Symbol.links initialization and nine objectAllocator constructor casts claim richer interfaces than the bare constructor initially supplies. A cast to the final interface would hide the same missing proof.",
+      "typeOnlyCandidate": false
+    },
+    {
+      "id": "copy",
+      "name": "Generic enumerable copy and metadata copy",
+      "siteIds": [
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        92,
+        93
+      ],
+      "count": 10,
+      "rule": "Decline until enumerable copy results and writable key relationships have an owner contract.",
+      "observation": "clone, extend, copyProperties and SourceFile metadata copying enumerate string keys and populate initially empty objects. T or T1 & T2 does not prove that copying enumerable own strings preserves prototypes, symbol keys or all members of arbitrary input types.",
+      "typeOnlyCandidate": false
+    },
+    {
+      "id": "host-standard",
+      "name": "Standard runtime feature probes",
+      "siteIds": [
+        47,
+        48,
+        66,
+        67,
+        116,
+        117,
+        126,
+        127
+      ],
+      "count": 8,
+      "rule": "Real type: existing Array, String and Error APIs, with optional host availability declared at their owners where older runtimes omit the API.",
+      "observation": "Array.at, Error.captureStackTrace, String.fromCodePoint and Error.stackTraceLimit. Some are standard built-ins, others Node/V8 additions; availability is already tested. They are not parsed JSON.",
+      "typeOnlyCandidate": true
+    },
+    {
+      "id": "ast-projection",
+      "name": "AST subtype properties and mutable manufactured nodes",
+      "siteIds": [
+        5,
+        101,
+        102,
+        120,
+        121,
+        122
+      ],
+      "count": 6,
+      "rule": "Real type: the precise node union or manufactured node shape at the owning declaration.",
+      "observation": "Fresh parentName.isTypeOf mutation; parent access on JSDoc parsing elements; optional declaration.type access in symbolWalker. Existing union narrowing and actual factory return shapes must be reconciled at owners.",
+      "typeOnlyCandidate": true
+    },
+    {
+      "id": "diagnostic",
+      "name": "Diagnostic substitution arguments",
+      "siteIds": [
+        8,
+        94,
+        100,
+        112,
+        114,
+        115
+      ],
+      "count": 6,
+      "rule": "Real type: the diagnostic substitution domain established from callers, expected string | number, with optional arguments retaining undefined.",
+      "observation": "Diagnostic formatter, resolution trace and scanner/parser diagnostic arguments. They are formatted into messages, not stored arbitrary callback tuples. The proposed domain must still be checked against services and public callers.",
+      "typeOnlyCandidate": true
+    },
+    {
+      "id": "display-projection",
+      "name": "Display projections on known internal objects",
+      "siteIds": [
+        6,
+        68,
+        95,
+        139,
+        140,
+        141
+      ],
+      "count": 6,
+      "rule": "Real type: declare the actual optional display fields or recursive option display value at the object owner, preserving existing control flow.",
+      "observation": "__debugFlags, function.name, nested compiler option values, Type.objectFlags/intrinsicName and SourceFile.path. The transformer cast follows a SourceFile kind test. Optional Type fields differ by subtype; internal values are not host input warranting unknown.",
+      "typeOnlyCandidate": true
+    },
+    {
+      "id": "builder-factory",
+      "name": "Generic builder program factory escapes",
+      "siteIds": [
+        146,
+        197,
+        198,
+        199,
+        206
+      ],
+      "count": 5,
+      "rule": "Decline until the generic program type is tied to the selected factory and persisted builder result at the owner.",
+      "observation": "Default emit-and-semantic factory and readBuilderProgram results are cast to arbitrary caller T. T can denote a different builder family; a replacement assertion T would perpetuate the mismatch.",
+      "typeOnlyCandidate": false
+    },
+    {
+      "id": "generic-api",
+      "name": "Broad generic API shape references",
+      "siteIds": [
+        104,
+        174,
+        175,
+        196
+      ],
+      "count": 4,
+      "rule": "Real type: use the declared generic bound, Program | BuilderProgram for ProgramHost and Node for NodeArray.",
+      "observation": "ProgramHost readFile/host projections and emit NodeArray callbacks. Type-only generic instantiations are not evidence of untyped input; the projected member may not depend on the generic argument.",
+      "typeOnlyCandidate": true
+    },
+    {
+      "id": "sorted-proof",
+      "name": "Sorted array brand assertions",
+      "siteIds": [
+        43,
+        44,
+        45,
+        105
+      ],
+      "count": 4,
+      "rule": "Decline until sortedness proof and its branded result are expressible at the sorting/empty-array owner.",
+      "observation": "Empty arrays are vacuously sorted; deduplication preserves its sorted input. as any as currently bridges the nominal SortedArray/SortedReadonlyArray marker. Merely swapping the bridge assertion for the target type would not constitute the owner proof requested.",
+      "typeOnlyCandidate": false
+    },
+    {
+      "id": "dependent-dispatch",
+      "name": "Heterogeneous node callback dispatch",
+      "siteIds": [
+        90,
+        99,
+        194
+      ],
+      "count": 3,
+      "rule": "Generic parameter associating the node kind and concrete node type with the callback input/output at registration and dispatch.",
+      "observation": "ParenthesizerRule, forEachChildTable and visitEachChildTable erase heterogeneous function types. A broad Node callback loses contravariant input relationships; the stored callback and its invocation must share a type parameter.",
+      "typeOnlyCandidate": true
+    },
+    {
+      "id": "generic-default",
+      "name": "Generic defaults and constraints",
+      "siteIds": [
+        57,
+        59,
+        60
+      ],
+      "count": 3,
+      "rule": "Generic parameter: retain the argument tuple and checked input/output relationship explicitly, removing permissive defaults after auditing explicit generic callers.",
+      "observation": "maybeBind already carries A; cast and tryCast default TIn to any. Replacing the default with an unrelated universal type can break predicate variance or weaken the TOut extends TIn proof.",
+      "typeOnlyCandidate": true
+    },
+    {
+      "id": "host-extension",
+      "name": "Optional process and stream extensions",
+      "siteIds": [
+        61,
+        136,
+        137
+      ],
+      "count": 3,
+      "rule": "Unknown plus checked narrowing only for genuinely untyped host extensions at process.browser, process.recordreplay and stdout._handle.",
+      "observation": "These three sites inspect external runtime extensions: browser marker, replay marker and private stream handle with optional setBlocking. Current truthiness or optional chaining does not prove an arbitrary handle method callable. Changing to checked unknown cannot be presumed byte-identical.",
+      "typeOnlyCandidate": false
+    },
+    {
+      "id": "instrumentation",
+      "name": "Resolution instrumentation payload",
+      "siteIds": [
+        108,
+        109,
+        110
+      ],
+      "count": 3,
+      "rule": "Generic parameter for before/after instrumentation data, with void for an ignored after-hook result.",
+      "observation": "ResolutionCache host hooks return a before payload and pass it unchanged into the matching after hook; after return value is ignored. This is an opaque correlated payload, not inspector or perfLogger code.",
+      "typeOnlyCandidate": true
+    },
+    {
+      "id": "watch-callback",
+      "name": "Heterogeneous watcher callbacks",
+      "siteIds": [
+        129,
+        130,
+        207
+      ],
+      "count": 3,
+      "rule": "Generic parameter carrying the watcher callback argument tuple through the cache and logging wrapper.",
+      "observation": "File and directory callback families have different arities; sys uses a never middle parameter as a variance workaround, while watchUtilities logs and forwards spread arguments. Cannot prove callback compatibility by changing just the spread array element type.",
+      "typeOnlyCandidate": true
+    },
+    {
+      "id": "data-comparison",
+      "name": "Recursive compiler data comparison",
+      "siteIds": [
+        181,
+        182
+      ],
+      "count": 2,
+      "rule": "Real type: recursive compiler data domain including object/array, scalar, null/undefined and ignored function members.",
+      "observation": "compareDataObjects recursively compares compiler option data and skips functions. It is not restricted to JSON, and unknown is not justified by an untyped external boundary here. Object indexing and recursive null behavior need an owner contract.",
+      "typeOnlyCandidate": true
+    },
+    {
+      "id": "debug-mutation",
+      "name": "Mutable Debug assertion table",
+      "siteIds": [
+        64,
+        65
+      ],
+      "count": 2,
+      "rule": "Decline: the restore assignment stores a cache entry object where the declared slot is callable; a truthful callable replacement exposes a runtime contract mismatch.",
+      "observation": "setAssertionLevel assigns cachedFunc, not cachedFunc.assertion, to Debug[key]. shouldAssertFunction installs noop. These are writes, not reflection for display. Fixing the restoration statement changes JavaScript, outside this unit.",
+      "typeOnlyCandidate": false
+    },
+    {
+      "id": "pragma",
+      "name": "Pragma argument name domain",
+      "siteIds": [
+        177,
+        178
+      ],
+      "count": 2,
+      "rule": "Real type: string as the PragmaArgumentSpecification name parameter bound.",
+      "observation": "Type-level pragma shapes already constrain the name parameter to strings. These are two generic instantiations, not arbitrary runtime payloads.",
+      "typeOnlyCandidate": true
+    },
+    {
+      "id": "program-feature",
+      "name": "Optional builder program feature access",
+      "siteIds": [
+        144,
+        145
+      ],
+      "count": 2,
+      "rule": "Real type: an optional getSemanticDiagnosticsOfNextAffectedFile capability on the program owner, preserving the existing presence test.",
+      "observation": "A builder family is probed for a method and conditionally invoked. Calling the method on a union requires declaring the optional capability; claiming all programs have the full semantic builder interface is too strong.",
+      "typeOnlyCandidate": true
+    },
+    {
+      "id": "array-predicate",
+      "name": "Generic array predicate input",
+      "siteIds": [
+        58
+      ],
+      "count": 1,
+      "rule": "Generic parameter for the internal value input while retaining the readonly unknown[] checked predicate.",
+      "observation": "isArray delegates to the runtime Array.isArray check. The incoming value is not inherently untyped JSON; a generic input preserves concrete caller types.",
+      "typeOnlyCandidate": true
+    },
+    {
+      "id": "comparer",
+      "name": "Default string comparator escape",
+      "siteIds": [
+        46
+      ],
+      "count": 1,
+      "rule": "Decline until the string default comparer is restricted to a string element branch or a generic caller supplies its comparator.",
+      "observation": "deduplicateSorted falls back to compareStringsCaseSensitive while T is unconstrained. Casting the string comparator to Comparer<T> has a missing domain proof.",
+      "typeOnlyCandidate": false
+    },
+    {
+      "id": "config-host",
+      "name": "System to config-host shape",
+      "siteIds": [
+        195
+      ],
+      "count": 1,
+      "rule": "Real type: the actual ParseConfigFileHost capability subset at the host declaration, proving required optional System methods before construction.",
+      "observation": "watch adapts a typed System into a config-reading host. It is not untyped host input, and the any cast may conceal optional versus required capabilities.",
+      "typeOnlyCandidate": true
+    },
+    {
+      "id": "distribution",
+      "name": "Distributive conditional type",
+      "siteIds": [
+        176
+      ],
+      "count": 1,
+      "rule": "Generic parameter: use the identity condition U extends U to preserve distribution without a top-type escape.",
+      "observation": "UnionToIntersection uses a naked type parameter conditional solely to distribute the union. Must verify never, unions and generic instantiations before any change.",
+      "typeOnlyCandidate": true
+    },
+    {
+      "id": "filesystem",
+      "name": "Filesystem entry classification",
+      "siteIds": [
+        138
+      ],
+      "count": 1,
+      "rule": "Real type: fs.Stats | fs.Dirent | undefined, with existing !stat continue retaining narrowing.",
+      "observation": "Assignments come from statSync or readdirSync dirents. This host API has real declarations and common isFile/isDirectory methods; unknown plus new checks is unnecessary.",
+      "typeOnlyCandidate": true
+    },
+    {
+      "id": "generator-input",
+      "name": "Delegated generator next-input type",
+      "siteIds": [
+        42
+      ],
+      "count": 1,
+      "rule": "Generic parameter carrying the delegated iterator next-input type through flatMapIterator.",
+      "observation": "yield* can forward caller next values to the delegated iterator, even though this generator does not name a received value. Declaring it void or undefined without checking delegated iterator contracts would overstate the proof.",
+      "typeOnlyCandidate": true
+    },
+    {
+      "id": "key-only",
+      "name": "Key-only mapped type",
+      "siteIds": [
+        193
+      ],
+      "count": 1,
+      "rule": "Real type: never as the unobserved mapped value, retaining the existing key remapping.",
+      "observation": "CompilerOptionKeys applies keyof to the mapped type; only its keys are consumed. No runtime value or external input is involved.",
+      "typeOnlyCandidate": true
+    },
+    {
+      "id": "module-key",
+      "name": "Module resolution enum key",
+      "siteIds": [
+        107
+      ],
+      "count": 1,
+      "rule": "Real type: the actual ModuleResolutionKind string-key domain at the declaration producing moduleKindName.",
+      "observation": "Runtime string indexes an enum and falls back to Node16; derive the valid key union rather than asserting every arbitrary string a valid enum key.",
+      "typeOnlyCandidate": true
+    },
+    {
+      "id": "node-family",
+      "name": "Variable-like declaration family",
+      "siteIds": [
+        7
+      ],
+      "count": 1,
+      "rule": "Real type: the variable-like declaration union including JSDoc property-like tags required by its callers.",
+      "observation": "widenTypeForVariableLikeDeclaration is an internal checker helper. Derive its declaration union from callers and property reads, rather than treating AST objects as unknown.",
+      "typeOnlyCandidate": true
+    },
+    {
+      "id": "resolution-write",
+      "name": "Resolution result update",
+      "siteIds": [
+        111
+      ],
+      "count": 1,
+      "rule": "Real type: declare the mutable resolvedModule result field at its actual owner.",
+      "observation": "The primary resolution result is updated after lookup; the any cast is on the assignment target. Replacing it with a value cast would not fix its ownership or readonly contract.",
+      "typeOnlyCandidate": true
+    },
+    {
+      "id": "unused-state",
+      "name": "Unused scanner reduction state",
+      "siteIds": [
+        113
+      ],
+      "count": 1,
+      "rule": "Real type: undefined, the state passed by both getLeadingCommentRanges and getTrailingCommentRanges.",
+      "observation": "appendCommentRange does not read _state and its two owners pass undefined explicitly.",
+      "typeOnlyCandidate": true
+    }
+  ],
+  "sites": [
+    {
+      "id": 1,
+      "file": "src/compiler/builder.ts",
+      "line": 1074,
+      "column": 88,
+      "source": "export type IncrementalBuildInfoFileId = number & { __incrementalBuildInfoFileIdBrand: any; };",
+      "classification": "brands"
+    },
+    {
+      "id": 2,
+      "file": "src/compiler/builder.ts",
+      "line": 1076,
+      "column": 100,
+      "source": "export type IncrementalBuildInfoFileIdListId = number & { __incrementalBuildInfoFileIdListIdBrand: any; };",
+      "classification": "brands"
+    },
+    {
+      "id": 3,
+      "file": "src/compiler/checker.ts",
+      "line": 1452,
+      "column": 32,
+      "source": "    declare _symbolLinksBrand: any;",
+      "classification": "brands"
+    },
+    {
+      "id": 4,
+      "file": "src/compiler/checker.ts",
+      "line": 2940,
+      "column": 76,
+      "source": "        return nodeLinks[nodeId] || (nodeLinks[nodeId] = new (NodeLinks as any)());",
+      "classification": "constructors"
+    },
+    {
+      "id": 5,
+      "file": "src/compiler/checker.ts",
+      "line": 6834,
+      "column": 40,
+      "source": "                        (parentName as any).isTypeOf = true; // mutably update, node is freshly manufactured anyhow",
+      "classification": "ast-projection"
+    },
+    {
+      "id": 6,
+      "file": "src/compiler/checker.ts",
+      "line": 10953,
+      "column": 77,
+      "source": "                    return Debug.fail(`Unhandled class member kind! ${(p as any).__debugFlags || p.flags}`);",
+      "classification": "display-projection"
+    },
+    {
+      "id": 7,
+      "file": "src/compiler/checker.ts",
+      "line": 12480,
+      "column": 87,
+      "source": "    function widenTypeForVariableLikeDeclaration(type: Type | undefined, declaration: any, reportErrors?: boolean) {",
+      "classification": "node-family"
+    },
+    {
+      "id": 8,
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2206,
+      "column": 72,
+      "source": "export function getDiagnosticText(message: DiagnosticMessage, ...args: any[]): string {",
+      "classification": "diagnostic"
+    },
+    {
+      "id": 9,
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2267,
+      "column": 110,
+      "source": "export function readConfigFile(fileName: string, readFile: (path: string) => string | undefined): { config?: any; error?: Diagnostic; } {",
+      "classification": "json"
+    },
+    {
+      "id": 10,
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2277,
+      "column": 91,
+      "source": "export function parseConfigFileTextToJson(fileName: string, jsonText: string): { config?: any; error?: Diagnostic; } {",
+      "classification": "json"
+    },
+    {
+      "id": 11,
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2430,
+      "column": 16,
+      "source": "        value: any,",
+      "classification": "json"
+    },
+    {
+      "id": 12,
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2441,
+      "column": 4,
+      "source": "): any {",
+      "classification": "json"
+    },
+    {
+      "id": 13,
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2467,
+      "column": 84,
+      "source": "export function convertToObject(sourceFile: JsonSourceFile, errors: Diagnostic[]): any {",
+      "classification": "json"
+    },
+    {
+      "id": 14,
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2484,
+      "column": 4,
+      "source": "): any {",
+      "classification": "json"
+    },
+    {
+      "id": 15,
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2494,
+      "column": 8,
+      "source": "    ): any {",
+      "classification": "json"
+    },
+    {
+      "id": 16,
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2495,
+      "column": 23,
+      "source": "        const result: any = returnValue ? {} : undefined;",
+      "classification": "json"
+    },
+    {
+      "id": 17,
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2538,
+      "column": 110,
+      "source": "    function convertPropertyValueToJson(valueExpression: Expression, option: CommandLineOption | undefined): any {",
+      "classification": "json"
+    },
+    {
+      "id": 18,
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2606,
+      "column": 79,
+      "source": "function isCompilerOptionsValue(option: CommandLineOption | undefined, value: any): value is CompilerOptionsValue {",
+      "classification": "json"
+    },
+    {
+      "id": 19,
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3013,
+      "column": 50,
+      "source": "export function parseJsonConfigFileContent(json: any, host: ParseConfigHost, basePath: string, existingOptions?: CompilerOptions, configFileName?: string, resolutionStack?: Path[], extraFileExtensions?: readonly FileExtensionInfo[], extendedConfigCache?: Map<string, ExtendedConfigCacheEntry>, existingWatchOptions?: WatchOptions): ParsedCommandLine {",
+      "classification": "json"
+    },
+    {
+      "id": 20,
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3038,
+      "column": 31,
+      "source": "function isNullOrUndefined(x: any): x is null | undefined { // eslint-disable-line no-restricted-syntax",
+      "classification": "json"
+    },
+    {
+      "id": 21,
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3060,
+      "column": 11,
+      "source": "    json: any,",
+      "classification": "json"
+    },
+    {
+      "id": 22,
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3300,
+      "column": 45,
+      "source": "function startsWithConfigDirTemplate(value: any): value is string {",
+      "classification": "json"
+    },
+    {
+      "id": 23,
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3354,
+      "column": 48,
+      "source": "export function canJsonReportNoInputFiles(raw: any): boolean {",
+      "classification": "json"
+    },
+    {
+      "id": 24,
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3377,
+      "column": 10,
+      "source": "    raw: any;",
+      "classification": "json"
+    },
+    {
+      "id": 25,
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3406,
+      "column": 11,
+      "source": "    json: any,",
+      "classification": "json"
+    },
+    {
+      "id": 26,
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3497,
+      "column": 11,
+      "source": "    json: any,",
+      "classification": "json"
+    },
+    {
+      "id": 27,
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3599,
+      "column": 16,
+      "source": "        value: any,",
+      "classification": "json"
+    },
+    {
+      "id": 28,
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3725,
+      "column": 57,
+      "source": "function convertCompileOnSaveOptionFromJson(jsonOption: any, basePath: string, errors: Diagnostic[]): boolean {",
+      "classification": "json"
+    },
+    {
+      "id": 29,
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3733,
+      "column": 61,
+      "source": "export function convertCompilerOptionsFromJson(jsonOptions: any, basePath: string, configFileName?: string): { options: CompilerOptions; errors: Diagnostic[]; } {",
+      "classification": "json"
+    },
+    {
+      "id": 30,
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3739,
+      "column": 61,
+      "source": "export function convertTypeAcquisitionFromJson(jsonOptions: any, basePath: string, configFileName?: string): { options: TypeAcquisition; errors: Diagnostic[]; } {",
+      "classification": "json"
+    },
+    {
+      "id": 31,
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3752,
+      "column": 60,
+      "source": "function convertCompilerOptionsFromJsonWorker(jsonOptions: any, basePath: string, errors: Diagnostic[], configFileName?: string): CompilerOptions {",
+      "classification": "json"
+    },
+    {
+      "id": 32,
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3765,
+      "column": 60,
+      "source": "function convertTypeAcquisitionFromJsonWorker(jsonOptions: any, basePath: string, errors: Diagnostic[], configFileName?: string): TypeAcquisition {",
+      "classification": "json"
+    },
+    {
+      "id": 33,
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3771,
+      "column": 57,
+      "source": "function convertWatchOptionsFromJsonWorker(jsonOptions: any, basePath: string, errors: Diagnostic[]): WatchOptions | undefined {",
+      "classification": "json"
+    },
+    {
+      "id": 34,
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3775,
+      "column": 94,
+      "source": "function convertOptionsFromJson(optionsNameMap: Map<string, CommandLineOption>, jsonOptions: any, basePath: string, defaultOptions: undefined, diagnostics: DidYouMeanOptionsDiagnostics, errors: Diagnostic[]): WatchOptions | undefined;",
+      "classification": "json"
+    },
+    {
+      "id": 35,
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3776,
+      "column": 94,
+      "source": "function convertOptionsFromJson(optionsNameMap: Map<string, CommandLineOption>, jsonOptions: any, basePath: string, defaultOptions: CompilerOptions | TypeAcquisition, diagnostics: DidYouMeanOptionsDiagnostics, errors: Diagnostic[]): CompilerOptions | TypeAcquisition;",
+      "classification": "json"
+    },
+    {
+      "id": 36,
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3777,
+      "column": 94,
+      "source": "function convertOptionsFromJson(optionsNameMap: Map<string, CommandLineOption>, jsonOptions: any, basePath: string, defaultOptions: CompilerOptions | TypeAcquisition | WatchOptions | undefined, diagnostics: DidYouMeanOptionsDiagnostics, errors: Diagnostic[]) {",
+      "classification": "json"
+    },
+    {
+      "id": 37,
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3803,
+      "column": 12,
+      "source": "    value: any,",
+      "classification": "json"
+    },
+    {
+      "id": 38,
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3835,
+      "column": 90,
+      "source": "function normalizeNonListOptionValue(option: CommandLineOption, basePath: string, value: any): CompilerOptionsValue {",
+      "classification": "json"
+    },
+    {
+      "id": 39,
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3880,
+      "column": 22,
+      "source": "    values: readonly any[],",
+      "classification": "json"
+    },
+    {
+      "id": 40,
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3886,
+      "column": 4,
+      "source": "): any[] {",
+      "classification": "json"
+    },
+    {
+      "id": 41,
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 4276,
+      "column": 48,
+      "source": "function getOptionValueWithEmptyStrings(value: any, option: CommandLineOption): {} | undefined {",
+      "classification": "json"
+    },
+    {
+      "id": 42,
+      "file": "src/compiler/core.ts",
+      "line": 437,
+      "column": 136,
+      "source": "export function* flatMapIterator<T, U>(iter: Iterable<T>, mapfn: (x: T) => readonly U[] | Iterable<U> | undefined): Generator<U, void, any> {",
+      "classification": "generator-input"
+    },
+    {
+      "id": 43,
+      "file": "src/compiler/core.ts",
+      "line": 736,
+      "column": 50,
+      "source": "    if (array.length === 0) return emptyArray as any as SortedReadonlyArray<T>;",
+      "classification": "sorted-proof"
+    },
+    {
+      "id": 44,
+      "file": "src/compiler/core.ts",
+      "line": 759,
+      "column": 28,
+      "source": "    return deduplicated as any as SortedReadonlyArray<T>;",
+      "classification": "sorted-proof"
+    },
+    {
+      "id": 45,
+      "file": "src/compiler/core.ts",
+      "line": 764,
+      "column": 18,
+      "source": "    return [] as any as SortedArray<T>; // TODO: GH#19873",
+      "classification": "sorted-proof"
+    },
+    {
+      "id": 46,
+      "file": "src/compiler/core.ts",
+      "line": 810,
+      "column": 120,
+      "source": "    return deduplicateSorted(toSorted(array, comparer), equalityComparer ?? comparer ?? compareStringsCaseSensitive as any as Comparer<T>);",
+      "classification": "comparer"
+    },
+    {
+      "id": 47,
+      "file": "src/compiler/core.ts",
+      "line": 1066,
+      "column": 119,
+      "source": "export const elementAt: <T>(array: readonly T[] | undefined, offset: number) => T | undefined = !!(Array.prototype as any).at",
+      "classification": "host-standard"
+    },
+    {
+      "id": 48,
+      "file": "src/compiler/core.ts",
+      "line": 1067,
+      "column": 36,
+      "source": "    ? (array, offset) => (array as any)?.at(offset)",
+      "classification": "host-standard"
+    },
+    {
+      "id": 49,
+      "file": "src/compiler/core.ts",
+      "line": 1479,
+      "column": 19,
+      "source": "    const result: any = {};",
+      "classification": "copy"
+    },
+    {
+      "id": 50,
+      "file": "src/compiler/core.ts",
+      "line": 1482,
+      "column": 37,
+      "source": "            result[id] = (object as any)[id];",
+      "classification": "copy"
+    },
+    {
+      "id": 51,
+      "file": "src/compiler/core.ts",
+      "line": 1496,
+      "column": 35,
+      "source": "    const result: T1 & T2 = {} as any;",
+      "classification": "copy"
+    },
+    {
+      "id": 52,
+      "file": "src/compiler/core.ts",
+      "line": 1499,
+      "column": 24,
+      "source": "            (result as any)[id] = (second as any)[id];",
+      "classification": "copy"
+    },
+    {
+      "id": 53,
+      "file": "src/compiler/core.ts",
+      "line": 1499,
+      "column": 46,
+      "source": "            (result as any)[id] = (second as any)[id];",
+      "classification": "copy"
+    },
+    {
+      "id": 54,
+      "file": "src/compiler/core.ts",
+      "line": 1505,
+      "column": 24,
+      "source": "            (result as any)[id] = (first as any)[id];",
+      "classification": "copy"
+    },
+    {
+      "id": 55,
+      "file": "src/compiler/core.ts",
+      "line": 1505,
+      "column": 45,
+      "source": "            (result as any)[id] = (first as any)[id];",
+      "classification": "copy"
+    },
+    {
+      "id": 56,
+      "file": "src/compiler/core.ts",
+      "line": 1516,
+      "column": 23,
+      "source": "            (first as any)[id] = second[id];",
+      "classification": "copy"
+    },
+    {
+      "id": 57,
+      "file": "src/compiler/core.ts",
+      "line": 1522,
+      "column": 40,
+      "source": "export function maybeBind<T, A extends any[], R>(obj: T, fn: ((this: T, ...args: A) => R) | undefined): ((...args: A) => R) | undefined {",
+      "classification": "generic-default"
+    },
+    {
+      "id": 58,
+      "file": "src/compiler/core.ts",
+      "line": 1750,
+      "column": 32,
+      "source": "export function isArray(value: any): value is readonly unknown[] {",
+      "classification": "array-predicate"
+    },
+    {
+      "id": 59,
+      "file": "src/compiler/core.ts",
+      "line": 1778,
+      "column": 49,
+      "source": "export function tryCast<TOut extends TIn, TIn = any>(value: TIn | undefined, test: (value: TIn) => value is TOut): TOut | undefined {",
+      "classification": "generic-default"
+    },
+    {
+      "id": 60,
+      "file": "src/compiler/core.ts",
+      "line": 1783,
+      "column": 46,
+      "source": "export function cast<TOut extends TIn, TIn = any>(value: TIn | undefined, test: (value: TIn) => value is TOut): TOut {",
+      "classification": "generic-default"
+    },
+    {
+      "id": 61,
+      "file": "src/compiler/core.ts",
+      "line": 2593,
+      "column": 25,
+      "source": "        && !(process as any).browser",
+      "classification": "host-extension"
+    },
+    {
+      "id": 62,
+      "file": "src/compiler/corePublic.ts",
+      "line": 18,
+      "column": 28,
+      "source": "    \" __sortedArrayBrand\": any;",
+      "classification": "brands"
+    },
+    {
+      "id": 63,
+      "file": "src/compiler/corePublic.ts",
+      "line": 22,
+      "column": 28,
+      "source": "    \" __sortedArrayBrand\": any;",
+      "classification": "brands"
+    },
+    {
+      "id": 64,
+      "file": "src/compiler/debug.ts",
+      "line": 170,
+      "column": 31,
+      "source": "                    (Debug as any)[key] = cachedFunc;",
+      "classification": "debug-mutation"
+    },
+    {
+      "id": 65,
+      "file": "src/compiler/debug.ts",
+      "line": 190,
+      "column": 23,
+      "source": "            (Debug as any)[name] = noop;",
+      "classification": "debug-mutation"
+    },
+    {
+      "id": 66,
+      "file": "src/compiler/debug.ts",
+      "line": 200,
+      "column": 23,
+      "source": "        if ((Error as any).captureStackTrace) {",
+      "classification": "host-standard"
+    },
+    {
+      "id": 67,
+      "file": "src/compiler/debug.ts",
+      "line": 201,
+      "column": 23,
+      "source": "            (Error as any).captureStackTrace(e, stackCrawlMark || fail);",
+      "classification": "host-standard"
+    },
+    {
+      "id": 68,
+      "file": "src/compiler/debug.ts",
+      "line": 373,
+      "column": 29,
+      "source": "            return (func as any).name;",
+      "classification": "display-projection"
+    },
+    {
+      "id": 69,
+      "file": "src/compiler/debug.ts",
+      "line": 389,
+      "column": 55,
+      "source": "    export function formatEnum(value = 0, enumObject: any, isFlags?: boolean): string {",
+      "classification": "enum-display"
+    },
+    {
+      "id": 70,
+      "file": "src/compiler/debug.ts",
+      "line": 420,
+      "column": 37,
+      "source": "    const enumMemberCache = new Map<any, SortedReadonlyArray<[number, string]>>();",
+      "classification": "enum-display"
+    },
+    {
+      "id": 71,
+      "file": "src/compiler/debug.ts",
+      "line": 422,
+      "column": 41,
+      "source": "    function getEnumMembers(enumObject: any) {",
+      "classification": "enum-display"
+    },
+    {
+      "id": 72,
+      "file": "src/compiler/debug.ts",
+      "line": 445,
+      "column": 40,
+      "source": "        return formatEnum(kind, (ts as any).SyntaxKind, /*isFlags*/ false);",
+      "classification": "enum-display"
+    },
+    {
+      "id": 73,
+      "file": "src/compiler/debug.ts",
+      "line": 449,
+      "column": 40,
+      "source": "        return formatEnum(kind, (ts as any).SnippetKind, /*isFlags*/ false);",
+      "classification": "enum-display"
+    },
+    {
+      "id": 74,
+      "file": "src/compiler/debug.ts",
+      "line": 453,
+      "column": 40,
+      "source": "        return formatEnum(kind, (ts as any).ScriptKind, /*isFlags*/ false);",
+      "classification": "enum-display"
+    },
+    {
+      "id": 75,
+      "file": "src/compiler/debug.ts",
+      "line": 457,
+      "column": 41,
+      "source": "        return formatEnum(flags, (ts as any).NodeFlags, /*isFlags*/ true);",
+      "classification": "enum-display"
+    },
+    {
+      "id": 76,
+      "file": "src/compiler/debug.ts",
+      "line": 461,
+      "column": 41,
+      "source": "        return formatEnum(flags, (ts as any).NodeCheckFlags, /*isFlags*/ true);",
+      "classification": "enum-display"
+    },
+    {
+      "id": 77,
+      "file": "src/compiler/debug.ts",
+      "line": 465,
+      "column": 41,
+      "source": "        return formatEnum(flags, (ts as any).ModifierFlags, /*isFlags*/ true);",
+      "classification": "enum-display"
+    },
+    {
+      "id": 78,
+      "file": "src/compiler/debug.ts",
+      "line": 469,
+      "column": 41,
+      "source": "        return formatEnum(flags, (ts as any).TransformFlags, /*isFlags*/ true);",
+      "classification": "enum-display"
+    },
+    {
+      "id": 79,
+      "file": "src/compiler/debug.ts",
+      "line": 473,
+      "column": 41,
+      "source": "        return formatEnum(flags, (ts as any).EmitFlags, /*isFlags*/ true);",
+      "classification": "enum-display"
+    },
+    {
+      "id": 80,
+      "file": "src/compiler/debug.ts",
+      "line": 477,
+      "column": 41,
+      "source": "        return formatEnum(flags, (ts as any).SymbolFlags, /*isFlags*/ true);",
+      "classification": "enum-display"
+    },
+    {
+      "id": 81,
+      "file": "src/compiler/debug.ts",
+      "line": 481,
+      "column": 41,
+      "source": "        return formatEnum(flags, (ts as any).TypeFlags, /*isFlags*/ true);",
+      "classification": "enum-display"
+    },
+    {
+      "id": 82,
+      "file": "src/compiler/debug.ts",
+      "line": 485,
+      "column": 41,
+      "source": "        return formatEnum(flags, (ts as any).SignatureFlags, /*isFlags*/ true);",
+      "classification": "enum-display"
+    },
+    {
+      "id": 83,
+      "file": "src/compiler/debug.ts",
+      "line": 489,
+      "column": 41,
+      "source": "        return formatEnum(flags, (ts as any).ObjectFlags, /*isFlags*/ true);",
+      "classification": "enum-display"
+    },
+    {
+      "id": 84,
+      "file": "src/compiler/debug.ts",
+      "line": 493,
+      "column": 41,
+      "source": "        return formatEnum(flags, (ts as any).FlowFlags, /*isFlags*/ true);",
+      "classification": "enum-display"
+    },
+    {
+      "id": 85,
+      "file": "src/compiler/debug.ts",
+      "line": 497,
+      "column": 42,
+      "source": "        return formatEnum(result, (ts as any).RelationComparisonResult, /*isFlags*/ true);",
+      "classification": "enum-display"
+    },
+    {
+      "id": 86,
+      "file": "src/compiler/debug.ts",
+      "line": 501,
+      "column": 40,
+      "source": "        return formatEnum(mode, (ts as any).CheckMode, /*isFlags*/ true);",
+      "classification": "enum-display"
+    },
+    {
+      "id": 87,
+      "file": "src/compiler/debug.ts",
+      "line": 505,
+      "column": 40,
+      "source": "        return formatEnum(mode, (ts as any).SignatureCheckMode, /*isFlags*/ true);",
+      "classification": "enum-display"
+    },
+    {
+      "id": 88,
+      "file": "src/compiler/debug.ts",
+      "line": 509,
+      "column": 41,
+      "source": "        return formatEnum(facts, (ts as any).TypeFacts, /*isFlags*/ true);",
+      "classification": "enum-display"
+    },
+    {
+      "id": 89,
+      "file": "src/compiler/debug.ts",
+      "line": 540,
+      "column": 62,
+      "source": "                        return formatEnum(this.flags, (ts as any).FlowFlags, /*isFlags*/ true);",
+      "classification": "enum-display"
+    },
+    {
+      "id": 90,
+      "file": "src/compiler/emitter.ts",
+      "line": 1274,
+      "column": 53,
+      "source": "    var currentParenthesizerRule: ParenthesizerRule<any> | undefined;",
+      "classification": "dependent-dispatch"
+    },
+    {
+      "id": 91,
+      "file": "src/compiler/emitter.ts",
+      "line": 5790,
+      "column": 147,
+      "source": "        return Debug.fail(`Unsupported GeneratedIdentifierKind: ${Debug.formatEnum(autoGenerate.flags & GeneratedIdentifierFlags.KindMask, (ts as any).GeneratedIdentifierFlags, /*isFlags*/ true)}.`);",
+      "classification": "enum-display"
+    },
+    {
+      "id": 92,
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6145,
+      "column": 22,
+      "source": "            (node as any)[p] = (source as any)[p];",
+      "classification": "copy"
+    },
+    {
+      "id": 93,
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6145,
+      "column": 43,
+      "source": "            (node as any)[p] = (source as any)[p];",
+      "classification": "copy"
+    },
+    {
+      "id": 94,
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 118,
+      "column": 88,
+      "source": "export function trace(host: ModuleResolutionHost, message: DiagnosticMessage, ...args: any[]): void {",
+      "classification": "diagnostic"
+    },
+    {
+      "id": 95,
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 954,
+      "column": 69,
+      "source": "            str += `${key}: ${compilerOptionValueToString((value as any)[key])}`;",
+      "classification": "display-projection"
+    },
+    {
+      "id": 96,
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 975,
+      "column": 66,
+      "source": "export type RedirectsCacheKey = string & { __compilerOptionsKey: any; };",
+      "classification": "brands"
+    },
+    {
+      "id": 97,
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 1113,
+      "column": 65,
+      "source": "export type ModeAwareCacheKey = string & { __modeAwareCacheKey: any; };",
+      "classification": "brands"
+    },
+    {
+      "id": 98,
+      "file": "src/compiler/moduleSpecifiers.ts",
+      "line": 1256,
+      "column": 54,
+      "source": "            const packageJsonContent: Record<string, any> | undefined = cachedPackageJson?.contents.packageJsonContent || tryParseJson(host.readFile!(packageJsonPath)!);",
+      "classification": "json"
+    },
+    {
+      "id": 99,
+      "file": "src/compiler/parser.ts",
+      "line": 1253,
+      "column": 78,
+      "source": "    const fn = (forEachChildTable as Record<SyntaxKind, ForEachChildFunction<any>>)[node.kind];",
+      "classification": "dependent-dispatch"
+    },
+    {
+      "id": 100,
+      "file": "src/compiler/parser.ts",
+      "line": 2176,
+      "column": 75,
+      "source": "    function scanError(message: DiagnosticMessage, length: number, arg0?: any): void {",
+      "classification": "diagnostic"
+    },
+    {
+      "id": 101,
+      "file": "src/compiler/parser.ts",
+      "line": 10207,
+      "column": 25,
+      "source": "        if ((element as any).parent) {",
+      "classification": "ast-projection"
+    },
+    {
+      "id": 102,
+      "file": "src/compiler/parser.ts",
+      "line": 10208,
+      "column": 40,
+      "source": "            const parent = (element as any).parent as Node;",
+      "classification": "ast-projection"
+    },
+    {
+      "id": 103,
+      "file": "src/compiler/path.ts",
+      "line": 457,
+      "column": 67,
+      "source": "export type PathPathComponents = Path[] & { __pathComponensBrand: any; };",
+      "classification": "brands"
+    },
+    {
+      "id": 104,
+      "file": "src/compiler/program.ts",
+      "line": 393,
+      "column": 27,
+      "source": "    readFile: ProgramHost<any>[\"readFile\"],",
+      "classification": "generic-api"
+    },
+    {
+      "id": 105,
+      "file": "src/compiler/program.ts",
+      "line": 3284,
+      "column": 130,
+      "source": "        return rootNames.length ? sortAndDeduplicateDiagnostics(getTypeChecker().getGlobalDiagnostics().slice()) : emptyArray as any as SortedReadonlyArray<Diagnostic>;",
+      "classification": "sorted-proof"
+    },
+    {
+      "id": 106,
+      "file": "src/compiler/program.ts",
+      "line": 3526,
+      "column": 50,
+      "source": "            fileIncludeKind: (FileIncludeKind as any)[reason.kind],",
+      "classification": "enum-display"
+    },
+    {
+      "id": 107,
+      "file": "src/compiler/program.ts",
+      "line": 4379,
+      "column": 81,
+      "source": "            const moduleResolutionName = ModuleResolutionKind[moduleKindName as any] ? moduleKindName : \"Node16\";",
+      "classification": "module-key"
+    },
+    {
+      "id": 108,
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 209,
+      "column": 8,
+      "source": "    ): any;",
+      "classification": "instrumentation"
+    },
+    {
+      "id": 109,
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 215,
+      "column": 15,
+      "source": "        data: any,",
+      "classification": "instrumentation"
+    },
+    {
+      "id": 110,
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 216,
+      "column": 8,
+      "source": "    ): any;",
+      "classification": "instrumentation"
+    },
+    {
+      "id": 111,
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 563,
+      "column": 46,
+      "source": "            (primaryResult.resolvedModule as any) = resolvedModule;",
+      "classification": "resolution-write"
+    },
+    {
+      "id": 112,
+      "file": "src/compiler/scanner.ts",
+      "line": 39,
+      "column": 81,
+      "source": "export type ErrorCallback = (message: DiagnosticMessage, length: number, arg0?: any) => void;",
+      "classification": "diagnostic"
+    },
+    {
+      "id": 113,
+      "file": "src/compiler/scanner.ts",
+      "line": 952,
+      "column": 111,
+      "source": "function appendCommentRange(pos: number, end: number, kind: CommentKind, hasTrailingNewLine: boolean, _state: any, comments: CommentRange[] = []) {",
+      "classification": "unused-state"
+    },
+    {
+      "id": 114,
+      "file": "src/compiler/scanner.ts",
+      "line": 1161,
+      "column": 87,
+      "source": "    function error(message: DiagnosticMessage, errPos: number, length: number, arg0?: any): void;",
+      "classification": "diagnostic"
+    },
+    {
+      "id": 115,
+      "file": "src/compiler/scanner.ts",
+      "line": 1162,
+      "column": 94,
+      "source": "    function error(message: DiagnosticMessage, errPos: number = pos, length?: number, arg0?: any): void {",
+      "classification": "diagnostic"
+    },
+    {
+      "id": 116,
+      "file": "src/compiler/scanner.ts",
+      "line": 4063,
+      "column": 77,
+      "source": "const utf16EncodeAsStringWorker: (codePoint: number) => string = (String as any).fromCodePoint ? codePoint => (String as any).fromCodePoint(codePoint) : utf16EncodeAsStringFallback;",
+      "classification": "host-standard"
+    },
+    {
+      "id": 117,
+      "file": "src/compiler/scanner.ts",
+      "line": 4063,
+      "column": 122,
+      "source": "const utf16EncodeAsStringWorker: (codePoint: number) => string = (String as any).fromCodePoint ? codePoint => (String as any).fromCodePoint(codePoint) : utf16EncodeAsStringFallback;",
+      "classification": "host-standard"
+    },
+    {
+      "id": 118,
+      "file": "src/compiler/sourcemap.ts",
+      "line": 404,
+      "column": 28,
+      "source": "function isStringOrNull(x: any) {",
+      "classification": "json"
+    },
+    {
+      "id": 119,
+      "file": "src/compiler/sourcemap.ts",
+      "line": 408,
+      "column": 28,
+      "source": "function isRawSourceMap(x: any): x is RawSourceMap {",
+      "classification": "json"
+    },
+    {
+      "id": 120,
+      "file": "src/compiler/symbolWalker.ts",
+      "line": 207,
+      "column": 27,
+      "source": "                if ((d as any).type && (d as any).type.kind === SyntaxKind.TypeQuery) {",
+      "classification": "ast-projection"
+    },
+    {
+      "id": 121,
+      "file": "src/compiler/symbolWalker.ts",
+      "line": 207,
+      "column": 46,
+      "source": "                if ((d as any).type && (d as any).type.kind === SyntaxKind.TypeQuery) {",
+      "classification": "ast-projection"
+    },
+    {
+      "id": 122,
+      "file": "src/compiler/symbolWalker.ts",
+      "line": 208,
+      "column": 41,
+      "source": "                    const query = (d as any).type as TypeQueryNode;",
+      "classification": "ast-projection"
+    },
+    {
+      "id": 123,
+      "file": "src/compiler/sys.ts",
+      "line": 50,
+      "column": 48,
+      "source": "declare function setTimeout(handler: (...args: any[]) => void, timeout: number): any;",
+      "classification": "timer"
+    },
+    {
+      "id": 124,
+      "file": "src/compiler/sys.ts",
+      "line": 50,
+      "column": 82,
+      "source": "declare function setTimeout(handler: (...args: any[]) => void, timeout: number): any;",
+      "classification": "timer"
+    },
+    {
+      "id": 125,
+      "file": "src/compiler/sys.ts",
+      "line": 51,
+      "column": 39,
+      "source": "declare function clearTimeout(handle: any): void;",
+      "classification": "timer"
+    },
+    {
+      "id": 126,
+      "file": "src/compiler/sys.ts",
+      "line": 75,
+      "column": 19,
+      "source": "    if ((Error as any).stackTraceLimit < 100) { // Also tests that we won't set the property if it doesn't exist.",
+      "classification": "host-standard"
+    },
+    {
+      "id": 127,
+      "file": "src/compiler/sys.ts",
+      "line": 76,
+      "column": 19,
+      "source": "        (Error as any).stackTraceLimit = 100;",
+      "classification": "host-standard"
+    },
+    {
+      "id": 128,
+      "file": "src/compiler/sys.ts",
+      "line": 463,
+      "column": 24,
+      "source": "    let pollScheduled: any;",
+      "classification": "timer"
+    },
+    {
+      "id": 129,
+      "file": "src/compiler/sys.ts",
+      "line": 516,
+      "column": 30,
+      "source": "                    (param1: any, param2: never, param3: any) => cache.get(path)?.callbacks.slice().forEach(cb => cb(param1, param2, param3))",
+      "classification": "watch-callback"
+    },
+    {
+      "id": 130,
+      "file": "src/compiler/sys.ts",
+      "line": 516,
+      "column": 58,
+      "source": "                    (param1: any, param2: never, param3: any) => cache.get(path)?.callbacks.slice().forEach(cb => cb(param1, param2, param3))",
+      "classification": "watch-callback"
+    },
+    {
+      "id": 131,
+      "file": "src/compiler/sys.ts",
+      "line": 617,
+      "column": 36,
+      "source": "    let timerToUpdateChildWatches: any;",
+      "classification": "timer"
+    },
+    {
+      "id": 132,
+      "file": "src/compiler/sys.ts",
+      "line": 1440,
+      "column": 37,
+      "source": "    setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;",
+      "classification": "timer"
+    },
+    {
+      "id": 133,
+      "file": "src/compiler/sys.ts",
+      "line": 1440,
+      "column": 74,
+      "source": "    setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;",
+      "classification": "timer"
+    },
+    {
+      "id": 134,
+      "file": "src/compiler/sys.ts",
+      "line": 1440,
+      "column": 82,
+      "source": "    setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;",
+      "classification": "timer"
+    },
+    {
+      "id": 135,
+      "file": "src/compiler/sys.ts",
+      "line": 1441,
+      "column": 30,
+      "source": "    clearTimeout?(timeoutId: any): void;",
+      "classification": "timer"
+    },
+    {
+      "id": 136,
+      "file": "src/compiler/sys.ts",
+      "line": 1594,
+      "column": 203,
+      "source": "            debugMode: !!process.env.NODE_INSPECTOR_IPC || !!process.env.VSCODE_INSPECTOR_OPTIONS || some(process.execArgv, arg => /^--(?:inspect|debug)(?:-brk)?(?:=\\d+)?$/i.test(arg)) || !!(process as any).recordreplay,",
+      "classification": "host-extension"
+    },
+    {
+      "id": 137,
+      "file": "src/compiler/sys.ts",
+      "line": 1609,
+      "column": 51,
+      "source": "                const handle = (process.stdout as any)?._handle as { setBlocking?: (value: boolean) => void; };",
+      "classification": "host-extension"
+    },
+    {
+      "id": 138,
+      "file": "src/compiler/sys.ts",
+      "line": 1853,
+      "column": 31,
+      "source": "                    let stat: any;",
+      "classification": "filesystem"
+    },
+    {
+      "id": 139,
+      "file": "src/compiler/tracing.ts",
+      "line": 231,
+      "column": 42,
+      "source": "            const objectFlags = (type as any).objectFlags;",
+      "classification": "display-projection"
+    },
+    {
+      "id": 140,
+      "file": "src/compiler/tracing.ts",
+      "line": 317,
+      "column": 41,
+      "source": "                intrinsicName: (type as any).intrinsicName,",
+      "classification": "display-projection"
+    },
+    {
+      "id": 141,
+      "file": "src/compiler/transformer.ts",
+      "line": 338,
+      "column": 116,
+      "source": "        tracing?.push(tracing.Phase.Emit, \"transformNodes\", node.kind === SyntaxKind.SourceFile ? { path: (node as any as SourceFile).path } : { kind: node.kind, pos: node.pos, end: node.end });",
+      "classification": "display-projection"
+    },
+    {
+      "id": 142,
+      "file": "src/compiler/transformers/esnext.ts",
+      "line": 774,
+      "column": 103,
+      "source": "function isUsingVariableDeclarationList(node: Node): node is VariableDeclarationList & { _usingBrand: any; } {",
+      "classification": "brands"
+    },
+    {
+      "id": 143,
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 424,
+      "column": 37,
+      "source": "    timerToBuildInvalidatedProject: any;",
+      "classification": "timer"
+    },
+    {
+      "id": 144,
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 992,
+      "column": 34,
+      "source": "                    ((program as any as SemanticDiagnosticsBuilderProgram).getSemanticDiagnosticsOfNextAffectedFile) &&",
+      "classification": "program-feature"
+    },
+    {
+      "id": 145,
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 993,
+      "column": 33,
+      "source": "                    (program as any as SemanticDiagnosticsBuilderProgram).getSemanticDiagnosticsOfNextAffectedFile(cancellationToken, ignoreSourceFile),",
+      "classification": "program-feature"
+    },
+    {
+      "id": 146,
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 1355,
+      "column": 64,
+      "source": "    return readBuilderProgram(parsed.options, compilerHost) as any as T;",
+      "classification": "builder-factory"
+    },
+    {
+      "id": 147,
+      "file": "src/compiler/types.ts",
+      "line": 23,
+      "column": 44,
+      "source": "export type Path = string & { __pathBrand: any; };",
+      "classification": "brands"
+    },
+    {
+      "id": 148,
+      "file": "src/compiler/types.ts",
+      "line": 958,
+      "column": 27,
+      "source": "    _jsdocContainerBrand: any;",
+      "classification": "brands"
+    },
+    {
+      "id": 149,
+      "file": "src/compiler/types.ts",
+      "line": 968,
+      "column": 28,
+      "source": "    _localsContainerBrand: any;",
+      "classification": "brands"
+    },
+    {
+      "id": 150,
+      "file": "src/compiler/types.ts",
+      "line": 974,
+      "column": 26,
+      "source": "    _flowContainerBrand: any;",
+      "classification": "brands"
+    },
+    {
+      "id": 151,
+      "file": "src/compiler/types.ts",
+      "line": 1757,
+      "column": 24,
+      "source": "    _declarationBrand: any;",
+      "classification": "brands"
+    },
+    {
+      "id": 152,
+      "file": "src/compiler/types.ts",
+      "line": 1944,
+      "column": 25,
+      "source": "    _autoAccessorBrand: any;",
+      "classification": "brands"
+    },
+    {
+      "id": 153,
+      "file": "src/compiler/types.ts",
+      "line": 1981,
+      "column": 26,
+      "source": "    _objectLiteralBrand: any;",
+      "classification": "brands"
+    },
+    {
+      "id": 154,
+      "file": "src/compiler/types.ts",
+      "line": 2064,
+      "column": 36,
+      "source": "    _functionLikeDeclarationBrand: any;",
+      "classification": "brands"
+    },
+    {
+      "id": 155,
+      "file": "src/compiler/types.ts",
+      "line": 2185,
+      "column": 21,
+      "source": "    _typeNodeBrand: any;",
+      "classification": "brands"
+    },
+    {
+      "id": 156,
+      "file": "src/compiler/types.ts",
+      "line": 2397,
+      "column": 23,
+      "source": "    _expressionBrand: any;",
+      "classification": "brands"
+    },
+    {
+      "id": 157,
+      "file": "src/compiler/types.ts",
+      "line": 2412,
+      "column": 28,
+      "source": "    _unaryExpressionBrand: any;",
+      "classification": "brands"
+    },
+    {
+      "id": 158,
+      "file": "src/compiler/types.ts",
+      "line": 2418,
+      "column": 29,
+      "source": "    _updateExpressionBrand: any;",
+      "classification": "brands"
+    },
+    {
+      "id": 159,
+      "file": "src/compiler/types.ts",
+      "line": 2449,
+      "column": 35,
+      "source": "    _leftHandSideExpressionBrand: any;",
+      "classification": "brands"
+    },
+    {
+      "id": 160,
+      "file": "src/compiler/types.ts",
+      "line": 2453,
+      "column": 29,
+      "source": "    _memberExpressionBrand: any;",
+      "classification": "brands"
+    },
+    {
+      "id": 161,
+      "file": "src/compiler/types.ts",
+      "line": 2457,
+      "column": 30,
+      "source": "    _primaryExpressionBrand: any;",
+      "classification": "brands"
+    },
+    {
+      "id": 162,
+      "file": "src/compiler/types.ts",
+      "line": 2785,
+      "column": 30,
+      "source": "    _literalExpressionBrand: any;",
+      "classification": "brands"
+    },
+    {
+      "id": 163,
+      "file": "src/compiler/types.ts",
+      "line": 2982,
+      "column": 26,
+      "source": "    _optionalChainBrand: any;",
+      "classification": "brands"
+    },
+    {
+      "id": 164,
+      "file": "src/compiler/types.ts",
+      "line": 2997,
+      "column": 55,
+      "source": "    _propertyAccessExpressionLikeQualifiedNameBrand?: any;",
+      "classification": "brands"
+    },
+    {
+      "id": 165,
+      "file": "src/compiler/types.ts",
+      "line": 3010,
+      "column": 26,
+      "source": "    _optionalChainBrand: any;",
+      "classification": "brands"
+    },
+    {
+      "id": 166,
+      "file": "src/compiler/types.ts",
+      "line": 3034,
+      "column": 26,
+      "source": "    _optionalChainBrand: any;",
+      "classification": "brands"
+    },
+    {
+      "id": 167,
+      "file": "src/compiler/types.ts",
+      "line": 3168,
+      "column": 26,
+      "source": "    _optionalChainBrand: any;",
+      "classification": "brands"
+    },
+    {
+      "id": 168,
+      "file": "src/compiler/types.ts",
+      "line": 3322,
+      "column": 22,
+      "source": "    _statementBrand: any;",
+      "classification": "brands"
+    },
+    {
+      "id": 169,
+      "file": "src/compiler/types.ts",
+      "line": 3568,
+      "column": 25,
+      "source": "    _classElementBrand: any;",
+      "classification": "brands"
+    },
+    {
+      "id": 170,
+      "file": "src/compiler/types.ts",
+      "line": 3573,
+      "column": 24,
+      "source": "    _typeElementBrand: any;",
+      "classification": "brands"
+    },
+    {
+      "id": 171,
+      "file": "src/compiler/types.ts",
+      "line": 3903,
+      "column": 22,
+      "source": "    _jsDocTypeBrand: any;",
+      "classification": "brands"
+    },
+    {
+      "id": 172,
+      "file": "src/compiler/types.ts",
+      "line": 6059,
+      "column": 24,
+      "source": "    _symbolLinksBrand: any;",
+      "classification": "brands"
+    },
+    {
+      "id": 173,
+      "file": "src/compiler/types.ts",
+      "line": 7705,
+      "column": 11,
+      "source": "    raw?: any;",
+      "classification": "json"
+    },
+    {
+      "id": 174,
+      "file": "src/compiler/types.ts",
+      "line": 9857,
+      "column": 64,
+      "source": "    /** @internal */ onBeforeEmitNodeArray?: (nodes: NodeArray<any> | undefined) => void;",
+      "classification": "generic-api"
+    },
+    {
+      "id": 175,
+      "file": "src/compiler/types.ts",
+      "line": 9858,
+      "column": 63,
+      "source": "    /** @internal */ onAfterEmitNodeArray?: (nodes: NodeArray<any> | undefined) => void;",
+      "classification": "generic-api"
+    },
+    {
+      "id": 176,
+      "file": "src/compiler/types.ts",
+      "line": 10320,
+      "column": 49,
+      "source": "export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends ((k: infer I) => void) ? I : never;",
+      "classification": "distribution"
+    },
+    {
+      "id": 177,
+      "file": "src/compiler/types.ts",
+      "line": 10323,
+      "column": 91,
+      "source": "export type ArgumentDefinitionToFieldUnion<T extends readonly PragmaArgumentSpecification<any>[]> = {",
+      "classification": "pragma"
+    },
+    {
+      "id": 178,
+      "file": "src/compiler/types.ts",
+      "line": 10332,
+      "column": 155,
+      "source": "export type PragmaArgumentType<KPrag extends keyof ConcretePragmaSpecs> = ConcretePragmaSpecs[KPrag] extends { args: readonly PragmaArgumentSpecification<any>[]; } ? UnionToIntersection<ArgumentDefinitionToFieldUnion<ConcretePragmaSpecs[KPrag][\"args\"]>>",
+      "classification": "pragma"
+    },
+    {
+      "id": 179,
+      "file": "src/compiler/utilities.ts",
+      "line": 4289,
+      "column": 40,
+      "source": "    _prototypePropertyAssignmentBrand: any;",
+      "classification": "brands"
+    },
+    {
+      "id": 180,
+      "file": "src/compiler/utilities.ts",
+      "line": 7809,
+      "column": 45,
+      "source": "export function tryParseJson(text: string): any {",
+      "classification": "json"
+    },
+    {
+      "id": 181,
+      "file": "src/compiler/utilities.ts",
+      "line": 8147,
+      "column": 41,
+      "source": "export function compareDataObjects(dst: any, src: any): boolean {",
+      "classification": "data-comparison"
+    },
+    {
+      "id": 182,
+      "file": "src/compiler/utilities.ts",
+      "line": 8147,
+      "column": 51,
+      "source": "export function compareDataObjects(dst: any, src: any): boolean {",
+      "classification": "data-comparison"
+    },
+    {
+      "id": 183,
+      "file": "src/compiler/utilities.ts",
+      "line": 8486,
+      "column": 14,
+      "source": "    (this as any).links = undefined; // used by TransientSymbol",
+      "classification": "constructors"
+    },
+    {
+      "id": 184,
+      "file": "src/compiler/utilities.ts",
+      "line": 8553,
+      "column": 39,
+      "source": "    getNodeConstructor: () => Node as any,",
+      "classification": "constructors"
+    },
+    {
+      "id": 185,
+      "file": "src/compiler/utilities.ts",
+      "line": 8554,
+      "column": 41,
+      "source": "    getTokenConstructor: () => Token as any,",
+      "classification": "constructors"
+    },
+    {
+      "id": 186,
+      "file": "src/compiler/utilities.ts",
+      "line": 8555,
+      "column": 51,
+      "source": "    getIdentifierConstructor: () => Identifier as any,",
+      "classification": "constructors"
+    },
+    {
+      "id": 187,
+      "file": "src/compiler/utilities.ts",
+      "line": 8556,
+      "column": 52,
+      "source": "    getPrivateIdentifierConstructor: () => Node as any,",
+      "classification": "constructors"
+    },
+    {
+      "id": 188,
+      "file": "src/compiler/utilities.ts",
+      "line": 8557,
+      "column": 45,
+      "source": "    getSourceFileConstructor: () => Node as any,",
+      "classification": "constructors"
+    },
+    {
+      "id": 189,
+      "file": "src/compiler/utilities.ts",
+      "line": 8558,
+      "column": 43,
+      "source": "    getSymbolConstructor: () => Symbol as any,",
+      "classification": "constructors"
+    },
+    {
+      "id": 190,
+      "file": "src/compiler/utilities.ts",
+      "line": 8559,
+      "column": 39,
+      "source": "    getTypeConstructor: () => Type as any,",
+      "classification": "constructors"
+    },
+    {
+      "id": 191,
+      "file": "src/compiler/utilities.ts",
+      "line": 8560,
+      "column": 49,
+      "source": "    getSignatureConstructor: () => Signature as any,",
+      "classification": "constructors"
+    },
+    {
+      "id": 192,
+      "file": "src/compiler/utilities.ts",
+      "line": 8561,
+      "column": 61,
+      "source": "    getSourceMapSourceConstructor: () => SourceMapSource as any,",
+      "classification": "constructors"
+    },
+    {
+      "id": 193,
+      "file": "src/compiler/utilities.ts",
+      "line": 9029,
+      "column": 97,
+      "source": "type CompilerOptionKeys = keyof { [K in keyof CompilerOptions as string extends K ? never : K]: any; };",
+      "classification": "key-only"
+    },
+    {
+      "id": 194,
+      "file": "src/compiler/visitorPublic.ts",
+      "line": 603,
+      "column": 82,
+      "source": "    const fn = (visitEachChildTable as Record<SyntaxKind, VisitEachChildFunction<any> | undefined>)[node.kind];",
+      "classification": "dependent-dispatch"
+    },
+    {
+      "id": 195,
+      "file": "src/compiler/watch.ts",
+      "line": 221,
+      "column": 49,
+      "source": "    const host: ParseConfigFileHost = system as any;",
+      "classification": "config-host"
+    },
+    {
+      "id": 196,
+      "file": "src/compiler/watch.ts",
+      "line": 754,
+      "column": 69,
+      "source": "export function createCompilerHostFromProgramHost(host: ProgramHost<any>, getCompilerOptions: () => CompilerOptions, directoryStructureHost: DirectoryStructureHost = host): CompilerHost {",
+      "classification": "generic-api"
+    },
+    {
+      "id": 197,
+      "file": "src/compiler/watch.ts",
+      "line": 862,
+      "column": 91,
+      "source": "        createProgram: createProgram || createEmitAndSemanticDiagnosticsBuilderProgram as any as CreateProgram<T>,",
+      "classification": "builder-factory"
+    },
+    {
+      "id": 198,
+      "file": "src/compiler/watchPublic.ts",
+      "line": 150,
+      "column": 88,
+      "source": "    createProgram = createProgram || createEmitAndSemanticDiagnosticsBuilderProgram as any as CreateProgram<T>;",
+      "classification": "builder-factory"
+    },
+    {
+      "id": 199,
+      "file": "src/compiler/watchPublic.ts",
+      "line": 151,
+      "column": 61,
+      "source": "    const oldProgram = readBuilderProgram(options, host) as any as T;",
+      "classification": "builder-factory"
+    },
+    {
+      "id": 200,
+      "file": "src/compiler/watchPublic.ts",
+      "line": 169,
+      "column": 37,
+      "source": "    setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;",
+      "classification": "timer"
+    },
+    {
+      "id": 201,
+      "file": "src/compiler/watchPublic.ts",
+      "line": 169,
+      "column": 74,
+      "source": "    setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;",
+      "classification": "timer"
+    },
+    {
+      "id": 202,
+      "file": "src/compiler/watchPublic.ts",
+      "line": 169,
+      "column": 82,
+      "source": "    setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;",
+      "classification": "timer"
+    },
+    {
+      "id": 203,
+      "file": "src/compiler/watchPublic.ts",
+      "line": 171,
+      "column": 30,
+      "source": "    clearTimeout?(timeoutId: any): void;",
+      "classification": "timer"
+    },
+    {
+      "id": 204,
+      "file": "src/compiler/watchPublic.ts",
+      "line": 443,
+      "column": 31,
+      "source": "    let timerToUpdateProgram: any; // timer callback to recompile the program",
+      "classification": "timer"
+    },
+    {
+      "id": 205,
+      "file": "src/compiler/watchPublic.ts",
+      "line": 444,
+      "column": 51,
+      "source": "    let timerToInvalidateFailedLookupResolutions: any; // timer callback to invalidate resolutions for changes in failed lookup locations",
+      "classification": "timer"
+    },
+    {
+      "id": 206,
+      "file": "src/compiler/watchPublic.ts",
+      "line": 555,
+      "column": 75,
+      "source": "    builderProgram = readBuilderProgram(compilerOptions, compilerHost) as any as T;",
+      "classification": "builder-factory"
+    },
+    {
+      "id": 207,
+      "file": "src/compiler/watchUtilities.ts",
+      "line": 814,
+      "column": 23,
+      "source": "            (...args: any[]) => {",
+      "classification": "watch-callback"
+    }
+  ],
+  "decision": "Stop: largest class is JSON/config, 38 sites, and its whole-class rule requires runtime narrowing. No further adaptation or consumer edit.",
+  "unknownBoundarySiteIds": [
+    9,
+    10,
+    19,
+    29,
+    30,
+    61,
+    98,
+    119,
+    136,
+    137,
+    180
+  ]
+}

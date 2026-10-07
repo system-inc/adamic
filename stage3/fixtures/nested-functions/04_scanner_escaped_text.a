@@ -1,0 +1,14 @@
+// From TypeScript 6.0.3, src/compiler/scanner.ts:3985
+// Census reason: a function inside a function (a closure)
+
+function createScanner(text: string): () => string {
+    return getText;
+    function getText(): string {
+        return text;
+    }
+}
+const first = createScanner('const x = 1;');
+const second = createScanner('let y = 2;');
+console.log(first());
+console.log(second());
+console.log(first());

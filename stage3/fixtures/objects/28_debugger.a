@@ -1,0 +1,11 @@
+// From TypeScript 6.0.3, src/compiler/debug.ts:196
+// From TypeScript 6.0.3, src/compiler/debug.ts:203
+// Census reason: debugger
+type AnyFunction = () => void;
+    export function fail(message?: string, stackCrawlMark?: AnyFunction): never {
+        // eslint-disable-next-line no-debugger
+        debugger;
+        const e = new Error(message ? `Debug Failure. ${message}` : "Debug Failure.");
+        throw e;
+}
+try { fail("Invalid version"); } catch(error) { if(error instanceof Error) console.log(error.message); }

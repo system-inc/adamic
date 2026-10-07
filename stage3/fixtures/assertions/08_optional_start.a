@@ -1,0 +1,17 @@
+// From TypeScript 6.0.3, src/compiler/scanner.ts:3993
+// Census reason: the non-null assertion !
+// Support types and driver are reduced scaffolding; the upstream function is unchanged.
+
+let text = "";
+let end = 0;
+function resetTokenState(position: number): void { console.log(String(position) + ":" + String(end) + ":" + text); }
+
+function setText(newText: string | undefined, start: number | undefined, length: number | undefined) {
+        text = newText || "";
+        end = length === undefined ? text.length : start! + length;
+        resetTokenState(start || 0);
+    }
+
+setText("abc", 0, 2);
+setText("name", undefined, undefined);
+setText(undefined, undefined, undefined);
