@@ -26,3 +26,10 @@ Refreshed all 536 origin refs and read all 19 distinct helper claim contents. Th
 ## markFinal delivery
 
 Actual file: from_wave1_02/final/mark_final.a. All four original Go consumer suites execute the private helper. The arena implementation matches 2,884 transitions, 87,942 bytes on Node, emitted JavaScript and sanitized native. Both compiling guard-removal mutants are caught only by output comparison. See from_wave1_02/final/REPORT.md for exact identity adapter and coverage boundaries. Four dependency occurrences removed, zero final blockers. enter remains withdrawn.
+
+## Second retained helper
+
+Claim: github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].markThrown
+File: from_wave1_02/thrown/mark_thrown.a.
+
+markFinal is rebased onto current main, re-green with both mutants, and pushed at 1a2b4e2db. Fresh audit inspected all 547 origin refs and 19 distinct claim contents. markThrown is unclaimed and ties the maximum concrete fan-out at four, same consumers as above. Preserve nil/unreachable/already-thrown guards, thrown flag, ordered thrown list and identity, independently from final state. Use stable arena handles with -1 nil. Compare actual private Go calls in each original consuming rule suite plus repeated/nil/state controls on Node source, emitted JavaScript and sanitized native, with compiling semantic mutants. Four dependency occurrences, zero final blockers alone. Push before code; no shared harness edits.
