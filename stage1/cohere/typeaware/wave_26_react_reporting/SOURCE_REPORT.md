@@ -1,5 +1,5 @@
 Built: native .a source validators for react-hooks/static-components, set-state-in-render and set-state-in-effect, with an isolated raw HIR bridge; eighteen wave 26 ports now have native Go agreement.
-Commits: base e8ba3d5d81de4d3773c723914fccd4c76248b965; preceding reporting commit ae7bfd8cb19cc05a12b4a0eec8ddd3753067f36d; implementation SHA is recorded below after committing.
+Commits: base e8ba3d5d81de4d3773c723914fccd4c76248b965; preceding reporting commit ae7bfd8cb19cc05a12b4a0eec8ddd3753067f36d; implementation d7a62ceddbbb63191d903cb160d241bc2a24fa5a.
 Checks: 129 source controls, 69 findings, 77 compiler files and 287 repository files per rule match production Go under normal native execution and sanitizers; original-source Node matches all controls; previous fifteen ports re-green.
 Mutants: three new analysis mutants, four reporting mutants, three no-input refusal mutants, omitted SSA, retained released handle, fifteen prior rule mutants, thirteen prior question runs, five prior handle mutants, seven ABI mutants and Node's one-byte mutant were caught.
 Not covered: checker-linked JavaScript emission and shared registration, the full root gate, larger application corpora, or Go's arbitrary creation-message choice when multiple dynamic phi operands have distinct creators.
