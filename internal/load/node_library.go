@@ -35,6 +35,10 @@ func nodeTypesIndex(directory string) (string, error) {
 			if _, err = os.Stat(index); err != nil {
 				return "", fmt.Errorf("load: Node declarations: %w", err)
 			}
+			index, err = filepath.EvalSymlinks(index)
+			if err != nil {
+				return "", fmt.Errorf("load: Node declaration path: %w", err)
+			}
 			return filepath.ToSlash(index), nil
 		}
 		if !os.IsNotExist(err) {
@@ -72,5 +76,5 @@ func IsNodeLibrary(file *ast.SourceFile) bool {
 // Preserve the existing console lowerer's declaration identity while letting
 // the pinned Node global Console interface merge. The package itself is untouched.
 func nodePrelude() string {
-	return strings.Replace(prelude, "declare const console: {\n\tlog(message: string): void;\n\terror(message: string): void;\n};", "interface Console {\n\tlog(message: string): void;\n\terror(message: string): void;\n}\ndeclare var console: Console;", 1)
+	return strings.Replace(prelude, "declare const console: {\n\tlog(message: string): void;\n\terror(message: string): void;\n};", "declare var console: Console;", 1)
 }
