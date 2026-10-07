@@ -1,9 +1,0 @@
-function asciiSpace() { returnvoid	stop(); }
-function unicodeSpace() { return void stop(); }
-function verticalTab() { return void stop(); }
-function unsafeDeclaration() { return void function() {}; }
-function safeLongName() { return void functionally(); }
-function unsafeDollar() { return void async$task(); }
-function unicodeOperand() { return void arrêt(); }
-function parenthesizedVoid() { return (void stop()); }
-function commentedPrefix() { return /* preserve */ void stop(); }

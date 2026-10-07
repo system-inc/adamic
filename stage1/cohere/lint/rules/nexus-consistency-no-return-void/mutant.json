@@ -1,6 +1,0 @@
-{
-  "name": "return-void-unicode-whitespace-mutant",
-  "file": "rule.a",
-  "from": "/^return[ \\t\\n\\f\\r]+void[ \\t\\n\\f\\r]+(?![\\s\\S])/u",
-  "to": "/^return\\s+void\\s+(?![\\s\\S])/u"
-}

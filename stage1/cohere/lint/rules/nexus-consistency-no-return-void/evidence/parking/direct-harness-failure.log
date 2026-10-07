@@ -1,8 +1,0 @@
-github.com/system-inc/adamic/stage1/cohere/lint/registry: /workspace/adamic-tools/go/pkg/tool/linux_amd64/vet: chdir /tmp/adamic-wave13-park/stage1/cohere/lint/registry: no such file or directory
-# github.com/system-inc/adamic/stage1/cohere/lint [github.com/system-inc/adamic/stage1/cohere/lint.test]
-../wave13-park-strings/lint_test.go:479:27: undefined: ownedWitnesses
-../wave13-park-strings/lint_test.go:669:29: undefined: ownedWitnesses
-../wave13-park-strings/lint_test.go:737:27: undefined: ownedWitnesses
-../wave13-park-strings/lint_test.go:908:28: undefined: ownedWitnesses
-FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
-FAIL
