@@ -216,3 +216,7 @@ See ../WAVE_14_AREA_REFRESH_REPORT.md and validation-wave-14-area-refresh.
 ## Latest landing refresh, October 7
 
 Rebased onto area b84a9d93 and current main c7991b90. Tested source a6e9ab6ba: owned oracle PASS 474.949s, bridge, uncached Node and five new proven fixtures, registry and vet pass. Twenty-one semantic byte mutants caught; ownership and sanitizer checks pass. No new claim; all-origin audit leaves no candidates. Remaining regex and undefined-label boundaries and full-stage exclusions are recorded in WAVE_14_LATEST_REPORT.md.
+
+## Registry landing refresh, October 7
+
+Rebased onto area b46914832, containing current main c7991b900. Source a89cd2eec: owned byte oracle PASS 480.336s, registry and vet pass, all semantic mutants and sanitizer/ownership checks pass. All-origin audit leaves no candidates. No new claim. Remaining boundaries and excluded gates are in WAVE_14_REGISTRY_REFRESH_REPORT.md.
