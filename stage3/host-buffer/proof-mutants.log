@@ -1,0 +1,3 @@
+hash_alias: CAUGHT by TestNodeBufferHashUpdateKeepsAlias; log=/tmp/host-buffer-mutants/hash_alias.log
+hash_fields: CAUGHT by TestRuntimeFieldLayoutsAreIncluded; log=/tmp/host-buffer-mutants/hash_fields.log
+host_cycle_dispatch: CAUGHT by TestEveryWriteIsRecordedAndKnown; log=/tmp/host-buffer-mutants/host_cycle_dispatch.log
