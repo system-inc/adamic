@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"io"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"testing"
 	"testing/fstest"
@@ -138,5 +140,45 @@ func TestLoweringSourceEdit(t *testing.T) {
 			}
 		}
 		previousContext = e.context
+	}
+}
+
+func TestRunnerLocationHelper(t *testing.T) {
+	if os.Getenv("ADAMIC_TEST262_CONTEXT_HELPER") != "1" {
+		return
+	}
+	cache, _, context, err := prepareCache()
+	if err != nil {
+		t.Fatal(err)
+	}
+	fmt.Printf("%s %s\n", context, cache.nodeContext)
+}
+
+func TestRunnerLocationIdentity(t *testing.T) {
+	t.Parallel()
+	executable, err := os.Executable()
+	if err != nil {
+		t.Fatal(err)
+	}
+	contents, err := os.ReadFile(executable)
+	if err != nil {
+		t.Fatal(err)
+	}
+	relocated := filepath.Join(t.TempDir(), "runner")
+	if err := os.WriteFile(relocated, contents, 0700); err != nil {
+		t.Fatal(err)
+	}
+	var before []byte
+	for _, path := range []string{executable, relocated} {
+		command := exec.Command(path, "-test.run=^TestRunnerLocationHelper$")
+		command.Env = append(os.Environ(), "ADAMIC_TEST262_CONTEXT_HELPER=1")
+		output, err := command.CombinedOutput()
+		if err != nil {
+			t.Fatalf("helper: %v: %s", err, output)
+		}
+		if before != nil && string(before) != string(output) {
+			t.Fatalf("relocating identical runner bytes invalidates observations: %s vs %s", before, output)
+		}
+		before = output
 	}
 }

@@ -167,7 +167,13 @@ func prepareCache() (*resultCache, string, string, error) {
 		if err != nil {
 			return nil, "", "", err
 		}
-		parts = append(parts, path, cacheKey(string(contents)))
+		// The runner's location is not input to successful compilation or native execution.
+		// go run allocates a new executable path even for identical built bytes.
+		if name == executable {
+			parts = append(parts, "runner", cacheKey(string(contents)))
+		} else {
+			parts = append(parts, path, cacheKey(string(contents)))
+		}
 		if name == "node" {
 			nodeParts = append(nodeParts, path, cacheKey(string(contents)))
 		}
