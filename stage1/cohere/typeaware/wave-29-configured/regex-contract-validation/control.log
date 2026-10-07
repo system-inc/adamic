@@ -1,0 +1,4 @@
+throw-exit: compiled, exit 0, empty stderr; only bytes catch 3143 changed graph results
+switch-case: compiled, exit 0, empty stderr; only bytes catch 4575 changed graph results
+PASS: graphs=17796 sources=28 bytes=243119 control_ns=53720007 sha256=84eb8fe79188f30fe7e1cad895b8c2f2fbde93cf5d6483746c2a2f7d6eaacd77
+Go/native/Node/emitted JavaScript/sanitized native agree; these are control graphs, not full rule findings

@@ -9,7 +9,7 @@ import { IdMatch } from '../id_match.a';
 
 
 import { Frames } from '../frames.ts';
-import { RegexpProgram } from '../regexp_program.a';
+import { optionPattern } from './option_pattern.a';
 
 const args = programArguments();
 const config = args[0] ?? panic('missing config');
@@ -31,8 +31,8 @@ const count = frames.natural();
 for(let at = 0; at < count; at++) {
     const pattern = frames.field();
     const text = frames.field();
-    const expression = new RegexpProgram(linter, pattern);
-    console.log(`${at} ${expression.matches(text) ? 1 : 0}`);
+    const expression = optionPattern(pattern);
+    console.log(`${at} ${expression.test(text) ? 1 : 0}`);
 }
 frames.end();
 tsgoRelease(program);

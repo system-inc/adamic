@@ -1,0 +1,19 @@
+id-denylist: valid JSON wrong-kind mutant caught only by Go registration comparison
+id-match: valid JSON wrong-kind mutant caught only by Go registration comparison
+nexus/concurrency-no-check-then-write: valid JSON wrong-kind mutant caught only by Go registration comparison
+no-restricted-globals: valid JSON wrong-kind mutant caught only by Go registration comparison
+no-setter-return: valid JSON wrong-kind mutant caught only by Go registration comparison
+no-shadow-restricted-names: valid JSON wrong-kind mutant caught only by Go registration comparison
+react-hooks/set-state-in-effect: valid JSON wrong-kind mutant caught only by Go registration comparison
+react-hooks/set-state-in-render: valid JSON wrong-kind mutant caught only by Go registration comparison
+react-hooks/static-components: valid JSON wrong-kind mutant caught only by Go registration comparison
+denylist: wrong numeric subscription compiles and exits 0; only registration-byte comparison catches it
+match: wrong numeric subscription compiles and exits 0; only registration-byte comparison catches it
+concurrency: wrong numeric subscription compiles and exits 0; only registration-byte comparison catches it
+globals: wrong numeric subscription compiles and exits 0; only registration-byte comparison catches it
+setter: wrong numeric subscription compiles and exits 0; only registration-byte comparison catches it
+shadow: wrong numeric subscription compiles and exits 0; only registration-byte comparison catches it
+effect: wrong numeric subscription compiles and exits 0; only registration-byte comparison catches it
+render: wrong numeric subscription compiles and exits 0; only registration-byte comparison catches it
+static: wrong numeric subscription compiles and exits 0; only registration-byte comparison catches it
+PASS: 9 numeric listener declarations; 315 bytes agree across Go/native/Node/sanitized native

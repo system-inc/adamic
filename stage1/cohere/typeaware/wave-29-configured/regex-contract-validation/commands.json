@@ -1,0 +1,86 @@
+[
+  {
+    "name": "dynamic-node",
+    "args": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-configured/gaps/dynamic_regexp.a",
+      "TODO"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "dynamic-native",
+    "args": [
+      "/workspace/wave29-regex-contract-adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-configured/gaps/dynamic_regexp.a",
+      "-o",
+      "/workspace/wave29-regex-contract-proof-final/dynamic"
+    ],
+    "exit": 1
+  },
+  {
+    "name": "configured-native",
+    "args": [
+      "/workspace/wave29-regex-contract-adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-configured/runner.a",
+      "-o",
+      "/workspace/wave29-regex-contract-proof-final/configured",
+      "--tsgo",
+      "/workspace/wave29-next-checker.a"
+    ],
+    "exit": 1
+  },
+  {
+    "name": "mutant-build",
+    "args": [
+      "/workspace/wave29-regex-contract-adamic",
+      "build",
+      "/workspace/wave29-regex-contract-proof-final/constant-mutant.a",
+      "-o",
+      "/workspace/wave29-regex-contract-proof-final/mutant"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "dynamic-node-miss",
+    "args": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-configured/gaps/dynamic_regexp.a",
+      "NO"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "mutant",
+    "args": [
+      "/workspace/wave29-regex-contract-proof-final/mutant",
+      "NO"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "dialect-go",
+    "args": [
+      "go",
+      "run",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-configured/testdata/regexp_semantics.go"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "dialect-node",
+    "args": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/wave29-regex-contract-proof-final/dialect.a"
+    ],
+    "exit": 0
+  }
+]

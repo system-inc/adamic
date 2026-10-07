@@ -1,0 +1,4 @@
+import { optionPattern } from '/workspace/adamic/stage1/cohere/typeaware/wave-29-configured/option_pattern.a';
+const patterns = ["\\Afoo\\z", "^foo$", ".", "(?i)^foo$", "^[^_]+$"];
+const names = ["foo", "foo\n", "\r", "FOO", "foo"];
+for(let index = 0; index < patterns.length; index++) { try { console.log(`${index} match ${optionPattern(patterns[index] ?? '').test(names[index] ?? '')}`); } catch { console.log(`${index} invalid`); } }

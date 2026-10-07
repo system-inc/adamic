@@ -1,0 +1,103 @@
+[
+  {
+    "name": "go",
+    "args": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/wave29-regex-contract-static/overlay.json",
+      "./internal/lint/rules/react",
+      "-run",
+      "^TestWave29StaticCore$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 0,
+    "elapsed_ns": 2040641896
+  },
+  {
+    "name": "native-build",
+    "args": [
+      "/workspace/wave29-regex-contract-adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-third/static_core.a",
+      "-o",
+      "/workspace/wave29-regex-contract-static/native"
+    ],
+    "exit": 0,
+    "elapsed_ns": 1079206070
+  },
+  {
+    "name": "native",
+    "args": [
+      "/workspace/wave29-regex-contract-static/native",
+      "/workspace/wave29-regex-contract-static/graphs.frames"
+    ],
+    "exit": 0,
+    "elapsed_ns": 3158042
+  },
+  {
+    "name": "asan-build",
+    "args": [
+      "/workspace/wave29-regex-contract-adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-third/static_core.a",
+      "-o",
+      "/workspace/wave29-regex-contract-static/asan",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "elapsed_ns": 2072854500
+  },
+  {
+    "name": "asan",
+    "args": [
+      "/workspace/wave29-regex-contract-static/asan",
+      "/workspace/wave29-regex-contract-static/graphs.frames"
+    ],
+    "exit": 0,
+    "elapsed_ns": 15613665
+  },
+  {
+    "name": "store-binding-build",
+    "args": [
+      "/workspace/wave29-regex-contract-adamic",
+      "build",
+      "/workspace/wave29-regex-contract-static/mutant-store-binding/static_core.a",
+      "-o",
+      "/workspace/wave29-regex-contract-static/mutant-store-binding/native"
+    ],
+    "exit": 0,
+    "elapsed_ns": 1005487174
+  },
+  {
+    "name": "store-binding",
+    "args": [
+      "/workspace/wave29-regex-contract-static/mutant-store-binding/native",
+      "/workspace/wave29-regex-contract-static/graphs.frames"
+    ],
+    "exit": 0,
+    "elapsed_ns": 2450355
+  },
+  {
+    "name": "phi-build",
+    "args": [
+      "/workspace/wave29-regex-contract-adamic",
+      "build",
+      "/workspace/wave29-regex-contract-static/mutant-phi/static_core.a",
+      "-o",
+      "/workspace/wave29-regex-contract-static/mutant-phi/native"
+    ],
+    "exit": 0,
+    "elapsed_ns": 1113087919
+  },
+  {
+    "name": "phi",
+    "args": [
+      "/workspace/wave29-regex-contract-static/mutant-phi/native",
+      "/workspace/wave29-regex-contract-static/graphs.frames"
+    ],
+    "exit": 0,
+    "elapsed_ns": 3795683
+  }
+]

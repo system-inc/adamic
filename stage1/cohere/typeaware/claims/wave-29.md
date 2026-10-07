@@ -85,3 +85,14 @@ Fourth-batch status: partial kernels pushed, not full source ports. See
 three compiling kernel mutants pass; shared numeric JSX source preparation,
 checker binding acquisition and context memo/escape analysis are not integrated.
 No further claims are taken in this continuation.
+
+## Required regex contract after rebase onto c01907a7
+
+The no-handwritten-matchers instruction supersedes the earlier configured
+id-match completion: its native VM is removed. Default empty-pattern mode is
+re-green; configured matching uses the required new RegExp(pattern, 'u') source
+and is blocked by native nonconstant RegExp lowering and raw Go/JS dialect
+incompatibility. No fallback or full configured parity is claimed. See
+[REGEX_CONTRACT.md](../wave-29-configured/REGEX_CONTRACT.md).
+All other pushed full/partial profiles re-green on current main. The fourth JSX
+batch remains partial with source/binding/memo blockers; no new claims are taken.

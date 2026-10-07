@@ -1,0 +1,6 @@
+fragment: compiles, exit 0, empty stderr; Go bytes catch 3 differing rows
+undef: compiles, exit 0, empty stderr; Go bytes catch 2 differing rows
+context: compiles, exit 0, empty stderr; Go bytes catch 2 differing rows
+PASS: 79 kernel/callback rows, 7359 identical bytes; sha256=f4d1fe2af24838bc1101de970acf6c8edc35baaba71208411cd4103c4499da55
+Go/native/Node/emitted JS/sanitized native agree; 3 listener manifests match live registrations
+No full source-rule findings/corpora, bridge/lifetime suite or full lint timing is claimed

@@ -6,6 +6,7 @@ import { UnaryMinus, byteOffsets } from '../unary_minus.ts';
 import { Rules } from '../rules.ts';
 import { IdDenylist } from '../id_denylist.a';
 import { IdMatch } from '../id_match.a';
+import { optionPattern } from './option_pattern.a';
 
 
 const args = programArguments();
@@ -45,7 +46,8 @@ for(const path of paths) {
     else {
         const pattern = fields[1] ?? '';
         const flags = fields[2] ?? '';
-        new IdMatch(linter).run(pattern, {
+        const expression = optionPattern(pattern);
+        new IdMatch(linter).runConfigured(pattern, (name) => expression.test(name), {
             properties: flags.includes('p'), classFields: flags.includes('c'),
             onlyDeclarations: flags.includes('o'), ignoreDestructuring: flags.includes('i'),
         });

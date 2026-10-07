@@ -1,0 +1,19 @@
+=== RUN   TestWave29AgreementAndMutants
+    wave_29_test.go:158: controls: 10250 identical finding bytes; findings 15
+    wave_29_test.go:164: controls-asan: 10250 identical finding bytes; findings 15
+    wave_29_test.go:175: denylist mutant exits 0, empty stderr, byte oracle catches offset 60
+    wave_29_test.go:175: match mutant exits 0, empty stderr, byte oracle catches offset 60
+    wave_29_test.go:175: race mutant exits 0, empty stderr, byte oracle catches offset 66
+    wave_29_test.go:184: provenance mutant exits 0, empty stderr, byte oracle catches offset 60
+    wave_29_test.go:200: released handle mutant exits 0 and is caught by required panic
+    wave_29_test.go:217: compiler: 5241 identical finding bytes; findings 0
+    wave_29_test.go:218: compiler-asan: 5241 identical finding bytes; findings 0
+    wave_29_test.go:247: compiler timing native=1.896475576s Go=306.935433ms; native tsgo: load_ns=257208385 query_ns=117855653 queries=30 first_query_ns=5060216 run_ns=1620010281
+        ; Go cohere: load_ns=244376711 rule_ns=2109512 run_ns=45630200
+    wave_29_test.go:235: repository: 18485 identical finding bytes; findings 0
+    wave_29_test.go:236: repository-asan: 18485 identical finding bytes; findings 0
+    wave_29_test.go:247: repository timing native=273.928873ms Go=124.837782ms; native tsgo: load_ns=71277815 query_ns=4642631 queries=7 first_query_ns=541742 run_ns=196309128
+        ; Go cohere: load_ns=63644749 rule_ns=922652 run_ns=49198826
+--- PASS: TestWave29AgreementAndMutants (102.53s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	102.536s

@@ -2,7 +2,6 @@ import type { Rules } from './rules.ts';
 import { Diagnostic } from './diagnostic.ts';
 import { panic } from 'adamic';
 import { IdDenylist } from './id_denylist.a';
-import { RegexpProgram } from './regexp_program.a';
 
 // Numeric SyntaxKind subscriptions, held to pinned Go production registrations.
 export const listenerKinds: readonly number[] = [79, 80];
@@ -15,14 +14,13 @@ export interface IdMatchFlags {
 }
 const defaults: IdMatchFlags = { properties: false, classFields: false, onlyDeclarations: false, ignoreDestructuring: false };
 
-// Configured patterns use a native VM over raw Go regex compiler instructions.
+// Default mode stays buildable while runtime option RegExp lowering is unavailable.
 export class IdMatch {
     readonly rules: Rules;
     constructor(rules: Rules) { this.rules = rules; }
     run(pattern = '', flags: IdMatchFlags = defaults): void {
         if(pattern === '') { return; }
-        const program = new RegexpProgram(this.rules, pattern);
-        this.runConfigured(pattern, (name) => program.matches(name), flags);
+        panic('NotYet: configured id-match requires runtime new RegExp(pattern, u)');
     }
     effective(index: number): number {
         const shapes = new IdDenylist(this.rules);

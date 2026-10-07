@@ -1,0 +1,4 @@
+Go production callbacks: three real JSX sources, three findings, zero fixes/suggestions
+react-jsx-fragments: compiled, exits 0, misparsed as TypeAssertionExpression with no JSX nodes
+react-jsx-no-constructed-context-values: compiled, native parser exit 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 42 in input.tsx
+react-jsx-no-undef: compiled, native parser exit 70: adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 22 in input.tsx
