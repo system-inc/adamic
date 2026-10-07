@@ -266,3 +266,53 @@ The eight crashes remain the inherited indexOf/lastIndexOf clang failures listed
 above, not agreements. No runtime failure was reported as a disagreement.
 Successful observations may use the existing content-addressed cache; these
 worker runs do not claim the uncached integration gate.
+
+## p2b requested mutants and uncached final gate
+
+Added reproducible mutants.py. It changes one source at a time, writes each run
+to its own log, requires a Node stdout disagreement, rejects compiler/sanitizer
+failures as semantic kills, and restores the original bytes in finally.
+
+| Requested mutant | Node check that killed it |
+| --- | --- |
+| (a) forEach visits missing slots as undefined | callback fixture stdout differs |
+| (b) map makes missing slots present undefined | callback fixture mapped presence/count stdout differs |
+| (c) join prints undefined for a hole | callback fixture joined text stdout differs |
+| (d) upper RangeError bound is off by one | range fixture maximum-length stdout differs |
+| (e) write does not decrement the hole count | callback fixture filled-slot observations stdout differ |
+
+All five compiled and ran without a compiler or sanitizer failure. An initial
+narrow (e) run used the scanner source, which prints only length and did not
+kill this mutation. The callback fixture killed it on rerun; the reproducible
+driver now selects that fixture. The initial driver log is preserved rather
+than claiming every fixture distinguishes every mutation. Every source was
+restored before the final checks.
+
+Also added TestArrayHolesWasmtimeRunnerMutants to the unit's oracle test file.
+Its real Wasm control prints the scanner's expected 4; changing output to 5
+is caught as stdout differs, and returning 23 is caught as exit codes differ.
+This proves the requested runner's comparison can fail independently of the
+Array implementation mutants.
+
+Final command, uncached:
+
+ADAMIC_GATE_UNCACHED=1 ADAMIC_ORACLE_WASI=1
+ADAMIC_WASMTIME=/workspace/adamic-tools/wasmtime/wasmtime
+go test ./internal/lower ./internal/oracle -run TestArrayHoles
+-count=1 -v -timeout 10m
+
+Passed: lower 0.761s; oracle 12.181s. Ten accepted sources run sanitized native,
+release native, generated JavaScript and wasmtime; 31 refusal sources run on
+independent Node; Linux LeakSanitizer is enabled. There were no skips in the
+wasmtime Array leg. go vet ./... and git diff --check pass with empty logs.
+The complete repository gate was not rerun; this is the focused unit gate.
+
+Additional shared files changed in this follow-up:
+internal/oracle/array_holes_test.go (wasmtime and runner-mutant checks),
+internal/lower/library_array_holes_claims.md (validation evidence), and this
+report. Merge conflict resolutions touched internal/oracle/counts.md,
+stage1/cohere/lint/inventory/testdata/engine.go, and
+stage1/typescript/parser/testdata/oracle.go. Integration's changes, including
+internal/native/native.go and its host runtime guards, are preserved by the
+merge; the Array worker made no hand edits to those guard files or native.go.
+The other three prohibited shared files remain untouched by this unit.
