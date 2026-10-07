@@ -37,6 +37,9 @@ func (l *lowering) slotContract(node *ast.Node, target *checker.Type) ir.ViewCon
 		l.result.ViewContractTypes = types
 		return 0
 	}
+	if !supportedSlotContract(l.result, id, map[ir.ViewContractID]bool{}) {
+		return 0
+	}
 	return id
 }
 
@@ -64,4 +67,33 @@ func (l *lowering) neverOptionalReceiver(node *ast.Node) bool {
 		return l.neverOptionalReceiver(node.AsAsExpression().Expression)
 	}
 	return l.isNever(node)
+}
+
+// Lazy descriptors must never become a write certificate.
+func supportedSlotContract(program *ir.Program, id ir.ViewContractID, seen map[ir.ViewContractID]bool) bool {
+	if id == 0 {
+		return false
+	}
+	if seen[id] {
+		return true
+	}
+	seen[id] = true
+	contract := program.ViewContracts[id-1]
+	if contract.Kind == ir.ViewUnknown || contract.Unsupported != "" {
+		return false
+	}
+	for _, field := range contract.Fields {
+		if !supportedSlotContract(program, field.Contract, seen) {
+			return false
+		}
+	}
+	for _, member := range contract.Members {
+		if !supportedSlotContract(program, member, seen) {
+			return false
+		}
+	}
+	if contract.Element != 0 && !supportedSlotContract(program, contract.Element, seen) {
+		return false
+	}
+	return true
 }

@@ -21,6 +21,9 @@ func internArrayViewContract(l *lowering, node *ast.Node, target *checker.Type, 
 	handled, err := l.viewArrayContract(node, target, func(element *checker.Type) error {
 		var childError error
 		contract.Element, childError = build(element)
+		if childError == nil && l.callableViewContract(element) {
+			l.result.ViewContracts[contract.Element-1].Unsupported = "callable"
+		}
 		return childError
 	})
 	if err != nil {

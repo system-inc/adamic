@@ -43,7 +43,7 @@ func (l *lowering) privateStaticReceiver(name *ast.Node, object ir.Expression, w
 }
 
 // A private assignment checks its brand after the RHS has executed, as JavaScript does.
-func (l *lowering) privateStaticStore(target *ast.Node, object, value ir.Expression) (ir.Expression, bool) {
+func (l *lowering) privateStaticStore(target *ast.Node, object, value ir.Expression, uninitialized bool) (ir.Expression, bool) {
 	if l.privateStaticMember(target.Name()) == nil {
 		return nil, false
 	}
@@ -52,6 +52,6 @@ func (l *lowering) privateStaticStore(target *ast.Node, object, value ir.Express
 	l.result.Locals = append(l.result.Locals, ir.Local{Name: "this", Type: ir.Object, Function: index}, ir.Local{Name: "value", Type: value.Type(), Function: index})
 	l.result.Functions = append(l.result.Functions, ir.Function{Name: "static_private_write", Parameters: []int{self, self + 1}})
 	receiver := l.privateStaticReceiver(target.Name(), ir.Read{Local: self, Of: ir.Object}, true)
-	l.result.Functions[index].Body = []ir.Statement{ir.SetProperty{Object: receiver, Name: l.fieldName(target.Name()), Value: ir.Read{Local: self + 1, Of: value.Type()}, Site: l.writeSite(target.AsPropertyAccessExpression().Expression)}}
+	l.result.Functions[index].Body = []ir.Statement{ir.SetProperty{Object: receiver, Name: l.fieldName(target.Name()), Value: ir.Read{Local: self + 1, Of: value.Type()}, Uninitialized: uninitialized, Site: l.writeSite(target.AsPropertyAccessExpression().Expression)}}
 	return ir.Call{Function: index, Arguments: []ir.Expression{object, value}}, true
 }

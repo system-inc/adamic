@@ -15,7 +15,7 @@ type viewContractHook func(*lowering, *ast.Node, *checker.Type, viewContractBuil
 var viewArrayContractHook viewContractHook
 var viewCallableContractHook viewContractHook
 
-func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewContractID, error) {
+func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.ViewContractID, error) {
 	if l.result.ViewContractTypes == nil {
 		l.result.ViewContractTypes = map[int]ir.ViewContractID{}
 	}
@@ -99,7 +99,24 @@ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewCo
 			if err != nil {
 				return 0, err
 			}
+			// Signature certification is demanded by reads, and failure is metadata
+			// until the shared flow establishes a read may receive this view.
+			if l.callableViewContract(l.checker.GetTypeOfSymbol(property)) {
+				if err := l.viewCallableFieldUses(node, target, property); err != nil {
+					l.result.ViewContracts[child-1].Unsupported = "callable"
+				}
+			}
 			contract.Fields = append(contract.Fields, ir.ViewFieldContract{Name: property.Name, Contract: child, Optional: property.Flags&ast.SymbolFlagsOptional != 0, Readonly: l.checker.IsReadonlySymbol(property)})
+		}
+	}
+	if contract.Kind == ir.ViewUnion && contract.Of == ir.Object {
+		tagged := false
+		for _, field := range contract.Fields {
+			child := l.result.ViewContracts[field.Contract-1]
+			tagged = tagged || !field.Optional && child.Kind == ir.ViewScalar && len(child.Allowed) != 0
+		}
+		if !tagged {
+			contract.Unsupported = "untagged object union"
 		}
 	}
 	l.result.ViewContracts[int(id)-1] = contract

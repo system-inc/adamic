@@ -61,6 +61,9 @@ type cycleFinder struct {
 // findCycles refuses the first cycle-capable slot that isn't declared Weak and has a write that isn't
 // proven not to close a cycle (fresh.go), or returns nil.
 func (l *lowering) findCycles(modules []*ast.SourceFile) error {
+	if err := l.checkLazyViewReads(); err != nil {
+		return err
+	}
 	finder := &cycleFinder{l: l, where: map[*checker.Type]*ast.Node{}}
 	for _, module := range modules {
 		var visit ast.Visitor
@@ -96,33 +99,13 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 	for _, proven := range l.instantiated {
 		finder.use(proven, l.classNodeFor(proven))
 	}
-	for _, proven := range finder.seen {
-		if err := finder.slotsOf(proven); err != nil {
-			return err
-		}
-	}
-	for local, declared := range l.result.Locals {
-		if !declared.Captured || declared.Global {
-			continue
-		}
-		proven, node := l.localTypes[local], l.localNodes[local]
-		if proven == nil || node == nil || finder.weak(proven) {
-			continue
-		}
-		if finder.reaches(proven, cycleNode{cell: local + 1}) {
-			return &Refused{
-				Where: l.program.Where(node),
-				What:  "'" + declared.Name + "', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free",
-				Fix:   "write the function as a function declaration (function " + declared.Name + "() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)",
-			}
-		}
-	}
-	return nil
+	return finder.graphTypes(modules)
 }
 
 // made notes the type of a value just made: an object type as a shape, and what anything else is
 // made of as used.
 func (f *cycleFinder) made(proven *checker.Type, where *ast.Node) {
+	proven = f.l.phantomArrayView(proven)
 	switch {
 	case proven == nil:
 	case proven.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0:
@@ -158,6 +141,7 @@ func (f *cycleFinder) shape(proven *checker.Type, where *ast.Node) {
 
 // use notes a type the program uses, and every type it's made of.
 func (f *cycleFinder) use(proven *checker.Type, where *ast.Node) {
+	proven = f.l.phantomArrayView(proven)
 	if proven == nil {
 		return
 	}
@@ -349,6 +333,7 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 // reaches reports whether a value of type from can reach target: a value seen as target's type
 // (either way round, since either may be what the value really is), or target's cell.
 func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
+	target.proven = f.l.phantomArrayView(target.proven)
 	visited := map[cycleNode]bool{}
 	queue := []cycleNode{{proven: from}}
 	for len(queue) > 0 {
@@ -371,7 +356,7 @@ func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
 			}
 			continue
 		}
-		proven := node.proven
+		proven := f.l.phantomArrayView(node.proven)
 		flags := proven.Flags()
 		if f.weak(proven) || f.template(proven) {
 			// A Weak holds nothing.

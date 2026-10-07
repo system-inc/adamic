@@ -11,10 +11,12 @@ import (
 // The proof contains checker types only, so refusals precede representation lowering of unknown
 // operands. Concrete generic instantiations are proved again when they are lowered.
 type castProof struct {
-	view    bool
-	field   string
-	allowed []*checker.Type
-	classes []*checker.Type
+	view          bool
+	lowering      castLoweringKind
+	deferredError error
+	field         string
+	allowed       []*checker.Type
+	classes       []*checker.Type
 }
 
 const castRepair = "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
@@ -96,7 +98,8 @@ func castMembers(proven *checker.Type) []*checker.Type {
 
 func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 	as := node.AsAsExpression()
-	if as.Type.Kind == ast.KindTypeReference && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
+	// A qualified name (NodeJS.ErrnoException) has no Text; only a bare `const` is as const.
+	if as.Type.Kind == ast.KindTypeReference && ast.IsIdentifier(as.Type.AsTypeReferenceNode().TypeName) && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
 		return castProof{}, nil
 	}
 	source := l.concrete(l.checker.GetTypeAtLocation(as.Expression))
@@ -108,6 +111,9 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 	}
 	if source.Flags()&checker.TypeFlagsAny != 0 || target.Flags()&checker.TypeFlagsAny != 0 {
 		return castProof{}, refused
+	}
+	if kind := l.deferredCastCandidate(node, source, target, true); kind != castLoweringNone {
+		return castProof{lowering: kind, deferredError: refused}, nil
 	}
 	members, targets := castMembers(source), castMembers(target)
 	allClasses := true
@@ -167,6 +173,9 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 			}
 		}
 		return castProof{classes: targets}, nil
+	}
+	if kind := l.deferredCastCandidate(node, source, target, false); kind != castLoweringNone {
+		return castProof{lowering: kind, deferredError: refused}, nil
 	}
 	if source.Flags()&checker.TypeFlagsUnion == 0 {
 		// Shared views certify each read; mutable source slots still require

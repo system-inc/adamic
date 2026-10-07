@@ -1,4 +1,4 @@
-# Checked views: three-worker plan
+# Checked views: worker plan
 
 Ruled by @system_adamic. Lane 1 stays with the interface-downcasts worker on
 `codex/interface-downcasts`; due October 8 at 18:00 MDT, **00:00 UTC October 9**.
@@ -271,3 +271,142 @@ routes eligible structural downcasts to the existing full `view(node,value,targe
 admission, rather than treating them as proven upcasts. The preflight does not
 certify any field. Lane 2 and lane 3 hooks and ownership remain unchanged. Shared
 readiness still handles staged assertions; no second state representation is added.
+
+## Lazy admission takeover, October 7, 2026
+
+The October 7 15:00 ruling replaces eager target-contract eligibility with lazy
+admission. Working delivery estimate: **October 8, 2026 at 22:00 UTC**.
+This estimate covers lazy admission and its evidence, not full tsc compilation.
+The previous lane 1 worker is stopped; this work owns its view entry point and
+shared read plumbing on `codex/views-lazy-admission`, based on `ab4d6f902`.
+
+1. Merge lane 2 `codex/views-arrays-callables-parser` at `2693041a` or newer,
+   keeping both cast paths, then consume lane 3's existing shared closed-world
+   flow on `codex/shape-conformance`. Do not create a second flow graph.
+2. Intern unsupported member descriptors without refusing the cast. Preserve
+   tagged entry checks. Refuse unsupported families by field name at reads
+   reachable from viewed values; unresolved flow retains a runtime tag check.
+3. Cover helpers accepting both viewed and ordinary values, generic instances,
+   callbacks, stored fields, aliases and transitive reads using shared may-flow.
+   Unknown origins never justify trusting a read.
+4. Add an unread unsupported-field fixture and the helper-read mutant, with
+   source Node and both backend evidence. Run independent check-removal mutants
+   and touched-package gates, with all test output captured in log files.
+5. Rerun the pinned 2,936-site census, separating actual tagged and untagged
+   lowering successes from contract eligibility and remaining read families.
+   Merge current origin/main, recheck, and push only this branch.
+
+Push every passing checkpoint. Any unfinished family or unmeasured census stays
+explicitly unclaimed. Compiler changes begin only after reading view() and its
+callers and the shared flow implementation.
+
+## Lane 5 callable handoff after c898009b
+
+The lead moved callable work to lane 5 on codex/views-callables, starting from
+c898009b. Lane 2 now owns native arrays only, including array intrinsics and
+mutation; its current integration branch is codex/views-arrays-callables-parser.
+The earlier combined array/callable shares and territories above are historical.
+Lane 2 will not edit callable files or certification hooks further. Lane 1 owns
+the cast merge conflict and will push lazy admission with Lane 2's tip merged;
+Lane 2 merges that SHA rather than resolving that conflict locally.
+
+Lane 5 owns internal/lower/view_callables.go and its tests,
+internal/native/view_callables.go, internal/javascript/view_callables.go, and
+internal/native/runtime/view_callables.c/.h. The callable fixtures currently live
+under stage3/interface-downcasts/lane2; future callable fixtures should use a lane5
+subdirectory. checked_views_callables_test.go contains the existing callable
+oracles as well as the parser array probes; leave it to lane 5 and add subsequent
+array tests in separate array-owned oracle files to avoid concurrent edits.
+
+Existing callable integration points at c898009b:
+
+- buildViewCallableContract registers viewCallableContractHook in init and interns
+  a ViewCallable/Closure kind contract. It does not build argument/result contracts
+  or certify arbitrary signatures; construct signatures remain NotYet.
+- viewCallableFieldUses, called by viewObjectFields, currently scans same-named
+  implementations and escaping reads across the module graph. It requires a body
+  and viewSignatureCompatible, which checks strict parameters/results and writable
+  relations. It is a conservative predecessor to per-read allocation certification.
+- viewCallableCall/checkViewCallableSignature pin the refusal naming the member:
+  its signature cannot be checked at runtime and no compatible implementation is
+  proven. Runtime function kind never supplies signatureProven.
+- viewProvenClassCast is invoked by deferredViewCast in view_cast_preflight.go.
+  Its current tag-to-construction scan requires every matching construction to
+  have the compatible nominal class identity before free method dispatch.
+- Native emitViewCallableRead calls adamic_view_callable. The runtime distinguishes
+  an own closure from a shape method and preserves readiness/kind checks and this.
+  JavaScript emitViewCallableProperty uses emitViewCallableRead/Call and the
+  adamicViewCallableRead/Call helper text, preserving explicit method receivers.
+- Shared metadata uses ViewContract.Kind=ViewCallable, Of=Closure and
+  Property.Method/Of/View/ViewContract and Readiness. Lane 1 owns the shared
+  dispatch/readiness wiring.
+
+Array elements whose declared type is callable remain a dependency on lane 5:
+viewArrayContract delegates the element to the common builder callback, while the
+current viewArrayFields uses viewCallableCall for an unproven element signature.
+Lane 2 may check an element's physical closure kind, but will not interpret that
+kind as a compatible callable signature. Array intrinsic contracts remain lane 2;
+user-defined function-valued array elements and fields remain lane 5.
+
+Read-based callable demand is 308 type/field pairs and 1,503 source reads in the
+pinned full compiler, from the c898009b-following census at 2de6d1ba. These are
+partial demand, not successful lowerings or a claim every read is blocked. Exact
+pairs and source witnesses are in stage3/interface-downcasts/lane2/read-census.
+Existing controls include function-field, class-method, callable missing/kind/
+uninitialized fixtures and the pinned opaque-signature refusal. The previous
+signature mutant was caught; its evidence is retained in parser-return-logs.
+
+### Lazy admission checkpoint, October 7, 2026
+
+Lazy unsupported descriptors now admit unread members. The shared allocation flow
+checks demanded callable reads, joining helpers and retaining Unknown callbacks.
+Tagged, untagged, and unread mixed-union fixtures match Node in native sanitized,
+native release, and JavaScript runs. The helper mutant refuses at its opaque read.
+Focused lower and oracle tests passed; array consumer coverage and the full view
+suite are still pending. The earlier lane 2 and lane 3 merges preceded the new
+integrator-only coordination rule. Future dependency merges use views-integration.
+No integration branch was advertised by origin at this checkpoint.
+
+### Lazy admission coverage checkpoint, October 7, 2026
+
+The shared-flow demanded-read guard now covers wired array element consumers and
+retains unsupported member families across wider helper interface type ids.
+Untagged object unions without a finite discriminant retain an unsupported
+descriptor and refuse at a demanded read. Existing representation/accessor
+preflight refusals name their read field and family. Array consumers without
+lowering adapters still fail closed. Unsupported contracts cannot certify writes.
+
+The focused lower and checked-view oracle suite passed. Direct, generic, callback,
+and stored-field helper mutants all refuse at line 9, the opaque member read.
+Deleting the read-demand guard made all four oracle controls fail, along with
+shared-flow helper and Unknown controls; the deletion was restored. Complete
+lower package tests still report failures in the merged pre-lazy baseline.
+Phantom-array, predicate marker, overload diagnostic, and nested-function failures
+were reproduced against c01ae313 using a Go source overlay. Those are not claimed
+as a green gate; reconciliation belongs with the integration branch.
+
+### Lazy admission evidence complete, October 7, 2026
+
+Core lazy descriptors and demanded read refusals have passed the focused view suite.
+The exact census matches 2,936 original spans: 1,758 tagged and 1,178 untagged target
+contracts intern descriptors. Unchanged production compilation is still 0 tagged,
+0 untagged: Adamic checker policy stops the upstream project before lowering.
+The family/read inventory, commands, mutants and limits are in
+[the lazy admission report](../stage3/interface-downcasts/lazy/REPORT.md).
+
+Direct, generic, callback and object-field helper mutants refuse at the opaque read;
+a missing-name helper mutant exits 70 in sanitized native, release native and JS.
+Deleting the demand guard is caught by every wired array consumer control, wider
+helper and Unknown flow controls, and the source helper controls. Positive tagged,
+untagged and unread mixed-union fixtures match Node in both backends.
+
+The full JavaScript package passes. Full native tests fail five graph-region tests,
+including sanitizer use-after-free and leaks; a c01ae313 source overlay reproduces
+all five. Full lower tests likewise retain reproduced merged-baseline failures.
+An extra Error.code probe exits 70 at the native read with an unsupported representation,
+rather than matching Node's missing optional field result. It is a recorded limit,
+not a successful positive fixture. Two old eager optional-Error compile assertions
+were updated to expect lazy admission. The final focused lower and view oracle tests
+pass. The integration branch was still absent from origin at the last check. This
+work is available on its own branch; whole-project compilation and a green integration
+gate are not claimed.

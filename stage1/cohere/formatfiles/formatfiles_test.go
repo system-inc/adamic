@@ -22,6 +22,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
+	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
@@ -74,6 +75,21 @@ func TestThePortParsesAsGoCohereDoes(t *testing.T) {
 			}
 		}
 		agreed := !t.Failed()
+		if agreed && os.Getenv("ADAMIC_CONFIG_TIMING") != "" {
+			binary := filepath.Join(t.TempDir(), "timed")
+			if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
+				t.Fatal(err)
+			}
+			for round := 0; round < 3; round++ {
+				started := time.Now()
+				result := execute(t, nil, binary, casesPath)
+				elapsed := time.Since(started)
+				if result.exitCode != 0 || string(result.stdout) != goAnswers {
+					t.Fatal("timed formatter enumeration differs")
+				}
+				t.Logf("formatter native round %d: %.6fs, %.0f files offered/s", round, elapsed.Seconds(), float64(strings.Count(goAnswers, "\nfile "))/elapsed.Seconds())
+			}
+		}
 		if leaked := leaks(t, program, sanitized, casesPath); leaked != "" {
 			t.Errorf("leaks:\n%s", leaked)
 		}
@@ -130,6 +146,11 @@ type mutant struct {
 }
 
 var mutants = []mutant{
+	{name: "lint ignores never match", file: "enumerate.ts", from: "if (glob.matches(fromSettings))", to: "if (false)"},
+	{name: "a file glob pruning a matching directory", file: "enumerate.ts",
+		from: "if (directory && pattern !== '**' && !pattern.endsWith('/**'))", to: "if (false)"},
+	{name: "lint globs relative to the walk instead of settings", file: "enumerate.ts",
+		from: "const fromSettings = rel(layer.from, join(root, relative));", to: "const fromSettings = relative;"},
 	{
 		name: "Adamic files declined instead of held back",
 		file: "enumerate.ts",
@@ -289,11 +310,13 @@ func cohereSide(t *testing.T, request map[string]any) {
 	if err := os.WriteFile(overlayPath, overlay, 0o644); err != nil {
 		t.Fatal(err)
 	}
-	command := bounded(t, "go", "test", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicPortCases$", "./internal/format/formatfiles")
+	command := bounded(t, "go", "test", "-count=1", "-overlay="+overlayPath, "-v", "-run=^TestAdamicPortCases$", "./internal/format/formatfiles")
 	command.Dir = cohere
 	command.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
 	if output, err := command.CombinedOutput(); err != nil {
 		t.Fatalf("cohere's side: %v\n%s", err, output)
+	} else {
+		t.Logf("%s", output)
 	}
 }
 
@@ -304,10 +327,18 @@ func portDirectory(t *testing.T, applied *mutant) string {
 	directory := t.TempDir()
 	port := filepath.Join(directory, "formatfiles")
 	gitignore := filepath.Join(directory, "gitignore")
-	for _, made := range []string{port, gitignore} {
+	config := filepath.Join(directory, "config")
+	for _, made := range []string{port, gitignore, config} {
 		if err := os.Mkdir(made, 0o755); err != nil {
 			t.Fatal(err)
 		}
+	}
+	contents, err := os.ReadFile("../config/glob.ts")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(config, "glob.ts"), contents, 0644); err != nil {
+		t.Fatal(err)
 	}
 	for _, name := range gitignoreFiles {
 		contents, err := os.ReadFile(filepath.Join("..", "gitignore", name))
@@ -447,29 +478,9 @@ func natively(t *testing.T, program *ir.Program, arguments ...string) (run, stri
 	return execute(t, environment, binary, arguments...), binary
 }
 
-// leaks returns a report of everything the finished port never let go of, or "": macOS's leaks tool on
-// an unsanitized build, or LeakSanitizer on Linux running the sanitized binary again, as the oracle
-// checks every fixture.
+// leaks returns a report of everything the finished port never let go of, or "": the leak check the
+// oracle runs on every fixture (internal/leakcheck), on the sanitized binary and the port's C.
 func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...string) string {
 	t.Helper()
-	switch runtime.GOOS {
-	case "darwin":
-		binary := filepath.Join(t.TempDir(), "port")
-		if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
-			t.Fatal(err)
-		}
-		report := execute(t, nil, "leaks", append([]string{"--atExit", "--", binary}, arguments...)...)
-		if report.exitCode == 0 {
-			return ""
-		}
-		return string(report.stdout)
-	case "linux":
-		report := execute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, arguments...)
-		if report.exitCode == 0 {
-			return ""
-		}
-		return fmt.Sprintf("exit %d\n%s", report.exitCode, report.stderr)
-	}
-	t.Fatalf("no leak check for %s", runtime.GOOS)
-	return ""
+	return leakcheck.Report(t, native.C(program), sanitized, arguments...)
 }

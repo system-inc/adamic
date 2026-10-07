@@ -1,0 +1,12 @@
+interface Base { readonly kind: 'identifier' | 'literal'; }
+interface Identifier extends Base {
+ readonly kind: 'identifier';
+ readonly name: string;
+ readonly opaque: (value: number) => number;
+}
+function make(): Base { const kind: 'identifier' = 'identifier'; const raw = { kind, name: 'ok'.repeat(2) }; return raw; }
+function identifier(value: Base): Identifier { return value as Identifier; }
+function helper(value: Identifier): (value: number) => number { return value.opaque; }
+function apply(value: Identifier, callback: (value: Identifier) => (value: number) => number): void { callback(value); }
+apply(identifier(make()), helper);
+console.log('must not run');

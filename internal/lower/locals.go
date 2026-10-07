@@ -16,6 +16,9 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
 	}
 	statements := []ir.Statement{}
 	for _, declaration := range list.AsVariableDeclarationList().Declarations.Nodes {
+		if l.nodeRequireBinding(declaration) {
+			continue
+		}
 		name := declaration.Name()
 		if name.Kind == ast.KindArrayBindingPattern || name.Kind == ast.KindObjectBindingPattern {
 			// const [a, b] = tuple, and const { x, y } = object (collections.go).
@@ -198,7 +201,7 @@ func (l *lowering) touch(local int) {
 // checked reports whether touching a local must be checked against the temporal dead zone: a
 // global reached from a function or a cyclic module body may precede its declaration.
 func (l *lowering) checked(local int) bool {
-	return l.result.Locals[local].Global && (l.function != nil || l.cyclicModules)
+	return (l.result.Locals[local].Global && (l.function != nil || l.cyclicModules)) || (l.function != nil && l.result.Locals[local].Preallocated && l.result.Locals[local].Captured)
 }
 
 func (l *lowering) constant(value string) int {

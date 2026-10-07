@@ -414,6 +414,10 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 		l.result.CheckedFields[l.fieldName(target.Name())] = true
 		l.optionalViewWriteField(l.fieldName(target.Name()))
 	}
+	uninitialized := l.uninitializedInitializer(valueNode)
+	if member := l.checker.GetSymbolAtLocation(target.Name()); uninitialized && member != nil && accessorSymbol(member) {
+		return nil, l.notYet(target, "deinitializing an accessor property")
+	}
 	if call, handled, err := l.superAccessor(target, valueNode); handled {
 		if err != nil {
 			return nil, err
@@ -430,27 +434,33 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 	if object.Type() != ir.Object {
 		return nil, l.notYet(target, "assigning a field of a "+typeName(object.Type()))
 	}
-	value, err := l.expression(valueNode)
-	if err != nil {
-		return nil, err
-	}
 	of, err := l.typeOf(target)
 	if field := l.checker.GetSymbolAtLocation(target.Name()); field != nil {
 		// What the field is declared to keep, not what the checker narrowed this write to.
 		of, err = l.typeOfSymbol(target, field)
 	}
-	if err != nil || slotless(of) && !(of == ir.MaybeBoolean && l.result.OptionalViewFields[l.fieldName(target.Name())]) || slotless(value.Type()) && !(value.Type() == ir.MaybeBoolean && l.result.OptionalViewFields[l.fieldName(target.Name())]) {
+	if err != nil || censusFieldSlotless(of) && !(of == ir.MaybeBoolean && l.result.OptionalViewFields[l.fieldName(target.Name())]) {
+		return nil, l.notYet(target, "storing "+l.checker.TypeToString(l.checker.GetTypeAtLocation(target))+" in a field")
+	}
+	value := uninitializedValue(of)
+	if !uninitialized {
+		value, err = l.expression(valueNode)
+		if err != nil {
+			return nil, err
+		}
+	}
+	if censusFieldSlotless(value.Type()) && !(value.Type() == ir.MaybeBoolean && l.result.OptionalViewFields[l.fieldName(target.Name())]) {
 		return nil, l.notYet(target, "storing "+l.checker.TypeToString(l.checker.GetTypeAtLocation(target))+" in a field")
 	}
 	writeContract := l.slotContract(valueNode, l.concrete(l.checker.GetTypeAtLocation(valueNode)))
 	rawValue := value
 	// A field of number | undefined is given a packed word, whatever it's assigned.
 	value = fit(value, of)
-	if call, handled := l.privateStaticStore(target, object, value); handled {
+	if call, handled := l.privateStaticStore(target, object, value, uninitialized); handled {
 		return []ir.Statement{ir.Evaluate{Value: call}}, nil
 	}
 	// A #private field is stored under its name, # and all, which nothing else can spell.
-	write := ir.SetProperty{Object: object, Name: l.fieldName(target.Name()), Value: value, Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)}
+	write := ir.SetProperty{Object: object, Name: l.fieldName(target.Name()), Value: value, Uninitialized: uninitialized, Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)}
 	if l.result.OptionalViewFields[write.Name] {
 		if writeContract == 0 {
 			return nil, l.notYet(target, "a checked write without a reifiable source-slot type certificate")

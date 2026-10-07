@@ -1,0 +1,43 @@
+=== RUN   TestCheckedViewLazyUnread
+=== RUN   TestCheckedViewLazyUnread/unread
+    checked_views_lazy_test.go:13: gate cache node miss
+    checked_views_lazy_test.go:22: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewLazyUnread/unread-untagged
+    checked_views_lazy_test.go:13: gate cache node miss
+    checked_views_lazy_test.go:22: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewLazyUnread/unread-mixed
+    checked_views_lazy_test.go:13: gate cache node miss
+    checked_views_lazy_test.go:22: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+--- PASS: TestCheckedViewLazyUnread (5.36s)
+    --- PASS: TestCheckedViewLazyUnread/unread (1.83s)
+    --- PASS: TestCheckedViewLazyUnread/unread-untagged (1.92s)
+    --- PASS: TestCheckedViewLazyUnread/unread-mixed (1.61s)
+=== RUN   TestCheckedViewLazyHelperMutant
+=== RUN   TestCheckedViewLazyHelperMutant/helper
+    checked_views_lazy_test.go:46: caught helper mutant: /workspace/adamic/stage3/interface-downcasts/lazy/helper-mutant.a:9:72: Adamic 0.1 refuses checked view read of field opaque with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewLazyHelperMutant/generic
+    checked_views_lazy_test.go:46: caught helper mutant: /workspace/adamic/stage3/interface-downcasts/lazy/generic-mutant.a:9:85: Adamic 0.1 refuses checked view read of field opaque with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewLazyHelperMutant/callback
+    checked_views_lazy_test.go:46: caught helper mutant: /workspace/adamic/stage3/interface-downcasts/lazy/callback-mutant.a:9:72: Adamic 0.1 refuses checked view read of field opaque with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewLazyHelperMutant/field
+    checked_views_lazy_test.go:46: caught helper mutant: /workspace/adamic/stage3/interface-downcasts/lazy/field-mutant.a:9:72: Adamic 0.1 refuses checked view read of field opaque with unsupported callable contract; prove or implement the callable contract before reading this field
+--- PASS: TestCheckedViewLazyHelperMutant (0.47s)
+    --- PASS: TestCheckedViewLazyHelperMutant/helper (0.10s)
+    --- PASS: TestCheckedViewLazyHelperMutant/generic (0.11s)
+    --- PASS: TestCheckedViewLazyHelperMutant/callback (0.16s)
+    --- PASS: TestCheckedViewLazyHelperMutant/field (0.10s)
+=== RUN   TestCheckedViewLazyMissingNameMutant
+    checked_views_lazy_test.go:53: gate cache node miss
+    checked_views_lazy_test.go:58: gate cache node miss
+    checked_views_lazy_test.go:63: caught missing-name mutant: adamic: panic: field read failed: value.name is not initialized; expected string, found missing
+    checked_views_lazy_test.go:63: caught missing-name mutant: adamic: panic: field read failed: value.name is not initialized; expected string, found missing
+    checked_views_lazy_test.go:63: caught missing-name mutant: adamic: panic: field read failed: value.name is not initialized; expected string, found missing
+--- PASS: TestCheckedViewLazyMissingNameMutant (1.44s)
+PASS
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=8
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	7.316s

@@ -36,7 +36,10 @@ func TestSharedArrayContractAdapter(t *testing.T) {
 			l := &lowering{program: program, checker: checked, result: &ir.Program{}}
 			id, err := l.viewContract(node, target)
 			if probe.rejected {
-				if err == nil {
+				if err != nil {
+					t.Fatal(err)
+				}
+				if supportedSlotContract(l.result, id, map[ir.ViewContractID]bool{}) {
 					t.Fatal("unknown element was certified")
 				}
 				return
