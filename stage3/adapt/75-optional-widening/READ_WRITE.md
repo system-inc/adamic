@@ -1,10 +1,32 @@
 (a) Fresh literal initialization: **2 sites**.
-(b) Adamic source `never`: **47 sites**; stock-checker discrepancy retained below.
+(b) Unobserved original census sites: **5 sites**; no dead-code proof.
 (c) Tag-checked class downcast: **17 sites**.
-Rest: **34 sites** stay refused; every site has source, target and write witnesses below.
-All **100** write-reaching sites occur once; the **291** read-only sites and existing adaptation edits are unchanged.
+Rest: **76 sites**, including **42 exercised sites** moved from (b); the grouped pattern table has 70 rows.
+Coverage: **42/47 ran**; 301/301 driver cases, 136,020 compiler/conformance checks and fresh self-project exit 0.
 
-# October 7 05:30 ruling
+# Runtime coverage follow-up
+
+Parts 1 and 2, all per-site counts, the 70-row property/source/target pattern table,
+and the compiler handoff are in [coverage/READ_WRITE.md](coverage/READ_WRITE.md).
+The authoritative partition is now **(a) 2, (b) 5 unobserved, (c) 17, rest 76**.
+The original 100-site and write-witness inventory remains below for traceability.
+
+The 42 exercised expressions cannot be classified as dead from their census source.
+Reproducing all 47 relations shows that `Source: never` denotes a reduced impossible
+intersection component inside the relation, not generally the whole expression.
+Both stock tsc 6.0.3 and Adamic's pinned checker agree on that component. All 47 have
+`IsNeverIntersection`; the shim flag reads match the checker's own methods.
+The three-line [census reproducer](coverage/reduced-union.a) shows the attribution
+error. No erroneous whole-expression `never` disagreement was found.
+
+The rest patterns, counted once per relation site, are: reduced intersection
+component 42; error/wildcard sentinel 10; factory/cached result 6; union alternative
+or shared cache 6; flag-selected operation 4; cache view 2; diagnostic enrichment 2;
+array metadata, option-schema dispatch, host enrichment and unproved assertion 1 each.
+No source adaptation changed, no checker option was weakened for coverage, and no
+zero-hit site is asserted unreachable. Six coverage/reporting mutants were caught.
+
+# October 7 05:30 ruling, with coverage dispositions updated
 
 This replaces the 04:35 write handoff with exactly one bucket per original write-reaching location.
 The full original 100-site inventory and all 58 witnesses remain below for traceability.
@@ -13,7 +35,14 @@ The full original 100-site inventory and all 58 witnesses remain below for trace
 
 Case (a) uses the expressly sanctioned `sys.ts:155` initial-construction pattern. The literal is the allocation arm of `(v || (v = {}))[k] = x`: no second alias to that allocation exists before the immediate initializing write. The primary wider-view binding is part of that expression. This does not preserve freshness after storing, passing, capturing or returning the value. Later writes on the old-value arm have a source binding whose static type already declares the indexed optional members, and are not additional `{}` widening sites.
 
-**Case (b) is a classification of the Adamic census relation, not an independent dead-code proof for upstream tsc.** All 47 records say `Source: never`, including the ruling examples at utilities.ts:4416 (two relations), factory/utilities.ts:363 and factory/nodeFactory.ts:7105. The stock checker does not set `TypeFlags.Never` at any of these 47 located expressions. At checker.ts:52739 its printed type is `never` but its flags are the error/any representation; 46 print inhabited types. The original census and bound stock evidence are both preserved. Under the ruling these 47 static Adamic relations go in (b); the compiler must reconcile the discrepancy before using them as a native unreachable-code proof. No declaration or reachability adaptation is proposed here.
+**Case (b) now contains only the five unobserved sites.** The original ruling
+classified 47 recursively found source components as `never`. The coverage trace
+reproduces all 47 but records their paths: union arms, nested properties and
+callback parameter views. Each reported component is an intersection reduced to
+`never`, rather than a TypeFlags.Never whole expression. Both checkers agree on the
+impossible component. The 42 exercised sites are moved to rest; the other five are
+unobserved in these workloads and carry no native reachability proof. The original
+census evidence is preserved, with corrected attribution in coverage/.
 
 Case (c) requires a positive, dominating tag condition on the same checker-bound value as the downcast. Parentheses and assertions are unwrapped; identifier identity is a checker symbol, not spelling. The analyzer recognizes true branches of `if`, conditional expressions and the right-hand evaluation of `&&`. `TypeFlags.TypeParameter` proves TypeParameter; `TypeFlags.Union` proves UnionType; `TypeFlags.Object` together with `ObjectFlags.Anonymous` proves AnonymousType. Enum members resolve to their declarations. Composite TypeVariable tags, calls returning allegedly appropriate types, and unproved mutable flag aliases do not qualify.
 
@@ -26,57 +55,17 @@ The proof is deliberately local and conservative. The original write graph joins
 | sys.ts:155:35 | {} | Partial<Levels> | src/compiler/sys.ts:155:50; src/compiler/sys.ts:155:17: (customLevels &#124;&#124; (customLevels = {}))[level] = Number(customLevel) | Empty literal has no initializer callbacks, spreads or references. Its only initial binding is the wider-view receiver binding; the same evaluation immediately writes through that receiver. No other alias to this allocation can be stored, passed or captured before this initial write. Freshness ends at that binding/initialization; no later write through an escaped value is licensed. This narrowly follows the expressly sanctioned sys.ts:155 construction pattern, not a general exemption for stored literals. Primary binding: src/compiler/sys.ts:146:13. |
 | commandLineParser.ts:3785:33 | {} | CompilerOptions | src/compiler/commandLineParser.ts:3785:50; src/compiler/commandLineParser.ts:3785:13: (defaultOptions &#124;&#124; (defaultOptions = {}))[opt.name] = convertJsonOption(opt, jsonOptions[id], basePath, errors) | Empty literal has no initializer callbacks, spreads or references. Its only initial binding is the wider-view receiver binding; the same evaluation immediately writes through that receiver. No other alias to this allocation can be stored, passed or captured before this initial write. Freshness ends at that binding/initialization; no later write through an escaped value is licensed. This narrowly follows the expressly sanctioned sys.ts:155 construction pattern, not a general exemption for stored literals. Primary binding: src/compiler/commandLineParser.ts:3777:117. |
 
-## (b) Adamic static source never
+## (b) Five unobserved original census sites
 
 | Site in src/compiler | Adamic source | Target | Stock bound expression type | Never evidence |
 |---|---|---|---|---|
-| utilities.ts:4416:20 | never | Expression | (LiteralExpression & StringLiteral) &#124; undefined | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
-| utilities.ts:4416:52 | never | LiteralExpression & StringLiteral | LiteralExpression & StringLiteral | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
 | factory/nodeFactory.ts:7105:63 | never | ParameterDeclaration | ParameterDeclaration | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
 | factory/utilities.ts:363:96 | never | BigIntLiteral | AccessorDeclaration & { readonly name: StringLiteral &#124; Identifier &#124; NoSubstitutionTemplateLiteral &#124; NumericLiteral &#124; ComputedPropertyName &#124; BigIntLiteral; } | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
-| checker.ts:13970:83 | never | LateBoundName | (TypeElement &#124; ClassElement &#124; ObjectLiteralElement) & (LateBoundDeclaration &#124; LateBoundBinaryExpressionDeclaration) | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
-| checker.ts:20007:71 | never | Expression | LiteralExpression & StringLiteral | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
-| checker.ts:32496:51 | never | Declaration | (MethodDeclaration & DynamicNamedDeclaration) &#124; (GetAccessorDeclaration & DynamicNamedDeclaration) &#124; (SetAccessorDeclaration & DynamicNamedDeclaration) &#124; (PropertyAssignment & DynamicNamedDeclaration) &#124; (ShorthandPropertyAssignment & DynamicNamedDeclaration) &#124; (SpreadAssignment & DynamicNamedDeclaration) | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
-| checker.ts:33480:121 | never | ArrayBindingPattern | StringLiteral &#124; Identifier &#124; ObjectBindingPattern &#124; ArrayBindingPattern &#124; NoSubstitutionTemplateLiteral &#124; ... 6 more ... &#124; JsxNamespacedName | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
-| checker.ts:33486:62 | never | ComputedPropertyName | ComputedPropertyName | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
-| checker.ts:44963:183 | never | ArrayBindingPattern | Identifier | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
-| checker.ts:47283:40 | never | Node | StringLiteral &#124; Identifier &#124; NoSubstitutionTemplateLiteral &#124; NumericLiteral &#124; ComputedPropertyName &#124; PrivateIdentifier &#124; BigIntLiteral | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
-| checker.ts:47284:36 | never | Node | ClassElement &#124; ParameterPropertyDeclaration | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
-| checker.ts:47301:13 | never | Node | ClassElement &#124; ParameterPropertyDeclaration &#124; undefined | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
-| checker.ts:48433:60 | never | Node | ImportEqualsDeclaration &#124; ImportClause &#124; NamespaceImport &#124; ImportSpecifier &#124; BindingElementOfBareOrAccessedRequire | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
-| checker.ts:48454:23 | never | Node | AliasDeclarationNode | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
-| checker.ts:48459:100 | never | Node | ImportEqualsDeclaration &#124; VariableDeclarationInitializedTo<RequireOrImportCall &#124; AccessExpression> &#124; ... 4 more ... &#124; BindingElementOfBareOrAccessedRequire | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
-| checker.ts:48462:25 | never | Node | ImportEqualsDeclaration &#124; VariableDeclarationInitializedTo<RequireOrImportCall &#124; AccessExpression> &#124; ... 4 more ... &#124; BindingElementOfBareOrAccessedRequire | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
-| checker.ts:48521:72 | never | Node | ExportSpecifier &#124; VariableDeclarationInitializedTo<RequireOrImportCall &#124; AccessExpression> &#124; ... 4 more ... &#124; BindingElementOfBareOrAccessedRequire | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
-| checker.ts:48523:27 | never | Node | ExportSpecifier &#124; VariableDeclarationInitializedTo<RequireOrImportCall &#124; AccessExpression> &#124; ... 4 more ... &#124; BindingElementOfBareOrAccessedRequire | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
-| checker.ts:48523:69 | never | Node | ExportSpecifier &#124; VariableDeclarationInitializedTo<RequireOrImportCall &#124; AccessExpression> &#124; ... 4 more ... &#124; BindingElementOfBareOrAccessedRequire | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
-| checker.ts:48529:72 | never | Node | ExportSpecifier &#124; ImportClause &#124; NamespaceImport &#124; ImportSpecifier &#124; NamespaceExport &#124; BindingElementOfBareOrAccessedRequire | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
-| checker.ts:48535:27 | never | Node | ExportSpecifier &#124; ImportClause &#124; NamespaceImport &#124; ImportSpecifier &#124; NamespaceExport &#124; BindingElementOfBareOrAccessedRequire | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
-| checker.ts:48547:31 | never | Node | AliasDeclarationNode | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
 | checker.ts:50318:76 | never | Node | LiteralExpression & StringLiteral | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
 | checker.ts:52739:39 | never | Node | never | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
-| transformers/ts.ts:1069:52 | never | Node | ParameterPropertyDeclaration | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
-| transformers/ts.ts:1453:41 | never | Identifier | Identifier | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
-| transformers/ts.ts:1460:25 | never | Node | ParameterPropertyDeclaration | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
-| transformers/classFields.ts:694:20 | never | BigIntLiteral | PropertyAssignment & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; } | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
-| transformers/classFields.ts:729:20 | never | ArrayBindingPattern | VariableDeclaration & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; } | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
-| transformers/classFields.ts:753:20 | never | ArrayBindingPattern | ParameterDeclaration & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; } | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
-| transformers/classFields.ts:777:20 | never | ArrayBindingPattern | BindingElement & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; } | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
-| transformers/esDecorators.ts:1412:99 | never | PrivateIdentifier | (node: PrivateIdentifierMethodDeclaration, modifiers: ModifiersArray &#124; undefined) => ObjectLiteralExpression | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
-| transformers/esDecorators.ts:1427:99 | never | PrivateIdentifier | (node: PrivateIdentifierGetAccessorDeclaration, modifiers: ModifiersArray &#124; undefined) => ObjectLiteralExpression | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
-| transformers/esDecorators.ts:1442:99 | never | PrivateIdentifier | (node: PrivateIdentifierSetAccessorDeclaration, modifiers: ModifiersArray &#124; undefined) => ObjectLiteralExpression | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
-| transformers/esDecorators.ts:1974:20 | never | BigIntLiteral | PropertyAssignment & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; } | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
-| transformers/esDecorators.ts:1996:20 | never | ArrayBindingPattern | VariableDeclaration & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; } | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
-| transformers/esDecorators.ts:2020:20 | never | ArrayBindingPattern | BindingElement & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; } | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
-| transformers/module/module.ts:1566:55 | never | ExternalModuleReference | ImportEqualsDeclaration & { moduleReference: ExternalModuleReference; } | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
-| transformers/module/module.ts:1588:63 | never | ExternalModuleReference | ImportEqualsDeclaration & { moduleReference: ExternalModuleReference; } | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
-| transformers/module/system.ts:775:73 | never | ExternalModuleReference | ImportEqualsDeclaration & { moduleReference: ExternalModuleReference; } | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
-| transformers/module/esnextAnd2015.ts:277:55 | never | ExternalModuleReference | ImportEqualsDeclaration & { moduleReference: ExternalModuleReference; } | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
-| binder.ts:738:67 | never | ArrayBindingPattern | StringLiteral &#124; Identifier &#124; ObjectBindingPattern &#124; ArrayBindingPattern &#124; NoSubstitutionTemplateLiteral &#124; ... 6 more ... &#124; JsxNamespacedName | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
 | binder.ts:3293:68 | never | Expression | (PropertyAccessExpression & DynamicNamedDeclaration) &#124; (BindablePropertyAssignmentExpression & DynamicNamedDeclaration) &#124; (BindablePropertyAssignmentExpression & DynamicNamedBinaryExpression) &#124; (ElementAccessExpression & ... 2 more ... & DynamicNamedDeclaration) | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
-| binder.ts:3313:64 | never | Expression | (PropertyAccessExpression & DynamicNamedDeclaration) &#124; (BindablePropertyAssignmentExpression & DynamicNamedDeclaration) &#124; (BindablePropertyAssignmentExpression & DynamicNamedBinaryExpression) &#124; (ElementAccessExpression & ... 2 more ... & DynamicNamedDeclaration) | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
-| binder.ts:3427:55 | never | Expression | BindablePropertyAssignmentExpression & (DynamicNamedDeclaration &#124; DynamicNamedBinaryExpression) | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
-| binder.ts:3705:86 | never | Node | ParameterPropertyDeclaration | Original refusal census Source=never; stock Never flag=False. Compiler reconciliation required. |
+
+Zero counts are observations, not dead-code proofs. The 42 exercised sites are in rest below.
 
 ## (c) Guarded class view
 
@@ -100,9 +89,9 @@ The proof is deliberately local and conservative. The original write graph joins
 | checker.ts:34595:166 | Type | TypeParameter | src/compiler/checker.ts:34593:13: containingType.flags & TypeFlags.TypeParameter; bound receiver=containingType | src/compiler/types.ts:6881:5; writes: [W018](#w018): default = targetDefault ? instantiateType(targetDefault, typeParameter.mapper) : noConstraintType<br>[W019](#w019): default = resolvingDefaultType<br>[W020](#w020): default = defaultType<br>[W021](#w021): default = circularConstraintType<br>[W023](#w023): constraint = targetConstraint ? instantiateType(targetConstraint, typeParameter.mapper) : noConstraintType<br>[W024](#w024): constraint = getInferredTypeParameterConstraint(typeParameter) &#124;&#124; noConstraintType<br>[W025](#w025): constraint = type<br>[W028](#w028): constraint = noConstraintType<br>[W044](#w044): mapper = mapper |
 | checker.ts:34614:57 | Type | TypeParameter | src/compiler/checker.ts:34613:17: thisType.flags & TypeFlags.TypeParameter; bound receiver=thisType | src/compiler/types.ts:6881:5; writes: [W018](#w018): default = targetDefault ? instantiateType(targetDefault, typeParameter.mapper) : noConstraintType<br>[W019](#w019): default = resolvingDefaultType<br>[W020](#w020): default = defaultType<br>[W021](#w021): default = circularConstraintType<br>[W023](#w023): constraint = targetConstraint ? instantiateType(targetConstraint, typeParameter.mapper) : noConstraintType<br>[W024](#w024): constraint = getInferredTypeParameterConstraint(typeParameter) &#124;&#124; noConstraintType<br>[W025](#w025): constraint = type<br>[W028](#w028): constraint = noConstraintType<br>[W044](#w044): mapper = mapper |
 
-## Rest: full refused write list
+## Rest: 76 relations, including 42 exercised former (b) sites
 
-No further source adaptation is made. These require a source declaration or further compiler proof within the three permitted cases. A fresh result from a helper is not a fresh object literal; a tag supplied to a constructor is not itself a dominating tag check; a composite TypeVariable tag does not prove TypeParameter. The generic and sentinel relations retain the original conservative aliases and their exact write witnesses.
+The single grouped pattern table, with checks and provenance before each write, is in [coverage/READ_WRITE.md#pattern-table](coverage/READ_WRITE.md#pattern-table). No further source adaptation is made. These require a source declaration or further compiler proof within the three permitted cases. A fresh result from a helper is not a fresh object literal; a tag supplied to a constructor is not itself a dominating tag check; a composite TypeVariable tag does not prove TypeParameter. The generic and sentinel relations retain the original conservative aliases and their exact write witnesses.
 
 | Site in src/compiler | Source type | Target type | First refused p | What is written |
 |---|---|---|---|---|
@@ -140,6 +129,50 @@ No further source adaptation is made. These require a source declaration or furt
 | builder.ts:575:36 | DiagnosticRelatedInformation | Diagnostic | reportsUnnecessary | [W007](#w007): reportsUnnecessary = diagnostic.reportsUnnecessary<br>[W008](#w008): reportsDeprecated = diagnostic.reportDeprecated<br>[W009](#w009): source = diagnostic.source<br>[W010](#w010): skippedOn = diagnostic.skippedOn<br>[W011](#w011): relatedInformation = relatedInformation ?<br>            relatedInformation.length ?<br>                relatedInformation.map(r => convertToDiagnosticRelatedInformation(r, diagnosticFilePath, newProgram, toPathInBuildInfoDirectory)) :<br>                [] :<br>            undefined |
 | builder.ts:1505:48 | ReusableDiagnosticRelatedInformation | ReusableDiagnostic | reportsUnnecessary | [W002](#w002): reportsUnnecessary = diagnostic.reportsUnnecessary<br>[W003](#w003): reportDeprecated = diagnostic.reportsDeprecated<br>[W004](#w004): source = diagnostic.source<br>[W005](#w005): skippedOn = diagnostic.skippedOn<br>[W006](#w006): relatedInformation = relatedInformation ?<br>                relatedInformation.length ?<br>                    relatedInformation.map(r => toReusableDiagnosticRelatedInformation(r, diagnosticFilePath)) :<br>                    [] :<br>                undefined |
 | tsbuildPublic.ts:313:18 | SolutionBuilderHostBase<T> | SolutionBuilderHost<T> | reportErrorSummary | [W057](#w057): reportErrorSummary = reportErrorSummary |
+| utilities.ts:4416:20 | never (reduced relation component) | Expression | id | src/compiler/checker.ts:1462:9: id = nextNodeId |
+| utilities.ts:4416:52 | never (reduced relation component) | LiteralExpression & StringLiteral | id | src/compiler/checker.ts:1462:9: id = nextNodeId |
+| checker.ts:13970:83 | never (reduced relation component) | LateBoundName | id | src/compiler/checker.ts:1462:9: id = nextNodeId |
+| checker.ts:20007:71 | never (reduced relation component) | Expression | id | src/compiler/checker.ts:1462:9: id = nextNodeId |
+| checker.ts:32496:51 | never (reduced relation component) | Declaration | localSymbol | src/compiler/binder.ts:922:17: localSymbol = local |
+| checker.ts:33480:121 | never (reduced relation component) | ArrayBindingPattern | id | src/compiler/checker.ts:1462:9: id = nextNodeId |
+| checker.ts:33486:62 | never (reduced relation component) | ComputedPropertyName | id | src/compiler/checker.ts:1462:9: id = nextNodeId |
+| checker.ts:44963:183 | never (reduced relation component) | ArrayBindingPattern | id | src/compiler/checker.ts:1462:9: id = nextNodeId |
+| checker.ts:47283:40 | never (reduced relation component) | Node | id | src/compiler/checker.ts:1462:9: id = nextNodeId |
+| checker.ts:47284:36 | never (reduced relation component) | Node | id | src/compiler/checker.ts:1462:9: id = nextNodeId |
+| checker.ts:47301:13 | never (reduced relation component) | Node | id | src/compiler/checker.ts:1462:9: id = nextNodeId |
+| checker.ts:48433:60 | never (reduced relation component) | Node | id | src/compiler/checker.ts:1462:9: id = nextNodeId |
+| checker.ts:48454:23 | never (reduced relation component) | Node | id | src/compiler/checker.ts:1462:9: id = nextNodeId |
+| checker.ts:48459:100 | never (reduced relation component) | Node | id | src/compiler/checker.ts:1462:9: id = nextNodeId |
+| checker.ts:48462:25 | never (reduced relation component) | Node | id | src/compiler/checker.ts:1462:9: id = nextNodeId |
+| checker.ts:48521:72 | never (reduced relation component) | Node | id | src/compiler/checker.ts:1462:9: id = nextNodeId |
+| checker.ts:48523:27 | never (reduced relation component) | Node | id | src/compiler/checker.ts:1462:9: id = nextNodeId |
+| checker.ts:48523:69 | never (reduced relation component) | Node | id | src/compiler/checker.ts:1462:9: id = nextNodeId |
+| checker.ts:48529:72 | never (reduced relation component) | Node | id | src/compiler/checker.ts:1462:9: id = nextNodeId |
+| checker.ts:48535:27 | never (reduced relation component) | Node | id | src/compiler/checker.ts:1462:9: id = nextNodeId |
+| checker.ts:48547:31 | never (reduced relation component) | Node | id | src/compiler/checker.ts:1462:9: id = nextNodeId |
+| transformers/ts.ts:1069:52 | never (reduced relation component) | Node | id | src/compiler/checker.ts:1462:9: id = nextNodeId |
+| transformers/ts.ts:1453:41 | never (reduced relation component) | Identifier | id | src/compiler/checker.ts:1462:9: id = nextNodeId |
+| transformers/ts.ts:1460:25 | never (reduced relation component) | Node | id | src/compiler/checker.ts:1462:9: id = nextNodeId |
+| transformers/classFields.ts:694:20 | never (reduced relation component) | BigIntLiteral | id | src/compiler/checker.ts:1462:9: id = nextNodeId |
+| transformers/classFields.ts:729:20 | never (reduced relation component) | ArrayBindingPattern | id | src/compiler/checker.ts:1462:9: id = nextNodeId |
+| transformers/classFields.ts:753:20 | never (reduced relation component) | ArrayBindingPattern | id | src/compiler/checker.ts:1462:9: id = nextNodeId |
+| transformers/classFields.ts:777:20 | never (reduced relation component) | ArrayBindingPattern | id | src/compiler/checker.ts:1462:9: id = nextNodeId |
+| transformers/esDecorators.ts:1412:99 | never (reduced relation component) | PrivateIdentifier | id | src/compiler/checker.ts:1462:9: id = nextNodeId |
+| transformers/esDecorators.ts:1427:99 | never (reduced relation component) | PrivateIdentifier | id | src/compiler/checker.ts:1462:9: id = nextNodeId |
+| transformers/esDecorators.ts:1442:99 | never (reduced relation component) | PrivateIdentifier | id | src/compiler/checker.ts:1462:9: id = nextNodeId |
+| transformers/esDecorators.ts:1974:20 | never (reduced relation component) | BigIntLiteral | id | src/compiler/checker.ts:1462:9: id = nextNodeId |
+| transformers/esDecorators.ts:1996:20 | never (reduced relation component) | ArrayBindingPattern | id | src/compiler/checker.ts:1462:9: id = nextNodeId |
+| transformers/esDecorators.ts:2020:20 | never (reduced relation component) | ArrayBindingPattern | id | src/compiler/checker.ts:1462:9: id = nextNodeId |
+| transformers/module/module.ts:1566:55 | never (reduced relation component) | ExternalModuleReference | id | src/compiler/checker.ts:1462:9: id = nextNodeId |
+| transformers/module/module.ts:1588:63 | never (reduced relation component) | ExternalModuleReference | id | src/compiler/checker.ts:1462:9: id = nextNodeId |
+| transformers/module/system.ts:775:73 | never (reduced relation component) | ExternalModuleReference | id | src/compiler/checker.ts:1462:9: id = nextNodeId |
+| transformers/module/esnextAnd2015.ts:277:55 | never (reduced relation component) | ExternalModuleReference | id | src/compiler/checker.ts:1462:9: id = nextNodeId |
+| binder.ts:738:67 | never (reduced relation component) | ArrayBindingPattern | id | src/compiler/checker.ts:1462:9: id = nextNodeId |
+| binder.ts:3313:64 | never (reduced relation component) | Expression | id | src/compiler/checker.ts:1462:9: id = nextNodeId |
+| binder.ts:3427:55 | never (reduced relation component) | Expression | id | src/compiler/checker.ts:1462:9: id = nextNodeId |
+| binder.ts:3705:86 | never (reduced relation component) | Node | id | src/compiler/checker.ts:1462:9: id = nextNodeId |
+
+The original 34 rows retain their census source/target components. The 42 added rows have positive expression-evaluation counts; their impossible relation components do not denote executing objects. The complete nested paths and outer types are in coverage/evidence/checker.json.gz.
 
 ## Reproduction and failing proofs
 
