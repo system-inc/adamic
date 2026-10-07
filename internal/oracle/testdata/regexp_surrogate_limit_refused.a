@@ -1,0 +1,2 @@
+const limit = [100, 0.5][0] ?? 0;
+console.log('a🌍b'.split(/\B/u, limit).join('|'));
