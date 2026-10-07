@@ -1,0 +1,145 @@
+file	/workspace/wave-27-scratch/f801-first/control-000.a
+864	865	base/correctness-require-orm-column-nullable-parity	columnNullableButTypeNot	Column declares 'nullable: true' but the type 'string' does not include null/undefined \u2014 a NULL row value will not match this type	0	0
+file	/workspace/wave-27-scratch/f801-first/control-001.a
+file	/workspace/wave-27-scratch/f801-first/control-002.a
+file	/workspace/wave-27-scratch/f801-first/control-003.a
+file	/workspace/wave-27-scratch/f801-first/control-004.a
+file	/workspace/wave-27-scratch/f801-first/control-005.a
+file	/workspace/wave-27-scratch/f801-first/control-006.a
+864	865	base/correctness-require-orm-column-nullable-parity	columnNullableButTypeNot	Column declares 'nullable: true' but the type 'never' does not include null/undefined \u2014 a NULL row value will not match this type	0	0
+file	/workspace/wave-27-scratch/f801-first/control-007.a
+870	871	base/correctness-require-orm-column-nullable-parity	columnNullableButTypeNot	Column declares 'nullable: true' but the type 'string' does not include null/undefined \u2014 a NULL row value will not match this type	0	0
+file	/workspace/wave-27-scratch/f801-first/control-008.a
+file	/workspace/wave-27-scratch/f801-first/control-009.a
+file	/workspace/wave-27-scratch/f801-first/control-010.a
+file	/workspace/wave-27-scratch/f801-first/control-011.a
+file	/workspace/wave-27-scratch/f801-first/control-012.a
+file	/workspace/wave-27-scratch/f801-first/control-013.a
+870	871	base/correctness-require-orm-column-nullable-parity	columnNullableButTypeNot	Column declares 'nullable: true' but the type 'never' does not include null/undefined \u2014 a NULL row value will not match this type	0	0
+file	/workspace/wave-27-scratch/f801-first/control-014.a
+868	869	base/correctness-require-orm-column-nullable-parity	columnNullableButTypeNot	Column declares 'nullable: true' but the type 'string' does not include null/undefined \u2014 a NULL row value will not match this type	0	0
+file	/workspace/wave-27-scratch/f801-first/control-015.a
+file	/workspace/wave-27-scratch/f801-first/control-016.a
+file	/workspace/wave-27-scratch/f801-first/control-017.a
+file	/workspace/wave-27-scratch/f801-first/control-018.a
+file	/workspace/wave-27-scratch/f801-first/control-019.a
+file	/workspace/wave-27-scratch/f801-first/control-020.a
+868	869	base/correctness-require-orm-column-nullable-parity	columnNullableButTypeNot	Column declares 'nullable: true' but the type 'never' does not include null/undefined \u2014 a NULL row value will not match this type	0	0
+file	/workspace/wave-27-scratch/f801-first/control-021.a
+file	/workspace/wave-27-scratch/f801-first/control-022.a
+file	/workspace/wave-27-scratch/f801-first/control-023.a
+file	/workspace/wave-27-scratch/f801-first/control-024.a
+file	/workspace/wave-27-scratch/f801-first/control-025.a
+file	/workspace/wave-27-scratch/f801-first/control-026.a
+file	/workspace/wave-27-scratch/f801-first/control-027.a
+file	/workspace/wave-27-scratch/f801-first/control-028.a
+file	/workspace/wave-27-scratch/f801-first/control-029.a
+file	/workspace/wave-27-scratch/f801-first/control-030.a
+file	/workspace/wave-27-scratch/f801-first/control-031.a
+872	873	base/correctness-require-orm-column-nullable-parity	columnNullableButTypeNot	Column declares 'nullable: true' but the type 'string' does not include null/undefined \u2014 a NULL row value will not match this type	0	0
+file	/workspace/wave-27-scratch/f801-first/control-032.a
+file	/workspace/wave-27-scratch/f801-first/control-033.a
+880	881	base/correctness-require-orm-column-nullable-parity	columnNullableButTypeNot	Column declares 'nullable: true' but the type 'string' does not include null/undefined \u2014 a NULL row value will not match this type	0	0
+file	/workspace/wave-27-scratch/f801-first/control-034.a
+file	/workspace/wave-27-scratch/f801-first/control-035.a
+file	/workspace/wave-27-scratch/f801-first/control-036.a
+891	892	base/correctness-require-orm-column-nullable-parity	columnNullableButTypeNot	Column declares 'nullable: true' but the type 'string' does not include null/undefined \u2014 a NULL row value will not match this type	0	0
+891	892	base/correctness-require-orm-column-nullable-parity	columnNullableButTypeNot	Column declares 'nullable: true' but the type 'string' does not include null/undefined \u2014 a NULL row value will not match this type	0	0
+file	/workspace/wave-27-scratch/f801-first/control-037.a
+file	/workspace/wave-27-scratch/f801-first/control-038.a
+857	858	base/correctness-require-serializable-nullable-parity	typeOptionalButDecoratorNot	Type 'string | null' is nullable but @SerializableField does not declare 'optional: true'	0	0
+file	/workspace/wave-27-scratch/f801-first/control-039.a
+857	858	base/correctness-require-serializable-nullable-parity	typeOptionalButDecoratorNot	Type 'any' is nullable but @SerializableField does not declare 'optional: true'	0	0
+file	/workspace/wave-27-scratch/f801-first/control-040.a
+857	858	base/correctness-require-serializable-nullable-parity	typeOptionalButDecoratorNot	Type 'unknown' is nullable but @SerializableField does not declare 'optional: true'	0	0
+file	/workspace/wave-27-scratch/f801-first/control-041.a
+857	858	base/correctness-require-serializable-nullable-parity	typeOptionalButDecoratorNot	Type 'void' is nullable but @SerializableField does not declare 'optional: true'	0	0
+file	/workspace/wave-27-scratch/f801-first/control-042.a
+file	/workspace/wave-27-scratch/f801-first/control-043.a
+872	873	base/correctness-require-serializable-nullable-parity	decoratorOptionalButTypeNot	@SerializableField declares 'optional: true' but type 'string' does not include null/undefined	0	0
+file	/workspace/wave-27-scratch/f801-first/control-044.a
+file	/workspace/wave-27-scratch/f801-first/control-045.a
+file	/workspace/wave-27-scratch/f801-first/control-046.a
+file	/workspace/wave-27-scratch/f801-first/control-047.a
+file	/workspace/wave-27-scratch/f801-first/control-048.a
+872	873	base/correctness-require-serializable-nullable-parity	decoratorOptionalButTypeNot	@SerializableField declares 'optional: true' but type 'never' does not include null/undefined	0	0
+file	/workspace/wave-27-scratch/f801-first/control-049.a
+file	/workspace/wave-27-scratch/f801-first/control-050.a
+873	874	base/correctness-require-serializable-nullable-parity	typeOptionalButDecoratorNot	Type 'string | null' is nullable but @SerializableField does not declare 'optional: true'	0	0
+file	/workspace/wave-27-scratch/f801-first/control-051.a
+873	874	base/correctness-require-serializable-nullable-parity	typeOptionalButDecoratorNot	Type 'any' is nullable but @SerializableField does not declare 'optional: true'	0	0
+file	/workspace/wave-27-scratch/f801-first/control-052.a
+873	874	base/correctness-require-serializable-nullable-parity	typeOptionalButDecoratorNot	Type 'unknown' is nullable but @SerializableField does not declare 'optional: true'	0	0
+file	/workspace/wave-27-scratch/f801-first/control-053.a
+873	874	base/correctness-require-serializable-nullable-parity	typeOptionalButDecoratorNot	Type 'void' is nullable but @SerializableField does not declare 'optional: true'	0	0
+file	/workspace/wave-27-scratch/f801-first/control-054.a
+file	/workspace/wave-27-scratch/f801-first/control-055.a
+file	/workspace/wave-27-scratch/f801-first/control-056.a
+file	/workspace/wave-27-scratch/f801-first/control-057.a
+file	/workspace/wave-27-scratch/f801-first/control-058.a
+file	/workspace/wave-27-scratch/f801-first/control-059.a
+file	/workspace/wave-27-scratch/f801-first/control-060.a
+file	/workspace/wave-27-scratch/f801-first/control-061.a
+file	/workspace/wave-27-scratch/f801-first/control-062.a
+file	/workspace/wave-27-scratch/f801-first/control-063.a
+file	/workspace/wave-27-scratch/f801-first/control-064.a
+file	/workspace/wave-27-scratch/f801-first/control-065.a
+file	/workspace/wave-27-scratch/f801-first/control-066.a
+file	/workspace/wave-27-scratch/f801-first/control-067.a
+file	/workspace/wave-27-scratch/f801-first/control-068.a
+file	/workspace/wave-27-scratch/f801-first/control-069.a
+file	/workspace/wave-27-scratch/f801-first/control-070.a
+file	/workspace/wave-27-scratch/f801-first/control-071.a
+file	/workspace/wave-27-scratch/f801-first/control-072.a
+file	/workspace/wave-27-scratch/f801-first/control-073.a
+854	855	base/correctness-require-verify-array-parity	missingArrayRule	Array-typed property 'x' has value-level @Verify rules but no array-level rule. The validation engine applies a value-level rule per element only when the property also declares an array-level rule. Without that pairing the rule evaluates the whole array instead of each item, so every legitimate array fails validation.	0	0
+file	/workspace/wave-27-scratch/f801-first/control-074.a
+854	855	base/correctness-require-verify-array-parity	missingArrayRule	Array-typed property 'x' has value-level @Verify rules but no array-level rule. The validation engine applies a value-level rule per element only when the property also declares an array-level rule. Without that pairing the rule evaluates the whole array instead of each item, so every legitimate array fails validation.	0	0
+file	/workspace/wave-27-scratch/f801-first/control-075.a
+854	855	base/correctness-require-verify-array-parity	missingArrayRule	Array-typed property 'x' has value-level @Verify rules but no array-level rule. The validation engine applies a value-level rule per element only when the property also declares an array-level rule. Without that pairing the rule evaluates the whole array instead of each item, so every legitimate array fails validation.	0	0
+file	/workspace/wave-27-scratch/f801-first/control-076.a
+854	855	base/correctness-require-verify-array-parity	missingArrayRule	Array-typed property 'x' has value-level @Verify rules but no array-level rule. The validation engine applies a value-level rule per element only when the property also declares an array-level rule. Without that pairing the rule evaluates the whole array instead of each item, so every legitimate array fails validation.	0	0
+file	/workspace/wave-27-scratch/f801-first/control-077.a
+854	855	base/correctness-require-verify-array-parity	missingArrayRule	Array-typed property 'x' has value-level @Verify rules but no array-level rule. The validation engine applies a value-level rule per element only when the property also declares an array-level rule. Without that pairing the rule evaluates the whole array instead of each item, so every legitimate array fails validation.	0	0
+file	/workspace/wave-27-scratch/f801-first/control-078.a
+854	855	base/correctness-require-verify-array-parity	missingArrayRule	Array-typed property 'x' has value-level @Verify rules but no array-level rule. The validation engine applies a value-level rule per element only when the property also declares an array-level rule. Without that pairing the rule evaluates the whole array instead of each item, so every legitimate array fails validation.	0	0
+file	/workspace/wave-27-scratch/f801-first/control-079.a
+854	855	base/correctness-require-verify-array-parity	missingArrayRule	Array-typed property 'x' has value-level @Verify rules but no array-level rule. The validation engine applies a value-level rule per element only when the property also declares an array-level rule. Without that pairing the rule evaluates the whole array instead of each item, so every legitimate array fails validation.	0	0
+file	/workspace/wave-27-scratch/f801-first/control-080.a
+854	855	base/correctness-require-verify-array-parity	missingArrayRule	Array-typed property 'x' has value-level @Verify rules but no array-level rule. The validation engine applies a value-level rule per element only when the property also declares an array-level rule. Without that pairing the rule evaluates the whole array instead of each item, so every legitimate array fails validation.	0	0
+file	/workspace/wave-27-scratch/f801-first/control-081.a
+file	/workspace/wave-27-scratch/f801-first/control-082.a
+file	/workspace/wave-27-scratch/f801-first/control-083.a
+file	/workspace/wave-27-scratch/f801-first/control-084.a
+file	/workspace/wave-27-scratch/f801-first/control-085.a
+file	/workspace/wave-27-scratch/f801-first/control-086.a
+file	/workspace/wave-27-scratch/f801-first/control-087.a
+file	/workspace/wave-27-scratch/f801-first/control-088.a
+file	/workspace/wave-27-scratch/f801-first/control-089.a
+file	/workspace/wave-27-scratch/f801-first/control-090.a
+874	875	base/correctness-require-verify-array-parity	missingArrayRule	Array-typed property 'x' has value-level @Verify rules but no array-level rule. The validation engine applies a value-level rule per element only when the property also declares an array-level rule. Without that pairing the rule evaluates the whole array instead of each item, so every legitimate array fails validation.	0	0
+file	/workspace/wave-27-scratch/f801-first/control-091.a
+874	875	base/correctness-require-verify-array-parity	missingArrayRule	Array-typed property 'x' has value-level @Verify rules but no array-level rule. The validation engine applies a value-level rule per element only when the property also declares an array-level rule. Without that pairing the rule evaluates the whole array instead of each item, so every legitimate array fails validation.	0	0
+file	/workspace/wave-27-scratch/f801-first/control-092.a
+863	864	base/correctness-require-verify-array-parity	missingArrayRule	Array-typed property 'x' has value-level @Verify rules but no array-level rule. The validation engine applies a value-level rule per element only when the property also declares an array-level rule. Without that pairing the rule evaluates the whole array instead of each item, so every legitimate array fails validation.	0	0
+file	/workspace/wave-27-scratch/f801-first/control-093.a
+file	/workspace/wave-27-scratch/f801-first/control-094.a
+file	/workspace/wave-27-scratch/f801-first/control-095.a
+file	/workspace/wave-27-scratch/f801-first/control-096.a
+file	/workspace/wave-27-scratch/f801-first/control-097.a
+872	873	base/correctness-require-verify-array-parity	missingArrayRule	Array-typed property 'x' has value-level @Verify rules but no array-level rule. The validation engine applies a value-level rule per element only when the property also declares an array-level rule. Without that pairing the rule evaluates the whole array instead of each item, so every legitimate array fails validation.	0	0
+file	/workspace/wave-27-scratch/f801-first/control-098.a
+874	875	base/correctness-require-verify-array-parity	missingArrayRule	Array-typed property 'x' has value-level @Verify rules but no array-level rule. The validation engine applies a value-level rule per element only when the property also declares an array-level rule. Without that pairing the rule evaluates the whole array instead of each item, so every legitimate array fails validation.	0	0
+file	/workspace/wave-27-scratch/f801-first/control-099.a
+873	874	base/correctness-require-verify-array-parity	missingArrayRule	Array-typed property 'x' has value-level @Verify rules but no array-level rule. The validation engine applies a value-level rule per element only when the property also declares an array-level rule. Without that pairing the rule evaluates the whole array instead of each item, so every legitimate array fails validation.	0	0
+file	/workspace/wave-27-scratch/f801-first/control-100.a
+875	876	base/correctness-require-verify-array-parity	missingArrayRule	Array-typed property 'x' has value-level @Verify rules but no array-level rule. The validation engine applies a value-level rule per element only when the property also declares an array-level rule. Without that pairing the rule evaluates the whole array instead of each item, so every legitimate array fails validation.	0	0
+file	/workspace/wave-27-scratch/f801-first/control-101.a
+file	/workspace/wave-27-scratch/f801-first/control-102.a
+888	889	base/correctness-require-verify-array-parity	missingArrayRule	Array-typed property 'x' has value-level @Verify rules but no array-level rule. The validation engine applies a value-level rule per element only when the property also declares an array-level rule. Without that pairing the rule evaluates the whole array instead of each item, so every legitimate array fails validation.	0	0
+file	/workspace/wave-27-scratch/f801-first/control-103.a
+file	/workspace/wave-27-scratch/f801-first/control-104.a
+882	884	base/correctness-require-orm-column-nullable-parity	columnNullableButTypeNot	Column declares 'nullable: true' but the type 'string' does not include null/undefined \u2014 a NULL row value will not match this type	0	0
+915	918	base/correctness-require-serializable-nullable-parity	typeOptionalButDecoratorNot	Type 'string | undefined' is nullable but @SerializableField does not declare 'optional: true'	0	0
+946	949	base/correctness-require-verify-array-parity	missingArrayRule	Array-typed property '\u540d' has value-level @Verify rules but no array-level rule. The validation engine applies a value-level rule per element only when the property also declares an array-level rule. Without that pairing the rule evaluates the whole array instead of each item, so every legitimate array fails validation.	0	0
+findings 39

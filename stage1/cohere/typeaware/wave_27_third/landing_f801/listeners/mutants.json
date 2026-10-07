@@ -1,0 +1,74 @@
+[
+  {
+    "file": "correctness_no_process_exit_after_output_listeners.a",
+    "mutation": "307 to 308",
+    "exit": 0,
+    "stderr": "",
+    "caught_by": "independent Go SyntaxKind bytes",
+    "offset": 216
+  },
+  {
+    "file": "correctness_no_uncleared_race_timeout_listeners.a",
+    "mutation": "214 to 215",
+    "exit": 0,
+    "stderr": "",
+    "caught_by": "independent Go SyntaxKind bytes",
+    "offset": 264
+  },
+  {
+    "file": "correctness_require_blocking_standard_streams_listeners.a",
+    "mutation": "307 to 308",
+    "exit": 0,
+    "stderr": "",
+    "caught_by": "independent Go SyntaxKind bytes",
+    "offset": 320
+  },
+  {
+    "file": "correctness_require_orm_column_nullable_parity_listeners.a",
+    "mutation": "171 to 172",
+    "exit": 0,
+    "stderr": "",
+    "caught_by": "independent Go SyntaxKind bytes",
+    "offset": 54
+  },
+  {
+    "file": "correctness_require_serializable_nullable_parity_listeners.a",
+    "mutation": "171 to 172",
+    "exit": 0,
+    "stderr": "",
+    "caught_by": "independent Go SyntaxKind bytes",
+    "offset": 112
+  },
+  {
+    "file": "correctness_require_verify_array_parity_listeners.a",
+    "mutation": "173 to 174",
+    "exit": 0,
+    "stderr": "",
+    "caught_by": "independent Go SyntaxKind bytes",
+    "offset": 161
+  },
+  {
+    "file": "exhaustive_deps_listeners.a",
+    "mutation": "214 to 215",
+    "exit": 0,
+    "stderr": "",
+    "caught_by": "independent Go SyntaxKind bytes",
+    "offset": 400
+  },
+  {
+    "file": "prefer_regex_literals_listeners.a",
+    "mutation": "307 to 308",
+    "exit": 0,
+    "stderr": "",
+    "caught_by": "independent Go SyntaxKind bytes",
+    "offset": 346
+  },
+  {
+    "file": "prefer_rest_params_listeners.a",
+    "mutation": "79 to 80",
+    "exit": 0,
+    "stderr": "",
+    "caught_by": "independent Go SyntaxKind bytes",
+    "offset": 367
+  }
+]
