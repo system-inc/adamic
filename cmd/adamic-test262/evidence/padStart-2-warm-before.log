@@ -1,0 +1,29 @@
+built-ins/String/prototype/padStart 13/13 pass=3 fail=0 refused=4 crashed=0 skipped=6
+test262 5992dc3b60faf62a48fd6be8a40ae9d9a8c84d81
+adapt on
+
+built-ins/String/prototype/padStart
+pass 3   fail 0   refused 4   crashed 0   skipped 6   total 13
+
+directory                              pass    fail   refused   crashed   skipped
+built-ins/String/prototype/padStart       3       0         4         0         6
+
+refusal reasons
+  2  error TS2345: Argument of type '…' is not assignable to parameter of type '…'.
+  1  error TS2554: Expected 2-3 arguments, but got 1.
+  1  error TS7006: Parameter '…' implicitly has an '…' type.
+
+skip reasons
+  3  harness include propertyHelper.js
+  2  feature Symbol
+  1  harness include isConstructor.js
+
+adaptations
+  6  var-to-let
+  1  throw-error
+
+passes (3)
+  built-ins/String/prototype/padStart/fill-string-empty.js
+  built-ins/String/prototype/padStart/fill-string-omitted.js
+  built-ins/String/prototype/padStart/normal-operation.js
+
