@@ -1,0 +1,10 @@
+export interface BreakableNode {
+    present: boolean;
+    kind: number;
+}
+// Numeric SyntaxKind values from pinned cohere's parser, verified by the actual Go predicate.
+export function isBreakableStatement(node: BreakableNode): boolean {
+    if(!node.present) { return false; }
+    return node.kind === 256 || node.kind === 248 || node.kind === 247 ||
+        node.kind === 249 || node.kind === 250 || node.kind === 251;
+}

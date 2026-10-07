@@ -1,0 +1,7 @@
+=== RUN   TestBreakableStatementMatchesGo
+    breakable_test.go:36: actual Go numeric switch/while/do/for/for-in/for-of kinds: KindSwitchStatement KindWhileStatement KindDoStatement KindForStatement KindForInStatement KindForOfStatement
+    breakable_test.go:39: /workspace/adamic/stage1/cohere/lint/helpers/wave12/breakable_main.a:12:17: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'string'.
+--- FAIL: TestBreakableStatementMatchesGo (4.15s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/wave12	4.161s
+FAIL

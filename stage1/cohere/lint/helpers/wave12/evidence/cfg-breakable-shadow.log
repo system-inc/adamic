@@ -1,0 +1,8 @@
+=== RUN   TestBreakableStatementMatchesGo
+    breakable_test.go:28: go [build -overlay=/tmp/adamic-gate/TestBreakableStatementMatchesGo4239360363/001/overlay.json -o /tmp/adamic-gate/TestBreakableStatementMatchesGo4239360363/002/go-oracle /workspace/adamic/cohere/adamic_wave12_breakable_oracle.go]: exit status 1 stderr # command-line-arguments
+        ../stage1/cohere/lint/helpers/wave12/testdata/breakable_oracle.go.txt:12:2: "path" imported and not used
+        ../stage1/cohere/lint/helpers/wave12/testdata/breakable_oracle.go.txt:51:21: path.Clean undefined (type string has no field or method Clean)
+--- FAIL: TestBreakableStatementMatchesGo (0.12s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/wave12	0.130s
+FAIL

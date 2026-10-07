@@ -1,0 +1,38 @@
+=== RUN   TestBigIntNormalizationMatchesGo
+    bigint_test.go:36: 10983 cases and 1003998 UTF-16 observation bytes match actual Go, source Node, ASan/UBSan native and emitted JavaScript
+--- PASS: TestBigIntNormalizationMatchesGo (6.97s)
+=== RUN   TestBigIntNormalizationMutants
+=== RUN   TestBigIntNormalizationMutants/hex-digit-value
+    bigint_test.go:71: backend 0 compiles and runs cleanly; Go comparison catches mutant at row 2137
+    bigint_test.go:71: backend 1 compiles and runs cleanly; Go comparison catches mutant at row 2137
+    bigint_test.go:71: backend 2 compiles and runs cleanly; Go comparison catches mutant at row 2137
+=== RUN   TestBigIntNormalizationMutants/negative-zero
+    bigint_test.go:71: backend 0 compiles and runs cleanly; Go comparison catches mutant at row 2124
+    bigint_test.go:71: backend 1 compiles and runs cleanly; Go comparison catches mutant at row 2124
+    bigint_test.go:71: backend 2 compiles and runs cleanly; Go comparison catches mutant at row 2124
+=== RUN   TestBigIntNormalizationMutants/invalid-fallback
+    bigint_test.go:71: backend 0 compiles and runs cleanly; Go comparison catches mutant at row 2152
+    bigint_test.go:71: backend 1 compiles and runs cleanly; Go comparison catches mutant at row 2152
+    bigint_test.go:71: backend 2 compiles and runs cleanly; Go comparison catches mutant at row 2152
+--- PASS: TestBigIntNormalizationMutants (6.52s)
+    --- PASS: TestBigIntNormalizationMutants/hex-digit-value (1.93s)
+    --- PASS: TestBigIntNormalizationMutants/negative-zero (1.98s)
+    --- PASS: TestBigIntNormalizationMutants/invalid-fallback (1.87s)
+=== RUN   TestBreakableStatementMatchesGo
+    breakable_test.go:30: /tmp/adamic-gate/TestBreakableStatementMatchesGo2556777471/002/go-oracle [--adapt /workspace/adamic/stage1/cohere/lint/helpers/wave12/testdata/cfg_consumers.json]: exit status 2 stderr panic: fileName should be normalized and absolute: "async.ts"
+        
+        goroutine 1 [running]:
+        github.com/microsoft/TypeScript/tsc/internal/ast.(*NodeFactory).NewSourceFile(0x3e006e1a7110, {{0x3e006e188260, 0x8}, {0x3e006e188260, 0x8}, {0x0, 0x0}}, {0x3e006e1b8030, 0x27}, 0x3e006e1b0a20, ...)
+        	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:2528 +0x24e
+        github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseSourceFileWorker(0x3e006e1a7108)
+        	/workspace/adamic/cohere/TypeScript/tsc/internal/parser/parser.go:449 +0x2a7
+        github.com/microsoft/TypeScript/tsc/internal/parser.ParseSourceFile({{0x3e006e188260, 0x8}, {0x3e006e188260, 0x8}, {0x0, 0x0}}, {0x3e006e1b8030, 0x27}, 0x3)
+        	/workspace/adamic/cohere/TypeScript/tsc/internal/parser/parser.go:143 +0x14b
+        github.com/microsoft/TypeScript/tsc/shim/parser.ParseSourceFile(...)
+        	/workspace/adamic/cohere/TypeScript-shim/parser/shim.go:16
+        main.main()
+        	/workspace/adamic/cohere/adamic_wave12_breakable_oracle.go:50 +0x485
+--- FAIL: TestBreakableStatementMatchesGo (3.52s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/wave12	17.022s
+FAIL

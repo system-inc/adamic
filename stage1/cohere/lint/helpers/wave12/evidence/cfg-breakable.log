@@ -1,0 +1,16 @@
+=== RUN   TestBreakableStatementMatchesGo
+    breakable_test.go:36: actual Go numeric switch/while/do/for/for-in/for-of kinds: 256 248 247 249 250 251
+    breakable_test.go:44: 30267 consumer AST and kind/nil controls, 179169 identical Go/source Node/emitted JS/sanitized native bytes
+=== RUN   TestBreakableStatementMatchesGo/missing-switch
+    breakable_test.go:71: backend 0 compiles and exits cleanly; Go comparison catches mutant at row 446
+    breakable_test.go:71: backend 1 compiles and exits cleanly; Go comparison catches mutant at row 446
+    breakable_test.go:71: backend 2 compiles and exits cleanly; Go comparison catches mutant at row 446
+=== RUN   TestBreakableStatementMatchesGo/nil-loop
+    breakable_test.go:71: backend 0 compiles and exits cleanly; Go comparison catches mutant at row 1
+    breakable_test.go:71: backend 1 compiles and exits cleanly; Go comparison catches mutant at row 1
+    breakable_test.go:71: backend 2 compiles and exits cleanly; Go comparison catches mutant at row 1
+--- PASS: TestBreakableStatementMatchesGo (9.41s)
+    --- PASS: TestBreakableStatementMatchesGo/missing-switch (2.89s)
+    --- PASS: TestBreakableStatementMatchesGo/nil-loop (2.66s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/wave12	9.422s

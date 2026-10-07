@@ -1,0 +1,7 @@
+=== RUN   TestBreakableStatementMatchesGo
+    breakable_test.go:36: actual Go numeric switch/while/do/for/for-in/for-of kinds: 256 248 247 249 250 251
+    breakable_test.go:41: backend 0 differs at row 381
+--- FAIL: TestBreakableStatementMatchesGo (7.84s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/wave12	7.846s
+FAIL
