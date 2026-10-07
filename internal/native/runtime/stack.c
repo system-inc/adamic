@@ -7,11 +7,18 @@
 // whole cost, and it works under the sanitizers, which a guard-page signal handler would fight with.
 
 #define _POSIX_C_SOURCE 200809L
+#if defined(__APPLE__)
+#define _DARWIN_C_SOURCE
+#endif
 
 #include "adamic.h"
 
 #include <stdint.h>
+#if defined(__APPLE__)
+#include <pthread.h>
+#else
 #include <sys/resource.h>
+#endif
 
 uintptr_t adamic_stack_limit;
 
@@ -25,6 +32,15 @@ uintptr_t adamic_stack_limit;
 #define ARGUMENTS_FLOOR ((uintptr_t)128 << 10)
 
 __attribute__((constructor)) static void find_stack_limit(void) {
+#if defined(__APPLE__)
+	// Darwin reports this thread's actual stack, including the smaller iOS main stack.
+	// RLIMIT_STACK describes the process limit, not necessarily the stack we run on.
+	pthread_t thread = pthread_self();
+	uintptr_t top = (uintptr_t)pthread_get_stackaddr_np(thread);
+	uintptr_t size = (uintptr_t)pthread_get_stacksize_np(thread);
+	uintptr_t margin = size / 8 < MARGIN ? size / 8 : MARGIN;
+	adamic_stack_limit = size > margin && top > size ? top - size + margin : 0;
+#else
 	uintptr_t base = (uintptr_t)__builtin_frame_address(0);
 	uintptr_t size = ASSUMED_STACK;
 	struct rlimit limit;
@@ -48,6 +64,7 @@ __attribute__((constructor)) static void find_stack_limit(void) {
 	uintptr_t reserved = arguments + margin;
 	// A stack too small to keep even that gets no check rather than one that fires at once.
 	adamic_stack_limit = size > reserved && base > size ? base - size + reserved : 0;
+#endif
 }
 
 _Noreturn void adamic_stack_overflow(void) {
