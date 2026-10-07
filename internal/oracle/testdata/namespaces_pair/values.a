@@ -1,0 +1,17 @@
+export namespace Paint {
+    let made = 0;
+    export function coat(name: string): string {
+        made += 1;
+        return `coat ${name}`;
+    }
+    export function madeCount(): number { return made; }
+    export namespace Inner {
+        let made = 0;
+        export function coat(name: string): string {
+            made += 1;
+            return `inner ${name}`;
+        }
+        export function madeCount(): number { return made; }
+    }
+}
+console.log('namespace dependency');

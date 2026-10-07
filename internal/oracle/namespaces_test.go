@@ -9,7 +9,12 @@ import (
 )
 
 func init() {
-	for _, path := range []string{"internal/oracle/testdata/namespaces.a", "internal/oracle/testdata/namespaces_modules/main.a"} {
+	for _, path := range []string{
+		"internal/oracle/testdata/namespaces.a",
+		"internal/oracle/testdata/namespaces_modules/main.a",
+		"internal/oracle/testdata/namespaces_nested.a",
+		"internal/oracle/testdata/namespaces_pair/main.a",
+	} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
