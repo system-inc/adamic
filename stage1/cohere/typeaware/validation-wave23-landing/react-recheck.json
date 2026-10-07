@@ -1,0 +1,22 @@
+{
+  "control.a": {
+    "exit": 0,
+    "stdout": "parsed SourceFile\n",
+    "stderr": ""
+  },
+  "component.tsx": {
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 53 in /workspace/wave-23/react-blocker/component.tsx\n"
+  },
+  "effect.tsx": {
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 101 in /workspace/wave-23/react-blocker/effect.tsx\n"
+  },
+  "render.tsx": {
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 83 in /workspace/wave-23/react-blocker/render.tsx\n"
+  }
+}
