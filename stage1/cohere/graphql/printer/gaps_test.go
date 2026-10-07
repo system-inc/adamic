@@ -36,7 +36,7 @@ func TestPrinterConstructorGap(t *testing.T) {
 func TestPrinterWhitespaceGap(t *testing.T) {
 	directory := os.Getenv("ADAMIC_GRAPHQL_PRETTIER")
 	if directory == "" {
-		t.Skip("set ADAMIC_GRAPHQL_PRETTIER to scratch prettier@3.9.6")
+		t.Skip("set ADAMIC_GRAPHQL_PRETTIER to an npm install of prettier@3.9.6 and graphql@17.0.2; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
 	}
 	proof, err := os.ReadFile("gaps/whitespace-cases.json")
 	if err != nil {
