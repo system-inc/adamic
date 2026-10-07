@@ -59,14 +59,12 @@
     "file": "05_writeFile.a",
     "nodeMatches": true,
     "native": {
-      "stage": "Compiles",
-      "diagnostic": "",
-      "agrees": true
+      "stage": "NotYet",
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/05_writeFile.a:35:19: stage 0 can't lower an unknown value observed outside Array.isArray or its narrowed array length yet\n"
     },
     "javascript": {
-      "stage": "Compiles",
-      "diagnostic": "",
-      "agrees": true
+      "stage": "NotYet",
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/05_writeFile.a:35:19: stage 0 can't lower an unknown value observed outside Array.isArray or its narrowed array length yet\n"
     }
   },
   {
@@ -169,14 +167,12 @@
     "file": "13_createDirectory.a",
     "nodeMatches": true,
     "native": {
-      "stage": "Compiles",
-      "diagnostic": "",
-      "agrees": true
+      "stage": "NotYet",
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/13_createDirectory.a:72:19: stage 0 can't lower an unknown value observed outside Array.isArray or its narrowed array length yet\n"
     },
     "javascript": {
-      "stage": "Compiles",
-      "diagnostic": "",
-      "agrees": true
+      "stage": "NotYet",
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/13_createDirectory.a:72:19: stage 0 can't lower an unknown value observed outside Array.isArray or its narrowed array length yet\n"
     }
   },
   {

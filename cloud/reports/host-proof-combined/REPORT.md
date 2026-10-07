@@ -1,8 +1,8 @@
 # Combined host proof
 
-21/25 adapted fixtures and 15/25 pristine fixtures execute and agree with fresh Node observations on both backends. Every fixture was rerun on each backend after the final merges. This is a proof, not a landing; no main/area push or force push.
+19/25 adapted fixtures and 15/25 pristine fixtures execute and agree with fresh Node observations on both backends. Every fixture was rerun on each backend after the final merges. This is a proof, not a landing; no main/area push or force push.
 
-Final additions: Buffer fallback ccb8a69 via merge 469bb8b9; exact audited adapted fixtures/status/Node records from 21ef072e via 33e60869; Date conversion 05635aa via merge 0e7a2cc3; scalar concatenation 998fb3eb via merge b78d7ea7. stage3/fixtures/host is identical to the adapted branch at 17c5385a. The pristine run uses the unchanged pre-adaptation fixture snapshot at 08b5b2c4. Agrees requires exact stdout, stderr and exit against Node, including exit 1 and 2 fixtures.
+Final additions: Buffer fallback ccb8a69 via merge 469bb8b9; exact audited adapted fixtures/status/Node records from 21ef072e via 33e60869; Date conversion 05635aa via merge 0e7a2cc3; scalar concatenation 998fb3eb via merge b78d7ea7. stage3/fixtures/host is identical to the adapted branch at 7218520a. The pristine run uses the unchanged pre-adaptation fixture snapshot at 08b5b2c4. Agrees requires exact stdout, stderr and exit against Node, including exit 1 and 2 fixtures.
 
 | Fixture | Pristine native | Pristine JS | Adapted native | Adapted JS | First adapted blocker | Owner |
 |---|---|---|---|---|---|---|
@@ -10,7 +10,7 @@ Final additions: Buffer fallback ccb8a69 via merge 469bb8b9; exact audited adapt
 | 02_readFile_utf16le.a | Checker | Checker | Agrees | Agrees | None | None |
 | 03_readFile_utf16be.a | Checker | Checker | Agrees | Agrees | None | None |
 | 04_readFile_missing.a | Checker | Checker | Agrees | Agrees | None | None |
-| 05_writeFile.a | Refused | Refused | Agrees | Agrees | None | None |
+| 05_writeFile.a | Refused | Refused | NotYet | NotYet | unknown errorCode observation at 35:19 | Compiler, regression from a85a9cb1 |
 | 06_fileExists.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 07_directoryExists.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 08_getDirectories.a | NotYet | NotYet | Refused | Refused | ensureTrailingDirectorySeparator overload Path/string result at 160:1 | Compiler / adaptation ruling |
@@ -18,7 +18,7 @@ Final additions: Buffer fallback ccb8a69 via merge 469bb8b9; exact audited adapt
 | 10_getModifiedTime.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 11_setModifiedTime.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 12_deleteFile.a | Agrees | Agrees | Agrees | Agrees | None | None |
-| 13_createDirectory.a | Checker | Checker | Agrees | Agrees | None | None |
+| 13_createDirectory.a | Checker | Checker | NotYet | NotYet | unknown errorCode observation at 72:19 | Compiler, regression from a85a9cb1 |
 | 14_getCurrentDirectory.a | Refused | Refused | Refused | Refused | memoize callback capture cycle at 12:28 | Compiler / runtime |
 | 15_getExecutingFilePath.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 16_getEnvironmentVariable.a | Agrees | Agrees | Agrees | Agrees | None | None |
@@ -76,3 +76,33 @@ Final validation commands, output recorded directly to logs:
 - Private Go overlay changes the empty-literal element kind to Boolean: native builds, ordinary output comparisons pass, LeakSanitizer catches 74 bytes leaked in one allocation. Exit 1, 0.362s. This is a lifetime-check mutant, not a Node-output mutant; working source is unchanged.
 - `python3 stage3/fixtures/host/check.py --mutants-only --logs /tmp/fs-recount-fixture-mutants`: PASS, all 25 semantic mutants caught by Node, including 08 returning files instead of directories, plus the recorded-diagnostic mutant.
 - `git diff --check`: PASS. Existing toolchain reused; nproc 5. GOPROXY set before Go commands. Full go test ./..., full language WASI, complete counts regeneration and macOS execution were not run. Prior full-gate limits remain recorded above.
+
+## Recount with a85a9cb1 and fixtures 7218520a
+
+Compiler a85a9cb1 merged with merge commit 86454464; exact fixture tip 7218520a taken in 5e40b960. Conflicts retained enum/void type representations alongside the opaque-array unknown representation and kept both sets of counts rows. No runtime code changed.
+
+Final full reruns: 19/25 adapted and 15/25 pristine agree with Node on native and JavaScript. All 25 sources in each set were observed on both backends; commands exit 1 for named blockers. This supersedes the earlier 21/25 adapted count.
+
+Fixture 11 remains green on both backends, with exact fresh Node stdout/stderr/exit agreement. Its source has no diff against the prior proof. Fixtures 06, 07 and 10 remain green; 08 retains the Path/string overload Refused diagnostic and 24 remains NotYet for the regex replacement callback. No utimesSync regression occurs in this combined proof.
+
+Two regressions are introduced by compiler a85a9cb1 (merge 86454464), not by the fixture update: 05 and 13 sources are unchanged from 5736b24, but their shared errorCode unknown parameter is now treated as an opaque Array.isArray-only input. Both backends stop at:
+```
+adamic: /workspace/adamic/stage3/fixtures/host/05_writeFile.a:35:19: stage 0 can't lower an unknown value observed outside Array.isArray or its narrowed array length yet
+adamic: /workspace/adamic/stage3/fixtures/host/13_createDirectory.a:72:19: stage 0 can't lower an unknown value observed outside Array.isArray or its narrowed array length yet
+```
+Verified compiler reproducer on both backends:
+```typescript
+export function errorCode(error: unknown): string | undefined { return typeof error === "object" && error !== null && "code" in error && typeof error.code === "string" ? error.code : undefined; } console.log("unused");
+```
+adamic: /workspace/adamic/cloud/reports/host-proof-combined/probes/05_unknown_error_observation.a:1:79: stage 0 can't lower an unknown value observed outside Array.isArray or its narrowed array length yet
+
+Fixture 25 remains Refused at 530:5, adamic/no-type-predicate. The delivered source still declares isArray(value: any): value is readonly unknown[], while a85a9cb1's proof supports an unknown parameter and explicitly rejects any. Taking typed stat at line 1238 does not change that earlier signature. Its one-line reproduction above remains verified; owner stays compiler. No additional source adaptation was invented.
+
+Validation after merging:
+
+- All 25 delivered fixtures: node_fs_file_host_check.py --all, log fs_predicate_final_adapted.log, 19 agree on each backend, exit 1. All 25 unchanged pristine controls: fs_predicate_final_original.log, 15 agree, exit 1. Node records freshly verified for every row.
+- Predicate lowering regressions: `go test ./internal/lower -run 'TestArrayPredicate|TestUnknownArrayPredicate|TestPredicateBodiesAreProven|TestUnprovenPredicate' -count=1 -timeout 10m`: PASS, 1.334s.
+- host_array_unknown_predicate source/native/JS oracle: PASS, 0.726s, including sanitizer/leak checks.
+- Private Go overlay brand-test mutant tests undefined instead of the actual argument. Builds successfully; Node reports exit 0 while native and JS report exit 70 after incorrect false results. Both Node comparisons catch it; no compiler or sanitizer error. Working source unchanged.
+- `ADAMIC_ORACLE_WASI=1 go test ./internal/oracle -run '^(TestWASIEmptySymlinkAgreesWithNode|TestWASIInputAgreesWithNode|TestWASIHostRuntimeRefusals|TestWASIFileAgreesWithNode)$' -count=1 -timeout 15m -v`: PASS, 21.546s, including empty-symlink controls and the removed-adapter Node mutant. Existing explicit target skips are not counted as passes.
+- Full go test ./..., full language WASI and counts regeneration were not run. Earlier gate limitations remain documented. This remains a proof branch; no main/area push, no rebase and no force push.
