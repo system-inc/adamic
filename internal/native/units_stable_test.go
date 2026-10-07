@@ -308,3 +308,53 @@ func TestModuleMainRejectsEarlyReturn(t *testing.T) {
 		t.Fatalf("early return accepted: %v", err)
 	}
 }
+
+func TestConstantDescriptorDoesNotMigrate(t *testing.T) {
+	source := "#include \"adamic.h\"\nstatic const int adamic_class_probe=7;\n// adamic-module \"one.a\"\nstatic int first(void){return adamic_class_probe;}\n// adamic-module \"two.a\"\nstatic int second(void){return 0;}\nint main(void){return first()-7;}\n"
+	header, units, err := splitC(source)
+	if err != nil {
+		t.Fatal(err)
+	}
+	edited := strings.Replace(source, "int main(void)", "// adamic-module \"two.a\"\nstatic int added(void){return adamic_class_probe;}\nint main(void)", 1)
+	nextHeader, nextUnits, err := splitC(edited)
+	if err != nil {
+		t.Fatal(err)
+	}
+	changed := changedUnitInputs(unitInputs(header, units), unitInputs(nextHeader, nextUnits))
+	if len(changed) != 1 || changed[0] != moduleUnit("two.a") {
+		t.Fatalf("constant descriptor migrated: %v", changed)
+	}
+}
+func TestDeclarationAdapterFollowsCallee(t *testing.T) {
+	source := "#include \"adamic.h\"\n// adamic-module \"one.a\"\nstatic int first(void){return 7;}\nstatic int adapter(void){return first();}\nstatic int outer_adapter(void){return adapter();}\n// adamic-module \"two.a\"\nstatic int second(void){return outer_adapter();}\nint main(void){return second()-7;}\n"
+	_, units, err := splitC(source)
+	if err != nil {
+		t.Fatal(err)
+	}
+	found := false
+	for _, unit := range units {
+		if unit.name == moduleUnit("one.a") && strings.Contains(unit.source, "int adamic_unit_adapter(void){") && strings.Contains(unit.source, "int adamic_unit_outer_adapter(void){") {
+			found = true
+		}
+	}
+	if !found {
+		t.Fatal("adapter did not follow its source declaration")
+	}
+}
+
+func TestForwarderGlobalsDoNotMigrate(t *testing.T) {
+	source := "#include \"adamic.h\"\nstatic int adamic_global_probe=7;\n// adamic-module \"one.a\"\nstatic int first(void){return 0;}\nint main(void){return adamic_global_probe-7;}\n"
+	header, units, err := splitC(source)
+	if err != nil {
+		t.Fatal(err)
+	}
+	edited := strings.Replace(source, "int main(void)", "// adamic-module \"two.a\"\nstatic int added(void){return adamic_global_probe;}\nint main(void)", 1)
+	nextHeader, nextUnits, err := splitC(edited)
+	if err != nil {
+		t.Fatal(err)
+	}
+	changed := changedUnitInputs(unitInputs(header, units), unitInputs(nextHeader, nextUnits))
+	if len(changed) != 1 || changed[0] != moduleUnit("two.a") {
+		t.Fatalf("forwarder global migrated: %v", changed)
+	}
+}

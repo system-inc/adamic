@@ -11,6 +11,8 @@ import (
 type unitDefinition struct {
 	name, declaration, definition, owner string
 	references                           []string
+	function                             bool
+	source                               bool
 }
 
 // Full paths determine identity. The escaped spelling is only a readable hint.
@@ -126,6 +128,8 @@ func stableSplitC(source string) (string, []compilationUnit, error) {
 			continue
 		}
 		item.definition = rewrite(tokens) + "\n"
+		item.function = d.function
+		item.source = d.function && marked && module != ""
 		if d.name == "main" {
 			item.owner = "main.c"
 		} else if d.function && marked {
@@ -135,7 +139,11 @@ func stableSplitC(source string) (string, []compilationUnit, error) {
 				digest := sha256.Sum256([]byte(d.name))
 				item.owner = fmt.Sprintf("helpers_%02d.c", int(digest[0])%16)
 			}
-		} else if !d.function && (strings.HasPrefix(d.name, "adamic_string_") || strings.HasPrefix(d.name, "adamic_shape_") || strings.HasPrefix(d.name, "adamic_regex_")) {
+		} else if !d.function && strings.HasPrefix(d.name, "adamic_global_") {
+			// Unmarked forwarders are initialized by the coordinator. Module-ready writes
+			// below replace this fallback with the source module's ownership.
+			item.owner = "main.c"
+		} else if !d.function && (strings.HasPrefix(d.name, "adamic_string_") || strings.HasPrefix(d.name, "adamic_shape_") || strings.HasPrefix(d.name, "adamic_regex_") || strings.Contains(" "+declaration, " const ")) {
 			// Content-addressed descriptors may gain consumers without migrating their identity.
 			digest := sha256.Sum256([]byte(d.name))
 			item.owner = fmt.Sprintf("shared_%02d.c", int(digest[0])%32)
@@ -150,6 +158,41 @@ func stableSplitC(source string) (string, []compilationUnit, error) {
 			item.references = append(item.references, name)
 		}
 		sort.Strings(item.references)
+	}
+	// Declaration-owned adapters follow the first source declarations reached through
+	// adapter calls. Stop at a source function rather than traversing its implementation.
+	for _, item := range definitions {
+		if !item.function || item.owner != "" {
+			continue
+		}
+		owners := map[string]bool{}
+		visited := map[string]bool{}
+		pending := append([]string(nil), item.references...)
+		for len(pending) > 0 {
+			reference := pending[len(pending)-1]
+			pending = pending[:len(pending)-1]
+			if visited[reference] {
+				continue
+			}
+			visited[reference] = true
+			target, ok := definitions[reference]
+			if !ok || !target.function {
+				continue
+			}
+			if target.source {
+				owners[target.owner] = true
+			} else {
+				pending = append(pending, target.references...)
+			}
+		}
+		if len(owners) == 1 {
+			for owner := range owners {
+				item.owner = owner
+			}
+		} else {
+			digest := sha256.Sum256([]byte(item.name))
+			item.owner = fmt.Sprintf("helpers_%02d.c", int(digest[0])%16)
+		}
 	}
 	if main, ok := definitions["main"]; ok {
 		coordinator, helpers, err := splitModuleMain(main.definition, names)
