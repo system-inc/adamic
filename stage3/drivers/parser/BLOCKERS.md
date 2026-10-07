@@ -1,3 +1,38 @@
+# Method truthiness probe: red at ambient-host runtime descriptor
+
+Merged method-presence-test 722a1c5a into unpushed scratch c7e63804, yielding
+290f216b. Compiler rebuild passes. native-process-next-tick-read.a is unchanged.
+Node prints `true\n`, exit 0, empty stderr. Native build exits 1 at 6:52:
+`stage 0 can't lower presence of an ambient host method without a runtime descriptor yet`.
+The previous unbound-method refusal has become this more specific NotYet stop.
+
+This is not lack of the Node loader. `adamic types` on the exact probe exits 0
+and reports `variable process: Process`. The activated pinned @types/node is
+25.3.3; its resolved package path is in evidence/front21/report.json. Code
+inspection: methodPresence explicitly refuses a method whose receiver binding
+is declared under an Ambient modifier without a runtime descriptor. Its
+TestMethodPresenceHostIsNotYet tests this boundary independently of the loader.
+The actual host method presence still lacks that runtime lowering path.
+
+Focused TestMethodPresence lower tests pass in 0.241s, covering ordinary presence,
+escapes and this host NotYet boundary. No native binary or output is emitted for
+the requested probe, so the native byte comparison and native-output mutant
+could not run. No substitute native output or green host claim is made.
+
+The refusal-pass merge conflict preserves Buffer and existing Node/record
+observation exceptions while adding incoming truthiness/comparison observations;
+count conflicts union incoming rows. No compiler proof bypass or temporary
+source adaptation was made. Exact ancestry, scratch-only patch and commands are
+in evidence/front21, with run-probe.py for reproduction. Compiler merge remains
+unpushed. No full gate, complete oracle, counts gate or sanitizer run occurred.
+
+Full parser rerun remains held for the namespace fix. The last observed first
+slice stop remains core.ts:11:52; no all-eleven-probe or split rerun was performed.
+Both native parser references, JSDoc and error-recovery acceptance remain
+unverified. This run only establishes the new stop for process.nextTick presence.
+
+---
+
 # Corrected host unknown integration: row 8 remains green
 
 Merged host-blockers b788e96e into unpushed scratch e3846087. The merge is
