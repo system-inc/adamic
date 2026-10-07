@@ -65,7 +65,7 @@ func (s *sourceFS) FileExists(path string) bool {
 
 func (s *sourceFS) ReadFile(path string) (string, bool) {
 	if path == preludePath {
-		return prelude, true
+		return prelude + nodeFSDirectoryDeclarations + nodePathDeclarations, true
 	}
 	if source, exists := s.overlay[path]; exists {
 		return source, true

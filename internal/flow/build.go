@@ -447,6 +447,8 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 			}
 		case reflect.Struct:
 			switch value.Type() {
+			case reflect.TypeOf(ir.NodeHostCall{}):
+				throws = throws || value.Interface().(ir.NodeHostCall).Throws
 			case callType:
 				if program.CallMayThrow(value.Interface().(ir.Call)) {
 					throws = true

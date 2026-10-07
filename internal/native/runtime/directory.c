@@ -205,7 +205,7 @@ static char *real_path_input(char *name) {
 
 // Ported from Node v24.14.1 lib/fs.js realpathSync, for POSIX paths.
 // The root and ordinary components keep their input spelling. Links alone replace it.
-adamic_object *adamic_real_path(const adamic_string *path) {
+static adamic_object *real_path(const adamic_string *path, bool node) {
 	static const char prefix[] = "cannot resolve path ";
 	static const char *const names[] = {"kind", "path"};
 	static const adamic_shape shape = {2, names, two_references, NULL};
@@ -213,9 +213,13 @@ adamic_object *adamic_real_path(const adamic_string *path) {
 	char *name = adamic_path_bytes(path);
 	if (name == NULL) { return failure(prefix, sizeof prefix - 1, path, 0, false); }
 	name = real_path_input(name);
-	if (name == NULL) { return failure(prefix, sizeof prefix - 1, path, errno, false); }
+	if (name == NULL) {
+		if (node) { adamic_node_fs_raise(NULL, errno, "uv_cwd"); return NULL; }
+		return failure(prefix, sizeof prefix - 1, path, errno, false);
+	}
 	size_t position = 1;
 	int error = 0;
+	const char *operation = "lstat";
 	while (name[position] != '\0') {
 		size_t previous = position;
 		while (name[position] != '\0' && name[position] != '/') { position++; }
@@ -229,7 +233,7 @@ adamic_object *adamic_real_path(const adamic_string *path) {
 			continue;
 		}
 		// Node stats the target first: the OS supplies ENOENT or ELOOP.
-		if (stat(name, &status) != 0) { error = errno; break; }
+		if (stat(name, &status) != 0) { error = errno; operation = "stat"; break; }
 		size_t capacity = 256;
 		char *target = NULL;
 		ssize_t length;
@@ -244,7 +248,7 @@ adamic_object *adamic_real_path(const adamic_string *path) {
 			if (length < 0 || (size_t)length < capacity) { break; }
 			capacity *= 2;
 		}
-		if (length < 0) { error = errno; free(target); break; }
+		if (length < 0) { error = errno; operation = "readlink"; free(target); break; }
 		target[length] = '\0';
 		name[position] = separator;
 		const char *rest = name + position + (separator != '\0');
@@ -267,7 +271,17 @@ adamic_object *adamic_real_path(const adamic_string *path) {
 		name = real_path_input(replacement);
 		position = 1;
 	}
-	if (error != 0) { free(name); return failure(prefix, sizeof prefix - 1, path, error, false); }
+	if (error != 0) {
+		if (node) {
+			adamic_string *failed = adamic_decode_utf8((const unsigned char *)name, strlen(name));
+			free(name);
+			adamic_node_fs_raise(failed, error, operation);
+			adamic_release(failed);
+			return NULL;
+		}
+		free(name);
+		return failure(prefix, sizeof prefix - 1, path, error, false);
+	}
 	char *resolved = name;
 	adamic_object *result = adamic_object_new(&shape);
 	result->slots[0].reference = &ok_kind;
@@ -275,3 +289,6 @@ adamic_object *adamic_real_path(const adamic_string *path) {
 	free(resolved);
 	return result;
 }
+
+adamic_object *adamic_real_path(const adamic_string *path) { return real_path(path, false); }
+adamic_object *adamic_real_path_node(const adamic_string *path) { return real_path(path, true); }
