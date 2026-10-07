@@ -66,3 +66,70 @@ controls tsconfig and a manifest containing the same input file. The exact fixtu
 exit statuses, expected production finding and compressed raw observations are
 under evidence. The helper's loading/serialization is the same independent
 production oracle used by the completed wave.
+
+## Current-main check and numeric listener boundary
+
+On 2026-10-07, fetching all origin heads again leaves origin/main at
+`e8ba3d5d81de4d3773c723914fccd4c76248b965`. It is an ancestor of the pushed
+wave-10 branch. The JSX reproduction still gives production Go exit 0 with
+one finding and native exit 70 with the exact error above.
+
+The new numeric-listener requirement has a separate shared API prerequisite.
+`stage1/typescript/parser/nodes.ts` declares `ParseNode.kind: string`; its
+constructor takes `kind: string`. Searching the entire shared parser directory
+for `SyntaxKind`, `kindId`, `kindCode` and `kindNumber` finds no numeric kind API.
+The shared rule adapter also accepts node indexes and fetches nodes inside
+`ask` and `add`. A rule-local numbering table would not be the parser's numeric
+SyntaxKind and would silently invent a contract with the incoming driver.
+Therefore no fabricated numeric listener declaration is added. The existing six
+ports retain their previous string-kind implementation and do not satisfy the
+new speed contract. Their byte-oracle results are separate from that limitation.
+
+Required shared changes before these React ports can proceed: JSX parse nodes,
+a public numeric SyntaxKind mapping, and an adapter that accepts the supplied
+node without refetching it. These are shared-parser/driver changes, outside this
+unit's permitted directories. No shared files were changed and no further claim
+was made. Current-check logs are stored under evidence/current-main.
+
+## Fresh oracle observations
+
+The unchanged six implementations were rechecked after the fetch. Commands
+source `/workspace/adamic-tools/env.sh` and run these exact Go tests with
+`-count=1 -timeout=10m -v`, redirecting all output to the compressed logs above:
+
+- `./stage1/cohere/typeaware -run '^TestWave10AgreementAndMutants$'`: PASS, 92.045s.
+- `./stage1/cohere/typeaware/wave_10_next -run '^TestTimeoutAgreementAndMutants$'`: PASS, 64.276s.
+- `./stage1/cohere/typeaware/wave_10_next -run '^TestLandingNativeRulesAndMutants$'`: PASS, 167.210s.
+
+Environment: `ADAMIC_WAVE10_REPOSITORY_MANIFEST=/workspace/wave-10-repository.manifest`,
+`ADAMIC_WAVE10_COMPILER_MANIFEST=/workspace/wave-10-compiler.manifest`,
+`ADAMIC_TYPESCRIPT_SOURCE=/workspace/wave-10-typescript`; original artifacts
+`ADAMIC_WAVE10_ARTIFACTS=/workspace/wave-10-landing-original`; timeout enabled
+with `ADAMIC_WAVE10_NEXT_VALIDATE=1` and artifacts
+`ADAMIC_WAVE10_NEXT_ARTIFACTS=/workspace/wave-10-landing-timeout`; landing
+`ADAMIC_WAVE10_LANDING_ARTIFACTS=/workspace/wave-10-landing-process` and
+`ADAMIC_WAVE10_LANDING_FIXTURES=/workspace/wave-10-process-validation`.
+Landing reuses the already-built stage-0 compiler and bridge archives from the
+same unchanged source commit; no fresh process bootstrap or full gate is claimed.
+
+All normal and sanitized findings/fixes/suggestions agree over controls,
+compiler77 and repository287. Original controls: 61 findings; timeout: 15;
+process: 77; blocking: 30. All six native decision mutants exit 0 with empty
+stderr and are caught only by Go byte comparison: loop byte 554, redundant
+constituents 4602, includes 8498, timeout 54, process 114, blocking 13904.
+Original and timeout released-handle checks exit 70; the retaining-registry
+mutants exit 0 and fail the required panic check. No new React mutant is claimed.
+
+Setup: Go 0s, clang 0s, Node 0s, submodules 0s, cache 28s, total 28s;
+`nproc` is 5. Native timing against Go below uses three alternating runs,
+complete-process medians including loading and serialization. Every timed output
+is compared; worker load is uncontrolled. Ratios denote native slowdown.
+
+| Rule and corpus | Native seconds | Go seconds | Native / Go |
+| --- | ---: | ---: | ---: |
+| process-controls | 3.751363 | 0.081383 | 46.095x |
+| process-compiler | 1.755326 | 0.302095 | 5.811x |
+| process-repository | 0.272872 | 0.134415 | 2.030x |
+| blocking-controls | 5.548422 | 0.077356 | 71.726x |
+| blocking-compiler | 2.137497 | 0.299683 | 7.133x |
+| blocking-repository | 0.377423 | 0.131031 | 2.880x |
