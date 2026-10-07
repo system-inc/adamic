@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 """Hold corpus/archive caches to their inputs and bytes; exercise real local rebuilds."""
+import contextlib
+import io
+import shlex
 import importlib.util
 import json
 import os
@@ -17,6 +20,28 @@ spec=importlib.util.spec_from_file_location('gate',HELPER);gate=importlib.util.m
 
 
 class Inputs(unittest.TestCase):
+    def test_shared_prettier_exports_and_typescript_pin(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            with patch.object(sys, 'argv', ['setup', 'env', temporary, temporary, 'node']), contextlib.redirect_stdout(io.StringIO()) as output:
+                gate.main()
+            exports = dict(shlex.split(line)[1].split('=', 1) for line in output.getvalue().splitlines())
+            self.assertIn('ADAMIC_TS_PRETTIER', exports)
+            self.assertEqual(exports['ADAMIC_TS_PRETTIER'], str(root / 'css-printer'))
+            self.assertEqual(exports['ADAMIC_TS_PRETTIER'], exports['ADAMIC_CSS_PRINTER_LIBRARY'])
+            self.assertEqual(exports['ADAMIC_TYPESCRIPT_SOURCE'], str(root / 'typescript'))
+            self.assertEqual(gate.TS_COMMIT, '050880ce59e30b356b686bd3144efe24f875ebc8')
+
+    def test_shared_prettier_installed_once(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            with patch.object(sys, 'argv', ['setup', 'npm', temporary, temporary, 'node']), patch.object(
+                gate.npm, 'prepare', return_value='verified'
+            ) as install, contextlib.redirect_stdout(io.StringIO()):
+                gate.main()
+            names = [call.args[0].name for call in install.call_args_list]
+            self.assertEqual(names.count('css-printer'), 1)
+            self.assertEqual(len(names), 7)
+
     def test_every_key_component(self):
         inputs=dict(kind='checker',head='head',packages=[['input','build-id']],environment={'CC':'gcc'},version='go1',
                     cc_version='gcc1',flags=['-trimpath'],validation_flags=['-buildmode=exe'],helper='source',commit='pin',url='https://source',size=100,content='bytes')
