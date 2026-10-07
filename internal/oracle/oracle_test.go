@@ -504,6 +504,15 @@ func execute(t *testing.T, name string, arguments ...string) run {
 	return executeWith(t, nil, name, arguments...)
 }
 
+// leakSanitizer asks AddressSanitizer to check for leaks where it can. macOS's has no leak detector
+// and aborts when asked for one; there the leak check is internal/leakcheck's counted build.
+func leakSanitizer() string {
+	if runtime.GOOS == "darwin" {
+		return "ASAN_OPTIONS=detect_leaks=0"
+	}
+	return "ASAN_OPTIONS=detect_leaks=1"
+}
+
 // executeWith runs a command with environment added to the test's own; a later value for the same
 // name wins, so a sanitizer setting here can't be overridden by one inherited from the shell.
 func executeWith(t *testing.T, environment []string, name string, arguments ...string) run {
