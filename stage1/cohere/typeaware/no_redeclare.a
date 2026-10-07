@@ -1,0 +1,106 @@
+import { panic } from 'adamic';
+import { Bindings } from './bindings.ts';
+import { Wave12Symbols } from './wave_12_symbols.a';
+import { ScopeMetadata } from './scope_metadata.a';
+import { globalSymbolDetails } from './global_symbol_details.a';
+import { Diagnostic } from './diagnostic.ts';
+
+export class NoRedeclare {
+    readonly bindings: Bindings;
+    readonly caller: Wave12Symbols;
+    readonly metadata: ScopeMetadata;
+    constructor(bindings: Bindings) {
+        this.bindings = bindings; this.caller = new Wave12Symbols(bindings); this.metadata = new ScopeMetadata(bindings);
+    }
+    root(index: number): number {
+        let current = index;
+        while(['BindingElement', 'ObjectBindingPattern', 'ArrayBindingPattern'].includes(this.bindings.rules.parser.node(current).kind)) {
+            current = this.bindings.parent(current);
+        }
+        return current;
+    }
+    scope(index: number): number {
+        const rules = this.bindings.rules; const root = this.root(index);
+        const kind = rules.parser.node(index).kind;
+        const variable = ['VariableDeclaration', 'BindingElement'].includes(kind);
+        const list = this.bindings.parent(root);
+        const hoisted = variable && list >= 0 && rules.parser.node(list).kind === 'VariableDeclarationList' && rules.parser.node(list).semantic === '0';
+        let current = this.bindings.parent(index);
+        while(current >= 0) {
+            const node = rules.parser.node(current);
+            if(hoisted) {
+                if(['SourceFile', 'ModuleDeclaration'].includes(node.kind)) { return current; }
+                if(this.bindings.functionKind(node.kind) || node.kind === 'ClassStaticBlockDeclaration') {
+                    const body = node.children.find((child) => rules.parser.node(child).kind === 'Block');
+                    return body !== undefined && this.metadata.containers.includes(body) ? body : current;
+                }
+            }
+            else if(this.metadata.containers.includes(current)) { return current; }
+            current = this.bindings.parent(current);
+        }
+        return -1;
+    }
+    surviving(group: readonly number[]): number[] {
+        const rules = this.bindings.rules;
+        const considered = group.filter((index) => rules.parser.node(index).kind !== 'FunctionDeclaration' || this.bindings.shape.body(index));
+        if(considered.length > 1) {
+            for(const primary of ['ClassDeclaration', 'FunctionDeclaration', 'EnumDeclaration']) {
+                const members = primary === 'ClassDeclaration' ? ['ClassDeclaration', 'InterfaceDeclaration', 'ModuleDeclaration'] : [primary, 'ModuleDeclaration'];
+                if(considered.every((index) => members.includes(rules.parser.node(index).kind))) {
+                    const primaries = considered.filter((index) => rules.parser.node(index).kind === primary);
+                    return primaries.length <= 1 ? [] : primaries;
+                }
+            }
+        }
+        return considered;
+    }
+    builtin(index: number): boolean {
+        const name = this.bindings.rules.parser.node(index).text;
+        if(BUILTINS.includes(name)) { return true; }
+        return globalSymbolDetails(this.caller, index).declarations.some((declaration) => declaration.defaultLibrary &&
+            ['InterfaceDeclaration', 'TypeAliasDeclaration', 'ClassDeclaration', 'EnumDeclaration', 'ModuleDeclaration'].includes(declaration.kind));
+    }
+    run(): void {
+        const rules = this.bindings.rules; const groups = new Map<string, number[]>(); const scopes = new Map<string, number>();
+        // Parser nodes are postorder; production grouping follows source preorder.
+        const ordered: number[] = [];
+        for(let at = 0; at < rules.parser.nodes.length; at++) { ordered.push(at); }
+        ordered.sort((a, b) => rules.parser.node(a).pos === rules.parser.node(b).pos ? rules.parser.node(b).end - rules.parser.node(a).end : rules.parser.node(a).pos - rules.parser.node(b).pos);
+        for(const index of ordered) {
+            if(this.bindings.parent(index) < 0) { continue; }
+            const node = rules.parser.node(index);
+            if(!['ClassDeclaration', 'InterfaceDeclaration', 'TypeAliasDeclaration', 'EnumDeclaration', 'ModuleDeclaration', 'FunctionDeclaration', 'VariableDeclaration', 'BindingElement'].includes(node.kind)) { continue; }
+            if(node.kind === 'BindingElement' && rules.parser.node(this.root(index)).kind !== 'VariableDeclaration') { continue; }
+            const name = this.bindings.shape.name(index);
+            if(name < 0 || rules.parser.node(name).kind !== 'Identifier') { continue; }
+            const scope = this.scope(index); const key = `${scope}:${rules.parser.node(name).text}`;
+            if(!groups.has(key)) { const fresh: number[] = []; groups.set(key, fresh); scopes.set(key, scope); }
+            (groups.get(key) ?? panic('missing redeclaration group')).push(index);
+        }
+        for(const [key, group] of groups) {
+            const scope = scopes.get(key) ?? -1;
+            if(scope >= 0) {
+                const kind = rules.parser.node(scope).kind;
+                if(['ModuleDeclaration', 'ClassStaticBlockDeclaration', 'CatchClause'].includes(kind)) { continue; }
+                const parent = this.bindings.parent(scope);
+                if(kind === 'Block' && parent >= 0 && rules.parser.node(parent).kind === 'ClassStaticBlockDeclaration') { continue; }
+            }
+            const survivors = this.surviving(group);
+            if(survivors.length === 0) { continue; }
+            const first = this.bindings.shape.name(survivors[0] ?? -1);
+            const builtin = !this.metadata.external && scope >= 0 && rules.parser.node(scope).kind === 'SourceFile' && this.builtin(first);
+            const reported = builtin ? survivors : survivors.slice(1);
+            for(const declaration of reported) {
+                const name = rules.parser.node(this.bindings.shape.name(declaration));
+                rules.findings.push(new Diagnostic('@typescript-eslint/no-redeclare', builtin ? 'redeclaredAsBuiltin' : 'redeclared',
+                    builtin ? BUILTIN_MESSAGE : MESSAGE, rules.byte(rules.start(name)), rules.byte(name.end), ''));
+            }
+        }
+    }
+}
+
+const MESSAGE = "This name is already declared in the same scope. The second declaration does not create a second binding, it overwrites what the name reaches, so every use of the name after this point gets whatever the last declaration bound and the earlier one becomes unreachable without ever being deleted. The two spellings that look intentional are the dangerous ones: a value and a type sharing a name compile fine and diverge later, and a second class silently replaces the first for every `new`, every `extends`, and every `instanceof` in the file. Rename one of them, or delete the declaration that is dead.";
+
+const BUILTIN_MESSAGE = "This name is already declared by the standard library this program compiles against, and this file is a script, so its top-level declarations land in the same global scope the library's do. The declaration does not make a new name, it collides with the built-in one: a type merges into it or conflicts with it, and a value replaces it for every script on the page that reads the global. Rename it, or make the file a module with an import or export so its declarations stop being globals.";
+
+const BUILTINS = ["AggregateError", "Array", "ArrayBuffer", "AsyncDisposableStack", "Atomics", "BigInt", "BigInt64Array", "BigUint64Array", "Boolean", "DataView", "Date", "DisposableStack", "Error", "EvalError", "FinalizationRegistry", "Float16Array", "Float32Array", "Float64Array", "Function", "Infinity", "Int16Array", "Int32Array", "Int8Array", "Intl", "Iterator", "JSON", "Map", "Math", "NaN", "Number", "Object", "Promise", "Proxy", "RangeError", "ReferenceError", "Reflect", "RegExp", "Set", "SharedArrayBuffer", "String", "SuppressedError", "Symbol", "SyntaxError", "Temporal", "TypeError", "URIError", "Uint16Array", "Uint32Array", "Uint8Array", "Uint8ClampedArray", "WeakMap", "WeakRef", "WeakSet", "constructor", "decodeURI", "decodeURIComponent", "encodeURI", "encodeURIComponent", "escape", "eval", "globalThis", "hasOwnProperty", "isFinite", "isNaN", "isPrototypeOf", "parseFloat", "parseInt", "propertyIsEnumerable", "toLocaleString", "toString", "undefined", "unescape", "valueOf"];

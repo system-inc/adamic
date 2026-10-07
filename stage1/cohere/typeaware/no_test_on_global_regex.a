@@ -1,0 +1,117 @@
+import { Bindings } from './bindings.ts';
+import { Wave12Symbols } from './wave_12_symbols.a';
+import { Diagnostic } from './diagnostic.ts';
+
+export class NoTestOnGlobalRegex {
+    readonly bindings: Bindings;
+    readonly caller: Wave12Symbols;
+    constructor(bindings: Bindings) { this.bindings = bindings; this.caller = new Wave12Symbols(bindings); }
+    name(index: number): number {
+        const node = this.bindings.rules.parser.node(index);
+        return node.kind === 'Identifier' ? index : node.kind === 'PropertyAccessExpression' ? node.children[node.children.length - 1] ?? -1 : -1;
+    }
+    flags(index: number): string {
+        const rules = this.bindings.rules; const node = rules.parser.node(index);
+        if(node.kind === 'RegularExpressionLiteral') { const text = rules.text(node); return text.slice(text.lastIndexOf('/') + 1); }
+        if(node.kind !== 'NewExpression') { return ''; }
+        const constructor = rules.skip(node.children[0] ?? -1); const args = node.children.slice(1).filter((child) => rules.parser.node(child).kind !== 'TypeArgumentList');
+        if(rules.parser.node(constructor).kind !== 'Identifier' || rules.parser.node(constructor).text !== 'RegExp' || args.length !== 2 ||
+            !this.caller.nodeSymbol(constructor).declarations.some((declaration) => declaration.defaultLibrary)) { return ''; }
+        const flag = rules.parser.node(rules.skip(args[1] ?? -1));
+        return ['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(flag.kind) ? flag.text : '';
+    }
+    slot(loop: number, child: number): number {
+        const rules = this.bindings.rules; const scanner = rules.scanner;
+        scanner.pos = rules.start(rules.parser.node(loop)); scanner.scan(); scanner.scan(); scanner.scan();
+        let nesting = 0; let semi = 0;
+        const start = rules.start(rules.parser.node(child));
+        // start() uses the same scanner, so restore the header position afterward.
+        scanner.pos = rules.start(rules.parser.node(loop)); scanner.scan(); scanner.scan(); scanner.scan();
+        while(scanner.start < start && scanner.kind !== 'EndOfFileToken') {
+            if(['OpenParenToken', 'OpenBracketToken', 'OpenBraceToken'].includes(scanner.kind)) { nesting++; }
+            if(['CloseParenToken', 'CloseBracketToken', 'CloseBraceToken'].includes(scanner.kind)) { nesting--; }
+            if(nesting === 0 && scanner.kind === 'SemicolonToken') { semi++; }
+            scanner.scan();
+        }
+        return semi;
+    }
+    condition(call: number): boolean {
+        const rules = this.bindings.rules; let child = call; let current = this.bindings.parent(child);
+        while(current >= 0) {
+            const node = rules.parser.node(current);
+            if(node.kind === 'WhileStatement') { return node.children[0] === child; }
+            if(node.kind === 'DoStatement') { return node.children[1] === child; }
+            if(node.kind === 'ForStatement') { return node.children[node.children.length - 1] !== child && this.slot(current, child) === 1; }
+            if((this.bindings.functionKind(node.kind) || ['FunctionType', 'ConstructorType', 'CallSignature', 'ConstructSignature', 'MethodSignature', 'IndexSignature'].includes(node.kind)) || node.kind.endsWith('Statement') || ['Block', 'VariableDeclaration', 'ClassDeclaration'].includes(node.kind)) { return false; }
+            child = current; current = this.bindings.parent(current);
+        }
+        return false;
+    }
+    repeats(call: number, creation: number): boolean {
+        const rules = this.bindings.rules; const holders: number[] = [];
+        let current = creation;
+        while(current >= 0) { holders.push(current); current = this.bindings.parent(current); }
+        let child = call; current = this.bindings.parent(call);
+        while(current >= 0 && !holders.includes(current)) {
+            const node = rules.parser.node(current);
+            if((this.bindings.functionKind(node.kind) || ['FunctionType', 'ConstructorType', 'CallSignature', 'ConstructSignature', 'MethodSignature', 'IndexSignature'].includes(node.kind)) || node.kind === 'ClassStaticBlockDeclaration') { return true; }
+            if(['WhileStatement', 'DoStatement'].includes(node.kind)) { return true; }
+            if(node.kind === 'ForStatement' && (node.children[node.children.length - 1] === child || this.slot(current, child) !== 0)) { return true; }
+            if(['ForOfStatement', 'ForInStatement'].includes(node.kind) && node.children[node.children.length - 1] === child) { return true; }
+            child = current; current = this.bindings.parent(current);
+        }
+        return false;
+    }
+    positioned(symbol: number): boolean {
+        const rules = this.bindings.rules;
+        for(let index = 0; index < rules.parser.nodes.length; index++) {
+            const node = rules.parser.node(index);
+            if(node.kind !== 'BinaryExpression') { continue; }
+            const operator = rules.parser.node(node.children[1] ?? -1).kind;
+            if(!this.caller.assignment(operator)) { continue; }
+            const target = rules.parser.node(rules.skip(node.children[0] ?? -1));
+            if(target.kind !== 'PropertyAccessExpression' || rules.parser.node(target.children[target.children.length - 1] ?? -1).text !== 'lastIndex') { continue; }
+            const value = rules.parser.node(rules.skip(node.children[2] ?? -1));
+            const zero = operator === 'EqualsToken' && value.kind === 'NumericLiteral' && value.text === '0';
+            const name = this.name(rules.skip(target.children[0] ?? -1));
+            if(name >= 0 && !zero && this.caller.nodeSymbol(name).identity === symbol) { return true; }
+        }
+        return false;
+    }
+    run(): void {
+        const rules = this.bindings.rules;
+        for(let index = 0; index < rules.parser.nodes.length; index++) {
+            const node = rules.parser.node(index);
+            if(node.kind !== 'CallExpression' || this.bindings.parent(index) < 0) { continue; }
+            const callee = rules.parser.node(rules.skip(node.children[0] ?? -1));
+            if(callee.kind !== 'PropertyAccessExpression') { continue; }
+            const method = callee.children[callee.children.length - 1] ?? -1;
+            if(rules.parser.node(method).kind !== 'Identifier' || rules.parser.node(method).text !== 'test') { continue; }
+            const member = this.caller.nodeSymbol(method);
+            if(member.declarations.length === 0 || !member.declarations.every((declaration) => declaration.defaultLibrary && declaration.parentKind === 'InterfaceDeclaration' && declaration.parentName === 'RegExp')) { continue; }
+            const receiver = rules.skip(callee.children[0] ?? -1); const name = this.name(receiver);
+            if(name < 0) { continue; }
+            const symbol = this.caller.nodeSymbol(name);
+            if(symbol.declarations.length !== 1 || symbol.declarations[0]?.file !== rules.path) { continue; }
+            const origin = symbol.declarations[0];
+            const declaration = origin === undefined ? -1 : this.bindings.spans.get(`${origin.kind}:${origin.start}:${origin.end}`) ?? -1;
+            if(declaration < 0) { continue; }
+            const declared = rules.parser.node(declaration); const parent = this.bindings.parent(declaration);
+            if(declared.kind === 'VariableDeclaration') {
+                if(rules.parser.node(receiver).kind !== 'Identifier' || parent < 0 || rules.parser.node(parent).kind !== 'VariableDeclarationList' || rules.parser.node(parent).semantic !== '2') { continue; }
+            }
+            else if(declared.kind === 'PropertyDeclaration') {
+                if(rules.parser.node(receiver).kind !== 'PropertyAccessExpression' || !declared.children.some((child) => rules.parser.node(child).kind === 'ReadonlyKeyword')) { continue; }
+            }
+            else { continue; }
+            const initializer = this.bindings.shape.initializer(declaration);
+            if(initializer < 0) { continue; }
+            const creation = rules.skip(initializer);
+            if(!this.flags(creation).includes('g') || this.condition(index) || !this.repeats(index, creation) || this.positioned(symbol.identity)) { continue; }
+            rules.findings.push(new Diagnostic('nexus/correctness-no-test-on-global-regex', 'globalRegexTest', MESSAGE,
+                rules.byte(rules.start(node)), rules.byte(node.end), ''));
+        }
+    }
+}
+
+const MESSAGE = "`.test()` on a regex with the `g` flag is stateful: a match leaves `lastIndex` past it, and the next `.test()` on the same regex starts searching from there, so the same input can answer true and then false. This regex outlives one call (it is shared by every call of the function, or every turn of the loop), so that next call happens. `.test()` never needs `g`: drop the flag, or give the `.test()` its own regex without it when another use (`replace`, `matchAll`) needs `g`. Resetting `lastIndex` by hand is the patch for a flag the call does not need.";

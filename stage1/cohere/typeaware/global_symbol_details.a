@@ -1,0 +1,8 @@
+import { Wave12Symbols, type Wave12Symbol } from './wave_12_symbols.a';
+import { Frames, header } from './frames.ts';
+
+export function globalSymbolDetails(caller: Wave12Symbols, index: number): Wave12Symbol {
+    const frames = new Frames(caller.bindings.rules.ask(index, 'global-symbol-details'));
+    header(frames, 'global-symbol-details');
+    const result = caller.symbol(frames); frames.end(); return result;
+}

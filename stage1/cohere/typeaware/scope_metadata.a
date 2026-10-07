@@ -1,0 +1,20 @@
+import { panic } from 'adamic';
+import { Bindings } from './bindings.ts';
+import { Frames, header } from './frames.ts';
+
+export class ScopeMetadata {
+    readonly containers: readonly number[];
+    readonly external: boolean;
+    constructor(bindings: Bindings) {
+        const rules = bindings.rules;
+        const frames = new Frames(rules.ask(rules.parser.nodes.length - 1, 'scope-metadata'));
+        header(frames, 'scope-metadata');
+        this.external = frames.yes();
+        const count = frames.natural(); const containers: number[] = [];
+        for(let at = 0; at < count; at++) {
+            const kind = frames.field(); const start = frames.natural(); const end = frames.natural();
+            containers.push(bindings.spans.get(`${kind}:${start}:${end}`) ?? panic('scope absent from native tree'));
+        }
+        frames.end(); this.containers = containers;
+    }
+}

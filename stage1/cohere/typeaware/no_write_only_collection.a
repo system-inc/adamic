@@ -1,0 +1,97 @@
+import { Bindings } from './bindings.ts';
+import { Wave12Symbols } from './wave_12_symbols.a';
+import { Diagnostic } from './diagnostic.ts';
+
+export class NoWriteOnlyCollection {
+    readonly bindings: Bindings;
+    readonly caller: Wave12Symbols;
+    constructor(bindings: Bindings) { this.bindings = bindings; this.caller = new Wave12Symbols(bindings); }
+    root(index: number): number {
+        const rules = this.bindings.rules; let child = index; let current = this.bindings.parent(index);
+        while(current >= 0) {
+            const node = rules.parser.node(current);
+            if(node.kind === 'SourceFile') { return current; }
+            if(node.kind === 'PropertyDeclaration' && this.bindings.shape.initializer(current) === child) { return current; }
+            if(node.kind === 'ClassStaticBlockDeclaration' || this.bindings.functionKind(node.kind)) {
+                if(this.bindings.shape.name(current) !== child && rules.parser.node(child).kind !== 'Decorator') { return current; }
+            }
+            child = current; current = this.bindings.parent(current);
+        }
+        return -1;
+    }
+    kind(index: number): string {
+        const rules = this.bindings.rules; let current = rules.skip(index);
+        while(['AsExpression', 'SatisfiesExpression'].includes(rules.parser.node(current).kind)) { current = rules.skip(rules.parser.node(current).children[0] ?? -1); }
+        const node = rules.parser.node(current);
+        if(node.kind === 'ArrayLiteralExpression') { return 'Array'; }
+        if(node.kind !== 'NewExpression') { return ''; }
+        const constructor = rules.skip(node.children[0] ?? -1); const name = rules.parser.node(constructor);
+        if(name.kind !== 'Identifier' || !['Map', 'Set'].includes(name.text) || !this.caller.nodeSymbol(constructor).declarations.some((declaration) => declaration.defaultLibrary)) { return ''; }
+        return name.text;
+    }
+    write(reference: number): boolean {
+        const rules = this.bindings.rules; const parent = this.bindings.parent(reference);
+        if(parent < 0) { return false; }
+        const access = rules.parser.node(parent);
+        if(access.children[0] !== reference) { return false; }
+        if(access.kind === 'PropertyAccessExpression') {
+            const name = access.children[access.children.length - 1] ?? -1;
+            if(rules.parser.node(name).kind !== 'Identifier') { return false; }
+            const call = this.bindings.parent(parent);
+            if(call < 0 || rules.parser.node(call).kind !== 'CallExpression' || rules.parser.node(call).children[0] !== parent) { return false; }
+            let statement = this.bindings.parent(call);
+            while(statement >= 0 && rules.parser.node(statement).kind === 'ParenthesizedExpression') { statement = this.bindings.parent(statement); }
+            if(statement < 0 || rules.parser.node(statement).kind !== 'ExpressionStatement') { return false; }
+            const method = rules.parser.node(name).text; const symbol = this.caller.nodeSymbol(name);
+            return symbol.declarations.length > 0 && symbol.declarations.every((declaration) => {
+                if(!declaration.defaultLibrary || declaration.parentKind !== 'InterfaceDeclaration') { return false; }
+                if(declaration.parentName === 'Array') { return ['push', 'unshift', 'pop', 'shift', 'splice'].includes(method); }
+                if(declaration.parentName === 'Map') { return ['set', 'delete', 'clear'].includes(method); }
+                return declaration.parentName === 'Set' && ['add', 'delete', 'clear'].includes(method);
+            });
+        }
+        if(access.kind === 'ElementAccessExpression') {
+            let outer = parent; let up = this.bindings.parent(outer);
+            while(up >= 0 && rules.parser.node(up).kind === 'ParenthesizedExpression') { outer = up; up = this.bindings.parent(outer); }
+            if(up < 0) { return false; }
+            const assignment = rules.parser.node(up);
+            return assignment.kind === 'BinaryExpression' && assignment.children[0] === outer && rules.parser.node(assignment.children[1] ?? -1).kind === 'EqualsToken';
+        }
+        return false;
+    }
+    references(index: number, name: number, symbol: number): number {
+        const rules = this.bindings.rules; const node = rules.parser.node(index);
+        let writes = 0;
+        if(node.kind === 'Identifier' && index !== name && node.text === rules.parser.node(name).text && this.caller.identity(index) === symbol) {
+            if(!this.write(index)) { return -1; }
+            writes++;
+        }
+        for(const child of node.children) {
+            const count = this.references(child, name, symbol);
+            if(count < 0) { return -1; }
+            writes += count;
+        }
+        return writes;
+    }
+    run(): void {
+        const rules = this.bindings.rules;
+        for(let index = 0; index < rules.parser.nodes.length; index++) {
+            const declaration = rules.parser.node(index); const parent = this.bindings.parent(index);
+            if(declaration.kind !== 'VariableDeclaration' || parent < 0 || rules.parser.node(parent).kind !== 'VariableDeclarationList' || rules.parser.node(parent).semantic !== '2') { continue; }
+            const name = this.bindings.shape.name(index); const initializer = this.bindings.shape.initializer(index);
+            if(name < 0 || rules.parser.node(name).kind !== 'Identifier' || initializer < 0) { continue; }
+            const root = this.root(index);
+            if(root < 0 || rules.parser.node(root).kind === 'SourceFile' || this.kind(initializer) === '') { continue; }
+            const symbol = this.caller.nodeSymbol(name); const declarations = this.bindings.declarations(name);
+            if(!symbol.present || symbol.declarations.length !== 1 || declarations.length !== 1 || declarations[0] !== index) { continue; }
+            let writes = 0;
+            for(const child of rules.parser.node(root).children) { const count = this.references(child, name, symbol.identity); if(count < 0) { writes = -1; break; } writes += count; }
+            if(writes <= 0) { continue; }
+            const node = rules.parser.node(name);
+            rules.findings.push(new Diagnostic('nexus/correctness-no-write-only-collection', 'writeOnlyCollection', MESSAGE,
+                rules.byte(rules.start(node)), rules.byte(node.end), ''));
+        }
+    }
+}
+
+const MESSAGE = "This collection is only ever added to: every use of it puts something in or takes something out, and nothing reads what it holds. The work that fills it is thrown away. Either the code that was meant to read it is missing (a rank kept for the result and never copied in), or the collection is dead and should be deleted along with the writes.";

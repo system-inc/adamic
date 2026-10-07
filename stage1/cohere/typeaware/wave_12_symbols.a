@@ -1,0 +1,53 @@
+import { Bindings } from './bindings.ts';
+import { Frames, header } from './frames.ts';
+
+export class Wave12Declaration {
+    readonly file: string; readonly kind: string; readonly start: number; readonly end: number;
+    readonly defaultLibrary: boolean; readonly parentKind: string; readonly parentName: string;
+    constructor(file: string, kind: string, start: number, end: number, library: boolean, parentKind: string, parentName: string) {
+        this.file = file; this.kind = kind; this.start = start; this.end = end;
+        this.defaultLibrary = library; this.parentKind = parentKind; this.parentName = parentName;
+    }
+}
+export class Wave12Symbol {
+    readonly present: boolean; readonly identity: number; readonly declarations: readonly Wave12Declaration[];
+    constructor(present: boolean, identity: number, declarations: readonly Wave12Declaration[]) {
+        this.present = present; this.identity = identity; this.declarations = declarations;
+    }
+}
+// Decode existing raw symbol facts without constructing unrelated lint passes.
+export class Wave12Symbols {
+    readonly bindings: Bindings;
+    constructor(bindings: Bindings) { this.bindings = bindings; }
+    symbol(frames: Frames): Wave12Symbol {
+        const present = frames.yes(); let identity = 0; const declarations: Wave12Declaration[] = [];
+        if(present) {
+            identity = frames.natural(); frames.natural(); frames.field();
+            const count = frames.natural();
+            for(let at = 0; at < count; at++) {
+                const file = frames.field(); const kind = frames.field(); const start = frames.natural(); const end = frames.natural();
+                frames.yes(); const library = frames.yes(); const parentKind = frames.field(); const parentName = frames.field();
+                frames.natural(); frames.natural(); const tags = frames.natural();
+                for(let tag = 0; tag < tags; tag++) { frames.field(); frames.field(); frames.natural(); frames.natural(); frames.field(); }
+                const parameters = frames.natural(); for(let parameter = 0; parameter < parameters; parameter++) { frames.field(); }
+                declarations.push(new Wave12Declaration(file, kind, start, end, library, parentKind, parentName));
+            }
+        }
+        return new Wave12Symbol(present, identity, declarations);
+    }
+    nodeSymbol(index: number): Wave12Symbol {
+        const frames = new Frames(this.bindings.rules.ask(index, 'node-symbol-details')); header(frames, 'node-symbol-details');
+        const result = this.symbol(frames); frames.end(); return result;
+    }
+    identity(index: number): number {
+        const frames = new Frames(this.bindings.rules.ask(index, 'symbol-identities')); header(frames, 'symbol-identities');
+        const own = frames.natural(); frames.natural(); frames.yes(); frames.natural(); const shorthand = frames.natural(); frames.end();
+        return shorthand === 0 ? own : shorthand;
+    }
+    assignment(operator: string): boolean {
+        return ['EqualsToken', 'PlusEqualsToken', 'MinusEqualsToken', 'AsteriskEqualsToken', 'AsteriskAsteriskEqualsToken',
+            'SlashEqualsToken', 'PercentEqualsToken', 'LessThanLessThanEqualsToken', 'GreaterThanGreaterThanEqualsToken',
+            'GreaterThanGreaterThanGreaterThanEqualsToken', 'AmpersandEqualsToken', 'BarEqualsToken', 'CaretEqualsToken',
+            'AmpersandAmpersandEqualsToken', 'BarBarEqualsToken', 'QuestionQuestionEqualsToken'].includes(operator);
+    }
+}
