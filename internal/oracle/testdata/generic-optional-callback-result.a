@@ -1,0 +1,5 @@
+// Reduced from TypeScript 6.0.3, src/compiler/utilities.ts:746-755
+function first<U>(callback: () => U | undefined): U | undefined {
+    return callback();
+}
+console.log(`${first(() => "x")}`);
