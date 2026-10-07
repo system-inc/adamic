@@ -234,7 +234,12 @@ export class Converter {
                 : absent();
     }
     exports(id: number, result: number): number {
-        const children = this.ts(id).children;
+        const children: number[] = [];
+        for(const child of this.ts(id).children) {
+            if(this.kind(child) !== 'Decorator') {
+                children.push(child);
+            }
+        }
         const exported = children[0] ?? -1;
         if(this.kind(exported) !== 'ExportKeyword') {
             return result;
@@ -245,6 +250,7 @@ export class Converter {
         this.scanner.scan();
         this.arena.node(result).start = this.byte(this.scanner.start);
         const wrapper = this.create(id, defaulted ? 'ExportDefaultDeclaration' : 'ExportNamedDeclaration');
+        this.arena.node(wrapper).start = this.start(exported);
         if(defaulted) {
             this.set(wrapper, 'declaration', childValue(result));
             this.set(wrapper, 'exportKind', stringValue('value'));

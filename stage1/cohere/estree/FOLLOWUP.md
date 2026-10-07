@@ -51,3 +51,23 @@ JSX mutant pass. `ADAMIC_ESTREE_CORPUS=/tmp/estree-jsx-rescued go test -count=1
 6,131,940 canonical bytes on source Node, ASan/UBSan native and emitted JS.
 The initial library comparison failed on the documented deltas; the final gate
 contains their exact proving checks. Cohere checks 21/21 sources, 100% ready.
+
+### Decorated export checkpoint
+
+JSX commit fe07100524fe56da82b15d8d8ff50358ff85c92d was pushed. The next
+largest output group had 47 files whose first difference was an export wrapper.
+Ignoring decorator children when reading modifiers and starting the wrapper at
+the export keyword resolves 46 files; the remaining file has another difference.
+The source audit is now 15,268 identical, 338 refused Go answers, 123 accepted
+Go refusals, 46 different and 11,594 both refused. No old match regressed.
+
+`go test -count=1 -v ./stage1/cohere/estree -run '^TestDecoratedExport' >
+/tmp/estree-exports-gate.log 2>&1`: PASS 39.380s, six generated files and
+successful wrapper-range mutant caught on source Node and sanitized native.
+`ADAMIC_ESTREE_LIBRARY=/workspace/scratch/estree-library
+ADAMIC_ESTREE_CORPUS=/tmp/estree-exports-rescued go test -count=1 -v
+./stage1/cohere/estree -run '^TestRepositoryAgreement$|^TestDecoratedExportLibraries$'
+> /tmp/estree-exports-rescued.log 2>&1`: PASS 20.277s, all 46 files and 251,078
+bytes on all three port builds, six raw and postprocessed library agreements.
+The source audit command is the JSX command with exports output paths.
+Cohere reports 21/21, 100 percent ready. Logs and full dispositions are retained.
