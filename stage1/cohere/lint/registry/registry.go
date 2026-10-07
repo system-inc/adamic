@@ -59,6 +59,20 @@ func RuleModule(directory string) (string, error) {
 	return module, nil
 }
 
+// Witnesses are raw source files outside the module graph. Keep their script kind.
+func Witnesses(directory string) ([]string, error) {
+	var paths []string
+	for _, extension := range []string{"ts", "tsx", "js", "jsx"} {
+		found, err := filepath.Glob(filepath.Join(directory, "testdata", "*."+extension+".txt"))
+		if err != nil {
+			return nil, err
+		}
+		paths = append(paths, found...)
+	}
+	sort.Strings(paths)
+	return paths, nil
+}
+
 func Discover(root string) ([]Descriptor, error) {
 	paths, err := filepath.Glob(filepath.Join(root, "rules", "*", "rule.json"))
 	if err != nil {
@@ -181,7 +195,7 @@ func Discover(root string) ([]Descriptor, error) {
 		if mutant.Name == "" || mutant.From == "" || mutant.To == mutant.From {
 			return nil, fmt.Errorf("%s: invalid owned mutant", path)
 		}
-		witnesses, err := filepath.Glob(filepath.Join(filepath.Dir(path), "testdata", "*.ts.txt"))
+		witnesses, err := Witnesses(filepath.Dir(path))
 		if err != nil || len(witnesses) == 0 {
 			return nil, fmt.Errorf("%s: missing witness", path)
 		}

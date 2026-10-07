@@ -98,7 +98,7 @@ func run(row string, countOnly bool, out *bufio.Writer) int {
 				replacement = strings.Join(edits, "|")
 				suggestion = s.Message.Description
 			} else {
-				repair = "suggestions"
+				repair, replacement, suggestion = "suggestions", "", ""
 			}
 		}
 		editStart, editEnd := start, end

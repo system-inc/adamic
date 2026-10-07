@@ -59,7 +59,16 @@ export class RuleContext {
         replacement: string,
         suggestion: string,
     ): Finding {
-        const finding = new Finding(rule, id, message, this.start(index), this.node(index).end, repair, replacement, suggestion);
+        const finding = new Finding(
+            rule,
+            id,
+            message,
+            this.start(index),
+            this.node(index).end,
+            repair,
+            replacement,
+            suggestion,
+        );
         this.findings.push(finding);
         return finding;
     }

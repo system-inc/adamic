@@ -1,5 +1,5 @@
 import type { RuleContext } from '../../context.ts';
-import { debuggerMessage } from './messages.ts';
+import { debuggerMessage } from '../../rules/no-debugger/messages.ts';
 import { Suggestion, SuggestionEdit } from '../../suggestions.a';
 
 export class Rule {

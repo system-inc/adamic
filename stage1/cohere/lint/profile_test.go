@@ -55,6 +55,11 @@ func TestProfileArtifacts(t *testing.T) {
 	if err := os.WriteFile(filepath.Join(directory, "oracle"), oracle, 0755); err != nil {
 		t.Fatal(err)
 	}
+	buildProfile(t, directory)
+}
+
+func buildProfile(t *testing.T, directory string) {
+	t.Helper()
 	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
 	if err != nil {
 		t.Fatal(err)
@@ -100,6 +105,27 @@ func TestProfileArtifacts(t *testing.T) {
 	flags = append(flags, "-lm")
 	execute(t, "", "clang", flags...)
 	t.Logf("release, counted and -O2 -g profiling builds saved in %s", directory)
+}
+
+// Exercise the shared profile graph without requiring the external compiler corpus.
+func TestProfileCompilation(t *testing.T) {
+	directory := t.TempDir()
+	copyPort(t, directory, "", "")
+	prepareRegistry(t, directory)
+	buildProfile(t, directory)
+	path := manifest(t, []string{ownedWitnesses(t, directory, "no-var")[0] + "\tno-var"})
+	oracle := goOracle(t)
+	compare(t, oracle, filepath.Join(directory, "scanner"), directory, path)
+	want := execute(t, "", oracle, "--manifest", path).output
+	got := execute(t, "", filepath.Join(directory, "profiled"), "--manifest", path).output
+	if diff := difference(got, want); diff != "" {
+		t.Fatal(diff)
+	}
+	want = execute(t, "", oracle, "--manifest", path, "--count").output
+	got = execute(t, "", filepath.Join(directory, "counted"), "--manifest", path, "--count").output
+	if diff := difference(got, want); diff != "" {
+		t.Fatal(diff)
+	}
 }
 
 // Not parallel: upstream fixture capture uses process-wide environment state.

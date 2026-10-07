@@ -71,16 +71,31 @@ function run(row: string, countOnly: boolean): number {
         if(finding.suggestions.length > 0) {
             const suggestion = finding.suggestions[0] ?? panic('missing suggestion');
             const edit = suggestion.edits[0];
-            if(finding.suggestions.length === 1 && suggestion.edits.length === 1 && edit !== undefined && edit.start === finding.start && edit.end === finding.end) {
+            if(
+                finding.suggestions.length === 1 &&
+                suggestion.edits.length === 1 &&
+                edit !== undefined &&
+                edit.start === finding.start &&
+                edit.end === finding.end
+            ) {
                 repair = 'suggestion';
                 replacement = edit.text;
                 description = suggestion.message;
                 editStart = offsets[edit.start] ?? panic('suggestion outside source');
                 editEnd = offsets[edit.end] ?? panic('suggestion end outside source');
             }
-            else if(finding.suggestions.length === 1 && suggestion.edits.length > 0 && suggestion.edits.every(value => !value.text.includes('|') && !value.text.includes(':'))) {
+            else if(
+                finding.suggestions.length === 1 &&
+                suggestion.edits.length > 0 &&
+                suggestion.edits.every((value) => !value.text.includes('|') && !value.text.includes(':'))
+            ) {
                 repair = `suggestion-edits:${suggestion.id}`;
-                replacement = suggestion.edits.map(value => `${offsets[value.start] ?? panic('suggestion outside source')}:${offsets[value.end] ?? panic('suggestion end outside source')}:${value.text}`).join('|');
+                replacement = suggestion.edits
+                    .map(
+                        (value) =>
+                            `${offsets[value.start] ?? panic('suggestion outside source')}:${offsets[value.end] ?? panic('suggestion end outside source')}:${value.text}`,
+                    )
+                    .join('|');
                 description = suggestion.message;
             }
             else {
@@ -95,9 +110,13 @@ function run(row: string, countOnly: boolean): number {
         );
         if(complete) {
             for(const suggestion of finding.suggestions) {
-                console.log(`suggestion\t${written(suggestion.id)}\t${written(suggestion.message)}\t${suggestion.edits.length}`);
+                console.log(
+                    `suggestion\t${written(suggestion.id)}\t${written(suggestion.message)}\t${suggestion.edits.length}`,
+                );
                 for(const edit of suggestion.edits) {
-                    console.log(`suggestion-edit\t${offsets[edit.start] ?? panic('suggestion outside source')} ${offsets[edit.end] ?? panic('suggestion end outside source')}\t${written(edit.text)}`);
+                    console.log(
+                        `suggestion-edit\t${offsets[edit.start] ?? panic('suggestion outside source')} ${offsets[edit.end] ?? panic('suggestion end outside source')}\t${written(edit.text)}`,
+                    );
                 }
             }
         }

@@ -470,7 +470,10 @@ func copyPort(t *testing.T, directory, from, to string, targets ...string) strin
 	}
 	// Validation requires each rule's owned witnesses too.
 	for _, d := range prepareRegistry(t, ".") {
-		paths, _ := filepath.Glob(filepath.Join("rules", d.Slug, "testdata", "*.ts.txt"))
+		paths, err := registry.Witnesses(filepath.Join("rules", d.Slug))
+		if err != nil {
+			t.Fatal(err)
+		}
 		for _, path := range paths {
 			data, err := os.ReadFile(path)
 			if err != nil {

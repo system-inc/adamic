@@ -139,7 +139,7 @@ func TestFactoryHooks(t *testing.T) {
 // Raw corpus text stays outside the project's TypeScript module graph.
 func ownedWitnesses(t *testing.T, directory, slug string) []string {
 	t.Helper()
-	paths, err := filepath.Glob(filepath.Join(directory, "rules", slug, "testdata", "*.ts.txt"))
+	paths, err := registry.Witnesses(filepath.Join(directory, "rules", slug))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -149,7 +149,7 @@ func ownedWitnesses(t *testing.T, directory, slug string) []string {
 		if err != nil {
 			t.Fatal(err)
 		}
-		target := filepath.Join(t.TempDir(), fmt.Sprintf("%s-%d.ts", slug, index))
+		target := filepath.Join(t.TempDir(), fmt.Sprintf("%s-%d%s", slug, index, filepath.Ext(strings.TrimSuffix(path, ".txt"))))
 		if err := os.WriteFile(target, data, 0644); err != nil {
 			t.Fatal(err)
 		}
