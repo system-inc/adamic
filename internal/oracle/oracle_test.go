@@ -38,6 +38,13 @@ var fixtures = []struct {
 	// the check, so the native binary is held to the JavaScript backend, which does.
 	checked bool
 }{
+	{"internal/oracle/testdata/process_exit_code.a", true, false},
+	{"internal/oracle/testdata/process_exit.a", true, false},
+	{"internal/oracle/testdata/process_exit_default.a", true, false},
+	{"internal/oracle/testdata/process_exit_uncaught.a", true, false},
+	{"internal/oracle/testdata/process_bad_code.a", true, false},
+	{"internal/oracle/testdata/process_observations.a", true, false},
+	{"internal/oracle/testdata/process_shadow.a", true, false},
 	{"internal/oracle/testdata/typeof_null.a", true, false},
 	{"internal/oracle/testdata/route_targets_callbacks.a", true, false},
 	{"internal/oracle/testdata/route_targets_virtual_fresh.a", true, false},

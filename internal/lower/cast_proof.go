@@ -95,7 +95,8 @@ func castMembers(proven *checker.Type) []*checker.Type {
 
 func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 	as := node.AsAsExpression()
-	if as.Type.Kind == ast.KindTypeReference && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
+	// A qualified name (NodeJS.ErrnoException) has no Text; only a bare `const` is as const.
+	if as.Type.Kind == ast.KindTypeReference && ast.IsIdentifier(as.Type.AsTypeReferenceNode().TypeName) && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
 		return castProof{}, nil
 	}
 	source := l.concrete(l.checker.GetTypeAtLocation(as.Expression))

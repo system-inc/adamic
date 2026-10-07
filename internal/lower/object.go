@@ -252,6 +252,9 @@ func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
 // elementType is the representation of an array's elements, from the checker's type for the node.
 func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 	arrayType := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node))
+	if l.nodeBufferType(arrayType, "Buffer") {
+		return ir.Number, nil
+	}
 	if l.isLibraryType(arrayType, "RegExpExecArray", "RegExpMatchArray") {
 		return ir.String, nil
 	}
@@ -323,7 +326,7 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	}
 	// A library declaration proves a prototype member exists, never an own slot. Keep this
 	// guard in lowering too, even when the up-front unbound-method pass has already refused it.
-	if l.inheritedLibraryMember(node) && !l.regexRuntimeProperty(access.Expression, name) && name != "length" && name != "size" && !(l.isLibraryType(l.checker.GetTypeAtLocation(access.Expression), "Error") && (name == "name" || name == "message")) {
+	if l.inheritedLibraryMember(node) && !l.regexRuntimeProperty(access.Expression, name) && name != "length" && name != "size" && !(l.isLibraryType(l.checker.GetTypeAtLocation(access.Expression), "Error") && (name == "name" || name == "message" || name == "code")) {
 		return nil, l.prototypeRead(node, name)
 	}
 	if err := l.erasedLiteralMethod(node); err != nil {
@@ -571,6 +574,15 @@ func refusedRandom(l *lowering, node *ast.Node) error {
 
 // builtin lowers a call to Math or a number's toFixed. isBuiltin is false for any other call.
 func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
+	if value, handled, err := l.libraryNodeBuffer(node); handled {
+		return value, true, err
+	}
+	if value, known, err := l.nodeFSDirectoryCall(node); known {
+		return value, known, err
+	}
+	if value, known, err := l.processValue(node); known {
+		return value, true, err
+	}
 	if value, handled, err := l.userMethodCall(node); handled {
 		return value, true, err
 	}
@@ -1334,6 +1346,9 @@ func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
 // newExpression lowers new Map(), and new Map([[key, value], ...]) with its pairs written out, which
 // is what the array of pairs means.
 func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
+	if value, found, err := l.nodeFSFileDate(node); found {
+		return value, err
+	}
 	if l.isLibraryGlobal(node.AsNewExpression().Expression, "RegExp") {
 		return l.regexConstant(node)
 	}
@@ -1487,6 +1502,9 @@ func (l *lowering) stringMethod(node *ast.Node, receiver *ast.Node, name string)
 // shorthand lowers the value of { value }. The name there is the field's, and asked for its symbol
 // the checker gives the field; the variable it reads is a separate question.
 func (l *lowering) shorthand(property *ast.Node) (ir.Expression, error) {
+	if value, known, err := l.nodeProcessValue(property.Name()); known {
+		return value, err
+	}
 	symbol := l.checker.GetShorthandAssignmentValueSymbol(property)
 	if symbol != nil && symbol.Flags&ast.SymbolFlagsAlias != 0 {
 		symbol = l.checker.GetAliasedSymbol(symbol)
@@ -1715,6 +1733,12 @@ func (l *lowering) setIndex(target *ast.Node, valueNode *ast.Node) ([]ir.Stateme
 	if err != nil {
 		return nil, err
 	}
+	if l.nodeBufferType(l.checker.GetTypeAtLocation(access.Expression), "Buffer") {
+		if value.Type() != ir.Number {
+			return nil, l.notYet(valueNode, "a Buffer write of a non-number")
+		}
+		return []ir.Statement{ir.Evaluate{Value: ir.NodeBufferCall{Function: "buffer_set", Arguments: []ir.Expression{array, index, value}, Returns: ir.Number}}}, nil
+	}
 	return []ir.Statement{ir.SetIndex{Array: array, Index: index, Value: fit(value, element), Element: element, Site: l.writeSite(access.Expression)}}, nil
 }
 
@@ -1937,6 +1961,9 @@ func (l *lowering) pairwiseTupleWhereArrayGoes(values []*checker.Type, targets [
 // read, and that read is held before the right side runs, exactly once each and in JavaScript's
 // order. The final SetIndex uses those same held values even when the right side changes their source.
 func (l *lowering) updateIndex(node *ast.Node, target *ast.Node, operator ast.Kind, valueNode *ast.Node) ([]ir.Statement, error) {
+	if l.nodeBufferType(l.checker.GetTypeAtLocation(target.AsElementAccessExpression().Expression), "Buffer") {
+		return nil, l.notYet(node, "a compound Buffer write outside the census")
+	}
 	access := target.AsElementAccessExpression()
 	array, err := l.expression(access.Expression)
 	if err != nil {
