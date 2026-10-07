@@ -1,0 +1,45 @@
+{
+  "status": "green for all six requested probes",
+  "scratch_head": "975e4d0bd6b1fcca55af5c5f4416b44cecfa6b06",
+  "inputs": [
+    {
+      "ref": "scratch base",
+      "sha": "80aef6975133d8a2dcf147c684b1ad1225bc525c",
+      "scratch_contains": true
+    },
+    {
+      "ref": "codex/census-small-families-3",
+      "sha": "24a2b28709aeaa80615e9b2760e534829b018b80",
+      "scratch_contains": true
+    }
+  ],
+  "reconciliation_source": "census-small-families-3 24a2b287 replaces separate census/proven-predicate tips as the reconciled implementation; prior commits remain ancestors of the scratch merge",
+  "compiler_build_exit": 0,
+  "rows_retested": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    9
+  ],
+  "passing": 6,
+  "total_retested": 6,
+  "probe_sources": "unchanged",
+  "byte_mutants": "actual native stdout first byte XOR 1; all six Node comparisons exit 1",
+  "tests": {
+    "command": "GOWORK=off TMPDIR=/workspace/scratch/parser-build-tmp go test ./internal/lower -run 'TestCensusPredicateInteraction|TestCensusPredicateMarkerKeepsProofBoundaries|TestPredicate|TestCensusOverloadReturnProof' -count=1",
+    "exit": 0,
+    "output": "ok  \tgithub.com/system-inc/adamic/internal/lower\t12.067s\n"
+  },
+  "merge_conflicts": [
+    "cast.go/cast_proof.go: retain deferred checked view/phantom lowering and add reconciled interfaceView proof field and dispatch. A deferred candidate still must validate at lowering; no proof bypass.",
+    "refusals.go: add incoming predicateArguments call checks; combine checkedCast flags for deferred and interface views while retaining record storage check.",
+    "control.go: use incoming censusCondition and retain truthy helper required by imported taste paths.",
+    "expression.go: retain localRead helper with checked module, namespace and union readiness, plus existing void path; no older inline helper substituted.",
+    "Docs/counts: retain existing conflicting text and union incoming count rows. No counts gate or docs gate claimed."
+  ],
+  "full_slice": "held for lane 2; no full slice, all-eleven-probe or parser-reference rerun",
+  "last_observed_slice_stop": "core.ts:204:12; not rerun this turn",
+  "limitations": "No complete gate, counts gate, sanitizer or full oracle run. Declaration-admission probes keep their original limited runtime coverage. No cumulative eleven-probe count claimed. Compiler changes remain scratch-only, never pushed."
+}

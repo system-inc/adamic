@@ -1,3 +1,43 @@
+# Reconciled census/predicate rerun: all six requested probes remain green
+
+Tools are available. Merged census-small-families-3 24a2b287 into unpushed scratch
+80aef697, yielding 975e4d0b. This is the reconciled implementation in place of
+separate census-small-families/proven-predicates tips; older commits remain
+ancestors of the scratch merge. Compiler rebuild succeeds.
+
+Unchanged rows 1, 2, 3, 4, 5 and 9 all compile natively and match Node stdout,
+stderr and exit byte for byte. Every exit is 0 and stderr is empty. Row 1 prints
+`overload declarations loaded\n`, row 2 `1\n`, row 3 `0\n`, row 4
+`overload declarations loaded\n`, row 5 `2\n`, and row 9
+`predicate view loaded\n`. A first-byte mutation of each actual native stdout
+is caught by cmp exit 1, six of six. Probe sources were not edited.
+
+Focused census predicate interaction/boundary, predicate and checked-overload
+result lower tests pass in 12.067s. The command includes
+TestCensusPredicateMarkerKeepsProofBoundaries, which failed in the prior merge,
+and the new interaction boundary/escape tests. Exact command and output are in
+evidence/front18/report.json and tests.log.gz. No test expectation was changed.
+
+The scratch merge conflicts affect cast/proof dispatch, conditions, expression
+reads and refusal preflight. Incoming interfaceView proof handling was combined
+with the existing deferred checked-view/phantom dispatch. Incoming predicate
+argument checks were retained, as were record storage checks and the namespace,
+checked module/union and void read paths. No compiler proof bypass was made.
+Exact ancestry, resolutions and scratch-only patch are retained in front18.
+Only parser evidence is on the pushed branch; compiler integration stays unpushed.
+
+Full slice, both native parser references and the other five probes were not
+rerun, as requested. core.ts:204:12 remains the last observed first slice stop,
+waiting for lane 2. This run is six of six requested probes, not a fresh full
+11-probe count. Declaration-admission probes retain their prior limited coverage.
+No complete gate, counts gate, sanitizer or full oracle run is claimed.
+
+See evidence/front18/probes/report.json and run-probes.py for actual commands,
+outputs, binary sizes and mutants. Native JSDoc and error-recovery acceptance
+remain unverified.
+
+---
+
 # Array.isArray predicate probe: adapted signature green
 
 Merged host-blockers a85a9cb1 into unpushed scratch e54b4179, producing
