@@ -1,0 +1,11 @@
+suite: load_s=0.292829936 run_s=17.926922168 process_s=18.270888 run_findings_s=98.344 process_findings_s=96.492
+  queries=131755 query_s=10.859239581 average_query_us=82.420
+oracle: load_s=0.286114521 run_s=1.739172245 process_s=2.045863 run_findings_s=1013.701 process_findings_s=861.739
+Warm identical-facts probes: median ns/query excluding first, 9999 remaining calls
+assignable: native=2894.044 direct_Go=2128.341 delta=765.703
+declarations: native=5406.636 direct_Go=5485.194 delta=-78.558
+signature: native=14997.768 direct_Go=15358.369 delta=-360.601
+raw-type: native=6404.666 direct_Go=6321.846 delta=82.820
+nullable: native=17556.268 direct_Go=17827.700 delta=-271.432
+union: native=13715.666 direct_Go=14287.957 delta=-572.291
+options: native=1805.108 direct_Go=1256.861 delta=548.247

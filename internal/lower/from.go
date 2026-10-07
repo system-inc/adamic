@@ -14,6 +14,25 @@ import (
 // missing (alwaysUndefined), which is exactly what it holds.
 func (l *lowering) arrayFrom(node *ast.Node) (ir.Expression, bool, error) {
 	arguments := node.AsCallExpression().Arguments.Nodes
+	if len(arguments) > 0 {
+		if plan, err := l.planIteration(arguments[0]); err != nil {
+			return nil, true, err
+		} else if plan != nil {
+			if len(arguments) > 2 {
+				return nil, true, l.notYet(node, "Array.from with thisArg")
+			}
+			element, err := l.elementType(node)
+			if err != nil {
+				return nil, true, err
+			}
+			var callback *ast.Node
+			if len(arguments) == 2 {
+				callback = arguments[1]
+			}
+			value, err := l.collectIteration(node, arguments[0], callback, plan, element)
+			return value, true, err
+		}
+	}
 	if len(arguments) != 2 {
 		return nil, true, l.notYet(node, "Array.from with other than { length } and a callback")
 	}

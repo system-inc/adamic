@@ -1,0 +1,1 @@
+function read(value: {kind: "a"; count: number} | {kind: "b"}): number { return value.count; }

@@ -5,15 +5,18 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 	"io/fs"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
 	"sort"
 	"strings"
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
@@ -22,7 +25,35 @@ import (
 const repository = "../../.."
 const compilerCommit = "050880ce59e30b356b686bd3144efe24f875ebc8"
 
-var portFiles = []string{"finding.ts", "lint.ts", "main.ts"}
+func prepareRegistry(t *testing.T, directory string) []registry.Descriptor {
+	t.Helper()
+	descriptors, err := registry.Generate(directory)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return descriptors
+}
+
+func portFiles(t *testing.T) []string {
+	t.Helper()
+	var files []string
+	err := filepath.WalkDir(".", func(path string, entry fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		if entry.IsDir() && (path == "gaps" || strings.HasSuffix(path, "testdata")) {
+			return filepath.SkipDir
+		}
+		if !entry.IsDir() && (strings.HasSuffix(path, ".ts") || strings.HasSuffix(path, ".a") || strings.HasSuffix(path, "rule.json") || strings.HasSuffix(path, "mutant.json") || strings.HasSuffix(path, "oracle.go")) {
+			files = append(files, path)
+		}
+		return nil
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	return files
+}
 
 type execution struct {
 	output   []byte
@@ -58,6 +89,9 @@ func execute(t *testing.T, directory, name string, args ...string) execution {
 }
 
 func goOracle(t *testing.T) string {
+	return goOracleFrom(t, ".")
+}
+func goOracleFrom(t *testing.T, sourceRoot string) string {
 	t.Helper()
 	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
 	if err != nil {
@@ -67,23 +101,41 @@ func goOracle(t *testing.T) string {
 	if err != nil {
 		t.Fatal(err)
 	}
-	virtual := filepath.Join(root, "adamic_lint_oracle.go")
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: side}})
+	descriptors := prepareRegistry(t, sourceRoot)
+	directory := t.TempDir()
+	replacements := map[string]string{}
+	var virtualFiles []string
+	add := func(name, source string) {
+		virtual := filepath.Join(root, "adamic_lint_"+name+".go")
+		absolute, err := filepath.Abs(source)
+		if err != nil {
+			t.Fatal(err)
+		}
+		replacements[virtual] = absolute
+		virtualFiles = append(virtualFiles, virtual)
+	}
+	add("oracle", side)
+	add("registry", filepath.Join(sourceRoot, ".generated/registry.go"))
+	for _, d := range descriptors {
+		add(strings.ReplaceAll(d.Slug, "-", "_"), filepath.Join(sourceRoot, "rules", d.Slug, "oracle.go"))
+	}
+	overlay, err := json.Marshal(map[string]any{"Replace": replacements})
 	if err != nil {
 		t.Fatal(err)
 	}
-	directory := t.TempDir()
 	path := filepath.Join(directory, "overlay.json")
 	if err := os.WriteFile(path, overlay, 0644); err != nil {
 		t.Fatal(err)
 	}
 	binary := filepath.Join(directory, "oracle")
-	execute(t, root, "go", "build", "-overlay="+path, "-o", binary, virtual)
+	args := append([]string{"build", "-overlay=" + path, "-o", binary}, virtualFiles...)
+	execute(t, root, "go", args...)
 	return binary
 }
 
 func buildPort(t *testing.T, directory string, sanitize bool) string {
 	t.Helper()
+	prepareRegistry(t, directory)
 	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
 	if err != nil {
 		t.Fatal(err)
@@ -101,6 +153,7 @@ func buildPort(t *testing.T, directory string, sanitize bool) string {
 
 func node(t *testing.T, directory, manifest string, count bool) execution {
 	t.Helper()
+	prepareRegistry(t, directory)
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	if err != nil {
 		t.Fatal(err)
@@ -155,6 +208,38 @@ func manifest(t *testing.T, rows []string) string {
 	}
 	return path
 }
+
+// recoveryRows marks "recovery" each row whose file typescript-go's parse reports a diagnostic, when no other
+// mode claims it, so the oracle compares that row's findings rather than refusing it as invalid corpus or
+// fixing a file Go would not. A legacy octal escape is the case: no-octal-escape exists to report one, and
+// TypeScript's parser reports it too. Other rows are left as they were.
+func recoveryRows(t *testing.T, oracle string, rows []string) []string {
+	t.Helper()
+	if len(rows) == 0 {
+		return rows
+	}
+	answer := execute(t, "", oracle, "--manifest", manifest(t, rows), "--diagnostics")
+	flags := strings.Fields(string(answer.output))
+	if len(flags) != len(rows) {
+		t.Fatalf("diagnostics answered %d rows of %d", len(flags), len(rows))
+	}
+	result := make([]string, len(rows))
+	for index, row := range rows {
+		result[index] = row
+		if flags[index] != "1" {
+			continue
+		}
+		fields := strings.Split(row, "\t")
+		for len(fields) < 7 {
+			fields = append(fields, "")
+		}
+		if fields[6] == "" {
+			fields[6] = "recovery"
+		}
+		result[index] = strings.Join(fields, "\t")
+	}
+	return result
+}
 func generated(t *testing.T) []string {
 	sources := []string{
 		"debugger; if(x) debugger; while(x) debugger; label: debugger; function f(){ debugger; } function noop(){} switch(x){case 1: debugger;}",
@@ -163,6 +248,14 @@ func generated(t *testing.T) []string {
 		"var a; for(var x=0;x<3;x++){}; for(var y in z){}; for(var q of z){}; declare var b; declare global{ var c; namespace N{var d;} } namespace M{var e;}",
 		"switch(x){case f( a /* c */ ):break;case f(a):break;case a?.b:break;case a.b:break;case (a):break;case a:break;case /[/*]/:break;case /[/*]/:break;case -1:break;case +1:break;case 1.0:break;case 1:break;}",
 		"const é = '😀';\r\n é == null;\n debugger;\r\n if(é){} // outside\n",
+		"outer: while(x){continue outer; break outer; await f(); async function nested(){await g();}} with(x){y();} new C(); void new D(); const holes=[,,x]; ([,a]=b); function* missing(){function* inner(){yield 1;} return 1;} function* good(){yield 1;} f(); var late;",
+		"async function f(){for(let i=await init();await test();await update()){await body();} for await(const x of xs){await ignored();} for(const x of xs){await body();}} function g(){'use strict'; var top; f(); var late;} class C{static{f();var late;}}",
+		"const placeholder='${x}${y}'; const empty='${}'; const regex=/=foo/g; const escaped=/\\=foo/; a|0; a|(0); 0|a; a>>>=b; ~a; for(a,b,c; a,b; a++,b++); for(let r=/;/; a,b; a++,b++); const arrow = a => (b,c); const deliberate = a => ((b,c));",
+		"const nested=(a?true:false)?false:true; const bool=a == b ? false : true; const same=f()?true:true; const coerced=(a + b)?true:false; const assertion=(a as any)?false:true; const fallback=a?a:b??c; const nonnull=a!?true:false;",
+		"// TODO: fix this xxx\nconst url='http://todo'; const fake=/[/*]TODO/; const template=`// TODO ${f() /* FIXME */} /* XXX */`; /* eslint no-warning-comments: error todo */\n// TODOé and fixme\n/** TODO decorated */ const arr=[1, // FIXME trailing comma\n]; import data from 'data' with {/* TODO attributes */}; type Empty=import('data', {with:{/* TODO import type */}});",
+		"\ufeff\ufeff // TODO two marks\nconst x=1;",
+		"// ſomething\n// K\n// ſa\n// Σ σ ς\n// TODO éééééééééééééééééééé é\n// TODO \\ quoted \"text\"\n// ABC TODO\n// K ſ TODO\n// -/ TODO\n",
+		"async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}",
 	}
 	var rows []string
 	for i, source := range sources {
@@ -170,15 +263,29 @@ func generated(t *testing.T) []string {
 		if err := os.WriteFile(path, []byte(source), 0644); err != nil {
 			t.Fatal(err)
 		}
-		for _, options := range []string{"all\tAlways\tAlways\tfalse", "all\tSmart\t\ttrue", "all\tAlways\tNever\tfalse", "all\tAlways\tIgnore\ttrue"} {
+		for _, options := range []string{"all\tAlways\tAlways\tfalse", "all\tSmart\t\ttrue", "all\tAlways\tNever\tfalse", "all\tAlways\tIgnore\ttrue", "all\tAlways\tAlways\tfalse\t{\"allowLoop\":true,\"allowSwitch\":true,\"int32Hint\":true,\"allow\":[\"~\"],\"allowInParentheses\":false,\"defaultAssignment\":false,\"terms\":[\"todo\",\"fixme\",\"xxx\"],\"location\":\"anywhere\",\"decoration\":[\"*\"]}", "all\tAlways\tAlways\tfalse\t{\"Require\":\"always\",\"terms\":[]}", "no-warning-comments\t\t\tfalse\t{\"terms\":[\"s\",\"k\",\"σ\",\"todo\"],\"location\":\"anywhere\"}", "no-warning-comments\t\t\tfalse\t{\"decoration\":[\"a\",\"-\",\"z\"]}", "no-warning-comments\t\t\tfalse\t{\"decoration\":[\"z\",\"-\",\"a\"]}", "no-warning-comments\t\t\tfalse\t{\"decoration\":[\"-\",\"/\"]}"} {
 			rows = append(rows, path+"\t"+options)
 		}
 	}
-	return rows
+	// One source exercising the ten rules that came from the frequency-ranked slice (VOLUME.md), by default
+	// and under the options each takes.
+	path := filepath.Join(t.TempDir(), "options.ts")
+	if err := os.WriteFile(path, []byte("interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\n"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	return append(rows, path,
+		path+"\tno-plusplus\t\t\t\t{\"AllowForLoopAfterthoughts\":true}",
+		path+"\t@typescript-eslint/method-signature-style\t\t\t\t{\"Style\":\"method\"}",
+		path+"\t@typescript-eslint/prefer-literal-enum-member\t\t\t\t{\"AllowBitwiseExpressions\":true}",
+		path+"\tno-return-assign\t\t\t\t\"always\"",
+	)
 }
 
 // Capture every Run, including tests that assert repair fields directly. The overlay changes no rule.
 func upstream(t *testing.T) []string {
+	return upstreamFrom(t, ".")
+}
+func upstreamFrom(t *testing.T, sourceRoot string) []string {
 	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
 	if err != nil {
 		t.Fatal(err)
@@ -205,17 +312,22 @@ func upstream(t *testing.T) []string {
 	}
 	capture := filepath.Join(directory, "capture")
 	t.Setenv("COHERE_DOCS_CAPTURE", capture)
-	execute(t, root, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/core", "-run", "Test(NoDebugger|NoEmpty|Eqeqeq|NoVar|NoDuplicateCase)", "-count=1", "-timeout=10m")
+	discovered := map[string]bool{}
+	packages := map[string][]string{}
+	for _, d := range prepareRegistry(t, sourceRoot) {
+		discovered[d.Name] = true
+		packages[d.UpstreamPackage] = append(packages[d.UpstreamPackage], d.UpstreamTest)
+	}
+	for name, tests := range packages {
+		execute(t, root, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/"+name, "-run", "^("+strings.Join(tests, "|")+")", "-count=1", "-timeout=10m")
+	}
 	files, err := filepath.Glob(filepath.Join(capture, "*.jsonl"))
 	if err != nil {
 		t.Fatal(err)
 	}
 	type record struct {
-		Rule, Source, Outcome, FixedSource string
-		Options                            struct {
-			Mode, Null      string
-			AllowEmptyCatch bool
-		}
+		Rule, File, Source, Outcome, FixedSource string
+		Options                                  json.RawMessage
 	}
 	unique := map[string]record{}
 	for _, path := range files {
@@ -231,10 +343,10 @@ func upstream(t *testing.T) []string {
 			if err := json.Unmarshal(line, &row); err != nil {
 				t.Fatal(err)
 			}
-			if !strings.Contains("|no-debugger|no-empty|eqeqeq|no-var|no-duplicate-case|", "|"+row.Rule+"|") {
+			if !discovered[row.Rule] {
 				continue
 			}
-			key := fmt.Sprintf("%s\t%+v\t%s", row.Rule, row.Options, row.Source)
+			key := fmt.Sprintf("%s\t%s\t%+v\t%s", row.Rule, row.File, row.Options, row.Source)
 			unique[key] = row
 		}
 	}
@@ -246,11 +358,40 @@ func upstream(t *testing.T) []string {
 	var rows []string
 	for i, key := range keys {
 		row := unique[key]
-		path := filepath.Join(directory, fmt.Sprintf("case-%03d.ts", i))
+		name := filepath.Base(strings.ReplaceAll(row.File, "\\", "/"))
+		if name == "." || name == "" {
+			name = "source.ts"
+		}
+		caseDirectory := filepath.Join(directory, fmt.Sprintf("case-%03d", i))
+		if err := os.MkdirAll(caseDirectory, 0755); err != nil {
+			t.Fatal(err)
+		}
+		path := filepath.Join(caseDirectory, name)
 		if err := os.WriteFile(path, []byte(row.Source), 0644); err != nil {
 			t.Fatal(err)
 		}
-		rows = append(rows, fmt.Sprintf("%s\t%s\t%s\t%s\t%t", path, row.Rule, row.Options.Mode, row.Options.Null, row.Options.AllowEmptyCatch))
+		var legacy struct {
+			Mode, Null      string
+			AllowEmptyCatch bool
+		}
+		if len(row.Options) > 0 && row.Options[0] == '{' {
+			if err := json.Unmarshal(row.Options, &legacy); err != nil {
+				t.Fatal(err)
+			}
+		}
+		mode := ""
+		if row.Rule == "@typescript-eslint/method-signature-style" {
+			switch row.Source {
+			case "type T = { m: => void };":
+				mode = "recovery"
+			case "interface I", "interface I { m(a: string): void;", "interface I { m<(a: string): void; }", "interface I { m<T(a: T): T; }":
+				mode = "unsupported-recovery"
+			}
+		}
+		if row.Rule == "no-div-regex" && (row.Source == "var a = /;" || row.Source == "var a = /" || row.Source == "var a = [/];" || row.Source == "if (/) {}" || row.Source == "var a = /=") {
+			mode = "recovery"
+		}
+		rows = append(rows, fmt.Sprintf("%s\t%s\t%s\t%s\t%t\t%s\t%s", path, row.Rule, legacy.Mode, legacy.Null, legacy.AllowEmptyCatch, string(row.Options), mode))
 	}
 	if len(rows) < 150 {
 		t.Fatalf("capture unexpectedly small: %d cases", len(rows))
@@ -260,18 +401,24 @@ func upstream(t *testing.T) []string {
 }
 func compare(t *testing.T, oracle, binary, directory, path string) []byte {
 	t.Helper()
+	return compareWithJavaScript(t, oracle, binary, directory, path, emittedJavaScript(t, directory))
+}
+func compareWithJavaScript(t *testing.T, oracle, binary, directory, path, module string) []byte {
+	t.Helper()
 	want := execute(t, "", oracle, "--manifest", path)
 	for _, side := range []struct {
 		name string
 		run  execution
-	}{{"Node", node(t, directory, path, false)}, {"native", execute(t, "", binary, "--manifest", path)}} {
+	}{{"Node", node(t, directory, path, false)}, {"emitted JavaScript", runJavaScript(t, module, path, false)}, {"native", execute(t, "", binary, "--manifest", path)}} {
 		if diff := difference(side.run.output, want.output); diff != "" {
 			t.Fatalf("%s: %s", side.name, diff)
 		}
 	}
-	t.Logf("Go, Node, native identical: %d bytes", len(want.output))
+	t.Logf("Go, Node, emitted JavaScript, native identical: %d bytes", len(want.output))
 	return want.output
 }
+
+// Not parallel: upstream capture uses t.Setenv and a process-wide fixture capture destination.
 func TestRulesAgree(t *testing.T) {
 	directory, err := filepath.Abs(".")
 	if err != nil {
@@ -279,9 +426,59 @@ func TestRulesAgree(t *testing.T) {
 	}
 	oracle := goOracle(t)
 	binary := buildPort(t, directory, true)
-	rows := append(generated(t), upstream(t)...)
-	compare(t, oracle, binary, directory, manifest(t, rows))
+	rows := generated(t)
+	for _, row := range upstream(t) {
+		if strings.HasSuffix(row, "\tunsupported-recovery") {
+			t.Logf("EXPLICIT LIMIT: parser recovery is not ported for %s", row)
+			checkRecoveryRefusal(t, oracle, binary, directory, row)
+		} else {
+			rows = append(rows, row)
+		}
+	}
+	compare(t, oracle, binary, directory, manifest(t, recoveryRows(t, oracle, rows)))
 }
+
+// Recovery is a parser dependency, not successful lint parity. Keep the exact
+// upstream malformed cases and prove that both ports refuse instead of silently
+// returning the oracle's recovered findings.
+func checkRecoveryRefusal(t *testing.T, oracle, binary, directory, row string) {
+	t.Helper()
+	recovered := manifest(t, []string{strings.TrimSuffix(row, "unsupported-recovery") + "recovery"})
+	answer := execute(t, "", oracle, "--manifest", recovered)
+	t.Logf("Go recovered output: %s", answer.output)
+	path := manifest(t, []string{row})
+	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, side := range []struct {
+		name string
+		args []string
+	}{
+		{binary, []string{"--manifest", path}},
+		{"node", []string{"--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, "main.ts"), "--manifest", path}},
+	} {
+		ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+		command := exec.CommandContext(ctx, side.name, side.args...)
+		output, err := os.CreateTemp(t.TempDir(), "recovery-refusal-")
+		if err != nil {
+			t.Fatal(err)
+		}
+		command.Stdout = output
+		var stderr bytes.Buffer
+		command.Stderr = &stderr
+		err = command.Run()
+		timedOut := ctx.Err() == context.DeadlineExceeded
+		cancel()
+		output.Close()
+		if err == nil || (!timedOut && !strings.Contains(stderr.String(), "adamic: panic:")) {
+			t.Fatalf("expected parser refusal from %s, got %v: %s", side.name, err, stderr.String())
+		}
+		t.Logf("explicit unsupported recovery: %s: timeout=%t: %v: %s", side.name, timedOut, err, stderr.String())
+	}
+}
+
+// Not parallel: the large sanitized corpus runs before timing samples.
 func TestCompilerAndStage1Agree(t *testing.T) {
 	source := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
 	if source == "" {
@@ -297,7 +494,7 @@ func TestCompilerAndStage1Agree(t *testing.T) {
 			if err != nil {
 				return err
 			}
-			if !entry.IsDir() && strings.HasSuffix(path, ".ts") {
+			if !entry.IsDir() && (strings.HasSuffix(path, ".ts") || strings.HasSuffix(path, ".a")) {
 				absolute, err := filepath.Abs(path)
 				if err != nil {
 					return err
@@ -317,46 +514,80 @@ func TestCompilerAndStage1Agree(t *testing.T) {
 	t.Logf("compiler and stage1: %d files", len(rows))
 	compare(t, goOracle(t), buildPort(t, directory, true), directory, manifest(t, rows))
 }
-func mutant(t *testing.T, from, to string) string {
-	directory := t.TempDir()
-	for _, file := range portFiles {
+func mutant(t *testing.T, from, to string, targets ...string) string {
+	return copyPort(t, t.TempDir(), from, to, targets...)
+}
+func copyPort(t *testing.T, directory, from, to string, targets ...string) string {
+	if len(targets) == 0 && from != "" {
+		targets = []string{"lint.ts"}
+	}
+	changed := 0
+	prepareRegistry(t, ".")
+	for _, file := range portFiles(t) {
 		data, err := os.ReadFile(file)
 		if err != nil {
 			t.Fatal(err)
 		}
 		source := string(data)
-		if file == "lint.ts" {
+		selected := len(targets) == 0 || filepath.Clean(file) == filepath.Clean(targets[0])
+		if from != "" && selected && !strings.HasSuffix(file, "mutant.json") && strings.Contains(source, from) {
 			if strings.Count(source, from) != 1 {
-				t.Fatalf("mutant anchor count for %q", from)
+				t.Fatalf("mutant anchor repeated in %s", file)
 			}
 			source = strings.Replace(source, from, to, 1)
+			changed++
 		}
-		typescript, err := filepath.Abs("../../typescript")
-		if err != nil {
+		if strings.HasSuffix(file, ".ts") || strings.HasSuffix(file, ".a") {
+			source = rewritePortImports(t, file, source)
+		}
+		destination := filepath.Join(directory, file)
+		if err := os.MkdirAll(filepath.Dir(destination), 0755); err != nil {
 			t.Fatal(err)
 		}
-		source = strings.ReplaceAll(source, "../../typescript", typescript)
-		if err := os.WriteFile(filepath.Join(directory, file), []byte(source), 0644); err != nil {
+		if err := os.WriteFile(destination, []byte(source), 0644); err != nil {
 			t.Fatal(err)
 		}
 	}
+	// Validation requires each rule's owned witnesses too.
+	for _, d := range prepareRegistry(t, ".") {
+		paths, err := registry.Witnesses(filepath.Join("rules", d.Slug))
+		if err != nil {
+			t.Fatal(err)
+		}
+		for _, path := range paths {
+			data, err := os.ReadFile(path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			target := filepath.Join(directory, path)
+			if err := os.MkdirAll(filepath.Dir(target), 0755); err != nil {
+				t.Fatal(err)
+			}
+			if err := os.WriteFile(target, data, 0644); err != nil {
+				t.Fatal(err)
+			}
+		}
+	}
+	if from != "" && changed != 1 {
+		t.Fatalf("mutant anchor count: %d for %q", changed, from)
+	}
 	return directory
 }
-func TestMutants(t *testing.T) {
+
+// Not parallel: sanitized rebuilds run in sequence to bound memory and precede timing.
+func TestLegacyMutants(t *testing.T) {
 	path := manifest(t, generated(t))
 	oracle := goOracle(t)
 	want := execute(t, "", oracle, "--manifest", path).output
 	for _, change := range []struct{ name, from, to string }{
-		{"suggestion applied as fix", "hasTypeOf || sameType ? 'fix' : 'suggestion'", "hasTypeOf || sameType ? 'fix' : 'fix'"},
-		{"empty function body reported", "if(!functionBody && !(this.allowCatch", "if((functionBody || !functionBody) && !(this.allowCatch"},
-		{"duplicate case suppressed", "if(seen.has(signature))", "if(!seen.has(signature))"},
+		{"overlap winner misreported", "${winner} overlaps another fix", "${this.selected} overlaps another fix"},
 	} {
 		t.Run(change.name, func(t *testing.T) {
 			directory := mutant(t, change.from, change.to)
 			for _, side := range []struct {
 				name string
 				run  execution
-			}{{"Node", node(t, directory, path, false)}, {"native", execute(t, "", buildPort(t, directory, true), "--manifest", path)}} {
+			}{{"Node", node(t, directory, path, false)}, {"emitted JavaScript", emittedNode(t, directory, path, false)}, {"native", execute(t, "", buildPort(t, directory, true), "--manifest", path)}} {
 				if bytes.Equal(side.run.output, want) {
 					t.Fatalf("%s mutant survived on %s", change.name, side.name)
 				}
@@ -366,6 +597,56 @@ func TestMutants(t *testing.T) {
 	}
 }
 
+func TestDecorationOptionMutant(t *testing.T) {
+	t.Parallel()
+	path := manifest(t, generated(t))
+	want := execute(t, "", goOracle(t), "--manifest", path).output
+	directory := mutant(t, "foldedRange(character, first, last)", "foldedRange(character, first, first)", "comments.ts")
+	binary := buildPort(t, directory, true)
+	for _, side := range []struct {
+		name string
+		run  execution
+	}{
+		{"Node", node(t, directory, path, false)},
+		{"native", execute(t, "", binary, "--manifest", path)},
+	} {
+		if bytes.Equal(side.run.output, want) {
+			t.Fatalf("decoration range mutant survived on %s", side.name)
+		}
+		t.Logf("decoration range collapsed to one character caught on %s: %s", side.name, difference(side.run.output, want))
+	}
+}
+
+func TestCountGuardMutant(t *testing.T) {
+	t.Parallel()
+	source := filepath.Join(t.TempDir(), "count.ts")
+	if err := os.WriteFile(source, []byte("var a; debugger;"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	path := manifest(t, []string{source})
+	oracle := goOracle(t)
+	answer := execute(t, "", oracle, "--manifest", path).output
+	count := execute(t, "", oracle, "--manifest", path, "--count").output
+	directory := mutant(t, "if(countOnly) {\n        return linter.findings.length;", "if(countOnly) {\n        return linter.findings.length + 1;", "main.ts")
+	binary := buildPort(t, directory, true)
+	for _, side := range []struct {
+		name            string
+		ordinary, count execution
+	}{
+		{"Node", node(t, directory, path, false), node(t, directory, path, true)},
+		{"native", execute(t, "", binary, "--manifest", path), execute(t, "", binary, "--manifest", path, "--count")},
+	} {
+		if !bytes.Equal(side.ordinary.output, answer) {
+			t.Fatalf("%s mutant was caught outside the count check", side.name)
+		}
+		if bytes.Equal(side.count.output, count) {
+			t.Fatalf("%s count mutant survived", side.name)
+		}
+		t.Logf("count check alone caught %s: mutant=%q Go=%q; ordinary output remains identical", side.name, side.count.output, count)
+	}
+}
+
+// Not parallel: interleaved timing samples must not compete with tests in this package.
 func TestThroughput(t *testing.T) {
 	if os.Getenv("ADAMIC_LINT_BENCH") != "1" {
 		t.Skip("set ADAMIC_LINT_BENCH=1")
@@ -379,7 +660,7 @@ func TestThroughput(t *testing.T) {
 		if err != nil {
 			return err
 		}
-		if !entry.IsDir() && strings.HasSuffix(path, ".ts") {
+		if !entry.IsDir() && (strings.HasSuffix(path, ".ts") || strings.HasSuffix(path, ".a")) {
 			rows = append(rows, path)
 		}
 		return nil
@@ -442,4 +723,102 @@ func TestThroughput(t *testing.T) {
 	}
 	loadAfter, _ := os.ReadFile("/proc/loadavg")
 	t.Logf("load after %s", strings.TrimSpace(string(loadAfter)))
+}
+
+func TestMutants(t *testing.T) {
+	oracle := goOracle(t)
+	for _, descriptor := range prepareRegistry(t, ".") {
+		var change struct{ Name, File, From, To string }
+		data, err := os.ReadFile(filepath.Join("rules", descriptor.Slug, "mutant.json"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if err := json.Unmarshal(data, &change); err != nil {
+			t.Fatal(err)
+		}
+		t.Run(change.Name, func(t *testing.T) {
+			rows := generated(t)
+			var witnesses []string
+			for _, source := range ownedWitnesses(t, ".", descriptor.Slug) {
+				witnesses = append(witnesses, source+"\t"+descriptor.Name)
+			}
+			rows = append(rows, recoveryRows(t, oracle, witnesses)...)
+			path := manifest(t, rows)
+			want := execute(t, "", oracle, "--manifest", path).output
+			if change.File == "" {
+				change.File = descriptor.Module
+			}
+			directory := mutant(t, change.From, change.To, filepath.Join("rules", descriptor.Slug, change.File))
+			for _, side := range []struct {
+				name string
+				run  execution
+			}{{"Node", node(t, directory, path, false)}, {"emitted JavaScript", emittedNode(t, directory, path, false)}, {"native", execute(t, "", buildPort(t, directory, true), "--manifest", path)}} {
+				if bytes.Equal(side.run.output, want) {
+					t.Fatalf("%s mutant survived on %s", change.Name, side.name)
+				}
+				t.Logf("%s caught on %s: %s", change.Name, side.name, difference(side.run.output, want))
+			}
+		})
+	}
+}
+
+var portImport = regexp.MustCompile(`(?m)(^import\s+[^;]*?\s+from\s+)(['"])([^'"]+)(['"])`)
+
+// Preserve imports within the copied port, and resolve outside imports from their
+// original module directory. Rules may be arbitrarily deeper than context.ts.
+func rewritePortImports(t *testing.T, file, source string) string {
+	t.Helper()
+	root, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	return portImport.ReplaceAllStringFunc(source, func(declaration string) string {
+		parts := portImport.FindStringSubmatch(declaration)
+		if !strings.HasPrefix(parts[3], ".") {
+			return declaration
+		}
+		absolute := filepath.Clean(filepath.Join(root, filepath.Dir(file), parts[3]))
+		relative, err := filepath.Rel(root, absolute)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if relative != ".." && !strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
+			return declaration
+		}
+		return parts[1] + parts[2] + filepath.ToSlash(absolute) + parts[4]
+	})
+}
+
+func emittedJavaScript(t *testing.T, directory string) string {
+	t.Helper()
+	prepareRegistry(t, directory)
+	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
+	if err != nil {
+		t.Fatal(err)
+	}
+	lowered, err := lower.Lower(context.Background(), program)
+	if err != nil {
+		t.Fatal(err)
+	}
+	path := filepath.Join(t.TempDir(), "lint.mjs")
+	if err := os.WriteFile(path, []byte(javascript.JavaScript(lowered)), 0644); err != nil {
+		t.Fatal(err)
+	}
+	return path
+}
+func emittedNode(t *testing.T, directory, manifest string, count bool) execution {
+	t.Helper()
+	return runJavaScript(t, emittedJavaScript(t, directory), manifest, count)
+}
+func runJavaScript(t *testing.T, module, manifest string, count bool) execution {
+	t.Helper()
+	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	args := []string{"--disable-warning=ExperimentalWarning", runner, module, "--manifest", manifest}
+	if count {
+		args = append(args, "--count")
+	}
+	return execute(t, "", "node", args...)
 }

@@ -1,0 +1,22 @@
+[
+  {
+    "file": "src/compiler/types.ts",
+    "before": "export type DiagnosticArguments = (string | number)[];",
+    "after": "export type DiagnosticArguments = (string | number | boolean | readonly string[] | SourceFile | undefined)[];"
+  },
+  {
+    "file": "src/compiler/moduleNameResolver.ts",
+    "before": "    type DiagnosticMessage,",
+    "after": "    type DiagnosticArguments, type DiagnosticMessage,"
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "before": "interface ResolveNamesReusingOldStateInput<Entry, SourceFileOrString,",
+    "after": "interface ResolveNamesReusingOldStateInput<Entry, SourceFileOrString extends SourceFile | string,"
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "before": "function resolveNamesReusingOldState<Entry, SourceFileOrString,",
+    "after": "function resolveNamesReusingOldState<Entry, SourceFileOrString extends SourceFile | string,"
+  }
+]

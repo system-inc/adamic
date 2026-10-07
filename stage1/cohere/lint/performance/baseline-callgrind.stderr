@@ -1,0 +1,14 @@
+==128077== Callgrind, a call-graph generating cache profiler
+==128077== Copyright (C) 2002-2017, and GNU GPL'd, by Josef Weidendorfer et al.
+==128077== Using Valgrind-3.24.0 and LibVEX; rerun with -h for copyright info
+==128077== Command: /workspace/scratch/lint-perf/baseline/profiled --manifest /workspace/scratch/lint-perf/baseline/compiler.txt --count
+==128077== 
+==128077== For interactive control, run 'callgrind_control -h'.
+==128077== brk segment overflow in thread #1: can't grow to 0x484a000
+==128077== (see section Limitations in user manual)
+==128077== NOTE: further instances of this message will not be shown
+==128077== 
+==128077== Events    : Ir
+==128077== Collected : 38559511949
+==128077== 
+==128077== I   refs:      38,559,511,949

@@ -1,0 +1,1 @@
+let value = false; value ||= true; console.log(String(value));

@@ -1,0 +1,5 @@
+{
+  "name": "continue finding stops before its semicolon",
+  "from": "node.end, 'no-continue'",
+  "to": "this.context.start(index) + 8, 'no-continue'"
+}

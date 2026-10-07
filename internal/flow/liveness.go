@@ -33,6 +33,14 @@ func LiveOut(function *Function) map[InstructionId]map[DeclarationId]bool {
 				for _, define := range instruction.Defines {
 					delete(live, declaration(define))
 				}
+				// An instruction that throws never gives its variables their values, so on the way to
+				// the handler what was live there is still live before it: in local = f() with a catch
+				// that reads local, local's old value must outlive the call.
+				if throws, ok := block.Terminal.(*MayThrow); ok && position == len(block.Instructions)-1 {
+					for variable := range liveIn[throws.Handler] {
+						live[variable] = true
+					}
+				}
 				for _, use := range instruction.Uses {
 					live[declaration(use)] = true
 				}

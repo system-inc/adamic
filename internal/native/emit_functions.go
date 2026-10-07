@@ -160,14 +160,16 @@ func (e *emitter) arguments(call ir.Call) []string {
 	handed := []string{}
 	defer func() { e.handedOver(handed) }()
 	for index, argument := range call.Arguments {
-		if index < len(parameters) && e.reuse.consumed[parameters[index]] {
+		if e.reuse.callConsumes(e.program, call, index) {
 			value := e.handOver(argument)
 			handed = append(handed, value)
 			arguments = append(arguments, value)
 			continue
 		}
 		value := ""
-		if e.statementRegion != "" && !e.regions.callEscapes(call, index) {
+		if lent, ok := e.lentArgument(call, index); ok {
+			value = lent
+		} else if e.statementRegion != "" && !e.regions.callEscapes(call, index) {
 			// A parameter that flows nowhere: a fresh value handed to it lives in the statement's region.
 			value = e.handRegion(argument, "&"+e.statementRegion)
 		} else {
@@ -210,9 +212,15 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 	method := ""
 	if receiver != "" {
 		property := expression.Closure.(ir.Property)
-		method = e.temporary()
-		e.line("adamic_method %s = NULL;", method)
-		closure = e.own(ir.Closure, fmt.Sprintf("adamic_retain(adamic_object_callee(%s, %s, &%s, &%s))", receiver, cString(property.Name), e.cache(), method))
+		if function, known := e.exactReceiverMethod(property.Object, property.Name); known {
+			// Keep the interface adapter's borrowed-input convention and the same
+			// exception and result handling, but call its proven method directly.
+			method = e.methodThunk(function)
+		} else {
+			method = e.temporary()
+			e.line("adamic_method %s = NULL;", method)
+			closure = e.own(ir.Closure, fmt.Sprintf("adamic_retain(adamic_object_callee(%s, %s, &%s, &%s))", receiver, cString(property.Name), e.cache(), method))
+		}
 	}
 	arguments := []string{}
 	for _, argument := range expression.Arguments {
@@ -224,7 +232,11 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 	}
 	call := fmt.Sprintf("%s->code(%s, %s)", closure, closure, packed)
 	if receiver != "" {
-		call = fmt.Sprintf("(%s != NULL ? %s : %s(%s, %s))", closure, call, method, receiver, packed)
+		if closure == "" {
+			call = fmt.Sprintf("%s(%s, %s)", method, receiver, packed)
+		} else {
+			call = fmt.Sprintf("(%s != NULL ? %s : %s(%s, %s))", closure, call, method, receiver, packed)
+		}
 	}
 	if expression.Returns == 0 {
 		e.line("%s;", call)

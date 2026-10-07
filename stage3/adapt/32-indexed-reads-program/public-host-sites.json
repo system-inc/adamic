@@ -1,0 +1,377 @@
+[
+  {
+    "kind": "public-method",
+    "file": "types.ts",
+    "interface": "CompilerHost",
+    "name": "getDefaultLibLocation",
+    "before": "getDefaultLibLocation?(): string;",
+    "after": "getDefaultLibLocation?: { getDefaultLibLocation(): string; }[\"getDefaultLibLocation\"] | undefined;",
+    "public": true,
+    "proof": "watch.ts explicitly populates getDefaultLibLocation with maybeBind of an optional host method. maybeBind returns undefined on absence. The owning optional field admits that legitimate value; indexed method extraction preserves the exact callable signature and its original parameter variance. No object shape, evaluation point or runtime value changes."
+  },
+  {
+    "kind": "public-method",
+    "file": "types.ts",
+    "interface": "CompilerHost",
+    "name": "createHash",
+    "before": "createHash?(data: string): string;",
+    "after": "createHash?: { createHash(data: string): string; }[\"createHash\"] | undefined;",
+    "public": true,
+    "proof": "watch.ts explicitly populates createHash with maybeBind of an optional host method. maybeBind returns undefined on absence. The owning optional field admits that legitimate value; indexed method extraction preserves the exact callable signature and its original parameter variance. No object shape, evaluation point or runtime value changes."
+  },
+  {
+    "kind": "public-method",
+    "file": "types.ts",
+    "interface": "CompilerHost",
+    "name": "readDirectory",
+    "before": "readDirectory?(rootDir: string, extensions: readonly string[], excludes: readonly string[] | undefined, includes: readonly string[], depth?: number): string[];",
+    "after": "readDirectory?: { readDirectory(rootDir: string, extensions: readonly string[], excludes: readonly string[] | undefined, includes: readonly string[], depth?: number): string[]; }[\"readDirectory\"] | undefined;",
+    "public": true,
+    "proof": "watch.ts explicitly populates readDirectory with maybeBind of an optional host method. maybeBind returns undefined on absence. The owning optional field admits that legitimate value; indexed method extraction preserves the exact callable signature and its original parameter variance. No object shape, evaluation point or runtime value changes."
+  },
+  {
+    "kind": "public-method",
+    "file": "types.ts",
+    "interface": "ModuleResolutionHost",
+    "name": "trace",
+    "before": "trace?(s: string): void;",
+    "after": "trace?: { trace(s: string): void; }[\"trace\"] | undefined;",
+    "public": true,
+    "proof": "watch.ts explicitly populates trace with maybeBind of an optional host method. maybeBind returns undefined on absence. The owning optional field admits that legitimate value; indexed method extraction preserves the exact callable signature and its original parameter variance. No object shape, evaluation point or runtime value changes."
+  },
+  {
+    "kind": "public-method",
+    "file": "types.ts",
+    "interface": "ModuleResolutionHost",
+    "name": "directoryExists",
+    "before": "directoryExists?(directoryName: string): boolean;",
+    "after": "directoryExists?: { directoryExists(directoryName: string): boolean; }[\"directoryExists\"] | undefined;",
+    "public": true,
+    "proof": "watch.ts explicitly populates directoryExists with maybeBind of an optional host method. maybeBind returns undefined on absence. The owning optional field admits that legitimate value; indexed method extraction preserves the exact callable signature and its original parameter variance. No object shape, evaluation point or runtime value changes."
+  },
+  {
+    "kind": "public-method",
+    "file": "types.ts",
+    "interface": "ModuleResolutionHost",
+    "name": "getDirectories",
+    "before": "getDirectories?(path: string): string[];",
+    "after": "getDirectories?: { getDirectories(path: string): string[]; }[\"getDirectories\"] | undefined;",
+    "public": true,
+    "proof": "watch.ts explicitly populates getDirectories with maybeBind of an optional host method. maybeBind returns undefined on absence. The owning optional field admits that legitimate value; indexed method extraction preserves the exact callable signature and its original parameter variance. No object shape, evaluation point or runtime value changes."
+  },
+  {
+    "kind": "public-method",
+    "file": "types.ts",
+    "interface": "ModuleResolutionHost",
+    "name": "realpath",
+    "before": "realpath?(path: string): string;",
+    "after": "realpath?: { realpath(path: string): string; }[\"realpath\"] | undefined;",
+    "public": true,
+    "proof": "watch.ts explicitly populates realpath with maybeBind of an optional host method. maybeBind returns undefined on absence. The owning optional field admits that legitimate value; indexed method extraction preserves the exact callable signature and its original parameter variance. No object shape, evaluation point or runtime value changes."
+  },
+  {
+    "kind": "public-method",
+    "file": "watchPublic.ts",
+    "interface": "ProgramHost",
+    "name": "createHash",
+    "before": "createHash?(data: string): string;",
+    "after": "createHash?: { createHash(data: string): string; }[\"createHash\"] | undefined;",
+    "public": true,
+    "proof": "watch.ts explicitly populates createHash with maybeBind of an optional host method. maybeBind returns undefined on absence. The owning optional field admits that legitimate value; indexed method extraction preserves the exact callable signature and its original parameter variance. No object shape, evaluation point or runtime value changes."
+  },
+  {
+    "kind": "public-method",
+    "file": "watchPublic.ts",
+    "interface": "ProgramHost",
+    "name": "realpath",
+    "before": "realpath?(path: string): string;",
+    "after": "realpath?: { realpath(path: string): string; }[\"realpath\"] | undefined;",
+    "public": true,
+    "proof": "watch.ts explicitly populates realpath with maybeBind of an optional host method. maybeBind returns undefined on absence. The owning optional field admits that legitimate value; indexed method extraction preserves the exact callable signature and its original parameter variance. No object shape, evaluation point or runtime value changes."
+  },
+  {
+    "kind": "public-method",
+    "file": "watchPublic.ts",
+    "interface": "ProgramHost",
+    "name": "getEnvironmentVariable",
+    "before": "getEnvironmentVariable?(name: string): string | undefined;",
+    "after": "getEnvironmentVariable?: { getEnvironmentVariable(name: string): string | undefined; }[\"getEnvironmentVariable\"] | undefined;",
+    "public": true,
+    "proof": "watch.ts explicitly populates getEnvironmentVariable with maybeBind of an optional host method. maybeBind returns undefined on absence. The owning optional field admits that legitimate value; indexed method extraction preserves the exact callable signature and its original parameter variance. No object shape, evaluation point or runtime value changes."
+  },
+  {
+    "kind": "public-method",
+    "file": "watchPublic.ts",
+    "interface": "ProgramHost",
+    "name": "now",
+    "before": "now?(): Date;",
+    "after": "now?: { now(): Date; }[\"now\"] | undefined;",
+    "public": false,
+    "proof": "watch.ts explicitly populates now with maybeBind of an optional host method. maybeBind returns undefined on absence. The owning optional field admits that legitimate value; indexed method extraction preserves the exact callable signature and its original parameter variance. No object shape, evaluation point or runtime value changes."
+  },
+  {
+    "kind": "public-method",
+    "file": "program.ts",
+    "interface": "CompilerHostLikeForCache",
+    "name": "directoryExists",
+    "before": "directoryExists?(directory: string): boolean;",
+    "after": "directoryExists?: { directoryExists(directory: string): boolean; }[\"directoryExists\"] | undefined;",
+    "public": false,
+    "proof": "This receiving host contract accepts the existing compiler/directory host whose optional directoryExists may be explicitly undefined. Its consumer tests absence before invoking it. The owning optional slot truthfully admits absence; callable parameters/results and original method variance are preserved. This prevents moving the watch diagnostic to a receiving file."
+  },
+  {
+    "kind": "public-method",
+    "file": "watchUtilities.ts",
+    "interface": "DirectoryStructureHost",
+    "name": "getDirectories",
+    "before": "getDirectories?(path: string): string[];",
+    "after": "getDirectories?: { getDirectories(path: string): string[]; }[\"getDirectories\"] | undefined;",
+    "public": false,
+    "proof": "This receiving host contract accepts the existing compiler/directory host whose optional getDirectories may be explicitly undefined. Its consumer tests absence before invoking it. The owning optional slot truthfully admits absence; callable parameters/results and original method variance are preserved. This prevents moving the watch diagnostic to a receiving file."
+  },
+  {
+    "kind": "public-method",
+    "file": "watchUtilities.ts",
+    "interface": "DirectoryStructureHost",
+    "name": "readDirectory",
+    "before": "readDirectory?(path: string, extensions?: readonly string[], exclude?: readonly string[], include?: readonly string[], depth?: number): string[];",
+    "after": "readDirectory?: { readDirectory(path: string, extensions?: readonly string[], exclude?: readonly string[], include?: readonly string[], depth?: number): string[]; }[\"readDirectory\"] | undefined;",
+    "public": false,
+    "proof": "This receiving host contract accepts the existing compiler/directory host whose optional readDirectory may be explicitly undefined. Its consumer tests absence before invoking it. The owning optional slot truthfully admits absence; callable parameters/results and original method variance are preserved. This prevents moving the watch diagnostic to a receiving file."
+  },
+  {
+    "kind": "public-method",
+    "file": "builderPublic.ts",
+    "interface": "BuilderProgramHost",
+    "name": "createHash",
+    "before": "createHash?: (data: string) => string;",
+    "after": "createHash?: ((data: string) => string) | undefined;",
+    "public": true,
+    "proof": "This receiving host contract accepts the existing compiler/directory host whose optional createHash may be explicitly undefined. Its consumer tests absence before invoking it. The owning optional slot truthfully admits absence; callable parameters/results and original method variance are preserved. This prevents moving the watch diagnostic to a receiving file."
+  },
+  {
+    "kind": "optional-helper-call",
+    "file": "moduleNameResolver.ts",
+    "function": "primaryLookup",
+    "call": "directoryProbablyExists",
+    "occurrence": 1,
+    "total": 1,
+    "arguments": [
+      "typeRoot",
+      "host"
+    ],
+    "type": "(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean",
+    "public": false,
+    "proof": "The existing utilities helper returns true when directoryExists is absent and invokes it only after its own presence test. This erased local call view admits the explicit undefined already handled by that body. The utility file is owned by adaptation 30 and remains untouched. Callee and argument reads stay at their original evaluation points; the reviewed helper body hash guards drift."
+  },
+  {
+    "kind": "optional-helper-call",
+    "file": "moduleNameResolver.ts",
+    "function": "tryLoadModuleUsingRootDirs",
+    "call": "directoryProbablyExists",
+    "occurrence": 1,
+    "total": 2,
+    "arguments": [
+      "containingDirectory",
+      "state.host"
+    ],
+    "type": "(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean",
+    "public": false,
+    "proof": "The existing utilities helper returns true when directoryExists is absent and invokes it only after its own presence test. This erased local call view admits the explicit undefined already handled by that body. The utility file is owned by adaptation 30 and remains untouched. Callee and argument reads stay at their original evaluation points; the reviewed helper body hash guards drift."
+  },
+  {
+    "kind": "optional-helper-call",
+    "file": "moduleNameResolver.ts",
+    "function": "tryLoadModuleUsingRootDirs",
+    "call": "directoryProbablyExists",
+    "occurrence": 2,
+    "total": 2,
+    "arguments": [
+      "baseDirectory",
+      "state.host"
+    ],
+    "type": "(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean",
+    "public": false,
+    "proof": "The existing utilities helper returns true when directoryExists is absent and invokes it only after its own presence test. This erased local call view admits the explicit undefined already handled by that body. The utility file is owned by adaptation 30 and remains untouched. Callee and argument reads stay at their original evaluation points; the reviewed helper body hash guards drift."
+  },
+  {
+    "kind": "optional-helper-call",
+    "file": "moduleNameResolver.ts",
+    "function": "tryLoadModuleUsingBaseUrl",
+    "call": "directoryProbablyExists",
+    "occurrence": 1,
+    "total": 1,
+    "arguments": [
+      "getDirectoryPath(candidate)",
+      "state.host"
+    ],
+    "type": "(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean",
+    "public": false,
+    "proof": "The existing utilities helper returns true when directoryExists is absent and invokes it only after its own presence test. This erased local call view admits the explicit undefined already handled by that body. The utility file is owned by adaptation 30 and remains untouched. Callee and argument reads stay at their original evaluation points; the reviewed helper body hash guards drift."
+  },
+  {
+    "kind": "optional-helper-call",
+    "file": "moduleNameResolver.ts",
+    "function": "nodeLoadModuleByRelativeName",
+    "call": "directoryProbablyExists",
+    "occurrence": 1,
+    "total": 2,
+    "arguments": [
+      "parentOfCandidate",
+      "state.host"
+    ],
+    "type": "(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean",
+    "public": false,
+    "proof": "The existing utilities helper returns true when directoryExists is absent and invokes it only after its own presence test. This erased local call view admits the explicit undefined already handled by that body. The utility file is owned by adaptation 30 and remains untouched. Callee and argument reads stay at their original evaluation points; the reviewed helper body hash guards drift."
+  },
+  {
+    "kind": "optional-helper-call",
+    "file": "moduleNameResolver.ts",
+    "function": "nodeLoadModuleByRelativeName",
+    "call": "directoryProbablyExists",
+    "occurrence": 2,
+    "total": 2,
+    "arguments": [
+      "candidate",
+      "state.host"
+    ],
+    "type": "(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean",
+    "public": false,
+    "proof": "The existing utilities helper returns true when directoryExists is absent and invokes it only after its own presence test. This erased local call view admits the explicit undefined already handled by that body. The utility file is owned by adaptation 30 and remains untouched. Callee and argument reads stay at their original evaluation points; the reviewed helper body hash guards drift."
+  },
+  {
+    "kind": "optional-helper-call",
+    "file": "moduleNameResolver.ts",
+    "function": "tryAddingExtensions",
+    "call": "directoryProbablyExists",
+    "occurrence": 1,
+    "total": 1,
+    "arguments": [
+      "directory",
+      "state.host"
+    ],
+    "type": "(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean",
+    "public": false,
+    "proof": "The existing utilities helper returns true when directoryExists is absent and invokes it only after its own presence test. This erased local call view admits the explicit undefined already handled by that body. The utility file is owned by adaptation 30 and remains untouched. Callee and argument reads stay at their original evaluation points; the reviewed helper body hash guards drift."
+  },
+  {
+    "kind": "optional-helper-call",
+    "file": "moduleNameResolver.ts",
+    "function": "getPackageJsonInfo",
+    "call": "directoryProbablyExists",
+    "occurrence": 1,
+    "total": 1,
+    "arguments": [
+      "packageDirectory",
+      "host"
+    ],
+    "type": "(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean",
+    "public": false,
+    "proof": "The existing utilities helper returns true when directoryExists is absent and invokes it only after its own presence test. This erased local call view admits the explicit undefined already handled by that body. The utility file is owned by adaptation 30 and remains untouched. Callee and argument reads stay at their original evaluation points; the reviewed helper body hash guards drift."
+  },
+  {
+    "kind": "optional-helper-call",
+    "file": "moduleNameResolver.ts",
+    "function": "loadNodeModuleFromDirectoryWorker",
+    "call": "directoryProbablyExists",
+    "occurrence": 1,
+    "total": 2,
+    "arguments": [
+      "getDirectoryPath(packageFile)",
+      "state.host"
+    ],
+    "type": "(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean",
+    "public": false,
+    "proof": "The existing utilities helper returns true when directoryExists is absent and invokes it only after its own presence test. This erased local call view admits the explicit undefined already handled by that body. The utility file is owned by adaptation 30 and remains untouched. Callee and argument reads stay at their original evaluation points; the reviewed helper body hash guards drift."
+  },
+  {
+    "kind": "optional-helper-call",
+    "file": "moduleNameResolver.ts",
+    "function": "loadNodeModuleFromDirectoryWorker",
+    "call": "directoryProbablyExists",
+    "occurrence": 2,
+    "total": 2,
+    "arguments": [
+      "candidate",
+      "state.host"
+    ],
+    "type": "(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean",
+    "public": false,
+    "proof": "The existing utilities helper returns true when directoryExists is absent and invokes it only after its own presence test. This erased local call view admits the explicit undefined already handled by that body. The utility file is owned by adaptation 30 and remains untouched. Callee and argument reads stay at their original evaluation points; the reviewed helper body hash guards drift."
+  },
+  {
+    "kind": "optional-helper-call",
+    "file": "moduleNameResolver.ts",
+    "function": "loadModuleFromImmediateNodeModulesDirectory",
+    "call": "directoryProbablyExists",
+    "occurrence": 1,
+    "total": 2,
+    "arguments": [
+      "nodeModulesFolder",
+      "state.host"
+    ],
+    "type": "(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean",
+    "public": false,
+    "proof": "The existing utilities helper returns true when directoryExists is absent and invokes it only after its own presence test. This erased local call view admits the explicit undefined already handled by that body. The utility file is owned by adaptation 30 and remains untouched. Callee and argument reads stay at their original evaluation points; the reviewed helper body hash guards drift."
+  },
+  {
+    "kind": "optional-helper-call",
+    "file": "moduleNameResolver.ts",
+    "function": "loadModuleFromImmediateNodeModulesDirectory",
+    "call": "directoryProbablyExists",
+    "occurrence": 2,
+    "total": 2,
+    "arguments": [
+      "nodeModulesAtTypes",
+      "state.host"
+    ],
+    "type": "(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean",
+    "public": false,
+    "proof": "The existing utilities helper returns true when directoryExists is absent and invokes it only after its own presence test. This erased local call view admits the explicit undefined already handled by that body. The utility file is owned by adaptation 30 and remains untouched. Callee and argument reads stay at their original evaluation points; the reviewed helper body hash guards drift."
+  },
+  {
+    "kind": "optional-helper-call",
+    "file": "moduleNameResolver.ts",
+    "function": "loadModuleFromSpecificNodeModulesDirectory",
+    "call": "directoryProbablyExists",
+    "occurrence": 1,
+    "total": 1,
+    "arguments": [
+      "packageDirectory",
+      "state.host"
+    ],
+    "type": "(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean",
+    "public": false,
+    "proof": "The existing utilities helper returns true when directoryExists is absent and invokes it only after its own presence test. This erased local call view admits the explicit undefined already handled by that body. The utility file is owned by adaptation 30 and remains untouched. Callee and argument reads stay at their original evaluation points; the reviewed helper body hash guards drift."
+  },
+  {
+    "kind": "optional-helper-call",
+    "file": "moduleNameResolver.ts",
+    "function": "tryLoadModuleUsingPaths",
+    "call": "directoryProbablyExists",
+    "occurrence": 1,
+    "total": 1,
+    "arguments": [
+      "getDirectoryPath(candidate)",
+      "state.host"
+    ],
+    "type": "(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean",
+    "public": false,
+    "proof": "The existing utilities helper returns true when directoryExists is absent and invokes it only after its own presence test. This erased local call view admits the explicit undefined already handled by that body. The utility file is owned by adaptation 30 and remains untouched. Callee and argument reads stay at their original evaluation points; the reviewed helper body hash guards drift."
+  },
+  {
+    "kind": "optional-helper-call",
+    "file": "moduleNameResolver.ts",
+    "function": "resolveFromTypeRoot",
+    "call": "directoryProbablyExists",
+    "occurrence": 1,
+    "total": 1,
+    "arguments": [
+      "typeRoot",
+      "state.host"
+    ],
+    "type": "(directoryName: string, host: { directoryExists?: ((directoryName: string) => boolean) | undefined; }) => boolean",
+    "public": false,
+    "proof": "The existing utilities helper returns true when directoryExists is absent and invokes it only after its own presence test. This erased local call view admits the explicit undefined already handled by that body. The utility file is owned by adaptation 30 and remains untouched. Callee and argument reads stay at their original evaluation points; the reviewed helper body hash guards drift."
+  }
+]

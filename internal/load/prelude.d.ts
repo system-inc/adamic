@@ -7,6 +7,16 @@ declare const console: {
 };
 
 declare module 'adamic' {
+	// External checker library. Native build requires --tsgo <archive>; JavaScript is refused.
+	// Paths and positions follow bridge/tsgo/tsgo.h. Release each handle exactly once.
+	export function tsgoProgram(tsconfig: string, files: readonly string[]): number;
+	export function tsgoQuery(program: number, file: string, bytePosition: number): { readonly nodeKind: number; readonly symbolName: string; readonly type: string };
+	// Constrained union parts, framed as documented in tsgo.h. Exact byte span and kind.
+	export function tsgoTypeParts(program: number, file: string, byteStart: number, byteEnd: number, nodeKind: string): string;
+	// Length-framed checker facts. Questions and schema: bridge/tsgo/facts.md.
+	export function tsgoInspect(program: number, file: string, byteStart: number, byteEnd: number, nodeKind: string, question: string): string;
+	export function tsgoRelease(program: number): void;
+
 	export function panic(message: string): never;
 
 	// Input, opened in 0.2 (docs/0.1.md). A failure is a value: 0.2 has no exceptions yet.

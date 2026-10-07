@@ -59,6 +59,13 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		}
 		return e.binary(expression.Operator, expression.Left.Type(), e.value(expression.Left), e.value(expression.Right))
 	case ir.Call:
+		if expression.Accessor != "" {
+			result := e.accessorCall(expression)
+			if e.program.CallMayThrow(expression) {
+				e.checkThrown()
+			}
+			return result
+		}
 		region := e.regionFor(expression)
 		arguments := e.arguments(expression)
 		call := e.callCode(expression, arguments)
@@ -78,11 +85,16 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			e.checkThrown()
 		}
 		return result
+	case ir.HasAccessor:
+		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_accessor_find(%s, %s) != NULL", e.value(expression.Object), cString(expression.Name)))
 	case ir.InstanceOf:
 		value := e.value(expression.Value)
 		if !expression.Value.Type().IsReference() {
 			e.line("(void)%s;", value)
 			return e.snapshot(ir.Boolean, "false")
+		}
+		if expression.Exact {
+			return e.snapshot(ir.Boolean, fmt.Sprintf("(%s != NULL && ((adamic_object *)%s)->class == &adamic_class_%d)", value, value, expression.Class))
 		}
 		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_instanceof(%s, &adamic_class_%d)", value, expression.Class))
 	case ir.NumberToString:
@@ -106,6 +118,26 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		lent := e.lendable && lendable(expression.Of) && !expression.Optional
 		object := e.value(expression.Object)
 		field := unslotted(expression.Of, fmt.Sprintf("%s->%s", e.fieldSlot(object, expression.Name, expression.Class), member(expression.Of)))
+		if expression.Of == ir.MaybeNumber {
+			field = fmt.Sprintf("adamic_object_maybe_number(%s, %s, &%s)", object, cString(expression.Name), e.cache())
+		}
+		if expression.Absent {
+			slot := e.temporary()
+			lookup := fmt.Sprintf("adamic_object_optional_field(%s, %s, &%s)", object, cString(expression.Name), e.cache())
+			if expression.Optional {
+				lookup = fmt.Sprintf("(%s == NULL ? NULL : %s)", object, lookup)
+			}
+			e.line("adamic_value *%s = %s;", slot, lookup)
+			undefined := "NULL"
+			if expression.Of.IsMaybe() {
+				undefined = zero(expression.Of)
+			}
+			present := unslotted(expression.Of, fmt.Sprintf("%s->%s", slot, member(expression.Of)))
+			if expression.Of == ir.MaybeNumber {
+				present = field
+			}
+			field = fmt.Sprintf("(%s == NULL ? %s : %s)", slot, undefined, present)
+		}
 		if expression.Of == ir.MaybeNumber && expression.Optional {
 			return e.snapshot(ir.MaybeNumber, fmt.Sprintf("(%s == NULL ? %s : %s)", object, zero(ir.MaybeNumber), field))
 		}
@@ -159,7 +191,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.Box:
 		return e.box(expression.Value)
 	case ir.MakeError:
-		return e.own(ir.Object, fmt.Sprintf("adamic_error_new(%s)", e.value(expression.Message)))
+		return e.makeError(expression)
 	case ir.WeakOf:
 		return e.own(ir.Weak, fmt.Sprintf("adamic_weak_of(%s)", e.value(expression.Value)))
 	case ir.WeakTarget:
@@ -173,7 +205,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.Narrow:
 		return e.narrow(expression)
 	case ir.TypeOf:
-		return e.typeOf(expression.Value)
+		return e.typeOf(expression)
 	case ir.UnionToString:
 		return e.own(ir.String, fmt.Sprintf("adamic_union_to_string(%s)", e.value(expression.Value)))
 	case ir.Coalesce:
@@ -322,17 +354,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		e.line("}")
 		return object
 	case ir.ArrayIndex:
-		array := e.value(expression.Array)
-		index := e.value(expression.Index)
-		slot := e.temporary()
-		lookup := "adamic_array_at"
-		if expression.Relative {
-			lookup = "adamic_array_at_relative"
-		} else if read, isRead := expression.Index.(ir.Read); isRead && e.program.Locals[read.Local].Counter {
-			// A counter is a whole number already: only the bounds are left to check.
-			lookup, index = "adamic_array_at_integer", e.localName(read.Local)
-		}
-		e.line("adamic_value *%s = %s(%s, %s);", slot, lookup, array, index)
+		slot := e.arrayIndexSlot(expression)
 		if expression.Type().IsMaybe() {
 			return e.snapshot(expression.Type(), maybeSlot(expression.Element, slot))
 		}
@@ -376,7 +398,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			return array
 		}
 		e.line("%s(%s, %s, NULL);", sort, array, e.comparator(expression))
-		if e.program.Functions[expression.Comparator].MayThrow {
+		if e.program.ClosureMayThrow(expression) {
 			e.checkThrown()
 		}
 		return array
@@ -436,10 +458,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.SetValues:
 		return e.own(ir.Array, fmt.Sprintf("adamic_set_values(%s)", e.value(expression.Set)))
 	case ir.MapGet:
-		object := e.value(expression.Map)
-		key := e.value(expression.Key)
-		slot := e.temporary()
-		e.line("adamic_value *%s = adamic_map_get(%s, %s);", slot, object, borrowed(expression.KeyType, key))
+		slot := e.mapGetSlot(expression)
 		if expression.Type().IsMaybe() {
 			return e.snapshot(expression.Type(), maybeSlot(expression.ValueType, slot))
 		}

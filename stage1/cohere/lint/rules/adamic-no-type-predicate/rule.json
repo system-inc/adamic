@@ -1,0 +1,13 @@
+{
+  "name": "adamic/no-type-predicate",
+  "kinds": [
+    "TypePredicate"
+  ],
+  "visit": "visit",
+  "node": true,
+  "oracle": "oracleNoTypePredicate",
+  "upstreamPackage": "adamic",
+  "upstreamTest": "TestNoTypePredicate",
+  "factory": "create",
+  "class": "Rule"
+}

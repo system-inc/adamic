@@ -1,0 +1,15 @@
+=== RUN   TestFactEncoding
+=== PAUSE TestFactEncoding
+=== RUN   TestShapeAndNameFacts
+=== PAUSE TestShapeAndNameFacts
+=== RUN   TestAdamicRootKeepsConfigDeclarations
+=== PAUSE TestAdamicRootKeepsConfigDeclarations
+=== CONT  TestFactEncoding
+=== CONT  TestAdamicRootKeepsConfigDeclarations
+--- PASS: TestFactEncoding (0.00s)
+=== CONT  TestShapeAndNameFacts
+--- PASS: TestShapeAndNameFacts (0.02s)
+--- PASS: TestAdamicRootKeepsConfigDeclarations (0.06s)
+PASS
+ok  	github.com/system-inc/adamic/bridge/tsgo/checker	0.063s
+?   	github.com/system-inc/adamic/bridge/tsgo/cost	[no test files]

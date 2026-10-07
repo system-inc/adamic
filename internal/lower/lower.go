@@ -35,6 +35,7 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 		return nil, err
 	}
 	lowering.noteInheritance(modules)
+	lowering.noteAccessorNames(modules)
 	for _, module := range modules {
 		if err := lowering.refuse(module); err != nil {
 			return nil, err
@@ -57,7 +58,13 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 	}
 	lowering.result.Main = append(lowering.forwarderValues, lowering.result.Main...)
 	lowering.finishClassCalls()
+	if err := lowering.finishAccessors(); err != nil {
+		return nil, err
+	}
 	if err := lowering.exceptions(); err != nil {
+		return nil, err
+	}
+	if err := lowering.checkAccessorSpreads(); err != nil {
 		return nil, err
 	}
 	if err := lowering.findCycles(modules); err != nil {
@@ -96,6 +103,8 @@ type lowering struct {
 	// classes maps each module class's symbol to its declaration, and instances each instantiation
 	// already lowered (class.go).
 	classes          map[*ast.Symbol]*ast.Node
+	statics          map[*ast.Symbol]*instance
+	staticGlobals    map[*ast.Symbol]int
 	instances        map[string]*instance
 	derivedAncestors map[*ast.Symbol]bool
 
@@ -130,9 +139,10 @@ type lowering struct {
 	// generics maps each generic module function's symbol to its declaration, and genericInstances
 	// each instantiation already lowered to its function (generic.go). genericDepth counts the
 	// instantiations being lowered inside one another.
-	generics         map[*ast.Symbol]*ast.Node
-	genericInstances map[string]int
-	genericDepth     int
+	generics              map[*ast.Symbol]*ast.Node
+	genericInstances      map[string]int
+	classGenericInstances map[string]map[string]int
+	genericDepth          int
 
 	// caught are the variables a catch binds, each always an Error; tries are the try statements
 	// lowered (exceptions.go).
@@ -157,5 +167,7 @@ type lowering struct {
 	instantiated []*checker.Type
 
 	// writeSites is every write into a slot lowering made, by its IR node's Site less one (fresh.go).
-	writeSites []writeSite
+	writeSites       []writeSite
+	accessorCaptures []accessorCapture
+	accessorNames    map[string]bool
 }

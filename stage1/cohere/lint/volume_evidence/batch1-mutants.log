@@ -1,0 +1,108 @@
+=== RUN   TestVolumeMutants
+=== RUN   TestVolumeMutants/predicate_kind_omitted
+    volume_test.go:40: predicate kind omitted caught on Node: case 0 line 18: port "/tmp/adamic-gate/TestVolumeMutants4223122154/001/volume.ts:1:183", Go "/tmp/adamic-gate/TestVolumeMutants4223122154/001/volume.ts:1:154"
+        Go context:
+        range 74 79 noTypeAliasSuffix 			74 79
+        /tmp/adamic-gate/TestVolumeMutants4223122154/001/volume.ts:1:97
+          nexus/consistency-require-type-suffix  Const enum-shaped object "Choice" should end in "Kind". Rename to "ChoiceKind" with a paired "ChoiceKindType" alias, so the runtime value and the type that indexes it are visibly one thing.
+        
+        range 96 102 noConstEnumSuffix 			96 102
+        /tmp/adamic-gate/TestVolumeMutants4223122154/001/volume.ts:1:154
+          adamic/no-type-predicate  A written type predicate is trusted and never checked: tsc narrows the argument on this function's word, and nothing makes its body agree, so a guard that returns true for the wrong value turns every narrowed use into a TypeError. Narrow where you use the value (`if (pet.kind === 'Cat')`), or drop the annotation and let TypeScript infer the predicate, which it does only when the body proves it (`(x) => x !== undefined`).
+        
+        range 153 164 typePredicate 			153 164
+        /tmp/adamic-gate/TestVolumeMutants4223122154/001/volume.ts:1:183
+    volume_test.go:40: predicate kind omitted caught on native: case 0 line 18: port "/tmp/adamic-gate/TestVolumeMutants4223122154/001/volume.ts:1:183", Go "/tmp/adamic-gate/TestVolumeMutants4223122154/001/volume.ts:1:154"
+        Go context:
+        range 74 79 noTypeAliasSuffix 			74 79
+        /tmp/adamic-gate/TestVolumeMutants4223122154/001/volume.ts:1:97
+          nexus/consistency-require-type-suffix  Const enum-shaped object "Choice" should end in "Kind". Rename to "ChoiceKind" with a paired "ChoiceKindType" alias, so the runtime value and the type that indexes it are visibly one thing.
+        
+        range 96 102 noConstEnumSuffix 			96 102
+        /tmp/adamic-gate/TestVolumeMutants4223122154/001/volume.ts:1:154
+          adamic/no-type-predicate  A written type predicate is trusted and never checked: tsc narrows the argument on this function's word, and nothing makes its body agree, so a guard that returns true for the wrong value turns every narrowed use into a TypeError. Narrow where you use the value (`if (pet.kind === 'Cat')`), or drop the annotation and let TypeScript infer the predicate, which it does only when the body proves it (`(x) => x !== undefined`).
+        
+        range 153 164 typePredicate 			153 164
+        /tmp/adamic-gate/TestVolumeMutants4223122154/001/volume.ts:1:183
+=== RUN   TestVolumeMutants/console_receiver_widened
+    volume_test.go:40: console receiver widened caught on Node: case 0 line 22: port "/tmp/adamic-gate/TestVolumeMutants4223122154/001/volume.ts:1:240", Go "/tmp/adamic-gate/TestVolumeMutants4223122154/001/volume.ts:1:183"
+        Go context:
+        range 96 102 noConstEnumSuffix 			96 102
+        /tmp/adamic-gate/TestVolumeMutants4223122154/001/volume.ts:1:154
+          adamic/no-type-predicate  A written type predicate is trusted and never checked: tsc narrows the argument on this function's word, and nothing makes its body agree, so a guard that returns true for the wrong value turns every narrowed use into a TypeError. Narrow where you use the value (`if (pet.kind === 'Cat')`), or drop the annotation and let TypeScript infer the predicate, which it does only when the body proves it (`(x) => x !== undefined`).
+        
+        range 153 164 typePredicate 			153 164
+        /tmp/adamic-gate/TestVolumeMutants4223122154/001/volume.ts:1:183
+          base/consistency-no-console  Do not call 'console.log'. Reach the tier that owns this failure and call '.log.error(identifier, data, error)' or '.log.warning(...)' for a row, or '.log.debug(message)' for a line that never becomes one.
+        
+        range 182 193 consistencyNoConsole 			182 193
+        /tmp/adamic-gate/TestVolumeMutants4223122154/001/volume.ts:1:203
+    volume_test.go:40: console receiver widened caught on native: case 0 line 22: port "/tmp/adamic-gate/TestVolumeMutants4223122154/001/volume.ts:1:240", Go "/tmp/adamic-gate/TestVolumeMutants4223122154/001/volume.ts:1:183"
+        Go context:
+        range 96 102 noConstEnumSuffix 			96 102
+        /tmp/adamic-gate/TestVolumeMutants4223122154/001/volume.ts:1:154
+          adamic/no-type-predicate  A written type predicate is trusted and never checked: tsc narrows the argument on this function's word, and nothing makes its body agree, so a guard that returns true for the wrong value turns every narrowed use into a TypeError. Narrow where you use the value (`if (pet.kind === 'Cat')`), or drop the annotation and let TypeScript infer the predicate, which it does only when the body proves it (`(x) => x !== undefined`).
+        
+        range 153 164 typePredicate 			153 164
+        /tmp/adamic-gate/TestVolumeMutants4223122154/001/volume.ts:1:183
+          base/consistency-no-console  Do not call 'console.log'. Reach the tier that owns this failure and call '.log.error(identifier, data, error)' or '.log.warning(...)' for a row, or '.log.debug(message)' for a line that never becomes one.
+        
+        range 182 193 consistencyNoConsole 			182 193
+        /tmp/adamic-gate/TestVolumeMutants4223122154/001/volume.ts:1:203
+=== RUN   TestVolumeMutants/for_update_option_ignored
+    volume_test.go:40: for update option ignored caught on Node: case 0 line 34: port "/tmp/adamic-gate/TestVolumeMutants4223122154/001/volume.ts:1:270", Go "/tmp/adamic-gate/TestVolumeMutants4223122154/001/volume.ts:1:265"
+        Go context:
+        range 202 217 consistencyNoConsole 			202 217
+        /tmp/adamic-gate/TestVolumeMutants4223122154/001/volume.ts:1:240
+          no-plusplus  Unary operator `++` used. It mutates its operand and evaluates to a different value depending on which side it sits, so `a[i++]` and `a[++i]` read almost identically and index different elements. Automatic semicolon insertion compounds it: a line ending in a value followed by a line starting with `++` joins into one statement. Write the assignment out as `x += 1`, which does one thing and reads the same wherever it appears.
+        
+        range 239 246 unexpectedUnaryOp 			239 246
+        /tmp/adamic-gate/TestVolumeMutants4223122154/001/volume.ts:1:265
+          no-plusplus  Unary operator `++` used. It mutates its operand and evaluates to a different value depending on which side it sits, so `a[i++]` and `a[++i]` read almost identically and index different elements. Automatic semicolon insertion compounds it: a line ending in a value followed by a line starting with `++` joins into one statement. Write the assignment out as `x += 1`, which does one thing and reads the same wherever it appears.
+        
+        range 264 267 unexpectedUnaryOp 			264 267
+        /tmp/adamic-gate/TestVolumeMutants4223122154/001/volume.ts:1:270
+    volume_test.go:40: for update option ignored caught on native: case 0 line 34: port "/tmp/adamic-gate/TestVolumeMutants4223122154/001/volume.ts:1:270", Go "/tmp/adamic-gate/TestVolumeMutants4223122154/001/volume.ts:1:265"
+        Go context:
+        range 202 217 consistencyNoConsole 			202 217
+        /tmp/adamic-gate/TestVolumeMutants4223122154/001/volume.ts:1:240
+          no-plusplus  Unary operator `++` used. It mutates its operand and evaluates to a different value depending on which side it sits, so `a[i++]` and `a[++i]` read almost identically and index different elements. Automatic semicolon insertion compounds it: a line ending in a value followed by a line starting with `++` joins into one statement. Write the assignment out as `x += 1`, which does one thing and reads the same wherever it appears.
+        
+        range 239 246 unexpectedUnaryOp 			239 246
+        /tmp/adamic-gate/TestVolumeMutants4223122154/001/volume.ts:1:265
+          no-plusplus  Unary operator `++` used. It mutates its operand and evaluates to a different value depending on which side it sits, so `a[i++]` and `a[++i]` read almost identically and index different elements. Automatic semicolon insertion compounds it: a line ending in a value followed by a line starting with `++` joins into one statement. Write the assignment out as `x += 1`, which does one thing and reads the same wherever it appears.
+        
+        range 264 267 unexpectedUnaryOp 			264 267
+        /tmp/adamic-gate/TestVolumeMutants4223122154/001/volume.ts:1:270
+=== RUN   TestVolumeMutants/interface_accepts_type_suffix
+    volume_test.go:40: interface accepts type suffix caught on Node: case 0 line 6: port "/tmp/adamic-gate/TestVolumeMutants4223122154/001/volume.ts:1:75", Go "/tmp/adamic-gate/TestVolumeMutants4223122154/001/volume.ts:1:41"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestVolumeMutants4223122154/001/volume.ts:1:11
+          nexus/consistency-require-type-suffix  Interface "Bare" should end in "Interface", "Properties", or "Options". Rename to "BareInterface", "BareProperties" if it shapes React component props, or "BareOptions" if it is an options or config bag.
+        
+        range 10 14 noInterfaceSuffix 			10 14
+        /tmp/adamic-gate/TestVolumeMutants4223122154/001/volume.ts:1:41
+          nexus/consistency-require-type-suffix  Interface "WrongType" should end in "Interface", "Properties", or "Options". Rename to "WrongTypeInterface", "WrongTypeProperties" if it shapes React component props, or "WrongTypeOptions" if it is an options or config bag.
+        
+        range 40 49 noInterfaceSuffix 			40 49
+        /tmp/adamic-gate/TestVolumeMutants4223122154/001/volume.ts:1:75
+    volume_test.go:40: interface accepts type suffix caught on native: case 0 line 6: port "/tmp/adamic-gate/TestVolumeMutants4223122154/001/volume.ts:1:75", Go "/tmp/adamic-gate/TestVolumeMutants4223122154/001/volume.ts:1:41"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestVolumeMutants4223122154/001/volume.ts:1:11
+          nexus/consistency-require-type-suffix  Interface "Bare" should end in "Interface", "Properties", or "Options". Rename to "BareInterface", "BareProperties" if it shapes React component props, or "BareOptions" if it is an options or config bag.
+        
+        range 10 14 noInterfaceSuffix 			10 14
+        /tmp/adamic-gate/TestVolumeMutants4223122154/001/volume.ts:1:41
+          nexus/consistency-require-type-suffix  Interface "WrongType" should end in "Interface", "Properties", or "Options". Rename to "WrongTypeInterface", "WrongTypeProperties" if it shapes React component props, or "WrongTypeOptions" if it is an options or config bag.
+        
+        range 40 49 noInterfaceSuffix 			40 49
+        /tmp/adamic-gate/TestVolumeMutants4223122154/001/volume.ts:1:75
+--- PASS: TestVolumeMutants (66.08s)
+    --- PASS: TestVolumeMutants/predicate_kind_omitted (16.13s)
+    --- PASS: TestVolumeMutants/console_receiver_widened (15.35s)
+    --- PASS: TestVolumeMutants/for_update_option_ignored (17.30s)
+    --- PASS: TestVolumeMutants/interface_accepts_type_suffix (15.30s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	66.082s

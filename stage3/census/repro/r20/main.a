@@ -1,0 +1,1 @@
+function take(value: {count?: number}): void { console.log(String(value.count)); } take({count: undefined});
