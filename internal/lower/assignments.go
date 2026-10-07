@@ -16,6 +16,10 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 		return nil, l.notYet(node, describe(node)+" as a statement")
 	}
 	target := ast.SkipParentheses(binary.Left)
+	if isCompound && l.enumNeverIdentity(target, map[*ast.Node]bool{}) != nil {
+		value, err := l.expression(target)
+		return []ir.Statement{ir.Evaluate{Value: value}}, err
+	}
 	if target.Kind == ast.KindPropertyAccessExpression {
 		if isCompound {
 			return l.updateProperty(node, target, operator, binary.Right)
@@ -144,6 +148,10 @@ func (l *lowering) increment(node *ast.Node) ([]ir.Statement, error) {
 		return nil, l.notYet(node, describe(node)+" as a statement")
 	}
 	operand = ast.SkipParentheses(operand)
+	if l.enumNeverIdentity(operand, map[*ast.Node]bool{}) != nil {
+		value, err := l.expression(operand)
+		return []ir.Statement{ir.Evaluate{Value: value}}, err
+	}
 	if operand.Kind == ast.KindPropertyAccessExpression {
 		step := ast.KindPlusToken
 		if operator == ast.KindMinusMinusToken {

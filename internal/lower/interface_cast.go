@@ -289,6 +289,8 @@ func (l *lowering) interfaceWrite(node *ast.Node, checked map[string]*checker.Ty
 
 // A finite literal contract is checked as well as its primitive representation.
 func (l *lowering) viewLiterals(declared *checker.Type) []ir.Expression {
+	// A whole numeric enum admits numbers outside its declared members.
+	if l.openNumericEnumType(declared) { return nil }
 	if declared.Flags()&checker.TypeFlagsUnion != 0 {
 		var allowed []ir.Expression
 		for _, member := range declared.Types() {
