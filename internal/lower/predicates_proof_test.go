@@ -1,0 +1,79 @@
+package lower
+
+import (
+	"context"
+	"errors"
+	"os"
+	"path/filepath"
+	"strings"
+	"testing"
+
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/system-inc/adamic/internal/load"
+)
+
+// Bodies of the positive probes come from TypeScript 6.0.3 core.ts:1769
+// and factory/nodeTests.ts:318. These test proof summaries, not admission:
+// open interface summaries still require the checked-view lowering handoff.
+func TestPredicateBodyProof(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct {
+		name, source, failure string
+		tagged                bool
+	}{
+		{"typeof", `function isString(text: unknown): text is string { return typeof text === "string"; }`, "", false},
+		{"kind", `const SyntaxKind = { Identifier: 80 } as const; interface Node { readonly kind: number } interface Identifier extends Node { readonly kind: typeof SyntaxKind.Identifier; readonly escapedText: string } export function isIdentifier(node: Node): node is Identifier { return node.kind === SyntaxKind.Identifier; }`, "", true},
+		{"kind helpers fixed point", `interface Node { readonly kind: number } interface Identifier extends Node { readonly kind: 80; readonly escapedText: string } interface StringLiteral extends Node { readonly kind: 11; readonly text: string } type ModuleName = Identifier | StringLiteral; function isModuleName(node: Node): node is ModuleName { return isIdentifier(node) || isStringLiteral(node); } function isIdentifier(node: Node): node is Identifier { return node.kind === 80; } function isStringLiteral(node: Node): node is StringLiteral { return node.kind === 11; }`, "", true},
+		{"helper", `function isString(text: unknown): text is string { return typeof text === "string"; } function guard(x: unknown): x is string { return isString(x); }`, "", false},
+		{"false branch lies", `function guard(x: unknown): x is number { return typeof x === "number" && x > 0; }`, "false return", false},
+		{"true branch lies", `function guard(x: unknown): x is number { return typeof x === "string"; }`, "true return", false},
+		{"mutation", `interface Node { kind: number } interface Identifier extends Node { kind: 80; readonly escapedText: string } function guard(node: Node): node is Identifier { const yes = node.kind === 80; node.kind = 11; return yes; }`, "mutation", false},
+		{"alias mutation", `interface Node { kind: number } interface Identifier extends Node { kind: 80; readonly escapedText: string } function guard(node: Node): node is Identifier { const alias = node; const yes = node.kind === 80; alias.kind = 11; return yes; }`, "mutation", false},
+		{"recursive", `function guard(x: unknown): x is number { return guard(x); }`, "unconverged", false},
+		{"default changes input", `function guard(x: unknown = 42): x is number { return typeof x === "number"; }`, "parameter initialization", false},
+		{"empty assertion", `function guard(x: unknown): asserts x is number {}`, "normal return", false},
+		{"assertion", `import { panic } from 'adamic'; function guard(x: unknown): asserts x is number { if (typeof x !== "number") panic("number required"); }`, "", false},
+		{"disabled assertion", `import { panic } from 'adamic'; function guard(x: unknown, enabled: boolean): asserts x is number { if (enabled && typeof x !== "number") panic("number required"); }`, "normal return", false},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			path := filepath.Join(t.TempDir(), "main.a")
+			if err := os.WriteFile(path, []byte(probe.source), 0644); err != nil {
+				t.Fatal(err)
+			}
+			program, err := load.Load([]string{path})
+			if err != nil {
+				t.Fatal(err)
+			}
+			file := program.Files()[0]
+			checked, release := program.Checker(context.Background(), file)
+			defer release()
+			l := &lowering{program: program, checker: checked}
+			var predicate *ast.Node
+			var visit ast.Visitor
+			visit = func(n *ast.Node) bool {
+				if n.Kind == ast.KindTypePredicate && (probe.name != "kind helpers fixed point" || n.Parent.Name().Text() == "isModuleName") {
+					predicate = n
+				}
+				n.ForEachChild(visit)
+				return false
+			}
+			file.AsNode().ForEachChild(visit)
+			proof, err := l.provePredicate(predicate)
+			if probe.failure != "" {
+				if err == nil || !strings.Contains(err.Error(), probe.failure) || !strings.Contains(err.Error(), "return a boolean and narrow at the caller") {
+					t.Fatalf("want %q refusal with caller fix, got %+v, %v", probe.failure, proof, err)
+				}
+			} else if err != nil || proof.TaggedView != probe.tagged {
+				t.Fatalf("want proof tagged=%v, got %+v, %v", probe.tagged, proof, err)
+			}
+			if probe.failure == "" && probe.tagged {
+				var gap *NotYet
+				admission := l.predicateRefusal(predicate)
+				if !errors.As(admission, &gap) || !strings.Contains(admission.Error(), "checked-view handoff") {
+					t.Fatalf("want checked-view dependency gap, got %v", admission)
+				}
+			}
+		})
+	}
+}
