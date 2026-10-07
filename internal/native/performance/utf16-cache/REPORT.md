@@ -13,11 +13,11 @@ on `codex/typescript-scanner` (fetched tip `17813f8`). Compare disjoint named
 self instructions, with each port given equal weight; do not add overlapping
 inclusive rows or mix their unlike corpus sizes into a raw-Ir total:
 
-| Shared proposal family | Scanner self share | JSON self share | Mean share |
-| --- | ---: | ---: | ---: |
-| UTF-16 lookup and access | 30.973% | 4.584% | 17.778% |
-| Ownership / RC traffic | 4.742% | 18.551% | 11.647% |
-| String building / slices / joins | 6.429% | 14.377% | 10.403% |
+| Shared proposal family           | Scanner self share | JSON self share | Mean share |
+| -------------------------------- | -----------------: | --------------: | ---------: |
+| UTF-16 lookup and access         |            30.973% |          4.584% |    17.778% |
+| Ownership / RC traffic           |             4.742% |         18.551% |    11.647% |
+| String building / slices / joins |             6.429% |         14.377% |    10.403% |
 
 UTF-16 includes locate, units, units-before, usable, unit_at, char-code wrappers
 and code-point access. RC includes retain and release. String building uses the
@@ -41,16 +41,16 @@ An earlier bounded-backward-cursor experiment saved only 0.118% scanner and
 removed: clang already inlines that path, and removing the extra source logic
 preserved the measured result. Neither experiment is in the production diff.
 
-| Port | Before Ir | Final Ir | Reduction |
-| --- | ---: | ---: | ---: |
-| Scanner | 2,429,650,932 | 2,345,680,271 | **3.456%** |
-| JSON bounded sample | 909,698,082 | 908,183,803 | **0.166%** |
+| Port                |     Before Ir |      Final Ir |  Reduction |
+| ------------------- | ------------: | ------------: | ---------: |
+| Scanner             | 2,429,650,932 | 2,345,680,271 | **3.456%** |
+| JSON bounded sample |   909,698,082 |   908,183,803 | **0.166%** |
 
-| Named self cost | Scanner before / final | JSON before / final |
-| --- | ---: | ---: |
-| usable | 153,766,828 / 63,250,673 | 1,278,760 / 781,385 |
-| locate | 288,080,341 / 294,625,823 | 9,500,949 / 8,542,232 |
-| units-before | inlined / inlined | 20,308,907 / 20,250,738 |
+| Named self cost |    Scanner before / final |     JSON before / final |
+| --------------- | ------------------------: | ----------------------: |
+| usable          |  153,766,828 / 63,250,673 |     1,278,760 / 781,385 |
+| locate          | 288,080,341 / 294,625,823 |   9,500,949 / 8,542,232 |
+| units-before    |         inlined / inlined | 20,308,907 / 20,250,738 |
 
 Some work moves into the callers; the scanner locate row rises. The whole
 process total, not the disappearance of a helper row, proves the reduction.

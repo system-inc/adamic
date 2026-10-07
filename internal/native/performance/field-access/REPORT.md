@@ -14,11 +14,11 @@ Their reports do not isolate all checks within method bodies. This unit
 attributes disjoint self instructions by source line in fresh baseline
 Callgrind profiles, using the saved generated C and adamic.h:
 
-| Measured source-line group | Scanner Ir / share | JSON Ir / share | Mean share |
-| --- | ---: | ---: | ---: |
-| Generated class-field lines (`->shape ==`) | 157,932,733 / 6.500% | 17,619,567 / 1.937% | 4.219% |
-| Inline object-field cache, header 170-176 | 939 / 0.00004% | 21,002,301 / 2.309% | 1.154% |
-| Generated entry-stack-check lines | 40,665,286 / 1.674% | 4,860,292 / 0.534% | 1.104% |
+| Measured source-line group                 |   Scanner Ir / share |     JSON Ir / share | Mean share |
+| ------------------------------------------ | -------------------: | ------------------: | ---------: |
+| Generated class-field lines (`->shape ==`) | 157,932,733 / 6.500% | 17,619,567 / 1.937% |     4.219% |
+| Inline object-field cache, header 170-176  |       939 / 0.00004% | 21,002,301 / 2.309% |     1.154% |
+| Generated entry-stack-check lines          |  40,665,286 / 1.674% |  4,860,292 / 0.534% |     1.104% |
 
 Class-field lines are the largest measured component among those groups.
 They include the field loads, address calculation and possibly surrounding
@@ -63,10 +63,10 @@ conservative whole-program approach leaves that conflict checked.
 
 ## Before and after instructions
 
-| Port | Main baseline Ir | Final Ir | Reduction |
-| --- | ---: | ---: | ---: |
-| Scanner | 2,429,650,952 | 2,342,851,635 | **3.5725%** |
-| JSON bounded sample | 909,698,064 | 883,391,243 | **2.8918%** |
+| Port                | Main baseline Ir |      Final Ir |   Reduction |
+| ------------------- | ---------------: | ------------: | ----------: |
+| Scanner             |    2,429,650,952 | 2,342,851,635 | **3.5725%** |
+| JSON bounded sample |      909,698,064 |   883,391,243 | **2.8918%** |
 
 Both totals are whole-process instructions. Field-cache lines fall from
 21.00M to 0.862M in JSON, but that disappearance is not itself the gain:
@@ -148,11 +148,11 @@ console.log and sound readonly widening rules; only its passing final run is use
 
 ## Mutants
 
-| Mutant | Check and observed failure |
-| --- | --- |
+| Mutant                                                                         | Check and observed failure                                                                                                                                                       |
+| ------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Accept a conflicting offset by replacing the permanent -1 with the latest slot | class_layouts.a compiled successfully; Node exits 0, sanitized native exits 1 under UBSan reading a null array; release build crashes. The ordinary byte/exit oracle catches it. |
-| Disable specialization entirely | New semantic/code-generation test rejects remaining lookup calls: uniform fields still use shape lookup. This proves parity alone cannot mask an optimization that never runs. |
-| Omit runtime text from the initial layout map | Runtime-layout audit rejects the missing field. This proves the new audit can fail. |
+| Disable specialization entirely                                                | New semantic/code-generation test rejects remaining lookup calls: uniform fields still use shape lookup. This proves parity alone cannot mask an optimization that never runs.   |
+| Omit runtime text from the initial layout map                                  | Runtime-layout audit rejects the missing field. This proves the new audit can fail.                                                                                              |
 
 These use Go overlays of fields.go and leave real source unchanged. The
 unsafe conflict mutant reaches a native executable; it is not a -Werror or
