@@ -1,9 +1,9 @@
-"""Independent pinned-Go verification of the twelve owned numeric declarations."""
+"""Independent pinned-Go verification of the eleven owned numeric declarations."""
 import json, os, re, subprocess, tempfile
 from pathlib import Path
 HERE=Path(__file__).resolve().parent
 RULES=HERE.parent
-SLUGS=['react-no-unsafe','react-self-closing-comp','sort-vars','structure-tailwind-no-physical-direction','typescript-ban-tslint-comment','typescript-no-invalid-this','arrow-body-style','max-lines','no-extra-bind','default-case','no-extra-label','no-fallthrough']
+SLUGS=['react-no-unsafe','react-self-closing-comp','sort-vars','typescript-ban-tslint-comment','typescript-no-invalid-this','arrow-body-style','max-lines','no-extra-bind','default-case','no-extra-label','no-fallthrough']
 COMPILER_ROOT=Path(os.environ.get('ADAMIC_LISTENER_COMPILER_ROOT','/workspace/adamic'))
 def run(command,stdout,cwd=COMPILER_ROOT):
     stderr=Path(str(stdout)+'.stderr')
@@ -41,4 +41,4 @@ with tempfile.TemporaryDirectory(prefix='wave10-listeners-') as directory:
             if mutant<0:assert got==want,(name,got,want)
             else:assert got!=want,(name,SLUGS[mutant],'mutant survived')
         print('baseline matches' if mutant<0 else 'compiling numeric-kind mutant caught: '+SLUGS[mutant])
-    print('PASS: 12 declarations match pinned Go on Node, emitted JS and ASan/UBSan native; 12 compiling mutants caught on every runtime; bytes',len(want))
+    print('PASS: 11 declarations match pinned Go on Node, emitted JS and ASan/UBSan native; 11 compiling mutants caught on every runtime; bytes',len(want))

@@ -4,7 +4,7 @@ import json
 import subprocess
 from pathlib import Path
 owned = Path(__file__).resolve().parent
-repository = owned.parents[4]
+repository = owned.parents[5]
 scratch = Path('/tmp/lint-wave1-10-next')
 scratch.mkdir(exist_ok=True)
 paths = ['stage1/cohere/lint/registry/registry.go', 'stage1/cohere/lint/lint_test.go', 'stage1/cohere/lint/profile_test.go']

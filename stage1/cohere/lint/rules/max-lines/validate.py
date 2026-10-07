@@ -4,7 +4,7 @@ import json, subprocess
 from pathlib import Path
 owned = Path(__file__).resolve().parent
 repository = owned.parents[4]
-subprocess.run(['python3', str(repository/'stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validate.py')], check=True)
+subprocess.run(['python3', str(repository/'stage1/cohere/lint/rules/default-case/legacy-validation/validate.py')], check=True)
 scratch=Path('/tmp/lint-wave1-10-next')
 p=scratch/'oracle.go'
 s=p.read_text()

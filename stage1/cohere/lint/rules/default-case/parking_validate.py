@@ -6,10 +6,11 @@ REPOSITORY=OWN.parents[4]
 COMPILER=Path(os.environ.get('ADAMIC_PARK_COMPILER_ROOT','/workspace/adamic'))
 ROOT=Path('/tmp/wave10-park-validation')
 ROOT.mkdir(exist_ok=True)
-slugs=['react-no-unsafe','react-self-closing-comp','sort-vars','structure-tailwind-no-physical-direction','typescript-ban-tslint-comment','typescript-no-invalid-this','arrow-body-style','max-lines','no-extra-bind','default-case','no-extra-label','no-fallthrough']
+slugs=['react-no-unsafe','react-self-closing-comp','sort-vars','typescript-ban-tslint-comment','typescript-no-invalid-this','arrow-body-style','max-lines','no-extra-bind','default-case','no-extra-label','no-fallthrough']
 archive=ROOT/'foundation.tar'
 with archive.open('wb') as out:subprocess.run(['git','archive','641b887ad10c109ba8a30f54966b8c6a87d7c579','stage1','cmd/lint-registry'],cwd=REPOSITORY,stdout=out,check=True)
 with tarfile.open(archive) as source:source.extractall(ROOT,filter='data')
+shutil.rmtree(ROOT/'stage1/cohere/lint/rules/structure-tailwind-no-physical-direction',ignore_errors=True)
 for name in ['internal','bridge','oracle','cohere','go.mod','go.sum','go.work']:
  if not ((ROOT/name).exists() or (ROOT/name).is_symlink()): (ROOT/name).symlink_to(COMPILER/name,target_is_directory=(COMPILER/name).is_dir())
 if not (ROOT/'cmd/adamic').exists(): (ROOT/'cmd/adamic').symlink_to(COMPILER/'cmd/adamic',target_is_directory=True)
@@ -24,7 +25,7 @@ run('prepare',['python3',str(ROOT/'stage1/cohere/lint/rules/default-case/validat
 overlay=Path('/tmp/lint-wave1-10-next/overlay.json')
 r=json.loads(overlay.read_text());harness=Path(r['Replace'][str(ROOT/'stage1/cohere/lint/lint_test.go')])
 s=harness.read_text();needle='for _, descriptor := range prepareRegistry(t, ".") {\n\t\tvar change'
-s=s.replace(needle,'for _, descriptor := range prepareRegistry(t, ".") {\n        if descriptor.Name != "react/no-unsafe" && descriptor.Name != "sort-vars" && descriptor.Name != "structure/tailwind-no-physical-direction" && descriptor.Name != "@typescript-eslint/ban-tslint-comment" && descriptor.Name != "@typescript-eslint/no-invalid-this" { continue }\n\t\tvar change')
+s=s.replace(needle,'for _, descriptor := range prepareRegistry(t, ".") {\n        if descriptor.Name != "react/no-unsafe" && descriptor.Name != "sort-vars" && descriptor.Name != "@typescript-eslint/ban-tslint-comment" && descriptor.Name != "@typescript-eslint/no-invalid-this" { continue }\n\t\tvar change')
 s=s.replace('{"Node", node(t, directory, path, false)}, {"native",','{"Node", node(t, directory, path, false)}, {"emitted JS", emitted(t, directory, path)}, {"native",')
 harness.write_text(s)
 flags='-overlay='+str(overlay)

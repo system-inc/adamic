@@ -1,0 +1,11 @@
+# Wave 10 deduplication
+
+Read the complete DEDUP_LEDGER.md from harness 41eb6eab2b6de45ede0a40250765be295ee25fbd before making this change. Current main is b8fb957aa839a9e8cb0b54279dd9864fa317bd30; the harness is not on main yet. Both owned branches already include current main.
+
+Dropped the complete registered structure/tailwind-no-physical-direction copy: wave1-05 is the ledger winner. Its descriptor, Adamic implementation/messages/listener, Go adapter, mutant and witness are removed. The eleven remaining owned rules include the winning arrow-body-style and default-case copies. The ledger lists batch-only source branches, but assigns no batch-only rule specifically to wave1-10. No new rule or helper is claimed under the landing cap.
+
+The compatibility overlay support used by other owned rule validators moved to default-case/legacy-validation. It contains historical scratch validation support, no registered Tailwind port. Its shape, corpus, throughput and upstream tests now select only the two retained TypeScript rules. Parking and listener validators no longer select the retired rule; parking removes its archived descriptor as well. Earlier reports and logs remain historical evidence with their original counts and paths.
+
+Full-rule landing is still blocked by nonconstant RegExp lowering and Go/JS option dialect parity, documented in REGEX_BLOCKER.md. The fixed-literal oracle validates only its stated supported slice and reproduces those blockers. The helper branch remains green on current main; this rule branch is not covered by the harness-only parking exemption. No shared harness or compiler file was edited.
+
+Validation after removal: regex_contract_validate.py again reports 32 private-Go queries / 184 matching bytes on source Node, emitted JavaScript and sanitized native. absolute_end_removed compiles on all three and is caught only by output comparison; option_parity_guard_removed is caught on Node only. Native/emitted runtime-RegExp lowering still refuses. dedup-structure.log.txt records eleven named-kind descriptors, complete retired-directory removal, and Python syntax/dependency checks. No full-rule oracle pass is inferred from these focused checks. See evidence/dedup-regex-summary.log.txt and evidence/dedup-structure.log.txt.

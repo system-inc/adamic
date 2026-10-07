@@ -1,3 +1,0 @@
-// Numeric SyntaxKind values from the pinned Go parser.
-// The forthcoming shared driver consumes this declaration.
-export const syntaxKinds: readonly number[] = [10, 14, 229];
