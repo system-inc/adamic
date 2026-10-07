@@ -15,3 +15,20 @@ already ported on the base.
 Reserved for codex/typeaware-wave-26. No claim or named port for these rules was
 found across fetched origin branches before this claim. Zero corpus findings
 require positive generated controls and independent byte-oracle mutants.
+
+## Next batch, October 7
+
+Fetched all 321 origin remote refs. Excluded the 26 ports on
+origin/codex/tsgo-c-library (5afbdb83da2ed7ad9815657cd3f6ececd5294bf6),
+ports on origin/main (ef3d907ecdc4c771b016f7d9c52372def057a340), and
+93 ranked rule names claimed in Markdown claim files on any origin branch.
+These are the first three remaining by combined volume descending and lexical ties:
+
+| Rule | Combined findings |
+| --- | ---: |
+| nexus/correctness-no-global-listener-target-assertion | 0 |
+| nexus/correctness-no-leaked-number-render | 0 |
+| nexus/correctness-no-mock-on-module-namespace | 0 |
+
+Reserved for this same branch before implementation. The previous three remain
+claimed and completed. Positive controls will exercise these zero-volume rules.
