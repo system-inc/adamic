@@ -1,0 +1,6 @@
+package main
+import (
+ "fmt"
+ cfg "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph"
+)
+func main() { length, index, same := cfg.AdamicSuccessorProbe(); fmt.Printf("%d,%d,%t\n", length, index, same) }
