@@ -1,7 +1,7 @@
 "use strict";
 const entries = require("./whole-sites.json");
 function planWhole(ts, file, text, check = false) {
-    if (!entries.some(entry => entry.file === file)) return { text, edits: 0 };
+    if (!entries.some(entry => entry.file === file && !entry.action.startsWith("decline"))) return { text, edits: 0 };
     const source = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true);
     if (file === "parser.ts") {
         const repairs = [

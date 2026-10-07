@@ -996,3 +996,24 @@ existing nodeIsMissing call fails the independent Node call/read-trace proof,
 exit 1. `whole-parser-proof.json`, mutant census JSON and logs retain these
 observations. **Parser remains at one**, awaiting the partition 32 owner repair;
 the parser slice audit remains on hold as separately instructed.
+
+
+## Whole-file review: factory/emitNode.ts, two declined owner sites
+
+Both TS2769 overload diagnostics at 205:108 and 218:110 come from the object
+passed to **already explicit** append<SynthesizedComment>. Overload selection
+is not the underlying problem: its hasTrailingNewLine field stores the optional
+argument, whose value may legitimately be undefined. The truthful declaration
+is **partition 32's types.ts:3873 CommentRange.hasTrailingNewLine**, which needs
+`boolean | undefined` in its optional value type. This is a public owner outside
+30 and the currently sanctioned 217 API lines. Adding !, casting away the
+undefined, or omitting the own property would be unjustified. Both sites are
+recorded as declines in whole-sites.json. **No source edit is made**, and the
+file stays **2 -> 2**, not counted at zero. All current adapter contracts and
+idempotence checks are rerun; the required default oracle is rerun on the same
+source tree after this complete file review.
+
+The emitNode review oracle passes: **106,367 passing, zero failing and pending,
+empty baseline diff**, in `whole-emitNode-oracle.json`. Before/after census
+JSON retain both unchanged diagnostics, and `whole-emitNode-proof.json` records
+the no-edit decline, owner and completed checks. No zero is counted.

@@ -54,5 +54,27 @@
       "TS2322 at parser.ts:10656:17"
     ],
     "proof": "Unnamed AMD dependencies legitimately produce an own name property whose value is undefined. Adding ! would falsely require a name; omitting the property changes runtime shape. The truthful owning declaration is public types.ts:4280 name?: string | undefined, outside partition 30 and outside the current 217 sanctioned API lines."
+  },
+  {
+    "file": "factory/emitNode.ts",
+    "owner": "CommentRange.hasTrailingNewLine in types.ts, partition 32",
+    "line": 205,
+    "class": "optional public owner; overload fallout",
+    "action": "decline and hand off to 32",
+    "diagnostics": [
+      "TS2769 at factory/emitNode.ts:205:108"
+    ],
+    "proof": "The explicit append<SynthesizedComment> overload already has the intended element type. The object stores the optional hasTrailingNewLine argument, which legitimately may be undefined. types.ts:3873 must truthfully admit boolean | undefined; this public owner is outside 30 and the current API exception set. An assertion/cast or omitted property would not repair that contract truthfully."
+  },
+  {
+    "file": "factory/emitNode.ts",
+    "owner": "CommentRange.hasTrailingNewLine in types.ts, partition 32",
+    "line": 218,
+    "class": "optional public owner; overload fallout",
+    "action": "decline and hand off to 32",
+    "diagnostics": [
+      "TS2769 at factory/emitNode.ts:218:110"
+    ],
+    "proof": "The explicit append<SynthesizedComment> overload already has the intended element type. The object stores the optional hasTrailingNewLine argument, which legitimately may be undefined. types.ts:3873 must truthfully admit boolean | undefined; this public owner is outside 30 and the current API exception set. An assertion/cast or omitted property would not repair that contract truthfully."
   }
 ]
