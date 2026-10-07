@@ -7,7 +7,7 @@ export function sourceMatches(declaration:DeclarationInput,property:string):bool
 }
 export function binds(declarations:readonly DeclarationInput[],property:string):boolean {
  for(const declaration of declarations){
-  if(declaration.kind===ImportSpecifier){if(declaration.imported===property&&declaration.module==='react'){return true;}}
+  if(declaration.kind===ImportSpecifier){if(declaration.importedKind===Identifier&&declaration.imported===property&&declaration.module==='react'){return true;}}
   else if(declaration.kind===BindingElement){if(declaration.objectBinding&&declaration.variableParent&&sourceMatches(declaration,property)){return true;}}
   else if(declaration.kind===VariableDeclaration&&sourceMatches(declaration,property)){return true;}
  }

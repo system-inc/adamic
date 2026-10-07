@@ -1,6 +1,6 @@
-// Private prepared syntax inputs. A native parser/checker adapter is still missing.
+// Raw syntax inputs shared by prepared controls and the handed-source adapters.
 export class DeclarationInput {
- kind=''; imported=''; module=''; initializerKind=''; initializerName=''; receiverKind=''; receiverName=''; firstKind=''; firstText=''; receiverFirstKind=''; receiverFirstText=''; objectBinding=false; variableParent=false;
+ kind=''; importedKind=''; imported=''; module=''; initializerKind=''; initializerName=''; receiverKind=''; receiverName=''; firstKind=''; firstText=''; receiverFirstKind=''; receiverFirstText=''; objectBinding=false; variableParent=false;
 }
 export class TagInput {
  kind=''; text=''; receiverKind=''; receiverText=''; depth=0; start=0; end=0;

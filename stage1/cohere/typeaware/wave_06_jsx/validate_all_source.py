@@ -17,6 +17,8 @@ else if(node.kind==="CallExpression"){for(const finding of adjacent.call(node,pa
 }lines.sort((left,right)=>left<right?-1:left>right?1:0);for(const line of lines){console.log(line);}
 '''
 extra=[
+ 'import {"Fragment" as F} from "react";const value=<F />;',
+ 'import {"createElement" as createElement} from "react";const value=createElement("div",null,[React.createElement("a"),React.createElement("span")]);',
  "import {createElement} from 'react';const value=createElement('div',null,[createElement('a'),createElement('span')]);",
  "import {createElement} from 'other';const value=createElement('div',null,[createElement('a'),createElement('span')]);",
  "const {createElement}=React;const value=createElement('div',null,[React.createElement('a'),React.createElement('span')]);",
@@ -33,6 +35,15 @@ extra=[
  "/* 🦊한 */const value=<div><a/><span/></div>;",
  "/* 🦊한 */const value=<React.Fragment />;",
 ]
+for literal in ['0','1n','true','false','null','/ x /','`x`','(1)']:
+ extra.append('const value=React.createElement("div",null,['+literal+',React.createElement("span")]);')
+extra.extend([
+ 'const value=(React.createElement)("div",null,[React.createElement("a"),React.createElement("span")]);',
+ 'declare function createElement(a:string):void;import {createElement} from "react";const value=createElement("div",null,[React.createElement("a"),React.createElement("span")]);',
+ 'import {createElement} from "react";declare function createElement(a:string):void;const value=createElement("div",null,[React.createElement("a"),React.createElement("span")]);',
+ 'const {NotFragment:F}=React;const value=<F />;',
+ 'const [F]=React;const value=<F />;',
+])
 files=[S/f'control-{i}.tsx' for i in range(61)]
 for at,body in enumerate(extra):
  f=S/f'source-extra-{at}.tsx';f.write_text('declare const React:any;declare const require:any;'+body+'\nexport {};\n');files.append(f)
@@ -47,6 +58,10 @@ print('PASS all actual source/checker:',len(files),'controls;',truth.decode().sp
 # The new question must be capable of producing an observable wrong answer.
 go=ROOT/'bridge/tsgo/checker/wave06_jsx_bindings.go';text=go.read_text();assert 'out.text(imported)' in text;mutant=S/'jsx-bindings-mutant.go';mutant.write_text(text.replace('out.text(imported)','out.text(imported + "wrong")'));overlay=S/'jsx-bindings-mutant.json';overlay.write_text(json.dumps({'Replace':{str(go):str(mutant)}}));mutant_archive=S/'jsx-bindings-mutant.a';run('all-source-question-mutant-archive',['go','build','-overlay='+str(overlay),'-buildmode=c-archive','-o',mutant_archive,'./bridge/tsgo/archive']);exe=S/'all-source-question-mutant';run('all-source-question-mutant-build',[S/'adamic','build',entry,'-o',exe,'--tsgo',mutant_archive]);assert run('all-source-question-mutant',[exe])!=truth;assert (S/'all-source-question-mutant.stderr').read_bytes()==b''
 print('Raw imported-name question mutant exits zero and is caught only by Go bytes',flush=True)
+# A quoted import must retain StringLiteral rather than masquerade as Identifier.
+text=go.read_text();assert 'out.text(importedKind)' in text;mutant=S/'jsx-binding-kind-mutant.go';mutant.write_text(text.replace('out.text(importedKind)','if importedKind == "StringLiteral" { importedKind = "Identifier" }; out.text(importedKind)'));overlay=S/'jsx-binding-kind-mutant.json';overlay.write_text(json.dumps({'Replace':{str(go):str(mutant)}}));mutant_archive=S/'jsx-binding-kind-mutant.a';run('all-source-kind-mutant-archive',['go','build','-overlay='+str(overlay),'-buildmode=c-archive','-o',mutant_archive,'./bridge/tsgo/archive']);exe=S/'all-source-kind-mutant';run('all-source-kind-mutant-build',[S/'adamic','build',entry,'-o',exe,'--tsgo',mutant_archive]);assert run('all-source-kind-mutant',[exe])!=truth;assert (S/'all-source-kind-mutant.stderr').read_bytes()==b''
+print('Raw imported-kind mutant exits zero; quoted import control catches it only through Go bytes',flush=True)
+
 # Released handles must be rejected by the newly added question too.
 f=files[4];stale=S/'bindings_released.a';stale.write_text(imports+'const file='+q(str(f))+';const text='+q(f.read_text())+';const program=tsgoProgram('+q(str(S/'tsconfig.json'))+',[file]);const parser=new Parser(text,file);parser.file();tsgoRelease(program);for(const node of parser.nodes){if(node.kind==="JsxSelfClosingElement"){new SourceFragments().named(node,node,parser.nodes,text,file,program);}}')
 exe=S/'bindings-released';run('bindings-released-build',[S/'adamic','build',stale,'-o',exe,'--tsgo',archive]);assert run('bindings-released',[exe],70)==b'';assert b'invalid or released checker handle' in (S/'bindings-released.stderr').read_bytes()

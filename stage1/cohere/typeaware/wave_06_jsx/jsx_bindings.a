@@ -9,7 +9,7 @@ export function jsxBindings(program:number,file:string,source:string,node:Source
  const frames=new Frames(tsgoInspect(program,file,utf8Length(source.slice(0,node.pos)),utf8Length(source.slice(0,node.end)),node.kind,'wave06-jsx-bindings'));
  header(frames,'wave06-jsx-bindings');const result=new JsxBindings();result.present=frames.yes();const count=frames.natural();
  for(let at=0;at<count;at++){
-  const item=new DeclarationInput();item.kind=frames.field();item.imported=frames.field();item.module=frames.field();item.objectBinding=frames.yes();item.variableParent=frames.yes();item.initializerKind=frames.field();item.initializerName=frames.field();item.receiverKind=frames.field();item.receiverName=frames.field();item.firstKind=frames.field();item.firstText=frames.field();item.receiverFirstKind=frames.field();item.receiverFirstText=frames.field();result.declarations.push(item);
+  const item=new DeclarationInput();item.kind=frames.field();item.importedKind=frames.field();item.imported=frames.field();item.module=frames.field();item.objectBinding=frames.yes();item.variableParent=frames.yes();item.initializerKind=frames.field();item.initializerName=frames.field();item.receiverKind=frames.field();item.receiverName=frames.field();item.firstKind=frames.field();item.firstText=frames.field();item.receiverFirstKind=frames.field();item.receiverFirstText=frames.field();result.declarations.push(item);
  }
  frames.end();return result;
 }

@@ -44,12 +44,13 @@ func (p *Program) wave06JSXBindings(out *fields, c *checker.Checker, node *ast.N
 			return "", fmt.Errorf("nil symbol declaration")
 		}
 		out.text(kind(d))
-		imported, module := "", ""
+		importedKind, imported, module := "", "", ""
 		if d.Kind == ast.KindImportSpecifier {
 			name := d.AsImportSpecifier().PropertyName
 			if name == nil {
 				name = d.Name()
 			}
+			importedKind = kind(name)
 			imported = text(name)
 			for parent := d.Parent; parent != nil; parent = parent.Parent {
 				if parent.Kind == ast.KindImportDeclaration {
@@ -58,6 +59,7 @@ func (p *Program) wave06JSXBindings(out *fields, c *checker.Checker, node *ast.N
 				}
 			}
 		}
+		out.text(importedKind)
 		out.text(imported)
 		out.text(module)
 		objectBinding := d.Kind == ast.KindBindingElement && d.Parent != nil && d.Parent.Kind == ast.KindObjectBindingPattern
