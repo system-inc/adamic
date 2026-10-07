@@ -1,0 +1,13 @@
+import type { UtilityInput, UtilityDescription, HandlerBuilder } from './model.a';
+export function functionalDescription(utility: UtilityInput, buildHandler: HandlerBuilder): UtilityDescription {
+    const names = new Map<string, boolean>();
+    for (const name of utility.staticNames) { names.set(name, true); }
+    return {
+        themeKeys: utility.themeKeys, themeKeysPresent: utility.themeKeysPresent,
+        negative: utility.negative, fractions: false,
+        defaultValue: utility.defaultValue, defaultPresent: utility.defaultPresent,
+        handler: buildHandler(utility.bareKind, utility.bareSuffix),
+        staticNames: names, staticNamesPresent: utility.staticNames.length > 0,
+        negativeHandlerPresent: false, modifierOnArbitrary: false, armsPresent: false
+    };
+}

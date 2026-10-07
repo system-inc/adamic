@@ -1,0 +1,10 @@
+import type { FloatResult } from './model.a';
+// Parsing is a shared dependency with strconv.ParseFloat's accepted spellings and errors.
+export function isFontStretchPercentage(value: string, parseFloat: (value: string) => FloatResult): boolean {
+    if (!value.endsWith('%')) { return false; }
+    const parsed = parseFloat(value.slice(0, -1));
+    if (!parsed.ok) { return false; }
+    const number = parsed.value;
+    if (number !== Math.trunc(number) || number < 50 || number > 200) { return false; }
+    return true;
+}

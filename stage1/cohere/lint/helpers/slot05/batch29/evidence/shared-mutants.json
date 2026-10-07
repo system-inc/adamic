@@ -1,0 +1,15 @@
+{
+  "complete_shared_suite": "environment-interrupted; uncredited",
+  "focused_suite": "PASS 41.641s",
+  "passed_subtests": [
+    "--- PASS: TestMutants/one_excess_class_is_silently_allowed (37.69s)",
+    "--- PASS: TestMutants/proto_accessor_suppressed (38.57s)",
+    "--- PASS: TestMutants/max-depth-keyword-span (38.94s)",
+    "--- PASS: TestMutants/init_declarations_always_span_includes_annotation (39.30s)"
+  ],
+  "backends": [
+    "source Node",
+    "emitted JavaScript Node",
+    "sanitized native"
+  ]
+}

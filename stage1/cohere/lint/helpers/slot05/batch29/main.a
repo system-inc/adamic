@@ -1,0 +1,48 @@
+import { panic, readTextFile, programArguments } from 'adamic';
+import { OptionsJson } from '../../options_json.ts';
+import { functionalDescription } from './functional_description.a';
+import { multiDescription } from './multi_description.a';
+import { isFontStretchPercentage } from './font_stretch_percentage.a';
+import type { UtilityInput, HandlerBuilder, BareHandler, ParsedValue, BareResult } from './model.a';
+const input = readTextFile(programArguments()[0] ?? panic('missing corpus'));
+if (input.kind === 'Error') { panic(input.message); }
+const json = new OptionsJson(input.text); const root = json.parse(); if (root < 0) { panic(json.error); }
+function text(index: number, name: string): string { return json.node(json.field(index, name)).text; }
+function truth(index: number, name: string): boolean { return text(index, name) === 'true'; }
+function texts(index: number, name: string): string[] { const values: string[] = []; for (const v of json.node(json.field(index, name)).children) { values.push(json.node(v).text); } return values; }
+const mode = text(root, 'mode');
+for (const row of json.node(json.field(root, 'rows')).children) {
+    const value = text(row, 'value');
+    if (mode === 'font') {
+        const answer = isFontStretchPercentage(value, (argument: string) => {
+            if (argument !== value.slice(0, -1)) { return panic('unexpected parse argument'); }
+            return {ok: truth(row, 'parseOK'), value: Number(text(row, 'parsed'))};
+        });
+        console.log(`${answer}`);
+    } else {
+        const utility: UtilityInput = {themeKeys: texts(row, 'theme'), themeKeysPresent: truth(row, 'themePresent'), negative: truth(row, 'negative'), fractions: truth(row, 'fractions'), defaultValue: text(row, 'default'), defaultPresent: truth(row, 'defaultPresent'), bareKind: text(row, 'kind'), bareSuffix: text(row, 'suffix'), staticNames: texts(row, 'names')};
+        const argument: ParsedValue = {present: truth(row, 'valuePresent'), value, fraction: text(row, 'fraction')};
+        const build: HandlerBuilder = (kind: string, suffix: string): BareHandler => {
+            let field = 'normal';
+            if (kind === '') { field = 'none'; }
+            else if (kind !== utility.bareKind) { return panic('unexpected handler kind'); }
+            else if (suffix === '' && suffix !== utility.bareSuffix) { field = 'nosuffix'; }
+            else if (suffix !== utility.bareSuffix) { return panic('unexpected handler suffix'); }
+            const dependency = json.field(row, field);
+            return {present: truth(dependency, 'present'), call: (v: ParsedValue): BareResult => {
+                if (v.present !== argument.present || v.value !== argument.value || v.fraction !== argument.fraction) { return panic('unexpected handler value'); }
+                return {ok: truth(dependency, 'ok'), text: text(dependency, 'text')};
+            }};
+        };
+        const description = mode === 'functional' ? functionalDescription(utility, build) : multiDescription(utility, build);
+        const second = mode === 'functional' ? functionalDescription(utility, build) : multiDescription(utility, build);
+        console.log(`${description.themeKeysPresent}|${description.themeKeys.join('~')}|${description.negative}|${description.fractions}|${description.defaultPresent}|${description.defaultValue}`);
+        console.log(`${description.handler.present}|${description.staticNamesPresent}|${description.negativeHandlerPresent}|${description.modifierOnArbitrary}|${description.armsPresent}`);
+        const keys: string[] = []; if (description.staticNamesPresent) { for (const key of description.staticNames.keys()) { keys.push(key); } } keys.sort((left: string, right: string): number => left < right ? -1 : left > right ? 1 : 0); const printed: string[] = []; for (const key of keys) { printed.push(`${key}:${description.staticNames.get(key) ?? false}`); } console.log(printed.join('~'));
+        if (description.handler.present) { const result = description.handler.call(argument); console.log(`${result.ok}|${result.text}`); } else { console.log('none'); }
+        if (description.staticNamesPresent) { description.staticNames.set('__owned_freshness_probe__', true); }
+        console.log(`${second.staticNamesPresent && second.staticNames.has('__owned_freshness_probe__')}`);
+        if (utility.themeKeys.length > 0) { utility.themeKeys[0] = '__owned_alias_probe__'; }
+        console.log(description.themeKeys[0] ?? 'none');
+    }
+}

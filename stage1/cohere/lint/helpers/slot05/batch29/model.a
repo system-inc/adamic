@@ -1,0 +1,30 @@
+export interface ParsedValue { present: boolean; value: string; fraction: string; }
+export interface BareResult { text: string; ok: boolean; }
+export interface BareHandler { present: boolean; call: (value: ParsedValue) => BareResult; }
+export type HandlerBuilder = (kind: string, suffix: string) => BareHandler;
+export interface UtilityInput {
+    themeKeys: string[];
+    themeKeysPresent: boolean;
+    negative: boolean;
+    fractions: boolean;
+    defaultValue: string;
+    defaultPresent: boolean;
+    bareKind: string;
+    bareSuffix: string;
+    staticNames: readonly string[];
+}
+export interface UtilityDescription {
+    themeKeys: string[];
+    themeKeysPresent: boolean;
+    negative: boolean;
+    fractions: boolean;
+    defaultValue: string;
+    defaultPresent: boolean;
+    handler: BareHandler;
+    staticNames: Map<string, boolean>;
+    staticNamesPresent: boolean;
+    negativeHandlerPresent: boolean;
+    modifierOnArbitrary: boolean;
+    armsPresent: boolean;
+}
+export interface FloatResult { ok: boolean; value: number; }

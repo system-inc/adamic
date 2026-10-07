@@ -1,0 +1,11 @@
+import type { UtilityInput, UtilityDescription, HandlerBuilder } from './model.a';
+export function multiDescription(utility: UtilityInput, buildHandler: HandlerBuilder): UtilityDescription {
+    return {
+        themeKeys: utility.themeKeys, themeKeysPresent: utility.themeKeysPresent,
+        negative: utility.negative, fractions: utility.fractions,
+        defaultValue: utility.defaultValue, defaultPresent: utility.defaultPresent,
+        handler: buildHandler(utility.bareKind, utility.bareSuffix),
+        staticNames: new Map<string, boolean>(), staticNamesPresent: false,
+        negativeHandlerPresent: false, modifierOnArbitrary: false, armsPresent: false
+    };
+}
