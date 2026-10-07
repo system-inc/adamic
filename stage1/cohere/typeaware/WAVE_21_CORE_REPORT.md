@@ -1,5 +1,5 @@
 Built: native no-obj-calls, no-object-constructor and no-promise-executor-return, including suggestions; three object-constructor inputs remain blocked by the shared parser.
-Commits: earlier batch 7d1f1fcc and 880f6f6f pushed; next claim 84c0240f pushed before implementation; implementation commit recorded in git history.
+Commits: earlier batch 7d1f1fcc and 880f6f6f pushed; next claim 84c0240f pushed before implementation; implementation 7f360051 pushed.
 Commands/output: core test PASS 81.533s, 242 default and 48 allowVoid findings byte-identical; 77 compiler and 287 repository roots identical; checker PASS 0.109s; Node PASS 17.118s; vet/gofmt clean.
 Mutants: namespace-message judgment byte 398; missing object-suggestion semicolon byte 44075; wrong promise-braces judgment byte 74316; released registry and request-suffix mutants caught by their explicit assertions.
 Not covered: three parser-blocked object-constructor rows, full repository gate, shared profile/JavaScript integration, and native JSON option decoding; no additional claims after this batch.
