@@ -1,0 +1,7 @@
+=== RUN   TestFifthRawOptions
+    lint_test.go:1182: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/cohere/lint/rules/typescript-no-non-null-assertion/driver.a --manifest /tmp/adamic-gate/TestFifthRawOptions1541891042/014/manifest.txt]: exit status 70
+        adamic: panic: restricted type settings must be an object
+--- FAIL: TestFifthRawOptions (19.72s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	19.730s
+FAIL

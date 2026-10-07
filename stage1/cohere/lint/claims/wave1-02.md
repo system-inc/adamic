@@ -117,3 +117,14 @@ inventory entries, neither ported on main nor named in origin claims, are:
 Both needs_type_information and binding_only are false for each entry.
 This reservation is pushed before implementation. Existing shared CFG, JSX,
 parser and reporting limitations remain documented in owned rule reports.
+
+## Fifth reservation result
+
+Dot notation, accessor grouping and identifier length now have registered .a
+candidates and independent Go comparisons on source Node, emitted JavaScript
+and sanitized native, including semantic mutants. Accessor grouping covers all
+160 captured cases. Dot and identifier runtime regex options remain explicitly
+blocked; all remaining selected upstream cases and the full compiler/stage1
+source corpus match. See rules/id-length/REPORT.md for exact coverage, excluded
+inputs, throughput and raw logs. No further reservations are taken while those
+two option surfaces remain pending. Only owned directories were changed.

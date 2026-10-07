@@ -1,0 +1,17 @@
+=== RUN   TestFifthWitnesses
+    lint_test.go:1027: Node: case 0 line 7: port "/tmp/adamic-gate/TestFifthWitnesses846650216/001/dot-notation-0.ts:3:17", Go "/tmp/adamic-gate/TestFifthWitnesses846650216/001/dot-notation-0.ts:2:19"
+        Go context:
+        /tmp/adamic-gate/TestFifthWitnesses846650216/001/dot-notation-0.ts:1:18
+          dot-notation  ["prop"] is better written in dot notation. Bracket notation is for keys computed at runtime; with a literal inside, it is the same access written the long way, and it reads as though the key were dynamic when it is not. Editors also stop offering completion and rename through a bracketed key, so the property quietly drops out of every refactor that touches it.
+        
+        range 17 23 useDot
+        fix 16 24	 .prop
+        /tmp/adamic-gate/TestFifthWitnesses846650216/001/dot-notation-0.ts:2:19
+          dot-notation  ["prop"] is better written in dot notation. Bracket notation is for keys computed at runtime; with a literal inside, it is the same access written the long way, and it reads as though the key were dynamic when it is not. Editors also stop offering completion and rename through a bracketed key, so the property quietly drops out of every refactor that touches it.
+        
+        range 44 50 useDot
+        fix 43 51	prop
+--- FAIL: TestFifthWitnesses (22.14s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	22.150s
+FAIL
