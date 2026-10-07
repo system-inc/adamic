@@ -90,3 +90,15 @@ WAVE_18_PREFERENCE_REPORT.md records full findings/fixes/suggestions agreement,
 419 controls, both corpora, options, mutants, sanitizers, released handles and timings.
 The only shared edit is one bridge question registration line. No additional rules
 are reserved in this turn.
+
+## Fifth batch after pushed preference completion
+
+Previous ports and evidence are pushed through eb1251ab. Reserved before code:
+
+1. react-hooks/set-state-in-effect
+2. react-hooks/set-state-in-render
+3. react-hooks/static-components
+
+The audit checks 389 origin refs, 142 claimed names and 25 ranked baseline ports.
+Baselines are main e011f8f6 and tsgo-c-library 5afbdb83.
+These are the first remaining names in the combined by-volume ranking.
