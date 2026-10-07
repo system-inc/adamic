@@ -1,4 +1,4 @@
-"""Numeric declaration contract against production listener maps, without parser adapters."""
+"""Named declaration contract against production listener maps, without parser adapters."""
 import pathlib,json,subprocess,time,hashlib
 root=pathlib.Path(__file__).resolve().parent;repo=root.parents[4]
 work=pathlib.Path('/workspace/wave-09-listeners');work.mkdir(exist_ok=True)
@@ -17,11 +17,11 @@ for row in rows:
  directory=root/(row['Name'].split('/')[-1].replace('-','_'))
  declaration=json.loads((directory/'rule.json').read_text())
  assert declaration=={'name':row['Name'],'kinds':row['Kinds']},directory
- assert all(type(kind) is int for kind in declaration['kinds']),directory
+ assert all(type(kind) is str for kind in declaration['kinds']),directory
  declarations.append(declaration)
 metadata=''.join(row['name']+'\t'+','.join(map(str,row['kinds']))+'\n' for row in declarations).encode()
 assert metadata==truth
-mutated=json.loads((root/'radix/rule.json').read_text());mutated['kinds']=[215]
+mutated=json.loads((root/'radix/rule.json').read_text());mutated['kinds']=['NewExpression']
 mutant_metadata=''.join((mutated if row['name']=='radix' else row)['name']+'\t'+','.join(map(str,(mutated if row['name']=='radix' else row)['kinds']))+'\n' for row in declarations).encode()
 assert mutant_metadata!=truth
 write('rule-json.stdout',metadata.decode());write('rule-json-mutant.stdout',mutant_metadata.decode())
@@ -35,8 +35,8 @@ path=write('main.a',source);measurements={'rules':len(rows),'bytes':len(truth),'
 for mode in ['normal','sanitized','mutant']:
  current=path
  if mode=='mutant':
-  target=root/'radix.a';text=target.read_text();assert text.count('[214]')==1
-  mutated=write('mutated.a',text.replace('[214]','[215]'));current=write('mutant-main.a',source.replace(str(target),str(mutated)))
+  target=root/'radix.a';text=target.read_text();assert text.count('["CallExpression"]')==1
+  mutated=write('mutated.a',text.replace('["CallExpression"]','["NewExpression"]'));current=write('mutant-main.a',source.replace(str(target),str(mutated)))
  binary=work/mode;args=['/workspace/wave-09-core/adamic','build',current,'-o',binary]
  if mode=='sanitized':args.append('--sanitize')
  run(mode+'-build',args);actual,elapsed=run(mode,[binary]);assert not (work/(mode+'.stderr')).read_bytes()
@@ -46,4 +46,4 @@ for mode in ['normal','sanitized','mutant']:
 emitted,_=run('js-build',['/workspace/wave-09-core/adamic','js',path]);js=write('main.mjs',emitted.decode())
 for name,p in [('source',path),('emitted',js)]:actual,_=run(name,['node','--disable-warning=ExperimentalWarning',repo/'oracle/node.mjs',p]);assert actual==truth
 write('results.json',json.dumps(measurements,indent=2)+'\n')
-print('PASS six numeric listener declarations, production Go maps, native, sanitizers, both Node modes and wrong-kind mutant; shared dispatch is not exercised',flush=True)
+print('PASS six named listener declarations, production Go maps, native, sanitizers, both Node modes and wrong-kind mutant; shared dispatch is not exercised',flush=True)

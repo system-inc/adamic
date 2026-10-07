@@ -1,4 +1,4 @@
-// Listener contract from pinned Go parser SyntaxKind values.
-// Shared native parser/driver numeric kinds remain unavailable.
+// Listener kind names from the pinned production Go listener maps.
+// Relevance dispatch belongs to the shared driver.
 export const ruleName = "@typescript-eslint/non-nullable-type-assertion-style";
-export const syntaxKinds:readonly number[] = [217, 235];
+export const syntaxKinds:readonly string[] = ["AsExpression","TypeAssertionExpression"];

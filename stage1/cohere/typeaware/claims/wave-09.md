@@ -140,3 +140,14 @@ decoded by that registry. The remaining speed blocker is the numeric contract
 and type-aware checker-context integration, not an absent handed-node hook
 on the named harness branch. The separate dynamic RegExp refusal remains.
 No new claims or React parking. See ../wave09_core/HARNESS_AB70_REPORT.md.
+
+## Named-kind correction supersedes numeric blocker
+
+The latest user instruction requires ast.Kind names and explicitly removes
+numeric kinds. All six owned rule.json descriptors and .a listener sidecars
+now use production kind names and pass the independent Go listener-map oracle,
+native, sanitizers and both Node modes, with wrong-kind mutants. Numeric schema
+compatibility is resolved; it must no longer be cited as a blocker. Legacy
+checker-backed visitor migration remains unfinished, and dynamic RegExp is
+still refused by native lowering. No new claims or React parking. See
+../wave09_core/KIND_NAMES_REPORT.md.

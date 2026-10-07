@@ -1,4 +1,4 @@
-// Numeric listener contracts from unmodified production Go rule maps.
+// Named listener contracts from unmodified production Go rule maps.
 package main
 
 import (
@@ -8,11 +8,12 @@ import (
 	"github.com/system-inc/cohere/internal/lint/rule"
 	"os"
 	"sort"
+	"strings"
 )
 
 type declaration struct {
 	Name  string
-	Kinds []int
+	Kinds []string
 }
 
 func main() {
@@ -24,9 +25,9 @@ func main() {
 		}
 		entry := declaration{Name: subject.Name}
 		for kind := range subject.Run(rule.Context{}, nil) {
-			entry.Kinds = append(entry.Kinds, int(kind))
+			entry.Kinds = append(entry.Kinds, strings.TrimPrefix(kind.String(), "Kind"))
 		}
-		sort.Ints(entry.Kinds)
+		sort.Strings(entry.Kinds)
 		declarations = append(declarations, entry)
 	}
 	if len(declarations) != len(names) {

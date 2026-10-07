@@ -1,4 +1,4 @@
-// Listener contract from pinned Go parser SyntaxKind values.
-// Shared native parser/driver numeric kinds remain unavailable.
+// Listener kind names from the pinned production Go listener maps.
+// Relevance dispatch belongs to the shared driver.
 export const ruleName = "no-label-var";
-export const syntaxKinds:readonly number[] = [257];
+export const syntaxKinds:readonly string[] = ["LabeledStatement"];

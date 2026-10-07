@@ -1,0 +1,6 @@
+@typescript-eslint/non-nullable-type-assertion-style	AsExpression,TypeAssertionExpression
+no-invalid-regexp	CallExpression,NewExpression
+no-label-var	LabeledStatement
+no-misleading-character-class	RegularExpressionLiteral,SourceFile
+prefer-const	VariableDeclarationList
+radix	NewExpression
