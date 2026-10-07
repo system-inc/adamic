@@ -1,0 +1,7 @@
+=== RUN   TestUpstreamRepositoryCorpusParity
+=== PAUSE TestUpstreamRepositoryCorpusParity
+=== CONT  TestUpstreamRepositoryCorpusParity
+    audit_test.go:136: set ADAMIC_JSON_PRETTIER for the separate upstream report
+--- SKIP: TestUpstreamRepositoryCorpusParity (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/json	0.031s

@@ -1,0 +1,13 @@
+{"Time":"2026-10-07T07:21:16.303814308Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/json"}
+{"Time":"2026-10-07T07:21:16.323146434Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestExternalComparisonCatchesThreePrinterMutants"}
+{"Time":"2026-10-07T07:21:16.323234917Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestExternalComparisonCatchesThreePrinterMutants","Output":"=== RUN   TestExternalComparisonCatchesThreePrinterMutants\n","OutputType":"frame"}
+{"Time":"2026-10-07T07:21:16.323259754Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestExternalComparisonCatchesThreePrinterMutants","Output":"=== PAUSE TestExternalComparisonCatchesThreePrinterMutants\n","OutputType":"frame"}
+{"Time":"2026-10-07T07:21:16.323262368Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestExternalComparisonCatchesThreePrinterMutants"}
+{"Time":"2026-10-07T07:21:16.323266414Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestExternalComparisonCatchesThreePrinterMutants"}
+{"Time":"2026-10-07T07:21:16.323268077Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestExternalComparisonCatchesThreePrinterMutants","Output":"=== CONT  TestExternalComparisonCatchesThreePrinterMutants\n","OutputType":"frame"}
+{"Time":"2026-10-07T07:21:16.3232703Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestExternalComparisonCatchesThreePrinterMutants","Output":"    audit_test.go:281: set ADAMIC_JSON_PRETTIER for the external oracle\n"}
+{"Time":"2026-10-07T07:21:16.32327656Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestExternalComparisonCatchesThreePrinterMutants","Output":"--- SKIP: TestExternalComparisonCatchesThreePrinterMutants (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-07T07:21:16.323278292Z","Action":"skip","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestExternalComparisonCatchesThreePrinterMutants","Elapsed":0}
+{"Time":"2026-10-07T07:21:16.323290511Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-07T07:21:16.323470292Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/json\t0.010s\n"}
+{"Time":"2026-10-07T07:21:16.32350881Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Elapsed":0.02}

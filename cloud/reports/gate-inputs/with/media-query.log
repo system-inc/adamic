@@ -1,0 +1,12 @@
+=== RUN   TestThePortParsesAsGoCohereDoes
+=== PAUSE TestThePortParsesAsGoCohereDoes
+=== CONT  TestThePortParsesAsGoCohereDoes
+    mediaquery_test.go:52: Go cohere without the fix to parsers.go answers 27 cases differently; the port is held to the fixed Go
+    mediaquery_test.go:52: seed 20261005, 4000 generated params
+=== RUN   TestThePortParsesAsGoCohereDoes/as_postcss-media-query-parser
+=== PAUSE TestThePortParsesAsGoCohereDoes/as_postcss-media-query-parser
+=== CONT  TestThePortParsesAsGoCohereDoes/as_postcss-media-query-parser
+--- PASS: TestThePortParsesAsGoCohereDoes/as_postcss-media-query-parser (0.26s)
+--- PASS: TestThePortParsesAsGoCohereDoes (1.29s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/mediaquery	1.551s

@@ -1,0 +1,14 @@
+F
+======================================================================
+FAIL: test_dirty_source_and_uncached_equality (__main__.Archive.test_dirty_source_and_uncached_equality)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_gate_inputs.py", line 92, in test_dirty_source_and_uncached_equality
+    self.assertIn('built',gate.archive(repo,inputs));self.assertNotEqual(before,(inputs/'checker/tsgo.a').read_bytes())
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'built' not found in 'skipped (validated Go actions and archive bytes)'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.865s
+
+FAILED (failures=1)

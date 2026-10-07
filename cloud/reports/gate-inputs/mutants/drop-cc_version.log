@@ -1,0 +1,13 @@
+F.
+======================================================================
+FAIL: test_every_key_component (__main__.Inputs.test_every_key_component) (name='cc_version')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_gate_inputs.py", line 27, in test_every_key_component
+    self.assertNotEqual(before,gate.cache_key(**changed),name)
+AssertionError: 'c94fed6ce9d9449be7073b95bf694e35113989ce87f31fc570b5abc16ef9ad76' == 'c94fed6ce9d9449be7073b95bf694e35113989ce87f31fc570b5abc16ef9ad76' : cc_version
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.002s
+
+FAILED (failures=1)

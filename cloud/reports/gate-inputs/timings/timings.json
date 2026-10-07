@@ -1,0 +1,932 @@
+[
+  {
+    "loop": 1,
+    "mode": "cold",
+    "phase": "npm",
+    "seconds": 5.681198184000095,
+    "steps": [
+      {
+        "name": "css",
+        "answer": "installed",
+        "seconds": 0.714
+      },
+      {
+        "name": "graphql",
+        "answer": "installed",
+        "seconds": 1.086
+      },
+      {
+        "name": "media-query",
+        "answer": "installed",
+        "seconds": 0.592
+      },
+      {
+        "name": "selector",
+        "answer": "installed",
+        "seconds": 0.746
+      },
+      {
+        "name": "values",
+        "answer": "installed",
+        "seconds": 0.724
+      },
+      {
+        "name": "json-prettier",
+        "answer": "installed",
+        "seconds": 0.875
+      },
+      {
+        "name": "css-printer",
+        "answer": "installed",
+        "seconds": 0.869
+      }
+    ],
+    "command": [
+      "python3",
+      "/workspace/adamic/cloud/setup-gate-inputs.py",
+      "npm",
+      "/workspace/gate-inputs-main",
+      "/workspace/gate-input-timings-7t4pe34r/1",
+      "/workspace/adamic-tools/bin/node"
+    ],
+    "before": {
+      "commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "0.29 3.24 3.42 2/420 125895"
+    },
+    "after": {
+      "commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "0.40 3.16 3.39 1/417 126024"
+    },
+    "cached": false
+  },
+  {
+    "loop": 1,
+    "mode": "cold",
+    "phase": "corpora",
+    "seconds": 18.22580694899807,
+    "steps": [
+      {
+        "name": "TypeScript source",
+        "answer": "installed",
+        "seconds": 17.918
+      },
+      {
+        "name": "100 MiB gitignore",
+        "answer": "generated",
+        "seconds": 0.235
+      }
+    ],
+    "command": [
+      "python3",
+      "/workspace/adamic/cloud/setup-gate-inputs.py",
+      "corpora",
+      "/workspace/gate-inputs-main",
+      "/workspace/gate-input-timings-7t4pe34r/1",
+      "/workspace/adamic-tools/bin/node"
+    ],
+    "before": {
+      "commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "0.40 3.16 3.39 1/417 126033"
+    },
+    "after": {
+      "commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "0.83 3.12 3.37 2/422 126094"
+    },
+    "cached": false
+  },
+  {
+    "loop": 1,
+    "mode": "cold",
+    "phase": "archive",
+    "seconds": 176.4785227559987,
+    "steps": [
+      {
+        "name": "checker archive",
+        "answer": "built",
+        "seconds": 176.416
+      }
+    ],
+    "command": [
+      "python3",
+      "/workspace/adamic/cloud/setup-gate-inputs.py",
+      "archive",
+      "/workspace/gate-inputs-main",
+      "/workspace/gate-input-timings-7t4pe34r/1",
+      "/workspace/adamic-tools/bin/node"
+    ],
+    "before": {
+      "commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "0.83 3.12 3.37 2/422 126103"
+    },
+    "after": {
+      "commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "11.83 8.75 5.60 3/436 130558"
+    },
+    "cached": false
+  },
+  {
+    "loop": 1,
+    "mode": "warm",
+    "phase": "npm",
+    "seconds": 0.5653203709989612,
+    "steps": [
+      {
+        "name": "css",
+        "answer": "skipped",
+        "seconds": 0.029
+      },
+      {
+        "name": "graphql",
+        "answer": "skipped",
+        "seconds": 0.343
+      },
+      {
+        "name": "media-query",
+        "answer": "skipped",
+        "seconds": 0.008
+      },
+      {
+        "name": "selector",
+        "answer": "skipped",
+        "seconds": 0.05
+      },
+      {
+        "name": "values",
+        "answer": "skipped",
+        "seconds": 0.015
+      },
+      {
+        "name": "json-prettier",
+        "answer": "skipped",
+        "seconds": 0.036
+      },
+      {
+        "name": "css-printer",
+        "answer": "skipped",
+        "seconds": 0.034
+      }
+    ],
+    "command": [
+      "python3",
+      "/workspace/adamic/cloud/setup-gate-inputs.py",
+      "npm",
+      "/workspace/gate-inputs-main",
+      "/workspace/gate-input-timings-7t4pe34r/1",
+      "/workspace/adamic-tools/bin/node"
+    ],
+    "before": {
+      "commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "11.83 8.75 5.60 3/436 130567"
+    },
+    "after": {
+      "commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "11.83 8.75 5.60 3/436 130588"
+    },
+    "cached": true
+  },
+  {
+    "loop": 1,
+    "mode": "warm",
+    "phase": "corpora",
+    "seconds": 18.522274628998275,
+    "steps": [
+      {
+        "name": "TypeScript source",
+        "answer": "skipped",
+        "seconds": 18.353
+      },
+      {
+        "name": "100 MiB gitignore",
+        "answer": "skipped",
+        "seconds": 0.135
+      }
+    ],
+    "command": [
+      "python3",
+      "/workspace/adamic/cloud/setup-gate-inputs.py",
+      "corpora",
+      "/workspace/gate-inputs-main",
+      "/workspace/gate-input-timings-7t4pe34r/1",
+      "/workspace/adamic-tools/bin/node"
+    ],
+    "before": {
+      "commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "11.83 8.75 5.60 3/436 130598"
+    },
+    "after": {
+      "commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "9.65 8.42 5.54 1/444 131647"
+    },
+    "cached": true
+  },
+  {
+    "loop": 1,
+    "mode": "warm",
+    "phase": "archive",
+    "seconds": 0.21664513100040494,
+    "steps": [
+      {
+        "name": "checker archive",
+        "answer": "skipped",
+        "seconds": 0.149
+      }
+    ],
+    "command": [
+      "python3",
+      "/workspace/adamic/cloud/setup-gate-inputs.py",
+      "archive",
+      "/workspace/gate-inputs-main",
+      "/workspace/gate-input-timings-7t4pe34r/1",
+      "/workspace/adamic-tools/bin/node"
+    ],
+    "before": {
+      "commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "9.65 8.42 5.54 1/444 131656"
+    },
+    "after": {
+      "commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "9.65 8.42 5.54 2/454 131724"
+    },
+    "cached": true
+  },
+  {
+    "loop": 2,
+    "mode": "warm",
+    "phase": "npm",
+    "seconds": 0.31508726899846806,
+    "steps": [
+      {
+        "name": "css",
+        "answer": "skipped",
+        "seconds": 0.014
+      },
+      {
+        "name": "graphql",
+        "answer": "skipped",
+        "seconds": 0.145
+      },
+      {
+        "name": "media-query",
+        "answer": "skipped",
+        "seconds": 0.007
+      },
+      {
+        "name": "selector",
+        "answer": "skipped",
+        "seconds": 0.021
+      },
+      {
+        "name": "values",
+        "answer": "skipped",
+        "seconds": 0.011
+      },
+      {
+        "name": "json-prettier",
+        "answer": "skipped",
+        "seconds": 0.023
+      },
+      {
+        "name": "css-printer",
+        "answer": "skipped",
+        "seconds": 0.023
+      }
+    ],
+    "command": [
+      "python3",
+      "/workspace/adamic/cloud/setup-gate-inputs.py",
+      "npm",
+      "/workspace/gate-inputs-main",
+      "/workspace/gate-input-timings-7t4pe34r/1",
+      "/workspace/adamic-tools/bin/node"
+    ],
+    "before": {
+      "commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "9.65 8.42 5.54 2/454 131733"
+    },
+    "after": {
+      "commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "9.04 8.31 5.53 1/454 131751"
+    },
+    "cached": true
+  },
+  {
+    "loop": 2,
+    "mode": "warm",
+    "phase": "corpora",
+    "seconds": 6.249196857999777,
+    "steps": [
+      {
+        "name": "TypeScript source",
+        "answer": "skipped",
+        "seconds": 6.048
+      },
+      {
+        "name": "100 MiB gitignore",
+        "answer": "skipped",
+        "seconds": 0.133
+      }
+    ],
+    "command": [
+      "python3",
+      "/workspace/adamic/cloud/setup-gate-inputs.py",
+      "corpora",
+      "/workspace/gate-inputs-main",
+      "/workspace/gate-input-timings-7t4pe34r/1",
+      "/workspace/adamic-tools/bin/node"
+    ],
+    "before": {
+      "commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "9.04 8.31 5.53 1/454 131760"
+    },
+    "after": {
+      "commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "8.40 8.19 5.50 1/447 131863"
+    },
+    "cached": true
+  },
+  {
+    "loop": 2,
+    "mode": "warm",
+    "phase": "archive",
+    "seconds": 0.21476365300259204,
+    "steps": [
+      {
+        "name": "checker archive",
+        "answer": "skipped",
+        "seconds": 0.146
+      }
+    ],
+    "command": [
+      "python3",
+      "/workspace/adamic/cloud/setup-gate-inputs.py",
+      "archive",
+      "/workspace/gate-inputs-main",
+      "/workspace/gate-input-timings-7t4pe34r/1",
+      "/workspace/adamic-tools/bin/node"
+    ],
+    "before": {
+      "commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "8.40 8.19 5.50 1/447 131872"
+    },
+    "after": {
+      "commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "8.40 8.19 5.50 1/447 131927"
+    },
+    "cached": true
+  },
+  {
+    "loop": 2,
+    "mode": "cold",
+    "phase": "npm",
+    "seconds": 5.735839518998546,
+    "steps": [
+      {
+        "name": "css",
+        "answer": "installed",
+        "seconds": 0.712
+      },
+      {
+        "name": "graphql",
+        "answer": "installed",
+        "seconds": 1.217
+      },
+      {
+        "name": "media-query",
+        "answer": "installed",
+        "seconds": 0.616
+      },
+      {
+        "name": "selector",
+        "answer": "installed",
+        "seconds": 0.803
+      },
+      {
+        "name": "values",
+        "answer": "installed",
+        "seconds": 0.846
+      },
+      {
+        "name": "json-prettier",
+        "answer": "installed",
+        "seconds": 0.716
+      },
+      {
+        "name": "css-printer",
+        "answer": "installed",
+        "seconds": 0.781
+      }
+    ],
+    "command": [
+      "python3",
+      "/workspace/adamic/cloud/setup-gate-inputs.py",
+      "npm",
+      "/workspace/gate-inputs-main",
+      "/workspace/gate-input-timings-7t4pe34r/2",
+      "/workspace/adamic-tools/bin/node"
+    ],
+    "before": {
+      "commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "8.40 8.19 5.50 1/447 131936"
+    },
+    "after": {
+      "commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "7.96 8.10 5.49 3/445 132073"
+    },
+    "cached": false
+  },
+  {
+    "loop": 2,
+    "mode": "cold",
+    "phase": "corpora",
+    "seconds": 27.252871991000575,
+    "steps": [
+      {
+        "name": "TypeScript source",
+        "answer": "installed",
+        "seconds": 26.959
+      },
+      {
+        "name": "100 MiB gitignore",
+        "answer": "generated",
+        "seconds": 0.216
+      }
+    ],
+    "command": [
+      "python3",
+      "/workspace/adamic/cloud/setup-gate-inputs.py",
+      "corpora",
+      "/workspace/gate-inputs-main",
+      "/workspace/gate-input-timings-7t4pe34r/2",
+      "/workspace/adamic-tools/bin/node"
+    ],
+    "before": {
+      "commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "7.96 8.10 5.49 3/445 132082"
+    },
+    "after": {
+      "commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "5.95 7.61 5.39 2/478 132666"
+    },
+    "cached": false
+  },
+  {
+    "loop": 2,
+    "mode": "cold",
+    "phase": "archive",
+    "seconds": 2.2337766970013035,
+    "steps": [
+      {
+        "name": "checker archive",
+        "answer": "built",
+        "seconds": 2.181
+      }
+    ],
+    "command": [
+      "python3",
+      "/workspace/adamic/cloud/setup-gate-inputs.py",
+      "archive",
+      "/workspace/gate-inputs-main",
+      "/workspace/gate-input-timings-7t4pe34r/2",
+      "/workspace/adamic-tools/bin/node"
+    ],
+    "before": {
+      "commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "5.95 7.61 5.39 2/478 132675"
+    },
+    "after": {
+      "commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "6.04 7.60 5.40 2/462 132991"
+    },
+    "cached": false
+  },
+  {
+    "loop": 3,
+    "mode": "cold",
+    "phase": "npm",
+    "seconds": 7.500450407002063,
+    "steps": [
+      {
+        "name": "css",
+        "answer": "installed",
+        "seconds": 1.062
+      },
+      {
+        "name": "graphql",
+        "answer": "installed",
+        "seconds": 1.545
+      },
+      {
+        "name": "media-query",
+        "answer": "installed",
+        "seconds": 0.745
+      },
+      {
+        "name": "selector",
+        "answer": "installed",
+        "seconds": 0.937
+      },
+      {
+        "name": "values",
+        "answer": "installed",
+        "seconds": 1.026
+      },
+      {
+        "name": "json-prettier",
+        "answer": "installed",
+        "seconds": 1.055
+      },
+      {
+        "name": "css-printer",
+        "answer": "installed",
+        "seconds": 1.046
+      }
+    ],
+    "command": [
+      "python3",
+      "/workspace/adamic/cloud/setup-gate-inputs.py",
+      "npm",
+      "/workspace/gate-inputs-main",
+      "/workspace/gate-input-timings-7t4pe34r/3",
+      "/workspace/adamic-tools/bin/node"
+    ],
+    "before": {
+      "commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "6.04 7.60 5.40 2/462 133000"
+    },
+    "after": {
+      "commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "5.71 7.51 5.38 3/468 133136"
+    },
+    "cached": false
+  },
+  {
+    "loop": 3,
+    "mode": "cold",
+    "phase": "corpora",
+    "seconds": 22.897165145001054,
+    "steps": [
+      {
+        "name": "TypeScript source",
+        "answer": "installed",
+        "seconds": 22.613
+      },
+      {
+        "name": "100 MiB gitignore",
+        "answer": "generated",
+        "seconds": 0.237
+      }
+    ],
+    "command": [
+      "python3",
+      "/workspace/adamic/cloud/setup-gate-inputs.py",
+      "corpora",
+      "/workspace/gate-inputs-main",
+      "/workspace/gate-input-timings-7t4pe34r/3",
+      "/workspace/adamic-tools/bin/node"
+    ],
+    "before": {
+      "commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "5.71 7.51 5.38 3/468 133145"
+    },
+    "after": {
+      "commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "4.23 7.02 5.28 1/443 133217"
+    },
+    "cached": false
+  },
+  {
+    "loop": 3,
+    "mode": "cold",
+    "phase": "archive",
+    "seconds": 2.1761572130017157,
+    "steps": [
+      {
+        "name": "checker archive",
+        "answer": "built",
+        "seconds": 2.119
+      }
+    ],
+    "command": [
+      "python3",
+      "/workspace/adamic/cloud/setup-gate-inputs.py",
+      "archive",
+      "/workspace/gate-inputs-main",
+      "/workspace/gate-input-timings-7t4pe34r/3",
+      "/workspace/adamic-tools/bin/node"
+    ],
+    "before": {
+      "commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "4.23 7.02 5.28 1/443 133226"
+    },
+    "after": {
+      "commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "4.23 7.02 5.28 1/443 133492"
+    },
+    "cached": false
+  },
+  {
+    "loop": 3,
+    "mode": "warm",
+    "phase": "npm",
+    "seconds": 0.21436809500301024,
+    "steps": [
+      {
+        "name": "css",
+        "answer": "skipped",
+        "seconds": 0.016
+      },
+      {
+        "name": "graphql",
+        "answer": "skipped",
+        "seconds": 0.103
+      },
+      {
+        "name": "media-query",
+        "answer": "skipped",
+        "seconds": 0.006
+      },
+      {
+        "name": "selector",
+        "answer": "skipped",
+        "seconds": 0.012
+      },
+      {
+        "name": "values",
+        "answer": "skipped",
+        "seconds": 0.008
+      },
+      {
+        "name": "json-prettier",
+        "answer": "skipped",
+        "seconds": 0.016
+      },
+      {
+        "name": "css-printer",
+        "answer": "skipped",
+        "seconds": 0.015
+      }
+    ],
+    "command": [
+      "python3",
+      "/workspace/adamic/cloud/setup-gate-inputs.py",
+      "npm",
+      "/workspace/gate-inputs-main",
+      "/workspace/gate-input-timings-7t4pe34r/3",
+      "/workspace/adamic-tools/bin/node"
+    ],
+    "before": {
+      "commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "4.23 7.02 5.28 1/443 133501"
+    },
+    "after": {
+      "commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "4.23 7.02 5.28 1/443 133518"
+    },
+    "cached": true
+  },
+  {
+    "loop": 3,
+    "mode": "warm",
+    "phase": "corpora",
+    "seconds": 5.830094420001842,
+    "steps": [
+      {
+        "name": "TypeScript source",
+        "answer": "skipped",
+        "seconds": 5.622
+      },
+      {
+        "name": "100 MiB gitignore",
+        "answer": "skipped",
+        "seconds": 0.13
+      }
+    ],
+    "command": [
+      "python3",
+      "/workspace/adamic/cloud/setup-gate-inputs.py",
+      "corpora",
+      "/workspace/gate-inputs-main",
+      "/workspace/gate-input-timings-7t4pe34r/3",
+      "/workspace/adamic-tools/bin/node"
+    ],
+    "before": {
+      "commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "4.23 7.02 5.28 1/443 133527"
+    },
+    "after": {
+      "commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "3.73 6.82 5.23 1/447 133541"
+    },
+    "cached": true
+  },
+  {
+    "loop": 3,
+    "mode": "warm",
+    "phase": "archive",
+    "seconds": 0.21457878699948196,
+    "steps": [
+      {
+        "name": "checker archive",
+        "answer": "skipped",
+        "seconds": 0.136
+      }
+    ],
+    "command": [
+      "python3",
+      "/workspace/adamic/cloud/setup-gate-inputs.py",
+      "archive",
+      "/workspace/gate-inputs-main",
+      "/workspace/gate-input-timings-7t4pe34r/3",
+      "/workspace/adamic-tools/bin/node"
+    ],
+    "before": {
+      "commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "3.73 6.82 5.23 1/447 133550"
+    },
+    "after": {
+      "commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "3.73 6.82 5.23 1/447 133605"
+    },
+    "cached": true
+  }
+]

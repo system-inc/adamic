@@ -1,0 +1,21 @@
+{"Time":"2026-10-07T07:26:34.457894255Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/graphql"}
+{"Time":"2026-10-07T07:26:34.462117282Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/graphql","Test":"TestThePortParsesAsGoCohereDoes"}
+{"Time":"2026-10-07T07:26:34.462190583Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql","Test":"TestThePortParsesAsGoCohereDoes","Output":"=== RUN   TestThePortParsesAsGoCohereDoes\n","OutputType":"frame"}
+{"Time":"2026-10-07T07:26:34.462208099Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql","Test":"TestThePortParsesAsGoCohereDoes","Output":"=== PAUSE TestThePortParsesAsGoCohereDoes\n","OutputType":"frame"}
+{"Time":"2026-10-07T07:26:34.462210362Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/graphql","Test":"TestThePortParsesAsGoCohereDoes"}
+{"Time":"2026-10-07T07:26:34.462213637Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/graphql","Test":"TestThePortParsesAsGoCohereDoes"}
+{"Time":"2026-10-07T07:26:34.46221541Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql","Test":"TestThePortParsesAsGoCohereDoes","Output":"=== CONT  TestThePortParsesAsGoCohereDoes\n","OutputType":"frame"}
+{"Time":"2026-10-07T07:26:35.549249307Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql","Test":"TestThePortParsesAsGoCohereDoes","Output":"    graphql_test.go:55: seed 20261005, 3000 generated documents\n"}
+{"Time":"2026-10-07T07:26:35.631941394Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/graphql","Test":"TestThePortParsesAsGoCohereDoes/as_graphql-js"}
+{"Time":"2026-10-07T07:26:35.631977158Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql","Test":"TestThePortParsesAsGoCohereDoes/as_graphql-js","Output":"=== RUN   TestThePortParsesAsGoCohereDoes/as_graphql-js\n","OutputType":"frame"}
+{"Time":"2026-10-07T07:26:35.631990098Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql","Test":"TestThePortParsesAsGoCohereDoes/as_graphql-js","Output":"=== PAUSE TestThePortParsesAsGoCohereDoes/as_graphql-js\n","OutputType":"frame"}
+{"Time":"2026-10-07T07:26:35.631992171Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/graphql","Test":"TestThePortParsesAsGoCohereDoes/as_graphql-js"}
+{"Time":"2026-10-07T07:26:35.632858996Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/graphql","Test":"TestThePortParsesAsGoCohereDoes/as_graphql-js"}
+{"Time":"2026-10-07T07:26:35.632866838Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql","Test":"TestThePortParsesAsGoCohereDoes/as_graphql-js","Output":"=== CONT  TestThePortParsesAsGoCohereDoes/as_graphql-js\n","OutputType":"frame"}
+{"Time":"2026-10-07T07:26:35.945903743Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql","Test":"TestThePortParsesAsGoCohereDoes/as_graphql-js","Output":"--- PASS: TestThePortParsesAsGoCohereDoes/as_graphql-js (0.31s)\n","OutputType":"frame"}
+{"Time":"2026-10-07T07:26:35.946216724Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/graphql","Test":"TestThePortParsesAsGoCohereDoes/as_graphql-js","Elapsed":0.31}
+{"Time":"2026-10-07T07:26:35.94624744Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql","Test":"TestThePortParsesAsGoCohereDoes","Output":"--- PASS: TestThePortParsesAsGoCohereDoes (1.17s)\n","OutputType":"frame"}
+{"Time":"2026-10-07T07:26:35.946283104Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/graphql","Test":"TestThePortParsesAsGoCohereDoes","Elapsed":1.17}
+{"Time":"2026-10-07T07:26:35.946287711Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-07T07:26:35.948087806Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/graphql\t1.490s\n"}
+{"Time":"2026-10-07T07:26:35.948120004Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/graphql","Elapsed":1.49}

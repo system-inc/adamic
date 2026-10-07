@@ -1,0 +1,15 @@
+=== RUN   TestThePortParsesAsGoCohereDoes
+    css_test.go:121: Go oracle: === RUN   TestAdamicPortCases
+            adamic_port_side_test.go:116: Prettier fixtures absent; set ADAMIC_CSS_FIXTURES
+            adamic_port_side_test.go:148: corpus files: map[.css:1]
+            adamic_port_side_test.go:216: 23496 cases, 4530 parsed
+            adamic_port_side_test.go:234: Go: 234960 stylesheets in 3.212672922s, 73135 stylesheets/s; 45300 parsed, 61710 children
+        --- PASS: TestAdamicPortCases (4.48s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css/postcss	4.512s
+=== RUN   TestThePortParsesAsGoCohereDoes/PostCSS
+    css_test.go:147: set ADAMIC_CSS_LIBRARY to the pinned npm scratch directory
+--- SKIP: TestThePortParsesAsGoCohereDoes/PostCSS (0.00s)
+--- PASS: TestThePortParsesAsGoCohereDoes (19.72s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/css	19.722s

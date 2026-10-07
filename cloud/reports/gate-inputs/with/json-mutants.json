@@ -1,0 +1,42 @@
+{
+  "id": "json-mutants",
+  "package": "stage1/cohere/json",
+  "test": "TestExternalComparisonCatchesThreePrinterMutants",
+  "verdict": "PASS",
+  "exit": 0,
+  "seconds": 8.26832035699772,
+  "first_diagnostic": null,
+  "command": [
+    "go",
+    "test",
+    "./stage1/cohere/json",
+    "-run",
+    "^TestExternalComparisonCatchesThreePrinterMutants$",
+    "-count=1",
+    "-timeout=30m",
+    "-json"
+  ],
+  "build_flags": {
+    "commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+    "nproc": "5",
+    "cpu_max": "400000 100000",
+    "go": "go version go1.27.1 linux/amd64",
+    "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+    "node": "v24.19.0",
+    "cached": false,
+    "inputs": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/adamic-tools/gate-inputs/typescript",
+      "ADAMIC_CSS_LIBRARY": "/workspace/adamic-tools/gate-inputs/css",
+      "ADAMIC_GRAPHQL_LIBRARY": "/workspace/adamic-tools/gate-inputs/graphql",
+      "ADAMIC_MEDIA_QUERY_LIBRARY": "/workspace/adamic-tools/gate-inputs/media-query",
+      "ADAMIC_SELECTOR_LIBRARY": "/workspace/adamic-tools/gate-inputs/selector",
+      "ADAMIC_VALUES_LIBRARY": "/workspace/adamic-tools/gate-inputs/values",
+      "ADAMIC_JSON_PRETTIER": "/workspace/adamic-tools/gate-inputs/json-prettier",
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/workspace/adamic-tools/gate-inputs/css-printer",
+      "ADAMIC_GITIGNORE_LARGEST": "/workspace/adamic-tools/gate-inputs/gitignore/.gitignore",
+      "ADAMIC_CLANG_TSGO_ARCHIVE": "/workspace/adamic-tools/gate-inputs/checker/tsgo.a"
+    }
+  },
+  "load_before": "4.31 6.44 4.05 2/448 120610",
+  "load_after": "4.87 6.50 4.09 2/452 120921"
+}

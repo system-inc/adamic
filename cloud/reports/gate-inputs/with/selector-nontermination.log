@@ -1,0 +1,26 @@
+=== RUN   TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars
+=== PAUSE TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars
+=== CONT  TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars
+=== RUN   TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|_b
+=== PAUSE TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|_b
+=== RUN   TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/:is(a|)
+=== PAUSE TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/:is(a|)
+=== RUN   TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|@x
+=== PAUSE TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|@x
+=== RUN   TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/*|)
+=== PAUSE TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/*|)
+=== CONT  TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|_b
+=== CONT  TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|@x
+=== CONT  TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/*|)
+=== CONT  TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/:is(a|)
+    selector_test.go:472: entered parser, no return within 1s, killed at deadline
+--- PASS: TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|@x (1.00s)
+    selector_test.go:472: entered parser, no return within 1s, killed at deadline
+--- PASS: TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/:is(a|) (1.00s)
+    selector_test.go:472: entered parser, no return within 1s, killed at deadline
+--- PASS: TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/*|) (1.00s)
+    selector_test.go:472: entered parser, no return within 1s, killed at deadline
+--- PASS: TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|_b (1.01s)
+--- PASS: TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/selector	1.012s
