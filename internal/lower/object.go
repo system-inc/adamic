@@ -58,8 +58,19 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			}
 			var value ir.Expression
 			var err error
+			uninitialized := false
 			if property.Kind == ast.KindPropertyAssignment {
-				value, err = l.expression(property.AsPropertyAssignment().Initializer)
+				initializer := property.AsPropertyAssignment().Initializer
+				uninitialized = l.uninitializedInitializer(initializer)
+				if uninitialized {
+					declared := l.declaredField(node, fieldName)
+					if declared == 0 || slotless(declared) {
+						return nil, &Refused{Where: l.program.Where(initializer), What: "an uninitialized object property without a supported stored type", Fix: "use a supported scalar or reference field type"}
+					}
+					value = uninitializedValue(declared)
+				} else {
+					value, err = l.expression(initializer)
+				}
 			} else {
 				value, err = l.shorthand(property)
 			}
@@ -76,7 +87,7 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if slotless(value.Type()) {
 				return nil, l.notYet(property, "a field holding "+typeName(value.Type()))
 			}
-			literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value})
+			literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value, Uninitialized: uninitialized})
 		default:
 			return nil, l.notYet(property, describe(property)+" in an object literal")
 		}

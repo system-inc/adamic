@@ -10,9 +10,9 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 )
 
-// These formerly runnable marker controls are now rejected by the later ruling.
+// These markers occur outside supported storage and remain refused.
 var impossibleAssertionFixtures = []string{
-	"scanner_initialized", "static_uninitialized", "uninitialized_catch", "uninitialized_field", "uninitialized_map_entry", "initialized", "literal_statement", "static_initialized", "literal_return", "uninitialized_append", "uninitialized_default", "uninitialized_iteration", "uninitialized_spread", "uninitialized_const", "uninitialized_interface", "uninitialized_optional",
+	"initialized", "literal_statement", "literal_return", "uninitialized_default",
 }
 
 func impossibleAssertionFixture(name string) bool {
@@ -42,7 +42,7 @@ func TestImpossibleNonNullFixturesAreRefused(t *testing.T) {
 			paths = append(paths, "non_null_refuse_"+operand+"."+extension)
 		}
 	}
-	for _, form := range []string{"argument", "return", "expression", "comparison"} {
+	for _, form := range []string{"argument", "return", "expression", "comparison", "conditional", "logical", "spread", "element", "default"} {
 		paths = append(paths, "non_null_refuse_"+form+".a")
 	}
 	for _, name := range paths {

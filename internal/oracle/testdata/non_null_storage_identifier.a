@@ -1,0 +1,4 @@
+interface Identifier { escapedText: string; }
+const node: Identifier = { escapedText: undefined! };
+console.log("before");
+console.log(`${node.escapedText === undefined}`);
