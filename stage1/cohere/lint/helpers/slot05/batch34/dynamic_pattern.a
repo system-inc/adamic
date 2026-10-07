@@ -1,0 +1,3 @@
+import { panic, programArguments } from 'adamic';
+const pattern = programArguments()[0] ?? panic('missing pattern');
+console.log(`${new RegExp(pattern, 'u').test('a')}`);
