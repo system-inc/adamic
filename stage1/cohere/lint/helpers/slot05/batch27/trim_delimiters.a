@@ -1,0 +1,7 @@
+export interface TextRange { start: number; end: number; }
+// Coordinates stay in Go byte-offset units; no source text or finding is built here.
+export function trimDelimiters(range: TextRange, leading: number, trailing: number): TextRange {
+    const start = range.start + leading; const end = range.end - trailing;
+    if (start > end) { return range; }
+    return { start, end };
+}

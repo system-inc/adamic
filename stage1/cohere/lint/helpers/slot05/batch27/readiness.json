@@ -1,0 +1,30 @@
+{
+  "helpers": {
+    "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isPositiveInteger": [
+      "better-tailwindcss/enforce-consistent-class-order",
+      "better-tailwindcss/enforce-shorthand-classes",
+      "better-tailwindcss/no-unknown-classes"
+    ],
+    "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isStrictPositiveInteger": [
+      "better-tailwindcss/enforce-consistent-class-order",
+      "better-tailwindcss/enforce-shorthand-classes",
+      "better-tailwindcss/no-unknown-classes"
+    ],
+    "github.com/system-inc/cohere/internal/lint/rules/tailwind.trimDelimiters": [
+      "better-tailwindcss/enforce-consistent-class-order",
+      "better-tailwindcss/no-duplicate-classes",
+      "better-tailwindcss/no-unnecessary-whitespace"
+    ]
+  },
+  "dependency_occurrences_removed": 9,
+  "unique_consumers": 5,
+  "newly_helper_ready_from_batch_alone": [],
+  "newly_helper_ready_with_previous_slot05": [],
+  "delivery": "local format-patch; reservation and implementation not pushed due GitHub internal server errors",
+  "cumulative_slot05_local": {
+    "helpers": 77,
+    "dependency_occurrences_removed": 392,
+    "unique_consumers": 76,
+    "helper_ready": 51
+  }
+}

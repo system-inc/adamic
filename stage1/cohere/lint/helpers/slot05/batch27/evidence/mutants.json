@@ -1,0 +1,15 @@
+{
+  "witnesses": [
+    "    helper_test.go:104: is_positive_integer.a mutant \"if (bytes.length === 0) { return false; }\" -> \"if (bytes.length === 0) { return true; }\" caught at output line 1: mutant \"true\", Go \"false\"",
+    "    helper_test.go:104: is_positive_integer.a mutant \"byte < 48 || byte > 57\" -> \"false\" caught at output line 65: mutant \"true\", Go \"false\"",
+    "    helper_test.go:104: is_positive_integer.a mutant \"fixed(number) === source\" -> \"true\" caught at output line 72: mutant \"true\", Go \"false\"",
+    "    helper_test.go:104: is_positive_integer.a mutant \"places - digits.length\" -> \"places - digits.length + 1\" caught at output line 147: mutant \"false\", Go \"true\"",
+    "    helper_test.go:104: is_strict_positive_integer.a mutant \" && !(bytes.length === 1 && bytes[0] === 48)\" -> \"\" caught at output line 71: mutant \"true\", Go \"false\"",
+    "    helper_test.go:104: is_strict_positive_integer.a mutant \"isPositiveInteger(bytes) &&\" -> \"true &&\" caught at output line 1: mutant \"true\", Go \"false\"",
+    "    helper_test.go:104: trim_delimiters.a mutant \"range.start + leading\" -> \"range.start\" caught at output line 17: mutant \"0|0\", Go \"0|1\"",
+    "    helper_test.go:104: trim_delimiters.a mutant \"range.end - trailing\" -> \"range.end\" caught at output line 17: mutant \"1|1\", Go \"0|1\"",
+    "    helper_test.go:104: trim_delimiters.a mutant \"if (start > end)\" -> \"if (false)\" caught at output line 2: mutant \"1|-1\", Go \"0|0\"",
+    "    helper_test.go:104: trim_delimiters.a mutant \"return range;\" -> \"return {start: range.start + 1,end: range.end};\" caught at output line 2: mutant \"1|0\", Go \"0|0\""
+  ],
+  "log_sha256": "e8fd257f7ab4b141d698cb1597a8331f266844316f34aee12842bbc75e0f11c2"
+}

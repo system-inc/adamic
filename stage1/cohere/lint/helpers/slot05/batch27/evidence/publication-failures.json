@@ -1,0 +1,17 @@
+{
+  "reservation": "962094b53ba2eb0c92364cc3bf495a7e0e4f0005",
+  "attempts": [
+    {
+      "error": "remote rejected HEAD -> codex/lint-helpers-05 (Internal Server Error)",
+      "request_id": "2D18:1FF347:1033118:152D01F:6AC679F1",
+      "remote_time": "2026-10-07T16:57:21Z"
+    },
+    {
+      "error": "remote rejected HEAD -> codex/lint-helpers-05 (Internal Server Error)",
+      "request_id": "29BF:6E157:9EB995:CE0A30:6AC67A63",
+      "remote_time": "2026-10-07T16:59:15Z"
+    }
+  ],
+  "verified_remote": "a9282c8a6645454097cafef88fbe4caf451a744b",
+  "ordering_mistake": "source was written before collecting the failed first reservation push result; no claim publication is asserted"
+}

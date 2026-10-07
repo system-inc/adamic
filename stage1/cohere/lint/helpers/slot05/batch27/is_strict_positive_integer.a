@@ -1,0 +1,4 @@
+import { isPositiveInteger } from './is_positive_integer.a';
+export function isStrictPositiveInteger(bytes: readonly number[]): boolean {
+    return isPositiveInteger(bytes) && !(bytes.length === 1 && bytes[0] === 48);
+}

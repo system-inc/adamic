@@ -1,0 +1,23 @@
+// Match Go strconv.FormatFloat(number, 'f', -1, 64), retaining its fixed notation.
+function fixed(number: number): string {
+    const text = number.toString(); const exponentAt = text.indexOf('e');
+    if (exponentAt < 0) { return text; }
+    const mantissa = text.slice(0, exponentAt); const exponent = Number(text.slice(exponentAt + 1));
+    const point = mantissa.indexOf('.');
+    const digits = mantissa.replace('.', '');
+    const places = (point < 0 ? mantissa.length : point) + exponent;
+    if (places >= digits.length) { return digits + '0'.repeat(places - digits.length); }
+    return digits.slice(0, places) + '.' + digits.slice(places);
+}
+// Original Go string bytes. Reject non-ASCII digits before numeric conversion.
+export function isPositiveInteger(bytes: readonly number[]): boolean {
+    if (bytes.length === 0) { return false; }
+    let source = '';
+    for (const byte of bytes) {
+        if (byte < 48 || byte > 57) { return false; }
+        source += String.fromCharCode(byte);
+    }
+    const number = Number(source);
+    if (!Number.isFinite(number)) { return false; }
+    return fixed(number) === source;
+}

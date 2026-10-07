@@ -1,0 +1,36 @@
+{
+  "boundary": "all 256 bytes; decimal powers through overflow, 2^53 neighbors, 4096 deterministic float-bit samples; byte-length range projections and exhaustive small signed range parameters",
+  "captured_strings": 487,
+  "consumers": {
+    "better-tailwindcss/enforce-consistent-class-order": 376,
+    "better-tailwindcss/no-duplicate-classes": 338,
+    "better-tailwindcss/no-unnecessary-whitespace": 326
+  },
+  "files": {
+    "better-tailwindcss/enforce-consistent-class-order": [
+      "cohere/internal/lint/rules/tailwind/design_system_live_walk_test.go",
+      "cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_options_test.go",
+      "cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go",
+      "cohere/internal/lint/rules/tailwind/shared_reader_walk_test.go"
+    ],
+    "better-tailwindcss/no-duplicate-classes": [
+      "cohere/internal/lint/rules/tailwind/class_literals_nested_test.go",
+      "cohere/internal/lint/rules/tailwind/class_literals_paren_test.go",
+      "cohere/internal/lint/rules/tailwind/class_literals_trivia_test.go",
+      "cohere/internal/lint/rules/tailwind/design_system_live_walk_test.go",
+      "cohere/internal/lint/rules/tailwind/fixers_compose_test.go",
+      "cohere/internal/lint/rules/tailwind/no_duplicate_classes_test.go",
+      "cohere/internal/lint/rules/tailwind/shared_reader_walk_test.go"
+    ],
+    "better-tailwindcss/no-unnecessary-whitespace": [
+      "cohere/internal/lint/rules/tailwind/class_literals_nested_test.go",
+      "cohere/internal/lint/rules/tailwind/class_literals_paren_test.go",
+      "cohere/internal/lint/rules/tailwind/design_system_live_walk_test.go",
+      "cohere/internal/lint/rules/tailwind/fixers_compose_test.go",
+      "cohere/internal/lint/rules/tailwind/no_unnecessary_whitespace_test.go",
+      "cohere/internal/lint/rules/tailwind/shared_reader_walk_test.go"
+    ]
+  },
+  "rows": 97528,
+  "sources": 6024
+}

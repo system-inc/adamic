@@ -1,0 +1,9 @@
+# Tailwind integer predicates and range trimming
+
+isPositiveInteger(bytes) accepts only nonempty ASCII digits whose original decimal spelling equals Go's fixed-notation shortest float64 round trip. Zero is accepted; leading zeroes, signs, fractions, exponent notation, invalid bytes, overflow and inexact spellings are declined. isStrictPositiveInteger(bytes) delegates to that predicate and excludes exactly zero. Byte inputs must be integer values 0..255, preserving original Go strings. No regex matcher is implemented.
+
+The positive helper uses Number conversion and shortest formatting, expanding positive scientific notation into fixed notation to match Go FormatFloat('f', -1, 64). Decimal input cannot produce a finite value between zero and one, so the private formatter's negative-exponent arm is outside this helper's reachable domain. The actual Go oracle covers large finite integer spellings and overflow explicitly. Floating-point parsing and formatting belong to the runtime; the helper is held against Go rather than assuming backend parity.
+
+trimDelimiters({start,end}, leading, trailing) shifts the two byte offsets. It returns the original range if those shifts would invert it, and allows zero-length results. Parameters must be integers whose arithmetic stays exact in JavaScript's safe integer range; Go int overflow is not an AST position use case and is not covered. Negative and inverted small ranges are tested as pure helper inputs. No source text is removed or finding position converted here.
+
+See REPORT.md for baseline/mutant evidence and the delivery failure. This batch is local only: both reservation pushes returned GitHub internal server errors. Source was mistakenly written before that first failed push result was collected. The format-patch fallback includes the reservation and completed implementation; the report does not claim push-before-source compliance or a published reservation.
