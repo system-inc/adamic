@@ -1,0 +1,13 @@
+export interface MutableValueNode {
+    tag: string;
+    data: readonly number[];
+    edges: readonly number[];
+    edgesBound: boolean;
+}
+export function replaceValueNode(node: MutableValueNode, resolved: readonly number[], print: (roots: readonly number[]) => readonly number[]): void {
+    node.tag = 'word';
+    node.data = print(resolved);
+    const empty: readonly number[] = [];
+    node.edges = empty;
+    node.edgesBound = false;
+}

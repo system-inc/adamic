@@ -1,0 +1,51 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { isQuotedLiteral } from './quoted_literal.a';
+import { replaceValueNode } from './replace_value_node.a';
+import type { MutableValueNode } from './replace_value_node.a';
+import { unionNodeSets } from './union_node_sets.a';
+import type { NodeSetView } from './union_node_sets.a';
+import { writeValueCss } from '../slot04_wave8/write_value_css.a';
+import type { ValueNodeView } from '../slot04_wave8/tree_view.a';
+function field(c: OptionsJson, row: number, name: string): number {
+    const n = c.node(row); const i = n.keys.indexOf(name);
+    if(i < 0) { panic('field'); } return n.children[i] ?? panic('value');
+}
+function text(c: OptionsJson, row: number, name: string): string { return c.node(field(c,row,name)).text; }
+function integers(c: OptionsJson, row: number): number[] {
+    const out: number[] = []; for(const v of c.node(row).children) { out.push(Number(c.node(v).text)); } return out;
+}
+function set(c: OptionsJson, row: number, side: string): NodeSetView {
+    const present = text(c,row,side+'Present') === 'true'; const entries = new Map<number,boolean>();
+    if(present) { for(const e of c.node(field(c,row,side)).children) { entries.set(Number(text(c,e,'ID')),text(c,e,'Value') === 'true'); } }
+    return {present,entries};
+}
+function observe(c: OptionsJson, row: number): void {
+    if(text(c,row,'Helper') === 'union') {
+        const left = set(c,row,'Left'); const right = text(c,row,'Shared') === 'true' ? left : set(c,row,'Right');
+        const result = unionNodeSets(left,right); if(result.present) { result.entries.set(999,true); }
+        const ids: number[] = []; for(const id of result.entries.keys()) { ids.push(id); } ids.sort((a,b) => a-b);
+        const parts: string[] = []; for(const id of ids) { parts.push(`${id}:${result.entries.get(id) ?? false}`); }
+        console.log(`${result.present}|${parts.join(',')}|${left.entries.get(999) ?? false}|${right.entries.get(999) ?? false}`); return;
+    }
+    console.log(`${isQuotedLiteral(integers(c,field(c,row,'Data')))}`);
+    const adaptation = field(c,row,'Adaptation'); const arena: MutableValueNode[] = [];
+    for(const n of c.node(field(c,adaptation,'Nodes')).children) {
+        arena.push({tag:text(c,n,'Tag'),data:integers(c,field(c,n,'Data')),edges:integers(c,field(c,n,'Edges')),edgesBound:text(c,n,'EdgesBound') === 'true'});
+    }
+    const target = arena[Number(text(c,adaptation,'Target'))] ?? panic('target');
+    replaceValueNode(target,integers(c,field(c,adaptation,'Roots')),(roots: readonly number[]): readonly number[] => {
+        const views: ValueNodeView[] = []; for(const n of arena) { views.push({tag:n.tag,data:n.data,edges:n.edges}); }
+        const bytes: number[] = []; writeValueCss(bytes,views,roots); return bytes;
+    });
+    console.log(`${target.tag}|${target.data.join(',')}|${target.edges.length}|${target.edgesBound}`);
+}
+const path = programArguments()[0] ?? panic('path');
+if(path === '--full') {
+    console.log(`${isQuotedLiteral([])}`);
+    for(let a = 0; a < 256; a++) { console.log(`${isQuotedLiteral([a])}`); for(let b = 0; b < 256; b++) { console.log(`${isQuotedLiteral([a,b])}`); } }
+} else {
+    const input = readTextFile(path); if(input.kind === 'Error') { panic(input.message); }
+    const c = new OptionsJson(input.text); const root = c.parse(); if(root < 0) { panic(c.error); }
+    for(const row of c.node(root).children) { observe(c,row); }
+}

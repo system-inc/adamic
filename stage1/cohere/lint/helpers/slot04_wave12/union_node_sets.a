@@ -1,0 +1,12 @@
+export interface NodeSetView {
+    readonly present: boolean;
+    readonly entries: Map<number,boolean>;
+}
+export function unionNodeSets(left: NodeSetView, right: NodeSetView): NodeSetView {
+    if(left.entries.size === 0) { return right; }
+    if(right.entries.size === 0) { return left; }
+    const entries = new Map<number,boolean>();
+    for(const id of left.entries.keys()) { entries.set(id,true); }
+    for(const id of right.entries.keys()) { entries.set(id,true); }
+    return {present:true,entries};
+}

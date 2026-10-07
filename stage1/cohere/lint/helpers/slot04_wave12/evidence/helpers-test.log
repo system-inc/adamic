@@ -1,0 +1,54 @@
+=== RUN   TestSurgeryGoNodeNativeJavaScript
+=== RUN   TestSurgeryGoNodeNativeJavaScript/witnesses.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 154 helper observations
+=== RUN   TestSurgeryGoNodeNativeJavaScript/consumers.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 224 helper observations
+=== RUN   TestSurgeryGoNodeNativeJavaScript/calls.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 6 helper observations
+=== RUN   TestSurgeryGoNodeNativeJavaScript/--full
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 65793 helper observations
+--- PASS: TestSurgeryGoNodeNativeJavaScript (3.06s)
+    --- PASS: TestSurgeryGoNodeNativeJavaScript/witnesses.json (0.43s)
+    --- PASS: TestSurgeryGoNodeNativeJavaScript/consumers.json (0.87s)
+    --- PASS: TestSurgeryGoNodeNativeJavaScript/calls.json (0.21s)
+    --- PASS: TestSurgeryGoNodeNativeJavaScript/--full (0.47s)
+=== RUN   TestCompilingMutants
+=== RUN   TestCompilingMutants/quoted_literal.aword.length_<_2
+    helpers_test.go:191: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:191: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:191: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/quoted_literal.aquote_!==_39_&&_quote_!==_34
+    helpers_test.go:191: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:191: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:191: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/replace_value_node.anode.tag_=_'word';
+    helpers_test.go:191: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:191: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:191: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/replace_value_node.anode.edges_=_empty;
+    helpers_test.go:191: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:191: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:191: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/union_node_sets.aif(left.entries.size_===_0)_{_return_right;_}
+    helpers_test.go:191: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:191: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:191: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/union_node_sets.aentries.set(id,true);
+    helpers_test.go:191: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:191: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:191: emitted JavaScript compiling semantic mutant caught by Go output comparison
+--- PASS: TestCompilingMutants (8.47s)
+    --- PASS: TestCompilingMutants/quoted_literal.aword.length_<_2 (1.35s)
+    --- PASS: TestCompilingMutants/quoted_literal.aquote_!==_39_&&_quote_!==_34 (1.36s)
+    --- PASS: TestCompilingMutants/replace_value_node.anode.tag_=_'word'; (1.30s)
+    --- PASS: TestCompilingMutants/replace_value_node.anode.edges_=_empty; (1.56s)
+    --- PASS: TestCompilingMutants/union_node_sets.aif(left.entries.size_===_0)_{_return_right;_} (1.31s)
+    --- PASS: TestCompilingMutants/union_node_sets.aentries.set(id,true); (1.33s)
+=== RUN   TestConsumerCoverage
+    helpers_test.go:262: consumer omission caught: better-tailwindcss/enforce-shorthand-classes
+    helpers_test.go:262: consumer omission caught: better-tailwindcss/no-conflicting-classes
+    helpers_test.go:262: consumer omission caught: better-tailwindcss/no-unknown-classes
+    helpers_test.go:262: consumer omission caught: better-tailwindcss/enforce-consistent-class-order
+--- PASS: TestConsumerCoverage (0.01s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave12	11.559s

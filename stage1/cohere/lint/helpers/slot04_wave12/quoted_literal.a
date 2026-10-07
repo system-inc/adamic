@@ -1,0 +1,6 @@
+export function isQuotedLiteral(word: readonly number[]): boolean {
+    if(word.length < 2) { return false; }
+    const quote = word[0] ?? 0;
+    if(quote !== 39 && quote !== 34) { return false; }
+    return word[word.length - 1] === quote;
+}
