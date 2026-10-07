@@ -61,9 +61,15 @@ type Options struct {
 	// see what fused multiply-adds would do, as on arm64.
 	cpu string
 
-	// slabs, for tests, keeps the size-class allocator on in a sanitized build (heap.c), where every
-	// value otherwise comes from malloc, to show a use after a free is still caught with it on.
-	slabs bool
+	// Slabs keeps the size-class allocator on in a sanitized build (heap.c), where every value
+	// otherwise comes from malloc: the oracle runs every fixture this way too, so the classes
+	// themselves run under the sanitizers, and a use after a free is still caught with them on.
+	Slabs bool
+
+	// Malloc takes every value from malloc in a build without sanitizers, as a sanitized build does.
+	// macOS's leaks tool needs it: a chunk of the size classes stays reachable from the runtime's own
+	// table, so a value leaked into one is never reported.
+	Malloc bool
 }
 
 // Flags are what clang compiles a program and the runtime with. The fuzzer (internal/fuzz) compiles
@@ -87,8 +93,11 @@ func Flags(options Options) []string {
 	if options.Count {
 		flags = append(flags, "-DADAMIC_COUNT")
 	}
-	if options.slabs {
+	if options.Slabs {
 		flags = append(flags, "-DADAMIC_SLABS")
+	}
+	if options.Malloc {
+		flags = append(flags, "-DADAMIC_MALLOC")
 	}
 	if options.cpu != "" {
 		flags = append(flags, "-march="+options.cpu)

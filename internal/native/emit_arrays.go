@@ -132,7 +132,7 @@ func (e *emitter) arrayReduce(reduce ir.ArrayReduce) string {
 	initial := e.value(reduce.Initial)
 	var accumulator string
 	if reduce.Result.IsReference() {
-		accumulator = e.own(reduce.Result, fmt.Sprintf("adamic_retain(%s)", initial))
+		accumulator = e.own(reduce.Result, retained(initial))
 	} else {
 		accumulator = e.snapshot(reduce.Result, initial)
 	}

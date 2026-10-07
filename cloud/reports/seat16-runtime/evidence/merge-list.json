@@ -1,0 +1,80 @@
+[
+  [
+    "runtime/release-fast-path",
+    "b9f22f0",
+    "6c12495e",
+    "heap.c comment conflict: keep area implementation, import evidence and shared-release mutant"
+  ],
+  [
+    "release-fast-path coverage",
+    "c0cc4d7",
+    "f6b13505",
+    "heap.c comment conflict: keep area; counts: keep area table"
+  ],
+  [
+    "runtime/slab-checks",
+    "220a915",
+    "b61bf78c",
+    "clean Git merge; adapt newer map_hash_test.go from private slabs to exported Slabs, retain all area native options"
+  ],
+  [
+    "runtime/handover-throw",
+    "be68139",
+    "2c322697",
+    "oracle registry union; counts: keep area"
+  ],
+  [
+    "handover-throw coverage",
+    "ac48654",
+    "61915120",
+    "counts: keep area; fixture registry merges cleanly"
+  ],
+  [
+    "runtime/aside-throw",
+    "3756e2f",
+    "db2aa3fe",
+    "oracle registry union; counts: keep area"
+  ],
+  [
+    "runtime/memory-guard-fixtures",
+    "0e3881f",
+    "58799a29",
+    "oracle registry union including area constructor-capture guard; counts: keep area"
+  ],
+  [
+    "codex/memory-worked-examples",
+    "bca0d5a",
+    "4cf15d6f",
+    "oracle registry union; counts: keep area; remeasure worked-example rows and explanations, preserve historical C dates and new string-view policy"
+  ],
+  [
+    "runtime/fresh-probes",
+    "2403dd3",
+    "92de9f11",
+    "clean merge, preserve area proof"
+  ],
+  [
+    "codex/fresh-clobbered-loads",
+    "dddb655",
+    "6b0456cd",
+    "clean merge, tests and documentation only"
+  ],
+  [
+    "runtime/error-spread",
+    "e73fd72",
+    "c19fa5ad",
+    "keep NoReuse private/accessor rule plus incoming Error and view guards; oracle registry union"
+  ],
+  [
+    "runtime/uncaught-name",
+    "bc75558",
+    "688d96cf",
+    "oracle registry union; counts: keep area"
+  ],
+  [
+    "coverage/error-names",
+    "69d3c87",
+    "616bc86f",
+    "oracle registry union; flow: keep sixteen NotYet exclusions and area long-normalization exclusion; counts: keep area"
+  ]
+]

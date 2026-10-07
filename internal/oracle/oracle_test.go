@@ -103,6 +103,12 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/call_targets_reuse.a", true, false},
 	{"internal/oracle/testdata/call_targets_closure.a", true, false},
 	{"internal/oracle/testdata/call_targets_sort.a", true, false},
+	// Small programs documented in docs/memory.md, held to Node and the leak check.
+	{"internal/oracle/testdata/memory_examples/list.a", true, false},
+	{"internal/oracle/testdata/memory_examples/tree.a", true, false},
+	{"internal/oracle/testdata/memory_examples/closures.a", true, false},
+	{"internal/oracle/testdata/memory_examples/regions.a", true, false},
+	{"internal/oracle/testdata/memory_examples/strings.a", true, false},
 	{"internal/oracle/testdata/library_object_keys.a", true, false},
 	{"internal/oracle/testdata/library_object_is.a", true, false},
 	{"internal/oracle/testdata/library_object_has_own.a", true, false},
@@ -339,6 +345,17 @@ var fixtures = []struct {
 	// A constructor whose object a closure captures, kept in a global (integration's reading of
 	// fa49e43): the object outlives its statement, so no region.
 	{"internal/oracle/testdata/regions_constructor_capture.a", true, false},
+	// Guards and paths no fixture reached, from integration's readings of aa17d3c and fa49e43
+	// (#fxspptb): a comparator that spreads its parameter, a global moved before it's declared, the
+	// ways a parameter escapes, a spread returned as fresh, an object bigger than a region's first
+	// block, and region paths through asides, nested literals and try/finally.
+	{"internal/oracle/testdata/reuse_comparator_spread.a", true, false},
+	{"internal/oracle/testdata/reuse_move_before_ready.a", true, false},
+	{"internal/oracle/testdata/regions_escapes.a", true, false},
+	{"internal/oracle/testdata/regions_spread_fresh.a", true, false},
+	{"internal/oracle/testdata/regions_big.a", true, false},
+	{"internal/oracle/testdata/regions_paths.a", true, false},
+	{"internal/oracle/testdata/reduce_undefined_initial.a", true, false},
 	// A variable borrowed from an array, beside every way the array could lose the element while it lives.
 	{"internal/oracle/testdata/borrow_element.a", true, false},
 	{"internal/oracle/testdata/borrow_loop.a", true, false},
@@ -447,6 +464,41 @@ var fixtures = []struct {
 	// (integration's reading of aa17d3c): the source is not only read there, so it isn't reused.
 	{"internal/oracle/testdata/reuse_spread_method.a", true, false},
 	{"internal/oracle/testdata/reuse_spread_method_alias.a", true, false},
+	// A move handed to a call whose later argument throws (reuse.go, handOver).
+	{"internal/oracle/testdata/reuse_handover_throw.a", true, false},
+	// A new object, a fresh array and a moved array handed to a call whose later argument throws.
+	{"internal/oracle/testdata/reuse_handover_fresh.a", true, false},
+	// Every string length from 1 to 300 bytes, and objects of every size an object can be in that
+	// range: some kept, some dropped, then more of the same size (heap.c).
+	{"internal/oracle/testdata/slab_sizes.a", true, false},
+	// A throw from inside a ?:, && or ?? arm after the statement built strings (9984394).
+	{"internal/oracle/testdata/aside_throw.a", true, false},
+	// Spreading an Error, directly and through a view (integration's reading of 9984394): not yet.
+	{"internal/oracle/testdata/error_spread.a", false, false},
+	{"internal/oracle/testdata/error_spread_view.a", false, false},
+	// An uncaught error with an empty name, and with both empty (integration's reading of 9984394).
+	{"internal/oracle/testdata/uncaught_names.a", true, false},
+	{"internal/oracle/testdata/uncaught_names_empty.a", true, false},
+	{"internal/oracle/testdata/coverage_error_construct.a", false, false},
+	{"internal/oracle/testdata/coverage_error_call.a", false, false},
+	{"internal/oracle/testdata/coverage_error_mutated.a", false, false},
+	{"internal/oracle/testdata/coverage_error_optional.a", false, false},
+	{"internal/oracle/testdata/coverage_error_view_return.a", false, false},
+	{"internal/oracle/testdata/coverage_regexp_literal.a", false, false},
+	{"internal/oracle/testdata/coverage_regexp_new.a", false, false},
+	{"internal/oracle/testdata/coverage_regexp_call.a", false, false},
+	{"internal/oracle/testdata/coverage_regexp_view.a", false, false},
+	{"internal/oracle/testdata/coverage_plain_view.a", true, false},
+	{"internal/oracle/testdata/coverage_uncaught_default_empty.a", true, false},
+	{"internal/oracle/testdata/coverage_uncaught_custom_empty.a", true, false},
+	{"internal/oracle/testdata/coverage_uncaught_custom_message.a", true, false},
+	{"internal/oracle/testdata/coverage_uncaught_empty_changed.a", true, false},
+	{"internal/oracle/testdata/coverage_uncaught_no_argument.a", true, false},
+	{"internal/oracle/testdata/coverage_view_array.a", false, false},
+	{"internal/oracle/testdata/coverage_view_number.a", false, false},
+	{"internal/oracle/testdata/coverage_view_string.a", false, false},
+	{"internal/oracle/testdata/coverage_view_boolean.a", false, false},
+	{"internal/oracle/testdata/coverage_view_closure.a", false, false},
 	// Assignments inside a try (integration 9): a parameter assigned there, a counter assigned there,
 	// and a counted loop inside one.
 	{"internal/oracle/testdata/try_assignments.a", true, false},
@@ -561,6 +613,17 @@ func lowered(t *testing.T, path string) (*ir.Program, error) {
 	return lower.Lower(context.Background(), program)
 }
 
+// nativeVariant is a native build a fixture runs as, each with its own runtime library (identity's
+// libraries, in this order) and its own cached result.
+type nativeVariant int
+
+const (
+	sanitizedBuild nativeVariant = iota
+	releaseBuild
+	countedBuild
+	slabsBuild
+)
+
 // natively builds a lowered program under the sanitizers and runs it. It returns the binary too, so
 // the leak check on Linux can run the same one again.
 //
@@ -573,21 +636,33 @@ func released(t *testing.T, program *ir.Program) run {
 		identity(t).cache.misses[nativeResults].Add(1)
 		return releasedUncached(t, program)
 	}
-	return cachedNative(t, program, true).Run.run()
+	return cachedNative(t, program, releaseBuild).Run.run()
+}
+
+// slabbed builds a lowered program under the sanitizers with the size-class allocator kept on (heap.c),
+// and runs it. The release build runs the classes too, but with nothing to catch a slot read past its
+// class or a class index past the table; here ASan and UBSan watch them. A leak into a chunk can't be
+// seen here (the chunk stays reachable), which is why the comparison build stays on malloc.
+func slabbed(t *testing.T, program *ir.Program) run {
+	if os.Getenv("ADAMIC_GATE_UNCACHED") == "1" {
+		identity(t).cache.misses[nativeResults].Add(1)
+		return slabbedUncached(t, program)
+	}
+	return cachedNative(t, program, slabsBuild).Run.run()
 }
 func natively(t *testing.T, program *ir.Program) (run, string) {
 	if os.Getenv("ADAMIC_GATE_UNCACHED") == "1" {
 		identity(t).cache.misses[nativeResults].Add(1)
 		return nativelyUncached(t, program)
 	}
-	return cachedNative(t, program, false).Run.run(), ""
+	return cachedNative(t, program, sanitizedBuild).Run.run(), ""
 }
 func leaks(t *testing.T, program *ir.Program, sanitized string) string {
 	if os.Getenv("ADAMIC_GATE_UNCACHED") == "1" {
 		identity(t).cache.misses[nativeResults].Add(1)
 		return leaksUncached(t, program, sanitized)
 	}
-	return string(cachedNative(t, program, false).LeakReport)
+	return string(cachedNative(t, program, sanitizedBuild).LeakReport)
 }
 
 func releasedUncached(t *testing.T, program *ir.Program) run {
@@ -597,6 +672,19 @@ func releasedUncached(t *testing.T, program *ir.Program) run {
 		t.Fatal(err)
 	}
 	return execute(t, binary)
+}
+
+func slabbedUncached(t *testing.T, program *ir.Program) run {
+	t.Helper()
+	binary := filepath.Join(t.TempDir(), "slabs")
+	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true, Slabs: true}); err != nil {
+		t.Fatal(err)
+	}
+	var environment []string
+	if runtime.GOOS == "linux" {
+		environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
+	}
+	return executeWith(t, environment, binary)
 }
 
 func nativelyUncached(t *testing.T, program *ir.Program) (run, string) {
@@ -630,12 +718,14 @@ func leaksUncached(t *testing.T, program *ir.Program, sanitized string) string {
 	return ""
 }
 
-// leaksTool builds a lowered program without sanitizers (they and macOS's leaks tool don't mix), runs
-// it under leaks --atExit, and returns its report when anything leaked.
+// leaksTool builds a lowered program without sanitizers (they and macOS's leaks tool don't mix) and
+// with every value from malloc (Malloc: a value leaked into a size class's chunk is reachable through
+// the chunk, so leaks would never report it), runs it under leaks --atExit, and returns its report
+// when anything leaked.
 func leaksTool(t *testing.T, program *ir.Program) string {
 	t.Helper()
 	binary := filepath.Join(t.TempDir(), "program")
-	if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
+	if err := native.Build(native.C(program), binary, native.Options{Malloc: true}); err != nil {
 		t.Fatal(err)
 	}
 	report := execute(t, "leaks", "--atExit", "--", binary)
@@ -698,6 +788,11 @@ func TestNativeAgreesWithNode(t *testing.T) {
 			if released := released(t, program); disagreement(native, released) != "" {
 				t.Errorf("the release build: %s\nsanitized: exit %d, stdout %q, stderr %q\nrelease:   exit %d, stdout %q, stderr %q",
 					disagreement(native, released), native.exitCode, native.stdout, native.stderr, released.exitCode, released.stdout, released.stderr)
+			}
+			// The size classes under the sanitizers must say exactly what malloc did too.
+			if slabbed := slabbed(t, program); disagreement(native, slabbed) != "" {
+				t.Errorf("the sanitized build with the size classes: %s\nsanitized: exit %d, stdout %q, stderr %q\nslabs:     exit %d, stdout %q, stderr %q",
+					disagreement(native, slabbed), native.exitCode, native.stdout, native.stderr, slabbed.exitCode, slabbed.stdout, slabbed.stderr)
 			}
 			if fixture.checked {
 				// The check fires, so the source on Node goes on where Adamic stops: hold native to the

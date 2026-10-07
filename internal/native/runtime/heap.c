@@ -18,7 +18,10 @@
 // Under the address sanitizer every value comes from malloc and goes back to free, so ASan sees each
 // use after a free and LeakSanitizer each value never freed, as the oracle needs. ADAMIC_SLABS turns
 // the classes on there too, to test them: a free slot is then poisoned, so a use after a free is
-// still caught, though a leak isn't, since a chunk stays reachable.
+// still caught, though a leak isn't, since a chunk stays reachable. The oracle runs every fixture that
+// way as well, so a mistake in the classes themselves meets the sanitizers. ADAMIC_MALLOC turns them
+// off in a build without sanitizers, for macOS's leaks tool, which for the same reason can't see a
+// value leaked into a chunk.
 #if defined(__has_feature)
 #if __has_feature(address_sanitizer)
 #define SANITIZED 1
@@ -40,7 +43,7 @@
 #define UNPOISON(slot, size) ((void)(slot), (void)(size))
 #endif
 
-#if SANITIZED && !defined(ADAMIC_SLABS)
+#if (SANITIZED && !defined(ADAMIC_SLABS)) || defined(ADAMIC_MALLOC)
 #define SLABS 0
 #else
 #define SLABS 1

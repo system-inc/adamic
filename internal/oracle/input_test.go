@@ -326,7 +326,7 @@ func inputLeaksUncached(t *testing.T, how inputRun, program *ir.Program, sanitiz
 	switch runtime.GOOS {
 	case "darwin":
 		binary := filepath.Join(sharedDirectory(t), "program")
-		if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
+		if err := native.Build(native.C(program), binary, native.Options{Malloc: true}); err != nil {
 			t.Fatal(err)
 		}
 		report := executeInput(t, how, nil, "leaks", append([]string{"--atExit", "--", binary}, how.arguments...)...)
