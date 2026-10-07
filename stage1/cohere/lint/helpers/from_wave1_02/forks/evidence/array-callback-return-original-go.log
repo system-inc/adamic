@@ -21,89 +21,58 @@
 === CONT  TestArrayCallbackReturnStaysSilent
 === CONT  TestArrayCallbackReturnOptionsDecode
 === CONT  TestArrayCallbackReturnSpan
+=== CONT  TestArrayCallbackReturnMessageText
+=== CONT  TestArrayCallbackReturnSuggestions
 === RUN   TestArrayCallbackReturnOptionsDecode/allowImplicit_accepts_a_bare_return
 === PAUSE TestArrayCallbackReturnOptionsDecode/allowImplicit_accepts_a_bare_return
 === RUN   TestArrayCallbackReturnSpan/an_arrow_reports_on_its_arrow_token
 === PAUSE TestArrayCallbackReturnSpan/an_arrow_reports_on_its_arrow_token
-=== CONT  TestArrayCallbackReturnSuggestions
 === RUN   TestArrayCallbackReturnSpan/an_anonymous_function_reports_on_its_head
+=== RUN   TestArrayCallbackReturnMessageText/a_prototype_method_is_qualified_through_the_prototype
 === PAUSE TestArrayCallbackReturnSpan/an_anonymous_function_reports_on_its_head
 === RUN   TestArrayCallbackReturnSpan/a_named_function_keeps_its_name_inside_the_span
+=== RUN   TestArrayCallbackReturnOptionsDecode/without_allowImplicit_a_bare_return_reports
 === PAUSE TestArrayCallbackReturnSpan/a_named_function_keeps_its_name_inside_the_span
+=== PAUSE TestArrayCallbackReturnOptionsDecode/without_allowImplicit_a_bare_return_reports
 === RUN   TestArrayCallbackReturnSpan/a_callback_returned_from_a_wrapper_reports_at_the_inner_function
+=== RUN   TestArrayCallbackReturnOptionsDecode/checkForEach_turns_the_judgment_around
 === PAUSE TestArrayCallbackReturnSpan/a_callback_returned_from_a_wrapper_reports_at_the_inner_function
 === RUN   TestArrayCallbackReturnSpan/a_bare_return_reports_at_the_return_statement,_not_the_function
 === PAUSE TestArrayCallbackReturnSpan/a_bare_return_reports_at_the_return_statement,_not_the_function
-=== RUN   TestArrayCallbackReturnOptionsDecode/without_allowImplicit_a_bare_return_reports
-=== PAUSE TestArrayCallbackReturnOptionsDecode/without_allowImplicit_a_bare_return_reports
-=== RUN   TestArrayCallbackReturnOptionsDecode/checkForEach_turns_the_judgment_around
+=== CONT  TestArrayCallbackReturnAsyncAndGenerator
+=== PAUSE TestArrayCallbackReturnMessageText/a_prototype_method_is_qualified_through_the_prototype
+=== RUN   TestArrayCallbackReturnAsyncAndGenerator/an_async_callback_to_a_prototype_method_is_not_checked
+--- PASS: TestArrayCallbackReturnSuggestions (0.00s)
 === PAUSE TestArrayCallbackReturnOptionsDecode/checkForEach_turns_the_judgment_around
+=== CONT  TestArrayCallbackReturnVoidParenthesization
 === RUN   TestArrayCallbackReturnOptionsDecode/without_checkForEach_a_forEach_returning_a_value_is_clean
 === PAUSE TestArrayCallbackReturnOptionsDecode/without_checkForEach_a_forEach_returning_a_value_is_clean
+=== RUN   TestArrayCallbackReturnMessageText/a_named_function_is_named_in_single_quotes
 === RUN   TestArrayCallbackReturnOptionsDecode/allowVoid_accepts_void_and_adds_a_second_suggestion
-=== PAUSE TestArrayCallbackReturnOptionsDecode/allowVoid_accepts_void_and_adds_a_second_suggestion
-=== RUN   TestArrayCallbackReturnOptionsDecode/nil_options_bypass_the_decoder_and_keep_every_default_off
-=== PAUSE TestArrayCallbackReturnOptionsDecode/nil_options_bypass_the_decoder_and_keep_every_default_off
-=== RUN   TestArrayCallbackReturnOptionsDecode/an_empty_object_decodes_to_all_three_defaults_off
-=== PAUSE TestArrayCallbackReturnOptionsDecode/an_empty_object_decodes_to_all_three_defaults_off
-=== CONT  TestArrayCallbackReturnAsyncAndGenerator
-WAVE02_SNAPSHOT:||
-=== RUN   TestArrayCallbackReturnAsyncAndGenerator/an_async_callback_to_a_prototype_method_is_not_checked
+=== PAUSE TestArrayCallbackReturnMessageText/a_named_function_is_named_in_single_quotes
+=== RUN   TestArrayCallbackReturnMessageText/an_arrow_is_named_by_its_kind
+=== PAUSE TestArrayCallbackReturnMessageText/an_arrow_is_named_by_its_kind
 === PAUSE TestArrayCallbackReturnAsyncAndGenerator/an_async_callback_to_a_prototype_method_is_not_checked
+=== RUN   TestArrayCallbackReturnVoidParenthesization/a_binary_expression_gains_parentheses
+=== PAUSE TestArrayCallbackReturnVoidParenthesization/a_binary_expression_gains_parentheses
+=== PAUSE TestArrayCallbackReturnOptionsDecode/allowVoid_accepts_void_and_adds_a_second_suggestion
+=== RUN   TestArrayCallbackReturnVoidParenthesization/a_concise_arrow_body_gains_them_too
+=== RUN   TestArrayCallbackReturnOptionsDecode/nil_options_bypass_the_decoder_and_keep_every_default_off
+=== PAUSE TestArrayCallbackReturnVoidParenthesization/a_concise_arrow_body_gains_them_too
+=== PAUSE TestArrayCallbackReturnOptionsDecode/nil_options_bypass_the_decoder_and_keep_every_default_off
+=== RUN   TestArrayCallbackReturnVoidParenthesization/a_conditional_gains_them
+=== RUN   TestArrayCallbackReturnOptionsDecode/an_empty_object_decodes_to_all_three_defaults_off
+=== PAUSE TestArrayCallbackReturnVoidParenthesization/a_conditional_gains_them
+=== PAUSE TestArrayCallbackReturnOptionsDecode/an_empty_object_decodes_to_all_three_defaults_off
 === RUN   TestArrayCallbackReturnAsyncAndGenerator/a_generator_callback_is_never_checked
 === PAUSE TestArrayCallbackReturnAsyncAndGenerator/a_generator_callback_is_never_checked
 === RUN   TestArrayCallbackReturnAsyncAndGenerator/an_async_callback_to_Array.fromAsync_IS_checked
 === PAUSE TestArrayCallbackReturnAsyncAndGenerator/an_async_callback_to_Array.fromAsync_IS_checked
-=== RUN   TestArrayCallbackReturnAsyncAndGenerator/a_plain_callback_to_a_prototype_method_is_checked
-=== PAUSE TestArrayCallbackReturnAsyncAndGenerator/a_plain_callback_to_a_prototype_method_is_checked
-=== CONT  TestArrayCallbackReturnVoidParenthesization
-WAVE02_SNAPSHOT:||
-=== RUN   TestArrayCallbackReturnVoidParenthesization/a_binary_expression_gains_parentheses
-=== PAUSE TestArrayCallbackReturnVoidParenthesization/a_binary_expression_gains_parentheses
-=== RUN   TestArrayCallbackReturnVoidParenthesization/a_concise_arrow_body_gains_them_too
---- PASS: TestArrayCallbackReturnSuggestions (0.00s)
 === CONT  TestArrayCallbackReturnFires
-=== PAUSE TestArrayCallbackReturnVoidParenthesization/a_concise_arrow_body_gains_them_too
-=== RUN   TestArrayCallbackReturnVoidParenthesization/a_conditional_gains_them
-=== PAUSE TestArrayCallbackReturnVoidParenthesization/a_conditional_gains_them
 === RUN   TestArrayCallbackReturnVoidParenthesization/a_tight_expression_does_not
 === PAUSE TestArrayCallbackReturnVoidParenthesization/a_tight_expression_does_not
-=== CONT  TestArrayCallbackReturnCalleeShapes
-=== RUN   TestArrayCallbackReturnCalleeShapes/a_logical_expression_choosing_a_callback_is_walked_through
-=== PAUSE TestArrayCallbackReturnCalleeShapes/a_logical_expression_choosing_a_callback_is_walked_through
-=== RUN   TestArrayCallbackReturnCalleeShapes/a_conditional_choosing_a_callback_reports_on_each_arm
-=== PAUSE TestArrayCallbackReturnCalleeShapes/a_conditional_choosing_a_callback_reports_on_each_arm
-=== RUN   TestArrayCallbackReturnCalleeShapes/an_immediately_invoked_wrapper's_returned_callback_is_judged
-=== PAUSE TestArrayCallbackReturnCalleeShapes/an_immediately_invoked_wrapper's_returned_callback_is_judged
-=== RUN   TestArrayCallbackReturnCalleeShapes/a_wrapper_that_is_NOT_called_is_not_walked_through
-=== PAUSE TestArrayCallbackReturnCalleeShapes/a_wrapper_that_is_NOT_called_is_not_walked_through
-=== CONT  TestArrayCallbackReturnMessageText
-=== RUN   TestArrayCallbackReturnMessageText/a_prototype_method_is_qualified_through_the_prototype
-=== PAUSE TestArrayCallbackReturnMessageText/a_prototype_method_is_qualified_through_the_prototype
-=== RUN   TestArrayCallbackReturnMessageText/a_named_function_is_named_in_single_quotes
-=== PAUSE TestArrayCallbackReturnMessageText/a_named_function_is_named_in_single_quotes
-=== RUN   TestArrayCallbackReturnMessageText/an_arrow_is_named_by_its_kind
-=== PAUSE TestArrayCallbackReturnMessageText/an_arrow_is_named_by_its_kind
-=== RUN   TestArrayCallbackReturnMessageText/a_static_method_is_qualified_on_Array_itself
-=== PAUSE TestArrayCallbackReturnMessageText/a_static_method_is_qualified_on_Array_itself
-=== RUN   TestArrayCallbackReturnMessageText/message_ids_are_the_four_upstream_names
-=== PAUSE TestArrayCallbackReturnMessageText/message_ids_are_the_four_upstream_names
-WAVE02_SNAPSHOT:||
---- PASS: TestArrayCallbackReturnStaysSilent (0.00s)
-=== RUN   TestArrayCallbackReturnCalleeShapes/a_parenthesized_optional-chain_callee_still_resolves
-=== PAUSE TestArrayCallbackReturnCalleeShapes/a_parenthesized_optional-chain_callee_still_resolves
-=== RUN   TestArrayCallbackReturnCalleeShapes/a_template-literal_key_names_the_method
-=== PAUSE TestArrayCallbackReturnCalleeShapes/a_template-literal_key_names_the_method
-=== RUN   TestArrayCallbackReturnCalleeShapes/a_typed_array_constructor_is_an_Array.from_receiver
-=== PAUSE TestArrayCallbackReturnCalleeShapes/a_typed_array_constructor_is_an_Array.from_receiver
-=== RUN   TestArrayCallbackReturnCalleeShapes/a_second_argument_to_a_prototype_method_is_not_the_callback
-=== PAUSE TestArrayCallbackReturnCalleeShapes/a_second_argument_to_a_prototype_method_is_not_the_callback
-=== RUN   TestArrayCallbackReturnCalleeShapes/a_first_argument_to_Array.from_is_not_the_callback
-=== PAUSE TestArrayCallbackReturnCalleeShapes/a_first_argument_to_Array.from_is_not_the_callback
-=== RUN   TestArrayCallbackReturnCalleeShapes/a_method_outside_the_set_is_not_checked
-=== PAUSE TestArrayCallbackReturnCalleeShapes/a_method_outside_the_set_is_not_checked
-=== CONT  TestArrayCallbackReturnSpan/an_arrow_reports_on_its_arrow_token
-=== CONT  TestArrayCallbackReturnOptionsDecode/allowImplicit_accepts_a_bare_return
+=== RUN   TestArrayCallbackReturnAsyncAndGenerator/a_plain_callback_to_a_prototype_method_is_checked
+=== PAUSE TestArrayCallbackReturnAsyncAndGenerator/a_plain_callback_to_a_prototype_method_is_checked
 === CONT  TestArrayCallbackReturnReachability
 === RUN   TestArrayCallbackReturnReachability/a_branch_that_can_fall_through_reports
 === PAUSE TestArrayCallbackReturnReachability/a_branch_that_can_fall_through_reports
@@ -113,89 +82,120 @@ WAVE02_SNAPSHOT:||
 === PAUSE TestArrayCallbackReturnReachability/a_throw_also_ends_the_path
 === RUN   TestArrayCallbackReturnReachability/no_return_anywhere_reports_the_other_message
 === PAUSE TestArrayCallbackReturnReachability/no_return_anywhere_reports_the_other_message
-=== CONT  TestArrayCallbackReturnAsyncAndGenerator/an_async_callback_to_a_prototype_method_is_not_checked
+=== RUN   TestArrayCallbackReturnMessageText/a_static_method_is_qualified_on_Array_itself
+=== PAUSE TestArrayCallbackReturnMessageText/a_static_method_is_qualified_on_Array_itself
+WAVE02_SNAPSHOT:||
+=== RUN   TestArrayCallbackReturnMessageText/message_ids_are_the_four_upstream_names
+=== PAUSE TestArrayCallbackReturnMessageText/message_ids_are_the_four_upstream_names
+=== CONT  TestArrayCallbackReturnCalleeShapes
+=== RUN   TestArrayCallbackReturnCalleeShapes/a_logical_expression_choosing_a_callback_is_walked_through
+=== PAUSE TestArrayCallbackReturnCalleeShapes/a_logical_expression_choosing_a_callback_is_walked_through
+=== RUN   TestArrayCallbackReturnCalleeShapes/a_conditional_choosing_a_callback_reports_on_each_arm
 === CONT  TestArrayCallbackReturnSpan/a_bare_return_reports_at_the_return_statement,_not_the_function
-=== CONT  TestArrayCallbackReturnVoidParenthesization/a_binary_expression_gains_parentheses
 === CONT  TestArrayCallbackReturnSpan/a_callback_returned_from_a_wrapper_reports_at_the_inner_function
-=== CONT  TestArrayCallbackReturnOptionsDecode/nil_options_bypass_the_decoder_and_keep_every_default_off
-=== CONT  TestArrayCallbackReturnOptionsDecode/allowVoid_accepts_void_and_adds_a_second_suggestion
-=== CONT  TestArrayCallbackReturnOptionsDecode/without_checkForEach_a_forEach_returning_a_value_is_clean
-=== CONT  TestArrayCallbackReturnOptionsDecode/checkForEach_turns_the_judgment_around
-=== CONT  TestArrayCallbackReturnOptionsDecode/without_allowImplicit_a_bare_return_reports
+WAVE02_SNAPSHOT:||
+=== PAUSE TestArrayCallbackReturnCalleeShapes/a_conditional_choosing_a_callback_reports_on_each_arm
+=== CONT  TestArrayCallbackReturnSpan/an_arrow_reports_on_its_arrow_token
 === CONT  TestArrayCallbackReturnSpan/a_named_function_keeps_its_name_inside_the_span
-=== CONT  TestArrayCallbackReturnAsyncAndGenerator/a_plain_callback_to_a_prototype_method_is_checked
-=== CONT  TestArrayCallbackReturnAsyncAndGenerator/an_async_callback_to_Array.fromAsync_IS_checked
-=== CONT  TestArrayCallbackReturnAsyncAndGenerator/a_generator_callback_is_never_checked
---- PASS: TestArrayCallbackReturnAsyncAndGenerator (0.00s)
-    --- PASS: TestArrayCallbackReturnAsyncAndGenerator/an_async_callback_to_a_prototype_method_is_not_checked (0.00s)
-    --- PASS: TestArrayCallbackReturnAsyncAndGenerator/a_plain_callback_to_a_prototype_method_is_checked (0.00s)
-    --- PASS: TestArrayCallbackReturnAsyncAndGenerator/an_async_callback_to_Array.fromAsync_IS_checked (0.00s)
-    --- PASS: TestArrayCallbackReturnAsyncAndGenerator/a_generator_callback_is_never_checked (0.00s)
+=== RUN   TestArrayCallbackReturnCalleeShapes/an_immediately_invoked_wrapper's_returned_callback_is_judged
+=== PAUSE TestArrayCallbackReturnCalleeShapes/an_immediately_invoked_wrapper's_returned_callback_is_judged
+=== RUN   TestArrayCallbackReturnCalleeShapes/a_wrapper_that_is_NOT_called_is_not_walked_through
+=== PAUSE TestArrayCallbackReturnCalleeShapes/a_wrapper_that_is_NOT_called_is_not_walked_through
+=== RUN   TestArrayCallbackReturnCalleeShapes/a_parenthesized_optional-chain_callee_still_resolves
+=== PAUSE TestArrayCallbackReturnCalleeShapes/a_parenthesized_optional-chain_callee_still_resolves
+=== RUN   TestArrayCallbackReturnCalleeShapes/a_template-literal_key_names_the_method
+=== PAUSE TestArrayCallbackReturnCalleeShapes/a_template-literal_key_names_the_method
+=== RUN   TestArrayCallbackReturnCalleeShapes/a_typed_array_constructor_is_an_Array.from_receiver
+=== PAUSE TestArrayCallbackReturnCalleeShapes/a_typed_array_constructor_is_an_Array.from_receiver
 === CONT  TestArrayCallbackReturnSpan/an_anonymous_function_reports_on_its_head
+=== RUN   TestArrayCallbackReturnCalleeShapes/a_second_argument_to_a_prototype_method_is_not_the_callback
+=== PAUSE TestArrayCallbackReturnCalleeShapes/a_second_argument_to_a_prototype_method_is_not_the_callback
+=== CONT  TestArrayCallbackReturnOptionsDecode/allowImplicit_accepts_a_bare_return
+=== RUN   TestArrayCallbackReturnCalleeShapes/a_first_argument_to_Array.from_is_not_the_callback
 --- PASS: TestArrayCallbackReturnSpan (0.00s)
-    --- PASS: TestArrayCallbackReturnSpan/an_arrow_reports_on_its_arrow_token (0.00s)
     --- PASS: TestArrayCallbackReturnSpan/a_bare_return_reports_at_the_return_statement,_not_the_function (0.00s)
     --- PASS: TestArrayCallbackReturnSpan/a_callback_returned_from_a_wrapper_reports_at_the_inner_function (0.00s)
     --- PASS: TestArrayCallbackReturnSpan/a_named_function_keeps_its_name_inside_the_span (0.00s)
+    --- PASS: TestArrayCallbackReturnSpan/an_arrow_reports_on_its_arrow_token (0.00s)
     --- PASS: TestArrayCallbackReturnSpan/an_anonymous_function_reports_on_its_head (0.00s)
+=== CONT  TestArrayCallbackReturnOptionsDecode/allowVoid_accepts_void_and_adds_a_second_suggestion
+WAVE02_SNAPSHOT:||
+=== PAUSE TestArrayCallbackReturnCalleeShapes/a_first_argument_to_Array.from_is_not_the_callback
+=== RUN   TestArrayCallbackReturnCalleeShapes/a_method_outside_the_set_is_not_checked
+=== CONT  TestArrayCallbackReturnOptionsDecode/without_checkForEach_a_forEach_returning_a_value_is_clean
+=== PAUSE TestArrayCallbackReturnCalleeShapes/a_method_outside_the_set_is_not_checked
+=== CONT  TestArrayCallbackReturnOptionsDecode/checkForEach_turns_the_judgment_around
+=== CONT  TestArrayCallbackReturnOptionsDecode/without_allowImplicit_a_bare_return_reports
 === CONT  TestArrayCallbackReturnOptionsDecode/an_empty_object_decodes_to_all_three_defaults_off
+=== CONT  TestArrayCallbackReturnOptionsDecode/nil_options_bypass_the_decoder_and_keep_every_default_off
+=== CONT  TestArrayCallbackReturnAsyncAndGenerator/an_async_callback_to_a_prototype_method_is_not_checked
+=== CONT  TestArrayCallbackReturnVoidParenthesization/a_binary_expression_gains_parentheses
 --- PASS: TestArrayCallbackReturnOptionsDecode (0.00s)
     --- PASS: TestArrayCallbackReturnOptionsDecode/allowImplicit_accepts_a_bare_return (0.00s)
-    --- PASS: TestArrayCallbackReturnOptionsDecode/nil_options_bypass_the_decoder_and_keep_every_default_off (0.00s)
-    --- PASS: TestArrayCallbackReturnOptionsDecode/allowVoid_accepts_void_and_adds_a_second_suggestion (0.00s)
     --- PASS: TestArrayCallbackReturnOptionsDecode/without_checkForEach_a_forEach_returning_a_value_is_clean (0.00s)
-    --- PASS: TestArrayCallbackReturnOptionsDecode/checkForEach_turns_the_judgment_around (0.00s)
     --- PASS: TestArrayCallbackReturnOptionsDecode/without_allowImplicit_a_bare_return_reports (0.00s)
     --- PASS: TestArrayCallbackReturnOptionsDecode/an_empty_object_decodes_to_all_three_defaults_off (0.00s)
-=== CONT  TestArrayCallbackReturnVoidParenthesization/a_tight_expression_does_not
-=== CONT  TestArrayCallbackReturnCalleeShapes/a_logical_expression_choosing_a_callback_is_walked_through
-=== CONT  TestArrayCallbackReturnVoidParenthesization/a_concise_arrow_body_gains_them_too
-=== CONT  TestArrayCallbackReturnMessageText/a_prototype_method_is_qualified_through_the_prototype
-=== CONT  TestArrayCallbackReturnMessageText/message_ids_are_the_four_upstream_names
-=== CONT  TestArrayCallbackReturnMessageText/a_static_method_is_qualified_on_Array_itself
-=== CONT  TestArrayCallbackReturnVoidParenthesization/a_conditional_gains_them
-=== CONT  TestArrayCallbackReturnMessageText/an_arrow_is_named_by_its_kind
-=== CONT  TestArrayCallbackReturnMessageText/a_named_function_is_named_in_single_quotes
+    --- PASS: TestArrayCallbackReturnOptionsDecode/allowVoid_accepts_void_and_adds_a_second_suggestion (0.00s)
+    --- PASS: TestArrayCallbackReturnOptionsDecode/checkForEach_turns_the_judgment_around (0.00s)
+    --- PASS: TestArrayCallbackReturnOptionsDecode/nil_options_bypass_the_decoder_and_keep_every_default_off (0.00s)
 === CONT  TestArrayCallbackReturnReachability/a_branch_that_can_fall_through_reports
-=== CONT  TestArrayCallbackReturnCalleeShapes/a_method_outside_the_set_is_not_checked
-=== CONT  TestArrayCallbackReturnCalleeShapes/a_first_argument_to_Array.from_is_not_the_callback
-=== CONT  TestArrayCallbackReturnCalleeShapes/a_second_argument_to_a_prototype_method_is_not_the_callback
-=== CONT  TestArrayCallbackReturnCalleeShapes/a_typed_array_constructor_is_an_Array.from_receiver
-=== CONT  TestArrayCallbackReturnCalleeShapes/a_template-literal_key_names_the_method
-=== CONT  TestArrayCallbackReturnCalleeShapes/a_parenthesized_optional-chain_callee_still_resolves
-=== CONT  TestArrayCallbackReturnCalleeShapes/a_wrapper_that_is_NOT_called_is_not_walked_through
-=== CONT  TestArrayCallbackReturnCalleeShapes/an_immediately_invoked_wrapper's_returned_callback_is_judged
-=== CONT  TestArrayCallbackReturnCalleeShapes/a_conditional_choosing_a_callback_reports_on_each_arm
+=== CONT  TestArrayCallbackReturnVoidParenthesization/a_tight_expression_does_not
+=== CONT  TestArrayCallbackReturnVoidParenthesization/a_conditional_gains_them
+=== CONT  TestArrayCallbackReturnVoidParenthesization/a_concise_arrow_body_gains_them_too
+=== CONT  TestArrayCallbackReturnAsyncAndGenerator/a_generator_callback_is_never_checked
 === CONT  TestArrayCallbackReturnReachability/no_return_anywhere_reports_the_other_message
---- PASS: TestArrayCallbackReturnCalleeShapes (0.00s)
-    --- PASS: TestArrayCallbackReturnCalleeShapes/a_logical_expression_choosing_a_callback_is_walked_through (0.00s)
-    --- PASS: TestArrayCallbackReturnCalleeShapes/a_method_outside_the_set_is_not_checked (0.00s)
-    --- PASS: TestArrayCallbackReturnCalleeShapes/a_first_argument_to_Array.from_is_not_the_callback (0.00s)
-    --- PASS: TestArrayCallbackReturnCalleeShapes/a_typed_array_constructor_is_an_Array.from_receiver (0.00s)
-    --- PASS: TestArrayCallbackReturnCalleeShapes/a_second_argument_to_a_prototype_method_is_not_the_callback (0.00s)
-    --- PASS: TestArrayCallbackReturnCalleeShapes/a_template-literal_key_names_the_method (0.00s)
-    --- PASS: TestArrayCallbackReturnCalleeShapes/a_wrapper_that_is_NOT_called_is_not_walked_through (0.00s)
-    --- PASS: TestArrayCallbackReturnCalleeShapes/a_parenthesized_optional-chain_callee_still_resolves (0.00s)
-    --- PASS: TestArrayCallbackReturnCalleeShapes/an_immediately_invoked_wrapper's_returned_callback_is_judged (0.00s)
-    --- PASS: TestArrayCallbackReturnCalleeShapes/a_conditional_choosing_a_callback_reports_on_each_arm (0.00s)
+=== CONT  TestArrayCallbackReturnAsyncAndGenerator/an_async_callback_to_Array.fromAsync_IS_checked
+=== CONT  TestArrayCallbackReturnAsyncAndGenerator/a_plain_callback_to_a_prototype_method_is_checked
 === CONT  TestArrayCallbackReturnReachability/a_throw_also_ends_the_path
 === CONT  TestArrayCallbackReturnReachability/both_branches_returning_is_clean
---- PASS: TestArrayCallbackReturnReachability (0.00s)
-    --- PASS: TestArrayCallbackReturnReachability/a_branch_that_can_fall_through_reports (0.00s)
-    --- PASS: TestArrayCallbackReturnReachability/no_return_anywhere_reports_the_other_message (0.00s)
-    --- PASS: TestArrayCallbackReturnReachability/both_branches_returning_is_clean (0.00s)
-    --- PASS: TestArrayCallbackReturnReachability/a_throw_also_ends_the_path (0.00s)
---- PASS: TestArrayCallbackReturnFires (0.00s)
---- PASS: TestArrayCallbackReturnMessageText (0.00s)
-    --- PASS: TestArrayCallbackReturnMessageText/message_ids_are_the_four_upstream_names (0.00s)
-    --- PASS: TestArrayCallbackReturnMessageText/an_arrow_is_named_by_its_kind (0.00s)
-    --- PASS: TestArrayCallbackReturnMessageText/a_named_function_is_named_in_single_quotes (0.00s)
-    --- PASS: TestArrayCallbackReturnMessageText/a_prototype_method_is_qualified_through_the_prototype (0.00s)
-    --- PASS: TestArrayCallbackReturnMessageText/a_static_method_is_qualified_on_Array_itself (0.00s)
+=== CONT  TestArrayCallbackReturnMessageText/a_prototype_method_is_qualified_through_the_prototype
+=== CONT  TestArrayCallbackReturnMessageText/an_arrow_is_named_by_its_kind
+=== CONT  TestArrayCallbackReturnMessageText/a_static_method_is_qualified_on_Array_itself
+=== CONT  TestArrayCallbackReturnMessageText/a_named_function_is_named_in_single_quotes
 --- PASS: TestArrayCallbackReturnVoidParenthesization (0.00s)
     --- PASS: TestArrayCallbackReturnVoidParenthesization/a_binary_expression_gains_parentheses (0.00s)
     --- PASS: TestArrayCallbackReturnVoidParenthesization/a_tight_expression_does_not (0.00s)
-    --- PASS: TestArrayCallbackReturnVoidParenthesization/a_conditional_gains_them (0.00s)
     --- PASS: TestArrayCallbackReturnVoidParenthesization/a_concise_arrow_body_gains_them_too (0.00s)
+    --- PASS: TestArrayCallbackReturnVoidParenthesization/a_conditional_gains_them (0.00s)
+--- PASS: TestArrayCallbackReturnStaysSilent (0.00s)
+--- PASS: TestArrayCallbackReturnAsyncAndGenerator (0.00s)
+    --- PASS: TestArrayCallbackReturnAsyncAndGenerator/an_async_callback_to_a_prototype_method_is_not_checked (0.00s)
+    --- PASS: TestArrayCallbackReturnAsyncAndGenerator/a_generator_callback_is_never_checked (0.00s)
+    --- PASS: TestArrayCallbackReturnAsyncAndGenerator/a_plain_callback_to_a_prototype_method_is_checked (0.00s)
+    --- PASS: TestArrayCallbackReturnAsyncAndGenerator/an_async_callback_to_Array.fromAsync_IS_checked (0.00s)
+=== CONT  TestArrayCallbackReturnMessageText/message_ids_are_the_four_upstream_names
+=== CONT  TestArrayCallbackReturnCalleeShapes/a_template-literal_key_names_the_method
+--- PASS: TestArrayCallbackReturnReachability (0.00s)
+    --- PASS: TestArrayCallbackReturnReachability/a_branch_that_can_fall_through_reports (0.00s)
+    --- PASS: TestArrayCallbackReturnReachability/a_throw_also_ends_the_path (0.00s)
+    --- PASS: TestArrayCallbackReturnReachability/both_branches_returning_is_clean (0.00s)
+    --- PASS: TestArrayCallbackReturnReachability/no_return_anywhere_reports_the_other_message (0.00s)
+=== CONT  TestArrayCallbackReturnCalleeShapes/a_method_outside_the_set_is_not_checked
+=== CONT  TestArrayCallbackReturnCalleeShapes/a_first_argument_to_Array.from_is_not_the_callback
+=== CONT  TestArrayCallbackReturnCalleeShapes/a_second_argument_to_a_prototype_method_is_not_the_callback
+--- PASS: TestArrayCallbackReturnMessageText (0.00s)
+    --- PASS: TestArrayCallbackReturnMessageText/an_arrow_is_named_by_its_kind (0.00s)
+    --- PASS: TestArrayCallbackReturnMessageText/a_prototype_method_is_qualified_through_the_prototype (0.00s)
+    --- PASS: TestArrayCallbackReturnMessageText/a_static_method_is_qualified_on_Array_itself (0.00s)
+    --- PASS: TestArrayCallbackReturnMessageText/message_ids_are_the_four_upstream_names (0.00s)
+    --- PASS: TestArrayCallbackReturnMessageText/a_named_function_is_named_in_single_quotes (0.00s)
+=== CONT  TestArrayCallbackReturnCalleeShapes/a_typed_array_constructor_is_an_Array.from_receiver
+=== CONT  TestArrayCallbackReturnCalleeShapes/a_wrapper_that_is_NOT_called_is_not_walked_through
+=== CONT  TestArrayCallbackReturnCalleeShapes/an_immediately_invoked_wrapper's_returned_callback_is_judged
+=== CONT  TestArrayCallbackReturnCalleeShapes/a_conditional_choosing_a_callback_reports_on_each_arm
+=== CONT  TestArrayCallbackReturnCalleeShapes/a_parenthesized_optional-chain_callee_still_resolves
+=== CONT  TestArrayCallbackReturnCalleeShapes/a_logical_expression_choosing_a_callback_is_walked_through
+--- PASS: TestArrayCallbackReturnCalleeShapes (0.00s)
+    --- PASS: TestArrayCallbackReturnCalleeShapes/a_template-literal_key_names_the_method (0.00s)
+    --- PASS: TestArrayCallbackReturnCalleeShapes/a_first_argument_to_Array.from_is_not_the_callback (0.00s)
+    --- PASS: TestArrayCallbackReturnCalleeShapes/a_method_outside_the_set_is_not_checked (0.00s)
+    --- PASS: TestArrayCallbackReturnCalleeShapes/a_second_argument_to_a_prototype_method_is_not_the_callback (0.00s)
+    --- PASS: TestArrayCallbackReturnCalleeShapes/a_typed_array_constructor_is_an_Array.from_receiver (0.00s)
+    --- PASS: TestArrayCallbackReturnCalleeShapes/a_wrapper_that_is_NOT_called_is_not_walked_through (0.00s)
+    --- PASS: TestArrayCallbackReturnCalleeShapes/an_immediately_invoked_wrapper's_returned_callback_is_judged (0.00s)
+    --- PASS: TestArrayCallbackReturnCalleeShapes/a_conditional_choosing_a_callback_reports_on_each_arm (0.00s)
+    --- PASS: TestArrayCallbackReturnCalleeShapes/a_parenthesized_optional-chain_callee_still_resolves (0.00s)
+    --- PASS: TestArrayCallbackReturnCalleeShapes/a_logical_expression_choosing_a_callback_is_walked_through (0.00s)
+--- PASS: TestArrayCallbackReturnFires (0.00s)
 PASS
-ok  	github.com/system-inc/cohere/internal/lint/rules/core	0.009s
+ok  	github.com/system-inc/cohere/internal/lint/rules/core	0.010s

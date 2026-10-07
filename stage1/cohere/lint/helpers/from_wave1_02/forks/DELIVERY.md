@@ -141,3 +141,35 @@ hunks zero. Registry PASS 0.066s; TestOwnedWitnesses FAIL 3.034s at default
 restricted-types witness because shared witness options are absent. This is
 not a green whole-rule landing. No further helper or batch-only port claimed.
 No push to main or area branches.
+
+
+## Typeof/null main refresh
+
+Rebased onto origin/main b6b1538b0cebc4ba6741ac34f1aedb60293c1d06,
+retaining incoming compiler fixes. Reran final/verify.py, thrown/verify.py,
+verify_joint.py, forks/verify_snapshot.py and forks/verify_restore.py.
+All five PASS. Go, source Node, emitted JavaScript and sanitized native agree
+on 7,432 observations and 211,466 bytes. Logs written directly and retained:
+../evidence/main-b6b1538b-*.log.
+
+All twelve compiling semantic mutants caught only by comparison: final's
+unreachable and final guards; thrown's unreachable and thrown guards and
+wrong final flag; joint wrong list; snapshot inverted bits, reversed order,
+reused buffer; restore inverted bits, clobbered suffix, reversed writes
+through shared frame identities. Buffer reuse still passes ordinary 864
+bytes but fails retained-array 641 bytes; reverse restore still passes unique
+105,613 bytes but fails shared-frame 6,096 bytes. No mutant was compiler-only.
+
+Same four consumers: array-callback-return, consistent-return,
+no-unreachable-loop, react-hooks/rules-of-hooks. Sixteen dependencies removed,
+zero newly complete rules. Full CFG, full-rule findings/fixes, throughput and
+full required-input repository gate remain unverified. No checks relaxed or
+forced to skip. No shared harness or compiler file edited.
+
+Rule successor rebased onto origin/area/stage1-lint
+d3a37422c6c2c3dd4a90b8721a2067a4ba0d8898, pushed at 6c8630274.
+Ledger unchanged, six winners retained, losing ports retired, shared lint
+hunks zero. Registry PASS 0.091s; TestOwnedWitnesses FAIL 2.882s at default
+restricted-types witness because the shared test supplies no configured Types.
+No green full-rule landing is asserted and no further helper is claimed.
+Only owned branches pushed, never main or area.

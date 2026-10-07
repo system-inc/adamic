@@ -20,120 +20,77 @@
 === PAUSE TestArrayCallbackReturnVoidParenthesization
 === CONT  TestArrayCallbackReturnStaysSilent
 === CONT  TestArrayCallbackReturnOptionsDecode
+=== CONT  TestArrayCallbackReturnSpan
+=== CONT  TestArrayCallbackReturnMessageText
+=== CONT  TestArrayCallbackReturnSuggestions
 === RUN   TestArrayCallbackReturnOptionsDecode/allowImplicit_accepts_a_bare_return
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
 === PAUSE TestArrayCallbackReturnOptionsDecode/allowImplicit_accepts_a_bare_return
+=== RUN   TestArrayCallbackReturnSpan/an_arrow_reports_on_its_arrow_token
+=== PAUSE TestArrayCallbackReturnSpan/an_arrow_reports_on_its_arrow_token
+--- PASS: TestArrayCallbackReturnSuggestions (0.00s)
+=== RUN   TestArrayCallbackReturnMessageText/a_prototype_method_is_qualified_through_the_prototype
+=== PAUSE TestArrayCallbackReturnMessageText/a_prototype_method_is_qualified_through_the_prototype
 === RUN   TestArrayCallbackReturnOptionsDecode/without_allowImplicit_a_bare_return_reports
+=== RUN   TestArrayCallbackReturnMessageText/a_named_function_is_named_in_single_quotes
+=== PAUSE TestArrayCallbackReturnMessageText/a_named_function_is_named_in_single_quotes
 === PAUSE TestArrayCallbackReturnOptionsDecode/without_allowImplicit_a_bare_return_reports
 === RUN   TestArrayCallbackReturnOptionsDecode/checkForEach_turns_the_judgment_around
 === PAUSE TestArrayCallbackReturnOptionsDecode/checkForEach_turns_the_judgment_around
 === RUN   TestArrayCallbackReturnOptionsDecode/without_checkForEach_a_forEach_returning_a_value_is_clean
-=== PAUSE TestArrayCallbackReturnOptionsDecode/without_checkForEach_a_forEach_returning_a_value_is_clean
-=== RUN   TestArrayCallbackReturnOptionsDecode/allowVoid_accepts_void_and_adds_a_second_suggestion
+=== RUN   TestArrayCallbackReturnSpan/an_anonymous_function_reports_on_its_head
+=== PAUSE TestArrayCallbackReturnSpan/an_anonymous_function_reports_on_its_head
+=== RUN   TestArrayCallbackReturnSpan/a_named_function_keeps_its_name_inside_the_span
+=== PAUSE TestArrayCallbackReturnSpan/a_named_function_keeps_its_name_inside_the_span
+=== RUN   TestArrayCallbackReturnSpan/a_callback_returned_from_a_wrapper_reports_at_the_inner_function
+=== PAUSE TestArrayCallbackReturnSpan/a_callback_returned_from_a_wrapper_reports_at_the_inner_function
+=== RUN   TestArrayCallbackReturnSpan/a_bare_return_reports_at_the_return_statement,_not_the_function
+=== PAUSE TestArrayCallbackReturnSpan/a_bare_return_reports_at_the_return_statement,_not_the_function
+=== RUN   TestArrayCallbackReturnMessageText/an_arrow_is_named_by_its_kind
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+=== PAUSE TestArrayCallbackReturnMessageText/an_arrow_is_named_by_its_kind
+=== RUN   TestArrayCallbackReturnMessageText/a_static_method_is_qualified_on_Array_itself
+=== PAUSE TestArrayCallbackReturnMessageText/a_static_method_is_qualified_on_Array_itself
+=== RUN   TestArrayCallbackReturnMessageText/message_ids_are_the_four_upstream_names
 WAVE02_FINAL:0,true,false,,true,0,true,0,0
 WAVE02_FINAL:0,true,false,,true,0,true,0,0
-=== CONT  TestArrayCallbackReturnSpan
-=== PAUSE TestArrayCallbackReturnOptionsDecode/allowVoid_accepts_void_and_adds_a_second_suggestion
-=== RUN   TestArrayCallbackReturnSpan/an_arrow_reports_on_its_arrow_token
-=== CONT  TestArrayCallbackReturnVoidParenthesization
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+=== PAUSE TestArrayCallbackReturnMessageText/message_ids_are_the_four_upstream_names
 === CONT  TestArrayCallbackReturnAsyncAndGenerator
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
 === RUN   TestArrayCallbackReturnAsyncAndGenerator/an_async_callback_to_a_prototype_method_is_not_checked
 WAVE02_FINAL:0,true,false,,true,0,true,0,0
 === PAUSE TestArrayCallbackReturnAsyncAndGenerator/an_async_callback_to_a_prototype_method_is_not_checked
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
 === RUN   TestArrayCallbackReturnAsyncAndGenerator/a_generator_callback_is_never_checked
-=== RUN   TestArrayCallbackReturnOptionsDecode/nil_options_bypass_the_decoder_and_keep_every_default_off
 WAVE02_FINAL:0,true,false,,true,0,true,0,0
-=== PAUSE TestArrayCallbackReturnSpan/an_arrow_reports_on_its_arrow_token
-=== PAUSE TestArrayCallbackReturnOptionsDecode/nil_options_bypass_the_decoder_and_keep_every_default_off
 === PAUSE TestArrayCallbackReturnAsyncAndGenerator/a_generator_callback_is_never_checked
-=== RUN   TestArrayCallbackReturnVoidParenthesization/a_binary_expression_gains_parentheses
-=== RUN   TestArrayCallbackReturnOptionsDecode/an_empty_object_decodes_to_all_three_defaults_off
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:2,true,false,,true,2,true,2,2
-WAVE02_FINAL:3,true,false,2,true,2:3,true,3,3
-WAVE02_FINAL:3,true,false,,true,3,true,3,3
-WAVE02_FINAL:2,true,false,,true,2,true,2,2
-WAVE02_FINAL:1,true,false,2,true,2:1,true,1,1
-WAVE02_FINAL:4,true,false,,true,4,true,4,4
-WAVE02_FINAL:1,true,false,4,true,4:1,true,1,1
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
 === RUN   TestArrayCallbackReturnAsyncAndGenerator/an_async_callback_to_Array.fromAsync_IS_checked
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
 WAVE02_FINAL:2,true,false,,true,2,true,2,2
-WAVE02_FINAL:3,true,false,2,true,2:3,true,3,3
-WAVE02_FINAL:3,true,false,,true,3,true,3,3
-WAVE02_FINAL:2,true,false,,true,2,true,2,2
-=== PAUSE TestArrayCallbackReturnVoidParenthesization/a_binary_expression_gains_parentheses
 === PAUSE TestArrayCallbackReturnAsyncAndGenerator/an_async_callback_to_Array.fromAsync_IS_checked
-=== RUN   TestArrayCallbackReturnVoidParenthesization/a_concise_arrow_body_gains_them_too
-WAVE02_FINAL:1,true,false,2,true,2:1,true,1,1
-=== RUN   TestArrayCallbackReturnSpan/an_anonymous_function_reports_on_its_head
-=== PAUSE TestArrayCallbackReturnVoidParenthesization/a_concise_arrow_body_gains_them_too
-=== PAUSE TestArrayCallbackReturnSpan/an_anonymous_function_reports_on_its_head
-WAVE02_FINAL:4,true,false,,true,4,true,4,4
-WAVE02_FINAL:1,true,false,4,true,4:1,true,1,1
-=== PAUSE TestArrayCallbackReturnOptionsDecode/an_empty_object_decodes_to_all_three_defaults_off
+WAVE02_FINAL:3,true,false,2,true,2:3,true,3,3
+=== RUN   TestArrayCallbackReturnAsyncAndGenerator/a_plain_callback_to_a_prototype_method_is_checked
+=== PAUSE TestArrayCallbackReturnAsyncAndGenerator/a_plain_callback_to_a_prototype_method_is_checked
 === CONT  TestArrayCallbackReturnCalleeShapes
+WAVE02_FINAL:3,true,false,,true,3,true,3,3
 === RUN   TestArrayCallbackReturnCalleeShapes/a_logical_expression_choosing_a_callback_is_walked_through
 === PAUSE TestArrayCallbackReturnCalleeShapes/a_logical_expression_choosing_a_callback_is_walked_through
-=== RUN   TestArrayCallbackReturnAsyncAndGenerator/a_plain_callback_to_a_prototype_method_is_checked
+=== CONT  TestArrayCallbackReturnFires
 === RUN   TestArrayCallbackReturnCalleeShapes/a_conditional_choosing_a_callback_reports_on_each_arm
-=== PAUSE TestArrayCallbackReturnAsyncAndGenerator/a_plain_callback_to_a_prototype_method_is_checked
 === PAUSE TestArrayCallbackReturnCalleeShapes/a_conditional_choosing_a_callback_reports_on_each_arm
-=== RUN   TestArrayCallbackReturnVoidParenthesization/a_conditional_gains_them
-=== PAUSE TestArrayCallbackReturnVoidParenthesization/a_conditional_gains_them
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
 === RUN   TestArrayCallbackReturnCalleeShapes/an_immediately_invoked_wrapper's_returned_callback_is_judged
 === PAUSE TestArrayCallbackReturnCalleeShapes/an_immediately_invoked_wrapper's_returned_callback_is_judged
-=== CONT  TestArrayCallbackReturnReachability
-=== RUN   TestArrayCallbackReturnSpan/a_named_function_keeps_its_name_inside_the_span
-=== RUN   TestArrayCallbackReturnReachability/a_branch_that_can_fall_through_reports
-=== PAUSE TestArrayCallbackReturnSpan/a_named_function_keeps_its_name_inside_the_span
-=== RUN   TestArrayCallbackReturnVoidParenthesization/a_tight_expression_does_not
-=== RUN   TestArrayCallbackReturnSpan/a_callback_returned_from_a_wrapper_reports_at_the_inner_function
-=== PAUSE TestArrayCallbackReturnVoidParenthesization/a_tight_expression_does_not
-=== PAUSE TestArrayCallbackReturnSpan/a_callback_returned_from_a_wrapper_reports_at_the_inner_function
-=== RUN   TestArrayCallbackReturnSpan/a_bare_return_reports_at_the_return_statement,_not_the_function
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:2,true,false,,true,2,true,2,2
-WAVE02_FINAL:3,true,false,2,true,2:3,true,3,3
-WAVE02_FINAL:2,true,false,,true,2,true,2,2
-WAVE02_FINAL:3,true,false,2,true,2:3,true,3,3
-=== PAUSE TestArrayCallbackReturnSpan/a_bare_return_reports_at_the_return_statement,_not_the_function
-WAVE02_FINAL:2,true,false,,true,2,true,2,2
-WAVE02_FINAL:1,true,false,2,true,2:1,true,1,1
-WAVE02_FINAL:4,true,false,,true,4,true,4,4
-WAVE02_FINAL:1,true,false,4,true,4:1,true,1,1
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
 === RUN   TestArrayCallbackReturnCalleeShapes/a_wrapper_that_is_NOT_called_is_not_walked_through
-=== CONT  TestArrayCallbackReturnFires
 === PAUSE TestArrayCallbackReturnCalleeShapes/a_wrapper_that_is_NOT_called_is_not_walked_through
 WAVE02_FINAL:0,true,false,,true,0,true,0,0
 WAVE02_FINAL:0,true,false,,true,0,true,0,0
@@ -148,254 +105,297 @@ WAVE02_FINAL:0,true,false,,true,0,true,0,0
 WAVE02_FINAL:0,true,false,,true,0,true,0,0
 WAVE02_FINAL:0,true,false,,true,0,true,0,0
 WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:2,true,false,,true,2,true,2,2
+WAVE02_FINAL:1,true,false,2,true,2:1,true,1,1
+WAVE02_FINAL:2,true,false,,true,2,true,2,2
+WAVE02_FINAL:1,true,false,2,true,2:1,true,1,1
+WAVE02_FINAL:3,true,false,,true,3,true,3,3
+WAVE02_FINAL:1,true,false,3,true,3:1,true,1,1
+WAVE02_FINAL:3,true,false,,true,3,true,3,3
+WAVE02_FINAL:1,true,false,3,true,3:1,true,1,1
+WAVE02_FINAL:1,true,false,,true,1,true,1,1
+WAVE02_FINAL:4,true,false,1,true,1:4,true,4,4
+WAVE02_FINAL:1,true,false,,true,1,true,1,1
+WAVE02_FINAL:4,true,false,1,true,1:4,true,4,4
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:2,true,false,,true,2,true,2,2
+WAVE02_FINAL:1,true,false,2,true,2:1,true,1,1
+WAVE02_FINAL:2,true,false,,true,2,true,2,2
+WAVE02_FINAL:1,true,false,2,true,2:1,true,1,1
+WAVE02_FINAL:2,true,false,,true,2,true,2,2
+WAVE02_FINAL:3,true,false,2,true,2:3,true,3,3
+WAVE02_FINAL:2,true,false,,true,2,true,2,2
+WAVE02_FINAL:3,true,false,2,true,2:3,true,3,3
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
 === RUN   TestArrayCallbackReturnCalleeShapes/a_parenthesized_optional-chain_callee_still_resolves
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
 === PAUSE TestArrayCallbackReturnCalleeShapes/a_parenthesized_optional-chain_callee_still_resolves
-=== CONT  TestArrayCallbackReturnSuggestions
+WAVE02_FINAL:2,true,false,,true,2,true,2,2
+WAVE02_FINAL:1,true,false,2,true,2:1,true,1,1
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:4,true,false,,true,4,true,4,4
+WAVE02_FINAL:1,true,false,4,true,4:1,true,1,1
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
 === RUN   TestArrayCallbackReturnCalleeShapes/a_template-literal_key_names_the_method
 WAVE02_FINAL:0,true,false,,true,0,true,0,0
+=== PAUSE TestArrayCallbackReturnOptionsDecode/without_checkForEach_a_forEach_returning_a_value_is_clean
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+=== CONT  TestArrayCallbackReturnVoidParenthesization
+WAVE02_FINAL:2,true,false,,true,2,true,2,2
+WAVE02_FINAL:3,true,false,2,true,2:3,true,3,3
+WAVE02_FINAL:3,true,false,,true,3,true,3,3
+WAVE02_FINAL:2,true,false,,true,2,true,2,2
+WAVE02_FINAL:1,true,false,2,true,2:1,true,1,1
+WAVE02_FINAL:4,true,false,,true,4,true,4,4
+WAVE02_FINAL:1,true,false,4,true,4:1,true,1,1
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+=== RUN   TestArrayCallbackReturnVoidParenthesization/a_binary_expression_gains_parentheses
+=== PAUSE TestArrayCallbackReturnVoidParenthesization/a_binary_expression_gains_parentheses
+=== RUN   TestArrayCallbackReturnVoidParenthesization/a_concise_arrow_body_gains_them_too
+WAVE02_FINAL:2,true,false,,true,2,true,2,2
+WAVE02_FINAL:3,true,false,2,true,2:3,true,3,3
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+=== PAUSE TestArrayCallbackReturnVoidParenthesization/a_concise_arrow_body_gains_them_too
+WAVE02_FINAL:2,true,false,,true,2,true,2,2
 === PAUSE TestArrayCallbackReturnCalleeShapes/a_template-literal_key_names_the_method
+WAVE02_FINAL:3,true,false,2,true,2:3,true,3,3
+=== RUN   TestArrayCallbackReturnOptionsDecode/allowVoid_accepts_void_and_adds_a_second_suggestion
+=== PAUSE TestArrayCallbackReturnOptionsDecode/allowVoid_accepts_void_and_adds_a_second_suggestion
+=== RUN   TestArrayCallbackReturnOptionsDecode/nil_options_bypass_the_decoder_and_keep_every_default_off
+=== PAUSE TestArrayCallbackReturnOptionsDecode/nil_options_bypass_the_decoder_and_keep_every_default_off
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+=== RUN   TestArrayCallbackReturnOptionsDecode/an_empty_object_decodes_to_all_three_defaults_off
+WAVE02_FINAL:2,true,false,,true,2,true,2,2
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+=== PAUSE TestArrayCallbackReturnOptionsDecode/an_empty_object_decodes_to_all_three_defaults_off
 === RUN   TestArrayCallbackReturnCalleeShapes/a_typed_array_constructor_is_an_Array.from_receiver
 WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:1,true,false,2,true,2:1,true,1,1
+=== RUN   TestArrayCallbackReturnVoidParenthesization/a_conditional_gains_them
+=== PAUSE TestArrayCallbackReturnVoidParenthesization/a_conditional_gains_them
+WAVE02_FINAL:4,true,false,,true,4,true,4,4
+WAVE02_FINAL:1,true,false,4,true,4:1,true,1,1
 === PAUSE TestArrayCallbackReturnCalleeShapes/a_typed_array_constructor_is_an_Array.from_receiver
-=== RUN   TestArrayCallbackReturnCalleeShapes/a_second_argument_to_a_prototype_method_is_not_the_callback
-=== PAUSE TestArrayCallbackReturnCalleeShapes/a_second_argument_to_a_prototype_method_is_not_the_callback
+=== RUN   TestArrayCallbackReturnVoidParenthesization/a_tight_expression_does_not
+=== CONT  TestArrayCallbackReturnReachability
 WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
+=== RUN   TestArrayCallbackReturnReachability/a_branch_that_can_fall_through_reports
 === PAUSE TestArrayCallbackReturnReachability/a_branch_that_can_fall_through_reports
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
 === RUN   TestArrayCallbackReturnReachability/both_branches_returning_is_clean
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
 === PAUSE TestArrayCallbackReturnReachability/both_branches_returning_is_clean
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
 WAVE02_FINAL:0,true,false,,true,0,true,0,0
 === RUN   TestArrayCallbackReturnReachability/a_throw_also_ends_the_path
 === PAUSE TestArrayCallbackReturnReachability/a_throw_also_ends_the_path
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
---- PASS: TestArrayCallbackReturnStaysSilent (0.00s)
 === RUN   TestArrayCallbackReturnReachability/no_return_anywhere_reports_the_other_message
-=== CONT  TestArrayCallbackReturnMessageText
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-=== RUN   TestArrayCallbackReturnCalleeShapes/a_first_argument_to_Array.from_is_not_the_callback
 === PAUSE TestArrayCallbackReturnReachability/no_return_anywhere_reports_the_other_message
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-=== CONT  TestArrayCallbackReturnOptionsDecode/allowImplicit_accepts_a_bare_return
-=== PAUSE TestArrayCallbackReturnCalleeShapes/a_first_argument_to_Array.from_is_not_the_callback
-=== RUN   TestArrayCallbackReturnMessageText/a_prototype_method_is_qualified_through_the_prototype
-=== RUN   TestArrayCallbackReturnCalleeShapes/a_method_outside_the_set_is_not_checked
-=== PAUSE TestArrayCallbackReturnMessageText/a_prototype_method_is_qualified_through_the_prototype
-=== PAUSE TestArrayCallbackReturnCalleeShapes/a_method_outside_the_set_is_not_checked
-=== RUN   TestArrayCallbackReturnMessageText/a_named_function_is_named_in_single_quotes
-=== CONT  TestArrayCallbackReturnOptionsDecode/an_empty_object_decodes_to_all_three_defaults_off
-=== PAUSE TestArrayCallbackReturnMessageText/a_named_function_is_named_in_single_quotes
-=== RUN   TestArrayCallbackReturnMessageText/an_arrow_is_named_by_its_kind
-=== PAUSE TestArrayCallbackReturnMessageText/an_arrow_is_named_by_its_kind
-=== RUN   TestArrayCallbackReturnMessageText/a_static_method_is_qualified_on_Array_itself
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-=== PAUSE TestArrayCallbackReturnMessageText/a_static_method_is_qualified_on_Array_itself
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-=== CONT  TestArrayCallbackReturnOptionsDecode/without_checkForEach_a_forEach_returning_a_value_is_clean
-=== RUN   TestArrayCallbackReturnMessageText/message_ids_are_the_four_upstream_names
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:2,true,false,,true,2,true,2,2
-WAVE02_FINAL:1,true,false,2,true,2:1,true,1,1
-WAVE02_FINAL:2,true,false,,true,2,true,2,2
-WAVE02_FINAL:1,true,false,2,true,2:1,true,1,1
-WAVE02_FINAL:3,true,false,,true,3,true,3,3
-WAVE02_FINAL:1,true,false,3,true,3:1,true,1,1
-=== PAUSE TestArrayCallbackReturnMessageText/message_ids_are_the_four_upstream_names
-WAVE02_FINAL:3,true,false,,true,3,true,3,3
-WAVE02_FINAL:1,true,false,3,true,3:1,true,1,1
---- PASS: TestArrayCallbackReturnSuggestions (0.00s)
-=== CONT  TestArrayCallbackReturnOptionsDecode/without_allowImplicit_a_bare_return_reports
-WAVE02_FINAL:1,true,false,,true,1,true,1,1
-WAVE02_FINAL:4,true,false,1,true,1:4,true,4,4
-WAVE02_FINAL:1,true,false,,true,1,true,1,1
-WAVE02_FINAL:4,true,false,1,true,1:4,true,4,4
-=== CONT  TestArrayCallbackReturnOptionsDecode/nil_options_bypass_the_decoder_and_keep_every_default_off
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:2,true,false,,true,2,true,2,2
-WAVE02_FINAL:1,true,false,2,true,2:1,true,1,1
-=== CONT  TestArrayCallbackReturnOptionsDecode/allowVoid_accepts_void_and_adds_a_second_suggestion
-WAVE02_FINAL:2,true,false,,true,2,true,2,2
-WAVE02_FINAL:1,true,false,2,true,2:1,true,1,1
-WAVE02_FINAL:2,true,false,,true,2,true,2,2
-WAVE02_FINAL:3,true,false,2,true,2:3,true,3,3
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-=== CONT  TestArrayCallbackReturnOptionsDecode/checkForEach_turns_the_judgment_around
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-=== CONT  TestArrayCallbackReturnAsyncAndGenerator/an_async_callback_to_a_prototype_method_is_not_checked
-=== CONT  TestArrayCallbackReturnAsyncAndGenerator/a_plain_callback_to_a_prototype_method_is_checked
-=== CONT  TestArrayCallbackReturnAsyncAndGenerator/an_async_callback_to_Array.fromAsync_IS_checked
---- PASS: TestArrayCallbackReturnOptionsDecode (0.00s)
-    --- PASS: TestArrayCallbackReturnOptionsDecode/an_empty_object_decodes_to_all_three_defaults_off (0.00s)
-    --- PASS: TestArrayCallbackReturnOptionsDecode/allowImplicit_accepts_a_bare_return (0.00s)
-    --- PASS: TestArrayCallbackReturnOptionsDecode/without_checkForEach_a_forEach_returning_a_value_is_clean (0.00s)
-    --- PASS: TestArrayCallbackReturnOptionsDecode/allowVoid_accepts_void_and_adds_a_second_suggestion (0.00s)
-    --- PASS: TestArrayCallbackReturnOptionsDecode/without_allowImplicit_a_bare_return_reports (0.00s)
-    --- PASS: TestArrayCallbackReturnOptionsDecode/checkForEach_turns_the_judgment_around (0.00s)
-    --- PASS: TestArrayCallbackReturnOptionsDecode/nil_options_bypass_the_decoder_and_keep_every_default_off (0.00s)
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-=== CONT  TestArrayCallbackReturnAsyncAndGenerator/a_generator_callback_is_never_checked
-WAVE02_FINAL:2,true,false,,true,2,true,2,2
-WAVE02_FINAL:3,true,false,2,true,2:3,true,3,3
-=== CONT  TestArrayCallbackReturnVoidParenthesization/a_binary_expression_gains_parentheses
-=== CONT  TestArrayCallbackReturnVoidParenthesization/a_conditional_gains_them
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-=== CONT  TestArrayCallbackReturnVoidParenthesization/a_tight_expression_does_not
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-=== CONT  TestArrayCallbackReturnSpan/a_named_function_keeps_its_name_inside_the_span
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:2,true,false,,true,2,true,2,2
-WAVE02_FINAL:1,true,false,2,true,2:1,true,1,1
+=== PAUSE TestArrayCallbackReturnVoidParenthesization/a_tight_expression_does_not
 === CONT  TestArrayCallbackReturnSpan/a_callback_returned_from_a_wrapper_reports_at_the_inner_function
 WAVE02_FINAL:0,true,false,,true,0,true,0,0
-=== CONT  TestArrayCallbackReturnVoidParenthesization/a_concise_arrow_body_gains_them_too
+=== RUN   TestArrayCallbackReturnCalleeShapes/a_second_argument_to_a_prototype_method_is_not_the_callback
+--- PASS: TestArrayCallbackReturnStaysSilent (0.00s)
+=== CONT  TestArrayCallbackReturnSpan/an_arrow_reports_on_its_arrow_token
 WAVE02_FINAL:0,true,false,,true,0,true,0,0
 WAVE02_FINAL:0,true,false,,true,0,true,0,0
 === CONT  TestArrayCallbackReturnSpan/an_anonymous_function_reports_on_its_head
+=== CONT  TestArrayCallbackReturnSpan/a_named_function_keeps_its_name_inside_the_span
+=== PAUSE TestArrayCallbackReturnCalleeShapes/a_second_argument_to_a_prototype_method_is_not_the_callback
+=== RUN   TestArrayCallbackReturnCalleeShapes/a_first_argument_to_Array.from_is_not_the_callback
+=== PAUSE TestArrayCallbackReturnCalleeShapes/a_first_argument_to_Array.from_is_not_the_callback
+=== RUN   TestArrayCallbackReturnCalleeShapes/a_method_outside_the_set_is_not_checked
+=== PAUSE TestArrayCallbackReturnCalleeShapes/a_method_outside_the_set_is_not_checked
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+=== CONT  TestArrayCallbackReturnMessageText/a_prototype_method_is_qualified_through_the_prototype
+WAVE02_FINAL:2,true,false,,true,2,true,2,2
+WAVE02_FINAL:1,true,false,2,true,2:1,true,1,1
+=== CONT  TestArrayCallbackReturnAsyncAndGenerator/an_async_callback_to_a_prototype_method_is_not_checked
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:2,true,false,,true,2,true,2,2
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:1,true,false,2,true,2:1,true,1,1
+=== CONT  TestArrayCallbackReturnMessageText/message_ids_are_the_four_upstream_names
+=== CONT  TestArrayCallbackReturnSpan/a_bare_return_reports_at_the_return_statement,_not_the_function
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+=== CONT  TestArrayCallbackReturnMessageText/an_arrow_is_named_by_its_kind
+=== CONT  TestArrayCallbackReturnMessageText/a_named_function_is_named_in_single_quotes
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+--- PASS: TestArrayCallbackReturnSpan (0.00s)
+    --- PASS: TestArrayCallbackReturnSpan/an_arrow_reports_on_its_arrow_token (0.00s)
+    --- PASS: TestArrayCallbackReturnSpan/a_callback_returned_from_a_wrapper_reports_at_the_inner_function (0.00s)
+    --- PASS: TestArrayCallbackReturnSpan/a_named_function_keeps_its_name_inside_the_span (0.00s)
+    --- PASS: TestArrayCallbackReturnSpan/an_anonymous_function_reports_on_its_head (0.00s)
+    --- PASS: TestArrayCallbackReturnSpan/a_bare_return_reports_at_the_return_statement,_not_the_function (0.00s)
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+=== CONT  TestArrayCallbackReturnAsyncAndGenerator/a_plain_callback_to_a_prototype_method_is_checked
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+=== CONT  TestArrayCallbackReturnAsyncAndGenerator/a_generator_callback_is_never_checked
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+=== CONT  TestArrayCallbackReturnMessageText/a_static_method_is_qualified_on_Array_itself
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+=== CONT  TestArrayCallbackReturnAsyncAndGenerator/an_async_callback_to_Array.fromAsync_IS_checked
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+=== CONT  TestArrayCallbackReturnOptionsDecode/without_checkForEach_a_forEach_returning_a_value_is_clean
+=== CONT  TestArrayCallbackReturnOptionsDecode/allowImplicit_accepts_a_bare_return
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
+=== CONT  TestArrayCallbackReturnOptionsDecode/without_allowImplicit_a_bare_return_reports
 WAVE02_FINAL:0,true,false,,true,0,true,0,0
 === CONT  TestArrayCallbackReturnReachability/a_branch_that_can_fall_through_reports
+=== CONT  TestArrayCallbackReturnOptionsDecode/an_empty_object_decodes_to_all_three_defaults_off
+=== CONT  TestArrayCallbackReturnVoidParenthesization/a_binary_expression_gains_parentheses
 WAVE02_FINAL:2,true,false,,true,2,true,2,2
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
 WAVE02_FINAL:1,true,false,2,true,2:1,true,1,1
+=== CONT  TestArrayCallbackReturnVoidParenthesization/a_tight_expression_does_not
+=== CONT  TestArrayCallbackReturnReachability/no_return_anywhere_reports_the_other_message
 === CONT  TestArrayCallbackReturnReachability/a_throw_also_ends_the_path
 WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-=== CONT  TestArrayCallbackReturnSpan/an_arrow_reports_on_its_arrow_token
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:2,true,false,,true,2,true,2,2
-WAVE02_FINAL:1,true,false,2,true,2:1,true,1,1
-=== CONT  TestArrayCallbackReturnReachability/no_return_anywhere_reports_the_other_message
 === CONT  TestArrayCallbackReturnReachability/both_branches_returning_is_clean
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-=== CONT  TestArrayCallbackReturnCalleeShapes/a_logical_expression_choosing_a_callback_is_walked_through
-=== CONT  TestArrayCallbackReturnCalleeShapes/a_method_outside_the_set_is_not_checked
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-=== CONT  TestArrayCallbackReturnCalleeShapes/a_first_argument_to_Array.from_is_not_the_callback
-=== CONT  TestArrayCallbackReturnCalleeShapes/a_second_argument_to_a_prototype_method_is_not_the_callback
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
+=== CONT  TestArrayCallbackReturnVoidParenthesization/a_conditional_gains_them
+--- PASS: TestArrayCallbackReturnFires (0.00s)
+=== CONT  TestArrayCallbackReturnOptionsDecode/nil_options_bypass_the_decoder_and_keep_every_default_off
+=== CONT  TestArrayCallbackReturnVoidParenthesization/a_concise_arrow_body_gains_them_too
 WAVE02_FINAL:2,true,false,,true,2,true,2,2
-=== CONT  TestArrayCallbackReturnCalleeShapes/a_typed_array_constructor_is_an_Array.from_receiver
 WAVE02_FINAL:3,true,false,2,true,2:3,true,3,3
+=== CONT  TestArrayCallbackReturnCalleeShapes/a_logical_expression_choosing_a_callback_is_walked_through
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
 === CONT  TestArrayCallbackReturnCalleeShapes/a_template-literal_key_names_the_method
+=== CONT  TestArrayCallbackReturnCalleeShapes/a_method_outside_the_set_is_not_checked
+=== CONT  TestArrayCallbackReturnCalleeShapes/a_first_argument_to_Array.from_is_not_the_callback
 WAVE02_FINAL:0,true,false,,true,0,true,0,0
+=== CONT  TestArrayCallbackReturnCalleeShapes/a_second_argument_to_a_prototype_method_is_not_the_callback
+=== CONT  TestArrayCallbackReturnCalleeShapes/a_typed_array_constructor_is_an_Array.from_receiver
 === CONT  TestArrayCallbackReturnCalleeShapes/a_parenthesized_optional-chain_callee_still_resolves
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-=== CONT  TestArrayCallbackReturnCalleeShapes/an_immediately_invoked_wrapper's_returned_callback_is_judged
---- PASS: TestArrayCallbackReturnAsyncAndGenerator (0.00s)
-    --- PASS: TestArrayCallbackReturnAsyncAndGenerator/an_async_callback_to_a_prototype_method_is_not_checked (0.00s)
-    --- PASS: TestArrayCallbackReturnAsyncAndGenerator/a_plain_callback_to_a_prototype_method_is_checked (0.00s)
-    --- PASS: TestArrayCallbackReturnAsyncAndGenerator/a_generator_callback_is_never_checked (0.00s)
-    --- PASS: TestArrayCallbackReturnAsyncAndGenerator/an_async_callback_to_Array.fromAsync_IS_checked (0.00s)
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
---- PASS: TestArrayCallbackReturnVoidParenthesization (0.00s)
-    --- PASS: TestArrayCallbackReturnVoidParenthesization/a_conditional_gains_them (0.00s)
-    --- PASS: TestArrayCallbackReturnVoidParenthesization/a_binary_expression_gains_parentheses (0.00s)
-    --- PASS: TestArrayCallbackReturnVoidParenthesization/a_tight_expression_does_not (0.00s)
-    --- PASS: TestArrayCallbackReturnVoidParenthesization/a_concise_arrow_body_gains_them_too (0.00s)
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
 WAVE02_FINAL:0,true,false,,true,0,true,0,0
 === CONT  TestArrayCallbackReturnCalleeShapes/a_wrapper_that_is_NOT_called_is_not_walked_through
 WAVE02_FINAL:0,true,false,,true,0,true,0,0
-=== CONT  TestArrayCallbackReturnMessageText/an_arrow_is_named_by_its_kind
-=== CONT  TestArrayCallbackReturnSpan/a_bare_return_reports_at_the_return_statement,_not_the_function
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-=== CONT  TestArrayCallbackReturnMessageText/message_ids_are_the_four_upstream_names
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-=== CONT  TestArrayCallbackReturnMessageText/a_named_function_is_named_in_single_quotes
-=== CONT  TestArrayCallbackReturnMessageText/a_static_method_is_qualified_on_Array_itself
 WAVE02_FINAL:0,true,false,,true,0,true,0,0
 WAVE02_FINAL:0,true,false,,true,0,true,0,0
---- PASS: TestArrayCallbackReturnReachability (0.00s)
-    --- PASS: TestArrayCallbackReturnReachability/a_throw_also_ends_the_path (0.00s)
-    --- PASS: TestArrayCallbackReturnReachability/a_branch_that_can_fall_through_reports (0.00s)
-    --- PASS: TestArrayCallbackReturnReachability/no_return_anywhere_reports_the_other_message (0.00s)
-    --- PASS: TestArrayCallbackReturnReachability/both_branches_returning_is_clean (0.00s)
-=== CONT  TestArrayCallbackReturnMessageText/a_prototype_method_is_qualified_through_the_prototype
+=== CONT  TestArrayCallbackReturnOptionsDecode/allowVoid_accepts_void_and_adds_a_second_suggestion
+=== CONT  TestArrayCallbackReturnOptionsDecode/checkForEach_turns_the_judgment_around
+--- PASS: TestArrayCallbackReturnMessageText (0.00s)
+    --- PASS: TestArrayCallbackReturnMessageText/message_ids_are_the_four_upstream_names (0.00s)
+    --- PASS: TestArrayCallbackReturnMessageText/a_prototype_method_is_qualified_through_the_prototype (0.00s)
+    --- PASS: TestArrayCallbackReturnMessageText/an_arrow_is_named_by_its_kind (0.00s)
+    --- PASS: TestArrayCallbackReturnMessageText/a_named_function_is_named_in_single_quotes (0.00s)
+    --- PASS: TestArrayCallbackReturnMessageText/a_static_method_is_qualified_on_Array_itself (0.00s)
+=== CONT  TestArrayCallbackReturnCalleeShapes/an_immediately_invoked_wrapper's_returned_callback_is_judged
+WAVE02_FINAL:0,true,false,,true,0,true,0,0
 === CONT  TestArrayCallbackReturnCalleeShapes/a_conditional_choosing_a_callback_reports_on_each_arm
 WAVE02_FINAL:0,true,false,,true,0,true,0,0
 WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
---- PASS: TestArrayCallbackReturnSpan (0.00s)
-    --- PASS: TestArrayCallbackReturnSpan/a_named_function_keeps_its_name_inside_the_span (0.00s)
-    --- PASS: TestArrayCallbackReturnSpan/a_callback_returned_from_a_wrapper_reports_at_the_inner_function (0.00s)
-    --- PASS: TestArrayCallbackReturnSpan/an_anonymous_function_reports_on_its_head (0.00s)
-    --- PASS: TestArrayCallbackReturnSpan/an_arrow_reports_on_its_arrow_token (0.00s)
-    --- PASS: TestArrayCallbackReturnSpan/a_bare_return_reports_at_the_return_statement,_not_the_function (0.00s)
---- PASS: TestArrayCallbackReturnMessageText (0.00s)
-    --- PASS: TestArrayCallbackReturnMessageText/an_arrow_is_named_by_its_kind (0.00s)
-    --- PASS: TestArrayCallbackReturnMessageText/message_ids_are_the_four_upstream_names (0.00s)
-    --- PASS: TestArrayCallbackReturnMessageText/a_named_function_is_named_in_single_quotes (0.00s)
-    --- PASS: TestArrayCallbackReturnMessageText/a_static_method_is_qualified_on_Array_itself (0.00s)
-    --- PASS: TestArrayCallbackReturnMessageText/a_prototype_method_is_qualified_through_the_prototype (0.00s)
+--- PASS: TestArrayCallbackReturnAsyncAndGenerator (0.00s)
+    --- PASS: TestArrayCallbackReturnAsyncAndGenerator/an_async_callback_to_a_prototype_method_is_not_checked (0.00s)
+    --- PASS: TestArrayCallbackReturnAsyncAndGenerator/a_generator_callback_is_never_checked (0.00s)
+    --- PASS: TestArrayCallbackReturnAsyncAndGenerator/a_plain_callback_to_a_prototype_method_is_checked (0.00s)
+    --- PASS: TestArrayCallbackReturnAsyncAndGenerator/an_async_callback_to_Array.fromAsync_IS_checked (0.00s)
+--- PASS: TestArrayCallbackReturnReachability (0.00s)
+    --- PASS: TestArrayCallbackReturnReachability/a_branch_that_can_fall_through_reports (0.00s)
+    --- PASS: TestArrayCallbackReturnReachability/no_return_anywhere_reports_the_other_message (0.00s)
+    --- PASS: TestArrayCallbackReturnReachability/a_throw_also_ends_the_path (0.00s)
+    --- PASS: TestArrayCallbackReturnReachability/both_branches_returning_is_clean (0.00s)
+--- PASS: TestArrayCallbackReturnVoidParenthesization (0.00s)
+    --- PASS: TestArrayCallbackReturnVoidParenthesization/a_tight_expression_does_not (0.00s)
+    --- PASS: TestArrayCallbackReturnVoidParenthesization/a_binary_expression_gains_parentheses (0.00s)
+    --- PASS: TestArrayCallbackReturnVoidParenthesization/a_conditional_gains_them (0.00s)
+    --- PASS: TestArrayCallbackReturnVoidParenthesization/a_concise_arrow_body_gains_them_too (0.00s)
 --- PASS: TestArrayCallbackReturnCalleeShapes (0.00s)
-    --- PASS: TestArrayCallbackReturnCalleeShapes/a_method_outside_the_set_is_not_checked (0.00s)
-    --- PASS: TestArrayCallbackReturnCalleeShapes/a_first_argument_to_Array.from_is_not_the_callback (0.00s)
     --- PASS: TestArrayCallbackReturnCalleeShapes/a_logical_expression_choosing_a_callback_is_walked_through (0.00s)
-    --- PASS: TestArrayCallbackReturnCalleeShapes/a_second_argument_to_a_prototype_method_is_not_the_callback (0.00s)
+    --- PASS: TestArrayCallbackReturnCalleeShapes/a_method_outside_the_set_is_not_checked (0.00s)
     --- PASS: TestArrayCallbackReturnCalleeShapes/a_template-literal_key_names_the_method (0.00s)
+    --- PASS: TestArrayCallbackReturnCalleeShapes/a_first_argument_to_Array.from_is_not_the_callback (0.00s)
+    --- PASS: TestArrayCallbackReturnCalleeShapes/a_second_argument_to_a_prototype_method_is_not_the_callback (0.00s)
     --- PASS: TestArrayCallbackReturnCalleeShapes/a_typed_array_constructor_is_an_Array.from_receiver (0.00s)
     --- PASS: TestArrayCallbackReturnCalleeShapes/a_parenthesized_optional-chain_callee_still_resolves (0.00s)
-    --- PASS: TestArrayCallbackReturnCalleeShapes/an_immediately_invoked_wrapper's_returned_callback_is_judged (0.00s)
     --- PASS: TestArrayCallbackReturnCalleeShapes/a_wrapper_that_is_NOT_called_is_not_walked_through (0.00s)
+    --- PASS: TestArrayCallbackReturnCalleeShapes/an_immediately_invoked_wrapper's_returned_callback_is_judged (0.00s)
     --- PASS: TestArrayCallbackReturnCalleeShapes/a_conditional_choosing_a_callback_reports_on_each_arm (0.00s)
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
-WAVE02_FINAL:0,true,false,,true,0,true,0,0
---- PASS: TestArrayCallbackReturnFires (0.00s)
+--- PASS: TestArrayCallbackReturnOptionsDecode (0.00s)
+    --- PASS: TestArrayCallbackReturnOptionsDecode/without_checkForEach_a_forEach_returning_a_value_is_clean (0.00s)
+    --- PASS: TestArrayCallbackReturnOptionsDecode/allowImplicit_accepts_a_bare_return (0.00s)
+    --- PASS: TestArrayCallbackReturnOptionsDecode/without_allowImplicit_a_bare_return_reports (0.00s)
+    --- PASS: TestArrayCallbackReturnOptionsDecode/an_empty_object_decodes_to_all_three_defaults_off (0.00s)
+    --- PASS: TestArrayCallbackReturnOptionsDecode/nil_options_bypass_the_decoder_and_keep_every_default_off (0.00s)
+    --- PASS: TestArrayCallbackReturnOptionsDecode/allowVoid_accepts_void_and_adds_a_second_suggestion (0.00s)
+    --- PASS: TestArrayCallbackReturnOptionsDecode/checkForEach_turns_the_judgment_around (0.00s)
 PASS
-ok  	github.com/system-inc/cohere/internal/lint/rules/core	0.010s
+ok  	github.com/system-inc/cohere/internal/lint/rules/core	0.013s
