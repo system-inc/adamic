@@ -1,0 +1,7 @@
+=== RUN   TestPendingFactsAndRegistrationRefusals
+    pending_facts_test.go:73: raw resolved callee and static/dynamic module facts pass; both native requests explicitly refuse because registration is absent
+--- PASS: TestPendingFactsAndRegistrationRefusals (0.07s)
+=== RUN   TestNativeFactFlagMasks
+--- PASS: TestNativeFactFlagMasks (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware/wave08-next	0.077s

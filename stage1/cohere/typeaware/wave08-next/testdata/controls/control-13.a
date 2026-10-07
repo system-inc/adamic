@@ -1,0 +1,3 @@
+declare function work():Promise<string>;declare function use(value:unknown):void;const ms=1;
+const pool={race(x:unknown[]){return x;}};pool.race([new Promise((r,j)=>{setTimeout(j,ms);})]);
+export {};

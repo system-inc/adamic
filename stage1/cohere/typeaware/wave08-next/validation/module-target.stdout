@@ -1,0 +1,6 @@
+=== RUN   TestPendingFactsAndRegistrationRefusals
+    pending_facts_test.go:62: static and dynamic module resolutions absent: 1
+--- FAIL: TestPendingFactsAndRegistrationRefusals (0.07s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware/wave08-next	0.076s
+FAIL

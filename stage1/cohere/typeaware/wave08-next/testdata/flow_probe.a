@@ -1,0 +1,41 @@
+import { ProcessGraph, ProcessBlock, ProcessEvent, walkProcess } from '../process_flow.a';
+function graph(events: ProcessEvent[]): ProcessGraph {
+    const graph = new ProcessGraph();
+    const block = new ProcessBlock();
+    for(const event of events) {
+        block.events.push(event);
+    }
+    graph.blocks.push(block);
+    return graph;
+}
+const write = new ProcessEvent('write', 1);
+const exit = new ProcessEvent('exit', 2);
+console.log(walkProcess(graph([write, exit]), false, false).exits.join(','));
+console.log(walkProcess(graph([exit, write]), false, false).exits.join(','));
+console.log(
+    walkProcess(
+        graph([new ProcessEvent('write', 1, ',0,'), new ProcessEvent('catch', 3, ',', 0), exit]),
+        false,
+        false,
+    ).exits.join(','),
+);
+console.log(walkProcess(graph([write, new ProcessEvent('catch', 3, ',', 0), exit]), false, false).exits.join(','));
+console.log(walkProcess(graph([write, new ProcessEvent('block', 3), exit]), true, true).exits.join(','));
+const called = walkProcess(graph([new ProcessEvent('call', 1, ',', -1, [4], [5]), write, exit]), false, true);
+console.log(`${called.exits.join(',')}:${called.started.join(',')}`);
+const ordered = walkProcess(graph([new ProcessEvent('call', 1, ',', -1, [4], [5]), write, exit]), true, true);
+console.log(`${ordered.exits.join(',')}:${ordered.started.join(',')}`);
+const cyclic = graph([]);
+const exiting = new ProcessBlock();
+exiting.events.push(exit);
+cyclic.blocks.push(exiting);
+const tail = new ProcessBlock();
+tail.events.push(write);
+tail.successors.push(0);
+cyclic.blocks.push(tail);
+const first = cyclic.blocks[0];
+if(first !== undefined) {
+    first.successors.push(1);
+    first.successors.push(2);
+}
+console.log(walkProcess(cyclic, false, false).exits.join(','));

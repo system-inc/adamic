@@ -1,0 +1,69 @@
+import type { Rules } from '../rules.ts';
+import { Frames, header } from '../frames.ts';
+export class Declaration {
+    path: string;
+    kind: string;
+    start: number;
+    end: number;
+    declarationFile: boolean;
+    library: boolean;
+    parentKind: string;
+    parentName: string;
+    parentStart: number;
+    parentEnd: number;
+    constructor(frames: Frames) {
+        this.path = frames.field();
+        this.kind = frames.field();
+        this.start = frames.natural();
+        this.end = frames.natural();
+        this.declarationFile = frames.yes();
+        this.library = frames.yes();
+        this.parentKind = frames.field();
+        this.parentName = frames.field();
+        this.parentStart = frames.natural();
+        this.parentEnd = frames.natural();
+        const tags = frames.natural();
+        for(let at = 0; at < tags; at++) {
+            frames.field();
+            frames.field();
+            frames.natural();
+            frames.natural();
+            frames.field();
+        }
+        const parameters = frames.natural();
+        for(let at = 0; at < parameters; at++) {
+            frames.field();
+        }
+    }
+}
+export class Declarations {
+    id = 0;
+    flags = 0;
+    name = '';
+    readonly entries: Declaration[] = [];
+    constructor(rules: Rules, index: number) {
+        const frames = new Frames(rules.ask(index, 'node-symbol-details'));
+        header(frames, 'node-symbol-details');
+        if(frames.yes()) {
+            this.id = frames.natural();
+            this.flags = frames.natural();
+            this.name = frames.field();
+            const count = frames.natural();
+            for(let at = 0; at < count; at++) {
+                this.entries.push(new Declaration(frames));
+            }
+        }
+        frames.end();
+    }
+    libraryMember(owner: string): boolean {
+        return (
+            this.entries.length > 0 &&
+            this.entries.every(
+                (entry) => entry.library && entry.parentKind === 'InterfaceDeclaration' && entry.parentName === owner,
+            )
+        );
+    }
+    librarySymbol(): boolean {
+        return this.entries.length > 0 && this.entries.every((entry) => entry.library);
+    }
+}

@@ -1,0 +1,296 @@
+import type { Rules } from '../rules.ts';
+import { Bindings } from '../bindings.ts';
+import { WaveSymbol } from '../wave08_symbol.a';
+import { SyntaxMetadata } from '../syntax_metadata.a';
+import { Diagnostic } from '../diagnostic.ts';
+import { Declarations } from './declarations.a';
+import { readTextFile, panic } from 'adamic';
+import { Parser } from '../../../typescript/parser/parser.ts';
+const message =
+    'This `setTimeout` arms the losing side of a `Promise.race`, and its handle is thrown away, so nothing can ever clear it. When the work wins the race, the timer stays armed for its whole duration: in Node it holds the process open (a batch that finished its last item sits until the timeout elapses), and its callback still runs, rejecting a promise nobody is waiting on. Keep the handle (`timer = setTimeout(...)`) and `clearTimeout(timer)` in a `finally` around the race.';
+export class NoUnclearedRaceTimeout {
+    readonly rules: Rules;
+    readonly bindings: Bindings;
+    readonly globalFiles = new Map<string, boolean>();
+    constructor(rules: Rules) {
+        this.rules = rules;
+        this.bindings = new Bindings(rules);
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            const node = this.rules.parser.node(index);
+            if(node.kind !== 'CallExpression' || (this.rules.parents[index] ?? -1) < 0) {
+                continue;
+            }
+            const callee = this.rules.skip(node.children[0] ?? -1);
+            const access = this.rules.parser.node(callee);
+            if(access.kind !== 'PropertyAccessExpression') {
+                continue;
+            }
+            const name = access.children[access.children.length - 1] ?? -1;
+            if(
+                this.rules.parser.node(name).text !== 'race' ||
+                !new Declarations(this.rules, name).libraryMember('PromiseConstructor')
+            ) {
+                continue;
+            }
+            const array = this.rules.skip(this.arguments(index)[0] ?? -1);
+            if(this.rules.parser.node(array).kind !== 'ArrayLiteralExpression') {
+                continue;
+            }
+            for(const element of this.rules.parser.node(array).children) {
+                const promise = this.promise(this.rules.skip(element));
+                if(promise < 0) {
+                    continue;
+                }
+                const executor = this.rules.skip(this.arguments(promise)[0] ?? -1);
+                if(!['ArrowFunction', 'FunctionExpression'].includes(this.rules.parser.node(executor).kind)) {
+                    continue;
+                }
+                const body = this.body(executor);
+                if(body >= 0) {
+                    this.visit(body, executor);
+                }
+            }
+        }
+    }
+    arguments(index: number): number[] {
+        const node = this.rules.parser.node(index);
+        return node.list > 0 ? node.children.slice(node.children.length - node.list) : [];
+    }
+    body(index: number): number {
+        const children = this.rules.parser.node(index).children;
+        return children[children.length - 1] ?? -1;
+    }
+    promise(index: number): number {
+        if(this.rules.parser.node(index).kind === 'Identifier') {
+            const declarations = this.bindings.list(index, 'binding-declarations', false);
+            if(new WaveSymbol(this.rules, index).declarations.length !== 1 || declarations.length !== 1) {
+                return -1;
+            }
+            const declaration = declarations[0] ?? -1;
+            if(this.rules.parser.node(declaration).kind !== 'VariableDeclaration') {
+                return -1;
+            }
+            const list = this.rules.parents[declaration] ?? -1;
+            if(
+                this.rules.parser.node(list).kind !== 'VariableDeclarationList' ||
+                (new SyntaxMetadata(this.rules, list).flags & 2) === 0
+            ) {
+                return -1;
+            }
+            index = this.rules.skip(this.bindings.shape.initializer(declaration));
+        }
+        const node = this.rules.parser.node(index);
+        if(node.kind !== 'NewExpression') {
+            return -1;
+        }
+        const constructor = this.rules.skip(node.children[0] ?? -1);
+        if(
+            this.rules.parser.node(constructor).kind !== 'Identifier' ||
+            this.rules.parser.node(constructor).text !== 'Promise' ||
+            !new Declarations(this.rules, constructor).librarySymbol()
+        ) {
+            return -1;
+        }
+        return index;
+    }
+    visit(index: number, executor: number): void {
+        const node = this.rules.parser.node(index);
+        if(this.bindings.functionKind(node.kind) || ['ClassDeclaration', 'ClassExpression'].includes(node.kind)) {
+            return;
+        }
+        if(node.kind === 'CallExpression' && this.globalTimer(index) && this.lost(index, executor)) {
+            const finding = new Diagnostic(
+                'nexus/correctness-no-uncleared-race-timeout',
+                'unclearedRaceTimeout',
+                message,
+                this.rules.byte(this.rules.start(node)),
+                this.rules.byte(node.end),
+                '',
+            );
+            this.rules.findings.push(finding);
+        }
+        for(const child of node.children) {
+            this.visit(child, executor);
+        }
+    }
+    globalTimer(index: number): boolean {
+        const call = this.rules.parser.node(index);
+        const callee = this.rules.skip(call.children[0] ?? -1);
+        const node = this.rules.parser.node(callee);
+        let name = callee;
+        if(node.kind === 'PropertyAccessExpression') {
+            const receiver = this.rules.skip(node.children[0] ?? -1);
+            if(
+                this.rules.parser.node(receiver).kind !== 'Identifier' ||
+                !['globalThis', 'window'].includes(this.rules.parser.node(receiver).text)
+            ) {
+                return false;
+            }
+            name = node.children[node.children.length - 1] ?? -1;
+        }
+        else if(node.kind !== 'Identifier') {
+            return false;
+        }
+        if(this.rules.parser.node(name).text !== 'setTimeout') {
+            return false;
+        }
+        const declarations = new Declarations(this.rules, name).entries;
+        return (
+            declarations.length > 0 &&
+            declarations.every((entry) => {
+                if(!entry.declarationFile) {
+                    return false;
+                }
+                if(entry.parentKind === 'SourceFile') {
+                    return entry.library || this.isGlobalFile(entry.path);
+                }
+                if(entry.parentKind === 'InterfaceDeclaration') {
+                    return entry.parentName === 'WindowOrWorkerGlobalScope' && entry.library;
+                }
+                if(entry.parentKind === 'ModuleBlock') {
+                    return this.globalBlock(entry.path, entry.parentStart, entry.parentEnd);
+                }
+                return false;
+            })
+        );
+    }
+    isGlobalFile(path: string): boolean {
+        if(this.globalFiles.has(path)) {
+            return this.globalFiles.get(path) ?? false;
+        }
+        const source = readTextFile(path);
+        if(source.kind === 'Error') {
+            panic(source.message);
+        }
+        const parser = new Parser(source.text, path);
+        const root = parser.file();
+        const external = parser
+            .node(root)
+            .children.some(
+                (child) =>
+                    ['ImportDeclaration', 'ImportEqualsDeclaration', 'ExportDeclaration', 'ExportAssignment'].includes(
+                        parser.node(child).kind,
+                    ) || parser.node(child).children.some((part) => parser.node(part).kind === 'ExportKeyword'),
+            );
+        this.globalFiles.set(path, !external);
+        return !external;
+    }
+    globalBlock(path: string, start: number, end: number): boolean {
+        const source = readTextFile(path);
+        if(source.kind === 'Error') {
+            panic(source.message);
+        }
+        const parser = new Parser(source.text, path);
+        parser.file();
+        // Compiler bounds are UTF-8. Find the module block by its raw source text.
+        for(const node of parser.nodes) {
+            if(
+                node.kind === 'ModuleDeclaration' &&
+                node.children.some(
+                    (child) => parser.node(child).kind === 'Identifier' && parser.node(child).text === 'global',
+                )
+            ) {
+                const block = node.children.find((child) => parser.node(child).kind === 'ModuleBlock');
+                if(block !== undefined) {
+                    const value = parser.node(block);
+                    const prefix = source.text.slice(0, value.pos);
+                    const content = source.text.slice(0, value.end);
+                    if(this.utf8(prefix) === start && this.utf8(content) === end) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    utf8(text: string): number {
+        let bytes = 0;
+        for(let at = 0; at < text.length; at++) {
+            const code = text.charCodeAt(at);
+            if(code < 128) {
+                bytes++;
+            }
+            else if(code < 2048) {
+                bytes += 2;
+            }
+            else if(code >= 55296 && code <= 56319) {
+                bytes += 4;
+                at++;
+            }
+            else {
+                bytes += 3;
+            }
+        }
+        return bytes;
+    }
+    outer(index: number): number {
+        while(this.rules.parser.node(this.rules.parents[index] ?? -1).kind === 'ParenthesizedExpression') {
+            index = this.rules.parents[index] ?? -1;
+        }
+        return index;
+    }
+    lost(index: number, executor: number): boolean {
+        const outer = this.outer(index);
+        const parent = this.rules.parents[outer] ?? -1;
+        const node = this.rules.parser.node(parent);
+        if(['ExpressionStatement', 'VoidExpression'].includes(node.kind) || parent === executor) {
+            return true;
+        }
+        if(node.kind === 'VariableDeclaration' && this.bindings.shape.initializer(parent) === outer) {
+            const name = this.bindings.shape.name(parent);
+            return this.rules.parser.node(name).kind === 'Identifier' && this.neverRead(name);
+        }
+        if(
+            node.kind === 'BinaryExpression' &&
+            this.rules.parser.node(node.children[1] ?? -1).kind === 'EqualsToken' &&
+            node.children[node.children.length - 1] === outer
+        ) {
+            const target = this.rules.skip(node.children[0] ?? -1);
+            const assignment = this.outer(parent);
+            return (
+                this.rules.parser.node(target).kind === 'Identifier' &&
+                this.rules.parser.node(this.rules.parents[assignment] ?? -1).kind === 'ExpressionStatement' &&
+                this.neverRead(target)
+            );
+        }
+        return false;
+    }
+    plainTarget(index: number): boolean {
+        const outer = this.outer(index);
+        const node = this.rules.parser.node(this.rules.parents[outer] ?? -1);
+        return (
+            node.kind === 'BinaryExpression' &&
+            this.rules.parser.node(node.children[1] ?? -1).kind === 'EqualsToken' &&
+            node.children[0] === outer
+        );
+    }
+    neverRead(index: number): boolean {
+        const symbol = new WaveSymbol(this.rules, index);
+        if(symbol.declarations.length !== 1) {
+            return false;
+        }
+        const entry = symbol.declarations[0];
+        if(entry === undefined || entry.path !== this.rules.path || entry.kind !== 'VariableDeclaration') {
+            return false;
+        }
+        const declarations = this.bindings.list(index, 'binding-declarations', false);
+        const declared = this.bindings.shape.name(declarations[0] ?? -1);
+        const name = this.rules.parser.node(declared).text;
+        for(let at = 0; at < this.rules.parser.nodes.length; at++) {
+            const node = this.rules.parser.node(at);
+            if(
+                node.kind === 'Identifier' &&
+                node.text === name &&
+                at !== declared &&
+                (this.rules.parents[at] ?? -1) >= 0 &&
+                new WaveSymbol(this.rules, at).id === symbol.id &&
+                !this.plainTarget(at)
+            ) {
+                return false;
+            }
+        }
+        return true;
+    }
+}

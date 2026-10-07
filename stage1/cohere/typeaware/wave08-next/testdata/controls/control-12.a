@@ -1,0 +1,3 @@
+declare function work():Promise<string>;declare function use(value:unknown):void;const ms=1;
+function setTimeout(j:unknown,ms:number){return ms;}Promise.race([work(),new Promise((r,j)=>{setTimeout(j,ms);})]);
+export {};

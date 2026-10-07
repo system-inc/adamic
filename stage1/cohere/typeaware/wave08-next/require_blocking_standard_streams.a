@@ -1,0 +1,76 @@
+import type { Rules } from '../rules.ts';
+import { Diagnostic } from '../diagnostic.ts';
+import { ProcessGraph, ProcessResult, walkProcess } from './process_flow.a';
+import { ProgramLoads } from './program_loads.a';
+import { panic } from 'adamic';
+const template =
+    "This file runs as a process (<<processReason>>), and this `process.exit()` runs after a write to stdout or stderr before the process has called `blockStandardStreams()`<<exitCount>>. Node writes to a pipe asynchronously, and `process.exit()` does not wait: a reader piping this process gets the output cut off (measured: 65,536 of 1 MiB), with exit status 0 and no error. Call Nexus's `blockStandardStreams()` (`source/system/StandardStreams`) before anything that can exit: first in the module, or first in the main it runs.";
+export class RequireBlockingStandardStreams {
+    readonly rules: Rules;
+    readonly graphs = new Map<number, ProcessGraph>();
+    readonly ordered: boolean;
+    constructor(rules: Rules, ordered = false) {
+        this.rules = rules;
+        this.ordered = ordered;
+    }
+    reachedExits(root: number): number[] {
+        const queue: number[] = [root];
+        const queued = new Set<number>();
+        queued.add(root);
+        const reported = new Set<number>();
+        const exits: number[] = [];
+        for(let at = 0; at < queue.length; at++) {
+            const current = queue[at] ?? -1;
+            const graph = this.graphs.get(current);
+            if(graph === undefined) {
+                panic('blocking stream rule requires a complete native graph');
+            }
+            const result = walkProcess(graph, this.ordered, true);
+            for(const exit of result.exits) {
+                if(!reported.has(exit)) {
+                    reported.add(exit);
+                    exits.push(exit);
+                }
+            }
+            for(const started of result.started) {
+                if(!queued.has(started)) {
+                    queued.add(started);
+                    queue.push(started);
+                }
+            }
+        }
+        return exits;
+    }
+    report(root: number, shebang: boolean, imported: boolean): void {
+        if(!shebang && imported) {
+            return;
+        }
+        const exits = this.reachedExits(root);
+        if(exits.length === 0) {
+            return;
+        }
+        exits.sort((left, right) => this.rules.parser.node(left).pos - this.rules.parser.node(right).pos);
+        const reason = shebang ? 'it starts with `#!`' : 'nothing in the program imports it';
+        const count = exits.length > 1 ? `, the first of ${exits.length} such exits in this file` : '';
+        const message = template.replace('<<processReason>>', reason).replace('<<exitCount>>', count);
+        const node = this.rules.parser.node(exits[0] ?? -1);
+        this.rules.findings.push(
+            new Diagnostic(
+                'nexus/correctness-require-blocking-standard-streams',
+                'exitBeforeBlockingStandardStreams',
+                message,
+                this.rules.byte(this.rules.start(node)),
+                this.rules.byte(node.end),
+                '',
+            ),
+        );
+    }
+    loads(root: number): ProgramLoads {
+        return new ProgramLoads(this.rules, root);
+    }
+    run(): void {
+        panic(
+            'wave08 blocking stream rule blocked: complete program-loads bridge registration and native graph integration pending',
+        );
+    }
+}

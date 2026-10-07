@@ -1,0 +1,67 @@
+import type { Rules } from '../rules.ts';
+import { Diagnostic } from '../diagnostic.ts';
+import { ProcessGraph, walkProcess } from './process_flow.a';
+import { ResolvedCallee } from './resolved_callee.a';
+import { panic } from 'adamic';
+const message =
+    'This calls `process.exit()` on a path that has already written to stdout or stderr in this function. `process.exit()` ends the process without waiting for writes still in flight, and a write to a pipe can be one: a reader piping this command (`| grep`, `execSync`, a spawned child) gets the output cut at 64 KB, with exit status 0 and no error. Set `process.exitCode = n` and return instead, so the process ends on its own once the output has drained.';
+export class NoProcessExitAfterOutput {
+    readonly rules: Rules;
+    constructor(rules: Rules) {
+        this.rules = rules;
+    }
+    // One-level callee eligibility is native. The pending question supplies the
+    // actual overload declaration, not an arbitrarily selected symbol declaration.
+    followedCallee(call: number): ResolvedCallee | undefined {
+        const fact = new ResolvedCallee(this.rules, call);
+        if(
+            !fact.present ||
+            !['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction', 'MethodDeclaration'].includes(fact.kind) ||
+            !fact.hasBody
+        ) {
+            return undefined;
+        }
+        if(fact.path !== this.rules.path && !fact.externalModule) {
+            return undefined;
+        }
+        if((fact.functionFlags & 1) !== 0) {
+            return undefined;
+        }
+        let outer = call;
+        while(this.rules.parser.node(this.rules.parents[outer] ?? -1).kind === 'ParenthesizedExpression') {
+            outer = this.rules.parents[outer] ?? -1;
+        }
+        if(
+            (fact.functionFlags & 2) !== 0 &&
+            this.rules.parser.node(this.rules.parents[outer] ?? -1).kind !== 'AwaitExpression'
+        ) {
+            return undefined;
+        }
+        if((fact.returnFlags & 262144) !== 0) {
+            return undefined;
+        }
+        return fact;
+    }
+    reportGraph(graph: ProcessGraph, exitOrder: readonly number[]): void {
+        const found = walkProcess(graph, false, false).exits;
+        for(const exit of exitOrder) {
+            if(!found.includes(exit)) {
+                continue;
+            }
+            const node = this.rules.parser.node(exit);
+            this.rules.findings.push(
+                new Diagnostic(
+                    'nexus/correctness-no-process-exit-after-output',
+                    'exitAfterOutput',
+                    message,
+                    this.rules.byte(this.rules.start(node)),
+                    this.rules.byte(node.end),
+                    '',
+                ),
+            );
+        }
+    }
+    run(): void {
+        panic('wave08 process rule blocked: resolved-callee bridge registration and native graph integration pending');
+    }
+}

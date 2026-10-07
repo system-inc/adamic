@@ -1,0 +1,40 @@
+import type { Rules } from '../rules.ts';
+import { Frames, header } from '../frames.ts';
+export class LoadSpecifier {
+    readonly start: number;
+    readonly end: number;
+    readonly target: string;
+    constructor(start: number, end: number, target: string) {
+        this.start = start;
+        this.end = end;
+        this.target = target;
+    }
+}
+export class LoadedFile {
+    readonly path: string;
+    readonly declarationFile: boolean;
+    readonly source: string;
+    readonly specifiers: LoadSpecifier[] = [];
+    constructor(path: string, declarationFile: boolean, source: string) {
+        this.path = path;
+        this.declarationFile = declarationFile;
+        this.source = source;
+    }
+}
+export class ProgramLoads {
+    readonly files: LoadedFile[] = [];
+    constructor(rules: Rules, root: number) {
+        const frames = new Frames(rules.ask(root, 'wave08-program-loads'));
+        header(frames, 'wave08-program-loads');
+        const count = frames.natural();
+        for(let at = 0; at < count; at++) {
+            const file = new LoadedFile(frames.field(), frames.yes(), frames.field());
+            const length = frames.natural();
+            for(let specifier = 0; specifier < length; specifier++) {
+                file.specifiers.push(new LoadSpecifier(frames.natural(), frames.natural(), frames.field()));
+            }
+            this.files.push(file);
+        }
+        frames.end();
+    }
+}

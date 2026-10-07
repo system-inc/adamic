@@ -1,0 +1,4 @@
+/// <reference lib="dom" />
+declare function work():Promise<string>;declare function use(value:unknown):void;const ms=1;
+Promise.race([new Promise((r,j)=>{setTimeout(j,ms);})]);
+export {};

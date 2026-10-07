@@ -1,0 +1,161 @@
+// Native rule decision engine. Graph production and checker registrations are
+// pending; this file never substitutes source-order guesses for graph edges.
+export class ProcessEvent {
+    readonly kind: string;
+    readonly node: number;
+    readonly chain: string;
+    readonly tryId: number;
+    readonly runs: number[];
+    readonly handsOn: number[];
+    readonly argumentsMayBlock: boolean;
+    constructor(
+        kind: string,
+        node: number,
+        chain = ',',
+        tryId = -1,
+        runs: number[] = [],
+        handsOn: number[] = [],
+        argumentsMayBlock = false,
+    ) {
+        this.kind = kind;
+        this.node = node;
+        this.chain = chain;
+        this.tryId = tryId;
+        this.runs = runs;
+        this.handsOn = handsOn;
+        this.argumentsMayBlock = argumentsMayBlock;
+    }
+}
+export class ProcessBlock {
+    readonly events: ProcessEvent[] = [];
+    readonly successors: number[] = [];
+    reachable = true;
+}
+export class ProcessGraph {
+    readonly blocks: ProcessBlock[] = [];
+    // The Go rule abandons a root containing exits the graph did not record.
+    unrecordable = false;
+}
+export class WriteState {
+    readonly chains: string[];
+    constructor(chains: string[] = []) {
+        this.chains = chains;
+    }
+    holds(outer: string, inner: string): boolean {
+        for(const id of inner.split(',')) {
+            if(id !== '' && !outer.includes(`,${id},`)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    with(chain: string): WriteState {
+        const next: string[] = [];
+        for(const held of this.chains) {
+            if(this.holds(chain, held)) {
+                return this;
+            }
+            if(!this.holds(held, chain)) {
+                next.push(held);
+            }
+        }
+        next.push(chain);
+        next.sort((left, right) => (left < right ? -1 : left > right ? 1 : 0));
+        return new WriteState(next);
+    }
+    entering(tryId: number): WriteState {
+        return new WriteState(this.chains.filter((chain) => !chain.includes(`,${tryId},`)));
+    }
+    key(): string {
+        return this.chains.join(';');
+    }
+}
+export class ProcessResult {
+    readonly exits: number[] = [];
+    readonly started: number[] = [];
+}
+export class Position {
+    readonly block: number;
+    readonly state: WriteState;
+    constructor(block: number, state: WriteState) {
+        this.block = block;
+        this.state = state;
+    }
+}
+export function walkProcess(graph: ProcessGraph, ordered: boolean, blocking: boolean): ProcessResult {
+    const result = new ProcessResult();
+    if(graph.unrecordable || graph.blocks.length === 0) {
+        return result;
+    }
+    const reported = new Set<number>();
+    const started = new Set<number>();
+    const visited = new Set<string>();
+    const queue: Position[] = [new Position(0, new WriteState())];
+    visited.add('0:');
+    for(let at = 0; at < queue.length; at++) {
+        const position = queue[at];
+        if(position === undefined) {
+            continue;
+        }
+        const block = graph.blocks[position.block];
+        if(block === undefined) {
+            continue;
+        }
+        let state = position.state;
+        let ended = false;
+        for(const event of block.events) {
+            if(event.kind === 'write') {
+                state = state.with(event.chain);
+            }
+            if(event.kind === 'catch') {
+                state = state.entering(event.tryId);
+            }
+            if(blocking && event.kind === 'call') {
+                if(!event.argumentsMayBlock) {
+                    for(const run of event.runs) {
+                        if(!started.has(run)) {
+                            started.add(run);
+                            result.started.push(run);
+                        }
+                    }
+                }
+                if(!ordered) {
+                    for(const hand of event.handsOn) {
+                        if(!started.has(hand)) {
+                            started.add(hand);
+                            result.started.push(hand);
+                        }
+                    }
+                }
+            }
+            if(event.kind === 'exit') {
+                if(state.chains.length > 0 && !reported.has(event.node)) {
+                    reported.add(event.node);
+                    result.exits.push(event.node);
+                }
+                ended = true;
+            }
+            if(blocking && event.kind === 'block') {
+                ended = true;
+            }
+            if(ended) {
+                break;
+            }
+        }
+        if(ended) {
+            continue;
+        }
+        for(const successor of block.successors) {
+            if(!(graph.blocks[successor]?.reachable ?? false)) {
+                continue;
+            }
+            const key = `${successor}:${state.key()}`;
+            if(visited.has(key)) {
+                continue;
+            }
+            visited.add(key);
+            queue.push(new Position(successor, state));
+        }
+    }
+    return result;
+}

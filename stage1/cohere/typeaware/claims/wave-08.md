@@ -33,3 +33,12 @@ branch are, with lexical ordering for equal combined volume:
 Claimed for wave 08 continuation. This update is committed and pushed before
 implementation. New Adamic files remain .a; existing shared harness and generator
 files will not be edited.
+
+Continuation status: no-uncleared-race-timeout is complete, with normal/sanitizer
+byte agreement on 22 controls, compiler 77 and repository 287, and its compiling
+byte-only mutant caught. The other two are partial ports, not production-ready:
+raw fact adapters and native decision cores are prepared, but resolved-callee
+and complete program-loads questions have no permitted shared registration, and
+native graph construction/integration remains unfinished. Their entry points
+explicitly refuse before findings. See ../wave08-next/REPORT.md. No further
+rules are claimed; the two partial claims remain reserved pending integration.

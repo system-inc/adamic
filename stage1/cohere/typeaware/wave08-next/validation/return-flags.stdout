@@ -1,0 +1,6 @@
+=== RUN   TestPendingFactsAndRegistrationRefusals
+    pending_facts_test.go:49: resolved callee differs: ["1" "wave08-resolved-callee" "1" "/tmp/adamic-gate/TestPendingFactsAndRegistrationRefusals284331385/001/main.ts" "FunctionDeclaration" "33" "79" "0" "1" "0" "1" "62" "79" "0"]
+--- FAIL: TestPendingFactsAndRegistrationRefusals (0.07s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware/wave08-next	0.079s
+FAIL

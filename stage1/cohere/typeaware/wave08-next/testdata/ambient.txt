@@ -1,0 +1,2 @@
+export {};
+declare global { namespace NodeJS { interface Timeout { unref(): this } } function setTimeout(callback: (...args:any[])=>void, delay?:number):NodeJS.Timeout; namespace setTimeout {const __promisify__:unknown;} function clearTimeout(timer:unknown):void; }

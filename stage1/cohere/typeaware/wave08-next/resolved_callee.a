@@ -1,0 +1,37 @@
+import type { Rules } from '../rules.ts';
+import { Frames, header } from '../frames.ts';
+export class ResolvedCallee {
+    present = false;
+    path = '';
+    kind = '';
+    start = 0;
+    end = 0;
+    declarationFile = false;
+    externalModule = false;
+    functionFlags = 0;
+    hasBody = false;
+    bodyStart = 0;
+    bodyEnd = 0;
+    returnFlags = 0;
+    constructor(rules: Rules, index: number) {
+        const frames = new Frames(rules.ask(index, 'wave08-resolved-callee'));
+        header(frames, 'wave08-resolved-callee');
+        this.present = frames.yes();
+        if(this.present) {
+            this.path = frames.field();
+            this.kind = frames.field();
+            this.start = frames.natural();
+            this.end = frames.natural();
+            this.declarationFile = frames.yes();
+            this.externalModule = frames.yes();
+            this.functionFlags = frames.natural();
+            this.hasBody = frames.yes();
+            if(this.hasBody) {
+                this.bodyStart = frames.natural();
+                this.bodyEnd = frames.natural();
+            }
+            this.returnFlags = frames.natural();
+        }
+        frames.end();
+    }
+}
