@@ -1,0 +1,542 @@
+import { panic } from 'adamic';
+import { Tools } from './tools.a';
+import { StreamFacts } from './stream_facts.a';
+import { syntaxFlow } from './wave_27_syntax_flow.a';
+import { FlowPosition } from './correctness_no_process_exit_after_output.a';
+export class StartedFunctions {
+    readonly runs: readonly number[];
+    readonly handsOn: readonly number[];
+    constructor(runs: readonly number[], handsOn: readonly number[]) {
+        this.runs = runs;
+        this.handsOn = handsOn;
+    }
+}
+export class BlockingStandardStreams {
+    readonly tools: Tools;
+    readonly facts: StreamFacts;
+    readonly imported = new Set<string>();
+    readonly canBlock = new Set<string>();
+    readonly edges = new Map<string, string[]>();
+    readonly functions = new Map<string, number>();
+    ordered = false;
+    constructor(tools: Tools) {
+        this.tools = tools;
+        this.facts = new StreamFacts(tools);
+    }
+    index(root: number): void {
+        const tools = this.tools;
+        tools.world.load(tools.bindings, root);
+        const seeds: string[] = [];
+        for(const [file, source] of tools.world.sources) {
+            if(
+                ['/source/system/StandardStreams.ts', '/source/system/StandardStreams.d.ts'].some((suffix) =>
+                    file.endsWith(suffix),
+                )
+            ) {
+                seeds.push(file);
+            }
+            const edges: string[] = [];
+            for(const edge of source.edges) {
+                if(edge.typeOnly) {
+                    continue;
+                }
+                if(edge.kind === 'call' && !edge.literal) {
+                    seeds.push(file);
+                }
+                if(edge.target !== '' && edge.target !== file && tools.world.sources.has(edge.target)) {
+                    edges.push(edge.target);
+                    this.imported.add(edge.target);
+                }
+            }
+            this.edges.set(file, edges);
+        }
+        for(const seed of seeds) {
+            this.canBlock.add(seed);
+        }
+        let changed = true;
+        while(changed) {
+            changed = false;
+            for(const [file, edges] of this.edges) {
+                if(!this.canBlock.has(file) && edges.some((target) => this.canBlock.has(target))) {
+                    this.canBlock.add(file);
+                    changed = true;
+                }
+            }
+        }
+    }
+    functionBody(tools: Tools, index: number): boolean {
+        return (
+            tools.bindings.functionKind(tools.kind(index)) &&
+            tools.bindings.rules.parser
+                .node(index)
+                .children.some(
+                    (child) =>
+                        tools.kind(child) === 'Block' ||
+                        (tools.kind(index) === 'ArrowFunction' && child === tools.body(index)),
+                )
+        );
+    }
+    callLike(tools: Tools, index: number): boolean {
+        return ['CallExpression', 'NewExpression', 'TaggedTemplateExpression'].includes(tools.kind(index));
+    }
+    local(index: number): number {
+        const tools = this.tools;
+        const expression = tools.skip(index);
+        if(['FunctionExpression', 'ArrowFunction'].includes(tools.kind(expression))) {
+            return expression;
+        }
+        if(tools.kind(expression) !== 'Identifier') {
+            return -1;
+        }
+        const symbol = tools.symbol(expression);
+        if(symbol.own !== symbol.identity) {
+            return -1;
+        }
+        for(const declaration of tools.bindings.declarations(expression)) {
+            if(tools.kind(declaration) === 'FunctionDeclaration' && this.functionBody(tools, declaration)) {
+                return declaration;
+            }
+            if(
+                tools.kind(declaration) === 'VariableDeclaration' &&
+                ['2', '6'].includes(tools.bindings.rules.parser.node(tools.parent(declaration)).semantic)
+            ) {
+                const initializer = tools.bindings.shape.initializer(declaration);
+                if(initializer >= 0) {
+                    const functionIndex = tools.skip(initializer);
+                    if(['FunctionExpression', 'ArrowFunction'].includes(tools.kind(functionIndex))) {
+                        return functionIndex;
+                    }
+                }
+            }
+        }
+        return -1;
+    }
+    started(index: number): StartedFunctions {
+        const tools = this.tools;
+        const kind = tools.kind(index);
+        const runs: number[] = [];
+        const handsOn: number[] = [];
+        if(kind !== 'NewExpression') {
+            const callee = this.local(tools.child(index, 0));
+            if(callee >= 0) {
+                if(
+                    tools.bindings.rules.parser
+                        .node(callee)
+                        .children.some((child) => tools.kind(child) === 'AsteriskToken')
+                ) {
+                    handsOn.push(callee);
+                }
+                else {
+                    runs.push(callee);
+                }
+            }
+        }
+        if(kind !== 'TaggedTemplateExpression') {
+            for(const argument of tools.args(index)) {
+                const functionIndex = this.local(argument);
+                if(functionIndex >= 0) {
+                    handsOn.push(functionIndex);
+                }
+            }
+        }
+        return new StartedFunctions(runs, handsOn);
+    }
+    mayBlock(tools: Tools, index: number): boolean {
+        const key = `${tools.bindings.rules.path}:${index}`;
+        const state = this.functions.get(key) ?? 0;
+        if(state !== 0) {
+            return state === 1;
+        }
+        this.functions.set(key, 3);
+        const stack = tools.bindings.rules.parser.node(index).children.slice();
+        let blocks = false;
+        while(stack.length > 0) {
+            const at = stack.pop() ?? -1;
+            if(at < 0) {
+                continue;
+            }
+            if(this.callLike(tools, at) && this.callMayBlock(tools, at)) {
+                blocks = true;
+                break;
+            }
+            for(const child of tools.bindings.rules.parser.node(at).children) {
+                stack.push(child);
+            }
+        }
+        this.functions.set(key, blocks ? 1 : 2);
+        return blocks;
+    }
+    declarationMayBlock(tools: Tools, index: number, name: string): boolean {
+        const subject = tools.symbol(index);
+        if(!subject.present || subject.declarations.length === 0) {
+            return true;
+        }
+        for(const declaration of subject.declarations) {
+            if(!this.canBlock.has(declaration.file)) {
+                if(declaration.declarationFile && name === 'require') {
+                    return true;
+                }
+                continue;
+            }
+            if(declaration.declarationFile) {
+                return true;
+            }
+            const kind = declaration.ancestors[0]?.kind ?? '';
+            const ownName = declaration.ancestors[0]?.name ?? '';
+            if(
+                kind === 'FunctionDeclaration' &&
+                ownName === 'blockStandardStreams' &&
+                ['/source/system/StandardStreams.ts', '/source/system/StandardStreams.d.ts'].some((suffix) =>
+                    declaration.file.endsWith(suffix),
+                )
+            ) {
+                return true;
+            }
+            const other = new Tools(tools.world.bindingsFor(declaration.file), tools.world);
+            const at =
+                other.bindings.spans.get(`${kind}:${declaration.start}:${declaration.end}`) ??
+                panic('blocking callee absent from Adamic tree');
+            if(
+                ['FunctionDeclaration', 'MethodDeclaration', 'Constructor', 'GetAccessor', 'SetAccessor'].includes(kind)
+            ) {
+                if(!this.functionBody(other, at)) {
+                    if(kind !== 'FunctionDeclaration' || ((declaration.ancestors[0]?.flags ?? 0) & 8388608) !== 0) {
+                        return true;
+                    }
+                    continue;
+                }
+                if(this.mayBlock(other, at)) {
+                    return true;
+                }
+            }
+            else if(kind === 'VariableDeclaration') {
+                const initializer = other.bindings.shape.initializer(at);
+                if(
+                    initializer >= 0 &&
+                    ['FunctionExpression', 'ArrowFunction'].includes(other.kind(other.skip(initializer)))
+                ) {
+                    if(this.mayBlock(other, other.skip(initializer))) {
+                        return true;
+                    }
+                    continue;
+                }
+                return true;
+            }
+            else if(['ClassDeclaration', 'ClassExpression'].includes(kind)) {
+                if(this.mayBlock(other, at)) {
+                    return true;
+                }
+            }
+            else {
+                return true;
+            }
+        }
+        return false;
+    }
+    handsOnMayBlock(tools: Tools, index: number): boolean {
+        const argument = tools.skip(index);
+        if(['FunctionExpression', 'ArrowFunction'].includes(tools.kind(argument))) {
+            return this.mayBlock(tools, argument);
+        }
+        if(tools.kind(argument) === 'Identifier') {
+            const symbol = tools.symbol(argument);
+            if(symbol.present && (symbol.flags & 16) !== 0) {
+                return this.declarationMayBlock(tools, argument, tools.bindings.rules.parser.node(argument).text);
+            }
+        }
+        return false;
+    }
+    callMayBlock(tools: Tools, index: number): boolean {
+        if(tools.kind(index) === 'CallExpression' && tools.kind(tools.child(index, 0)) === 'ImportKeyword') {
+            return true;
+        }
+        if(
+            tools.kind(index) !== 'TaggedTemplateExpression' &&
+            tools.args(index).some((argument) => this.handsOnMayBlock(tools, argument))
+        ) {
+            return true;
+        }
+        const callee = tools.skip(tools.child(index, 0));
+        if(['FunctionExpression', 'ArrowFunction'].includes(tools.kind(callee))) {
+            return this.mayBlock(tools, callee);
+        }
+        const name =
+            tools.kind(callee) === 'Identifier'
+                ? callee
+                : tools.kind(callee) === 'PropertyAccessExpression'
+                  ? tools.child(callee, 1)
+                  : -1;
+        return name < 0 || this.declarationMayBlock(tools, name, tools.bindings.rules.parser.node(name).text);
+    }
+    argumentsMayBlock(index: number): boolean {
+        const tools = this.tools;
+        if(tools.kind(index) === 'TaggedTemplateExpression') {
+            return false;
+        }
+        const stack = tools.args(index).slice();
+        while(stack.length > 0) {
+            const at = stack.pop() ?? -1;
+            if(at < 0 || this.functionBody(tools, at)) {
+                continue;
+            }
+            if(tools.kind(at) === 'AwaitExpression' || (this.callLike(tools, at) && this.callMayBlock(tools, at))) {
+                return true;
+            }
+            for(const child of tools.bindings.rules.parser.node(at).children) {
+                stack.push(child);
+            }
+        }
+        return false;
+    }
+    topLevelMayBlock(file: string): boolean {
+        const tools = new Tools(this.tools.world.bindingsFor(file), this.tools.world);
+        const stack = tools.bindings.rules.parser.node(tools.bindings.rules.parser.nodes.length - 1).children.slice();
+        while(stack.length > 0) {
+            const at = stack.pop() ?? -1;
+            if(at < 0 || this.functionBody(tools, at)) {
+                continue;
+            }
+            if(this.callLike(tools, at) && this.callMayBlock(tools, at)) {
+                return true;
+            }
+            for(const child of tools.bindings.rules.parser.node(at).children) {
+                stack.push(child);
+            }
+        }
+        return false;
+    }
+    importsBlock(file: string): boolean {
+        const queue = [file];
+        const empty: string[] = [];
+        const seen = new Set<string>(queue);
+        for(let at = 0; at < queue.length; at++) {
+            for(const next of this.edges.get(queue[at] ?? '') ?? empty) {
+                if(seen.has(next)) {
+                    continue;
+                }
+                seen.add(next);
+                queue.push(next);
+                if(this.canBlock.has(next)) {
+                    const source = this.tools.world.sources.get(next);
+                    if(source === undefined || source.declaration || this.topLevelMayBlock(next)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    inRun(index: number, root: number): boolean {
+        let current = this.tools.parent(index);
+        while(current >= 0 && current !== root) {
+            if(this.functionBody(this.tools, current)) {
+                return false;
+            }
+            current = this.tools.parent(current);
+        }
+        return true;
+    }
+    analyze(root: number, started: number[]): number[] {
+        const tools = this.tools;
+        const facts = this.facts;
+        const blocks = syntaxFlow(tools, root);
+        const recorded = new Set<number>();
+        for(const block of blocks) {
+            for(const event of block.events) {
+                const index = event.node;
+                if(
+                    event.kind === 'expression' &&
+                    !facts.inCatchBinding(index, root) &&
+                    (facts.exit(index) ||
+                        (this.ordered &&
+                            (tools.kind(index) === 'AwaitExpression' ||
+                                (this.callLike(tools, index) && this.callMayBlock(tools, index)))))
+                ) {
+                    recorded.add(index);
+                }
+            }
+        }
+        for(let index = 0; index < tools.bindings.rules.parser.nodes.length; index++) {
+            if(!tools.bindings.contains(root, index)) {
+                continue;
+            }
+            if(
+                !recorded.has(index) &&
+                ((facts.exit(index) && facts.rootOf(index) === root) ||
+                    (this.ordered &&
+                        this.inRun(index, root) &&
+                        (tools.kind(index) === 'AwaitExpression' ||
+                            (this.callLike(tools, index) && this.callMayBlock(tools, index)))))
+            ) {
+                const empty: number[] = [];
+                return empty;
+            }
+        }
+        const reported = new Set<number>();
+        const seen = new Set<string>(['0:']);
+        const queue = [new FlowPosition(0, [])];
+        for(let at = 0; at < queue.length; at++) {
+            const current = queue[at];
+            if(current === undefined) {
+                continue;
+            }
+            const block = blocks[current.block];
+            if(block === undefined) {
+                continue;
+            }
+            let state = current.state.slice();
+            let ended = false;
+            for(const event of block.events) {
+                const index = event.node;
+                if(event.kind === 'statement') {
+                    if(tools.kind(index) === 'Block' && tools.kind(tools.parent(index)) === 'CatchClause') {
+                        state = facts.entering(state, tools.parent(tools.parent(index)));
+                    }
+                    if(
+                        this.ordered &&
+                        ((tools.kind(index) === 'ForOfStatement' &&
+                            tools.bindings.rules.parser
+                                .node(index)
+                                .children.some((child) => tools.kind(child) === 'AwaitKeyword')) ||
+                            (tools.kind(index) === 'VariableStatement' &&
+                                tools.bindings.rules.parser.node(tools.child(index, 0)).semantic === '6'))
+                    ) {
+                        ended = true;
+                        break;
+                    }
+                }
+                if(event.kind !== 'expression' || facts.inCatchBinding(index, root)) {
+                    continue;
+                }
+                if(tools.kind(index) === 'AwaitExpression') {
+                    if(this.ordered) {
+                        ended = true;
+                        break;
+                    }
+                    continue;
+                }
+                if(!this.callLike(tools, index)) {
+                    continue;
+                }
+                if(facts.exit(index)) {
+                    if(state.length > 0) {
+                        reported.add(index);
+                    }
+                    ended = true;
+                    break;
+                }
+                if(facts.write(index) && !facts.holdsExit(index)) {
+                    state = facts.with(state, facts.chain(index, root));
+                }
+                const functions = this.started(index);
+                if(!this.ordered || functions.runs.length === 0 || !this.argumentsMayBlock(index)) {
+                    for(const functionIndex of functions.runs) {
+                        if(!started.includes(functionIndex)) {
+                            started.push(functionIndex);
+                        }
+                    }
+                }
+                if(!this.ordered) {
+                    for(const functionIndex of functions.handsOn) {
+                        if(!started.includes(functionIndex)) {
+                            started.push(functionIndex);
+                        }
+                    }
+                }
+                if(this.ordered && this.callMayBlock(tools, index)) {
+                    ended = true;
+                    break;
+                }
+            }
+            if(ended) {
+                continue;
+            }
+            for(const successor of block.successors) {
+                if(!(blocks[successor]?.reachable ?? false)) {
+                    continue;
+                }
+                const key = `${successor}:${state.join('|')}`;
+                if(seen.has(key)) {
+                    continue;
+                }
+                seen.add(key);
+                queue.push(new FlowPosition(successor, state));
+            }
+        }
+        const result: number[] = [];
+        for(const node of reported) {
+            result.push(node);
+        }
+        return result;
+    }
+    run(): void {
+        const tools = this.tools;
+        const exitRoots = new Set<number>();
+        const writeRoots = new Set<number>();
+        let root = -1;
+        for(let index = 0; index < tools.bindings.rules.parser.nodes.length; index++) {
+            if(tools.kind(index) === 'SourceFile') {
+                root = index;
+            }
+            if(this.facts.exit(index)) {
+                exitRoots.add(this.facts.rootOf(index));
+            }
+            else if(this.facts.write(index)) {
+                writeRoots.add(this.facts.rootOf(index));
+            }
+        }
+        let candidate = false;
+        for(const at of exitRoots) {
+            if(writeRoots.has(at)) {
+                candidate = true;
+            }
+        }
+        if(root < 0 || !candidate) {
+            return;
+        }
+        this.index(root);
+        const shebang = tools.bindings.rules.scanner.text.startsWith('#!');
+        if(!shebang && this.imported.has(tools.bindings.rules.path)) {
+            return;
+        }
+        this.ordered = this.canBlock.has(tools.bindings.rules.path);
+        if(this.ordered && this.importsBlock(tools.bindings.rules.path)) {
+            return;
+        }
+        const queued = new Set<number>([root]);
+        const queue = [root];
+        const exits = new Set<number>();
+        for(let at = 0; at < queue.length; at++) {
+            const started: number[] = [];
+            for(const exit of this.analyze(queue[at] ?? -1, started)) {
+                exits.add(exit);
+            }
+            for(const functionIndex of started) {
+                if(!queued.has(functionIndex)) {
+                    queued.add(functionIndex);
+                    queue.push(functionIndex);
+                }
+            }
+        }
+        const found: number[] = [];
+        for(const exit of exits) {
+            found.push(exit);
+        }
+        found.sort(
+            (left, right) => tools.bindings.rules.parser.node(left).pos - tools.bindings.rules.parser.node(right).pos,
+        );
+        if(found.length === 0) {
+            return;
+        }
+        const reason = shebang ? 'it starts with `#!`' : 'nothing in the program imports it';
+        const count = found.length === 1 ? '' : `, the first of ${found.length} such exits in this file`;
+        tools.report(
+            'correctness-require-blocking-standard-streams',
+            'exitBeforeBlockingStandardStreams',
+            MESSAGE.replace('<<processReason>>', reason).replace('<<exitCount>>', count),
+            found[0] ?? -1,
+        );
+    }
+}
+const MESSAGE =
+    "This file runs as a process (<<processReason>>), and this `process.exit()` runs after a write to stdout or stderr before the process has called `blockStandardStreams()`<<exitCount>>. Node writes to a pipe asynchronously, and `process.exit()` does not wait: a reader piping this process gets the output cut off (measured: 65,536 of 1 MiB), with exit status 0 and no error. Call Nexus's `blockStandardStreams()` (`source/system/StandardStreams`) before anything that can exit: first in the module, or first in the main it runs.";

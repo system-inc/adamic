@@ -1,0 +1,45 @@
+import { panic } from 'adamic';
+import { Frames, header } from '../frames.ts';
+import type { Tools } from './tools.a';
+export class FlowEvent {
+    readonly kind: string;
+    readonly node: number;
+    constructor(kind: string, node: number) {
+        this.kind = kind;
+        this.node = node;
+    }
+}
+export class FlowBlock {
+    readonly reachable: boolean;
+    readonly events: readonly FlowEvent[];
+    readonly successors: readonly number[];
+    constructor(reachable: boolean, events: readonly FlowEvent[], successors: readonly number[]) {
+        this.reachable = reachable;
+        this.events = events;
+        this.successors = successors;
+    }
+}
+export function syntaxFlow(tools: Tools, root: number): FlowBlock[] {
+    const frames = new Frames(tools.bindings.rules.ask(root, 'wave-27-syntax-flow'));
+    header(frames, 'wave-27-syntax-flow');
+    const result: FlowBlock[] = [];
+    const length = frames.natural();
+    for(let block = 0; block < length; block++) {
+        const reachable = frames.yes();
+        const count = frames.natural();
+        const events: FlowEvent[] = [];
+        for(let at = 0; at < count; at++) {
+            const kind = frames.field();
+            const nodeKind = frames.field();
+            const start = frames.natural();
+            const end = frames.natural();
+            const node =
+                tools.bindings.spans.get(`${nodeKind}:${start}:${end}`) ?? panic('flow event absent from Adamic tree');
+            events.push(new FlowEvent(kind, node));
+        }
+        const successors = frames.ids();
+        result.push(new FlowBlock(reachable, events, successors));
+    }
+    frames.end();
+    return result;
+}

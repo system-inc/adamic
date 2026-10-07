@@ -1,0 +1,89 @@
+import { panic, readTextFile } from 'adamic';
+import { Parser } from '../../../typescript/parser/parser.ts';
+import { Scanner } from '../../../typescript/scanner/scanner.ts';
+import { UnaryMinus, byteOffsets } from '../unary_minus.ts';
+import { Rules } from '../rules.ts';
+import { Bindings } from '../bindings.ts';
+import { Frames, header } from '../frames.ts';
+export class ModuleEdge {
+    readonly kind: string;
+    readonly typeOnly: boolean;
+    readonly literal: boolean;
+    readonly target: string;
+    constructor(kind: string, typeOnly: boolean, literal: boolean, target: string) {
+        this.kind = kind;
+        this.typeOnly = typeOnly;
+        this.literal = literal;
+        this.target = target;
+    }
+}
+export class ModuleSource {
+    readonly file: string;
+    readonly declaration: boolean;
+    readonly external: boolean;
+    readonly text: string;
+    readonly edges: readonly ModuleEdge[];
+    constructor(file: string, declaration: boolean, external: boolean, text: string, edges: readonly ModuleEdge[]) {
+        this.file = file;
+        this.declaration = declaration;
+        this.external = external;
+        this.text = text;
+        this.edges = edges;
+    }
+}
+export class World {
+    readonly program: number;
+    readonly bindings = new Map<string, Bindings>();
+    readonly sources = new Map<string, ModuleSource>();
+    ready = false;
+    constructor(program: number) {
+        this.program = program;
+    }
+    bindingsFor(path: string): Bindings {
+        if(!this.bindings.has(path)) {
+            const stored = this.sources.get(path);
+            let text = stored?.text ?? '';
+            if(stored === undefined) {
+                const source = readTextFile(path);
+                if(source.kind === 'Error') {
+                    panic(source.message);
+                }
+                text = source.text;
+            }
+            const parser = new Parser(text, path);
+            const scanner = new Scanner(text);
+            const offsets = byteOffsets(text);
+            const unary = new UnaryMinus(this.program, path, parser, scanner, offsets);
+            const rules = new Rules(this.program, path, parser, scanner, offsets, unary);
+            const root = parser.file();
+            for(const _node of parser.nodes) {
+                rules.parents.push(-1);
+            }
+            rules.links(root, -1);
+            this.bindings.set(path, new Bindings(rules));
+        }
+        return this.bindings.get(path) ?? panic('missing source bindings');
+    }
+    load(bindings: Bindings, root: number): void {
+        if(this.ready) {
+            return;
+        }
+        const frames = new Frames(bindings.rules.ask(root, 'wave-27-module-sources'));
+        header(frames, 'wave-27-module-sources');
+        const length = frames.natural();
+        for(let at = 0; at < length; at++) {
+            const file = frames.field();
+            const declaration = frames.yes();
+            const external = frames.yes();
+            const text = frames.field();
+            const count = frames.natural();
+            const edges: ModuleEdge[] = [];
+            for(let edge = 0; edge < count; edge++) {
+                edges.push(new ModuleEdge(frames.field(), frames.yes(), frames.yes(), frames.field()));
+            }
+            this.sources.set(file, new ModuleSource(file, declaration, external, text, edges));
+        }
+        frames.end();
+        this.ready = true;
+    }
+}

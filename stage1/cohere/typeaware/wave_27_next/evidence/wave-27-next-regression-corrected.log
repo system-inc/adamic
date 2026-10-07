@@ -1,0 +1,63 @@
+=== RUN   TestBridge
+    bridge_test.go:72: C ABI: 100 queries, outputs survive release, stale and zero handles rejected, second handle distinct; "世界🌍"
+    bridge_test.go:77: input length off by one: ASan heap-buffer-overflow
+    bridge_test.go:90: build, C and JavaScript commands refuse unlinked checker calls
+    bridge_test.go:149: go: tsgo: load_ns=44192934 query_ns=17293330 queries=162
+    bridge_test.go:154: oracle: 162 positions across 1 files, 3261 bytes identical under ASan/UBSan/LSan
+    bridge_test.go:156: native-round-1: tsgo: load_ns=63057670 query_ns=798128 queries=162 first_query_ns=78147 run_ns=1141371
+    bridge_test.go:157: go-round-1: tsgo: load_ns=46279515 query_ns=26306542 queries=162
+    bridge_test.go:156: native-round-2: tsgo: load_ns=74484432 query_ns=893105 queries=162 first_query_ns=77126 run_ns=1179129
+    bridge_test.go:157: go-round-2: tsgo: load_ns=56890919 query_ns=25304865 queries=162
+    bridge_test.go:156: native-round-3: tsgo: load_ns=67521552 query_ns=682442 queries=162 first_query_ns=65609 run_ns=913037
+    bridge_test.go:157: go-round-3: tsgo: load_ns=31854104 query_ns=15183737 queries=162
+    bridge_test.go:197: output string length off by one: ASan heap-buffer-overflow
+    bridge_test.go:207: released handle kept live: stale-handle assertion catches it
+    bridge_test.go:217: type from source-file position: oracle mismatch at byte 6
+    bridge_test.go:224: link opt-in guard removed: refusal test catches it
+    bridge_test.go:235: C output free removed: LeakSanitizer detects the leaked buffers
+    bridge_test.go:273: region probe: Go and native answer 6; adamic: counts: allocations 9 frees 8 retains 6 releases 14 peak 8 regions 1
+    bridge_test.go:283: region entry allocates on heap: LeakSanitizer catches the unowned result
+--- PASS: TestBridge (95.58s)
+=== RUN   TestTSGoRequiresLink
+--- PASS: TestTSGoRequiresLink (0.04s)
+PASS
+ok  	github.com/system-inc/adamic/bridge/tsgo	95.635s
+=== RUN   TestCoverageCheckerQuestions
+--- PASS: TestCoverageCheckerQuestions (0.03s)
+=== RUN   TestFactEncoding
+=== PAUSE TestFactEncoding
+=== RUN   TestShapeAndNameFacts
+=== PAUSE TestShapeAndNameFacts
+=== RUN   TestExactIndexMatchesCompilerNodes
+=== PAUSE TestExactIndexMatchesCompilerNodes
+=== RUN   TestAdamicRootKeepsConfigDeclarations
+=== PAUSE TestAdamicRootKeepsConfigDeclarations
+=== CONT  TestFactEncoding
+--- PASS: TestFactEncoding (0.00s)
+=== CONT  TestShapeAndNameFacts
+=== CONT  TestAdamicRootKeepsConfigDeclarations
+=== CONT  TestExactIndexMatchesCompilerNodes
+--- PASS: TestShapeAndNameFacts (0.03s)
+--- PASS: TestExactIndexMatchesCompilerNodes (0.13s)
+--- PASS: TestAdamicRootKeepsConfigDeclarations (0.16s)
+PASS
+ok  	github.com/system-inc/adamic/bridge/tsgo/checker	0.203s
+=== RUN   TestWave27AgreementAndMutants
+    wave_27_test.go:84: controls: 18437 identical finding bytes; findings 39
+    wave_27_test.go:92: controls-asan: 18437 identical finding bytes; findings 39
+    wave_27_test.go:134: orm mutant: exit 0, empty stderr, Go byte oracle catches byte 69
+    wave_27_test.go:134: serializable mutant: exit 0, empty stderr, Go byte oracle catches byte 5994
+    wave_27_test.go:134: array mutant: exit 0, empty stderr, Go byte oracle catches byte 9152
+    wave_27_test.go:144: repository: 18485 identical finding bytes; findings 0
+    wave_27_test.go:145: repository-asan: 18485 identical finding bytes; findings 0
+    wave_27_test.go:153: repository process native=286.746271ms Go=288.672532ms; native tsgo: load_ns=91819349 query_ns=0 queries=0 first_query_ns=0 run_ns=186463318
+         Go cohere: load_ns=77062804 rule_ns=5781585 run_ns=192427308
+    wave_27_test.go:144: compiler: 5934 identical finding bytes; findings 0
+    wave_27_test.go:145: compiler-asan: 5934 identical finding bytes; findings 0
+    wave_27_test.go:153: compiler process native=1.963450499s Go=475.816344ms; native tsgo: load_ns=614982551 query_ns=0 queries=0 first_query_ns=0 run_ns=1322425719
+         Go cohere: load_ns=345289159 rule_ns=2084704 run_ns=101326497
+    wave_27_test.go:165: released handle: panic 70, invalid or released checker handle
+    wave_27_test.go:170: released-registry mutant exits 0, caught by required panic 70
+--- PASS: TestWave27AgreementAndMutants (89.13s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	89.136s

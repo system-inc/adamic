@@ -1,0 +1,234 @@
+import type { Tools } from './tools.a';
+export class UnclearedRaceTimeout {
+    readonly tools: Tools;
+    constructor(tools: Tools) {
+        this.tools = tools;
+    }
+    promise(index: number): number {
+        const tools = this.tools;
+        let element = tools.skip(index);
+        if(tools.kind(element) === 'Identifier') {
+            const facts = tools.symbol(element);
+            if(facts.own !== facts.identity || facts.declarations.length !== 1) {
+                return -1;
+            }
+            const declaration = facts.declarations[0];
+            if(
+                declaration === undefined ||
+                declaration.file !== tools.bindings.rules.path ||
+                (declaration.ancestors[0]?.kind ?? '') !== 'VariableDeclaration'
+            ) {
+                return -1;
+            }
+            const declarations = tools.bindings.declarations(element);
+            if(declarations.length !== 1) {
+                return -1;
+            }
+            const at = declarations[0] ?? -1;
+            if(!['2', '6'].includes(tools.bindings.rules.parser.node(tools.parent(at)).semantic)) {
+                return -1;
+            }
+            const initializer = tools.bindings.shape.initializer(at);
+            if(initializer < 0) {
+                return -1;
+            }
+            element = tools.skip(initializer);
+        }
+        if(tools.kind(element) !== 'NewExpression') {
+            return -1;
+        }
+        const constructor = tools.skip(tools.child(element, 0));
+        return tools.kind(constructor) === 'Identifier' &&
+            tools.bindings.rules.parser.node(constructor).text === 'Promise' &&
+            tools.library(constructor)
+            ? element
+            : -1;
+    }
+    timer(index: number): boolean {
+        const tools = this.tools;
+        const callee = tools.skip(tools.child(index, 0));
+        let name = callee;
+        if(tools.kind(callee) === 'PropertyAccessExpression') {
+            const receiver = tools.skip(tools.child(callee, 0));
+            if(
+                tools.kind(receiver) !== 'Identifier' ||
+                !['globalThis', 'window'].includes(tools.bindings.rules.parser.node(receiver).text)
+            ) {
+                return false;
+            }
+            name = tools.child(callee, 1);
+        }
+        else if(tools.kind(callee) !== 'Identifier') {
+            return false;
+        }
+        if(tools.kind(name) !== 'Identifier' || tools.bindings.rules.parser.node(name).text !== 'setTimeout') {
+            return false;
+        }
+        const symbol = tools.symbol(name);
+        if(!symbol.present || symbol.own !== symbol.identity || symbol.declarations.length === 0) {
+            return false;
+        }
+        return symbol.declarations.every((declaration) => {
+            if(!declaration.declarationFile) {
+                return false;
+            }
+            const owner = declaration.ancestors[1];
+            if(owner === undefined) {
+                return false;
+            }
+            return owner.kind === 'SourceFile'
+                ? !declaration.external
+                : owner.kind === 'ModuleBlock'
+                  ? (declaration.ancestors[2]?.global ?? false)
+                  : owner.kind === 'InterfaceDeclaration' &&
+                    owner.name === 'WindowOrWorkerGlobalScope' &&
+                    declaration.library;
+        });
+    }
+    assignmentTarget(index: number): boolean {
+        const tools = this.tools;
+        const outer = tools.outer(index);
+        const parent = tools.parent(outer);
+        return (
+            tools.kind(parent) === 'BinaryExpression' &&
+            tools.kind(tools.child(parent, 1)) === 'EqualsToken' &&
+            tools.child(parent, 0) === outer
+        );
+    }
+    neverRead(index: number): boolean {
+        const tools = this.tools;
+        const subject = tools.symbol(index);
+        if(subject.declarations.length !== 1 || subject.own !== subject.identity) {
+            return false;
+        }
+        const declaration = subject.declarations[0];
+        if(
+            declaration === undefined ||
+            declaration.file !== tools.bindings.rules.path ||
+            (declaration.ancestors[0]?.kind ?? '') !== 'VariableDeclaration'
+        ) {
+            return false;
+        }
+        const declarations = tools.bindings.declarations(index);
+        const declared = tools.bindings.shape.name(declarations[0] ?? -1);
+        const name = tools.bindings.rules.parser.node(declared).text;
+        for(let at = 0; at < tools.bindings.rules.parser.nodes.length; at++) {
+            const node = tools.bindings.rules.parser.node(at);
+            if(node.kind !== 'Identifier' || node.text !== name || at === declared) {
+                continue;
+            }
+            // Shorthand value symbols are distinct from their property symbols.
+            if(this.sameBinding(at, subject.own) && !this.assignmentTarget(at)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    sameBinding(index: number, identity: number): boolean {
+        return this.tools.bindings.declarations(index).some((at) => {
+            const name = this.tools.bindings.shape.name(at);
+            return name >= 0 && this.tools.symbol(name).own === identity;
+        });
+    }
+    lost(executor: number, call: number): boolean {
+        const tools = this.tools;
+        const outer = tools.outer(call);
+        const parent = tools.parent(outer);
+        const kind = tools.kind(parent);
+        if(kind === 'ExpressionStatement' || kind === 'VoidExpression' || parent === executor) {
+            return true;
+        }
+        if(kind === 'VariableDeclaration' && tools.bindings.shape.initializer(parent) === outer) {
+            const name = tools.bindings.shape.name(parent);
+            return tools.kind(name) === 'Identifier' && this.neverRead(name);
+        }
+        if(
+            kind === 'BinaryExpression' &&
+            tools.kind(tools.child(parent, 1)) === 'EqualsToken' &&
+            tools.child(parent, 2) === outer
+        ) {
+            const target = tools.skip(tools.child(parent, 0));
+            return (
+                tools.kind(target) === 'Identifier' &&
+                tools.kind(tools.parent(tools.outer(parent))) === 'ExpressionStatement' &&
+                this.neverRead(target)
+            );
+        }
+        return false;
+    }
+    visit(index: number, executor: number): void {
+        const tools = this.tools;
+        if(
+            tools.bindings.functionKind(tools.kind(index)) ||
+            [
+                'ClassDeclaration',
+                'ClassExpression',
+                'CallSignature',
+                'ConstructSignature',
+                'MethodSignature',
+                'FunctionType',
+                'ConstructorType',
+            ].includes(tools.kind(index))
+        ) {
+            return;
+        }
+        if(tools.kind(index) === 'CallExpression' && this.timer(index) && this.lost(executor, index)) {
+            tools.report('correctness-no-uncleared-race-timeout', 'unclearedRaceTimeout', MESSAGE, index);
+        }
+        for(const child of tools.bindings.rules.parser.node(index).children) {
+            this.visit(child, executor);
+        }
+    }
+    run(): void {
+        const tools = this.tools;
+        for(let index = 0; index < tools.bindings.rules.parser.nodes.length; index++) {
+            if(tools.kind(index) !== 'CallExpression') {
+                continue;
+            }
+            const callee = tools.skip(tools.child(index, 0));
+            if(tools.kind(callee) !== 'PropertyAccessExpression') {
+                continue;
+            }
+            const name = tools.child(callee, 1);
+            if(tools.kind(name) !== 'Identifier' || tools.bindings.rules.parser.node(name).text !== 'race') {
+                continue;
+            }
+            const symbol = tools.symbol(name);
+            if(
+                !symbol.present ||
+                symbol.own !== symbol.identity ||
+                symbol.declarations.length === 0 ||
+                !symbol.declarations.every(
+                    (declaration) =>
+                        declaration.library &&
+                        (declaration.ancestors[1]?.kind ?? '') === 'InterfaceDeclaration' &&
+                        (declaration.ancestors[1]?.name ?? '') === 'PromiseConstructor',
+                )
+            ) {
+                continue;
+            }
+            const first = tools.args(index)[0] ?? -1;
+            const array = first < 0 ? -1 : tools.skip(first);
+            if(tools.kind(array) !== 'ArrayLiteralExpression') {
+                continue;
+            }
+            for(const element of tools.bindings.rules.parser.node(array).children) {
+                const promise = this.promise(element);
+                if(promise < 0) {
+                    continue;
+                }
+                const argument = tools.args(promise)[0] ?? -1;
+                const executor = argument < 0 ? -1 : tools.skip(argument);
+                if(!['ArrowFunction', 'FunctionExpression'].includes(tools.kind(executor))) {
+                    continue;
+                }
+                const body = tools.body(executor);
+                if(body >= 0) {
+                    this.visit(body, executor);
+                }
+            }
+        }
+    }
+}
+const MESSAGE =
+    'This `setTimeout` arms the losing side of a `Promise.race`, and its handle is thrown away, so nothing can ever clear it. When the work wins the race, the timer stays armed for its whole duration: in Node it holds the process open (a batch that finished its last item sits until the timeout elapses), and its callback still runs, rejecting a promise nobody is waiting on. Keep the handle (`timer = setTimeout(...)`) and `clearTimeout(timer)` in a `finally` around the race.';

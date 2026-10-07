@@ -1,0 +1,64 @@
+import { panic } from 'adamic';
+import { Bindings } from '../bindings.ts';
+import { Diagnostic } from '../diagnostic.ts';
+import { declarationAncestry } from './wave_27_declaration_ancestry.a';
+import type { World } from './wave_27_module_sources.a';
+import type { Ancestry } from './wave_27_declaration_ancestry.a';
+export class Tools {
+    readonly bindings: Bindings;
+    readonly world: World;
+    readonly symbols = new Map<number, Ancestry>();
+    constructor(bindings: Bindings, world: World) {
+        this.bindings = bindings;
+        this.world = world;
+    }
+    kind(index: number): string {
+        return index < 0 ? '' : this.bindings.rules.parser.node(index).kind;
+    }
+    child(index: number, at: number): number {
+        return this.bindings.rules.parser.node(index).children[at] ?? -1;
+    }
+    parent(index: number): number {
+        return this.bindings.parent(index);
+    }
+    skip(index: number): number {
+        return this.bindings.rules.skip(index);
+    }
+    outer(index: number): number {
+        let current = index;
+        while(this.kind(this.parent(current)) === 'ParenthesizedExpression') {
+            current = this.parent(current);
+        }
+        return current;
+    }
+    args(index: number): number[] {
+        const node = this.bindings.rules.parser.node(index);
+        return node.children.slice(node.children.length - node.list);
+    }
+    body(index: number): number {
+        const node = this.bindings.rules.parser.node(index);
+        return node.children[node.children.length - 1] ?? -1;
+    }
+    symbol(index: number): Ancestry {
+        if(!this.symbols.has(index)) {
+            this.symbols.set(index, declarationAncestry(this.bindings.rules, index));
+        }
+        return this.symbols.get(index) ?? panic('missing ancestry');
+    }
+    library(index: number): boolean {
+        const symbol = this.symbol(index);
+        return (
+            symbol.present &&
+            symbol.declarations.length > 0 &&
+            symbol.declarations.some((declaration) => declaration.library) &&
+            symbol.own === symbol.identity
+        );
+    }
+    report(rule: string, id: string, message: string, index: number): void {
+        const rules = this.bindings.rules;
+        const node = rules.parser.node(index);
+        rules.findings.push(
+            new Diagnostic(rule, id, message, rules.byte(rules.start(node)), rules.byte(node.end), 'nexus/'),
+        );
+    }
+}

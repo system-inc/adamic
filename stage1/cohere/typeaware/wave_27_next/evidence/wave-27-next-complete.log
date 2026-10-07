@@ -1,0 +1,30 @@
+controls 60514 identical bytes findings 98
+controls-asan 60514 identical bytes findings 98
+process mutant: exit 0, empty stderr; Go byte oracle catches byte 84
+race mutant: exit 0, empty stderr; Go byte oracle catches byte 52486
+blocking mutant: exit 0, empty stderr; Go byte oracle catches byte 585
+wave-27-declaration-ancestry fact mutant: exit 0, empty stderr; Go bytes catch byte 60
+wave-27-syntax-flow fact mutant: exit 0, empty stderr; Go bytes catch byte 1330
+wave-27-call-declaration fact mutant: exit 0, empty stderr; Go bytes catch byte 12520
+wave-27-module-sources fact mutant: exit 0, empty stderr; Go bytes catch byte 42269
+wave-27-declaration-ancestry released handle: required panic 70
+wave-27-syntax-flow released handle: required panic 70
+wave-27-call-declaration released handle: required panic 70
+wave-27-module-sources released handle: required panic 70
+wave-27-declaration-ancestry retained-registry mutant: exit 0; required-panic check catches it
+wave-27-syntax-flow retained-registry mutant: exit 0; required-panic check catches it
+wave-27-call-declaration retained-registry mutant: exit 0; required-panic check catches it
+wave-27-module-sources retained-registry mutant: exit 0; required-panic check catches it
+repository 18485 identical bytes findings 0
+repository-asan 18485 identical bytes findings 0
+Traceback (most recent call last):
+  File "/workspace/adamic/stage1/cohere/typeaware/wave_27_next/validate.py", line 81, in <module>
+    corpus_manifest=Path(os.environ[setting]);compare(name,native,corpus_config,corpus_manifest);compare(name+'-asan',asan,corpus_config,corpus_manifest);populations.append((name,corpus_config,corpus_manifest))
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/stage1/cohere/typeaware/wave_27_next/validate.py", line 32, in compare
+    truth,_,_=run(label+'-go',[oracle,config,manifest]);got,err,_=run(label+'-native',[binary,config,manifest]);assert not err,(label,err)
+                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/stage1/cohere/typeaware/wave_27_next/validate.py", line 17, in run
+    if result.returncode!=expected:raise AssertionError((label,result.returncode,expected,err[-3000:]))
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('compiler-native', 70, 0, b'adamic: panic: Unhandled case in Node.Text: *ast.BindingPattern\n')

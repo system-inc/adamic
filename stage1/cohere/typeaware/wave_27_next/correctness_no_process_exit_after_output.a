@@ -1,0 +1,133 @@
+import type { Tools } from './tools.a';
+import { StreamFacts } from './stream_facts.a';
+import { syntaxFlow } from './wave_27_syntax_flow.a';
+export class FlowPosition {
+    readonly block: number;
+    readonly state: readonly string[];
+    constructor(block: number, state: readonly string[]) {
+        this.block = block;
+        this.state = state;
+    }
+}
+export class ProcessExitAfterOutput {
+    readonly tools: Tools;
+    readonly facts: StreamFacts;
+    constructor(tools: Tools) {
+        this.tools = tools;
+        this.facts = new StreamFacts(tools);
+    }
+    analyze(root: number, exits: readonly number[]): void {
+        const tools = this.tools;
+        const facts = this.facts;
+        const blocks = syntaxFlow(tools, root);
+        const recorded: number[] = [];
+        for(const block of blocks) {
+            for(const event of block.events) {
+                if(event.kind === 'expression' && facts.exit(event.node) && !facts.inCatchBinding(event.node, root)) {
+                    recorded.push(event.node);
+                }
+            }
+        }
+        if(exits.some((exit) => !recorded.includes(exit))) {
+            return;
+        }
+        const reported = new Set<number>();
+        const seen = new Set<string>(['0:']);
+        const queue = [new FlowPosition(0, [])];
+        for(let at = 0; at < queue.length; at++) {
+            const current = queue[at];
+            if(current === undefined) {
+                continue;
+            }
+            const block = blocks[current.block];
+            if(block === undefined) {
+                continue;
+            }
+            let state = current.state.slice();
+            let ended = false;
+            for(const event of block.events) {
+                const index = event.node;
+                if(
+                    event.kind === 'expression' &&
+                    tools.kind(index) === 'CallExpression' &&
+                    !facts.inCatchBinding(index, root)
+                ) {
+                    if(facts.exit(index)) {
+                        if(state.length > 0) {
+                            reported.add(index);
+                        }
+                        ended = true;
+                        break;
+                    }
+                    if(facts.writes(index) && !facts.holdsExit(index)) {
+                        state = facts.with(state, facts.chain(index, root));
+                    }
+                }
+                if(
+                    event.kind === 'statement' &&
+                    tools.kind(index) === 'Block' &&
+                    tools.kind(tools.parent(index)) === 'CatchClause'
+                ) {
+                    state = facts.entering(state, tools.parent(tools.parent(index)));
+                }
+            }
+            if(ended) {
+                continue;
+            }
+            for(const successor of block.successors) {
+                if(!(blocks[successor]?.reachable ?? false)) {
+                    continue;
+                }
+                const key = `${successor}:${state.join('|')}`;
+                if(seen.has(key)) {
+                    continue;
+                }
+                seen.add(key);
+                queue.push(new FlowPosition(successor, state));
+            }
+        }
+        for(const exit of exits) {
+            if(reported.has(exit)) {
+                tools.report('correctness-no-process-exit-after-output', 'exitAfterOutput', MESSAGE, exit);
+            }
+        }
+    }
+    run(): void {
+        const tools = this.tools;
+        const roots = new Map<number, number[]>();
+        for(let index = 0; index < tools.bindings.rules.parser.nodes.length; index++) {
+            if(!this.facts.exit(index)) {
+                continue;
+            }
+            const root = this.facts.rootOf(index);
+            if(root < 0) {
+                continue;
+            }
+            if(!roots.has(root)) {
+                roots.set(root, []);
+            }
+            const exits = roots.get(root);
+            if(exits !== undefined) {
+                exits.push(index);
+            }
+        }
+        for(const [root, exits] of roots) {
+            let wrote = false;
+            for(let index = 0; index < tools.bindings.rules.parser.nodes.length; index++) {
+                if(
+                    tools.kind(index) === 'CallExpression' &&
+                    this.facts.rootOf(index) === root &&
+                    this.facts.writes(index)
+                ) {
+                    wrote = true;
+                    break;
+                }
+            }
+            if(wrote) {
+                this.analyze(root, exits);
+            }
+        }
+    }
+}
+const MESSAGE =
+    'This calls `process.exit()` on a path that has already written to stdout or stderr in this function. `process.exit()` ends the process without waiting for writes still in flight, and a write to a pipe can be one: a reader piping this command (`| grep`, `execSync`, a spawned child) gets the output cut at 64 KB, with exit status 0 and no error. Set `process.exitCode = n` and return instead, so the process ends on its own once the output has drained.';

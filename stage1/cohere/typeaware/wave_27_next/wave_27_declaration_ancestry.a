@@ -1,0 +1,93 @@
+import type { Rules } from '../rules.ts';
+import { Frames, header } from '../frames.ts';
+export class Ancestor {
+    readonly kind: string;
+    readonly name: string;
+    readonly nameKind: string;
+    readonly flags: number;
+    readonly global: boolean;
+    constructor(kind: string, nameKind: string, name: string, flags: number, global: boolean) {
+        this.kind = kind;
+        this.nameKind = nameKind;
+        this.name = name;
+        this.flags = flags;
+        this.global = global;
+    }
+}
+export class AncestryDeclaration {
+    readonly file: string;
+    readonly declarationFile: boolean;
+    readonly library: boolean;
+    readonly external: boolean;
+    readonly start: number;
+    readonly end: number;
+    readonly ancestors: readonly Ancestor[];
+    constructor(
+        file: string,
+        declarationFile: boolean,
+        library: boolean,
+        external: boolean,
+        start: number,
+        end: number,
+        ancestors: readonly Ancestor[],
+    ) {
+        this.file = file;
+        this.declarationFile = declarationFile;
+        this.library = library;
+        this.external = external;
+        this.start = start;
+        this.end = end;
+        this.ancestors = ancestors;
+    }
+}
+export class Ancestry {
+    readonly own: number;
+    readonly identity: number;
+    readonly present: boolean;
+    readonly flags: number;
+    readonly declarations: readonly AncestryDeclaration[];
+    constructor(
+        own: number,
+        identity: number,
+        present: boolean,
+        flags: number,
+        declarations: readonly AncestryDeclaration[],
+    ) {
+        this.own = own;
+        this.identity = identity;
+        this.present = present;
+        this.flags = flags;
+        this.declarations = declarations;
+    }
+}
+export function declarationAncestry(rules: Rules, index: number): Ancestry {
+    const frames = new Frames(rules.ask(index, 'wave-27-declaration-ancestry'));
+    header(frames, 'wave-27-declaration-ancestry');
+    const own = frames.natural();
+    const identity = frames.natural();
+    const present = frames.yes();
+    let flags = 0;
+    const declarations: AncestryDeclaration[] = [];
+    if(present) {
+        flags = frames.natural();
+        const count = frames.natural();
+        for(let at = 0; at < count; at++) {
+            const file = frames.field();
+            const declarationFile = frames.yes();
+            const library = frames.yes();
+            const external = frames.yes();
+            const start = frames.natural();
+            const end = frames.natural();
+            const length = frames.natural();
+            const ancestors: Ancestor[] = [];
+            for(let level = 0; level < length; level++) {
+                ancestors.push(
+                    new Ancestor(frames.field(), frames.field(), frames.field(), frames.natural(), frames.yes()),
+                );
+            }
+            declarations.push(new AncestryDeclaration(file, declarationFile, library, external, start, end, ancestors));
+        }
+    }
+    frames.end();
+    return new Ancestry(own, identity, present, flags, declarations);
+}

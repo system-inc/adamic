@@ -1,0 +1,24 @@
+controls 62666 identical bytes findings 101
+controls-asan 62666 identical bytes findings 101
+repository 18485 identical bytes findings 0
+repository-asan 18485 identical bytes findings 0
+compiler 5934 identical bytes findings 0
+compiler-asan 5934 identical bytes findings 0
+process mutant: exit 0, empty stderr; Go byte oracle catches byte 85
+race mutant: exit 0, empty stderr; Go byte oracle catches byte 52549
+blocking mutant: exit 0, empty stderr; Go byte oracle catches byte 586
+wave-27-declaration-ancestry fact mutant: exit 0, empty stderr; Go bytes catch byte 61
+wave-27-syntax-flow fact mutant: exit 0, empty stderr; Go bytes catch byte 1333
+wave-27-call-declaration fact mutant: exit 0, empty stderr; Go bytes catch byte 12537
+wave-27-module-sources fact mutant: exit 0, empty stderr; Go bytes catch byte 42319
+Traceback (most recent call last):
+  File "/workspace/adamic/stage1/cohere/typeaware/wave_27_next/validate.py", line 71, in <module>
+    original=repo/'bridge/tsgo/checker'/file;text=original.read_text();assert text.count(before)==1,(name,before);mutant=art/(name+'-mutant.go');mutant.write_text(text.replace(before,after));overlay=art/(name+'-overlay.json');overlay.write_text(json.dumps({'Replace':{str(original):str(mutant)}}));mutantarchive=art/(name+'-mutant.a');lib(name+'-archive',mutantarchive,overlay=overlay);binary=art/(name+'-mutant');build(name+'-build',source/'suite.a',binary,mutantarchive);got,err,_=run(name+'-run',[binary,config,manifest]);assert not err and got!=truth,(name,err);offset=next((i for i,(x,y) in enumerate(zip(truth,got)) if x!=y),min(len(truth),len(got)));print(name,'fact mutant: exit 0, empty stderr; Go bytes catch byte',offset,flush=True)
+                                                                                                                                                                                                                                                                                                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/stage1/cohere/typeaware/wave_27_next/validate.py", line 29, in lib
+    args+=['./bridge/tsgo/archive'];run(label,args)
+                                    ^^^^^^^^^^^^^^^
+  File "/workspace/adamic/stage1/cohere/typeaware/wave_27_next/validate.py", line 17, in run
+    if result.returncode!=expected:raise AssertionError((label,result.returncode,expected,err[-3000:]))
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('ancestry-name-kind-archive', 1, 0, b'# github.com/system-inc/adamic/bridge/tsgo/checker\n../wave-27-scratch/next-corrected/ancestry-name-kind-mutant.go:44:11: declared and not used: nameKind\n')

@@ -1,0 +1,284 @@
+import { panic } from 'adamic';
+import { Tools } from './tools.a';
+import { callDeclaration } from './wave_27_call_declaration.a';
+export class StreamFacts {
+    readonly tools: Tools;
+    readonly writers = new Map<string, boolean>();
+    constructor(tools: Tools) {
+        this.tools = tools;
+    }
+    isRoot(index: number): boolean {
+        return (
+            this.tools.bindings.functionKind(this.tools.kind(index)) ||
+            ['SourceFile', 'ClassStaticBlockDeclaration'].includes(this.tools.kind(index)) ||
+            (this.tools.kind(index) === 'PropertyDeclaration' && this.tools.bindings.shape.initializer(index) >= 0)
+        );
+    }
+    rootOf(index: number): number {
+        const tools = this.tools;
+        let previous = index;
+        let decorator = -1;
+        let current = tools.parent(index);
+        while(current >= 0) {
+            const kind = tools.kind(current);
+            if(kind === 'Decorator') {
+                decorator = current;
+            }
+            if(kind === 'SourceFile') {
+                return current;
+            }
+            if(this.isRoot(current)) {
+                if(kind === 'PropertyDeclaration') {
+                    if(tools.bindings.shape.initializer(current) === previous) {
+                        return current;
+                    }
+                }
+                else if(kind === 'ClassStaticBlockDeclaration') {
+                    if(tools.body(current) === previous) {
+                        return current;
+                    }
+                }
+                else if(
+                    tools.bindings.shape.name(current) !== previous &&
+                    !(decorator >= 0 && (tools.parent(decorator) === current || tools.parent(decorator) === previous))
+                ) {
+                    return current;
+                }
+            }
+            previous = current;
+            current = tools.parent(current);
+        }
+        return -1;
+    }
+    member(index: number): number {
+        const tools = this.tools;
+        return tools.kind(index) === 'Identifier'
+            ? index
+            : tools.kind(index) === 'PropertyAccessExpression'
+              ? tools.child(index, 1)
+              : -1;
+    }
+    processMember(index: number): boolean {
+        const symbol = this.tools.symbol(index);
+        return (
+            symbol.present &&
+            symbol.declarations.length > 0 &&
+            symbol.declarations.every(
+                (declaration) =>
+                    declaration.declarationFile &&
+                    ['MethodSignature', 'PropertySignature'].includes(declaration.ancestors[0]?.kind ?? '') &&
+                    (declaration.ancestors[1]?.kind ?? '') === 'InterfaceDeclaration' &&
+                    (declaration.ancestors[1]?.name ?? '') === 'Process' &&
+                    (declaration.ancestors[2]?.kind ?? '') === 'ModuleBlock' &&
+                    (declaration.ancestors[3]?.kind ?? '') === 'ModuleDeclaration' &&
+                    (declaration.ancestors[3]?.name ?? '') === 'NodeJS' &&
+                    (declaration.ancestors[3]?.nameKind ?? '') === 'Identifier',
+            )
+        );
+    }
+    exit(index: number): boolean {
+        const tools = this.tools;
+        if(tools.kind(index) !== 'CallExpression') {
+            return false;
+        }
+        const name = this.member(tools.skip(tools.child(index, 0)));
+        return (
+            tools.kind(name) === 'Identifier' &&
+            tools.bindings.rules.parser.node(name).text === 'exit' &&
+            this.processMember(name)
+        );
+    }
+    globalConsole(index: number): boolean {
+        const symbol = this.tools.symbol(index);
+        return (
+            symbol.present &&
+            symbol.own === symbol.identity &&
+            symbol.declarations.length > 0 &&
+            symbol.declarations.every(
+                (declaration) =>
+                    declaration.declarationFile &&
+                    (declaration.ancestors[0]?.kind ?? '') === 'VariableDeclaration' &&
+                    (declaration.ancestors[1]?.kind ?? '') === 'VariableDeclarationList' &&
+                    (declaration.ancestors[2]?.kind ?? '') === 'VariableStatement' &&
+                    ((declaration.ancestors[3]?.kind ?? '') === 'SourceFile'
+                        ? !declaration.external
+                        : (declaration.ancestors[3]?.kind ?? '') === 'ModuleBlock' &&
+                          (declaration.ancestors[4]?.global ?? false)),
+            )
+        );
+    }
+    write(index: number): boolean {
+        const tools = this.tools;
+        if(tools.kind(index) !== 'CallExpression') {
+            return false;
+        }
+        const callee = tools.skip(tools.child(index, 0));
+        if(!['PropertyAccessExpression', 'ElementAccessExpression'].includes(tools.kind(callee))) {
+            return false;
+        }
+        const name = tools.skip(tools.child(callee, 1));
+        const member = tools.bindings.rules.parser.node(name).text;
+        if(tools.kind(callee) === 'ElementAccessExpression') {
+            if(tools.kind(name) !== 'StringLiteral') {
+                return false;
+            }
+        }
+        const receiver = tools.skip(tools.child(callee, 0));
+        if(
+            ['log', 'info', 'debug', 'warn', 'error', 'trace', 'table', 'dir', 'dirxml'].includes(member) &&
+            tools.kind(receiver) === 'Identifier' &&
+            tools.bindings.rules.parser.node(receiver).text === 'console'
+        ) {
+            return this.globalConsole(receiver);
+        }
+        if(member !== 'write') {
+            return false;
+        }
+        const stream = this.member(receiver);
+        return (
+            tools.kind(stream) === 'Identifier' &&
+            ['stdout', 'stderr'].includes(tools.bindings.rules.parser.node(stream).text) &&
+            this.processMember(stream)
+        );
+    }
+    holdsExit(index: number): boolean {
+        for(const child of this.tools.bindings.rules.parser.node(index).children) {
+            if(this.isRoot(child)) {
+                continue;
+            }
+            if(this.exit(child) || this.holdsExit(child)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    inCatchBinding(index: number, root: number): boolean {
+        const tools = this.tools;
+        let previous = index;
+        let current = tools.parent(index);
+        while(current >= 0 && current !== root) {
+            if(
+                tools.kind(current) === 'CatchClause' &&
+                tools.child(current, 0) === previous &&
+                tools.kind(previous) === 'VariableDeclaration'
+            ) {
+                return true;
+            }
+            previous = current;
+            current = tools.parent(current);
+        }
+        return false;
+    }
+    followed(index: number): number {
+        const tools = this.tools;
+        const declaration = callDeclaration(tools.bindings.rules, index);
+        if(
+            !declaration.present ||
+            !['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction', 'MethodDeclaration'].includes(
+                declaration.kind,
+            ) ||
+            !declaration.body ||
+            (declaration.file !== tools.bindings.rules.path && !declaration.external) ||
+            (declaration.flags & 1) !== 0 ||
+            (declaration.returns & 131072) !== 0
+        ) {
+            return -1;
+        }
+        if((declaration.flags & 2) !== 0 && tools.kind(tools.parent(tools.outer(index))) !== 'AwaitExpression') {
+            return -1;
+        }
+        if(declaration.file !== tools.bindings.rules.path) {
+            return -2;
+        }
+        return (
+            tools.bindings.spans.get(`${declaration.kind}:${declaration.start}:${declaration.end}`) ??
+            panic('resolved callee absent from Adamic tree')
+        );
+    }
+    bodyWrites(index: number): boolean {
+        const tools = this.tools;
+        let wrote = false;
+        const stack = [tools.body(index)];
+        while(stack.length > 0) {
+            const at = stack.pop() ?? -1;
+            if(at < 0) {
+                continue;
+            }
+            if(this.isRoot(at)) {
+                continue;
+            }
+            if(this.exit(at)) {
+                return false;
+            }
+            if(this.write(at)) {
+                wrote = true;
+            }
+            for(const child of tools.bindings.rules.parser.node(at).children) {
+                stack.push(child);
+            }
+        }
+        return wrote;
+    }
+    writes(index: number): boolean {
+        if(this.write(index)) {
+            return true;
+        }
+        const tools = this.tools;
+        const callee = this.followed(index);
+        if(callee === -1) {
+            return false;
+        }
+        if(callee === -2) {
+            const declaration = callDeclaration(tools.bindings.rules, index);
+            const other = new Tools(tools.world.bindingsFor(declaration.file), tools.world);
+            const at =
+                other.bindings.spans.get(`${declaration.kind}:${declaration.start}:${declaration.end}`) ??
+                panic('external callee absent from Adamic tree');
+            return new StreamFacts(other).bodyWrites(at);
+        }
+        const key = `${callee}`;
+        if(!this.writers.has(key)) {
+            this.writers.set(key, this.bodyWrites(callee));
+        }
+        return this.writers.get(key) ?? false;
+    }
+    chain(index: number, root: number): string {
+        const tools = this.tools;
+        const ids: number[] = [];
+        let previous = index;
+        let current = tools.parent(index);
+        while(current >= 0 && current !== root) {
+            if(
+                tools.kind(current) === 'TryStatement' &&
+                tools.child(current, 0) === previous &&
+                tools.bindings.rules.parser.node(current).children.some((child) => tools.kind(child) === 'CatchClause')
+            ) {
+                ids.push(current);
+            }
+            previous = current;
+            current = tools.parent(current);
+        }
+        ids.sort((left, right) => left - right);
+        return ',' + ids.map((id) => `${id},`).join('');
+    }
+    chainHolds(outer: string, inner: string): boolean {
+        return inner.split(',').every((id) => id === '' || outer.includes(`,${id},`));
+    }
+    with(state: readonly string[], chain: string): string[] {
+        const next: string[] = [];
+        for(const held of state) {
+            if(this.chainHolds(chain, held)) {
+                return state.slice();
+            }
+            if(!this.chainHolds(held, chain)) {
+                next.push(held);
+            }
+        }
+        next.push(chain);
+        next.sort((left, right) => (left < right ? -1 : left > right ? 1 : 0));
+        return next;
+    }
+    entering(state: readonly string[], statement: number): string[] {
+        return state.filter((held) => !held.includes(`,${statement},`));
+    }
+}

@@ -1,0 +1,54 @@
+import { Frames, header } from '../frames.ts';
+import type { Rules } from '../rules.ts';
+export class CallDeclaration {
+    readonly present: boolean;
+    readonly file: string;
+    readonly kind: string;
+    readonly start: number;
+    readonly end: number;
+    readonly flags: number;
+    readonly body: boolean;
+    readonly external: boolean;
+    readonly returns: number;
+    constructor(
+        present: boolean,
+        file: string,
+        kind: string,
+        start: number,
+        end: number,
+        flags: number,
+        body: boolean,
+        external: boolean,
+        returns: number,
+    ) {
+        this.present = present;
+        this.file = file;
+        this.kind = kind;
+        this.start = start;
+        this.end = end;
+        this.flags = flags;
+        this.body = body;
+        this.external = external;
+        this.returns = returns;
+    }
+}
+export function callDeclaration(rules: Rules, index: number): CallDeclaration {
+    const frames = new Frames(rules.ask(index, 'wave-27-call-declaration'));
+    header(frames, 'wave-27-call-declaration');
+    const present = frames.yes();
+    const result = present
+        ? new CallDeclaration(
+              true,
+              frames.field(),
+              frames.field(),
+              frames.natural(),
+              frames.natural(),
+              frames.natural(),
+              frames.yes(),
+              frames.yes(),
+              frames.natural(),
+          )
+        : new CallDeclaration(false, '', '', 0, 0, 0, false, false, 0);
+    frames.end();
+    return result;
+}

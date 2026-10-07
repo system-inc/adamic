@@ -203,6 +203,10 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 	mode := strings.Split(question, "\n")[0]
 	out.text(mode)
 	switch mode {
+	case "wave-27-call-declaration": return p.wave27CallDeclaration(out, c, node, question)
+	case "wave-27-module-sources": return p.wave27ModuleSources(out, node, question)
+	case "wave-27-syntax-flow": return p.wave27SyntaxFlow(out, node, question)
+	case "wave-27-declaration-ancestry": return p.wave27DeclarationAncestry(out, c, node, question)
 	case "node-symbol-details", "declaration-details", "type-symbol-details", "property-declarations":
 		if err := p.declarationFacts(out, c, node, mode, question); err != nil {
 			return "", err
