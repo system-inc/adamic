@@ -1,0 +1,111 @@
+{
+  "source": "area/stage3 7ad8666 fully adapted",
+  "sharedTool": "188de02",
+  "productionDriverBaselineCompiler": "merged parser branch 818ea0f; production compiler source unchanged",
+  "baselineOptions": {
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "erasableSyntaxOnly": true
+  },
+  "profiles": {
+    "baseline": {
+      "total": 143,
+      "byCode": {
+        "TS1294": 85,
+        "TS2345": 1,
+        "TS2412": 2,
+        "TS7030": 26,
+        "TS7029": 23,
+        "TS2591": 6
+      },
+      "outsideScanner": 55,
+      "outsideSlice": 0,
+      "first": {
+        "order": 1,
+        "file": "src/compiler/checker.ts",
+        "line": 109,
+        "column": 19,
+        "code": "TS1294",
+        "scannerShared": false,
+        "temporary60to69Eligible": true,
+        "diagnostic": "src/compiler/checker.ts:109:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      }
+    },
+    "features": {
+      "total": 9,
+      "byCode": {
+        "TS2345": 1,
+        "TS2412": 2,
+        "TS2591": 6
+      },
+      "outsideScanner": 8,
+      "outsideSlice": 0,
+      "first": {
+        "order": 1,
+        "file": "src/compiler/core.ts",
+        "line": 379,
+        "column": 21,
+        "code": "TS2345",
+        "scannerShared": true,
+        "temporary60to69Eligible": false,
+        "diagnostic": "src/compiler/core.ts:379:21: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'."
+      }
+    },
+    "features-host": {
+      "total": 5,
+      "byCode": {
+        "TS2345": 2,
+        "TS2412": 2,
+        "TS2769": 1
+      },
+      "outsideScanner": 4,
+      "outsideSlice": 0,
+      "first": {
+        "order": 1,
+        "file": "src/compiler/core.ts",
+        "line": 379,
+        "column": 21,
+        "code": "TS2345",
+        "scannerShared": true,
+        "temporary60to69Eligible": false,
+        "diagnostic": "src/compiler/core.ts:379:21: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'."
+      }
+    }
+  },
+  "baselineCli": {
+    "exit": 1,
+    "diagnostics": 143,
+    "sameDiagnosticsAsParserEntry": true,
+    "nativeBinaryProduced": false
+  },
+  "featureScratch": {
+    "branch": "scratch/parser-fixed-features",
+    "head": "a342d47b6da9d15c0e72264ab2dd8113c6607593",
+    "featuresInMergeOrder": {
+      "taste-not-soundness": "d2c05df34443d9c0ae4fe6639beef2c5aee8a4ad",
+      "flag-enums": "ec67b02fd2b0fc0d31102b74af9ab07af9f3d2fc",
+      "namespaces-tsc": "90f1baca0fce5285ddfa2f8801070dc9d7c9108c",
+      "nested-functions": "59f0d0aaf132969f5f9b55bac4b1e91ffd2a4ba1",
+      "fallthrough-and-implicit-returns": "5f77d3315f3a6472ee2a6cc28e23e2f7cb1eb8ff",
+      "host-node-types-land": "69c71d5171801bc355400452a0dff8a93533ac2e"
+    },
+    "loweringReached": false,
+    "checkerOptionsChangedByFeatureBranchesOnly": true,
+    "erasableSyntaxOnly": false,
+    "noImplicitReturns": false,
+    "noFallthroughCasesInSwitch": false,
+    "strictIndexedAndExactOptionalRemain": true,
+    "compilerProductionFilesEdited": false,
+    "scratchPushed": false,
+    "probeBuildExit": 0,
+    "fullCompilerAndFeatureGateNotRun": true,
+    "integrationPatchSha256": "138e6ba6367ab50c84573b5c137e89f3e87b2ffac25664073455bd149c0cd4f0",
+    "cohereTypeScriptPin": "8d550c837c90bd1805b047b7eeccc2baac2d5e7a",
+    "hostControl": "Scratch driver prepends import type {} from 'node:fs'; installs stage3/api locked @types/node 25.3.3 in scratch checkout; no gathered source change",
+    "hostControlNodeByteIdentical": true
+  },
+  "temporaryAdaptationsMade": false
+}

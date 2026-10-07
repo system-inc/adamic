@@ -1,0 +1,30 @@
+{
+  "tool": "188de02",
+  "source": "area/stage3 7ad8666 fully adapted",
+  "filesParsed": 81,
+  "node": {
+    "exit": 0,
+    "stderrBytes": 0,
+    "bytes": 35456964,
+    "sha256": "2014ef06f9db928b50d001787c44e490bbdbd8ecd9e912d3f676d58148ffefc5",
+    "byteIdenticalToOriginalFullTree": true
+  },
+  "nodeEndMutant": {
+    "exit": 0,
+    "comparisonExit": 1,
+    "changedRecords": 1
+  },
+  "sliceOmission": {
+    "target": "Parser.initializeState",
+    "sourceLine": 1735,
+    "removedDeclarations": 1,
+    "auditControlExit": 0,
+    "auditMutantExit": 1,
+    "nodeControlExit": 0,
+    "nodeMutantExit": 70,
+    "mutantStderr": "adamic: panic: ReferenceError: initializeState is not defined",
+    "dumpComparisonExit": 1,
+    "controlHasFullOriginalDump": true,
+    "mutantStdoutBytes": 0
+  }
+}

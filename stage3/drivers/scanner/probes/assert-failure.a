@@ -1,0 +1,10 @@
+// Reached assertion: scanner.ts reScanQuestionToken requires a ?? token.
+import { createScanner } from './adapted/src/compiler/scanner.ts';
+import { ScriptTarget } from './adapted/src/compiler/types.ts';
+const scanner = createScanner(ScriptTarget.Latest, true);
+try {
+    scanner.reScanQuestionToken();
+    console.log('MUTANT: assertion failed to throw');
+} catch (error) {
+    console.log(error.message);
+}

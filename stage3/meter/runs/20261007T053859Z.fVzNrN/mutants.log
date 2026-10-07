@@ -1,0 +1,71 @@
+root attribution
+FF
+======================================================================
+FAIL: test_planted_diagnostic_changes_only_its_own_file (report_test.ReportTests.test_planted_diagnostic_changes_only_its_own_file)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/meter-mutant-lr3ls2ak/report_test.py", line 57, in test_planted_diagnostic_changes_only_its_own_file
+    self.assertEqual(changed, ['src/compiler/good.ts'])
+AssertionError: Lists differ: ['src/compiler/good.ts', 'src/compiler/later.ts', 'src/compiler/refused.ts'] != ['src/compiler/good.ts']
+
+First list contains 2 additional elements.
+First extra element 1:
+'src/compiler/later.ts'
+
+- ['src/compiler/good.ts', 'src/compiler/later.ts', 'src/compiler/refused.ts']
++ ['src/compiler/good.ts']
+
+======================================================================
+FAIL: test_type_error_in_dependency_changes_only_dependency_own_file (report_test.CensusAttributionTests.test_type_error_in_dependency_changes_only_dependency_own_file)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/meter-mutant-lr3ls2ak/report_test.py", line 143, in test_type_error_in_dependency_changes_only_dependency_own_file
+    self.assertEqual(after['totals']['checker_own_file'], 1)
+AssertionError: 0 != 1
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.211s
+
+FAILED (failures=2)
+
+area reused for main
+F
+======================================================================
+FAIL: test_pair_preserves_area_fields_and_prints_four_numbers_first (report_test.ReportTests.test_pair_preserves_area_fields_and_prints_four_numbers_first)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/meter-mutant-16etmzm_/report_test.py", line 85, in test_pair_preserves_area_fields_and_prints_four_numbers_first
+    self.assertEqual((self.run / 'report.md').read_text().splitlines()[:2],
+AssertionError: Lists differ: ['Whole program: main: 0/4; area: 0/4', 'Own file: main: 3/4; area: 3/4'] != ['Whole program: main: 3/4; area: 0/4', 'Own file: main: 4/4; area: 3/4']
+
+First differing element 0:
+'Whole program: main: 0/4; area: 0/4'
+'Whole program: main: 3/4; area: 0/4'
+
+- ['Whole program: main: 0/4; area: 0/4', 'Own file: main: 3/4; area: 3/4']
+?                        ^                                 ^
+
++ ['Whole program: main: 3/4; area: 0/4', 'Own file: main: 4/4; area: 3/4']
+?                        ^                                 ^
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.017s
+
+FAILED (failures=1)
+
+malformed location silently ignored
+F
+======================================================================
+FAIL: test_malformed_diagnostic_is_rejected (report_test.ReportTests.test_malformed_diagnostic_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/meter-mutant-1cchhymh/report_test.py", line 90, in test_malformed_diagnostic_is_rejected
+    with self.assertRaisesRegex(ValueError, 'unrecognized diagnostic format'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.005s
+
+FAILED (failures=1)

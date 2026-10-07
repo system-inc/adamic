@@ -1,0 +1,16 @@
+F
+======================================================================
+FAIL: test_exact_prefix_and_variance_owners (report_test.LatentReportTests.test_exact_prefix_and_variance_owners)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/variance-owner-mutant-wbnbvz_h/report_test.py", line 206, in test_exact_prefix_and_variance_owners
+    self.assertEqual(reason_owner('a function returning T seen as U', owners), 'adaptation 70, stage 3')
+AssertionError: '01a1143c' != 'adaptation 70, stage 3'
+- 01a1143c
++ adaptation 70, stage 3
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)

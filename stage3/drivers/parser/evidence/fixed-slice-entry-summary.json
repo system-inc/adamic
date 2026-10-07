@@ -1,0 +1,61 @@
+{
+  "typescript": "6.0.3",
+  "tree": "/tmp/parser-area-adapted",
+  "entries": [
+    "src/compiler/parser.ts:createSourceFile"
+  ],
+  "declarations": 2067,
+  "copied_spans": 2079,
+  "namespace_wrapper_spans": 12,
+  "value_declarations": 1402,
+  "type_declarations": 665,
+  "files": 79,
+  "declaration_files": 26,
+  "code_declarations": 1990,
+  "export_facade_records": 77,
+  "evaluation_only_files": 53,
+  "preserves_evaluation": true,
+  "declaration_lines": 41814,
+  "declaration_bytes": 2357285,
+  "rewritten_import_lines": 234,
+  "code_span_lines_including_namespace_wrappers": 41657,
+  "code_declaration_lines_excluding_wrappers": 41618,
+  "code_files": [
+    "src/compiler/checker.ts",
+    "src/compiler/commandLineParser.ts",
+    "src/compiler/core.ts",
+    "src/compiler/corePublic.ts",
+    "src/compiler/debug.ts",
+    "src/compiler/diagnosticInformationMap.generated.ts",
+    "src/compiler/factory/baseNodeFactory.ts",
+    "src/compiler/factory/emitNode.ts",
+    "src/compiler/factory/nodeConverters.ts",
+    "src/compiler/factory/nodeFactory.ts",
+    "src/compiler/factory/nodeTests.ts",
+    "src/compiler/factory/parenthesizerRules.ts",
+    "src/compiler/factory/utilities.ts",
+    "src/compiler/factory/utilitiesPublic.ts",
+    "src/compiler/hostErrors.ts",
+    "src/compiler/moduleNameResolver.ts",
+    "src/compiler/parser.ts",
+    "src/compiler/path.ts",
+    "src/compiler/performance.ts",
+    "src/compiler/performanceCore.ts",
+    "src/compiler/scanner.ts",
+    "src/compiler/tracing.ts",
+    "src/compiler/types.ts",
+    "src/compiler/utilities.ts",
+    "src/compiler/utilitiesPublic.ts",
+    "src/compiler/visitorPublic.ts"
+  ],
+  "why": [
+    {
+      "selector": "src/compiler/checker.ts:createTypeChecker",
+      "reached": false
+    },
+    {
+      "selector": "src/compiler/program.ts:createProgram",
+      "reached": false
+    }
+  ]
+}

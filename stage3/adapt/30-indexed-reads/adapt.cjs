@@ -3,6 +3,7 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const sites = require("./sites.json");
+const { planWhole } = require("./whole-files.cjs");
 const files = [
     "core.ts", "utilities.ts", "utilitiesPublic.ts", "parser.ts", "scanner.ts",
     "factory/baseNodeFactory.ts", "factory/emitHelpers.ts", "factory/emitNode.ts",
@@ -40,8 +41,13 @@ function plan(ts, file, text, check = false, zeroOnly = false) {
         const zeroed = coalesced && ts.isNumericLiteral(parent.right) && parent.right.text === "0" &&
             ts.isParenthesizedExpression(parent.parent);
         const label = `${file}:${site.line}:${site.column}`;
+        // Adaptation 46 owns this already-approved optional quote selection.
+        // Keep the original declined capture reads on a fully adapted rerun.
+        const quoteSelection = file === "parser.ts" && site.expression === "matchResult[2]" &&
+            coalesced && parent.right.getText(source) === "matchResult[3]" &&
+            ts.isParenthesizedExpression(parent.parent) && ts.isNonNullExpression(parent.parent.parent);
         if (site.action === "decline") {
-            if (asserted || coalesced) throw new Error(`declined site changed: ${label}`);
+            if (asserted || coalesced && !quoteSelection) throw new Error(`declined site changed: ${label}`);
             declined++;
         }
         else if (site.action === "assert") {
@@ -65,7 +71,8 @@ function plan(ts, file, text, check = false, zeroOnly = false) {
     for (const edit of edits.sort((a, b) => b.at - a.at)) {
         text = text.slice(0, edit.at) + edit.text + text.slice(edit.at);
     }
-    return { text, assertions, zeros, declined };
+    const closure = zeroOnly ? { text, edits: 0 } : planWhole(ts, file, text, check);
+    return { text: closure.text, assertions, zeros, declined, closures: closure.edits };
 }
 
 function main() {
@@ -86,7 +93,7 @@ function main() {
     for (const item of plans) {
         if (!check && item.text !== item.before) fs.writeFileSync(item.name, item.text);
     }
-    console.log(JSON.stringify(plans.map(({ file, assertions, zeros, declined }) => ({ file, assertions, zeros, declined })), null, 2));
+    console.log(JSON.stringify(plans.map(({ file, assertions, zeros, declined, closures }) => ({ file, assertions, zeros, declined, closures })), null, 2));
 }
 module.exports = { plan, files };
 if (require.main === module) {

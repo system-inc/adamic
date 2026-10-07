@@ -11,9 +11,21 @@ function plan(ts, file, text, check = false, zeroOnly = false) {
     const source = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true);
     if (source.parseDiagnostics.length) throw new Error(`cannot parse ${file}`);
     const groups = new Map();
+    const laterExpressions = new Map(sites.filter(s => s.file === file && s.laterExpression).map(s => [s.laterExpression, s.expression]));
+    const laterCaptures = new Set();
     function visit(node) {
         if (ts.isElementAccessExpression(node)) {
-            const expression = node.getText(source).replaceAll("!", "");
+            let expression = node.getText(source).replaceAll("!", "");
+            if (file === "semver.ts" && expression === "match[1]") {
+                let owner = node.parent;
+                while (owner && !(ts.isFunctionDeclaration(owner) && owner.name)) owner = owner.parent;
+                if (owner && ["tryParseComponents", "parsePartial"].includes(owner.name.text)) {
+                    if (!ts.isNonNullExpression(node.parent) || !ts.isVariableDeclaration(node.parent.parent) || node.parent.parent.name.getText(source) !== "major" || laterCaptures.has(owner.name.text)) throw new Error("adaptation 45 capture drift");
+                    laterCaptures.add(owner.name.text);
+                    return;
+                }
+            }
+            expression = laterExpressions.get(expression) || expression;
             const group = groups.get(expression) || [];
             group.push(node);
             groups.set(expression, group);
@@ -21,6 +33,7 @@ function plan(ts, file, text, check = false, zeroOnly = false) {
         ts.forEachChild(node, visit);
     }
     visit(source);
+    if (laterCaptures.size !== 0 && laterCaptures.size !== 2) throw new Error("incomplete adaptation 45 captures");
     const fileSites = sites.filter(site => site.file === file);
     const indexedCount = [...groups.values()].reduce((count, group) => count + group.length, 0);
     if (indexedCount !== fileSites.length) throw new Error(`indexed inventory drift: ${file}: ${indexedCount} != ${fileSites.length}`);
@@ -41,7 +54,7 @@ function plan(ts, file, text, check = false, zeroOnly = false) {
             if (site.existingDefault !== undefined) {
                 if (asserted || !coalesced || parent.right.getText(source) !== site.existingDefault) throw new Error(`existing default changed: ${label}`);
             }
-            else if (asserted || coalesced) throw new Error(`declined site changed: ${label}`);
+            else if ((asserted && site.laterAssertion !== "47-host-errors") || coalesced) throw new Error(`declined site changed: ${label}`);
             declined++;
         }
         else if (site.action === "assert") {
@@ -62,10 +75,14 @@ function plan(ts, file, text, check = false, zeroOnly = false) {
         }
         else throw new Error(`unknown action: ${site.action}`);
     }
+    if (file === "watchUtilities.ts") require("./watch-protocol.cjs").validate(ts, source);
+    if (file === "moduleSpecifiers.ts") require("./nonempty-endings.cjs").validate(ts, source);
     for (const edit of edits.sort((a, b) => b.at - a.at)) {
         text = text.slice(0, edit.at) + edit.text + text.slice(edit.at);
     }
-    return { text, assertions, zeros, declined };
+    const closure = require("./closure.cjs").plan(ts, file, text, check);
+    const handoff = require("./handoffs.cjs").plan(ts, file, closure.text, check);
+    return { ...handoff, contracts: closure.contracts + handoff.contracts, assertions, zeros, declined };
 }
 
 function main() {
@@ -74,6 +91,8 @@ function main() {
     const tree = path.resolve(process.argv[check ? 3 : 2]);
     const ts = require(process.env.CENSUS_TYPESCRIPT || "typescript");
     if (ts.version !== "6.0.3") throw new Error(`want TypeScript 6.0.3, got ${ts.version}`);
+    require("./handoffs.cjs").validate(ts, tree);
+    require("./public-host-guards.cjs").validate(ts, tree);
     // Validate all selected files before writing any; retain original bytes and reads.
     const plans = files.map(file => {
         const name = path.join(tree, "src/compiler", file);
@@ -86,7 +105,7 @@ function main() {
     for (const item of plans) {
         if (!check && item.text !== item.before) fs.writeFileSync(item.name, item.text);
     }
-    console.log(JSON.stringify(plans.map(({ file, assertions, zeros, declined }) => ({ file, assertions, zeros, declined })), null, 2));
+    console.log(JSON.stringify(plans.map(({ file, assertions, zeros, declined, contracts }) => ({ file, assertions, zeros, declined, contracts })), null, 2));
 }
 module.exports = { plan, files };
 if (require.main === module) {

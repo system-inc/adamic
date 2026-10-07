@@ -1,0 +1,208 @@
+[
+  {
+    "file": "builderState.ts",
+    "function": "getAllDependencies",
+    "call": "mapDefinedIterator",
+    "typeArguments": [
+      "Path",
+      "string"
+    ],
+    "proof": "seenMap is a Set<Path>; Set.keys yields only stored Path values. The mapper returns an existing fileName or the same Path, both strings; the generator filters undefined results.",
+    "arguments": [
+      "seenMap.keys()",
+      "path => programOfThisState.getSourceFileByPath(path)?.fileName ?? path"
+    ]
+  },
+  {
+    "file": "builderState.ts",
+    "function": "getReferencedByPaths",
+    "call": "arrayFrom",
+    "typeArguments": [
+      "Path"
+    ],
+    "proof": "getKeys returns a ReadonlySet<Path>; its keys iterator yields only stored Path values. Completion is not a yielded value.",
+    "arguments": [
+      "keys.keys()"
+    ]
+  },
+  {
+    "file": "executeCommandLine.ts",
+    "function": "formatDefaultValue",
+    "call": "arrayFrom",
+    "typeArguments": [
+      "[string, string | number]"
+    ],
+    "arguments": [
+      "type.entries()"
+    ],
+    "proof": "The typeof-object guard narrows type to Map<string, string | number>. entries yields stored key/value tuples; iterator completion is not an array element, so both destructuring callbacks receive a tuple."
+  },
+  {
+    "file": "executeCommandLine.ts",
+    "function": "reportStatistics",
+    "call": "reduceLeftIterator",
+    "typeArguments": [
+      "number",
+      "number"
+    ],
+    "arguments": [
+      "lineCounts.values()",
+      "(sum, count) => sum + count",
+      "0"
+    ],
+    "proof": "countLines returns Map<string, number>. values yields stored numbers only; reduceLeftIterator initializes its accumulator to 0 and only replaces it with a numeric sum. Completion is not a callback value."
+  },
+  {
+    "file": "moduleSpecifiers.ts",
+    "function": "getAllModulePathsWorker",
+    "call": "arrayFrom",
+    "typeArguments": [
+      "[string, { path: string; isRedirect: boolean; isInNodeModules: boolean; }]",
+      "ModulePath"
+    ],
+    "arguments": [
+      "allFileNames.entries()",
+      "([fileName, { isRedirect, isInNodeModules }]): ModulePath => ({ path: fileName, isRedirect, isInNodeModules })"
+    ],
+    "proof": "allFileNames is Map<string, { path: string; isRedirect: boolean; isInNodeModules: boolean; }>. entries yields complete stored pairs; the mapper returns ModulePath and never receives iterator completion."
+  },
+  {
+    "kind": "optional-tuple",
+    "file": "moduleSpecifiers.ts",
+    "function": "tryGetModuleSpecifiersFromCacheWorker",
+    "name": "specifiers",
+    "type": "readonly string[]",
+    "proof": "The populated return tuple writes every position. Optional cache lookup and optional host cache access can explicitly supply undefined here; an empty tuple is also valid."
+  },
+  {
+    "kind": "optional-tuple",
+    "file": "moduleSpecifiers.ts",
+    "function": "tryGetModuleSpecifiersFromCacheWorker",
+    "name": "modulePaths",
+    "type": "readonly ModulePath[]",
+    "proof": "The populated return tuple writes every position. Optional cache lookup and optional host cache access can explicitly supply undefined here; an empty tuple is also valid."
+  },
+  {
+    "kind": "optional-tuple",
+    "file": "moduleSpecifiers.ts",
+    "function": "tryGetModuleSpecifiersFromCacheWorker",
+    "name": "cache",
+    "type": "ModuleSpecifierCache",
+    "proof": "The populated return tuple writes every position. Optional cache lookup and optional host cache access can explicitly supply undefined here; an empty tuple is also valid."
+  },
+  {
+    "kind": "nonempty-parameter",
+    "file": "moduleSpecifiers.ts",
+    "function": "processEnding",
+    "name": "allowedEndings",
+    "type": "readonly ModuleSpecifierEnding[]",
+    "after": "readonly [ModuleSpecifierEnding, ...ModuleSpecifierEnding[]]",
+    "proof": "All calls forward fresh nonempty preference arrays or supply a fresh [ending] singleton; the reviewed call graph and no-write bodies are guarded by stock runtime hashes."
+  },
+  {
+    "kind": "nonempty-parameter",
+    "file": "moduleSpecifiers.ts",
+    "function": "tryGetModuleNameFromRootDirs",
+    "name": "allowedEndings",
+    "type": "readonly ModuleSpecifierEnding[]",
+    "after": "readonly [ModuleSpecifierEnding, ...ModuleSpecifierEnding[]]",
+    "proof": "All calls forward fresh nonempty preference arrays or supply a fresh [ending] singleton; the reviewed call graph and no-write bodies are guarded by stock runtime hashes."
+  },
+  {
+    "kind": "nonempty-initializer",
+    "file": "moduleSpecifiers.ts",
+    "function": "getLocalModuleSpecifier",
+    "name": "allowedEndings",
+    "expression": "getAllowedEndingsInPrefererredOrder(importMode)",
+    "after": "[ModuleSpecifierEnding, ...ModuleSpecifierEnding[]]",
+    "proof": "This private consumer receives a fresh preference-factory result. All private callers create preferences locally; no external override reaches this instance. Every normal factory result has one to four elements, with no mutation before forwarding."
+  },
+  {
+    "kind": "nonempty-initializer",
+    "file": "moduleSpecifiers.ts",
+    "function": "tryGetModuleNameAsNodeModule",
+    "name": "allowedEndings",
+    "expression": "preferences.getAllowedEndingsInPreferredOrder()",
+    "after": "[ModuleSpecifierEnding, ...ModuleSpecifierEnding[]]",
+    "proof": "This private consumer receives a fresh preference-factory result. All private callers create preferences locally; no external override reaches this instance. Every normal factory result has one to four elements, with no mutation before forwarding."
+  },
+  {
+    "kind": "internal-method",
+    "file": "watchUtilities.ts",
+    "interface": "DirectoryStructureHost",
+    "name": "directoryExists",
+    "before": "directoryExists?(path: string): boolean;",
+    "after": "directoryExists?: { directoryExists(path: string): boolean; }[\"directoryExists\"] | undefined;",
+    "proof": "The caching factory explicitly writes host.directoryExists && wrapper; absence is legitimate. This owning interface is @internal. The function signature is retained verbatim and only explicit undefined is admitted. Indexed method extraction preserves the original method parameter variance (required boolean WriteFileCallback hosts remain assignable); no function-property contravariance is introduced."
+  },
+  {
+    "kind": "internal-method",
+    "file": "watchUtilities.ts",
+    "interface": "DirectoryStructureHost",
+    "name": "realpath",
+    "before": "realpath?(path: string): string;",
+    "after": "realpath?: { realpath(path: string): string; }[\"realpath\"] | undefined;",
+    "proof": "The caching factory explicitly writes host.realpath && wrapper; absence is legitimate. This owning interface is @internal. The function signature is retained verbatim and only explicit undefined is admitted. Indexed method extraction preserves the original method parameter variance (required boolean WriteFileCallback hosts remain assignable); no function-property contravariance is introduced."
+  },
+  {
+    "kind": "internal-method",
+    "file": "watchUtilities.ts",
+    "interface": "DirectoryStructureHost",
+    "name": "createDirectory",
+    "before": "createDirectory?(path: string): void;",
+    "after": "createDirectory?: { createDirectory(path: string): void; }[\"createDirectory\"] | undefined;",
+    "proof": "The caching factory explicitly writes host.createDirectory && wrapper; absence is legitimate. This owning interface is @internal. The function signature is retained verbatim and only explicit undefined is admitted. Indexed method extraction preserves the original method parameter variance (required boolean WriteFileCallback hosts remain assignable); no function-property contravariance is introduced."
+  },
+  {
+    "kind": "internal-method",
+    "file": "watchUtilities.ts",
+    "interface": "DirectoryStructureHost",
+    "name": "writeFile",
+    "before": "writeFile?(path: string, data: string, writeByteOrderMark?: boolean): void;",
+    "after": "writeFile?: { writeFile(path: string, data: string, writeByteOrderMark?: boolean): void; }[\"writeFile\"] | undefined;",
+    "proof": "The caching factory explicitly writes host.writeFile && wrapper; absence is legitimate. This owning interface is @internal. The function signature is retained verbatim and only explicit undefined is admitted. Indexed method extraction preserves the original method parameter variance (required boolean WriteFileCallback hosts remain assignable); no function-property contravariance is introduced."
+  },
+  {
+    "kind": "call-receiver",
+    "file": "watchUtilities.ts",
+    "function": "createExcludeHandlingAddWatch",
+    "expression": "factory[key]",
+    "type": "(file: string, cb: FileWatcherCallback | DirectoryWatcherCallback, flags: PollingInterval | WatchDirectoryFlags, options: WatchOptions | undefined, detailInfo1: X, detailInfo2?: Y) => FileWatcher",
+    "proof": "The immutable key selects the corresponding WatchFactory field. Only matching literal keys construct each private wrapper; the exposed keyed return type preserves callback and flag correlation. The host invokes the wrapped callback with that same key-specific argument tuple. No values or reads are changed; reviewed whole getWatchFactory runtime hash guards the protocol."
+  },
+  {
+    "kind": "call-receiver",
+    "file": "watchUtilities.ts",
+    "function": "createTriggerLoggingAddWatch",
+    "expression": "plainInvokeFactory[key]",
+    "type": "(file: string, cb: FileWatcherCallback | DirectoryWatcherCallback, flags: PollingInterval | WatchDirectoryFlags, options: WatchOptions | undefined, detailInfo1: X, detailInfo2?: Y) => FileWatcher",
+    "proof": "The immutable key selects the corresponding WatchFactory field. Only matching literal keys construct each private wrapper; the exposed keyed return type preserves callback and flag correlation. The host invokes the wrapped callback with that same key-specific argument tuple. No values or reads are changed; reviewed whole getWatchFactory runtime hash guards the protocol."
+  },
+  {
+    "kind": "call-receiver",
+    "file": "watchUtilities.ts",
+    "function": "createTriggerLoggingAddWatch",
+    "expression": "cb",
+    "type": "(...eventArgs: typeof args) => void",
+    "proof": "The immutable key selects the corresponding WatchFactory field. Only matching literal keys construct each private wrapper; the exposed keyed return type preserves callback and flag correlation. The host invokes the wrapped callback with that same key-specific argument tuple. No values or reads are changed; reviewed whole getWatchFactory runtime hash guards the protocol."
+  },
+  {
+    "kind": "rest-type",
+    "file": "watchUtilities.ts",
+    "function": "createTriggerLoggingAddWatch",
+    "name": "args",
+    "before": "any[]",
+    "after": "Parameters<FileWatcherCallback> | Parameters<DirectoryWatcherCallback>",
+    "proof": "Only the selected host watcher invokes this callback: file events use the FileWatcherCallback tuple, directory events use its one-string tuple. Forwarding retains the exact argument list, including optional modifiedTime."
+  },
+  {
+    "kind": "internal-property",
+    "file": "tracing.ts",
+    "namespace": "tracingEnabled",
+    "interface": "TraceRecord",
+    "name": "typesPath",
+    "before": "string",
+    "after": "string | undefined",
+    "proof": "stopTracing deliberately clears typesPath to undefined when the server has no type catalog, because the precomputed types file will not exist. This private optional TraceRecord field owns that absence; the annotation is erased and no read, write or object shape changes."
+  }
+]

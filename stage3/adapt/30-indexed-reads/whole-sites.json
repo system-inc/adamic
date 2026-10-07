@@ -1,0 +1,206 @@
+[
+  {
+    "file": "debug.ts",
+    "owner": "Debug.assertionCache",
+    "line": 155,
+    "class": "truthful index-value declaration",
+    "action": "add undefined to the Record value type, retaining Partial and every runtime write",
+    "diagnostics": [
+      "TS2322 at debug.ts:171:21"
+    ],
+    "proof": "setAssertionLevel clears populated cache slots by writing undefined at line 171; the read at line 168 is guarded by cachedFunc !== undefined before dereferencing, so the private cache's value type must represent stored undefined as well as missing keys."
+  },
+  {
+    "file": "scanner.ts",
+    "owner": "computePositionOfLineAndCharacter allowEdits branch",
+    "line": 491,
+    "class": "U-position, preserved-read narrowing",
+    "action": "hold the original first read in a const; test undefined explicitly; retain the second read with a required assertion",
+    "diagnostics": [
+      "TS2532 at scanner.ts:491:22",
+      "TS2322 at scanner.ts:491:45"
+    ],
+    "proof": "Undefined next-line starts make the original numeric comparison false. The new guard does the same for number | undefined. The first read is evaluated once where the comparison used it, with only a pure read of const res reordered; the conditional second read remains. Both production callers pass getLineStarts, whose computeLineStarts result is a dense plain array; no write occurs between the guard and second read."
+  },
+  {
+    "file": "parser.ts",
+    "owner": "IncrementalParser.SyntaxCursor.currentNode",
+    "line": 10446,
+    "class": "truthful return declaration and preserved-call narrowing",
+    "action": "declare Node | undefined; hold the existing nodeIsMissing call result before a redundant explicit undefined test",
+    "diagnostics": [
+      "TS2322 at parser.ts:10458:13"
+    ],
+    "proof": "The cursor returns current after unsuccessful search explicitly clears it; parser already treats missing nodes as unusable. nodeIsMissing(undefined) returns true without property reads. The helper call is preserved once at the same point and its cached true result short-circuits all later tests; the extra undefined test reads only local const node."
+  },
+  {
+    "file": "parser.ts",
+    "owner": "getNamedPragmaArguments return and argMap",
+    "line": 10781,
+    "class": "truthful index-value declaration",
+    "action": "admit string | undefined in both local dictionary value declarations",
+    "diagnostics": [
+      "TS2322 at parser.ts:10794:9"
+    ],
+    "proof": "Optional pragma arguments deliberately permit a missing args[i] and store that value. Both the local map and its returned index value must admit undefined; every read and store remains unchanged."
+  },
+  {
+    "file": "parser.ts",
+    "owner": "AmdDependency.name in types.ts, partition 32",
+    "line": 10656,
+    "class": "truthful optional owner outside partition",
+    "action": "decline and hand off to 32",
+    "diagnostics": [
+      "TS2322 at parser.ts:10656:17"
+    ],
+    "proof": "Unnamed AMD dependencies legitimately produce an own name property whose value is undefined. Adding ! would falsely require a name; omitting the property changes runtime shape. The truthful owning declaration is public types.ts:4280 name?: string | undefined, outside partition 30. A truthful public-owner | undefined is sanctioned under adaptation 20 discipline; partition 32 must supply the parsed-owner API proof."
+  },
+  {
+    "file": "factory/emitNode.ts",
+    "owner": "CommentRange.hasTrailingNewLine in types.ts, partition 32",
+    "line": 205,
+    "class": "optional public owner; overload fallout",
+    "action": "decline and hand off to 32",
+    "diagnostics": [
+      "TS2769 at factory/emitNode.ts:205:108"
+    ],
+    "proof": "The explicit append<SynthesizedComment> overload already has the intended element type. The object stores the optional hasTrailingNewLine argument, which legitimately may be undefined. types.ts:3873 must truthfully admit boolean | undefined; this public owner is outside 30. Its truthful | undefined is sanctioned under adaptation 20 discipline and needs partition 32's parsed-owner API proof. An assertion/cast or omitted property would not repair that contract truthfully."
+  },
+  {
+    "file": "factory/emitNode.ts",
+    "owner": "CommentRange.hasTrailingNewLine in types.ts, partition 32",
+    "line": 218,
+    "class": "optional public owner; overload fallout",
+    "action": "decline and hand off to 32",
+    "diagnostics": [
+      "TS2769 at factory/emitNode.ts:218:110"
+    ],
+    "proof": "The explicit append<SynthesizedComment> overload already has the intended element type. The object stores the optional hasTrailingNewLine argument, which legitimately may be undefined. types.ts:3873 must truthfully admit boolean | undefined; this public owner is outside 30. Its truthful | undefined is sanctioned under adaptation 20 discipline and needs partition 32's parsed-owner API proof. An assertion/cast or omitted property would not repair that contract truthfully."
+  },
+  {
+    "file": "factory/nodeFactory.ts",
+    "owner": "createBaseDeclaration<T>.localSymbol",
+    "line": 1216,
+    "class": "optional owner or generic construction contract",
+    "action": "decline",
+    "diagnostics": [
+      "TS2412 at factory/nodeFactory.ts:1216"
+    ],
+    "proof": "Undefined is a legitimate pre-binder state, but T[localSymbol] may be required Symbol in a narrower T. A cast or ! would hide the generic construction contract; no type-only change preserving every instantiated return contract has been proven."
+  },
+  {
+    "file": "factory/nodeFactory.ts",
+    "owner": "AutoGenerateInfo.prefix/suffix in types.ts, partition 32",
+    "line": 1315,
+    "class": "optional owner or generic construction contract",
+    "action": "decline",
+    "diagnostics": [
+      "TS2379 at factory/nodeFactory.ts:1315"
+    ],
+    "proof": "Both generated-name arguments legitimately admit undefined and are stored as own fields. The truthful owners are types.ts:1720 prefix and 1721 suffix, outside 30; keep their reads and object shape."
+  },
+  {
+    "file": "factory/nodeFactory.ts",
+    "owner": "AutoGenerateInfo.prefix/suffix in types.ts, partition 32",
+    "line": 1403,
+    "class": "optional owner or generic construction contract",
+    "action": "decline",
+    "diagnostics": [
+      "TS2379 at factory/nodeFactory.ts:1403"
+    ],
+    "proof": "Both generated private-name arguments legitimately admit undefined and are stored as own fields. The truthful owners are types.ts:1720 prefix and 1721 suffix, outside 30; keep their reads and object shape."
+  },
+  {
+    "file": "factory/nodeFactory.ts",
+    "owner": "createJSDocTypeLikeTagWorker<T>.typeExpression",
+    "line": 5496,
+    "class": "optional owner or generic construction contract",
+    "action": "decline",
+    "diagnostics": [
+      "TS2412 at factory/nodeFactory.ts:5496"
+    ],
+    "proof": "The optional argument may be undefined, while a narrower T may require JSDocTypeExpression. Merely widening the generic constraint does not prove the write satisfies every T; the construction/return contract needs proof, not a cast or assertion."
+  },
+  {
+    "file": "utilities.ts",
+    "owner": "createCommentDirectivesMap.getUnusedExpectations arrayFrom",
+    "line": 1222,
+    "class": "truthful overload type argument",
+    "action": "explicitly select [string, CommentDirective] yielded tuple type",
+    "diagnostics": [
+      "TS2488 at utilities.ts:1223:22",
+      "TS2488 at utilities.ts:1224:19"
+    ],
+    "proof": "Map.entries yields string/CommentDirective pairs; its terminal undefined is not yielded by for-of in arrayFrom. The explicit type argument repairs structural inference from the iterator return arm without changing iterator operations or JavaScript."
+  },
+  {
+    "file": "utilities.ts",
+    "owner": "getStringFromExpandedCharCodes.nextCode",
+    "line": 7721,
+    "class": "truthful local declaration and preserved-read narrowing",
+    "action": "admit number | undefined; explicitly guard the existing continuation-byte mask",
+    "diagnostics": [
+      "TS2322 at utilities.ts:7721:17",
+      "TS2322 at utilities.ts:7725:17"
+    ],
+    "proof": "The lookahead legitimately runs off the final byte. Undefined & mask was zero and stopped the original loop; the explicit undefined guard does the same. Both indexed reads and every i increment remain at their original points; the added test reads only local nextCode."
+  },
+  {
+    "file": "utilities.ts",
+    "owner": "stringReplace",
+    "line": 11194,
+    "class": "truthful extracted method signature",
+    "action": "annotate the string-search/string-replacement overload with this: string",
+    "diagnostics": [
+      "TS2345 at utilities.ts:11201:34"
+    ],
+    "proof": "The only use is stringReplace.call(s, \"*\", replacement), with three string values. String.prototype.replace supports exactly this overload; the annotation selects that truthful call contract and retains the same captured function object and call evaluation point."
+  },
+  {
+    "file": "core.ts",
+    "owner": "createSet.forEach arrayFrom",
+    "line": 1712,
+    "class": "truthful overload type argument",
+    "action": "select TElement | TElement[] yielded map value explicitly",
+    "diagnostics": [
+      "TS2345 at core.ts:1721:28"
+    ],
+    "proof": "multiMap stores exactly TElement | TElement[]; its iterator terminal return is not a yielded value. Explicitly selecting the map value type preserves every iteration and erases on Node."
+  },
+  {
+    "file": "core.ts",
+    "owner": "isNodeLikeSystem host bindings",
+    "line": 2588,
+    "class": "truthful ambient host declarations",
+    "action": "declare optional process shape and unknown require, type-only",
+    "diagnostics": [
+      "TS2591 at core.ts:2591",
+      "TS2591 at core.ts:2592",
+      "TS2591 at core.ts:2593",
+      "TS2591 at core.ts:2594"
+    ],
+    "proof": "Only isNodeLikeSystem reads these host bindings. process may be absent and is tested with typeof before fields; nextTick/browser may be absent and are only tested for truthiness. require is only tested with typeof, so unknown is truthful. Module-local ambient declarations emit no binding and leave Node global lookup unchanged."
+  },
+  {
+    "file": "core.ts",
+    "owner": "addRange repeated guarded read",
+    "line": 992,
+    "class": "U-position, repeated-read contract",
+    "action": "decline",
+    "diagnostics": [
+      "TS2345 at core.ts:992:21"
+    ],
+    "proof": "The first from[i] read deliberately handles absence. A readonly array type alone does not prove the second read stays defined across accessor reads, including to.push lookup; caching/deduplicating or skipping the second read changes Node behavior. A generic ! or cast is unproved."
+  },
+  {
+    "file": "core.ts",
+    "owner": "createSet full ES2024 Set contract",
+    "line": 1637,
+    "class": "non-absence Set contract",
+    "action": "decline",
+    "diagnostics": [
+      "TS2740 at core.ts:1637:11"
+    ],
+    "proof": "The returned custom object lacks seven ES2024 Set operations. An assertion to full Set lies; adding methods changes runtime code. A truthful reduced recursive return/callback contract needs all consumer obligations checked, which is not proven here."
+  }
+]

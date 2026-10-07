@@ -1,0 +1,62 @@
+{
+  "compiler": "area/stage3 7ad8666, unmodified compiler source",
+  "entry": "src/compiler/parser.ts from raw driver-equivalent slice",
+  "outcome": "Checker",
+  "diagnostics": 830,
+  "counts": {
+    "TS7030": 252,
+    "TS1294": 180,
+    "TS7029": 83,
+    "TS2345": 88,
+    "TS2488": 6,
+    "TS2375": 14,
+    "TS2769": 6,
+    "TS18048": 49,
+    "TS2322": 30,
+    "TS2412": 23,
+    "TS2722": 1,
+    "TS2379": 10,
+    "TS2556": 1,
+    "TS2532": 15,
+    "TS2420": 1,
+    "TS18046": 6,
+    "TS2740": 1,
+    "TS2591": 50,
+    "TS2304": 6,
+    "TS2307": 1,
+    "TS7006": 1,
+    "TS7031": 1,
+    "TS2538": 2,
+    "TS2339": 3
+  },
+  "returnedOrder": "load.CheckError.Diagnostics; compiler sorts formatted diagnostics lexicographically",
+  "filteredToSliceFiles": true,
+  "outsideSliceDiagnosticCount": 0,
+  "loweringReached": false,
+  "firstDiagnostic": {
+    "order": 1,
+    "file": "src/compiler/binder.ts",
+    "line": 1672,
+    "column": 18,
+    "code": "TS7030",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/binder.ts:1672:18: error TS7030: Not all code paths return a value."
+  },
+  "options": {
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "erasableSyntaxOnly": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "strict": true
+  },
+  "checkerOptionsChanged": false,
+  "temporaryAdaptationsMade": false,
+  "cli": {
+    "entry": "parser-proof-main.a using corrected private identifier text",
+    "buildExit": 1,
+    "same830DiagnosticsAsParserEntry": true,
+    "nativeBinaryProduced": false
+  }
+}

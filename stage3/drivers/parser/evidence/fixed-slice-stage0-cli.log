@@ -1,0 +1,150 @@
+/tmp/parser-fixed-driver-slice/src/compiler/checker.ts:109:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/checker.ts:10:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/checker.ts:95:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/core.ts:379:21: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.
+  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.
+/tmp/parser-fixed-driver-slice/src/compiler/core.ts:687:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/corePublic.ts:23:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/debug.ts:12:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/debug.ts:26:18: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/debug.ts:50:22: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/debug.ts:792:20: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/debug.ts:806:20: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/factory/nodeFactory.ts:12:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/factory/nodeFactory.ts:5037:9: error TS2412: Type 'JSDocTypeExpression | undefined' is not assignable to type 'T["typeExpression"]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  'JSDocTypeExpression | undefined' is assignable to the constraint of type 'T["typeExpression"]', but 'T["typeExpression"]' could be instantiated with a different subtype of constraint 'JSDocTypeExpression | undefined'.
+    Type 'undefined' is not assignable to type 'T["typeExpression"]'.
+      'undefined' is assignable to the constraint of type 'T["typeExpression"]', but 'T["typeExpression"]' could be instantiated with a different subtype of constraint 'JSDocTypeExpression | undefined'.
+        Type 'undefined' is not assignable to type 'JSDocTypeExpression'.
+/tmp/parser-fixed-driver-slice/src/compiler/factory/nodeFactory.ts:757:9: error TS2412: Type 'undefined' is not assignable to type 'T["localSymbol"]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  'undefined' is assignable to the constraint of type 'T["localSymbol"]', but 'T["localSymbol"]' could be instantiated with a different subtype of constraint 'Symbol | undefined'.
+    Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/parser-fixed-driver-slice/src/compiler/factory/parenthesizerRules.ts:620:89: error TS7030: Not all code paths return a value.
+/tmp/parser-fixed-driver-slice/src/compiler/factory/utilities.ts:191:82: error TS7030: Not all code paths return a value.
+/tmp/parser-fixed-driver-slice/src/compiler/parser.ts:1197:21: error TS7029: Fallthrough case in switch.
+/tmp/parser-fixed-driver-slice/src/compiler/parser.ts:11:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/parser.ts:20:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/parser.ts:2419:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-fixed-driver-slice/src/compiler/parser.ts:30:153: error TS7030: Not all code paths return a value.
+/tmp/parser-fixed-driver-slice/src/compiler/parser.ts:3306:14: error TS7030: Not all code paths return a value.
+/tmp/parser-fixed-driver-slice/src/compiler/parser.ts:3502:37: error TS7030: Not all code paths return a value.
+/tmp/parser-fixed-driver-slice/src/compiler/parser.ts:3610:14: error TS7030: Not all code paths return a value.
+/tmp/parser-fixed-driver-slice/src/compiler/parser.ts:4118:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-fixed-driver-slice/src/compiler/parser.ts:4124:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-fixed-driver-slice/src/compiler/parser.ts:4273:14: error TS7030: Not all code paths return a value.
+/tmp/parser-fixed-driver-slice/src/compiler/parser.ts:4439:14: error TS7030: Not all code paths return a value.
+/tmp/parser-fixed-driver-slice/src/compiler/parser.ts:5334:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-fixed-driver-slice/src/compiler/parser.ts:5367:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-fixed-driver-slice/src/compiler/parser.ts:6125:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-fixed-driver-slice/src/compiler/parser.ts:7007:53: error TS7030: Not all code paths return a value.
+/tmp/parser-fixed-driver-slice/src/compiler/parser.ts:7268:14: error TS7030: Not all code paths return a value.
+/tmp/parser-fixed-driver-slice/src/compiler/parser.ts:7281:25: error TS7030: Not all code paths return a value.
+/tmp/parser-fixed-driver-slice/src/compiler/parser.ts:7956:14: error TS7030: Not all code paths return a value.
+/tmp/parser-fixed-driver-slice/src/compiler/parser.ts:8269:16: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/parser.ts:8299:16: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/parser.ts:8305:22: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/parser.ts:8360:20: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/parser.ts:8367:20: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/parser.ts:8472:25: error TS7029: Fallthrough case in switch.
+/tmp/parser-fixed-driver-slice/src/compiler/parser.ts:855:199: error TS7030: Not all code paths return a value.
+/tmp/parser-fixed-driver-slice/src/compiler/parser.ts:8683:80: error TS7030: Not all code paths return a value.
+/tmp/parser-fixed-driver-slice/src/compiler/parser.ts:8760:25: error TS7029: Fallthrough case in switch.
+/tmp/parser-fixed-driver-slice/src/compiler/parser.ts:8834:22: error TS7030: Not all code paths return a value.
+/tmp/parser-fixed-driver-slice/src/compiler/parser.ts:8934:22: error TS7030: Not all code paths return a value.
+/tmp/parser-fixed-driver-slice/src/compiler/parser.ts:9195:44: error TS7030: Not all code paths return a value.
+/tmp/parser-fixed-driver-slice/src/compiler/parser.ts:9425:11: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/parser.ts:9535:16: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/parser.ts:963:11: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/path.ts:218:10: error TS7030: Not all code paths return a value.
+/tmp/parser-fixed-driver-slice/src/compiler/performanceCore.ts:37:37: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-fixed-driver-slice/src/compiler/performanceCore.ts:37:84: error TS2591: Cannot find name 'perf_hooks'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-fixed-driver-slice/src/compiler/scanner.ts:1426:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-fixed-driver-slice/src/compiler/scanner.ts:1436:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-fixed-driver-slice/src/compiler/scanner.ts:1559:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-fixed-driver-slice/src/compiler/scanner.ts:2006:17: error TS7029: Fallthrough case in switch.
+/tmp/parser-fixed-driver-slice/src/compiler/scanner.ts:2298:14: error TS7030: Not all code paths return a value.
+/tmp/parser-fixed-driver-slice/src/compiler/scanner.ts:2638:21: error TS7029: Fallthrough case in switch.
+/tmp/parser-fixed-driver-slice/src/compiler/scanner.ts:2711:21: error TS7029: Fallthrough case in switch.
+/tmp/parser-fixed-driver-slice/src/compiler/scanner.ts:2780:17: error TS7029: Fallthrough case in switch.
+/tmp/parser-fixed-driver-slice/src/compiler/scanner.ts:3173:17: error TS7029: Fallthrough case in switch.
+/tmp/parser-fixed-driver-slice/src/compiler/scanner.ts:3353:17: error TS7029: Fallthrough case in switch.
+/tmp/parser-fixed-driver-slice/src/compiler/scanner.ts:3734:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-fixed-driver-slice/src/compiler/scanner.ts:405:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-fixed-driver-slice/src/compiler/scanner.ts:536:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-fixed-driver-slice/src/compiler/scanner.ts:730:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-fixed-driver-slice/src/compiler/scanner.ts:839:43: error TS7030: Not all code paths return a value.
+/tmp/parser-fixed-driver-slice/src/compiler/scanner.ts:874:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/scanner.ts:887:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/tracing.ts:116:23: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/tracing.ts:21:18: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/tracing.ts:24:27: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-fixed-driver-slice/src/compiler/tracing.ts:47:22: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-fixed-driver-slice/src/compiler/tracing.ts:66:50: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-fixed-driver-slice/src/compiler/tracing.ts:67:39: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:1346:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:2385:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:2406:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:30:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:3638:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:3954:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:4009:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:4511:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:4518:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:4526:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:4536:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:4580:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:4590:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:4632:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:4685:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:4692:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:4769:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:4873:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:5036:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:5074:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:5121:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:5179:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:5342:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:5480:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:5603:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:5632:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:5690:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:5697:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:5762:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:5778:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:5796:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:5914:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:5921:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:5944:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:5974:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:5983:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:5990:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:6189:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:6218:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:6228:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:6234:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:6248:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:6267:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:6289:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:6307:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:6421:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:6620:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:6676:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:6817:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:6825:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:6859:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:6996:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:7054:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:740:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:8092:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:809:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:8180:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/types.ts:865:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/utilities.ts:1540:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-fixed-driver-slice/src/compiler/utilities.ts:626:84: error TS7030: Not all code paths return a value.
+/tmp/parser-fixed-driver-slice/src/compiler/utilities.ts:801:58: error TS7030: Not all code paths return a value.
+/tmp/parser-fixed-driver-slice/src/compiler/utilities.ts:894:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/utilities.ts:966:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-fixed-driver-slice/src/compiler/utilitiesPublic.ts:114:84: error TS7030: Not all code paths return a value.
+/tmp/parser-fixed-driver-slice/src/compiler/utilitiesPublic.ts:225:46: error TS7030: Not all code paths return a value.
+/tmp/parser-fixed-driver-slice/src/compiler/utilitiesPublic.ts:245:51: error TS7030: Not all code paths return a value.
+/tmp/parser-fixed-driver-slice/src/compiler/utilitiesPublic.ts:68:95: error TS7030: Not all code paths return a value.

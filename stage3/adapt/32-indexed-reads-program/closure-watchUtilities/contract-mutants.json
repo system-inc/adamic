@@ -1,0 +1,50 @@
+[
+  {
+    "kind": "internal-method",
+    "name": "directoryExists",
+    "exit": 1,
+    "stderr": "watch contract missing: internal-method\n"
+  },
+  {
+    "kind": "internal-method",
+    "name": "realpath",
+    "exit": 1,
+    "stderr": "watch contract missing: internal-method\n"
+  },
+  {
+    "kind": "internal-method",
+    "name": "createDirectory",
+    "exit": 1,
+    "stderr": "watch contract missing: internal-method\n"
+  },
+  {
+    "kind": "internal-method",
+    "name": "writeFile",
+    "exit": 1,
+    "stderr": "watch contract missing: internal-method\n"
+  },
+  {
+    "kind": "call-receiver",
+    "name": "factory[key]",
+    "exit": 1,
+    "stderr": "watch contract missing: call-receiver\n"
+  },
+  {
+    "kind": "call-receiver",
+    "name": "plainInvokeFactory[key]",
+    "exit": 1,
+    "stderr": "watch contract missing: call-receiver\n"
+  },
+  {
+    "kind": "call-receiver",
+    "name": "cb",
+    "exit": 1,
+    "stderr": "watch contract missing: call-receiver\n"
+  },
+  {
+    "kind": "rest-type",
+    "name": "args",
+    "exit": 1,
+    "stderr": "watch contract missing: rest-type\n"
+  }
+]

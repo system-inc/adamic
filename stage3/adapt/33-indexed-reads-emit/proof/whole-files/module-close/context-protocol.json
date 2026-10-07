@@ -1,0 +1,23 @@
+{
+  "status": "pass",
+  "required_reads": 22,
+  "required_reader_functions": [
+    "shouldEmitUnderscoreUnderscoreESModule",
+    "transformCommonJSModule",
+    "collectAsynchronousDependencies",
+    "transformAsynchronousModuleBody",
+    "addExportEqualsIfNeeded",
+    "appendExportsOfImportDeclaration",
+    "appendExportsOfImportEqualsDeclaration",
+    "appendExportsOfVariableDeclarationList",
+    "appendExportsOfBindingElement",
+    "appendExportsOfHoistedDeclaration",
+    "appendExportsOfDeclaration"
+  ],
+  "all_required_readers_reachable_in_transformation": true,
+  "all_required_readers_unreachable_in_emission": true,
+  "writes_confined_to_transform_and_emit_roots": true,
+  "initialization_precedes_delegate": true,
+  "reset_follows_delegate": true,
+  "no_recursive_source_file_transform": true
+}
