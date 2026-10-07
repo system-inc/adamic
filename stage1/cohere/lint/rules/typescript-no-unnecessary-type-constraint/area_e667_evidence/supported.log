@@ -1,0 +1,16 @@
+=== RUN   TestWave08RetainedUpstream
+    lint_test.go:404: cohere cases: 2502 unique source/rule/options combinations
+    wave08_unified_test.go:37: parser recovery blocker: "({ ['x' });"
+    wave08_unified_test.go:37: parser recovery blocker: "({ ['x': 0 });"
+    wave08_unified_test.go:47: seven retained rules: map[@typescript-eslint/no-unnecessary-type-constraint:43 @typescript-eslint/prefer-as-const:69 @typescript-eslint/prefer-enum-initializers:21 default-param-last:128 no-useless-computed-key:120 react-hooks/gating:42 react/forbid-foreign-prop-types:60]; malformed computed-key recovery blocked separately
+    wave08_unified_test.go:48: Go, Node, emitted JavaScript, native identical: 171109 bytes
+--- PASS: TestWave08RetainedUpstream (95.47s)
+=== RUN   TestWave08RetainedCorpus
+    wave08_unified_test.go:88: compiler/stage1: 411 .ts/.a files, 2877 selected rule cases
+    wave08_unified_test.go:89: Go, Node, emitted JavaScript, native identical: 93531347 bytes
+--- PASS: TestWave08RetainedCorpus (303.36s)
+=== RUN   TestWave08ConstSingleEdit
+    wave08_unified_test.go:106: Go, Node, emitted JavaScript, native identical: 1009 bytes
+--- PASS: TestWave08ConstSingleEdit (88.30s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	487.257s

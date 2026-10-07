@@ -1,0 +1,31 @@
+Built: accepted landed multi-edit support and expanded owned parity to all seven retained rule ports; no new rule or helper claim.
+Commits: previous pushed c1a1303de32f5ef276cac4f2768a930a33e479f6; pre-evidence d0cba7dffcd8f25994de0d87d8073d590134e5cc; helper remains pushed bdae8bc99.
+Checks: supported parity PASS 487.257s, seven rule mutants PASS 372.200s, full owned witnesses PASS 108.549s, repository vet zero.
+Mutants: all seven rule mutants caught only by Go output comparison, including the previously blocked annotation second edit; four helper mutants remain certified on current main.
+Limits: two malformed computed-key parser-recovery cases still block full upstream findings parity; no new helper claim, full repository gate, broader seventeen checks or fresh throughput measurement.
+
+Merged current origin/area/stage1-lint e667e3e1dbdfd1b9125c3256961bfbc8ec31946b cleanly, accepting the shared owner's multiple automatic edits and path-preserving fixture capture. No shared source was hand edited. Current main 71d7e491b3c9724f7a0e2ee754592149e7f9790b and this area head are ancestors. The dedup ledger is unchanged, so seven retained winners and eleven retired copies remain unchanged. The only owned executable-test change adds prefer-as-const to the already owned unified_test.go.txt selection and updates its log. All rule implementations remain .a.
+
+Fresh commands use source /workspace/adamic-tools/env.sh and direct log redirection:
+
+```sh
+ADAMIC_GATE_UNCACHED=1 ADAMIC_TYPESCRIPT_SOURCE=/tmp/lint-wave1-08-typescript go test -overlay=/tmp/wave08-unified-overlay.json ./stage1/cohere/lint -run '^(TestWave08RetainedUpstream|TestWave08RetainedCorpus|TestWave08ConstSingleEdit)$' -count=1 -v -timeout=20m > /tmp/wave08-e667-supported.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./stage1/cohere/lint -run '^TestMutants$/(core_default_suppressed|computed_replacement_wrong|foreign_read_suppressed|gating_invalid_suppressed|constraint_suggestion_wrong|enum_second_suggestion_wrong|const_append_wrong)$' -count=1 -v -timeout=20m > /tmp/wave08-e667-mutants.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./stage1/cohere/lint -run '^TestOwnedWitnesses$' -count=1 -v -timeout=15m > /tmp/wave08-e667-witness.log 2>&1
+go vet ./... > /tmp/wave08-e667-vet.log 2>&1
+node --disable-warning=ExperimentalWarning oracle/node.mjs stage1/cohere/lint/main.ts --manifest /tmp/wave08-71d-computed.manifest > /tmp/wave08-e667-computed-probe.log 2>&1
+```
+
+The owned overlay adds only unified_test.go.txt as a virtual test, replacing no shared source. It invokes the actual shared Go oracle and comparator, and validates the supplied TypeScript checkout pin 050880ce59e30b356b686bd3144efe24f875ebc8. It is supported-scope evidence, not a final checker receipt.
+
+Upstream PASS 95.47s: 483 supported cases on all seven rules, identical actual-Go/source-Node/emitted-JavaScript/ASan-UBSan-native output at 171109 bytes. Counts: computed-key 120, gating 42, foreign propTypes 60, constraint 43, prefer-as-const 69, enum 21, default-param-last 128. This includes the annotation two-edit cases formerly blocked by the finding model. Two malformed computed-key cases remain explicitly excluded and blocking: ({ ['x' }); and ({ ['x': 0 });. Corpus PASS 303.36s: all 411 compiler/stage1 .ts/.a files and 2877 selected rule/file cases match at 93531347 bytes. Three const single-edit/negative controls PASS 88.30s, identical 1009 bytes. Combined PASS 487.257s.
+
+TestOwnedWitnesses now PASS 108.549s, actual Go, source Node, emitted JavaScript and sanitized native identical at 124609 bytes, using the unchanged shared test rather than an overlay replacement. The prior unexpected fix shape and one automatic edit guard blockers are resolved by the shared owner. No annotation edits were collapsed to force parity.
+
+All seven mutants compile and execute successfully on source Node, emitted JavaScript and sanitized native; only Go output differences kill them. core_default_suppressed suppresses parameter diagnostics; computed_replacement_wrong corrupts fix bytes; foreign_read_suppressed suppresses propTypes diagnostics; gating_invalid_suppressed suppresses invalid configuration; constraint_suggestion_wrong corrupts a suggestion; enum_second_suggestion_wrong corrupts the second enum suggestion. const_append_wrong replaces the second annotation edit's as const with as unknown: the shared comparison reports fix-edit 28 28 as unknown versus Go as const on all three port backends. This is now a fresh semantic mutant kill, not a baseline refusal.
+
+The remaining minimal ({ ['x' }); parser probe exits 70: parser slice expected CloseBracketToken, got CloseBraceToken at 8. The second malformed source is also still excluded. These valid recovery inputs produce Go findings but the stage1 parser cannot recover them. Parser changes are outside this unit's territory; do not edit shared sources, skip a required full gate, or assert full upstream findings parity. This gap prevents the shared-harness-only parking exception and keeps the work-in-progress cap closed. No additional helper is claimed.
+
+The owned helper branch remains bdae8bc99 on current main: four Go/Node/emitted-JavaScript/sanitized-native baselines and four comparison-only mutants PASS 23.184s, vet zero, external one-byte oracle PASS 0.564s with zero cache hits. Mutants: nonzero NewTheme deadKeys, incorrect ClearNamespace hyphen boundary, omitted var( refusal, reversed unresolved breakpoint comparison. Six Tailwind consumers are named in its reports, and none is independently fully unblocked by these helpers. Neither main nor helper implementations changed this turn, so that certification is not repeated.
+
+Toolchain and setup remain the previous main certification: Go 1.27.1, clang 20.1.8, Node 24.19.0, nproc 5 and quota four CPUs. Last setup PASS 59.479s with timing lines recorded in MAIN71D_LANDING.md and helper evidence/landing_71d_setup.log. No full repository gate, broader seventeen external-input correctness checks, shared node-table guard certification or fresh throughput benchmark. Historical rates remain in the own claim/rule reports. Raw new logs are area_e667_evidence/. Push only the owned branch under an exact expected-old-head lease, never main or area.
