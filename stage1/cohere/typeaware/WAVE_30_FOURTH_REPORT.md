@@ -63,3 +63,9 @@ source controls and hashes are in validation-wave-30-fourth.
 
 For the completed third-batch ports and measured native/Go times, see
 [WAVE_30_PROCESS_REPORT.md](WAVE_30_PROCESS_REPORT.md).
+
+Progress update: 1f2e7bbc ports independent native components of all three rules,
+with production Go, sanitized native and emitted-JavaScript agreement and caught
+component decision mutants. See [WAVE_30_REACT_COMPONENTS_REPORT.md](WAVE_30_REACT_COMPONENTS_REPORT.md).
+A broader scan found JSX support on codex/stage1-jsx-lint; shared integration and
+native React HIR remain prerequisites. The complete three rules are still partial.

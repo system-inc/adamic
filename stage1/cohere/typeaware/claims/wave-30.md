@@ -85,3 +85,12 @@ that the current native parser rejects valid JSX or parses it as a type assertio
 The native React HIR/SSA and memoization pipeline are also absent. No shared files
 were edited to work around these blockers, and no later batch was claimed.
 See ../WAVE_30_FOURTH_REPORT.md for exact controls, results and missing coverage.
+
+Fourth batch progress in 1f2e7bbc: native ref-lattice operations, purity-property
+propagation and manual-memo scope verdicts now match production Go helpers,
+sanitized native and emitted JavaScript. Each component has a caught decision
+mutant. These are partial components; the three complete analyses remain
+unported. JSX support exists on codex/stage1-jsx-lint but is not integrated here;
+native React HIR/SSA and the reactive memoization pipeline are still required.
+The refreshed wave-04 branch has a later overlapping claim, recorded in
+../WAVE_30_REACT_COMPONENTS_REPORT.md. No subsequent batch was claimed.
