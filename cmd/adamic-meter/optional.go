@@ -40,7 +40,7 @@ func optionalProgram(paths []string, overlay map[string]string) (*compiler.Progr
 	}
 	owned := make(map[string]bool)
 	fs := &optionalFS{FS: osvfs.FS(), source: make(map[string]string)}
-	roots := make([]string, 0, len(paths))
+	roots := make([]tspath.RootedFilePath, 0, len(paths))
 	for _, path := range paths {
 		absolute, err := filepath.Abs(path)
 		if err != nil {
@@ -53,14 +53,14 @@ func optionalProgram(paths []string, overlay map[string]string) (*compiler.Progr
 			if err != nil {
 				return nil, nil, err
 			}
-			if fs.FS.FileExists(name + ".ts") {
+			if fs.FS.FileExists(tspath.RootedFilePathFromAbsolute(name + ".ts")) {
 				return nil, nil, fmt.Errorf("ambiguous adaptation source %s", name)
 			}
 			fs.source[name+".ts"] = string(source)
 			owned[name+".ts"] = true
 			name += ".ts"
 		}
-		roots = append(roots, name)
+		roots = append(roots, tspath.RootedFilePathFromAbsolute(name))
 	}
 	for path, source := range overlay {
 		absolute, err := filepath.Abs(path)
@@ -82,10 +82,8 @@ func optionalProgram(paths []string, overlay map[string]string) (*compiler.Progr
 		Lib: []string{"lib.es2024.d.ts"}, Types: []string{},
 	}
 	fileSystem := cachedvfs.From(bundled.WrapFS(fs))
-	config := tsoptions.NewParsedCommandLine(options, roots, nil, tspath.ComparePathsOptions{
-		UseCaseSensitiveFileNames: fileSystem.UseCaseSensitiveFileNames(), CurrentDirectory: filepath.ToSlash(cwd),
-	})
-	host := compiler.NewCachedFSCompilerHost(filepath.ToSlash(cwd), fileSystem, bundled.LibPath(), nil, nil, nil)
+	config := tsoptions.NewParsedCommandLine(options, roots, nil, tspath.RootedDirectoryPathFromAbsolute(filepath.ToSlash(cwd)), fileSystem.CaseSensitivity())
+	host := compiler.NewCachedFSCompilerHost(fileSystem, bundled.LibPath(), nil, nil, nil)
 	program := compiler.NewProgram(compiler.ProgramOptions{Config: config, Host: host, SingleThreaded: core.TSTrue})
 	if program == nil {
 		return nil, nil, errors.New("building optional-property declaration resolver")
@@ -98,14 +96,14 @@ type optionalFS struct {
 	source map[string]string
 }
 
-func (fs *optionalFS) ReadFile(path string) (string, bool) {
-	if source, ok := fs.source[path]; ok {
+func (fs *optionalFS) ReadFile(path tspath.RootedFilePath) (string, bool) {
+	if source, ok := fs.source[path.AsString()]; ok {
 		return source, true
 	}
 	return fs.FS.ReadFile(path)
 }
-func (fs *optionalFS) FileExists(path string) bool {
-	_, ok := fs.source[path]
+func (fs *optionalFS) FileExists(path tspath.RootedFilePath) bool {
+	_, ok := fs.source[path.AsString()]
 	return ok || fs.FS.FileExists(path)
 }
 
@@ -136,7 +134,7 @@ func optionalAdaptations(paths []string, overlay map[string]string, before error
 	}
 	files := make(map[string]*ast.SourceFile)
 	for _, file := range program.GetSourceFiles() {
-		files[file.FileName()] = file
+		files[file.FileName().AsString()] = file
 	}
 	selected := make(map[*ast.Node]bool)
 	for _, diagnostic := range diagnostics.Diagnostics {
@@ -223,7 +221,7 @@ func optionalAdaptations(paths []string, overlay map[string]string, before error
 	sources := make(map[string]string)
 	for declaration := range selected {
 		file := ast.GetSourceFileOfNode(declaration)
-		name := file.FileName()
+		name := file.FileName().AsString()
 		if strings.HasSuffix(name, ".a.ts") && owned[strings.TrimSuffix(name, ".ts")] {
 			name = strings.TrimSuffix(name, ".ts")
 		}
@@ -298,7 +296,7 @@ func selectOptional(c *checker.Checker, symbol *ast.Symbol, value *checker.Type,
 		if declaration.Kind != ast.KindPropertySignature && declaration.Kind != ast.KindPropertyDeclaration && declaration.Kind != ast.KindMethodSignature {
 			return
 		}
-		if !ast.HasQuestionToken(declaration) || declaration.Type() == nil || !owned[ast.GetSourceFileOfNode(declaration).FileName()] {
+		if !ast.HasQuestionToken(declaration) || declaration.Type() == nil || !owned[ast.GetSourceFileOfNode(declaration).FileName().AsString()] {
 			return
 		}
 		var target *checker.Type
