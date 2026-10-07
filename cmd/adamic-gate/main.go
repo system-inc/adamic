@@ -87,6 +87,7 @@ type summary struct {
 	DiskBefore, DiskAfter uint64
 	Errors                []string
 	Submodules            []submoduleRecord
+	Concurrency           concurrency
 }
 type merged struct {
 	Version           int
@@ -131,12 +132,18 @@ func run(args []string) error {
 		count := flags.Int("count", 8, "number of shards")
 		index := flags.Int("index", -1, "zero-based shard")
 		out := flags.String("out", "", "evidence directory")
-		flags.IntVar(&packageJobs, "jobs", runtime.GOMAXPROCS(0), "concurrent package test processes")
+		jobs := flags.Int("jobs", 0, "legacy package job override; must agree with an explicit concurrency setting")
+		budget := flags.String("concurrency", defaultConcurrency, "auto or JOBSxPARALLEL, for example 4x1 or 2x2")
 		resume := flags.Bool("resume", false, "reuse complete package evidence for identical execution inputs")
 		scratch := flags.String("scratch", "/workspace/adamic-gate-scratch", "disk-backed scratch root outside the repository")
 		if err := flags.Parse(args[1:]); err != nil {
 			return err
 		}
+		configured, err := resolveConcurrency(*budget, *jobs)
+		if err != nil {
+			return err
+		}
+		packageJobs, testParallel, concurrencySetting = configured.Jobs, configured.Parallel, configured.Setting
 		return shard(*index, *count, *out, *scratch, *resume)
 	case "merge":
 		flags := flag.NewFlagSet("merge", flag.ContinueOnError)
@@ -721,7 +728,7 @@ func shard(index, count int, out, scratch string, resume bool) error {
 	if packageJobs < 1 {
 		return errors.New("jobs must be positive")
 	}
-	context = schedulingIdentity(context, packageJobs)
+	context = schedulingIdentity(context, packageJobs, testParallel, currentConcurrency().EffectiveParallel)
 	state := resumeState{PlanDigest: p.Digest, Context: context, Index: index}
 	if _, err := os.Stat(out); err == nil {
 		if !resume {
@@ -751,7 +758,7 @@ func shard(index, count int, out, scratch string, resume bool) error {
 	if err := atomicJSON(filepath.Join(out, "run.json"), state); err != nil {
 		return err
 	}
-	s := summary{Version: 1, Plan: p, Index: index, Checks: map[string]string{}, DiskBefore: beforeDisk, Submodules: submodules}
+	s := summary{Version: 1, Plan: p, Index: index, Checks: map[string]string{}, DiskBefore: beforeDisk, Submodules: submodules, Concurrency: currentConcurrency()}
 	raw, err := os.Create(filepath.Join(out, "test.jsonl"))
 	if err != nil {
 		return err
@@ -874,7 +881,7 @@ func shard(index, count int, out, scratch string, resume bool) error {
 		local := summary{}
 		var localErrors []string
 		for _, selection := range selections(p, index, pkg) {
-			args := selectionArgs(pkg, selection)
+			args := concurrencyArgs(selectionArgs(pkg, selection), testParallel)
 			cmd, release := shardCommand("go", args...)
 			cmd.Env = append(os.Environ(), "ADAMIC_GATE_UNCACHED=1", "TMPDIR="+tmp)
 			if strings.HasSuffix(pkg, "/internal/native") && selection.Run == "^TestWASI$" {
@@ -904,7 +911,7 @@ func shard(index, count int, out, scratch string, resume bool) error {
 		if err := os.Rename(filepath.Join(packageDir, "test.stderr.partial"), filepath.Join(packageDir, "test.stderr")); err != nil {
 			return err
 		}
-		checkpoint := packageEvidence{Key: key, Package: pkg, Invocations: local.Invocations}
+		checkpoint := packageEvidence{Key: key, Package: pkg, Invocations: local.Invocations, TestParallel: testParallel}
 		if err := atomicJSON(filepath.Join(packageDir, "invocations.json"), checkpoint); err != nil {
 			return err
 		}
@@ -1159,6 +1166,9 @@ func merge(dirs []string, out string) error {
 	produced := map[string]bool{}
 	var all []result
 	for i, s := range summaries {
+		if err := validateConcurrency(s.Concurrency); err != nil {
+			m.Errors = append(m.Errors, fmt.Sprintf("shard %d: %s", s.Index, err))
+		}
 		if s.Version != 1 || !samePlan(expected, s.Plan) {
 			m.Errors = append(m.Errors, fmt.Sprintf("shard %d plan differs from repository enumeration", s.Index))
 		}

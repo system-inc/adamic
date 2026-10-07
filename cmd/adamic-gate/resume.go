@@ -279,6 +279,7 @@ type resumeState struct {
 type packageEvidence struct {
 	Key, Package, LogDigest, StderrDigest string
 	Invocations                           []invocation
+	TestParallel                          int
 }
 
 func checkpointKey(s resumeState, pkg string, patterns []string) string {
@@ -341,7 +342,7 @@ func completePackage(dir string, e packageEvidence, p plan, index int, pkg strin
 		return errors.New("package invocation count differs")
 	}
 	for i, call := range e.Invocations {
-		if call.Package != pkg || !call.Uncached || !reflect.DeepEqual(call.Args, selectionArgs(pkg, selectors[i])) {
+		if e.TestParallel < 0 || call.Package != pkg || !call.Uncached || !reflect.DeepEqual(call.Args, concurrencyArgs(selectionArgs(pkg, selectors[i]), e.TestParallel)) {
 			return errors.New("package invocation inputs differ")
 		}
 	}
@@ -465,6 +466,9 @@ func validatePackageFiles(dir string, p plan, s summary) []string {
 			continue
 		}
 		calls = append(calls, e.Invocations...)
+		if e.TestParallel != s.Concurrency.Parallel {
+			problems = append(problems, fmt.Sprintf("shard %d package %s concurrency differs from summary", s.Index, pkg))
+		}
 		if err := appendFile(h, filepath.Join(packageDir, "test.jsonl")); err != nil {
 			problems = append(problems, err.Error())
 		}
