@@ -1,0 +1,4 @@
+// Exact Go keyword set; no case folding, trimming or Unicode normalization.
+export function isAbsoluteSize(value: string): boolean {
+ return value === 'xx-small' || value === 'x-small' || value === 'small' || value === 'medium' || value === 'large' || value === 'x-large' || value === 'xx-large' || value === 'xxx-large';
+}

@@ -1,0 +1,22 @@
+=== RUN   TestBatch10Helpers
+    batch10_test.go:49: 2776 lines match real Go, Node source, emitted JavaScript and sanitized native
+--- PASS: TestBatch10Helpers (3.17s)
+=== RUN   TestBatch10Mutants
+=== RUN   TestBatch10Mutants/is_url.a
+    batch10_test.go:91: compiled semantic mutant caught at line 12: got "true" Go "false"
+=== RUN   TestBatch10Mutants/is_url.a#01
+    batch10_test.go:91: compiled semantic mutant caught at line 261: got "true" Go "false"
+=== RUN   TestBatch10Mutants/is_digit.a
+    batch10_test.go:91: compiled semantic mutant caught at line 2578: got "false" Go "true"
+=== RUN   TestBatch10Mutants/has_any_prefix.a
+    batch10_test.go:91: compiled semantic mutant caught at line 283: got "false" Go "true"
+=== RUN   TestBatch10Mutants/has_any_prefix.a#01
+    batch10_test.go:91: compiled semantic mutant caught at line 293: got "true" Go "false"
+--- PASS: TestBatch10Mutants (4.89s)
+    --- PASS: TestBatch10Mutants/is_url.a (0.93s)
+    --- PASS: TestBatch10Mutants/is_url.a#01 (0.83s)
+    --- PASS: TestBatch10Mutants/is_digit.a (0.99s)
+    --- PASS: TestBatch10Mutants/has_any_prefix.a (0.88s)
+    --- PASS: TestBatch10Mutants/has_any_prefix.a#01 (1.01s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot03	8.063s

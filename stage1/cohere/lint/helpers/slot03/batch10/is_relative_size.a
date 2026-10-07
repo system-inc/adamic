@@ -1,0 +1,2 @@
+// Exact Go keyword membership.
+export function isRelativeSize(value: string): boolean { return value === 'larger' || value === 'smaller'; }

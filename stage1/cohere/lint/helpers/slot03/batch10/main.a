@@ -1,0 +1,8 @@
+import {panic, readTextFile, programArguments} from 'adamic';
+import {OptionsJson} from '../../options_json.ts';
+import {isURL} from './is_url.a';
+import {isAbsoluteSize} from './is_absolute_size.a';
+import {isRelativeSize} from './is_relative_size.a';
+const file=readTextFile(programArguments()[0] ?? panic('missing cases'));if(file.kind==='Error') {panic(file.message);}
+const json=new OptionsJson(file.text);const root=json.parse();if(root<0) {panic(json.error);}
+for(const row of json.node(json.field(root,'texts')).children) {const value=json.node(row).text;console.log(`${isURL(value)}`);console.log(`${isAbsoluteSize(value)}`);console.log(`${isRelativeSize(value)}`);}

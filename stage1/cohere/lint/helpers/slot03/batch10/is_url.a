@@ -1,0 +1,6 @@
+// Go-valid UTF-8 text maps to Unicode JavaScript text. No case folding or trimming.
+export function isURL(value: string): boolean {
+ if(!value.startsWith('url(') || !value.endsWith(')') || value.length < 5) { return false; }
+ const body = value.slice(4, -1);
+ return !body.includes('\n') && !body.includes('\r') && !body.includes('\u2028') && !body.includes('\u2029');
+}

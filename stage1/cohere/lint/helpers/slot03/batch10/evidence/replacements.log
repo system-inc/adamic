@@ -1,0 +1,22 @@
+=== RUN   TestBatch10Helpers
+    batch10_test.go:49: 1071 lines match real Go, Node source, emitted JavaScript and sanitized native
+--- PASS: TestBatch10Helpers (3.61s)
+=== RUN   TestBatch10Mutants
+=== RUN   TestBatch10Mutants/is_url.a
+    batch10_test.go:91: compiled semantic mutant caught at line 79: got "true" Go "false"
+=== RUN   TestBatch10Mutants/is_url.a#01
+    batch10_test.go:91: compiled semantic mutant caught at line 916: got "true" Go "false"
+=== RUN   TestBatch10Mutants/is_absolute_size.a
+    batch10_test.go:91: compiled semantic mutant caught at line 1046: got "false" Go "true"
+=== RUN   TestBatch10Mutants/is_absolute_size.a#01
+    batch10_test.go:91: compiled semantic mutant caught at line 65: got "true" Go "false"
+=== RUN   TestBatch10Mutants/is_relative_size.a
+    batch10_test.go:91: compiled semantic mutant caught at line 783: got "false" Go "true"
+--- PASS: TestBatch10Mutants (4.32s)
+    --- PASS: TestBatch10Mutants/is_url.a (0.65s)
+    --- PASS: TestBatch10Mutants/is_url.a#01 (1.04s)
+    --- PASS: TestBatch10Mutants/is_absolute_size.a (0.62s)
+    --- PASS: TestBatch10Mutants/is_absolute_size.a#01 (0.59s)
+    --- PASS: TestBatch10Mutants/is_relative_size.a (1.15s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot03	7.934s
