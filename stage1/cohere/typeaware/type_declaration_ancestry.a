@@ -1,0 +1,65 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+
+export class Ancestor {
+    readonly kind: string;
+    readonly name: string;
+    readonly start: number;
+    readonly end: number;
+    readonly children: readonly string[];
+    constructor(kind: string, name: string, start: number, end: number, children: readonly string[]) {
+        this.kind = kind;
+        this.name = name;
+        this.start = start;
+        this.end = end;
+        this.children = children;
+    }
+    identity(): string {
+        return `${this.kind}:${this.start}:${this.end}`;
+    }
+}
+export class DeclarationAncestry {
+    readonly file: string;
+    readonly ancestors: readonly Ancestor[];
+    constructor(file: string, ancestors: readonly Ancestor[]) {
+        this.file = file;
+        this.ancestors = ancestors;
+    }
+}
+export function typeDeclarationAncestry(
+    rules: Rules,
+    index: number,
+    id: number,
+    awaited: boolean,
+): DeclarationAncestry[] {
+    const frames = new Frames(rules.ask(index, `type-declaration-ancestry\n${id}\n${awaited ? 1 : 0}`));
+    header(frames, 'type-declaration-ancestry');
+    const result: DeclarationAncestry[] = [];
+    const parts = frames.natural();
+    for(let part = 0; part < parts; part++) {
+        const declarations = frames.natural();
+        for(let at = 0; at < declarations; at++) {
+            const file = frames.field();
+            const count = frames.natural();
+            const ancestors: Ancestor[] = [];
+            for(let a = 0; a < count; a++) {
+                const kind = frames.field();
+                const name = frames.field();
+                const start = frames.natural();
+                const end = frames.natural();
+                const children: string[] = [];
+                const length = frames.natural();
+                for(let child = 0; child < length; child++) {
+                    const k = frames.field();
+                    const s = frames.natural();
+                    const e = frames.natural();
+                    children.push(`${k}:${s}:${e}`);
+                }
+                ancestors.push(new Ancestor(kind, name, start, end, children));
+            }
+            result.push(new DeclarationAncestry(file, ancestors));
+        }
+    }
+    frames.end();
+    return result;
+}

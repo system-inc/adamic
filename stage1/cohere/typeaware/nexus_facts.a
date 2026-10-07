@@ -1,0 +1,123 @@
+import type { Rules } from './rules.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { Frames, header } from './frames.ts';
+import { types } from './facts.ts';
+import type { Types } from './types.ts';
+import type { TypeFact } from './type_fact.ts';
+
+export class NexusDeclaration {
+    readonly kind: string;
+    readonly library: boolean;
+    readonly ownerKind: string;
+    readonly ownerName: string;
+    constructor(kind: string, library: boolean, ownerKind: string, ownerName: string) {
+        this.kind = kind;
+        this.library = library;
+        this.ownerKind = ownerKind;
+        this.ownerName = ownerName;
+    }
+}
+export class NexusFacts {
+    readonly wave17NexusFactsTag = true;
+    readonly rules: Rules;
+    constructor(rules: Rules) {
+        this.rules = rules;
+    }
+    report(rule: string, id: string, message: string, index: number): void {
+        const node = this.rules.parser.node(index);
+        this.rules.findings.push(
+            new Diagnostic(rule, id, message, this.rules.byte(this.rules.start(node)), this.rules.byte(node.end), ''),
+        );
+    }
+    shape(index: number, constrained = true): Types {
+        const mode = constrained ? 'type-shape' : 'raw-shape';
+        return types(this.rules.ask(index, mode), mode);
+    }
+    library(index: number, type: TypeFact): string {
+        const f = new Frames(this.rules.ask(index, `type-origin\n${type.id}`));
+        header(f, 'type-origin');
+        let name = '';
+        let library = false;
+        if(f.yes()) {
+            name = f.field();
+            const count = f.natural();
+            for(let at = 0; at < count; at++) {
+                f.field();
+                f.yes();
+                if(f.yes()) {
+                    library = true;
+                }
+            }
+        }
+        f.end();
+        return library ? name : '';
+    }
+    literal(index: number, type: TypeFact): string {
+        const f = new Frames(this.rules.ask(index, `literal-value\n${type.id}`));
+        header(f, 'literal-value');
+        const kind = f.field();
+        const value = f.field();
+        f.end();
+        return kind === 'string' ? value : '';
+    }
+    property(index: number, type: TypeFact, name: string): boolean {
+        const f = new Frames(this.rules.ask(index, `property-declarations\n${type.id}\n${name}`));
+        header(f, 'property-declarations');
+        const cursor = f.cursor;
+        const present = f.yes();
+        f.cursor = cursor;
+        this.symbol(f);
+        f.end();
+        return present;
+    }
+    declarations(index: number): NexusDeclaration[] {
+        const f = new Frames(this.rules.ask(index, 'node-symbol-details'));
+        header(f, 'node-symbol-details');
+        const result = this.symbol(f);
+        f.end();
+        return result;
+    }
+    symbol(f: Frames): NexusDeclaration[] {
+        const result: NexusDeclaration[] = [];
+        if(!f.yes()) {
+            return result;
+        }
+        f.natural();
+        f.natural();
+        f.field();
+        const count = f.natural();
+        for(let at = 0; at < count; at++) {
+            f.field();
+            const kind = f.field();
+            f.natural();
+            f.natural();
+            f.yes();
+            const library = f.yes();
+            const ownerKind = f.field();
+            const ownerName = f.field();
+            f.natural();
+            f.natural();
+            const tags = f.natural();
+            for(let tag = 0; tag < tags; tag++) {
+                f.field();
+                f.field();
+                f.natural();
+                f.natural();
+                f.field();
+            }
+            const parameters = f.natural();
+            for(let p = 0; p < parameters; p++) {
+                f.field();
+            }
+            result.push(new NexusDeclaration(kind, library, ownerKind, ownerName));
+        }
+        return result;
+    }
+    callable(index: number, type: TypeFact): boolean {
+        const f = new Frames(this.rules.ask(index, `call-count\n${type.id}`));
+        header(f, 'call-count');
+        const result = f.natural() > 0;
+        f.end();
+        return result;
+    }
+}

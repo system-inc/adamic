@@ -1,0 +1,263 @@
+import type { Rules } from './rules.ts';
+import { NexusFacts } from './nexus_facts.a';
+import { stringLike, numberLike, booleanLike, bigintLike, nullish } from './flags.ts';
+
+const collections: readonly string[] = ['Map', 'ReadonlyMap', 'Set', 'ReadonlySet', 'WeakMap', 'WeakSet'];
+const sized: readonly string[] = ['Map', 'ReadonlyMap', 'Set', 'ReadonlySet'];
+const typed: readonly string[] = [
+    'Int8Array',
+    'Uint8Array',
+    'Uint8ClampedArray',
+    'Int16Array',
+    'Uint16Array',
+    'Int32Array',
+    'Uint32Array',
+    'Float16Array',
+    'Float32Array',
+    'Float64Array',
+    'BigInt64Array',
+    'BigUint64Array',
+];
+const messages: readonly string[] = [
+    'This uses `in` to look for a value in an array. `in` asks whether the array has a property or index of that name, never whether it holds that element, and this name is neither, so the test is always false. Use `.includes()` for membership.',
+    'This compares a `.length` or `.size` against a value it can never be on the other side of. A length or size is never negative, so the comparison has the same answer every time: always false (`< 0`, `=== -1`) or always true (`>= 0`, `!== -1`). Compare against `0` for empty, or `> 0` for not empty.',
+    "This reads or writes a Map or Set with brackets. Brackets reach the object's own properties, not its entries, so a read finds nothing that `.set()` or `.add()` stored and a write stores nothing `.get()` or `.has()` will see. Use `.get()`, `.set()`, `.has()` or `.add()`.",
+    "This hands a Map or Set to an `Object` method that lists own properties. Entries are not properties, so the result is always empty. Use the collection's own `.keys()`, `.values()` or `.entries()`, or `Array.from(...)` around one of them.",
+];
+export class NoCollectionMisuse {
+    readonly wave17NoCollectionMisuseTag = true;
+    readonly rules: Rules;
+    readonly facts: NexusFacts;
+    constructor(rules: Rules, facts: NexusFacts) {
+        this.rules = rules;
+        this.facts = facts;
+    }
+    collection(index: number, names: readonly string[]): boolean {
+        const graph = this.facts.shape(index);
+        return (
+            graph.present &&
+            graph.parts(graph.root()).length > 0 &&
+            graph.parts(graph.root()).every((id) => names.includes(this.facts.library(index, graph.type(id))))
+        );
+    }
+    index(name: string): boolean {
+        if(name.length === 0 || (name.length > 1 && name[0] === '0')) {
+            return false;
+        }
+        for(let at = 0; at < name.length; at++) {
+            const code = name.charCodeAt(at);
+            if(code < 48 || code > 57) {
+                return false;
+            }
+        }
+        const value = Number.parseFloat(name);
+        return value < 4294967295 && `${value}` === name;
+    }
+    inArray(left: number, right: number): boolean {
+        const arrays = this.facts.shape(right);
+        if(
+            !arrays.present ||
+            arrays.parts(arrays.root()).length === 0 ||
+            !arrays.parts(arrays.root()).every((id) => arrays.type(id).array || arrays.type(id).tuple >= 0)
+        ) {
+            return false;
+        }
+        const names = this.facts.shape(left);
+        if(!names.present || names.parts(names.root()).length === 0) {
+            return false;
+        }
+        for(const id of names.parts(names.root())) {
+            const type = names.type(id);
+            if((type.flags & 1024) === 0) {
+                return false;
+            }
+            const name = this.facts.literal(left, type);
+            if(this.index(name)) {
+                return false;
+            }
+            if(arrays.parts(arrays.root()).some((a) => this.facts.property(right, arrays.type(a), name))) {
+                return false;
+            }
+        }
+        return true;
+    }
+    size(index: number): boolean {
+        const access = this.rules.parser.node(this.rules.skip(index));
+        if(access.kind !== 'PropertyAccessExpression') {
+            return false;
+        }
+        const name = this.rules.parser.node(access.children[access.children.length - 1] ?? -1);
+        if(name.kind !== 'Identifier' || !['length', 'size'].includes(name.text)) {
+            return false;
+        }
+        const receiver = access.children[0] ?? -1;
+        const graph = this.facts.shape(receiver);
+        if(!graph.present || graph.parts(graph.root()).length === 0) {
+            return false;
+        }
+        return graph.parts(graph.root()).every((id) => {
+            const type = graph.type(id);
+            return name.text === 'size'
+                ? sized.includes(this.facts.library(receiver, type))
+                : type.array ||
+                      type.tuple >= 0 ||
+                      (type.flags & stringLike) !== 0 ||
+                      typed.includes(this.facts.library(receiver, type));
+        });
+    }
+    numeric(index: number): number | undefined {
+        let node = this.rules.parser.node(this.rules.skip(index));
+        let sign = 1;
+        if(node.kind === 'PrefixUnaryExpression') {
+            if(node.operator !== 'MinusToken') {
+                return undefined;
+            }
+            sign = -1;
+            node = this.rules.parser.node(this.rules.skip(node.children[0] ?? -1));
+        }
+        if(node.kind !== 'NumericLiteral') {
+            return undefined;
+        }
+        // Read the spelling so uppercase radix prefixes do not depend on the
+        // shared scanner's canonical-number implementation.
+        const spelling = this.rules.text(node).replaceAll('_', '');
+        const prefix = spelling.slice(0, 2).toLowerCase();
+        const value =
+            prefix === '0x'
+                ? Number.parseInt(spelling.slice(2), 16)
+                : prefix === '0b'
+                  ? Number.parseInt(spelling.slice(2), 2)
+                  : prefix === '0o'
+                    ? Number.parseInt(spelling.slice(2), 8)
+                    : Number.parseFloat(spelling);
+        return Number.isNaN(value) ? undefined : sign * value;
+    }
+    decided(operator: string, value: number): boolean {
+        if(['LessThanToken', 'GreaterThanEqualsToken'].includes(operator)) {
+            return value <= 0;
+        }
+        return (
+            [
+                'LessThanEqualsToken',
+                'GreaterThanToken',
+                'EqualsEqualsEqualsToken',
+                'EqualsEqualsToken',
+                'ExclamationEqualsEqualsToken',
+                'ExclamationEqualsToken',
+            ].includes(operator) && value < 0
+        );
+    }
+    impossible(left: number, right: number, operator: string): boolean {
+        if(this.size(left)) {
+            const value = this.numeric(right);
+            return value !== undefined && this.decided(operator, value);
+        }
+        if(!this.size(right)) {
+            return false;
+        }
+        const value = this.numeric(left);
+        if(value === undefined) {
+            return false;
+        }
+        const names: readonly string[] = [
+            'LessThanToken',
+            'GreaterThanToken',
+            'LessThanEqualsToken',
+            'GreaterThanEqualsToken',
+        ];
+        const mirrors: readonly string[] = [
+            'GreaterThanToken',
+            'LessThanToken',
+            'GreaterThanEqualsToken',
+            'LessThanEqualsToken',
+        ];
+        const at = names.indexOf(operator);
+        return this.decided(at < 0 ? operator : (mirrors[at] ?? ''), value);
+    }
+    misses(collection: number, key: number): boolean {
+        const keys = this.facts.shape(key, false);
+        if(!keys.present) {
+            return false;
+        }
+        const objects = this.facts.shape(collection);
+        for(const id of keys.parts(keys.root())) {
+            const type = keys.type(id);
+            if((type.flags & 1024) !== 0) {
+                const name = this.facts.literal(key, type);
+                if(objects.parts(objects.root()).some((o) => this.facts.property(collection, objects.type(o), name))) {
+                    return false;
+                }
+            }
+            else if((type.flags & (numberLike | booleanLike | bigintLike | nullish)) === 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+    objectMethod(index: number): boolean {
+        const call = this.rules.parser.node(index);
+        if(call.list <= 0) {
+            return false;
+        }
+        const callee = this.rules.parser.node(this.rules.skip(call.children[0] ?? -1));
+        if(callee.kind !== 'PropertyAccessExpression') {
+            return false;
+        }
+        const nameIndex = callee.children[callee.children.length - 1] ?? -1;
+        const name = this.rules.parser.node(nameIndex);
+        const objectIndex = this.rules.skip(callee.children[0] ?? -1);
+        const object = this.rules.parser.node(objectIndex);
+        if(
+            name.kind !== 'Identifier' ||
+            !['keys', 'values', 'entries', 'getOwnPropertyNames'].includes(name.text) ||
+            object.kind !== 'Identifier' ||
+            object.text !== 'Object'
+        ) {
+            return false;
+        }
+        const a = this.facts.declarations(objectIndex);
+        const b = this.facts.declarations(nameIndex);
+        return (
+            a.some((d) => d.library) &&
+            b.some((d) => d.library) &&
+            this.collection(call.children[call.children.length - call.list] ?? -1, collections)
+        );
+    }
+    report(index: number, at: number): void {
+        const ids: readonly string[] = [
+            'inOnArray',
+            'impossibleSizeComparison',
+            'bracketAccessOnCollection',
+            'objectMethodOnCollection',
+        ];
+        this.facts.report('nexus/correctness-no-collection-misuse', ids[at] ?? '', messages[at] ?? '', index);
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            const node = this.rules.parser.node(index);
+            if(node.kind === 'BinaryExpression') {
+                const left = node.children[0] ?? -1;
+                const right = node.children[2] ?? -1;
+                const operator = this.rules.parser.node(node.children[1] ?? -1).kind;
+                if(operator === 'InKeyword') {
+                    if(this.inArray(left, right)) {
+                        this.report(index, 0);
+                    }
+                }
+                else if(this.impossible(left, right, operator)) {
+                    this.report(index, 1);
+                }
+            }
+            else if(node.kind === 'ElementAccessExpression') {
+                const object = node.children[0] ?? -1;
+                const key = node.children[node.children.length - 1] ?? -1;
+                if(key !== object && this.collection(object, collections) && this.misses(object, key)) {
+                    this.report(index, 2);
+                }
+            }
+            else if(node.kind === 'CallExpression' && this.objectMethod(index)) {
+                this.report(index, 3);
+            }
+        }
+    }
+}
