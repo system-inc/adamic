@@ -43,6 +43,11 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return e.read(expression)
 	case ir.Truthy:
 		return e.toBoolean(expression.Value.Type(), e.value(expression.Value))
+	case ir.Comma:
+		e.line("(void)%s;", e.value(expression.Left))
+		return e.value(expression.Right)
+	case ir.Effects:
+		return e.effects(expression)
 	case ir.LogicalAssignment:
 		return e.logicalAssignment(expression)
 	case ir.Logical:

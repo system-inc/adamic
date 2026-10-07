@@ -26,3 +26,16 @@ type LogicalAssignment struct {
 }
 
 func (a LogicalAssignment) Type() Type { return a.Of }
+
+// Comma evaluates Left, discards its value, then evaluates and returns Right.
+type Comma struct{ Left, Right Expression }
+
+func (c Comma) Type() Type { return c.Right.Type() }
+
+// Effects permits a statement's effects inside a value expression.
+type Effects struct {
+	Body   []Statement
+	Result Expression
+}
+
+func (e Effects) Type() Type { return e.Result.Type() }

@@ -1,0 +1,15 @@
+let calls = 0;
+function next(): number { calls += 1; console.log(`next ${calls}`); return calls * 10; }
+console.log(`${(next(), next(), 17)} ${calls}`);
+let value = 1;
+console.log(`${(value += 3, value)} ${value}`);
+console.log(`${(value++, value)} ${value}`);
+console.log(`${(console.log('left'), 23)}`);
+(next(), next());
+function built(): string { return `built${next()}`; }
+console.log((built(), built()));
+const first = (next(), { name: built() });
+console.log(first.name);
+for (let i = 0; (next(), i < 2); (i += 1, next())) { console.log(`loop ${i}`); }
+try { console.log(`${(next(), fail(), 99)}`); } catch (error) { if (error instanceof Error) { console.log(error.message); } }
+function fail(): number { throw new Error('comma throws'); }

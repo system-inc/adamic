@@ -91,3 +91,16 @@ func logicalConverted(from, to ir.Type, value string) (string, bool) {
 	}
 	return converted(from, to, value)
 }
+
+func (e *emitter) effects(expression ir.Effects) string {
+	savedOwned, savedAt := e.owned, e.at
+	e.outerOwned = append(e.outerOwned, savedOwned)
+	e.owned, e.at = nil, nil
+	for _, statement := range expression.Body {
+		e.statement(statement)
+	}
+	e.end()
+	e.owned, e.at = savedOwned, savedAt
+	e.outerOwned = e.outerOwned[:len(e.outerOwned)-1]
+	return e.value(expression.Result)
+}

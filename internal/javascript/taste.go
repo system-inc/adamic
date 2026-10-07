@@ -3,6 +3,7 @@ package javascript
 import (
 	"fmt"
 	"github.com/system-inc/adamic/internal/ir"
+	"strings"
 )
 
 func (e *emitter) logicalAssignment(expression ir.LogicalAssignment) string {
@@ -27,4 +28,16 @@ func (e *emitter) logicalAssignment(expression ir.LogicalAssignment) string {
 		result = fmt.Sprintf("(%s ? %s : adamicUnready(%s))", readyName(write.Local), result, quote(e.program.Locals[write.Local].Name))
 	}
 	return result
+}
+
+func (e *emitter) effects(expression ir.Effects) string {
+	savedOut, savedOptions := e.out, e.options
+	e.out = strings.Builder{}
+	// Internal statements have no independent graph points: the enclosing expression is the point.
+	e.options.Mark = nil
+	e.statements(expression.Body)
+	e.line("return %s;", e.value(expression.Result))
+	text := e.out.String()
+	e.out, e.options = savedOut, savedOptions
+	return "(() => {\n" + text + "})()"
 }
