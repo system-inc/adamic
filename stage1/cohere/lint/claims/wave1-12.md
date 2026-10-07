@@ -217,3 +217,20 @@ prose, config/suppression frontend parity, general parser recovery or non-UTF-8
 input coverage; no pinned CLI self-lint of .a. Cohere's own tests, valid decoded
 options, full named corpora, byte spans/messages/fixed sources, and the two rule
 mutants are covered as observed above. No PR is opened.
+
+## Next three rules, October 7
+
+All previous work is pushed through 068060e. Fetched origin/main is
+ef3d907ecdc4c771b016f7d9c52372def057a340. All 305 origin refs were inspected;
+unique claim Markdown blobs and main lint .a/.ts sources were searched.
+All 46 helper-ready names occur in claims. Continuing in inventory array order
+on origin/codex/lint-inventory, syntax-only means needs_type_information=false,
+including entries still waiting on helpers. The first three absent from both
+main implementations and all fetched claim Markdown are claimed here:
+
+1. @next/next/google-font-preconnect
+2. @next/next/inline-script-id
+3. @next/next/next-script-for-ga
+
+Owned directories use next-google-font-preconnect, next-inline-script-id and
+next-next-script-for-ga under rules/. This update is pushed before rule code.
