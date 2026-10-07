@@ -1,0 +1,39 @@
+case 0
+finding 0 18 noAssignModuleVariable	Declaring a variable named `module` shadows the CommonJS `module` object that the bundler relies on, so code compiled into a CommonJS context loses its reference to its own exports. The failure surfaces at runtime as an export that is silently missing rather than as a build error. Rename the variable.
+fixed	const module = {};\u000a
+case 1
+fixed	const moduleName = 'x';\u000aexport const Name = moduleName;\u000a
+case 2
+fixed	const myModule = {};\u000aexport const Thing = myModule;\u000a
+case 3
+fixed	const { module: renamed } = imported;\u000aexport const Value = renamed;\u000a
+case 4
+fixed	export const Message = 'module';\u000a
+case 5
+fixed	export const Settings = { module: true };\u000a
+case 6
+finding 28 44 noAssignModuleVariable	Declaring a variable named `module` shadows the CommonJS `module` object that the bundler relies on, so code compiled into a CommonJS context loses its reference to its own exports. The failure surfaces at runtime as an export that is silently missing rather than as a build error. Rename the variable.
+fixed	export function run() {\u000a    let module = {};\u000a}\u000a
+case 7
+fixed	export function run(module: unknown) {\u000a    return module;\u000a}\u000a
+case 8
+fixed	import module from 'node:module';\u000aexport const Loaded = module;\u000a
+case 9
+finding 0 23 noAssignModuleVariable	Declaring a variable named `module` shadows the CommonJS `module` object that the bundler relies on, so code compiled into a CommonJS context loses its reference to its own exports. The failure surfaces at runtime as an export that is silently missing rather than as a build error. Rename the variable.
+fixed	let a = 1, module = {};\u000a
+case 10
+finding 0 16 noAssignModuleVariable	Declaring a variable named `module` shadows the CommonJS `module` object that the bundler relies on, so code compiled into a CommonJS context loses its reference to its own exports. The failure surfaces at runtime as an export that is silently missing rather than as a build error. Rename the variable.
+fixed	let module = {};\u000a
+case 11
+finding 0 11 noAssignModuleVariable	Declaring a variable named `module` shadows the CommonJS `module` object that the bundler relies on, so code compiled into a CommonJS context loses its reference to its own exports. The failure surfaces at runtime as an export that is silently missing rather than as a build error. Rename the variable.
+fixed	let module;\u000a
+case 12
+finding 0 16 noAssignModuleVariable	Declaring a variable named `module` shadows the CommonJS `module` object that the bundler relies on, so code compiled into a CommonJS context loses its reference to its own exports. The failure surfaces at runtime as an export that is silently missing rather than as a build error. Rename the variable.
+fixed	var module = {};\u000a
+case 13
+finding 8 31 noAssignModuleVariable	Declaring a variable named `module` shadows the CommonJS `module` object that the bundler relies on, so code compiled into a CommonJS context loses its reference to its own exports. The failure surfaces at runtime as an export that is silently missing rather than as a build error. Rename the variable.
+finding 87 110 noAssignModuleVariable	Declaring a variable named `module` shadows the CommonJS `module` object that the bundler relies on, so code compiled into a CommonJS context loses its reference to its own exports. The failure surfaces at runtime as an export that is silently missing rather than as a build error. Rename the variable.
+fixed	// \ud83d\udc8e\u000alet module, moduleName; for (let module of values) {} const {module} = object; let other, module = {};
+case 14
+finding 0 23 noAssignModuleVariable	Declaring a variable named `module` shadows the CommonJS `module` object that the bundler relies on, so code compiled into a CommonJS context loses its reference to its own exports. The failure surfaces at runtime as an export that is silently missing rather than as a build error. Rename the variable.
+fixed	let a = 1, module = {};\u000a

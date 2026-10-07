@@ -2,6 +2,9 @@ import type { RuleContext } from '../../context.ts';
 import { Result, emptyResults, publish } from '../typescript-no-unnecessary-type-constraint/results.a';
 import { noStringLiteralGraphQlQuery } from './messages.a';
 
+// Numeric SyntaxKind values from the pinned Go parser: CallExpression.
+export const syntaxKinds: readonly number[] = [214];
+
 export class Rule {
     readonly context: RuleContext;
     results: readonly Result[] = emptyResults();

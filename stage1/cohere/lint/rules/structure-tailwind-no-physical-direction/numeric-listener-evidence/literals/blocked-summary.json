@@ -1,0 +1,164 @@
+[
+  {
+    "case": 0,
+    "side": "Node",
+    "exit": 70,
+    "stderr": "adamic: panic: parser slice expected semicolon at 10 in /tmp/wave15-speed-literals/blocked-0.ts\n"
+  },
+  {
+    "case": 0,
+    "side": "JavaScript",
+    "exit": 70,
+    "stderr": "adamic: panic: parser slice expected semicolon at 10 in /tmp/wave15-speed-literals/blocked-0.ts\n"
+  },
+  {
+    "case": 0,
+    "side": "native",
+    "exit": 70,
+    "stderr": "adamic: panic: parser slice expected semicolon at 10 in /tmp/wave15-speed-literals/blocked-0.ts\n"
+  },
+  {
+    "case": 1,
+    "side": "Node",
+    "exit": 70,
+    "stderr": "adamic: panic: parser slice expected semicolon at 12 in /tmp/wave15-speed-literals/blocked-1.ts\n"
+  },
+  {
+    "case": 1,
+    "side": "JavaScript",
+    "exit": 70,
+    "stderr": "adamic: panic: parser slice expected semicolon at 12 in /tmp/wave15-speed-literals/blocked-1.ts\n"
+  },
+  {
+    "case": 1,
+    "side": "native",
+    "exit": 70,
+    "stderr": "adamic: panic: parser slice expected semicolon at 12 in /tmp/wave15-speed-literals/blocked-1.ts\n"
+  },
+  {
+    "case": 2,
+    "side": "Node",
+    "exit": 70,
+    "stderr": "adamic: panic: parser slice expected semicolon at 12 in /tmp/wave15-speed-literals/blocked-2.ts\n"
+  },
+  {
+    "case": 2,
+    "side": "JavaScript",
+    "exit": 70,
+    "stderr": "adamic: panic: parser slice expected semicolon at 12 in /tmp/wave15-speed-literals/blocked-2.ts\n"
+  },
+  {
+    "case": 2,
+    "side": "native",
+    "exit": 70,
+    "stderr": "adamic: panic: parser slice expected semicolon at 12 in /tmp/wave15-speed-literals/blocked-2.ts\n"
+  },
+  {
+    "case": 3,
+    "side": "Node",
+    "exit": 70,
+    "stderr": "adamic: panic: parser slice expected GreaterThanToken, got Identifier at 13 in /tmp/wave15-speed-literals/blocked-3.tsx\n"
+  },
+  {
+    "case": 3,
+    "side": "JavaScript",
+    "exit": 70,
+    "stderr": "adamic: panic: parser slice expected GreaterThanToken, got Identifier at 13 in /tmp/wave15-speed-literals/blocked-3.tsx\n"
+  },
+  {
+    "case": 3,
+    "side": "native",
+    "exit": 70,
+    "stderr": "adamic: panic: parser slice expected GreaterThanToken, got Identifier at 13 in /tmp/wave15-speed-literals/blocked-3.tsx\n"
+  },
+  {
+    "case": 4,
+    "side": "Node",
+    "exit": 70,
+    "stderr": "adamic: panic: NotYet: no-multi-str requires JSX parent nodes\n"
+  },
+  {
+    "case": 4,
+    "side": "JavaScript",
+    "exit": 70,
+    "stderr": "adamic: panic: NotYet: no-multi-str requires JSX parent nodes\n"
+  },
+  {
+    "case": 4,
+    "side": "native",
+    "exit": 70,
+    "stderr": "adamic: panic: NotYet: no-multi-str requires JSX parent nodes\n"
+  },
+  {
+    "case": 5,
+    "side": "Node",
+    "exit": 70,
+    "stderr": "adamic: panic: parser slice expected GreaterThanToken, got OpenBraceToken at 13 in /tmp/wave15-speed-literals/blocked-5.tsx\n"
+  },
+  {
+    "case": 5,
+    "side": "JavaScript",
+    "exit": 70,
+    "stderr": "adamic: panic: parser slice expected GreaterThanToken, got OpenBraceToken at 13 in /tmp/wave15-speed-literals/blocked-5.tsx\n"
+  },
+  {
+    "case": 5,
+    "side": "native",
+    "exit": 70,
+    "stderr": "adamic: panic: parser slice expected GreaterThanToken, got OpenBraceToken at 13 in /tmp/wave15-speed-literals/blocked-5.tsx\n"
+  },
+  {
+    "case": 6,
+    "side": "Node",
+    "exit": 70,
+    "stderr": "adamic: panic: parser slice expected GreaterThanToken, got OpenBraceToken at 13 in /tmp/wave15-speed-literals/blocked-6.tsx\n"
+  },
+  {
+    "case": 6,
+    "side": "JavaScript",
+    "exit": 70,
+    "stderr": "adamic: panic: parser slice expected GreaterThanToken, got OpenBraceToken at 13 in /tmp/wave15-speed-literals/blocked-6.tsx\n"
+  },
+  {
+    "case": 6,
+    "side": "native",
+    "exit": 70,
+    "stderr": "adamic: panic: parser slice expected GreaterThanToken, got OpenBraceToken at 13 in /tmp/wave15-speed-literals/blocked-6.tsx\n"
+  },
+  {
+    "case": 7,
+    "side": "Node",
+    "exit": 70,
+    "stderr": "adamic: panic: NotYet: no-multi-str requires JSX parent nodes\n"
+  },
+  {
+    "case": 7,
+    "side": "JavaScript",
+    "exit": 70,
+    "stderr": "adamic: panic: NotYet: no-multi-str requires JSX parent nodes\n"
+  },
+  {
+    "case": 7,
+    "side": "native",
+    "exit": 70,
+    "stderr": "adamic: panic: NotYet: no-multi-str requires JSX parent nodes\n"
+  },
+  {
+    "case": 8,
+    "side": "Node",
+    "exit": 70,
+    "stderr": "adamic: panic: parser slice expected GreaterThanToken, got Identifier at 13 in /tmp/wave15-speed-literals/blocked-8.tsx\n"
+  },
+  {
+    "case": 8,
+    "side": "JavaScript",
+    "exit": 70,
+    "stderr": "adamic: panic: parser slice expected GreaterThanToken, got Identifier at 13 in /tmp/wave15-speed-literals/blocked-8.tsx\n"
+  },
+  {
+    "case": 8,
+    "side": "native",
+    "exit": 70,
+    "stderr": "adamic: panic: parser slice expected GreaterThanToken, got Identifier at 13 in /tmp/wave15-speed-literals/blocked-8.tsx\n"
+  }
+]

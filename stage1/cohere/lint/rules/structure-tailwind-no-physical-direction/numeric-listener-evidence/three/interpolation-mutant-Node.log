@@ -1,0 +1,165 @@
+case 0
+fixed	export const c = 'flex ml-4';\u000a
+case 1
+fixed	export const c = '';\u000a
+case 2
+finding 17 82 useLogicalClass	The class "before:left-1/2" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "before:start-1/2", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'before:absolute before:top-1/2 before:left-1/2 before:size-full';\u000a
+case 3
+fixed	export const c = 'border-s-2 rounded-e-md';\u000a
+case 4
+finding 17 63 useLogicalClass	The class "left-[50%]" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "start-[50%]", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'fixed top-[50%] left-[50%] z-50 outline-none';\u000a
+case 5
+finding 17 29 useLogicalClass	The class "-ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "-ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex -ml-4';\u000a
+case 6
+fixed	export const c = 'flex -text-left';\u000a
+case 7
+finding 17 32 useLogicalClass	The class "border-l" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "border-s", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex border-l';\u000a
+case 8
+finding 17 34 useLogicalClass	The class "border-l-2" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "border-s-2", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex border-l-2';\u000a
+case 9
+finding 17 32 useLogicalClass	The class "border-r" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "border-e", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex border-r';\u000a
+case 10
+finding 17 34 useLogicalClass	The class "border-r-2" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "border-e-2", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex border-r-2';\u000a
+case 11
+finding 17 30 useLogicalClass	The class "left-0" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "start-0", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex left-0';\u000a
+case 12
+fixed	export const c = 'flex ltr:mr-4';\u000a
+case 13
+finding 17 37 useLogicalClass	The class "md:hover:ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "md:hover:ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex md:hover:ml-4';\u000a
+case 14
+finding 17 31 useLogicalClass	The class "md:ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "md:ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex md:ml-4';\u000a
+case 15
+fixed	export const c = 'flex md:rtl:ml-4';\u000a
+case 16
+fixed	export const c = 'flex ml-';\u000a
+case 17
+finding 17 28 useLogicalClass	The class "ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex ml-4';\u000a
+case 18
+fixed	export const c = 'flex mlauto';\u000a
+case 19
+finding 17 28 useLogicalClass	The class "mr-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "me-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex mr-4';\u000a
+case 20
+fixed	export const c = 'flex ms-4 me-4';\u000a
+case 21
+fixed	export const c = 'flex overflow-hidden';\u000a
+case 22
+finding 17 28 useLogicalClass	The class "pl-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ps-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex pl-4';\u000a
+case 23
+finding 17 28 useLogicalClass	The class "pr-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "pe-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex pr-4';\u000a
+case 24
+fixed	export const c = 'flex ps-4 pe-4';\u000a
+case 25
+finding 17 31 useLogicalClass	The class "right-0" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "end-0", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex right-0';\u000a
+case 26
+finding 17 33 useLogicalClass	The class "rounded-l" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "rounded-s", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex rounded-l';\u000a
+case 27
+finding 17 36 useLogicalClass	The class "rounded-l-md" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "rounded-s-md", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex rounded-l-md';\u000a
+case 28
+finding 17 33 useLogicalClass	The class "rounded-r" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "rounded-e", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex rounded-r';\u000a
+case 29
+finding 17 36 useLogicalClass	The class "rounded-r-md" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "rounded-e-md", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex rounded-r-md';\u000a
+case 30
+fixed	export const c = 'flex rtl:ml-4';\u000a
+case 31
+finding 17 35 useLogicalClass	The class "scroll-ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "scroll-ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex scroll-ml-4';\u000a
+case 32
+finding 17 35 useLogicalClass	The class "scroll-mr-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "scroll-me-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex scroll-mr-4';\u000a
+case 33
+finding 17 35 useLogicalClass	The class "scroll-pl-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "scroll-ps-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex scroll-pl-4';\u000a
+case 34
+finding 17 35 useLogicalClass	The class "scroll-pr-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "scroll-pe-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex scroll-pr-4';\u000a
+case 35
+fixed	export const c = 'flex start-0 end-0';\u000a
+case 36
+finding 17 33 useLogicalClass	The class "text-left" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "text-start", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex text-left';\u000a
+case 37
+finding 17 34 useLogicalClass	The class "text-right" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "text-end", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'flex text-right';\u000a
+case 38
+fixed	export const c = 'flex text-start text-end';\u000a
+case 39
+finding 17 28 useLogicalClass	The class "ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+finding 17 28 useLogicalClass	The class "mr-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "me-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = 'ml-4 mr-4';\u000a
+case 40
+finding 30 37 useLogicalClass	The class "ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = `flex ${other} ml-4`;\u000a
+case 41
+finding 17 30 useLogicalClass	The class "ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = `flex ml-4 ${other}`;\u000a
+case 42
+finding 17 28 useLogicalClass	The class "ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = `flex ml-4`;\u000a
+case 43
+finding 33 44 useLogicalClass	The class "ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const c = mergeClassNames('flex ml-4');\u000a
+case 44
+fixed	export const key = 'someIdentifierName';\u000a
+case 45
+fixed	export const link = 'See docs/text-left.md';\u000a
+case 46
+fixed	export const message = 'Align the text to the left side';\u000a
+case 47
+fixed	export const message = 'You have items left in your cart';\u000a
+case 48
+fixed	export const note = 'ml-4;';\u000a
+case 49
+fixed	export const path = '/repository/source/Thing.ts';\u000a
+case 50
+finding 52 70 useLogicalClass	The class "left-[50%]" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "start-[50%]", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	export const theme = [\u000a    'flex items-center',\u000a    'fixed left-[50%]',\u000a];\u000a
+case 51
+fixed	export const token = '{{ml-4}}';\u000a
+case 52
+fixed	export const url = 'https://example.com/left/right';\u000a
+case 53
+finding 16 78 useLogicalClass	The class "ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+finding 16 78 useLogicalClass	The class "mr-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "me-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+finding 16 78 useLogicalClass	The class "md:hover:pl-2" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "md:hover:ps-2", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+finding 16 78 useLogicalClass	The class "ml-4;" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-4;", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+finding 97 110 useLogicalClass	The class "ml-2" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-2", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+finding 115 124 useLogicalClass	The class "mr-2" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "me-2", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+finding 129 141 useLogicalClass	The class "text-left" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "text-start", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+finding 181 211 useLogicalClass	The class "ml-{{original}}" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-{{replacement}}", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+finding 181 211 useLogicalClass	The class "mr-The class "" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "me-The class "mr-The class "" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+finding 181 211 useLogicalClass	The class "pl-$" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ps-$", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+finding 181 211 useLogicalClass	The class "pr-$1" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "pe-$1", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+finding 234 259 useLogicalClass	The class "ml-ms-{{replacement}}" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-{{replacement}}", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	const classes = 'ml-4\u005cu0085mr-4 md:hover:pl-2 rtl:mr-3 -border-l-2 flex ml-4;'; const template = `flex ml-2 ${other} mr-2 ${third} text-left`; const bare = 'ml-4;'; const dollars = 'flex ml-$& mr-$` pl-$$ pr-$1'; const placeholders = 'flex ml-{{replacement}}';
+case 54
+finding 16 22 useLogicalClass	The class "ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+fixed	const classes = 'ml-4';
+case 55
+fixed	const classes = 'ml-4';
+case 56
+fixed	const classes = 'ml-4';
+case 57
+fixed	const classes = 'ml-4';
+case 58
+fixed	const classes = 'ml-4';
+case 59
+fixed	const classes = 'ml-4 rtl:mr-4';\u000a

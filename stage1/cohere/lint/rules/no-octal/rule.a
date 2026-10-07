@@ -1,6 +1,9 @@
 import type { RuleContext } from '../../context.ts';
 import { Result, Suggestion, Edit, emptyResults, publish } from '../no-multi-str/results.a';
 import { message } from './messages.a';
+// Numeric SyntaxKind values from the pinned Go parser: NumericLiteral.
+export const syntaxKinds: readonly number[] = [8];
+
 export class Rule {
     readonly context: RuleContext;
     results: readonly Result[] = emptyResults();

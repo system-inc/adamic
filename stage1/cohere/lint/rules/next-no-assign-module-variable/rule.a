@@ -1,6 +1,9 @@
 import type { RuleContext } from '../../context.ts';
 import { message } from './messages.a';
 
+// Numeric SyntaxKind values from the pinned Go parser: VariableStatement.
+export const syntaxKinds: readonly number[] = [244];
+
 export class Rule {
     readonly context: RuleContext;
     constructor(context: RuleContext) {

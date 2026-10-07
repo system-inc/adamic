@@ -1,0 +1,310 @@
+case 0
+fixed	\u000aclass Foo {\u000a  constructor(\u000a    a: number,\u000a    b?: number,\u000a    private c = 0,\u000a  ) {}\u000a}\u000a    
+case 1
+fixed	\u000aclass Foo {\u000a  constructor(\u000a    a: number,\u000a    private b?: number,\u000a    c = 0,\u000a  ) {}\u000a}\u000a    
+case 2
+fixed	\u000aclass Foo {\u000a  constructor(\u000a    a: number,\u000a    protected b?: number,\u000a    private c = 0,\u000a  ) {}\u000a}\u000a    
+case 3
+finding 32 44 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	\u000aclass Foo {\u000a  constructor(\u000a    public a = 0,\u000a    private b: number,\u000a  ) {}\u000a}\u000a      
+case 4
+finding 54 69 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	\u000aclass Foo {\u000a  constructor(\u000a    public a: number,\u000a    protected b = 0,\u000a    private c: number,\u000a  ) {}\u000a}\u000a      
+case 5
+fixed	\u000aclass Foo {\u000a  constructor(\u000a    public a: number,\u000a    protected b = 10,\u000a    private c?: number,\u000a  ) {}\u000a}\u000a    
+case 6
+fixed	\u000aclass Foo {\u000a  constructor(\u000a    public a: number,\u000a    protected b: number,\u000a    private c: number,\u000a  ) {}\u000a}\u000a    
+case 7
+fixed	\u000aclass Foo {\u000a  constructor(\u000a    public a: number,\u000a    protected b?: number,\u000a    private c = 10,\u000a  ) {}\u000a}\u000a    
+case 8
+finding 54 74 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	\u000aclass Foo {\u000a  constructor(\u000a    public a: number,\u000a    protected b?: number,\u000a    private c: number,\u000a  ) {}\u000a}\u000a      
+case 9
+finding 32 49 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	\u000aclass Foo {\u000a  constructor(\u000a    public a?: number,\u000a    private b: number,\u000a  ) {}\u000a}\u000a      
+case 10
+finding 27 32 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	\u000aclass Foo {\u000a  constructor(a = 0, b: number) {}\u000a}\u000a      
+case 11
+fixed	\u000aclass Foo {\u000a  constructor(a: number, b = 1, c?: number) {}\u000a}\u000a    
+case 12
+fixed	\u000aclass Foo {\u000a  constructor(a: number, b: number, c: number) {}\u000a}\u000a    
+case 13
+fixed	\u000aclass Foo {\u000a  constructor(a: number, b?: number, c = 1) {}\u000a}\u000a    
+case 14
+finding 27 37 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	\u000aclass Foo {\u000a  constructor(a?: number, b: number) {}\u000a}\u000a      
+case 15
+fixed	abstract class Foo { abstract m(a = 1, b: number): void; }
+case 16
+finding 19 24 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	async function foo(a = 1, b: number) {}
+case 17
+fixed	class Foo { constructor(a = 1, b: number); constructor(a?: any, b?: any) {} }
+case 18
+finding 24 42 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	class Foo { constructor(private a?: number, b: number) {} }
+case 19
+fixed	class Foo { get x(): number { return 1; } }
+case 20
+finding 18 23 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	class Foo { get x(a = 1, b: number) { return 1; } }
+case 21
+finding 19 24 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	class Foo { method(a = 1, b: number) {} }
+case 22
+finding 18 23 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	class Foo { set x(a = 1, b: number) {} }
+case 23
+fixed	class Foo { set x(v = 1) {} }
+case 24
+finding 21 26 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	class Foo { static m(a = 1, b: number) {} }
+case 25
+fixed	const foo = () => {};
+case 26
+finding 13 28 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	const foo = ([a, b] = [1, 2], c) => {};
+case 27
+finding 13 21 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	const foo = ([a] = [], b) => {};
+case 28
+fixed	const foo = (a = 1) => {};
+case 29
+finding 13 18 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+finding 20 25 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	const foo = (a = 1, b = 2, c: number) => {};
+case 30
+finding 13 18 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	const foo = (a = 1, b: number) => {};
+case 31
+finding 13 18 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	const foo = (a = 1, b: number, ...c) => {};
+case 32
+finding 13 18 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	const foo = (a = 1, b: number, c = 2) => {};
+case 33
+finding 13 18 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+finding 31 36 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	const foo = (a = 1, b: number, c = 2, d: number) => {};
+case 34
+finding 13 18 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+finding 20 30 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	const foo = (a = 1, b?: number, c: number) => {};
+case 35
+finding 13 18 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	const foo = (a = 1, { b }) => {};
+case 36
+fixed	const foo = (a: number) => {};
+case 37
+fixed	const foo = (a: number, b = 1) => {};
+case 38
+fixed	const foo = (a: number, b = 1, ...c) => {};
+case 39
+fixed	const foo = (a: number, b = 1, c = 1) => {};
+case 40
+fixed	const foo = (a: number, b = 1, c?: number) => {};
+case 41
+fixed	const foo = (a: number, b: number) => {};
+case 42
+fixed	const foo = (a: number, b: number, c?: number) => {};
+case 43
+fixed	const foo = (a: number, b?: number, c = 1) => {};
+case 44
+finding 24 34 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	const foo = (a: number, b?: number, c: number) => {};
+case 45
+fixed	const foo = (a?: number) => {};
+case 46
+finding 13 23 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	const foo = (a?: number, b: number) => {};
+case 47
+finding 13 23 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	const foo = ({ a } = {}, b) => {};
+case 48
+finding 13 38 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	const foo = ({ a, b } = { a: 1, b: 2 }, c) => {};
+case 49
+finding 19 24 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	const foo = async (a = 1, b: number) => {};
+case 50
+fixed	const foo = function () {};
+case 51
+finding 22 37 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	const foo = function ([a, b] = [1, 2], c) {};
+case 52
+finding 22 30 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	const foo = function ([a] = [], b) {};
+case 53
+fixed	const foo = function (a = 1) {};
+case 54
+finding 22 27 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+finding 29 34 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	const foo = function (a = 1, b = 2, c: number) {};
+case 55
+finding 22 27 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	const foo = function (a = 1, b: number) {};
+case 56
+finding 22 27 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	const foo = function (a = 1, b: number, ...c) {};
+case 57
+finding 22 27 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	const foo = function (a = 1, b: number, c = 2) {};
+case 58
+finding 22 27 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+finding 40 45 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	const foo = function (a = 1, b: number, c = 2, d: number) {};
+case 59
+finding 22 27 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+finding 29 39 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	const foo = function (a = 1, b?: number, c: number) {};
+case 60
+finding 22 27 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	const foo = function (a = 1, { b }) {};
+case 61
+fixed	const foo = function (a: number) {};
+case 62
+fixed	const foo = function (a: number, b = 1) {};
+case 63
+fixed	const foo = function (a: number, b = 1, ...c) {};
+case 64
+fixed	const foo = function (a: number, b = 1, c = 1) {};
+case 65
+fixed	const foo = function (a: number, b = 1, c?: number) {};
+case 66
+fixed	const foo = function (a: number, b: number) {};
+case 67
+fixed	const foo = function (a: number, b: number, c?: number) {};
+case 68
+fixed	const foo = function (a: number, b?: number, c = 1) {};
+case 69
+finding 33 43 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	const foo = function (a: number, b?: number, c: number) {};
+case 70
+fixed	const foo = function (a?: number) {};
+case 71
+finding 22 32 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	const foo = function (a?: number, b: number) {};
+case 72
+finding 22 32 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	const foo = function ({ a } = {}, b) {};
+case 73
+finding 22 47 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	const foo = function ({ a, b } = { a: 1, b: 2 }, c) {};
+case 74
+finding 18 23 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	const o = { get x(a = 1, b: number) { return 1; } };
+case 75
+finding 14 19 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	const o = { m(a = 1, b: number) {} };
+case 76
+finding 25 30 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	const o = { m: function (a = 1, b: number) {} };
+case 77
+finding 18 23 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	const o = { set x(a = 1, b: number) {} };
+case 78
+fixed	declare class Foo { m(a = 1, b: number): void; }
+case 79
+fixed	declare function foo(a = 1, b: number): void;
+case 80
+fixed	function foo() {}
+case 81
+finding 13 28 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	function foo([a, b] = [1, 2], c) {}
+case 82
+finding 13 21 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	function foo([a] = [], b) {}
+case 83
+fixed	function foo(a = 1) {}
+case 84
+fixed	function foo(a = 1, ...b) {}
+case 85
+finding 13 18 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+finding 20 25 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	function foo(a = 1, b = 2, c: number) {}
+case 86
+finding 13 18 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	function foo(a = 1, b: number) {}
+case 87
+finding 13 18 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	function foo(a = 1, b: number, ...c) {}
+case 88
+finding 13 18 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	function foo(a = 1, b: number, c = 2) {}
+case 89
+finding 13 18 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+finding 31 36 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	function foo(a = 1, b: number, c = 2, d: number) {}
+case 90
+finding 13 18 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+finding 31 36 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	function foo(a = 1, b: number, c = 2, d: number, e = 3) {}
+case 91
+fixed	function foo(a = 1, b?, ...c) {}
+case 92
+finding 13 18 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+finding 20 30 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	function foo(a = 1, b?: number, c: number) {}
+case 93
+finding 13 18 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	function foo(a = 1, { b }) {}
+case 94
+finding 13 26 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	function foo(a: number = 1, b: number) {}
+case 95
+fixed	function foo(a: number) {}
+case 96
+fixed	function foo(a: number, b = 1) {}
+case 97
+fixed	function foo(a: number, b = 1, ...c) {}
+case 98
+fixed	function foo(a: number, b = 1, c = 1) {}
+case 99
+fixed	function foo(a: number, b = 1, c?: number) {}
+case 100
+fixed	function foo(a: number, b: number) {}
+case 101
+fixed	function foo(a: number, b: number, c = 1, d = 2) {}
+case 102
+fixed	function foo(a: number, b: number, c?: number) {}
+case 103
+fixed	function foo(a: number, b?: number, c = 1) {}
+case 104
+finding 24 34 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	function foo(a: number, b?: number, c: number) {}
+case 105
+fixed	function foo(a?: number) {}
+case 106
+fixed	function foo(a?: number, ...b) {}
+case 107
+finding 13 23 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	function foo(a?: number, b: number) {}
+case 108
+finding 27 32 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	function foo(this: Window, a = 1, b: number) {}
+case 109
+finding 13 23 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	function foo({ a } = {}, b) {}
+case 110
+finding 13 38 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	function foo({ a, b } = { a: 1, b: 2 }, c) {}
+case 111
+finding 15 20 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+finding 42 47 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	function outer(x = 1, y) { function inner(p = 1, q) {} }
+case 112
+finding 14 19 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	function* gen(a = 1, b: number) {}
+case 113
+fixed	interface I { m(a?: number, b: number): void }
+case 114
+fixed	type T = (a?: number, b: number) => void;
+case 115
+finding 11 45 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+finding 118 136 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+finding 216 221 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	function f(a: Map<string, number> = new Map(), b: number) {} class X { constructor(public a /* = comment */ : number, private b?: number, c: number) {} } declare function ambient(a = 1, b: number): void; const f2 = (a = 1, b: number) => b;
+case 116
+finding 11 21 shouldBeLast	A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+fixed	function f(a?: number, b: number) {}\u000a

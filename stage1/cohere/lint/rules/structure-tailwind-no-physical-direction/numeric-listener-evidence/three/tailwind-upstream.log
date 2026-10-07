@@ -1,0 +1,226 @@
+=== RUN   TestNoPhysicalDirectionFires
+=== PAUSE TestNoPhysicalDirectionFires
+=== RUN   TestNoPhysicalDirectionStaysSilent
+=== PAUSE TestNoPhysicalDirectionStaysSilent
+=== CONT  TestNoPhysicalDirectionFires
+=== RUN   TestNoPhysicalDirectionFires/margin_left
+=== PAUSE TestNoPhysicalDirectionFires/margin_left
+=== RUN   TestNoPhysicalDirectionFires/margin_right
+=== PAUSE TestNoPhysicalDirectionFires/margin_right
+=== RUN   TestNoPhysicalDirectionFires/padding_left
+=== PAUSE TestNoPhysicalDirectionFires/padding_left
+=== RUN   TestNoPhysicalDirectionFires/padding_right
+=== PAUSE TestNoPhysicalDirectionFires/padding_right
+=== CONT  TestNoPhysicalDirectionStaysSilent
+=== RUN   TestNoPhysicalDirectionStaysSilent/logical_margin
+=== PAUSE TestNoPhysicalDirectionStaysSilent/logical_margin
+=== RUN   TestNoPhysicalDirectionStaysSilent/logical_padding
+=== PAUSE TestNoPhysicalDirectionStaysSilent/logical_padding
+=== RUN   TestNoPhysicalDirectionStaysSilent/logical_text_alignment
+=== PAUSE TestNoPhysicalDirectionStaysSilent/logical_text_alignment
+=== RUN   TestNoPhysicalDirectionFires/text_left
+=== PAUSE TestNoPhysicalDirectionFires/text_left
+=== RUN   TestNoPhysicalDirectionStaysSilent/logical_border_and_rounded
+=== PAUSE TestNoPhysicalDirectionStaysSilent/logical_border_and_rounded
+=== RUN   TestNoPhysicalDirectionFires/text_right
+=== PAUSE TestNoPhysicalDirectionFires/text_right
+=== RUN   TestNoPhysicalDirectionFires/position_left
+=== PAUSE TestNoPhysicalDirectionFires/position_left
+=== RUN   TestNoPhysicalDirectionStaysSilent/logical_position
+=== PAUSE TestNoPhysicalDirectionStaysSilent/logical_position
+=== RUN   TestNoPhysicalDirectionFires/position_right
+=== RUN   TestNoPhysicalDirectionStaysSilent/an_rtl_prefix
+=== PAUSE TestNoPhysicalDirectionStaysSilent/an_rtl_prefix
+=== RUN   TestNoPhysicalDirectionStaysSilent/an_ltr_prefix
+=== PAUSE TestNoPhysicalDirectionStaysSilent/an_ltr_prefix
+=== RUN   TestNoPhysicalDirectionStaysSilent/a_direction_prefix_among_others
+=== PAUSE TestNoPhysicalDirectionStaysSilent/a_direction_prefix_among_others
+=== PAUSE TestNoPhysicalDirectionFires/position_right
+=== RUN   TestNoPhysicalDirectionFires/border_left_bare
+=== PAUSE TestNoPhysicalDirectionFires/border_left_bare
+=== RUN   TestNoPhysicalDirectionFires/border_left_with_value
+=== PAUSE TestNoPhysicalDirectionFires/border_left_with_value
+=== RUN   TestNoPhysicalDirectionFires/border_right_bare
+=== PAUSE TestNoPhysicalDirectionFires/border_right_bare
+=== RUN   TestNoPhysicalDirectionStaysSilent/a_class_merely_starting_with_the_letters
+=== PAUSE TestNoPhysicalDirectionStaysSilent/a_class_merely_starting_with_the_letters
+=== RUN   TestNoPhysicalDirectionFires/border_right_with_value
+=== PAUSE TestNoPhysicalDirectionFires/border_right_with_value
+=== RUN   TestNoPhysicalDirectionStaysSilent/a_bare_prefix_with_no_value
+=== PAUSE TestNoPhysicalDirectionStaysSilent/a_bare_prefix_with_no_value
+=== RUN   TestNoPhysicalDirectionStaysSilent/a_class_containing_left_elsewhere
+=== PAUSE TestNoPhysicalDirectionStaysSilent/a_class_containing_left_elsewhere
+=== RUN   TestNoPhysicalDirectionStaysSilent/the_word_left_in_prose
+=== PAUSE TestNoPhysicalDirectionStaysSilent/the_word_left_in_prose
+=== RUN   TestNoPhysicalDirectionFires/rounded_left_bare
+=== PAUSE TestNoPhysicalDirectionFires/rounded_left_bare
+=== RUN   TestNoPhysicalDirectionFires/rounded_left_with_value
+=== PAUSE TestNoPhysicalDirectionFires/rounded_left_with_value
+=== RUN   TestNoPhysicalDirectionFires/rounded_right_bare
+=== PAUSE TestNoPhysicalDirectionFires/rounded_right_bare
+=== RUN   TestNoPhysicalDirectionFires/rounded_right_with_value
+=== PAUSE TestNoPhysicalDirectionFires/rounded_right_with_value
+=== RUN   TestNoPhysicalDirectionFires/scroll_margin_left
+=== PAUSE TestNoPhysicalDirectionFires/scroll_margin_left
+=== RUN   TestNoPhysicalDirectionFires/scroll_margin_right
+=== PAUSE TestNoPhysicalDirectionFires/scroll_margin_right
+=== RUN   TestNoPhysicalDirectionFires/scroll_padding_left
+=== PAUSE TestNoPhysicalDirectionFires/scroll_padding_left
+=== RUN   TestNoPhysicalDirectionFires/scroll_padding_right
+=== PAUSE TestNoPhysicalDirectionFires/scroll_padding_right
+=== RUN   TestNoPhysicalDirectionFires/a_responsive_prefix
+=== PAUSE TestNoPhysicalDirectionFires/a_responsive_prefix
+=== RUN   TestNoPhysicalDirectionFires/stacked_prefixes
+=== PAUSE TestNoPhysicalDirectionFires/stacked_prefixes
+=== RUN   TestNoPhysicalDirectionFires/a_negative_margin
+=== PAUSE TestNoPhysicalDirectionFires/a_negative_margin
+=== RUN   TestNoPhysicalDirectionFires/two_violations_in_one_string
+=== PAUSE TestNoPhysicalDirectionFires/two_violations_in_one_string
+=== RUN   TestNoPhysicalDirectionFires/a_jsx_attribute
+=== PAUSE TestNoPhysicalDirectionFires/a_jsx_attribute
+=== RUN   TestNoPhysicalDirectionFires/a_call_argument
+=== PAUSE TestNoPhysicalDirectionFires/a_call_argument
+=== RUN   TestNoPhysicalDirectionFires/a_bare_array_entry
+=== PAUSE TestNoPhysicalDirectionFires/a_bare_array_entry
+=== RUN   TestNoPhysicalDirectionFires/a_template_with_no_holes
+=== PAUSE TestNoPhysicalDirectionFires/a_template_with_no_holes
+=== RUN   TestNoPhysicalDirectionFires/a_template_head
+=== PAUSE TestNoPhysicalDirectionFires/a_template_head
+=== RUN   TestNoPhysicalDirectionFires/a_template_tail_after_a_hole
+=== PAUSE TestNoPhysicalDirectionFires/a_template_tail_after_a_hole
+=== RUN   TestNoPhysicalDirectionFires/the_dialog_theme_string
+=== PAUSE TestNoPhysicalDirectionFires/the_dialog_theme_string
+=== RUN   TestNoPhysicalDirectionFires/the_scroll_area_string
+=== PAUSE TestNoPhysicalDirectionFires/the_scroll_area_string
+=== CONT  TestNoPhysicalDirectionFires/margin_left
+=== CONT  TestNoPhysicalDirectionFires/scroll_margin_right
+=== CONT  TestNoPhysicalDirectionFires/a_call_argument
+=== RUN   TestNoPhysicalDirectionStaysSilent/a_sentence
+=== PAUSE TestNoPhysicalDirectionStaysSilent/a_sentence
+=== CONT  TestNoPhysicalDirectionFires/scroll_margin_left
+=== RUN   TestNoPhysicalDirectionStaysSilent/a_documentation_path_naming_a_class
+=== PAUSE TestNoPhysicalDirectionStaysSilent/a_documentation_path_naming_a_class
+=== RUN   TestNoPhysicalDirectionStaysSilent/a_class_name_inside_braces
+=== PAUSE TestNoPhysicalDirectionStaysSilent/a_class_name_inside_braces
+=== RUN   TestNoPhysicalDirectionStaysSilent/a_class_name_with_trailing_punctuation
+=== PAUSE TestNoPhysicalDirectionStaysSilent/a_class_name_with_trailing_punctuation
+=== RUN   TestNoPhysicalDirectionStaysSilent/a_url
+=== PAUSE TestNoPhysicalDirectionStaysSilent/a_url
+=== RUN   TestNoPhysicalDirectionStaysSilent/a_file_path
+=== PAUSE TestNoPhysicalDirectionStaysSilent/a_file_path
+=== RUN   TestNoPhysicalDirectionStaysSilent/an_identifier-like_string
+=== PAUSE TestNoPhysicalDirectionStaysSilent/an_identifier-like_string
+=== RUN   TestNoPhysicalDirectionStaysSilent/an_empty_string
+=== PAUSE TestNoPhysicalDirectionStaysSilent/an_empty_string
+=== RUN   TestNoPhysicalDirectionStaysSilent/a_negative_on_an_exact_family
+=== PAUSE TestNoPhysicalDirectionStaysSilent/a_negative_on_an_exact_family
+=== RUN   TestNoPhysicalDirectionStaysSilent/a_javascript_file
+=== PAUSE TestNoPhysicalDirectionStaysSilent/a_javascript_file
+=== CONT  TestNoPhysicalDirectionFires/rounded_right_with_value
+=== CONT  TestNoPhysicalDirectionFires/rounded_right_bare
+=== CONT  TestNoPhysicalDirectionFires/rounded_left_with_value
+=== CONT  TestNoPhysicalDirectionFires/rounded_left_bare
+=== CONT  TestNoPhysicalDirectionFires/border_right_with_value
+=== CONT  TestNoPhysicalDirectionFires/border_right_bare
+=== CONT  TestNoPhysicalDirectionFires/border_left_bare
+=== CONT  TestNoPhysicalDirectionFires/position_left
+=== CONT  TestNoPhysicalDirectionFires/text_right
+=== CONT  TestNoPhysicalDirectionFires/padding_right
+=== CONT  TestNoPhysicalDirectionFires/padding_left
+=== CONT  TestNoPhysicalDirectionFires/position_right
+=== CONT  TestNoPhysicalDirectionFires/margin_right
+=== CONT  TestNoPhysicalDirectionStaysSilent/logical_margin
+=== CONT  TestNoPhysicalDirectionFires/the_scroll_area_string
+=== CONT  TestNoPhysicalDirectionFires/the_dialog_theme_string
+=== CONT  TestNoPhysicalDirectionFires/a_template_head
+=== CONT  TestNoPhysicalDirectionFires/a_template_with_no_holes
+=== CONT  TestNoPhysicalDirectionFires/a_bare_array_entry
+=== CONT  TestNoPhysicalDirectionFires/a_template_tail_after_a_hole
+=== CONT  TestNoPhysicalDirectionStaysSilent/a_javascript_file
+=== CONT  TestNoPhysicalDirectionStaysSilent/an_empty_string
+=== CONT  TestNoPhysicalDirectionStaysSilent/an_identifier-like_string
+=== CONT  TestNoPhysicalDirectionFires/text_left
+=== CONT  TestNoPhysicalDirectionStaysSilent/a_negative_on_an_exact_family
+=== CONT  TestNoPhysicalDirectionStaysSilent/a_url
+=== CONT  TestNoPhysicalDirectionStaysSilent/a_class_name_with_trailing_punctuation
+=== CONT  TestNoPhysicalDirectionStaysSilent/a_class_name_inside_braces
+=== CONT  TestNoPhysicalDirectionStaysSilent/a_sentence
+=== CONT  TestNoPhysicalDirectionStaysSilent/the_word_left_in_prose
+=== CONT  TestNoPhysicalDirectionStaysSilent/a_class_containing_left_elsewhere
+=== CONT  TestNoPhysicalDirectionStaysSilent/a_bare_prefix_with_no_value
+=== CONT  TestNoPhysicalDirectionStaysSilent/an_ltr_prefix
+=== CONT  TestNoPhysicalDirectionStaysSilent/an_rtl_prefix
+=== CONT  TestNoPhysicalDirectionStaysSilent/logical_position
+=== CONT  TestNoPhysicalDirectionStaysSilent/a_file_path
+=== CONT  TestNoPhysicalDirectionStaysSilent/logical_text_alignment
+=== CONT  TestNoPhysicalDirectionStaysSilent/logical_border_and_rounded
+=== CONT  TestNoPhysicalDirectionStaysSilent/a_class_merely_starting_with_the_letters
+=== CONT  TestNoPhysicalDirectionStaysSilent/logical_padding
+=== CONT  TestNoPhysicalDirectionStaysSilent/a_documentation_path_naming_a_class
+=== CONT  TestNoPhysicalDirectionFires/stacked_prefixes
+=== CONT  TestNoPhysicalDirectionFires/two_violations_in_one_string
+=== CONT  TestNoPhysicalDirectionStaysSilent/a_direction_prefix_among_others
+--- PASS: TestNoPhysicalDirectionStaysSilent (0.00s)
+    --- PASS: TestNoPhysicalDirectionStaysSilent/logical_margin (0.00s)
+    --- PASS: TestNoPhysicalDirectionStaysSilent/a_javascript_file (0.00s)
+    --- PASS: TestNoPhysicalDirectionStaysSilent/an_empty_string (0.00s)
+    --- PASS: TestNoPhysicalDirectionStaysSilent/a_negative_on_an_exact_family (0.00s)
+    --- PASS: TestNoPhysicalDirectionStaysSilent/a_url (0.00s)
+    --- PASS: TestNoPhysicalDirectionStaysSilent/a_class_name_with_trailing_punctuation (0.00s)
+    --- PASS: TestNoPhysicalDirectionStaysSilent/an_identifier-like_string (0.00s)
+    --- PASS: TestNoPhysicalDirectionStaysSilent/a_sentence (0.00s)
+    --- PASS: TestNoPhysicalDirectionStaysSilent/the_word_left_in_prose (0.00s)
+    --- PASS: TestNoPhysicalDirectionStaysSilent/a_class_name_inside_braces (0.00s)
+    --- PASS: TestNoPhysicalDirectionStaysSilent/a_class_containing_left_elsewhere (0.00s)
+    --- PASS: TestNoPhysicalDirectionStaysSilent/a_bare_prefix_with_no_value (0.00s)
+    --- PASS: TestNoPhysicalDirectionStaysSilent/an_ltr_prefix (0.00s)
+    --- PASS: TestNoPhysicalDirectionStaysSilent/an_rtl_prefix (0.00s)
+    --- PASS: TestNoPhysicalDirectionStaysSilent/logical_position (0.00s)
+    --- PASS: TestNoPhysicalDirectionStaysSilent/a_file_path (0.00s)
+    --- PASS: TestNoPhysicalDirectionStaysSilent/logical_text_alignment (0.00s)
+    --- PASS: TestNoPhysicalDirectionStaysSilent/a_class_merely_starting_with_the_letters (0.00s)
+    --- PASS: TestNoPhysicalDirectionStaysSilent/logical_padding (0.00s)
+    --- PASS: TestNoPhysicalDirectionStaysSilent/logical_border_and_rounded (0.00s)
+    --- PASS: TestNoPhysicalDirectionStaysSilent/a_documentation_path_naming_a_class (0.00s)
+    --- PASS: TestNoPhysicalDirectionStaysSilent/a_direction_prefix_among_others (0.00s)
+=== CONT  TestNoPhysicalDirectionFires/border_left_with_value
+=== CONT  TestNoPhysicalDirectionFires/scroll_padding_right
+=== CONT  TestNoPhysicalDirectionFires/a_negative_margin
+=== CONT  TestNoPhysicalDirectionFires/a_jsx_attribute
+=== CONT  TestNoPhysicalDirectionFires/a_responsive_prefix
+=== CONT  TestNoPhysicalDirectionFires/scroll_padding_left
+--- PASS: TestNoPhysicalDirectionFires (0.00s)
+    --- PASS: TestNoPhysicalDirectionFires/margin_left (0.00s)
+    --- PASS: TestNoPhysicalDirectionFires/rounded_right_with_value (0.00s)
+    --- PASS: TestNoPhysicalDirectionFires/rounded_right_bare (0.00s)
+    --- PASS: TestNoPhysicalDirectionFires/rounded_left_bare (0.00s)
+    --- PASS: TestNoPhysicalDirectionFires/scroll_margin_right (0.00s)
+    --- PASS: TestNoPhysicalDirectionFires/border_right_with_value (0.00s)
+    --- PASS: TestNoPhysicalDirectionFires/rounded_left_with_value (0.00s)
+    --- PASS: TestNoPhysicalDirectionFires/border_right_bare (0.00s)
+    --- PASS: TestNoPhysicalDirectionFires/a_call_argument (0.00s)
+    --- PASS: TestNoPhysicalDirectionFires/scroll_margin_left (0.00s)
+    --- PASS: TestNoPhysicalDirectionFires/border_left_bare (0.00s)
+    --- PASS: TestNoPhysicalDirectionFires/text_right (0.00s)
+    --- PASS: TestNoPhysicalDirectionFires/padding_right (0.00s)
+    --- PASS: TestNoPhysicalDirectionFires/padding_left (0.00s)
+    --- PASS: TestNoPhysicalDirectionFires/margin_right (0.00s)
+    --- PASS: TestNoPhysicalDirectionFires/position_right (0.00s)
+    --- PASS: TestNoPhysicalDirectionFires/position_left (0.00s)
+    --- PASS: TestNoPhysicalDirectionFires/the_dialog_theme_string (0.00s)
+    --- PASS: TestNoPhysicalDirectionFires/the_scroll_area_string (0.00s)
+    --- PASS: TestNoPhysicalDirectionFires/a_template_head (0.00s)
+    --- PASS: TestNoPhysicalDirectionFires/a_template_with_no_holes (0.00s)
+    --- PASS: TestNoPhysicalDirectionFires/a_bare_array_entry (0.00s)
+    --- PASS: TestNoPhysicalDirectionFires/a_template_tail_after_a_hole (0.00s)
+    --- PASS: TestNoPhysicalDirectionFires/text_left (0.00s)
+    --- PASS: TestNoPhysicalDirectionFires/stacked_prefixes (0.00s)
+    --- PASS: TestNoPhysicalDirectionFires/border_left_with_value (0.00s)
+    --- PASS: TestNoPhysicalDirectionFires/two_violations_in_one_string (0.00s)
+    --- PASS: TestNoPhysicalDirectionFires/scroll_padding_right (0.00s)
+    --- PASS: TestNoPhysicalDirectionFires/a_negative_margin (0.00s)
+    --- PASS: TestNoPhysicalDirectionFires/a_jsx_attribute (0.00s)
+    --- PASS: TestNoPhysicalDirectionFires/a_responsive_prefix (0.00s)
+    --- PASS: TestNoPhysicalDirectionFires/scroll_padding_left (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/tailwind	0.014s

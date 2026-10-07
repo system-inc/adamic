@@ -44,6 +44,9 @@ function replacement(base: string): string {
     return '';
 }
 
+// Numeric SyntaxKind values from the pinned Go parser: StringLiteral, NoSubstitutionTemplateLiteral, TemplateExpression.
+export const syntaxKinds: readonly number[] = [10, 14, 229];
+
 export class Rule {
     readonly context: RuleContext;
     constructor(context: RuleContext) {

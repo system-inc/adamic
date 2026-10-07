@@ -2,6 +2,9 @@ import type { RuleContext } from '../../context.ts';
 import { message } from './messages.a';
 import { Edit, Result, emptyResults, publish } from '../typescript-no-unnecessary-type-constraint/results.a';
 
+// Numeric SyntaxKind values from the pinned Go parser: VariableDeclaration, PropertyDeclaration, AsExpression.
+export const syntaxKinds: readonly number[] = [261, 173, 235];
+
 export class Rule {
     readonly context: RuleContext;
     results: readonly Result[] = emptyResults();

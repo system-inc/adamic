@@ -1,0 +1,56 @@
+[
+  {
+    "rule": "no-multi-str",
+    "side": "Node",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "rule": "no-multi-str",
+    "side": "JavaScript",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "rule": "no-multi-str",
+    "side": "native",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "rule": "no-nonoctal-decimal-escape",
+    "side": "Node",
+    "exit": 70,
+    "stderr": "adamic: panic: NotYet: shared lint repair serialization for no-nonoctal-decimal-escape\n"
+  },
+  {
+    "rule": "no-nonoctal-decimal-escape",
+    "side": "JavaScript",
+    "exit": 70,
+    "stderr": "adamic: panic: NotYet: shared lint repair serialization for no-nonoctal-decimal-escape\n"
+  },
+  {
+    "rule": "no-nonoctal-decimal-escape",
+    "side": "native",
+    "exit": 70,
+    "stderr": "adamic: panic: NotYet: shared lint repair serialization for no-nonoctal-decimal-escape\n"
+  },
+  {
+    "rule": "no-octal",
+    "side": "Node",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "rule": "no-octal",
+    "side": "JavaScript",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "rule": "no-octal",
+    "side": "native",
+    "exit": 0,
+    "stderr": ""
+  }
+]

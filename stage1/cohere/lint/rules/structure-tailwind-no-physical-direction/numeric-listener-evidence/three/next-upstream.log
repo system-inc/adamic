@@ -1,0 +1,62 @@
+=== RUN   TestNoAssignModuleVariableFires
+=== PAUSE TestNoAssignModuleVariableFires
+=== RUN   TestNoAssignModuleVariableStaysSilent
+=== PAUSE TestNoAssignModuleVariableStaysSilent
+=== CONT  TestNoAssignModuleVariableFires
+=== RUN   TestNoAssignModuleVariableFires/a_let_declaration
+=== PAUSE TestNoAssignModuleVariableFires/a_let_declaration
+=== RUN   TestNoAssignModuleVariableFires/a_const_declaration
+=== PAUSE TestNoAssignModuleVariableFires/a_const_declaration
+=== RUN   TestNoAssignModuleVariableFires/a_var_declaration
+=== PAUSE TestNoAssignModuleVariableFires/a_var_declaration
+=== RUN   TestNoAssignModuleVariableFires/the_second_name_in_a_list
+=== PAUSE TestNoAssignModuleVariableFires/the_second_name_in_a_list
+=== RUN   TestNoAssignModuleVariableFires/declared_without_an_initializer
+=== PAUSE TestNoAssignModuleVariableFires/declared_without_an_initializer
+=== RUN   TestNoAssignModuleVariableFires/inside_a_function_body
+=== PAUSE TestNoAssignModuleVariableFires/inside_a_function_body
+=== CONT  TestNoAssignModuleVariableFires/a_let_declaration
+=== CONT  TestNoAssignModuleVariableStaysSilent
+=== RUN   TestNoAssignModuleVariableStaysSilent/a_name_that_merely_starts_with_it
+=== PAUSE TestNoAssignModuleVariableStaysSilent/a_name_that_merely_starts_with_it
+=== RUN   TestNoAssignModuleVariableStaysSilent/a_name_that_merely_contains_it
+=== PAUSE TestNoAssignModuleVariableStaysSilent/a_name_that_merely_contains_it
+=== RUN   TestNoAssignModuleVariableStaysSilent/a_property_called_module
+=== PAUSE TestNoAssignModuleVariableStaysSilent/a_property_called_module
+=== RUN   TestNoAssignModuleVariableStaysSilent/a_string_containing_the_word
+=== PAUSE TestNoAssignModuleVariableStaysSilent/a_string_containing_the_word
+=== RUN   TestNoAssignModuleVariableStaysSilent/an_import_binding
+=== PAUSE TestNoAssignModuleVariableStaysSilent/an_import_binding
+=== RUN   TestNoAssignModuleVariableStaysSilent/a_destructured_property_named_module
+=== PAUSE TestNoAssignModuleVariableStaysSilent/a_destructured_property_named_module
+=== RUN   TestNoAssignModuleVariableStaysSilent/a_function_parameter_named_module
+=== PAUSE TestNoAssignModuleVariableStaysSilent/a_function_parameter_named_module
+=== CONT  TestNoAssignModuleVariableStaysSilent/a_name_that_merely_starts_with_it
+=== CONT  TestNoAssignModuleVariableFires/inside_a_function_body
+=== CONT  TestNoAssignModuleVariableFires/declared_without_an_initializer
+=== CONT  TestNoAssignModuleVariableFires/the_second_name_in_a_list
+=== CONT  TestNoAssignModuleVariableFires/a_var_declaration
+=== CONT  TestNoAssignModuleVariableFires/a_const_declaration
+--- PASS: TestNoAssignModuleVariableFires (0.00s)
+    --- PASS: TestNoAssignModuleVariableFires/a_let_declaration (0.00s)
+    --- PASS: TestNoAssignModuleVariableFires/inside_a_function_body (0.00s)
+    --- PASS: TestNoAssignModuleVariableFires/declared_without_an_initializer (0.00s)
+    --- PASS: TestNoAssignModuleVariableFires/the_second_name_in_a_list (0.00s)
+    --- PASS: TestNoAssignModuleVariableFires/a_var_declaration (0.00s)
+    --- PASS: TestNoAssignModuleVariableFires/a_const_declaration (0.00s)
+=== CONT  TestNoAssignModuleVariableStaysSilent/a_function_parameter_named_module
+=== CONT  TestNoAssignModuleVariableStaysSilent/a_destructured_property_named_module
+=== CONT  TestNoAssignModuleVariableStaysSilent/an_import_binding
+=== CONT  TestNoAssignModuleVariableStaysSilent/a_string_containing_the_word
+=== CONT  TestNoAssignModuleVariableStaysSilent/a_property_called_module
+=== CONT  TestNoAssignModuleVariableStaysSilent/a_name_that_merely_contains_it
+--- PASS: TestNoAssignModuleVariableStaysSilent (0.00s)
+    --- PASS: TestNoAssignModuleVariableStaysSilent/a_name_that_merely_starts_with_it (0.00s)
+    --- PASS: TestNoAssignModuleVariableStaysSilent/a_function_parameter_named_module (0.00s)
+    --- PASS: TestNoAssignModuleVariableStaysSilent/a_destructured_property_named_module (0.00s)
+    --- PASS: TestNoAssignModuleVariableStaysSilent/an_import_binding (0.00s)
+    --- PASS: TestNoAssignModuleVariableStaysSilent/a_string_containing_the_word (0.00s)
+    --- PASS: TestNoAssignModuleVariableStaysSilent/a_property_called_module (0.00s)
+    --- PASS: TestNoAssignModuleVariableStaysSilent/a_name_that_merely_contains_it (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/next	0.006s

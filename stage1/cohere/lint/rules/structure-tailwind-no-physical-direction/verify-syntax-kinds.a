@@ -1,0 +1,25 @@
+import { syntaxKinds as kinds0 } from '../next-no-assign-module-variable/rule.a';
+import { syntaxKinds as kinds1 } from '../typescript-default-param-last/rule.a';
+import { syntaxKinds as kinds2 } from '../structure-tailwind-no-physical-direction/rule.a';
+import { syntaxKinds as kinds3 } from '../typescript-no-unnecessary-type-constraint/rule.a';
+import { syntaxKinds as kinds4 } from '../typescript-prefer-as-const/rule.a';
+import { syntaxKinds as kinds5 } from '../typescript-prefer-enum-initializers/rule.a';
+import { syntaxKinds as kinds6 } from '../nexus-import-require-node-namespace/rule.a';
+import { syntaxKinds as kinds7 } from '../structure-network-no-invalidate-cache-literal-key/rule.a';
+import { syntaxKinds as kinds8 } from '../structure-network-no-string-literal-query/rule.a';
+import { syntaxKinds as kinds9 } from '../no-multi-str/rule.a';
+import { syntaxKinds as kinds10 } from '../no-nonoctal-decimal-escape/rule.a';
+import { syntaxKinds as kinds11 } from '../no-octal/rule.a';
+
+console.log(`next-no-assign-module-variable ${kinds0.join(',')}`);
+console.log(`typescript-default-param-last ${kinds1.join(',')}`);
+console.log(`structure-tailwind-no-physical-direction ${kinds2.join(',')}`);
+console.log(`typescript-no-unnecessary-type-constraint ${kinds3.join(',')}`);
+console.log(`typescript-prefer-as-const ${kinds4.join(',')}`);
+console.log(`typescript-prefer-enum-initializers ${kinds5.join(',')}`);
+console.log(`nexus-import-require-node-namespace ${kinds6.join(',')}`);
+console.log(`structure-network-no-invalidate-cache-literal-key ${kinds7.join(',')}`);
+console.log(`structure-network-no-string-literal-query ${kinds8.join(',')}`);
+console.log(`no-multi-str ${kinds9.join(',')}`);
+console.log(`no-nonoctal-decimal-escape ${kinds10.join(',')}`);
+console.log(`no-octal ${kinds11.join(',')}`);

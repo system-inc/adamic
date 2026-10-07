@@ -1,6 +1,9 @@
 import type { RuleContext } from '../../context.ts';
 import { Edit, Result, Suggestion, emptyEdits, emptyResults, publish } from '../typescript-no-unnecessary-type-constraint/results.a';
 
+// Numeric SyntaxKind values from the pinned Go parser: EnumDeclaration.
+export const syntaxKinds: readonly number[] = [267];
+
 export class Rule {
     readonly context: RuleContext;
     results: readonly Result[] = emptyResults();

@@ -1,0 +1,678 @@
+=== RUN   TestDefaultParamLastFires
+=== PAUSE TestDefaultParamLastFires
+=== RUN   TestDefaultParamLastStaysSilent
+=== PAUSE TestDefaultParamLastStaysSilent
+=== RUN   TestDefaultParamLastSpans
+=== PAUSE TestDefaultParamLastSpans
+=== RUN   TestDefaultParamLastMessageReadsAsWritten
+=== PAUSE TestDefaultParamLastMessageReadsAsWritten
+=== CONT  TestDefaultParamLastFires
+=== RUN   TestDefaultParamLastFires/function_foo(a_=_1,_b:_number)_{}
+=== PAUSE TestDefaultParamLastFires/function_foo(a_=_1,_b:_number)_{}
+=== RUN   TestDefaultParamLastFires/function_foo(a_=_1,_b_=_2,_c:_number)_{}
+=== PAUSE TestDefaultParamLastFires/function_foo(a_=_1,_b_=_2,_c:_number)_{}
+=== RUN   TestDefaultParamLastFires/function_foo(a_=_1,_b:_number,_c_=_2,_d:_number)_{}
+=== PAUSE TestDefaultParamLastFires/function_foo(a_=_1,_b:_number,_c_=_2,_d:_number)_{}
+=== RUN   TestDefaultParamLastFires/function_foo(a_=_1,_b:_number,_c_=_2)_{}
+=== PAUSE TestDefaultParamLastFires/function_foo(a_=_1,_b:_number,_c_=_2)_{}
+=== RUN   TestDefaultParamLastFires/function_foo(a_=_1,_b:_number,_...c)_{}
+=== PAUSE TestDefaultParamLastFires/function_foo(a_=_1,_b:_number,_...c)_{}
+=== RUN   TestDefaultParamLastFires/function_foo(a?:_number,_b:_number)_{}
+=== PAUSE TestDefaultParamLastFires/function_foo(a?:_number,_b:_number)_{}
+=== RUN   TestDefaultParamLastFires/function_foo(a:_number,_b?:_number,_c:_number)_{}
+=== PAUSE TestDefaultParamLastFires/function_foo(a:_number,_b?:_number,_c:_number)_{}
+=== RUN   TestDefaultParamLastFires/function_foo(a_=_1,_b?:_number,_c:_number)_{}
+=== PAUSE TestDefaultParamLastFires/function_foo(a_=_1,_b?:_number,_c:_number)_{}
+=== RUN   TestDefaultParamLastFires/function_foo(a_=_1,_{_b_})_{}
+=== PAUSE TestDefaultParamLastFires/function_foo(a_=_1,_{_b_})_{}
+=== RUN   TestDefaultParamLastFires/function_foo({_a_}_=_{},_b)_{}
+=== PAUSE TestDefaultParamLastFires/function_foo({_a_}_=_{},_b)_{}
+=== RUN   TestDefaultParamLastFires/function_foo({_a,_b_}_=_{_a:_1,_b:_2_},_c)_{}
+=== PAUSE TestDefaultParamLastFires/function_foo({_a,_b_}_=_{_a:_1,_b:_2_},_c)_{}
+=== RUN   TestDefaultParamLastFires/function_foo([a]_=_[],_b)_{}
+=== PAUSE TestDefaultParamLastFires/function_foo([a]_=_[],_b)_{}
+=== RUN   TestDefaultParamLastFires/function_foo([a,_b]_=_[1,_2],_c)_{}
+=== PAUSE TestDefaultParamLastFires/function_foo([a,_b]_=_[1,_2],_c)_{}
+=== RUN   TestDefaultParamLastFires/const_foo_=_function_(a_=_1,_b:_number)_{};
+=== PAUSE TestDefaultParamLastFires/const_foo_=_function_(a_=_1,_b:_number)_{};
+=== RUN   TestDefaultParamLastFires/const_foo_=_function_(a_=_1,_b_=_2,_c:_number)_{};
+=== PAUSE TestDefaultParamLastFires/const_foo_=_function_(a_=_1,_b_=_2,_c:_number)_{};
+=== RUN   TestDefaultParamLastFires/const_foo_=_function_(a_=_1,_b:_number,_c_=_2,_d:_number)_{};
+=== PAUSE TestDefaultParamLastFires/const_foo_=_function_(a_=_1,_b:_number,_c_=_2,_d:_number)_{};
+=== RUN   TestDefaultParamLastFires/const_foo_=_function_(a_=_1,_b:_number,_c_=_2)_{};
+=== PAUSE TestDefaultParamLastFires/const_foo_=_function_(a_=_1,_b:_number,_c_=_2)_{};
+=== RUN   TestDefaultParamLastFires/const_foo_=_function_(a_=_1,_b:_number,_...c)_{};
+=== PAUSE TestDefaultParamLastFires/const_foo_=_function_(a_=_1,_b:_number,_...c)_{};
+=== RUN   TestDefaultParamLastFires/const_foo_=_function_(a?:_number,_b:_number)_{};
+=== PAUSE TestDefaultParamLastFires/const_foo_=_function_(a?:_number,_b:_number)_{};
+=== RUN   TestDefaultParamLastFires/const_foo_=_function_(a:_number,_b?:_number,_c:_number)_{};
+=== PAUSE TestDefaultParamLastFires/const_foo_=_function_(a:_number,_b?:_number,_c:_number)_{};
+=== RUN   TestDefaultParamLastFires/const_foo_=_function_(a_=_1,_b?:_number,_c:_number)_{};
+=== PAUSE TestDefaultParamLastFires/const_foo_=_function_(a_=_1,_b?:_number,_c:_number)_{};
+=== RUN   TestDefaultParamLastFires/const_foo_=_function_(a_=_1,_{_b_})_{};
+=== PAUSE TestDefaultParamLastFires/const_foo_=_function_(a_=_1,_{_b_})_{};
+=== RUN   TestDefaultParamLastFires/const_foo_=_function_({_a_}_=_{},_b)_{};
+=== PAUSE TestDefaultParamLastFires/const_foo_=_function_({_a_}_=_{},_b)_{};
+=== RUN   TestDefaultParamLastFires/const_foo_=_function_({_a,_b_}_=_{_a:_1,_b:_2_},_c)_{};
+=== PAUSE TestDefaultParamLastFires/const_foo_=_function_({_a,_b_}_=_{_a:_1,_b:_2_},_c)_{};
+=== RUN   TestDefaultParamLastFires/const_foo_=_function_([a]_=_[],_b)_{};
+=== PAUSE TestDefaultParamLastFires/const_foo_=_function_([a]_=_[],_b)_{};
+=== RUN   TestDefaultParamLastFires/const_foo_=_function_([a,_b]_=_[1,_2],_c)_{};
+=== PAUSE TestDefaultParamLastFires/const_foo_=_function_([a,_b]_=_[1,_2],_c)_{};
+=== RUN   TestDefaultParamLastFires/const_foo_=_(a_=_1,_b:_number)_=>_{};
+=== PAUSE TestDefaultParamLastFires/const_foo_=_(a_=_1,_b:_number)_=>_{};
+=== RUN   TestDefaultParamLastFires/const_foo_=_(a_=_1,_b_=_2,_c:_number)_=>_{};
+=== PAUSE TestDefaultParamLastFires/const_foo_=_(a_=_1,_b_=_2,_c:_number)_=>_{};
+=== RUN   TestDefaultParamLastFires/const_foo_=_(a_=_1,_b:_number,_c_=_2,_d:_number)_=>_{};
+=== PAUSE TestDefaultParamLastFires/const_foo_=_(a_=_1,_b:_number,_c_=_2,_d:_number)_=>_{};
+=== RUN   TestDefaultParamLastFires/const_foo_=_(a_=_1,_b:_number,_c_=_2)_=>_{};
+=== PAUSE TestDefaultParamLastFires/const_foo_=_(a_=_1,_b:_number,_c_=_2)_=>_{};
+=== RUN   TestDefaultParamLastFires/const_foo_=_(a_=_1,_b:_number,_...c)_=>_{};
+=== PAUSE TestDefaultParamLastFires/const_foo_=_(a_=_1,_b:_number,_...c)_=>_{};
+=== RUN   TestDefaultParamLastFires/const_foo_=_(a?:_number,_b:_number)_=>_{};
+=== PAUSE TestDefaultParamLastFires/const_foo_=_(a?:_number,_b:_number)_=>_{};
+=== RUN   TestDefaultParamLastFires/const_foo_=_(a:_number,_b?:_number,_c:_number)_=>_{};
+=== PAUSE TestDefaultParamLastFires/const_foo_=_(a:_number,_b?:_number,_c:_number)_=>_{};
+=== RUN   TestDefaultParamLastFires/const_foo_=_(a_=_1,_b?:_number,_c:_number)_=>_{};
+=== PAUSE TestDefaultParamLastFires/const_foo_=_(a_=_1,_b?:_number,_c:_number)_=>_{};
+=== RUN   TestDefaultParamLastFires/const_foo_=_(a_=_1,_{_b_})_=>_{};
+=== PAUSE TestDefaultParamLastFires/const_foo_=_(a_=_1,_{_b_})_=>_{};
+=== RUN   TestDefaultParamLastFires/const_foo_=_({_a_}_=_{},_b)_=>_{};
+=== PAUSE TestDefaultParamLastFires/const_foo_=_({_a_}_=_{},_b)_=>_{};
+=== RUN   TestDefaultParamLastFires/const_foo_=_({_a,_b_}_=_{_a:_1,_b:_2_},_c)_=>_{};
+=== PAUSE TestDefaultParamLastFires/const_foo_=_({_a,_b_}_=_{_a:_1,_b:_2_},_c)_=>_{};
+=== RUN   TestDefaultParamLastFires/const_foo_=_([a]_=_[],_b)_=>_{};
+=== PAUSE TestDefaultParamLastFires/const_foo_=_([a]_=_[],_b)_=>_{};
+=== RUN   TestDefaultParamLastFires/const_foo_=_([a,_b]_=_[1,_2],_c)_=>_{};
+=== PAUSE TestDefaultParamLastFires/const_foo_=_([a,_b]_=_[1,_2],_c)_=>_{};
+=== RUN   TestDefaultParamLastFires/class_Foo_{_constructor(_public_a:_number,_protected_b?:_number,_private_c:...
+=== PAUSE TestDefaultParamLastFires/class_Foo_{_constructor(_public_a:_number,_protected_b?:_number,_private_c:...
+=== RUN   TestDefaultParamLastFires/class_Foo_{_constructor(_public_a:_number,_protected_b_=_0,_private_c:_numb...
+=== PAUSE TestDefaultParamLastFires/class_Foo_{_constructor(_public_a:_number,_protected_b_=_0,_private_c:_numb...
+=== RUN   TestDefaultParamLastFires/class_Foo_{_constructor(_public_a?:_number,_private_b:_number,_)_{}_}
+=== PAUSE TestDefaultParamLastFires/class_Foo_{_constructor(_public_a?:_number,_private_b:_number,_)_{}_}
+=== RUN   TestDefaultParamLastFires/class_Foo_{_constructor(_public_a_=_0,_private_b:_number,_)_{}_}
+=== PAUSE TestDefaultParamLastFires/class_Foo_{_constructor(_public_a_=_0,_private_b:_number,_)_{}_}
+=== RUN   TestDefaultParamLastFires/class_Foo_{_constructor(a_=_0,_b:_number)_{}_}
+=== PAUSE TestDefaultParamLastFires/class_Foo_{_constructor(a_=_0,_b:_number)_{}_}
+=== RUN   TestDefaultParamLastFires/class_Foo_{_constructor(a?:_number,_b:_number)_{}_}
+=== PAUSE TestDefaultParamLastFires/class_Foo_{_constructor(a?:_number,_b:_number)_{}_}
+=== RUN   TestDefaultParamLastFires/a_class_method
+=== PAUSE TestDefaultParamLastFires/a_class_method
+=== RUN   TestDefaultParamLastFires/a_static_class_method
+=== PAUSE TestDefaultParamLastFires/a_static_class_method
+=== RUN   TestDefaultParamLastFires/an_object_literal_method
+=== PAUSE TestDefaultParamLastFires/an_object_literal_method
+=== RUN   TestDefaultParamLastFires/a_function_expression_in_an_object_literal
+=== PAUSE TestDefaultParamLastFires/a_function_expression_in_an_object_literal
+=== RUN   TestDefaultParamLastFires/a_generator_function
+=== PAUSE TestDefaultParamLastFires/a_generator_function
+=== RUN   TestDefaultParamLastFires/an_async_function
+=== PAUSE TestDefaultParamLastFires/an_async_function
+=== RUN   TestDefaultParamLastFires/an_async_arrow_function
+=== PAUSE TestDefaultParamLastFires/an_async_arrow_function
+=== RUN   TestDefaultParamLastFires/a_this_parameter_ahead_of_the_defaulted_one
+=== PAUSE TestDefaultParamLastFires/a_this_parameter_ahead_of_the_defaulted_one
+=== RUN   TestDefaultParamLastFires/a_nested_function_with_its_own_violation
+=== PAUSE TestDefaultParamLastFires/a_nested_function_with_its_own_violation
+=== RUN   TestDefaultParamLastFires/a_defaulted_parameter_with_a_type_annotation
+=== PAUSE TestDefaultParamLastFires/a_defaulted_parameter_with_a_type_annotation
+=== RUN   TestDefaultParamLastFires/an_optional_parameter_property
+=== PAUSE TestDefaultParamLastFires/an_optional_parameter_property
+=== RUN   TestDefaultParamLastFires/three_defaults_straddling_two_required_parameters
+=== PAUSE TestDefaultParamLastFires/three_defaults_straddling_two_required_parameters
+=== RUN   TestDefaultParamLastFires/a_setter_with_two_parameters,_the_first_defaulted
+=== PAUSE TestDefaultParamLastFires/a_setter_with_two_parameters,_the_first_defaulted
+=== RUN   TestDefaultParamLastFires/a_getter_with_two_parameters,_the_first_defaulted
+=== PAUSE TestDefaultParamLastFires/a_getter_with_two_parameters,_the_first_defaulted
+=== RUN   TestDefaultParamLastFires/an_object_literal_setter_with_two_parameters
+=== PAUSE TestDefaultParamLastFires/an_object_literal_setter_with_two_parameters
+=== RUN   TestDefaultParamLastFires/an_object_literal_getter_with_two_parameters
+=== PAUSE TestDefaultParamLastFires/an_object_literal_getter_with_two_parameters
+=== CONT  TestDefaultParamLastFires/function_foo(a_=_1,_b:_number)_{}
+=== CONT  TestDefaultParamLastMessageReadsAsWritten
+--- PASS: TestDefaultParamLastMessageReadsAsWritten (0.00s)
+=== CONT  TestDefaultParamLastSpans
+=== RUN   TestDefaultParamLastSpans/function_foo(a_=_1,_b:_number)_{}_(2)
+=== PAUSE TestDefaultParamLastSpans/function_foo(a_=_1,_b:_number)_{}_(2)
+=== RUN   TestDefaultParamLastSpans/function_foo(a_=_1,_b_=_2,_c:_number)_{}_(2)
+=== PAUSE TestDefaultParamLastSpans/function_foo(a_=_1,_b_=_2,_c:_number)_{}_(2)
+=== RUN   TestDefaultParamLastSpans/function_foo(a_=_1,_b:_number,_c_=_2,_d:_number)_{}_(2)
+=== PAUSE TestDefaultParamLastSpans/function_foo(a_=_1,_b:_number,_c_=_2,_d:_number)_{}_(2)
+=== RUN   TestDefaultParamLastSpans/function_foo(a_=_1,_b:_number,_c_=_2)_{}_(2)
+=== PAUSE TestDefaultParamLastSpans/function_foo(a_=_1,_b:_number,_c_=_2)_{}_(2)
+=== RUN   TestDefaultParamLastSpans/function_foo(a_=_1,_b:_number,_...c)_{}_(2)
+=== PAUSE TestDefaultParamLastSpans/function_foo(a_=_1,_b:_number,_...c)_{}_(2)
+=== RUN   TestDefaultParamLastSpans/function_foo(a?:_number,_b:_number)_{}_(2)
+=== PAUSE TestDefaultParamLastSpans/function_foo(a?:_number,_b:_number)_{}_(2)
+=== RUN   TestDefaultParamLastSpans/function_foo(a:_number,_b?:_number,_c:_number)_{}_(2)
+=== PAUSE TestDefaultParamLastSpans/function_foo(a:_number,_b?:_number,_c:_number)_{}_(2)
+=== RUN   TestDefaultParamLastSpans/function_foo(a_=_1,_b?:_number,_c:_number)_{}_(2)
+=== PAUSE TestDefaultParamLastSpans/function_foo(a_=_1,_b?:_number,_c:_number)_{}_(2)
+=== RUN   TestDefaultParamLastSpans/function_foo(a_=_1,_{_b_})_{}_(2)
+=== PAUSE TestDefaultParamLastSpans/function_foo(a_=_1,_{_b_})_{}_(2)
+=== RUN   TestDefaultParamLastSpans/function_foo({_a_}_=_{},_b)_{}_(2)
+=== PAUSE TestDefaultParamLastSpans/function_foo({_a_}_=_{},_b)_{}_(2)
+=== RUN   TestDefaultParamLastSpans/function_foo({_a,_b_}_=_{_a:_1,_b:_2_},_c)_{}_(2)
+=== PAUSE TestDefaultParamLastSpans/function_foo({_a,_b_}_=_{_a:_1,_b:_2_},_c)_{}_(2)
+=== RUN   TestDefaultParamLastSpans/function_foo([a]_=_[],_b)_{}_(2)
+=== PAUSE TestDefaultParamLastSpans/function_foo([a]_=_[],_b)_{}_(2)
+=== RUN   TestDefaultParamLastSpans/function_foo([a,_b]_=_[1,_2],_c)_{}_(2)
+=== PAUSE TestDefaultParamLastSpans/function_foo([a,_b]_=_[1,_2],_c)_{}_(2)
+=== RUN   TestDefaultParamLastSpans/const_foo_=_function_(a_=_1,_b:_number)_{};_(2)
+=== PAUSE TestDefaultParamLastSpans/const_foo_=_function_(a_=_1,_b:_number)_{};_(2)
+=== RUN   TestDefaultParamLastSpans/const_foo_=_function_(a_=_1,_b_=_2,_c:_number)_{};_(2)
+=== PAUSE TestDefaultParamLastSpans/const_foo_=_function_(a_=_1,_b_=_2,_c:_number)_{};_(2)
+=== RUN   TestDefaultParamLastSpans/const_foo_=_function_(a_=_1,_b:_number,_c_=_2,_d:_number)_{};_(2)
+=== PAUSE TestDefaultParamLastSpans/const_foo_=_function_(a_=_1,_b:_number,_c_=_2,_d:_number)_{};_(2)
+=== RUN   TestDefaultParamLastSpans/const_foo_=_function_(a_=_1,_b:_number,_c_=_2)_{};_(2)
+=== PAUSE TestDefaultParamLastSpans/const_foo_=_function_(a_=_1,_b:_number,_c_=_2)_{};_(2)
+=== RUN   TestDefaultParamLastSpans/const_foo_=_function_(a_=_1,_b:_number,_...c)_{};_(2)
+=== PAUSE TestDefaultParamLastSpans/const_foo_=_function_(a_=_1,_b:_number,_...c)_{};_(2)
+=== RUN   TestDefaultParamLastSpans/const_foo_=_function_(a?:_number,_b:_number)_{};_(2)
+=== PAUSE TestDefaultParamLastSpans/const_foo_=_function_(a?:_number,_b:_number)_{};_(2)
+=== RUN   TestDefaultParamLastSpans/const_foo_=_function_(a:_number,_b?:_number,_c:_number)_{};_(2)
+=== PAUSE TestDefaultParamLastSpans/const_foo_=_function_(a:_number,_b?:_number,_c:_number)_{};_(2)
+=== RUN   TestDefaultParamLastSpans/const_foo_=_function_(a_=_1,_b?:_number,_c:_number)_{};_(2)
+=== PAUSE TestDefaultParamLastSpans/const_foo_=_function_(a_=_1,_b?:_number,_c:_number)_{};_(2)
+=== RUN   TestDefaultParamLastSpans/const_foo_=_function_(a_=_1,_{_b_})_{};_(2)
+=== PAUSE TestDefaultParamLastSpans/const_foo_=_function_(a_=_1,_{_b_})_{};_(2)
+=== RUN   TestDefaultParamLastSpans/const_foo_=_function_({_a_}_=_{},_b)_{};_(2)
+=== PAUSE TestDefaultParamLastSpans/const_foo_=_function_({_a_}_=_{},_b)_{};_(2)
+=== RUN   TestDefaultParamLastSpans/const_foo_=_function_({_a,_b_}_=_{_a:_1,_b:_2_},_c)_{};_(2)
+=== PAUSE TestDefaultParamLastSpans/const_foo_=_function_({_a,_b_}_=_{_a:_1,_b:_2_},_c)_{};_(2)
+=== RUN   TestDefaultParamLastSpans/const_foo_=_function_([a]_=_[],_b)_{};_(2)
+=== PAUSE TestDefaultParamLastSpans/const_foo_=_function_([a]_=_[],_b)_{};_(2)
+=== RUN   TestDefaultParamLastSpans/const_foo_=_function_([a,_b]_=_[1,_2],_c)_{};_(2)
+=== PAUSE TestDefaultParamLastSpans/const_foo_=_function_([a,_b]_=_[1,_2],_c)_{};_(2)
+=== RUN   TestDefaultParamLastSpans/const_foo_=_(a_=_1,_b:_number)_=>_{};_(2)
+=== PAUSE TestDefaultParamLastSpans/const_foo_=_(a_=_1,_b:_number)_=>_{};_(2)
+=== RUN   TestDefaultParamLastSpans/const_foo_=_(a_=_1,_b_=_2,_c:_number)_=>_{};_(2)
+=== PAUSE TestDefaultParamLastSpans/const_foo_=_(a_=_1,_b_=_2,_c:_number)_=>_{};_(2)
+=== RUN   TestDefaultParamLastSpans/const_foo_=_(a_=_1,_b:_number,_c_=_2,_d:_number)_=>_{};_(2)
+=== PAUSE TestDefaultParamLastSpans/const_foo_=_(a_=_1,_b:_number,_c_=_2,_d:_number)_=>_{};_(2)
+=== RUN   TestDefaultParamLastSpans/const_foo_=_(a_=_1,_b:_number,_c_=_2)_=>_{};_(2)
+=== PAUSE TestDefaultParamLastSpans/const_foo_=_(a_=_1,_b:_number,_c_=_2)_=>_{};_(2)
+=== RUN   TestDefaultParamLastSpans/const_foo_=_(a_=_1,_b:_number,_...c)_=>_{};_(2)
+=== PAUSE TestDefaultParamLastSpans/const_foo_=_(a_=_1,_b:_number,_...c)_=>_{};_(2)
+=== RUN   TestDefaultParamLastSpans/const_foo_=_(a?:_number,_b:_number)_=>_{};_(2)
+=== PAUSE TestDefaultParamLastSpans/const_foo_=_(a?:_number,_b:_number)_=>_{};_(2)
+=== RUN   TestDefaultParamLastSpans/const_foo_=_(a:_number,_b?:_number,_c:_number)_=>_{};_(2)
+=== PAUSE TestDefaultParamLastSpans/const_foo_=_(a:_number,_b?:_number,_c:_number)_=>_{};_(2)
+=== RUN   TestDefaultParamLastSpans/const_foo_=_(a_=_1,_b?:_number,_c:_number)_=>_{};_(2)
+=== PAUSE TestDefaultParamLastSpans/const_foo_=_(a_=_1,_b?:_number,_c:_number)_=>_{};_(2)
+=== RUN   TestDefaultParamLastSpans/const_foo_=_(a_=_1,_{_b_})_=>_{};_(2)
+=== PAUSE TestDefaultParamLastSpans/const_foo_=_(a_=_1,_{_b_})_=>_{};_(2)
+=== RUN   TestDefaultParamLastSpans/const_foo_=_({_a_}_=_{},_b)_=>_{};_(2)
+=== PAUSE TestDefaultParamLastSpans/const_foo_=_({_a_}_=_{},_b)_=>_{};_(2)
+=== RUN   TestDefaultParamLastSpans/const_foo_=_({_a,_b_}_=_{_a:_1,_b:_2_},_c)_=>_{};_(2)
+=== PAUSE TestDefaultParamLastSpans/const_foo_=_({_a,_b_}_=_{_a:_1,_b:_2_},_c)_=>_{};_(2)
+=== RUN   TestDefaultParamLastSpans/const_foo_=_([a]_=_[],_b)_=>_{};_(2)
+=== PAUSE TestDefaultParamLastSpans/const_foo_=_([a]_=_[],_b)_=>_{};_(2)
+=== RUN   TestDefaultParamLastSpans/const_foo_=_([a,_b]_=_[1,_2],_c)_=>_{};_(2)
+=== PAUSE TestDefaultParamLastSpans/const_foo_=_([a,_b]_=_[1,_2],_c)_=>_{};_(2)
+=== RUN   TestDefaultParamLastSpans/class_Foo_{_constructor(_public_a:_number,_protected_b?:_number,_private_c:..._(2)
+=== PAUSE TestDefaultParamLastSpans/class_Foo_{_constructor(_public_a:_number,_protected_b?:_number,_private_c:..._(2)
+=== RUN   TestDefaultParamLastSpans/class_Foo_{_constructor(_public_a:_number,_protected_b_=_0,_private_c:_numb..._(2)
+=== PAUSE TestDefaultParamLastSpans/class_Foo_{_constructor(_public_a:_number,_protected_b_=_0,_private_c:_numb..._(2)
+=== RUN   TestDefaultParamLastSpans/class_Foo_{_constructor(_public_a?:_number,_private_b:_number,_)_{}_}_(2)
+=== PAUSE TestDefaultParamLastSpans/class_Foo_{_constructor(_public_a?:_number,_private_b:_number,_)_{}_}_(2)
+=== RUN   TestDefaultParamLastSpans/class_Foo_{_constructor(_public_a_=_0,_private_b:_number,_)_{}_}_(2)
+=== PAUSE TestDefaultParamLastSpans/class_Foo_{_constructor(_public_a_=_0,_private_b:_number,_)_{}_}_(2)
+=== RUN   TestDefaultParamLastSpans/class_Foo_{_constructor(a_=_0,_b:_number)_{}_}_(2)
+=== PAUSE TestDefaultParamLastSpans/class_Foo_{_constructor(a_=_0,_b:_number)_{}_}_(2)
+=== RUN   TestDefaultParamLastSpans/class_Foo_{_constructor(a?:_number,_b:_number)_{}_}_(2)
+=== PAUSE TestDefaultParamLastSpans/class_Foo_{_constructor(a?:_number,_b:_number)_{}_}_(2)
+=== RUN   TestDefaultParamLastSpans/a_public_parameter_property_spans_its_modifier
+=== PAUSE TestDefaultParamLastSpans/a_public_parameter_property_spans_its_modifier
+=== RUN   TestDefaultParamLastSpans/a_readonly_parameter_property_spans_its_modifier
+=== PAUSE TestDefaultParamLastSpans/a_readonly_parameter_property_spans_its_modifier
+=== RUN   TestDefaultParamLastSpans/an_optional_parameter_property_spans_its_modifier
+=== PAUSE TestDefaultParamLastSpans/an_optional_parameter_property_spans_its_modifier
+=== RUN   TestDefaultParamLastSpans/a_defaulted_parameter_with_an_annotation_spans_the_annotation
+=== PAUSE TestDefaultParamLastSpans/a_defaulted_parameter_with_an_annotation_spans_the_annotation
+=== RUN   TestDefaultParamLastSpans/three_defaults_straddling_two_required_parameters,_in_source_order
+=== PAUSE TestDefaultParamLastSpans/three_defaults_straddling_two_required_parameters,_in_source_order
+=== CONT  TestDefaultParamLastSpans/function_foo(a_=_1,_b:_number)_{}_(2)
+=== CONT  TestDefaultParamLastStaysSilent
+=== RUN   TestDefaultParamLastStaysSilent/function_foo()_{}
+=== PAUSE TestDefaultParamLastStaysSilent/function_foo()_{}
+=== RUN   TestDefaultParamLastStaysSilent/function_foo(a:_number)_{}
+=== PAUSE TestDefaultParamLastStaysSilent/function_foo(a:_number)_{}
+=== RUN   TestDefaultParamLastStaysSilent/function_foo(a_=_1)_{}
+=== PAUSE TestDefaultParamLastStaysSilent/function_foo(a_=_1)_{}
+=== RUN   TestDefaultParamLastStaysSilent/function_foo(a?:_number)_{}
+=== PAUSE TestDefaultParamLastStaysSilent/function_foo(a?:_number)_{}
+=== RUN   TestDefaultParamLastStaysSilent/function_foo(a:_number,_b:_number)_{}
+=== PAUSE TestDefaultParamLastStaysSilent/function_foo(a:_number,_b:_number)_{}
+=== RUN   TestDefaultParamLastStaysSilent/function_foo(a:_number,_b:_number,_c?:_number)_{}
+=== PAUSE TestDefaultParamLastStaysSilent/function_foo(a:_number,_b:_number,_c?:_number)_{}
+=== RUN   TestDefaultParamLastStaysSilent/function_foo(a:_number,_b_=_1)_{}
+=== PAUSE TestDefaultParamLastStaysSilent/function_foo(a:_number,_b_=_1)_{}
+=== RUN   TestDefaultParamLastStaysSilent/function_foo(a:_number,_b_=_1,_c_=_1)_{}
+=== PAUSE TestDefaultParamLastStaysSilent/function_foo(a:_number,_b_=_1,_c_=_1)_{}
+=== RUN   TestDefaultParamLastStaysSilent/function_foo(a:_number,_b_=_1,_c?:_number)_{}
+=== PAUSE TestDefaultParamLastStaysSilent/function_foo(a:_number,_b_=_1,_c?:_number)_{}
+=== RUN   TestDefaultParamLastStaysSilent/function_foo(a:_number,_b?:_number,_c_=_1)_{}
+=== PAUSE TestDefaultParamLastStaysSilent/function_foo(a:_number,_b?:_number,_c_=_1)_{}
+=== RUN   TestDefaultParamLastStaysSilent/function_foo(a:_number,_b_=_1,_...c)_{}
+=== PAUSE TestDefaultParamLastStaysSilent/function_foo(a:_number,_b_=_1,_...c)_{}
+=== RUN   TestDefaultParamLastStaysSilent/const_foo_=_function_()_{};
+=== PAUSE TestDefaultParamLastStaysSilent/const_foo_=_function_()_{};
+=== RUN   TestDefaultParamLastStaysSilent/const_foo_=_function_(a:_number)_{};
+=== PAUSE TestDefaultParamLastStaysSilent/const_foo_=_function_(a:_number)_{};
+=== RUN   TestDefaultParamLastStaysSilent/const_foo_=_function_(a_=_1)_{};
+=== PAUSE TestDefaultParamLastStaysSilent/const_foo_=_function_(a_=_1)_{};
+=== RUN   TestDefaultParamLastStaysSilent/const_foo_=_function_(a?:_number)_{};
+=== PAUSE TestDefaultParamLastStaysSilent/const_foo_=_function_(a?:_number)_{};
+=== RUN   TestDefaultParamLastStaysSilent/const_foo_=_function_(a:_number,_b:_number)_{};
+=== PAUSE TestDefaultParamLastStaysSilent/const_foo_=_function_(a:_number,_b:_number)_{};
+=== RUN   TestDefaultParamLastStaysSilent/const_foo_=_function_(a:_number,_b:_number,_c?:_number)_{};
+=== PAUSE TestDefaultParamLastStaysSilent/const_foo_=_function_(a:_number,_b:_number,_c?:_number)_{};
+=== RUN   TestDefaultParamLastStaysSilent/const_foo_=_function_(a:_number,_b_=_1)_{};
+=== PAUSE TestDefaultParamLastStaysSilent/const_foo_=_function_(a:_number,_b_=_1)_{};
+=== RUN   TestDefaultParamLastStaysSilent/const_foo_=_function_(a:_number,_b_=_1,_c_=_1)_{};
+=== PAUSE TestDefaultParamLastStaysSilent/const_foo_=_function_(a:_number,_b_=_1,_c_=_1)_{};
+=== RUN   TestDefaultParamLastStaysSilent/const_foo_=_function_(a:_number,_b_=_1,_c?:_number)_{};
+=== PAUSE TestDefaultParamLastStaysSilent/const_foo_=_function_(a:_number,_b_=_1,_c?:_number)_{};
+=== RUN   TestDefaultParamLastStaysSilent/const_foo_=_function_(a:_number,_b?:_number,_c_=_1)_{};
+=== PAUSE TestDefaultParamLastStaysSilent/const_foo_=_function_(a:_number,_b?:_number,_c_=_1)_{};
+=== RUN   TestDefaultParamLastStaysSilent/const_foo_=_function_(a:_number,_b_=_1,_...c)_{};
+=== PAUSE TestDefaultParamLastStaysSilent/const_foo_=_function_(a:_number,_b_=_1,_...c)_{};
+=== RUN   TestDefaultParamLastStaysSilent/const_foo_=_()_=>_{};
+=== PAUSE TestDefaultParamLastStaysSilent/const_foo_=_()_=>_{};
+=== RUN   TestDefaultParamLastStaysSilent/const_foo_=_(a:_number)_=>_{};
+=== PAUSE TestDefaultParamLastStaysSilent/const_foo_=_(a:_number)_=>_{};
+=== RUN   TestDefaultParamLastStaysSilent/const_foo_=_(a_=_1)_=>_{};
+=== PAUSE TestDefaultParamLastStaysSilent/const_foo_=_(a_=_1)_=>_{};
+=== RUN   TestDefaultParamLastStaysSilent/const_foo_=_(a?:_number)_=>_{};
+=== PAUSE TestDefaultParamLastStaysSilent/const_foo_=_(a?:_number)_=>_{};
+=== RUN   TestDefaultParamLastStaysSilent/const_foo_=_(a:_number,_b:_number)_=>_{};
+=== PAUSE TestDefaultParamLastStaysSilent/const_foo_=_(a:_number,_b:_number)_=>_{};
+=== RUN   TestDefaultParamLastStaysSilent/const_foo_=_(a:_number,_b:_number,_c?:_number)_=>_{};
+=== PAUSE TestDefaultParamLastStaysSilent/const_foo_=_(a:_number,_b:_number,_c?:_number)_=>_{};
+=== RUN   TestDefaultParamLastStaysSilent/const_foo_=_(a:_number,_b_=_1)_=>_{};
+=== PAUSE TestDefaultParamLastStaysSilent/const_foo_=_(a:_number,_b_=_1)_=>_{};
+=== RUN   TestDefaultParamLastStaysSilent/const_foo_=_(a:_number,_b_=_1,_c_=_1)_=>_{};
+=== PAUSE TestDefaultParamLastStaysSilent/const_foo_=_(a:_number,_b_=_1,_c_=_1)_=>_{};
+=== RUN   TestDefaultParamLastStaysSilent/const_foo_=_(a:_number,_b_=_1,_c?:_number)_=>_{};
+=== PAUSE TestDefaultParamLastStaysSilent/const_foo_=_(a:_number,_b_=_1,_c?:_number)_=>_{};
+=== RUN   TestDefaultParamLastStaysSilent/const_foo_=_(a:_number,_b?:_number,_c_=_1)_=>_{};
+=== PAUSE TestDefaultParamLastStaysSilent/const_foo_=_(a:_number,_b?:_number,_c_=_1)_=>_{};
+=== RUN   TestDefaultParamLastStaysSilent/const_foo_=_(a:_number,_b_=_1,_...c)_=>_{};
+=== PAUSE TestDefaultParamLastStaysSilent/const_foo_=_(a:_number,_b_=_1,_...c)_=>_{};
+=== RUN   TestDefaultParamLastStaysSilent/class_Foo_{_constructor(a:_number,_b:_number,_c:_number)_{}_}
+=== PAUSE TestDefaultParamLastStaysSilent/class_Foo_{_constructor(a:_number,_b:_number,_c:_number)_{}_}
+=== RUN   TestDefaultParamLastStaysSilent/class_Foo_{_constructor(a:_number,_b?:_number,_c_=_1)_{}_}
+=== PAUSE TestDefaultParamLastStaysSilent/class_Foo_{_constructor(a:_number,_b?:_number,_c_=_1)_{}_}
+=== RUN   TestDefaultParamLastStaysSilent/class_Foo_{_constructor(a:_number,_b_=_1,_c?:_number)_{}_}
+=== PAUSE TestDefaultParamLastStaysSilent/class_Foo_{_constructor(a:_number,_b_=_1,_c?:_number)_{}_}
+=== RUN   TestDefaultParamLastStaysSilent/class_Foo_{_constructor(_public_a:_number,_protected_b:_number,_private_c:_...
+=== PAUSE TestDefaultParamLastStaysSilent/class_Foo_{_constructor(_public_a:_number,_protected_b:_number,_private_c:_...
+=== RUN   TestDefaultParamLastStaysSilent/class_Foo_{_constructor(_public_a:_number,_protected_b?:_number,_private_c_...
+=== PAUSE TestDefaultParamLastStaysSilent/class_Foo_{_constructor(_public_a:_number,_protected_b?:_number,_private_c_...
+=== RUN   TestDefaultParamLastStaysSilent/class_Foo_{_constructor(_public_a:_number,_protected_b_=_10,_private_c?:_nu...
+=== PAUSE TestDefaultParamLastStaysSilent/class_Foo_{_constructor(_public_a:_number,_protected_b_=_10,_private_c?:_nu...
+=== RUN   TestDefaultParamLastStaysSilent/class_Foo_{_constructor(_a:_number,_protected_b?:_number,_private_c_=_0,_)_...
+=== PAUSE TestDefaultParamLastStaysSilent/class_Foo_{_constructor(_a:_number,_protected_b?:_number,_private_c_=_0,_)_...
+=== RUN   TestDefaultParamLastStaysSilent/class_Foo_{_constructor(_a:_number,_b?:_number,_private_c_=_0,_)_{}_}
+=== PAUSE TestDefaultParamLastStaysSilent/class_Foo_{_constructor(_a:_number,_b?:_number,_private_c_=_0,_)_{}_}
+=== RUN   TestDefaultParamLastStaysSilent/class_Foo_{_constructor(_a:_number,_private_b?:_number,_c_=_0,_)_{}_}
+=== PAUSE TestDefaultParamLastStaysSilent/class_Foo_{_constructor(_a:_number,_private_b?:_number,_c_=_0,_)_{}_}
+=== RUN   TestDefaultParamLastStaysSilent/an_ambient_function_declaration
+=== PAUSE TestDefaultParamLastStaysSilent/an_ambient_function_declaration
+=== RUN   TestDefaultParamLastStaysSilent/a_constructor_overload_signature
+=== PAUSE TestDefaultParamLastStaysSilent/a_constructor_overload_signature
+=== RUN   TestDefaultParamLastStaysSilent/an_abstract_method_signature
+=== PAUSE TestDefaultParamLastStaysSilent/an_abstract_method_signature
+=== RUN   TestDefaultParamLastStaysSilent/a_method_in_an_ambient_class
+=== PAUSE TestDefaultParamLastStaysSilent/a_method_in_an_ambient_class
+=== RUN   TestDefaultParamLastStaysSilent/a_method_signature_in_an_interface
+=== PAUSE TestDefaultParamLastStaysSilent/a_method_signature_in_an_interface
+=== RUN   TestDefaultParamLastStaysSilent/a_function_type_alias
+=== PAUSE TestDefaultParamLastStaysSilent/a_function_type_alias
+=== RUN   TestDefaultParamLastStaysSilent/a_setter_with_a_defaulted_parameter
+=== PAUSE TestDefaultParamLastStaysSilent/a_setter_with_a_defaulted_parameter
+=== RUN   TestDefaultParamLastStaysSilent/a_getter
+=== PAUSE TestDefaultParamLastStaysSilent/a_getter
+=== RUN   TestDefaultParamLastStaysSilent/a_default_followed_only_by_a_rest
+=== PAUSE TestDefaultParamLastStaysSilent/a_default_followed_only_by_a_rest
+=== RUN   TestDefaultParamLastStaysSilent/an_optional_followed_only_by_a_rest
+=== PAUSE TestDefaultParamLastStaysSilent/an_optional_followed_only_by_a_rest
+=== RUN   TestDefaultParamLastStaysSilent/a_default,_an_optional,_and_a_rest
+=== PAUSE TestDefaultParamLastStaysSilent/a_default,_an_optional,_and_a_rest
+=== RUN   TestDefaultParamLastStaysSilent/defaults_only_after_every_required_parameter
+=== PAUSE TestDefaultParamLastStaysSilent/defaults_only_after_every_required_parameter
+=== CONT  TestDefaultParamLastStaysSilent/function_foo()_{}
+=== CONT  TestDefaultParamLastFires/an_object_literal_getter_with_two_parameters
+=== CONT  TestDefaultParamLastFires/an_object_literal_setter_with_two_parameters
+=== CONT  TestDefaultParamLastFires/a_getter_with_two_parameters,_the_first_defaulted
+=== CONT  TestDefaultParamLastFires/a_setter_with_two_parameters,_the_first_defaulted
+=== CONT  TestDefaultParamLastFires/three_defaults_straddling_two_required_parameters
+=== CONT  TestDefaultParamLastFires/an_optional_parameter_property
+=== CONT  TestDefaultParamLastFires/a_defaulted_parameter_with_a_type_annotation
+=== CONT  TestDefaultParamLastFires/a_nested_function_with_its_own_violation
+=== CONT  TestDefaultParamLastFires/a_this_parameter_ahead_of_the_defaulted_one
+=== CONT  TestDefaultParamLastFires/an_async_arrow_function
+=== CONT  TestDefaultParamLastFires/an_async_function
+=== CONT  TestDefaultParamLastFires/a_generator_function
+=== CONT  TestDefaultParamLastFires/a_function_expression_in_an_object_literal
+=== CONT  TestDefaultParamLastFires/an_object_literal_method
+=== CONT  TestDefaultParamLastFires/a_static_class_method
+=== CONT  TestDefaultParamLastFires/a_class_method
+=== CONT  TestDefaultParamLastFires/class_Foo_{_constructor(a?:_number,_b:_number)_{}_}
+=== CONT  TestDefaultParamLastFires/class_Foo_{_constructor(a_=_0,_b:_number)_{}_}
+=== CONT  TestDefaultParamLastFires/class_Foo_{_constructor(_public_a_=_0,_private_b:_number,_)_{}_}
+=== CONT  TestDefaultParamLastFires/class_Foo_{_constructor(_public_a?:_number,_private_b:_number,_)_{}_}
+=== CONT  TestDefaultParamLastFires/class_Foo_{_constructor(_public_a:_number,_protected_b_=_0,_private_c:_numb...
+=== CONT  TestDefaultParamLastFires/class_Foo_{_constructor(_public_a:_number,_protected_b?:_number,_private_c:...
+=== CONT  TestDefaultParamLastFires/const_foo_=_([a,_b]_=_[1,_2],_c)_=>_{};
+=== CONT  TestDefaultParamLastFires/const_foo_=_([a]_=_[],_b)_=>_{};
+=== CONT  TestDefaultParamLastFires/const_foo_=_({_a,_b_}_=_{_a:_1,_b:_2_},_c)_=>_{};
+=== CONT  TestDefaultParamLastFires/const_foo_=_({_a_}_=_{},_b)_=>_{};
+=== CONT  TestDefaultParamLastFires/const_foo_=_(a_=_1,_{_b_})_=>_{};
+=== CONT  TestDefaultParamLastFires/const_foo_=_(a_=_1,_b?:_number,_c:_number)_=>_{};
+=== CONT  TestDefaultParamLastFires/const_foo_=_(a:_number,_b?:_number,_c:_number)_=>_{};
+=== CONT  TestDefaultParamLastFires/const_foo_=_(a?:_number,_b:_number)_=>_{};
+=== CONT  TestDefaultParamLastFires/const_foo_=_(a_=_1,_b:_number,_...c)_=>_{};
+=== CONT  TestDefaultParamLastFires/const_foo_=_(a_=_1,_b:_number,_c_=_2)_=>_{};
+=== CONT  TestDefaultParamLastFires/const_foo_=_(a_=_1,_b:_number,_c_=_2,_d:_number)_=>_{};
+=== CONT  TestDefaultParamLastFires/const_foo_=_(a_=_1,_b_=_2,_c:_number)_=>_{};
+=== CONT  TestDefaultParamLastFires/const_foo_=_(a_=_1,_b:_number)_=>_{};
+=== CONT  TestDefaultParamLastFires/const_foo_=_function_([a,_b]_=_[1,_2],_c)_{};
+=== CONT  TestDefaultParamLastFires/const_foo_=_function_([a]_=_[],_b)_{};
+=== CONT  TestDefaultParamLastFires/const_foo_=_function_({_a,_b_}_=_{_a:_1,_b:_2_},_c)_{};
+=== CONT  TestDefaultParamLastFires/const_foo_=_function_({_a_}_=_{},_b)_{};
+=== CONT  TestDefaultParamLastFires/const_foo_=_function_(a_=_1,_{_b_})_{};
+=== CONT  TestDefaultParamLastFires/const_foo_=_function_(a_=_1,_b?:_number,_c:_number)_{};
+=== CONT  TestDefaultParamLastFires/const_foo_=_function_(a:_number,_b?:_number,_c:_number)_{};
+=== CONT  TestDefaultParamLastFires/const_foo_=_function_(a?:_number,_b:_number)_{};
+=== CONT  TestDefaultParamLastFires/const_foo_=_function_(a_=_1,_b:_number,_...c)_{};
+=== CONT  TestDefaultParamLastFires/const_foo_=_function_(a_=_1,_b:_number,_c_=_2)_{};
+=== CONT  TestDefaultParamLastFires/const_foo_=_function_(a_=_1,_b:_number,_c_=_2,_d:_number)_{};
+=== CONT  TestDefaultParamLastFires/const_foo_=_function_(a_=_1,_b_=_2,_c:_number)_{};
+=== CONT  TestDefaultParamLastFires/const_foo_=_function_(a_=_1,_b:_number)_{};
+=== CONT  TestDefaultParamLastFires/function_foo([a,_b]_=_[1,_2],_c)_{}
+=== CONT  TestDefaultParamLastFires/function_foo([a]_=_[],_b)_{}
+=== CONT  TestDefaultParamLastFires/function_foo({_a,_b_}_=_{_a:_1,_b:_2_},_c)_{}
+=== CONT  TestDefaultParamLastFires/function_foo({_a_}_=_{},_b)_{}
+=== CONT  TestDefaultParamLastFires/function_foo(a_=_1,_{_b_})_{}
+=== CONT  TestDefaultParamLastFires/function_foo(a_=_1,_b?:_number,_c:_number)_{}
+=== CONT  TestDefaultParamLastFires/function_foo(a:_number,_b?:_number,_c:_number)_{}
+=== CONT  TestDefaultParamLastFires/function_foo(a?:_number,_b:_number)_{}
+=== CONT  TestDefaultParamLastFires/function_foo(a_=_1,_b:_number,_...c)_{}
+=== CONT  TestDefaultParamLastFires/function_foo(a_=_1,_b:_number,_c_=_2)_{}
+=== CONT  TestDefaultParamLastFires/function_foo(a_=_1,_b:_number,_c_=_2,_d:_number)_{}
+=== CONT  TestDefaultParamLastFires/function_foo(a_=_1,_b_=_2,_c:_number)_{}
+--- PASS: TestDefaultParamLastFires (0.00s)
+    --- PASS: TestDefaultParamLastFires/function_foo(a_=_1,_b:_number)_{} (0.00s)
+    --- PASS: TestDefaultParamLastFires/an_object_literal_getter_with_two_parameters (0.00s)
+    --- PASS: TestDefaultParamLastFires/an_object_literal_setter_with_two_parameters (0.00s)
+    --- PASS: TestDefaultParamLastFires/a_getter_with_two_parameters,_the_first_defaulted (0.00s)
+    --- PASS: TestDefaultParamLastFires/a_setter_with_two_parameters,_the_first_defaulted (0.00s)
+    --- PASS: TestDefaultParamLastFires/three_defaults_straddling_two_required_parameters (0.00s)
+    --- PASS: TestDefaultParamLastFires/an_optional_parameter_property (0.00s)
+    --- PASS: TestDefaultParamLastFires/a_defaulted_parameter_with_a_type_annotation (0.00s)
+    --- PASS: TestDefaultParamLastFires/a_nested_function_with_its_own_violation (0.00s)
+    --- PASS: TestDefaultParamLastFires/a_this_parameter_ahead_of_the_defaulted_one (0.00s)
+    --- PASS: TestDefaultParamLastFires/an_async_arrow_function (0.00s)
+    --- PASS: TestDefaultParamLastFires/an_async_function (0.00s)
+    --- PASS: TestDefaultParamLastFires/a_generator_function (0.00s)
+    --- PASS: TestDefaultParamLastFires/a_function_expression_in_an_object_literal (0.00s)
+    --- PASS: TestDefaultParamLastFires/an_object_literal_method (0.00s)
+    --- PASS: TestDefaultParamLastFires/a_static_class_method (0.00s)
+    --- PASS: TestDefaultParamLastFires/a_class_method (0.00s)
+    --- PASS: TestDefaultParamLastFires/class_Foo_{_constructor(a?:_number,_b:_number)_{}_} (0.00s)
+    --- PASS: TestDefaultParamLastFires/class_Foo_{_constructor(a_=_0,_b:_number)_{}_} (0.00s)
+    --- PASS: TestDefaultParamLastFires/class_Foo_{_constructor(_public_a_=_0,_private_b:_number,_)_{}_} (0.00s)
+    --- PASS: TestDefaultParamLastFires/class_Foo_{_constructor(_public_a?:_number,_private_b:_number,_)_{}_} (0.00s)
+    --- PASS: TestDefaultParamLastFires/class_Foo_{_constructor(_public_a:_number,_protected_b_=_0,_private_c:_numb... (0.00s)
+    --- PASS: TestDefaultParamLastFires/class_Foo_{_constructor(_public_a:_number,_protected_b?:_number,_private_c:... (0.00s)
+    --- PASS: TestDefaultParamLastFires/const_foo_=_([a,_b]_=_[1,_2],_c)_=>_{}; (0.00s)
+    --- PASS: TestDefaultParamLastFires/const_foo_=_([a]_=_[],_b)_=>_{}; (0.00s)
+    --- PASS: TestDefaultParamLastFires/const_foo_=_({_a,_b_}_=_{_a:_1,_b:_2_},_c)_=>_{}; (0.00s)
+    --- PASS: TestDefaultParamLastFires/const_foo_=_({_a_}_=_{},_b)_=>_{}; (0.00s)
+    --- PASS: TestDefaultParamLastFires/const_foo_=_(a_=_1,_{_b_})_=>_{}; (0.00s)
+    --- PASS: TestDefaultParamLastFires/const_foo_=_(a_=_1,_b?:_number,_c:_number)_=>_{}; (0.00s)
+    --- PASS: TestDefaultParamLastFires/const_foo_=_(a:_number,_b?:_number,_c:_number)_=>_{}; (0.00s)
+    --- PASS: TestDefaultParamLastFires/const_foo_=_(a?:_number,_b:_number)_=>_{}; (0.00s)
+    --- PASS: TestDefaultParamLastFires/const_foo_=_(a_=_1,_b:_number,_...c)_=>_{}; (0.00s)
+    --- PASS: TestDefaultParamLastFires/const_foo_=_(a_=_1,_b:_number,_c_=_2)_=>_{}; (0.00s)
+    --- PASS: TestDefaultParamLastFires/const_foo_=_(a_=_1,_b:_number,_c_=_2,_d:_number)_=>_{}; (0.00s)
+    --- PASS: TestDefaultParamLastFires/const_foo_=_(a_=_1,_b_=_2,_c:_number)_=>_{}; (0.00s)
+    --- PASS: TestDefaultParamLastFires/const_foo_=_(a_=_1,_b:_number)_=>_{}; (0.00s)
+    --- PASS: TestDefaultParamLastFires/const_foo_=_function_([a,_b]_=_[1,_2],_c)_{}; (0.00s)
+    --- PASS: TestDefaultParamLastFires/const_foo_=_function_([a]_=_[],_b)_{}; (0.00s)
+    --- PASS: TestDefaultParamLastFires/const_foo_=_function_({_a,_b_}_=_{_a:_1,_b:_2_},_c)_{}; (0.00s)
+    --- PASS: TestDefaultParamLastFires/const_foo_=_function_({_a_}_=_{},_b)_{}; (0.00s)
+    --- PASS: TestDefaultParamLastFires/const_foo_=_function_(a_=_1,_{_b_})_{}; (0.00s)
+    --- PASS: TestDefaultParamLastFires/const_foo_=_function_(a_=_1,_b?:_number,_c:_number)_{}; (0.00s)
+    --- PASS: TestDefaultParamLastFires/const_foo_=_function_(a:_number,_b?:_number,_c:_number)_{}; (0.00s)
+    --- PASS: TestDefaultParamLastFires/const_foo_=_function_(a?:_number,_b:_number)_{}; (0.00s)
+    --- PASS: TestDefaultParamLastFires/const_foo_=_function_(a_=_1,_b:_number,_...c)_{}; (0.00s)
+    --- PASS: TestDefaultParamLastFires/const_foo_=_function_(a_=_1,_b:_number,_c_=_2)_{}; (0.00s)
+    --- PASS: TestDefaultParamLastFires/const_foo_=_function_(a_=_1,_b:_number,_c_=_2,_d:_number)_{}; (0.00s)
+    --- PASS: TestDefaultParamLastFires/const_foo_=_function_(a_=_1,_b_=_2,_c:_number)_{}; (0.00s)
+    --- PASS: TestDefaultParamLastFires/const_foo_=_function_(a_=_1,_b:_number)_{}; (0.00s)
+    --- PASS: TestDefaultParamLastFires/function_foo([a,_b]_=_[1,_2],_c)_{} (0.00s)
+    --- PASS: TestDefaultParamLastFires/function_foo([a]_=_[],_b)_{} (0.00s)
+    --- PASS: TestDefaultParamLastFires/function_foo({_a,_b_}_=_{_a:_1,_b:_2_},_c)_{} (0.00s)
+    --- PASS: TestDefaultParamLastFires/function_foo({_a_}_=_{},_b)_{} (0.00s)
+    --- PASS: TestDefaultParamLastFires/function_foo(a_=_1,_{_b_})_{} (0.00s)
+    --- PASS: TestDefaultParamLastFires/function_foo(a_=_1,_b?:_number,_c:_number)_{} (0.00s)
+    --- PASS: TestDefaultParamLastFires/function_foo(a:_number,_b?:_number,_c:_number)_{} (0.00s)
+    --- PASS: TestDefaultParamLastFires/function_foo(a?:_number,_b:_number)_{} (0.00s)
+    --- PASS: TestDefaultParamLastFires/function_foo(a_=_1,_b:_number,_...c)_{} (0.00s)
+    --- PASS: TestDefaultParamLastFires/function_foo(a_=_1,_b:_number,_c_=_2)_{} (0.00s)
+    --- PASS: TestDefaultParamLastFires/function_foo(a_=_1,_b:_number,_c_=_2,_d:_number)_{} (0.00s)
+    --- PASS: TestDefaultParamLastFires/function_foo(a_=_1,_b_=_2,_c:_number)_{} (0.00s)
+=== CONT  TestDefaultParamLastSpans/three_defaults_straddling_two_required_parameters,_in_source_order
+=== CONT  TestDefaultParamLastSpans/a_defaulted_parameter_with_an_annotation_spans_the_annotation
+=== CONT  TestDefaultParamLastSpans/an_optional_parameter_property_spans_its_modifier
+=== CONT  TestDefaultParamLastSpans/a_readonly_parameter_property_spans_its_modifier
+=== CONT  TestDefaultParamLastSpans/a_public_parameter_property_spans_its_modifier
+=== CONT  TestDefaultParamLastSpans/class_Foo_{_constructor(a?:_number,_b:_number)_{}_}_(2)
+=== CONT  TestDefaultParamLastSpans/class_Foo_{_constructor(a_=_0,_b:_number)_{}_}_(2)
+=== CONT  TestDefaultParamLastSpans/class_Foo_{_constructor(_public_a_=_0,_private_b:_number,_)_{}_}_(2)
+=== CONT  TestDefaultParamLastSpans/class_Foo_{_constructor(_public_a?:_number,_private_b:_number,_)_{}_}_(2)
+=== CONT  TestDefaultParamLastSpans/class_Foo_{_constructor(_public_a:_number,_protected_b_=_0,_private_c:_numb..._(2)
+=== CONT  TestDefaultParamLastSpans/class_Foo_{_constructor(_public_a:_number,_protected_b?:_number,_private_c:..._(2)
+=== CONT  TestDefaultParamLastSpans/const_foo_=_([a,_b]_=_[1,_2],_c)_=>_{};_(2)
+=== CONT  TestDefaultParamLastSpans/const_foo_=_([a]_=_[],_b)_=>_{};_(2)
+=== CONT  TestDefaultParamLastSpans/const_foo_=_({_a,_b_}_=_{_a:_1,_b:_2_},_c)_=>_{};_(2)
+=== CONT  TestDefaultParamLastSpans/const_foo_=_({_a_}_=_{},_b)_=>_{};_(2)
+=== CONT  TestDefaultParamLastSpans/const_foo_=_(a_=_1,_{_b_})_=>_{};_(2)
+=== CONT  TestDefaultParamLastSpans/const_foo_=_(a_=_1,_b?:_number,_c:_number)_=>_{};_(2)
+=== CONT  TestDefaultParamLastSpans/const_foo_=_(a:_number,_b?:_number,_c:_number)_=>_{};_(2)
+=== CONT  TestDefaultParamLastSpans/const_foo_=_(a?:_number,_b:_number)_=>_{};_(2)
+=== CONT  TestDefaultParamLastSpans/const_foo_=_(a_=_1,_b:_number,_...c)_=>_{};_(2)
+=== CONT  TestDefaultParamLastSpans/const_foo_=_(a_=_1,_b:_number,_c_=_2)_=>_{};_(2)
+=== CONT  TestDefaultParamLastSpans/const_foo_=_(a_=_1,_b:_number,_c_=_2,_d:_number)_=>_{};_(2)
+=== CONT  TestDefaultParamLastSpans/const_foo_=_(a_=_1,_b_=_2,_c:_number)_=>_{};_(2)
+=== CONT  TestDefaultParamLastSpans/const_foo_=_(a_=_1,_b:_number)_=>_{};_(2)
+=== CONT  TestDefaultParamLastSpans/const_foo_=_function_([a,_b]_=_[1,_2],_c)_{};_(2)
+=== CONT  TestDefaultParamLastSpans/const_foo_=_function_([a]_=_[],_b)_{};_(2)
+=== CONT  TestDefaultParamLastSpans/const_foo_=_function_({_a,_b_}_=_{_a:_1,_b:_2_},_c)_{};_(2)
+=== CONT  TestDefaultParamLastSpans/const_foo_=_function_({_a_}_=_{},_b)_{};_(2)
+=== CONT  TestDefaultParamLastSpans/const_foo_=_function_(a_=_1,_{_b_})_{};_(2)
+=== CONT  TestDefaultParamLastSpans/const_foo_=_function_(a_=_1,_b?:_number,_c:_number)_{};_(2)
+=== CONT  TestDefaultParamLastSpans/const_foo_=_function_(a:_number,_b?:_number,_c:_number)_{};_(2)
+=== CONT  TestDefaultParamLastSpans/const_foo_=_function_(a?:_number,_b:_number)_{};_(2)
+=== CONT  TestDefaultParamLastSpans/const_foo_=_function_(a_=_1,_b:_number,_...c)_{};_(2)
+=== CONT  TestDefaultParamLastSpans/const_foo_=_function_(a_=_1,_b:_number,_c_=_2)_{};_(2)
+=== CONT  TestDefaultParamLastSpans/const_foo_=_function_(a_=_1,_b:_number,_c_=_2,_d:_number)_{};_(2)
+=== CONT  TestDefaultParamLastSpans/const_foo_=_function_(a_=_1,_b_=_2,_c:_number)_{};_(2)
+=== CONT  TestDefaultParamLastSpans/const_foo_=_function_(a_=_1,_b:_number)_{};_(2)
+=== CONT  TestDefaultParamLastSpans/function_foo([a,_b]_=_[1,_2],_c)_{}_(2)
+=== CONT  TestDefaultParamLastSpans/function_foo([a]_=_[],_b)_{}_(2)
+=== CONT  TestDefaultParamLastSpans/function_foo({_a,_b_}_=_{_a:_1,_b:_2_},_c)_{}_(2)
+=== CONT  TestDefaultParamLastSpans/function_foo({_a_}_=_{},_b)_{}_(2)
+=== CONT  TestDefaultParamLastSpans/function_foo(a_=_1,_{_b_})_{}_(2)
+=== CONT  TestDefaultParamLastSpans/function_foo(a_=_1,_b?:_number,_c:_number)_{}_(2)
+=== CONT  TestDefaultParamLastSpans/function_foo(a:_number,_b?:_number,_c:_number)_{}_(2)
+=== CONT  TestDefaultParamLastSpans/function_foo(a?:_number,_b:_number)_{}_(2)
+=== CONT  TestDefaultParamLastSpans/function_foo(a_=_1,_b:_number,_...c)_{}_(2)
+=== CONT  TestDefaultParamLastSpans/function_foo(a_=_1,_b:_number,_c_=_2)_{}_(2)
+=== CONT  TestDefaultParamLastSpans/function_foo(a_=_1,_b:_number,_c_=_2,_d:_number)_{}_(2)
+=== CONT  TestDefaultParamLastSpans/function_foo(a_=_1,_b_=_2,_c:_number)_{}_(2)
+--- PASS: TestDefaultParamLastSpans (0.00s)
+    --- PASS: TestDefaultParamLastSpans/function_foo(a_=_1,_b:_number)_{}_(2) (0.00s)
+    --- PASS: TestDefaultParamLastSpans/three_defaults_straddling_two_required_parameters,_in_source_order (0.00s)
+    --- PASS: TestDefaultParamLastSpans/a_defaulted_parameter_with_an_annotation_spans_the_annotation (0.00s)
+    --- PASS: TestDefaultParamLastSpans/an_optional_parameter_property_spans_its_modifier (0.00s)
+    --- PASS: TestDefaultParamLastSpans/a_readonly_parameter_property_spans_its_modifier (0.00s)
+    --- PASS: TestDefaultParamLastSpans/a_public_parameter_property_spans_its_modifier (0.00s)
+    --- PASS: TestDefaultParamLastSpans/class_Foo_{_constructor(a?:_number,_b:_number)_{}_}_(2) (0.00s)
+    --- PASS: TestDefaultParamLastSpans/class_Foo_{_constructor(a_=_0,_b:_number)_{}_}_(2) (0.00s)
+    --- PASS: TestDefaultParamLastSpans/class_Foo_{_constructor(_public_a_=_0,_private_b:_number,_)_{}_}_(2) (0.00s)
+    --- PASS: TestDefaultParamLastSpans/class_Foo_{_constructor(_public_a?:_number,_private_b:_number,_)_{}_}_(2) (0.00s)
+    --- PASS: TestDefaultParamLastSpans/class_Foo_{_constructor(_public_a:_number,_protected_b_=_0,_private_c:_numb..._(2) (0.00s)
+    --- PASS: TestDefaultParamLastSpans/class_Foo_{_constructor(_public_a:_number,_protected_b?:_number,_private_c:..._(2) (0.00s)
+    --- PASS: TestDefaultParamLastSpans/const_foo_=_([a,_b]_=_[1,_2],_c)_=>_{};_(2) (0.00s)
+    --- PASS: TestDefaultParamLastSpans/const_foo_=_([a]_=_[],_b)_=>_{};_(2) (0.00s)
+    --- PASS: TestDefaultParamLastSpans/const_foo_=_({_a,_b_}_=_{_a:_1,_b:_2_},_c)_=>_{};_(2) (0.00s)
+    --- PASS: TestDefaultParamLastSpans/const_foo_=_({_a_}_=_{},_b)_=>_{};_(2) (0.00s)
+    --- PASS: TestDefaultParamLastSpans/const_foo_=_(a_=_1,_{_b_})_=>_{};_(2) (0.00s)
+    --- PASS: TestDefaultParamLastSpans/const_foo_=_(a_=_1,_b?:_number,_c:_number)_=>_{};_(2) (0.00s)
+    --- PASS: TestDefaultParamLastSpans/const_foo_=_(a:_number,_b?:_number,_c:_number)_=>_{};_(2) (0.00s)
+    --- PASS: TestDefaultParamLastSpans/const_foo_=_(a?:_number,_b:_number)_=>_{};_(2) (0.00s)
+    --- PASS: TestDefaultParamLastSpans/const_foo_=_(a_=_1,_b:_number,_...c)_=>_{};_(2) (0.00s)
+    --- PASS: TestDefaultParamLastSpans/const_foo_=_(a_=_1,_b:_number,_c_=_2)_=>_{};_(2) (0.00s)
+    --- PASS: TestDefaultParamLastSpans/const_foo_=_(a_=_1,_b:_number,_c_=_2,_d:_number)_=>_{};_(2) (0.00s)
+    --- PASS: TestDefaultParamLastSpans/const_foo_=_(a_=_1,_b_=_2,_c:_number)_=>_{};_(2) (0.00s)
+    --- PASS: TestDefaultParamLastSpans/const_foo_=_(a_=_1,_b:_number)_=>_{};_(2) (0.00s)
+    --- PASS: TestDefaultParamLastSpans/const_foo_=_function_([a,_b]_=_[1,_2],_c)_{};_(2) (0.00s)
+    --- PASS: TestDefaultParamLastSpans/const_foo_=_function_([a]_=_[],_b)_{};_(2) (0.00s)
+    --- PASS: TestDefaultParamLastSpans/const_foo_=_function_({_a,_b_}_=_{_a:_1,_b:_2_},_c)_{};_(2) (0.00s)
+    --- PASS: TestDefaultParamLastSpans/const_foo_=_function_({_a_}_=_{},_b)_{};_(2) (0.00s)
+    --- PASS: TestDefaultParamLastSpans/const_foo_=_function_(a_=_1,_{_b_})_{};_(2) (0.00s)
+    --- PASS: TestDefaultParamLastSpans/const_foo_=_function_(a_=_1,_b?:_number,_c:_number)_{};_(2) (0.00s)
+    --- PASS: TestDefaultParamLastSpans/const_foo_=_function_(a:_number,_b?:_number,_c:_number)_{};_(2) (0.00s)
+    --- PASS: TestDefaultParamLastSpans/const_foo_=_function_(a?:_number,_b:_number)_{};_(2) (0.00s)
+    --- PASS: TestDefaultParamLastSpans/const_foo_=_function_(a_=_1,_b:_number,_...c)_{};_(2) (0.00s)
+    --- PASS: TestDefaultParamLastSpans/const_foo_=_function_(a_=_1,_b:_number,_c_=_2)_{};_(2) (0.00s)
+    --- PASS: TestDefaultParamLastSpans/const_foo_=_function_(a_=_1,_b:_number,_c_=_2,_d:_number)_{};_(2) (0.00s)
+    --- PASS: TestDefaultParamLastSpans/const_foo_=_function_(a_=_1,_b_=_2,_c:_number)_{};_(2) (0.00s)
+    --- PASS: TestDefaultParamLastSpans/const_foo_=_function_(a_=_1,_b:_number)_{};_(2) (0.00s)
+    --- PASS: TestDefaultParamLastSpans/function_foo([a,_b]_=_[1,_2],_c)_{}_(2) (0.00s)
+    --- PASS: TestDefaultParamLastSpans/function_foo([a]_=_[],_b)_{}_(2) (0.00s)
+    --- PASS: TestDefaultParamLastSpans/function_foo({_a,_b_}_=_{_a:_1,_b:_2_},_c)_{}_(2) (0.00s)
+    --- PASS: TestDefaultParamLastSpans/function_foo({_a_}_=_{},_b)_{}_(2) (0.00s)
+    --- PASS: TestDefaultParamLastSpans/function_foo(a_=_1,_{_b_})_{}_(2) (0.00s)
+    --- PASS: TestDefaultParamLastSpans/function_foo(a_=_1,_b?:_number,_c:_number)_{}_(2) (0.00s)
+    --- PASS: TestDefaultParamLastSpans/function_foo(a:_number,_b?:_number,_c:_number)_{}_(2) (0.00s)
+    --- PASS: TestDefaultParamLastSpans/function_foo(a?:_number,_b:_number)_{}_(2) (0.00s)
+    --- PASS: TestDefaultParamLastSpans/function_foo(a_=_1,_b:_number,_...c)_{}_(2) (0.00s)
+    --- PASS: TestDefaultParamLastSpans/function_foo(a_=_1,_b:_number,_c_=_2)_{}_(2) (0.00s)
+    --- PASS: TestDefaultParamLastSpans/function_foo(a_=_1,_b:_number,_c_=_2,_d:_number)_{}_(2) (0.00s)
+    --- PASS: TestDefaultParamLastSpans/function_foo(a_=_1,_b_=_2,_c:_number)_{}_(2) (0.00s)
+=== CONT  TestDefaultParamLastStaysSilent/defaults_only_after_every_required_parameter
+=== CONT  TestDefaultParamLastStaysSilent/a_default,_an_optional,_and_a_rest
+=== CONT  TestDefaultParamLastStaysSilent/an_optional_followed_only_by_a_rest
+=== CONT  TestDefaultParamLastStaysSilent/a_default_followed_only_by_a_rest
+=== CONT  TestDefaultParamLastStaysSilent/a_getter
+=== CONT  TestDefaultParamLastStaysSilent/a_setter_with_a_defaulted_parameter
+=== CONT  TestDefaultParamLastStaysSilent/a_function_type_alias
+=== CONT  TestDefaultParamLastStaysSilent/a_method_signature_in_an_interface
+=== CONT  TestDefaultParamLastStaysSilent/a_method_in_an_ambient_class
+=== CONT  TestDefaultParamLastStaysSilent/an_abstract_method_signature
+=== CONT  TestDefaultParamLastStaysSilent/a_constructor_overload_signature
+=== CONT  TestDefaultParamLastStaysSilent/an_ambient_function_declaration
+=== CONT  TestDefaultParamLastStaysSilent/class_Foo_{_constructor(_a:_number,_private_b?:_number,_c_=_0,_)_{}_}
+=== CONT  TestDefaultParamLastStaysSilent/class_Foo_{_constructor(_a:_number,_b?:_number,_private_c_=_0,_)_{}_}
+=== CONT  TestDefaultParamLastStaysSilent/class_Foo_{_constructor(_a:_number,_protected_b?:_number,_private_c_=_0,_)_...
+=== CONT  TestDefaultParamLastStaysSilent/class_Foo_{_constructor(_public_a:_number,_protected_b_=_10,_private_c?:_nu...
+=== CONT  TestDefaultParamLastStaysSilent/const_foo_=_function_(a:_number,_b_=_1,_c?:_number)_{};
+=== CONT  TestDefaultParamLastStaysSilent/const_foo_=_function_(a:_number,_b_=_1,_c_=_1)_{};
+=== CONT  TestDefaultParamLastStaysSilent/const_foo_=_function_(a?:_number)_{};
+=== CONT  TestDefaultParamLastStaysSilent/const_foo_=_function_(a_=_1)_{};
+=== CONT  TestDefaultParamLastStaysSilent/const_foo_=_function_(a:_number)_{};
+=== CONT  TestDefaultParamLastStaysSilent/const_foo_=_function_()_{};
+=== CONT  TestDefaultParamLastStaysSilent/function_foo(a:_number,_b_=_1,_...c)_{}
+=== CONT  TestDefaultParamLastStaysSilent/function_foo(a:_number,_b?:_number,_c_=_1)_{}
+=== CONT  TestDefaultParamLastStaysSilent/function_foo(a:_number,_b_=_1,_c?:_number)_{}
+=== CONT  TestDefaultParamLastStaysSilent/function_foo(a:_number,_b_=_1,_c_=_1)_{}
+=== CONT  TestDefaultParamLastStaysSilent/function_foo(a:_number,_b_=_1)_{}
+=== CONT  TestDefaultParamLastStaysSilent/function_foo(a:_number,_b:_number,_c?:_number)_{}
+=== CONT  TestDefaultParamLastStaysSilent/const_foo_=_function_(a:_number,_b_=_1)_{};
+=== CONT  TestDefaultParamLastStaysSilent/function_foo(a:_number,_b:_number)_{}
+=== CONT  TestDefaultParamLastStaysSilent/function_foo(a?:_number)_{}
+=== CONT  TestDefaultParamLastStaysSilent/function_foo(a_=_1)_{}
+=== CONT  TestDefaultParamLastStaysSilent/function_foo(a:_number)_{}
+=== CONT  TestDefaultParamLastStaysSilent/const_foo_=_function_(a:_number,_b:_number,_c?:_number)_{};
+=== CONT  TestDefaultParamLastStaysSilent/const_foo_=_(a:_number,_b_=_1)_=>_{};
+=== CONT  TestDefaultParamLastStaysSilent/const_foo_=_(a:_number,_b:_number,_c?:_number)_=>_{};
+=== CONT  TestDefaultParamLastStaysSilent/const_foo_=_(a:_number,_b:_number)_=>_{};
+=== CONT  TestDefaultParamLastStaysSilent/const_foo_=_(a?:_number)_=>_{};
+=== CONT  TestDefaultParamLastStaysSilent/const_foo_=_()_=>_{};
+=== CONT  TestDefaultParamLastStaysSilent/const_foo_=_(a:_number)_=>_{};
+=== CONT  TestDefaultParamLastStaysSilent/const_foo_=_function_(a:_number,_b_=_1,_...c)_{};
+=== CONT  TestDefaultParamLastStaysSilent/class_Foo_{_constructor(a:_number,_b?:_number,_c_=_1)_{}_}
+=== CONT  TestDefaultParamLastStaysSilent/class_Foo_{_constructor(_public_a:_number,_protected_b?:_number,_private_c_...
+=== CONT  TestDefaultParamLastStaysSilent/class_Foo_{_constructor(_public_a:_number,_protected_b:_number,_private_c:_...
+=== CONT  TestDefaultParamLastStaysSilent/class_Foo_{_constructor(a:_number,_b_=_1,_c?:_number)_{}_}
+=== CONT  TestDefaultParamLastStaysSilent/const_foo_=_function_(a:_number,_b?:_number,_c_=_1)_{};
+=== CONT  TestDefaultParamLastStaysSilent/const_foo_=_(a:_number,_b_=_1,_...c)_=>_{};
+=== CONT  TestDefaultParamLastStaysSilent/class_Foo_{_constructor(a:_number,_b:_number,_c:_number)_{}_}
+=== CONT  TestDefaultParamLastStaysSilent/const_foo_=_(a:_number,_b?:_number,_c_=_1)_=>_{};
+=== CONT  TestDefaultParamLastStaysSilent/const_foo_=_(a:_number,_b_=_1,_c?:_number)_=>_{};
+=== CONT  TestDefaultParamLastStaysSilent/const_foo_=_(a:_number,_b_=_1,_c_=_1)_=>_{};
+=== CONT  TestDefaultParamLastStaysSilent/const_foo_=_(a_=_1)_=>_{};
+=== CONT  TestDefaultParamLastStaysSilent/const_foo_=_function_(a:_number,_b:_number)_{};
+--- PASS: TestDefaultParamLastStaysSilent (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/function_foo()_{} (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/defaults_only_after_every_required_parameter (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/a_default,_an_optional,_and_a_rest (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/an_optional_followed_only_by_a_rest (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/a_default_followed_only_by_a_rest (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/a_getter (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/a_setter_with_a_defaulted_parameter (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/a_function_type_alias (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/a_method_signature_in_an_interface (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/a_method_in_an_ambient_class (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/an_abstract_method_signature (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/a_constructor_overload_signature (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/an_ambient_function_declaration (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/class_Foo_{_constructor(_a:_number,_private_b?:_number,_c_=_0,_)_{}_} (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/class_Foo_{_constructor(_a:_number,_b?:_number,_private_c_=_0,_)_{}_} (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/class_Foo_{_constructor(_a:_number,_protected_b?:_number,_private_c_=_0,_)_... (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/class_Foo_{_constructor(_public_a:_number,_protected_b_=_10,_private_c?:_nu... (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/const_foo_=_function_(a:_number,_b_=_1,_c?:_number)_{}; (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/const_foo_=_function_(a?:_number)_{}; (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/const_foo_=_function_(a_=_1)_{}; (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/const_foo_=_function_(a:_number)_{}; (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/const_foo_=_function_()_{}; (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/function_foo(a:_number,_b_=_1,_...c)_{} (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/function_foo(a:_number,_b?:_number,_c_=_1)_{} (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/function_foo(a:_number,_b_=_1,_c?:_number)_{} (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/function_foo(a:_number,_b_=_1,_c_=_1)_{} (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/function_foo(a:_number,_b_=_1)_{} (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/function_foo(a:_number,_b:_number,_c?:_number)_{} (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/function_foo(a:_number,_b:_number)_{} (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/function_foo(a?:_number)_{} (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/function_foo(a_=_1)_{} (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/function_foo(a:_number)_{} (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/const_foo_=_function_(a:_number,_b_=_1)_{}; (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/const_foo_=_function_(a:_number,_b:_number,_c?:_number)_{}; (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/const_foo_=_(a:_number,_b_=_1)_=>_{}; (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/const_foo_=_(a:_number,_b:_number,_c?:_number)_=>_{}; (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/const_foo_=_(a?:_number)_=>_{}; (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/const_foo_=_(a:_number,_b:_number)_=>_{}; (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/const_foo_=_()_=>_{}; (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/const_foo_=_function_(a:_number,_b_=_1,_...c)_{}; (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/const_foo_=_(a:_number)_=>_{}; (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/class_Foo_{_constructor(a:_number,_b?:_number,_c_=_1)_{}_} (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/class_Foo_{_constructor(_public_a:_number,_protected_b:_number,_private_c:_... (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/class_Foo_{_constructor(_public_a:_number,_protected_b?:_number,_private_c_... (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/class_Foo_{_constructor(a:_number,_b_=_1,_c?:_number)_{}_} (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/const_foo_=_(a:_number,_b_=_1,_...c)_=>_{}; (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/const_foo_=_function_(a:_number,_b?:_number,_c_=_1)_{}; (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/class_Foo_{_constructor(a:_number,_b:_number,_c:_number)_{}_} (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/const_foo_=_(a:_number,_b_=_1,_c?:_number)_=>_{}; (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/const_foo_=_(a:_number,_b?:_number,_c_=_1)_=>_{}; (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/const_foo_=_(a:_number,_b_=_1,_c_=_1)_=>_{}; (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/const_foo_=_function_(a:_number,_b:_number)_{}; (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/const_foo_=_(a_=_1)_=>_{}; (0.00s)
+    --- PASS: TestDefaultParamLastStaysSilent/const_foo_=_function_(a:_number,_b_=_1,_c_=_1)_{}; (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/typescript	0.029s
