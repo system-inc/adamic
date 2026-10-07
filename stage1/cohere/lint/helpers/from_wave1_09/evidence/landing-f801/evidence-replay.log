@@ -1,0 +1,27 @@
+[detached HEAD cfd2795fd] Record main rebase gates and shared rule landing blocker
+ Date: Wed Oct 7 03:07:21 2026 +0000
+ 19 files changed, 3650 insertions(+)
+ create mode 100644 stage1/cohere/lint/helpers/from_wave1_09/LANDING_REPORT.md
+ create mode 100644 stage1/cohere/lint/helpers/from_wave1_09/evidence/landing/fetch.log
+ create mode 100644 stage1/cohere/lint/helpers/from_wave1_09/evidence/landing/foundation-oracles.log
+ create mode 100644 stage1/cohere/lint/helpers/from_wave1_09/evidence/landing/helper-rebase.log
+ create mode 100644 stage1/cohere/lint/helpers/from_wave1_09/evidence/landing/input-oracle.log
+ create mode 100644 stage1/cohere/lint/helpers/from_wave1_09/evidence/landing/live-capture.log
+ create mode 100644 stage1/cohere/lint/helpers/from_wave1_09/evidence/landing/live-consumers/coverage.json
+ create mode 100644 stage1/cohere/lint/helpers/from_wave1_09/evidence/landing/live-consumers/enforce-canonical-classes.log
+ create mode 100644 stage1/cohere/lint/helpers/from_wave1_09/evidence/landing/live-consumers/enforce-consistent-class-order.log
+ create mode 100644 stage1/cohere/lint/helpers/from_wave1_09/evidence/landing/live-consumers/enforce-consistent-variant-order.log
+ create mode 100644 stage1/cohere/lint/helpers/from_wave1_09/evidence/landing/live-consumers/enforce-shorthand-classes.log
+ create mode 100644 stage1/cohere/lint/helpers/from_wave1_09/evidence/landing/live-consumers/no-conflicting-classes.log
+ create mode 100644 stage1/cohere/lint/helpers/from_wave1_09/evidence/landing/live-consumers/no-unknown-classes.log
+ create mode 100644 stage1/cohere/lint/helpers/from_wave1_09/evidence/landing/owned-oracle.log
+ create mode 100644 stage1/cohere/lint/helpers/from_wave1_09/evidence/landing/rule-rebase.log
+ create mode 100644 stage1/cohere/lint/helpers/from_wave1_09/evidence/landing/rule-shared-conflicts.patch
+ create mode 100644 stage1/cohere/lint/helpers/from_wave1_09/evidence/landing/setup.log
+ create mode 100644 stage1/cohere/lint/helpers/from_wave1_09/evidence/landing/status.json
+ create mode 100644 stage1/cohere/lint/helpers/from_wave1_09/evidence/landing/vet.log
+[detached HEAD 9a3dfadfa] Keep the shared conflict witness compressed and lossless
+ Date: Wed Oct 7 03:07:53 2026 +0000
+ 3 files changed, 1 insertion(+), 1876 deletions(-)
+ delete mode 100644 stage1/cohere/lint/helpers/from_wave1_09/evidence/landing/rule-shared-conflicts.patch
+ create mode 100644 stage1/cohere/lint/helpers/from_wave1_09/evidence/landing/rule-shared-conflicts.patch.gz
