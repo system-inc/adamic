@@ -1,0 +1,20 @@
+=== RUN   TestWave14ThirdAgreementAndMutants
+    wave_14_third_test.go:92: controls: 17789 identical finding bytes; findings 49
+    wave_14_third_test.go:100: controls-asan: 17789 identical finding bytes; findings 49
+    wave_14_third_test.go:114: label mutant exits 0 with empty stderr; full byte oracle catches byte 50
+    wave_14_third_test.go:114: flags mutant exits 0 with empty stderr; full byte oracle catches byte 5076
+    wave_14_third_test.go:114: unicode-quote mutant exits 0 with empty stderr; full byte oracle catches byte 5667
+    wave_14_third_test.go:114: class mutant exits 0 with empty stderr; full byte oracle catches byte 6811
+    wave_14_third_test.go:124: scope meaning mutant exits 0 with empty stderr; full byte oracle catches byte 1338
+    wave_14_third_test.go:132: compiler: 5318 identical finding bytes; findings 0
+    wave_14_third_test.go:133: compiler-asan: 5318 identical finding bytes; findings 0
+    wave_14_third_test.go:132: repository: 18485 identical finding bytes; findings 0
+    wave_14_third_test.go:133: repository-asan: 18485 identical finding bytes; findings 0
+    wave_14_third_test.go:156: flag-decoding: Go positive invalidRegexp; native explicit NotYet panic 70
+    wave_14_third_test.go:156: label-parser: Go positive identifierClashWithLabel; native explicit NotYet panic 70
+    wave_14_third_test.go:156: pattern: Go positive invalidRegexp; native explicit NotYet panic 70
+    wave_14_third_test.go:156: constructor: Go positive combiningClass; native explicit NotYet panic 70
+    wave_14_third_test.go:172: released handle panics 70; retaining it exits 0 and is caught
+--- PASS: TestWave14ThirdAgreementAndMutants (89.34s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	89.340s
