@@ -1,0 +1,79 @@
+// Named callbacks the string fixtures did not cover: delete a later key, append, replace, keep, throw.
+function key(index: number): string { return `key${index}`; }
+function value(index: number): string { return `value${index}`; }
+
+let kept: string[] = [];
+
+function filled(): Map<string, string> {
+	const collection = new Map<string, string>();
+	for (let index = 0; index < 8; index += 1) {
+		collection.set(key(index), value(index));
+	}
+	return collection;
+}
+
+function deleteLater(item: string, current: string, owner: Map<string, string>): void {
+	if (current === "key0") { owner.delete(key(1)); }
+	kept.push(current);
+	kept.push(item);
+	console.log(`later ${current} ${item} ${owner.size}`);
+}
+
+function append(item: string, current: string, owner: Map<string, string>): void {
+	if (current === "key0") {
+		owner.delete(current);
+		owner.set(key(8), value(8));
+	}
+	kept.push(current);
+	kept.push(item);
+	console.log(`append ${current} ${item} ${owner.size}`);
+}
+
+function replace(item: string, current: string, owner: Map<string, string>): void {
+	owner.set(current, `changed${current}`);
+	kept.push(item);
+	console.log(`replace ${current} ${item} ${owner.size}`);
+}
+
+function reassignValue(item: string, current: string, owner: Map<string, string>): void {
+	owner.delete(current);
+	console.log(`value ${current} ${item}`);
+	item = `${item}/reassigned`;
+	kept.push(current);
+	kept.push(item);
+	console.log(`reassigned ${current} ${item}`);
+}
+
+function reassignKey(item: string, current: string, owner: Map<string, string>): void {
+	owner.delete(current);
+	kept.push(current);
+	console.log(`key ${current} ${item}`);
+	current = `${current}/reassigned`;
+	console.log(`reassigned ${current}`);
+}
+
+function throwBorrowed(item: string, current: string, owner: Map<string, string>): void {
+	owner.delete(current);
+	kept.push(current);
+	kept.push(item);
+	throw new Error(`deleted ${current} ${item}`);
+}
+
+function run(name: string, visit: (item: string, current: string, owner: Map<string, string>) => void): void {
+	kept = [];
+	const collection = filled();
+	try {
+		collection.forEach(visit);
+	} catch (error) {
+		console.log(error instanceof Error ? error.message : "unexpected");
+	}
+	console.log(`${name} kept ${kept.join(",")} remaining ${collection.size}`);
+	collection.forEach((item, current) => { console.log(`${name} after ${current} ${item}`); });
+}
+
+run("later", deleteLater);
+run("append", append);
+run("replace", replace);
+run("reassignValue", reassignValue);
+run("reassignKey", reassignKey);
+run("throw", throwBorrowed);

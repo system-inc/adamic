@@ -1,0 +1,74 @@
+// Named callbacks borrow or reassign object keys, which the map may already have released.
+interface Box {
+	readonly label: string;
+}
+
+function box(label: string): Box {
+	return { label: `${label}` };
+}
+
+let kept: Box[] = [];
+let later = box("later");
+
+function filled(): Map<Box, Box> {
+	const collection = new Map<Box, Box>();
+	const first = box("k0");
+	later = box("k1");
+	collection.set(first, box("v0"));
+	collection.set(later, box("v1"));
+	collection.set(box("k2"), box("v2"));
+	return collection;
+}
+
+function deleteLater(item: Box, current: Box, owner: Map<Box, Box>): void {
+	if (current.label === "k0") { owner.delete(later); }
+	kept.push(current);
+	kept.push(item);
+	console.log(`later ${current.label} ${item.label} ${owner.size}`);
+}
+
+function clearBorrowed(item: Box, current: Box, owner: Map<Box, Box>): void {
+	owner.clear();
+	kept.push(current);
+	kept.push(item);
+	console.log(`clear ${current.label} ${item.label} ${owner.size}`);
+}
+
+function reassignKey(item: Box, current: Box, owner: Map<Box, Box>): void {
+	owner.delete(current);
+	kept.push(current);
+	console.log(`key ${current.label} ${item.label}`);
+	current = box(`${current.label}/reassigned`);
+	console.log(`reassigned ${current.label}`);
+}
+
+function replace(item: Box, current: Box, owner: Map<Box, Box>): void {
+	owner.set(current, box(`changed${current.label}`));
+	kept.push(item);
+	console.log(`replace ${current.label} ${item.label}`);
+}
+
+function throwBorrowed(item: Box, current: Box, owner: Map<Box, Box>): void {
+	owner.delete(current);
+	kept.push(current);
+	kept.push(item);
+	throw new Error(`deleted ${current.label} ${item.label}`);
+}
+
+function run(name: string, visit: (item: Box, current: Box, owner: Map<Box, Box>) => void): void {
+	kept = [];
+	const collection = filled();
+	try {
+		collection.forEach(visit);
+	} catch (error) {
+		console.log(error instanceof Error ? error.message : "unexpected");
+	}
+	console.log(`${name} kept ${kept.map((item) => item.label).join(",")} remaining ${collection.size}`);
+	collection.forEach((item, current) => { console.log(`${name} after ${current.label} ${item.label}`); });
+}
+
+run("later", deleteLater);
+run("clear", clearBorrowed);
+run("reassign", reassignKey);
+run("replace", replace);
+run("throw", throwBorrowed);
