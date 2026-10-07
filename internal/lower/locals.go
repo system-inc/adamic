@@ -86,7 +86,7 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
 			if err != nil {
 				return nil, err
 			}
-		} else if !l.result.Locals[local].NamespaceVar && l.includesUndefined(l.checker.GetTypeAtLocation(name)) {
+		} else if !l.result.Locals[local].NamespaceVar && (l.includesUndefined(l.checker.GetTypeAtLocation(name)) || l.evolvingObject(name) != nil) {
 			// An optional declaration can be read before assignment. Its first value
 			// is undefined, not the backend's unobservable storage placeholder. Namespace
 			// var was initialized when hoisted; a later declaration must not reset it.
@@ -122,6 +122,7 @@ func (l *lowering) declareLocal(name *ast.Node) (int, error) {
 		return 0, l.notYet(name, "the checker gave a declaration no symbol")
 	}
 	valueType := ir.Object
+	inferred := l.evolvingObject(name)
 	if l.detachedOwnAlias(name) != nil {
 		valueType = ir.Boolean
 	} else if l.detachedOwnObjectParameter(name) {
@@ -129,7 +130,10 @@ func (l *lowering) declareLocal(name *ast.Node) (int, error) {
 	} else if !l.alwaysUndefined[symbol] && !l.caught[symbol] {
 		var err error
 		if valueType, err = l.typeOf(name); err != nil {
-			return 0, err
+			if inferred == nil {
+				return 0, err
+			}
+			valueType = ir.Object
 		}
 	}
 	if l.locals == nil {
@@ -146,6 +150,8 @@ func (l *lowering) declareLocal(name *ast.Node) (int, error) {
 		// This local holds only the readiness marker. The intrinsic cannot escape,
 		// so cycle analysis must not treat it as a user closure capturing cells.
 		proven = l.checker.GetBooleanType()
+	} else if inferred != nil {
+		proven = inferred
 	}
 	l.noteLocal(l.locals[symbol], proven, name)
 	return l.locals[symbol], nil
@@ -255,7 +261,7 @@ func (l *lowering) localRead(node *ast.Node, local int) (ir.Expression, error) {
 			parent = parent.Parent
 		}
 		observing := comparedWithUndefined(node) || (parent != nil && parent.Kind == ast.KindTypeOfExpression)
-		if narrowed, isKnown := l.representation(l.checker.GetTypeAtLocation(node)); isKnown && narrowed != ir.Union && !observing {
+		if narrowed, isKnown := l.representation(l.arrayPredicateObservedType(node)); isKnown && narrowed != ir.Union && !observing {
 			// Calls and captured writes can invalidate the checker's narrowing. Check the
 			// held member before casting it, with ordinary IR shared by both backends.
 			name := "object"
@@ -295,7 +301,7 @@ func (l *lowering) localRead(node *ast.Node, local int) (ir.Expression, error) {
 	}
 	if declared := l.result.Locals[local].Type; declared.IsMaybe() {
 		// Where the checker has narrowed it to what it holds, it's read as that.
-		if narrowed, _ := l.representation(l.checker.GetTypeAtLocation(node)); narrowed == declared.Present() && !l.acceptsUndefined(node) {
+		if narrowed, _ := l.representation(l.arrayPredicateObservedType(node)); narrowed == declared.Present() && !l.acceptsUndefined(node) {
 			read = ir.Unwrap{Value: read}
 		}
 	}

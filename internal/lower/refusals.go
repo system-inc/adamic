@@ -24,18 +24,14 @@ var refusals = map[ast.Kind]refusal{
 	ast.KindDecorator:         {"a decorator", "write the behavior where it applies; 0.1 doesn't rewrite classes at runtime"},
 	ast.KindWithStatement:     {"with", "name the object you mean"},
 	ast.KindDebuggerStatement: {"debugger", "remove it"},
-	ast.KindVoidExpression:    {"the void operator", "evaluate the expression as a statement"},
 	ast.KindExportAssignment:  {"export default", "export by name: one name for one thing"},
 }
 
 // refusedOperators are binary operators 0.1 refuses.
 var refusedOperators = map[ast.Kind]refusal{
-	ast.KindEqualsEqualsToken:             {"==", "use ===, which doesn't coerce"},
-	ast.KindExclamationEqualsToken:        {"!=", "use !==, which doesn't coerce"},
-	ast.KindInKeyword:                     {"in", "an object's shape is known; use a discriminant, or a Map"},
-	ast.KindCommaToken:                    {"the comma operator", "write each expression as its own statement"},
-	ast.KindAmpersandAmpersandEqualsToken: {"&&=", "write the if"},
-	ast.KindBarBarEqualsToken:             {"||=", "write the if"},
+	ast.KindEqualsEqualsToken:      {"==", "use ===, which doesn't coerce"},
+	ast.KindExclamationEqualsToken: {"!=", "use !==, which doesn't coerce"},
+	ast.KindInKeyword:              {"in", "an object's shape is known; use a discriminant, or a Map"},
 }
 
 // refuse walks a module for what 0.1 refuses and returns the first, with where it is and the fix.

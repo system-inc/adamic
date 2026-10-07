@@ -75,9 +75,12 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		// A function that never returns (it panics on every path, as (why) => panic(why) does) has no
 		// result to hold, as one returning void hasn't. An arrow whose expression is never for another
 		// reason, a variable the checker narrowed to nothing, isn't one.
-		neverArrow := returns.Flags()&checker.TypeFlagsNever != 0 && declaration.Body() != nil && declaration.Body().Kind != ast.KindBlock && !l.isPanicCall(declaration.Body()) && !l.isProcessExit(declaration.Body())
+		neverArrow := returns.Flags()&checker.TypeFlagsNever != 0 && declaration.Body() != nil && declaration.Body().Kind != ast.KindBlock && declaration.Body().Kind != ast.KindCallExpression && !l.isPanicCall(declaration.Body()) && !l.isProcessExit(declaration.Body())
 		if returns.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 || neverArrow {
 			valueType, isKnown := l.representation(returns)
+			if returns.Flags()&checker.TypeFlagsUndefined != 0 {
+				valueType, isKnown = ir.Object, true
+			}
 			if !isKnown {
 				// An arrow function has no name to point at, so it's pointed at whole.
 				where := declaration.Name()

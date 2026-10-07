@@ -345,7 +345,7 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 			return nil, err
 		}
 		of := l.result.Locals[local].Type
-		if element, isKnown := l.representation(fieldType); !isKnown || element != of || slotless(of) {
+		if element, isKnown := l.representation(fieldType); !isKnown || element != of || (slotless(of) && !(of == ir.Union && l.writable(fieldType))) {
 			return nil, l.notYet(binding, "a destructured name held otherwise than its field")
 		}
 		value := ir.Property{Object: ir.Read{Local: held, Of: ir.Object}, Name: field, Of: of, Absent: absent}

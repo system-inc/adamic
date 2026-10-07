@@ -198,6 +198,8 @@ func equality(element ir.Type) string {
 		return "adamic_equal_booleans"
 	case ir.String:
 		return "adamic_equal_strings"
+	case ir.Union:
+		return "adamic_equal_unions"
 	case ir.MaybeNumber:
 		return "adamic_equal_maybe_numbers"
 	}

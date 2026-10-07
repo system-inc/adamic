@@ -199,6 +199,9 @@ type Local struct {
 	// Captured is a variable some closure reads or writes: it lives in a cell, shared by reference.
 	Captured bool
 
+	// ExpressionAssigned excludes conditional expression writes from statement liveness and moves.
+	ExpressionAssigned bool
+
 	// Borrowed is a reference parameter the function only looks at: its caller keeps the value alive
 	// for the whole call, so the function neither retains it on entry nor releases it on the way out
 	// (docs/memory.md, "Borrowed parameters"). Nothing ever assigns a borrowed parameter.
@@ -1107,6 +1110,7 @@ type (
 	// the body, or after it when CheckAfter is set), and Update runs after each pass, continue
 	// included.
 	Loop struct {
+		Labels     []string
 		Condition  Expression
 		Body       []Statement
 		Update     []Statement
@@ -1125,6 +1129,7 @@ type (
 	// elements are its code points, each a string.
 	ForOf struct {
 		ViewRead ArrayViewRead
+		Labels   []string
 		Iterable Expression
 		Element  Type
 		Local    int
@@ -1152,10 +1157,11 @@ type (
 		Default []Statement
 	}
 
-	// Depth counts the enclosing loops and switches skipped by a labeled break.
-	// Zero is the innermost breakable, as for an unlabeled break.
-	Break    struct{ Depth int }
-	Continue struct{}
+	Break struct {
+		Depth int
+		Label string
+	}
+	Continue struct{ Label string }
 
 	// Throw throws Value, an Error: to the innermost Try around it, or out of the function, whose
 	// caller passes it on the same way, or, out of every function, as a panic of String(Value).
