@@ -1,0 +1,16 @@
+export function formatJavaScriptNumber(value: number): string {
+    if(value >= 1e21) { return ''; }
+    if(Number.isNaN(value)) { return 'NaN'; }
+    if(value === -Infinity) { return '-Inf'; }
+    if(value === 0 && 1/value === -Infinity) { return '-0'; }
+    const printed=String(value); const exponentAt=printed.indexOf('e');
+    if(exponentAt < 0) { return printed; }
+    const negative=printed.startsWith('-'); const start=negative ? 1 : 0;
+    const mantissa=printed.slice(start,exponentAt); const dot=mantissa.indexOf('.');
+    const before=dot < 0 ? mantissa.length : dot;
+    const digits=dot < 0 ? mantissa : mantissa.slice(0,dot)+mantissa.slice(dot+1);
+    const point=before+Number(printed.slice(exponentAt+1)); const sign=negative ? '-' : '';
+    if(point <= 0) { return sign+'0.'+'0'.repeat(-point)+digits; }
+    if(point >= digits.length) { return sign+digits+'0'.repeat(point-digits.length); }
+    return sign+digits.slice(0,point)+'.'+digits.slice(point);
+}

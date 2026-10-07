@@ -1,0 +1,51 @@
+=== RUN   TestNumericGoNodeNativeJavaScript
+=== RUN   TestNumericGoNodeNativeJavaScript/witnesses.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 8952 numeric observations
+=== RUN   TestNumericGoNodeNativeJavaScript/consumers.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 2688 numeric observations
+=== RUN   TestNumericGoNodeNativeJavaScript/calls.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 123 numeric observations
+--- PASS: TestNumericGoNodeNativeJavaScript (3.59s)
+    --- PASS: TestNumericGoNodeNativeJavaScript/witnesses.json (1.27s)
+    --- PASS: TestNumericGoNodeNativeJavaScript/consumers.json (0.60s)
+    --- PASS: TestNumericGoNodeNativeJavaScript/calls.json (0.25s)
+=== RUN   TestCompilingMutants
+=== RUN   TestCompilingMutants/mod_float.avalue_%_divisor
+    helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/format_number.avalue_>=_1e21
+    helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/format_number.areturn_'-0';
+    helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/multiple_of.aif(!parsed.ok)
+    helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/multiple_of.aif(parsed.value_<_0)
+    helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/multiple_of.aformatJavaScriptNumber(parsed.value)_===_value
+    helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+--- PASS: TestCompilingMutants (15.15s)
+    --- PASS: TestCompilingMutants/mod_float.avalue_%_divisor (2.60s)
+    --- PASS: TestCompilingMutants/format_number.avalue_>=_1e21 (3.48s)
+    --- PASS: TestCompilingMutants/format_number.areturn_'-0'; (2.50s)
+    --- PASS: TestCompilingMutants/multiple_of.aif(!parsed.ok) (2.07s)
+    --- PASS: TestCompilingMutants/multiple_of.aif(parsed.value_<_0) (2.03s)
+    --- PASS: TestCompilingMutants/multiple_of.aformatJavaScriptNumber(parsed.value)_===_value (2.00s)
+=== RUN   TestConsumerCoverage
+    helpers_test.go:251: consumer omission caught: better-tailwindcss/enforce-shorthand-classes
+    helpers_test.go:251: consumer omission caught: better-tailwindcss/no-conflicting-classes
+    helpers_test.go:251: consumer omission caught: better-tailwindcss/no-unknown-classes
+    helpers_test.go:251: consumer omission caught: better-tailwindcss/enforce-consistent-class-order
+--- PASS: TestConsumerCoverage (0.01s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave14	18.757s

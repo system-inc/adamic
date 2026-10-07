@@ -1,0 +1,10 @@
+import { modFloat } from './mod_float.a';
+import { formatJavaScriptNumber } from './format_number.a';
+export interface FloatParse { readonly ok: boolean; readonly value: number; }
+export function isMultipleOf(value: string, divisor: number, parse: (source: string) => FloatParse): boolean {
+    const parsed=parse(value);
+    if(!parsed.ok) { return false; }
+    if(parsed.value < 0) { return false; }
+    if(modFloat(parsed.value,divisor) !== 0) { return false; }
+    return formatJavaScriptNumber(parsed.value) === value;
+}
