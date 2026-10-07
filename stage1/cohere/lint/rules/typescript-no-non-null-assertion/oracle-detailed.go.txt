@@ -9,6 +9,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/parser"
 	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 	"github.com/system-inc/cohere/internal/edit"
+ "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph"
 	"github.com/system-inc/cohere/internal/lint/report"
 	"github.com/system-inc/cohere/internal/lint/rule"
 	"os"
@@ -77,9 +78,10 @@ func run(row string, countOnly bool, out *bufio.Writer) int {
 	result, err := edit.FixText(path, source, func(fileName, text string) ([]edit.Proposal, error) {
 		return edit.ProposalsFrom(collect(fileName, text, fields)), nil
 	}, 10)
-	if err != nil || len(result.Rejected) != 0 || !result.Converged {
+	if err != nil || !result.Converged {
 		panic(fmt.Sprintf("fix failed: %v %+v", err, result))
 	}
+	for _, rejection := range result.Rejected { fmt.Fprintf(out, "rejected %s %d %d %s %s\n", rejection.Proposal.RuleName, rejection.Proposal.Fix.Range.Pos(), rejection.Proposal.Fix.Range.End(), rejection.ConflictsWith, rejection.Reason) }
 	fixed := result.Text
 	fmt.Fprintf(out, "fixed\t%s\n", written(fixed))
 	return len(diagnostics)
@@ -131,6 +133,7 @@ func classify(path string) {
 
 func main() {
 	args := os.Args[1:]
+ if len(args) == 2 && args[0] == "--flow-manifest" { flowManifest(args[1]); return }
  if len(args) == 2 && args[0] == "--classify" { classify(args[1]); return }
 	if len(args) == 0 {
 		panic("missing file")
@@ -160,4 +163,29 @@ func main() {
 	if countOnly {
 		fmt.Fprintln(out, count)
 	}
+}
+
+func flowManifest(path string) {
+ data,err:=os.ReadFile(path);if err!=nil{panic(err)}
+ for _,row:=range strings.Split(string(data),"\n") {
+  if row==""{continue}
+  fields:=strings.Split(row,"\t");for len(fields)<8{fields=append(fields,"")}
+  text,err:=os.ReadFile(fields[0]);if err!=nil{panic(err)}
+  source:=string(text)
+  file:=parser.ParseSourceFile(ast.SourceFileParseOptions{FileName:fields[0],Path:tspath.Path(fields[0])},source,scriptKind(fields[0]))
+  var ends []string
+  var walk func(*ast.Node)
+  walk=func(node *ast.Node) {
+   if node.Kind==ast.KindFunctionExpression || node.Kind==ast.KindArrowFunction {
+    graph:=control_flow_graph.Build(node,control_flow_graph.Hooks[struct{}]{})
+    reachable:=true;if graph!=nil{reachable=graph.EndReachable}
+    pos:=rule.TokenRange(file,node).Pos()
+    start:=len(utf16.Encode([]rune(source[:pos])))
+    ends=append(ends,fmt.Sprintf("%d:%t",start,reachable))
+   }
+   node.ForEachChild(func(child *ast.Node)bool{walk(child);return false})
+  };walk(file.AsNode())
+  fields[7]=strings.Join(ends,";")
+  fmt.Println(strings.Join(fields,"\t"))
+ }
 }

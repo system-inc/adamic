@@ -1,0 +1,47 @@
+import { panic, utf8Length } from 'adamic';
+import { Parser } from '../../../../typescript/parser/parser.ts';
+import { Scanner } from '../../../../typescript/scanner/scanner.ts';
+import { Linter } from '../../lint.ts';
+import { FixedFinding } from './edits.a';
+import { Fix } from '../typescript-no-non-null-assertion/suggestions.a';
+class Proposal {
+    readonly rule: string;
+    readonly fix: Fix;
+    constructor(rule: string, fix: Fix) { this.rule = rule; this.fix = fix; }
+}
+export function fixed(initial: Linter): string {
+    let current = initial.context.source;
+    let linter = initial;
+    for(let pass = 0; pass < 10; pass++) {
+        const proposals: Proposal[] = [];
+        for(const finding of linter.findings) {
+            if(finding instanceof FixedFinding) for(const fix of finding.fixes) proposals.push(new Proposal(finding.rule, fix));
+            else if(finding.repair === 'fix') proposals.push(new Proposal(finding.rule, new Fix(finding.start, finding.end, finding.replacement)));
+        }
+        if(proposals.length === 0) return current;
+        proposals.sort((left, right) => left.fix.start !== right.fix.start ? left.fix.start - right.fix.start : left.fix.end !== right.fix.end ? left.fix.end - right.fix.end : left.rule < right.rule ? -1 : left.rule > right.rule ? 1 : 0);
+        const applied: Proposal[] = [];
+        let lastEnd = -1;
+        let winner = '';
+        for(const proposal of proposals) {
+            const fix = proposal.fix;
+            if(fix.start < 0 || fix.end < fix.start || fix.end > current.length) panic('private repair range outside source');
+            if(fix.start > lastEnd || (fix.start >= lastEnd && fix.start !== fix.end)) {
+                lastEnd = fix.end; winner = proposal.rule;
+                if(current.slice(fix.start, fix.end) !== fix.text) applied.push(proposal);
+                else console.log(`rejected ${proposal.rule} ${utf8Length(current.slice(0, fix.start))} ${utf8Length(current.slice(0, fix.end))}  fix would not change the text`);
+            }
+            else console.log(`rejected ${proposal.rule} ${utf8Length(current.slice(0, fix.start))} ${utf8Length(current.slice(0, fix.end))} ${winner} overlaps another fix`);
+        }
+        if(applied.length === 0) return current;
+        for(const proposal of applied.slice().reverse()) {
+            const fix = proposal.fix;
+            current = current.slice(0, fix.start) + fix.text + current.slice(fix.end);
+        }
+        const context = initial.context;
+        linter = new Linter(current, new Parser(current, context.parser.path), new Scanner(current), context.selected,
+            context.mode, context.nullPolicy, context.allowCatch, context.settings);
+        linter.run();
+    }
+    panic('private fix pass budget exhausted');
+}
