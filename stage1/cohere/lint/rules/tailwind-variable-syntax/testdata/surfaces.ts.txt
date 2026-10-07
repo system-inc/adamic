@@ -1,3 +1,0 @@
-const ButtonClassName = flag ? 'text-[--x]' : 'text-[var(--y)]';
-mergeClassNames(['text-[--x]', flag && 'text-(--z)'], ('bg-[var(--shade)]' as string));
-theme.mergeClassNames('text-[--x]');

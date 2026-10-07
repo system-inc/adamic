@@ -203,3 +203,18 @@ tests and Tailwind two filtered correctness tests, -count=1 -v -timeout=10m,
 with ADAMIC_TYPESCRIPT_SOURCE and ADAMIC_TAILWIND_PACKAGE supplied. Evidence
 d3-core.log, d3-tailwind.log, d3-rule-vet.log. Full gate and seventeen
 repository-wide correctness checks not run; no check relaxed, removed or skipped.
+
+Landing split requested by Ahra: the three blocked Tailwind descriptor directories
+are removed; their exact implementation and reproducer remain named in
+claims/wave1-04-parked.md at the preserved pre-split commit. The current landing
+branch retains consistent-this and func-name-matching and is GREEN on the real
+unified harness at area d3a37422c. This supersedes the earlier blocked status.
+go run ./cmd/lint-registry passes; owned gofmt -l output empty; go vet
+./stage1/cohere/lint passes. ADAMIC_TYPESCRIPT_SOURCE=/tmp/lint-wave1-04-typescript
+go test ./stage1/cohere/lint -run '^(TestOwnedWitnesses|TestMutants|TestRulesAgree)$'
+-count=1 -v -timeout=30m PASS 875.988s. TestRulesAgree PASS 72.79s; complete
+TestMutants PASS (all descriptors); TestOwnedWitnesses PASS 21.83s with 93,748
+identical bytes on Go, Node, emitted JavaScript and sanitized native. Existing
+shared recovery limitations remain explicit in the log and are not changed.
+No shared harness edits. Full repository gate was not run. Evidence:
+unified-landing.log, unified-landing-vet.log, landing-gofmt.log, landing-registry.log.
