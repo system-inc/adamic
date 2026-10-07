@@ -1,0 +1,10 @@
+function narrowed(value: number | undefined): number {
+ if (typeof value === 'number') return value!;
+ return 1;
+}
+const values = new Map<string, number>();
+values.set('zero', 0);
+values.set('nan', NaN);
+console.log(String(narrowed(values.get('zero'))));
+console.log(String(narrowed(values.get('nan'))));
+console.log(String(narrowed(values.get('missing'))));

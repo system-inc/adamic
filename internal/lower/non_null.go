@@ -8,7 +8,8 @@ import (
 )
 
 // nonNull uses the same nullish test and terminal panic as ?? panic(...).
-// Keep the operand's stored representation: checker narrowing can outlive a call.
+// Recover presence checks from nullable loads, but keep a checked union narrowing
+// in its result representation. Calls may invalidate the original narrowing.
 func (l *lowering) nonNull(node *ast.Node) (ir.Expression, error) {
 	operand := node.AsNonNullExpression().Expression
 	value, err := l.expression(operand)
@@ -20,8 +21,6 @@ func (l *lowering) nonNull(node *ast.Node) (ir.Expression, error) {
 		case ir.Unwrap:
 			value = narrowed.Value
 		case ir.Defined:
-			value = narrowed.Value
-		case ir.Narrow:
 			value = narrowed.Value
 		default:
 			goto stored
@@ -66,6 +65,11 @@ stored:
 	}
 	if err != nil {
 		return nil, err
+	}
+	// A checked narrowing helper can already return a plain scalar. Its result
+	// has no nullish representation and must never receive a pointer test.
+	if value.Type() == ir.Number || value.Type() == ir.Boolean {
+		return value, nil
 	}
 	proven := l.checker.GetTypeAtLocation(operand)
 	if !weakOperand && !l.includesUndefined(proven) && !l.includesNull(proven) && !l.narrowedAway(ast.SkipParentheses(operand)) && !value.Type().IsMaybe() {

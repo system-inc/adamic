@@ -189,9 +189,8 @@ func (e *emitter) statement(statement ir.Statement) {
 		} else {
 			e.line("%s->%s = %s;", slot, member(statement.Value.Type()), slotted(statement.Value.Type(), value))
 		}
-		if statement.Uninitialized {
-			e.line("adamic_object_set_initialized(%s, %s, false);", object, cString(statement.Name))
-		}
+		// Direct-slot stores can bypass write_field; readiness must follow the store too.
+		e.line("adamic_object_set_initialized(%s, %s, %t);", object, cString(statement.Name), !statement.Uninitialized)
 		e.end()
 	case ir.Panic:
 		// The program ends here, so nothing it holds needs letting go.
