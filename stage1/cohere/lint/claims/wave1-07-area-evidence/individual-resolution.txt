@@ -1,0 +1,39 @@
+[detached HEAD 44842a184] Revalidate owned lint rules after rebasing onto main
+ 22 files changed, 2774 insertions(+)
+ create mode 100644 stage1/cohere/lint/claims/wave1-07-landing-evidence/alias-owned-validation.txt
+ create mode 100644 stage1/cohere/lint/claims/wave1-07-landing-evidence/corrected-alias-status.json
+ create mode 100644 stage1/cohere/lint/claims/wave1-07-landing-evidence/default-case-validation.txt
+ create mode 100644 stage1/cohere/lint/claims/wave1-07-landing-evidence/default-custom-refusal.json
+ create mode 100644 stage1/cohere/lint/claims/wave1-07-landing-evidence/dynamic-compile-exit.txt
+ create mode 100644 stage1/cohere/lint/claims/wave1-07-landing-evidence/dynamic-compile.txt
+ create mode 100644 stage1/cohere/lint/claims/wave1-07-landing-evidence/filtered-oracle.txt
+ create mode 100644 stage1/cohere/lint/claims/wave1-07-landing-evidence/initial-batch-results.json
+ create mode 100644 stage1/cohere/lint/claims/wave1-07-landing-evidence/next-google-font-display-validation.txt
+ create mode 100644 stage1/cohere/lint/claims/wave1-07-landing-evidence/no-underscore-dangle-validation.txt
+ create mode 100644 stage1/cohere/lint/claims/wave1-07-landing-evidence/no-unsafe-negation-validation.txt
+ create mode 100644 stage1/cohere/lint/claims/wave1-07-landing-evidence/no-unsafe-optional-chaining-validation.txt
+ create mode 100644 stage1/cohere/lint/claims/wave1-07-landing-evidence/output-digests.json
+ create mode 100644 stage1/cohere/lint/claims/wave1-07-landing-evidence/owned-vet.txt
+ create mode 100644 stage1/cohere/lint/claims/wave1-07-landing-evidence/pair-validation.txt
+ create mode 100644 stage1/cohere/lint/claims/wave1-07-landing-evidence/rebase-continue.txt
+ create mode 100644 stage1/cohere/lint/claims/wave1-07-landing-evidence/rebase-first.txt
+ create mode 100644 stage1/cohere/lint/claims/wave1-07-landing-evidence/setup.txt
+ create mode 100644 stage1/cohere/lint/claims/wave1-07-landing-evidence/shared-witnesses.txt
+ create mode 100644 stage1/cohere/lint/claims/wave1-07-landing-evidence/typescript-no-non-null-asserted-optional-chain-validation.txt
+ create mode 100644 stage1/cohere/lint/claims/wave1-07-landing-evidence/typescript-no-non-null-assertion-validation.txt
+ create mode 100644 stage1/cohere/lint/claims/wave1-07-landing-report.md
+Rebasing (43/49)Rebasing (44/49)Rebasing (45/49)Rebasing (46/49)Rebasing (47/49)Rebasing (48/49)Rebasing (49/49)CONFLICT (rename/delete): stage1/cohere/lint/rules/typescript-no-non-null-assertion/evidence-completion/setup.txt renamed to cloud/reports/lint-wave-check/setup.txt in HEAD, but deleted in 45266b36f (Retire losing rule copies according to the harness ledger).
+CONFLICT (modify/delete): cloud/reports/lint-wave-check/setup.txt deleted in 45266b36f (Retire losing rule copies according to the harness ledger) and modified in HEAD.  Version HEAD of cloud/reports/lint-wave-check/setup.txt left in tree.
+CONFLICT (rename/delete): stage1/cohere/lint/rules/typescript-no-non-null-assertion/evidence-completion/external-oracle.txt renamed to docs/lint-harness-dot-a-evidence/oracle.txt in HEAD, but deleted in 45266b36f (Retire losing rule copies according to the harness ledger).
+CONFLICT (modify/delete): docs/lint-harness-dot-a-evidence/oracle.txt deleted in 45266b36f (Retire losing rule copies according to the harness ledger) and modified in HEAD.  Version HEAD of docs/lint-harness-dot-a-evidence/oracle.txt left in tree.
+CONFLICT (rename/delete): stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/evidence/external-oracle.txt renamed to stage1/typescript/parser/jsx_evidence/external-oracle.log in HEAD, but deleted in 45266b36f (Retire losing rule copies according to the harness ledger).
+CONFLICT (modify/delete): stage1/typescript/parser/jsx_evidence/external-oracle.log deleted in 45266b36f (Retire losing rule copies according to the harness ledger) and modified in HEAD.  Version HEAD of stage1/typescript/parser/jsx_evidence/external-oracle.log left in tree.
+CONFLICT (rename/delete): stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/evidence/setup.txt renamed to stage3/census/latent/data/rerun2/setup.log in HEAD, but deleted in 45266b36f (Retire losing rule copies according to the harness ledger).
+CONFLICT (modify/delete): stage3/census/latent/data/rerun2/setup.log deleted in 45266b36f (Retire losing rule copies according to the harness ledger) and modified in HEAD.  Version HEAD of stage3/census/latent/data/rerun2/setup.log left in tree.
+error: could not apply 45266b36f... Retire losing rule copies according to the harness ledger
+hint: Resolve all conflicts manually, mark them as resolved with
+hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
+hint: You can instead skip this commit: run "git rebase --skip".
+hint: To abort and get back to the state before "git rebase", run "git rebase --abort".
+hint: Disable this message with "git config set advice.mergeConflict false"
+Could not apply 45266b36f... # Retire losing rule copies according to the harness ledger
