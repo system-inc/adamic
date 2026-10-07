@@ -174,6 +174,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
 		parent = parent.Parent
 	}
+	if parent != nil && parent.Kind == ast.KindPropertyAccessExpression && parent.AsPropertyAccessExpression().Expression == node && l.genericSignature(l.checker.GetTypeAtLocation(node)) != nil {
+		return nil, l.notYet(node, "observing properties of a generic function value")
+	}
 	if parent != nil && parent.Kind == ast.KindSpreadAssignment && l.genericSignature(l.checker.GetTypeAtLocation(node)) != nil {
 		return nil, l.notYet(node, "spreading a generic function value")
 	}

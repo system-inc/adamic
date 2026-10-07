@@ -11,6 +11,7 @@ cases=[
 ('slot-key','generic_closures.go','return strings.Join(keys, ";")','return strings.Join(keys[:1], ";")','./internal/lower','TestGenericPropertyHasConcreteBodies','want number/string/object bodies'),
 ('spread','expression.go','if parent != nil && parent.Kind == ast.KindSpreadAssignment && l.genericSignature(l.checker.GetTypeAtLocation(node)) != nil {','if false {','./internal/lower','TestGenericPropertyUnsupportedUsesStayDiagnostic','want a diagnostic, got <nil>'),
 ('captured-locals','generic_closures.go','l.locals[symbol] = local','if l.result.Locals[local].Global { l.locals[symbol] = local }','./internal/oracle','TestNativeAgreesWithNode/internal/oracle/testdata/generic_function_properties','Lower:'),
+('property-observation','expression.go','if parent != nil && parent.Kind == ast.KindPropertyAccessExpression && parent.AsPropertyAccessExpression().Expression == node && l.genericSignature(l.checker.GetTypeAtLocation(node)) != nil {','if false {','./internal/lower','TestGenericPropertyUnsupportedUsesStayDiagnostic','want a diagnostic, got <nil>'),
 ('typeof','expression.go','if l.genericSignature(l.checker.GetTypeAtLocation(written)) != nil {','if false {','./internal/oracle','TestNativeAgreesWithNode/internal/oracle/testdata/generic_function_properties','stdout differs'),
 ]
 for name,filename,old,new,package,test,expected in cases:
