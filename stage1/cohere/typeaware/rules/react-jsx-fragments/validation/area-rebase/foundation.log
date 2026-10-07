@@ -1,0 +1,181 @@
+=== RUN   TestDeterministicRegeneration
+=== PAUSE TestDeterministicRegeneration
+=== RUN   TestDescriptorRejections
+=== PAUSE TestDescriptorRejections
+=== RUN   TestAdamicRuleModule
+=== PAUSE TestAdamicRuleModule
+=== CONT  TestDeterministicRegeneration
+=== CONT  TestAdamicRuleModule
+=== CONT  TestDescriptorRejections
+=== RUN   TestDescriptorRejections/duplicate_public_name
+=== PAUSE TestDescriptorRejections/duplicate_public_name
+=== RUN   TestDescriptorRejections/unknown_field
+=== PAUSE TestDescriptorRejections/unknown_field
+=== RUN   TestDescriptorRejections/missing_named_export
+=== PAUSE TestDescriptorRejections/missing_named_export
+=== RUN   TestDescriptorRejections/bad_kind
+=== PAUSE TestDescriptorRejections/bad_kind
+=== RUN   TestDescriptorRejections/missing_oracle_export
+=== PAUSE TestDescriptorRejections/missing_oracle_export
+=== RUN   TestDescriptorRejections/no_listener
+=== PAUSE TestDescriptorRejections/no_listener
+=== RUN   TestDescriptorRejections/missing_factory
+=== PAUSE TestDescriptorRejections/missing_factory
+=== RUN   TestDescriptorRejections/missing_class
+=== PAUSE TestDescriptorRejections/missing_class
+=== RUN   TestDescriptorRejections/missing_finish_hook
+=== PAUSE TestDescriptorRejections/missing_finish_hook
+=== RUN   TestDescriptorRejections/unsafe_public_name
+=== PAUSE TestDescriptorRejections/unsafe_public_name
+=== CONT  TestDescriptorRejections/duplicate_public_name
+=== CONT  TestDescriptorRejections/bad_kind
+=== CONT  TestDescriptorRejections/no_listener
+=== NAME  TestDescriptorRejections/duplicate_public_name
+    registry_test.go:119: mutant rejected: /tmp/wave15-area-tmp/TestDescriptorRejectionsduplicate_public_name2812221816/001/rules/no-empty/rule.json: invalid or duplicate rule name "no-empty"
+=== NAME  TestAdamicRuleModule
+    registry_test.go:171: stale .ts alongside .a rejected
+--- PASS: TestAdamicRuleModule (0.01s)
+=== CONT  TestDescriptorRejections/unknown_field
+=== CONT  TestDescriptorRejections/missing_named_export
+=== NAME  TestDescriptorRejections/unknown_field
+    registry_test.go:119: mutant rejected: /tmp/wave15-area-tmp/TestDescriptorRejectionsunknown_field1434516433/001/rules/no-debugger/rule.json: json: unknown field "vist"
+=== CONT  TestDescriptorRejections/missing_oracle_export
+=== NAME  TestDescriptorRejections/bad_kind
+    registry_test.go:119: mutant rejected: /tmp/wave15-area-tmp/TestDescriptorRejectionsbad_kind106059325/001/rules/no-debugger/rule.json: invalid or duplicate kind "NotARealNode"
+=== CONT  TestDescriptorRejections/missing_finish_hook
+=== NAME  TestDescriptorRejections/missing_oracle_export
+    registry_test.go:119: mutant rejected: /tmp/wave15-area-tmp/TestDescriptorRejectionsmissing_oracle_export3459330562/001/rules/no-debugger/rule.json: missing oracle adapter exports
+=== CONT  TestDescriptorRejections/unsafe_public_name
+=== NAME  TestDescriptorRejections/missing_finish_hook
+    registry_test.go:119: mutant rejected: /tmp/wave15-area-tmp/TestDescriptorRejectionsmissing_finish_hook3682752014/001/rules/no-debugger/rule.json: missing named hook "missing"
+=== CONT  TestDescriptorRejections/missing_class
+=== NAME  TestDescriptorRejections/unsafe_public_name
+    registry_test.go:119: mutant rejected: /tmp/wave15-area-tmp/TestDescriptorRejectionsunsafe_public_name2270022095/001/rules/no-debugger/rule.json: invalid or duplicate rule name "bad\\name"
+=== NAME  TestDescriptorRejections/no_listener
+    registry_test.go:119: mutant rejected: /tmp/wave15-area-tmp/TestDescriptorRejectionsno_listener2004147244/001/rules/no-debugger/rule.json: visit and kinds required
+=== CONT  TestDescriptorRejections/missing_factory
+=== NAME  TestDescriptorRejections/missing_named_export
+    registry_test.go:119: mutant rejected: /tmp/wave15-area-tmp/TestDescriptorRejectionsmissing_named_export3336586599/001/rules/no-debugger/rule.json: missing named hook "missing"
+--- PASS: TestDeterministicRegeneration (0.03s)
+=== NAME  TestDescriptorRejections/missing_class
+    registry_test.go:119: mutant rejected: /tmp/wave15-area-tmp/TestDescriptorRejectionsmissing_class572021085/001/rules/no-debugger/rule.json: missing named factory or class
+=== NAME  TestDescriptorRejections/missing_factory
+    registry_test.go:119: mutant rejected: /tmp/wave15-area-tmp/TestDescriptorRejectionsmissing_factory1035501085/001/rules/no-debugger/rule.json: missing named factory or class
+--- PASS: TestDescriptorRejections (0.00s)
+    --- PASS: TestDescriptorRejections/duplicate_public_name (0.00s)
+    --- PASS: TestDescriptorRejections/unknown_field (0.00s)
+    --- PASS: TestDescriptorRejections/bad_kind (0.01s)
+    --- PASS: TestDescriptorRejections/missing_oracle_export (0.01s)
+    --- PASS: TestDescriptorRejections/missing_finish_hook (0.01s)
+    --- PASS: TestDescriptorRejections/unsafe_public_name (0.01s)
+    --- PASS: TestDescriptorRejections/no_listener (0.02s)
+    --- PASS: TestDescriptorRejections/missing_named_export (0.02s)
+    --- PASS: TestDescriptorRejections/missing_class (0.01s)
+    --- PASS: TestDescriptorRejections/missing_factory (0.01s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/registry	0.036s
+=== RUN   TestJsxMutants
+=== RUN   TestJsxMutants/text_payload
+=== PAUSE TestJsxMutants/text_payload
+=== RUN   TestJsxMutants/whitespace_flag
+=== PAUSE TestJsxMutants/whitespace_flag
+=== RUN   TestJsxMutants/namespace_kind
+=== PAUSE TestJsxMutants/namespace_kind
+=== RUN   TestJsxMutants/self_closing_kind
+=== PAUSE TestJsxMutants/self_closing_kind
+=== RUN   TestJsxMutants/type_argument_comma
+=== PAUSE TestJsxMutants/type_argument_comma
+=== RUN   TestJsxMutants/attribute_list
+=== PAUSE TestJsxMutants/attribute_list
+=== RUN   TestJsxMutants/expression_kind
+=== PAUSE TestJsxMutants/expression_kind
+=== RUN   TestJsxMutants/child_order
+=== PAUSE TestJsxMutants/child_order
+=== RUN   TestJsxMutants/text_start
+=== PAUSE TestJsxMutants/text_start
+=== CONT  TestJsxMutants/text_payload
+=== CONT  TestJsxMutants/attribute_list
+=== CONT  TestJsxMutants/self_closing_kind
+=== CONT  TestJsxMutants/type_argument_comma
+=== CONT  TestJsxMutants/child_order
+=== NAME  TestJsxMutants/attribute_list
+    jsx_mutants_test.go:48: Node compiled mutant caught: case 0 line 10: port "5 JsxAttributes 14 14 0 0 1 0 0\t\t\t\t", Go "5 JsxAttributes 14 14 0 0 0 0 0\t\t\t\t"
+    jsx_mutants_test.go:48: native compiled mutant caught: case 0 line 10: port "5 JsxAttributes 14 14 0 0 1 0 0\t\t\t\t", Go "5 JsxAttributes 14 14 0 0 0 0 0\t\t\t\t"
+=== CONT  TestJsxMutants/text_start
+=== NAME  TestJsxMutants/text_payload
+    jsx_mutants_test.go:48: Node compiled mutant caught: case 6 line 89: port "6 JsxText 19 23 0 0 -1 0 0\t\ttext!\t\t0", Go "6 JsxText 19 23 0 0 -1 0 0\t\ttext\t\t0"
+    jsx_mutants_test.go:48: native compiled mutant caught: case 6 line 89: port "6 JsxText 19 23 0 0 -1 0 0\t\ttext!\t\t0", Go "6 JsxText 19 23 0 0 -1 0 0\t\ttext\t\t0"
+=== CONT  TestJsxMutants/expression_kind
+=== NAME  TestJsxMutants/self_closing_kind
+    jsx_mutants_test.go:48: Node compiled mutant caught: case 0 line 8: port "4 JsxOpeningElement 9 16 0 0 -1 0 0\t\t\t\t-1:0", Go "4 JsxSelfClosingElement 9 16 0 0 -1 0 0\t\t\t\t-1:0"
+    jsx_mutants_test.go:48: native compiled mutant caught: case 0 line 8: port "4 JsxOpeningElement 9 16 0 0 -1 0 0\t\t\t\t-1:0", Go "4 JsxSelfClosingElement 9 16 0 0 -1 0 0\t\t\t\t-1:0"
+=== CONT  TestJsxMutants/namespace_kind
+=== NAME  TestJsxMutants/child_order
+    jsx_mutants_test.go:48: Node compiled mutant caught: case 2 line 31: port "5 JsxClosingElement 15 21 0 0 -1 0 0\t\t\t\t", Go "5 JsxOpeningElement 9 15 0 0 -1 0 0\t\t\t\t-1:0"
+    jsx_mutants_test.go:48: native compiled mutant caught: case 2 line 31: port "5 JsxClosingElement 15 21 0 0 -1 0 0\t\t\t\t", Go "5 JsxOpeningElement 9 15 0 0 -1 0 0\t\t\t\t-1:0"
+=== CONT  TestJsxMutants/whitespace_flag
+=== NAME  TestJsxMutants/type_argument_comma
+    jsx_mutants_test.go:48: Node compiled mutant caught: case 16 line 356: port "5 JsxSelfClosingElement 19 38 0 0 -1 0 0\t\t\t\t2:0", Go "5 JsxSelfClosingElement 19 38 0 0 -1 0 0\t\t\t\t2:1"
+    jsx_mutants_test.go:48: native compiled mutant caught: case 16 line 356: port "5 JsxSelfClosingElement 19 38 0 0 -1 0 0\t\t\t\t2:0", Go "5 JsxSelfClosingElement 19 38 0 0 -1 0 0\t\t\t\t2:1"
+=== NAME  TestJsxMutants/text_start
+    jsx_mutants_test.go:48: Node compiled mutant caught: case 6 line 89: port "6 JsxText 20 23 0 0 -1 0 0\t\ttext\t\t0", Go "6 JsxText 19 23 0 0 -1 0 0\t\ttext\t\t0"
+    jsx_mutants_test.go:48: native compiled mutant caught: case 6 line 89: port "6 JsxText 20 23 0 0 -1 0 0\t\ttext\t\t0", Go "6 JsxText 19 23 0 0 -1 0 0\t\ttext\t\t0"
+=== NAME  TestJsxMutants/expression_kind
+    jsx_mutants_test.go:48: Node compiled mutant caught: case 12 line 228: port "8 ParenthesizedExpression 31 37 0 0 -1 0 0\t\t\t\t", Go "8 JsxExpression 31 37 0 0 -1 0 0\t\t\t\t"
+    jsx_mutants_test.go:48: native compiled mutant caught: case 12 line 228: port "8 ParenthesizedExpression 31 37 0 0 -1 0 0\t\t\t\t", Go "8 JsxExpression 31 37 0 0 -1 0 0\t\t\t\t"
+=== NAME  TestJsxMutants/whitespace_flag
+    jsx_mutants_test.go:48: Node compiled mutant caught: case 20 line 459: port "5 JsxText 48 54 0 0 -1 0 0\t\t\\u000a  \\u0009\\u000d\\u000a\t\t0", Go "5 JsxText 48 54 0 0 -1 0 0\t\t\\u000a  \\u0009\\u000d\\u000a\t\t1"
+    jsx_mutants_test.go:48: native compiled mutant caught: case 20 line 459: port "5 JsxText 48 54 0 0 -1 0 0\t\t\\u000a  \\u0009\\u000d\\u000a\t\t0", Go "5 JsxText 48 54 0 0 -1 0 0\t\t\\u000a  \\u0009\\u000d\\u000a\t\t1"
+=== NAME  TestJsxMutants/namespace_kind
+    jsx_mutants_test.go:48: Node compiled mutant caught: case 8 line 133: port "7 QualifiedName 40 49 0 0 -1 0 0\t\t\t\t", Go "7 JsxNamespacedName 40 49 0 0 -1 0 0\t\t\t\t"
+    jsx_mutants_test.go:48: native compiled mutant caught: case 8 line 133: port "7 QualifiedName 40 49 0 0 -1 0 0\t\t\t\t", Go "7 JsxNamespacedName 40 49 0 0 -1 0 0\t\t\t\t"
+--- PASS: TestJsxMutants (12.47s)
+    --- PASS: TestJsxMutants/attribute_list (7.88s)
+    --- PASS: TestJsxMutants/text_payload (8.00s)
+    --- PASS: TestJsxMutants/self_closing_kind (8.34s)
+    --- PASS: TestJsxMutants/child_order (15.55s)
+    --- PASS: TestJsxMutants/type_argument_comma (16.00s)
+    --- PASS: TestJsxMutants/text_start (8.28s)
+    --- PASS: TestJsxMutants/expression_kind (15.34s)
+    --- PASS: TestJsxMutants/whitespace_flag (8.65s)
+    --- PASS: TestJsxMutants/namespace_kind (16.09s)
+=== RUN   TestJsxMemberNameRejection
+    jsx_rejection_test.go:57: Go rejects with diagnostic 1003; Node/native reject identically: adamic: panic: JSX expected name at 21 in /tmp/wave15-area-tmp/TestJsxMemberNameRejection1137686907/001/dashed-member.tsx
+    jsx_rejection_test.go:72: Node compiled permissive mutant finishes cleanly; Go-backed rejection check catches its exit 0
+    jsx_rejection_test.go:72: native compiled permissive mutant finishes cleanly; Go-backed rejection check catches its exit 0
+--- PASS: TestJsxMemberNameRejection (14.00s)
+=== RUN   TestJsxNameBoundaryRejections
+    jsx_rejection_test.go:108: private member: Go diagnoses; Node/native refuse identically
+    jsx_rejection_test.go:108: escaped tag: Go diagnoses; Node/native refuse identically
+    jsx_rejection_test.go:108: escaped member: Go diagnoses; Node/native refuse identically
+    jsx_rejection_test.go:108: escaped namespace: Go diagnoses; Node/native refuse identically
+    jsx_rejection_test.go:108: escaped attribute: Go diagnoses; Node/native refuse identically
+=== RUN   TestJsxNameBoundaryRejections/private_name_accepted
+    jsx_rejection_test.go:129: Node compiled permissive mutant exits 0; Go-backed refusal check catches it
+    jsx_rejection_test.go:129: native compiled permissive mutant exits 0; Go-backed refusal check catches it
+=== RUN   TestJsxNameBoundaryRejections/escaped_name_accepted
+    jsx_rejection_test.go:129: Node compiled permissive mutant exits 0; Go-backed refusal check catches it
+    jsx_rejection_test.go:129: native compiled permissive mutant exits 0; Go-backed refusal check catches it
+--- PASS: TestJsxNameBoundaryRejections (24.95s)
+    --- PASS: TestJsxNameBoundaryRejections/private_name_accepted (8.25s)
+    --- PASS: TestJsxNameBoundaryRejections/escaped_name_accepted (7.92s)
+=== RUN   TestJsxScannerMutants
+=== RUN   TestJsxScannerMutants/raw_attribute_value
+    jsx_scanner_mutants_test.go:71: Node compiled mutant caught: case 8 line 131: port "7 StringLiteral 34 40 0 0 -1 0 0\t\ta\\u005cnb!\t\t", Go "7 StringLiteral 34 40 0 0 -1 0 0\t\ta\\u005cnb\t\t"
+    jsx_scanner_mutants_test.go:71: native compiled mutant caught: case 8 line 131: port "7 StringLiteral 34 40 0 0 -1 0 0\t\ta\\u005cnb!\t\t", Go "7 StringLiteral 34 40 0 0 -1 0 0\t\ta\\u005cnb\t\t"
+=== RUN   TestJsxScannerMutants/JSX_name_payload
+    jsx_scanner_mutants_test.go:71: Node compiled mutant caught: case 0 line 9: port "5 Identifier 11 14 0 0 -1 0 0\t\tdiv!\t\t", Go "5 Identifier 11 14 0 0 -1 0 0\t\tdiv\t\t"
+    jsx_scanner_mutants_test.go:71: native compiled mutant caught: case 0 line 9: port "5 Identifier 11 14 0 0 -1 0 0\t\tdiv!\t\t", Go "5 Identifier 11 14 0 0 -1 0 0\t\tdiv\t\t"
+--- PASS: TestJsxScannerMutants (23.06s)
+    --- PASS: TestJsxScannerMutants/raw_attribute_value (7.27s)
+    --- PASS: TestJsxScannerMutants/JSX_name_payload (7.68s)
+=== RUN   TestJsxNode
+    jsx_test.go:88: all 13 Go JSX AST kinds covered
+    jsx_test.go:93: 348 JSX inputs, 277842 identical whole-tree bytes
+--- PASS: TestJsxNode (0.70s)
+=== RUN   TestJsxNative
+    jsx_test.go:108: sanitize=true: 348 JSX inputs, 277842 identical whole-tree bytes
+    jsx_test.go:108: sanitize=false: 348 JSX inputs, 277842 identical whole-tree bytes
+--- PASS: TestJsxNative (10.54s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/typescript/parser	110.163s

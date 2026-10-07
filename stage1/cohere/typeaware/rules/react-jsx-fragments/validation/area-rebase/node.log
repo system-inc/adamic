@@ -1,0 +1,25 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== RUN   TestTheOracleCatchesOneByte
+=== PAUSE TestTheOracleCatchesOneByte
+=== CONT  TestNativeAgreesWithNode
+=== CONT  TestTheOracleCatchesOneByte
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_layouts.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_layouts.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/inherited_static_field_read.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/inherited_static_field_read.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/override_same_representation.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/override_same_representation.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_layouts.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/override_same_representation.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/inherited_static_field_read.a
+--- PASS: TestTheOracleCatchesOneByte (0.48s)
+--- PASS: TestNativeAgreesWithNode (0.03s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/override_same_representation.a (0.62s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/inherited_static_field_read.a (0.70s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_layouts.a (0.88s)
+PASS
+gate cache: native hits=0 misses=10
+gate cache: node hits=0 misses=7
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.915s

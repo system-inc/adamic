@@ -1,0 +1,77 @@
+    coverage_test.go:153: before: exit 0, Go byte oracle catches byte 46; findings 52
+    coverage_test.go:153: cast: exit 0, Go byte oracle catches byte 1516; findings 53
+    coverage_test.go:153: methods: exit 0, Go byte oracle catches byte 2133; findings 46
+    coverage_test.go:153: coercion: exit 0, Go byte oracle catches byte 1132; findings 53
+    coverage_test.go:153: caller: exit 0, Go byte oracle catches byte 10108; findings 54
+    coverage_test.go:153: parameter: exit 0, Go byte oracle catches byte 358; findings 50
+    coverage_test.go:153: invariant: exit 0, Go byte oracle catches byte 12569; findings 48
+    coverage_test.go:153: optional: exit 0, Go byte oracle catches byte 15292; findings 53
+    coverage_test.go:153: alias: exit 0, Go byte oracle catches byte 15748; findings 53
+    coverage_test.go:153: unused: exit 0, Go byte oracle catches byte 16535; findings 56
+    coverage_test.go:182: released program queried using a new question: panic 70, invalid or released checker handle
+--- PASS: TestCoverageAgreementAndMutants (552.33s)
+    --- PASS: TestCoverageAgreementAndMutants/before (9.48s)
+    --- PASS: TestCoverageAgreementAndMutants/cast (9.41s)
+    --- PASS: TestCoverageAgreementAndMutants/methods (9.14s)
+    --- PASS: TestCoverageAgreementAndMutants/coercion (9.14s)
+    --- PASS: TestCoverageAgreementAndMutants/caller (9.13s)
+    --- PASS: TestCoverageAgreementAndMutants/parameter (9.26s)
+    --- PASS: TestCoverageAgreementAndMutants/invariant (9.35s)
+    --- PASS: TestCoverageAgreementAndMutants/optional (9.54s)
+    --- PASS: TestCoverageAgreementAndMutants/alias (9.92s)
+    --- PASS: TestCoverageAgreementAndMutants/unused (9.71s)
+    wave_15_arrow_test.go:106: arrow: exit 0, independent Go bytes catch byte 321
+    wave_15_arrow_test.go:127: repository native=309.183488ms Go=143.27422ms; tsgo: load_ns=88252312 query_ns=4208365 queries=25 first_query_ns=660431 run_ns=214558482
+    wave_15_arrow_test.go:127: compiler native=2.143194448s Go=339.10993ms; tsgo: load_ns=227406803 query_ns=180155005 queries=422 first_query_ns=4839835 run_ns=1899182095
+    wave_15_arrow_test.go:139: released handle: panic 70, invalid or released checker handle
+--- PASS: TestWave15FourthArrowAgreementAndMutants (58.01s)
+    --- PASS: TestWave15FourthArrowAgreementAndMutants/arrow (6.67s)
+    wave_15_backreference_test.go:99: backreference: exit 0, independent Go bytes catch byte 241
+    wave_15_backreference_test.go:108: controls native=15.046883ms Go=23.208282ms
+    wave_15_backreference_test.go:119: released handle: panic 70, invalid or released checker handle
+--- PASS: TestWave15FourthBackreferenceAgreementAndMutants (37.95s)
+    --- PASS: TestWave15FourthBackreferenceAgreementAndMutants/backreference (6.25s)
+    wave_15_continuation_test.go:110: listener: exit 0, independent Go bytes catch byte 2960
+    wave_15_continuation_test.go:110: mock: exit 0, independent Go bytes catch byte 49
+    wave_15_continuation_test.go:131: repository native=280.445344ms Go=168.0095ms; tsgo: load_ns=81689991 query_ns=0 queries=0 first_query_ns=0 run_ns=193186558
+    wave_15_continuation_test.go:131: compiler native=1.86889611s Go=357.836751ms; tsgo: load_ns=252598899 query_ns=0 queries=0 first_query_ns=0 run_ns=1603079941
+    wave_15_continuation_test.go:143: released handle: panic 70, invalid or released checker handle
+--- PASS: TestWave15ContinuationAgreementAndMutants (62.43s)
+    --- PASS: TestWave15ContinuationAgreementAndMutants/listener (6.86s)
+    --- PASS: TestWave15ContinuationAgreementAndMutants/mock (6.89s)
+    wave_15_core_test.go:99: label: exit 0, independent Go bytes catch byte 45
+    wave_15_core_test.go:120: repository native=244.912381ms Go=126.703363ms; tsgo: load_ns=76243282 query_ns=0 queries=0 first_query_ns=0 run_ns=162503684
+    wave_15_core_test.go:120: compiler native=1.432818916s Go=293.44675ms; tsgo: load_ns=245161036 query_ns=124042210 queries=10 first_query_ns=100866743 run_ns=1171857829
+    wave_15_core_test.go:132: released handle: panic 70, invalid or released checker handle
+--- PASS: TestWave15CoreAgreementAndMutants (47.14s)
+    --- PASS: TestWave15CoreAgreementAndMutants/label (6.04s)
+    wave_15_fourth_test.go:98: throw: exit 0, independent Go bytes catch byte 45
+    wave_15_fourth_test.go:119: repository native=251.417075ms Go=173.764643ms; tsgo: load_ns=91166146 query_ns=0 queries=0 first_query_ns=0 run_ns=154394975
+    wave_15_fourth_test.go:119: compiler native=1.490327315s Go=285.499285ms; tsgo: load_ns=312307520 query_ns=0 queries=0 first_query_ns=0 run_ns=1157994367
+    wave_15_fourth_test.go:131: released handle: panic 70, invalid or released checker handle
+--- PASS: TestWave15FourthThrowAgreementAndMutants (47.21s)
+    --- PASS: TestWave15FourthThrowAgreementAndMutants/throw (6.33s)
+    wave_15_leaked_test.go:63: controls: 8731 identical bytes; native=19.894072ms Go=20.907975ms
+    wave_15_leaked_test.go:63: controls-asan: 8731 identical bytes; native=45.913067ms Go=22.203089ms
+    wave_15_leaked_test.go:109: leaked: exit 0, independent Go bytes catch byte 6173
+    wave_15_leaked_test.go:130: repository native=238.744112ms Go=136.013423ms; tsgo: load_ns=78710944 query_ns=0 queries=0 first_query_ns=0 run_ns=154219436
+    wave_15_leaked_test.go:130: compiler native=1.375560257s Go=296.819596ms; tsgo: load_ns=244298179 query_ns=0 queries=0 first_query_ns=0 run_ns=1118879748
+    wave_15_leaked_test.go:142: released handle: panic 70, invalid or released checker handle
+--- PASS: TestWave15LeakedAgreementAndMutants (48.03s)
+    --- PASS: TestWave15LeakedAgreementAndMutants/leaked (5.77s)
+    wave_15_regex_test.go:95: flags: exit 0, independent Go bytes catch byte 117
+    wave_15_regex_test.go:95: suggestion: exit 0, independent Go bytes catch byte 2577
+    wave_15_regex_test.go:108: released handle: panic 70, invalid or released checker handle
+--- PASS: TestWave15RegexPartialControlsAndMutants (43.74s)
+    --- PASS: TestWave15RegexPartialControlsAndMutants/flags (5.89s)
+    --- PASS: TestWave15RegexPartialControlsAndMutants/suggestion (6.15s)
+    wave_15_test.go:96: default: exit 0, independent Go bytes catch byte 2029
+    wave_15_test.go:96: find: exit 0, independent Go bytes catch byte 608
+    wave_15_test.go:96: sort: exit 0, independent Go bytes catch byte 45
+    wave_15_test.go:117: repository native=307.639868ms Go=136.485977ms; tsgo: load_ns=72927482 query_ns=24282133 queries=563 first_query_ns=17466 run_ns=229084659
+    wave_15_test.go:117: compiler native=2.061861896s Go=333.565059ms; tsgo: load_ns=244283167 query_ns=251388237 queries=1303 first_query_ns=17185 run_ns=1800057687
+    wave_15_test.go:129: released handle: panic 70, invalid or released checker handle
+--- PASS: TestWave15AgreementAndMutants (76.10s)
+    --- PASS: TestWave15AgreementAndMutants/default (7.45s)
+    --- PASS: TestWave15AgreementAndMutants/find (7.41s)
+    --- PASS: TestWave15AgreementAndMutants/sort (7.45s)
