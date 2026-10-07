@@ -1,0 +1,264 @@
+# Required indexed reads in checker.ts
+
+This partition adapts only `src/compiler/checker.ts` in TypeScript 6.0.3,
+pinned at `050880ce59e30b356b686bd3144efe24f875ebc8`. It follows adaptation 30:
+one reviewed entry per required read, a class from `docs/tsc-strictness.md`,
+and a one-line invariant obligation. `!` is a loud required-value check in
+Adamic and erased syntax on Node. The invariant obligations cover populated
+compiler-built or caller-provided arrays, not merely array bounds. Invalid
+states may fail loudly natively even where erased Node syntax would continue.
+
+Every read stays at its original evaluation point, including repeated reads
+and callback boundaries. No optional chain, skip, hoist, default, or initializer
+assertion is introduced. Only reviewed numeric bitwise U-zero operands may use
+`?? 0`; none were selected in Wave A. Existing undefined!/null! initializers
+remain untouched. Text insertions preserve CRLF; no source printer is used.
+
+The adapter parses current text with stock npm TypeScript 6.0.3. Its addresses
+are parsed element-access expressions plus occurrence and total counts, as in
+adaptation 30. Ledger line/column numbers document the original source and are
+never edit addresses. It validates every occurrence count, rejects defaulted
+required reads, optional access chains and pure stores, plans every file before
+writing, and checks that the source has not changed before applying edits.
+
+## Tree, toolchain and waves
+
+Base main: `e011f8f`. Required prerequisite merges: adaptation 10 at `a3ef0dc`
+and adaptation 30 at `07f637c`; merge HEAD before this unit was `437fe1b`.
+The tested tree contains setup, 10, 30, and this adapter. Adaptation 20 is absent.
+No TypeScript source is committed. No files in the other partitions are edited.
+
+Toolchain setup: Go 0s, clang 0s, Node 0s, submodules 0s, build cache 160s,
+total 160s. `nproc=5`, CPU quota 4. Environment is
+`source /workspace/adamic-tools/env.sh`; Node 24.19.0, Go 1.27.1, clang 20.1.8.
+
+The fresh Adamic census has 796 findings across the five requested codes,
+rather than the earlier stock census's 798. `wave-boundaries.json` freezes them
+in numeric line, column, code order. Waves address ranks 1-200, 201-400,
+401-600, and 601-796 of that frozen input, so declined findings do not consume
+later waves repeatedly. `findings-wave-a.json` records every Wave A disposition.
+
+## Wave A
+
+Ranks 1-200, through `checker.ts:16133:46`: **102 required-read assertions**,
+**6 declined indexed reads**, **164 findings removed**, **36 findings declined**.
+The required-read ledger includes related reads needed to resolve a selected
+finding, such as both populated lists of a parallel comparison. It never
+asserts every indexed expression in a selected function or source range.
+
+The real Adamic loader/checker checked 78 prepared roots with its unchanged
+fixed strictness options and no implicit optional-declaration adaptation.
+The census includes all five-code findings in checker.ts, whatever their cause.
+
+| File | TS2345 | TS18048 | TS2532 | TS2322 | TS2538 | Total |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| checker.ts before | 395 | 245 | 113 | 43 | 0 | 796 |
+| checker.ts after Wave A | 309 | 191 | 94 | 38 | 0 | 632 |
+
+`remaining-wave-a.json` lists **every remaining finding** with its complete
+chain and reason. The 36 remaining Wave A findings concern explicit absence
+handling or non-indexed iterator, Set, regex callback, and optional-return
+contracts. Findings outside the first 200 are marked with their deferred wave,
+not falsely claimed reviewed or repaired. This file does not yet pass the full
+Adamic checker; other diagnostic codes and compiler feature refusals remain.
+
+## Proof
+
+Stock TypeScript emitted JavaScript is byte-identical to the before tree.
+The verifier checks the site contract and idempotence independently of the
+upstream suite. A real second CLI run reports **0 assertions, 0 U-zero edits**.
+`proof-wave-a.json` records hashes, CRLF counts, and observations.
+
+Mutant: the new `jsxFragmentPragma[0]!` at `checker.ts:2446:75` is replaced
+with `(jsxFragmentPragma[0] ?? 0)` in an isolated checker snapshot. The stock
+emitted-JavaScript comparison fails with exit 1, and the site contract fails
+with `required read defaulted: checker.ts:2446:75`, exit 1. The oracle tree
+never contained this mutant. The census and full oracle were not run on it.
+
+Default stage 3 oracle: **pass**, 106,367 passing, 0 failing, 0 pending. Baseline differences: **0**. Install, build, and tests exits: 0, 0, 0. Wall time 529.947s. `baseline-wave-a.diff` records the exact diff.
+
+The default oracle runs all suites, unfiltered, with four workers and
+`--light=false`; lint is disabled by the harness. Native Adamic tsc compilation,
+browser integration, ESLint-rule integrations, and the full repository Go gate
+are not covered by this source-adaptation unit.
+
+## Reproduction
+
+Prepare a pinned scratch checkout with setup, adaptation 10 and adaptation 30,
+then retain a before snapshot of checker.ts. Run with stock TypeScript 6.0.3
+on NODE_PATH or CENSUS_TYPESCRIPT. All test output goes to logs.
+
+```sh
+source /workspace/adamic-tools/env.sh
+export NODE_PATH=/home/agent/.cache/adamic-stage3/api/node_modules
+unit=stage3/adapt/31-indexed-reads-checker
+bash "$unit/census.sh" /tmp/checker-before /tmp/checker-before-census > /tmp/checker-before-census.log 2>&1
+node "$unit/adapt.cjs" /tmp/checker-after > /tmp/checker-adapt.log 2>&1
+bash "$unit/census.sh" /tmp/checker-after /tmp/checker-after-census > /tmp/checker-after-census.log 2>&1
+node "$unit/verify.cjs" /tmp/checker-before /tmp/checker-after > /tmp/checker-verify.log 2>&1
+node "$unit/adapt.cjs" /tmp/checker-after > /tmp/checker-idempotence.log 2>&1
+stage3/oracle/run.sh /tmp/checker-after /tmp/checker-oracle > /tmp/checker-oracle.log 2>&1
+```
+
+Observed Wave A scratch tree: `/tmp/checker-wave-tree`; original checker
+snapshot: `/tmp/checker-original`; census: `/tmp/checker-wave-{before,a-after}`;
+oracle: `/tmp/checker-wave-a-oracle`. Command logs are
+`/tmp/checker-wave-a-{adapt,verify,idempotence,census,oracle,mutant,mutant-contract}.log`.
+
+## Site ledger
+
+Each row represents exactly one parsed indexed read. Occurrence and count
+addresses are retained in sites.json. One invariant applies at each original
+read, even when several reads share a construction obligation.
+
+| Site | Read | Class | Action | Invariant or decline reason |
+| --- | --- | --- | --- | --- |
+| checker.ts:2446:75 | `jsxFragmentPragma[0]` | U-endpoint | assert | A present parser pragma array contains the first parsed pragma; the scalar branch keeps its original value. |
+| checker.ts:2492:55 | `jsxPragma[0]` | U-endpoint | assert | A present parser pragma array contains the first parsed pragma; the scalar branch keeps its original value. |
+| checker.ts:5043:67 | `referenceParent.arguments[0]` | U-endpoint | assert | This resolved import-call reference has its required module-specifier argument in the parser-built argument list. |
+| checker.ts:5311:54 | `mergedSymbols[symbol.mergeId]` | U-table | decline | Merged-symbol lookup explicitly tests absence and falls back to the original symbol. |
+| checker.ts:5915:74 | `accessibleSymbolChain[0]` | U-endpoint | assert | A successful accessible-symbol lookup constructs a nonempty populated chain whose root is required. |
+| checker.ts:6584:91 | `classDeclarations[0]` | U-endpoint | assert | The explicit positive or single-element length guard precedes this first read from a populated declaration, type-node, type, or signature list. |
+| checker.ts:6602:67 | `decls[0]` | U-endpoint | assert | The explicit positive or single-element length guard precedes this first read from a populated declaration, type-node, type, or signature list. |
+| checker.ts:6921:60 | `typeArgumentNodes[0]` | U-endpoint | assert | The explicit positive or single-element length guard precedes this first read from a populated declaration, type-node, type, or signature list. |
+| checker.ts:6982:49 | `types[0]` | U-endpoint | assert | The explicit positive or single-element length guard precedes this first read from a populated declaration, type-node, type, or signature list. |
+| checker.ts:7009:65 | `texts[0]` | U-parallel | assert | Template-literal construction supplies a head text and one following text for each interpolated type. |
+| checker.ts:7014:112 | `texts[i + 1]` | U-parallel | assert | Template-literal construction supplies a head text and one following text for each interpolated type. |
+| checker.ts:7376:43 | `resolved.callSignatures[0]` | U-endpoint | assert | The explicit positive or single-element length guard precedes this first read from a populated declaration, type-node, type, or signature list. |
+| checker.ts:7382:43 | `resolved.constructSignatures[0]` | U-endpoint | assert | The explicit positive or single-element length guard precedes this first read from a populated declaration, type-node, type, or signature list. |
+| checker.ts:7424:71 | `typeArguments[0]` | U-endpoint | assert | The recognized global Array or ReadonlyArray type has its one required element type argument. |
+| checker.ts:7427:62 | `typeArguments[0]` | U-endpoint | assert | The recognized global Array or ReadonlyArray type has its one required element type argument. |
+| checker.ts:7432:94 | `(type.target as TupleType).elementFlags[i]` | U-parallel | assert | Tuple construction aligns populated element flags and constituent nodes by tuple position; each rewritten constituent remains defined. |
+| checker.ts:7439:47 | `(type.target as TupleType).elementFlags[i]` | U-parallel | assert | Tuple construction aligns populated flags with constituent nodes at each visited tuple position. |
+| checker.ts:7440:67 | `labeledElementDeclarations?.[i]` | U-parallel | decline | Tuple labels are optional and the following branch explicitly handles a missing label. |
+| checker.ts:7447:97 | `tupleConstituentNodes[i]` | U-parallel | assert | Tuple construction aligns populated element flags and constituent nodes by tuple position; each rewritten constituent remains defined. |
+| checker.ts:7448:45 | `tupleConstituentNodes[i]` | U-parallel | assert | Tuple construction aligns populated element flags and constituent nodes by tuple position; each rewritten constituent remains defined. |
+| checker.ts:7452:179 | `tupleConstituentNodes[i]` | U-parallel | assert | Tuple construction aligns populated element flags and constituent nodes by tuple position; each rewritten constituent remains defined. |
+| checker.ts:7452:207 | `tupleConstituentNodes[i]` | U-parallel | assert | Tuple construction aligns populated element flags and constituent nodes by tuple position; each rewritten constituent remains defined. |
+| checker.ts:7453:104 | `tupleConstituentNodes[i]` | U-parallel | assert | Tuple construction aligns populated element flags and constituent nodes by tuple position; each rewritten constituent remains defined. |
+| checker.ts:7454:41 | `tupleConstituentNodes[i]` | U-parallel | assert | Tuple construction aligns populated element flags and constituent nodes by tuple position; each rewritten constituent remains defined. |
+| checker.ts:7485:75 | `outerTypeParameters[i]` | U-loop | assert | The outer-type-parameter traversal bounds i by the populated parameter list, including after increment. |
+| checker.ts:7489:81 | `outerTypeParameters[i]` | U-loop | assert | The outer-type-parameter traversal bounds i by the populated parameter list, including after increment. |
+| checker.ts:7523:62 | `typeArguments[typeParameterCount - 1]` | U-parallel | assert | The positive remaining parameter count is bounded by both populated type-parameter and type-argument lists. |
+| checker.ts:7524:63 | `type.target.typeParameters[typeParameterCount - 1]` | U-parallel | assert | The positive remaining parameter count is bounded by both populated type-parameter and type-argument lists. |
+| checker.ts:7700:50 | `properties[properties.length - 1]` | U-endpoint | assert | The truncation branch runs inside populated property traversal and requires the final property. |
+| checker.ts:7744:34 | `context.reverseMappedStack[context.reverseMappedStack.length - 1 - i]` | U-position | assert | The reverse-mapped stack has at least depth populated entries before the bounded backward traversal. |
+| checker.ts:7909:50 | `types[0]` | U-endpoint | assert | The truncation length guards establish nonempty populated type input before first or last type serialization. |
+| checker.ts:7913:50 | `types[types.length - 1]` | U-endpoint | assert | The truncation length guards establish nonempty populated type input before first or last type serialization. |
+| checker.ts:7931:63 | `types[types.length - 1]` | U-endpoint | assert | The truncation length guards establish nonempty populated type input before first or last type serialization. |
+| checker.ts:8013:36 | `getExpandedParameters(signature, /*skipUnionExpanding*/ true)[0]` | U-endpoint | assert | Skipping union expansion always returns a single populated outer parameter-list entry, even when that inner list is empty. |
+| checker.ts:8027:65 | `expandedParams[expandedParams.length - 1]` | U-endpoint | decline | The callback compares a potentially absent endpoint directly; the outer list is asserted at its original read. |
+| checker.ts:8208:43 | `expandedParams[pIndex]` | U-loop | assert | The parameter-scope loop traverses the populated expanded parameter list under its length bound. |
+| checker.ts:8479:40 | `accessibleSymbolChain[0]` | U-endpoint | assert | A successful accessible-symbol lookup constructs a nonempty populated chain whose root is required. |
+| checker.ts:8482:83 | `accessibleSymbolChain[0]` | U-endpoint | assert | A successful accessible-symbol lookup constructs a nonempty populated chain whose root is required. |
+| checker.ts:8491:64 | `parents[i]` | U-position | assert | indices is a permutation of positions in the populated parents list; sorting changes only that permutation. |
+| checker.ts:8559:28 | `chain[index]` | U-position | assert | lookupTypeParameterNodes asserts a valid nonnegative chain index; the successor read additionally checks index < length - 1. |
+| checker.ts:8572:36 | `chain[index + 1]` | U-position | assert | lookupTypeParameterNodes asserts a valid nonnegative chain index; the successor read additionally checks index < length - 1. |
+| checker.ts:8667:22 | `chain[0]` | U-endpoint | assert | lookupSymbolChain constructs a nonempty populated chain or a singleton containing the requested symbol. |
+| checker.ts:8672:58 | `chain[0]` | U-endpoint | assert | lookupSymbolChain constructs a nonempty populated chain or a singleton containing the requested symbol. |
+| checker.ts:8678:65 | `chain[0]` | U-endpoint | assert | lookupSymbolChain constructs a nonempty populated chain or a singleton containing the requested symbol. |
+| checker.ts:8690:61 | `chain[0]` | U-endpoint | assert | lookupSymbolChain constructs a nonempty populated chain or a singleton containing the requested symbol. |
+| checker.ts:8697:65 | `chain[0]` | U-endpoint | assert | lookupSymbolChain constructs a nonempty populated chain or a singleton containing the requested symbol. |
+| checker.ts:8756:32 | `chain[index]` | U-position | assert | Symbol-chain serialization starts at length - 1 and recurses toward the root of a nonempty populated chain. |
+| checker.ts:8888:32 | `chain[index]` | U-position | assert | Symbol-chain serialization starts at length - 1 and recurses toward the root of a nonempty populated chain. |
+| checker.ts:8913:32 | `chain[index]` | U-position | assert | Symbol-chain serialization starts at length - 1 and recurses toward the root of a nonempty populated chain. |
+| checker.ts:9379:42 | `chain[0]` | U-endpoint | assert | lookupSymbolChain constructs a nonempty populated chain or a singleton containing the requested symbol. |
+| checker.ts:9498:41 | `group[0]` | U-endpoint | assert | The grouped reexport list has length greater than one before its first module specifier is read. |
+| checker.ts:9518:88 | `statements[i]` | U-position | assert | indicesOf selects positions in the same populated statements list; filtering preserves those positions. |
+| checker.ts:9519:114 | `statements[i]` | U-position | assert | indicesOf selects positions in the same populated statements list; filtering preserves those positions. |
+| checker.ts:9588:41 | `symbols[symbols.length - 1]` | U-endpoint | assert | Truncation runs during symbol traversal and selects the last populated symbol-table snapshot entry. |
+| checker.ts:9597:21 | `deferredPrivatesStack[deferredPrivatesStack.length - 1]` | U-position | assert | Private serialization pushes populated Map frames; the current or root frame is required until its matching pop. |
+| checker.ts:9858:17 | `deferredPrivatesStack[isExternalImportAlias ? 0 : (deferredPrivatesStack.length - 1)]` | U-position | assert | Private serialization pushes populated Map frames; the current or root frame is required until its matching pop. |
+| checker.ts:9965:61 | `props[props.length - 1]` | U-endpoint | assert | The truncation branch runs during populated property traversal and selects its final property. |
+| checker.ts:9966:65 | `props[props.length - 1]` | U-endpoint | assert | The truncation branch runs during populated property traversal and selects its final property. |
+| checker.ts:10098:38 | `memberProps[memberProps.length - 1]` | U-endpoint | assert | The truncation branch runs during populated property traversal and selects its final property. |
+| checker.ts:10099:71 | `last.declarations[0]` | U-endpoint | decline | Enum initialization explicitly tests a missing first declaration and uses undefined when absent. |
+| checker.ts:10099:108 | `last.declarations[0]` | U-endpoint | decline | Enum initialization explicitly tests a missing first declaration and uses undefined when absent. |
+| checker.ts:10099:149 | `last.declarations[0]` | U-endpoint | decline | Enum initialization explicitly tests a missing first declaration and uses undefined when absent. |
+| checker.ts:10212:40 | `props[0]` | U-endpoint | assert | Namespace serialization is invoked with nonempty populated properties belonging to the same parent symbol. |
+| checker.ts:10997:65 | `signatures[i]` | U-parallel | assert | Equal signature-list lengths precede bounded comparison; both lists contain constructed signatures at i. |
+| checker.ts:10997:80 | `baseSigs[i]` | U-parallel | assert | Equal signature-list lengths precede bounded comparison; both lists contain constructed signatures at i. |
+| checker.ts:11021:29 | `signatures[0]` | U-endpoint | assert | A private or protected constructor flag found during signature traversal requires a nonempty populated signature list. |
+| checker.ts:11192:23 | `types[i]` | U-loop | assert | formatUnionTypes traverses populated union constituents with i < types.length. |
+| checker.ts:11199:86 | `types[i + count - 1]` | U-position | assert | Union constituents are nonempty; the i + count bound selects the populated final constituent of the matched enum span. |
+| checker.ts:11199:140 | `(baseType as UnionType).types[count - 1]` | U-position | assert | Union constituents are nonempty; the i + count bound selects the populated final constituent of the matched enum span. |
+| checker.ts:11226:51 | `type.symbol.declarations[0]` | U-endpoint | assert | A declared symbol carries a nonempty parser-built declarations list; the fallback name branch also checks its length. |
+| checker.ts:11305:31 | `symbol.declarations[0]` | U-endpoint | assert | A declared symbol carries a nonempty parser-built declarations list; the fallback name branch also checks its length. |
+| checker.ts:11505:45 | `resolutionTargets[i]` | U-parallel | assert | Resolution targets and property names are pushed and popped together; the backward loop stays in their populated active range. |
+| checker.ts:11505:67 | `resolutionPropertyNames[i]` | U-parallel | assert | Resolution targets and property names are pushed and popped together; the backward loop stays in their populated active range. |
+| checker.ts:12040:47 | `(symbol.escapedName as string).split("@")[1]` | U-endpoint | assert | Private names beginning __# are generated with an @ separator followed by the required original private identifier. |
+| checker.ts:12061:47 | `(symbol.escapedName as string).split("@")[1]` | U-endpoint | assert | Private names beginning __# are generated with an @ separator followed by the required original private identifier. |
+| checker.ts:12342:33 | `declarations[i]` | U-parallel | assert | The asserted equal lengths align populated declarations with types traversed by filter. |
+| checker.ts:12583:73 | `declaration.statements[0]` | U-endpoint | assert | The JSON source-file branch returns for an empty statements list before reading its populated first expression statement. |
+| checker.ts:13161:23 | `signatures[0]` | U-endpoint | assert | The mixin test checks one construct signature, then one rest parameter, before reading the respective populated first entries. |
+| checker.ts:13163:54 | `s.parameters[0]` | U-endpoint | assert | The mixin test checks one construct signature, then one rest parameter, before reading the respective populated first entries. |
+| checker.ts:13243:69 | `baseConstructorType.symbol.declarations[0]` | U-endpoint | assert | A declared symbol carries a nonempty parser-built declarations list; the fallback name branch also checks its length. |
+| checker.ts:13313:69 | `type.elementFlags[i]` | U-parallel | assert | Tuple construction supplies one populated element flag for each tuple type parameter or element visited by the callback. |
+| checker.ts:13347:49 | `constructors[0]` | U-endpoint | assert | The no-constructors error returns before selecting the first populated matching constructor signature. |
+| checker.ts:13381:20 | `outerTypeParameters[last]` | U-parallel | assert | A present captured outer-parameter list is nonempty and has matching populated applied arguments in outer-to-inner order. |
+| checker.ts:13381:57 | `typeArguments[last]` | U-parallel | assert | A present captured outer-parameter list is nonempty and has matching populated applied arguments in outer-to-inner order. |
+| checker.ts:14190:32 | `sig.parameters[restIndex]` | U-endpoint | assert | signatureHasRestParameter requires a populated last parameter; restIndex selects that parameter. |
+| checker.ts:14208:31 | `restType.target.elementFlags[i]` | U-parallel | assert | Tuple construction supplies one populated element flag for each tuple type parameter or element visited by the callback. |
+| checker.ts:14219:134 | `type.target.elementFlags[i]` | U-parallel | assert | Tuple construction supplies one populated element flag for each tuple type parameter or element visited by the callback. |
+| checker.ts:14231:48 | `names[i]` | U-position | assert | Duplicate positions were collected while traversing the same populated names list; rewrites preserve defined names. |
+| checker.ts:14287:44 | `signatureLists[i]` | U-grid | assert | The bounded signature-list traversal selects a populated constituent list; an inner list may be empty and remains checked nearby. |
+| checker.ts:14299:41 | `signatureLists[i]` | U-grid | assert | The bounded signature-list traversal selects a populated constituent list; an inner list may be empty and remains checked nearby. |
+| checker.ts:14300:46 | `signatureLists[i]` | U-grid | assert | The bounded signature-list traversal selects a populated constituent list; an inner list may be empty and remains checked nearby. |
+| checker.ts:14317:17 | `signatureLists[i]` | U-grid | assert | The bounded signature-list traversal selects a populated constituent list; an inner list may be empty and remains checked nearby. |
+| checker.ts:14318:17 | `signatureLists[i]` | U-grid | assert | The bounded signature-list traversal selects a populated constituent list; an inner list may be empty and remains checked nearby. |
+| checker.ts:14321:37 | `signatureLists[i]` | U-grid | assert | The bounded signature-list traversal selects a populated constituent list; an inner list may be empty and remains checked nearby. |
+| checker.ts:14348:32 | `signatureLists[indexWithLengthOverOne == undefined ? indexWithLengthOverOne : 0]` | U-position | assert | The union has populated constituent signature lists; the chosen overload index or root index selects an existing list. |
+| checker.ts:14375:28 | `sourceParams[i]` | U-parallel | assert | Equal populated parameter-list lengths precede the bounded comparison at their shared index. |
+| checker.ts:14376:28 | `targetParams[i]` | U-parallel | assert | Equal populated parameter-list lengths precede the bounded comparison at their shared index. |
+| checker.ts:14485:49 | `types[0]` | U-endpoint | assert | Union and intersection construction use populated nonempty constituent lists before selecting their first type. |
+| checker.ts:14531:58 | `getSignaturesOfType(types[i], SignatureKind.Construct)[0]` | U-parallel | assert | The bounded mixin position selects a populated type; its mixin predicate requires one populated construct signature. |
+| checker.ts:14531:78 | `types[i]` | U-parallel | assert | The bounded mixin position selects a populated type; its mixin predicate requires one populated construct signature. |
+| checker.ts:14547:23 | `type.types[i]` | U-loop | assert | Intersection-member resolution traverses the populated constituent list at a bounded index. |
+| checker.ts:14582:30 | `indexInfos[i]` | U-loop | assert | appendIndexInfo traverses populated index records under its length bound and preserves defined records on replacement. |
+| checker.ts:14782:42 | `types[0]` | U-endpoint | assert | The length-two intersection guard precedes the first populated constituent flags read. |
+| checker.ts:14987:66 | `(type as IntersectionType).types[0]` | U-endpoint | assert | Union and intersection construction use populated nonempty constituent lists before selecting their first type. |
+| checker.ts:15172:87 | `type.target.elementFlags[i]` | U-parallel | assert | Tuple construction supplies one populated element flag for each tuple type parameter or element visited by the callback. |
+| checker.ts:15439:77 | `t.target.elementFlags[i]` | U-parallel | assert | Tuple construction supplies one populated element flag for each tuple type parameter or element visited by the callback. |
+| checker.ts:15958:67 | `(isReadonlyArraySymbol(t.symbol.parent) ? globalReadonlyArrayType : globalArrayType).typeParameters[0]` | U-endpoint | assert | The recognized global array interface has a required first type parameter used by its member mapper. |
+| checker.ts:16133:46 | `typeParameters[i]` | U-loop | assert | The minimum-type-argument loop traverses populated parameters under i < typeParameters.length. |
+
+## Remaining Wave A findings
+
+| Site | Code | Reason |
+| --- | --- | --- |
+| checker.ts:1779:9 | TS2322 | Not an indexed read: arrayFrom(Set<Signature>) returns a possibly-undefined iterator payload under the current loader typing. |
+| checker.ts:5311:45 | TS2322 | Declined U-table probe: mergedSymbols lookup tests absence and falls back to the original symbol. |
+| checker.ts:8062:153 | TS18048 | Not an indexed read: regex split/map callback parameter is possibly undefined under the current string/regex typing. |
+| checker.ts:8566:17 | TS2322 | Not an indexed read: copying an optional Set infers a possibly-undefined element type. |
+| checker.ts:8861:21 | TS2322 | Not an indexed read: copying an optional Set infers a possibly-undefined element type. |
+| checker.ts:9363:17 | TS2322 | Not an indexed read: copying an optional Set infers a possibly-undefined element type. |
+| checker.ts:9591:37 | TS2345 | Not an indexed read: Array.from(symbolTable.values()) iterator payload is inferred as possibly undefined. |
+| checker.ts:10022:63 | TS2345 | Not an indexed read: arrayFrom of namespace export Map/Set iterators introduces possibly-undefined Symbol payloads propagated through callbacks. |
+| checker.ts:10022:86 | TS18048 | Not an indexed read: arrayFrom of namespace export Map/Set iterators introduces possibly-undefined Symbol payloads propagated through callbacks. |
+| checker.ts:10026:97 | TS2345 | Not an indexed read: arrayFrom of namespace export Map/Set iterators introduces possibly-undefined Symbol payloads propagated through callbacks. |
+| checker.ts:10033:67 | TS18048 | Not an indexed read: arrayFrom of namespace export Map/Set iterators introduces possibly-undefined Symbol payloads propagated through callbacks. |
+| checker.ts:10033:79 | TS18048 | Not an indexed read: arrayFrom of namespace export Map/Set iterators introduces possibly-undefined Symbol payloads propagated through callbacks. |
+| checker.ts:10053:53 | TS2345 | Not an indexed read: arrayFrom of namespace export Map/Set iterators introduces possibly-undefined Symbol payloads propagated through callbacks. |
+| checker.ts:10061:90 | TS18048 | Not an indexed read: arrayFrom of namespace export Map/Set iterators introduces possibly-undefined Symbol payloads propagated through callbacks. |
+| checker.ts:10062:69 | TS18048 | Not an indexed read: arrayFrom of namespace export Map/Set iterators introduces possibly-undefined Symbol payloads propagated through callbacks. |
+| checker.ts:10063:69 | TS2345 | Not an indexed read: arrayFrom of namespace export Map/Set iterators introduces possibly-undefined Symbol payloads propagated through callbacks. |
+| checker.ts:10064:47 | TS18048 | Not an indexed read: arrayFrom of namespace export Map/Set iterators introduces possibly-undefined Symbol payloads propagated through callbacks. |
+| checker.ts:10064:93 | TS2345 | Not an indexed read: arrayFrom of namespace export Map/Set iterators introduces possibly-undefined Symbol payloads propagated through callbacks. |
+| checker.ts:10065:122 | TS18048 | Not an indexed read: arrayFrom of namespace export Map/Set iterators introduces possibly-undefined Symbol payloads propagated through callbacks. |
+| checker.ts:10066:103 | TS2345 | Not an indexed read: arrayFrom of namespace export Map/Set iterators introduces possibly-undefined Symbol payloads propagated through callbacks. |
+| checker.ts:10070:50 | TS2345 | Not an indexed read: arrayFrom of namespace export Map/Set iterators introduces possibly-undefined Symbol payloads propagated through callbacks. |
+| checker.ts:10319:83 | TS2345 | Not an indexed read: getNonInheritedProperties returns arrayFrom(seen.values()), whose iterator payload is possibly undefined. |
+| checker.ts:10320:51 | TS2345 | Not an indexed read: getNonInheritedProperties returns arrayFrom(seen.values()), whose iterator payload is possibly undefined. |
+| checker.ts:10336:86 | TS2345 | Not an indexed read: getNonInheritedProperties returns arrayFrom(seen.values()), whose iterator payload is possibly undefined. |
+| checker.ts:12034:30 | TS18048 | Not an indexed read: getSourceFileOfNode has an optional return; checking its input declaration cannot change that return contract. |
+| checker.ts:13986:47 | TS2345 | Not an indexed read: arrayFrom(assignments.values()) propagates a possibly-undefined iterator payload into the for-of binding. |
+| checker.ts:13990:49 | TS2345 | Not an indexed read: arrayFrom(assignments.values()) propagates a possibly-undefined iterator payload into the for-of binding. |
+| checker.ts:14643:66 | TS2345 | Not an indexed read: arrayFrom(Map.values()) infers a possibly-undefined Symbol iterator payload. |
+| checker.ts:15145:9 | TS2322 | Not an indexed read: arrayFrom(Map.values()) infers a possibly-undefined Symbol iterator payload. |
+| checker.ts:15695:41 | TS18048 | Not an indexed read: arrayFrom(propSet.values()) propagates a possibly-undefined Symbol iterator payload into the for-of binding. |
+| checker.ts:15697:22 | TS18048 | Not an indexed read: arrayFrom(propSet.values()) propagates a possibly-undefined Symbol iterator payload into the for-of binding. |
+| checker.ts:15697:47 | TS18048 | Not an indexed read: arrayFrom(propSet.values()) propagates a possibly-undefined Symbol iterator payload into the for-of binding. |
+| checker.ts:15700:51 | TS18048 | Not an indexed read: arrayFrom(propSet.values()) propagates a possibly-undefined Symbol iterator payload into the for-of binding. |
+| checker.ts:15701:42 | TS2345 | Not an indexed read: arrayFrom(propSet.values()) propagates a possibly-undefined Symbol iterator payload into the for-of binding. |
+| checker.ts:15704:43 | TS2345 | Not an indexed read: arrayFrom(propSet.values()) propagates a possibly-undefined Symbol iterator payload into the for-of binding. |
+| checker.ts:15706:52 | TS2345 | Not an indexed read: arrayFrom(propSet.values()) propagates a possibly-undefined Symbol iterator payload into the for-of binding. |
