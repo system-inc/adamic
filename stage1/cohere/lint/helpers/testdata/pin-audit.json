@@ -1,0 +1,65 @@
+{
+  "range": "715ba94f..7945d102",
+  "command": "python3 stage1/cohere/lint/helpers/testdata/regenerate.py",
+  "messages_reworded": [],
+  "options_removed": [],
+  "rules_removed": [],
+  "options_added": {
+    "commit": "06906740",
+    "fields": [
+      "cwd",
+      "entryPoint",
+      "tailwindConfig"
+    ],
+    "targets": [
+      "better-tailwindcss/enforce-canonical-classes",
+      "better-tailwindcss/enforce-consistent-class-order",
+      "better-tailwindcss/enforce-consistent-important-position",
+      "better-tailwindcss/enforce-consistent-variable-syntax",
+      "better-tailwindcss/enforce-consistent-variant-order",
+      "better-tailwindcss/enforce-shorthand-classes",
+      "better-tailwindcss/no-concatenated-classes",
+      "better-tailwindcss/no-conflicting-classes",
+      "better-tailwindcss/no-deprecated-classes",
+      "better-tailwindcss/no-duplicate-classes",
+      "better-tailwindcss/no-unknown-classes",
+      "better-tailwindcss/no-unnecessary-whitespace"
+    ]
+  },
+  "rules_added": [
+    {
+      "rule": "nexus/correctness-no-load-time-import-meta-path",
+      "commit": "21d02688"
+    }
+  ],
+  "messages_added": [
+    {
+      "rule": "adamic/invariant-mutable",
+      "id": "readonlyMadeWritable",
+      "commit": "f4383994"
+    },
+    {
+      "rule": "adamic/invariant-mutable",
+      "id": "methodParameterNarrowed",
+      "commit": "a64f6eff"
+    },
+    {
+      "rule": "nexus/localization-no-untranslated-value",
+      "id": "missingEnglishSibling",
+      "commit": "12948765"
+    },
+    {
+      "rule": "nexus/localization-no-untranslated-value",
+      "id": "ambiguousEnglishSibling",
+      "commit": "5108245a"
+    },
+    {
+      "rule": "nexus/correctness-no-load-time-import-meta-path",
+      "id": "loadTimeImportMetaPath",
+      "commit": "21d02688"
+    }
+  ],
+  "cases_before": 22347,
+  "cases_after": 23539,
+  "unexplained_losses": []
+}

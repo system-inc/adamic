@@ -22,9 +22,6 @@ import (
 	"time"
 
 	tsast "github.com/microsoft/TypeScript/tsc/shim/ast"
-	tscore "github.com/microsoft/TypeScript/tsc/shim/core"
-	tsparser "github.com/microsoft/TypeScript/tsc/shim/parser"
-	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 	"github.com/system-inc/cohere/internal/lint/registry"
 	"github.com/system-inc/cohere/internal/lint/rule"
 	"github.com/system-inc/cohere/internal/types/program"
@@ -736,7 +733,7 @@ func measured(subject rule.Registration, file *tsast.SourceFile, graph *program.
 	report.Offered++
 	defer func() {
 		if value := recover(); value != nil {
-			report.Failures = append(report.Failures, file.FileName()+": "+fmt.Sprint(value))
+			report.Failures = append(report.Failures, string(file.FileName())+": "+fmt.Sprint(value))
 		}
 	}()
 	if subject.RequiresOptions {
@@ -774,13 +771,8 @@ func measureCorpus(root, output, label string, paths []string, items []entry) []
 	scratch, e := os.MkdirTemp("", "lint-inventory-corpus-")
 	fatal(e)
 	config := filepath.Join(scratch, "tsconfig.json")
-	programPaths := []string{}
-	for _, path := range paths {
-		if filepath.Ext(path) != ".a" {
-			programPaths = append(programPaths, path)
-		}
-	}
-	data, e := json.Marshal(map[string]any{"compilerOptions": map[string]any{"target": "ESNext", "module": "ESNext", "moduleResolution": "Bundler", "strict": true, "skipLibCheck": true, "sourceExtensions": []string{".a"}, "allowJs": true, "jsx": "preserve", "noEmit": true}, "files": programPaths})
+	programPaths := paths
+	data, e := json.Marshal(map[string]any{"compilerOptions": map[string]any{"target": "ESNext", "module": "ESNext", "moduleResolution": "Bundler", "strict": true, "skipLibCheck": true, "allowJs": true, "jsx": "preserve", "noEmit": true}, "sourceExtensions": []string{".a"}, "files": programPaths})
 	fatal(e)
 	fatal(os.WriteFile(config, data, 0644))
 	graph, e := program.Build(program.Options{CurrentDirectory: root, ConfigFileName: config, SingleThreaded: true})
@@ -802,19 +794,12 @@ func measureCorpus(root, output, label string, paths []string, items []entry) []
 	if len(files) != len(programPaths) {
 		panic(fmt.Sprintf("corpus denominator mismatch %d != %d", len(files), len(programPaths)))
 	}
-	for _, path := range paths {
-		if filepath.Ext(path) == ".a" {
-			data, err := os.ReadFile(path)
-			fatal(err)
-			files = append(files, tsparser.ParseSourceFile(tsast.SourceFileParseOptions{FileName: path, Path: tspath.Path(path)}, string(data), tscore.ScriptKindTS))
-		}
-	}
 	if len(files) != len(paths) {
 		panic("incomplete corpus")
 	}
 	for index, file := range files {
 		if len(file.Diagnostics()) > 0 {
-			excluded = append(excluded, file.FileName()+": parse diagnostics")
+			excluded = append(excluded, string(file.FileName())+": parse diagnostics")
 			continue
 		}
 		for _, registration := range rule.Registered() {
@@ -823,17 +808,7 @@ func measureCorpus(root, output, label string, paths []string, items []entry) []
 			if label == "compiler" {
 				f = &item.Compiler
 			}
-			activeGraph := graph
-			if filepath.Ext(file.FileName()) == ".a" {
-				activeGraph = nil
-			}
-			if activeGraph == nil && registration.Rule.NeedsTypeChecker {
-				f.Offered++
-				f.Status = "unknown: .a checker bridge unavailable"
-				f.Failures = append(f.Failures, file.FileName()+": no checker for Adamic source")
-				continue
-			}
-			measured(registration, file, activeGraph, f)
+			measured(registration, file, graph, f)
 		}
 		if index%20 == 0 {
 			fmt.Printf("%s: %d/%d\n", label, index+1, len(files))
