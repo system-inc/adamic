@@ -84,7 +84,7 @@ for (const rule of rules.brands) {
         file.getLineAndCharacterOfPosition(node.getStart(file)).line + 1 === rule.line);
     assert.equal(matches.length, 1, `reviewed brand owner ${rule.file}:${rule.line}`);
     assert.equal(matches[0].type.kind, ts.SyntaxKind.AnyKeyword);
-    assert.equal(rule.replacement, 'undefined');
+    assert.equal(rule.replacement, 'void');
     brandPaths.add(JSON.stringify(ownerPath(matches[0])));
 }
 const publicBrands = nodes(source, node => property(node) && brandPaths.has(JSON.stringify(ownerPath(node))));
@@ -92,7 +92,7 @@ assert.equal(publicBrands.length, 27);
 for (const member of publicBrands) {
     const node = owned({ path: ownerPath(member) }, property, '40');
     assert.equal(node.type.kind, ts.SyntaxKind.AnyKeyword);
-    edits.push({ at: node.type.getStart(source), end: node.type.end, text: 'undefined' });
+    edits.push({ at: node.type.getStart(source), end: node.type.end, text: 'void' });
 }
 const callbacks = rules.diagnostic.filter(rule => rule.owner === 'ErrorCallback' && rule.key === 'arg0');
 assert.equal(callbacks.length, 1);
