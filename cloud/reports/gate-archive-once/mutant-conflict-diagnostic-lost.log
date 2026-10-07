@@ -1,0 +1,13 @@
+F
+======================================================================
+FAIL: test_conflicting_flags_fail_before_preparation (cloud.test_archive_modes.ArchiveModes.test_conflicting_flags_fail_before_preparation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_archive_modes.py", line 67, in test_conflicting_flags_fail_before_preparation
+    self.assertIn('conflicts', result.stderr)
+AssertionError: 'conflicts' not found in 'setup: --gate-inputs-no-archive accepts --gate-inputs or --gate-archive\n'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.008s
+
+FAILED (failures=1)

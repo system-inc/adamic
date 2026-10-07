@@ -1,0 +1,14 @@
+F
+======================================================================
+FAIL: test_environment_modes (cloud.test_archive_modes.ArchiveModes.test_environment_modes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_archive_modes.py", line 30, in test_environment_modes
+    self.assertEqual(exports, expected)
+AssertionError: Items in the first set but not the second:
+'ADAMIC_CLANG_TSGO_ARCHIVE'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=1)

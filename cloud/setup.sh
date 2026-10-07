@@ -4,7 +4,7 @@
 # Every cloud environment runs it (Codex's setup and maintenance scripts, Claude's, a plain VM), it's
 # safe to run again, and it prints how long each step took, so time-to-green is a number we watch.
 #
-#   bash cloud/setup.sh [--warm-tests] [--gate-inputs]   then: source the env.sh path printed below
+#   bash cloud/setup.sh [--warm-tests] [--gate-inputs | --gate-inputs-no-archive | --gate-archive]   then: source the env.sh path printed below
 #
 # Go checks its own content-addressed action cache before a warming stamp can skip linking.
 # Test binaries are optional because most workers need one package.
@@ -33,15 +33,23 @@ started=$EPOCHREALTIME
 loadBefore=$(cat /proc/loadavg)
 warmTests=false
 gateInputs=false
+gateArchive=false
+gateInputsWithoutArchive=false
 wasiSDK=false
 for argument in "$@"; do
 	case "$argument" in
 		--warm-tests) warmTests=true ;;
-		--gate-inputs) gateInputs=true ;;
+		--gate-inputs) gateInputs=true; gateArchive=true ;;
+		--gate-inputs-no-archive) gateInputs=true; gateInputsWithoutArchive=true ;;
+		--gate-archive) gateArchive=true ;;
 		--wasi-sdk) wasiSDK=true ;;
-		*) echo "usage: bash cloud/setup.sh [--warm-tests] [--gate-inputs] [--wasi-sdk]" >&2; exit 2 ;;
+		*) echo "usage: bash cloud/setup.sh [--warm-tests] [--gate-inputs | --gate-inputs-no-archive | --gate-archive] [--wasi-sdk]" >&2; exit 2 ;;
 	esac
 done
+if "$gateInputsWithoutArchive" && "$gateArchive"; then
+ echo "setup: --gate-inputs-no-archive conflicts with --gate-inputs or --gate-archive" >&2
+ exit 2
+fi
 step() {
 	local elapsed
 	elapsed=$(awk -v start="$started" -v now="$EPOCHREALTIME" 'BEGIN {printf "%.3f", now - start}')
@@ -234,12 +242,18 @@ ENV
 if "$wasiSDK"; then
  printf 'export WASI_SYSROOT=%q\n' "$wasiDirectory/share/wasi-sysroot" >> "$tools/env.sh"
 fi
-if "$gateInputs"; then
-	# Node, Go and submodules are now ready; build this seat's checker archive.
+if "$gateArchive"; then
+	# Only the shard holding TestSplitTSGoAgrees needs this archive.
 	export PATH="$tools/bin:$PATH"
 	bounded 1800 python3 "$cloudSource/../internal/boundedrun/python.py" "$cloudSource/setup-gate-inputs.py" archive "$repository" "$gateInputsRoot" "$tools/bin/node" > "$run/gate-archive.log" 2>&1 || { cat "$run/gate-archive.log"; exit 1; }
 	cat "$run/gate-archive.log"
-	bounded 30 python3 "$cloudSource/setup-gate-inputs.py" env "$repository" "$gateInputsRoot" "$tools/bin/node" >> "$tools/env.sh"
+fi
+if "$gateInputs"; then
+	environmentPhase=env-no-archive
+	"$gateArchive" && environmentPhase=env
+	bounded 30 python3 "$cloudSource/setup-gate-inputs.py" "$environmentPhase" "$repository" "$gateInputsRoot" "$tools/bin/node" >> "$tools/env.sh"
+elif "$gateArchive"; then
+	bounded 30 python3 "$cloudSource/setup-gate-inputs.py" env-archive "$repository" "$gateInputsRoot" "$tools/bin/node" >> "$tools/env.sh"
 else
 	# A later ordinary setup must not inherit a previous opt-in gate seat.
 	echo "unset ADAMIC_CSS_FIXTURES ADAMIC_CSSNUMBERS_LIBRARY ADAMIC_CSSSTRINGS_LIBRARY ADAMIC_MARKDOWNINLINE_LIBRARY ADAMIC_GRAPHQL_PRETTIER ADAMIC_ESTREE_LIBRARY ADAMIC_YAML_LIBRARY ADAMIC_TS_PRETTIER ADAMIC_TYPESCRIPT_SOURCE ADAMIC_CSS_LIBRARY ADAMIC_GRAPHQL_LIBRARY ADAMIC_MEDIA_QUERY_LIBRARY ADAMIC_SELECTOR_LIBRARY ADAMIC_VALUES_LIBRARY ADAMIC_JSON_PRETTIER ADAMIC_CSS_PRINTER_LIBRARY ADAMIC_GITIGNORE_LARGEST ADAMIC_CLANG_TSGO_ARCHIVE" >> "$tools/env.sh"
@@ -314,7 +328,7 @@ step "workspace sums restored to the commit"
 
 cpuQuota=$(cat /sys/fs/cgroup/cpu.max 2> /dev/null || echo unknown)
 memory=$(awk '/MemTotal/ {printf "%.1f GB", $2 / 1048576}' /proc/meminfo)
-echo "setup: build-flags commit=$(bounded 30 git -C "$repository" rev-parse HEAD) nproc=$(nproc) cpu.max=$cpuQuota go=$(bounded 30 go version) clang=$(bounded 30 clang --version | head -n 1) node=$(bounded 30 node --version) cached=$([ "${ADAMIC_GATE_UNCACHED:-0}" = 1 ] && echo no || echo yes) warm-tests=$warmTests gate-inputs=$gateInputs load-before=$loadBefore load-after=$(cat /proc/loadavg)"
+echo "setup: build-flags commit=$(bounded 30 git -C "$repository" rev-parse HEAD) nproc=$(nproc) cpu.max=$cpuQuota go=$(bounded 30 go version) clang=$(bounded 30 clang --version | head -n 1) node=$(bounded 30 node --version) cached=$([ "${ADAMIC_GATE_UNCACHED:-0}" = 1 ] && echo no || echo yes) warm-tests=$warmTests gate-inputs=$gateInputs gate-archive=$gateArchive load-before=$loadBefore load-after=$(cat /proc/loadavg)"
 step "done on $(nproc) processors (cgroup cpu.max: $cpuQuota), $memory"
 echo "setup: source $tools/env.sh"
 echo "setup: logs $run"

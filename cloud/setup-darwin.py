@@ -29,7 +29,13 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--warm-tests', action='store_true')
     parser.add_argument('--gate-inputs', action='store_true')
+    parser.add_argument('--gate-inputs-no-archive', action='store_true')
+    parser.add_argument('--gate-archive', action='store_true')
     flags = parser.parse_args()
+    if flags.gate_inputs_no_archive and (flags.gate_inputs or flags.gate_archive):
+        parser.error('--gate-inputs-no-archive conflicts with --gate-inputs or --gate-archive')
+    gate_inputs = flags.gate_inputs or flags.gate_inputs_no_archive
+    gate_archive = flags.gate_inputs or flags.gate_archive
     repository = Path(os.environ.get('ADAMIC_SETUP_REPOSITORY', SOURCE.parent))
     tools = Path(os.environ.get('ADAMIC_TOOLS', str(Path.home() / '.adamic-tools'))).resolve()
     if tools.is_relative_to('/root'):
@@ -74,14 +80,17 @@ def main():
         helper('setup-markdown-width.py', SOURCE / 'markdown-width', tools / 'markdown-width', tools / 'bin/node')
         helper('setup-stage3-api.py', repository, tools, tools / 'bin/node')
         inputs = tools / 'gate-inputs'
-        if flags.gate_inputs:
-            for phase in ['npm', 'corpora', 'archive']:
+        if gate_inputs:
+            for phase in ['npm', 'corpora']:
                 helper('setup-gate-inputs.py', phase, repository, inputs, tools / 'bin/node')
+        if gate_archive:
+            helper('setup-gate-inputs.py', 'archive', repository, inputs, tools / 'bin/node')
         environment = ('export PATH=' + shlex.quote(str(tools / 'bin') + ':' + str(tools / 'go/bin')) + ':"$PATH"\n'
                        'export GOTOOLCHAIN=auto\nexport TMPDIR=' + shlex.quote(str(gate)) + '\n'
                        'export ADAMIC_MARKDOWNWIDTH_DEPS=' + shlex.quote(str(tools / 'markdown-width')) + '\n')
-        if flags.gate_inputs:
-            environment += output([sys.executable, str(SOURCE / 'setup-gate-inputs.py'), 'env', str(repository), str(inputs), str(tools / 'bin/node')]) + '\n'
+        if gate_inputs or gate_archive:
+            phase = 'env' if gate_inputs and gate_archive else 'env-no-archive' if gate_inputs else 'env-archive'
+            environment += output([sys.executable, str(SOURCE / 'setup-gate-inputs.py'), phase, str(repository), str(inputs), str(tools / 'bin/node')]) + '\n'
         else:
             # Use the same variable catalog as the Linux installer; never carry a prior opt-in seat.
             spec = importlib.util.spec_from_file_location('gate_inputs', SOURCE / 'setup-gate-inputs.py')
@@ -114,7 +123,7 @@ def main():
         expected = json.loads(node.PIN.read_text())['version']
         if actual != expected:
             raise ValueError(f'node: got {actual}, want {expected}')
-        print(f'setup: build-flags commit={output(["git", "-C", str(repository), "rev-parse", "HEAD"])} nproc={os.cpu_count()} cpu.max=unavailable go={go_version} clang={clang_version} node={actual} cached={"no" if uncached else "yes"} warm-tests={flags.warm_tests} gate-inputs={flags.gate_inputs} load-before={load_before} load-after={os.getloadavg()}')
+        print(f'setup: build-flags commit={output(["git", "-C", str(repository), "rev-parse", "HEAD"])} nproc={os.cpu_count()} cpu.max=unavailable go={go_version} clang={clang_version} node={actual} cached={"no" if uncached else "yes"} warm-tests={flags.warm_tests} gate-inputs={gate_inputs} gate-archive={gate_archive} load-before={load_before} load-after={os.getloadavg()}')
         step('done on macOS')
         print(f'setup: source {tools / "env.sh"}')
         print('setup: add the source command to your shell configuration')

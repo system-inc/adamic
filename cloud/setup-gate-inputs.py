@@ -276,9 +276,14 @@ def main():
     if root.resolve().is_relative_to('/root'):
         raise ValueError('gate inputs must be outside /root')
     root.mkdir(parents=True, exist_ok=True, mode=0o755)
-    if phase == 'env':
+    if phase in {'env', 'env-no-archive', 'env-archive'}:
         for name, relative in VARIABLES.items():
-            print('export ' + name + '=' + __import__('shlex').quote(str(root / relative)))
+            archive_input = name == 'ADAMIC_CLANG_TSGO_ARCHIVE'
+            selected = phase == 'env' or (phase == 'env-archive') == archive_input
+            if selected:
+                print('export ' + name + '=' + __import__('shlex').quote(str(root / relative)))
+            else:
+                print('unset ' + name)
         return
     tasks = {'corpora': [('CSS fixtures', lambda: css_fixtures(root)), ('TypeScript source', lambda: typescript(root)), ('100 MiB gitignore', lambda: gitignore(root))],
              'archive': [('checker archive', lambda: archive(repository, root))],
