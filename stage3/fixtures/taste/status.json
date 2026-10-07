@@ -23,7 +23,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/taste/02_diagnostic_message.a:9:68: stage 0 can't lower String conversion of an object, array, map or function (ToPrimitive is not lowered) yet"}
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/taste/02_diagnostic_message.a:9:68: stage 0 can't lower String conversion of an object, array, map or function (ToPrimitive is not lowered) (format the needed scalar fields explicitly instead of relying on object coercion) yet"}
   },
   {
     "file": "03_diagnostic_file.a",

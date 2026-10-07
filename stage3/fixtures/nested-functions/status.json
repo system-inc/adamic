@@ -37,7 +37,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"Refused","what":"stage3/fixtures/nested-functions/01_scanner_frame.a:72:5: Adamic 0.1 refuses var; use const or let"}
+    "stage0": {"outcome":"Refused","what":"stage3/fixtures/nested-functions/01_scanner_frame.a:72:5: Adamic 0.1 refuses var; use const or let (adamic/no-var)"}
   },
   {
     "file": "02_scanner_digits.a",

@@ -54,7 +54,7 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 		return l.enumDeclaration(node)
 	case ast.KindClassDeclaration:
 		if l.function != nil {
-			return nil, l.notYet(node, "a class inside a function")
+			return nil, l.notYet(node, "a class inside a function (declare the class at module scope and pass captured values to its constructor)")
 		}
 		return l.staticDeclaration(node)
 	case ast.KindReturnStatement:

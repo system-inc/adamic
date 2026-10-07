@@ -41,18 +41,18 @@ func (l *lowering) forIn(node *ast.Node) ([]ir.Statement, error) {
 	var assignment ir.Statement
 	if initializer.Kind == ast.KindVariableDeclarationList {
 		if initializer.Flags&ast.NodeFlagsBlockScoped == 0 {
-			return nil, &Refused{Where: l.program.Where(initializer), What: "var", Fix: "use const or let"}
+			return nil, &Refused{Where: l.program.Where(initializer), What: "var", Fix: "use const or let (adamic/no-var)"}
 		}
 		declarations := initializer.AsVariableDeclarationList().Declarations.Nodes
 		if len(declarations) != 1 || !ast.IsIdentifier(declarations[0].Name()) {
-			return nil, l.notYet(initializer, "a for...in binding that is not one plain name")
+			return nil, l.notYet(initializer, "a for...in binding that is not one plain name (write for (const key in object))")
 		}
 		loop.Local, err = l.declareLocal(declarations[0].Name())
 	} else {
 		target := ast.SkipParentheses(initializer)
 		local, found := l.local(target)
 		if !ast.IsIdentifier(target) || !found || l.result.Locals[local].Type != ir.String {
-			return nil, l.notYet(initializer, "a for...in assignment that is not a string variable")
+			return nil, l.notYet(initializer, "a for...in assignment that is not a string variable (declare a fresh string binding with for (const key in object), then assign it in the body)")
 		}
 		loop.Local = len(l.result.Locals)
 		l.result.Locals = append(l.result.Locals, ir.Local{Name: "key", Type: ir.String, Function: l.functionIndex})

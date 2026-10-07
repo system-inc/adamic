@@ -12,7 +12,7 @@ import (
 // variables lowers const and let declarations, each to a local of its own.
 func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
 	if list.Flags&ast.NodeFlagsBlockScoped == 0 && !assertionVarList(list) {
-		return nil, &Refused{Where: l.program.Where(list), What: "var", Fix: "use const or let"}
+		return nil, &Refused{Where: l.program.Where(list), What: "var", Fix: "use const or let (adamic/no-var)"}
 	}
 	statements := []ir.Statement{}
 	for _, declaration := range list.AsVariableDeclarationList().Declarations.Nodes {
@@ -187,7 +187,7 @@ func (l *lowering) touch(local int) {
 	if name, isInitializing := l.initializing[local]; isInitializing && l.unlowerable == nil {
 		// const f = () => f(): the function value is made before the variable's cell is, so it has
 		// nothing to capture yet.
-		l.unlowerable = l.notYet(name, "a function value that captures the variable its own initializer declares")
+		l.unlowerable = l.notYet(name, "a function value that captures the variable its own initializer declares (use a module-level function declaration for noncapturing recursion, passing needed state as parameters)")
 	}
 	start := 0
 	for position, closure := range l.closures {

@@ -105,7 +105,7 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 		return existing, nil
 	}
 	if l.genericDepth >= maximumGenericDepth {
-		return 0, &Refused{Where: l.program.Where(call), What: "a generic function instantiated without end (polymorphic recursion)", Fix: "call it with the same type arguments it was called with, or write a function per type"}
+		return 0, &Refused{Where: l.program.Where(call), What: "a generic function instantiated without end (polymorphic recursion)", Fix: "call it with the same type arguments it was called with, or write a function per type (adamic/polymorphic-recursion)"}
 	}
 
 	index := len(l.result.Functions)

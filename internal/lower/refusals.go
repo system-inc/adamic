@@ -20,19 +20,19 @@ type refusal struct {
 // something 0.1 refuses for good, never that stage 0 hasn't got to it yet.
 var refusals = map[ast.Kind]refusal{
 	ast.KindAnyKeyword:        {"any", "name the proven type, or use unknown and narrow it"},
-	ast.KindAwaitExpression:   {"await", "0.1 has no async; it arrives with the concurrency model"},
-	ast.KindYieldExpression:   {"yield (generators)", "build an array, or call a function per item"},
-	ast.KindDecorator:         {"a decorator", "write the behavior where it applies; 0.1 doesn't rewrite classes at runtime"},
-	ast.KindWithStatement:     {"with", "name the object you mean"},
-	ast.KindDebuggerStatement: {"debugger", "remove it"},
-	ast.KindModuleDeclaration: {"a namespace", "use a module: a file of its own, with named exports"},
-	ast.KindExportAssignment:  {"export default", "export by name: one name for one thing"},
+	ast.KindAwaitExpression:   {"await", "0.1 has no async; it arrives with the concurrency model (adamic/no-async)"},
+	ast.KindYieldExpression:   {"yield (generators)", "build an array, or call a function per item (adamic/no-generators)"},
+	ast.KindDecorator:         {"a decorator", "write the behavior where it applies; 0.1 doesn't rewrite classes at runtime (adamic/no-decorators)"},
+	ast.KindWithStatement:     {"with", "name the object you mean (adamic/no-with)"},
+	ast.KindDebuggerStatement: {"debugger", "remove it (adamic/no-debugger)"},
+	ast.KindModuleDeclaration: {"a namespace", "use a module: a file of its own, with named exports (adamic/no-namespace)"},
+	ast.KindExportAssignment:  {"export default", "export by name: one name for one thing (adamic/named-declaration-export)"},
 }
 
 // refusedOperators are binary operators 0.1 refuses.
 var refusedOperators = map[ast.Kind]refusal{
-	ast.KindEqualsEqualsToken:      {"==", "use ===, which doesn't coerce"},
-	ast.KindExclamationEqualsToken: {"!=", "use !==, which doesn't coerce"},
+	ast.KindEqualsEqualsToken:      {"==", "use ===, which doesn't coerce (adamic/strict-equality)"},
+	ast.KindExclamationEqualsToken: {"!=", "use !==, which doesn't coerce (adamic/strict-equality)"},
 }
 
 // refuse walks a module for permanent refusals first, then record operations not
@@ -50,7 +50,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			name = "@ts-expect-error"
 		}
 		line, column := scanner.GetLineAndCharacterOfPosition(module, directive.Loc.Pos())
-		return &Refused{Where: fmt.Sprintf("%s:%d:%d", l.program.FileName(module), line+1, column+1), What: name + " suppression directive", Fix: "remove it and fix the type error"}
+		return &Refused{Where: fmt.Sprintf("%s:%d:%d", l.program.FileName(module), line+1, column+1), What: name + " suppression directive", Fix: "remove it and fix the type error (ban-ts-comment)"}
 	}
 	// File-level checking pragmas are separate from line-suppression directives. Use every
 	// parsed pragma, including one overridden by a later pragma, rather than just CheckJsDirective.
@@ -143,17 +143,17 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			generator = node.AsMethodDeclaration().AsteriskToken != nil
 		}
 		if generator {
-			found = &Refused{Where: l.program.Where(node), What: "a generator function", Fix: "use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"}
+			found = &Refused{Where: l.program.Where(node), What: "a generator function", Fix: "use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md) (adamic/no-generators)"}
 			return true
 		}
 		if ast.IsFunctionLike(node) && ast.HasSyntacticModifier(node, ast.ModifierFlagsAsync) {
-			found = &Refused{Where: l.program.Where(node), What: "an async function", Fix: "0.1 has no async; it arrives with the concurrency model"}
+			found = &Refused{Where: l.program.Where(node), What: "an async function", Fix: "0.1 has no async; it arrives with the concurrency model (adamic/no-async)"}
 			return true
 		}
 		if node.Kind == ast.KindIdentifier && node.Text() == "arguments" {
 			// JavaScript's arguments object, not a variable the program named arguments.
 			if symbol := l.checker.GetSymbolAtLocation(node); symbol != nil && len(symbol.Declarations) == 0 {
-				found = &Refused{Where: l.program.Where(node), What: "arguments", Fix: "name the parameters, or take a rest parameter"}
+				found = &Refused{Where: l.program.Where(node), What: "arguments", Fix: "name the parameters, or take a rest parameter (adamic/no-arguments)"}
 				return true
 			}
 		}

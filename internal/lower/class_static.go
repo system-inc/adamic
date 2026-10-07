@@ -111,7 +111,7 @@ func (l *lowering) staticInstance(declaration *ast.Node) (*instance, error) {
 			continue
 		}
 		if member.Name() == nil || (!ast.IsIdentifier(member.Name()) && member.Name().Kind != ast.KindPrivateIdentifier) {
-			return nil, l.notYet(member, "a static member without an identifier name")
+			return nil, l.notYet(member, "a static member without an identifier name (give the static member a fixed identifier name)")
 		}
 		if member.Kind == ast.KindPropertyDeclaration {
 			if ast.HasSyntacticModifier(member, ast.ModifierFlagsAmbient|ast.ModifierFlagsAbstract) {
@@ -137,7 +137,7 @@ func (l *lowering) staticInstance(declaration *ast.Node) (*instance, error) {
 				if previous.Name == field.Name {
 					slot = i
 					if previous.Value.Type() != of {
-						return nil, l.notYet(member, "a static field override with a different native representation")
+						return nil, l.notYet(member, "a static field override with a different native representation (keep the inherited static field type unchanged)")
 					}
 					break
 				}
@@ -377,7 +377,7 @@ func (l *lowering) staticInitializationReads(node, declaration *ast.Node, availa
 				if symbol != nil && len(symbol.Declarations) > 0 {
 					member := symbol.Declarations[0]
 					if member.Kind == ast.KindPropertyDeclaration && !available[member.Name().Text()] {
-						failure = &Refused{Where: l.program.Where(child), What: "a static field read before its initializer has run", Fix: "declare the field earlier, or move the read after that field's initialization"}
+						failure = &Refused{Where: l.program.Where(child), What: "a static field read before its initializer has run", Fix: "declare the field earlier, or move the read after that field's initialization (adamic/static-initialization)"}
 						return true
 					}
 					if accessorMember(member) {
@@ -398,19 +398,19 @@ func (l *lowering) staticInitializationReads(node, declaration *ast.Node, availa
 		}
 		if ast.IsIdentifier(child) && l.symbol(child) == l.symbol(declaration.Name()) && !ast.IsDeclarationName(child) {
 			if !insideClass(child, declaration) {
-				failure = &Refused{Where: l.program.Where(child), What: "an outside helper reading a class during its declaration (the temporal dead zone)", Fix: "run the helper after the class declaration, or read this inside a static method"}
+				failure = &Refused{Where: l.program.Where(child), What: "an outside helper reading a class during its declaration (the temporal dead zone)", Fix: "run the helper after the class declaration, or read this inside a static method (adamic/class-temporal-dead-zone)"}
 				return true
 			}
 			parent := child.Parent
 			if pending && (parent == nil || parent.Kind != ast.KindPropertyAccessExpression || parent.AsPropertyAccessExpression().Expression != child) {
-				failure = &Refused{Where: l.program.Where(child), What: "a constructor object escaping before static fields are initialized", Fix: "publish the class value after the last static field initializer"}
+				failure = &Refused{Where: l.program.Where(child), What: "a constructor object escaping before static fields are initialized", Fix: "publish the class value after the last static field initializer (adamic/static-initialization)"}
 				return true
 			}
 		}
 		if child.Kind == ast.KindThisKeyword && receiver {
 			parent := child.Parent
 			if pending && (parent == nil || parent.Kind != ast.KindPropertyAccessExpression || parent.AsPropertyAccessExpression().Expression != child) {
-				failure = &Refused{Where: l.program.Where(child), What: "a constructor object escaping before static fields are initialized", Fix: "publish this after the last static field initializer"}
+				failure = &Refused{Where: l.program.Where(child), What: "a constructor object escaping before static fields are initialized", Fix: "publish this after the last static field initializer (adamic/static-initialization)"}
 				return true
 			}
 		}

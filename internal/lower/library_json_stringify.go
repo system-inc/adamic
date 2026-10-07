@@ -11,7 +11,7 @@ import (
 
 func (l *lowering) jsonCall(node *ast.Node, name string) (ir.Expression, bool, error) {
 	if name == "parse" {
-		return nil, true, &Refused{Where: l.program.Where(node), What: "JSON.parse: its result's type can't be proven from the text", Fix: "a checked parse against a declared type is a later design; construct typed values explicitly for now"}
+		return nil, true, &Refused{Where: l.program.Where(node), What: "JSON.parse: its result's type can't be proven from the text", Fix: "a checked parse against a declared type is a later design; construct typed values explicitly for now (adamic/checked-json-parse)"}
 	}
 	if name != "stringify" {
 		return nil, true, l.notYet(node, "JSON."+name)
@@ -30,7 +30,7 @@ func (l *lowering) jsonCall(node *ast.Node, name string) (ir.Expression, bool, e
 	}
 	if len(args) > 1 {
 		if t := l.checker.GetTypeAtLocation(args[1]); len(l.checker.GetSignaturesOfType(t, checker.SignatureKindCall)) != 0 {
-			return nil, true, l.notYet(args[1], "JSON.stringify replacer functions (the callback must have a proven type for every visited value and its holder)")
+			return nil, true, l.notYet(args[1], "JSON.stringify replacer functions (the callback must have a proven type for every visited value and its holder) (construct the serializable values explicitly before stringify, or use a key-array replacer to select fields)")
 		}
 		result.Replacer, result.ReplacerSchema, err = l.jsonInput(args[1])
 		if err != nil {
@@ -38,18 +38,18 @@ func (l *lowering) jsonCall(node *ast.Node, name string) (ir.Expression, bool, e
 		}
 		k := result.ReplacerSchema.Kind
 		if k != "array" && k != "tuple" && k != "null" && k != "undefined" {
-			return nil, true, l.notYet(args[1], "JSON.stringify replacer other than a key array, null or undefined")
+			return nil, true, l.notYet(args[1], "JSON.stringify replacer other than a key array, null or undefined (pass an array of string keys, null or undefined as the replacer)")
 		}
 		// Only scalar keys: objects could run coercion code, which this slice does not invoke.
 		if k == "tuple" {
 			for _, f := range result.ReplacerSchema.Fields {
 				if !jsonScalar(f.Schema) {
-					return nil, true, l.notYet(args[1], "JSON.stringify replacer keys with object coercion")
+					return nil, true, l.notYet(args[1], "JSON.stringify replacer keys with object coercion (convert replacer keys to strings explicitly before the call)")
 				}
 			}
 		}
 		if k == "array" && !jsonScalar(result.ReplacerSchema.Element) {
-			return nil, true, l.notYet(args[1], "JSON.stringify replacer keys with object coercion")
+			return nil, true, l.notYet(args[1], "JSON.stringify replacer keys with object coercion (convert replacer keys to strings explicitly before the call)")
 		}
 	}
 	if len(args) > 2 {
@@ -58,7 +58,7 @@ func (l *lowering) jsonCall(node *ast.Node, name string) (ir.Expression, bool, e
 			return nil, true, err
 		}
 		if !jsonScalar(result.SpaceSchema) {
-			return nil, true, l.notYet(args[2], "JSON.stringify space requiring object coercion")
+			return nil, true, l.notYet(args[2], "JSON.stringify space requiring object coercion (pass a number or string as the space argument)")
 		}
 	}
 	return result, true, nil
@@ -124,11 +124,11 @@ func (l *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSchema, err
 		} else {
 			for _, f := range n.AsObjectLiteralExpression().Properties.Nodes {
 				if f.Kind != ast.KindPropertyAssignment {
-					return nil, nil, l.notYet(f, "JSON.stringify a literal with spread, shorthand or methods")
+					return nil, nil, l.notYet(f, "JSON.stringify a literal with spread, shorthand or methods (write explicit field: value entries in a plain literal)")
 				}
 				key := f.Name()
 				if !ast.IsIdentifier(key) && key.Kind != ast.KindStringLiteral && key.Kind != ast.KindNumericLiteral {
-					return nil, nil, l.notYet(key, "JSON.stringify computed keys")
+					return nil, nil, l.notYet(key, "JSON.stringify computed keys (spell each key as an identifier or string literal)")
 				}
 				name := key.Text()
 				if key.Kind == ast.KindNumericLiteral {

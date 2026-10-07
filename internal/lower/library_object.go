@@ -13,7 +13,7 @@ func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool,
 		return value, true, err
 	}
 	refused := func(reason string) (ir.Expression, bool, error) {
-		return nil, true, &Refused{Where: l.program.Where(node), What: "Object." + name, Fix: reason}
+		return nil, true, &Refused{Where: l.program.Where(node), What: "Object." + name, Fix: reason + " (adamic/object-shape)"}
 	}
 	switch name {
 	case "defineProperty", "defineProperties", "getOwnPropertyDescriptor", "getOwnPropertyDescriptors":
@@ -32,7 +32,7 @@ func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool,
 	written := node.AsCallExpression().Arguments.Nodes
 	if name == "assign" {
 		if len(written) < 1 {
-			return nil, true, l.notYet(node, "Object.assign without a target")
+			return nil, true, l.notYet(node, "Object.assign without a target (pass a present plain-object target as the first argument)")
 		}
 	} else if len(written) != count {
 		return nil, true, l.notYet(node, "Object."+name+" with these arguments")
@@ -138,7 +138,7 @@ func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool,
 				for _, field := range l.checker.GetPropertiesOfType(source) {
 					into := l.checker.GetPropertyOfType(target, field.Name)
 					if into == nil {
-						return nil, true, l.notYet(argument, "Object.assign adding a field to its target's fixed shape")
+						return nil, true, l.notYet(argument, "Object.assign adding a field to its target's fixed shape (construct a new literal with every destination field declared explicitly)")
 					}
 					fromType, toType := l.checker.GetTypeOfSymbol(field), l.checker.GetTypeOfSymbol(into)
 					of, known := l.representation(fromType)

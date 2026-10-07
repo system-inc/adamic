@@ -181,10 +181,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/objects/16_version_defaults.a:15:13: stage 0 can't lower a destructured name that isn't plain yet"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/16_version_defaults.a:15:13: stage 0 can't lower a destructured name that isn't plain (bind a plain name first, then destructure or apply a default in a separate statement) yet"}
   },
   {
     "file": "17_container_rest.a",
@@ -291,10 +288,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/25_map_generator.a:3:1: Adamic 0.1 refuses a generator function; use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"
-    }
+    "stage0": {"outcome":"Refused","what":"stage3/fixtures/objects/25_map_generator.a:3:1: Adamic 0.1 refuses a generator function; use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md) (adamic/no-generators)"}
   },
   {
     "file": "26_diagnostic_in.a",
@@ -334,10 +328,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/28_debugger.a:7:9: Adamic 0.1 refuses debugger; remove it"
-    }
+    "stage0": {"outcome":"Refused","what":"stage3/fixtures/objects/28_debugger.a:7:9: Adamic 0.1 refuses debugger; remove it (adamic/no-debugger)"}
   },
   {
     "file": "29_parameter_default.a",
