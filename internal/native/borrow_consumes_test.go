@@ -24,6 +24,9 @@ func TestPassThroughsAreNotConsumers(t *testing.T) {
 		"NumberConstant": ir.NumberConstant{}, "BooleanConstant": ir.BooleanConstant{}, "StringConstant": ir.StringConstant{},
 	}
 	consumers := map[string]ir.Expression{
+		// Generated primitive guard calls return a result with its own count.
+		// Ordinary calls still fail purity and cannot lend their operands.
+		"Call":  ir.Call{Pure: true},
 		"Unary": ir.Unary{}, "Binary": ir.Binary{}, "NumberToString": ir.NumberToString{}, "BooleanToString": ir.BooleanToString{},
 		"Concat": ir.Concat{}, "Length": ir.Length{}, "StringLength": ir.StringLength{}, "CharCodeAt": ir.CharCodeAt{},
 		"StringIndex": ir.StringIndex{}, "ArrayIndex": ir.ArrayIndex{}, "Property": ir.Property{}, "MapGet": ir.MapGet{},
@@ -42,6 +45,9 @@ func TestPassThroughsAreNotConsumers(t *testing.T) {
 		if !consumes(expression) {
 			t.Errorf("ir.%s is listed as a consumer, but consumes says it isn't", name)
 		}
+	}
+	if consumes(ir.Call{}) || consumes(ir.Call{Pure: true, Arguments: []ir.Expression{ir.Call{}}}) {
+		t.Error("ordinary calls and pure calls with impure arguments cannot lend operands")
 	}
 	for _, name := range pureKinds(t) {
 		_, through := passesThrough[name]

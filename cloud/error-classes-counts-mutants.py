@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Prove MayThrow precision assertions fail under Go source overlays."""
+"""Prove exception precision and method receiver assertions under Go source overlays."""
 import json
 from pathlib import Path
 import subprocess
@@ -9,6 +9,9 @@ root = Path(__file__).resolve().parents[1]
 logs = Path('/tmp/adamic-counts-mutants')
 logs.mkdir(exist_ok=True)
 mutants = [
+    ('callback-method-receiver-unbound', 'internal/lower/expression.go',
+     'property.Method = true', 'property.Method = false',
+     './internal/lower', 'TestCallbackTypedClassMethodCallBindsReceiver$', 'must bind its receiver'),
     ('loop-presence-unproved', 'internal/lower/exception_paths.go',
      'if node, ok := value.Interface().(ir.Loop); ok {',
      'if node, ok := value.Interface().(ir.Loop); ok && false {',
