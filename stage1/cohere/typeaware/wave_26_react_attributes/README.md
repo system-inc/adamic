@@ -97,8 +97,8 @@ All test output went directly to log files. The full uncached repository gate
 was not run. Configurable option decoding, edit application, suppression, every
 JSX/JavaScript project and unpaired-surrogate button messages are not claimed.
 
-Quiet alternating process timings are recorded in validation/cost.log.gz and
-validation/cost-runs.json.gz. Every timing sample checks complete diagnostic bytes.
+Quiet alternating process timings are recorded in validation/new-and-gates/cost.log.gz and
+validation/new-and-gates/cost-runs.json.gz. Every timing sample checks complete diagnostic bytes.
 These measure this three-rule suite, not a combined twenty-one-rule runner.
 
 | Quiet process median | Native | Production Go |
