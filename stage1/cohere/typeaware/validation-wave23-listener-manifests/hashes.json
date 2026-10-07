@@ -1,0 +1,450 @@
+{
+  "diff.log": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "vet.log": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate.log": {
+    "bytes": 2772,
+    "sha256": "1ef46079e0c117ed3a63210e1767d7b6cf6506f01e3000764f4a55db2f70c4b8"
+  },
+  "json-mutant.log": {
+    "bytes": 310,
+    "sha256": "1c31fe7b018e166834fa71b9c1e4043730ee1e2c7036c67607b508e058a49def"
+  },
+  "gate/021-mutant-05-run.stdout": {
+    "bytes": 612,
+    "sha256": "8d79e7b7c42daa0119f986eb4c1bc8515128244ad983f00aa7e0ff88e9beb9be"
+  },
+  "gate/041-mutant-15-run.stdout": {
+    "bytes": 612,
+    "sha256": "43908b07b2ea087275d7b7a09711dfffd437b37b970e7bcdb866bf3ed0d20a47"
+  },
+  "gate/020-mutant-05-build.stdout": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/009-node-run.stdout": {
+    "bytes": 614,
+    "sha256": "7336d5ba3efd8cbeabd7ee44fbaa16ecaeae2c34aa7735a650b3d37d6bec3b4e"
+  },
+  "gate/019-mutant-04-run.stdout": {
+    "bytes": 612,
+    "sha256": "505ddaa7110a77523249f01b3c9acdf5d6549622443cd12cb470497d6b522792"
+  },
+  "gate/018-mutant-04-build.stdout": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/044-mutant-17-build.stdout": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/039-mutant-14-run.stdout": {
+    "bytes": 612,
+    "sha256": "ec53f63576916805a1bcd971b3d0b7a58813bdc3d87696de23629e61fb1a3ead"
+  },
+  "gate/006-native-asan-build.stdout": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/036-mutant-13-build.stdout": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/043-mutant-16-run.stdout": {
+    "bytes": 612,
+    "sha256": "10d4b48734e81544aa513c4575f5613ff010fe8df63dc3acc3009a3b8da21765"
+  },
+  "gate/002-listeners-oracle-build.stdout": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/045-mutant-17-run.stdout": {
+    "bytes": 612,
+    "sha256": "f919db5b0d95d0fe2ee6c5f741284198184316b59045215d6966925a5ed85a21"
+  },
+  "gate/029-mutant-09-run.stdout": {
+    "bytes": 612,
+    "sha256": "3c12052638e6d9601e5104727a9a8c588c68e846b9481714f8b90fa84de5d867"
+  },
+  "gate/034-mutant-12-build.stdout": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/011-mutant-00-run.stdout": {
+    "bytes": 612,
+    "sha256": "c550d21dab22dd1256cc6ef2f0b79dc97794b6ba193f5f3cff2e1c11b25f0c4f"
+  },
+  "gate/013-mutant-01-run.stdout": {
+    "bytes": 612,
+    "sha256": "e8b8a119d85e27d76ce8deac5ba3b04121380a276cf8abe34f4a2380894eedd3"
+  },
+  "gate/012-mutant-01-build.stdout": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/042-mutant-16-build.stdout": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/014-mutant-02-build.stdout": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/022-mutant-06-build.stdout": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/008-javascript-build.stdout": {
+    "bytes": 5647,
+    "sha256": "8b985521ac500158f73b858171965adbbd0db410914a3317f66656c00ccfd069"
+  },
+  "gate/035-mutant-12-run.stdout": {
+    "bytes": 612,
+    "sha256": "6b80461add14a657e7c56f48a48f2f23d80221435a2ca325cda4968399a7eabc"
+  },
+  "gate/010-mutant-00-build.stdout": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/003-go-listeners.stdout": {
+    "bytes": 614,
+    "sha256": "7336d5ba3efd8cbeabd7ee44fbaa16ecaeae2c34aa7735a650b3d37d6bec3b4e"
+  },
+  "gate/004-native-build.stdout": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/026-mutant-08-build.stdout": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/005-native-run.stdout": {
+    "bytes": 614,
+    "sha256": "7336d5ba3efd8cbeabd7ee44fbaa16ecaeae2c34aa7735a650b3d37d6bec3b4e"
+  },
+  "gate/027-mutant-08-run.stdout": {
+    "bytes": 612,
+    "sha256": "646378f56b6a9352f6a9bfebeb05cecaf66984250ce0f8434a68e95831e832fa"
+  },
+  "gate/031-mutant-10-run.stdout": {
+    "bytes": 612,
+    "sha256": "a8daf8668c1142785b6f57680029e929fc6e631792f37f593d1e1a478c8e92ca"
+  },
+  "gate/040-mutant-15-build.stdout": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/015-mutant-02-run.stdout": {
+    "bytes": 612,
+    "sha256": "5faf0dab7081858c39948aae71c7def17d274aa3a4abf8d3ab0abeebdbde647c"
+  },
+  "gate/017-mutant-03-run.stdout": {
+    "bytes": 612,
+    "sha256": "417fd6550eee13dcf1c06baabfc999636a656d9dd2a314ecd76e14c4e67380c1"
+  },
+  "gate/037-mutant-13-run.stdout": {
+    "bytes": 613,
+    "sha256": "0c8e692a5cb50a410704d125c837fa27c14ba42d92b9df0c7a715e04687645dd"
+  },
+  "gate/032-mutant-11-build.stdout": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/033-mutant-11-run.stdout": {
+    "bytes": 612,
+    "sha256": "0451f86a8bcea0fd3ead2fbf398a1984426617c9df6b0b8b2cfaa852f6f36a75"
+  },
+  "gate/023-mutant-06-run.stdout": {
+    "bytes": 613,
+    "sha256": "2efd198d29d961d89129451d63bef2f6d715fd0e9c31e6e73f978662300216e4"
+  },
+  "gate/024-mutant-07-build.stdout": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/025-mutant-07-run.stdout": {
+    "bytes": 612,
+    "sha256": "f35301803d4d92584efffcfcbd823b42c3e36bfceea9a01ff133bf0d135cf6de"
+  },
+  "gate/038-mutant-14-build.stdout": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/028-mutant-09-build.stdout": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/001-stage0.stdout": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/016-mutant-03-build.stdout": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/007-native-asan-run.stdout": {
+    "bytes": 614,
+    "sha256": "7336d5ba3efd8cbeabd7ee44fbaa16ecaeae2c34aa7735a650b3d37d6bec3b4e"
+  },
+  "gate/030-mutant-10-build.stdout": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/016-mutant-03-build.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/010-mutant-00-build.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/017-mutant-03-run.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/012-mutant-01-build.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/041-mutant-15-run.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/009-node-run.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/032-mutant-11-build.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/011-mutant-00-run.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/024-mutant-07-build.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/031-mutant-10-run.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/015-mutant-02-run.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/039-mutant-14-run.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/005-native-run.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/033-mutant-11-run.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/020-mutant-05-build.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/022-mutant-06-build.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/003-go-listeners.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/045-mutant-17-run.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/029-mutant-09-run.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/034-mutant-12-build.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/006-native-asan-build.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/027-mutant-08-run.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/035-mutant-12-run.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/028-mutant-09-build.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/038-mutant-14-build.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/025-mutant-07-run.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/008-javascript-build.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/007-native-asan-run.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/040-mutant-15-build.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/036-mutant-13-build.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/023-mutant-06-run.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/030-mutant-10-build.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/019-mutant-04-run.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/014-mutant-02-build.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/013-mutant-01-run.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/044-mutant-17-build.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/043-mutant-16-run.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/026-mutant-08-build.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/018-mutant-04-build.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/001-stage0.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/021-mutant-05-run.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/002-listeners-oracle-build.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/037-mutant-13-run.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/004-native-build.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gate/042-mutant-16-build.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stage1/cohere/typeaware/listeners-wave23/no-throw-literal/rule.json": {
+    "bytes": 59,
+    "sha256": "f4e2d9a189b700b77ed0ea394509a088e2dd6d121abe7f5c90abdb882d1f0056"
+  },
+  "stage1/cohere/typeaware/listeners-wave23/no-new-wrappers/rule.json": {
+    "bytes": 58,
+    "sha256": "6b2792b454973e13041e241d7542e0dc9ee0e58f31e8179d57f1c782c0d0b5bf"
+  },
+  "stage1/cohere/typeaware/listeners-wave23/no-extend-native/rule.json": {
+    "bytes": 68,
+    "sha256": "5ccc3c01998a7053a6ff9e9ee700457fb1303254c1c176361fd1f8e70c64af6c"
+  },
+  "stage1/cohere/typeaware/listeners-wave23/no-new-native-nonconstructor/rule.json": {
+    "bytes": 71,
+    "sha256": "87c3f5e2db565e306162da3af84ffe014b7730228a1500842ad811afa4ecd18e"
+  },
+  "stage1/cohere/typeaware/listeners-wave23/prefer-arrow-callback/rule.json": {
+    "bytes": 64,
+    "sha256": "cbdcadad57883fc997a394a4e3e1d32241f162a2ebef5d5f21e9cefe5427e55e"
+  },
+  "stage1/cohere/typeaware/listeners-wave23/no-useless-backreference/rule.json": {
+    "bytes": 75,
+    "sha256": "f1d36477eed62cf2f1f2072a4b1a5c952ef5e7b3fcfe43a99a8c034f7ad28833"
+  },
+  "stage1/cohere/typeaware/listeners-wave23/no-new-func/rule.json": {
+    "bytes": 63,
+    "sha256": "5b8561d097b93ce19b16036714fc1649dcbc615e02ceb4837c19b9ed0bbd6bcc"
+  },
+  "stage1/cohere/typeaware/listeners-wave23/no-eval/rule.json": {
+    "bytes": 76,
+    "sha256": "e6ddadaf4bfa1ec462eb436d48eaf0632c0bd4d504df148663efae048ca316e0"
+  },
+  "stage1/cohere/typeaware/listeners-wave23/no-func-assign/rule.json": {
+    "bytes": 57,
+    "sha256": "0c854d3d284e3ff8f7f0d2b0206995b6266521d3c306879d1e2bc2b2a72501f4"
+  },
+  "stage1/cohere/typeaware/listeners-wave23/nexus/correctness-no-collection-misuse/rule.json": {
+    "bytes": 99,
+    "sha256": "4ccd4cb7e224470a8853b2d4545f385a78a3b1c5c8f213cba5de53e97ab067bc"
+  },
+  "stage1/cohere/typeaware/listeners-wave23/nexus/correctness-no-discarded-outcome/rule.json": {
+    "bytes": 81,
+    "sha256": "d2150fcf7c68d88d0cbeb56b2589d681775bc582b94227d4b8c331f847ababca"
+  },
+  "stage1/cohere/typeaware/listeners-wave23/nexus/correctness-no-discarded-pure-result/rule.json": {
+    "bytes": 85,
+    "sha256": "ce3d5765babcfeaa3ad768f467ff07aa6f4f20bd8cde83989befb8942fc110a3"
+  },
+  "stage1/cohere/typeaware/listeners-wave23/react-hooks/static-components/rule.json": {
+    "bytes": 72,
+    "sha256": "6fdb6adb32a2038003896c7edccd8df5122d166aac42ca4face71fc7fc2fbc5c"
+  },
+  "stage1/cohere/typeaware/listeners-wave23/react-hooks/set-state-in-render/rule.json": {
+    "bytes": 74,
+    "sha256": "146433dfd41e1d7dda2731b54acbe17be2aae0956ef8c9b300f399c38a6a2be7"
+  },
+  "stage1/cohere/typeaware/listeners-wave23/react-hooks/set-state-in-effect/rule.json": {
+    "bytes": 74,
+    "sha256": "b5223ee2e8fe5e5d6e3467dd165a4395ff8029d4b2f81a41bcce361eca5da1b3"
+  },
+  "stage1/cohere/typeaware/listeners-wave23/@typescript-eslint/prefer-promise-reject-errors/rule.json": {
+    "bytes": 99,
+    "sha256": "244eca0e30250402cac911b6eeb68658600496bf4766dfa4589eca2a7440843b"
+  },
+  "stage1/cohere/typeaware/listeners-wave23/@typescript-eslint/only-throw-error/rule.json": {
+    "bytes": 78,
+    "sha256": "4dbaf4ab7958360964f804c5c1520abd85fbd59a0f633ef0ab382a4be10f8665"
+  },
+  "stage1/cohere/typeaware/listeners-wave23/@typescript-eslint/prefer-reduce-type-parameter/rule.json": {
+    "bytes": 90,
+    "sha256": "9d4811ad37c8cbd4632be3d6667a938efbc3cdc75ed48f52c3ed4aff52d0b1e4"
+  }
+}

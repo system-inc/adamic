@@ -2,6 +2,7 @@ package typeaware
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"os"
 	"os/exec"
@@ -36,6 +37,32 @@ func TestWave23NumericListeners(t *testing.T) {
 	if len(rows) != 18 {
 		t.Fatalf("expected eighteen production rule registrations, got %d", len(rows))
 	}
+	for _, row := range rows {
+		parts := strings.Split(row, "\t")
+		if len(parts) != 2 {
+			t.Fatal("bad Go listener record", row)
+		}
+		data, err := os.ReadFile(filepath.Join(repository, "stage1/cohere/typeaware/listeners-wave23", parts[0], "rule.json"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		var declaration struct {
+			Name  string `json:"name"`
+			Kinds []int  `json:"kinds"`
+		}
+		if err := json.Unmarshal(data, &declaration); err != nil {
+			t.Fatal(err)
+		}
+		var numbers []string
+		for _, kind := range declaration.Kinds {
+			numbers = append(numbers, fmt.Sprint(kind))
+		}
+		got := declaration.Name + "\t" + strings.Join(numbers, ",")
+		if got != row {
+			t.Fatalf("rule.json kinds differ from Go: got %s, want %s", got, row)
+		}
+	}
+	t.Log("eighteen rule.json name/kinds declarations match the independent Go registry")
 	entry := filepath.Join(repository, "stage1/cohere/typeaware/wave_23_listener_probe.a")
 	for _, sanitize := range []bool{false, true} {
 		name := "native"
