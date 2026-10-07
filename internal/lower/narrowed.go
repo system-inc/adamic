@@ -33,10 +33,10 @@ func (l *lowering) narrowedAway(node *ast.Node) bool {
 }
 
 // defined checks a reference the checker narrowed undefined out of. Read through a property next,
-// it panics with the TypeError JavaScript throws there, word for word; anywhere else, with Adamic's
+// it throws the TypeError JavaScript throws there, word for word; anywhere else, panics with Adamic's
 // own words, since JavaScript would go on with undefined in a place typed not to hold it.
 func (l *lowering) defined(node *ast.Node, value ir.Expression) ir.Expression {
-	if !value.Type().IsReference() || value.Type() == ir.Union || !l.narrowedAway(node) || comparedWithUndefined(node) {
+	if !value.Type().IsReference() || value.Type() == ir.Union || !l.narrowedAway(node) || comparedWithUndefined(node) || optionalReceiver(node) {
 		return value
 	}
 	null := false
@@ -84,4 +84,29 @@ func comparedWithUndefined(node *ast.Node) bool {
 	}
 	other = ast.SkipParentheses(other)
 	return other.Kind == ast.KindNullKeyword || (other.Kind == ast.KindIdentifier && other.Text() == "undefined")
+}
+
+// optionalReceiver recognizes the operand tested by ?. before a property, element or call.
+// Parentheses around that operand do not change which value the optional operation tests.
+// The optional operation must see an absent value itself, rather than a narrowing check stopping it.
+func optionalReceiver(node *ast.Node) bool {
+	parent := node.Parent
+	for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
+		node, parent = parent, parent.Parent
+	}
+	if parent == nil {
+		return false
+	}
+	switch parent.Kind {
+	case ast.KindPropertyAccessExpression:
+		access := parent.AsPropertyAccessExpression()
+		return access.Expression == node && access.QuestionDotToken != nil
+	case ast.KindElementAccessExpression:
+		access := parent.AsElementAccessExpression()
+		return access.Expression == node && access.QuestionDotToken != nil
+	case ast.KindCallExpression:
+		call := parent.AsCallExpression()
+		return call.Expression == node && call.QuestionDotToken != nil
+	}
+	return false
 }
