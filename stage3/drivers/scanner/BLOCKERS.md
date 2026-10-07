@@ -1,5 +1,27 @@
 # Scanner blockers
 
+## October 7: Uint16Array probe fixed; bigint writes stay in range
+
+Runtime 1836fc27 is integrated in unpushed scratch 0c328304, using an isolated
+first-parent typed-array patch to preserve existing compiler features. This is
+not a claim that all divergent area/runtime prerequisites were merged.
+Evidence and merge limitations: `evidence/uint16-runtime-retry.json`.
+The unchanged uint16-array-constructor.a prints `1` on native and Node, with
+empty stderr and exit 0. Its one-byte native-output mutant is caught by diff.
+
+parsePseudoBigInt allocates L=ceil(N*b/16) segments, where N is digit count and
+b is 1, 3 or 4. Digit k writes floor(k*b/16)<L. A nonzero residual means
+(segment+1)*16<(k+1)*b<=N*b, so segment+1<L. The later division loop only writes
+indices L-1 down to zero. Scanner-validated digits fit b bits; the length never
+changes. This establishes in-range writes for valid scanner inputs, assuming
+allocatable lengths; malformed direct callers are outside that argument.
+
+`uint16-bounds.cjs` runs the actual sliced function with a bounds-checking Proxy:
+4,610 edge inputs, 23,533,762 checked writes, zero bounds failures and results
+identical to BigInt. The fixed compiler-source corpus has zero bigint literal
+occurrences. Injecting a write at segments.length is caught. No full scanner
+rerun occurred in this Uint16-only step, as instructed.
+
 ## October 7: ten stops behind Map and Uint16Array discovery stubs
 
 Discovery only, using compiler scratch 04a365a8. Nothing stubbed enters the

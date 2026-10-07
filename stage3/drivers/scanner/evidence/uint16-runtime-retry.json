@@ -1,0 +1,33 @@
+{
+  "runtime_feature": "1836fc27ef547a42c9c4d43c498e69cc1eea0990",
+  "scratch_commit": "0c328304cb279678b5f7a6c729d1f2469409827e",
+  "probe": "probes/uint16-array-constructor.a",
+  "probe_results": {
+    "node": {
+      "exit": 0,
+      "stdout": "1\n",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "1\n",
+      "stderr": ""
+    },
+    "one_byte_mutant_diff_exit": 1
+  },
+  "bounds": {
+    "inputs": 4610,
+    "corpus_literal_occurrences": 0,
+    "writes_checked": 23533762,
+    "values_match_BigInt": true,
+    "out_of_range_mutant_caught": true
+  },
+  "merge_resolution": "Unpushed ours-strategy merge plus first-parent runtime typed-array feature patch; excluded missing share.c. Preserved existing record, enum, host and predicate hooks, combined typed-array hooks, omitted unrelated async enum context. Initial direct merge conflicts and intermediate clang switch failure recorded in scratch logs. This does not claim all area/runtime prerequisites are integrated.",
+  "bounds_argument": "Let N=endIndex-startIndex, b=log2Base in {1,3,4}, B=N*b and L=ceil(B/16). Digit k has bitOffset=k*b, 0<=k<N, so segment=floor(k*b/16)<L. A nonzero residual requires k*b mod 16+b>16, hence (segment+1)*16<(k+1)*b<=B and segment+1<L. Digits are validated for their base by the scanner. Division writes descend from L-1 to zero. Length remains fixed; zero-length case performs no indexed writes. Argument assumes valid scanner-produced literal and allocatable sizes; generated tests are witnesses, not a proof for arbitrary malformed direct callers.",
+  "full_slice": "Not rerun in this Uint16-only step per instruction; waiting for Map iterator sha.",
+  "scanner_native_diff": "unavailable; no scanner binary",
+  "mutants": [
+    "One-byte native probe stdout XOR caught by diff exit 1",
+    "Actual slice function injected segments[segments.length]=1 caught by bounds witness"
+  ]
+}
