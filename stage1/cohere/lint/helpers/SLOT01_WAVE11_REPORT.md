@@ -191,3 +191,11 @@ The tree-helper CollapseCopyNode[] adamic/cycle-capable refusal persists, so nat
 Rebased without conflicts onto origin/area/stage1-lint b46914832d70e00847d82d5d221ab7bb24040c53, containing unchanged main c7991b90. Retained the incoming registry migration without shared edits. The integration delta does not change helper, compiler or external Go fixture inputs; prior full helper evidence remains b84-oracle.log (609.715s, 76 passes, eight blocked skips).
 
 Reran `go test ./stage1/cohere/lint/helpers -run '^TestSlot01Wave11' -count=1 -v -timeout=20m`: 32.376s, eight explicit skips after Go/Node parity and all eight source-only mutant catches. The exact node-arena ownership refusal remains; native/emitted-JavaScript tree parity is unverified. `go vet ./stage1/cohere/lint/helpers` passed. Fresh logs: evidence/slot01-wave11/b469-{oracle,vet}.log. No full or required-input gate is claimed green, no checks are relaxed, and no new helper is claimed.
+
+## typeof integration landing on d3a37422
+
+Rebased without conflicts onto origin/area/stage1-lint d3a37422c6c2c3dd4a90b8721a2067a4ba0d8898, containing main b6b1538b and the incoming typeof-null/lookup-presence fix. No shared source was edited. Pre-report head: b5c0b3868feaf7d7f5199f907589f7ab5cc03f57.
+
+`go test ./stage1/cohere/lint/helpers -count=1 -v -timeout=20m` passed in 603.249s with 76 top-level passes and eight explicit ownership-blocked skips. All 77 compiled semantic mutants and eight source-only tree mutants were caught, and the two expected refusal checks passed. `go vet ./stage1/cohere/lint/helpers` passed. `ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestInputAgreesWithNode$' -count=1 -v -timeout=20m` passed in 12.421s. Evidence: evidence/slot01-wave11/d3-{oracle,vet,input}.log.
+
+The same CollapseCopyNode[] adamic/cycle-capable refusal remains. Native/emitted-JavaScript tree parity and compiled tree mutants are unverified. The full repository and 17 required-input checks were not run in this bounded worker check; no such check was relaxed or bypassed. No fully green gate, new claim or tree readiness credit is asserted.
