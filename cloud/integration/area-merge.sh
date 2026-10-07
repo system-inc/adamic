@@ -152,6 +152,9 @@ fi
 status=0
 cd "$worktree"
 export ADAMIC_GATE_UNCACHED=1
+# Python's bytecode caches land beside the scripts, inside the worktree, and outlive the tree that
+# made them (a refused merge's stage3/lane/__pycache__ stayed after the switch back).
+export PYTHONDONTWRITEBYTECODE=1
 goFiles=$(printf '%s\n' "$changed" | grep '\.go$' | while IFS= read -r file; do [ -f "$file" ] && echo "$file"; done || true)
 if [ -n "$goFiles" ]; then
 	unformatted=$(gofmt -l $goFiles)
@@ -245,6 +248,14 @@ sys.exit(0 if ok else 1)' "$logs/stage3-oracle/report.json" "$expectedPassing" |
 		echo "  (the API snapshot diff's lines aren't compared to the sanctioned set here; stage3/lane/run.sh does that)"
 	fi
 	echo "ran: stage3/apply.sh and stage3/oracle/run.sh on the merged tree"
+fi
+# stage3/apply.py rewrites stage3/patch-set.md in the checkout it runs from, and the next run refuses
+# a worktree with local changes. The table is generated, so a difference means the area's committed
+# table is stale: name it, then put the committed table back so this worktree stays usable.
+if ! git diff --quiet -- stage3/patch-set.md; then
+	git diff -- stage3/patch-set.md >"$logs/stage3-patch-set.diff"
+	echo "warning: stage3/apply.py regenerated stage3/patch-set.md differently, so the area's committed table is stale ($logs/stage3-patch-set.diff); not held against the merge"
+	git show HEAD:stage3/patch-set.md >stage3/patch-set.md
 fi
 if [ "$oracle" = test262 ] && [ "${#filters[@]}" -gt 0 ]; then
 	if [ -z "${ADAMIC_TEST262:-}" ]; then
