@@ -1,0 +1,14 @@
+import {type GraphDependencies} from './conditional_expression.a';
+export type MemberView = {node: number; functionLike: boolean; parameters: number[]; computed: boolean; computedExpression: number; property: boolean; indexSignature: boolean; parameterTypes: number[]; typeNode: number};
+export function memberHeader(member: MemberView, dependencies: GraphDependencies): void {
+  dependencies.decorators(member.node);
+  if (member.functionLike) {
+    for (const parameter of member.parameters) { dependencies.decorators(parameter); }
+  }
+  if (member.computed) { dependencies.expr(member.computedExpression); }
+  if (member.property) { dependencies.expr(member.typeNode); }
+  else if (member.indexSignature) {
+    for (const typeNode of member.parameterTypes) { dependencies.expr(typeNode); }
+    dependencies.expr(member.typeNode);
+  }
+}

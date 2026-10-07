@@ -1,0 +1,14 @@
+import {type Cursor, type GraphDependencies} from './conditional_expression.a';
+export function bindWithDefault(state: Cursor, target: number, fallback: number, dependencies: GraphDependencies): void {
+  if (fallback >= 0) {
+    const join = dependencies.newBlock();
+    dependencies.link(state.cur, join);
+    const withFallback = dependencies.newBlock();
+    dependencies.link(state.cur, withFallback);
+    dependencies.enter(withFallback);
+    dependencies.expr(fallback);
+    dependencies.link(state.cur, join);
+    dependencies.enter(join);
+  }
+  dependencies.patternBind(target);
+}

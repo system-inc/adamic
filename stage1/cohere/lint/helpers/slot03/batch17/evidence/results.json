@@ -1,0 +1,35 @@
+{
+  "claim": "397caa0b",
+  "base_main": "39638d9e",
+  "base_area": "d65a8f93",
+  "prelanding_helpers_seconds": 41.568,
+  "comparison_lines": 948,
+  "new_mutants": 12,
+  "prior_helpers": 48,
+  "owned_helpers": 51,
+  "observations": {
+    "control_calls": 19,
+    "live": {
+      "array-callback-return": {
+        "conditional": 5,
+        "default": 75,
+        "member": 262
+      },
+      "consistent-return": {
+        "default": 2,
+        "member": 38
+      },
+      "no-unreachable-loop": {
+        "default": 114,
+        "member": 171
+      },
+      "react-hooks/rules-of-hooks": {
+        "conditional": 51,
+        "default": 72,
+        "member": 139
+      }
+    },
+    "live_calls": 929,
+    "total_calls": 948
+  }
+}

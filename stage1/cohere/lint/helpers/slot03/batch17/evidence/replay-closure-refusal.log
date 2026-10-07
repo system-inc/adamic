@@ -1,0 +1,44 @@
+=== RUN   TestBatch17Helpers
+    batch17_test.go:74: /workspace/adamic/stage1/cohere/lint/helpers/slot03/batch17/main.a:21:9: Adamic 0.1 refuses 'event', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function event() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+--- FAIL: TestBatch17Helpers (1.64s)
+=== RUN   TestBatch17Mutants
+=== RUN   TestBatch17Mutants/conditional_expression.a
+    batch17_test.go:121: /tmp/adamic-gate/TestBatch17Mutantsconditional_expression.a3158866224/001/main.a:21:9: Adamic 0.1 refuses 'event', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function event() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+=== RUN   TestBatch17Mutants/conditional_expression.a#01
+    batch17_test.go:121: /tmp/adamic-gate/TestBatch17Mutantsconditional_expression.a#013172237674/001/main.a:21:9: Adamic 0.1 refuses 'event', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function event() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+=== RUN   TestBatch17Mutants/conditional_expression.a#02
+    batch17_test.go:121: /tmp/adamic-gate/TestBatch17Mutantsconditional_expression.a#022202933983/001/main.a:21:9: Adamic 0.1 refuses 'event', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function event() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+=== RUN   TestBatch17Mutants/conditional_expression.a#03
+    batch17_test.go:121: /tmp/adamic-gate/TestBatch17Mutantsconditional_expression.a#032226884155/001/main.a:21:9: Adamic 0.1 refuses 'event', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function event() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+=== RUN   TestBatch17Mutants/bind_with_default.a
+    batch17_test.go:121: /tmp/adamic-gate/TestBatch17Mutantsbind_with_default.a1962199559/001/main.a:21:9: Adamic 0.1 refuses 'event', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function event() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+=== RUN   TestBatch17Mutants/bind_with_default.a#01
+    batch17_test.go:121: /tmp/adamic-gate/TestBatch17Mutantsbind_with_default.a#011848854311/001/main.a:21:9: Adamic 0.1 refuses 'event', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function event() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+=== RUN   TestBatch17Mutants/bind_with_default.a#02
+    batch17_test.go:121: /tmp/adamic-gate/TestBatch17Mutantsbind_with_default.a#021979100075/001/main.a:21:9: Adamic 0.1 refuses 'event', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function event() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+=== RUN   TestBatch17Mutants/member_header.a
+    batch17_test.go:121: /tmp/adamic-gate/TestBatch17Mutantsmember_header.a1795330582/001/main.a:21:9: Adamic 0.1 refuses 'event', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function event() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+=== RUN   TestBatch17Mutants/member_header.a#01
+    batch17_test.go:121: /tmp/adamic-gate/TestBatch17Mutantsmember_header.a#012520895818/001/main.a:21:9: Adamic 0.1 refuses 'event', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function event() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+=== RUN   TestBatch17Mutants/member_header.a#02
+    batch17_test.go:121: /tmp/adamic-gate/TestBatch17Mutantsmember_header.a#02470526916/001/main.a:21:9: Adamic 0.1 refuses 'event', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function event() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+=== RUN   TestBatch17Mutants/member_header.a#03
+    batch17_test.go:121: /tmp/adamic-gate/TestBatch17Mutantsmember_header.a#034014577356/001/main.a:21:9: Adamic 0.1 refuses 'event', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function event() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+=== RUN   TestBatch17Mutants/member_header.a#04
+    batch17_test.go:121: /tmp/adamic-gate/TestBatch17Mutantsmember_header.a#041333548634/001/main.a:21:9: Adamic 0.1 refuses 'event', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function event() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+--- FAIL: TestBatch17Mutants (1.97s)
+    --- FAIL: TestBatch17Mutants/conditional_expression.a (0.08s)
+    --- FAIL: TestBatch17Mutants/conditional_expression.a#01 (0.08s)
+    --- FAIL: TestBatch17Mutants/conditional_expression.a#02 (0.06s)
+    --- FAIL: TestBatch17Mutants/conditional_expression.a#03 (0.07s)
+    --- FAIL: TestBatch17Mutants/bind_with_default.a (0.07s)
+    --- FAIL: TestBatch17Mutants/bind_with_default.a#01 (0.06s)
+    --- FAIL: TestBatch17Mutants/bind_with_default.a#02 (0.06s)
+    --- FAIL: TestBatch17Mutants/member_header.a (0.05s)
+    --- FAIL: TestBatch17Mutants/member_header.a#01 (0.05s)
+    --- FAIL: TestBatch17Mutants/member_header.a#02 (0.05s)
+    --- FAIL: TestBatch17Mutants/member_header.a#03 (0.06s)
+    --- FAIL: TestBatch17Mutants/member_header.a#04 (0.07s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot03	3.631s
+FAIL

@@ -1,0 +1,49 @@
+import {panic, readTextFile, programArguments} from 'adamic';
+import {OptionsJson} from '../../options_json.ts';
+import {conditionalExpression, type GraphDependencies} from './conditional_expression.a';
+import {bindWithDefault} from './bind_with_default.a';
+import {memberHeader, type MemberView} from './member_header.a';
+const file = readTextFile(programArguments()[0] ?? panic('missing cases'));
+if (file.kind === 'Error') { panic(file.message); }
+const json = new OptionsJson(file.text); const root = json.parse();
+if (root < 0) { panic(json.error); }
+function num(row: number, key: string): number { return Number(json.node(json.field(row, key)).text); }
+function bool(row: number, key: string): boolean { return json.node(json.field(row, key)).text === 'true'; }
+function numbers(row: number, key: string): number[] {
+  const values: number[] = [];
+  for (const node of json.node(json.field(row, key)).children) { values.push(Number(json.node(node).text)); }
+  return values;
+}
+const state = {cur: 0};
+const initialEvents: readonly number[] = [];
+const replay = {events: initialEvents, index: 0, trace: ''};
+function event(kind: string, a: number, b: number): number {
+  const before = state.cur;
+  const item = replay.events[replay.index]; replay.index++;
+  let value = -1;
+  if (item !== undefined) { state.cur = num(item, 'cur'); value = num(item, 'value'); }
+  replay.trace += `${kind}:${a}:${b}:${before}>${state.cur}:${value};`;
+  return value;
+}
+const dependencies: GraphDependencies = {
+  expr: node => { event('expr', node, -1); },
+  newBlock: () => event('new', -1, -1),
+  link: (from, to) => { event('link', from, to); },
+  enter: block => { event('enter', block, -1); },
+  patternBind: node => { event('bind', node, -1); },
+  decorators: node => { event('decorators', node, -1); },
+};
+for (const row of json.node(root).children) {
+  state.cur = num(row, 'cur');
+  replay.events = json.node(json.field(row, 'events')).children;
+  replay.index = 0; replay.trace = '';
+  const op = json.node(json.field(row, 'op')).text;
+  if (op === 'conditional') { conditionalExpression(state, num(row, 'condition'), num(row, 'whenTrue'), num(row, 'whenFalse'), dependencies); }
+  else if (op === 'default') { bindWithDefault(state, num(row, 'target'), num(row, 'fallback'), dependencies); }
+  else {
+    const node = json.field(row, 'member');
+    const member: MemberView = {node: num(node, 'node'), functionLike: bool(node, 'functionLike'), parameters: numbers(node, 'parameters'), computed: bool(node, 'computed'), computedExpression: num(node, 'computedExpression'), property: bool(node, 'property'), indexSignature: bool(node, 'indexSignature'), parameterTypes: numbers(node, 'parameterTypes'), typeNode: num(node, 'typeNode')};
+    memberHeader(member, dependencies);
+  }
+  console.log(`${state.cur}/${replay.trace}`);
+}

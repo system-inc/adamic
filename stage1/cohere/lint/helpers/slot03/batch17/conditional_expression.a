@@ -1,0 +1,18 @@
+export type Cursor = {cur: number};
+export type GraphDependencies = {expr: (node: number) => void; newBlock: () => number; link: (from: number, to: number) => void; enter: (block: number) => void; patternBind: (node: number) => void; decorators: (node: number) => void};
+export function conditionalExpression(state: Cursor, condition: number, whenTrueNode: number, whenFalseNode: number, dependencies: GraphDependencies): void {
+  dependencies.expr(condition);
+  const testEnd = state.cur;
+  const join = dependencies.newBlock();
+  const whenTrue = dependencies.newBlock();
+  dependencies.link(testEnd, whenTrue);
+  dependencies.enter(whenTrue);
+  dependencies.expr(whenTrueNode);
+  dependencies.link(state.cur, join);
+  const whenFalse = dependencies.newBlock();
+  dependencies.link(testEnd, whenFalse);
+  dependencies.enter(whenFalse);
+  dependencies.expr(whenFalseNode);
+  dependencies.link(state.cur, join);
+  dependencies.enter(join);
+}
