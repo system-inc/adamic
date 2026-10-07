@@ -30,11 +30,14 @@ for(const path of paths) {
     // These ports traverse the bridge's exact syntax projection and its parents.
     // Rules supplies only the finding sink; no second parser walk is needed.
     const syntax = new SyntaxProjection(program, path);
-    new UnsupportedSyntax(linter, syntax).run();
+    const unsupported = new UnsupportedSyntax(linter, syntax);
     const memo = new UseMemo(linter, syntax);
     for(let identity = 1; identity <= syntax.nodes.length; identity++) {
         const node = syntax.node(identity);
         if(node.kind === 'CallExpression') { memo.visit(node, identity); }
+        else if(node.kind === 'Identifier') { unsupported.visit(node, identity, 'unsupportedEval'); }
+        else if(node.kind === 'WithStatement') { unsupported.visit(node, identity, 'unsupportedWith'); }
+        else if(node.kind === 'ClassDeclaration') { unsupported.visit(node, identity, 'unsupportedInlineClass'); }
     }
     new BooleanPropNaming(linter, syntax, args.includes('--boolean-defaults')).run();
     for(const finding of linter.findings) {

@@ -1,5 +1,5 @@
 import type { Rules } from './rules.ts';
-import type { SyntaxProjection } from './syntax_projection.a';
+import type { SyntaxNode, SyntaxProjection } from './syntax_projection.a';
 import { ProcessSymbols } from './process_symbol_details.a';
 import { ReactCompilationGate } from './react_compilation_gate.a';
 import { Diagnostic } from './diagnostic.ts';
@@ -7,10 +7,8 @@ import { reactWave25Message } from './react_wave_25_messages.a';
 export class UnsupportedSyntax {
  readonly rules: Rules; readonly syntax: SyntaxProjection; readonly symbols: ProcessSymbols; readonly gate: ReactCompilationGate;
  constructor(rules: Rules, syntax: SyntaxProjection) { this.rules = rules; this.syntax = syntax; this.symbols = new ProcessSymbols(syntax); this.gate = new ReactCompilationGate(syntax); }
- run(): void { for(let at = 1; at <= this.syntax.nodes.length; at++) { const node = this.syntax.node(at); let id = '';
-  if(node.kind === 'Identifier' && node.text === 'eval') { if(!this.symbols.get(at).declarations.some((declaration) => declaration.library)) { continue; } id = 'unsupportedEval'; }
-  else if(node.kind === 'WithStatement') { id = 'unsupportedWith'; }
-  else if(node.kind === 'ClassDeclaration') { id = 'unsupportedInlineClass'; }
-  if(id !== '' && this.gate.inside(at)) { this.rules.findings.push(new Diagnostic('react-hooks/unsupported-syntax', id, reactWave25Message(id), node.start, node.end, '')); }
- } }
+ visit(node: SyntaxNode, at: number, id: string): void {
+  if(id === 'unsupportedEval' && (node.text !== 'eval' || !this.symbols.get(at).declarations.some((declaration) => declaration.library))) { return; }
+  if(this.gate.inside(at)) { this.rules.findings.push(new Diagnostic('react-hooks/unsupported-syntax', id, reactWave25Message(id), node.start, node.end, '')); }
+ }
 }

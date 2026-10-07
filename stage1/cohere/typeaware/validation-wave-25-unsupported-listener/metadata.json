@@ -1,0 +1,24 @@
+{
+  "base": "b8fb957aa839a9e8cb0b54279dd9864fa317bd30",
+  "previous_tip": "a4af2fb5c6d0f092a454a732bb03dee91e04d62f",
+  "source_hashes": {
+    "unsupported_syntax.a": "6f7348f9c90d881262e69a48ec5e5363664894a659b1db59ec62e10e13456dce",
+    "wave_25_fifth_suite.a": "7b8611d983da647a696d45a89f1eb7670ed676541073246b0d1be0503fd53d51"
+  },
+  "test_command": "ADAMIC_TYPESCRIPT_SOURCE=/workspace/wave-25-corpus ADAMIC_WAVE25_FIFTH_ARTIFACTS=/workspace/wave-25-landing-second/fifth ADAMIC_WAVE25_FIFTH_REFUSALS=/workspace/wave-25-unsupported-listener-refusals go test ./stage1/cohere/typeaware -run ^TestWave25Fifth(AgreementAndMutants|BooleanRefusals)$ -count=1 -v -timeout 20m",
+  "additional_mutant": {
+    "name": "unsupported-dispatch",
+    "file": "wave_25_fifth_suite.a",
+    "from": "else if(node.kind === 'ClassDeclaration')",
+    "to": "else if(false)",
+    "build_exit": 0,
+    "native_exit": 0,
+    "native_stderr_bytes": 0,
+    "differing_byte": 1211,
+    "config": "/workspace/wave-25-landing-second/fifth/controls-config.json",
+    "manifest": "/workspace/wave-25-landing-second/fifth/controls-valid.manifest",
+    "arguments": [
+      "--boolean-defaults"
+    ]
+  }
+}

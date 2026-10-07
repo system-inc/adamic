@@ -407,3 +407,39 @@ Unsupported-syntax dispatch migration was deferred because this turn became
 the landing unit. Other dispatch migrations, dynamic option RegExp lowering,
 imported props, typed wrappers and the placeholder-regex migration remain
 unfinished. No React claim was marked parked under the IR/SSA/capture exception.
+
+## Unsupported-syntax handed-node dispatch, October 7
+
+Current main remains b8fb957a. UnsupportedSyntax.visit now takes the projected
+node, its identity and the diagnostic category selected by the runner.
+The rule no longer scans the file, looks up its entry node, or reads that
+node's kind to decide relevance. Its semantic eval checks and compilation
+gate are unchanged. The runner fetches each node once in the same pass already
+used for use-memo, dispatching only Identifier, WithStatement and
+ClassDeclaration to unsupported-syntax and only CallExpression to use-memo.
+These kinds match the existing rule.json declarations. No shared generator,
+registry or test harness file was changed.
+
+The fifth byte agreement/mutant suite and refusal suite passed in 113.548s.
+Default controls: 141 findings, 61,122 identical bytes. Nil options: 84 findings,
+53,794 identical bytes. Controls and both corpora matched under sanitizers;
+released handles and explicit refusal paths passed. eval-library, memo-inline
+and boolean-capital compiled, exited 0 with empty native stderr and only Go
+bytes caught offsets 70, 19,756 and 44,875.
+
+A separate new unsupported-dispatch mutant changes only the runner's
+ClassDeclaration route to else if(false). It compiles successfully, exits 0
+with empty native stderr and differs from the unmodified Go oracle at byte
+1,211. Thus the comparison also detects dropping an entire relevance route.
+Its initial standalone invocations used the wrong config path and then
+mistakenly rejected the Go oracle's normal timing stderr. The final comparison
+uses controls-config.json and permits Go timing output, exactly like the
+agreement harness, while requiring empty native stderr. Final logs, both
+serialized outputs, compressed mutant source and exact metadata are archived
+under validation-wave-25-unsupported-listener.
+
+Single affected-suite whole-process samples: compiler native 3.989765270s
+versus Go 0.386340024s; repository native 0.640659498s versus Go 0.151139036s.
+No speedup or median claim is made. Other suites retain fifth-landing evidence.
+Boolean-prop-naming traversal and its partial options, imported props, typed
+wrappers and placeholder regex remain unfinished. No new rules were claimed.
