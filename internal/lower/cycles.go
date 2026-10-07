@@ -65,8 +65,8 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 	// Generated frame/Promise/reaction layouts are IR identities, never checker declarations.
 	// Only their runtime-owned protocol edges are exempt. Source types, including a class
 	// called adamic_async_frame, continue through slotsOf with no name-based escape hatch.
-	if l.result.Async != nil {
-		for _, generated := range l.result.Async.Generated {
+	if l.result.HasAsync() {
+		for _, generated := range l.result.Generated {
 			if !fresh.RuntimeBreaksCycles(generated) {
 				return fmt.Errorf("lower: unaudited generated cycle identity")
 			}
@@ -142,7 +142,7 @@ func (f *cycleFinder) made(proven *checker.Type, where *ast.Node) {
 		}
 	case proven.Flags()&checker.TypeFlagsObject == 0 || f.isFunction(proven):
 		f.use(proven, where)
-	case f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet"):
+	case f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise"):
 		for _, argument := range f.l.checker.GetTypeArguments(proven) {
 			f.use(argument, where)
 		}
@@ -198,7 +198,7 @@ func (f *cycleFinder) use(proven *checker.Type, where *ast.Node) {
 	if f.isFunction(proven) {
 		return
 	}
-	if f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
+	if f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise") {
 		for _, argument := range f.l.checker.GetTypeArguments(proven) {
 			f.use(argument, where)
 		}
@@ -423,7 +423,7 @@ func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
 					queue = append(queue, cycleNode{cell: local + 1})
 				}
 			}
-		case f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet"):
+		case f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise"):
 			for _, argument := range f.l.checker.GetTypeArguments(proven) {
 				queue = append(queue, cycleNode{proven: argument})
 			}

@@ -46,6 +46,8 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 	case flags&checker.TypeFlagsObject != 0 && l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet"):
 		// A Set is held as a Map whose values aren't used (set.go).
 		return ir.Map, true
+	case flags&checker.TypeFlagsObject != 0 && l.isLibraryType(proven, "Promise"):
+		return ir.Promise, true
 	case flags&checker.TypeFlagsObject != 0 && len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) == 0:
 		return ir.Object, true
 	case flags&checker.TypeFlagsObject != 0:
@@ -368,6 +370,8 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 		return observed, nil
 	}
 	switch node.Kind {
+	case ast.KindAwaitExpression:
+		return l.awaitExpression(node)
 	case ast.KindNullKeyword:
 		return ir.Null{}, nil
 	case ast.KindRegularExpressionLiteral:
@@ -473,6 +477,9 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 	case ast.KindElementAccessExpression:
 		return l.elementAccess(node)
 	case ast.KindNewExpression:
+		if l.isLibraryGlobal(node.AsNewExpression().Expression, "Promise") {
+			return nil, l.notYet(node, "Promise executors and pending-I/O cancellation")
+		}
 		return l.newExpression(node)
 	case ast.KindThisKeyword:
 		if l.this < 0 {
@@ -490,6 +497,9 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 	case ast.KindFunctionExpression:
 		return l.functionExpression(node)
 	case ast.KindCallExpression:
+		if value, handled, err := l.promiseValue(node); handled {
+			return value, err
+		}
 		if err := l.optionalCall(node); err != nil {
 			return nil, err
 		}

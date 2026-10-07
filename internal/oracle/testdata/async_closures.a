@@ -1,0 +1,19 @@
+function make(prefix: string): (value: number) => Promise<string> {
+    return async (value: number): Promise<string> => {
+        const held = `${prefix}:${value}`;
+        await Promise.resolve();
+        return held;
+    };
+}
+const arrow = make(`arrow${1}`);
+const ordinary = async function (value: number): Promise<number> {
+    await Promise.resolve();
+    return value + 2;
+};
+function start(work: (value: number) => Promise<string>): Promise<string> { return work(4); }
+async function run(): Promise<string> {
+    const result = await start(arrow);
+    return `${result}:${await ordinary(5)}`;
+}
+const pending = run();
+console.log(`${await pending}`);

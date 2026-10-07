@@ -116,7 +116,7 @@ typedef struct adamic_cell {
 	adamic_heap heap;
 	bool references;
 	bool ready;
-	struct adamic_environment *owner;
+	adamic_heap *owner;
 	adamic_value value;
 } adamic_cell;
 
@@ -127,6 +127,8 @@ typedef struct adamic_environment {
 	adamic_cell cells[];
 } adamic_environment;
 adamic_environment *adamic_environment_new(size_t count);
+void adamic_environment_initialize_cells(adamic_heap *, adamic_cell *, size_t);
+void adamic_environment_drop_cells(adamic_cell *, size_t, void (*)(void *));
 
 adamic_cell *adamic_cell_new(adamic_value value, bool references);
 

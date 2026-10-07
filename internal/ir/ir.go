@@ -10,7 +10,8 @@ import "fmt"
 
 // Program is one compiled Adamic program.
 type Program struct {
-	Async *AsyncProgram
+	Generated  []*GeneratedType
+	AsyncEntry int // one-based ordinary function for module suspension, zero when synchronous
 
 	// Source is the entry file's base name, as written, for the header of what the backends emit.
 	Source string
@@ -73,7 +74,9 @@ type Function struct {
 	Parameters []int
 
 	// Returns is the result's type, or 0 for void.
-	Returns Type
+	Returns      Type
+	Async        bool
+	AsyncReturns Type // body payload; Returns is Promise for an async function
 
 	Body []Statement
 
@@ -132,6 +135,7 @@ const (
 	// A value of the type exists only where it's kept (a variable, a parameter, a field, an element,
 	// a map's value); reading one is WeakTarget, and keeping one is WeakOf.
 	Weak
+	Promise
 )
 
 // Maybe is the type of a value of type t that may be missing: number | undefined and boolean |
@@ -164,7 +168,7 @@ func (t Type) Present() Type {
 
 // IsReference reports whether a value of the type lives on the heap and is counted.
 func (t Type) IsReference() bool {
-	return t == String || t == Object || t == Array || t == Map || t == Closure || t == Union || t == Weak
+	return t == String || t == Object || t == Array || t == Map || t == Closure || t == Union || t == Weak || t == Promise
 }
 
 // Local is a variable: its name as written, for reading the output, and its type.
@@ -1075,6 +1079,7 @@ type (
 	// included.
 	Loop struct {
 		Condition  Expression
+		Test       []Statement // normalization before every loop condition
 		Body       []Statement
 		Update     []Statement
 		CheckAfter bool

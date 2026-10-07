@@ -123,6 +123,11 @@ func (e *emitter) read(read ir.Read) string {
 // value is already the local's. A captured local is declared straight into a cell.
 func (e *emitter) declareLocal(local int, value string, owned bool) {
 	declared := e.program.Locals[local]
+	if _, ok := e.asyncSlots[local]; ok {
+		e.store(local, value, owned)
+		e.line("%s->ready = true;", e.cellReference(local))
+		return
+	}
 	if declared.Counter {
 		// A whole-number constant within 2^53, which an integer holds exactly (lower/counters.go).
 		e.line("int64_t %s = (int64_t)%s;", e.localName(local), value)
@@ -180,6 +185,9 @@ func (e *emitter) cellSlot(local int) string {
 
 // cellReference is the cell a captured local lives in, from the current function, or "".
 func (e *emitter) cellReference(local int) string {
+	if position, ok := e.asyncSlots[local]; ok {
+		return fmt.Sprintf("(&frame->cells[%d])", position)
+	}
 	declared := e.program.Locals[local]
 	if declared.Global || !declared.Captured {
 		return ""

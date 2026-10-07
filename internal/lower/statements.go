@@ -98,6 +98,12 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 		return statements, err
 	}
 	switch expression.Kind {
+	case ast.KindAwaitExpression:
+		value, err := l.awaitExpression(expression)
+		if err != nil {
+			return nil, err
+		}
+		return []ir.Statement{ir.Evaluate{Value: value}}, nil
 	case ast.KindCallExpression:
 		if ast.SkipParentheses(expression.AsCallExpression().Expression).Kind == ast.KindSuperKeyword {
 			return l.superStatement(expression)
@@ -135,6 +141,9 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 		if err != nil {
 			return nil, err
 		}
+		if call.Type() == ir.Promise {
+			return nil, &Refused{Where: l.program.Where(expression), What: "an unawaited async task", Fix: "await the call or keep and return its Promise"}
+		}
 		return []ir.Statement{ir.Evaluate{Value: call}}, nil
 	case ast.KindBinaryExpression:
 		return l.assignment(expression)
@@ -161,5 +170,8 @@ func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
 	if err != nil {
 		return nil, err
 	}
-	return []ir.Statement{ir.Return{Value: fit(value, l.function.Returns)}}, nil
+	if l.function.Async && value.Type() == ir.Promise {
+		return nil, l.notYet(expression, "return of a Promise without await (Promise adoption)")
+	}
+	return []ir.Statement{ir.Return{Value: fit(value, l.function.BodyReturns())}}, nil
 }

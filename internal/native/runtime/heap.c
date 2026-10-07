@@ -257,7 +257,7 @@ static void deallocate(adamic_heap *heap) {
 void *adamic_retain_slow(void *value) {
 	adamic_heap *heap = value;
 	if (heap != NULL && heap->kind == adamic_kind_cell && ((adamic_cell *)heap)->owner != NULL) {
-		heap = &((adamic_cell *)heap)->owner->heap;
+		heap = ((adamic_cell *)heap)->owner;
 	}
 	if (heap != NULL) {
 		size_t count = __atomic_load_n(&heap->references, __ATOMIC_RELAXED);
@@ -295,7 +295,7 @@ static void list(void *value) {
 static bool drop_reference(void *value) {
 	adamic_heap *heap = value;
 	if (heap != NULL && heap->kind == adamic_kind_cell && ((adamic_cell *)heap)->owner != NULL) {
-		heap = &((adamic_cell *)heap)->owner->heap;
+		heap = ((adamic_cell *)heap)->owner;
 	}
 	if (heap == NULL) { return false; }
 	size_t count = __atomic_load_n(&heap->references, __ATOMIC_RELAXED);
@@ -315,7 +315,7 @@ static bool drop_reference(void *value) {
 static void let_go(void *value) {
 	if (drop_reference(value)) {
 		adamic_heap *heap = value;
-		if (heap->kind == adamic_kind_cell && ((adamic_cell *)heap)->owner != NULL) heap = &((adamic_cell *)heap)->owner->heap;
+		if (heap->kind == adamic_kind_cell && ((adamic_cell *)heap)->owner != NULL) heap = ((adamic_cell *)heap)->owner;
 		list(heap);
 	}
 }
@@ -361,10 +361,7 @@ static void free_one(void *value) {
 	}
 	case adamic_kind_environment: {
 		adamic_environment *environment = value;
-		for (size_t index = 0; index < environment->count; index++) {
-			adamic_cell *cell = &environment->cells[index];
-			if (cell->references) { let_go(cell->value.reference); }
-		}
+		adamic_environment_drop_cells(environment->cells, environment->count, let_go);
 		break;
 	}
 	case adamic_kind_closure: {
@@ -406,7 +403,7 @@ __attribute__((noinline)) static void release_last(void *value) {
 void adamic_release_slow(void *value) {
 	if (drop_reference(value)) {
 		adamic_heap *heap = value;
-		if (heap->kind == adamic_kind_cell && ((adamic_cell *)heap)->owner != NULL) heap = &((adamic_cell *)heap)->owner->heap;
+		if (heap->kind == adamic_kind_cell && ((adamic_cell *)heap)->owner != NULL) heap = ((adamic_cell *)heap)->owner;
 		release_last(heap);
 	}
 }

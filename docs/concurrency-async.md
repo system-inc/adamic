@@ -531,3 +531,121 @@ The full uncached `go test -count=1 -timeout 30m ./...` was attempted and stoppe
 ## Limits of this evidence
 
 The compiler has no host timer/file/socket service, complete Promise API, Node phase emulation, async scopes, source cancellation, pending-I/O cancellation, arbitrary reference payloads, await in loops/catch/finally, pool adapter or scalability/performance benchmark. The original standalone C timer/file runtime remains fixed to one timer and one small ASCII file request (127-byte payload); it is not the compiler's file API. No macOS/Windows run or TSan proof. The original helper thread joins before the loop reads its buffer. Broader async correctness remains work for the landing units above.
+
+
+## Ordinary async implementation after checkpoint approval
+
+Async declarations, instance and static methods, arrows and function expressions
+now use the ordinary statement and expression lowerers. `ir.Function.Async` and
+`AsyncReturns` describe an ordinary function; `ir.Await` is an expression.
+`lowerAsync`, its grammar helpers, the early async module route and both backend
+AsyncProgram routes are removed. Promise.resolve/reject are small shared lowering
+leaves, not a source-language interpreter. Returning an unawaited Promise still
+reports NotYet rather than claiming Promise adoption.
+
+Normalization snapshots earlier operands and receiver reads before later awaits,
+keeps conditional, boolean and coalescing operands guarded, and copies array and
+object spread inputs at their evaluation point. Loop tests execute on each
+iteration. Fulfillment binds its result and rejection follows the lexical throw
+edge. MayThrow and closure effects use Program.CallTargets and ClosureTargets.
+Async graph tracing parks an activation at await and restores that activation on
+resume, including interleaved nested tasks; these functions now participate in
+the ordinary SSA and Node path tests instead of being excluded.
+
+`CutSuspensionGraph` works through EntryBlock, BlockOrder, Successors and
+Suspension, promoting multi-entry joins to region roots until every block has
+one owner. Native states name region entries; synchronous region edges are
+immediate gotos, and only Suspend yields. The adapter currently obtains the
+already-finalized reverse-postorder block list from flow.Function. When
+codex/shared-ssa lands, replace this BlockOrder implementation with the shared
+Graph ReversePostorder, and delegate entry and successor traversal to that
+Graph adapter. Suspend remains an Adamic terminal. No implementation depends on
+flow/graph.go, ssa.go, ssa_eliminate.go or ssa_verify.go. No shared module import
+is claimed: after fetching depth 200 and then unshallowing cohere, the observed
+origin/main was e7cfe4d1aceb524bc6f5936564284d54ca63d771 and d19d0023 remained
+absent; origin/codex/shared-ssa was also absent. Reconciliation is pending its tip.
+
+The merged nested-functions layout is used: one AllocateEnvironment at function
+entry and Function.FrameEnvironment in ascending local-index order. The async
+activation embeds the scheduler prefix, inherited closure and error edges, plus
+the same adamic_cell layout and common initialize/drop helpers as a synchronous
+environment. It is not a second captured-slot representation. All activation
+locals are conservatively owned, rather than claiming minimal liveness. Private
+reference slots clear before release at completion; captured slots remain for
+escaped closures until environment destruction. Environment-cell owner is now
+a heap-header pointer, with unchanged pointer size, so cells can name either
+scheduler-prefixed or ordinary environments. Region placement stays disabled
+for async activations. HasPromises conservatively disables borrowing, reuse and
+region optimizations for the whole containing module; suspension also mutates
+escaped values in flow effect inference.
+
+The unit 1 Promise and reaction structs, frame prefix and existing protocol
+function signatures are unchanged. Two additive compiler-private functions,
+adamic_async_register_cleanup(frame, callback) and adamic_async_forget_cleanup,
+register abandonment cleanup without owning the frame. They clear private
+slots, inherited closure and output edges on cancel or normal-exit abandonment,
+including a private closure that otherwise retains its own activation. Cleanup
+records are removed even by skip-detach mutants so their raw pointers do not
+hide leaks from LeakSanitizer. Source finally is not executed on abandonment.
+The common cell helpers are adamic_environment_initialize_cells and
+adamic_environment_drop_cells. The share walker normalizes interior cells to
+owners and recognizes ordinary environments, fixing the merged runtime seam.
+
+Named native hooks: asyncFunction (ordinary graph instructions and terminals),
+asyncMain (root draining/rejection), promiseValue (settled values), asyncSlots in
+cellReference/declareLocal, asyncHandler in jumpThrown, Promise in cType,
+PromiseValue/Await expression dispatch, and appendsTo's refusal to use stack-local
+string accumulation for frame slots. emit.go selects these hooks, includes the
+async runtime and disables unproved optimization plans. Existing ordinary
+statement, expression, store and exception emitters remain shared. JavaScript
+uses Async metadata, Await/PromiseValue dispatch and loop Test; tracedAwait is
+instrumentation-only, with Suspend/Resume options preserving activation traces.
+
+Fourteen async source fixtures run through the Node/native/JavaScript oracle.
+The ten additions cover control flow, operand order, methods, closures, owned
+reference values, caught rejection and synchronous throws, escaped captures,
+awaited loop tests/updates, spread snapshots and receiver snapshots. Current
+compiler mutants cover wrong resumed payload (Node stdout), missing dynamic
+parameter retain (ASan use-after-free) and omitted throw-frame slot drop (LSan).
+The production-runtime cycle fixtures separately pass settle, cancel and exit,
+and each skip-detach mutant is caught by LSan; lost next-link ownership is caught
+by ASan and inline fulfilled resumption by Node FIFO output. Additional expanded
+callable/control mutants and final gates are recorded after their runs finish.
+
+Observed setup: ready steps 0s, build cache 88s, total 88s; nproc 5. The complete
+flow tests passed after enabling async path tracing. Lower, IR and native passed
+the first package run; that run exposed an activation-trace parser error in flow,
+which was fixed and the entire flow package rerun successfully. Tests are logged
+under /tmp/async-ordinary-*.log. These observations are not a full-gate claim.
+
+Counts (allocations/frees, retains/releases, peak; every async row has 0 regions):
+
+| Fixture | Before | After |
+| --- | --- | --- |
+| plain | 21/21, 32/36, 13 | 21/21, 39/61, 15 |
+| three | 20/20, 25/29, 11 | 20/20, 34/58, 12 |
+| nested | 22/22, 38/41, 12 | 22/22, 45/70, 13 |
+| throw | 12/10, 16/15, 10 | 12/10, 26/35, 10 |
+| control | new | 39/39, 88/115, 13 |
+| operand_order | new | 18/18, 27/51, 10 |
+| methods | new | 21/21, 40/71, 13 |
+| closures | new | 25/25, 51/86, 17 |
+| live_values | new | 24/24, 35/61, 21 |
+| catches | new | 23/23, 45/71, 16 |
+| escaped_capture | new | 23/23, 53/80, 18 |
+| conditions | new | 53/53, 129/168, 13 |
+| snapshots | new | 48/48, 92/153, 28 |
+| receiver | new | 30/30, 65/100, 17 |
+
+The throw fixture intentionally exits through fatal root rejection; its separate
+consumed-rejection harness checks balanced cleanup. Unrelated counts changed
+only row ordering inherited from the nested-functions merge, not numeric values.
+
+Explicit gaps remain: awaits in catch/finally, all async finally completion
+routing, async for-of/switch, captured per-iteration cells, structural-method
+operands containing awaits, boolean-or-undefined slots, Promise.all, arbitrary
+executors, thenables and Promise adoption. Host services and source cancellation
+remain separate units. The broad ordinary async surface is implemented, but the
+approved checkpoint's non-suspending finally routing, per-surface mutants and
+shared-module reconciliation are not yet complete; this section does not claim
+the entire October 9 bar is met.

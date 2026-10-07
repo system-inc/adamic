@@ -1,0 +1,16 @@
+async function make(seed: string): Promise<() => string> {
+    const held = `${seed}:held`;
+    await Promise.resolve();
+    return () => held;
+}
+const escaped = await make(`seed${3}`);
+console.log(escaped());
+async function local(seed: string): Promise<string> {
+    const held = `${seed}:inner`;
+    const work = async (): Promise<string> => {
+        await Promise.resolve();
+        return held;
+    };
+    return await work();
+}
+console.log(await local(`local${4}`));

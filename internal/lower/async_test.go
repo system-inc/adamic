@@ -28,15 +28,13 @@ func TestAsyncGeneratedIdentityCannotBeClaimedBySource(t *testing.T) {
 func TestAsyncGapsNameTheMissingPiece(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ source, want string }{
-		{"async function f(): Promise<void> { await Promise.resolve(); throw new Error(); }\nawait f();", "Error construction without one explicit message"},
 		{"async function f(): Promise<void> { await new Promise<void>(() => {}); }\nawait f();", "Promise executors"},
-		{"async function f(): Promise<void> { await Promise.all([Promise.resolve(1)]); }\nawait f();", "full Promise surface"},
-		{"async function f(): Promise<void> { try { await Promise.resolve(); } finally { console.log('cleanup'); } }\nawait f();", "try/catch/finally"},
-		{"async function f(): Promise<void> { const value = await Promise.resolve(); }\nawait f();", "void-valued locals"},
-		{"async function f(): Promise<void> { await undefined; }\nawait f();", "undefined/void-valued expressions"},
-		{"async function f(): Promise<object> { return {}; }\nawait f();", "object, union"},
-		{"async function f(): Promise<void> { await f(); }\nawait f();", "recursive async call graphs"},
-		{"async function f(): Promise<void> { while (false) { await Promise.resolve(); } }\nawait f();", "control flow"},
+		{"async function f(): Promise<void> { await Promise.all([Promise.resolve(1)]); }\nawait f();", "Promise.all"},
+		{"async function f(): Promise<void> { try { throw new Error('why'); } catch { await Promise.resolve(); } }\nawait f();", "await in catch or finally"},
+		{"async function f(): Promise<void> { try { await Promise.resolve(); } finally { await Promise.resolve(); } }\nawait f();", "await in catch or finally"},
+		{"async function f(): Promise<void> { const value = await Promise.resolve(); }\nawait f();", "type void"},
+		{"async function f(): Promise<number> { return Promise.resolve(1); }\nawait f();", "Promise adoption"},
+		{"async function f(): Promise<number> { return await {then(resolve: (value: number) => void): void { resolve(1); }}; }\nawait f();", "thenables"},
 		{"async function f(): Promise<void> {}\nf();", "unawaited async task"},
 		{"async function f(): Promise<void> { await Promise.resolve(); }\nvoid f();", "void operator"},
 		{"async function f(): Promise<void> { console.log(`${1 == 1}`); }\nawait f();", "refuses =="},
@@ -56,5 +54,14 @@ func TestAsyncGapsNameTheMissingPiece(t *testing.T) {
 				t.Errorf("gap became refusal: %v", err)
 			}
 		}
+	}
+}
+
+func TestPromisePayloadCannotHideUserCycles(t *testing.T) {
+	t.Parallel()
+	_, err := lowerSource(t, "interface Box { promise: Promise<Box> | undefined; }\nfunction stash(box: Box, promise: Promise<Box>): void { box.promise = promise; }\nconst box: Box = {promise: undefined};\nconst promise = Promise.resolve(box);\nstash(box,promise);")
+	var refused *Refused
+	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "adamic/cycle-capable") {
+		t.Fatalf("Promise payload hid the user back-reference: %v", err)
 	}
 }

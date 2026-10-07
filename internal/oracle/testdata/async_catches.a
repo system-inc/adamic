@@ -1,0 +1,16 @@
+function fail(): number { throw new Error(`sync${1}`); }
+async function reject(): Promise<number> {
+    await Promise.resolve();
+    throw new Error(`async${2}`);
+}
+async function run(): Promise<string> {
+    let text = "";
+    try { const value = await reject(); text = `${value}`; }
+    catch (error) { if (error instanceof Error) { text = error.message; } }
+    try { const value = await Promise.reject<number>(new Error(`rejected${3}`)); text = `${value}`; }
+    catch (error) { if (error instanceof Error) { text = `${text}:${error.message}`; } }
+    try { const value = fail() + await Promise.resolve(4); text = `${value}`; }
+    catch (error) { if (error instanceof Error) { text = `${text}:${error.message}`; } }
+    return text;
+}
+console.log(await run());

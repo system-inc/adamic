@@ -1,0 +1,17 @@
+async function allowed(value: number): Promise<boolean> {
+    await undefined;
+    return value < 3;
+}
+async function run(): Promise<number> {
+    let step = 0;
+    let total = 0;
+    while (await allowed(step)) {
+        total += step;
+        step++;
+    }
+    for (let index = 0; await allowed(index); index += await Promise.resolve(1)) {
+        total += index;
+    }
+    return total;
+}
+console.log(`${await run()}`);
