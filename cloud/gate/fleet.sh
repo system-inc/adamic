@@ -147,9 +147,21 @@ run)
 	done
 	echo "fleet: run $run, logs on $prefix/"
 
-	# A shard takes about 20 minutes; two hours covers setup, restarts and resumes.
+	# A shard takes about 20 minutes; two hours covers setup, restarts and resumes. A box can fail
+	# in ways its brief can't fix (no push credentials, a dead container), so each shard whose logs
+	# never arrive is started once more on a fresh box before the run gives up.
 	# shellcheck disable=SC2046
-	await "${ADAMIC_GATE_FLEET_SHARD_WAIT:-7200}" $(shards) || exit 1
+	if ! await "${ADAMIC_GATE_FLEET_SHARD_WAIT:-7200}" $(shards); then
+		present=$(arrived)
+		retried=()
+		for name in $(shards); do
+			grep -qx "$name" <<< "$present" && continue
+			launch "$fleet-$name-retry" "$work/$name.md"
+			retried+=("$name")
+		done
+		echo "fleet: started again on fresh boxes: ${retried[*]}"
+		await "${ADAMIC_GATE_FLEET_SHARD_WAIT:-7200}" "${retried[@]}" || exit 1
+	fi
 	echo "fleet: all $count shard logs arrived after $((($(date +%s) - started) / 60)) minutes"
 	runMerge
 	;;
