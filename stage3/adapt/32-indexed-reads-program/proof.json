@@ -65,10 +65,130 @@
       "after_sha256": "fff26242d3adbdc6107230f0e61f555b4394104e3d1db05c5ef89a6ca2ebce26",
       "before_CRLF": 1981,
       "after_CRLF": 1981
+    },
+    "builder.ts": {
+      "before_sha256": "80d74f38d234882721c3ed08aacdd121bb2db3306b244c99cd32a603ca6b9030",
+      "after_sha256": "db69cd4925cd9536986d3d4f9a82820d3801d52f72130736a3393d8c262b503b",
+      "before_CRLF": 2480,
+      "after_CRLF": 2480
+    },
+    "builderPublic.ts": {
+      "before_sha256": "946d9ffc54af1debe07e1625527a45df696eeeeb96e123c74b6099868123a939",
+      "after_sha256": "946d9ffc54af1debe07e1625527a45df696eeeeb96e123c74b6099868123a939",
+      "before_CRLF": 273,
+      "after_CRLF": 273
+    },
+    "builderState.ts": {
+      "before_sha256": "d88acf93f4dae794f3911a766ebeda9c553b046cf1e1bcfcf138e9c268c1ed05",
+      "after_sha256": "d88acf93f4dae794f3911a766ebeda9c553b046cf1e1bcfcf138e9c268c1ed05",
+      "before_CRLF": 626,
+      "after_CRLF": 626
+    },
+    "builderStatePublic.ts": {
+      "before_sha256": "271f9512e20d7f04fe1d68394fbd8647ce022c9978bf80e6fab681dd453c52dc",
+      "after_sha256": "271f9512e20d7f04fe1d68394fbd8647ce022c9978bf80e6fab681dd453c52dc",
+      "before_CRLF": 17,
+      "after_CRLF": 17
+    },
+    "watch.ts": {
+      "before_sha256": "19aa60584dc9d870db4649df71964d50f39a15f286706a3d721545d65a3b01ff",
+      "after_sha256": "50d71288ee4a1d87ef73a1cca56103eb22031a775343e06f8ca63f19d5d15768",
+      "before_CRLF": 999,
+      "after_CRLF": 999
+    },
+    "watchPublic.ts": {
+      "before_sha256": "d89938fec0f1609c8d2e7427df068eca36513e1e4c4d89442d9558de3d0213e4",
+      "after_sha256": "d89938fec0f1609c8d2e7427df068eca36513e1e4c4d89442d9558de3d0213e4",
+      "before_CRLF": 1263,
+      "after_CRLF": 1263
+    },
+    "watchUtilities.ts": {
+      "before_sha256": "6c5f03d70b0dcd704a2f425f097fe6bd9a66dd05c5d75c0c3adb76e3c1eb0fc8",
+      "after_sha256": "6c5f03d70b0dcd704a2f425f097fe6bd9a66dd05c5d75c0c3adb76e3c1eb0fc8",
+      "before_CRLF": 847,
+      "after_CRLF": 847
+    },
+    "resolutionCache.ts": {
+      "before_sha256": "e4a681e2022812886243130bde8f4598ba7925f3277ddf945ba3578341da0a0b",
+      "after_sha256": "058be2fce23cb1c64e689c293c0680c88f5003d696783ad1e1e3a97f4fc32c96",
+      "before_CRLF": 1716,
+      "after_CRLF": 1716
+    },
+    "tsbuild.ts": {
+      "before_sha256": "0bcbfbb3c4a9ed2dd502417150f730ed84704486982fed8b10b524206dcb716f",
+      "after_sha256": "0bcbfbb3c4a9ed2dd502417150f730ed84704486982fed8b10b524206dcb716f",
+      "before_CRLF": 183,
+      "after_CRLF": 183
+    },
+    "tsbuildPublic.ts": {
+      "before_sha256": "4e9187522a3258cfc9935018b698e7201fb360c824f58001541df74f30a8332c",
+      "after_sha256": "9bec9404174a0457321d305a5962c6f7e9e992eec689e704bc77cbd444ba9112",
+      "before_CRLF": 2493,
+      "after_CRLF": 2493
     }
   },
-  "verification": "PASS moduleNameResolver.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS moduleSpecifiers.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS sys.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS program.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS commandLineParser.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS binder.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS semver.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS programDiagnostics.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS tracing.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS symbolWalker.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS performance.ts: stock emitted JavaScript bytes, site contract, idempotence\n",
+  "verification": "PASS builder.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS builderPublic.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS builderState.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS builderStatePublic.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS watch.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS watchPublic.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS watchUtilities.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS resolutionCache.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS tsbuild.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS tsbuildPublic.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS moduleNameResolver.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS moduleSpecifiers.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS sys.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS program.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS commandLineParser.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS binder.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS semver.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS programDiagnostics.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS tracing.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS symbolWalker.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS performance.ts: stock emitted JavaScript bytes, site contract, idempotence\n",
   "idempotence": [
+    {
+      "file": "builder.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 24
+    },
+    {
+      "file": "builderPublic.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 0
+    },
+    {
+      "file": "builderState.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 0
+    },
+    {
+      "file": "builderStatePublic.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 0
+    },
+    {
+      "file": "watch.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 9
+    },
+    {
+      "file": "watchPublic.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 0
+    },
+    {
+      "file": "watchUtilities.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 5
+    },
+    {
+      "file": "resolutionCache.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 6
+    },
+    {
+      "file": "tsbuild.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 0
+    },
+    {
+      "file": "tsbuildPublic.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 3
+    },
     {
       "file": "moduleNameResolver.ts",
       "assertions": 0,
@@ -136,12 +256,17 @@
       "declined": 0
     }
   ],
-  "census_before": 132,
-  "census_after": 35,
+  "census_before": 212,
+  "census_after": 62,
   "setup": "go version go1.27.1 linux/amd64\nsetup: go ready (1s)\nclang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)\nsetup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (1s)\nv24.19.0\nsetup: node ready (1s)\nsetup: submodules ready (1s)\nsetup: build cache warm (298s)\nsetup: done in 298s on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB\n",
   "wave2_incremental_before": 14,
   "wave3_incremental_before": 85,
   "wave4_incremental_before": 36,
+  "wave5_incremental_before": 115,
+  "inventory_mutant": {
+    "mutant": "one unledgered indexed expression added",
+    "caught": "indexed inventory drift: builder.ts: 36 != 35"
+  },
   "oracle": {
     "tree": "/tmp/adapt32-after",
     "nproc": 5,
@@ -158,7 +283,7 @@
           "--no-fund"
         ],
         "exit": 0,
-        "seconds": 3.686
+        "seconds": 4.456
       },
       "build": {
         "command": [
@@ -167,7 +292,7 @@
           "build"
         ],
         "exit": 0,
-        "seconds": 7.822
+        "seconds": 15.181
       },
       "tests": {
         "command": [
@@ -179,7 +304,7 @@
           "--no-colors"
         ],
         "exit": 0,
-        "seconds": 334.644
+        "seconds": 413.644
       }
     },
     "status": "pass",
@@ -189,7 +314,7 @@
       "pending": 0
     },
     "baseline_diffs": [],
-    "wall_seconds": 346.217
+    "wall_seconds": 433.359
   },
   "baseline_diff_bytes": 0
 }
