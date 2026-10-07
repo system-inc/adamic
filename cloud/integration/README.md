@@ -45,6 +45,13 @@ named). The rule hasn't changed; the tree only changes what reaches it.
 - `speculate.sh <label> <area>...` pushes `cloud/speculate-<label>-<n>`, main plus the first n
   areas, for every n, so the prefixes gate at once. The longest green prefix goes to main; a red one
   is bisected by its prefixes.
+- Every prefix of a stack gates on its own box, beside the whole stack (@system_adamic, October 7).
+  When the whole stack is red, the longest green prefix goes to main at once and only the rest is
+  bisected. Members go in order of risk: fast tracks and small, already gated areas first, merges
+  that have never had a whole gate of their own last. Each prefix must be an ancestor of the next
+  with valid counts on its own, so a stack whose merges conflict in counts.md is built by a seat
+  that regenerates counts after every merge, not once at the end. When a small push lands under a
+  stack built on it, push it with --defer-velocity so the stack stays a fast-forward.
 - `push-main.sh <sha> <gate minutes> <pass> <fail> <skip> "<branches>"` checks main is still the
   sha's ancestor, fast-forwards main (never a force), appends one row to
   `documentation/velocity/landings.csv` in a commit that changes only that file, pushes it, and runs
