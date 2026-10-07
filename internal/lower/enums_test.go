@@ -42,7 +42,8 @@ func TestEnumSlotViews(t *testing.T) {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
 			_, err := lowerSource(t, probe.source)
-			closed := strings.Contains(probe.name, "enum object") || probe.name == "object assign"
+			// Open numeric enums do not erase generic class argument identity.
+			closed := strings.Contains(probe.name, "enum object") || probe.name == "object assign" || probe.name == "generic class invariant"
 			if !closed {
 				if err != nil {
 					t.Fatal(err)
@@ -52,6 +53,9 @@ func TestEnumSlotViews(t *testing.T) {
 			var refused *Refused
 			if !errors.As(err, &refused) {
 				t.Fatalf("got %v, want Refused", err)
+			}
+			if probe.name == "generic class invariant" && !strings.Contains(err.Error(), "adamic/nominal-class") {
+				t.Fatalf("want nominal generic argument refusal, got %v", err)
 			}
 			if !strings.Contains(err.Error(), "enum") && !strings.Contains(err.Error(), "readonly") && !strings.Contains(err.Error(), "invariant-mutable") && !strings.Contains(err.Error(), "override") && !strings.Contains(err.Error(), "Object.assign") && !strings.Contains(err.Error(), "nominal-class") {
 				t.Fatalf("missing reason: %v", err)
