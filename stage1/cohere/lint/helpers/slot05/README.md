@@ -49,3 +49,7 @@ Set `ADAMIC_SLOT05_EVIDENCE` to an existing directory to save per-consumer liter
 ## Seventh batch
 
 [batch7/REPORT.md](batch7/REPORT.md) records descriptor functional-root registration, theme namespace construction and utility evaluator construction. Three retained helpers add eighteen dependency removals across six rules, with eleven compiling semantic mutants caught in four-way Go comparisons. Current origin/main remains e8ba3d5; no additional helper is reserved.
+
+## Eighth batch
+
+[batch8/REPORT.md](batch8/REPORT.md) records candidate parsing, variant parsing and design-system load orchestration. Actual Go/source Node/emitted JavaScript/sanitized native agree across 34,057 final cases, with nine compiling semantic mutants caught. Three helpers remove eighteen prerequisites across six rules and no final blocker; full linter/engine integration remains outside this helper comparison.
