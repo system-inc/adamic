@@ -121,11 +121,16 @@ func run(row string, countOnly bool, out *bufio.Writer) int {
 	result, err := edit.FixText(path, source, func(fileName, text string) ([]edit.Proposal, error) {
 		return edit.ProposalsFrom(collect(fileName, text, fields)), nil
 	}, 10)
-	if err != nil || !result.Converged {
+	if err != nil {
 		panic(fmt.Sprintf("fix failed: %v %+v", err, result))
 	}
 	for _, rejection := range result.Rejected {
 		fmt.Fprintf(out, "rejected %s %d %d %s %s\n", rejection.Proposal.RuleName, rejection.Proposal.Fix.Range.Pos(), rejection.Proposal.Fix.Range.End(), rejection.ConflictsWith, rejection.Reason)
+	}
+	// A run that exhausts the pass budget is cohere's answer too, not a harness failure: the file is left
+	// as found, with a fix-engine rejection, and the rules still proposing are named.
+	if !result.Converged {
+		fmt.Fprintf(out, "unconverged\t%s\n", strings.Join(result.UnconvergedRules, ","))
 	}
 	fixed := result.Text
 	fmt.Fprintf(out, "fixed\t%s\n", written(fixed))
