@@ -3,6 +3,7 @@ package oracle
 import (
 	"path/filepath"
 	"regexp"
+	"runtime"
 	"strings"
 	"testing"
 
@@ -48,7 +49,12 @@ func TestNodeFSDirectoryRuntimeLayouts(t *testing.T) {
 	if err := native.Build(changed, mutant, native.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
-	result := executeInput(t, how, []string{"ASAN_OPTIONS=detect_leaks=1"}, mutant)
+	// LeakSanitizer is Linux's: macOS's AddressSanitizer aborts when asked for it.
+	var environment []string
+	if runtime.GOOS == "linux" {
+		environment = []string{"ASAN_OPTIONS=detect_leaks=1"}
+	}
+	result := executeInput(t, how, environment, mutant)
 	if result.exitCode != 0 || len(result.stderr) != 0 {
 		t.Fatalf("mutant failed outside comparison: exit %d stderr %s", result.exitCode, result.stderr)
 	}

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"syscall"
 	"testing"
@@ -207,7 +208,12 @@ func TestNodeFSFileMutants(t *testing.T) {
 				t.Fatal(err)
 			}
 			how := fsFilePrepare(t, shared, "mutant-input")
-			got := executeInput(t, how, []string{"ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1"}, binary, how.arguments...)
+			// LeakSanitizer is Linux's: macOS's AddressSanitizer aborts when asked for it.
+			environment := []string{"UBSAN_OPTIONS=halt_on_error=1"}
+			if runtime.GOOS == "linux" {
+				environment = append(environment, "ASAN_OPTIONS=detect_leaks=1")
+			}
+			got := executeInput(t, how, environment, binary, how.arguments...)
 			if got.exitCode != 0 || len(got.stderr) != 0 {
 				t.Fatalf("mutant failed outside Node comparison: exit %d stderr %s", got.exitCode, got.stderr)
 			}
