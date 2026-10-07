@@ -1,0 +1,3 @@
+type Brand = string & { __proto__: void };
+const value = 'abc' as Brand;
+console.log(typeof value.__proto__);
