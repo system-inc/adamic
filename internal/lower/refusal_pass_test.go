@@ -27,11 +27,20 @@ func TestRefusalPassRulings(t *testing.T) {
 			}
 			_, err = lowerSource(t, string(source))
 			var refused *Refused
-			if !errors.As(err, &refused) {
-				t.Fatalf("got %v, want Refused", err)
+			var notYet *NotYet
+			var got string
+			// Pin the error category as well as the complete location and explanation.
+			if strings.Contains(string(want), ": stage 0 can't lower ") {
+				if !errors.As(err, &notYet) {
+					t.Fatalf("got %v, want NotYet", err)
+				}
+				got = filepath.Base(notYet.Where) + ": stage 0 can't lower " + notYet.What + " yet"
+			} else {
+				if !errors.As(err, &refused) {
+					t.Fatalf("got %v, want Refused", err)
+				}
+				got = filepath.Base(refused.Where) + ": Adamic 0.1 refuses " + refused.What + "; " + refused.Fix
 			}
-			// Keep the complete location, construct and fix, excluding only the temporary directory.
-			got := filepath.Base(refused.Where) + ": Adamic 0.1 refuses " + refused.What + "; " + refused.Fix
 			if got != strings.TrimSpace(string(want)) {
 				t.Fatalf("got %q, want %q", got, strings.TrimSpace(string(want)))
 			}

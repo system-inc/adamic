@@ -1,0 +1,2 @@
+function take(value: Function): void {}
+take((): number => 1);

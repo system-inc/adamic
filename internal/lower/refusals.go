@@ -46,7 +46,8 @@ var refusedOperators = map[ast.Kind]refusal{
 	ast.KindBarBarEqualsToken:             {"||=", "write the if"},
 }
 
-// refuse walks a module for what 0.1 refuses and returns the first, with where it is and the fix.
+// refuse walks a module for permanent refusals first, then record operations not
+// implemented yet, then temporary record declaration refusals. Each names its fix.
 func (l *lowering) refuse(module *ast.SourceFile) error {
 	// Use the parser's directives, which also recognize the block forms honored by the checker.
 	// Text in a string or a prose comment never enters this list.
@@ -68,6 +69,8 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		}
 	}
 	var found error
+	var recordDeclaration error
+	var recordOperation error
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
 		if found != nil {
@@ -80,6 +83,12 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		if err := l.refuseUnsafeDeclaration(node); err != nil {
 			found = err
 			return true
+		}
+		if err := l.refuseRecordDeclaration(node); err != nil && recordDeclaration == nil {
+			recordDeclaration = err
+		}
+		if err := l.recordOperationNotYet(node); err != nil && recordOperation == nil {
+			recordOperation = err
 		}
 		if refused, isRefused := refusals[node.Kind]; isRefused {
 			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
@@ -173,7 +182,15 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		return false
 	}
 	module.AsNode().ForEachChild(visit)
-	return found
+	if found != nil {
+		return found
+	}
+	// Permanent refusals win. Otherwise name the unimplemented record operation
+	// before falling back to the temporary refusal of its annotation.
+	if recordOperation != nil {
+		return recordOperation
+	}
+	return recordDeclaration
 }
 
 // called reports whether a property access is what a call calls, through any parentheses around it:
@@ -254,12 +271,7 @@ func (l *lowering) refuseUnsafeDeclaration(node *ast.Node) error {
 		if l.isLibraryGlobal(reference.TypeName, "Function") {
 			return &Refused{Where: l.program.Where(node), What: "the Function type", Fix: "write a function type with its parameters and result, like (value: number) => number"}
 		}
-		// Record<string, T> stays refused until #p9v82wa lowers own keys only,
-		// dynamic reads as T | undefined, and loudly stops prototype-name reads and in.
-		// A finite Record literal-key union is an ordinary checked object shape.
-		if l.checker.GetStringIndexType(l.checker.GetTypeAtLocation(node)) != nil {
-			return &Refused{Where: l.program.Where(node), What: "Record<string, T> (an index signature without own-key record lowering)", Fix: "use Map<string, T> until records have own keys, T | undefined dynamic reads, and loud prototype-name checks (#p9v82wa)"}
-		}
+
 	}
 	if node.Kind == ast.KindIdentifier && l.isLibraryGlobal(node, "eval") {
 		return &Refused{Where: l.program.Where(node), What: "eval", Fix: "write the code as a function; native programs have no compiler at runtime"}
@@ -280,6 +292,47 @@ func (l *lowering) refuseUnsafeDeclaration(node *ast.Node) error {
 				if ast.IsExpandoPropertyDeclaration(declaration) {
 					return &Refused{Where: l.program.Where(node), What: "properties added after creation (expando)", Fix: "declare the properties when the object is created, or use a Map for dynamic keys"}
 				}
+			}
+		}
+	}
+	return nil
+}
+
+// Unused string-indexed declarations and named missing reads stay temporarily
+// refused until #p9v82wa lands. Finite literal-key Records are checked object shapes.
+func (l *lowering) refuseRecordDeclaration(node *ast.Node) error {
+	if node.Kind == ast.KindTypeReference {
+		// Record<string, T> stays refused until #p9v82wa lowers own keys only,
+		// dynamic reads as T | undefined, and loudly stops prototype-name reads and in.
+		// A finite Record literal-key union is an ordinary checked object shape.
+		if l.checker.GetStringIndexType(l.checker.GetTypeAtLocation(node)) != nil {
+			return &Refused{Where: l.program.Where(node), What: "Record<string, T> (an index signature without own-key record lowering)", Fix: "use Map<string, T> until records have own keys, T | undefined dynamic reads, and loud prototype-name checks (#p9v82wa)"}
+		}
+	}
+	return nil
+}
+
+// These operations have not been implemented, rather than forbidden. Diagnose
+// them before a record can become ordinary fixed-shape IR and fail at runtime.
+func (l *lowering) recordOperationNotYet(node *ast.Node) error {
+	if node.Kind == ast.KindElementAccessExpression {
+		access := node.AsElementAccessExpression()
+		if l.checker.GetStringIndexType(l.checker.GetTypeAtLocation(access.Expression)) != nil {
+			parent := node.Parent
+			if parent != nil && parent.Kind == ast.KindBinaryExpression && parent.AsBinaryExpression().Left == node && ast.IsAssignmentOperator(parent.AsBinaryExpression().OperatorToken.Kind) {
+				return l.notYet(node, "dynamic record writes (own-key record storage is not implemented; use Map.set)")
+			}
+			return l.notYet(node, "dynamic record reads (own-key lookup returning T | undefined is not implemented; use Map.get)")
+		}
+	}
+	if node.Kind == ast.KindCallExpression {
+		call := node.AsCallExpression()
+		callee := ast.SkipParentheses(call.Expression)
+		if callee.Kind == ast.KindPropertyAccessExpression && call.Arguments != nil && len(call.Arguments.Nodes) > 0 {
+			access := callee.AsPropertyAccessExpression()
+			name := access.Name().Text()
+			if l.isLibraryGlobal(access.Expression, "Object") && (name == "values" || name == "entries") && l.checker.GetStringIndexType(l.checker.GetTypeAtLocation(call.Arguments.Nodes[0])) != nil {
+				return l.notYet(node, "Object."+name+" on a record (own-key record enumeration is not implemented; use Map."+name+")")
 			}
 		}
 	}
