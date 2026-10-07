@@ -1,4 +1,8 @@
-# one-var unified migration blocked
+# Historical one-var multi-edit blocker
+
+This historical blocker is resolved by harness fca1616e6 and the rule's
+reportRange migration on base 59451e23e. See REPORT.md for current validation.
+The earlier failure evidence below is retained as history.
 
 Source: origin/codex/stage1-lint-batch3, rules/one_var.ts, as named by
 DEDUP_LEDGER.md. Messages were moved verbatim; helpers used only by this rule

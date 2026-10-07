@@ -3,7 +3,6 @@ import { panic } from 'adamic';
 import type { RuleContext } from '../../context.ts';
 import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
 import { Settings } from '../../settings.ts';
-import { Finding } from '../../finding.ts';
 import { SuggestionEdit as RepairEdit } from '../../suggestions.a';
 import { initializer } from './initializer.a';
 import { first, parent } from './helpers.a';
@@ -96,6 +95,7 @@ function afterComments(source: string, from: number): number {
 export class Rule {
     readonly context: RuleContext;
     readonly scopes = new Map<string, Scope>();
+    reported = 0;
     constructor(context: RuleContext) {
         this.context = context;
     }
@@ -152,25 +152,19 @@ export class Rule {
         return -1;
     }
     emit(statement: number, id: string, kind: string, edits: RepairEdit[]): void {
-        const edit = edits[0];
-        const finding = new Finding(
+        const finding = this.context.reportRange(
+            this.context.start(statement),
+            this.context.node(statement).end,
             'one-var',
             id,
             oneVarMessage(id, kindText(kind)),
-            this.context.start(statement),
-            this.context.node(statement).end,
-            edit === undefined ? '' : 'fix',
-            edit?.text ?? '',
-            '',
+            edits,
         );
-        if(edit !== undefined) {
-            finding.editStart = edit.start;
-            finding.editEnd = edit.end;
-        }
-        if(edits.length > 1) {
-            panic('one-var needs unified multi-edit fixes');
-        }
-        this.context.findings.push(finding);
+        // Go gathers this rule at SourceFile before ordinary node listeners.
+        // Preserve that stable tie order while retaining handed-node dispatch.
+        this.context.findings.pop();
+        this.context.findings.splice(this.reported, 0, finding);
+        this.reported++;
     }
     join(
         statement: number,
