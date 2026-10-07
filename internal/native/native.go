@@ -44,6 +44,9 @@ func cString(value string) string {
 
 // Options says how to compile.
 type Options struct {
+	// Compiler selects clang (the default) or gcc for the differential lane.
+	Compiler string
+
 	// Split compiles generated functions in separate translation units. Off by default.
 	Split bool
 
@@ -72,7 +75,11 @@ func Flags(options Options) []string {
 	// A program may declare a variable, a function or a parameter it never uses, or assign a variable
 	// to itself, as JavaScript allows; that's the linter's business (cohere's no-unused-vars and
 	// no-self-assign), not a reason the C can't compile.
-	flags := []string{"-std=c11", "-Wall", "-Wextra", "-Werror", "-pedantic", "-Wno-unused-variable", "-Wno-unused-but-set-variable", "-Wno-unused-function", "-Wno-unused-parameter", "-Wno-self-assign"}
+	flags := []string{"-std=c11", "-Wall", "-Wextra", "-Werror", "-pedantic", "-Wno-unused-variable", "-Wno-unused-but-set-variable", "-Wno-unused-function", "-Wno-unused-parameter"}
+	// GCC has no self-assignment warning corresponding to clang's.
+	if options.Compiler != "gcc" {
+		flags = append(flags, "-Wno-self-assign")
+	}
 	// JavaScript rounds every operation on its own. clang otherwise fuses a * b + c into one
 	// multiply-add wherever the processor has one (every arm64, so every Apple silicon Mac), and
 	// 0.1 * 10 - 1 is then 5.551115123125783e-17 instead of 0. V8 builds itself the same way.
@@ -98,6 +105,13 @@ func Flags(options Options) []string {
 
 // Build compiles C source and the runtime into a native binary at output.
 func Build(source string, output string, options Options) error {
+	compiler, err := selectedCompiler(options)
+	if err != nil {
+		return err
+	}
+	if compiler == "gcc" && (options.Split || os.Getenv("ADAMIC_NATIVE_SPLIT") == "1") {
+		return fmt.Errorf("native: GCC lane requires an unsplit build")
+	}
 	if options.Split || os.Getenv("ADAMIC_NATIVE_SPLIT") == "1" {
 		return buildUnits(source, output, options)
 	}
@@ -120,9 +134,20 @@ func Build(source string, output string, options Options) error {
 	// The runtime calls libm (trunc, floor, sqrt). On macOS that's part of libSystem and comes free; on
 	// Linux it's its own library, and only the sanitizers' runtime happened to pull it in.
 	arguments = append(arguments, "-lm")
-	command := exec.Command("clang", arguments...)
+	command := exec.Command(compiler, arguments...)
 	if combined, err := command.CombinedOutput(); err != nil {
-		return fmt.Errorf("native: clang failed: %w\n%s", err, combined)
+		return fmt.Errorf("native: %s failed: %w\n%s", compiler, err, combined)
 	}
 	return nil
+}
+
+func selectedCompiler(options Options) (string, error) {
+	switch options.Compiler {
+	case "", "clang":
+		return "clang", nil
+	case "gcc":
+		return "gcc", nil
+	default:
+		return "", fmt.Errorf("native: unsupported compiler %q", options.Compiler)
+	}
 }
