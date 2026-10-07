@@ -2,7 +2,7 @@
 
 ## Deliberate compile regressions first
 
-None in merge 1.
+None through merge 5.
 
 ## Merge 1: compiler/landing-batch-1 e5d34c099
 
@@ -125,3 +125,7 @@ Merge 4 validation: checkpoint flow 177.226s, lower 74.090s, native 234.570s, st
 Conflicts preserve shared nested environments and readiness bits, import-cycle checks, enum/cast/record and predicate body proofs, both oracle fixture lists, taste field representations, and main's complete escape-hatch document plus the incoming implementation record. Nested preallocation is distinguished from uninitialized variable storage in both emitters. A non-null assertion on an already checked scalar does not add an invalid NULL comparison. Removing that scalar repair was run as a mutant and failed native C compilation on non_null.a; restored baseline passed. All 16 ReadinessMutants cases were caught by pinned output or exact diagnostics, including captured and exceptional reads and deinitialization.
 
 History audit: call-targets f64641f38 and MayThrow commits 2dbee1148, 5af7bfbc6 and 3ab8f94c1 are already ancestors of origin/main. Shared exact commit history is retained; no duplicate patches were replayed. The separate call-targets branch is intentionally excluded as requested.
+
+## Merge 5: codex/optional-chain-after-call 611f6e093
+
+Conflicts: combined optional receiver recognition with contextual undefined observation handling in narrowed.go; retained both helpers and every existing check. Counts regenerated on Linux in 23.982s. gofmt, vet and whitespace checks passed. Lower passed 56.318s, native 230.262s, flow 195.750s and IR 11.948s; whole oracle passed (05-gate.log). No new failure and no stage3 record edit. The catchable-read mutant changed Defined.Throws to reject the TypeError prefix: both backends panicked with exit 70 instead of Node's caught TypeError and exit 0. The required-read fixture caught it; baseline restored.

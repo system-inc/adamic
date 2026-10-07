@@ -844,6 +844,13 @@ func (e *emitter) value(expression ir.Expression) string {
 		// Checked as native checks it: the checker narrowed undefined away, but a call may have put it back.
 		return "adamicDefined(" + e.value(expression.Value) + ", " + quote(narrowedAwayMessage) + ")"
 	case ir.Defined:
+		if expression.Throws() {
+			absent := "undefined"
+			if expression.Null {
+				absent = "null"
+			}
+			return "((value) => { if (value === " + absent + ") throw new TypeError(" + quote(strings.TrimPrefix(expression.Message, "TypeError: ")) + "); return value; })(" + e.value(expression.Value) + ")"
+		}
 		if expression.Null {
 			return "adamicDefinedNull(" + e.value(expression.Value) + ", " + quote(expression.Message) + ")"
 		}
