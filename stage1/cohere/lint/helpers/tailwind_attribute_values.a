@@ -1,0 +1,20 @@
+import { panic } from 'adamic';
+import type { TailwindClassValues } from './tailwind_class_values_in.a';
+
+export interface TailwindAttributeNode {
+    readonly kind: string;
+    readonly text: string;
+    readonly name: number;
+    readonly initializer: number;
+}
+// Go's AsJsxAttribute and unsupported Name.Text calls assert their AST shape.
+// Refuse invalid adapters explicitly instead of treating them as an empty result.
+export function tailwindAttributeValues<Literal, Template>(nodes: readonly TailwindAttributeNode[], node: number, attributeNames: ReadonlyMap<string, boolean>, classValuesUnder: (node: number, origin: string) => TailwindClassValues<Literal, Template>): TailwindClassValues<Literal, Template> {
+    const attribute = nodes[node] ?? panic('attributeValues requires a JSX attribute');
+    if (attribute.kind !== 'JsxAttribute') { panic('attributeValues requires a JSX attribute'); }
+    if (attribute.name < 0) { return { literals: [], templates: [] }; }
+    const name = nodes[attribute.name] ?? panic('missing attribute name');
+    if (name.kind === 'UnsupportedText') { panic('attribute name has no Go Text accessor'); }
+    if (!(attributeNames.get(name.text) ?? false)) { return { literals: [], templates: [] }; }
+    return classValuesUnder(attribute.initializer, 'Attribute');
+}

@@ -1,0 +1,60 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from './options_json.ts';
+import { tailwindAttributeValues } from './tailwind_attribute_values.a';
+import type { TailwindAttributeNode } from './tailwind_attribute_values.a';
+import type { TailwindClassValues } from './tailwind_class_values_in.a';
+import type { TailwindClassLiteral } from './tailwind_class_literal_from.a';
+interface Template { readonly node: number; readonly origin: string; readonly edges: { readonly leading: boolean; readonly trailing: boolean }; }
+function decodeValues(reader: OptionsJson, index: number): TailwindClassValues<TailwindClassLiteral, Template> {
+    const lists = reader.node(index).children;
+    const literals: TailwindClassLiteral[] = [];
+    const templates: Template[] = [];
+    const literalList = reader.node(reader.node(lists[0] ?? panic('literals')).children[0] ?? panic('literal list')).children;
+    const templateList = reader.node(reader.node(lists[1] ?? panic('templates')).children[0] ?? panic('template list')).children;
+    for (const item of literalList) {
+        const fields = reader.node(item).children;
+        literals.push({ node: Number(reader.node(fields[0] ?? panic('node')).text), text: reader.node(fields[1] ?? panic('text')).text,
+            range: { pos: Number(reader.node(fields[2] ?? panic('pos')).text), end: Number(reader.node(fields[3] ?? panic('end')).text) },
+            origin: reader.node(fields[4] ?? panic('origin')).text,
+            edges: { leading: reader.node(fields[5] ?? panic('leading')).text === 'true', trailing: reader.node(fields[6] ?? panic('trailing')).text === 'true' } });
+    }
+    for (const item of templateList) {
+        const fields = reader.node(item).children;
+        templates.push({ node: Number(reader.node(fields[0] ?? panic('node')).text), origin: reader.node(fields[1] ?? panic('origin')).text,
+            edges: { leading: reader.node(fields[2] ?? panic('leading')).text === 'true', trailing: reader.node(fields[3] ?? panic('trailing')).text === 'true' } });
+    }
+    return { literals, templates };
+}
+function printValues(values: TailwindClassValues<TailwindClassLiteral, Template>): void {
+    console.log(`${values.literals.length} ${values.templates.length}`);
+    for (const value of values.literals) {
+        console.log(`${value.node} ${value.range.pos} ${value.range.end} ${value.edges.leading} ${value.edges.trailing}`);
+        console.log(value.text); console.log(value.origin);
+    }
+    for (const value of values.templates) { console.log(`${value.node} ${value.edges.leading} ${value.edges.trailing}`); console.log(value.origin); }
+}
+const args = programArguments();
+const file = readTextFile(args[0] ?? panic('fixture path'));
+if (file.kind === 'Error') { panic(file.message); }
+for (const line of file.text.split('\n')) {
+    if (line === '') { continue; }
+    const reader = new OptionsJson(line);
+    const root = reader.parse();
+    if (root < 0) { panic(reader.error); }
+    const fields = reader.node(root).children;
+    const present = reader.node(fields[0] ?? panic('name presence')).text === 'true';
+    const text = reader.node(fields[1] ?? panic('name')).text;
+    const initializer = Number(reader.node(fields[2] ?? panic('initializer')).text);
+    const names = new Map<string, boolean>();
+    for (const index of reader.node(fields[3] ?? panic('names')).children) {
+        const entry = reader.node(index).children;
+        names.set(reader.node(entry[0] ?? panic('key')).text, reader.node(entry[1] ?? panic('value')).text === 'true');
+    }
+    const delegated = decodeValues(reader, fields[4] ?? panic('delegate values'));
+    const nodes: TailwindAttributeNode[] = [{ kind: 'JsxAttribute', text: '', name: present ? 1 : -1, initializer }, { kind: 'Identifier', text, name: -1, initializer: -1 }];
+    const values = tailwindAttributeValues(nodes, 0, names, (node, origin) => {
+        if (node !== initializer || origin !== 'Attribute') { panic('attribute delegation differs from Go'); }
+        return delegated;
+    });
+    printValues(values);
+}
