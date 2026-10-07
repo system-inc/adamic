@@ -1,7 +1,7 @@
 Built binaryExpression, classLike and ifStatement in three separate .a files; fifty-four owned helpers total.
-Commits: claim 5ec90184 pushed before implementation, on current main c7991b90 and lint area b84a9d93; final publication SHA is named in the final response.
-Commands: selected gate PASS 80.495s, 1,153 comparisons; extra else mutants PASS 11.710s; vet/format clean; six uncached probes PASS 2.417s; setup 151s, nproc 5; complete helper gate PASS: owned 875.662s, shared 93.618s.
-Mutants: all twenty-one new variants compile and run cleanly before ordinary stdout comparisons catch their wrong operation traces.
+Commits: claim 5ec90184 pushed before implementation (rebased as 1ac93d1b), implementation a54f84ee on lint area b4691483 containing main c7991b90; final publication SHA is named in the final response.
+Commands: rebased helper gate PASS owned 896.257s/shared 93.953s, 3,046,326 comparisons; shared harness PASS 315.787s; vet/format clean; six uncached probes PASS 2.266s; setup 151s, nproc 5.
+Mutants: 203 owned variants (twenty-one new), four inherited variants and the missing-consumer check caught; clean native execution and stdout differences catch semantic variants, the empty-stack exit check catches its guard variant.
 Not covered: full rule findings, independent parser/backend integration, arbitrary malformed AST views and the full repository gate, including the seventeen external correctness comparisons.
 
 # Scope, claim and readiness
@@ -137,3 +137,19 @@ batch18_test.go:150: compiled semantic mutant caught at line 1: got "1/new:-1:-1
 Not a complete rule findings/fix/suggestion corpus, independent Adamic parsing of these sources, arbitrary graph/AST fuzzing or dependency backend validation. Capture and callback replay are bounded. The full repository gate, including its seventeen external stage-1 correctness comparisons, was not run in this helper unit. No executed correctness test was skipped, and no required-input check was weakened or deleted. The shared harness was previously green on this unchanged base; its full tests were not rerun for these helper-only changes.
 
 All previously delivered variants are rerun in final-helpers.log; evidence/all-mutant-witnesses.log names every rerun mutant and its observed first mismatch or guard result. Their mutations are specified in the earlier batch reports and owned tests.
+
+# Landing on the updated lint area
+
+A final fetch advanced the lint area from b84a9d93 to b4691483. The completed helper unit was committed, then all sixty-three own commits rebased cleanly onto origin/area/stage1-lint. Current main c7991b90 remains an ancestor. The new base migrates legacy lint rules to the registry; those integration changes are accepted unchanged. Rebased implementation a54f84ee and claim 1ac93d1b preserve the original pushed-before-source reservation. A complete second helper gate runs against this new base, together with vet, six uncached input probes and six selected shared-harness checks. The rechecked twenty remote helper branches and nineteen claim files have no competing mentions.
+
+```
+git rebase origin/area/stage1-lint
+go test ./stage1/cohere/lint/helpers ./stage1/cohere/lint/helpers/slot03 -count=1 -v -timeout=20m > stage1/cohere/lint/helpers/slot03/batch18/evidence/rebased-helpers.log 2>&1
+go vet ./... > stage1/cohere/lint/helpers/slot03/batch18/evidence/rebased-vet.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run "^TestInputAgreesWithNode$" -count=1 -v -timeout=20m > stage1/cohere/lint/helpers/slot03/batch18/evidence/rebased-input-oracle.log 2>&1
+go test ./stage1/cohere/lint -run "^(TestEmittedJavaScriptMismatch|TestDotARename|TestCompleteSuggestionSerialization|TestSuggestionAlongsideAutomaticFix|TestWitnessScriptKind|TestProfileCompilation)$" -count=1 -v -timeout=20m > stage1/cohere/lint/helpers/slot03/batch18/evidence/rebased-harness.log 2>&1
+```
+
+Rebased auxiliary checks: shared helpers PASS 93.953s; six selected shared-harness tests PASS 315.787s; vet output empty; six uncached input probes PASS 2.266s with zero hits and six misses. The emitted-JavaScript mismatch test intentionally launches a failing child comparison and passes only when that mismatch is caught; its child FAIL text is an expected mutant witness, not a gate failure. Profile compilation reports 139 allocations and 139 frees.
+
+Final landing result: all fifty-four owned helpers PASS 896.257s on b4691483, containing freshly fetched current main c7991b90. Exactly 3,046,326 comparison lines, 202 owned compiled semantic variants, one owned empty-stack guard variant, four inherited semantic variants, and the missing-consumer check pass. No helper tests skip or fail. Source Node and sanitized native are covered throughout; later batches also compare emitted JavaScript, including all 1,153 new cases. The initial full gate passed before rebase as recorded above. No further helpers are claimed. Publication targets only codex/lint-helpers-03 using the exact lease of previously pushed claim 5ec90184186a693a1882f9d6685ecd079bf25e24.

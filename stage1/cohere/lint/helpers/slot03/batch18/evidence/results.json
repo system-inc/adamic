@@ -1,7 +1,7 @@
 {
   "claim": "5ec90184",
   "base_main": "c7991b900362796aefd111474e65eb5398e91953",
-  "base_area": "b84a9d9314b65d3d0261ee017e233287b4f071da",
+  "base_area": "b46914832d70e00847d82d5d221ab7bb24040c53",
   "prior_helpers": 51,
   "owned_helpers": 54,
   "new_comparison_lines": 1153,
@@ -38,5 +38,15 @@
   "full_shared_seconds": 93.618,
   "owned_comparison_lines": 3046326,
   "owned_mutants": 203,
-  "inherited_mutants": 4
+  "inherited_mutants": 4,
+  "rebased_implementation": "a54f84ee",
+  "rebased_claim": "1ac93d1b",
+  "rebased_shared_seconds": 93.953,
+  "rebased_harness_seconds": 315.787,
+  "rebased_uncached_input_seconds": 2.266,
+  "rebased_owned_seconds": 896.257,
+  "owned_semantic_mutants": 202,
+  "owned_guard_mutants": 1,
+  "coverage_mutants": 1,
+  "skips": 0
 }
