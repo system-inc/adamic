@@ -1,7 +1,6 @@
 """Isolated supplied-fact controls. This is not the live native lint harness."""
 import argparse
 import json
-import shutil
 import subprocess
 from pathlib import Path
 

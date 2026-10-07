@@ -78,3 +78,43 @@ No native compiler77/repository287 comparison for these three, live handle relea
 check, full upstream matrix, emitted-JavaScript comparison or full repository gate
 is claimed. They remain in progress and do not authorize another reservation.
 Evidence contains raw stdout/stderr, parser numbers, source lint and mutant logs.
+
+## Current landing on c01907a7
+
+Main advances again to c01907a7036a22c2ea7ee686ed5fe4c6cd4bbc06.
+The only changed path under compiler/bridge/stage1/config scope is an added
+internal/oracle/stage3_hook_test.go; production compiler, bridge, stage1,
+submodule and configuration sources are unchanged. Rebase succeeds cleanly,
+yielding source tip 39310513. Main is fetched again after the gates and remains
+c01907a7. The six completed ports are green on this base; the new three remain
+partial for the reasons above.
+
+Rerun the exact earlier six-rule gates, with the same frozen manifests and
+artifact settings and -count=1: original three PASS 92.098s; timeout PASS
+50.990s; final process/blocking PASS 163.061s. All controls and compiler77/
+repository287 findings/fixes/suggestions agree with Go, normal and sanitized.
+All six clean-exit native mutants and both retaining-registry mutants are caught;
+released queries exit 70. The final gate reuses only the process compiler/bridge
+archives whose production sources are unchanged. No new process bootstrap or
+full repository gate is claimed. Logs are in evidence/landing-c019.
+
+The new isolated gate reruns with --artifacts /workspace/wave-10-leaf-c019:
+symbol 2023 bytes, hook 5790 bytes, require-await filter 784 bytes; normal and
+sanitized results agree with their respective Go authority. Their clean-exit
+mutants are caught at bytes 59, 63 and 558. Different artifact-path lengths
+account for changed serialized byte positions. Candidate reporting still refuses
+at exit 70; full live-node integration and reporting are not validated.
+
+New complete-process timing observations for the previously completed process
+and blocking rules below use three alternating runs and compare each stdout.
+They include load/parse/checker/serialization; worker load is uncontrolled.
+They are separate from the incomparable isolated-core timing above.
+
+| Rule and corpus | Native seconds | Go seconds | Native / Go |
+| --- | ---: | ---: | ---: |
+| process-controls | 3.622435 | 0.079991 | 45.286x |
+| process-compiler | 1.689670 | 0.292615 | 5.774x |
+| process-repository | 0.279804 | 0.172372 | 1.623x |
+| blocking-controls | 5.667838 | 0.077326 | 73.298x |
+| blocking-compiler | 2.148552 | 0.307177 | 6.995x |
+| blocking-repository | 0.366139 | 0.131993 | 2.774x |

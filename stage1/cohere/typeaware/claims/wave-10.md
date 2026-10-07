@@ -92,7 +92,7 @@ The next eligible checker-dependent rules in combined by-volume order are:
 All 528 origin refs were fetched. Scanning 33 distinct claim blobs across the
 197 ranked names leaves 18 unclaimed rules. The base/main ranked ports remain
 unchanged. The thirteen react/ candidates are skipped under the React parking
-instruction; require-atomic-updates imports the control_flow_graph module and
+instruction; the atomic-updates candidate imports the control_flow_graph module and
 is skipped because it needs that analysis. require-await uses AST/checker
 facts; structure/react-hook-no-any-type listens to CallExpression and uses
 checker/React binding facts without JSX or high-level analysis; symbol-description
@@ -110,3 +110,9 @@ filters pass context-free Go controls; candidate reporting explicitly refuses.
 The shared numeric supplied-node adapter is absent; live bridge/corpus validation
 is not performed. Contextual require-await reporting remains unported. See
 ../wave_10_leaf/README.md for exact observations and limits. No further claim.
+
+Latest landing base: c01907a7. Six completed-rule oracle gates and the isolated
+new-module gate are green after the clean rebase; source tip 39310513 precedes
+this evidence commit. React claims remain PARKED. The three non-analysis claims
+remain IN PROGRESS, with no additional reservation. See wave_10_leaf's current
+landing section for commands, comparisons, mutants, timings and limits.
