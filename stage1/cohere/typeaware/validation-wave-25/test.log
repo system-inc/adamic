@@ -1,0 +1,16 @@
+=== RUN   TestWave25AgreementAndMutants
+    wave_25_test.go:108: controls: 7334 identical finding bytes; findings 24
+    wave_25_test.go:116: controls-asan: 7334 identical finding bytes; findings 24
+    wave_25_test.go:150: graphql-mask exits 0; only Go byte oracle catches byte 784
+    wave_25_test.go:150: inject-strip exits 0; only Go byte oracle catches byte 5090
+    wave_25_test.go:169: repository: 18485 identical finding bytes; findings 0
+    wave_25_test.go:170: repository-asan: 18485 identical finding bytes; findings 0
+    wave_25_test.go:178: repository whole process native 219.025233ms Go 121.157554ms; tsgo: load_ns=66607298 query_ns=0 queries=0 first_query_ns=0 run_ns=145435756
+    wave_25_test.go:169: compiler: 5010 identical finding bytes; findings 0
+    wave_25_test.go:170: compiler-asan: 5010 identical finding bytes; findings 0
+    wave_25_test.go:178: compiler whole process native 1.471616141s Go 309.021761ms; tsgo: load_ns=246353523 query_ns=0 queries=0 first_query_ns=0 run_ns=1215755452
+    wave_25_test.go:189: released-handle check: panic 70, invalid or released checker handle
+    wave_25_test.go:194: released registry mutant exits 0; required panic 70 catches it
+--- PASS: TestWave25AgreementAndMutants (48.26s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	48.264s
