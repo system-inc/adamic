@@ -135,7 +135,10 @@ This is the existing standalone stage-1 runner pattern. Shared profile compilati
 shared `.a` module loading, suggestion serialization and emitted-JavaScript
 comparison are left to codex/lint-harness-dot-a. These ports are not wired into the
 shared full CLI, configuration/suppression routing or edit application. No shared
-harness gap prevents their native comparisons. No full `go test ./...` or general
+harness gap prevents their native comparisons. After the full gate, the declaration
+decoder was mechanically renamed to `declaration_context.a` to match its question.
+Normal and sanitizer binaries were rebuilt and all three workloads compared again;
+they remain byte identical, with empty stderr and zero source-lint findings. No full `go test ./...` or general
 equivalence proof outside the measured inputs is claimed.
 
 Committed evidence is in `validation/`: gate and oracle logs, selection snapshot,

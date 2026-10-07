@@ -1,6 +1,6 @@
 import { panic } from 'adamic';
 import type { Bindings } from '../bindings.ts';
-import { SymbolContext } from './symbol_context.a';
+import { SymbolContext } from './declaration_context.a';
 import type { Syntax } from './syntax.a';
 
 export class Context {
