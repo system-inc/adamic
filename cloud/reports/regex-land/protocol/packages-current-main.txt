@@ -1,0 +1,12 @@
+ok  	github.com/system-inc/adamic/internal/lower	61.504s
+ok  	github.com/system-inc/adamic/internal/fresh	100.298s
+ok  	github.com/system-inc/adamic/internal/flow	160.458s
+?   	github.com/system-inc/adamic/internal/javascript	[no test files]
+ok  	github.com/system-inc/adamic/internal/load	5.316s
+--- FAIL: TestCallTargetReaders (6.40s)
+    call_targets_guard_test.go:166: unapproved call-target read internal/lower/regexp_diagnostics.go:regexpDiagnosticLeaves:ArraySort.Comparator at /workspace/adamic/internal/lower/regexp_diagnostics.go:79:96; use CallTargets or ClosureTargets
+FAIL
+FAIL	github.com/system-inc/adamic/internal/ir	6.443s
+ok  	github.com/system-inc/adamic/cmd/adamic-test262	162.380s
+ok  	github.com/system-inc/adamic/internal/native	208.367s
+FAIL

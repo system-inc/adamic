@@ -1,0 +1,35 @@
+# github.com/system-inc/adamic/internal/lower [github.com/system-inc/adamic/internal/lower.test]
+internal/lower/regexp.go:37:9: l.constantUndefined undefined (type *lowering has no field or method constantUndefined)
+internal/lower/regexp.go:41:28: l.constantRegExp undefined (type *lowering has no field or method constantRegExp)
+internal/lower/regexp.go:48:68: l.intrinsicUndefined undefined (type *lowering has no field or method intrinsicUndefined)
+FAIL	github.com/system-inc/adamic/internal/lower [build failed]
+# github.com/system-inc/adamic/internal/lower
+internal/lower/regexp.go:37:9: l.constantUndefined undefined (type *lowering has no field or method constantUndefined)
+internal/lower/regexp.go:41:28: l.constantRegExp undefined (type *lowering has no field or method constantRegExp)
+internal/lower/regexp.go:48:68: l.intrinsicUndefined undefined (type *lowering has no field or method intrinsicUndefined)
+FAIL	github.com/system-inc/adamic/internal/fresh [build failed]
+# github.com/system-inc/adamic/internal/lower [github.com/system-inc/adamic/internal/flow.test]
+internal/lower/regexp.go:37:9: l.constantUndefined undefined (type *lowering has no field or method constantUndefined)
+internal/lower/regexp.go:41:28: l.constantRegExp undefined (type *lowering has no field or method constantRegExp)
+internal/lower/regexp.go:48:68: l.intrinsicUndefined undefined (type *lowering has no field or method intrinsicUndefined)
+FAIL	github.com/system-inc/adamic/internal/flow [build failed]
+?   	github.com/system-inc/adamic/internal/javascript	[no test files]
+ok  	github.com/system-inc/adamic/internal/load	1.241s
+?   	github.com/system-inc/adamic/internal/ir	[no test files]
+--- FAIL: TestMiniRunner (0.90s)
+    corpus_test.go:188: building adamic: exit status 1
+        # github.com/system-inc/adamic/internal/lower
+        internal/lower/regexp.go:37:9: l.constantUndefined undefined (type *lowering has no field or method constantUndefined)
+        internal/lower/regexp.go:41:28: l.constantRegExp undefined (type *lowering has no field or method constantRegExp)
+        internal/lower/regexp.go:48:68: l.intrinsicUndefined undefined (type *lowering has no field or method intrinsicUndefined)
+        
+--- FAIL: TestLargeCompilerOutputIsComplete (0.62s)
+    corpus_test.go:228: building adamic: exit status 1
+        # github.com/system-inc/adamic/internal/lower
+        internal/lower/regexp.go:37:9: l.constantUndefined undefined (type *lowering has no field or method constantUndefined)
+        internal/lower/regexp.go:41:28: l.constantRegExp undefined (type *lowering has no field or method constantRegExp)
+        internal/lower/regexp.go:48:68: l.intrinsicUndefined undefined (type *lowering has no field or method intrinsicUndefined)
+        
+FAIL
+FAIL	github.com/system-inc/adamic/cmd/adamic-test262	1.526s
+FAIL

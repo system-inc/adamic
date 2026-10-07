@@ -1,0 +1,11 @@
+# github.com/system-inc/adamic/internal/lower
+internal/lower/regexp.go:37:9: l.constantUndefined undefined (type *lowering has no field or method constantUndefined)
+internal/lower/regexp.go:41:28: l.constantRegExp undefined (type *lowering has no field or method constantRegExp)
+internal/lower/regexp.go:48:68: l.intrinsicUndefined undefined (type *lowering has no field or method intrinsicUndefined)
+# github.com/system-inc/adamic/internal/lower [github.com/system-inc/adamic/internal/flow.test]
+internal/lower/regexp.go:37:9: l.constantUndefined undefined (type *lowering has no field or method constantUndefined)
+internal/lower/regexp.go:41:28: l.constantRegExp undefined (type *lowering has no field or method constantRegExp)
+internal/lower/regexp.go:48:68: l.intrinsicUndefined undefined (type *lowering has no field or method intrinsicUndefined)
+# github.com/system-inc/adamic/internal/lower
+# [github.com/system-inc/adamic/internal/lower]
+vet: internal/lower/regexp.go:37:9: l.constantUndefined undefined (type *lowering has no field or method constantUndefined)

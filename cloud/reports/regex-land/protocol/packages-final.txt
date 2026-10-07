@@ -1,0 +1,19 @@
+--- FAIL: TestRegExpUncaughtDiagnosticsRefuse (0.11s)
+    regexp_diagnostics_test.go:18: unhandled parser diagnostic must refuse: new RegExp('(');: /tmp/adamic-gate/TestRegExpUncaughtDiagnosticsRefuse2158798505/001/main.a:1:1: stage 0 can't lower a NewExpression as a statement yet
+--- FAIL: TestRegExpHandledDiagnosticsAccepted (0.11s)
+    regexp_diagnostics_test.go:30: handled parser diagnostic must compile: try { new RegExp('('); } catch (error) { console.log(error instanceof SyntaxError ? "syntax" : "other"); }: /tmp/adamic-gate/TestRegExpHandledDiagnosticsAccepted3639345714/001/main.a:1:7: stage 0 can't lower a NewExpression as a statement yet
+--- FAIL: TestRegExpProtocolRefusals (0.28s)
+    regexp_protocol_test.go:23: escaping diagnostic must refuse: /tmp/adamic-gate/TestRegExpProtocolRefusals1992030883/003/main.a:1:87: stage 0 can't lower a NewExpression as a statement yet
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	67.741s
+ok  	github.com/system-inc/adamic/internal/fresh	86.332s
+ok  	github.com/system-inc/adamic/internal/flow	204.953s
+?   	github.com/system-inc/adamic/internal/javascript	[no test files]
+ok  	github.com/system-inc/adamic/internal/load	6.604s
+?   	github.com/system-inc/adamic/internal/ir	[no test files]
+ok  	github.com/system-inc/adamic/cmd/adamic-test262	146.787s
+--- FAIL: TestThrowElementBorrowPlan (3.16s)
+    element_borrow_test.go:72: caughtInside: harmless Error creation prevented borrowing
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	321.547s
+FAIL

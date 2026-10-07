@@ -76,7 +76,11 @@ func (l *lowering) regexpDiagnosticLeaves(statements []ir.Statement, functions [
 		case ir.RegExpCall:
 			found = found || (strings.HasSuffix(value.Method, "Callback") && closures)
 		case ir.ArraySort:
-			found = found || (value.Callback != nil && closures) || (value.Callback == nil && functions[value.Comparator])
+			targets := l.result.ClosureTargets(value)
+			found = found || (targets.Unknown && closures)
+			for _, target := range targets.Functions {
+				found = found || functions[target]
+			}
 		}
 		return !found
 	})
