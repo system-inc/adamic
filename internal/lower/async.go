@@ -146,6 +146,24 @@ func (l *lowering) asyncType(proven *checker.Type, where *ast.Node) (ir.Type, er
 	}
 	return 0, l.notYet(where, "async object, union, Promise-handle or thenable payloads (full Promise compatibility)")
 }
+
+// asyncTypeOf observes a named async declaration without making a synchronous wrapper.
+// The async grammar refuses assignments to these declarations, and reading a hoisted function
+// identifier has no effects. Resolve the symbol so a same-named primitive parameter is not folded.
+func (l *lowering) asyncTypeOf(node *ast.Node) (ir.Expression, bool) {
+	if l.result.Async == nil {
+		return nil, false
+	}
+	operand := ast.SkipParentheses(node.AsTypeOfExpression().Expression)
+	if !ast.IsIdentifier(operand) {
+		return nil, false
+	}
+	if _, declared := l.functions[l.symbol(operand)]; !declared {
+		return nil, false
+	}
+	return ir.StringConstant{Index: l.constant("function")}, true
+}
+
 func (l *lowering) asyncValue(node *ast.Node) (ir.Expression, error) {
 	if node == nil {
 		return nil, nil
