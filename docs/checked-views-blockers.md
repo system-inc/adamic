@@ -1,4 +1,4 @@
-# Checked-view blocking families at 609ed395
+# Checked-view blocking families and remaining lane dependencies
 
 Measured before the next family implementation on the pinned 2,936 sites. These
 are overlapping transitive target-contract dependencies, not first blockers,
@@ -24,12 +24,39 @@ which belong to lane 2, rather than walking their intrinsic library APIs.
 | nominal class fields | 0 | 18 | 18 |
 | generic field contract | 0 | 6 | 6 |
 
-Arrays/tuples are biggest (2,909), so their integration starts first. Lane 2 tip
-2a16ce35 supplies standalone lowering and JavaScript helpers but no native element
-checker. The dependency merge is f709a1c5. Lane 1 supplies the missing shared
-registry adapter and physical storage byte first; admission remains NotYet until
-the runtime checks and all read/write paths are wired. This does not unlock a
-complete tsc site. Nullish members are next and are the largest lane 1 family.
+Lane 1 now builds nullish members and optional properties together, followed by
+mixed and untagged unions and full union admission. Lane 2 owns native array
+reads/mutations and callable contracts. The array adapter/storage prerequisite is
+already pushed; it does not remove the array blocker.
+
+## Remaining families by site
+
+Each row in `stage3/interface-downcasts/blocking-families-sites.json` now has a
+second census column, `remaining_families`, beside the original `blockers`, plus
+`remaining_owner`, `lane_projection` and `other_remaining_families`. Nothing has
+been removed merely because a helper or descriptor exists. Complete source
+lowerings remain **0 / 1,758 tagged and 0 / 1,178 untagged**.
+
+Exclusive counts include every missing family. “Other unresolved” means finishing
+both lanes alone still leaves a recorded blocker; its complete set remains in the
+per-site table. The projected counts below answer which of these two lanes a site
+needs, while retaining other blockers separately. They are not unlocked counts.
+
+| Remaining ownership | Exclusive sites | Two-lane projection |
+| --- | ---: | ---: |
+| Only lane 1 | 2 | 2 |
+| Only lane 2 | 32 | 32 |
+| Both lanes | 23 | 2901 |
+| Other unresolved | 2879 | separately recorded |
+| No missing families | 0 | not a lowering claim |
+
+Lane 1 families: nullish members, optional properties, mixed primitive union,
+object plus primitive union, untagged object union and union cast admission.
+Lane 2 families: array or tuple contracts and callable contracts. Dictionaries,
+any/unknown/generic/intersection/never/empty contracts and nominal class fields
+are other unresolved families; no worker completion is assumed for them.
+The summary JSON groups all sites by their exact remaining set. Rerun this column
+after each admitted family, removing only support validated on both backends.
 
 The new native `adamic_array.element_kind` records storage, not logical element
 conformance: 0 unknown, 1 number, 2 boolean, 7 packed number/undefined, 10 heap

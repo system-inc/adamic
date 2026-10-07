@@ -247,3 +247,21 @@ callables through nested interface fields at many more sites; it does not reassi
 those sites or claim successful lowering. Mixed primitive element descriptors now
 carry explicit ViewUnion member ids instead of an ambiguous ViewScalar/Union
 storage certificate. This is metadata preparation, not mixed-union admission.
+
+## Updated lane split and delivery estimate
+
+Lane 1 next owns nullish members and optional properties, then mixed unions.
+Lane 2 next owns native array reads and mutation through the shared contract,
+then callable contracts. Existing file ownership and hook signatures remain as
+listed above. No other worker should edit the shared null/undefined representation
+or the object readiness/read dispatch; lane 1 supplies those handoffs.
+
+The remaining-family census in checked-views-blockers.md supersedes the earlier
+direct-only dependency counts for scheduling. It records all missing families at
+each site, exclusive ownership counts and a two-lane projection which does not
+claim that other unresolved contracts have disappeared.
+
+Working estimate for lane 1 nullish plus optional: October 8 22:00 UTC (16:00 MDT),
+with native null/undefined separation and mutation/alias parity still a risk.
+This is an estimate, not a completion claim; each family is pushed only after its
+both-backend oracle and semantic mutants pass.

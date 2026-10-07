@@ -77,7 +77,26 @@ for(const file of program.getSourceFiles()) {
  visit(file);
 }
 assert.equal(lookup.size,0);assert.equal(rows.length,2936);
+const lane1=new Set(['nullish members','optional properties','mixed primitive union','object plus primitive union','untagged object union','union cast admission']);
+const lane2=new Set(['array or tuple contracts','callable contracts']);
+const laneCounts={lane1_only:0,lane2_only:0,both:0,other_unresolved:0,complete:0};
+const projectionCounts={lane1_only:0,lane2_only:0,both:0,neither:0};
+const remainingSets=new Map();
+for(const row of rows) {
+ row.remaining_families=[...row.blockers];
+ const first=row.remaining_families.some(family=>lane1.has(family));
+ const second=row.remaining_families.some(family=>lane2.has(family));
+ row.other_remaining_families=row.remaining_families.filter(family=>!lane1.has(family)&&!lane2.has(family));
+ const projection=first?(second?'both':'lane1_only'):(second?'lane2_only':'neither');
+ row.lane_projection=projection;projectionCounts[projection]++;
+ row.remaining_owner=row.other_remaining_families.length?'other_unresolved':row.remaining_families.length?projection:'complete';
+ laneCounts[row.remaining_owner]++;
+ const key=row.remaining_families.join('; ');
+ if(!remainingSets.has(key))remainingSets.set(key,{remaining_families:row.remaining_families,owner:row.remaining_owner,tagged:0,untagged:0,total:0});
+ const group=remainingSets.get(key);group[row.kind]++;group.total++;
+}
+assert.equal(Object.values(laneCounts).reduce((a,b)=>a+b,0),2936);
 const counts={};for(const row of rows)for(const family of row.blockers){counts[family]??={tagged:0,untagged:0,total:0};counts[family][row.kind]++;counts[family].total++;}
 const ranked=Object.entries(counts).sort((a,b)=>b[1].total-a[1].total);
-const summary={typescript:ts.version,source_commit:'050880ce59e30b356b686bd3144efe24f875ebc8',sites:rows.length,counts:Object.fromEntries(ranked),limits:'Overlapping complete-target dependencies, not successful lowering or runtime frequencies. Stop at arrays/callables, owned by lane 2. Generic/intersection/dictionary boundaries are recorded; their field/index contracts are also inspected where available. Every witness is a declared checker type, never a proof of construction or initialization.'};
+const summary={typescript:ts.version,source_commit:'050880ce59e30b356b686bd3144efe24f875ebc8',sites:rows.length,remaining_by_owner:laneCounts,lane_projection:projectionCounts,remaining_sets:[...remainingSets.values()].sort((a,b)=>b.total-a.total),counts:Object.fromEntries(ranked),limits:'Overlapping complete-target dependencies, not successful lowering or runtime frequencies. Stop at arrays/callables, owned by lane 2. Generic/intersection/dictionary boundaries are recorded; their field/index contracts are also inspected where available. Every witness is a declared checker type, never a proof of construction or initialization.'};
 fs.writeFileSync(path.join(output,'blocking-families-sites.json'),JSON.stringify(rows,null,2)+'\n');fs.writeFileSync(path.join(output,'blocking-families-summary.json'),JSON.stringify(summary,null,2)+'\n');console.log(JSON.stringify(summary,null,2));

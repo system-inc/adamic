@@ -2,6 +2,305 @@
   "typescript": "6.0.3",
   "source_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
   "sites": 2936,
+  "remaining_by_owner": {
+    "lane1_only": 2,
+    "lane2_only": 32,
+    "both": 23,
+    "other_unresolved": 2879,
+    "complete": 0
+  },
+  "lane_projection": {
+    "lane1_only": 2,
+    "lane2_only": 32,
+    "both": 2901,
+    "neither": 1
+  },
+  "remaining_sets": [
+    {
+      "remaining_families": [
+        "any field contract",
+        "array or tuple contracts",
+        "callable contracts",
+        "dictionary contracts",
+        "empty or unsupported field contract",
+        "intersection field contract",
+        "mixed primitive union",
+        "never field contract",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties",
+        "untagged object union"
+      ],
+      "owner": "other_unresolved",
+      "tagged": 1497,
+      "untagged": 1061,
+      "total": 2558
+    },
+    {
+      "remaining_families": [
+        "any field contract",
+        "array or tuple contracts",
+        "callable contracts",
+        "dictionary contracts",
+        "empty or unsupported field contract",
+        "intersection field contract",
+        "mixed primitive union",
+        "never field contract",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties",
+        "union cast admission",
+        "untagged object union"
+      ],
+      "owner": "other_unresolved",
+      "tagged": 261,
+      "untagged": 25,
+      "total": 286
+    },
+    {
+      "remaining_families": [
+        "array or tuple contracts"
+      ],
+      "owner": "lane2_only",
+      "tagged": 0,
+      "untagged": 27,
+      "total": 27
+    },
+    {
+      "remaining_families": [
+        "any field contract",
+        "array or tuple contracts",
+        "callable contracts",
+        "dictionary contracts",
+        "empty or unsupported field contract",
+        "intersection field contract",
+        "mixed primitive union",
+        "never field contract",
+        "nominal class fields",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties",
+        "untagged object union"
+      ],
+      "owner": "other_unresolved",
+      "tagged": 0,
+      "untagged": 18,
+      "total": 18
+    },
+    {
+      "remaining_families": [
+        "array or tuple contracts",
+        "nullish members"
+      ],
+      "owner": "both",
+      "tagged": 0,
+      "untagged": 12,
+      "total": 12
+    },
+    {
+      "remaining_families": [
+        "callable contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "owner": "both",
+      "tagged": 0,
+      "untagged": 7,
+      "total": 7
+    },
+    {
+      "remaining_families": [
+        "callable contracts"
+      ],
+      "owner": "lane2_only",
+      "tagged": 0,
+      "untagged": 5,
+      "total": 5
+    },
+    {
+      "remaining_families": [
+        "callable contracts",
+        "dictionary contracts",
+        "generic field contract",
+        "nullish members",
+        "optional properties"
+      ],
+      "owner": "other_unresolved",
+      "tagged": 0,
+      "untagged": 4,
+      "total": 4
+    },
+    {
+      "remaining_families": [
+        "callable contracts",
+        "empty or unsupported field contract",
+        "mixed primitive union",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "owner": "other_unresolved",
+      "tagged": 0,
+      "untagged": 3,
+      "total": 3
+    },
+    {
+      "remaining_families": [
+        "any field contract",
+        "callable contracts",
+        "dictionary contracts",
+        "empty or unsupported field contract",
+        "intersection field contract",
+        "nullish members",
+        "optional properties"
+      ],
+      "owner": "other_unresolved",
+      "tagged": 0,
+      "untagged": 2,
+      "total": 2
+    },
+    {
+      "remaining_families": [
+        "nullish members",
+        "optional properties"
+      ],
+      "owner": "lane1_only",
+      "tagged": 0,
+      "untagged": 2,
+      "total": 2
+    },
+    {
+      "remaining_families": [
+        "array or tuple contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "owner": "both",
+      "tagged": 0,
+      "untagged": 2,
+      "total": 2
+    },
+    {
+      "remaining_families": [
+        "array or tuple contracts",
+        "callable contracts",
+        "nullish members"
+      ],
+      "owner": "both",
+      "tagged": 0,
+      "untagged": 2,
+      "total": 2
+    },
+    {
+      "remaining_families": [
+        "any field contract",
+        "callable contracts",
+        "dictionary contracts",
+        "generic field contract",
+        "nullish members",
+        "optional properties"
+      ],
+      "owner": "other_unresolved",
+      "tagged": 0,
+      "untagged": 1,
+      "total": 1
+    },
+    {
+      "remaining_families": [
+        "dictionary contracts",
+        "generic field contract"
+      ],
+      "owner": "other_unresolved",
+      "tagged": 0,
+      "untagged": 1,
+      "total": 1
+    },
+    {
+      "remaining_families": [
+        "callable contracts",
+        "dictionary contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "owner": "other_unresolved",
+      "tagged": 0,
+      "untagged": 1,
+      "total": 1
+    },
+    {
+      "remaining_families": [
+        "any field contract",
+        "callable contracts",
+        "dictionary contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "owner": "other_unresolved",
+      "tagged": 0,
+      "untagged": 1,
+      "total": 1
+    },
+    {
+      "remaining_families": [
+        "array or tuple contracts",
+        "callable contracts",
+        "empty or unsupported field contract",
+        "mixed primitive union",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "owner": "other_unresolved",
+      "tagged": 0,
+      "untagged": 1,
+      "total": 1
+    },
+    {
+      "remaining_families": [
+        "array or tuple contracts",
+        "dictionary contracts",
+        "mixed primitive union",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "owner": "other_unresolved",
+      "tagged": 0,
+      "untagged": 1,
+      "total": 1
+    },
+    {
+      "remaining_families": [
+        "array or tuple contracts",
+        "dictionary contracts",
+        "empty or unsupported field contract",
+        "mixed primitive union",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "owner": "other_unresolved",
+      "tagged": 0,
+      "untagged": 1,
+      "total": 1
+    },
+    {
+      "remaining_families": [
+        "any field contract",
+        "array or tuple contracts",
+        "callable contracts",
+        "dictionary contracts",
+        "empty or unsupported field contract",
+        "intersection field contract",
+        "nullish members",
+        "optional properties"
+      ],
+      "owner": "other_unresolved",
+      "tagged": 0,
+      "untagged": 1,
+      "total": 1
+    }
+  ],
   "counts": {
     "array or tuple contracts": {
       "tagged": 1758,
