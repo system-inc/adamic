@@ -1,0 +1,5 @@
+export const messageConsistentTypeDefinitionsInterfaceOverType =
+    'Use an `interface` instead of a `type` here. Both describe the same object shape, but an interface is the one this project writes: it can be reopened by a later declaration, it shows up under its own name in compiler errors rather than being expanded inline, and mixing the two spellings for the same job makes a reader ask whether the difference was meant.';
+export const messageConsistentTypeDefinitionsTypeOverInterface =
+    'Use a `type` instead of an `interface` here. Both describe the same object shape, but a type alias is the one this project writes: it cannot be reopened by a declaration somewhere else in the program, so what you read at the definition is all there is, and mixing the two spellings for the same job makes a reader ask whether the difference was meant.';
+

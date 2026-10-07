@@ -1,0 +1,156 @@
+import { panic } from 'adamic';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { RuleContext } from '../../context.ts';
+import {
+    messageConsistentTypeDefinitionsInterfaceOverType,
+    messageConsistentTypeDefinitionsTypeOverInterface,
+} from './messages.a';
+
+// Keep the batch repair's separate spans locally. The current Finding wire carries one edit,
+// so compose the declaration repair without changing the shared context or the Go oracle.
+class Edit {
+    readonly start: number;
+    readonly end: number;
+    readonly text: string;
+    constructor(start: number, end: number, text: string) {
+        this.start = start;
+        this.end = end;
+        this.text = text;
+    }
+}
+
+export class Rule {
+    readonly context: RuleContext;
+    readonly style: string;
+    constructor(context: RuleContext) {
+        this.context = context;
+        this.style = context.enabled('@typescript-eslint/consistent-type-definitions')
+            ? context.settings.read('style', context.settings.read('option', 'interface'))
+            : 'interface';
+        if(this.style !== 'interface' && this.style !== 'type') {
+            panic('consistent-type-definitions: invalid style');
+        }
+    }
+    visit(node: ParseNode, index: number): void {
+        const context = this.context;
+        const alias = node.kind === 'TypeAliasDeclaration';
+        if(alias !== (this.style === 'interface')) {
+            return;
+        }
+        const name = context.name(index);
+        if(name < 0) {
+            return;
+        }
+        let body = node.children[node.children.length - 1] ?? -1;
+        if(alias) {
+            while(body >= 0 && context.node(body).kind === 'ParenthesizedType') {
+                body = context.node(body).children[0] ?? -1;
+            }
+            if(body < 0 || context.node(body).kind !== 'TypeLiteral') {
+                return;
+            }
+        }
+        const message = alias
+            ? messageConsistentTypeDefinitionsInterfaceOverType
+            : messageConsistentTypeDefinitionsTypeOverInterface;
+        const id = alias ? 'interfaceOverType' : 'typeOverInterface';
+        let global = false;
+        if(!alias) {
+            for(let parent = context.parent(index); parent >= 0; parent = context.parent(parent)) {
+                if(
+                    context.node(parent).kind === 'ModuleDeclaration' &&
+                    context.has(parent, 'DeclareKeyword') &&
+                    context.node(parent).operator === 'GlobalKeyword'
+                ) {
+                    global = true;
+                }
+            }
+        }
+        if(global) {
+            context.report(name, '@typescript-eslint/consistent-type-definitions', id, message, '', '', '');
+            return;
+        }
+        const start = context.start(index);
+        const end = node.end;
+        const keywordText = alias ? 'type' : 'interface';
+        const keyword = this.keyword(start, end, keywordText);
+        if(keyword < 0) {
+            context.report(name, '@typescript-eslint/consistent-type-definitions', id, message, '', '', '');
+            return;
+        }
+        const edits: Edit[] = [new Edit(keyword, keyword + keywordText.length, alias ? 'interface' : 'type')];
+        if(alias) {
+            const bodyStart = context.start(body);
+            const equals = context.source.slice(start, bodyStart).lastIndexOf('=') + start;
+            let previous = equals;
+            while(previous > start && ' \t\n\r\v\f'.includes(context.source[previous - 1] ?? '')) {
+                previous--;
+            }
+            edits.push(new Edit(previous, bodyStart, ' '));
+            edits.push(new Edit(context.node(body).end, end, ''));
+        }
+        else {
+            let headEnd = context.node(name).end;
+            for(const child of node.children) {
+                if(context.node(child).kind === 'TypeParameter') {
+                    headEnd = context.source.indexOf('>', context.node(child).end) + 1;
+                }
+            }
+            const brace = context.source.indexOf('{', headEnd);
+            edits.push(new Edit(headEnd, brace, ' = '));
+            let suffix = '';
+            for(const child of node.children) {
+                if(context.node(child).kind === 'HeritageClause') {
+                    for(const type of context.node(child).children) {
+                        suffix += ` & ${context.raw(type)}`;
+                    }
+                }
+            }
+            if(suffix !== '') {
+                edits.push(new Edit(end, end, suffix));
+            }
+            if(context.has(index, 'ExportKeyword') && context.has(index, 'DefaultKeyword')) {
+                edits.push(new Edit(start, keyword, ''));
+                edits.push(new Edit(end, end, `\nexport default ${context.node(name).text}`));
+            }
+        }
+        // Applying backward preserves every untouched token between the upstream repair spans.
+        edits.sort((left, right) => left.start - right.start);
+        let replacement = context.source.slice(start, end);
+        for(let position = edits.length - 1; position >= 0; position--) {
+            const edit = edits[position] ?? panic('missing type-definition edit');
+            replacement = replacement.slice(0, edit.start - start) + edit.text + replacement.slice(edit.end - start);
+        }
+        const finding = context.report(
+            name, '@typescript-eslint/consistent-type-definitions', id, message, 'fix', replacement, '',
+        );
+        finding.editStart = start;
+        finding.editEnd = end;
+    }
+    // Match Go's whole-word search, including its decision to count comment text.
+    keyword(start: number, end: number, text: string): number {
+        const source = this.context.source;
+        for(let position = start; position + text.length <= end; position++) {
+            if(source.slice(position, position + text.length) !== text) {
+                continue;
+            }
+            if(position > start && this.word(source.charCodeAt(position - 1))) {
+                continue;
+            }
+            const after = position + text.length;
+            if(after < source.length && this.word(source.charCodeAt(after))) {
+                continue;
+            }
+            return position;
+        }
+        return -1;
+    }
+    word(code: number): boolean {
+        return code === 95 || code === 36 || code >= 128 ||
+            (code >= 65 && code <= 90) || (code >= 97 && code <= 122) || (code >= 48 && code <= 57);
+    }
+}
+
+export function create(context: RuleContext): Rule {
+    return new Rule(context);
+}
