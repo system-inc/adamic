@@ -1,0 +1,39 @@
+
+> typescript@6.0.3 test
+> hereby runtests-parallel --light=false --workers=4 --lint=false --no-colors
+
+Using /workspace/scratch/scanner-adapted50/Herebyfile.mjs to run runtests-parallel
+Starting lib
+Starting generate-diagnostics
+> /workspace/adamic-tools/bin/node scripts/processDiagnosticMessages.mjs src/compiler/diagnosticMessages.json
+Starting generate-types-map
+Finished generate-types-map in 5ms
+Reading diagnostics from src/compiler/diagnosticMessages.json
+Finished generate-diagnostics in 76ms
+Starting bundle-tests
+Starting build-tests
+Starting build-services
+Finished lib in 83ms
+Finished build-tests in 330ms
+Finished build-services in 330ms
+Starting dts-services
+Finished dts-services in 1ms
+Starting dts-lssl
+Finished dts-lssl in 11ms
+Finished bundle-tests in 550ms
+Starting do-runtests-parallel
+Running tests with config: {"light":false,"workerCount":4,"taskConfigsFolder":"/tmp/adamic-gate/ts-tests1","noColor":true,"timeout":40000,"keepFailed":false}
+> /workspace/adamic-tools/bin/node ./built/local/run.js
+Discovered 327 unittest suites.
+Discovering runner-based tests...
+Discovered 19676 test files in 112ms.
+Starting to run tests using 4 threads...
+Batching initial test lists...
+Batched into 4 groups with approximate total file sizes of 5113656 bytes in each group. (90.0% of total tests batched)
+
+
+
+  106367 passing (5m)
+
+Finished do-runtests-parallel in 5m 17.8s
+Completed runtests-parallel in 5m 18.4s

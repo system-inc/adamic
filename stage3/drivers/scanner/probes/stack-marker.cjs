@@ -1,0 +1,5 @@
+const fs=require('node:fs'),ts=require(process.env.SLICE_TYPESCRIPT || 'typescript');
+function load(tree){let s=fs.readFileSync(tree+'/src/compiler/debug.ts','utf8');if(process.env.SCANNER_MARKER_MUTANT && tree === process.argv[3]) s=s.replace('stackCrawlMark || fail','fail');const js=ts.transpileModule(s,{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ESNext}}).outputText;const module={exports:{}};Function('module','exports',js)(module,module.exports);return module.exports.Debug;}
+const old=load(process.argv[2]), adapted=load(process.argv[3]);
+for(const debug of [old,adapted]){function caller(){debug.fail('marker proof',caller);}try{caller();throw Error('failure missing');}catch(e){if(e.message!=='Debug Failure. marker proof')throw e;if(e.stack.includes('at caller'))throw Error('marker was not preserved');}try{debug.assertEqual(1,2,'same');}catch(e){if(e.message!=='Debug Failure. Expected 1 === 2. same')throw e;}}
+console.log('PASS: failure messages and explicit stack marker preserved');

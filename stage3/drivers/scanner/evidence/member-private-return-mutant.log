@@ -1,0 +1,4 @@
+/workspace/scratch/scanner-revised-optional-mutant-run/adapted/src/compiler/diagnosticInformationMap.generated.ts:6:5: error TS2375: Type '{ code: number; category: DiagnosticCategory; key: string; message: string; reportsUnnecessary: {} | undefined; elidedInCompatabilityPyramid: boolean | undefined; reportsDeprecated: ... | undefined; }' is not assignable to type 'DiagnosticMessage' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'reportsUnnecessary' are incompatible.
+    Type '{} | undefined' is not assignable to type '{}'.
+      Type 'undefined' is not assignable to type '{}'.
