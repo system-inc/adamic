@@ -1,0 +1,10 @@
+Merge made by the 'ort' strategy.
+ stage1/cohere/lint/context.ts           |  6 +++---
+ stage1/cohere/lint/finding.ts           |  5 ++++-
+ stage1/cohere/lint/lint.ts              | 24 ++++++++++++++++++++++--
+ stage1/cohere/lint/lint_test.go         | 13 +++++++++----
+ stage1/cohere/lint/main.ts              |  5 +++++
+ stage1/cohere/lint/registration_test.go | 11 +++++++++++
+ stage1/cohere/lint/registry/registry.go | 26 +++++++++++++++++++++-----
+ stage1/cohere/lint/testdata/oracle.go   | 10 +++++++---
+ 8 files changed, 82 insertions(+), 18 deletions(-)
