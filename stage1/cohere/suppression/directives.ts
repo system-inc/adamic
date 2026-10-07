@@ -14,9 +14,8 @@
 //     array, splitDirective returns a DirectiveRest and ParseEnable an Enable, objects, which may be
 //     undefined, where the natural results are a string and a list.
 //   - Go's Scope is an int enum; here it is the union of its names.
-//   - Go's strings.TrimSpace trims what Go's unicode.IsSpace calls space, which is not what
-//     JavaScript's trim trims: Go takes U+0085 and leaves U+FEFF, JavaScript the other way round. The
-//     port writes Go's (goTrimSpace), since the port answers as Go cohere does.
+//   - cohere 8e30b756 uses JavaScript whitespace for trimming and directive-word boundaries,
+//     matching ESLint. The same set is spelled out here over UTF-16 units.
 
 // directives.go: the honored spellings. `cohere-disable` is what new code writes; `verify-disable` is
 // what this tool's directives were called before the rename to Cohere; `eslint-disable` is the
@@ -51,9 +50,8 @@ export const ScopeWordDisableLine = 'eslint-disable-line';
 export const ScopeWordDisableNextLine = 'eslint-disable-next-line';
 export const ScopeWordEnable = 'eslint-enable';
 
-// isGoSpace is Go's unicode.IsSpace: the Latin-1 spaces '\t', '\n', '\v', '\f', '\r', ' ', U+0085 and
-// U+00A0, and Unicode's White_Space above them. Every one is a single UTF-16 unit.
-function isGoSpace(unit: number): boolean {
+// isJavaScriptSpace is ECMAScript WhiteSpace and LineTerminator. Every one is a single UTF-16 unit.
+function isJavaScriptSpace(unit: number): boolean {
 	switch (unit) {
 		case 0x09:
 		case 0x0a:
@@ -61,7 +59,7 @@ function isGoSpace(unit: number): boolean {
 		case 0x0c:
 		case 0x0d:
 		case 0x20:
-		case 0x85:
+		case 0xfeff:
 		case 0xa0:
 		case 0x1680:
 		case 0x2028:
@@ -74,14 +72,14 @@ function isGoSpace(unit: number): boolean {
 	return unit >= 0x2000 && unit <= 0x200a;
 }
 
-// goTrimSpace is Go's strings.TrimSpace.
-export function goTrimSpace(text: string): string {
+// trimWhitespace is cohere's text.TrimWhitespace, which matches JavaScript's trim.
+export function trimWhitespace(text: string): string {
 	let start = 0;
-	while (start < text.length && isGoSpace(text.charCodeAt(start))) {
+	while (start < text.length && isJavaScriptSpace(text.charCodeAt(start))) {
 		start++;
 	}
 	let end = text.length;
-	while (end > start && isGoSpace(text.charCodeAt(end - 1))) {
+	while (end > start && isJavaScriptSpace(text.charCodeAt(end - 1))) {
 		end--;
 	}
 	return text.slice(start, end);
@@ -115,7 +113,7 @@ function stripCommentMarkers(commentText: string): string {
 
 	const lines = text.split('\n');
 	for (let index = 0; index < lines.length; index++) {
-		const line = goTrimSpace(lines[index] ?? '');
+		const line = trimWhitespace(lines[index] ?? '');
 		lines[index] = line.startsWith('*') ? line.slice(1) : line;
 	}
 	return lines.join(' ');
@@ -138,10 +136,9 @@ function splitDirective(body: string): DirectiveRest | undefined {
 	return undefined;
 }
 
-// directives.go: endsWord, whether the scope word just read is a whole word: the comment ends, or a
-// space or tab follows.
+// directives.go: endsWord, whether the comment ends or JavaScript whitespace follows the word.
 function endsWord(rest: string): boolean {
-	return rest === '' || rest.startsWith(' ') || rest.startsWith('\t');
+	return rest === '' || isJavaScriptSpace(rest.charCodeAt(0));
 }
 
 // directives.go: splitScope's results, the scope and what follows it, when the scope word is whole.
@@ -181,9 +178,9 @@ interface RuleList {
 function splitReason(rest: string): RuleList {
 	const index = rest.indexOf('--');
 	if (index >= 0) {
-		return { rules: goTrimSpace(rest.slice(0, index)), reason: goTrimSpace(rest.slice(index + 2)) };
+		return { rules: trimWhitespace(rest.slice(0, index)), reason: trimWhitespace(rest.slice(index + 2)) };
 	}
-	return { rules: goTrimSpace(rest), reason: '' };
+	return { rules: trimWhitespace(rest), reason: '' };
 }
 
 // directives.go: parseRuleNames splits a comma-separated rule list, dropping empties. The Go returns
@@ -194,7 +191,7 @@ function parseRuleNames(list: string): readonly string[] {
 		return names;
 	}
 	for (const part of list.split(',')) {
-		const trimmed = goTrimSpace(part);
+		const trimmed = trimWhitespace(part);
 		if (trimmed !== '') {
 			names.push(trimmed);
 		}
@@ -210,7 +207,7 @@ function parseRuleNames(list: string): readonly string[] {
 // Everything after the directive word is optional. No rules means blanket. No reason means the author
 // did not say why, which is recorded rather than rejected.
 export function parseDisable(commentText: string): Disable | undefined {
-	const body = goTrimSpace(stripCommentMarkers(commentText));
+	const body = trimWhitespace(stripCommentMarkers(commentText));
 
 	const directive = splitDirective(body);
 	if (directive === undefined) {
@@ -242,7 +239,7 @@ export function parseEnable(commentText: string): Enable | undefined {
 	if (isLineComment(commentText)) {
 		return undefined;
 	}
-	const body = goTrimSpace(stripCommentMarkers(commentText));
+	const body = trimWhitespace(stripCommentMarkers(commentText));
 
 	for (const directive of enableDirectives) {
 		if (!body.startsWith(directive)) {
@@ -250,7 +247,7 @@ export function parseEnable(commentText: string): Enable | undefined {
 		}
 		const rest = body.slice(directive.length);
 		// Same anchoring rule as a disable: the directive has to be the whole word.
-		if (rest !== '' && !rest.startsWith(' ') && !rest.startsWith('\t')) {
+		if (!endsWord(rest)) {
 			continue;
 		}
 		return { rules: parseRuleNames(splitReason(rest).rules) };
