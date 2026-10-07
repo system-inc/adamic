@@ -1,0 +1,1 @@
+Private copy of origin/codex/lint-helpers comments module at 6769b88e. Only external import paths were adjusted. Shared files are untouched; replace these imports with the shared helper after foundation integration.
