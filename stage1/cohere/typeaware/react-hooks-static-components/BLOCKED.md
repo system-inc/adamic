@@ -80,3 +80,32 @@ still require native React HIR lowering and their value/control analyses.
 No additional rules were claimed, and no new implementation or validation
 pass is asserted by this dependency inventory. Existing results above are
 historical, not reruns. The current checkout and shared files remain unchanged.
+
+## Landing and ownership recheck
+
+Remote main remains `e8ba3d5d`; this worker's nine implemented rules were
+re-greened against that base and pushed at `7d68cf37`. The exact remote
+branch SHA was reconfirmed. No implementation changed after those checks.
+The all-heads fetch now includes 468 origin refs.
+
+The same three React rules also appear in concurrent claim documents on
+`origin/codex/typeaware-wave-06` and `origin/codex/typeaware-wave-29`.
+Their current tips are `48c6c7e0` and `48355ed0`. All three workers' scans
+record 389 refs when making these claims, indicating overlapping reservation
+windows. This overlap was not visible in this worker's original fetched claim
+blobs. No ownership priority or completed port is inferred from it.
+
+Wave 06 has reporting/refusal portions under `wave_06_react_state/`.
+Wave 29 has a tested supplied-SSA static-components kernel under
+`wave-29-third/`, but explicitly lacks source-to-SSA construction and does not
+claim a full port. Both report the same missing native React HIR/SSA/control
+pipeline; JSX parsing is available separately at `codex/stage1-jsx-lint`.
+Their partial work should be reconciled by integration before duplicating it.
+Per the instruction to skip rules already claimed on another origin branch,
+this worker skips additional duplicate implementation and records the overlap.
+The original claims remain explicitly unfinished, not relabeled as complete.
+No replacement rules are claimed while these reservations remain unresolved.
+
+Only this worker's own branch and rule directories are changed. Nothing is
+pushed to main or to an area branch. The existing landing report remains the
+oracle evidence; this follow-up adds dependency/ownership documentation only.
