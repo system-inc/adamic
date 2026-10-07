@@ -125,3 +125,9 @@ The driver's own reading of the cases was quadratic at first: each escape in a l
 - `maxTokens`, `noLocation` and the other options Prettier leaves at graphql-js's defaults; `parseValue`, `parseConstValue`, `parseType` and the schema coordinate entries, which Prettier never calls (the Go leaves them out too).
 - Text that isn't UTF-8: the test refuses to write such a case, since Node and 'adamic' decode it with replacement characters and Go keeps its bytes.
 - graphql-js's `locations` beyond the first, and the error's other fields, which Prettier doesn't read.
+
+## Composed printer
+
+The formatter is ported in [printer](printer/README.md), using this parser
+unchanged. Its [gap report](printer/GAPS.md) records the compiler workaround,
+exact Go parity and five upstream whitespace-only differences with Prettier.

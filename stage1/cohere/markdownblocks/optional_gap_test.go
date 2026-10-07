@@ -7,6 +7,7 @@ import (
 
 // Optional declarations start as undefined on every backend, as Node decides.
 func TestOptionalStringInitializationWitness(t *testing.T) {
+	parallelMarkdownMemory(t, 1)
 	path, err := filepath.Abs("gaps/6_uninitialized_optional_string.ts")
 	if err != nil {
 		t.Fatal(err)

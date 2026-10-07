@@ -1,0 +1,19 @@
+round 1 native: 3.672828s, 2729.78 texts/s; exact Go bytes
+round 1 Node source: 1.268133s, 7906.11 texts/s; exact Go bytes
+round 1 Go: 0.673137s, 14894.45 texts/s; exact Go bytes
+round 2 native: 3.574899s, 2804.55 texts/s; exact Go bytes
+round 2 Node source: 1.373376s, 7300.26 texts/s; exact Go bytes
+round 2 Go: 0.718377s, 13956.45 texts/s; exact Go bytes
+round 3 native: 3.672639s, 2729.92 texts/s; exact Go bytes
+round 3 Node source: 1.318939s, 7601.56 texts/s; exact Go bytes
+round 3 Go: 0.720596s, 13913.48 texts/s; exact Go bytes
+round 4 native: 3.621730s, 2768.29 texts/s; exact Go bytes
+round 4 Node source: 1.378117s, 7275.14 texts/s; exact Go bytes
+round 4 Go: 0.668311s, 15002.00 texts/s; exact Go bytes
+round 5 native: 3.572741s, 2806.25 texts/s; exact Go bytes
+round 5 Node source: 1.421751s, 7051.87 texts/s; exact Go bytes
+round 5 Go: 0.669228s, 14981.44 texts/s; exact Go bytes
+native: median 2768.29 texts/s; seconds [3.6728277530000923, 3.574898763999954, 3.672639086000345, 3.621729989999949, 3.5727409450009873]
+Node source: median 7300.26 texts/s; seconds [1.2681328439994104, 1.3733760390005045, 1.318939185999625, 1.3781170459988061, 1.4217508480014658]
+Go: median 14894.45 texts/s; seconds [0.6731366379990504, 0.7183772739990673, 0.7205959279999661, 0.6683107459994062, 0.6692278400005307]
+10026 format cases; 992282 answer bytes; startup, input and output included
