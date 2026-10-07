@@ -59,3 +59,13 @@ and zero final blockers. The final 421-ref, 17-claim-blob refresh finds
 these two targets only on this branch. VariantKind remains withdrawn and its
 source removed; no duplicate or further helper is delivered or reserved.
 Reports, complete byte observations and hash records live under wave15/.
+
+## Continuation after parking authorization
+
+Both owned branches are rebased on main f8013f0b and their independent oracles rerun green. The rule branch explicitly names its shared harness blockers and is parked under Ahra's exception. The existing helper branch was created from origin/codex/lint-helpers and remains the owned helper branch.
+
+Refetched all 530 origin refs and read all 17 helper claim occurrences, plus HELPERS.md's earlier comment-bundle reservation. No named unclaimed helper has more than four remaining consumers. Reserve this highest-count tie before implementation:
+
+- github.com/system-inc/cohere/internal/lint/ecmascript/regexp.parseFlags
+
+File: wave15/regexp_flags/parse_flags.a. Four frozen consumers: @next/next/no-html-link-for-pages, @typescript-eslint/no-empty-object-type, no-restricted-exports and no-restricted-imports. Preserve partial flag state on failure, ignored global/indices flags, sticky, duplicate priority and exact Go rune-quoted error bytes. Compare the actual private Go function on every consumer fixture's strings and exhaustive ordered flag/control cases, source Node, emitted JavaScript and sanitized native, with a compiling duplicate-state mutant. This supplies four prerequisite edges, not complete regexp compilation or completed rule ports. Claim pushed before code.
