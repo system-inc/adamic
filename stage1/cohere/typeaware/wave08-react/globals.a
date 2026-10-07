@@ -1,0 +1,357 @@
+import type { Rules } from '../rules.ts';
+import { Diagnostic } from '../diagnostic.ts';
+import { Bindings } from '../bindings.ts';
+import { Reassign } from '../reassign.ts';
+import { WaveSymbol } from '../wave08_symbol.a';
+import { ProcessFile } from '../wave08-next/process_context.a';
+export class Globals {
+    readonly rules: Rules;
+    readonly file: ProcessFile;
+    readonly writes: Reassign;
+    readonly gates = new Map<number, boolean>();
+    constructor(rules: Rules, file: ProcessFile, writes: Reassign) {
+        this.rules = rules;
+        this.file = file;
+        this.writes = writes;
+    }
+    hook(name: string): boolean {
+        const code = name.charCodeAt(3);
+        return name.startsWith('use') && name.length >= 4 && ((code >= 65 && code <= 90) || (code >= 48 && code <= 57));
+    }
+    component(name: string): boolean {
+        const code = name.charCodeAt(0);
+        return code >= 65 && code <= 90;
+    }
+    skipped(index: number): boolean {
+        return ['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction'].includes(this.file.node(index).kind);
+    }
+    upper(index: number): number {
+        let current = this.file.parent(index);
+        while(this.file.node(current).kind === 'ParenthesizedExpression') {
+            current = this.file.parent(current);
+        }
+        return current;
+    }
+    name(index: number): string {
+        const kind = this.file.node(index).kind;
+        if(kind === 'FunctionDeclaration') {
+            const name = this.file.bindings.shape.name(index);
+            return this.file.node(name).kind === 'Identifier' ? this.file.node(name).text : '';
+        }
+        if(kind !== 'FunctionExpression' && kind !== 'ArrowFunction') {
+            return '';
+        }
+        const declared = this.upper(index);
+        if(this.file.node(declared).kind !== 'VariableDeclaration') {
+            return '';
+        }
+        const initialized = this.file.bindings.shape.initializer(declared);
+        if(initialized < 0 || this.rules.skip(initialized) !== index) {
+            return '';
+        }
+        const name = this.file.bindings.shape.name(declared);
+        return this.file.node(name).kind === 'Identifier' ? this.file.node(name).text : '';
+    }
+    reachable(index: number): boolean {
+        for(let current = this.file.parent(index); current >= 0; current = this.file.parent(current)) {
+            const kind = this.file.node(current).kind;
+            if(kind === 'SourceFile') {
+                return true;
+            }
+            if(
+                [
+                    'VariableDeclaration',
+                    'VariableDeclarationList',
+                    'VariableStatement',
+                    'ExportAssignment',
+                    'ExportDeclaration',
+                    'ParenthesizedExpression',
+                ].includes(kind)
+            ) {
+                continue;
+            }
+            if(this.skipped(current)) {
+                const name = this.name(current);
+                if(!this.hook(name) && !this.component(name)) {
+                    return false;
+                }
+                continue;
+            }
+            if(kind === 'Block' && this.skipped(this.file.parent(current))) {
+                continue;
+            }
+            return false;
+        }
+        return false;
+    }
+    evidence(index: number): boolean {
+        if(
+            [
+                'JsxElement',
+                'JsxSelfClosingElement',
+                'JsxFragment',
+                'JsxOpeningElement',
+                'JsxOpeningFragment',
+                'JsxExpression',
+                'JsxText',
+                'JsxAttribute',
+                'JsxAttributes',
+                'JsxSpreadAttribute',
+            ].includes(this.file.node(index).kind)
+        ) {
+            return true;
+        }
+        if(this.file.node(index).kind === 'CallExpression') {
+            const callee = this.file.child(index, 0);
+            const node = this.file.node(callee);
+            if(node.kind === 'Identifier' && this.hook(node.text)) {
+                return true;
+            }
+            if(node.kind === 'PropertyAccessExpression') {
+                const name = this.file.node(this.file.last(callee));
+                const receiver = this.file.node(this.file.child(callee, 0));
+                if(
+                    name.kind === 'Identifier' &&
+                    this.hook(name.text) &&
+                    receiver.kind === 'Identifier' &&
+                    this.component(receiver.text)
+                ) {
+                    return true;
+                }
+            }
+        }
+        if(this.skipped(index)) {
+            return false;
+        }
+        return this.file.node(index).children.some((child) => this.evidence(child));
+    }
+    parameters(index: number): boolean {
+        const params = this.file.node(index).children.filter((child) => this.file.node(child).kind === 'Parameter');
+        if(params.length === 0) {
+            return true;
+        }
+        if(params.length > 2) {
+            return false;
+        }
+        const first = params[0] ?? -1;
+        if(this.file.node(first).children.some((child) => this.file.node(child).kind === 'DotDotDotToken')) {
+            return false;
+        }
+        const annotation = this.rules.annotation(first);
+        if(
+            [
+                'ArrayType',
+                'BigIntKeyword',
+                'BooleanKeyword',
+                'ConstructorType',
+                'FunctionType',
+                'LiteralType',
+                'NeverKeyword',
+                'NumberKeyword',
+                'StringKeyword',
+                'SymbolKeyword',
+                'TupleType',
+            ].includes(this.file.node(annotation).kind)
+        ) {
+            return false;
+        }
+        if(params.length === 1) {
+            return true;
+        }
+        const second = this.file.node(this.file.bindings.shape.name(params[1] ?? -1));
+        return second.kind === 'Identifier' && (second.text.includes('ref') || second.text.includes('Ref'));
+    }
+    compiled(index: number): boolean {
+        if(!this.gates.has(index)) {
+            const name = this.name(index);
+            const body = this.skipped(index) ? this.file.body(index) : -1;
+            this.gates.set(
+                index,
+                body >= 0 &&
+                    this.evidence(body) &&
+                    (this.hook(name) || (this.component(name) && this.parameters(index))),
+            );
+        }
+        return this.gates.get(index) ?? false;
+    }
+    root(index: number): number {
+        for(let current = this.file.parent(index); current >= 0; current = this.file.parent(current)) {
+            if(this.compiled(current) && this.reachable(current)) {
+                return current;
+            }
+        }
+        return -1;
+    }
+    operator(kind: string): boolean {
+        return [
+            'EqualsToken',
+            'PlusEqualsToken',
+            'MinusEqualsToken',
+            'AsteriskEqualsToken',
+            'AsteriskAsteriskEqualsToken',
+            'SlashEqualsToken',
+            'PercentEqualsToken',
+            'LessThanLessThanEqualsToken',
+            'GreaterThanGreaterThanEqualsToken',
+            'GreaterThanGreaterThanGreaterThanEqualsToken',
+            'AmpersandEqualsToken',
+            'BarEqualsToken',
+            'CaretEqualsToken',
+        ].includes(kind);
+    }
+    target(index: number): boolean {
+        const parent = this.upper(index);
+        const kind = this.file.node(parent).kind;
+        if(parent < 0) {
+            return false;
+        }
+        if(kind === 'BinaryExpression') {
+            return this.operator(this.file.node(this.file.child(parent, 1)).kind);
+        }
+        return !['PrefixUnaryExpression', 'PostfixUnaryExpression', 'ForOfStatement', 'ForInStatement'].includes(kind);
+    }
+    nested(index: number, root: number): boolean {
+        for(
+            let current = this.file.parent(index);
+            current >= 0 && current !== root;
+            current = this.file.parent(current)
+        ) {
+            if(this.file.function(current)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    exceptional(index: number, root: number): boolean {
+        for(let current = index; current >= 0 && current !== root; current = this.file.parent(current)) {
+            const parent = this.file.parent(current);
+            const kind = this.file.node(parent).kind;
+            if(
+                kind === 'CatchClause' ||
+                (kind === 'TryStatement' &&
+                    this.file.child(parent, 0) !== current &&
+                    this.file.node(current).kind === 'Block')
+            ) {
+                return true;
+            }
+        }
+        return false;
+    }
+    abrupt(index: number, root: number): boolean {
+        for(let current = index; current >= 0 && current !== root; current = this.file.parent(current)) {
+            const parent = this.file.parent(current);
+            const kind = this.file.node(parent).kind;
+            if(!['Block', 'CaseClause', 'DefaultClause'].includes(kind)) {
+                continue;
+            }
+            const children = this.file.node(parent).children;
+            for(const statement of kind === 'CaseClause' ? children.slice(1) : children) {
+                if(statement === current) {
+                    break;
+                }
+                if(
+                    ['ReturnStatement', 'ThrowStatement', 'BreakStatement', 'ContinueStatement'].includes(
+                        this.file.node(statement).kind,
+                    )
+                ) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    outside(index: number, root: number): boolean {
+        const symbol = new WaveSymbol(this.rules, index);
+        for(const declaration of symbol.declarations) {
+            if(declaration.path !== this.rules.path) {
+                continue;
+            }
+            const declared = this.file.bindings.spans.get(
+                `${declaration.kind}:${declaration.start}:${declaration.end}`,
+            );
+            if(declared === undefined) {
+                continue;
+            }
+            for(let current = declared; current >= 0; current = this.file.parent(current)) {
+                if(current === root) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    destructuring(index: number): boolean {
+        for(let current = this.file.parent(index); current >= 0; current = this.file.parent(current)) {
+            const kind = this.file.node(current).kind;
+            if(['ArrayLiteralExpression', 'ObjectLiteralExpression'].includes(kind)) {
+                return true;
+            }
+            if(
+                ![
+                    'BinaryExpression',
+                    'SpreadElement',
+                    'SpreadAssignment',
+                    'PropertyAssignment',
+                    'ShorthandPropertyAssignment',
+                    'ParenthesizedExpression',
+                ].includes(kind)
+            ) {
+                return false;
+            }
+        }
+        return false;
+    }
+    reported(index: number): number {
+        const parent = this.file.parent(index);
+        if(
+            this.file.node(parent).kind === 'BinaryExpression' &&
+            this.file.node(this.file.child(parent, 1)).kind === 'EqualsToken' &&
+            this.file.child(parent, 0) === index &&
+            this.destructuring(parent)
+        ) {
+            return parent;
+        }
+        const outer = this.upper(index);
+        if(
+            this.file.node(outer).kind === 'BinaryExpression' &&
+            this.file.node(this.file.child(outer, 1)).kind !== 'EqualsToken'
+        ) {
+            return outer;
+        }
+        return index;
+    }
+    run(): void {
+        for(let at = 0; at < this.rules.parser.nodes.length; at++) {
+            if(
+                this.file.node(at).kind !== 'Identifier' ||
+                this.file.parent(at) < 0 ||
+                !this.writes.writes(at) ||
+                !this.target(at)
+            ) {
+                continue;
+            }
+            const root = this.root(at);
+            if(
+                root < 0 ||
+                this.nested(at, root) ||
+                this.exceptional(at, root) ||
+                this.abrupt(at, root) ||
+                !this.outside(at, root)
+            ) {
+                continue;
+            }
+            const message = `This writes to \`${this.file.node(at).text}\`, which is declared outside the component or hook, while the component is rendering. Render has to be able to run at any time and any number of times, so a write that escapes it makes the result depend on how often the component happened to render. Under Strict Mode and concurrent rendering that count is not something the code controls, so the value drifts and the bug shows up somewhere else entirely. If the value is used in rendering, hold it in useState. If it is not, write it from an effect or an event handler, where running once is guaranteed.`;
+            const node = this.file.node(this.reported(at));
+            this.rules.findings.push(
+                new Diagnostic(
+                    'react-hooks/globals',
+                    'globalReassignment',
+                    message,
+                    this.rules.byte(this.rules.start(node)),
+                    this.rules.byte(node.end),
+                    '',
+                ),
+            );
+        }
+    }
+}

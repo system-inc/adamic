@@ -1,0 +1,72 @@
+import { programArguments } from 'adamic';
+import { Immutability } from '../immutability.a';
+import {
+    NoDerivingStateInEffects,
+    EffectGraph,
+    EffectBlock,
+    EffectInstruction,
+    EffectPhi,
+} from '../no_deriving_state_in_effects.a';
+const immutability = new Immutability();
+const derivation = new NoDerivingStateInEffects();
+const args = programArguments();
+if(args.includes('--immutability')) {
+    immutability.run();
+}
+if(args.includes('--derivation')) {
+    derivation.run();
+}
+for(let a = 0; a < 6; a++) {
+    for(let b = 0; b < 6; b++) {
+        console.log(`${immutability.merge(a, b)}`);
+    }
+}
+for(let a = 0; a < 6; a++) {
+    console.log(`${immutability.mutation(a)}`);
+}
+for(let kind = 0; kind < 10; kind++) {
+    let captures: number[] = [0, 1];
+    let context: number[] = [0, 1];
+    let deps: number[] = [1];
+    if(kind === 1) {
+        captures.push(3);
+        context.push(3);
+    }
+    if(kind === 6) {
+        captures = [0];
+        context = [0];
+    }
+    if(kind === 8 || kind === 9) {
+        captures = [0, 1, 2];
+        context = [0, 1, 2];
+        deps = [1, 2];
+    }
+    const graph = new EffectGraph(context);
+    const predecessors: number[] = [];
+    if(kind === 2) {
+        predecessors.push(0);
+    }
+    const block = new EffectBlock(0, predecessors);
+    const load = new EffectInstruction(kind === 3 ? 'StoreLocal' : 'LoadContext', 2, [1]);
+    const call = new EffectInstruction('CallExpression', 3, [0, 2], 2, true, 0, kind === 5 ? 2 : 1);
+    if(kind === 8) {
+        block.instructions.push(new EffectInstruction('BinaryExpression', 3, [1, 2]));
+        block.instructions.push(new EffectInstruction('CallExpression', 4, [0, 3], 3, true, 0));
+    }
+    else if(kind === 9) {
+        block.phis.push(new EffectPhi(3, [1, 2]));
+        block.instructions.push(new EffectInstruction('CallExpression', 4, [0, 3], 3, true, 0));
+    }
+    else {
+        block.instructions.push(load);
+        block.instructions.push(call);
+    }
+    if(kind === 4) {
+        block.terminals.push(2);
+    }
+    if(kind === 7) {
+        block.instructions.push(new EffectInstruction('CallExpression', 4, [0, 8], 8, true, 0));
+    }
+    graph.blocks.push(block);
+    console.log(`${derivation.validate(captures, [0], deps, graph).length}`);
+}

@@ -1,0 +1,57 @@
+// Partial pass kernel. HIR lowering, SSA, transfer and reporting are not wired.
+import { panic } from 'adamic';
+export class AbstractValue {
+    readonly kind: number;
+    readonly reasons: number;
+    constructor(kind: number, reasons = 0) {
+        this.kind = kind;
+        this.reasons = reasons;
+    }
+}
+export class Immutability {
+    // Mutable 0, Frozen 1, Primitive 2, MaybeFrozen 3, Global 4, Context 5.
+    merge(a: number, b: number): number {
+        if(a === b) {
+            return a;
+        }
+        if(a === 3 || b === 3) {
+            return 3;
+        }
+        if(a === 0 || b === 0) {
+            if(a === 1 || b === 1) {
+                return 3;
+            }
+            if(a === 5 || b === 5) {
+                return 5;
+            }
+            return 0;
+        }
+        if(a === 5 || b === 5) {
+            return a === 1 || b === 1 ? 3 : 5;
+        }
+        if(a === 1 || b === 1) {
+            return 1;
+        }
+        if(a === 4 || b === 4) {
+            return 4;
+        }
+        return 2;
+    }
+    value(a: AbstractValue, b: AbstractValue): AbstractValue {
+        return new AbstractValue(this.merge(a.kind, b.kind), a.reasons | b.reasons);
+    }
+    mutation(kind: number): number {
+        if(kind === 0 || kind === 5) {
+            return 1;
+        }
+        if(kind === 1 || kind === 3) {
+            return 2;
+        }
+        return kind === 4 ? 3 : 0;
+    }
+    run(): void {
+        panic(
+            'wave08 immutability blocked: native React HIR lowering, SSA, instruction transfer and reporting are unavailable in the shared profile',
+        );
+    }
+}

@@ -60,3 +60,11 @@ ordering for tied zero totals, are:
 Reserved for this branch. This claim update is committed and pushed before
 implementation. Shared harness, generator and dispatcher files stay untouched;
 new native implementation files will be .a.
+
+Second continuation status: reserved, partially implemented and blocked. Globals
+has native AST/scope decisions and exact normal/sanitized parity on 35 non-JSX
+controls and both corpora, but the shared parser rejects JSX. Immutability and
+no-deriving-state-in-effects have tested native kernels; their production entry
+points refuse because native React HIR lowering/SSA and the associated passes
+are unavailable. Kernel mutants are not complete rule mutants. Shared files
+were not edited and no further rules are claimed. See ../wave08-react/REPORT.md.

@@ -1,0 +1,158 @@
+// Partial pass kernel over supplied HIR events. Source lowering and the candidate
+// gather pass are deliberately not replaced by an AST/source-order heuristic.
+import { panic } from 'adamic';
+export class EffectInstruction {
+    readonly kind: string;
+    readonly target: number;
+    readonly inputs: number[];
+    readonly argument: number;
+    readonly setter: boolean;
+    readonly node: number;
+    readonly argumentCount: number;
+    readonly spread: boolean;
+    constructor(
+        kind: string,
+        target: number,
+        inputs: number[],
+        argument = -1,
+        setter = false,
+        node = -1,
+        argumentCount = 1,
+        spread = false,
+    ) {
+        this.kind = kind;
+        this.target = target;
+        this.inputs = inputs;
+        this.argument = argument;
+        this.setter = setter;
+        this.node = node;
+        this.argumentCount = argumentCount;
+        this.spread = spread;
+    }
+}
+export class EffectPhi {
+    readonly target: number;
+    readonly inputs: number[];
+    constructor(target: number, inputs: number[]) {
+        this.target = target;
+        this.inputs = inputs;
+    }
+}
+export class EffectBlock {
+    readonly id: number;
+    readonly predecessors: number[];
+    readonly instructions: EffectInstruction[] = [];
+    readonly phis: EffectPhi[] = [];
+    readonly terminals: number[] = [];
+    constructor(id: number, predecessors: number[] = []) {
+        this.id = id;
+        this.predecessors = predecessors;
+    }
+}
+export class EffectGraph {
+    readonly context: number[];
+    readonly blocks: EffectBlock[] = [];
+    constructor(context: number[]) {
+        this.context = context;
+    }
+}
+export class NoDerivingStateInEffects {
+    aggregate(inputs: number[], values: Map<number, number[]>, deps: number[]): number[] {
+        const seen = new Set<number>();
+        const empty: number[] = [];
+        for(const input of inputs) {
+            for(const dep of values.get(input) ?? empty) {
+                seen.add(dep);
+            }
+        }
+        return deps.filter((dep) => seen.has(dep));
+    }
+    validate(captures: number[], setters: number[], deps: number[], graph: EffectGraph): number[] {
+        const empty: number[] = [];
+        if(
+            captures.some((capture) => !setters.includes(capture) && !deps.includes(capture)) ||
+            deps.some((dep) => !captures.includes(dep))
+        ) {
+            return empty;
+        }
+        const values = new Map<number, number[]>();
+        for(let at = 0; at < captures.length; at++) {
+            const capture = captures[at] ?? -1;
+            const inner = graph.context[at];
+            if(inner === undefined) {
+                break;
+            }
+            if(deps.includes(capture)) {
+                values.set(inner, [capture]);
+            }
+        }
+        if(values.size !== deps.length) {
+            return empty;
+        }
+        const seen = new Set<number>();
+        const locations: number[] = [];
+        for(const block of graph.blocks) {
+            if(block.predecessors.some((pred) => !seen.has(pred))) {
+                return empty;
+            }
+            for(const phi of block.phis) {
+                const aggregate = this.aggregate(phi.inputs, values, deps);
+                if(aggregate.length > 0) {
+                    values.set(phi.target, aggregate);
+                }
+            }
+            for(const instruction of block.instructions) {
+                const kind = instruction.kind;
+                if(['Primitive', 'JsxText', 'LoadGlobal'].includes(kind)) {
+                    continue;
+                }
+                if(kind === 'LoadLocal' || kind === 'LoadContext') {
+                    const carried = values.get(instruction.inputs[0] ?? -1);
+                    if(carried !== undefined) {
+                        values.set(instruction.target, carried);
+                    }
+                    continue;
+                }
+                if(
+                    ![
+                        'ComputedLoad',
+                        'PropertyLoad',
+                        'BinaryExpression',
+                        'TemplateLiteral',
+                        'CallExpression',
+                        'MethodCall',
+                    ].includes(kind)
+                ) {
+                    return empty;
+                }
+                const aggregate = this.aggregate(instruction.inputs, values, deps);
+                if(aggregate.length > 0) {
+                    values.set(instruction.target, aggregate);
+                }
+                if(
+                    kind !== 'CallExpression' ||
+                    instruction.argumentCount !== 1 ||
+                    instruction.spread ||
+                    !instruction.setter
+                ) {
+                    continue;
+                }
+                const carried = values.get(instruction.argument);
+                if(carried === undefined || new Set<number>(carried).size !== deps.length) {
+                    return empty;
+                }
+                locations.push(instruction.node);
+            }
+            if(block.terminals.some((value) => values.has(value))) {
+                return empty;
+            }
+            seen.add(block.id);
+        }
+        return locations;
+    }
+    run(): void {
+        panic(
+            'wave08 derivation rule blocked: native React HIR lowering, SSA, manual memoization erasure, candidate gathering and checker/identifier mapping are unavailable in the shared profile',
+        );
+    }
+}
