@@ -1,5 +1,21 @@
 [
   {
+    "file": "cloud/cohere_gate_test.go",
+    "test": "TestRepositoryPassesCohereBaseline",
+    "id": "TestRepositoryPassesCohereBaseline:dd3f35bd67c84269d6f6facc6775dc0ea2954a802f8b42c1fe2c30554b1534a8",
+    "line": 20,
+    "condition": "os.Getenv(cohereGateVariable) != \"1\"",
+    "reads": [
+      "os.Getenv(cohereGateVariable)"
+    ],
+    "callers": [
+      "TestRepositoryPassesCohereBaseline"
+    ],
+    "message": "\"%s is not 1: the cohere baseline runs in the gate, not in ordinary loops\"",
+    "class": "required-input",
+    "provides": "The dedicated cohere gate shard sets ADAMIC_GATE_COHERE=1 and runs TestRepositoryPassesCohereBaseline. cloud/cohere_gate.py builds the pinned cohere submodule and checks repository sources and docs against cloud/cohere-baseline.json; setup supplies Node v24.19.0, Go and Python 3."
+  },
+  {
     "file": "cmd/adamic-test262/corpus_test.go",
     "test": "TestMiniRunner",
     "id": "TestMiniRunner:7142fe5f686906b6c54dad1e0bba12ea37f11741787771ea271c0b59f3e70ea0",
@@ -50,6 +66,38 @@
     "provides": "Opt-in timing or profile artifact comparison; does not replace correctness verification."
   },
   {
+    "file": "cmd/adamic/request_test.go",
+    "test": "TestWASIRequest",
+    "id": "TestWASIRequest:60edfd5dfdae8c56ca8b1865e065faf4ec3bed49b1a7c2b1969971912171d0e9",
+    "line": 73,
+    "condition": "os.Getenv(\"ADAMIC_ORACLE_WASI\") != \"1\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_ORACLE_WASI\")"
+    ],
+    "callers": [
+      "TestWASIRequest"
+    ],
+    "message": "\"set ADAMIC_ORACLE_WASI=1\"",
+    "class": "required-input",
+    "provides": "Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification."
+  },
+  {
+    "file": "cmd/adamic/request_test.go",
+    "test": "TestWASIRequestThrows",
+    "id": "TestWASIRequestThrows:60edfd5dfdae8c56ca8b1865e065faf4ec3bed49b1a7c2b1969971912171d0e9",
+    "line": 144,
+    "condition": "os.Getenv(\"ADAMIC_ORACLE_WASI\") != \"1\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_ORACLE_WASI\")"
+    ],
+    "callers": [
+      "TestWASIRequestThrows"
+    ],
+    "message": "\"set ADAMIC_ORACLE_WASI=1\"",
+    "class": "required-input",
+    "provides": "Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification."
+  },
+  {
     "file": "internal/lower/prototype_test.go",
     "test": "nodePrototypeMembers",
     "id": "TestInheritedLibraryReadsNeverLoadOwnFields,TestNullishPrototypeReadsAreRejectedByChecker:c7462b9a2227a7a13105687b1b5da770404c35e872a8a6f92c8fdc51eb949e59",
@@ -65,6 +113,20 @@
     "message": "\"Node is needed to enumerate Object.prototype\"",
     "class": "required-input",
     "provides": "cloud/setup.sh provides Node 24 on PATH; test runs Node to enumerate Object.prototype."
+  },
+  {
+    "file": "internal/metamorphic/metamorphic_test.go",
+    "test": "TestTheLeakCheckReadsTheCounts",
+    "id": "TestTheLeakCheckReadsTheCounts:c25bf1830cfbf9413673dfec69544a474d2a30e77d371825c69128882094f2e1",
+    "line": 132,
+    "condition": "runtime.GOOS != \"darwin\"",
+    "reads": [],
+    "callers": [
+      "TestTheLeakCheckReadsTheCounts"
+    ],
+    "message": "\"Not on macOS: Linux's leak check is LeakSanitizer's, run on the sanitized binary\"",
+    "class": "not-applicable",
+    "provides": "macOS-only counted-build leak witness; Linux uses LeakSanitizer on the sanitized binary."
   },
   {
     "file": "internal/native/contract_test.go",
@@ -97,6 +159,22 @@
     "message": "\"ADAMIC_C_COVERAGE=1 puts coverage in every build\"",
     "class": "required-input",
     "provides": "The normal correctness gate must leave ADAMIC_C_COVERAGE unset (or not equal to 1). CoverageRequested in internal/native/native.go reads this variable; forcing coverage on every build prevents the covered/ordinary runtime cache separation proof."
+  },
+  {
+    "file": "internal/native/normalize_benchmark_test.go",
+    "test": "TestNormalizeLongMeasurements",
+    "id": "TestNormalizeLongMeasurements:6dcd1081c12d5b6018fcc9cefc4b64e74675be953be75185fa2be02d217f45de",
+    "line": 19,
+    "condition": "destination == \"\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_NORMALIZE_BENCH_LOG\")"
+    ],
+    "callers": [
+      "TestNormalizeLongMeasurements"
+    ],
+    "message": "\"set ADAMIC_NORMALIZE_BENCH_LOG to run the long-string measurements\"",
+    "class": "measurement",
+    "provides": "ADAMIC_NORMALIZE_BENCH_LOG names a writable JSONL output for opt-in long-string timing and RSS observations."
   },
   {
     "file": "internal/native/record_test.go",
@@ -151,6 +229,111 @@
     "message": "\"set ADAMIC_CLANG_TSGO_ARCHIVE to a built checker archive\"",
     "class": "required-input",
     "provides": "ADAMIC_CLANG_TSGO_ARCHIVE: bridge/tsgo built c-archive for the pinned cohere TypeScript checker, using go build -buildmode=c-archive -o /path/tsgo.a ./bridge/tsgo/archive; see docs/gate-inputs.md."
+  },
+  {
+    "file": "internal/native/wasm_test.go",
+    "test": "TestWASI",
+    "id": "TestWASI:362f333fa4b72ea7c25a5bb02fd791f13e6995ff1db70c6bcd5e8b503ce3da89",
+    "line": 20,
+    "condition": "os.Getenv(\"ADAMIC_TEST_WASI\") != \"1\"",
+    "reads": [
+      "exec.LookPath(tool)",
+      "os.Getenv(\"ADAMIC_TEST_WASI\")",
+      "os.Getenv(\"ADAMIC_WASI_ARTIFACT\")",
+      "os.Getenv(\"ADAMIC_WASI_RUNTIME\")",
+      "os.Getenv(\"WASI_SYSROOT\")",
+      "os.ReadFile(module)"
+    ],
+    "callers": [
+      "TestWASI"
+    ],
+    "message": "\"WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH\"",
+    "class": "required-input",
+    "provides": "Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification."
+  },
+  {
+    "file": "internal/native/wasm_test.go",
+    "test": "TestWASI",
+    "id": "TestWASI:e331d554fc45e12edd105c0ed30539b5b8161c822ca013eeb9b559b9a29e4822",
+    "line": 24,
+    "condition": "sysroot == \"\"",
+    "reads": [
+      "exec.LookPath(tool)",
+      "os.Getenv(\"ADAMIC_TEST_WASI\")",
+      "os.Getenv(\"ADAMIC_WASI_ARTIFACT\")",
+      "os.Getenv(\"ADAMIC_WASI_RUNTIME\")",
+      "os.Getenv(\"WASI_SYSROOT\")",
+      "os.ReadFile(module)"
+    ],
+    "callers": [
+      "TestWASI"
+    ],
+    "message": "\"WASI toolchain missing: WASI_SYSROOT is not set\"",
+    "class": "required-input",
+    "provides": "Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification."
+  },
+  {
+    "file": "internal/native/wasm_test.go",
+    "test": "TestWASI",
+    "id": "TestWASI:c21b865ade4f7ec33e3c43e989d4915bb320441b56260e70d1b404d8e6ee400c",
+    "line": 28,
+    "condition": "_, err := exec.LookPath(tool); err != nil",
+    "reads": [
+      "exec.LookPath(tool)",
+      "os.Getenv(\"ADAMIC_TEST_WASI\")",
+      "os.Getenv(\"ADAMIC_WASI_ARTIFACT\")",
+      "os.Getenv(\"ADAMIC_WASI_RUNTIME\")",
+      "os.Getenv(\"WASI_SYSROOT\")",
+      "os.ReadFile(module)"
+    ],
+    "callers": [
+      "TestWASI"
+    ],
+    "message": "\"WASI toolchain missing: %s: %v\"",
+    "class": "required-input",
+    "provides": "Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification."
+  },
+  {
+    "file": "internal/native/wasm_test.go",
+    "test": "TestWASI",
+    "id": "TestWASI:84bb45dda60b9ac4a325def472053ec24083a3eca7b2cf2474e71763541bf80c",
+    "line": 41,
+    "condition": "output, err := exec.Command(\"clang\", append(append([]string{}, flags...), probe, \"-o\", filepath.Join(directory, \"probe.wasm\"))...).CombinedOutput(); err != nil",
+    "reads": [
+      "exec.LookPath(tool)",
+      "os.Getenv(\"ADAMIC_TEST_WASI\")",
+      "os.Getenv(\"ADAMIC_WASI_ARTIFACT\")",
+      "os.Getenv(\"ADAMIC_WASI_RUNTIME\")",
+      "os.Getenv(\"WASI_SYSROOT\")",
+      "os.ReadFile(module)"
+    ],
+    "callers": [
+      "TestWASI"
+    ],
+    "message": "\"WASI toolchain missing or unusable (sysroot, linker, builtins): %v\\n%s\"",
+    "class": "required-input",
+    "provides": "Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification."
+  },
+  {
+    "file": "internal/native/wasm_test.go",
+    "test": "TestWASI",
+    "id": "TestWASI:f69cd3364c297e515a7579901e72251584219181e3d65f6db4443ff8a7833420",
+    "line": 45,
+    "condition": "output, err := exec.Command(\"node\", \"--disable-warning=ExperimentalWarning\", \"--input-type=module\", \"-e\",\n\t\"import {WASI} from 'node:wasi'; import {registerHooks} from 'node:module'; new WASI({version:'preview1'}); if (!registerHooks || Number(process.versions.node.split('.')[0]) < 24) process.exit(1)\").CombinedOutput(); err != nil",
+    "reads": [
+      "exec.LookPath(tool)",
+      "os.Getenv(\"ADAMIC_TEST_WASI\")",
+      "os.Getenv(\"ADAMIC_WASI_ARTIFACT\")",
+      "os.Getenv(\"ADAMIC_WASI_RUNTIME\")",
+      "os.Getenv(\"WASI_SYSROOT\")",
+      "os.ReadFile(module)"
+    ],
+    "callers": [
+      "TestWASI"
+    ],
+    "message": "\"WASI toolchain missing: Node 24 with node:wasi and source oracle hooks required: %v\\n%s\"",
+    "class": "required-input",
+    "provides": "Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification."
   },
   {
     "file": "internal/oracle/gcc_lane_test.go",
@@ -247,6 +430,64 @@
     "provides": "Both selectable release runs explicitly cover finishing fixtures only. Node exit != 0 excludes that fixture from this lane; the ordinary oracle covers non-finishing behavior. This is a declared lane scope exclusion, not a missing toolchain or corpus."
   },
   {
+    "file": "internal/oracle/slabs_test.go",
+    "test": "TestNativeSlabsAgreeWithNode",
+    "id": "TestNativeSlabsAgreeWithNode:caf85ea1ec8cfd7fd6f51757b3af3de7ea0c64b6e4ef434e3796b9f3cc05b624",
+    "line": 18,
+    "condition": "runtime.GOOS == \"darwin\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_GATE_UNCACHED\")",
+      "os.ReadFile(absolute)",
+      "os.ReadFile(file)",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestNativeSlabsAgreeWithNode"
+    ],
+    "message": "\"Linux is the gate of record; macOS Node fuses multiply-adds, so navigation.a differs there (#myatdyv), and this lane gets its own Linux shard\"",
+    "class": "not-applicable",
+    "provides": "Slab correctness lane requires its Linux shard. macOS Node fuses multiply-adds on navigation.a; other non-Linux platforms are outside this witness."
+  },
+  {
+    "file": "internal/oracle/slabs_test.go",
+    "test": "TestNativeSlabsAgreeWithNode",
+    "id": "TestNativeSlabsAgreeWithNode:1743f5368e290c06ba6735cab080c81df3d75b4eadbff4df11f133275a5beced",
+    "line": 21,
+    "condition": "runtime.GOOS != \"linux\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_GATE_UNCACHED\")",
+      "os.ReadFile(absolute)",
+      "os.ReadFile(file)",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestNativeSlabsAgreeWithNode"
+    ],
+    "message": "\"the slab lane has its own Linux gate shard\"",
+    "class": "not-applicable",
+    "provides": "Slab correctness lane requires its Linux shard. macOS Node fuses multiply-adds on navigation.a; other non-Linux platforms are outside this witness."
+  },
+  {
+    "file": "internal/oracle/slabs_test.go",
+    "test": "TestNativeMallocAgreesWithNode",
+    "id": "TestNativeMallocAgreesWithNode:4be973d40ef3554399a7b55adc4838f67420bcdfeaba943cfec966c3f7a02827",
+    "line": 30,
+    "condition": "os.Getenv(\"ADAMIC_SLAB_MEASURE\") != \"1\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_GATE_UNCACHED\")",
+      "os.Getenv(\"ADAMIC_SLAB_MEASURE\")",
+      "os.ReadFile(absolute)",
+      "os.ReadFile(file)",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestNativeMallocAgreesWithNode"
+    ],
+    "message": "\"set ADAMIC_SLAB_MEASURE=1 for the timing control\"",
+    "class": "measurement",
+    "provides": "ADAMIC_SLAB_MEASURE=1 enables the existing malloc allocator timing control, separate from the slab correctness lane."
+  },
+  {
     "file": "internal/oracle/stage3_hook_test.go",
     "test": "TestStage3FixtureHook",
     "id": "TestStage3FixtureHook:071bee04ebc1306585f9ad6a0a4aa5333046920fcb7bc52d74b659e6bbc9199d",
@@ -262,6 +503,97 @@
     "message": "\"called only by the Stage 3 fixture runner\"",
     "class": "required-input",
     "provides": "stage3/fixtures runner sets ADAMIC_STAGE3_FIXTURE to fixture source and ADAMIC_STAGE3_RESULT to a writable result path."
+  },
+  {
+    "file": "internal/oracle/wasi_test.go",
+    "test": "TestWASIAgreesWithNode",
+    "id": "TestWASIAgreesWithNode:60edfd5dfdae8c56ca8b1865e065faf4ec3bed49b1a7c2b1969971912171d0e9",
+    "line": 18,
+    "condition": "os.Getenv(\"ADAMIC_ORACLE_WASI\") != \"1\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_GATE_UNCACHED\")",
+      "os.Getenv(\"ADAMIC_ORACLE_WASI\")",
+      "os.ReadFile(absolute)",
+      "os.ReadFile(file)",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestWASIAgreesWithNode"
+    ],
+    "message": "\"set ADAMIC_ORACLE_WASI=1 to run the WASI oracle\"",
+    "class": "required-input",
+    "provides": "Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification."
+  },
+  {
+    "file": "internal/oracle/wasi_test.go",
+    "test": "TestWASIOracleCatchesMutants",
+    "id": "TestWASIOracleCatchesMutants:60edfd5dfdae8c56ca8b1865e065faf4ec3bed49b1a7c2b1969971912171d0e9",
+    "line": 63,
+    "condition": "os.Getenv(\"ADAMIC_ORACLE_WASI\") != \"1\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_GATE_UNCACHED\")",
+      "os.Getenv(\"ADAMIC_ORACLE_WASI\")",
+      "os.ReadFile(absolute)",
+      "os.ReadFile(file)",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestWASIOracleCatchesMutants"
+    ],
+    "message": "\"set ADAMIC_ORACLE_WASI=1\"",
+    "class": "required-input",
+    "provides": "Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification."
+  },
+  {
+    "file": "internal/oracle/wasi_test.go",
+    "test": "TestWASIRunnerCatchesMutants",
+    "id": "TestWASIRunnerCatchesMutants:60edfd5dfdae8c56ca8b1865e065faf4ec3bed49b1a7c2b1969971912171d0e9",
+    "line": 86,
+    "condition": "os.Getenv(\"ADAMIC_ORACLE_WASI\") != \"1\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_ORACLE_WASI\")",
+      "os.Getenv(\"WASI_SYSROOT\")"
+    ],
+    "callers": [
+      "TestWASIRunnerCatchesMutants"
+    ],
+    "message": "\"set ADAMIC_ORACLE_WASI=1\"",
+    "class": "required-input",
+    "provides": "Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification."
+  },
+  {
+    "file": "internal/oracle/wasi_test.go",
+    "test": "TestWASIEmission",
+    "id": "TestWASIEmission:60edfd5dfdae8c56ca8b1865e065faf4ec3bed49b1a7c2b1969971912171d0e9",
+    "line": 117,
+    "condition": "os.Getenv(\"ADAMIC_ORACLE_WASI\") != \"1\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_ORACLE_WASI\")",
+      "os.Getenv(\"WASI_SYSROOT\")"
+    ],
+    "callers": [
+      "TestWASIEmission"
+    ],
+    "message": "\"set ADAMIC_ORACLE_WASI=1\"",
+    "class": "required-input",
+    "provides": "Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification."
+  },
+  {
+    "file": "internal/oracle/wasi_test.go",
+    "test": "TestWASIEmission",
+    "id": "TestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9",
+    "line": 132,
+    "condition": "!fixture.lowers",
+    "reads": [
+      "os.Getenv(\"ADAMIC_ORACLE_WASI\")",
+      "os.Getenv(\"WASI_SYSROOT\")"
+    ],
+    "callers": [
+      "TestWASIEmission"
+    ],
+    "message": "\"fixture does not lower\"",
+    "class": "opt-in-lane",
+    "provides": "WASI emission lane covers fixtures with an existing lowered C representation. Fixtures marked !lowers have no emitted C; TestWASIAgreesWithNode separately requires their explicit NotYet outcome."
   },
   {
     "file": "stage1/cohere/css/css_test.go",
@@ -724,13 +1056,32 @@
     "provides": "stage1/cohere/json/audit_test.go oracleAnswers writes ADAMIC_JSON_CASES (JSON array of name/text records) and ADAMIC_JSON_ANSWERS (writable answer path), then runs this overlay in pinned cohere."
   },
   {
+    "file": "stage1/cohere/lint/jsx_integration_test.go",
+    "test": "TestJsxLintReleaseAndThroughput",
+    "id": "TestJsxLintReleaseAndThroughput:0ac2731cc03aa88aa1db988e0910063d36067cbcb25e2a776be9408d8e4d1ebf",
+    "line": 74,
+    "condition": "os.Getenv(\"ADAMIC_LINT_BENCH\") != \"1\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_LINT_BENCH\")",
+      "os.ReadFile(harness)",
+      "os.ReadFile(output.Name())",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestJsxLintReleaseAndThroughput"
+    ],
+    "message": "\"set ADAMIC_LINT_BENCH=1 for JSX throughput\"",
+    "class": "measurement",
+    "provides": "ADAMIC_LINT_BENCH=1 enables five-round JSX throughput comparisons; ordinary JSX correctness is held separately by TestJsxLintTrees and the lint oracle."
+  },
+  {
     "file": "stage1/cohere/lint/lint_test.go",
     "test": "TestCompilerAndStage1Agree",
     "id": "TestCompilerAndStage1Agree:1dbf140729f17ef866b29b574189ddf438e2a4dd6762d9bdcd8e5dae68bf6b7e",
-    "line": 328,
+    "line": 485,
     "condition": "source == \"\"",
     "reads": [
-      "filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif !entry.IsDir() && strings.HasSuffix(path, \".ts\") {\n\t\tabsolute, err := filepath.Abs(path)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\trows = append(rows, absolute)\n\t}\n\treturn nil\n})",
+      "filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif !entry.IsDir() && (strings.HasSuffix(path, \".ts\") || strings.HasSuffix(path, \".a\")) {\n\t\tabsolute, err := filepath.Abs(path)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\trows = append(rows, absolute)\n\t}\n\treturn nil\n})",
       "os.Getenv(\"ADAMIC_TYPESCRIPT_SOURCE\")",
       "os.ReadFile(output.Name())"
     ],
@@ -745,10 +1096,10 @@
     "file": "stage1/cohere/lint/lint_test.go",
     "test": "TestThroughput",
     "id": "TestThroughput:0ac2731cc03aa88aa1db988e0910063d36067cbcb25e2a776be9408d8e4d1ebf",
-    "line": 481,
+    "line": 652,
     "condition": "os.Getenv(\"ADAMIC_LINT_BENCH\") != \"1\"",
     "reads": [
-      "filepath.WalkDir(filepath.Join(source, \"src/compiler\"), func(path string, entry fs.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif !entry.IsDir() && strings.HasSuffix(path, \".ts\") {\n\t\trows = append(rows, path)\n\t}\n\treturn nil\n})",
+      "filepath.WalkDir(filepath.Join(source, \"src/compiler\"), func(path string, entry fs.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif !entry.IsDir() && (strings.HasSuffix(path, \".ts\") || strings.HasSuffix(path, \".a\")) {\n\t\trows = append(rows, path)\n\t}\n\treturn nil\n})",
       "os.Getenv(\"ADAMIC_LINT_BENCH\")",
       "os.Getenv(\"ADAMIC_TYPESCRIPT_SOURCE\")",
       "os.ReadFile(\"/proc/cpuinfo\")",
@@ -766,16 +1117,18 @@
     "file": "stage1/cohere/lint/profile_test.go",
     "test": "TestProfileArtifacts",
     "id": "TestProfileArtifacts:03683169fb662d98215fb4465dea1cc535cddd2f3b736fc257b8ceee2618bd70",
-    "line": 19,
+    "line": 20,
     "condition": "directory == \"\"",
     "reads": [
+      "filepath.WalkDir(\".\", func(path string, entry fs.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.IsDir() && (path == \"gaps\" || strings.HasSuffix(path, \"testdata\")) {\n\t\treturn filepath.SkipDir\n\t}\n\tif !entry.IsDir() && (strings.HasSuffix(path, \".ts\") || strings.HasSuffix(path, \".a\") || strings.HasSuffix(path, \"rule.json\") || strings.HasSuffix(path, \"mutant.json\") || strings.HasSuffix(path, \"oracle.go\")) {\n\t\tfiles = append(files, path)\n\t}\n\treturn nil\n})",
       "filepath.WalkDir(filepath.Join(sourceRoot, \"src/compiler\"), func(path string, entry os.DirEntry, err error) error {\n\tif err == nil && !entry.IsDir() && strings.HasSuffix(path, \".ts\") {\n\t\tfiles = append(files, path)\n\t}\n\treturn err\n})",
       "os.Getenv(\"ADAMIC_LINT_PROFILE_DIR\")",
       "os.Getenv(\"ADAMIC_TYPESCRIPT_SOURCE\")",
+      "os.ReadFile(file)",
       "os.ReadFile(filepath.Join(runtime, entry.Name()))",
       "os.ReadFile(goOracle(t))",
-      "os.ReadFile(name)",
-      "os.ReadFile(output.Name())"
+      "os.ReadFile(output.Name())",
+      "os.ReadFile(path)"
     ],
     "callers": [
       "TestProfileArtifacts"
@@ -788,7 +1141,7 @@
     "file": "stage1/cohere/lint/profile_test.go",
     "test": "TestProfileSnapshotsAgree",
     "id": "TestProfileSnapshotsAgree:3bd24aa7ec39b0814f83da55e2fa69db6694d0b9024893cf146dc5f7e1cbb1b4",
-    "line": 121,
+    "line": 162,
     "condition": "asked == \"\"",
     "reads": [
       "filepath.WalkDir(root, func(path string, entry os.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif !entry.IsDir() && strings.HasSuffix(path, \".ts\") {\n\t\tabsolute, err := filepath.Abs(path)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\trows = append(rows, absolute)\n\t}\n\treturn nil\n})",

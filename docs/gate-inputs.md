@@ -55,3 +55,27 @@ Those optional reads are not newly mandated gate inputs. In particular
 COHERE_GIT_SOURCE and generation seed/count overrides do not guard a Skip site.
 This census does not detect omitted checks expressed only as logging or an
 optional comparison with no Skip call.
+
+## Required shards added by the latest area merge
+
+The cohere shard must set `ADAMIC_GATE_COHERE=1` and run
+`TestRepositoryPassesCohereBaseline` in `./cloud`. Its Python runner builds the
+pinned cohere submodule and reads `cloud/cohere-baseline.json`; it needs Go,
+Python 3 and pinned Node v24.19.0. Its skip is required-input, even though
+ordinary development loops leave the switch off.
+
+The required WASI shard runs `bash cloud/setup.sh --wasi-sdk`, sources the
+printed env.sh and sets `ADAMIC_TEST_WASI=1 ADAMIC_ORACLE_WASI=1`. Setup pins
+wasi-sdk 27.0. `WASI_SYSROOT` must name its `share/wasi-sysroot` directory,
+including headers and wasm32-wasi libraries. The SDK's sibling `bin/clang`,
+linker and compiler builtins must be usable; the integration test also looks up
+clang, node and go on PATH and probes a real WASI build. Node v24.19.0 must
+provide node:wasi and node:module registerHooks. Missing switches, tools,
+sysroot or failed prerequisite probes are required-input skips. The gate's
+WASI plan assigns these to its required shard rather than treating opt-out as
+successful verification. Fixtures explicitly marked as not lowering are a
+lane scope exclusion, with NotYet checked separately by the WASI oracle.
+
+Node v24.19.0 is now enforced by internal/nodepin and setup verifies its archive
+against `cloud/node-pin.json`; the earlier observation that Node patch versions
+were not enforced describes the initial base, not the current merged tree.
