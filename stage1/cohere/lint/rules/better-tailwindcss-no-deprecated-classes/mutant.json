@@ -1,0 +1,6 @@
+{
+  "name": "decision core semantic mutant",
+  "file": "core.a",
+  "from": "major<entry.major",
+  "to": "major<=entry.major"
+}

@@ -52,4 +52,6 @@ The completed claimed implementations and evidence were pushed at bf9675da befor
 
 This claim update is committed and pushed before writing any implementation for these three rules.
 
-Outcome of the new selection: all three remain reserved and unported. Investigation stopped at the absent live design-system engine and program context, following Ahra's instruction for blockers beyond the shared harness. Each own rule directory contains a REPORT.md; no rule descriptor was added and no passing parity claim is made.
+Initial outcome of this selection was a dependency-only investigation. The continuation below supersedes that outcome; all three claims remain reserved and full integration is still pending.
+
+Continuation: the three Tailwind candidates now have owned .a cores, descriptors and explicit unsupported-adapter refusals. Deprecation and duplicate listeners pass bounded fixture comparisons; unknown reporting requires a live resolver binding. The complete bar is not certified, and no more rules are claimed. Current evidence is ../rules/better-tailwindcss-no-deprecated-classes/testdata/evidence/REPORT.md.

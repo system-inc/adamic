@@ -1,0 +1,14 @@
+{
+  "name": "better-tailwindcss/no-deprecated-classes",
+  "kinds": [
+    "JsxAttribute",
+    "CallExpression",
+    "VariableDeclaration"
+  ],
+  "factory": "create",
+  "class": "Rule",
+  "visit": "visit",
+  "oracle": "oracleNoDeprecatedClasses",
+  "upstreamPackage": "tailwind",
+  "upstreamTest": "TestNoDeprecatedClasses"
+}
