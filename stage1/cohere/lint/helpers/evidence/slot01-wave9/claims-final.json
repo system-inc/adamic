@@ -1,0 +1,49 @@
+{
+  "branches": [
+    "origin/codex/lint-helpers",
+    "origin/codex/lint-helpers-01",
+    "origin/codex/lint-helpers-02",
+    "origin/codex/lint-helpers-03",
+    "origin/codex/lint-helpers-04",
+    "origin/codex/lint-helpers-05",
+    "origin/codex/lint-helpers-from-codex-lint-wave1-03",
+    "origin/codex/lint-helpers-from-codex-lint-wave1-14",
+    "origin/codex/lint-helpers-from-codex/lint-wave1-04",
+    "origin/codex/lint-helpers-from-codex/lint-wave1-06",
+    "origin/codex/lint-helpers-from-codex/lint-wave1-09",
+    "origin/codex/lint-helpers-from-codex/lint-wave1-10",
+    "origin/codex/lint-helpers-from-codex/lint-wave1-11",
+    "origin/codex/lint-helpers-from-codex/lint-wave1-15",
+    "origin/codex/lint-helpers-from-lint-wave1-05",
+    "origin/codex/lint-helpers-from-lint-wave1-08",
+    "origin/codex/lint-helpers-from-lint-wave1-12",
+    "origin/codex/lint-helpers-from-lint-wave1-13"
+  ],
+  "matches": [
+    {
+      "branch": "origin/codex/lint-helpers-01",
+      "file": "stage1/cohere/lint/helpers/claims/01.md",
+      "symbols": [
+        "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.boundedQuantifierWidth",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.quantifierWidth",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.groupKindOf"
+      ]
+    },
+    {
+      "branch": "origin/codex/lint-helpers-05",
+      "file": "stage1/cohere/lint/helpers/claims/05.md",
+      "symbols": [
+        "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.boundedQuantifierWidth",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.groupKindOf"
+      ]
+    }
+  ],
+  "resolution": {
+    "slot01_claim": "9867cb69",
+    "slot01_time": "2026-10-07T04:37:46Z",
+    "slot05_later_claim": "94e0c374",
+    "slot05_time": "2026-10-07T04:37:54Z",
+    "retained": "slot01",
+    "reason": "Earlier claim by eight seconds"
+  }
+}

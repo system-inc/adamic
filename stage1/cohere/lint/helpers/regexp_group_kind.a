@@ -1,0 +1,8 @@
+// Go groupKind values are plain 0, lookahead 1 and lookbehind 2.
+export function regexpGroupKind(source: readonly number[], offset: number): number {
+    if (source[offset] !== 40 || source[offset + 1] !== 63) { return 0; }
+    const third = source[offset + 2] ?? 0;
+    if (third === 61 || third === 33) { return 1; }
+    if (third === 60 && (source[offset + 3] === 61 || source[offset + 3] === 33)) { return 2; }
+    return 0;
+}

@@ -1,0 +1,32 @@
+=== RUN   TestSlot01Wave9Bounded
+    slot01_wave9_test.go:142: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/next/no_html_link_for_pages_test.go: 280 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/typescript/no_empty_object_type_test.go: 47 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/core/no_restricted_exports_test.go: 177 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/core/no_restricted_imports_test.go: 414 string inputs
+        918 fixture strings; 27783 bounded queries
+    slot01_wave9_test.go:142: 27783 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave9_test.go:142: compiled regexp_bounded_quantifier_width.a mutant caught at output line 22: got "2", Go "0"
+--- PASS: TestSlot01Wave9Bounded (21.45s)
+=== RUN   TestSlot01Wave9Quantifier
+    slot01_wave9_test.go:147: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/next/no_html_link_for_pages_test.go: 280 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/typescript/no_empty_object_type_test.go: 47 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/core/no_restricted_exports_test.go: 177 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/core/no_restricted_imports_test.go: 414 string inputs
+        918 fixture strings; 27783 quantifier queries
+    slot01_wave9_test.go:147: 27783 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave9_test.go:147: compiled regexp_quantifier_width.a mutant caught at output line 25795: got "1", Go "2"
+--- PASS: TestSlot01Wave9Quantifier (22.06s)
+=== RUN   TestSlot01Wave9Group
+    slot01_wave9_test.go:152: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/next/no_html_link_for_pages_test.go: 280 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/typescript/no_empty_object_type_test.go: 47 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/core/no_restricted_exports_test.go: 177 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/core/no_restricted_imports_test.go: 414 string inputs
+        918 fixture strings; 27783 group queries
+    slot01_wave9_test.go:152: 27783 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave9_test.go:152: compiled regexp_group_kind.a mutant caught at output line 25936: got "0", Go "2"
+--- PASS: TestSlot01Wave9Group (21.03s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers	64.543s

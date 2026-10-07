@@ -1,0 +1,21 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from './options_json.ts';
+import { regexpBoundedQuantifierWidth } from './regexp_bounded_quantifier_width.a';
+import { regexpQuantifierWidth } from './regexp_quantifier_width.a';
+import { regexpGroupKind } from './regexp_group_kind.a';
+const args = programArguments();
+const file = readTextFile(args[0] ?? panic('fixture path'));
+if (file.kind === 'Error') { panic(file.message); }
+for (const line of file.text.split('\n')) {
+    if (line === '') { continue; }
+    const json = new OptionsJson(line);
+    const root = json.parse();
+    if (root < 0) { panic(json.error); }
+    const row = json.node(root).children;
+    const source: number[] = [];
+    for (const item of json.node(row[0] ?? panic('bytes')).children) { source.push(Number(json.node(item).text)); }
+    const offset = Number(json.node(row[1] ?? panic('offset')).text);
+    if (args[1] === 'bounded') { console.log(`${regexpBoundedQuantifierWidth(source, offset)}`); }
+    else if (args[1] === 'quantifier') { console.log(`${regexpQuantifierWidth(source, offset)}`); }
+    else { console.log(`${regexpGroupKind(source, offset)}`); }
+}

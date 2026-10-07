@@ -1,0 +1,13 @@
+import { regexpBoundedQuantifierWidth } from './regexp_bounded_quantifier_width.a';
+export function regexpQuantifierWidth(source: readonly number[], offset: number): number {
+    if (offset >= source.length) { return 0; }
+    const first = source[offset] ?? 0;
+    let width = 0;
+    if (first === 42 || first === 43 || first === 63) { width = 1; }
+    else if (first === 123) {
+        width = regexpBoundedQuantifierWidth(source, offset);
+        if (width === 0) { return 0; }
+    } else { return 0; }
+    if (offset + width < source.length && source[offset + width] === 63) { width++; }
+    return width;
+}

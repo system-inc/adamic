@@ -1,0 +1,22 @@
+// The caller supplies a validated byte arena and a nonnegative slice offset.
+// Go starts at byte one without checking that the slice begins with '{'.
+export function regexpBoundedQuantifierWidth(source: readonly number[], offset: number): number {
+    let index = offset + 1;
+    const digits = index;
+    while (index < source.length) {
+        const character = source[index] ?? 0;
+        if (character < 48 || character > 57) { break; }
+        index++;
+    }
+    if (index === digits) { return 0; }
+    if (index < source.length && source[index] === 44) {
+        index++;
+        while (index < source.length) {
+            const character = source[index] ?? 0;
+            if (character < 48 || character > 57) { break; }
+            index++;
+        }
+    }
+    if (index < source.length && source[index] === 125) { return index - offset + 1; }
+    return 0;
+}
