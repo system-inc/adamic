@@ -1,112 +1,0 @@
-Rebasing (1/33)Auto-merging stage1/cohere/lint/README.md
-CONFLICT (content): Merge conflict in stage1/cohere/lint/README.md
-Auto-merging stage1/cohere/lint/lint.ts
-CONFLICT (content): Merge conflict in stage1/cohere/lint/lint.ts
-Auto-merging stage1/cohere/lint/lint_test.go
-CONFLICT (content): Merge conflict in stage1/cohere/lint/lint_test.go
-Auto-merging stage1/cohere/lint/testdata/oracle.go
-CONFLICT (content): Merge conflict in stage1/cohere/lint/testdata/oracle.go
-error: could not apply 29175443... Discover lint rules from independent directories
-hint: Resolve all conflicts manually, mark them as resolved with
-hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
-hint: You can instead skip this commit: run "git rebase --skip".
-hint: To abort and get back to the state before "git rebase", run "git rebase --abort".
-hint: Disable this message with "git config set advice.mergeConflict false"
-Could not apply 29175443... # Discover lint rules from independent directories
-[detached HEAD 36633568] Discover lint rules from independent directories
- 44 files changed, 1515 insertions(+), 33 deletions(-)
- create mode 100644 cmd/lint-registry/main.go
- create mode 100644 docs/lint-registration-evidence/rules-after.txt
- create mode 100644 docs/lint-registration-evidence/rules-before.txt
- create mode 100644 docs/lint-registration-evidence/rules.diff
- create mode 100644 docs/lint-registration.md
- create mode 100644 stage1/cohere/lint/context.ts
- create mode 100644 stage1/cohere/lint/registration_test.go
- create mode 100644 stage1/cohere/lint/registry/registry.go
- create mode 100644 stage1/cohere/lint/registry/registry_test.go
- create mode 100644 stage1/cohere/lint/rules/eqeqeq/messages.ts
- create mode 100644 stage1/cohere/lint/rules/eqeqeq/mutant.json
- create mode 100644 stage1/cohere/lint/rules/eqeqeq/oracle.go
- create mode 100644 stage1/cohere/lint/rules/eqeqeq/rule.json
- create mode 100644 stage1/cohere/lint/rules/eqeqeq/rule.ts
- create mode 100644 stage1/cohere/lint/rules/eqeqeq/testdata/witness.ts.txt
- create mode 100644 stage1/cohere/lint/rules/no-debugger/messages.ts
- create mode 100644 stage1/cohere/lint/rules/no-debugger/mutant.json
- create mode 100644 stage1/cohere/lint/rules/no-debugger/oracle.go
- create mode 100644 stage1/cohere/lint/rules/no-debugger/rule.json
- create mode 100644 stage1/cohere/lint/rules/no-debugger/rule.ts
- create mode 100644 stage1/cohere/lint/rules/no-debugger/testdata/witness.ts.txt
- create mode 100644 stage1/cohere/lint/rules/no-duplicate-case/messages.ts
- create mode 100644 stage1/cohere/lint/rules/no-duplicate-case/mutant.json
- create mode 100644 stage1/cohere/lint/rules/no-duplicate-case/oracle.go
- create mode 100644 stage1/cohere/lint/rules/no-duplicate-case/rule.json
- create mode 100644 stage1/cohere/lint/rules/no-duplicate-case/rule.ts
- create mode 100644 stage1/cohere/lint/rules/no-duplicate-case/testdata/witness.ts.txt
- create mode 100644 stage1/cohere/lint/rules/no-empty/messages.ts
- create mode 100644 stage1/cohere/lint/rules/no-empty/mutant.json
- create mode 100644 stage1/cohere/lint/rules/no-empty/oracle.go
- create mode 100644 stage1/cohere/lint/rules/no-empty/rule.json
- create mode 100644 stage1/cohere/lint/rules/no-empty/rule.ts
- create mode 100644 stage1/cohere/lint/rules/no-empty/testdata/witness.ts.txt
- create mode 100644 stage1/cohere/lint/rules/no-var/messages.ts
- create mode 100644 stage1/cohere/lint/rules/no-var/mutant.json
- create mode 100644 stage1/cohere/lint/rules/no-var/oracle.go
- create mode 100644 stage1/cohere/lint/rules/no-var/rule.json
- create mode 100644 stage1/cohere/lint/rules/no-var/rule.ts
- create mode 100644 stage1/cohere/lint/rules/no-var/testdata/witness.ts.txt
-Rebasing (2/33)Rebasing (3/33)Auto-merging stage1/cohere/lint/lint_test.go
-CONFLICT (content): Merge conflict in stage1/cohere/lint/lint_test.go
-error: could not apply 4450eea8... Scope rule mutants and copied imports to their owning modules
-hint: Resolve all conflicts manually, mark them as resolved with
-hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
-hint: You can instead skip this commit: run "git rebase --skip".
-hint: To abort and get back to the state before "git rebase", run "git rebase --abort".
-hint: Disable this message with "git config set advice.mergeConflict false"
-Could not apply 4450eea8... # Scope rule mutants and copied imports to their owning modules
-[detached HEAD a90b5a8f] Scope rule mutants and copied imports to their owning modules
- 3 files changed, 36 insertions(+), 2 deletions(-)
-Rebasing (4/33)Rebasing (5/33)Auto-merging stage1/cohere/lint/README.md
-CONFLICT (content): Merge conflict in stage1/cohere/lint/README.md
-Auto-merging stage1/cohere/lint/lint.ts
-CONFLICT (content): Merge conflict in stage1/cohere/lint/lint.ts
-Auto-merging stage1/cohere/lint/lint_test.go
-CONFLICT (content): Merge conflict in stage1/cohere/lint/lint_test.go
-Auto-merging stage1/cohere/lint/main.ts
-Auto-merging stage1/cohere/lint/settings.ts
-CONFLICT (add/add): Merge conflict in stage1/cohere/lint/settings.ts
-error: could not apply 48741f90... Carry rule options without a shared capture schema
-hint: Resolve all conflicts manually, mark them as resolved with
-hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
-hint: You can instead skip this commit: run "git rebase --skip".
-hint: To abort and get back to the state before "git rebase", run "git rebase --abort".
-hint: Disable this message with "git config set advice.mergeConflict false"
-Could not apply 48741f90... # Carry rule options without a shared capture schema
-[detached HEAD b1ec1c52] Carry rule options without a shared capture schema
- 7 files changed, 101 insertions(+), 8 deletions(-)
-Rebasing (6/33)Rebasing (7/33)Rebasing (8/33)Auto-merging stage1/cohere/lint/lint.ts
-CONFLICT (content): Merge conflict in stage1/cohere/lint/lint.ts
-error: could not apply fe4daf32... Create rule instances outside aggregate constructors
-hint: Resolve all conflicts manually, mark them as resolved with
-hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
-hint: You can instead skip this commit: run "git rebase --skip".
-hint: To abort and get back to the state before "git rebase", run "git rebase --abort".
-hint: Disable this message with "git config set advice.mergeConflict false"
-Could not apply fe4daf32... # Create rule instances outside aggregate constructors
-[detached HEAD 5fc12886] Create rule instances outside aggregate constructors
- 2 files changed, 19 insertions(+), 3 deletions(-)
-Rebasing (9/33)Auto-merging stage1/cohere/lint/lint_test.go
-CONFLICT (content): Merge conflict in stage1/cohere/lint/lint_test.go
-Auto-merging stage1/cohere/lint/main.ts
-Auto-merging stage1/cohere/lint/settings.ts
-CONFLICT (content): Merge conflict in stage1/cohere/lint/settings.ts
-error: could not apply 3383c509... Keep option capture independent of every rule schema
-hint: Resolve all conflicts manually, mark them as resolved with
-hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
-hint: You can instead skip this commit: run "git rebase --skip".
-hint: To abort and get back to the state before "git rebase", run "git rebase --abort".
-hint: Disable this message with "git config set advice.mergeConflict false"
-Could not apply 3383c509... # Keep option capture independent of every rule schema
-[detached HEAD 91133cc3] Keep option capture independent of every rule schema
- 5 files changed, 9 insertions(+), 16 deletions(-)
-Rebasing (10/33)Rebasing (11/33)Rebasing (12/33)Rebasing (13/33)Rebasing (14/33)Rebasing (15/33)Rebasing (16/33)Rebasing (17/33)Rebasing (18/33)Rebasing (19/33)Rebasing (20/33)Rebasing (21/33)Rebasing (22/33)Rebasing (23/33)Rebasing (24/33)Rebasing (25/33)Rebasing (26/33)Rebasing (27/33)dropping 8cf9f2a0b209c35040da4eef4c00d34013d4f9a8 Restore the committed harness test dependency -- patch contents already upstream
-Rebasing (28/33)Rebasing (29/33)Rebasing (30/33)Rebasing (31/33)Rebasing (32/33)Rebasing (33/33)Successfully rebased and updated refs/heads/codex/lint-wave1-01.

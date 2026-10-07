@@ -1,0 +1,10 @@
+# Parked rules outside the landing branch
+
+Preserved implementations and logs: commit 9688a99061c666ca46e4ec252158d29834e76821 on codex/lint-wave1-01 before this split. Retrieve any removed directory with git show/git archive from that commit. No blocked descriptor remains in the landing branch.
+
+- better-tailwindcss/no-unknown-classes: missing live Tailwind design-system/program/candidate resolver. Reproducer on the preserved commit: source /workspace/adamic-tools/env.sh; ADAMIC_TYPESCRIPT_SOURCE=/tmp/lint-wave1-typescript go test ./stage1/cohere/lint -run '^TestCompilerAndStage1Agree$' -count=1 -timeout 15m -v > /tmp/parked-tailwind.log 2>&1. Source Node exits 70 with NotYet: live Tailwind design-system and program adapter. TestOwnedWitnesses also reports no Go findings without provider inputs.
+- better-tailwindcss/no-duplicate-classes: shared Finding cannot serialize multiple automatic edits. Preserved owned reproducer: go test ./stage1/cohere/lint/rules/better-tailwindcss-no-deprecated-classes -run '^TestRefusals$' -count=1 -v > /tmp/parked-multiple-edits.log 2>&1; mergeClassNames('flex flex flex') explicitly refuses multiple edits. Configured variable regex provider also incomplete.
+- better-tailwindcss/no-deprecated-classes: configured variable regex provider incomplete and Tailwind version hardcoded. Preserved same TestRefusals command: const arbitrary='flex', variables ['^arbitrary$'] exits 70 with NotYet: Go-equivalent configured variable regex provider.
+- @typescript-eslint/consistent-type-assertions: shared all-rule option routing supplies no-labels allowLoop to this strict decoder. Preserved reproducer: go test ./stage1/cohere/lint -run '^TestRulesAgree$' -count=1 -timeout 15m -v > /tmp/parked-options-routing.log 2>&1; panic json: unknown field "allowLoop". Decoder stays strict; isolated scoped parity is not a unified landing certificate.
+
+The retained winning @next/next/google-font-display must pass all three unified gates independently. Losing require-description/physical-direction copies were already removed per DEDUP_LEDGER.md.

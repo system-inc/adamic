@@ -1,8 +1,0 @@
-=== RUN   TestRulesAgree
-    lint_test.go:374: /workspace/adamic/stage1/cohere/lint/lint.ts:12:29: error TS2307: Cannot find module './volume.ts' or its corresponding type declarations.
-        /workspace/adamic/stage1/cohere/lint/lint.ts:35:8: error TS2307: Cannot find module './messages.ts' or its corresponding type declarations.
-        /workspace/adamic/stage1/cohere/lint/lint.ts:9:47: error TS2307: Cannot find module './comments.ts' or its corresponding type declarations.
---- FAIL: TestRulesAgree (12.93s)
-FAIL
-FAIL	github.com/system-inc/adamic/stage1/cohere/lint	12.950s
-FAIL

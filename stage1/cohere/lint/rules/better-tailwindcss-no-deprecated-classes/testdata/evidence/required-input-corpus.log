@@ -1,8 +1,0 @@
-=== RUN   TestCompilerAndStage1Agree
-    lint_test.go:466: compiler and stage1: 368 files
-    lint_test.go:467: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/cohere/lint/main.ts --manifest /tmp/adamic-gate/TestCompilerAndStage1Agree474031133/005/manifest.txt]: exit status 70
-        adamic: panic: NotYet: live Tailwind design-system and program adapter
---- FAIL: TestCompilerAndStage1Agree (25.76s)
-FAIL
-FAIL	github.com/system-inc/adamic/stage1/cohere/lint	25.772s
-FAIL

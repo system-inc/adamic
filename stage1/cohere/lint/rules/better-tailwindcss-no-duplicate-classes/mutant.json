@@ -1,6 +1,0 @@
-{
-  "name": "decision core semantic mutant",
-  "file": "core.a",
-  "from": "if(!seen)",
-  "to": "if(seen)"
-}

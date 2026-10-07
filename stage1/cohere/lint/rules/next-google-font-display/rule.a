@@ -1,11 +1,12 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
 import type { RuleContext } from '../../context.ts';
 import { decode } from './entities.a';
 import { missing, discouraged } from './messages.a';
 export class Rule {
     readonly context: RuleContext;
     constructor(context: RuleContext) { this.context = context; }
-    visit(index: number): void {
-        const children = this.context.node(index).children;
+    visit(node: ParseNode, index: number): void {
+        const children = node.children;
         const tag = children[0] ?? -1;
         if(tag < 0 || this.context.node(tag).kind !== 'Identifier' || this.context.node(tag).text !== 'link') { return; }
         const attributes = children.find(child => this.context.node(child).kind === 'JsxAttributes') ?? -1;

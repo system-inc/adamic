@@ -1,3 +1,0 @@
-// Pinned parser SyntaxKind values. The shared numeric driver consumes this declaration.
-// JsxAttribute, CallExpression, VariableDeclaration
-export const syntaxKinds: readonly number[] = [292, 214, 261];
