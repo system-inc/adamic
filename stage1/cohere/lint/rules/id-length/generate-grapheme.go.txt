@@ -1,0 +1,19 @@
+package main
+import("fmt";"unicode")
+func main(){
+ fmt.Println("// Generated from Go unicode",unicode.Version,"by generate-grapheme.go.txt.")
+ for _,entry:=range []struct{name string;tables []*unicode.RangeTable}{
+  {"marks",[]*unicode.RangeTable{unicode.Mn,unicode.Me,unicode.Mc}},
+  {"controls",[]*unicode.RangeTable{unicode.Cc,unicode.Zl,unicode.Zp}},
+  {"formats",[]*unicode.RangeTable{unicode.Cf}},
+  {"letters",[]*unicode.RangeTable{unicode.Lo}},
+  {"symbols",[]*unicode.RangeTable{unicode.So}},
+ }{
+  fmt.Printf("export const %s: readonly number[] = [",entry.name)
+  start:=-1
+  for code:=0;code<=0x110000;code++{
+   present:=code<0x110000 && unicode.In(rune(code),entry.tables...)
+   if present&&start<0{start=code};if !present&&start>=0{fmt.Printf("%d,%d,",start,code-1);start=-1}
+  };fmt.Println("];")
+ }
+}

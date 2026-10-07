@@ -1,0 +1,181 @@
+func fifthDescriptors(t *testing.T) []registry.Descriptor {
+ var result []registry.Descriptor
+ for _,d:=range prepareRegistry(t,".") {if d.Slug=="dot-notation"||d.Slug=="grouped-accessor-pairs"||d.Slug=="id-length"{result=append(result,d)}}
+ if len(result)!=3{t.Fatalf("wanted 3 descriptors got %d",len(result))};return result
+}
+func fifthRows(t *testing.T,oracle string,rows []string) string {
+ // These rules use the Adamic AST directly and need no Go semantic metadata.
+ return manifest(t,rows)
+}
+func TestFifthWitnesses(t *testing.T) {
+ var rows []string
+ for _,d:=range fifthDescriptors(t) {
+  options:="null"
+  for _,source:=range ownedWitnesses(t,".",d.Slug) {
+   rows=append(rows,source+"\t"+d.Name+"\t\t\tfalse\t"+options+"\tapply")
+   rows=append(rows,source+"\tall\t\t\tfalse\tnull\tapply")
+  }
+ }
+ directory,err:=filepath.Abs(".");if err!=nil{t.Fatal(err)}
+ oracle:=goOracle(t)
+ compare(t,oracle,buildPort(t,directory,true),directory,fifthRows(t,oracle,rows))
+}
+func TestFifthUpstream(t *testing.T) {
+ selected:=map[string]bool{}
+ for _,d:=range fifthDescriptors(t){selected[d.Name]=true}
+ var rows []string
+ counts:=map[string]int{}
+ for _,row:=range upstream(t) {
+  rule:=strings.Split(row,"\t")[1]
+  if selected[rule]{
+   var options map[string]json.RawMessage
+   fields:=strings.Split(row,"\t")
+   if len(fields)>5 && strings.HasPrefix(fields[5],"{"){if err:=json.Unmarshal([]byte(fields[5]),&options);err!=nil{t.Fatal(err)}}
+   blocked:=false
+   for key,value:=range options {
+    if rule=="dot-notation" && strings.EqualFold(key,"allowPattern") && string(value)!=`""` && string(value)!="null" {blocked=true}
+    if rule=="id-length" && strings.EqualFold(key,"exceptionPatterns") && string(value)!="[]" && string(value)!="null" {blocked=true}
+   }
+   if blocked {data,err:=os.ReadFile(fields[0]);if err!=nil{t.Fatal(err)};t.Logf("explicit runtime regex exclusion: %s options=%s source=%q",rule,fields[5],data);continue}
+   rows=append(rows,row+"\tapply");counts[rule]++
+  }
+ }
+ t.Logf("fifth upstream cases: %d, per rule %v",len(rows),counts)
+ directory,err:=filepath.Abs(".");if err!=nil{t.Fatal(err)}
+ oracle:=goOracle(t)
+ classified:=execute(t,"",oracle,"--classify",manifest(t,rows)).output
+ bad:=map[int]bool{}
+ for _,line:=range strings.Split(strings.TrimSpace(string(classified)),"\n") {
+  if line==""{continue};var index int;if _,err:=fmt.Sscan(line,&index);err!=nil{t.Fatal(err)};bad[index]=true
+ }
+ classifier,err:=filepath.Abs("rules/base-consistency-no-bare-throw/classify.mjs");if err!=nil{t.Fatal(err)}
+ classifiedNode:=execute(t,"","node","--disable-warning=ExperimentalWarning",classifier,manifest(t,rows)).output
+ var failures []struct {Index int;Error string}
+ if err:=json.Unmarshal(classifiedNode,&failures);err!=nil{t.Fatal(err)}
+ for _,failure:=range failures {bad[failure.Index]=true;parts:=strings.Split(rows[failure.Index],"\t");source,err:=os.ReadFile(parts[0]);if err!=nil{t.Fatal(err)};t.Logf("explicit shared-parser exclusion: %s %s source=%q",parts[1],failure.Error,source)}
+ var accepted []string
+ for index,row:=range rows {if bad[index] {parts:=strings.Split(row,"\t");source,err:=os.ReadFile(parts[0]);if err!=nil{t.Fatal(err)};t.Logf("explicit parse/fix-engine exclusion: %s source=%q",parts[1],source)} else {accepted=append(accepted,row)}}
+ t.Logf("accepted %d upstream cases, excluded %d Go or Adamic parse refusals",len(accepted),len(bad))
+ compare(t,oracle,buildPort(t,directory,true),directory,fifthRows(t,oracle,accepted))
+}
+func TestFifthCompiler(t *testing.T) {
+ source:=os.Getenv("ADAMIC_TYPESCRIPT_SOURCE");if source==""{t.Fatal("missing compiler source")}
+ var files []string
+ for _,root:=range []string{filepath.Join(source,"src/compiler"),filepath.Join(repository,"stage1")} {
+  err:=filepath.WalkDir(root,func(path string,entry fs.DirEntry,err error)error {
+   if err!=nil{return err};if !entry.IsDir()&&(strings.HasSuffix(path,".ts")||strings.HasSuffix(path,".a")){absolute,err:=filepath.Abs(path);if err!=nil{return err};files=append(files,absolute)};return nil
+  });if err!=nil{t.Fatal(err)}
+ }
+ var rows []string
+ snapshot:=t.TempDir()
+ for _,path:=range files {
+  target:=filepath.Join(snapshot,strings.TrimPrefix(filepath.ToSlash(path),"/"))
+  if err:=os.MkdirAll(filepath.Dir(target),0755);err!=nil{t.Fatal(err)}
+  data,err:=os.ReadFile(path);if err!=nil{t.Fatal(err)}
+  if err:=os.WriteFile(target,data,0644);err!=nil{t.Fatal(err)}
+  for _,d:=range fifthDescriptors(t){rows=append(rows,target+"\t"+d.Name)}
+ }
+ t.Logf("compiler/stage1 %d files, %d rule/file pairs; no Go semantic metadata supplied",len(files),len(rows))
+ directory,err:=filepath.Abs(".");if err!=nil{t.Fatal(err)}
+ oracle:=goOracle(t)
+ compare(t,oracle,buildPort(t,directory,true),directory,fifthRows(t,oracle,rows))
+}
+func TestFifthMutants(t *testing.T) {
+ oracle:=goOracle(t)
+ for _,d:=range fifthDescriptors(t){t.Run(d.Slug,func(t *testing.T){
+  options:="null"
+  var rows []string
+  for _,source:=range ownedWitnesses(t,".",d.Slug){rows=append(rows,source+"\t"+d.Name+"\t\t\tfalse\t"+options+"\tapply")}
+  path:=fifthRows(t,oracle,rows);want:=execute(t,"",oracle,"--manifest",path).output
+  var change struct{Name,File,From,To string}
+  data,err:=os.ReadFile(filepath.Join("rules",d.Slug,"mutant.json"));if err!=nil{t.Fatal(err)}
+  if err:=json.Unmarshal(data,&change);err!=nil{t.Fatal(err)}
+  directory:=mutant(t,change.From,change.To,filepath.Join("rules",d.Slug,change.File))
+  for _,side:=range []struct{name string;run execution}{
+   {"Node",node(t,directory,path,false)}, {"emitted JavaScript",emitted(t,directory,path)},
+   {"sanitized native",execute(t,"",buildPort(t,directory,true),"--manifest",path)},
+  } {if bytes.Equal(side.run.output,want){t.Fatalf("mutant survived on %s",side.name)};t.Logf("%s caught only by output comparison on %s: %s",change.Name,side.name,difference(side.run.output,want))}
+ })}
+}
+func TestFifthThroughput(t *testing.T) {
+ directory,err:=filepath.Abs(".");if err!=nil{t.Fatal(err)}
+ oracle:=goOracle(t);binary:=buildPort(t,directory,false)
+ for _,d:=range fifthDescriptors(t) {
+  options:="null"
+  source:=ownedWitnesses(t,".",d.Slug)[0]
+  var rows []string;for index:=0;index<1000;index++{rows=append(rows,source+"\t"+d.Name+"\t\t\tfalse\t"+options)}
+  path:=fifthRows(t,oracle,rows)
+  var want []byte
+  for _,side:=range []struct{name string;run execution}{
+   {"Go",execute(t,"",oracle,"--manifest",path,"--count")},
+   {"native",execute(t,"",binary,"--manifest",path,"--count")},
+   {"Node",node(t,directory,path,true)},
+  } {if want==nil{want=side.run.output};if !bytes.Equal(want,side.run.output){t.Fatal("counts differ")};var count int;fmt.Sscan(string(want),&count);t.Logf("%s %s: %d findings, %s, %.2f findings/s (1000 owned witnesses; no Go semantic metadata supplied)",d.Name,side.name,count,side.run.duration,float64(count)/side.run.duration.Seconds())}
+ }
+}
+func TestFifthSourceThroughput(t *testing.T) {
+ source:=os.Getenv("ADAMIC_TYPESCRIPT_SOURCE");if source==""{t.Fatal("missing compiler source")}
+ var files []string
+ for _,root:=range []string{filepath.Join(source,"src/compiler"),filepath.Join(repository,"stage1")} {
+  err:=filepath.WalkDir(root,func(path string,entry fs.DirEntry,err error)error{if err!=nil{return err};if !entry.IsDir()&&(strings.HasSuffix(path,".ts")||strings.HasSuffix(path,".a")){absolute,err:=filepath.Abs(path);if err!=nil{return err};files=append(files,absolute)};return nil});if err!=nil{t.Fatal(err)}
+ }
+ directory,err:=filepath.Abs(".");if err!=nil{t.Fatal(err)}
+ oracle:=goOracle(t);binary:=buildPort(t,directory,false)
+ for _,d:=range fifthDescriptors(t) {
+  var rows []string;for _,path:=range files{rows=append(rows,path+"\t"+d.Name)}
+  path:=fifthRows(t,oracle,rows)
+  var want []byte
+  for _,side:=range []struct{name string;run execution}{
+   {"Go",execute(t,"",oracle,"--manifest",path,"--count")},
+   {"native",execute(t,"",binary,"--manifest",path,"--count")},
+   {"Node",node(t,directory,path,true)},
+  } {if want==nil{want=side.run.output};if !bytes.Equal(want,side.run.output){t.Fatal("counts differ")};var count int;fmt.Sscan(string(want),&count);t.Logf("%s %s: %d findings, %s, %.2f findings/s (%d compiler/stage1 files; no Go semantic metadata supplied)",d.Name,side.name,count,side.run.duration,float64(count)/side.run.duration.Seconds(),len(files))}
+ }
+}
+func TestFifthRegexRefusal(t *testing.T) {
+ prepareRegistry(t,".")
+ entry,err:=filepath.Abs("rules/typescript-no-non-null-assertion/driver.a");if err!=nil{t.Fatal(err)}
+ program,err:=load.Load([]string{entry});if err!=nil{t.Fatal(err)}
+ lowered,err:=lower.Lower(context.Background(),program);if err!=nil{t.Fatal(err)}
+ binary:=filepath.Join(t.TempDir(),"regex-refusal")
+ if err:=native.Build(native.C(lowered),binary,native.Options{Sanitize:true});err!=nil{t.Fatal(err)}
+ js:=filepath.Join(t.TempDir(),"regex-refusal.mjs")
+ if err:=os.WriteFile(js,[]byte(javascript.JavaScript(lowered)),0644);err!=nil{t.Fatal(err)}
+ runner,err:=filepath.Abs(filepath.Join(repository,"oracle/node.mjs"));if err!=nil{t.Fatal(err)}
+ for _,row:=range []struct{slug,options string}{{"dot-notation",`{"allowPattern":"^snake_"}`},{"id-length",`{"exceptionPatterns":["^a"]}`}} {
+  path:=manifest(t,[]string{ownedWitnesses(t,".",row.slug)[0]+"\t"+row.slug+"\t\t\tfalse\t"+row.options})
+  for _,side:=range []struct{name,command string;args []string}{
+   {"Node","node",[]string{"--disable-warning=ExperimentalWarning",runner,entry,"--manifest",path,"--count"}},
+   {"emitted JavaScript","node",[]string{"--disable-warning=ExperimentalWarning",runner,js,"--manifest",path,"--count"}},
+   {"sanitized native",binary,[]string{"--manifest",path,"--count"}},
+  } {
+   output,err:=os.CreateTemp(t.TempDir(),"refusal-");if err!=nil{t.Fatal(err)}
+   command:=exec.Command(side.command,side.args...);command.Stdout=output;command.Stderr=output
+   runError:=command.Run();if err:=output.Close();err!=nil{t.Fatal(err)}
+   data,err:=os.ReadFile(output.Name());if err!=nil{t.Fatal(err)}
+   exit,ok:=runError.(*exec.ExitError)
+   want:="adamic: panic: "+row.slug+": runtime regex option requires shared matcher support\n"
+   if !ok||exit.ExitCode()!=70||string(data)!=want{t.Fatalf("%s %s refusal: %v %s",row.slug,side.name,runError,data)}
+   t.Logf("%s %s: configured runtime regex refuses explicitly, exit 70",row.slug,side.name)
+  }
+ }
+}
+func TestFifthRawOptions(t *testing.T) {
+ cases:=[]struct{name,source,options string}{
+  {"grouped-accessor-pairs","({ set value(input) {}, get value() {} });",`["getBeforeSet"]`},
+  {"grouped-accessor-pairs","({ get value() {}, set value(input) {} });",`["setBeforeGet"]`},
+  {"grouped-accessor-pairs","interface Values { get value(): number; other: number; set value(input: number); }",`["anyOrder",{"enforceForTSTypes":true}]`},
+  {"grouped-accessor-pairs","type Values = { get [key](): number; other: number; set [key](input: number); };",`["anyOrder",{"enforceForTSTypes":true}]`},
+  {"dot-notation","obj.true; obj?.true; foo. /* keep */ while; obj['true'];",`{"allowKeywords":false}`},
+  {"id-length","var 각 = 1; var 葛󠄀 = 1;",`{"min":1,"max":1}`},
+  {"id-length","var value = 1;",`{"min":0,"max":0}`},
+  {"id-length","var a=1,b=2,c=3;",`{"exceptions":["a","b"]}`},
+  {"id-length","var a=1,b=2,c=3;",`{"Minimum":2,"Maximum":0,"HasMaximum":false,"CheckProperties":true,"Exceptions":{"a":true,"b":true},"ExceptionPatterns":null}`},
+  {"id-length","var a=1,b=2,c=3;",`{"Minimum":2,"Maximum":0,"HasMaximum":false,"CheckProperties":true,"Exceptions":{"a":false,"b":true},"ExceptionPatterns":null}`},
+  {"id-length","var [a] = input; var {key:b} = input; obj.c = 1;",`{"properties":"never"}`},
+ }
+ var rows []string
+ for index,row:=range cases {path:=filepath.Join(t.TempDir(),fmt.Sprintf("option-%d.ts",index));if err:=os.WriteFile(path,[]byte(row.source),0644);err!=nil{t.Fatal(err)};rows=append(rows,path+"\t"+row.name+"\t\t\tfalse\t"+row.options)}
+ directory,err:=filepath.Abs(".");if err!=nil{t.Fatal(err)}
+ compare(t,goOracle(t),buildPort(t,directory,true),directory,manifest(t,rows))
+}
