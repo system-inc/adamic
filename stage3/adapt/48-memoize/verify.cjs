@@ -11,7 +11,12 @@ fs.mkdirSync(results, {recursive: false});
 const file = path.resolve(tree, "src/compiler/core.ts");
 const text = fs.readFileSync(file, "utf8");
 const source = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true);
-const fn = source.statements.find(n => ts.isFunctionDeclaration(n) && n.name?.text === "memoize").getText(source);
+let fn = source.statements.find(n => ts.isFunctionDeclaration(n) && n.name?.text === "memoize").getText(source);
+// Accept either the pre-adaptation tree or the actual applied A tree.
+if (fn.includes("callback: (() => T) | undefined")) {
+    assert.ok(fn.includes("callback = undefined;"));
+    fn = fn.replace("callback: (() => T) | undefined", "callback: () => T").replace("callback = undefined;", "callback = undefined!;");
+}
 const variants = {
     original: fn,
     a: fn.replace("callback: () => T", "callback: (() => T) | undefined").replace("undefined!", "undefined"),
@@ -62,6 +67,6 @@ walk(path.join(tree, "src/compiler"));
 assert.equal(callers.length, 22);
 const report = {node: process.version, source: "050880ce59e30b356b686bd3144efe24f875ebc8", a_javascript_identical: true,
     observations, output_mutant: {changed_bytes: 1, caught, catcher: "byte comparison against original Node stdout", native: false},
-    callers, native: "Neither candidate builds on area/stage3 03ccf222; see compiler logs"};
+    callers, native: "Native acceptance is separate; updated area and scratch capture builds refuse unchanged A and B at their conditions; see p2-repeat/results.json"};
 fs.writeFileSync(path.join(results, "proof.json"), JSON.stringify(report, null, 2) + "\n");
 console.log(JSON.stringify({a_javascript_identical: true, node_two_call: observations, output_mutant_caught: caught, callers: callers.length, native: false}));

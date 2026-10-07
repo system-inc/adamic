@@ -1,4 +1,26 @@
-# Memoize: blocked optional callback adaptation
+# Memoize: honestly optional callback
+
+## Accepted tsc adaptation A
+
+Adaptation 48 **applies A**: memoize's internal parameter is
+`callback: (() => T) | undefined`, and its clearing assignment is
+`callback = undefined;`. This adds the value the variable actually holds.
+The union and removed assertion erase, so emitted JavaScript is byte-identical.
+The guarded adaptation accepts only the reviewed original or applied A form,
+checks emission identity before writing, and is idempotent.
+
+The user's acceptance separates the tsc adaptation from native compiler
+support. The previous declines below are historical observations, superseded
+for the adaptation series. Native A and B still refuse on the p2 compiler as
+recorded below; that does not prevent applying A to tsc or extracting it into
+host fixture 14. The original Node, caller and full oracle evidence remains
+scoped to its recorded revision. Fresh applied-tree evidence is recorded in
+`evidence/applied-a/`: clean apply exits 0, row 48 measures one file and
+two added/two removed lines; idempotence leaves core.ts unchanged; Node
+returns `42 42 1`, and the one-byte output and changed-source mutants are
+caught. The full tsc oracle and lane are not rerun in this acceptance follow-up;
+A changes no JavaScript and the prior gate evidence is retained.
+
 
 ## Updated p2 compiler repeat
 
