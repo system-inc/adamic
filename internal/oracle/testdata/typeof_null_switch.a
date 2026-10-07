@@ -1,0 +1,52 @@
+// A switch must take the object case for a nullable slot, a literal and a call.
+function inspect(value: RegExpMatchArray | null): void {
+	switch (typeof value) {
+		case 'object':
+			console.log('slot object');
+			break;
+		default:
+			console.log('slot wrong');
+			break;
+	}
+}
+function missing(): RegExpMatchArray | null {
+	console.log('called once');
+	return null;
+}
+switch (typeof null) {
+	case 'object':
+		console.log('literal object');
+		break;
+	default:
+		console.log('literal wrong');
+		break;
+}
+switch (typeof missing()) {
+	case 'object':
+		console.log('call object');
+		break;
+	default:
+		console.log('call wrong');
+		break;
+}
+inspect(null);
+inspect('x'.match(/x/));
+function classify(value: string | number | undefined): void {
+	switch (typeof value) {
+		case 'string':
+			console.log('string');
+			break;
+		case 'number':
+			console.log('number');
+			break;
+		case 'undefined':
+			console.log('undefined');
+			break;
+		default:
+			console.log('union wrong');
+			break;
+	}
+}
+classify('text');
+classify(42);
+classify(undefined);
