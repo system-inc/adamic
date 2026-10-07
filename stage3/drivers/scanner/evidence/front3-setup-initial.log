@@ -1,0 +1,62 @@
+v24.19.0
+setup: node ready (0.052s)
+go version go1.27.1 linux/amd64
+setup: go ready (0.056s)
+Cloning into '/workspace/adamic/cohere'...
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.378s)
+
+added 3 packages in 264ms
+setup: markdown dependencies installed (npm ci, integrity verified); step-duration=0.575s
+setup: markdown dependencies ready (0.721s)
+From https://github.com/system-inc/cohere
+ * branch            7945d102a6c18dd36adf9114a758ce646e8b2359 -> FETCH_HEAD
+Submodule path 'cohere': checked out '7945d102a6c18dd36adf9114a758ce646e8b2359'
+Submodule 'TypeScript' (https://github.com/system-inc/TypeScript.git) registered for path 'cohere/TypeScript'
+Cloning into '/workspace/adamic/cohere/TypeScript'...
+From https://github.com/system-inc/TypeScript
+ * branch                  d92d9bfee114c80be2c375d72edae966176e3a4f -> FETCH_HEAD
+Submodule path 'cohere/TypeScript': checked out 'd92d9bfee114c80be2c375d72edae966176e3a4f'
+setup: submodules ready (614.549s)
+# github.com/system-inc/adamic/bridge/tsgo/oracle
+bridge/tsgo/oracle/main.go:41:144: too many arguments in call to compiler.NewCachedFSCompilerHost
+	have (string, vfs.FS, tspath.RootedDirectoryPath, nil, nil, nil)
+	want (vfs.FS, tspath.RootedDirectoryPath, "github.com/microsoft/TypeScript/tsc/internal/tsoptions".ExtendedConfigCache, func(msg *diagnostics.Message, args ...any), contentmapper.Project)
+bridge/tsgo/oracle/main.go:42:68: cannot use filepath.ToSlash(configPath) (value of type string) as tspath.RootedFilePath value in argument to tsoptions.GetParsedCommandLineOfConfigFile
+bridge/tsgo/oracle/main.go:42:108: cannot use host (variable of interface type "github.com/microsoft/TypeScript/tsc/internal/compiler".CompilerHost) as vfs.FS value in argument to tsoptions.GetParsedCommandLineOfConfigFile: "github.com/microsoft/TypeScript/tsc/internal/compiler".CompilerHost does not implement vfs.FS (missing method AppendFile)
+bridge/tsgo/oracle/main.go:54:33: cannot use roots (variable of type []string) as []tspath.RootedFilePath value in argument to config.WithFileNames
+bridge/tsgo/oracle/main.go:77:33: cannot use filepath.ToSlash(path) (value of type string) as tspath.RootedFilePath value in argument to program.GetSourceFile
+# github.com/system-inc/adamic/bridge/tsgo/checker
+bridge/tsgo/checker/facts.go:65:37: cannot use path (variable of type string) as tspath.RootedFilePath value in argument to p.Compiler.GetSourceFile
+bridge/tsgo/checker/facts.go:213:12: cannot use f.FileName() (value of string type tspath.RootedFilePath) as string value in assignment
+bridge/tsgo/checker/facts.go:345:14: cannot use f.FileName() (value of string type tspath.RootedFilePath) as string value in argument to out.text
+bridge/tsgo/checker/metadata.go:21:12: cannot use source.FileName() (value of string type tspath.RootedFilePath) as string value in argument to out.text
+bridge/tsgo/checker/metadata.go:23:56: source.Path undefined (type *"github.com/microsoft/TypeScript/tsc/internal/ast".SourceFile has no field or method Path)
+bridge/tsgo/checker/program.go:51:87: too many arguments in call to compiler.NewCachedFSCompilerHost
+	have (string, *"github.com/microsoft/TypeScript/tsc/internal/vfs/cachedvfs".FS, tspath.RootedDirectoryPath, nil, nil, nil)
+	want (vfs.FS, tspath.RootedDirectoryPath, "github.com/microsoft/TypeScript/tsc/internal/tsoptions".ExtendedConfigCache, func(msg *diagnostics.Message, args ...any), contentmapper.Project)
+bridge/tsgo/checker/program.go:52:68: cannot use configPath (variable of type string) as tspath.RootedFilePath value in argument to tsoptions.GetParsedCommandLineOfConfigFile
+bridge/tsgo/checker/program.go:52:90: cannot use host (variable of interface type "github.com/microsoft/TypeScript/tsc/internal/compiler".CompilerHost) as vfs.FS value in argument to tsoptions.GetParsedCommandLineOfConfigFile: "github.com/microsoft/TypeScript/tsc/internal/compiler".CompilerHost does not implement vfs.FS (missing method AppendFile)
+bridge/tsgo/checker/program.go:72:22: cannot use roots[index] (variable of type string) as tspath.RootedFilePath value in argument to fs.FileExists
+bridge/tsgo/checker/program.go:82:25: cannot use declaration (variable of string type tspath.RootedFilePath) as string value in argument to strings.HasSuffix
+bridge/tsgo/checker/program.go:82:25: too many errors
+# github.com/system-inc/adamic/internal/load
+internal/load/declarations.go:70:28: cannot use sourceFile.FileName() (value of string type "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedFilePath) as string value in argument to p.fs.displayName
+internal/load/load.go:124:31: cannot use &regexpLibraryFS{…} (value of type *regexpLibraryFS) as "github.com/microsoft/TypeScript/tsc/internal/vfs".FS value in argument to cachedvfs.From: *regexpLibraryFS does not implement "github.com/microsoft/TypeScript/tsc/internal/vfs".FS (wrong type for method ReadFile)
+		have ReadFile(string) (string, bool)
+		want ReadFile("github.com/microsoft/TypeScript/tsc/internal/tspath".RootedFilePath) (string, bool)
+internal/load/load.go:124:67: cannot use fs (variable of type *sourceFS) as "github.com/microsoft/TypeScript/tsc/internal/vfs".FS value in argument to bundled.WrapFS: *sourceFS does not implement "github.com/microsoft/TypeScript/tsc/internal/vfs".FS (wrong type for method AppendFile)
+		have AppendFile(string, string) error
+		want AppendFile("github.com/microsoft/TypeScript/tsc/internal/tspath".RootedFilePath, string) error
+internal/load/load.go:125:74: not enough arguments in call to tsoptions.NewParsedCommandLine
+	have (*"github.com/microsoft/TypeScript/tsc/shim/core".CompilerOptions, []string, nil, unknown type)
+	want (*"github.com/microsoft/TypeScript/tsc/internal/core".CompilerOptions, []"github.com/microsoft/TypeScript/tsc/internal/tspath".RootedFilePath, []*"github.com/microsoft/TypeScript/tsc/internal/core".ProjectReference, "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedDirectoryPath, "github.com/microsoft/TypeScript/tsc/internal/tspath".CaseSensitivity)
+internal/load/load.go:125:81: undefined: tspath.ComparePathsOptions
+internal/load/load.go:126:41: fileSystem.UseCaseSensitiveFileNames undefined (type *"github.com/microsoft/TypeScript/tsc/internal/vfs/cachedvfs".FS has no field or method UseCaseSensitiveFileNames)
+internal/load/load.go:129:102: too many arguments in call to compiler.NewCachedFSCompilerHost
+	have (string, *"github.com/microsoft/TypeScript/tsc/internal/vfs/cachedvfs".FS, "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedDirectoryPath, nil, nil, nil)
+	want ("github.com/microsoft/TypeScript/tsc/internal/vfs".FS, "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedDirectoryPath, "github.com/microsoft/TypeScript/tsc/internal/tsoptions".ExtendedConfigCache, func(msg *diagnostics.Message, args ...any), contentmapper.Project)
+internal/load/load.go:145:28: undefined: tspath.Path
+internal/load/load.go:147:21: sourceFile.Path undefined (type *"github.com/microsoft/TypeScript/tsc/internal/ast".SourceFile has no field or method Path)
+internal/load/load.go:150:41: undefined: tspath.ToPath
+internal/load/load.go:150:41: too many errors

@@ -1,0 +1,4 @@
+PASS: decoded evidence equals the full scratch git diff --cc (107564 bytes, 32 conflicted files)
+PASS: all 9 requested pins are absent from front-3 ancestry
+CAUGHT: one-byte conflict artifact mutant rejected by recorded SHA-256
+NOT RUN: scanner builds, native output comparisons or native mutants

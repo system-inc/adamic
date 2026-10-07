@@ -1,0 +1,196 @@
+{
+  "status": "stopped at compiler integration conflict; no native scanner build attempted",
+  "deliverable_base": "b3b9e81b4b8756778a695f13d29b44a62c5a062b",
+  "scratch": "/workspace/scratch/scanner-proof-20261007",
+  "scratch_head_before_host_merge": "17a219e824f2188de4526547eb87569c712b05fb",
+  "successful_merges": {
+    "area/stage3": "b2c4549f60a79c6f38d312af06bee73a6102bdf4",
+    "compiler/stage3-front-3": "2db01c2fe919a4cad282b7d6fe59bf8c000c8cb2"
+  },
+  "feature_ancestry": [
+    {
+      "requested_pin": "cd220dd5",
+      "full_sha": "cd220dd58420c25c884e92ef37d789973126ebce",
+      "front3_contains": false
+    },
+    {
+      "requested_pin": "c9d885d7",
+      "full_sha": "c9d885d79e10c6e0b404a9b6e9f3529f9e9b3412",
+      "front3_contains": false
+    },
+    {
+      "requested_pin": "6ffb8bb8",
+      "full_sha": "6ffb8bb89c020d81d800cb139b2c5768cc552ff6",
+      "front3_contains": false
+    },
+    {
+      "requested_pin": "998fb3eb",
+      "full_sha": "998fb3eb3fc89fbeaebc5453d328ed9f2f222fb7",
+      "front3_contains": false
+    },
+    {
+      "requested_pin": "cf9fa276",
+      "full_sha": "cf9fa276c9180f63c78e9697760599aba919832f",
+      "front3_contains": false
+    },
+    {
+      "requested_pin": "85cade98",
+      "full_sha": "85cade98e3bd0bee1f7b10f2b20c2c905d05f4f2",
+      "front3_contains": false
+    },
+    {
+      "requested_pin": "75b107a0",
+      "full_sha": "75b107a0a486844a537255f6d58a354776b6c0d6",
+      "front3_contains": false
+    },
+    {
+      "requested_pin": "ed6e30e2",
+      "full_sha": "ed6e30e2b1e813d7b201741f397e26ec9f5fb072",
+      "front3_contains": false
+    },
+    {
+      "requested_pin": "1836fc27",
+      "full_sha": "1836fc27ef547a42c9c4d43c498e69cc1eea0990",
+      "front3_contains": false
+    }
+  ],
+  "attempted_merge": "cd220dd58420c25c884e92ef37d789973126ebce",
+  "unmerged_files": [
+    "docs/0.1.md",
+    "internal/flow/build.go",
+    "internal/ir/ir.go",
+    "internal/javascript/javascript.go",
+    "internal/load/load.go",
+    "internal/load/load_test.go",
+    "internal/lower/control.go",
+    "internal/lower/enums.go",
+    "internal/lower/expression.go",
+    "internal/lower/functions.go",
+    "internal/lower/invariance.go",
+    "internal/lower/lower_test.go",
+    "internal/lower/modules.go",
+    "internal/lower/object.go",
+    "internal/lower/refusals.go",
+    "internal/lower/statements.go",
+    "internal/native/class_accessors.go",
+    "internal/native/emit_arrays.go",
+    "internal/native/emit_expressions.go",
+    "internal/native/emit_functions.go",
+    "internal/native/emit_maps.go",
+    "internal/native/emit_objects.go",
+    "internal/native/emit_statements.go",
+    "internal/native/from.go",
+    "internal/native/reuse.go",
+    "internal/native/runtime/adamic.h",
+    "internal/native/runtime/array.c",
+    "internal/native/runtime/map_set.c",
+    "internal/native/runtime/maybe.c",
+    "internal/native/slots.go",
+    "internal/oracle/counts.md",
+    "tsconfig.json"
+  ],
+  "conflict_artifact": {
+    "path": "front3-host-merge-conflicts.json",
+    "sha256": "f486f607dbf3ebfb6237a85e1edc14758f528ab57a15425950267a11a3935523",
+    "bytes": 107564,
+    "encoding": "JSON diff string; SHA-256 and byte length apply to decoded diff"
+  },
+  "owner_decisions": [
+    {
+      "files": [
+        "internal/native/runtime/adamic.h",
+        "internal/native/emit_functions.go",
+        "internal/native/emit_expressions.go",
+        "internal/native/emit_objects.go",
+        "internal/native/runtime/array.c",
+        "internal/native/runtime/map_set.c"
+      ],
+      "conflict": "front-3 closure/method ABI is (self, argument_count, arguments); host ABI is (self, arguments, argument_count), with incoming receiver injection overlapping front-3 Direct/canonical nested calls",
+      "needed": "compiler-owned coherent ABI and receiver/direct-call reconciliation across declarations, emitters, runtime callbacks and host builtins"
+    },
+    {
+      "files": [
+        "internal/lower/expression.go"
+      ],
+      "conflict": "front-3 checks narrowed boxed union members with TypeOf and Panic before Narrow; incoming host path narrows arrayPredicateObservedType directly without that guard",
+      "needed": "compiler-owned reconciliation retaining invalidated-narrowing checks and host predicate storage handling"
+    },
+    {
+      "files": [
+        "internal/ir/ir.go",
+        "internal/flow/build.go",
+        "internal/lower/statements.go",
+        "internal/native/emit_statements.go",
+        "internal/javascript/javascript.go"
+      ],
+      "conflict": "front-3 Break.Depth and breakable cleanup coexist with incoming Break.Label/Continue.Label and labeled jump implementation",
+      "needed": "one coherent lowering/IR/CFG/native/JS labeled jump and cleanup contract"
+    }
+  ],
+  "resolutions": [],
+  "remaining_feature_merges": "not attempted after compiler-owner conflict, per stop instruction",
+  "preservation": "scratch left in conflicted host merge; successful stage3/front3 merges preserved; no scratch push",
+  "measurements": {
+    "nproc": 5,
+    "C_bytes": null,
+    "clang_unsplit_wall": null,
+    "clang_split_wall": null,
+    "warm_rebuild_wall": null,
+    "binary_bytes": null,
+    "native_sha256": null,
+    "native_best_of_3_user": null,
+    "node_fresh_sha256": null
+  },
+  "reference": "Historical Node reference from user/README only: 1,369,432 tokens, 466 errors, SHA-256 41672da9bab56f9d10ad7d45b5938f96e3f969c6a299e5be1b260cba189893cc. No fresh scanner run.",
+  "mutants": "XOR first byte of conflict artifact in memory; recorded SHA-256 rejects it. No scanner or native-output mutant ran.",
+  "coverage": "No scanner builds, Node corpus execution, source minimal reproduction, comparison, timings, compiler tests or full gate. This is a merge blocker, not a source lowering diagnostic.",
+  "evidence_audit": {
+    "exit": 0,
+    "conflict_file_count": 32,
+    "ancestry_records": 9,
+    "artifact_sha256_matches": true,
+    "one_byte_conflict_artifact_mutant_rejected": true,
+    "scope": "conflict evidence integrity only; not a native scanner comparison"
+  },
+  "successful_scratch_merge_commits": {
+    "area/stage3": "65ff2f878",
+    "compiler/stage3-front-3": "17a219e82"
+  },
+  "remote_recheck": {
+    "compiler/stage3-front-3": "2db01c2fe919a4cad282b7d6fe59bf8c000c8cb2",
+    "area/stage3": "234ab1aa5f728a5221fb6075c35b94f88a2c6437",
+    "note": "front-3 unchanged at handoff; the scratch uses the required area/stage3 minimum b2c4549f"
+  },
+  "setup": {
+    "command": "export GOPROXY='https://proxy.golang.org|direct'; bash cloud/setup.sh",
+    "initial_exit": 1,
+    "initial_failure": "Setup started before checkout completed and checked out initial main cohere 7945d102; scanner b3b9e81b expects 715ba94f. Cache warming failed with NewCachedFSCompilerHost and RootedFilePath API errors. Full diagnostics in front3-setup-initial.log.",
+    "workaround": "Reran setup from scanner branch; submodule update restored the recorded cohere and TypeScript pins.",
+    "retry_exit": 0,
+    "retry_elapsed_seconds": {
+      "go_ready": 0.016,
+      "node_ready": 0.018,
+      "markdown_ready": 0.051,
+      "clang_ready": 0.105,
+      "submodules_ready": 22.625,
+      "go_build_ready": 52.044,
+      "cache_warm": 52.108,
+      "done": 52.13
+    },
+    "nproc": 5,
+    "cpu_max": "400000 100000",
+    "env_sourced": "/workspace/adamic-tools/env.sh",
+    "versions": {
+      "Go": "1.27.1",
+      "clang": "20.1.8",
+      "Node": "24.19.0"
+    },
+    "scope": "setup go build ./... succeeded on scanner deliverable base, not on unresolved scratch merge; test binaries deferred"
+  },
+  "validation": {
+    "evidence_audit_exit": 0,
+    "staged_whitespace_exit": 0,
+    "full_gate": "not run; evidence-only deliverable, scratch compiler cannot build with unresolved merge",
+    "initial_whitespace_failure": "Raw git diff artifact contains diff context whitespace; stored losslessly in JSON and reran check successfully."
+  }
+}

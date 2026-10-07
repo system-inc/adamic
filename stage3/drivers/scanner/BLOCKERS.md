@@ -1,5 +1,59 @@
 # Scanner blockers
 
+## October 7: front-3 integration stops at host compiler contracts
+
+This retry stops in step 1, before building the validated scanner slice.
+Scratch `/workspace/scratch/scanner-proof-20261007` starts at scanner branch
+b3b9e81b and successfully merges area/stage3 b2c4549f and front-3 2db01c2f.
+The successful scratch head is 17a219e824f2188de4526547eb87569c712b05fb.
+None of the nine requested feature pins is an ancestor of that front-3 tip.
+Merging host-blockers cd220dd5 leaves 32 conflicted files. No resolution or
+compiler change was made, and the scratch checkout is never pushed.
+
+Compiler handoff decisions:
+
+- `internal/native/runtime/adamic.h` and `emit_functions.go`: front-3 uses
+  `(self, argument_count, arguments)`; host-blockers uses
+  `(self, arguments, argument_count)`. The call emitter also conflicts between
+  front-3 Direct/canonical nested calls and incoming receiver injection.
+  Declarations, emitters, runtime callbacks and host builtins need one coherent
+  ABI while retaining both features.
+- `internal/lower/expression.go`: front-3 checks a narrowed boxed union with
+  TypeOf and Panic before Narrow; host-blockers directly narrows the observed
+  array-predicate type. Integration must preserve the invalidated-narrowing
+  guard while admitting the incoming predicate/storage cases.
+- `internal/ir/ir.go`, flow/build.go and both backends: Break.Depth and existing
+  breakable cleanup conflict with Break.Label/Continue.Label and labeled jumps.
+  The compiler owner must reconcile the IR, CFG and cleanup contract together.
+
+Per this unit's instruction to stop when a conflict needs a compiler decision,
+the remaining feature merges are not attempted. The successful merges and the
+unresolved host merge are preserved in scratch. The complete conflict diff,
+all requested ancestry checks and exact hashes are retained in
+[evidence/front3-integration-stop.json](evidence/front3-integration-stop.json)
+and [the conflict diff](evidence/front3-host-merge-conflicts.json).
+
+No scanner build in either split mode, generated C, clang timing, binary,
+fresh Node corpus run, native comparison, native output mutant or compiler gate
+is claimed. The established Node reference remains historical evidence:
+1,369,432 tokens, 466 errors, SHA-256
+41672da9bab56f9d10ad7d45b5938f96e3f969c6a299e5be1b260cba189893cc.
+Setup initially exited 1 after checking out initial main's newer cohere pin
+while the branch fetch was running; cache warming reported compiler-host and
+RootedFilePath API mismatches. Rerunning on the scanner branch restored its
+recorded cohere pin and passed. Retry timing lines: Go 0.016s, Node 0.018s,
+markdown 0.051s, clang 0.105s, submodules 22.625s, Go build 52.044s,
+cache warm 52.108s, done 52.130s; nproc 5. Sourced
+`/workspace/adamic-tools/env.sh`. Both setup logs are retained with the evidence.
+
+Evidence audit and staged whitespace check pass. XOR of the conflict artifact's
+first byte is caught by its recorded SHA-256. This mutant checks only artifact
+integrity; it is not a native-output mutant. No compiler tests or full gate ran.
+
+This is a compiler merge blocker, not a new source-level NotYet; no minimal
+source program can reproduce a Git conflict. A clean retry from front-3 once
+it contains all requested pins is still required.
+
 ## October 7: five increment and nested-reference probes fixed
 
 Integrated scanner-value-increments 85cade98 and scanner-nested-references
