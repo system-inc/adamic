@@ -21,6 +21,9 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 
 func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 	proven = l.concrete(proven)
+	if l.phantomArrayBase(proven) != nil {
+		return ir.Array, true
+	}
 	flags := proven.Flags()
 	if flags&checker.TypeFlagsTypeParameter != 0 {
 		// Inside a generic class, a type parameter is what this instantiation made it.
@@ -31,6 +34,12 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		// Target & WeakBrand is what a Weak<Target> reads as where it's present: the target.
 		if target := l.weakTarget(proven); target != nil {
 			return l.representation(target)
+		}
+		if primitive := l.phantomBase(proven); primitive != nil {
+			if l.phantomUndefined(proven) {
+				return ir.Object, true
+			}
+			return l.representation(primitive)
 		}
 		return l.objectIntersection(proven)
 	}
@@ -66,7 +75,7 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		var shared ir.Type
 		mixed, weak := false, false
 		for _, member := range proven.Types() {
-			if member.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0 {
+			if member.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0 || l.phantomUndefined(member) {
 				// undefined joins a union of references as a null pointer; it's checked below that
 				// the rest are references.
 				continue
@@ -121,10 +130,10 @@ func (l *lowering) isLibraryType(proven *checker.Type, names ...string) bool {
 
 func (l *lowering) includesUndefined(proven *checker.Type) bool {
 	if proven.Flags()&checker.TypeFlagsUnion == 0 {
-		return proven.Flags()&checker.TypeFlagsUndefined != 0
+		return proven.Flags()&checker.TypeFlagsUndefined != 0 || l.phantomUndefined(proven)
 	}
 	for _, member := range proven.Types() {
-		if member.Flags()&checker.TypeFlagsUndefined != 0 {
+		if member.Flags()&checker.TypeFlagsUndefined != 0 || l.phantomUndefined(member) {
 			return true
 		}
 	}
@@ -202,6 +211,7 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 // and result of a function, Weak in both or in neither, all the way down.
 func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) bool {
 	from, to = l.present(from), l.present(to)
+	from, to = l.phantomArrayView(from), l.phantomArrayView(to)
 	if from == nil || to == nil || from == to || visited[[2]*checker.Type{from, to}] {
 		return true
 	}
@@ -367,6 +377,9 @@ func (l *lowering) weakTarget(proven *checker.Type) *checker.Type {
 // value lowers a value, as expression does, but leaves a Weak as it's kept.
 func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 	node = ast.SkipParentheses(node)
+	if member, handled, err := l.phantomMember(node); handled {
+		return member, err
+	}
 	if observed, known := l.libraryArrayObservation(node); known {
 		return observed, nil
 	}
@@ -894,7 +907,7 @@ func (l *lowering) callFunction(call *ast.CallExpression, function int) (ir.Expr
 		}
 		arguments = append(arguments, lowered)
 	}
-	return ir.Call{Function: function, Arguments: arguments, Returns: l.result.Functions[function].Returns}, nil
+	return l.overloadedCall(call, ir.Call{Function: function, Arguments: arguments, Returns: l.result.Functions[function].Returns})
 }
 
 // coalesce lowers value ?? fallback, and value ?? panic('why'), evaluating the right side only when
@@ -957,6 +970,9 @@ func (l *lowering) closure(node *ast.Node) (ir.Expression, error) {
 // the parameters the function declares, so one with a parameter that may be left out isn't made yet:
 // a function value is called with the arguments its caller has, and no more.
 func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, error) {
+	if err := l.overloadedValue(node); err != nil {
+		return nil, err
+	}
 	if held, isMade := l.forwarders[target]; isMade {
 		return ir.Read{Local: held, Of: ir.Closure}, nil
 	}

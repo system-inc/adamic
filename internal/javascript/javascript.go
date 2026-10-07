@@ -711,6 +711,12 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 			}
 		}
 		return object
+	case ir.PhantomMember:
+		operator := "["
+		if expression.Optional {
+			operator = "?.["
+		}
+		return "(" + e.value(expression.Value) + ")" + operator + quote(expression.Name) + "]"
 	case ir.Property:
 		if expression.View != "" {
 			if expression.Of == ir.Closure {

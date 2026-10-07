@@ -111,6 +111,8 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 		return e.conditional(expression)
 	case ir.ObjectLiteral:
 		return e.objectLiteral(expression)
+	case ir.PhantomMember:
+		return e.phantomMember(expression)
 	case ir.Property:
 		if expression.View != "" {
 			return e.viewField(expression)

@@ -1,0 +1,10 @@
+--- FAIL: TestPhantomArrayPresenceViews (0.00s)
+    --- FAIL: TestPhantomArrayPresenceViews/interface_Brand_extends_ReadonlyArray<number>_{_marker:_undefined;_}a:_Item (0.10s)
+        phantom_array_presence_test.go:86: got <nil>, want Adamic 0.1 refuses presence of phantom array brand member marker via Object.keys; read the brand member's undefined value without testing its presence; use a separate real field or Map for observable presence
+    --- FAIL: TestPhantomArrayPresenceViews/interface_Brand_extends_ReadonlyArray<number>_{_marker:_void;_}a:_Item (0.12s)
+        phantom_array_presence_test.go:86: got <nil>, want Adamic 0.1 refuses presence of phantom array brand member marker via Object.keys; read the brand member's undefined value without testing its presence; use a separate real field or Map for observable presence
+    --- FAIL: TestPhantomArrayPresenceViews/interface_Brand_extends_ReadonlyArray<number>_{_marker?:_undefined;_}a:_Item (0.08s)
+        phantom_array_presence_test.go:86: got <nil>, want Adamic 0.1 refuses presence of phantom array brand member marker via Object.keys; read the brand member's undefined value without testing its presence; use a separate real field or Map for observable presence
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.200s
+FAIL
