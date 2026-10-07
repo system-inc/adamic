@@ -78,3 +78,21 @@ descending combined ranking with lexical ties. Earlier candidates, including
 no-obj-calls, no-object-constructor and no-promise-executor-return, are claimed
 on other origin branches and were skipped. No conflicting claim was found for
 these three. This update is pushed before implementation.
+
+## Fifth continuation
+
+Reserved after the previous fifteen ports, tests and evidence were pushed at c47e2d1e:
+
+- react-hooks/set-state-in-effect (0 compiler, 0 repository)
+- react-hooks/set-state-in-render (0 compiler, 0 repository)
+- react-hooks/static-components (0 compiler, 0 repository)
+
+Selection checked all 389 fetched origin refs, 142 claimed ranked rules across
+33 distinct Markdown claim blobs, and the same 26 production ports on main and
+codex/tsgo-c-library. These are the first three of 30 remaining entries in the
+descending combined ranking with lexical ties. Earlier candidates, including
+prefer-numeric-literals, prefer-object-has-own and prefer-object-spread, are now
+claimed on other origin branches and were skipped. Main advanced to e011f8f6,
+with no change to its typeaware port inventory; the bridge tip remains 5afbdb83.
+No conflicting full or short rule-name claim was found for these three. This
+claim update is pushed before implementation.
