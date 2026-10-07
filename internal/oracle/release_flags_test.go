@@ -10,7 +10,7 @@ import (
 )
 
 // TestNativeReleaseFlagsAgreeWithNode is a selectable shipping-build lane. Build and its runtime
-// library both use native.Flags(native.Options{}), just as adamic build does. In particular, any
+// library use the options traced from adamic build and its actual flag function. Any
 // LTO flags added there apply here without maintaining another flag list. Native observations are
 // always fresh; the existing Node cache has the gate's uncached bypass.
 func TestNativeReleaseFlagsAgreeWithNode(t *testing.T) {
