@@ -44,3 +44,8 @@ The required shared registration edits have not been authorized under Ahra's
 correction; no shared files were edited. See
 `../wave_04_next/BLOCKER_REPORT.md` for the positive probe and exact missing lines.
 No continuation rule parity, mutant, sanitizer or runtime result is claimed.
+
+Continuation implementations completed in `99c9e8d3`. All three pass complete
+native/Go comparisons over the frozen compiler and repository manifests,
+positive controls, ASan/UBSan/leaks, per-rule span mutants and released-handle
+checks. See [the continuation report](../wave_04_next/REPORT.md).

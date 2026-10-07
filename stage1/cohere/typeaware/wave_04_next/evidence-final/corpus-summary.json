@@ -1,0 +1,460 @@
+[
+  {
+    "corpus": "controls",
+    "roots": 26,
+    "findings": 12,
+    "rules": {
+      "nexus/correctness-no-uncleared-race-timeout": 12
+    },
+    "bytes": 8588
+  },
+  {
+    "corpus": "process-controls",
+    "roots": 59,
+    "findings": 39,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 36,
+      "nexus/correctness-require-blocking-standard-streams": 3
+    },
+    "bytes": 25214
+  },
+  {
+    "corpus": "blocking-000",
+    "roots": 3,
+    "findings": 3,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 2,
+      "nexus/correctness-require-blocking-standard-streams": 1
+    },
+    "bytes": 2044
+  },
+  {
+    "corpus": "blocking-001",
+    "roots": 3,
+    "findings": 3,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 2,
+      "nexus/correctness-require-blocking-standard-streams": 1
+    },
+    "bytes": 2040
+  },
+  {
+    "corpus": "blocking-002",
+    "roots": 3,
+    "findings": 3,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 2,
+      "nexus/correctness-require-blocking-standard-streams": 1
+    },
+    "bytes": 2040
+  },
+  {
+    "corpus": "blocking-003",
+    "roots": 3,
+    "findings": 3,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 2,
+      "nexus/correctness-require-blocking-standard-streams": 1
+    },
+    "bytes": 2040
+  },
+  {
+    "corpus": "blocking-004",
+    "roots": 3,
+    "findings": 4,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 3,
+      "nexus/correctness-require-blocking-standard-streams": 1
+    },
+    "bytes": 2571
+  },
+  {
+    "corpus": "blocking-005",
+    "roots": 4,
+    "findings": 3,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 2,
+      "nexus/correctness-require-blocking-standard-streams": 1
+    },
+    "bytes": 2124
+  },
+  {
+    "corpus": "blocking-006",
+    "roots": 3,
+    "findings": 3,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 2,
+      "nexus/correctness-require-blocking-standard-streams": 1
+    },
+    "bytes": 2044
+  },
+  {
+    "corpus": "blocking-007",
+    "roots": 4,
+    "findings": 3,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 2,
+      "nexus/correctness-require-blocking-standard-streams": 1
+    },
+    "bytes": 2142
+  },
+  {
+    "corpus": "blocking-008",
+    "roots": 4,
+    "findings": 3,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 2,
+      "nexus/correctness-require-blocking-standard-streams": 1
+    },
+    "bytes": 2141
+  },
+  {
+    "corpus": "blocking-009",
+    "roots": 3,
+    "findings": 3,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 2,
+      "nexus/correctness-require-blocking-standard-streams": 1
+    },
+    "bytes": 2042
+  },
+  {
+    "corpus": "blocking-010",
+    "roots": 3,
+    "findings": 3,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 2,
+      "nexus/correctness-require-blocking-standard-streams": 1
+    },
+    "bytes": 2040
+  },
+  {
+    "corpus": "blocking-011",
+    "roots": 4,
+    "findings": 3,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 2,
+      "nexus/correctness-require-blocking-standard-streams": 1
+    },
+    "bytes": 2145
+  },
+  {
+    "corpus": "blocking-012",
+    "roots": 3,
+    "findings": 3,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 2,
+      "nexus/correctness-require-blocking-standard-streams": 1
+    },
+    "bytes": 2040
+  },
+  {
+    "corpus": "blocking-013",
+    "roots": 4,
+    "findings": 2,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 2
+    },
+    "bytes": 1515
+  },
+  {
+    "corpus": "blocking-014",
+    "roots": 4,
+    "findings": 2,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 2
+    },
+    "bytes": 1513
+  },
+  {
+    "corpus": "blocking-015",
+    "roots": 4,
+    "findings": 2,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 2
+    },
+    "bytes": 1517
+  },
+  {
+    "corpus": "blocking-016",
+    "roots": 3,
+    "findings": 2,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 2
+    },
+    "bytes": 1416
+  },
+  {
+    "corpus": "blocking-017",
+    "roots": 3,
+    "findings": 1,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 1
+    },
+    "bytes": 890
+  },
+  {
+    "corpus": "blocking-018",
+    "roots": 3,
+    "findings": 1,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 1
+    },
+    "bytes": 890
+  },
+  {
+    "corpus": "blocking-019",
+    "roots": 3,
+    "findings": 2,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 2
+    },
+    "bytes": 1417
+  },
+  {
+    "corpus": "blocking-020",
+    "roots": 4,
+    "findings": 2,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 2
+    },
+    "bytes": 1519
+  },
+  {
+    "corpus": "blocking-021",
+    "roots": 4,
+    "findings": 2,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 2
+    },
+    "bytes": 1517
+  },
+  {
+    "corpus": "blocking-022",
+    "roots": 3,
+    "findings": 2,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 2
+    },
+    "bytes": 1417
+  },
+  {
+    "corpus": "blocking-023",
+    "roots": 3,
+    "findings": 2,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 2
+    },
+    "bytes": 1417
+  },
+  {
+    "corpus": "blocking-024",
+    "roots": 3,
+    "findings": 2,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 2
+    },
+    "bytes": 1417
+  },
+  {
+    "corpus": "blocking-025",
+    "roots": 3,
+    "findings": 2,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 2
+    },
+    "bytes": 1417
+  },
+  {
+    "corpus": "blocking-026",
+    "roots": 3,
+    "findings": 2,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 2
+    },
+    "bytes": 1417
+  },
+  {
+    "corpus": "blocking-027",
+    "roots": 3,
+    "findings": 2,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 2
+    },
+    "bytes": 1417
+  },
+  {
+    "corpus": "blocking-028",
+    "roots": 3,
+    "findings": 2,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 2
+    },
+    "bytes": 1415
+  },
+  {
+    "corpus": "blocking-029",
+    "roots": 3,
+    "findings": 2,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 2
+    },
+    "bytes": 1417
+  },
+  {
+    "corpus": "blocking-030",
+    "roots": 3,
+    "findings": 1,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 1
+    },
+    "bytes": 890
+  },
+  {
+    "corpus": "blocking-031",
+    "roots": 3,
+    "findings": 1,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 1
+    },
+    "bytes": 890
+  },
+  {
+    "corpus": "blocking-032",
+    "roots": 3,
+    "findings": 5,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 4,
+      "nexus/correctness-require-blocking-standard-streams": 1
+    },
+    "bytes": 3124
+  },
+  {
+    "corpus": "blocking-033",
+    "roots": 3,
+    "findings": 4,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 4
+    },
+    "bytes": 2471
+  },
+  {
+    "corpus": "blocking-034",
+    "roots": 3,
+    "findings": 3,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 2,
+      "nexus/correctness-require-blocking-standard-streams": 1
+    },
+    "bytes": 2044
+  },
+  {
+    "corpus": "blocking-035",
+    "roots": 3,
+    "findings": 2,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 2
+    },
+    "bytes": 1417
+  },
+  {
+    "corpus": "blocking-036",
+    "roots": 3,
+    "findings": 3,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 2,
+      "nexus/correctness-require-blocking-standard-streams": 1
+    },
+    "bytes": 2030
+  },
+  {
+    "corpus": "blocking-037",
+    "roots": 3,
+    "findings": 2,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 2
+    },
+    "bytes": 1417
+  },
+  {
+    "corpus": "blocking-038",
+    "roots": 3,
+    "findings": 5,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 4,
+      "nexus/correctness-require-blocking-standard-streams": 1
+    },
+    "bytes": 3098
+  },
+  {
+    "corpus": "blocking-039",
+    "roots": 3,
+    "findings": 4,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 4
+    },
+    "bytes": 2471
+  },
+  {
+    "corpus": "blocking-040",
+    "roots": 3,
+    "findings": 3,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 2,
+      "nexus/correctness-require-blocking-standard-streams": 1
+    },
+    "bytes": 2044
+  },
+  {
+    "corpus": "blocking-041",
+    "roots": 3,
+    "findings": 2,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 2
+    },
+    "bytes": 1417
+  },
+  {
+    "corpus": "blocking-042",
+    "roots": 3,
+    "findings": 3,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 3
+    },
+    "bytes": 1944
+  },
+  {
+    "corpus": "blocking-043",
+    "roots": 3,
+    "findings": 4,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 3,
+      "nexus/correctness-require-blocking-standard-streams": 1
+    },
+    "bytes": 2571
+  },
+  {
+    "corpus": "blocking-044",
+    "roots": 3,
+    "findings": 3,
+    "rules": {
+      "nexus/correctness-no-process-exit-after-output": 2,
+      "nexus/correctness-require-blocking-standard-streams": 1
+    },
+    "bytes": 2044
+  },
+  {
+    "corpus": "repository",
+    "roots": 287,
+    "findings": 0,
+    "rules": {},
+    "bytes": 18485
+  },
+  {
+    "corpus": "compiler",
+    "roots": 77,
+    "findings": 0,
+    "rules": {},
+    "bytes": 6088
+  }
+]

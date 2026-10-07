@@ -1,0 +1,266 @@
+oracle-build: exit 0, 0 stdout bytes, 0 stderr bytes, 2.529010s
+normal-archive: exit 0, 0 stdout bytes, 0 stderr bytes, 1.671957s
+normal-native-build: exit 0, 0 stdout bytes, 0 stderr bytes, 6.490112s
+asan-archive: exit 0, 0 stdout bytes, 0 stderr bytes, 1.842037s
+asan-native-build: exit 0, 0 stdout bytes, 0 stderr bytes, 18.139970s
+controls-go: exit 0, 8588 stdout bytes, 55 stderr bytes, 0.027889s
+controls-normal: exit 0, 8588 stdout bytes, 0 stderr bytes, 0.028377s
+controls normal: complete finding bytes match
+controls-asan: exit 0, 8588 stdout bytes, 0 stderr bytes, 0.058115s
+controls asan: complete finding bytes match
+process-controls-go: exit 0, 25214 stdout bytes, 57 stderr bytes, 0.077140s
+process-controls-normal: exit 0, 25214 stdout bytes, 0 stderr bytes, 0.092877s
+process-controls normal: complete finding bytes match
+process-controls-asan: exit 0, 25214 stdout bytes, 0 stderr bytes, 0.179635s
+process-controls asan: complete finding bytes match
+blocking-000-go: exit 0, 2044 stdout bytes, 54 stderr bytes, 0.021061s
+blocking-000-normal: exit 0, 2044 stdout bytes, 0 stderr bytes, 0.016645s
+blocking-000 normal: complete finding bytes match
+blocking-000-asan: exit 0, 2044 stdout bytes, 0 stderr bytes, 0.031146s
+blocking-000 asan: complete finding bytes match
+blocking-001-go: exit 0, 2040 stdout bytes, 55 stderr bytes, 0.022283s
+blocking-001-normal: exit 0, 2040 stdout bytes, 0 stderr bytes, 0.017224s
+blocking-001 normal: complete finding bytes match
+blocking-001-asan: exit 0, 2040 stdout bytes, 0 stderr bytes, 0.031778s
+blocking-001 asan: complete finding bytes match
+blocking-002-go: exit 0, 2040 stdout bytes, 54 stderr bytes, 0.025102s
+blocking-002-normal: exit 0, 2040 stdout bytes, 0 stderr bytes, 0.016717s
+blocking-002 normal: complete finding bytes match
+blocking-002-asan: exit 0, 2040 stdout bytes, 0 stderr bytes, 0.030692s
+blocking-002 asan: complete finding bytes match
+blocking-003-go: exit 0, 2040 stdout bytes, 54 stderr bytes, 0.024138s
+blocking-003-normal: exit 0, 2040 stdout bytes, 0 stderr bytes, 0.018011s
+blocking-003 normal: complete finding bytes match
+blocking-003-asan: exit 0, 2040 stdout bytes, 0 stderr bytes, 0.033844s
+blocking-003 asan: complete finding bytes match
+blocking-004-go: exit 0, 2571 stdout bytes, 54 stderr bytes, 0.024178s
+blocking-004-normal: exit 0, 2571 stdout bytes, 0 stderr bytes, 0.015905s
+blocking-004 normal: complete finding bytes match
+blocking-004-asan: exit 0, 2571 stdout bytes, 0 stderr bytes, 0.031819s
+blocking-004 asan: complete finding bytes match
+blocking-005-go: exit 0, 2124 stdout bytes, 54 stderr bytes, 0.020900s
+blocking-005-normal: exit 0, 2124 stdout bytes, 0 stderr bytes, 0.017361s
+blocking-005 normal: complete finding bytes match
+blocking-005-asan: exit 0, 2124 stdout bytes, 0 stderr bytes, 0.033908s
+blocking-005 asan: complete finding bytes match
+blocking-006-go: exit 0, 2044 stdout bytes, 54 stderr bytes, 0.021576s
+blocking-006-normal: exit 0, 2044 stdout bytes, 0 stderr bytes, 0.017226s
+blocking-006 normal: complete finding bytes match
+blocking-006-asan: exit 0, 2044 stdout bytes, 0 stderr bytes, 0.031089s
+blocking-006 asan: complete finding bytes match
+blocking-007-go: exit 0, 2142 stdout bytes, 54 stderr bytes, 0.021693s
+blocking-007-normal: exit 0, 2142 stdout bytes, 0 stderr bytes, 0.018701s
+blocking-007 normal: complete finding bytes match
+blocking-007-asan: exit 0, 2142 stdout bytes, 0 stderr bytes, 0.035686s
+blocking-007 asan: complete finding bytes match
+blocking-008-go: exit 0, 2141 stdout bytes, 53 stderr bytes, 0.023138s
+blocking-008-normal: exit 0, 2141 stdout bytes, 0 stderr bytes, 0.015743s
+blocking-008 normal: complete finding bytes match
+blocking-008-asan: exit 0, 2141 stdout bytes, 0 stderr bytes, 0.031363s
+blocking-008 asan: complete finding bytes match
+blocking-009-go: exit 0, 2042 stdout bytes, 53 stderr bytes, 0.018210s
+blocking-009-normal: exit 0, 2042 stdout bytes, 0 stderr bytes, 0.015354s
+blocking-009 normal: complete finding bytes match
+blocking-009-asan: exit 0, 2042 stdout bytes, 0 stderr bytes, 0.029690s
+blocking-009 asan: complete finding bytes match
+blocking-010-go: exit 0, 2040 stdout bytes, 54 stderr bytes, 0.020678s
+blocking-010-normal: exit 0, 2040 stdout bytes, 0 stderr bytes, 0.014417s
+blocking-010 normal: complete finding bytes match
+blocking-010-asan: exit 0, 2040 stdout bytes, 0 stderr bytes, 0.030792s
+blocking-010 asan: complete finding bytes match
+blocking-011-go: exit 0, 2145 stdout bytes, 55 stderr bytes, 0.024872s
+blocking-011-normal: exit 0, 2145 stdout bytes, 0 stderr bytes, 0.017377s
+blocking-011 normal: complete finding bytes match
+blocking-011-asan: exit 0, 2145 stdout bytes, 0 stderr bytes, 0.033182s
+blocking-011 asan: complete finding bytes match
+blocking-012-go: exit 0, 2040 stdout bytes, 53 stderr bytes, 0.022812s
+blocking-012-normal: exit 0, 2040 stdout bytes, 0 stderr bytes, 0.016080s
+blocking-012 normal: complete finding bytes match
+blocking-012-asan: exit 0, 2040 stdout bytes, 0 stderr bytes, 0.031231s
+blocking-012 asan: complete finding bytes match
+blocking-013-go: exit 0, 1515 stdout bytes, 54 stderr bytes, 0.018720s
+blocking-013-normal: exit 0, 1515 stdout bytes, 0 stderr bytes, 0.015524s
+blocking-013 normal: complete finding bytes match
+blocking-013-asan: exit 0, 1515 stdout bytes, 0 stderr bytes, 0.031736s
+blocking-013 asan: complete finding bytes match
+blocking-014-go: exit 0, 1513 stdout bytes, 54 stderr bytes, 0.021427s
+blocking-014-normal: exit 0, 1513 stdout bytes, 0 stderr bytes, 0.014339s
+blocking-014 normal: complete finding bytes match
+blocking-014-asan: exit 0, 1513 stdout bytes, 0 stderr bytes, 0.029718s
+blocking-014 asan: complete finding bytes match
+blocking-015-go: exit 0, 1517 stdout bytes, 55 stderr bytes, 0.025685s
+blocking-015-normal: exit 0, 1517 stdout bytes, 0 stderr bytes, 0.017448s
+blocking-015 normal: complete finding bytes match
+blocking-015-asan: exit 0, 1517 stdout bytes, 0 stderr bytes, 0.030962s
+blocking-015 asan: complete finding bytes match
+blocking-016-go: exit 0, 1416 stdout bytes, 54 stderr bytes, 0.022543s
+blocking-016-normal: exit 0, 1416 stdout bytes, 0 stderr bytes, 0.017138s
+blocking-016 normal: complete finding bytes match
+blocking-016-asan: exit 0, 1416 stdout bytes, 0 stderr bytes, 0.031804s
+blocking-016 asan: complete finding bytes match
+blocking-017-go: exit 0, 890 stdout bytes, 54 stderr bytes, 0.022844s
+blocking-017-normal: exit 0, 890 stdout bytes, 0 stderr bytes, 0.019948s
+blocking-017 normal: complete finding bytes match
+blocking-017-asan: exit 0, 890 stdout bytes, 0 stderr bytes, 0.033936s
+blocking-017 asan: complete finding bytes match
+blocking-018-go: exit 0, 890 stdout bytes, 54 stderr bytes, 0.021252s
+blocking-018-normal: exit 0, 890 stdout bytes, 0 stderr bytes, 0.015806s
+blocking-018 normal: complete finding bytes match
+blocking-018-asan: exit 0, 890 stdout bytes, 0 stderr bytes, 0.030566s
+blocking-018 asan: complete finding bytes match
+blocking-019-go: exit 0, 1417 stdout bytes, 53 stderr bytes, 0.018656s
+blocking-019-normal: exit 0, 1417 stdout bytes, 0 stderr bytes, 0.016222s
+blocking-019 normal: complete finding bytes match
+blocking-019-asan: exit 0, 1417 stdout bytes, 0 stderr bytes, 0.032637s
+blocking-019 asan: complete finding bytes match
+blocking-020-go: exit 0, 1519 stdout bytes, 53 stderr bytes, 0.020054s
+blocking-020-normal: exit 0, 1519 stdout bytes, 0 stderr bytes, 0.018132s
+blocking-020 normal: complete finding bytes match
+blocking-020-asan: exit 0, 1519 stdout bytes, 0 stderr bytes, 0.035885s
+blocking-020 asan: complete finding bytes match
+blocking-021-go: exit 0, 1517 stdout bytes, 54 stderr bytes, 0.022581s
+blocking-021-normal: exit 0, 1517 stdout bytes, 0 stderr bytes, 0.014362s
+blocking-021 normal: complete finding bytes match
+blocking-021-asan: exit 0, 1517 stdout bytes, 0 stderr bytes, 0.035997s
+blocking-021 asan: complete finding bytes match
+blocking-022-go: exit 0, 1417 stdout bytes, 54 stderr bytes, 0.023883s
+blocking-022-normal: exit 0, 1417 stdout bytes, 0 stderr bytes, 0.017170s
+blocking-022 normal: complete finding bytes match
+blocking-022-asan: exit 0, 1417 stdout bytes, 0 stderr bytes, 0.032289s
+blocking-022 asan: complete finding bytes match
+blocking-023-go: exit 0, 1417 stdout bytes, 55 stderr bytes, 0.025801s
+blocking-023-normal: exit 0, 1417 stdout bytes, 0 stderr bytes, 0.017221s
+blocking-023 normal: complete finding bytes match
+blocking-023-asan: exit 0, 1417 stdout bytes, 0 stderr bytes, 0.033608s
+blocking-023 asan: complete finding bytes match
+blocking-024-go: exit 0, 1417 stdout bytes, 53 stderr bytes, 0.020447s
+blocking-024-normal: exit 0, 1417 stdout bytes, 0 stderr bytes, 0.015470s
+blocking-024 normal: complete finding bytes match
+blocking-024-asan: exit 0, 1417 stdout bytes, 0 stderr bytes, 0.040138s
+blocking-024 asan: complete finding bytes match
+blocking-025-go: exit 0, 1417 stdout bytes, 54 stderr bytes, 0.024145s
+blocking-025-normal: exit 0, 1417 stdout bytes, 0 stderr bytes, 0.015616s
+blocking-025 normal: complete finding bytes match
+blocking-025-asan: exit 0, 1417 stdout bytes, 0 stderr bytes, 0.030740s
+blocking-025 asan: complete finding bytes match
+blocking-026-go: exit 0, 1417 stdout bytes, 53 stderr bytes, 0.020704s
+blocking-026-normal: exit 0, 1417 stdout bytes, 0 stderr bytes, 0.016552s
+blocking-026 normal: complete finding bytes match
+blocking-026-asan: exit 0, 1417 stdout bytes, 0 stderr bytes, 0.034317s
+blocking-026 asan: complete finding bytes match
+blocking-027-go: exit 0, 1417 stdout bytes, 54 stderr bytes, 0.030276s
+blocking-027-normal: exit 0, 1417 stdout bytes, 0 stderr bytes, 0.023725s
+blocking-027 normal: complete finding bytes match
+blocking-027-asan: exit 0, 1417 stdout bytes, 0 stderr bytes, 0.032159s
+blocking-027 asan: complete finding bytes match
+blocking-028-go: exit 0, 1415 stdout bytes, 54 stderr bytes, 0.035025s
+blocking-028-normal: exit 0, 1415 stdout bytes, 0 stderr bytes, 0.018402s
+blocking-028 normal: complete finding bytes match
+blocking-028-asan: exit 0, 1415 stdout bytes, 0 stderr bytes, 0.029408s
+blocking-028 asan: complete finding bytes match
+blocking-029-go: exit 0, 1417 stdout bytes, 54 stderr bytes, 0.025157s
+blocking-029-normal: exit 0, 1417 stdout bytes, 0 stderr bytes, 0.021512s
+blocking-029 normal: complete finding bytes match
+blocking-029-asan: exit 0, 1417 stdout bytes, 0 stderr bytes, 0.035199s
+blocking-029 asan: complete finding bytes match
+blocking-030-go: exit 0, 890 stdout bytes, 54 stderr bytes, 0.027110s
+blocking-030-normal: exit 0, 890 stdout bytes, 0 stderr bytes, 0.018540s
+blocking-030 normal: complete finding bytes match
+blocking-030-asan: exit 0, 890 stdout bytes, 0 stderr bytes, 0.037490s
+blocking-030 asan: complete finding bytes match
+blocking-031-go: exit 0, 890 stdout bytes, 54 stderr bytes, 0.029545s
+blocking-031-normal: exit 0, 890 stdout bytes, 0 stderr bytes, 0.017841s
+blocking-031 normal: complete finding bytes match
+blocking-031-asan: exit 0, 890 stdout bytes, 0 stderr bytes, 0.030168s
+blocking-031 asan: complete finding bytes match
+blocking-032-go: exit 0, 3124 stdout bytes, 55 stderr bytes, 0.024287s
+blocking-032-normal: exit 0, 3124 stdout bytes, 0 stderr bytes, 0.022021s
+blocking-032 normal: complete finding bytes match
+blocking-032-asan: exit 0, 3124 stdout bytes, 0 stderr bytes, 0.038433s
+blocking-032 asan: complete finding bytes match
+blocking-033-go: exit 0, 2471 stdout bytes, 54 stderr bytes, 0.022672s
+blocking-033-normal: exit 0, 2471 stdout bytes, 0 stderr bytes, 0.017408s
+blocking-033 normal: complete finding bytes match
+blocking-033-asan: exit 0, 2471 stdout bytes, 0 stderr bytes, 0.053261s
+blocking-033 asan: complete finding bytes match
+blocking-034-go: exit 0, 2044 stdout bytes, 55 stderr bytes, 0.027094s
+blocking-034-normal: exit 0, 2044 stdout bytes, 0 stderr bytes, 0.017704s
+blocking-034 normal: complete finding bytes match
+blocking-034-asan: exit 0, 2044 stdout bytes, 0 stderr bytes, 0.031079s
+blocking-034 asan: complete finding bytes match
+blocking-035-go: exit 0, 1417 stdout bytes, 54 stderr bytes, 0.022447s
+blocking-035-normal: exit 0, 1417 stdout bytes, 0 stderr bytes, 0.014785s
+blocking-035 normal: complete finding bytes match
+blocking-035-asan: exit 0, 1417 stdout bytes, 0 stderr bytes, 0.033792s
+blocking-035 asan: complete finding bytes match
+blocking-036-go: exit 0, 2030 stdout bytes, 55 stderr bytes, 0.023551s
+blocking-036-normal: exit 0, 2030 stdout bytes, 0 stderr bytes, 0.014051s
+blocking-036 normal: complete finding bytes match
+blocking-036-asan: exit 0, 2030 stdout bytes, 0 stderr bytes, 0.030428s
+blocking-036 asan: complete finding bytes match
+blocking-037-go: exit 0, 1417 stdout bytes, 53 stderr bytes, 0.019761s
+blocking-037-normal: exit 0, 1417 stdout bytes, 0 stderr bytes, 0.019052s
+blocking-037 normal: complete finding bytes match
+blocking-037-asan: exit 0, 1417 stdout bytes, 0 stderr bytes, 0.031515s
+blocking-037 asan: complete finding bytes match
+blocking-038-go: exit 0, 3098 stdout bytes, 54 stderr bytes, 0.022208s
+blocking-038-normal: exit 0, 3098 stdout bytes, 0 stderr bytes, 0.019487s
+blocking-038 normal: complete finding bytes match
+blocking-038-asan: exit 0, 3098 stdout bytes, 0 stderr bytes, 0.032722s
+blocking-038 asan: complete finding bytes match
+blocking-039-go: exit 0, 2471 stdout bytes, 53 stderr bytes, 0.020004s
+blocking-039-normal: exit 0, 2471 stdout bytes, 0 stderr bytes, 0.016147s
+blocking-039 normal: complete finding bytes match
+blocking-039-asan: exit 0, 2471 stdout bytes, 0 stderr bytes, 0.038683s
+blocking-039 asan: complete finding bytes match
+blocking-040-go: exit 0, 2044 stdout bytes, 54 stderr bytes, 0.022538s
+blocking-040-normal: exit 0, 2044 stdout bytes, 0 stderr bytes, 0.024879s
+blocking-040 normal: complete finding bytes match
+blocking-040-asan: exit 0, 2044 stdout bytes, 0 stderr bytes, 0.032300s
+blocking-040 asan: complete finding bytes match
+blocking-041-go: exit 0, 1417 stdout bytes, 54 stderr bytes, 0.021866s
+blocking-041-normal: exit 0, 1417 stdout bytes, 0 stderr bytes, 0.016009s
+blocking-041 normal: complete finding bytes match
+blocking-041-asan: exit 0, 1417 stdout bytes, 0 stderr bytes, 0.034216s
+blocking-041 asan: complete finding bytes match
+blocking-042-go: exit 0, 1944 stdout bytes, 53 stderr bytes, 0.019533s
+blocking-042-normal: exit 0, 1944 stdout bytes, 0 stderr bytes, 0.016225s
+blocking-042 normal: complete finding bytes match
+blocking-042-asan: exit 0, 1944 stdout bytes, 0 stderr bytes, 0.034045s
+blocking-042 asan: complete finding bytes match
+blocking-043-go: exit 0, 2571 stdout bytes, 54 stderr bytes, 0.023921s
+blocking-043-normal: exit 0, 2571 stdout bytes, 0 stderr bytes, 0.017972s
+blocking-043 normal: complete finding bytes match
+blocking-043-asan: exit 0, 2571 stdout bytes, 0 stderr bytes, 0.036750s
+blocking-043 asan: complete finding bytes match
+blocking-044-go: exit 0, 2044 stdout bytes, 54 stderr bytes, 0.020731s
+blocking-044-normal: exit 0, 2044 stdout bytes, 0 stderr bytes, 0.016476s
+blocking-044 normal: complete finding bytes match
+blocking-044-asan: exit 0, 2044 stdout bytes, 0 stderr bytes, 0.031064s
+blocking-044 asan: complete finding bytes match
+repository-go: exit 0, 18485 stdout bytes, 57 stderr bytes, 0.125301s
+repository-normal: exit 0, 18485 stdout bytes, 0 stderr bytes, 0.251510s
+repository normal: complete finding bytes match
+repository-asan: exit 0, 18485 stdout bytes, 0 stderr bytes, 0.871488s
+repository asan: complete finding bytes match
+compiler-go: exit 0, 6088 stdout bytes, 59 stderr bytes, 0.326092s
+compiler-normal: exit 0, 6088 stdout bytes, 0 stderr bytes, 1.797111s
+compiler normal: complete finding bytes match
+compiler-asan: exit 0, 6088 stdout bytes, 0 stderr bytes, 5.616241s
+compiler asan: complete finding bytes match
+mutant-build-no-uncleared-race-timeout: exit 0, 0 stdout bytes, 0 stderr bytes, 6.605632s
+mutant-run-no-uncleared-race-timeout: exit 0, 8588 stdout bytes, 0 stderr bytes, 0.024517s
+no-uncleared-race-timeout mutant: compiled, exit 0, empty stderr; byte oracle catches byte 82
+mutant-build-no-process-exit-after-output: exit 0, 0 stdout bytes, 0 stderr bytes, 7.584175s
+mutant-run-no-process-exit-after-output: exit 0, 25214 stdout bytes, 0 stderr bytes, 0.106050s
+no-process-exit-after-output mutant: compiled, exit 0, empty stderr; byte oracle catches byte 79
+mutant-build-require-blocking-standard-streams: exit 0, 0 stdout bytes, 0 stderr bytes, 8.706427s
+mutant-run-require-blocking-standard-streams: exit 0, 25214 stdout bytes, 0 stderr bytes, 0.081815s
+require-blocking-standard-streams mutant: compiled, exit 0, empty stderr; byte oracle catches byte 9245
+released-build: exit 0, 0 stdout bytes, 0 stderr bytes, 2.135233s
+released-run: exit 70, 0 stdout bytes, 50 stderr bytes, 0.017992s
+registry-mutant-archive: exit 0, 0 stdout bytes, 0 stderr bytes, 4.842061s
+registry-mutant-build: exit 0, 0 stdout bytes, 0 stderr bytes, 2.168340s
+registry-mutant-run: exit 0, 41 stdout bytes, 0 stderr bytes, 0.015485s
+released-handle registry mutant: compiled, exit 0, empty stderr; expected panic assertion catches it
+PASS three claimed rules: positive controls, requested corpora, ASan/UBSan/leaks, three byte mutants and released handle

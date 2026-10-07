@@ -1,0 +1,82 @@
+[
+  {
+    "path": "stage1/cohere/typeaware/wave_04_next/decoder_build_probe.a",
+    "sha256": "1875a22f59fc24d37602823aaf0ebfd603cd70971ddc7a84e6732963ef395dbd"
+  },
+  {
+    "path": "stage1/cohere/typeaware/wave_04_next/released.a",
+    "sha256": "3f0d7d2e9be8870d22fbcd1674ffa14185f66a0b11c7da6d7cd6885915cde3b0"
+  },
+  {
+    "path": "stage1/cohere/typeaware/wave_04_next/no_process_exit_after_output.a",
+    "sha256": "f2390e12a228659d06a9f2b148add4bdd9e27ccd10a668974fb7e257198a8702"
+  },
+  {
+    "path": "stage1/cohere/typeaware/wave_04_next/resolved_signature_declaration.a",
+    "sha256": "e988366d6b0433c4457eecd9e20cefe22f934af47274a08071c2298e78b7c44a"
+  },
+  {
+    "path": "stage1/cohere/typeaware/wave_04_next/declaration_context.a",
+    "sha256": "25fbaa066f39f5b36b665ad9d0d7beb88f657026916bbb8ad8a00192df4e1761"
+  },
+  {
+    "path": "stage1/cohere/typeaware/wave_04_next/suite.a",
+    "sha256": "9e2ddcb31000c337e70b4f38a64d139c69956ff094493a2ce3af706326fe80ab"
+  },
+  {
+    "path": "stage1/cohere/typeaware/wave_04_next/require_blocking_standard_streams.a",
+    "sha256": "687d95711e9ad5661d94a1cdd4f12507ebf4f3833792f9f96b20389e316d7611"
+  },
+  {
+    "path": "stage1/cohere/typeaware/wave_04_next/no_uncleared_race_timeout.a",
+    "sha256": "0d5d1f5c44b66ea1f86cea0c1cbcbc84a51bf6c51abb4d2becdb5affa5a14d8e"
+  },
+  {
+    "path": "stage1/cohere/typeaware/wave_04_next/bridge_probe.a",
+    "sha256": "aa614f0fd77fa218efabb09c3812e7c5a6d8767ae04b3d94ef30a3f1f5becb8c"
+  },
+  {
+    "path": "stage1/cohere/typeaware/wave_04_next/source_context.a",
+    "sha256": "a63b6bff62f7bfb442e675c263db7ba9668bd1767a02c63c26c278742f777b34"
+  },
+  {
+    "path": "stage1/cohere/typeaware/wave_04_next/program_modules.a",
+    "sha256": "568c2f161fd073ffd51ad219796923cfdd618978b934ff8c522068bb2e14d7cd"
+  },
+  {
+    "path": "stage1/cohere/typeaware/wave_04_next/code_graph.a",
+    "sha256": "cf8daa261e6b0dad1ae66070b346d45599b940a4d1fdfe4db16540b147c337e2"
+  },
+  {
+    "path": "stage1/cohere/typeaware/wave_04_next/process_facts.a",
+    "sha256": "2d85e9e9821809f95bcd8edfaf932ca0ae240dd26ee787532c9a015b932bf6d2"
+  },
+  {
+    "path": "bridge/tsgo/checker/wave04_next_dispatch.go",
+    "sha256": "b873570c882ca2ce100bd6a259f1808145bc1deac2b40a095f323574c8db6974"
+  },
+  {
+    "path": "bridge/tsgo/checker/wave04_next_modules_test.go",
+    "sha256": "27a0f1acc3e13c37d03c43c0ebe5b4bf3f5106b8ba1d23a0229532e610f031d4"
+  },
+  {
+    "path": "bridge/tsgo/checker/wave04_next_program_modules.go",
+    "sha256": "7eb69cd4ac0eb271e5bc78c6b1b092e3fdcb5067b684ee8109ec491b45a61003"
+  },
+  {
+    "path": "bridge/tsgo/checker/wave04_next_source_context.go",
+    "sha256": "50c1942d6abb1cef1b5ede83ae60b2eca054651bf9745bfb736b3c33ff198a91"
+  },
+  {
+    "path": "bridge/tsgo/checker/wave04_next_declaration_context.go",
+    "sha256": "1db638ea2d89764c33126de15e2bc017ec1151643ec9eb76ba280dfed863694f"
+  },
+  {
+    "path": "bridge/tsgo/checker/wave04_next_resolved_signature_declaration.go",
+    "sha256": "f0fde32c500db2f9c6e90c521a10e4f5deb99e00f67a33c815098bb0167586be"
+  },
+  {
+    "path": "bridge/tsgo/checker/wave04_next_facts_test.go",
+    "sha256": "1972e938502044fe4f59cb292cf1e2e798fe349bb3f97ec04a535ba1c22df755"
+  }
+]

@@ -1,3 +1,5 @@
+Current status: this historical blocker report is superseded by [REPORT.md](REPORT.md). The isolated adapter now runs all three continuation ports; normal and sanitized byte comparisons pass. Earlier failed push commits were subsequently pushed.
+
 Built: the original three rules remain complete; continuation has two prepared raw checker questions and `.a` decoders, not rule ports.
 Commits: original completed tip `67b15e35`; continuation claim `940df421`; blocker evidence committed separately.
 Commands and outputs: checker tests PASS; both Adamic probes compile; native metadata control exits 0 with 111 bytes.
