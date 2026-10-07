@@ -347,27 +347,49 @@ func (l *lowering) enumExpression(node *ast.Node) (ir.Expression, bool, error) {
 	return ir.Call{Function: index, Arguments: []ir.Expression{object, key}, Returns: of}, true, nil
 }
 
+// A discriminant occurs in every variant, has a unit type in at least one,
+// differs between variants, and has actually changed in this refinement.
+// Identical metadata fields cannot be evidence for narrowing.
+func (l *lowering) enumTagDiscriminant(declared, observed *checker.Type, name string) bool {
+	var first *checker.Type
+	unit, different, open, changed := false, false, false, false
+	members := 0
+	view := l.checker.GetPropertyOfType(observed, name)
+	if view == nil {
+		return false
+	}
+	here := l.checker.GetTypeOfSymbol(view)
+	for _, member := range declared.Types() {
+		if member.Flags()&checker.TypeFlagsObject == 0 {
+			return false
+		}
+		field := l.checker.GetPropertyOfType(member, name)
+		if field == nil {
+			return false
+		}
+		tag := l.checker.GetTypeOfSymbol(field)
+		members++
+		unit = unit || tag.Flags()&checker.TypeFlagsUnit != 0
+		open = open || l.openNumericEnumType(tag)
+		changed = changed || tag != here
+		if first == nil {
+			first = tag
+		} else {
+			different = different || first != tag
+		}
+	}
+	return members > 1 && unit && different && open && changed
+}
+
 func (l *lowering) enumRefusal(node *ast.Node) error {
-	// The checker conflates a singleton numeric enum with its member literal.
-	// Its arbitrary numeric values can overlap another variant's tag, so a
-	// payload refinement needs a checked object view that this backend lacks.
 	if l.isExpression(node) {
 		if symbol := l.flagValueSymbol(node); symbol != nil {
 			declared := l.checker.GetTypeOfSymbol(symbol)
 			observed := l.checker.GetTypeAtLocation(node)
-			objectMembers := 0
-			if declared.Flags()&checker.TypeFlagsUnion != 0 {
-				for _, member := range declared.Types() {
-					if member.Flags()&checker.TypeFlagsObject != 0 {
-						objectMembers++
-					}
-				}
-			}
-			if objectMembers > 1 && declared.Flags()&checker.TypeFlagsUnion != 0 && observed != declared && observed.Flags()&checker.TypeFlagsObject != 0 {
+			if declared.Flags()&checker.TypeFlagsUnion != 0 && observed != declared && observed.Flags()&checker.TypeFlagsObject != 0 {
 				for _, field := range l.checker.GetPropertiesOfType(observed) {
-					tag := l.checker.GetTypeOfSymbol(field)
-					if tag.Flags()&checker.TypeFlagsNumberLiteral != 0 && l.openNumericEnumType(tag) {
-						return &Refused{Where: l.program.Where(node), What: "an ambiguous singleton numeric enum tag without a checked object view", Fix: "use a member-specific tag from a multi-member enum until checked object views can validate the payload (adamic/enum-tag)"}
+					if l.enumTagDiscriminant(declared, observed, field.Name) {
+						return &Refused{Where: l.program.Where(node), What: "an object refinement using an open numeric enum as a literal tag", Fix: "use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)"}
 					}
 				}
 			}

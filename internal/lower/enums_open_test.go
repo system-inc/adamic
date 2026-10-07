@@ -95,3 +95,10 @@ func TestNumericEnumLiteralPromises(t *testing.T) {
 		})
 	}
 }
+
+func TestNumericEnumMetadataIsNotDiscriminant(t *testing.T) {
+	_, err := lowerSource(t, "enum Flags { X = 1, Y = 2 } interface A { readonly kind: 'a'; readonly flags: Flags; readonly s: string } interface B { readonly kind: 'b'; readonly flags: Flags; readonly n: number } function show(v: A | B): void { if (v.kind === 'b') { console.log(String(v.n)); } }")
+	if err != nil {
+		t.Fatal(err)
+	}
+}

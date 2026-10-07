@@ -190,3 +190,30 @@ compressed by the runner; final raw JSONL and logs remain under
 Final `git fetch origin main` and `git merge --no-edit origin/main` report
 `Already up to date.` Main remains `48c05d09`. Only the feature branch is pushed;
 no main or area branch is modified, and no pull request is opened.
+
+## Step zero correction
+
+The prior 966 to 0 result combined removal of metadata false positives with the
+member-tag implementation; it did not count genuine discriminants separately.
+The requested negative control on pinned main 48c05d09 fails at main.a:1:258
+with the original adamic/enum-tag refusal. Its string kind narrows the object;
+identical whole-enum flags in both members are unrelated metadata.
+
+The discriminant-only checkpoint requires the field in every object member,
+a unit type in at least one member, differing types between members, and a
+changed observed field type. It retains the original refusal reason for direct
+comparison. The complete latent census yields main 966 to 101 and area 1182 to
+101. Thus 865 main and 1081 area sites are removed by restricting the field
+loop; 101 on each tree remain candidate open-enum discriminants. Counts are
+unique refusal sites across all attempts, rather than successful builds.
+Both trees have all 79 source files. Raw evidence is under
+/tmp/enum-stepzero-meter; the checked-in summary is
+[enum-tag-step-zero-meter.json](enum-tag-step-zero-meter.json).
+
+Commands: the README latent overlay go build, then LATENT_ASSERT_NO_OUTPUT=1
+/tmp/enum-stepzero-latent for each pinned adapted src/compiler tree. Full lower
+passes in 19.669s (/tmp/enum-stepzero-lower.log). The negative control passes
+on the corrected branch. Disabling the discriminant guard in a Go overlay
+fails TestNumericEnumLiteralPromises/open_tag: expected refusal, got nil
+(/tmp/enum-stepzero-mutant.log). Main's negative-control failure is recorded
+in /tmp/enum-negative-main.log. No native build was needed for those probes.
