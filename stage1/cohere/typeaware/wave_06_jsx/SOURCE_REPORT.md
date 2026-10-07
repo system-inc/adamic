@@ -1,3 +1,5 @@
+Current landing validation: [STAGE3_LANDING_REPORT.md](STAGE3_LANDING_REPORT.md).
+
 Latest landing validation and remaining blockers: [HARNESS_LANDING_REPORT.md](HARNESS_LANDING_REPORT.md). The historical parser blocker below is superseded.
 
 Built: source handlers for react/jsx-fragments, react/jsx-no-undef and react/no-adjacent-inline-elements, named listeners and isolated raw JSX binding facts; rebased onto main 39638d9e.
