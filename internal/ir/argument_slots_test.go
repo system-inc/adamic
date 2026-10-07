@@ -19,7 +19,7 @@ func TestArgumentLayouts(t *testing.T) {
 		t.Fatalf("optional layout: %+v", optional)
 	}
 	rest := p.ClosureArgumentLayout(CallClosure{FunctionType: 2})
-	if rest.Count || len(rest.Rest) != 1 || rest.Rest[0].Start != 0 {
+	if !rest.Count || len(rest.Rest) != 1 || rest.Rest[0].Start != 0 {
 		t.Fatalf("mixed fixed/rest layout: %+v", rest)
 	}
 	reader := p.ClosureArgumentLayout(CallClosure{FunctionType: 3})

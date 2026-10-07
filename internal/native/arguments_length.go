@@ -9,7 +9,7 @@ import (
 
 // closureArguments keeps the legacy two-argument ABI. Optional slots and rest
 // tails are prepared here; no count is needed to bind them in the callee.
-func (e *emitter) closureArguments(call ir.CallClosure) string {
+func (e *emitter) closureArguments(call ir.CallClosure) (string, string) {
 	if len(call.Spread) != 0 {
 		packed := e.packCallArguments(call.Arguments, call.Spread)
 		layout := e.program.ClosureArgumentLayout(call)
@@ -18,13 +18,13 @@ func (e *emitter) closureArguments(call ir.CallClosure) string {
 			value := packedParameter(of, packed+"->elements", packed+"->length", index)
 			slots = append(slots, fmt.Sprintf("{.%s = %s}", member(of), slotted(of, value)))
 		}
-		return e.closureSlots(call, slots, packed+"->elements", packed+"->length")
+		return e.closureSlots(call, slots, packed+"->elements", packed+"->length"), packed + "->length"
 	}
 	slots := []string{}
 	for _, argument := range call.Arguments {
 		slots = append(slots, fmt.Sprintf("{.%s = %s}", member(argument.Type()), slotted(argument.Type(), e.value(argument))))
 	}
-	return e.closureSlots(call, slots, "", fmt.Sprint(len(call.Arguments)))
+	return e.closureSlots(call, slots, "", fmt.Sprint(len(call.Arguments))), fmt.Sprint(len(call.Arguments))
 }
 
 func (e *emitter) closureSlots(call ir.CallClosure, slots []string, source, count string) string {
@@ -39,7 +39,7 @@ func (e *emitter) closureSlots(call ir.CallClosure, slots []string, source, coun
 		of := layout.Fixed[index]
 		slots = append(slots, fmt.Sprintf("{.%s = %s}", member(of), slotted(of, missingArgument(of))))
 	}
-	if !layout.Count && len(layout.Rest) == 0 {
+	if len(layout.Rest) == 0 {
 		if len(slots) == 0 {
 			return "NULL"
 		}
@@ -56,16 +56,14 @@ func (e *emitter) closureSlots(call ir.CallClosure, slots []string, source, coun
 		array := e.restArray(source, count, rest.Start, rest.Element)
 		entries = append(entries, fmt.Sprintf("[%d] = {.reference = %s}", e.program.RestArgumentSlots[rest], array))
 	}
-	if layout.Count {
-		entries = append(entries, fmt.Sprintf("[%d] = /* actual argument count */ {.number = (double)%s}", e.program.ArgumentCountSlot, count))
-	}
+
 	return "(adamic_value[]){" + strings.Join(entries, ", ") + "}"
 }
 
 func (e *emitter) callbackCall(callback string, expression ir.Expression, kind int, slots ...string) string {
 	call := ir.CallClosure{Closure: expression, FunctionType: kind}
 	packed := e.closureSlots(call, slots, "", fmt.Sprint(len(slots)))
-	return fmt.Sprintf("%s->code(%s, %s)", callback, callback, packed)
+	return e.packedClosureCall(call, callback, packed, fmt.Sprint(len(slots)))
 }
 
 // The runtime's ordinary sort comparator still has main's ABI. A reader, rest
@@ -81,7 +79,7 @@ func (e *emitter) closureComparator(sort ir.ArraySort) string {
 	adapter := emitter{program: e.program, reuse: e.reuse, indent: 1, scopes: [][]string{{}}}
 	packed := adapter.closureSlots(call, []string{"left", "right"}, "", "2")
 	adapter.line("adamic_closure *compare = context;")
-	adapter.line("double result = compare->code(compare, %s).number;", packed)
+	adapter.line("double result = %s.number;", adapter.packedClosureCall(call, "compare", packed, "2"))
 	adapter.releaseScopes(0)
 	adapter.line("return result < 0 ? -1 : result > 0 ? 1 : 0;")
 	e.declarations = append(e.declarations, "static int "+name+"(adamic_value left, adamic_value right, void *context) {\n"+adapter.out.String()+"}")
@@ -174,4 +172,11 @@ func missingArgument(of ir.Type) string {
 		return "NULL"
 	}
 	return zero(of)
+}
+
+func (e *emitter) packedClosureCall(call ir.CallClosure, closure, packed, count string) string {
+	if e.program.PackedCountNeededFromCall(call) {
+		return fmt.Sprintf("adamic_closure_call(%s, %s, %s)", closure, packed, count)
+	}
+	return fmt.Sprintf("%s->code(%s, %s)", closure, closure, packed)
 }

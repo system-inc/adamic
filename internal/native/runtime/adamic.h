@@ -82,15 +82,48 @@ adamic_cell *adamic_cell_new(adamic_value value, bool references);
 // the same way, its arguments and its result as adamic_value, whatever its types.
 typedef struct adamic_closure adamic_closure;
 typedef adamic_value (*adamic_code)(adamic_closure *self, adamic_value *arguments);
+typedef adamic_value (*adamic_counted_code)(adamic_closure *self, adamic_value *arguments, size_t argument_count);
 struct adamic_closure {
 	adamic_heap heap;
-	adamic_code code;
+#ifdef ADAMIC_CLOSURE_CONVENTION
+ union { adamic_code code; adamic_counted_code counted_code; };
+ bool counted;
+ bool receiver;
+#else
+ adamic_code code;
+#endif
 	size_t count;
 	adamic_cell *cells[];
 };
 
 // adamic_closure_new makes a closure of count cells, for the caller to fill with references it gives.
 adamic_closure *adamic_closure_new(adamic_code code, size_t count);
+#ifdef ADAMIC_CLOSURE_CONVENTION
+static inline adamic_closure *adamic_counted_closure_new(adamic_counted_code code, size_t count) {
+ adamic_closure *closure = adamic_closure_new(NULL, count);
+ closure->counted = true;
+ closure->counted_code = code;
+ return closure;
+}
+#endif
+static inline adamic_value adamic_closure_call(adamic_closure *closure, adamic_value *arguments, size_t argument_count) {
+#ifdef ADAMIC_CLOSURE_CONVENTION
+ if (closure->counted) { return closure->counted_code(closure, arguments, argument_count); }
+#else
+ (void)argument_count;
+#endif
+ return closure->code(closure, arguments);
+}
+#ifdef ADAMIC_CLOSURE_CONVENTION
+static inline adamic_value adamic_closure_receiver_call(adamic_closure *closure, void *receiver, adamic_value *arguments, size_t argument_count) {
+ if (!closure->receiver) { return adamic_closure_call(closure, arguments, argument_count); }
+ adamic_value received[argument_count + 1];
+ received[0].reference = receiver;
+ for (size_t i = 0; i < argument_count; i++) { received[i + 1] = arguments[i]; }
+ return adamic_closure_call(closure, received, argument_count + 1);
+}
+#endif
+
 
 // adamic_string is an immutable string: UTF-8 bytes (string.c).
 typedef struct adamic_string {
@@ -213,16 +246,30 @@ void adamic_object_view_write(adamic_object *object, const char *name, adamic_sl
 // adamic_method is a class's method as a call through an interface calls it: the object as this, and
 // the arguments and the result as adamic_value, as a closure's are (the result owned).
 typedef adamic_value (*adamic_method)(adamic_object *self, adamic_value *arguments);
+typedef adamic_value (*adamic_counted_method)(adamic_object *self, adamic_value *arguments, size_t argument_count);
+#ifdef ADAMIC_CLOSURE_CONVENTION
+typedef struct adamic_method_entry {
+ bool counted;
+ union { adamic_method code; adamic_counted_method counted_code; };
+} adamic_method_entry;
+static inline adamic_value adamic_method_call(adamic_method_entry method, adamic_object *self, adamic_value *arguments, size_t argument_count) {
+ if (method.counted) { return method.counted_code(self, arguments, argument_count); }
+ return method.code(self, arguments);
+}
+#else
+typedef adamic_method adamic_method_entry;
+#endif
+
 struct adamic_methods {
 	size_t count;
 	const char *const *names;
-	const adamic_method *code;
+	const adamic_method_entry *code;
 };
 
 // adamic_object_callee finds what object.name(...) calls, where the object is seen through an
 // interface: its own field of that name, a function value, which it returns; or else its class's
 // method of that name, which it puts in *method, returning NULL. The checker proved one is there.
-adamic_closure *adamic_object_callee(const adamic_object *object, const char *name, adamic_slot_cache *cache, adamic_method *method);
+adamic_closure *adamic_object_callee(const adamic_object *object, const char *name, adamic_slot_cache *cache, adamic_method_entry *method);
 
 // adamic_object_new makes an object of a shape, its fields zeroed for the caller to fill; a reference
 // stored in a field belongs to the object.
@@ -247,6 +294,17 @@ adamic_object *adamic_object_copy_checked(const adamic_object *source, const cha
 
 // adamic_object_has is object.hasOwnProperty(name).
 bool adamic_object_has(const adamic_object *object, const adamic_string *name);
+
+// Runtime scalar tags for fixed program shapes. Host reference slots already carry heap tags.
+typedef struct adamic_shape_types {
+	const adamic_shape *shape;
+	const int *types;
+	struct adamic_shape_types *next;
+} adamic_shape_types;
+extern adamic_heap adamic_null;
+void adamic_register_shape_types(adamic_shape_types *metadata);
+bool adamic_has_property(const adamic_heap *object, const char *name);
+adamic_heap *adamic_dynamic_property(adamic_heap *object, const char *name);
 
 // adamic_object_field finds a field by name. The checker proved the field is there. Where this place in
 // the program last saw the same shape, the field is where it was then, which is inline, since it's
@@ -483,6 +541,7 @@ enum adamic_equality {
 	adamic_equal_strings,
 	adamic_equal_identity,
 	adamic_equal_maybe_numbers,
+	adamic_equal_unions,
 };
 double adamic_array_index_of(const adamic_array *array, adamic_value value, enum adamic_equality equality, bool same_value_zero);
 double adamic_array_search_from(const adamic_array *array, adamic_value value, enum adamic_equality equality, bool same_value_zero, double from, bool has_from, bool last);
@@ -914,6 +973,9 @@ _Noreturn void adamic_stack_overflow(void);
 _Noreturn void adamic_unreachable(void);
 
 #include "regexp.h"
+#include "node_fs_file.h"
+#include "node_buffer.h"
+#include "node_crypto.h"
 // Fixed plain literals can have public # keys; Object reflection refuses those shapes.
 // Keep their enumeration distinct from the Object slice, which skips private class slots.
 adamic_array *adamic_plain_object_keys(const adamic_object *object);

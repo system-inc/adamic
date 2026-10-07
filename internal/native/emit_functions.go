@@ -16,7 +16,11 @@ func (e *emitter) signature(function int) string {
 	if declared.Closure {
 		// Every closure's code is called the same way (adamic_code): its arguments and result as
 		// adamic_value, whatever their types.
-		return fmt.Sprintf("adamic_value %s(adamic_closure *self, adamic_value *arguments)", e.functionName(function))
+		count := ""
+		if e.program.PackedCountNeeded(function) {
+			count = ", size_t argument_count"
+		}
+		return fmt.Sprintf("adamic_value %s(adamic_closure *self, adamic_value *arguments%s)", e.functionName(function), count)
 	}
 	returns := "void"
 	if declared.Returns != 0 {
@@ -56,7 +60,7 @@ func (e *emitter) functionBody(function ir.Function) {
 		e.line("(void)self;")
 		e.line("(void)arguments;")
 		if function.ArgumentsCount != 0 {
-			count := fmt.Sprintf("arguments[%d].number", e.program.ArgumentCountSlot)
+			count := "(double)argument_count"
 			if function.Receiver {
 				count += " - 1"
 			}
@@ -71,6 +75,9 @@ func (e *emitter) functionBody(function ir.Function) {
 				continue
 			}
 			value := unslotted(local.Type, fmt.Sprintf("arguments[%d].%s", index, member(local.Type)))
+			if e.program.PackedCountNeeded(e.functionIndex) {
+				value = closureArgument(local.Type, index)
+			}
 			if local.Type.IsReference() {
 				value = fmt.Sprintf("(%s)%s", cType(local.Type), value)
 			}
@@ -283,17 +290,38 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 			method = e.methodThunk(function)
 		} else {
 			method = e.temporary()
-			e.line("adamic_method %s = NULL;", method)
+			if e.program.ClosureConventionNeeded() {
+				e.line("adamic_method_entry %s = {0};", method)
+			} else {
+				e.line("adamic_method %s = NULL;", method)
+			}
 			closure = e.own(ir.Closure, fmt.Sprintf("adamic_retain(adamic_object_callee(%s, %s, &%s, &%s))", receiver, cString(property.Name), e.cache(), method))
 		}
 	}
-	packed := e.closureArguments(expression)
-	call := fmt.Sprintf("%s->code(%s, %s)", closure, closure, packed)
+	packed, count := e.closureArguments(expression)
+	call := e.packedClosureCall(expression, closure, packed, count)
 	if receiver != "" {
 		if closure == "" {
-			call = fmt.Sprintf("%s(%s, %s)", method, receiver, packed)
+			if e.program.PackedCountNeededFromCall(expression) {
+				if closure == "" {
+					call = fmt.Sprintf("%s(%s, %s, %s)", method, receiver, packed, count)
+				}
+			} else if e.program.ClosureConventionNeeded() && closure != "" {
+				call = fmt.Sprintf("%s.code(%s, %s)", method, receiver, packed)
+			} else {
+				call = fmt.Sprintf("%s(%s, %s)", method, receiver, packed)
+			}
 		} else {
-			call = fmt.Sprintf("(%s != NULL ? %s : %s(%s, %s))", closure, call, method, receiver, packed)
+			methodCall := fmt.Sprintf("%s(%s, %s)", method, receiver, packed)
+			if e.program.ClosureConventionNeeded() {
+				call = fmt.Sprintf("adamic_closure_receiver_call(%s, %s, %s, %s)", closure, receiver, packed, count)
+				if e.program.PackedCountNeededFromCall(expression) {
+					methodCall = fmt.Sprintf("adamic_method_call(%s, %s, %s, %s)", method, receiver, packed, count)
+				} else {
+					methodCall = fmt.Sprintf("%s.code(%s, %s)", method, receiver, packed)
+				}
+			}
+			call = fmt.Sprintf("(%s != NULL ? %s : %s)", closure, call, methodCall)
 		}
 	}
 

@@ -12,11 +12,12 @@ import (
 
 func TestNoReaderCallingConvention(t *testing.T) {
 	for _, probe := range []struct {
-		file  string
-		slots int
+		file    string
+		counted bool
 	}{
-		{"arguments_length_no_reader.a", 0},
-		{"arguments_length_unrelated_type.a", 1},
+		{"closure_convention_plain.a", false},
+		{"arguments_length_no_reader.a", true},
+		{"arguments_length_unrelated_type.a", true},
 	} {
 		t.Run(probe.file, func(t *testing.T) {
 			checked, err := load.Load([]string{filepath.Join("..", "oracle", "testdata", probe.file)})
@@ -28,15 +29,19 @@ func TestNoReaderCallingConvention(t *testing.T) {
 				t.Fatal(err)
 			}
 			code := C(program)
-			if got := strings.Count(code, "/* actual argument count */"); got != probe.slots {
-				t.Fatalf("hidden count slots: got %d, want %d", got, probe.slots)
+			if strings.Contains(code, "/* actual argument count */") {
+				t.Fatal("count must use its typed parameter, not a buffer slot")
 			}
-			if strings.Contains(code, "size_t argument_count") {
-				t.Fatal("packed convention must retain main's two-argument ABI")
+			if got := strings.Contains(code, "#define ADAMIC_CLOSURE_CONVENTION 1"); got != probe.counted {
+				t.Fatalf("counted convention: got %t, want %t", got, probe.counted)
 			}
-			if probe.slots == 0 && strings.Contains(code, "argument_count") {
-				t.Fatal("readerless program contains a count binding")
+			if probe.file == "arguments_length_unrelated_type.a" && strings.Count(code, "= adamic_closure_call(") != 1 {
+				t.Fatal("count reached an unrelated function type")
 			}
+			if !probe.counted && (strings.Contains(code, "argument_count") || strings.Contains(code, "adamic_closure_call(")) {
+				t.Fatal("unobserved program contains a count binding")
+			}
+
 		})
 	}
 }

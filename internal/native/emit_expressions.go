@@ -12,6 +12,16 @@ import (
 // expression that stays valid to the end of the statement.
 func (e *emitter) evaluate(expression ir.Expression) string {
 	switch expression := expression.(type) {
+	case ir.HasProperty:
+		value := e.value(expression.Object)
+		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_has_property(%s, %s)", value, cString(expression.Name)))
+	case ir.DynamicProperty:
+		value := e.value(expression.Object)
+		return e.own(ir.Union, fmt.Sprintf("adamic_dynamic_property(%s, %s)", value, cString(expression.Name)))
+	case ir.NodeFSFile:
+		return e.nodeFSFile(expression)
+	case ir.NodeBufferCall:
+		return e.nodeBufferCall(expression)
 	case ir.RegExpNew:
 		for _, argument := range expression.Arguments {
 			e.value(argument)
@@ -32,6 +42,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			e.value(expression.Value)
 			return "false"
 		}
+		if expression.Value.Type() == ir.Union {
+			return fmt.Sprintf("(%s == &adamic_null)", e.value(expression.Value))
+		}
 		return fmt.Sprintf("(%s == NULL)", e.value(expression.Value))
 	case ir.NumberConstant:
 		return cNumber(expression.Value)
@@ -41,6 +54,23 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return fmt.Sprintf("&adamic_string_%d", expression.Index)
 	case ir.Read:
 		return e.read(expression)
+	case ir.Truthy:
+		return e.toBoolean(expression.Value.Type(), e.value(expression.Value))
+	case ir.Void:
+		e.line("(void)%s;", e.value(expression.Value))
+		if expression.Type().IsMaybe() {
+			return zero(expression.Type())
+		}
+		return "NULL"
+	case ir.Comma:
+		e.line("(void)%s;", e.value(expression.Left))
+		return e.value(expression.Right)
+	case ir.Effects:
+		return e.effects(expression)
+	case ir.LogicalAssignment:
+		return e.logicalAssignment(expression)
+	case ir.Logical:
+		return e.logicalValue(expression)
 	case ir.Unary:
 		operand := e.value(expression.Operand)
 		switch expression.Operator {
@@ -227,6 +257,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return e.own(expression.To, fmt.Sprintf("(%s)adamic_retain(%s(%s))", cType(expression.To), target, e.value(expression.Value)))
 	case ir.Narrow:
 		return e.narrow(expression)
+	case ir.ArrayIsArray:
+		value := e.snapshot(ir.Union, e.value(expression.Value))
+		return fmt.Sprintf("(%s != NULL && %s->kind == adamic_kind_array)", value, value)
 	case ir.TypeOf:
 		return e.typeOf(expression)
 	case ir.UnionToString:
@@ -247,9 +280,13 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return e.libraryLanguageValue(expression)
 	case ir.MakeClosure:
 		environment := e.program.Functions[expression.Function].Environment
-		closure := e.own(ir.Closure, fmt.Sprintf("adamic_closure_new(%s, %d)", e.functionName(expression.Function), len(environment)))
+		constructor := "adamic_closure_new"
+		if e.program.PackedCountNeeded(expression.Function) {
+			constructor = "adamic_counted_closure_new"
+		}
+		closure := e.own(ir.Closure, fmt.Sprintf("%s(%s, %d)", constructor, e.functionName(expression.Function), len(environment)))
 		if e.program.Functions[expression.Function].Receiver {
-			// Literal receivers are selected at the call site.
+			e.line("%s->receiver = true;", closure)
 		}
 		for index, local := range environment {
 			e.line("%s->cells[%d] = adamic_retain(%s);", closure, index, e.cellReference(local))

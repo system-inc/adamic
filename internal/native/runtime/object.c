@@ -64,7 +64,7 @@ adamic_value *adamic_object_find(const adamic_object *object, const char *name, 
 	adamic_panic(message, sizeof message - 1);
 }
 
-adamic_closure *adamic_object_callee(const adamic_object *object, const char *name, adamic_slot_cache *cache, adamic_method *method) {
+adamic_closure *adamic_object_callee(const adamic_object *object, const char *name, adamic_slot_cache *cache, adamic_method_entry *method) {
 	const adamic_shape *shape = object->shape;
 	// The cache's index counts the fields, then the methods after them.
 	if (cache->shape != shape) {

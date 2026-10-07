@@ -26,6 +26,18 @@ var runtimeBuilds sync.Map
 // uses the embedded runtime; the fuzzer supplies another checkout's runtime directory instead.
 // Sources and headers are snapshotted together, so the key and the compiled bytes cannot disagree.
 func RuntimeLibrary(directory string, options Options) (string, error) {
+	return runtimeLibrary(directory, options, nil)
+}
+
+func RuntimeLibraryForSource(directory string, source string, options Options) (string, error) {
+	var flags []string
+	if strings.HasPrefix(source, "#define ADAMIC_CLOSURE_CONVENTION 1\n") {
+		flags = append(flags, "-DADAMIC_CLOSURE_CONVENTION=1")
+	}
+	return runtimeLibrary(directory, options, flags)
+}
+
+func runtimeLibrary(directory string, options Options, extraFlags []string) (string, error) {
 	if err := ValidateOptions(options); err != nil {
 		return "", err
 	}
@@ -50,7 +62,7 @@ func RuntimeLibrary(directory string, options Options) (string, error) {
 	if err != nil {
 		return "", fmt.Errorf("native: cache directory: %w", err)
 	}
-	return cachedRuntime(files, Flags(options), compiler, string(version), filepath.Join(cache, "adamic", "runtime"))
+	return cachedRuntime(files, append(Flags(options), extraFlags...), compiler, string(version), filepath.Join(cache, "adamic", "runtime"))
 }
 
 func readRuntime(sources fs.FS, root string) ([]runtimeFile, error) {
@@ -112,6 +124,14 @@ func cachedRuntime(files []runtimeFile, flags []string, compiler string, version
 		return "", fmt.Errorf("native: %w", err)
 	}
 	defer os.RemoveAll(temporary)
+	if slicesContain(flags, "-DADAMIC_CLOSURE_CONVENTION=1") {
+		files = append([]runtimeFile(nil), files...)
+		for i := range files {
+			if files[i].name == "adamic.h" {
+				files[i].contents = append([]byte("#define ADAMIC_CLOSURE_CONVENTION 1\n"), files[i].contents...)
+			}
+		}
+	}
 	// Headers live beside the archive, from the same snapshot that produced its objects.
 	if err := os.Chmod(temporary, 0o755); err != nil {
 		return "", err
@@ -157,4 +177,13 @@ func RuntimeLinkFlags(library string) []string {
 		return []string{"-Xlinker", "-force_load", "-Xlinker", library}
 	}
 	return []string{"-Xlinker", "--whole-archive", library, "-Xlinker", "--no-whole-archive"}
+}
+
+func slicesContain(values []string, wanted string) bool {
+	for _, value := range values {
+		if value == wanted {
+			return true
+		}
+	}
+	return false
 }

@@ -26,7 +26,11 @@ func (e *emitter) accessorDeclarations(builder *strings.Builder, classID int, cl
 			}
 			if function.Closure {
 				packed := e.closureSlots(ir.CallClosure{Closure: ir.MakeClosure{Function: accessor.Getter}}, []string{fmt.Sprintf("{.reference = %s}", self)}, "", "1")
-				fmt.Fprintf(builder, "\tadamic_slot_cache cache = {NULL, 0};\n\tadamic_closure *closure = adamic_object_field(object, %s, &cache)->reference;\n\treturn %s(closure, %s);\n", cString(fmt.Sprintf("#accessor:%d", accessor.Getter)), e.functionName(accessor.Getter), packed)
+				count := ""
+				if e.program.PackedCountNeeded(accessor.Getter) {
+					count = ", 1"
+				}
+				fmt.Fprintf(builder, "\tadamic_slot_cache cache = {NULL, 0};\n\tadamic_closure *closure = adamic_object_field(object, %s, &cache)->reference;\n\treturn %s(closure, %s%s);\n", cString(fmt.Sprintf("#accessor:%d", accessor.Getter)), e.functionName(accessor.Getter), packed, count)
 			} else {
 				count := ""
 				if function.ArgumentsCount != 0 {
@@ -66,7 +70,11 @@ func (e *emitter) accessorDeclarations(builder *strings.Builder, classID int, cl
 			}
 			if function.Closure {
 				packed := e.closureSlots(ir.CallClosure{Closure: ir.MakeClosure{Function: accessor.Setter}}, []string{fmt.Sprintf("{.reference = %s}", self), fmt.Sprintf("{.%s = %s}", member(input), slotted(input, argument))}, "", "2")
-				fmt.Fprintf(builder, "\tadamic_slot_cache cache = {NULL, 0};\n\tadamic_closure *closure = adamic_object_field(object, %s, &cache)->reference;\n\t(void)%s(closure, %s);\n", cString(fmt.Sprintf("#accessor:%d", accessor.Setter)), e.functionName(accessor.Setter), packed)
+				count := ""
+				if e.program.PackedCountNeeded(accessor.Setter) {
+					count = ", 2"
+				}
+				fmt.Fprintf(builder, "\tadamic_slot_cache cache = {NULL, 0};\n\tadamic_closure *closure = adamic_object_field(object, %s, &cache)->reference;\n\t(void)%s(closure, %s%s);\n", cString(fmt.Sprintf("#accessor:%d", accessor.Setter)), e.functionName(accessor.Setter), packed, count)
 			} else {
 				count := ""
 				if function.ArgumentsCount != 0 {

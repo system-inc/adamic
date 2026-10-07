@@ -63,7 +63,7 @@ func (p *Program) ClosureArgumentLayout(call CallClosure) ArgumentLayout {
 	layout := ArgumentLayout{}
 	for _, target := range targets {
 		function := p.Functions[target]
-		layout.Count = layout.Count || function.ReadsArguments
+		layout.Count = layout.Count || p.PackedCountNeeded(target)
 		// Ordinary named functions bind their direct arguments elsewhere. Their
 		// value adapters, when the program makes one, are separate closure records.
 		if !function.Closure && !function.Receiver {
@@ -75,16 +75,8 @@ func (p *Program) ClosureArgumentLayout(call CallClosure) ArgumentLayout {
 				continue
 			}
 		}
-		packable := function.Returns != Union
-		for _, parameter := range function.Parameters {
-			of := p.Locals[parameter].Type
-			packable = packable && of != Union
-		}
-		if !packable {
-			continue
-		}
 		parameters := function.Parameters
-		if function.Receiver && !function.Closure {
+		if function.Receiver {
 			parameters = parameters[1:]
 		}
 		if function.RestElement != 0 {
@@ -108,4 +100,84 @@ func (p *Program) ClosureArgumentLayout(call CallClosure) ArgumentLayout {
 		}
 	}
 	return layout
+}
+
+// PackedCountNeeded is a callee observation, not a property of all function values.
+func (p *Program) PackedCountNeeded(function int) bool {
+	f := p.Functions[function]
+	if f.ReadsArguments || f.RestElement != 0 && (f.Closure || f.Receiver) {
+		return true
+	}
+	if f.Closure && f.Receiver {
+		for _, parameter := range f.Parameters {
+			if p.Locals[parameter].Type.IsMaybe() || f.OptionalParameters[parameter] {
+				return true
+			}
+		}
+	}
+
+	// A zero-argument view can reach optional parameters held differently. One
+	// padding word cannot be absent in both representations, so those callees
+	// distinguish presence with the count instead of interpreting that word.
+	for _, targets := range p.FunctionTypeTargets {
+		contains := false
+		for _, target := range targets {
+			contains = contains || target == function
+		}
+		if !contains {
+			continue
+		}
+		parameters := f.Parameters
+		if f.Receiver {
+			parameters = parameters[1:]
+		}
+		for _, target := range targets {
+			other := p.Functions[target]
+			if !other.Closure && !other.Receiver {
+				continue
+			}
+			if !f.Closure || !other.Closure {
+				if f.MethodName != other.MethodName || f.Closure != other.Closure {
+					continue
+				}
+			}
+			compared := other.Parameters
+			if other.Receiver {
+				compared = compared[1:]
+			}
+			for index, parameter := range parameters {
+				if index >= len(compared) || f.RestElement != 0 && index == len(parameters)-1 || other.RestElement != 0 && index == len(compared)-1 {
+					continue
+				}
+				of, against := p.Locals[parameter].Type, p.Locals[compared[index]].Type
+				if (of.IsMaybe() || of.IsReference()) && absentRepresentation(of) != absentRepresentation(against) {
+					return true
+				}
+			}
+		}
+	}
+	return false
+}
+
+func absentRepresentation(of Type) int {
+	if of == MaybeNumber {
+		return 1
+	}
+	if of == MaybeBoolean {
+		return 2
+	}
+	return 0
+}
+
+func (p *Program) ClosureConventionNeeded() bool {
+	for index, f := range p.Functions {
+		if p.PackedCountNeeded(index) || f.Closure && f.Receiver {
+			return true
+		}
+	}
+	return false
+}
+
+func (p *Program) PackedCountNeededFromCall(call CallClosure) bool {
+	return p.ClosureArgumentLayout(call).Count
 }

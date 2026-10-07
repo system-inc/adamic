@@ -98,7 +98,14 @@ func (l *lowering) condition(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
-	return censusCondition(value), nil
+	return truthy(value), nil
+}
+
+func truthy(value ir.Expression) ir.Expression {
+	if value.Type() == ir.Boolean {
+		return value
+	}
+	return ir.Truthy{Value: value}
 }
 
 // initializerIsLet reports whether a for loop declares its variables with let, which JavaScript gives

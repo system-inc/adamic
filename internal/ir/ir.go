@@ -108,6 +108,8 @@ type Function struct {
 	ForwardsArguments int
 	// Receiver excludes the leading implementation-only this from that count.
 	Receiver bool
+	// OptionalParameters records source presence independently of reference representation.
+	OptionalParameters map[int]bool
 	// RestElement identifies the final parameter as a rest array.
 	RestElement Type
 
@@ -218,6 +220,9 @@ type Local struct {
 
 	// Captured is a variable some closure reads or writes: it lives in a cell, shared by reference.
 	Captured bool
+
+	// ExpressionAssigned excludes conditional expression writes from statement liveness and moves.
+	ExpressionAssigned bool
 
 	// Borrowed is a reference parameter the function only looks at: its caller keeps the value alive
 	// for the whole call, so the function neither retains it on entry nor releases it on the way out
@@ -1124,6 +1129,7 @@ type (
 	// the body, or after it when CheckAfter is set), and Update runs after each pass, continue
 	// included.
 	Loop struct {
+		Labels     []string
 		Condition  Expression
 		Body       []Statement
 		Update     []Statement
@@ -1141,6 +1147,7 @@ type (
 	// length is read again before each pass, as JavaScript's array iterator does; over a string, the
 	// elements are its code points, each a string.
 	ForOf struct {
+		Labels   []string
 		Iterable Expression
 		Element  Type
 		Local    int
@@ -1170,8 +1177,11 @@ type (
 
 	// Depth counts the enclosing loops and switches skipped by a labeled break.
 	// Zero is the innermost breakable, as for an unlabeled break.
-	Break    struct{ Depth int }
-	Continue struct{}
+	Break struct {
+		Depth int
+		Label string
+	}
+	Continue struct{ Label string }
 
 	// Throw throws Value, an Error: to the innermost Try around it, or out of the function, whose
 	// caller passes it on the same way, or, out of every function, as a panic of String(Value).

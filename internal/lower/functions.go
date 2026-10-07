@@ -76,9 +76,12 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		// A function that never returns (it panics on every path, as (why) => panic(why) does) has no
 		// result to hold, as one returning void hasn't. An arrow whose expression is never for another
 		// reason, a variable the checker narrowed to nothing, isn't one.
-		neverArrow := returns.Flags()&checker.TypeFlagsNever != 0 && declaration.Body() != nil && declaration.Body().Kind != ast.KindBlock && !l.isPanicCall(declaration.Body())
+		neverArrow := returns.Flags()&checker.TypeFlagsNever != 0 && declaration.Body() != nil && declaration.Body().Kind != ast.KindBlock && declaration.Body().Kind != ast.KindCallExpression && !l.isPanicCall(declaration.Body())
 		if returns.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 || neverArrow {
 			valueType, isKnown := l.representation(returns)
+			if returns.Flags()&checker.TypeFlagsUndefined != 0 {
+				valueType, isKnown = ir.Object, true
+			}
 			if !isKnown {
 				// An arrow function has no name to point at, so it's pointed at whole.
 				where := declaration.Name()
@@ -122,7 +125,7 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 				return l.notYet(parameter, "a rest parameter that isn't an array")
 			}
 			element, known := l.representation(elements[0])
-			if !known || slotless(element) {
+			if !known || slotless(element) && element != ir.Union {
 				return l.notYet(parameter, "a rest parameter whose elements cannot be packed")
 			}
 			function.RestElement = element
@@ -150,6 +153,17 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 	}
 	if declaration.Body() == nil && !ast.HasSyntacticModifier(declaration, ast.ModifierFlagsAbstract) {
 		return l.notYet(declaration, "a function without a body")
+	}
+	function.OptionalParameters = map[int]bool{}
+	offset := 0
+	if function.Receiver {
+		offset = 1
+	}
+	for i, node := range declaration.Parameters() {
+		parameter := node.AsParameterDeclaration()
+		if parameter.QuestionToken != nil || parameter.Initializer != nil {
+			function.OptionalParameters[function.Parameters[i+offset]] = true
+		}
 	}
 	l.result.Functions[index] = function
 	if !function.Closure && declaration.Kind != ast.KindConstructor && declaration.Name() != nil {

@@ -8,9 +8,13 @@ import (
 )
 
 type loop struct {
-	depth     int
-	label     string
-	continued bool
+	sourceName string
+	breakLabel string
+	broken     bool
+	iteration  *loop
+	depth      int
+	label      string
+	continued  bool
 }
 
 // A break to an outer target uses a goto, emitted only when needed, after the target's loop.
@@ -231,6 +235,8 @@ func (e *emitter) statement(statement ir.Statement) {
 			e.nested(statement.Else, nil)
 		}
 		e.line("}")
+	case ir.Labeled:
+		e.labeled(statement)
 	case ir.Block:
 		e.line("{")
 		e.nested(statement.Body, nil)
@@ -242,6 +248,10 @@ func (e *emitter) statement(statement ir.Statement) {
 	case ir.Switch:
 		e.switchStatement(statement)
 	case ir.Break:
+		if statement.Label != "" {
+			e.labeledJump(statement.Label, false)
+			break
+		}
 		target := e.breakables[len(e.breakables)-1-statement.Depth]
 		e.finallies(e.innerHandlers(target.depth))
 		e.releaseScopes(target.depth)
@@ -252,7 +262,20 @@ func (e *emitter) statement(statement ir.Statement) {
 			e.line("goto %s;", target.label)
 		}
 	case ir.Continue:
-		current := e.loops[len(e.loops)-1]
+		if statement.Label != "" {
+			e.labeledJump(statement.Label, true)
+			break
+		}
+		var current *loop
+		for index := len(e.loops) - 1; index >= 0; index-- {
+			if e.loops[index].sourceName == "" {
+				current = e.loops[index]
+				break
+			}
+		}
+		if current == nil {
+			panic("native: continue outside a loop")
+		}
 		current.continued = true
 		e.finallies(e.innerHandlers(current.depth))
 		e.releaseScopes(current.depth)
@@ -295,6 +318,7 @@ func (e *emitter) loop(statement ir.Loop) {
 	saved := e.out
 	e.out = strings.Builder{}
 	current.depth = len(e.scopes)
+	e.linkLabels(statement.Labels, current)
 	e.loops = append(e.loops, current)
 	target := &breakable{depth: current.depth, label: e.temporary()}
 	e.breakables = append(e.breakables, target)
@@ -386,6 +410,7 @@ func (e *emitter) forOf(statement ir.ForOf) {
 	saved := e.out
 	e.out = strings.Builder{}
 	current.depth = len(e.scopes)
+	e.linkLabels(statement.Labels, current)
 	e.loops = append(e.loops, current)
 	target := &breakable{depth: current.depth, label: e.temporary()}
 	e.breakables = append(e.breakables, target)
@@ -488,11 +513,8 @@ func (e *emitter) switchStatement(statement ir.Switch) {
 	e.breakables = append(e.breakables, target)
 	depth := 0
 	for _, matched := range statement.Cases {
-		tests := []string{}
-		for _, test := range matched.Tests {
-			tests = append(tests, e.binary(ir.Equal, statement.Value.Type(), held, e.value(test)))
-		}
-		e.line("if (%s) {", unwrap(strings.Join(tests, " || ")))
+		condition := e.switchTests(statement.Value.Type(), held, matched.Tests)
+		e.line("if (%s) {", condition)
 		e.nested(matched.Body, nil)
 		e.line("} else {")
 		e.indent++

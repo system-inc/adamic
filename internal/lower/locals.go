@@ -74,7 +74,7 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
 			if err != nil {
 				return nil, err
 			}
-		} else if l.includesUndefined(l.checker.GetTypeAtLocation(name)) {
+		} else if l.includesUndefined(l.checker.GetTypeAtLocation(name)) || l.evolvingObject(name) != nil {
 			// An optional declaration can be read before assignment. Its first value
 			// is undefined, not the backend's unobservable storage placeholder.
 			value = ir.Undefined{Of: ir.Object}
@@ -100,10 +100,14 @@ func (l *lowering) declareLocal(name *ast.Node) (int, error) {
 		return 0, errors.New("lower: " + l.program.Where(name) + ": the checker gave a declaration no symbol")
 	}
 	valueType := ir.Object
+	inferred := l.evolvingObject(name)
 	if !l.alwaysUndefined[symbol] && !l.caught[symbol] {
 		var err error
 		if valueType, err = l.typeOf(name); err != nil {
-			return 0, err
+			if inferred == nil {
+				return 0, err
+			}
+			valueType = ir.Object
 		}
 	}
 	if l.locals == nil {
@@ -115,7 +119,11 @@ func (l *lowering) declareLocal(name *ast.Node) (int, error) {
 	}
 	l.locals[symbol] = len(l.result.Locals)
 	l.result.Locals = append(l.result.Locals, ir.Local{Name: name.Text(), Type: valueType, Function: l.functionIndex})
-	l.noteLocal(l.locals[symbol], l.checker.GetTypeAtLocation(name), name)
+	proven := l.checker.GetTypeAtLocation(name)
+	if inferred != nil {
+		proven = inferred
+	}
+	l.noteLocal(l.locals[symbol], proven, name)
 	return l.locals[symbol], nil
 }
 

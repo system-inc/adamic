@@ -113,6 +113,9 @@ func (p *predicateFlowProof) proveBody(node *ast.Node) error {
 }
 
 func (p *predicateFlowProof) narrowed(path predicateFlowPath, initial *checker.Type) *checker.Type {
+	if path.flow.Node != nil && p.l.isArrayPredicateCall(path.flow.Node) && p.reference(ast.SkipParentheses(ast.SkipParentheses(path.flow.Node).AsCallExpression().Arguments.Nodes[0])) {
+		return p.l.arrayPredicateMembers(initial, path.flow.Flags&ast.FlowFlagsTrueCondition != 0)
+	}
 	if p.admitted != nil && initial == p.declared {
 		initial = p.admitted
 	}
@@ -258,6 +261,9 @@ func (p *predicateFlowProof) check(node *ast.Node) bool {
 	}
 	if p.assertion && p.target == predicateTrueType(p.l.checker) && p.reference(node) {
 		return true
+	}
+	if p.l.isArrayPredicateCall(node) {
+		return p.reference(ast.SkipParentheses(node.AsCallExpression().Arguments.Nodes[0])) && (p.l.arrayPredicateDomain(p.declared) || p.declared.Flags()&checker.TypeFlagsUnknown != 0)
 	}
 	if node.Kind != ast.KindBinaryExpression {
 		return false
