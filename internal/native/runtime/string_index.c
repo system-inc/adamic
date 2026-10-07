@@ -34,8 +34,6 @@
 #define CURSOR 1
 #endif
 
-
-
 static size_t width(unsigned char lead) {
 	return lead < 0x80 ? 1 : lead < 0xe0 ? 2 : lead < 0xf0 ? 3 : 4;
 }
@@ -80,7 +78,7 @@ static struct adamic_string_index *build(adamic_string *string, size_t units) {
 	for (; checkpoint < count; checkpoint++) {
 		index->checkpoints[checkpoint] = (uint32_t)(string->length << 1);
 	}
-	index->view = malloc(units * sizeof *index->view);
+	index->view = malloc((units == 0 ? 1 : units) * sizeof *index->view);
 	if (index->view == NULL) {
 		static const char message[] = "out of memory";
 		adamic_panic(message, sizeof message - 1);
@@ -219,6 +217,20 @@ const uint16_t *adamic_string_unit_view(const adamic_string *string) {
 		index = usable(string, adamic_string_units(string));
 	}
 	return index != NULL ? index->view : NULL;
+}
+
+// Heap strings and marked literals have an owner for this cache. Stack pieces do
+// not; their caller decodes a temporary view instead. Append invalidates the index
+// before changing uniquely owned bytes, and the heap frees it with the string.
+const uint16_t *adamic_string_utf16_view(adamic_string *string) {
+	struct adamic_string_index *index = string->index;
+	if (index == NULL || index == ADAMIC_LITERAL_INDEX) {
+		if ((index == NULL && string->heap.references == 0) ||
+			string->length > UINT32_MAX >> 1)
+			return NULL;
+		index = build(string, adamic_string_units(string));
+	}
+	return index->view;
 }
 
 void adamic_string_free_index(adamic_string *string) {
