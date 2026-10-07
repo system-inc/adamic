@@ -192,3 +192,6 @@
 {"Time":"2026-10-07T21:54:58.42737415Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestLintCacheMutants/go-output","Elapsed":12.62}
 {"Time":"2026-10-07T21:54:58.427382926Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestLintCacheMutants/port"}
 {"Time":"2026-10-07T21:54:58.427386201Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestLintCacheMutants/port","Output":"=== RUN   TestLintCacheMutants/port\n","OutputType":"frame"}
+{"Time":"2026-10-07T21:55:06.776267791Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeProfileAgreementAndMutants","Output":"    profile_test.go:108: index-kind: compiler AST identity oracle catches wrong selector\n"}
+{"Time":"2026-10-07T21:55:18.896430692Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeProfileAgreementAndMutants","Output":"    profile_test.go:108: root-kind: compiler AST identity oracle catches wrong selector\n"}
+{"Time":"2026-10-07T21:55:36.940563255Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeProfileAgreementAndMutants","Output":"    profile_test.go:108: index-end: compiler AST identity oracle catches wrong selector\n"}
