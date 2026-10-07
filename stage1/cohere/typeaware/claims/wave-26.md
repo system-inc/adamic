@@ -48,3 +48,16 @@ the first three available by combined volume and lexical ties are:
 
 Reserved on codex/typeaware-wave-26 before implementation. No further
 rules are reserved in this batch.
+
+## Fourth batch, October 7
+
+All nine previous claims are implemented, compared, sanitized and pushed at
+a385f1e4. Fetched all 341 origin refs. Base is 5afbdb83 and main ef3d907e.
+Excluding existing ports and 117 ranked names mentioned in origin Markdown
+claims leaves these first three available, each with zero combined findings:
+
+- no-new-func
+- no-new-native-nonconstructor
+- no-new-wrappers
+
+Reserved on codex/typeaware-wave-26 before implementation.
