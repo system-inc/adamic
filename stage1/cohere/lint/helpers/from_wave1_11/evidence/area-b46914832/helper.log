@@ -1,0 +1,82 @@
+=== RUN   TestFindEntryPointMatchesGoWithMutant
+    entry_test.go:33: replaying 154 actual consumer calls and 768 controls
+        baseline Node equal
+        baseline emitted equal
+        baseline native equal
+        entry_point_priority_reversed Node byte-only catch
+        entry_point_priority_reversed emitted byte-only catch
+        entry_point_priority_reversed native byte-only catch
+        PASS 922 cases 130833 bytes
+        
+--- PASS: TestFindEntryPointMatchesGoWithMutant (3.64s)
+=== RUN   TestEscapeCssIdentifierMatchesGoWithMutant
+    escape_test.go:33: replaying 8 actual consumer calls and 17050 controls
+        baseline Node equal
+        baseline emitted equal
+        baseline native equal
+        leading_hyphen_digit_escape_lost Node byte-only catch
+        leading_hyphen_digit_escape_lost emitted byte-only catch
+        leading_hyphen_digit_escape_lost native byte-only catch
+        PASS 17058 cases 518507 bytes
+        
+--- PASS: TestEscapeCssIdentifierMatchesGoWithMutant (2.80s)
+=== RUN   TestReactOptionalParenthesesMatchesGoWithMutant
+    optional_test.go:33: replaying 2185 actual consumer calls through 4528 metadata cases
+        baseline Node equal
+        baseline emitted equal
+        baseline native equal
+        parenthesis_identity_unwrap_lost Node byte-only catch
+        parenthesis_identity_unwrap_lost emitted byte-only catch
+        parenthesis_identity_unwrap_lost native byte-only catch
+        PASS 4528 cases 84932 bytes
+        
+--- PASS: TestReactOptionalParenthesesMatchesGoWithMutant (4.15s)
+=== RUN   TestParameterTypeNodeMatchesGoWithMutant
+    parameter_test.go:33: replaying 90 actual consumer calls through 4514 metadata cases
+        baseline Node equal
+        baseline emitted equal
+        baseline native equal
+        parameter_kind_guard_lost Node byte-only catch
+        parameter_kind_guard_lost emitted byte-only catch
+        parameter_kind_guard_lost native byte-only catch
+        PASS 4514 cases 88662 bytes
+        
+--- PASS: TestParameterTypeNodeMatchesGoWithMutant (4.16s)
+=== RUN   TestCfgIsDestructuringTargetMatchesGoWithMutant
+    pattern_test.go:33: replaying 185 actual consumer calls through 4508 metadata cases
+        baseline Node equal
+        baseline emitted equal
+        baseline native equal
+        nil chain depth 0 refused by all four runtimes
+        nil chain depth 1 refused by all four runtimes
+        nil chain depth 8 refused by all four runtimes
+        object_pattern_recognition_lost Node byte-only catch
+        object_pattern_recognition_lost emitted byte-only catch
+        object_pattern_recognition_lost native byte-only catch
+        PASS 4508 cases 102550 bytes
+        
+--- PASS: TestCfgIsDestructuringTargetMatchesGoWithMutant (3.17s)
+=== RUN   TestCfgIsRootMatchesGoWithMutant
+    root_test.go:33: replaying 20545 actual consumer calls through 1067 metadata cases
+        baseline Node equal
+        baseline emitted equal
+        baseline native equal
+        property_initializer_guard_lost Node byte-only catch
+        property_initializer_guard_lost emitted byte-only catch
+        property_initializer_guard_lost native byte-only catch
+        PASS 1067 cases 23407 bytes
+        
+--- PASS: TestCfgIsRootMatchesGoWithMutant (2.07s)
+=== RUN   TestValueToCssMatchesGoWithMutant
+    value_test.go:33: replaying 78 actual consumer calls and 155 controls
+        baseline Node equal
+        baseline emitted equal
+        baseline native equal
+        function_closing_parenthesis_omitted Node byte-only catch
+        function_closing_parenthesis_omitted emitted byte-only catch
+        function_closing_parenthesis_omitted native byte-only catch
+        PASS 233 cases 13040 bytes
+        
+--- PASS: TestValueToCssMatchesGoWithMutant (2.21s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from_wave1_11	22.200s
