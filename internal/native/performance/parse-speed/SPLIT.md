@@ -148,8 +148,9 @@ on the other path. The bucket table charges only these exact self costs.
 The classified kind equality body is **374,802,438 inclusive**, including
 59,174,562 byte-comparator instructions; the other body is 29,921,325 inclusive.
 These are supplementary replay costs. The two inclusive bodies together differ
-from baseline equality inclusive (404,753,771) by 30,008 instructions, because
-libc byte comparison sees relocated literal bytes. That difference is not
+from baseline equality inclusive (404,753,771) by 30,008 instructions, with
+relocated literal bytes. The exact source of this small libc difference is not
+isolated. That difference is not
 silently allocated: byte-comparator self remains in the original profile's
 remainder. Classifier/counter overhead and scan instrumentation are excluded
 from the performance baseline. The replay's 15.104G total is not a parse result.

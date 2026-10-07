@@ -1,0 +1,8 @@
+=== RUN   TestRuntimeStringEquality
+=== PAUSE TestRuntimeStringEquality
+=== CONT  TestRuntimeStringEquality
+    runtime_profile_test.go:81: sanitize false: "0 1 0 1 0 0\n"; Node "1 1 0 1 0 0\n"
+--- FAIL: TestRuntimeStringEquality (2.70s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	2.705s
+FAIL

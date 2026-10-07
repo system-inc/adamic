@@ -1,0 +1,5 @@
+77 compiler files, full findings, suggestions, edits and fixed sources
+go-full.stdout: 11442907 bytes sha256 78df58d2cf444b42374c09b551f51f6edc6c633582d547f7c97d7d2f06c7c339
+native-full-before.stdout: 11442907 bytes sha256 78df58d2cf444b42374c09b551f51f6edc6c633582d547f7c97d7d2f06c7c339
+native-full-after.stdout: 11442907 bytes sha256 78df58d2cf444b42374c09b551f51f6edc6c633582d547f7c97d7d2f06c7c339
+Both native outputs compared against Go with cmp, exit 0. All stderr files empty.
