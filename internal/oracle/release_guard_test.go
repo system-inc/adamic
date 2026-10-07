@@ -20,6 +20,13 @@ import (
 // Flags and the runtime key are evaluated by native itself; neither is copied into this guard.
 func TestReleaseBuildConfigurationAgrees(t *testing.T) {
 	t.Parallel()
+	optionType := reflect.TypeOf(native.Options{})
+	for index := range optionType.NumField() {
+		kind := optionType.Field(index).Type.Kind()
+		if kind != reflect.Bool && kind != reflect.Int && kind != reflect.String {
+			t.Fatalf("Options.%s needs a value-semantics proof in the release trace", optionType.Field(index).Name)
+		}
+	}
 	requireReleaseCall(t, "cmd/adamic", "main", "run", 0, "os.Args[1:]")
 	requireReleaseCall(t, "cmd/adamic", "run", "build", 2, "arguments[4:]")
 	requireReleaseCall(t, "internal/oracle", "released", "cachedNative", 2, "true")
@@ -150,8 +157,18 @@ func traceReleaseOptions(t *testing.T, function *ast.FuncDecl) native.Options {
 			if expression.Name == "false" {
 				return false
 			}
+			if expression.Name == "nil" {
+				return nil
+			}
 			if value, ok := values[expression.Name]; ok {
 				return value
+			}
+		case *ast.SelectorExpr:
+			if options, ok := evaluate(expression.X).(native.Options); ok {
+				field := reflect.ValueOf(options).FieldByName(expression.Sel.Name)
+				if field.IsValid() && field.CanInterface() {
+					return field.Interface()
+				}
 			}
 		case *ast.BasicLit:
 			if expression.Kind == token.INT {
@@ -190,6 +207,19 @@ func traceReleaseOptions(t *testing.T, function *ast.FuncDecl) native.Options {
 				}
 			}
 		case *ast.BinaryExpr:
+			if expression.Op == token.LAND {
+				left, ok := evaluate(expression.X).(bool)
+				if ok && !left {
+					return false
+				}
+				if ok {
+					return evaluate(expression.Y)
+				}
+			}
+			if expression.Op == token.EQL || expression.Op == token.NEQ {
+				equal := reflect.DeepEqual(evaluate(expression.X), evaluate(expression.Y))
+				return equal == (expression.Op == token.EQL)
+			}
 			if expression.Op == token.LSS {
 				left, leftOK := evaluate(expression.X).(int)
 				right, rightOK := evaluate(expression.Y).(int)
@@ -214,6 +244,9 @@ func traceReleaseOptions(t *testing.T, function *ast.FuncDecl) native.Options {
 		return found
 	}
 	assign := func(statement *ast.AssignStmt) {
+		if statement.Tok != token.ASSIGN && statement.Tok != token.DEFINE {
+			t.Fatalf("%s: compound option assignment needs a trace: %s", function.Name, releaseSyntax(statement))
+		}
 		if len(statement.Lhs) != len(statement.Rhs) {
 			t.Fatalf("%s: cannot trace %s", function.Name, releaseSyntax(statement))
 		}
@@ -241,6 +274,17 @@ func traceReleaseOptions(t *testing.T, function *ast.FuncDecl) native.Options {
 	var walk func([]ast.Stmt) (native.Options, bool)
 	walk = func(statements []ast.Stmt) (native.Options, bool) {
 		for _, statement := range statements {
+			if declaration, ok := statement.(*ast.DeclStmt); ok {
+				if general, ok := declaration.Decl.(*ast.GenDecl); ok {
+					for _, specification := range general.Specs {
+						if value, ok := specification.(*ast.ValueSpec); ok && value.Type != nil && releaseSyntax(value.Type) == "error" && len(value.Values) == 0 {
+							for _, name := range value.Names {
+								values[name.Name] = nil
+							}
+						}
+					}
+				}
+			}
 			if conditional, ok := statement.(*ast.IfStmt); ok {
 				if releaseSyntax(conditional.Cond) == "native.UsesTSGo(program)" {
 					otherwise, ok := conditional.Else.(*ast.BlockStmt)
@@ -253,12 +297,39 @@ func traceReleaseOptions(t *testing.T, function *ast.FuncDecl) native.Options {
 					continue
 				}
 				if conditional.Init != nil {
+					// Validation takes these scalar options by value and cannot change the caller's
+					// configuration. It may refuse the build, which is outside this agreement check.
+					if initial, ok := conditional.Init.(*ast.AssignStmt); ok && len(initial.Rhs) == 1 {
+						if call, ok := initial.Rhs[0].(*ast.CallExpr); ok && releaseSyntax(call.Fun) == "native.ValidateOptions" && len(call.Args) == 1 {
+							if _, ok := evaluate(call.Args[0]).(native.Options); !ok {
+								t.Fatal("validation options changed")
+							}
+							continue
+						}
+					}
 					if options, found := walk([]ast.Stmt{conditional.Init}); found {
 						return options, true
 					}
 				}
 				if touchesOptions(conditional) {
-					t.Fatalf("%s: conditional option use %s; update the guard", function.Name, releaseSyntax(conditional))
+					condition, ok := evaluate(conditional.Cond).(bool)
+					if !ok {
+						t.Fatalf("%s: conditional option use %s; update the guard", function.Name, releaseSyntax(conditional))
+					}
+					if condition {
+						if options, found := walk(conditional.Body.List); found {
+							return options, true
+						}
+					} else if conditional.Else != nil {
+						otherwise, ok := conditional.Else.(*ast.BlockStmt)
+						if !ok {
+							t.Fatal("release conditional changed")
+						}
+						if options, found := walk(otherwise.List); found {
+							return options, true
+						}
+					}
+					continue
 				}
 			}
 			if loop, ok := statement.(*ast.ForStmt); ok && touchesOptions(loop.Body) {
