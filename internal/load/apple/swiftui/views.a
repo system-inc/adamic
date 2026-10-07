@@ -1,0 +1,129 @@
+// SwiftUI's views from Adamic. Written in Adamic, served as apple/swiftui/views
+// (internal/load/apple.go), over the shim's bindings (apple/swiftui/native).
+//
+// A view is anything with a body: a program's own class (class SupplementRow implements View), or
+// what the functions below make, a Shown holding SwiftUI's view, whose body is itself. Only a
+// Shown's SwiftUI view ever crosses to Swift: rendered asks each body for the next until it reaches
+// one, here in Adamic, so no object of the program's is held by SwiftUI and none of its classes is
+// reached from native code.
+
+import {
+	button as swiftButton,
+	horizontalStack as swiftHorizontalStack,
+	image as swiftImage,
+	list as swiftList,
+	navigationStack as swiftNavigationStack,
+	progressView as swiftProgressView,
+	section as swiftSection,
+	spacer as swiftSpacer,
+	text as swiftText,
+	verticalStack as swiftVerticalStack,
+	type ButtonStyle,
+	type FontStyle,
+	type ListStyle,
+	type SwiftUIView,
+	type SystemColor,
+	type TextAlignment,
+} from 'apple/swiftui/native';
+
+export interface View {
+	body(): View;
+}
+
+// Shown is a view SwiftUI makes, its modifiers each a new Shown.
+export class Shown implements View {
+	readonly view: SwiftUIView;
+
+	constructor(view: SwiftUIView) {
+		this.view = view;
+	}
+
+	body(): View {
+		return this;
+	}
+
+	padding(amount: number): Shown {
+		return new Shown(this.view.padding(amount));
+	}
+
+	font(style: FontStyle): Shown {
+		return new Shown(this.view.font(style));
+	}
+
+	navigationTitle(title: string): Shown {
+		return new Shown(this.view.navigationTitle(title));
+	}
+
+	foregroundColor(color: SystemColor): Shown {
+		return new Shown(this.view.foregroundColor(color));
+	}
+
+	background(color: SystemColor): Shown {
+		return new Shown(this.view.background(color));
+	}
+
+	opacity(amount: number): Shown {
+		return new Shown(this.view.opacity(amount));
+	}
+
+	multilineTextAlignment(alignment: TextAlignment): Shown {
+		return new Shown(this.view.multilineTextAlignment(alignment));
+	}
+
+	listStyle(style: ListStyle): Shown {
+		return new Shown(this.view.listStyle(style));
+	}
+
+	buttonStyle(style: ButtonStyle): Shown {
+		return new Shown(this.view.buttonStyle(style));
+	}
+}
+
+// rendered is the SwiftUI view a view's bodies come to.
+export function rendered(view: View): SwiftUIView {
+	let current: View = view;
+	while (!(current instanceof Shown)) {
+		current = current.body();
+	}
+	return current.view;
+}
+
+export function text(content: string): Shown {
+	return new Shown(swiftText(content));
+}
+
+export function button(title: string, action: () => void): Shown {
+	return new Shown(swiftButton(title, action));
+}
+
+export function verticalStack(options: { readonly spacing?: number }, children: readonly View[]): Shown {
+	return new Shown(swiftVerticalStack({ spacing: options.spacing ?? 0 }, children.map(rendered)));
+}
+
+export function horizontalStack(options: { readonly spacing?: number }, children: readonly View[]): Shown {
+	return new Shown(swiftHorizontalStack({ spacing: options.spacing ?? 0 }, children.map(rendered)));
+}
+
+export function spacer(): Shown {
+	return new Shown(swiftSpacer());
+}
+
+export function list(children: readonly View[]): Shown {
+	return new Shown(swiftList(children.map(rendered)));
+}
+
+export function section(title: string, children: readonly View[]): Shown {
+	return new Shown(swiftSection(title, children.map(rendered)));
+}
+
+export function navigationStack(root: View): Shown {
+	return new Shown(swiftNavigationStack(rendered(root)));
+}
+
+export function image(systemName: string): Shown {
+	return new Shown(swiftImage(systemName));
+}
+
+export function progressView(): Shown {
+	return new Shown(swiftProgressView());
+}

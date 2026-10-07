@@ -174,6 +174,11 @@ func appleRoots(source *sourceFS, roots []string, overlay map[string]string) ([]
 				added = append(added, bindingPath)
 				visit(bindingPath, files[bindingPath])
 			}
+			// An apple/ module written in Adamic is found by the resolver, but the binding files it
+			// imports (apple/swiftui/views imports apple/swiftui/native) are roots like any others.
+			if implementation, err := appleBindings.ReadFile(match[1] + ".a"); err == nil {
+				visit(appleImplementations+strings.TrimPrefix(match[1], "apple/")+".ts", string(implementation))
+			}
 		}
 		if strings.HasPrefix(fileName, appleDirectory+"/") {
 			return

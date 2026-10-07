@@ -67,4 +67,9 @@ print("rows: \(rows()), size: \(size())")
 evening.append(Supplement(name: "Glycine", dose: "3 g", symbol: "leaf.fill"))
 hosting.rootView = body()
 print("supplements: \(morning.count + evening.count), rows: \(rows())")
+
+// One row on its own: its size is its symbol's, name's and dose's.
+let alone = NSHostingView(rootView: row(morning[1]))
+alone.layoutSubtreeIfNeeded()
+print("row: \(number(alone.fittingSize.width)) by \(number(alone.fittingSize.height))")
 window.close()

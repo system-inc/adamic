@@ -74,9 +74,28 @@ function body(): View {
 }
 const host = new Host(body());
 renderWhenStateChanges(() => host.render(body()));
+window.contentView = host.view();
 ```
 
 `State` (`apple/swiftui/state`) is written in Adamic, not declared: some `apple/` modules are Adamic code, embedded as `internal/load/apple/<path>.a` and served by the loader where the resolver looks for any package, one module however many directories import it (`internal/load/apple.go`). Setting a `State` renders again through whatever `renderWhenStateChanges` was given. Bindings for plain functions that message a class use `@objc send <Class> <selector>`, and an array of views crosses as an `NSArray` (`objects`).
+
+A view may be a class of the program's own, as SwiftUI's are structs of the app's:
+
+```ts
+class SupplementRow implements View {
+	readonly supplement: Supplement;
+	constructor(supplement: Supplement) {
+		this.supplement = supplement;
+	}
+	body(): View {
+		return horizontalStack({ spacing: 8 }, [image(this.supplement.symbol), text(this.supplement.name), spacer(), text(this.supplement.dose).foregroundColor('Secondary')]);
+	}
+}
+```
+
+`apple/swiftui/views` and `apple/swiftui/host` are written in Adamic over the shim's bindings (`apple/swiftui/native`, `apple/swiftui/hosting`). A `View` is anything with a `body()`. What the view functions make is a `Shown`, holding the shim's view, whose body is itself and whose modifiers each make a new `Shown`. Before a view crosses (a stack's children, a host's root), `rendered` asks each body for the next until it reaches a `Shown`, in Adamic, and only that `Shown`'s Objective-C view crosses.
+
+So ownership stays simple. SwiftUI holds only the shim's objects, by Objective-C's count, and never an object of the program's: no class of the program's is reached from native code, and none is kept alive by Swift past a render. A closure a button holds is the one thing of Adamic's SwiftUI keeps. It's a block holding the closure (as everywhere in the bridge), let go of when the shim forgets the button, at the latest as the program finishes. A view that captures its own model through a button's closure is the same cycle as an action's (below, Not yet).
 
 `examples/apple/counter.a` is the app.
 

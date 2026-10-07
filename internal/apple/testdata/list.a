@@ -1,5 +1,6 @@
 // list.a: a supplements list written in Adamic through SwiftUI: a navigation stack over a list in
-// sections, each row a symbol, a name and a dose in a secondary color. It renders, gains a row and
+// sections, each row a symbol, a name and a dose in a secondary color, the rows and the screen
+// classes of the program's own (class SupplementRow implements View). It renders, gains a row and
 // renders again, and prints the rows SwiftUI's list shows each time (its fitting size can't tell). list.swift is the same list
 // written as plain SwiftUI: the two must agree (witness_test.go).
 
@@ -19,24 +20,43 @@ const morning: Supplement[] = [
 ];
 const evening: Supplement[] = [{ name: 'Magnesium', dose: '400 mg', symbol: 'moon.fill' }];
 
-function row(supplement: Supplement): View {
-	return horizontalStack({ spacing: 8 }, [image(supplement.symbol).foregroundColor('Accent'), text(supplement.name), spacer(), text(supplement.dose).foregroundColor('Secondary')]);
+// A row is a class of the program's own: its body is what SwiftUI shows.
+class SupplementRow implements View {
+	readonly supplement: Supplement;
+
+	constructor(supplement: Supplement) {
+		this.supplement = supplement;
+	}
+
+	body(): View {
+		return horizontalStack({ spacing: 8 }, [image(this.supplement.symbol).foregroundColor('Accent'), text(this.supplement.name), spacer(), text(this.supplement.dose).foregroundColor('Secondary')]);
+	}
 }
 
-function body(): View {
-	return navigationStack(
-		verticalStack({ spacing: 0 }, [
-			list([section('Morning', morning.map(row)), section('Evening', evening.map(row))]).listStyle('Inset'),
-			text(`${morning.length + evening.length} supplements`).font('Caption').multilineTextAlignment('Center').padding(8),
-		]).navigationTitle('Stack'),
-	);
+class SupplementsView implements View {
+	body(): View {
+		return navigationStack(
+			verticalStack({ spacing: 0 }, [
+				list([section('Morning', morning.map((supplement) => new SupplementRow(supplement))), section('Evening', evening.map((supplement) => new SupplementRow(supplement)))]).listStyle('Inset'),
+				text(`${morning.length + evening.length} supplements`).font('Caption').multilineTextAlignment('Center').padding(8),
+			]).navigationTitle('Stack'),
+		);
+	}
 }
 
-const host = new Host(body());
+const host = new Host(new SupplementsView());
 const window = new Window({ contentRectangle: { x: 0, y: 0, width: 360, height: 480 }, styleMask: ['Titled'], backing: 'Buffered', defer: true });
-window.contentView = host.view;
-console.log(`rows: ${host.listRows}, size: ${host.fittingWidth} by ${host.fittingHeight}`);
+window.contentView = host.view();
+console.log(`rows: ${host.listRows()}, size: ${host.fittingWidth()} by ${host.fittingHeight()}`);
 evening.push({ name: 'Glycine', dose: '3 g', symbol: 'leaf.fill' });
-host.render(body());
-console.log(`supplements: ${morning.length + evening.length}, rows: ${host.listRows}`);
+host.render(new SupplementsView());
+console.log(`supplements: ${morning.length + evening.length}, rows: ${host.listRows()}`);
+
+// One row on its own: its size is its symbol's, name's and dose's, so what the class's body gave
+// shows.
+const alone = morning[1];
+if (alone !== undefined) {
+	const row = new Host(new SupplementRow(alone));
+	console.log(`row: ${row.fittingWidth()} by ${row.fittingHeight()}`);
+}
 window.close();

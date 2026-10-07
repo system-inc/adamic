@@ -1,32 +1,33 @@
-// A SwiftUI view shown in AppKit, through swiftui.swift (internal/native/apple): a seed binding,
-// until the generator writes these (#7xv3pcs).
+// A SwiftUI view shown in AppKit, through swiftui.swift (internal/native/apple), written by hand
+// until the generator writes these (#7xv3pcs). Programs use apple/swiftui/host, written in Adamic
+// over this.
 
-declare module 'apple/swiftui/host' {
-	import type { View as AppKitView } from 'apple/appkit/view';
-	import type { View } from 'apple/swiftui/views';
+declare module 'apple/swiftui/hosting' {
+	import type { View } from 'apple/appkit/view';
+	import type { SwiftUIView } from 'apple/swiftui/native';
 
 	/**
 	 * NSHostingView<AnyView>, and the root it shows
 	 * @objc class AdamicSwiftUIHost
 	 */
-	export class Host {
+	export class SwiftUIHost {
 		/**
 		 * init(root:)
 		 * @objc init initWithRoot: 0:object
 		 */
-		constructor(root: View);
+		constructor(root: SwiftUIView);
 
 		/**
 		 * the hosting view, for a window's contentView
 		 * @objc get view -> object
 		 */
-		readonly view: AppKitView;
+		readonly view: View;
 
 		/**
 		 * shows a new root: what a view's body gives when its state changes
 		 * @objc method render: 0:object -> void
 		 */
-		render(root: View): void;
+		render(root: SwiftUIView): void;
 
 		/**
 		 * the width the view wants, laid out now
