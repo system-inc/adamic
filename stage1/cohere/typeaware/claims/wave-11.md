@@ -115,3 +115,21 @@ checks. One isolated symbol-declaration provenance question was added. Evidence,
 strict-parser exclusions and option/JavaScript coverage limits are in
 ../WAVE_11_FIFTH_REPORT.md. All fifteen reservations have native implementations
 and evidence. This completion update reserves no additional rules.
+
+## Sixth batch claim
+
+All fifteen earlier native production-default reservations are tested and pushed
+through `5e14644c`. Fetch audited 389 origin refs, 383 distinct trees and 33
+distinct Markdown claim documents. Combined descending volume with lexical ties,
+excluding base ports and all named origin reservations, selects these next three
+zero-volume rules. Main and bridge references are inventories, not native ports;
+no origin claim names them:
+
+1. `react-hooks/set-state-in-effect`
+2. `react-hooks/set-state-in-render`
+3. `react-hooks/static-components`
+
+This claim is pushed before implementation. New native sources use .a. All
+three depend on Cohere's high-level intermediate representation; its lowering,
+capture identities and control-flow semantics must be preserved. Shared generator
+and harness remain untouched; incomplete analysis must fail explicitly.
