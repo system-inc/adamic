@@ -576,7 +576,7 @@ func refusedRandom(l *lowering, node *ast.Node) error {
 func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 	if value, handled, err := l.libraryNodeBuffer(node); handled {
 		return value, true, err
-}
+	}
 	if value, known, err := l.nodeFSDirectoryCall(node); known {
 		return value, known, err
 	}
