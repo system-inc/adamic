@@ -54,3 +54,6 @@ ties are reserved here before implementation:
 
 Implementations and validation will remain in an owned `wave_06_constructors/`
 directory. No additional rules are claimed.
+
+The second continuation is complete. Implementations and full validation
+evidence are in `wave_06_constructors/REPORT.md` and its `validation/` directory.

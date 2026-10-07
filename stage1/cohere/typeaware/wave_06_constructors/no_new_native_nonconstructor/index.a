@@ -1,0 +1,11 @@
+import type {Rules} from '../../rules.ts';
+import {Globals} from '../global.a';
+export class NoNewNativeNonconstructor {
+ readonly g:Globals;constructor(rules:Rules){this.g=new Globals(rules);}
+ run():void{const g=this.g;for(let at=0;at<g.rules.parser.nodes.length;at++){
+  if(g.kind(at)!=='NewExpression')continue;
+  const callee=g.child(at);if(g.kind(callee)!=='Identifier')continue;
+  const name=g.name(callee);if(!["Symbol", "BigInt"].includes(name)||!g.global(callee))continue;
+  g.report('no-new-native-nonconstructor','noNewNativeNonconstructor',`This calls \`new ${name}()\`. ${name} is a function that returns a primitive and throws a TypeError when constructed, so this line fails at runtime every time it is reached. Call it without \`new\`.`,callee);
+ }}
+}

@@ -1,0 +1,11 @@
+import type {Rules} from '../../rules.ts';
+import {Globals} from '../global.a';
+export class NoNewWrappers {
+ readonly g:Globals;constructor(rules:Rules){this.g=new Globals(rules);}
+ run():void{const g=this.g;for(let at=0;at<g.rules.parser.nodes.length;at++){
+  if(g.kind(at)!=='NewExpression')continue;
+  const callee=g.skip(g.child(at));if(g.kind(callee)!=='Identifier')continue;
+  const name=g.name(callee);if(!["String", "Number", "Boolean"].includes(name)||!g.global(callee))continue;
+  g.report('no-new-wrappers','noNewWrappers',`This calls \`new ${name}()\`. Constructed, ${name} returns an object rather than a primitive, so the result is always truthy, compares equal to nothing by \`===\`, and reports its \`typeof\` as "object". Drop the \`new\` and call ${name} directly.`,at);
+ }}
+}

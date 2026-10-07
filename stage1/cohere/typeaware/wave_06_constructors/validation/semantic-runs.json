@@ -1,0 +1,74 @@
+[
+  {
+    "name": "no_new_func-semantic-build",
+    "command": [
+      "/workspace/wave-06-constructors-final/adamic",
+      "build",
+      "/workspace/wave-06-constructors-final/no_new_func-semantic-source/suite.a",
+      "-o",
+      "/workspace/wave-06-constructors-final/no_new_func-semantic",
+      "--tsgo",
+      "/workspace/wave-06-constructors-final/checker.a"
+    ],
+    "exit": 0,
+    "seconds": 5.299300845999824
+  },
+  {
+    "name": "no_new_func-semantic-run",
+    "command": [
+      "/workspace/wave-06-constructors-final/no_new_func-semantic",
+      "/workspace/wave-06-constructors-final/tsconfig.json",
+      "/workspace/wave-06-constructors-final/controls.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.17602843300028326
+  },
+  {
+    "name": "no_new_native_nonconstructor-semantic-build",
+    "command": [
+      "/workspace/wave-06-constructors-final/adamic",
+      "build",
+      "/workspace/wave-06-constructors-final/no_new_native_nonconstructor-semantic-source/suite.a",
+      "-o",
+      "/workspace/wave-06-constructors-final/no_new_native_nonconstructor-semantic",
+      "--tsgo",
+      "/workspace/wave-06-constructors-final/checker.a"
+    ],
+    "exit": 0,
+    "seconds": 5.809643553000569
+  },
+  {
+    "name": "no_new_native_nonconstructor-semantic-run",
+    "command": [
+      "/workspace/wave-06-constructors-final/no_new_native_nonconstructor-semantic",
+      "/workspace/wave-06-constructors-final/tsconfig.json",
+      "/workspace/wave-06-constructors-final/controls.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.07313152400001854
+  },
+  {
+    "name": "no_new_wrappers-semantic-build",
+    "command": [
+      "/workspace/wave-06-constructors-final/adamic",
+      "build",
+      "/workspace/wave-06-constructors-final/no_new_wrappers-semantic-source/suite.a",
+      "-o",
+      "/workspace/wave-06-constructors-final/no_new_wrappers-semantic",
+      "--tsgo",
+      "/workspace/wave-06-constructors-final/checker.a"
+    ],
+    "exit": 0,
+    "seconds": 7.081251554000119
+  },
+  {
+    "name": "no_new_wrappers-semantic-run",
+    "command": [
+      "/workspace/wave-06-constructors-final/no_new_wrappers-semantic",
+      "/workspace/wave-06-constructors-final/tsconfig.json",
+      "/workspace/wave-06-constructors-final/controls.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.0755365390004954
+  }
+]

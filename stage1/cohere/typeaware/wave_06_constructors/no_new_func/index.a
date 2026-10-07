@@ -1,0 +1,18 @@
+import type {Rules} from '../../rules.ts';
+import {Globals} from '../global.a';
+export class NoNewFunc {
+ readonly g:Globals;constructor(rules:Rules){this.g=new Globals(rules);}
+ run():void{const g=this.g;for(let at=0;at<g.rules.parser.nodes.length;at++){
+  if(!['NewExpression','CallExpression'].includes(g.kind(at)))continue;
+  const callee=g.skip(g.child(at));let target=callee;
+  if(g.kind(callee)!=='Identifier'){
+   if(!['PropertyAccessExpression','ElementAccessExpression'].includes(g.kind(callee)))continue;
+   const key=g.kind(callee)==='PropertyAccessExpression'?g.last(callee):g.skip(g.last(callee));
+   if(g.kind(callee)==='ElementAccessExpression'&&!['StringLiteral','NoSubstitutionTemplateLiteral'].includes(g.kind(key)))continue;
+   if(!['apply','bind','call'].includes(g.name(key)))continue;
+   target=g.skip(g.child(callee));
+  }
+  if(g.kind(target)!=='Identifier'||g.name(target)!=='Function'||!g.global(target))continue;
+  g.report('no-new-func','noFunctionConstructor',"This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter.",at);
+ }}
+}

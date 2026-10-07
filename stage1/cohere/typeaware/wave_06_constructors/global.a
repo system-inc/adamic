@@ -1,0 +1,14 @@
+import type {Rules} from '../rules.ts';
+import {Diagnostic} from '../diagnostic.ts';
+import {declarations} from '../wave_06_next/wave06_declarations.a';
+export class Globals {
+ readonly rules:Rules;
+ constructor(rules:Rules){this.rules=rules;}
+ kind(at:number):string{return at<0?'':this.rules.parser.node(at).kind;}
+ child(at:number,index=0):number{return at<0?-1:(this.rules.parser.node(at).children[index]??-1);}
+ last(at:number):number{return this.child(at,this.rules.parser.node(at).children.length-1);}
+ skip(at:number):number{while(this.kind(at)==='ParenthesizedExpression')at=this.child(at);return at;}
+ name(at:number):string{return at<0?'':this.rules.parser.node(at).text;}
+ global(at:number):boolean{return declarations(this.rules,at).items[0]?.ambient??false;}
+ report(rule:string,id:string,message:string,at:number):void{const n=this.rules.parser.node(at);this.rules.findings.push(new Diagnostic(rule,id,message,this.rules.byte(this.rules.start(n)),this.rules.byte(n.end),''));}
+}
