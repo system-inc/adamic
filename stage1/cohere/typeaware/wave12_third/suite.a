@@ -1,0 +1,40 @@
+import { panic, programArguments, readTextFile, tsgoProgram, tsgoRelease } from 'adamic';
+import { written } from '../../../typescript/parser/nodes.ts';
+import { NoNewFunc } from './no_new_func.a';
+import { NoNewNativeNonconstructor } from './no_new_native_nonconstructor.a';
+import { NoNewWrappers } from './no_new_wrappers.a';
+import { SourceFiles } from '../wave12_next/source_files.a';
+
+const args = programArguments();
+const config = args[0] ?? panic('usage: suite.a tsconfig manifest [--count]');
+const manifest = readTextFile(args[1] ?? panic('missing manifest'));
+if(manifest.kind === 'Error') {
+    panic(manifest.message);
+}
+const paths = manifest.text.split('\n').filter((path) => path !== '');
+const program = tsgoProgram(config, paths);
+let findings = 0;
+const files = new SourceFiles(program);
+for(const path of paths) {
+    const source = readTextFile(path);
+    if(source.kind === 'Error') {
+        panic(source.message);
+    }
+    const bindings = files.file(path); const linter = bindings.rules;
+    new NoNewFunc(bindings).run();
+    new NoNewNativeNonconstructor(bindings).run();
+    new NoNewWrappers(bindings).run();
+    for(const finding of linter.findings) {
+        finding.sortKey = finding.written();
+    }
+    linter.findings.sort((left, right) => left.sortKey < right.sortKey ? -1 : left.sortKey > right.sortKey ? 1 : 0);
+    findings += linter.findings.length;
+    if(!args.includes('--count')) {
+        console.log(`file\t${written(path)}`);
+        for(const finding of linter.findings) {
+            console.log(finding.written());
+        }
+    }
+}
+console.log(`findings ${findings}`);
+tsgoRelease(program);

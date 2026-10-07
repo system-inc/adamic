@@ -1,0 +1,17 @@
+import { Bindings } from '../bindings.ts';
+import { Diagnostic } from '../diagnostic.ts';
+import { SymbolDeclarationFiles } from './symbol_declaration_files.a';
+
+export class NoNewWrappers {
+    readonly bindings: Bindings; readonly files: SymbolDeclarationFiles;
+    constructor(bindings: Bindings) { this.bindings = bindings; this.files = new SymbolDeclarationFiles(bindings); }
+    run(): void {
+        const rules = this.bindings.rules;
+        for(let at = 0; at < rules.parser.nodes.length; at++) {
+            const node = rules.parser.node(at); if(node.kind !== 'NewExpression') { continue; }
+            const callee = rules.skip(node.children[0] ?? -1); const target = rules.parser.node(callee); const name = target.text;
+            if(target.kind !== 'Identifier' || !['String', 'Number', 'Boolean'].includes(name) || !this.files.global(callee)) { continue; }
+            rules.findings.push(new Diagnostic('no-new-wrappers', 'noNewWrappers', `This calls \`new ${name}()\`. Constructed, ${name} returns an object rather than a primitive, so the result is always truthy, compares equal to nothing by \`===\`, and reports its \`typeof\` as "object". Drop the \`new\` and call ${name} directly.`, rules.byte(rules.start(rules.parser.node(at))), rules.byte(rules.parser.node(at).end), ''));
+        }
+    }
+}

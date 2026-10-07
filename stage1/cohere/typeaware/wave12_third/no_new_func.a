@@ -1,0 +1,27 @@
+import { Bindings } from '../bindings.ts';
+import { Diagnostic } from '../diagnostic.ts';
+import { SymbolDeclarationFiles } from './symbol_declaration_files.a';
+
+export class NoNewFunc {
+    readonly bindings: Bindings; readonly files: SymbolDeclarationFiles;
+    constructor(bindings: Bindings) { this.bindings = bindings; this.files = new SymbolDeclarationFiles(bindings); }
+    visit(index: number): void {
+        const rules = this.bindings.rules; const node = rules.parser.node(index);
+        if(!['NewExpression', 'CallExpression'].includes(node.kind)) { return; }
+        const callee = rules.skip(node.children[0] ?? -1); const target = rules.parser.node(callee);
+        let receiver = callee;
+        if(target.kind !== 'Identifier') {
+            if(!['PropertyAccessExpression', 'ElementAccessExpression'].includes(target.kind)) { return; }
+            const member = rules.parser.node(target.kind === 'ElementAccessExpression' ? rules.skip(target.children[target.children.length - 1] ?? -1) : target.children[target.children.length - 1] ?? -1);
+            if(target.kind === 'ElementAccessExpression' && !['StringLiteral', 'NoSubstitutionTemplateLiteral', 'NumericLiteral'].includes(member.kind)) { return; }
+            if(!['apply', 'bind', 'call'].includes(member.text)) { return; }
+            receiver = rules.skip(target.children[0] ?? -1);
+        }
+        const name = rules.parser.node(receiver);
+        if(name.kind === 'Identifier' && name.text === 'Function' && this.files.global(receiver)) {
+            rules.findings.push(new Diagnostic('no-new-func', 'noFunctionConstructor', MESSAGE, rules.byte(rules.start(rules.parser.node(index))), rules.byte(rules.parser.node(index).end), ''));
+        }
+    }
+    run(): void { for(let at = 0; at < this.bindings.rules.parser.nodes.length; at++) { this.visit(at); } }
+}
+const MESSAGE = "This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter.";

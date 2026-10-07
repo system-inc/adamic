@@ -1,0 +1,17 @@
+import { Bindings } from '../bindings.ts';
+import { Diagnostic } from '../diagnostic.ts';
+import { SymbolDeclarationFiles } from './symbol_declaration_files.a';
+
+export class NoNewNativeNonconstructor {
+    readonly bindings: Bindings; readonly files: SymbolDeclarationFiles;
+    constructor(bindings: Bindings) { this.bindings = bindings; this.files = new SymbolDeclarationFiles(bindings); }
+    run(): void {
+        const rules = this.bindings.rules;
+        for(let at = 0; at < rules.parser.nodes.length; at++) {
+            const node = rules.parser.node(at); if(node.kind !== 'NewExpression') { continue; }
+            const callee = node.children[0] ?? -1; const target = rules.parser.node(callee); const name = target.text;
+            if(target.kind !== 'Identifier' || !['Symbol', 'BigInt'].includes(name) || !this.files.global(callee)) { continue; }
+            rules.findings.push(new Diagnostic('no-new-native-nonconstructor', 'noNewNativeNonconstructor', `This calls \`new ${name}()\`. ${name} is a function that returns a primitive and throws a TypeError when constructed, so this line fails at runtime every time it is reached. Call it without \`new\`.`, rules.byte(rules.start(rules.parser.node(callee))), rules.byte(rules.parser.node(callee).end), ''));
+        }
+    }
+}

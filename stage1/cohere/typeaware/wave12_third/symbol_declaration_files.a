@@ -1,0 +1,14 @@
+import { Bindings } from '../bindings.ts';
+import { Frames, header } from '../frames.ts';
+
+export class SymbolDeclarationFiles {
+    readonly bindings: Bindings;
+    constructor(bindings: Bindings) { this.bindings = bindings; }
+    global(index: number): boolean {
+        const frames = new Frames(this.bindings.rules.ask(index, 'symbol-declaration-files'));
+        header(frames, 'symbol-declaration-files');
+        const count = frames.natural(); let first = false;
+        for(let at = 0; at < count; at++) { frames.field(); const declaration = frames.yes(); if(at === 0) { first = declaration; } }
+        frames.end(); return first;
+    }
+}
