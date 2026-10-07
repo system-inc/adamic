@@ -14,6 +14,7 @@ adamic_array *adamic_array_new(size_t capacity, bool references) {
 	array->length = 0;
 	array->capacity = capacity;
 	array->references = references;
+	array->element_kind = 0;
 	array->elements = NULL;
 	array->properties = NULL;
 	array->sparse = NULL;

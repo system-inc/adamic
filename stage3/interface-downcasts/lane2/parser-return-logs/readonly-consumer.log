@@ -1,0 +1,6 @@
+--- FAIL: TestCheckedViewParserReturns (0.05s)
+    --- FAIL: TestCheckedViewParserReturns/native-sorted-empty-conditional (0.05s)
+        checked_views_callables_test.go:84: /workspace/adamic/stage3/interface-downcasts/lane2/native-sorted-empty-conditional.a:5:34: Adamic 0.1 refuses a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold; take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.061s
+FAIL

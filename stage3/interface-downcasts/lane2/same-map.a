@@ -1,8 +1,7 @@
-// TypeScript 6.0.3 core.ts sameMap. The undefined guard makes the optional return explicit;
-// index assertions preserve the loop-bound proof. The final alias is readonly, as declared.
+// TypeScript 6.0.3 core.ts sameMap. Index assertions preserve the loop-bound proof.
+// Both generic array assertion chains are unchanged, including the nullable return.
 // The row-2 slice cast is unchanged; overload admission is tested separately.
 export function sameMap<T, U = T>(array: readonly T[] | undefined, f: (x: T, i: number) => U): readonly U[] | undefined {
-    if (array === undefined) return undefined;
     if (array !== undefined) {
         for (let i = 0; i < array.length; i++) {
             const item = array[i]!;
@@ -17,7 +16,7 @@ export function sameMap<T, U = T>(array: readonly T[] | undefined, f: (x: T, i: 
             }
         }
     }
-    return array as unknown[] as readonly U[];
+    return array as unknown[] as U[];
 }
 const original = [1, 2, 3];
 const unchanged = sameMap(original, (x: number) => x);

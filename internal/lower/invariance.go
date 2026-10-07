@@ -630,6 +630,9 @@ func (l *lowering) impliedTarget(node *ast.Node) *checker.Type {
 	switch parent.Kind {
 	case ast.KindConditionalExpression:
 		if conditional := parent.AsConditionalExpression(); conditional.WhenTrue == child || conditional.WhenFalse == child {
+			if target := l.readonlyArrayConsumer(parent); target != nil {
+				return target
+			}
 			return l.checker.GetTypeAtLocation(parent)
 		}
 	case ast.KindBinaryExpression:

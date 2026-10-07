@@ -13,7 +13,7 @@ Inputs: the unchanged 4,101-site assertions ledger and the tagged-other refineme
 with 1,758 tagged plus 1,178 untagged sites. TypeScript 6.0.3 at 050880ce is the
 outside checker. These are contract dependencies, **not sites already unlocked**.
 
-| Lane | Primary tagged | Primary untagged | Primary total | Overlapping tagged dependency | Overlapping untagged dependency |
+| Lane | Primary tagged | Primary untagged | Primary total | Direct tagged dependency | Direct untagged dependency |
 | --- | ---: | ---: | ---: | ---: | ---: |
 | 1: objects, interfaces, unions/readiness | 1,733 | 132 | 1,865 | 1,758 | 1,171 |
 | 2: arrays and callable members | 25 | 1,046 | 1,071 | 25 | 1,046 |
@@ -216,3 +216,52 @@ field contracts. Nullish/mixed union contracts remain unsupported. Property.View
 preserves the checker type id so readiness finalization can resolve a contract
 interned after an earlier function body was lowered. Lane 3 must still retain checks
 for zero/Unknown contracts; physical shape ids do not certify these logical types.
+
+## Array integration prerequisite after the renewed blocker census
+
+The overlapping target-contract census makes arrays/tuples the biggest blocker:
+2,909 sites, compared with nullish members 2,903 and optional properties 2,889.
+See [checked-views-blockers.md](checked-views-blockers.md) for the complete table,
+limits and exact source witnesses. Lane 2 tip 2a16ce35 is merged into this feature
+branch as f709a1c5. It supplies standalone helpers, not native compiler admission.
+
+Lane 1's `internArrayViewContract` in view_array_adapter.go registers the existing
+viewArrayContractHook and adapts lane 2's error-only recursive element callback.
+It interns the array before its element so recursive interface/array contracts
+share the same ids. Errors propagate; unknown contracts never certify elements.
+The callable hook stays unregistered pending implementation certification.
+
+Native `adamic_array.element_kind` now provides the missing physical storage byte.
+Zero is unknown, 1/2 distinguish number/boolean, 7 is packed maybe-number, and 10
+is a heap pointer classified at the selected read. Plain fresh literals populate
+it; opaque/reused/spread/runtime producers remain unknown. Do not set it based on
+a target view or treat it as an element-shape/initialization proof. The added byte
+fits existing padding, with sizeof(adamic_array) still 56 here. Lane 2 can now
+build native helpers in its reserved files against this field. Lane 1 wires those
+helpers into shared dispatch only once all read/mutation paths are covered.
+Array admission is still NotYet; this prerequisite unlocks no complete tsc sites.
+
+The original primary lane partition above is unchanged and its dependency columns
+are direct-only observations. The renewed recursive census reaches arrays and
+callables through nested interface fields at many more sites; it does not reassign
+those sites or claim successful lowering. Mixed primitive element descriptors now
+carry explicit ViewUnion member ids instead of an ambiguous ViewScalar/Union
+storage certificate. This is metadata preparation, not mixed-union admission.
+
+## Updated lane split and delivery estimate
+
+Lane 1 next owns nullish members and optional properties, then mixed unions.
+Lane 2 next owns native array reads and mutation through the shared contract,
+then callable contracts. Existing file ownership and hook signatures remain as
+listed above. No other worker should edit the shared null/undefined representation
+or the object readiness/read dispatch; lane 1 supplies those handoffs.
+
+The remaining-family census in checked-views-blockers.md supersedes the earlier
+direct-only dependency counts for scheduling. It records all missing families at
+each site, exclusive ownership counts and a two-lane projection which does not
+claim that other unresolved contracts have disappeared.
+
+Working estimate for lane 1 nullish plus optional: October 8 22:00 UTC (16:00 MDT),
+with native null/undefined separation and mutation/alias parity still a risk.
+This is an estimate, not a completion claim; each family is pushed only after its
+both-backend oracle and semantic mutants pass.

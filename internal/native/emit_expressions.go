@@ -632,6 +632,13 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 			elements = append(elements, e.value(element))
 		}
 		array := e.own(ir.Array, fmt.Sprintf("adamic_array_new(%d, %t)", len(elements), expression.Element.IsReference()))
+		// A plain literal has known physical stores; spreads/reuse and runtime
+		// producers stay unknown until their own storage contract is certified.
+		kind := expression.Element
+		if kind.IsReference() {
+			kind = ir.Union
+		}
+		e.line("%s->element_kind = %d;", array, kind)
 		for _, element := range elements {
 			if expression.Element.IsReference() {
 				element = retained(element)
