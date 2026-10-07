@@ -1,0 +1,426 @@
+=== RUN   TestNoNewFuncFires
+=== PAUSE TestNoNewFuncFires
+=== RUN   TestNoNewFuncStaysSilent
+=== PAUSE TestNoNewFuncStaysSilent
+=== RUN   TestNoNewFuncReportsTheInvokingExpression
+=== PAUSE TestNoNewFuncReportsTheInvokingExpression
+=== RUN   TestNoNewFuncFiresOnShapesTheCorpusOmits
+=== PAUSE TestNoNewFuncFiresOnShapesTheCorpusOmits
+=== RUN   TestNoNewFuncDeclinesShapesTheCorpusOmits
+=== PAUSE TestNoNewFuncDeclinesShapesTheCorpusOmits
+=== RUN   TestNoNewFuncNeedsTheTypedHarness
+=== PAUSE TestNoNewFuncNeedsTheTypedHarness
+=== RUN   TestNoNewFuncReportsWhyItMatters
+=== PAUSE TestNoNewFuncReportsWhyItMatters
+=== RUN   TestNoNewFuncDeclinesAShadowReachedThroughAMethod
+=== PAUSE TestNoNewFuncDeclinesAShadowReachedThroughAMethod
+=== RUN   TestNoNewFuncReadsATemplateMethodName
+=== PAUSE TestNoNewFuncReadsATemplateMethodName
+=== RUN   TestNoNewFuncDeclinesANumericMethodSubscript
+=== PAUSE TestNoNewFuncDeclinesANumericMethodSubscript
+=== RUN   TestNoNewFuncSurvivesANonIdentifierReceiver
+=== PAUSE TestNoNewFuncSurvivesANonIdentifierReceiver
+=== RUN   TestNoNewNativeNonconstructorFires
+=== PAUSE TestNoNewNativeNonconstructorFires
+=== RUN   TestNoNewNativeNonconstructorStaysSilent
+=== PAUSE TestNoNewNativeNonconstructorStaysSilent
+=== RUN   TestNoNewNativeNonconstructorDeclinesAnImportedShadow
+=== PAUSE TestNoNewNativeNonconstructorDeclinesAnImportedShadow
+=== RUN   TestNoNewWrappersFires
+=== PAUSE TestNoNewWrappersFires
+=== RUN   TestNoNewWrappersStaysSilent
+=== PAUSE TestNoNewWrappersStaysSilent
+=== RUN   TestNoNewWrappersDeclinesAnImportedShadow
+=== PAUSE TestNoNewWrappersDeclinesAnImportedShadow
+=== RUN   TestNoNewWrappersReportsWhereUpstreamsGlobalsConfigWouldNot
+=== PAUSE TestNoNewWrappersReportsWhereUpstreamsGlobalsConfigWouldNot
+=== RUN   TestNoNewWrappersReportsTheWholeNewExpression
+=== PAUSE TestNoNewWrappersReportsTheWholeNewExpression
+=== RUN   TestNoNewWrappersRendersTheName
+=== PAUSE TestNoNewWrappersRendersTheName
+=== RUN   TestNoNewWrappersOnFormsUpstreamDoesNotWrite
+=== PAUSE TestNoNewWrappersOnFormsUpstreamDoesNotWrite
+=== RUN   TestNoNewWrappersReportsEachViolation
+=== PAUSE TestNoNewWrappersReportsEachViolation
+=== RUN   TestNoNewWrappersIsSilentWithoutAChecker
+=== PAUSE TestNoNewWrappersIsSilentWithoutAChecker
+=== CONT  TestNoNewFuncFires
+=== RUN   TestNoNewFuncFires/new_with_the_global
+=== PAUSE TestNoNewFuncFires/new_with_the_global
+=== RUN   TestNoNewFuncFires/a_plain_call_of_the_global
+=== PAUSE TestNoNewFuncFires/a_plain_call_of_the_global
+=== CONT  TestNoNewNativeNonconstructorStaysSilent
+=== RUN   TestNoNewNativeNonconstructorStaysSilent/calling_Symbol_without_new
+=== PAUSE TestNoNewNativeNonconstructorStaysSilent/calling_Symbol_without_new
+=== RUN   TestNoNewNativeNonconstructorStaysSilent/a_parameter_shadowing_Symbol
+=== PAUSE TestNoNewNativeNonconstructorStaysSilent/a_parameter_shadowing_Symbol
+=== RUN   TestNoNewFuncFires/call_on_the_global
+=== PAUSE TestNoNewFuncFires/call_on_the_global
+=== CONT  TestNoNewNativeNonconstructorFires
+=== RUN   TestNoNewFuncFires/apply_on_the_global
+=== CONT  TestNoNewFuncSurvivesANonIdentifierReceiver
+=== PAUSE TestNoNewFuncFires/apply_on_the_global
+=== RUN   TestNoNewFuncSurvivesANonIdentifierReceiver/a_qualified_receiver
+=== PAUSE TestNoNewFuncSurvivesANonIdentifierReceiver/a_qualified_receiver
+=== RUN   TestNoNewFuncSurvivesANonIdentifierReceiver/a_comma_expression_as_receiver
+=== PAUSE TestNoNewFuncSurvivesANonIdentifierReceiver/a_comma_expression_as_receiver
+=== RUN   TestNoNewFuncSurvivesANonIdentifierReceiver/a_nested_property_receiver
+=== PAUSE TestNoNewFuncSurvivesANonIdentifierReceiver/a_nested_property_receiver
+=== RUN   TestNoNewFuncSurvivesANonIdentifierReceiver/a_call_result_as_receiver
+=== CONT  TestNoNewFuncDeclinesANumericMethodSubscript
+=== RUN   TestNoNewFuncDeclinesANumericMethodSubscript/a_numeric_subscript,_which_names_no_method
+=== PAUSE TestNoNewFuncDeclinesANumericMethodSubscript/a_numeric_subscript,_which_names_no_method
+=== RUN   TestNoNewFuncFires/bind_on_the_global,_then_invoked
+=== PAUSE TestNoNewFuncFires/bind_on_the_global,_then_invoked
+=== RUN   TestNoNewFuncFires/bind_on_the_global,_uncalled
+=== PAUSE TestNoNewFuncFires/bind_on_the_global,_uncalled
+=== RUN   TestNoNewFuncFires/a_subscripted_call_on_the_global
+=== PAUSE TestNoNewFuncFires/a_subscripted_call_on_the_global
+=== RUN   TestNoNewFuncFires/a_parenthesized_optional_call_on_the_global
+=== PAUSE TestNoNewFuncFires/a_parenthesized_optional_call_on_the_global
+=== RUN   TestNoNewFuncFires/a_class_shadowing_only_an_inner_scope
+=== PAUSE TestNoNewFuncFires/a_class_shadowing_only_an_inner_scope
+=== RUN   TestNoNewFuncFires/a_function_declaration_shadowing_only_an_inner_scope
+=== PAUSE TestNoNewFuncFires/a_function_declaration_shadowing_only_an_inner_scope
+=== CONT  TestNoNewFuncDeclinesAShadowReachedThroughAMethod
+=== RUN   TestNoNewNativeNonconstructorFires/new_Symbol
+=== PAUSE TestNoNewNativeNonconstructorFires/new_Symbol
+=== RUN   TestNoNewNativeNonconstructorFires/new_BigInt
+=== CONT  TestNoNewFuncReadsATemplateMethodName
+=== PAUSE TestNoNewNativeNonconstructorFires/new_BigInt
+=== RUN   TestNoNewNativeNonconstructorFires/a_nested_function_named_Symbol_does_not_shadow_the_outer_call
+=== PAUSE TestNoNewNativeNonconstructorFires/a_nested_function_named_Symbol_does_not_shadow_the_outer_call
+=== RUN   TestNoNewNativeNonconstructorStaysSilent/a_function_declaration_shadowing_Symbol
+=== PAUSE TestNoNewNativeNonconstructorStaysSilent/a_function_declaration_shadowing_Symbol
+=== PAUSE TestNoNewFuncSurvivesANonIdentifierReceiver/a_call_result_as_receiver
+=== CONT  TestNoNewFuncReportsWhyItMatters
+=== RUN   TestNoNewFuncDeclinesAShadowReachedThroughAMethod/a_class_shadow_reached_through_call
+=== PAUSE TestNoNewFuncDeclinesAShadowReachedThroughAMethod/a_class_shadow_reached_through_call
+=== RUN   TestNoNewFuncDeclinesAShadowReachedThroughAMethod/a_class_shadow_reached_through_bind
+=== PAUSE TestNoNewFuncDeclinesAShadowReachedThroughAMethod/a_class_shadow_reached_through_bind
+=== RUN   TestNoNewFuncReadsATemplateMethodName/a_template-literal_method_name
+=== RUN   TestNoNewNativeNonconstructorFires/a_nested_function_named_BigInt_does_not_shadow_the_outer_call
+=== PAUSE TestNoNewFuncReadsATemplateMethodName/a_template-literal_method_name
+=== PAUSE TestNoNewNativeNonconstructorFires/a_nested_function_named_BigInt_does_not_shadow_the_outer_call
+=== RUN   TestNoNewFuncReadsATemplateMethodName/a_template-literal_bind
+=== PAUSE TestNoNewFuncReadsATemplateMethodName/a_template-literal_bind
+=== CONT  TestNoNewFuncNeedsTheTypedHarness
+=== RUN   TestNoNewNativeNonconstructorStaysSilent/Symbol_passed_as_an_argument
+=== PAUSE TestNoNewNativeNonconstructorStaysSilent/Symbol_passed_as_an_argument
+=== RUN   TestNoNewNativeNonconstructorStaysSilent/Symbol_as_a_later_argument
+=== CONT  TestNoNewFuncDeclinesShapesTheCorpusOmits
+=== PAUSE TestNoNewNativeNonconstructorStaysSilent/Symbol_as_a_later_argument
+=== RUN   TestNoNewFuncDeclinesShapesTheCorpusOmits/an_uncalled_method_reference
+=== RUN   TestNoNewNativeNonconstructorStaysSilent/calling_BigInt_without_new
+=== RUN   TestNoNewFuncDeclinesAShadowReachedThroughAMethod/a_function-declaration_shadow_reached_through_apply
+=== PAUSE TestNoNewFuncDeclinesShapesTheCorpusOmits/an_uncalled_method_reference
+=== PAUSE TestNoNewFuncDeclinesAShadowReachedThroughAMethod/a_function-declaration_shadow_reached_through_apply
+=== RUN   TestNoNewFuncDeclinesShapesTheCorpusOmits/a_method_that_does_not_construct
+=== PAUSE TestNoNewFuncDeclinesShapesTheCorpusOmits/a_method_that_does_not_construct
+=== RUN   TestNoNewFuncDeclinesAShadowReachedThroughAMethod/a_class_shadow_reached_through_a_subscripted_call
+=== CONT  TestNoNewFuncFiresOnShapesTheCorpusOmits
+=== RUN   TestNoNewFuncFiresOnShapesTheCorpusOmits/an_optional_call_of_the_global
+=== PAUSE TestNoNewFuncDeclinesAShadowReachedThroughAMethod/a_class_shadow_reached_through_a_subscripted_call
+=== PAUSE TestNoNewFuncFiresOnShapesTheCorpusOmits/an_optional_call_of_the_global
+=== RUN   TestNoNewFuncFiresOnShapesTheCorpusOmits/an_optional_method_call_on_the_global
+=== PAUSE TestNoNewFuncFiresOnShapesTheCorpusOmits/an_optional_method_call_on_the_global
+=== RUN   TestNoNewFuncFiresOnShapesTheCorpusOmits/a_parenthesized_receiver
+=== PAUSE TestNoNewFuncFiresOnShapesTheCorpusOmits/a_parenthesized_receiver
+=== RUN   TestNoNewFuncFiresOnShapesTheCorpusOmits/new_with_no_argument_list
+=== PAUSE TestNoNewFuncFiresOnShapesTheCorpusOmits/new_with_no_argument_list
+=== CONT  TestNoNewFuncReportsTheInvokingExpression
+=== RUN   TestNoNewFuncReportsTheInvokingExpression/var_a_=_new_Function("b",_"c",_"return_b+c");
+=== PAUSE TestNoNewFuncReportsTheInvokingExpression/var_a_=_new_Function("b",_"c",_"return_b+c");
+=== RUN   TestNoNewFuncReportsTheInvokingExpression/var_a_=_Function("b",_"c",_"return_b+c");
+=== PAUSE TestNoNewFuncReportsTheInvokingExpression/var_a_=_Function("b",_"c",_"return_b+c");
+=== RUN   TestNoNewFuncReportsTheInvokingExpression/var_a_=_Function.bind(null,_"b",_"c",_"return_b+c")();
+=== PAUSE TestNoNewFuncReportsTheInvokingExpression/var_a_=_Function.bind(null,_"b",_"c",_"return_b+c")();
+=== RUN   TestNoNewFuncReportsTheInvokingExpression/var_a_=_Function.bind(null,_"b",_"c",_"return_b+c");
+=== PAUSE TestNoNewFuncReportsTheInvokingExpression/var_a_=_Function.bind(null,_"b",_"c",_"return_b+c");
+=== PAUSE TestNoNewNativeNonconstructorStaysSilent/calling_BigInt_without_new
+=== RUN   TestNoNewNativeNonconstructorStaysSilent/a_parameter_shadowing_BigInt
+=== PAUSE TestNoNewNativeNonconstructorStaysSilent/a_parameter_shadowing_BigInt
+=== RUN   TestNoNewNativeNonconstructorStaysSilent/a_function_declaration_shadowing_BigInt
+=== PAUSE TestNoNewNativeNonconstructorStaysSilent/a_function_declaration_shadowing_BigInt
+=== RUN   TestNoNewNativeNonconstructorStaysSilent/BigInt_passed_as_an_argument
+=== PAUSE TestNoNewNativeNonconstructorStaysSilent/BigInt_passed_as_an_argument
+=== RUN   TestNoNewNativeNonconstructorStaysSilent/BigInt_as_a_later_argument
+=== PAUSE TestNoNewNativeNonconstructorStaysSilent/BigInt_as_a_later_argument
+=== CONT  TestNoNewFuncStaysSilent
+=== RUN   TestNoNewFuncStaysSilent/a_differently-named_constructor
+=== PAUSE TestNoNewFuncStaysSilent/a_differently-named_constructor
+=== RUN   TestNoNewFuncStaysSilent/a_differently-named_call
+=== PAUSE TestNoNewFuncStaysSilent/a_differently-named_call
+=== RUN   TestNoNewFuncStaysSilent/a_class_shadowing_the_global
+=== PAUSE TestNoNewFuncStaysSilent/a_class_shadowing_the_global
+=== RUN   TestNoNewFuncStaysSilent/a_class_shadowing_inside_an_arrow_body
+=== PAUSE TestNoNewFuncStaysSilent/a_class_shadowing_inside_an_arrow_body
+=== RUN   TestNoNewFuncStaysSilent/a_function_declaration_shadowing_the_global
+=== PAUSE TestNoNewFuncStaysSilent/a_function_declaration_shadowing_the_global
+=== RUN   TestNoNewFuncStaysSilent/a_function_declaration_shadowing_inside_a_function_body
+=== PAUSE TestNoNewFuncStaysSilent/a_function_declaration_shadowing_inside_a_function_body
+=== RUN   TestNoNewFuncStaysSilent/a_named_function_expression_shadowing_its_own_body
+=== PAUSE TestNoNewFuncStaysSilent/a_named_function_expression_shadowing_its_own_body
+=== RUN   TestNoNewFuncStaysSilent/the_global_passed_as_an_argument
+=== PAUSE TestNoNewFuncStaysSilent/the_global_passed_as_an_argument
+=== RUN   TestNoNewFuncStaysSilent/the_global_passed_to_another_constructor
+=== PAUSE TestNoNewFuncStaysSilent/the_global_passed_to_another_constructor
+=== RUN   TestNoNewFuncStaysSilent/the_global_used_as_a_computed_key
+=== PAUSE TestNoNewFuncStaysSilent/the_global_used_as_a_computed_key
+=== RUN   TestNoNewFuncStaysSilent/a_method_reference_passed_as_an_argument
+=== PAUSE TestNoNewFuncStaysSilent/a_method_reference_passed_as_an_argument
+=== RUN   TestNoNewFuncStaysSilent/a_method_that_does_not_construct
+=== PAUSE TestNoNewFuncStaysSilent/a_method_that_does_not_construct
+=== RUN   TestNoNewFuncStaysSilent/a_computed_method_name_that_is_not_static
+=== PAUSE TestNoNewFuncStaysSilent/a_computed_method_name_that_is_not_static
+=== CONT  TestNoNewWrappersReportsTheWholeNewExpression
+=== RUN   TestNoNewWrappersReportsTheWholeNewExpression/new_String
+=== PAUSE TestNoNewWrappersReportsTheWholeNewExpression/new_String
+=== RUN   TestNoNewWrappersReportsTheWholeNewExpression/new_Number
+=== PAUSE TestNoNewWrappersReportsTheWholeNewExpression/new_Number
+=== RUN   TestNoNewWrappersReportsTheWholeNewExpression/new_Boolean
+=== PAUSE TestNoNewWrappersReportsTheWholeNewExpression/new_Boolean
+=== RUN   TestNoNewWrappersReportsTheWholeNewExpression/the_outer_call_in_the_block-shadow_case
+=== PAUSE TestNoNewWrappersReportsTheWholeNewExpression/the_outer_call_in_the_block-shadow_case
+=== CONT  TestNoNewWrappersIsSilentWithoutAChecker
+--- PASS: TestNoNewWrappersIsSilentWithoutAChecker (0.00s)
+=== CONT  TestNoNewWrappersRendersTheName
+=== CONT  TestNoNewWrappersReportsEachViolation
+=== CONT  TestNoNewWrappersOnFormsUpstreamDoesNotWrite
+=== RUN   TestNoNewWrappersOnFormsUpstreamDoesNotWrite/a_parenthesized_callee_reports,_because_ESTree_has_no_node_for_the_parenthesis
+=== PAUSE TestNoNewWrappersOnFormsUpstreamDoesNotWrite/a_parenthesized_callee_reports,_because_ESTree_has_no_node_for_the_parenthesis
+=== RUN   TestNoNewWrappersOnFormsUpstreamDoesNotWrite/and_so_does_a_doubly_parenthesized_one
+=== PAUSE TestNoNewWrappersOnFormsUpstreamDoesNotWrite/and_so_does_a_doubly_parenthesized_one
+=== RUN   TestNoNewWrappersOnFormsUpstreamDoesNotWrite/a_new_expression_with_no_argument_list_still_reports
+=== PAUSE TestNoNewWrappersOnFormsUpstreamDoesNotWrite/a_new_expression_with_no_argument_list_still_reports
+=== RUN   TestNoNewWrappersOnFormsUpstreamDoesNotWrite/a_property_access_callee_is_silent,_since_upstream_reads_callee.name_and_finds_none
+=== PAUSE TestNoNewWrappersOnFormsUpstreamDoesNotWrite/a_property_access_callee_is_silent,_since_upstream_reads_callee.name_and_finds_none
+=== RUN   TestNoNewWrappersOnFormsUpstreamDoesNotWrite/globalThis.String_is_a_property_access_too,_and_equally_silent
+=== PAUSE TestNoNewWrappersOnFormsUpstreamDoesNotWrite/globalThis.String_is_a_property_access_too,_and_equally_silent
+=== RUN   TestNoNewWrappersOnFormsUpstreamDoesNotWrite/parentheses_around_the_whole_expression_do_not_change_the_callee
+=== PAUSE TestNoNewWrappersOnFormsUpstreamDoesNotWrite/parentheses_around_the_whole_expression_do_not_change_the_callee
+=== RUN   TestNoNewWrappersOnFormsUpstreamDoesNotWrite/a_class_shadowing_the_name_declines
+=== PAUSE TestNoNewWrappersOnFormsUpstreamDoesNotWrite/a_class_shadowing_the_name_declines
+=== RUN   TestNoNewWrappersOnFormsUpstreamDoesNotWrite/a_function_declaration_shadowing_the_name_declines
+=== PAUSE TestNoNewWrappersOnFormsUpstreamDoesNotWrite/a_function_declaration_shadowing_the_name_declines
+=== RUN   TestNoNewWrappersOnFormsUpstreamDoesNotWrite/Object_is_not_one_of_the_three
+=== PAUSE TestNoNewWrappersOnFormsUpstreamDoesNotWrite/Object_is_not_one_of_the_three
+=== RUN   TestNoNewWrappersOnFormsUpstreamDoesNotWrite/Symbol_belongs_to_no-new-native-nonconstructor,_not_here
+=== PAUSE TestNoNewWrappersOnFormsUpstreamDoesNotWrite/Symbol_belongs_to_no-new-native-nonconstructor,_not_here
+=== RUN   TestNoNewWrappersOnFormsUpstreamDoesNotWrite/the_name_is_case_sensitive
+=== PAUSE TestNoNewWrappersOnFormsUpstreamDoesNotWrite/the_name_is_case_sensitive
+=== CONT  TestNoNewWrappersStaysSilent
+=== RUN   TestNoNewWrappersStaysSilent/new_Object_is_not_a_wrapper
+=== PAUSE TestNoNewWrappersStaysSilent/new_Object_is_not_a_wrapper
+=== RUN   TestNoNewWrappersStaysSilent/String_called_without_new,_beside_a_static_read_off_it
+=== PAUSE TestNoNewWrappersStaysSilent/String_called_without_new,_beside_a_static_read_off_it
+=== RUN   TestNoNewWrappersStaysSilent/a_parameter_named_Number_shadows_the_global
+=== PAUSE TestNoNewWrappersStaysSilent/a_parameter_named_Number_shadows_the_global
+=== RUN   TestNoNewWrappersStaysSilent/a_var_hoisted_out_of_the_else_branch_shadows_Boolean
+=== PAUSE TestNoNewWrappersStaysSilent/a_var_hoisted_out_of_the_else_branch_shadows_Boolean
+=== CONT  TestNoNewWrappersReportsWhereUpstreamsGlobalsConfigWouldNot
+=== RUN   TestNoNewWrappersReportsWhereUpstreamsGlobalsConfigWouldNot/globals_String_off
+=== PAUSE TestNoNewWrappersReportsWhereUpstreamsGlobalsConfigWouldNot/globals_String_off
+=== RUN   TestNoNewWrappersReportsWhereUpstreamsGlobalsConfigWouldNot/a_global_comment_turning_Boolean_off
+=== PAUSE TestNoNewWrappersReportsWhereUpstreamsGlobalsConfigWouldNot/a_global_comment_turning_Boolean_off
+=== CONT  TestNoNewWrappersDeclinesAnImportedShadow
+--- PASS: TestNoNewFuncReportsWhyItMatters (0.02s)
+=== CONT  TestNoNewWrappersFires
+--- PASS: TestNoNewWrappersDeclinesAnImportedShadow (0.02s)
+=== CONT  TestNoNewNativeNonconstructorDeclinesAnImportedShadow
+=== RUN   TestNoNewWrappersFires/new_String
+--- PASS: TestNoNewWrappersReportsEachViolation (0.02s)
+=== PAUSE TestNoNewWrappersFires/new_String
+=== RUN   TestNoNewWrappersFires/new_Number
+=== PAUSE TestNoNewWrappersFires/new_Number
+=== RUN   TestNoNewWrappersFires/new_Boolean
+=== PAUSE TestNoNewWrappersFires/new_Boolean
+=== RUN   TestNoNewWrappersFires/the_outer_new_String_reports_while_the_block-shadowed_one_does_not
+=== PAUSE TestNoNewWrappersFires/the_outer_new_String_reports_while_the_block-shadowed_one_does_not
+--- PASS: TestNoNewFuncNeedsTheTypedHarness (0.02s)
+=== CONT  TestNoNewFuncFires/a_function_declaration_shadowing_only_an_inner_scope
+=== CONT  TestNoNewFuncDeclinesANumericMethodSubscript/a_numeric_subscript,_which_names_no_method
+--- PASS: TestNoNewWrappersRendersTheName (0.02s)
+=== CONT  TestNoNewFuncFires/a_class_shadowing_only_an_inner_scope
+=== CONT  TestNoNewFuncFires/new_with_the_global
+=== CONT  TestNoNewFuncFires/a_parenthesized_optional_call_on_the_global
+--- PASS: TestNoNewNativeNonconstructorDeclinesAnImportedShadow (0.00s)
+=== CONT  TestNoNewFuncFires/a_subscripted_call_on_the_global
+--- PASS: TestNoNewFuncDeclinesANumericMethodSubscript (0.00s)
+    --- PASS: TestNoNewFuncDeclinesANumericMethodSubscript/a_numeric_subscript,_which_names_no_method (0.00s)
+=== CONT  TestNoNewFuncFires/bind_on_the_global,_uncalled
+=== CONT  TestNoNewFuncFires/bind_on_the_global,_then_invoked
+=== CONT  TestNoNewFuncFires/apply_on_the_global
+=== CONT  TestNoNewFuncFires/call_on_the_global
+=== CONT  TestNoNewFuncFires/a_plain_call_of_the_global
+=== CONT  TestNoNewFuncSurvivesANonIdentifierReceiver/a_qualified_receiver
+=== CONT  TestNoNewFuncReadsATemplateMethodName/a_template-literal_method_name
+=== CONT  TestNoNewNativeNonconstructorFires/new_Symbol
+=== CONT  TestNoNewNativeNonconstructorFires/a_nested_function_named_Symbol_does_not_shadow_the_outer_call
+--- PASS: TestNoNewFuncFires (0.00s)
+    --- PASS: TestNoNewFuncFires/new_with_the_global (0.00s)
+    --- PASS: TestNoNewFuncFires/a_class_shadowing_only_an_inner_scope (0.00s)
+    --- PASS: TestNoNewFuncFires/bind_on_the_global,_uncalled (0.00s)
+    --- PASS: TestNoNewFuncFires/a_subscripted_call_on_the_global (0.00s)
+    --- PASS: TestNoNewFuncFires/a_function_declaration_shadowing_only_an_inner_scope (0.01s)
+    --- PASS: TestNoNewFuncFires/bind_on_the_global,_then_invoked (0.00s)
+    --- PASS: TestNoNewFuncFires/apply_on_the_global (0.00s)
+    --- PASS: TestNoNewFuncFires/call_on_the_global (0.00s)
+    --- PASS: TestNoNewFuncFires/a_parenthesized_optional_call_on_the_global (0.01s)
+    --- PASS: TestNoNewFuncFires/a_plain_call_of_the_global (0.00s)
+=== CONT  TestNoNewFuncReadsATemplateMethodName/a_template-literal_bind
+=== CONT  TestNoNewNativeNonconstructorFires/a_nested_function_named_BigInt_does_not_shadow_the_outer_call
+--- PASS: TestNoNewFuncReadsATemplateMethodName (0.00s)
+    --- PASS: TestNoNewFuncReadsATemplateMethodName/a_template-literal_method_name (0.00s)
+    --- PASS: TestNoNewFuncReadsATemplateMethodName/a_template-literal_bind (0.00s)
+=== CONT  TestNoNewNativeNonconstructorFires/new_BigInt
+=== CONT  TestNoNewFuncDeclinesShapesTheCorpusOmits/a_method_that_does_not_construct
+=== CONT  TestNoNewFuncSurvivesANonIdentifierReceiver/a_nested_property_receiver
+=== CONT  TestNoNewFuncDeclinesShapesTheCorpusOmits/an_uncalled_method_reference
+=== CONT  TestNoNewFuncSurvivesANonIdentifierReceiver/a_call_result_as_receiver
+--- PASS: TestNoNewFuncDeclinesShapesTheCorpusOmits (0.00s)
+    --- PASS: TestNoNewFuncDeclinesShapesTheCorpusOmits/an_uncalled_method_reference (0.00s)
+    --- PASS: TestNoNewFuncDeclinesShapesTheCorpusOmits/a_method_that_does_not_construct (0.00s)
+=== CONT  TestNoNewFuncDeclinesAShadowReachedThroughAMethod/a_class_shadow_reached_through_call
+=== CONT  TestNoNewFuncFiresOnShapesTheCorpusOmits/an_optional_call_of_the_global
+--- PASS: TestNoNewNativeNonconstructorFires (0.00s)
+    --- PASS: TestNoNewNativeNonconstructorFires/a_nested_function_named_Symbol_does_not_shadow_the_outer_call (0.00s)
+    --- PASS: TestNoNewNativeNonconstructorFires/new_Symbol (0.00s)
+    --- PASS: TestNoNewNativeNonconstructorFires/new_BigInt (0.00s)
+    --- PASS: TestNoNewNativeNonconstructorFires/a_nested_function_named_BigInt_does_not_shadow_the_outer_call (0.00s)
+=== CONT  TestNoNewFuncSurvivesANonIdentifierReceiver/a_comma_expression_as_receiver
+=== CONT  TestNoNewFuncReportsTheInvokingExpression/var_a_=_new_Function("b",_"c",_"return_b+c");
+=== CONT  TestNoNewFuncDeclinesAShadowReachedThroughAMethod/a_function-declaration_shadow_reached_through_apply
+=== CONT  TestNoNewFuncDeclinesAShadowReachedThroughAMethod/a_class_shadow_reached_through_a_subscripted_call
+=== CONT  TestNoNewFuncDeclinesAShadowReachedThroughAMethod/a_class_shadow_reached_through_bind
+=== CONT  TestNoNewNativeNonconstructorStaysSilent/calling_Symbol_without_new
+--- PASS: TestNoNewFuncSurvivesANonIdentifierReceiver (0.00s)
+    --- PASS: TestNoNewFuncSurvivesANonIdentifierReceiver/a_qualified_receiver (0.00s)
+    --- PASS: TestNoNewFuncSurvivesANonIdentifierReceiver/a_nested_property_receiver (0.00s)
+    --- PASS: TestNoNewFuncSurvivesANonIdentifierReceiver/a_call_result_as_receiver (0.00s)
+    --- PASS: TestNoNewFuncSurvivesANonIdentifierReceiver/a_comma_expression_as_receiver (0.00s)
+=== CONT  TestNoNewFuncStaysSilent/a_differently-named_constructor
+=== CONT  TestNoNewFuncFiresOnShapesTheCorpusOmits/new_with_no_argument_list
+=== CONT  TestNoNewFuncFiresOnShapesTheCorpusOmits/a_parenthesized_receiver
+--- PASS: TestNoNewFuncDeclinesAShadowReachedThroughAMethod (0.00s)
+    --- PASS: TestNoNewFuncDeclinesAShadowReachedThroughAMethod/a_class_shadow_reached_through_call (0.00s)
+    --- PASS: TestNoNewFuncDeclinesAShadowReachedThroughAMethod/a_class_shadow_reached_through_a_subscripted_call (0.00s)
+    --- PASS: TestNoNewFuncDeclinesAShadowReachedThroughAMethod/a_class_shadow_reached_through_bind (0.00s)
+    --- PASS: TestNoNewFuncDeclinesAShadowReachedThroughAMethod/a_function-declaration_shadow_reached_through_apply (0.01s)
+=== CONT  TestNoNewFuncFiresOnShapesTheCorpusOmits/an_optional_method_call_on_the_global
+=== CONT  TestNoNewWrappersReportsTheWholeNewExpression/new_String
+=== CONT  TestNoNewFuncReportsTheInvokingExpression/var_a_=_Function.bind(null,_"b",_"c",_"return_b+c");
+=== CONT  TestNoNewFuncReportsTheInvokingExpression/var_a_=_Function.bind(null,_"b",_"c",_"return_b+c")();
+=== CONT  TestNoNewNativeNonconstructorStaysSilent/BigInt_as_a_later_argument
+--- PASS: TestNoNewFuncFiresOnShapesTheCorpusOmits (0.00s)
+    --- PASS: TestNoNewFuncFiresOnShapesTheCorpusOmits/an_optional_call_of_the_global (0.00s)
+    --- PASS: TestNoNewFuncFiresOnShapesTheCorpusOmits/a_parenthesized_receiver (0.00s)
+    --- PASS: TestNoNewFuncFiresOnShapesTheCorpusOmits/new_with_no_argument_list (0.00s)
+    --- PASS: TestNoNewFuncFiresOnShapesTheCorpusOmits/an_optional_method_call_on_the_global (0.00s)
+=== CONT  TestNoNewFuncReportsTheInvokingExpression/var_a_=_Function("b",_"c",_"return_b+c");
+=== CONT  TestNoNewNativeNonconstructorStaysSilent/a_function_declaration_shadowing_BigInt
+=== CONT  TestNoNewNativeNonconstructorStaysSilent/a_parameter_shadowing_BigInt
+=== CONT  TestNoNewNativeNonconstructorStaysSilent/Symbol_as_a_later_argument
+=== CONT  TestNoNewNativeNonconstructorStaysSilent/Symbol_passed_as_an_argument
+--- PASS: TestNoNewFuncReportsTheInvokingExpression (0.00s)
+    --- PASS: TestNoNewFuncReportsTheInvokingExpression/var_a_=_new_Function("b",_"c",_"return_b+c"); (0.01s)
+    --- PASS: TestNoNewFuncReportsTheInvokingExpression/var_a_=_Function.bind(null,_"b",_"c",_"return_b+c")(); (0.00s)
+    --- PASS: TestNoNewFuncReportsTheInvokingExpression/var_a_=_Function("b",_"c",_"return_b+c"); (0.00s)
+    --- PASS: TestNoNewFuncReportsTheInvokingExpression/var_a_=_Function.bind(null,_"b",_"c",_"return_b+c"); (0.00s)
+=== CONT  TestNoNewNativeNonconstructorStaysSilent/BigInt_passed_as_an_argument
+=== CONT  TestNoNewNativeNonconstructorStaysSilent/calling_BigInt_without_new
+=== CONT  TestNoNewNativeNonconstructorStaysSilent/a_parameter_shadowing_Symbol
+=== CONT  TestNoNewNativeNonconstructorStaysSilent/a_function_declaration_shadowing_Symbol
+=== CONT  TestNoNewFuncStaysSilent/a_computed_method_name_that_is_not_static
+=== CONT  TestNoNewFuncStaysSilent/a_method_that_does_not_construct
+=== CONT  TestNoNewFuncStaysSilent/a_method_reference_passed_as_an_argument
+=== CONT  TestNoNewFuncStaysSilent/the_global_used_as_a_computed_key
+=== CONT  TestNoNewFuncStaysSilent/the_global_passed_to_another_constructor
+=== CONT  TestNoNewFuncStaysSilent/the_global_passed_as_an_argument
+=== CONT  TestNoNewFuncStaysSilent/a_named_function_expression_shadowing_its_own_body
+=== CONT  TestNoNewFuncStaysSilent/a_function_declaration_shadowing_inside_a_function_body
+--- PASS: TestNoNewNativeNonconstructorStaysSilent (0.00s)
+    --- PASS: TestNoNewNativeNonconstructorStaysSilent/calling_Symbol_without_new (0.00s)
+    --- PASS: TestNoNewNativeNonconstructorStaysSilent/BigInt_as_a_later_argument (0.00s)
+    --- PASS: TestNoNewNativeNonconstructorStaysSilent/a_function_declaration_shadowing_BigInt (0.00s)
+    --- PASS: TestNoNewNativeNonconstructorStaysSilent/a_parameter_shadowing_BigInt (0.00s)
+    --- PASS: TestNoNewNativeNonconstructorStaysSilent/Symbol_as_a_later_argument (0.00s)
+    --- PASS: TestNoNewNativeNonconstructorStaysSilent/Symbol_passed_as_an_argument (0.00s)
+    --- PASS: TestNoNewNativeNonconstructorStaysSilent/calling_BigInt_without_new (0.00s)
+    --- PASS: TestNoNewNativeNonconstructorStaysSilent/a_parameter_shadowing_Symbol (0.00s)
+    --- PASS: TestNoNewNativeNonconstructorStaysSilent/a_function_declaration_shadowing_Symbol (0.00s)
+    --- PASS: TestNoNewNativeNonconstructorStaysSilent/BigInt_passed_as_an_argument (0.00s)
+=== CONT  TestNoNewFuncStaysSilent/a_function_declaration_shadowing_the_global
+=== CONT  TestNoNewFuncStaysSilent/a_class_shadowing_inside_an_arrow_body
+=== CONT  TestNoNewFuncStaysSilent/a_class_shadowing_the_global
+=== CONT  TestNoNewFuncStaysSilent/a_differently-named_call
+=== CONT  TestNoNewWrappersOnFormsUpstreamDoesNotWrite/a_parenthesized_callee_reports,_because_ESTree_has_no_node_for_the_parenthesis
+=== CONT  TestNoNewWrappersReportsTheWholeNewExpression/the_outer_call_in_the_block-shadow_case
+=== CONT  TestNoNewWrappersReportsTheWholeNewExpression/new_Boolean
+=== CONT  TestNoNewWrappersReportsTheWholeNewExpression/new_Number
+--- PASS: TestNoNewFuncStaysSilent (0.00s)
+    --- PASS: TestNoNewFuncStaysSilent/a_differently-named_constructor (0.01s)
+    --- PASS: TestNoNewFuncStaysSilent/a_computed_method_name_that_is_not_static (0.00s)
+    --- PASS: TestNoNewFuncStaysSilent/a_method_reference_passed_as_an_argument (0.00s)
+    --- PASS: TestNoNewFuncStaysSilent/a_method_that_does_not_construct (0.00s)
+    --- PASS: TestNoNewFuncStaysSilent/a_named_function_expression_shadowing_its_own_body (0.00s)
+    --- PASS: TestNoNewFuncStaysSilent/a_function_declaration_shadowing_the_global (0.00s)
+    --- PASS: TestNoNewFuncStaysSilent/a_function_declaration_shadowing_inside_a_function_body (0.00s)
+    --- PASS: TestNoNewFuncStaysSilent/a_class_shadowing_the_global (0.00s)
+    --- PASS: TestNoNewFuncStaysSilent/a_class_shadowing_inside_an_arrow_body (0.00s)
+    --- PASS: TestNoNewFuncStaysSilent/the_global_used_as_a_computed_key (0.01s)
+    --- PASS: TestNoNewFuncStaysSilent/the_global_passed_to_another_constructor (0.01s)
+    --- PASS: TestNoNewFuncStaysSilent/the_global_passed_as_an_argument (0.01s)
+    --- PASS: TestNoNewFuncStaysSilent/a_differently-named_call (0.00s)
+=== CONT  TestNoNewWrappersStaysSilent/new_Object_is_not_a_wrapper
+=== CONT  TestNoNewWrappersOnFormsUpstreamDoesNotWrite/the_name_is_case_sensitive
+=== CONT  TestNoNewWrappersOnFormsUpstreamDoesNotWrite/Symbol_belongs_to_no-new-native-nonconstructor,_not_here
+=== CONT  TestNoNewWrappersOnFormsUpstreamDoesNotWrite/Object_is_not_one_of_the_three
+=== CONT  TestNoNewWrappersOnFormsUpstreamDoesNotWrite/a_function_declaration_shadowing_the_name_declines
+--- PASS: TestNoNewWrappersReportsTheWholeNewExpression (0.00s)
+    --- PASS: TestNoNewWrappersReportsTheWholeNewExpression/new_String (0.00s)
+    --- PASS: TestNoNewWrappersReportsTheWholeNewExpression/new_Number (0.00s)
+    --- PASS: TestNoNewWrappersReportsTheWholeNewExpression/the_outer_call_in_the_block-shadow_case (0.00s)
+    --- PASS: TestNoNewWrappersReportsTheWholeNewExpression/new_Boolean (0.00s)
+=== CONT  TestNoNewWrappersOnFormsUpstreamDoesNotWrite/a_class_shadowing_the_name_declines
+=== CONT  TestNoNewWrappersOnFormsUpstreamDoesNotWrite/parentheses_around_the_whole_expression_do_not_change_the_callee
+=== CONT  TestNoNewWrappersOnFormsUpstreamDoesNotWrite/globalThis.String_is_a_property_access_too,_and_equally_silent
+=== CONT  TestNoNewWrappersOnFormsUpstreamDoesNotWrite/a_new_expression_with_no_argument_list_still_reports
+=== CONT  TestNoNewWrappersOnFormsUpstreamDoesNotWrite/and_so_does_a_doubly_parenthesized_one
+=== CONT  TestNoNewWrappersOnFormsUpstreamDoesNotWrite/a_property_access_callee_is_silent,_since_upstream_reads_callee.name_and_finds_none
+=== CONT  TestNoNewWrappersReportsWhereUpstreamsGlobalsConfigWouldNot/globals_String_off
+=== CONT  TestNoNewWrappersStaysSilent/a_var_hoisted_out_of_the_else_branch_shadows_Boolean
+=== CONT  TestNoNewWrappersStaysSilent/a_parameter_named_Number_shadows_the_global
+=== CONT  TestNoNewWrappersStaysSilent/String_called_without_new,_beside_a_static_read_off_it
+=== CONT  TestNoNewWrappersReportsWhereUpstreamsGlobalsConfigWouldNot/a_global_comment_turning_Boolean_off
+=== CONT  TestNoNewWrappersFires/new_String
+--- PASS: TestNoNewWrappersStaysSilent (0.00s)
+    --- PASS: TestNoNewWrappersStaysSilent/new_Object_is_not_a_wrapper (0.00s)
+    --- PASS: TestNoNewWrappersStaysSilent/String_called_without_new,_beside_a_static_read_off_it (0.00s)
+    --- PASS: TestNoNewWrappersStaysSilent/a_parameter_named_Number_shadows_the_global (0.00s)
+    --- PASS: TestNoNewWrappersStaysSilent/a_var_hoisted_out_of_the_else_branch_shadows_Boolean (0.00s)
+=== CONT  TestNoNewWrappersFires/new_Boolean
+--- PASS: TestNoNewWrappersReportsWhereUpstreamsGlobalsConfigWouldNot (0.00s)
+    --- PASS: TestNoNewWrappersReportsWhereUpstreamsGlobalsConfigWouldNot/globals_String_off (0.00s)
+    --- PASS: TestNoNewWrappersReportsWhereUpstreamsGlobalsConfigWouldNot/a_global_comment_turning_Boolean_off (0.00s)
+=== CONT  TestNoNewWrappersFires/new_Number
+=== CONT  TestNoNewWrappersFires/the_outer_new_String_reports_while_the_block-shadowed_one_does_not
+--- PASS: TestNoNewWrappersOnFormsUpstreamDoesNotWrite (0.00s)
+    --- PASS: TestNoNewWrappersOnFormsUpstreamDoesNotWrite/a_parenthesized_callee_reports,_because_ESTree_has_no_node_for_the_parenthesis (0.00s)
+    --- PASS: TestNoNewWrappersOnFormsUpstreamDoesNotWrite/the_name_is_case_sensitive (0.00s)
+    --- PASS: TestNoNewWrappersOnFormsUpstreamDoesNotWrite/a_function_declaration_shadowing_the_name_declines (0.00s)
+    --- PASS: TestNoNewWrappersOnFormsUpstreamDoesNotWrite/Symbol_belongs_to_no-new-native-nonconstructor,_not_here (0.00s)
+    --- PASS: TestNoNewWrappersOnFormsUpstreamDoesNotWrite/a_class_shadowing_the_name_declines (0.00s)
+    --- PASS: TestNoNewWrappersOnFormsUpstreamDoesNotWrite/Object_is_not_one_of_the_three (0.00s)
+    --- PASS: TestNoNewWrappersOnFormsUpstreamDoesNotWrite/parentheses_around_the_whole_expression_do_not_change_the_callee (0.00s)
+    --- PASS: TestNoNewWrappersOnFormsUpstreamDoesNotWrite/globalThis.String_is_a_property_access_too,_and_equally_silent (0.00s)
+    --- PASS: TestNoNewWrappersOnFormsUpstreamDoesNotWrite/a_new_expression_with_no_argument_list_still_reports (0.00s)
+    --- PASS: TestNoNewWrappersOnFormsUpstreamDoesNotWrite/a_property_access_callee_is_silent,_since_upstream_reads_callee.name_and_finds_none (0.00s)
+    --- PASS: TestNoNewWrappersOnFormsUpstreamDoesNotWrite/and_so_does_a_doubly_parenthesized_one (0.00s)
+--- PASS: TestNoNewWrappersFires (0.00s)
+    --- PASS: TestNoNewWrappersFires/new_String (0.00s)
+    --- PASS: TestNoNewWrappersFires/new_Boolean (0.00s)
+    --- PASS: TestNoNewWrappersFires/new_Number (0.00s)
+    --- PASS: TestNoNewWrappersFires/the_outer_new_String_reports_while_the_block-shadowed_one_does_not (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/core	0.073s

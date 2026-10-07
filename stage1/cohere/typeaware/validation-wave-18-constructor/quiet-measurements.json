@@ -1,0 +1,98 @@
+{
+  "rounds": [
+    {
+      "corpus": "repository",
+      "round": 0,
+      "kind": "native",
+      "seconds": 0.20401853900057176,
+      "stderr": "tsgo: load_ns=64427878 query_ns=0 queries=0 first_query_ns=0 run_ns=134795514\n"
+    },
+    {
+      "corpus": "repository",
+      "round": 0,
+      "kind": "go",
+      "seconds": 0.1159389429994917,
+      "stderr": "cohere: load_ns=58884244 rule_ns=877439 run_ns=44492616\n"
+    },
+    {
+      "corpus": "repository",
+      "round": 1,
+      "kind": "go",
+      "seconds": 0.11579349200019351,
+      "stderr": "cohere: load_ns=60733229 rule_ns=939102 run_ns=43897506\n"
+    },
+    {
+      "corpus": "repository",
+      "round": 1,
+      "kind": "native",
+      "seconds": 0.20184204399993178,
+      "stderr": "tsgo: load_ns=63684024 query_ns=0 queries=0 first_query_ns=0 run_ns=132640076\n"
+    },
+    {
+      "corpus": "repository",
+      "round": 2,
+      "kind": "native",
+      "seconds": 0.196476574999906,
+      "stderr": "tsgo: load_ns=60103036 query_ns=0 queries=0 first_query_ns=0 run_ns=130880136\n"
+    },
+    {
+      "corpus": "repository",
+      "round": 2,
+      "kind": "go",
+      "seconds": 0.11397550999936357,
+      "stderr": "cohere: load_ns=58076799 rule_ns=1206882 run_ns=44962897\n"
+    },
+    {
+      "corpus": "compiler",
+      "round": 0,
+      "kind": "native",
+      "seconds": 1.374102216999745,
+      "stderr": "tsgo: load_ns=238127375 query_ns=88827644 queries=2 first_query_ns=4204125 run_ns=1121308553\n"
+    },
+    {
+      "corpus": "compiler",
+      "round": 0,
+      "kind": "go",
+      "seconds": 0.30212060600024415,
+      "stderr": "cohere: load_ns=239293433 rule_ns=3519823 run_ns=45844985\n"
+    },
+    {
+      "corpus": "compiler",
+      "round": 1,
+      "kind": "go",
+      "seconds": 0.2906710560000647,
+      "stderr": "cohere: load_ns=226892068 rule_ns=3570823 run_ns=47981424\n"
+    },
+    {
+      "corpus": "compiler",
+      "round": 1,
+      "kind": "native",
+      "seconds": 1.4045977250007127,
+      "stderr": "tsgo: load_ns=234771663 query_ns=88048726 queries=2 first_query_ns=3166546 run_ns=1156491181\n"
+    },
+    {
+      "corpus": "compiler",
+      "round": 2,
+      "kind": "native",
+      "seconds": 1.3966030319998026,
+      "stderr": "tsgo: load_ns=239671044 query_ns=72348875 queries=2 first_query_ns=4250835 run_ns=1142285660\n"
+    },
+    {
+      "corpus": "compiler",
+      "round": 2,
+      "kind": "go",
+      "seconds": 0.3173475920002602,
+      "stderr": "cohere: load_ns=253869114 rule_ns=4284720 run_ns=46879198\n"
+    }
+  ],
+  "medians": {
+    "repository": {
+      "native": 0.20184204399993178,
+      "go": 0.11579349200019351
+    },
+    "compiler": {
+      "native": 1.3966030319998026,
+      "go": 0.30212060600024415
+    }
+  }
+}

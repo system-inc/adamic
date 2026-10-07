@@ -1,0 +1,149 @@
+file	/workspace/wave-18-constructor-validation/constructor-shadows.a
+file	/workspace/wave-18-constructor-validation/control-000.a
+8	44	no-new-func	noFunctionConstructor	This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter.	0	0
+file	/workspace/wave-18-constructor-validation/control-001.a
+8	40	no-new-func	noFunctionConstructor	This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter.	0	0
+file	/workspace/wave-18-constructor-validation/control-002.a
+8	51	no-new-func	noFunctionConstructor	This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter.	0	0
+file	/workspace/wave-18-constructor-validation/control-003.a
+8	54	no-new-func	noFunctionConstructor	This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter.	0	0
+file	/workspace/wave-18-constructor-validation/control-004.a
+8	51	no-new-func	noFunctionConstructor	This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter.	0	0
+file	/workspace/wave-18-constructor-validation/control-005.a
+8	51	no-new-func	noFunctionConstructor	This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter.	0	0
+file	/workspace/wave-18-constructor-validation/control-006.a
+8	54	no-new-func	noFunctionConstructor	This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter.	0	0
+file	/workspace/wave-18-constructor-validation/control-007.a
+8	54	no-new-func	noFunctionConstructor	This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter.	0	0
+file	/workspace/wave-18-constructor-validation/control-008.a
+40	60	no-new-func	noFunctionConstructor	This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter.	0	0
+file	/workspace/wave-18-constructor-validation/control-009.a
+49	65	no-new-func	noFunctionConstructor	This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter.	0	0
+file	/workspace/wave-18-constructor-validation/control-010.a
+file	/workspace/wave-18-constructor-validation/control-011.a
+file	/workspace/wave-18-constructor-validation/control-012.a
+file	/workspace/wave-18-constructor-validation/control-013.a
+file	/workspace/wave-18-constructor-validation/control-014.a
+file	/workspace/wave-18-constructor-validation/control-015.a
+file	/workspace/wave-18-constructor-validation/control-016.a
+file	/workspace/wave-18-constructor-validation/control-017.a
+file	/workspace/wave-18-constructor-validation/control-018.a
+file	/workspace/wave-18-constructor-validation/control-019.a
+file	/workspace/wave-18-constructor-validation/control-020.a
+file	/workspace/wave-18-constructor-validation/control-021.a
+file	/workspace/wave-18-constructor-validation/control-022.a
+file	/workspace/wave-18-constructor-validation/control-023.a
+0	12	no-new-func	noFunctionConstructor	This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter.	0	0
+file	/workspace/wave-18-constructor-validation/control-024.a
+0	16	no-new-func	noFunctionConstructor	This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter.	0	0
+file	/workspace/wave-18-constructor-validation/control-025.a
+0	17	no-new-func	noFunctionConstructor	This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter.	0	0
+file	/workspace/wave-18-constructor-validation/control-026.a
+0	12	no-new-func	noFunctionConstructor	This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter.	0	0
+file	/workspace/wave-18-constructor-validation/control-027.a
+file	/workspace/wave-18-constructor-validation/control-028.a
+file	/workspace/wave-18-constructor-validation/control-029.a
+file	/workspace/wave-18-constructor-validation/control-030.a
+file	/workspace/wave-18-constructor-validation/control-031.a
+file	/workspace/wave-18-constructor-validation/control-032.a
+file	/workspace/wave-18-constructor-validation/control-033.a
+0	34	no-new-func	noFunctionConstructor	This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter.	0	0
+file	/workspace/wave-18-constructor-validation/control-034.a
+0	22	no-new-func	noFunctionConstructor	This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter.	0	0
+file	/workspace/wave-18-constructor-validation/control-035.a
+file	/workspace/wave-18-constructor-validation/control-036.a
+file	/workspace/wave-18-constructor-validation/control-037.a
+file	/workspace/wave-18-constructor-validation/control-038.a
+file	/workspace/wave-18-constructor-validation/control-039.a
+file	/workspace/wave-18-constructor-validation/control-040.a
+8	44	no-new-func	noFunctionConstructor	This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter.	0	0
+file	/workspace/wave-18-constructor-validation/control-041.a
+8	40	no-new-func	noFunctionConstructor	This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter.	0	0
+file	/workspace/wave-18-constructor-validation/control-042.a
+8	51	no-new-func	noFunctionConstructor	This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter.	0	0
+file	/workspace/wave-18-constructor-validation/control-043.a
+8	51	no-new-func	noFunctionConstructor	This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter.	0	0
+file	/workspace/wave-18-constructor-validation/control-044.a
+14	20	no-new-native-nonconstructor	noNewNativeNonconstructor	This calls `new Symbol()`. Symbol is a function that returns a primitive and throws a TypeError when constructed, so this line fails at runtime every time it is reached. Call it without `new`.	0	0
+file	/workspace/wave-18-constructor-validation/control-045.a
+14	20	no-new-native-nonconstructor	noNewNativeNonconstructor	This calls `new BigInt()`. BigInt is a function that returns a primitive and throws a TypeError when constructed, so this line fails at runtime every time it is reached. Call it without `new`.	0	0
+file	/workspace/wave-18-constructor-validation/control-046.a
+62	68	no-new-native-nonconstructor	noNewNativeNonconstructor	This calls `new Symbol()`. Symbol is a function that returns a primitive and throws a TypeError when constructed, so this line fails at runtime every time it is reached. Call it without `new`.	0	0
+file	/workspace/wave-18-constructor-validation/control-047.a
+62	68	no-new-native-nonconstructor	noNewNativeNonconstructor	This calls `new BigInt()`. BigInt is a function that returns a primitive and throws a TypeError when constructed, so this line fails at runtime every time it is reached. Call it without `new`.	0	0
+file	/workspace/wave-18-constructor-validation/control-048.a
+file	/workspace/wave-18-constructor-validation/control-049.a
+file	/workspace/wave-18-constructor-validation/control-050.a
+file	/workspace/wave-18-constructor-validation/control-051.a
+file	/workspace/wave-18-constructor-validation/control-052.a
+file	/workspace/wave-18-constructor-validation/control-053.a
+file	/workspace/wave-18-constructor-validation/control-054.a
+file	/workspace/wave-18-constructor-validation/control-055.a
+file	/workspace/wave-18-constructor-validation/control-056.a
+file	/workspace/wave-18-constructor-validation/control-057.a
+file	/workspace/wave-18-constructor-validation/control-058.a
+file	/workspace/wave-18-constructor-validation/control-059.a
+file	/workspace/wave-18-constructor-validation/control-060.a
+file	/workspace/wave-18-constructor-validation/control-061.a
+127	144	no-new-wrappers	noNewWrappers	This calls `new String()`. Constructed, String returns an object rather than a primitive, so the result is always truthy, compares equal to nothing by `===`, and reports its `typeof` as "object". Drop the `new` and call String directly.	0	0
+file	/workspace/wave-18-constructor-validation/control-062.a
+file	/workspace/wave-18-constructor-validation/control-063.a
+file	/workspace/wave-18-constructor-validation/control-064.a
+52	62	no-new-wrappers	noNewWrappers	This calls `new Number()`. Constructed, Number returns an object rather than a primitive, so the result is always truthy, compares equal to nothing by `===`, and reports its `typeof` as "object". Drop the `new` and call Number directly.	0	0
+file	/workspace/wave-18-constructor-validation/control-065.a
+41	57	no-new-wrappers	noNewWrappers	This calls `new Boolean()`. Constructed, Boolean returns an object rather than a primitive, so the result is always truthy, compares equal to nothing by `===`, and reports its `typeof` as "object". Drop the `new` and call Boolean directly.	0	0
+file	/workspace/wave-18-constructor-validation/control-066.a
+file	/workspace/wave-18-constructor-validation/control-067.a
+file	/workspace/wave-18-constructor-validation/control-068.a
+file	/workspace/wave-18-constructor-validation/control-069.a
+file	/workspace/wave-18-constructor-validation/control-070.a
+file	/workspace/wave-18-constructor-validation/control-071.a
+127	144	no-new-wrappers	noNewWrappers	This calls `new String()`. Constructed, String returns an object rather than a primitive, so the result is always truthy, compares equal to nothing by `===`, and reports its `typeof` as "object". Drop the `new` and call String directly.	0	0
+file	/workspace/wave-18-constructor-validation/control-072.a
+file	/workspace/wave-18-constructor-validation/control-073.a
+file	/workspace/wave-18-constructor-validation/control-074.a
+file	/workspace/wave-18-constructor-validation/control-075.a
+file	/workspace/wave-18-constructor-validation/control-076.a
+file	/workspace/wave-18-constructor-validation/control-077.a
+file	/workspace/wave-18-constructor-validation/control-078.a
+16	28	no-new-wrappers	noNewWrappers	This calls `new String()`. Constructed, String returns an object rather than a primitive, so the result is always truthy, compares equal to nothing by `===`, and reports its `typeof` as "object". Drop the `new` and call String directly.	0	0
+file	/workspace/wave-18-constructor-validation/control-079.a
+22	35	no-new-wrappers	noNewWrappers	This calls `new Boolean()`. Constructed, Boolean returns an object rather than a primitive, so the result is always truthy, compares equal to nothing by `===`, and reports its `typeof` as "object". Drop the `new` and call Boolean directly.	0	0
+file	/workspace/wave-18-constructor-validation/control-080.a
+file	/workspace/wave-18-constructor-validation/control-081.a
+12	18	no-new-native-nonconstructor	noNewNativeNonconstructor	This calls `new Symbol()`. Symbol is a function that returns a primitive and throws a TypeError when constructed, so this line fails at runtime every time it is reached. Call it without `new`.	0	0
+file	/workspace/wave-18-constructor-validation/control-082.a
+file	/workspace/wave-18-constructor-validation/control-083.a
+51	57	no-new-native-nonconstructor	noNewNativeNonconstructor	This calls `new Symbol()`. Symbol is a function that returns a primitive and throws a TypeError when constructed, so this line fails at runtime every time it is reached. Call it without `new`.	0	0
+61	92	no-new-func	noFunctionConstructor	This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter.	0	0
+file	/workspace/wave-18-constructor-validation/control-084.a
+51	79	no-new-func	noFunctionConstructor	This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter.	0	0
+file	/workspace/wave-18-constructor-validation/control-085.a
+0	24	no-new-func	noFunctionConstructor	This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter.	0	0
+26	49	no-new-func	noFunctionConstructor	This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter.	0	0
+51	77	no-new-func	noFunctionConstructor	This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter.	0	0
+file	/workspace/wave-18-constructor-validation/control-086.a
+0	34	no-new-func	noFunctionConstructor	This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter.	0	0
+36	75	no-new-func	noFunctionConstructor	This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter.	0	0
+file	/workspace/wave-18-constructor-validation/control-087.a
+file	/workspace/wave-18-constructor-validation/control-088.a
+113	127	no-new-func	noFunctionConstructor	This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter.	0	0
+132	138	no-new-native-nonconstructor	noNewNativeNonconstructor	This calls `new Symbol()`. Symbol is a function that returns a primitive and throws a TypeError when constructed, so this line fails at runtime every time it is reached. Call it without `new`.	0	0
+98	110	no-new-wrappers	noNewWrappers	This calls `new String()`. Constructed, String returns an object rather than a primitive, so the result is always truthy, compares equal to nothing by `===`, and reports its `typeof` as "object". Drop the `new` and call String directly.	0	0
+file	/workspace/wave-18-constructor-validation/control-089.a
+99	105	no-new-native-nonconstructor	noNewNativeNonconstructor	This calls `new BigInt()`. BigInt is a function that returns a primitive and throws a TypeError when constructed, so this line fails at runtime every time it is reached. Call it without `new`.	0	0
+file	/workspace/wave-18-constructor-validation/control-090.a
+file	/workspace/wave-18-constructor-validation/control-091.a
+file	/workspace/wave-18-constructor-validation/control-092.a
+41	47	no-new-native-nonconstructor	noNewNativeNonconstructor	This calls `new Symbol()`. Symbol is a function that returns a primitive and throws a TypeError when constructed, so this line fails at runtime every time it is reached. Call it without `new`.	0	0
+53	59	no-new-native-nonconstructor	noNewNativeNonconstructor	This calls `new BigInt()`. BigInt is a function that returns a primitive and throws a TypeError when constructed, so this line fails at runtime every time it is reached. Call it without `new`.	0	0
+61	73	no-new-func	noFunctionConstructor	This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter.	0	0
+file	/workspace/wave-18-constructor-validation/control-093.a
+44	74	no-new-func	noFunctionConstructor	This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter.	0	0
+53	73	no-new-func	noFunctionConstructor	This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter.	0	0
+file	/workspace/wave-18-constructor-validation/control-094.a
+file	/workspace/wave-18-constructor-validation/control-095.a
+126	138	no-new-wrappers	noNewWrappers	This calls `new Number()`. Constructed, Number returns an object rather than a primitive, so the result is always truthy, compares equal to nothing by `===`, and reports its `typeof` as "object". Drop the `new` and call Number directly.	0	0
+139	152	no-new-wrappers	noNewWrappers	This calls `new Boolean()`. Constructed, Boolean returns an object rather than a primitive, so the result is always truthy, compares equal to nothing by `===`, and reports its `typeof` as "object". Drop the `new` and call Boolean directly.	0	0
+86	99	no-new-wrappers	noNewWrappers	This calls `new String()`. Constructed, String returns an object rather than a primitive, so the result is always truthy, compares equal to nothing by `===`, and reports its `typeof` as "object". Drop the `new` and call String directly.	0	0
+findings 51

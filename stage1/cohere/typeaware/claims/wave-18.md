@@ -66,3 +66,7 @@ Markdown blobs, 117 claimed rules, and 25 ranked ports on
 origin/main (ef3d907e) and origin/codex/tsgo-c-library
 (5afbdb83). These are the first remaining names
 in the combined by-volume ranking; all three have zero corpus findings.
+
+Third-batch implementation: all three constructor rules are complete in
+a63e3ffc. WAVE_18_CONSTRUCTOR_REPORT.md records complete byte comparisons,
+no-library and ambient controls, mutants, sanitizers and quiet Go/native timing.
