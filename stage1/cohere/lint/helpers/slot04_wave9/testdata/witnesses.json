@@ -1,0 +1,534 @@
+[
+  {
+    "Name": "missing-root",
+    "Kind": "load",
+    "Root": "",
+    "Entry": "/project/theme.css",
+    "Package": "/node_modules/tailwindcss",
+    "Directory": "",
+    "Message": "",
+    "Path": "theme.css",
+    "Source": "",
+    "Failed": false,
+    "Sheets": [
+      "a.css",
+      "b.css",
+      "a.css"
+    ],
+    "System": 7,
+    "Inputs": [],
+    "Keys": []
+  },
+  {
+    "Name": "missing-entry",
+    "Kind": "load",
+    "Root": "/project",
+    "Entry": "",
+    "Package": "/node_modules/tailwindcss",
+    "Directory": "",
+    "Message": "",
+    "Path": "theme.css",
+    "Source": "",
+    "Failed": false,
+    "Sheets": [
+      "a.css",
+      "b.css",
+      "a.css"
+    ],
+    "System": 7,
+    "Inputs": [],
+    "Keys": []
+  },
+  {
+    "Name": "missing-package",
+    "Kind": "load",
+    "Root": "/project",
+    "Entry": "/project/theme.css",
+    "Package": "",
+    "Directory": "",
+    "Message": "",
+    "Path": "theme.css",
+    "Source": "",
+    "Failed": false,
+    "Sheets": [
+      "a.css",
+      "b.css",
+      "a.css"
+    ],
+    "System": 7,
+    "Inputs": [],
+    "Keys": []
+  },
+  {
+    "Name": "load-failed",
+    "Kind": "load",
+    "Root": "/project",
+    "Entry": "/project/theme.css",
+    "Package": "/node_modules/tailwindcss",
+    "Directory": "",
+    "Message": "CSS parse failed",
+    "Path": "theme.css",
+    "Source": "",
+    "Failed": true,
+    "Sheets": [
+      "a.css",
+      "b.css",
+      "a.css"
+    ],
+    "System": 7,
+    "Inputs": [],
+    "Keys": []
+  },
+  {
+    "Name": "empty-error",
+    "Kind": "load",
+    "Root": "/project",
+    "Entry": "/project/theme.css",
+    "Package": "/node_modules/tailwindcss",
+    "Directory": "",
+    "Message": "",
+    "Path": "theme.css",
+    "Source": "",
+    "Failed": true,
+    "Sheets": [
+      "a.css",
+      "b.css",
+      "a.css"
+    ],
+    "System": 7,
+    "Inputs": [],
+    "Keys": []
+  },
+  {
+    "Name": "success",
+    "Kind": "load",
+    "Root": "/project",
+    "Entry": "/project/theme.css",
+    "Package": "/node_modules/tailwindcss",
+    "Directory": "",
+    "Message": "",
+    "Path": "theme.css",
+    "Source": "",
+    "Failed": false,
+    "Sheets": [
+      "a.css",
+      "b.css",
+      "a.css"
+    ],
+    "System": 7,
+    "Inputs": [],
+    "Keys": []
+  },
+  {
+    "Name": "empty-stylesheets",
+    "Kind": "load",
+    "Root": "/project",
+    "Entry": "/project/theme.css",
+    "Package": "/node_modules/tailwindcss",
+    "Directory": "",
+    "Message": "",
+    "Path": "theme.css",
+    "Source": "",
+    "Failed": false,
+    "Sheets": [],
+    "System": 7,
+    "Inputs": [],
+    "Keys": []
+  },
+  {
+    "Name": "unicode-path",
+    "Kind": "load",
+    "Root": "/project",
+    "Entry": "/项目/主题.css",
+    "Package": "/node_modules/tailwindcss",
+    "Directory": "",
+    "Message": "",
+    "Path": "theme.css",
+    "Source": "",
+    "Failed": false,
+    "Sheets": [
+      "/项目/a.css"
+    ],
+    "System": 7,
+    "Inputs": [],
+    "Keys": []
+  },
+  {
+    "Name": "utility-registration",
+    "Kind": "utility",
+    "Root": "/project",
+    "Entry": "/project/theme.css",
+    "Package": "/node_modules/tailwindcss",
+    "Directory": "",
+    "Message": "",
+    "Path": "theme.css",
+    "Source": "",
+    "Failed": false,
+    "Sheets": [
+      "a.css",
+      "b.css",
+      "a.css"
+    ],
+    "System": 7,
+    "Inputs": [
+      {
+        "Params": "foo",
+        "Body": [
+          0,
+          100
+        ],
+        "Trimmed": ""
+      },
+      {
+        "Params": "foo-*",
+        "Body": [
+          1,
+          101
+        ],
+        "Trimmed": ""
+      },
+      {
+        "Params": "foo",
+        "Body": [
+          2,
+          102
+        ],
+        "Trimmed": ""
+      },
+      {
+        "Params": "foo-*",
+        "Body": [
+          3,
+          103
+        ],
+        "Trimmed": ""
+      },
+      {
+        "Params": "bar-*",
+        "Body": [
+          4,
+          104
+        ],
+        "Trimmed": ""
+      },
+      {
+        "Params": "bar",
+        "Body": [
+          5,
+          105
+        ],
+        "Trimmed": ""
+      },
+      {
+        "Params": "",
+        "Body": [
+          6,
+          106
+        ],
+        "Trimmed": ""
+      },
+      {
+        "Params": "-*",
+        "Body": [
+          7,
+          107
+        ],
+        "Trimmed": ""
+      },
+      {
+        "Params": "x*y",
+        "Body": [
+          8,
+          108
+        ],
+        "Trimmed": ""
+      },
+      {
+        "Params": "x-**",
+        "Body": [
+          9,
+          109
+        ],
+        "Trimmed": ""
+      },
+      {
+        "Params": " spaced-* \n",
+        "Body": [
+          10,
+          110
+        ],
+        "Trimmed": ""
+      },
+      {
+        "Params": "unicode ",
+        "Body": [
+          11,
+          111
+        ],
+        "Trimmed": ""
+      },
+      {
+        "Params": "é-*",
+        "Body": [
+          12,
+          112
+        ],
+        "Trimmed": ""
+      },
+      {
+        "Params": "--odd",
+        "Body": [
+          13,
+          113
+        ],
+        "Trimmed": ""
+      },
+      {
+        "Params": "a b",
+        "Body": [
+          14,
+          114
+        ],
+        "Trimmed": ""
+      },
+      {
+        "Params": "comma,name",
+        "Body": [
+          15,
+          115
+        ],
+        "Trimmed": ""
+      }
+    ],
+    "Keys": [
+      "foo",
+      "bar",
+      "spaced",
+      "unicode",
+      "é",
+      "--odd",
+      "a b",
+      "comma,name"
+    ]
+  },
+  {
+    "Name": "normalization-0",
+    "Kind": "normalize",
+    "Root": "/project",
+    "Entry": "/project/theme.css",
+    "Package": "/node_modules/tailwindcss",
+    "Directory": "",
+    "Message": "",
+    "Path": "theme.css",
+    "Source": "--value(--color)",
+    "Failed": false,
+    "Sheets": [
+      "a.css",
+      "b.css",
+      "a.css"
+    ],
+    "System": 7,
+    "Inputs": [],
+    "Keys": []
+  },
+  {
+    "Name": "normalization-1",
+    "Kind": "normalize",
+    "Root": "/project",
+    "Entry": "/project/theme.css",
+    "Package": "/node_modules/tailwindcss",
+    "Directory": "",
+    "Message": "",
+    "Path": "theme.css",
+    "Source": "calc(--value(--text --line-height) + --modifier([number], --spacing))",
+    "Failed": false,
+    "Sheets": [
+      "a.css",
+      "b.css",
+      "a.css"
+    ],
+    "System": 7,
+    "Inputs": [],
+    "Keys": []
+  },
+  {
+    "Name": "normalization-2",
+    "Kind": "normalize",
+    "Root": "/project",
+    "Entry": "/project/theme.css",
+    "Package": "/node_modules/tailwindcss",
+    "Directory": "",
+    "Message": "",
+    "Path": "theme.css",
+    "Source": "--value()",
+    "Failed": false,
+    "Sheets": [
+      "a.css",
+      "b.css",
+      "a.css"
+    ],
+    "System": 7,
+    "Inputs": [],
+    "Keys": []
+  },
+  {
+    "Name": "normalization-3",
+    "Kind": "normalize",
+    "Root": "/project",
+    "Entry": "/project/theme.css",
+    "Package": "/node_modules/tailwindcss",
+    "Directory": "",
+    "Message": "",
+    "Path": "theme.css",
+    "Source": "--modifier(--x-*-*, --a\\*, --default(4))",
+    "Failed": false,
+    "Sheets": [
+      "a.css",
+      "b.css",
+      "a.css"
+    ],
+    "System": 7,
+    "Inputs": [],
+    "Keys": []
+  },
+  {
+    "Name": "normalization-4",
+    "Kind": "normalize",
+    "Root": "/project",
+    "Entry": "/project/theme.css",
+    "Package": "/node_modules/tailwindcss",
+    "Directory": "",
+    "Message": "",
+    "Path": "theme.css",
+    "Source": "other(--value(--foo), --modifier(integer))",
+    "Failed": false,
+    "Sheets": [
+      "a.css",
+      "b.css",
+      "a.css"
+    ],
+    "System": 7,
+    "Inputs": [],
+    "Keys": []
+  },
+  {
+    "Name": "normalization-5",
+    "Kind": "normalize",
+    "Root": "/project",
+    "Entry": "/project/theme.css",
+    "Package": "/node_modules/tailwindcss",
+    "Directory": "",
+    "Message": "",
+    "Path": "theme.css",
+    "Source": "word --value(--a) --value(--b)",
+    "Failed": false,
+    "Sheets": [
+      "a.css",
+      "b.css",
+      "a.css"
+    ],
+    "System": 7,
+    "Inputs": [],
+    "Keys": []
+  },
+  {
+    "Name": "normalization-6",
+    "Kind": "normalize",
+    "Root": "/project",
+    "Entry": "/project/theme.css",
+    "Package": "/node_modules/tailwindcss",
+    "Directory": "",
+    "Message": "",
+    "Path": "theme.css",
+    "Source": "--value(--value(--x))",
+    "Failed": false,
+    "Sheets": [
+      "a.css",
+      "b.css",
+      "a.css"
+    ],
+    "System": 7,
+    "Inputs": [],
+    "Keys": []
+  },
+  {
+    "Name": "normalization-7",
+    "Kind": "normalize",
+    "Root": "/project",
+    "Entry": "/project/theme.css",
+    "Package": "/node_modules/tailwindcss",
+    "Directory": "",
+    "Message": "",
+    "Path": "theme.css",
+    "Source": "calc(1 + 2)",
+    "Failed": false,
+    "Sheets": [
+      "a.css",
+      "b.css",
+      "a.css"
+    ],
+    "System": 7,
+    "Inputs": [],
+    "Keys": []
+  },
+  {
+    "Name": "normalization-8",
+    "Kind": "normalize",
+    "Root": "/project",
+    "Entry": "/project/theme.css",
+    "Package": "/node_modules/tailwindcss",
+    "Directory": "",
+    "Message": "",
+    "Path": "theme.css",
+    "Source": "--Value(--x)",
+    "Failed": false,
+    "Sheets": [
+      "a.css",
+      "b.css",
+      "a.css"
+    ],
+    "System": 7,
+    "Inputs": [],
+    "Keys": []
+  },
+  {
+    "Name": "normalization-9",
+    "Kind": "normalize",
+    "Root": "/project",
+    "Entry": "/project/theme.css",
+    "Package": "/node_modules/tailwindcss",
+    "Directory": "",
+    "Message": "",
+    "Path": "theme.css",
+    "Source": "--modifier(--😀)",
+    "Failed": false,
+    "Sheets": [
+      "a.css",
+      "b.css",
+      "a.css"
+    ],
+    "System": 7,
+    "Inputs": [],
+    "Keys": []
+  },
+  {
+    "Name": "normalization-10",
+    "Kind": "normalize",
+    "Root": "/project",
+    "Entry": "/project/theme.css",
+    "Package": "/node_modules/tailwindcss",
+    "Directory": "",
+    "Message": "",
+    "Path": "theme.css",
+    "Source": "--value(\"a,b\", [length], --x)",
+    "Failed": false,
+    "Sheets": [
+      "a.css",
+      "b.css",
+      "a.css"
+    ],
+    "System": 7,
+    "Inputs": [],
+    "Keys": []
+  }
+]

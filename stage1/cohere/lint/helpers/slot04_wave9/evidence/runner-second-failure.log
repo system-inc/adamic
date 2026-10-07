@@ -1,0 +1,6 @@
+=== RUN   TestHelpersGoNodeNativeJavaScript
+    helpers_test.go:82: /workspace/adamic/stage1/cohere/lint/helpers/slot04_wave9/main.a:60:60: stage 0 can't lower an array of never yet
+--- FAIL: TestHelpersGoNodeNativeJavaScript (0.42s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave9	0.430s
+FAIL

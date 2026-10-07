@@ -1,0 +1,53 @@
+=== RUN   TestHelpersGoNodeNativeJavaScript
+=== RUN   TestHelpersGoNodeNativeJavaScript/witnesses.json
+    helpers_test.go:132: Go, source Node, sanitized native, emitted JavaScript match 51 lines
+=== RUN   TestHelpersGoNodeNativeJavaScript/calls.json
+    helpers_test.go:132: Go, source Node, sanitized native, emitted JavaScript match 234 lines
+--- PASS: TestHelpersGoNodeNativeJavaScript (2.81s)
+    --- PASS: TestHelpersGoNodeNativeJavaScript/witnesses.json (0.50s)
+    --- PASS: TestHelpersGoNodeNativeJavaScript/calls.json (0.75s)
+=== RUN   TestCompilingMutants
+=== RUN   TestCompilingMutants/load_design_system_through.adependencies.stat(path)
+    helpers_test.go:179: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:179: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:179: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/load_design_system_through.aif(loaded.failed)
+    helpers_test.go:179: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:179: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:179: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/ingest_utility_block.aprevious_+_2
+    helpers_test.go:179: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:179: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:179: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/ingest_utility_block.acollector.definitions.push({root,body});
+    helpers_test.go:179: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:179: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:179: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/normalize_value_function_nodes.anormalizeValueFunctionNodes(arena,node.edges,dependencies);
+    helpers_test.go:179: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:179: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:179: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/normalize_value_function_nodes.anode.edges_=_dependencies.parse(args.join(','));
+    helpers_test.go:179: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:179: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:179: emitted JavaScript compiling semantic mutant caught by Go output comparison
+--- PASS: TestCompilingMutants (9.27s)
+    --- PASS: TestCompilingMutants/load_design_system_through.adependencies.stat(path) (1.57s)
+    --- PASS: TestCompilingMutants/load_design_system_through.aif(loaded.failed) (1.44s)
+    --- PASS: TestCompilingMutants/ingest_utility_block.aprevious_+_2 (1.37s)
+    --- PASS: TestCompilingMutants/ingest_utility_block.acollector.definitions.push({root,body}); (1.47s)
+    --- PASS: TestCompilingMutants/normalize_value_function_nodes.anormalizeValueFunctionNodes(arena,node.edges,dependencies); (1.50s)
+    --- PASS: TestCompilingMutants/normalize_value_function_nodes.anode.edges_=_dependencies.parse(args.join(',')); (1.65s)
+=== RUN   TestLoaderBodyMatchesPinnedGo
+    helpers_test.go:211: loader-body drift mutant caught
+--- PASS: TestLoaderBodyMatchesPinnedGo (0.00s)
+=== RUN   TestConsumerCoverage
+    helpers_test.go:281: consumer omission caught: better-tailwindcss/no-unknown-classes
+    helpers_test.go:281: consumer omission caught: better-tailwindcss/enforce-canonical-classes
+    helpers_test.go:281: consumer omission caught: better-tailwindcss/enforce-consistent-class-order
+    helpers_test.go:281: consumer omission caught: better-tailwindcss/enforce-consistent-variant-order
+    helpers_test.go:281: consumer omission caught: better-tailwindcss/enforce-shorthand-classes
+    helpers_test.go:281: consumer omission caught: better-tailwindcss/no-conflicting-classes
+--- PASS: TestConsumerCoverage (0.02s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave9	12.116s

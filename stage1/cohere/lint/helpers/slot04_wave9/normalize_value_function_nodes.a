@@ -1,0 +1,28 @@
+import { panic } from 'adamic';
+export interface NormalizationNode {
+    readonly tag: string;
+    readonly text: string;
+    edges: number[];
+}
+export interface NormalizationDependencies {
+    readonly print: (edges: readonly number[]) => string;
+    readonly segment: (text: string) => string[];
+    readonly argument: (text: string) => string;
+    readonly parse: (text: string) => number[];
+}
+// External parser/printer/argument helpers retain their own ownership and contracts.
+export function normalizeValueFunctionNodes(arena: readonly NormalizationNode[], roots: readonly number[], dependencies: NormalizationDependencies): void {
+    for(const id of roots) {
+        const node = arena[id] ?? panic('invalid value node');
+        if(node.tag !== 'function') { continue; }
+        if(node.text !== '--value' && node.text !== '--modifier') {
+            normalizeValueFunctionNodes(arena,node.edges,dependencies);
+            continue;
+        }
+        const args = dependencies.segment(dependencies.print(node.edges));
+        for(let index = 0; index < args.length; index++) {
+            args[index] = dependencies.argument(args[index] ?? panic('argument'));
+        }
+        node.edges = dependencies.parse(args.join(','));
+    }
+}

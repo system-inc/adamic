@@ -1,0 +1,29 @@
+export interface UtilityDefinition {
+    readonly root: string;
+    readonly body: readonly number[];
+}
+export interface UtilityCollector {
+    readonly kinds: Map<string,number>;
+    readonly statics: Map<string,readonly number[]>;
+    readonly definitions: UtilityDefinition[];
+}
+// Kinds are membership bits: static=1, functional=2. Bodies retain arena identity.
+export function ingestUtilityBlock(collector: UtilityCollector, params: string, body: readonly number[], path: string, trim: (text: string) => string): string {
+    const name = trim(params);
+    if(name === '') { return `${path}: \`@utility\` with no name`; }
+    let root = name;
+    let kind = 1;
+    if(name.endsWith('-*')) { kind = 2; root = name.slice(0,-2); }
+    if(root === '' || root.includes('*')) {
+        return `${path}: \`@utility ${name}\` is not a valid utility name; expected \`name\` or \`name-*\``;
+    }
+    const previous = collector.kinds.get(root) ?? 0;
+    if(kind === 2) {
+        if(previous < 2) { collector.kinds.set(root,previous + 2); }
+        collector.definitions.push({root,body});
+        return '';
+    }
+    if(previous % 2 === 0) { collector.kinds.set(root,previous + 1); }
+    collector.statics.set(root,body);
+    return '';
+}

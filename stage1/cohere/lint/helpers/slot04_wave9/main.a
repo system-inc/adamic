@@ -1,0 +1,99 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { loadDesignSystemThrough } from './load_design_system_through.a';
+import { ingestUtilityBlock } from './ingest_utility_block.a';
+import type { UtilityCollector } from './ingest_utility_block.a';
+import { normalizeValueFunctionNodes } from './normalize_value_function_nodes.a';
+import type { NormalizationNode } from './normalize_value_function_nodes.a';
+function field(corpus: OptionsJson, row: number, name: string): number {
+    const node = corpus.node(row);
+    const index = node.keys.indexOf(name);
+    if(index < 0) { panic(`missing field ${name}`); }
+    return node.children[index] ?? panic('field');
+}
+function text(corpus: OptionsJson, row: number, name: string): string { return corpus.node(field(corpus,row,name)).text; }
+function integers(corpus: OptionsJson, row: number): number[] {
+    const result: number[] = [];
+    for(const child of corpus.node(row).children) { result.push(Number(corpus.node(child).text)); }
+    return result;
+}
+function strings(corpus: OptionsJson, row: number): string[] {
+    const result: string[] = [];
+    for(const child of corpus.node(row).children) { result.push(corpus.node(child).text); }
+    return result;
+}
+function render(arena: readonly NormalizationNode[], roots: readonly number[]): string {
+    let result = '';
+    for(const id of roots) {
+        const node = arena[id] ?? panic('node');
+        if(node.tag === 'word' || node.tag === 'separator') { result += node.text; }
+        else if(node.tag === 'function') { result += node.text + '(' + render(arena,node.edges) + ')'; }
+    }
+    return result;
+}
+function observe(corpus: OptionsJson, row: number): void {
+    const kind = text(corpus,row,'Kind');
+    if(kind === 'load') {
+        const trace: string[] = [];
+        const result = loadDesignSystemThrough({
+            projectRoot:(): string => { trace.push('root'); return text(corpus,row,'Root'); },
+            findEntryPoint:(root: string): string => { trace.push('entry:' + root); return text(corpus,row,'Entry'); },
+            directory:(_path: string): string => text(corpus,row,'Directory'),
+            findPackageRoot:(directory: string): string => { trace.push('package:' + directory); return text(corpus,row,'Package'); },
+            load:(entry: string, packageRoot: string) => {
+                trace.push('load:' + entry + ':' + packageRoot);
+                return {failed:text(corpus,row,'Failed') === 'true',message:text(corpus,row,'Message'),system:Number(text(corpus,row,'System')),stylesheets:strings(corpus,field(corpus,row,'Sheets'))};
+            },
+            stat:(path: string): void => { trace.push('stat:' + path); },
+            newTable:(system: number): number => { trace.push(`table:${system}`); return system + 100; }
+        });
+        console.log(`${result.failed}|${result.message}|${result.entryPoint}|${result.system}|${result.table}|${trace.join('|')}`);
+    } else if(kind === 'utility') {
+        const collector: UtilityCollector = {kinds:new Map<string,number>(),statics:new Map<string,readonly number[]>(),definitions:[]};
+        const path = text(corpus,row,'Path');
+        const keys = strings(corpus,field(corpus,row,'Keys'));
+        for(const input of corpus.node(field(corpus,row,'Inputs')).children) {
+            const error = ingestUtilityBlock(collector,text(corpus,input,'Params'),integers(corpus,field(corpus,input,'Body')),path,(_params: string): string => text(corpus,input,'Trimmed'));
+            console.log(error);
+            const states: string[] = [];
+            for(const key of keys) {
+                const empty: readonly number[] = [];
+                const body = collector.statics.get(key) ?? empty;
+                states.push(`${key}:${collector.kinds.get(key) ?? 0}:${collector.statics.has(key)}:${body.join(',')}`);
+            }
+            const definitions: string[] = [];
+            for(const definition of collector.definitions) { definitions.push(definition.root + ':' + definition.body.join(',')); }
+            console.log(states.join('|') + ';' + definitions.join('|'));
+        }
+    } else if(kind === 'normalize') {
+        const adaptation = field(corpus,row,'Adaptation');
+        const arena: NormalizationNode[] = [];
+        for(const node of corpus.node(field(corpus,adaptation,'Nodes')).children) {
+            arena.push({tag:text(corpus,node,'Tag'),text:text(corpus,node,'Text'),edges:integers(corpus,field(corpus,node,'Edges'))});
+        }
+        const segments = new Map<string,readonly string[]>();
+        const args = new Map<string,string>();
+        const parses = new Map<string,readonly number[]>();
+        const segmentNode = corpus.node(field(corpus,adaptation,'Segments'));
+        for(let i = 0; i < segmentNode.keys.length; i++) { segments.set(segmentNode.keys[i] ?? panic('key'),strings(corpus,segmentNode.children[i] ?? panic('value'))); }
+        const argNode = corpus.node(field(corpus,adaptation,'Arguments'));
+        for(let i = 0; i < argNode.keys.length; i++) { args.set(argNode.keys[i] ?? panic('key'),corpus.node(argNode.children[i] ?? panic('value')).text); }
+        const parseNode = corpus.node(field(corpus,adaptation,'Parses'));
+        for(let i = 0; i < parseNode.keys.length; i++) { parses.set(parseNode.keys[i] ?? panic('key'),integers(corpus,parseNode.children[i] ?? panic('value'))); }
+        const roots = integers(corpus,field(corpus,adaptation,'Roots'));
+        normalizeValueFunctionNodes(arena,roots,{
+            print:(edges: readonly number[]): string => render(arena,edges),
+            segment:(input: string): string[] => (segments.get(input) ?? panic('segment dependency')).slice(),
+            argument:(input: string): string => args.get(input) ?? panic('argument dependency'),
+            parse:(input: string): number[] => (parses.get(input) ?? panic('parse dependency')).slice()
+        });
+        console.log(render(arena,roots));
+    } else { panic('case kind'); }
+}
+const path = programArguments()[0] ?? panic('path');
+const input = readTextFile(path);
+if(input.kind === 'Error') { panic(input.message); }
+const corpus = new OptionsJson(input.text);
+const root = corpus.parse();
+if(root < 0) { panic(corpus.error); }
+for(const row of corpus.node(root).children) { observe(corpus,row); }

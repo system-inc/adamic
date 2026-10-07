@@ -1,0 +1,44 @@
+export interface LoadedResult {
+    readonly failed: boolean;
+    readonly message: string;
+    readonly system: number;
+    readonly stylesheets: readonly string[];
+}
+export interface DesignSystemResult {
+    readonly failed: boolean;
+    readonly message: string;
+    readonly entryPoint: string;
+    readonly system: number;
+    readonly table: number;
+}
+export interface LoaderDependencies {
+    readonly projectRoot: () => string;
+    readonly findEntryPoint: (root: string) => string;
+    readonly directory: (path: string) => string;
+    readonly findPackageRoot: (directory: string) => string;
+    readonly load: (entryPoint: string, packageRoot: string) => LoadedResult;
+    readonly stat: (path: string) => void;
+    readonly newTable: (system: number) => number;
+}
+// Handles represent externally owned engine objects; zero represents Go nil.
+export function loadDesignSystemThrough(dependencies: LoaderDependencies): DesignSystemResult {
+    const root = dependencies.projectRoot();
+    if(root === '') {
+        return {failed:true,message:'could not determine the project root from the program',entryPoint:'',system:0,table:0};
+    }
+    const entryPoint = dependencies.findEntryPoint(root);
+    if(entryPoint === '') {
+        return {failed:true,message:`no Tailwind entry point found in this project: looked under ${root}`,entryPoint:'',system:0,table:0};
+    }
+    const packageRoot = dependencies.findPackageRoot(dependencies.directory(entryPoint));
+    if(packageRoot === '') {
+        return {failed:true,message:`${entryPoint}: no installed tailwindcss package found, so \`@import "tailwindcss"\` cannot resolve`,entryPoint,system:0,table:0};
+    }
+    const loaded = dependencies.load(entryPoint,packageRoot);
+    if(loaded.failed) {
+        return {failed:true,message:loaded.message,entryPoint,system:0,table:0};
+    }
+    for(const path of loaded.stylesheets) { dependencies.stat(path); }
+    const table = dependencies.newTable(loaded.system);
+    return {failed:false,message:'',entryPoint,system:loaded.system,table};
+}

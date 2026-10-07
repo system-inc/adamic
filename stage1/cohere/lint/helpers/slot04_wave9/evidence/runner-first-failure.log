@@ -1,0 +1,6 @@
+=== RUN   TestHelpersGoNodeNativeJavaScript
+    helpers_test.go:82: /workspace/adamic/stage1/cohere/lint/helpers/slot04_wave9/main.a:48:63: stage 0 can't lower a BinaryExpression with a string and a number yet
+--- FAIL: TestHelpersGoNodeNativeJavaScript (1.84s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave9	1.854s
+FAIL
