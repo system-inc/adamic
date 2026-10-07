@@ -125,3 +125,16 @@ ports were rebased and revalidated before publication. See
 `../wave_05_core/REPORT.md`. The three React reservations remain PARKED with
 the blockers above; no React verdict parity is claimed. No additional rules
 are reserved by this update.
+
+## Shared-harness area landing
+
+Rebased onto origin/area/stage1-lint 7481e032 (includes harness 41eb6eab2
+and main 39638d9e). The nine completed ports are revalidated before publication.
+The previous native JSX parsing blocker is CLOSED on this base: all three
+retained positive JSX probes parse successfully. The three React claims stay
+PARKED for native analysis, not JSX: globals needs compilation-root/capture/
+reference-write classification; immutability needs HIR/SSA/capture/frozen-value
+analysis; no-deriving-state-in-effects needs HIR/SSA/capture/effect-taint analysis.
+The shared analysis dependency is #dnv6f2c. No React verdict parity is claimed.
+The fresh all-origin ranking has no unclaimed rule. See
+`../wave_05_core/AREA_LANDING_REPORT.md`; no additional rules are reserved.
