@@ -69,5 +69,24 @@ the proposed 86. Those legacy plans and results remain historical evidence.
 unknown parameter still cannot lower. The latest compiler tips and scratch
 integration SHA are recorded in evidence/native-live-feature-refs.json.
 
-The current native attempt stops at reading Error as a value in Debug.fail's
-V8 captureStackTrace check. No native token diff or ownership pass is claimed.
+The latest front-2/import-cycles/library-loader attempt stops at the reached
+MapLike index signature in corePublic.ts:9:5. The cycle probe prints 1 natively;
+Node's 509,014 tokens still match the full tree. See BLOCKERS.md and
+evidence/front2-run.json. No native scanner diff or ownership pass is claimed.
+
+## Native comparison and measurement
+
+`--oracle FULL_TREE_NODE_STDOUT` requires the slice Node stream to match the
+full-tree stream before attempting native compilation. A successful native
+comparison then plants exactly one changed byte in a copy of native stdout;
+`diff -u` must return 1. The mutant is output-only and does not change the slice.
+
+After a green native run, `python3 stage3/drivers/scanner/measure.py OUTPUT`
+runs the native binary and the same Node driver three times each on the exact
+files.json corpus, retaining every stdout, stderr, and diff. User CPU time is
+the sequential RUSAGE_CHILDREN delta; report.json records all three values and
+the best. Process startup, Node transpilation, and token printing are included.
+The script records native binary bytes and attempts `perf stat -e instructions`
+when perf is installed, retaining access failures rather than inventing counts.
+Compilation failure produces no native timing, binary size, or native-output
+mutant claim.

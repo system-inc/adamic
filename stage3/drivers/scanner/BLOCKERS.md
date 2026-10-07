@@ -1,5 +1,40 @@
 # Scanner blockers
 
+## October 7: front-2 plus explicit import-cycles and library loader, real run
+
+**RED, exact first failure:** `corePublic.ts:9:5: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added`.
+This is the reached type-only `MapLike<T>` declaration's `[index: string]: T`,
+from upstream corePublic.ts:14. No body lowering or ownership pass is reached.
+
+Scratch 6ade8c38 includes newest area/stage3 4ad53a4, front-2 80fb9b75, explicit
+import-cycles 779ff9d, library/qualified-as-const 8280fd08, and the previous
+scanner feature integration. All four requested refs are ancestors. Compiler
+build succeeds; the safe import-cycle probe prints `1` natively. This retires
+the previous conservative cyclic-import stopping point. Lowering conflicts and
+scratch API resolutions are reported in evidence/front2-conflicts.md; none are
+pushed as compiler changes. No stubs or new source adaptations were used.
+
+Minimal reproduction: probes/index-signature-type-only.a. Node prints `ok`;
+stage 0 refuses its index signature at 3:5. The control omits only the interface,
+prints `ok` natively, and matches Node (diff exit 0). Flipping exactly one byte
+of that native control's output (`ok` -> `nk`) is caught by diff (exit 1).
+This is a native **control** mutant, not scanner native output. The runner also
+contains the requested one-byte scanner native-output mutant, for when it builds.
+
+Node scanner over all 81 files still emits 509,014 tokens, 27,879,197 bytes,
+SHA256 c1a9f239790e158cc4471aa6c9273ff678cb32e5890b3d4c95e077ee90c61b0f.
+The full-tree diff is empty (exit 0), and the token-end mutant is caught (exit 1).
+Native scanner diff, best-of-three timings, and scanner binary size are unavailable
+because compilation stops. perf is not installed here. measure.py will record
+all three user CPU times and binary bytes and attempts instruction counting when
+a green native comparison exists. Full compiler gate was not run.
+
+This is a compiler admission blocker for a reached type-only string-indexed
+record. Replacing it with Map changes TypeScript's declaration; silently dropping
+it would violate the slice contract. No further bypass discovery was done.
+Evidence: front2-run.json, front2-*.log/.diff, and front2-conflicts.md.
+
+
 ## October 7: real unstubbed run after library Error and non-null tip
 
 Scratch compiler e034d3d merges library-error-value 6469f37 and non-null-check

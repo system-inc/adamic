@@ -15,6 +15,7 @@ parser.add_argument('output', type=Path, help='new scratch output directory')
 parser.add_argument('--tree', type=Path, help='reuse a tree already made by stage3/apply.sh')
 parser.add_argument('--compiler', type=Path, help='existing Adamic binary, otherwise go run')
 parser.add_argument('--node-only', action='store_true')
+parser.add_argument('--oracle', type=Path, help='full-tree Node stdout to compare byte for byte')
 parser.add_argument('--inputs', type=Path, help='fixed compiler corpus for comparing source adaptations')
 args = parser.parse_args()
 out = args.output.resolve()
@@ -67,6 +68,10 @@ paths = [str(inputs / p) for p in files]
 node = run(['node', '--disable-warning=ExperimentalWarning', str(here / 'node.mjs'), str(out / 'main.a'), *paths], 'node', out, env)
 if node:
     sys.exit(f'Node oracle failed ({node}); see node.stderr')
+if args.oracle:
+    oracle_diff = run(['diff', '-u', str(args.oracle.resolve()), str(out / 'node.stdout')], 'full-tree-diff')
+    if oracle_diff:
+        sys.exit(f'slice Node differs from full-tree oracle (diff exit {oracle_diff})')
 # The native binary is unavailable while lowering is blocked. Prove the exact
 # comparison with a scratch control copied from Node, then mutate Node's end.
 control = out / 'comparison-control.stdout'
@@ -97,6 +102,18 @@ if not args.node_only:
         report.update(native='executed', native_exit=native, native_diff_exit=difference)
         if native or difference:
             report['failure'] = 'native exit or token bytes differ'
+        else:
+            native_mutant = out / 'native-byte-mutant.stdout'
+            with (out / 'native.stdout').open('rb') as source, native_mutant.open('wb') as target:
+                first = source.read(1)
+                if not first:
+                    sys.exit('native output empty: cannot plant byte mutant')
+                target.write(bytes([first[0] ^ 1]))
+                shutil.copyfileobj(source, target)
+            killed = run(['diff', '-u', str(out / 'node.stdout'), str(native_mutant)], 'native-byte-mutant-diff')
+            report['native_byte_mutant_diff_exit'] = killed
+            if killed != 1:
+                report['failure'] = 'native byte mutant was not caught by comparison'
 (out / 'report.json').write_text(json.dumps(report, indent=2) + '\n')
 print(json.dumps(report))
 if report.get('build_exit', 0) or report.get('failure'):
