@@ -1,0 +1,12 @@
+go-build 0 0.115594
+go 0 0.065017
+normal-build 0 2.584118
+normal 0 0.115155
+sanitized-build 0 3.09343
+sanitized 0 0.921211
+mutant-build 0 2.285253
+mutant 0 0.117489
+js-build 0 0.270051
+source 0 0.271024
+emitted 0 0.214812
+PASS production equivalence groups and exhaustive memberships, native, sanitizers, source/emitted Node and pair-dropping mutant; full regex engine remains incomplete

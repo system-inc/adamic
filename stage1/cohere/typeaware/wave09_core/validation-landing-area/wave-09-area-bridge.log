@@ -1,0 +1,48 @@
+=== RUN   TestCoverageCheckerQuestions
+--- PASS: TestCoverageCheckerQuestions (0.01s)
+=== RUN   TestDeclarationFileFlags
+=== PAUSE TestDeclarationFileFlags
+=== RUN   TestFactEncoding
+=== PAUSE TestFactEncoding
+=== RUN   TestShapeAndNameFacts
+=== PAUSE TestShapeAndNameFacts
+=== RUN   TestExactIndexMatchesCompilerNodes
+=== PAUSE TestExactIndexMatchesCompilerNodes
+=== RUN   TestAdamicRootKeepsConfigDeclarations
+=== PAUSE TestAdamicRootKeepsConfigDeclarations
+=== CONT  TestDeclarationFileFlags
+=== CONT  TestExactIndexMatchesCompilerNodes
+=== CONT  TestAdamicRootKeepsConfigDeclarations
+=== CONT  TestShapeAndNameFacts
+=== CONT  TestFactEncoding
+--- PASS: TestFactEncoding (0.00s)
+--- PASS: TestDeclarationFileFlags (0.02s)
+--- PASS: TestShapeAndNameFacts (0.04s)
+--- PASS: TestExactIndexMatchesCompilerNodes (0.10s)
+--- PASS: TestAdamicRootKeepsConfigDeclarations (0.10s)
+PASS
+ok  	github.com/system-inc/adamic/bridge/tsgo/checker	0.124s
+=== RUN   TestBridge
+    bridge_test.go:72: C ABI: 100 queries, outputs survive release, stale and zero handles rejected, second handle distinct; "世界🌍"
+    bridge_test.go:77: input length off by one: ASan heap-buffer-overflow
+    bridge_test.go:90: build, C and JavaScript commands refuse unlinked checker calls
+    bridge_test.go:149: go: tsgo: load_ns=46425995 query_ns=16140312 queries=162
+    bridge_test.go:154: oracle: 162 positions across 1 files, 3261 bytes identical under ASan/UBSan/LSan
+    bridge_test.go:156: native-round-1: tsgo: load_ns=48483289 query_ns=1403427 queries=162 first_query_ns=144540 run_ns=1601199
+    bridge_test.go:157: go-round-1: tsgo: load_ns=40535619 query_ns=19278910 queries=162
+    bridge_test.go:156: native-round-2: tsgo: load_ns=49392887 query_ns=613358 queries=162 first_query_ns=55668 run_ns=806315
+    bridge_test.go:157: go-round-2: tsgo: load_ns=32925563 query_ns=17034373 queries=162
+    bridge_test.go:156: native-round-3: tsgo: load_ns=47091872 query_ns=602236 queries=162 first_query_ns=56704 run_ns=789383
+    bridge_test.go:157: go-round-3: tsgo: load_ns=41925781 query_ns=19907640 queries=162
+    bridge_test.go:197: output string length off by one: ASan heap-buffer-overflow
+    bridge_test.go:207: released handle kept live: stale-handle assertion catches it
+    bridge_test.go:217: type from source-file position: oracle mismatch at byte 6
+    bridge_test.go:224: link opt-in guard removed: refusal test catches it
+    bridge_test.go:235: C output free removed: LeakSanitizer detects the leaked buffers
+    bridge_test.go:273: region probe: Go and native answer 6; adamic: counts: allocations 9 frees 8 retains 6 releases 14 peak 8 regions 1
+    bridge_test.go:283: region entry allocates on heap: LeakSanitizer catches the unowned result
+--- PASS: TestBridge (74.30s)
+=== RUN   TestTSGoRequiresLink
+--- PASS: TestTSGoRequiresLink (0.04s)
+PASS
+ok  	github.com/system-inc/adamic/bridge/tsgo	74.350s

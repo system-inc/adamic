@@ -161,3 +161,14 @@ released-handle checks pass again. A clean-running refetch mutant is caught
 at byte 43 by the dedicated handed-node check. Shared registry installation
 and both regex completions remain outstanding; no new claims or React
 parking. See ../wave09_core/HANDED_LABEL_REPORT.md.
+
+## Integrated area landing
+
+Per the explicit request, wave-09 is now rebased onto origin/area/stage1-lint
+7481e0324, which includes current main 39638d9e2 and the shared harness.
+All eighteen owned checks, registry, bridge, Node and vet pass again, with
+mutants and sanitizers. The shared handed-node API is present; it must no
+longer be described as absent. Remaining visitor/registry installation is
+unfinished integration work. Dynamic native RegExp remains independently
+refused on this base. Both regex claims remain incomplete; no new claims or
+React parking. See ../wave09_core/LANDING_AREA_REPORT.md.
