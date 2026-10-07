@@ -1,6 +1,0 @@
-import { Words as Names } from './values.a';
-console.log('namespace entry');
-const index: Names.Inner.Index = 3;
-console.log(`${Names.label(index)} ${Names.length} ${Names.Inner.double(index)}`);
-const label = Names.label;
-console.log(`${label === Names.label} ${label(5)}`);
