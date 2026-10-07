@@ -1,0 +1,64 @@
+import type { RuleContext } from '../../context.ts';
+import { message } from './messages.a';
+
+// Go's regexp \s is ASCII space, tab, line feed, form feed and carriage return.
+function whitespace(text: string, nonempty: boolean): boolean {
+    if(nonempty && text.length === 0) return false;
+    for(let index = 0; index < text.length; index++) {
+        if(![9, 10, 12, 13, 32].includes(text.charCodeAt(index))) return false;
+    }
+    return true;
+}
+function identifierStart(code: number): boolean {
+    return code === 95 || code === 36 || (code >= 65 && code <= 90) || (code >= 97 && code <= 122);
+}
+function word(code: number): boolean {
+    return code === 95 || (code >= 65 && code <= 90) || (code >= 97 && code <= 122) || (code >= 48 && code <= 57);
+}
+
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    visit(index: number, parent: number): void {
+        const context = this.context;
+        const expression = context.node(index).children[0] ?? -1;
+        if(expression < 0) return;
+        const unary = context.unwrap(expression);
+        if(context.node(unary).kind !== 'VoidExpression') return;
+        const operand = context.node(unary).children[0] ?? -1;
+        let replacement = '';
+        if(operand >= 0) {
+            const start = context.start(index);
+            const operandStart = context.start(operand);
+            const operandEnd = context.node(operand).end;
+            const operandText = context.source.slice(operandStart, operandEnd);
+            const prefix = context.source.slice(start, operandStart);
+            const suffix = context.source.slice(operandEnd, context.node(index).end);
+            const between = prefix.slice(6);
+            let gap = 0;
+            while(gap < between.length && whitespace(between.slice(gap, gap + 1), true)) gap++;
+            const canonical = prefix.startsWith('return') && gap > 0 && between.slice(gap, gap + 4) === 'void' &&
+                whitespace(between.slice(gap + 4), true) && suffix.endsWith(';') && whitespace(suffix.slice(0, -1), false);
+            let unsafe = false;
+            for(const keyword of ['function', 'class', 'let', 'async']) {
+                if(operandText.startsWith(keyword) && !word(operandText.charCodeAt(keyword.length))) unsafe = true;
+            }
+            if(canonical && identifierStart(operandText.charCodeAt(0)) && !unsafe) {
+                const parentKind = parent < 0 ? '' : context.node(parent).kind;
+                if(['Block', 'CaseClause', 'DefaultClause'].includes(parentKind)) {
+                    const lineStart = context.source.slice(0, start).lastIndexOf('\n') + 1;
+                    const indentation = context.source.slice(lineStart, start);
+                    let indented = true;
+                    for(let offset = 0; offset < indentation.length; offset++) {
+                        if(indentation.charCodeAt(offset) !== 32 && indentation.charCodeAt(offset) !== 9) indented = false;
+                    }
+                    replacement = indented ? `${operandText};\n${indentation}return;` : `${operandText}; return;`;
+                }
+                else replacement = `{ ${operandText}; return; }`;
+            }
+        }
+        context.report(index, 'nexus/consistency-no-return-void', 'returnVoid', message,
+            replacement === '' ? '' : 'fix', replacement, '');
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
