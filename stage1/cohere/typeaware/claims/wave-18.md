@@ -262,3 +262,14 @@ No selected final test skipped; full gate and external checks not run.
 Four named analysis claims remain parked. Refreshed 477-head audit finds
 zero unclaimed ranked rules; no new claim made. See
 wave_18_component_props/LANDING_TYPEOF_REPORT.md and validation-typeof.
+
+## Landing on current main 4e0bfda50 through area bb2ece564
+
+Rebased onto area bb2ece564 containing fetched main 4e0bfda50. Five owned
+suites pass in 441.360s and React in 540.639s. Standalone groups, sanitizer,
+released handles, mutants, parked reporters, bridge, registry, seven shared
+harness tests including configured witnesses and decoded-option mutation,
+uncached Node and vet pass. No selected test skipped; full gate and external
+correctness checks not run. Four named analysis claims stay parked. Audit
+of 542 origin heads finds no unclaimed ranked rules; no new claim made. See
+wave_18_component_props/LANDING_READY_REPORT.md and validation-ready.
