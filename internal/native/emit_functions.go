@@ -212,7 +212,12 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 		property := expression.Closure.(ir.Property)
 		method = e.temporary()
 		e.line("adamic_method %s = NULL;", method)
-		closure = e.own(ir.Closure, fmt.Sprintf("adamic_retain(adamic_object_callee(%s, %s, &%s, &%s))", receiver, cString(property.Name), e.cache(), method))
+		callee := e.snapshot(ir.Closure, fmt.Sprintf("adamic_object_callee(%s, %s, &%s, &%s)", receiver, cString(property.Name), e.cache(), method))
+		closure = e.own(ir.Closure, fmt.Sprintf("(%s == NULL ? NULL : adamic_retain(%s))", callee, callee))
+		if e.mostlyNull == nil {
+			e.mostlyNull = map[string]bool{}
+		}
+		e.mostlyNull[closure] = true
 	}
 	arguments := []string{}
 	for _, argument := range expression.Arguments {

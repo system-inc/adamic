@@ -300,6 +300,62 @@ The last three were caught only once `mutations.a` existed. Before it, no progra
 
 **Not covered:** the check sees mutations of tracked variables only. Globals and captured variables aren't values in the graph, and a variable a call reaches only through one isn't checked at that call. The check also counts a change in anything a variable's object reaches, which is exactly what a transitive range claims and more than a direct one does. A direct range that's too short for a mutation it only reaches indirectly would show up here as a failure, not a pass, so the check errs toward failing.
 
+### Calling conventions through call targets, October 7, 2026
+
+The current native convention refines the original lowering rule above. The one
+ownership flag is still `Local.Borrowed`, on each function's parameter locals,
+including its receiver. `inferParameterBorrows` runs before native lifetime plans.
+It computes a fixed point: a parameter borrows when it is only read, including
+through immutable local aliases, and is never assigned, captured, stored,
+returned directly, mutated, or handed to an owning parameter. Unknown operations
+are owning. Closure parameters additionally require a body that cannot remove
+array elements, since runtime callback loops can pass elements without a count.
+An ordinary direct field return acquires an independent count on the field;
+its receiver can borrow without transferring the receiver's own count.
+
+`Program.CallBorrows` joins one parameter position over `CallTargets`.
+`Program.ClosureBorrows` does the same over bounded `ClosureTargets`, adjusting
+for the implicit receiver of a class method. Unknown is owned. Structural
+listener calls use a whole-program superset of every method, function-valued
+field construction, and field write with the same name. An unbounded field or
+accessor keeps that set Unknown. This may include unrelated classes, but never
+uses a static interface signature as proof of its implementations' effects.
+
+Nominal virtual tables have a borrowing adapter boundary, as structural accessor
+adapters already do. A consuming implementation acquires its own count there;
+a read-only implementation does not inherit an unrelated override's consumption.
+Direct calls still move or hand over their count where reuse proves that safe.
+A structural dispatch resolving to a class method has no closure allocation to
+hold, so its absent closure branch takes neither a retain nor a release.
+
+The visitor fixture has 63 nodes with `kind`, weak `parent`, and readonly
+`children`, and two read-only rule listeners called through an interface. Eight
+rounds visit 1,008 nodes. Four-round and eight-round runs separate traversal
+cost from construction and printing: baseline retains and releases per visited
+node are both 2008/504 = 3.984127; after calling conventions they are both
+1504/504 = 2.984127. The full eight-round counted runs are 4,299 retains and
+4,305 releases before, and 3,354 retains and 3,360 releases after. Allocations
+and frees stay 192, peak live stays 161, and no allocation is in a region.
+
+The baseline is the merge of main `e011f8f` with routing `f64641f` (`669210d`).
+The visitor and `borrow_target_store.a` run against source on Node, both native
+builds, ASan/UBSan, and the leak check. Forcing the storing callback's `item`
+parameter to borrow is caught by ASan heap-use-after-free: it overwrites the last
+array owner before pushing the element into another array. A push alone takes
+its own count and cannot make an otherwise stable borrow wrong. The probe
+therefore tests the lifetime error as well as the storing convention.
+
+Additional independent mutants: considering only the first override fails
+`TestBorrowConventionJoinsEveryTarget`; treating Unknown as borrowed fails the
+same test's Unknown case; omitting a virtual adapter's consuming count fails the
+uncached inheritance/reuse oracle with ASan heap-use-after-free. All source edits
+were restored. Logs are `/tmp/borrow-step1-mutant.log` and
+`/tmp/borrow-step1-mutant-{first_target,unknown_borrowed,adapter_count}.log`.
+
+The visitor uses an interface method signature. Current main refuses a class
+prototype method called through a property-style function view as erasing its
+prototype origin; this unit does not change that lowering rule.
+
 ## Cycles: found by the compiler, broken by Weak
 
 Reference counting can't free a cycle, and a garbage collector is refused (no cycle collector, ever: decided by @system_adamic, task #gsz351g). What's known:

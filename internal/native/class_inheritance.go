@@ -18,7 +18,7 @@ func (e *emitter) classDeclarations(builder *strings.Builder) {
 		if len(class.Methods) > 0 {
 			entries := []string{}
 			for _, method := range class.Methods {
-				entries = append(entries, "(adamic_virtual_method)"+e.functionName(method))
+				entries = append(entries, "(adamic_virtual_method)"+e.virtualAdapter(builder, method))
 			}
 			methods = fmt.Sprintf("adamic_methods_%d", index+1)
 			fmt.Fprintf(builder, "static const adamic_virtual_method %s[] = {%s};\n", methods, strings.Join(entries, ", "))
@@ -58,4 +58,40 @@ func (e *emitter) callCode(call ir.Call, arguments []string) string {
 	}
 	code := fmt.Sprintf("((%s (*)(%s))adamic_virtual(%s, %d))", result, strings.Join(parameters, ", "), arguments[0], call.Virtual-1)
 	return code + "(" + strings.Join(arguments, ", ") + ")"
+}
+
+// virtualAdapter gives the table a borrowing ABI. A consuming implementation alone
+// takes a count; direct callers keep the implementation's own convention.
+func (e *emitter) virtualAdapter(builder *strings.Builder, function int) string {
+	declared := e.program.Functions[function]
+	consumes := false
+	for _, parameter := range declared.Parameters {
+		consumes = consumes || e.reuse.consumed[parameter]
+	}
+	if !consumes {
+		return e.functionName(function)
+	}
+	name := e.functionName(function) + "_virtual"
+	// Tables may share a function. Each class gets its own adapter name.
+	name += fmt.Sprintf("_%d", builder.Len())
+	parameters, arguments := []string{}, []string{}
+	for position, parameter := range declared.Parameters {
+		argument := fmt.Sprintf("argument_%d", position)
+		parameters = append(parameters, cType(e.program.Locals[parameter].Type)+" "+argument)
+		if e.reuse.consumed[parameter] {
+			argument = retained(argument)
+		}
+		arguments = append(arguments, argument)
+	}
+	result := "void"
+	if declared.Returns != 0 {
+		result = cType(declared.Returns)
+	}
+	fmt.Fprintf(builder, "static %s %s(%s) {\n", result, name, strings.Join(parameters, ", "))
+	prefix := ""
+	if declared.Returns != 0 {
+		prefix = "return "
+	}
+	fmt.Fprintf(builder, "\t%s%s(%s);\n}\n", prefix, e.functionName(function), strings.Join(arguments, ", "))
+	return name
 }

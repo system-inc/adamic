@@ -21,6 +21,7 @@ import (
 // Every possible call target must preserve the elements for the borrow to stand.
 // Reuse never moves an array that lends (reusePlan.movable).
 func planElementBorrows(program *ir.Program) (map[*ir.Statement]bool, map[int]bool) {
+	inferParameterBorrows(program)
 	changing := changingFunctions(program)
 	borrows := map[*ir.Statement]bool{}
 	lending := map[int]bool{}

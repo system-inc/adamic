@@ -1,0 +1,11 @@
+function probe(): void {
+ const source = ['label' + String(1), 'label' + String(2)];
+ const kept: string[] = [];
+ const results = source.map((item) => {
+  source[0] = 'replacement' + String(3);
+  kept.push(item);
+  return item.length;
+ });
+ console.log(`${results.join(',')} ${kept.join(',')}`);
+}
+probe();
