@@ -2,7 +2,7 @@ Repaired all 17 requested error helpers using errorCode(error: unknown) and guar
 Merged compiler unknown-narrowing 616870d with merge commit bb993abf; prior proof remains ae3a6c52.
 Node stdout before/after is byte-identical for all 17 and two additional system/buffer fixtures.
 All 52 existing fs file/directory mutants are caught by Node stdout; sanitizers and leak checks pass.
-Remaining failure: TestNodeProcessErrorNarrowingBlocker; none of the 17 requested fixtures stops.
+The process source remains refused at 9:32; its test now pins the full unbound-method diagnostic.
 
 Every helper uses the same narrowing form:
 
@@ -99,8 +99,8 @@ This is a changed blocker after the required compiler dependency merge: the
 process test still demands a refusal whose What contains 'in'. Unknown/in
 narrowing now succeeds; the unchanged node_process_errors.a proceeds to its
 Object.prototype.hasOwnProperty.call expression, refused as an unbound method
-at 9:32. That source and its old blocker expectation are left for the process
-and compiler owners; no language workaround is introduced here.
+at 9:32. That gate preceded the authorized expectation update recorded below; no
+language workaround is introduced here.
 
 The baseline blocker test passes at ae3a6c52 under a source overlay (0.381s),
 reporting the original refusal at node_process_errors.a:6:67:
@@ -116,3 +116,24 @@ console.log(String(Object.prototype.hasOwnProperty.call({}, 'code')));
 It refuses at 1:20 with (unbound-method). Linux is the gate used here; macOS was
 not run. Only codex/node-options-widening is pushed; no main push, force push or
 history rewrite is performed.
+
+Following the authorized blocker update, TestNodeProcessErrorNarrowingBlocker
+now compares the exact absolute fixture location (9:32) and complete Refused
+message, including the unbound-method rule. Unknown narrowing 616870d moved
+the source beyond its former in refusal; the process fixture is unchanged.
+The previously recorded 813.463s oracle failure predates this assertion update.
+
+The focused exact-blocker test passes (0.414s). Two diagnostic build-overlay
+mutants are caught specifically by `recorded blocker changed`: altered location
+(0.413s) and altered message (0.961s). Neither changes the fixture, compiler
+production files, or the language rule. The complete Linux oracle passes
+with the WebAssembly leg enabled (1095.645s), with no failing tests:
+
+```sh
+ADAMIC_ORACLE_WASI=1 go test ./internal/oracle -count=1 -parallel=2 -timeout=30m
+```
+
+The command used the configured WASI_SYSROOT and GOPROXY; its output is
+`ok github.com/system-inc/adamic/internal/oracle 1095.645s`.
+
+Unchanged process fixture Git blob: `7aae2d5459ef6f64e9028d4b22739bec9ec03958`.
