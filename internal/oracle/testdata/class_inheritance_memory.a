@@ -1,20 +1,39 @@
-interface Item { readonly text: string; }
+interface Item {
+    readonly text: string;
+}
 let saved: Item | undefined;
-function make(value: number): Item { return { text: `item${value}` }; }
+function make(value: number): Item {
+    return { text: `item${value}` };
+}
 let active: Item = make(1);
 class Reader {
-    size(value: Item): number { return value.text.length; }
-    replace(value: Item): Item { return { ...value, text: `${value.text}!` }; }
+    size(value: Item): number {
+        return value.text.length;
+    }
+    replace(value: Item): Item {
+        return { ...value, text: `${value.text}!` };
+    }
 }
 class ChildReader extends Reader {
-    override size(value: Item): number { return super.size(value) + 1; }
-    override replace(value: Item): Item { return { text: `${active.text}/${value.text}?` }; }
+    override size(value: Item): number {
+        return super.size(value) + 1;
+    }
+    override replace(value: Item): Item {
+        return { text: `${active.text}/${value.text}?` };
+    }
 }
 class SavingReader extends Reader {
-    override size(value: Item): number { saved = value; return value.text.length; }
+    override size(value: Item): number {
+        saved = value;
+        return value.text.length;
+    }
 }
-function read(reader: Reader, value: number): number { return reader.size(make(value)); }
-function replace(reader: Reader, value: Item): Item { return reader.replace(value); }
+function read(reader: Reader, value: number): number {
+    return reader.size(make(value));
+}
+function replace(reader: Reader, value: Item): Item {
+    return reader.replace(value);
+}
 const child: Reader = new ChildReader();
 console.log(`${read(child, 12)}`);
 console.log(`${new ChildReader().size(make(34))}`);
@@ -27,5 +46,9 @@ console.log(`${saved?.text}`);
 const saving: Reader = new SavingReader();
 console.log(`${saving.size(make(91))}`);
 console.log(`${saved?.text}`);
-class PlainReader { size(value: Item): number { return value.text.length; } }
+class PlainReader {
+    size(value: Item): number {
+        return value.text.length;
+    }
+}
 console.log(`${new PlainReader().size(make(11))}`);
