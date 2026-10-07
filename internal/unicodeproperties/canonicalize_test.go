@@ -197,11 +197,14 @@ func TestCanonicalizeLegacyNode(t *testing.T) {
 	reportDisagreements(t, disagreements)
 }
 
+// The measured winner keeps 80-line batches: the expensive singleton strides need
+// enough independent jobs to fill the capped worker pool. Flags reproduce the size study.
 var unicodeNodeBatchSize = flag.Int("unicode-node-batch-size", 80, "Unicode Node lines per batch; zero means all lines")
 var unicodeNodeWorkers = flag.Int("unicode-node-workers", 0, "Unicode Node workers; zero means GOMAXPROCS, requests are capped at GOMAXPROCS")
 
 // Not parallel: this sweep owns a Node pool capped at GOMAXPROCS, and must not
-// overlap the legacy sweep in this package. Every non-trivial class is scanned\n// as new RegExp('^\\u{X}$', 'iu')
+// overlap the legacy sweep in this package. Every non-trivial class is scanned
+// as new RegExp('^\\u{X}$', 'iu')
 // and again with iv, over every code point. Singletons (the code points in no
 // class) are partitioned twice, into blocks of 1024 and into strides. Any two
 // distinct code points fall in different groups of at least one partition, so
@@ -342,6 +345,8 @@ func TestUnicodeNodeBatchOrderAndLimit(t *testing.T) {
 			<-secondFinished
 		case "1\n":
 			<-firstStarted
+		case "2\n":
+			// This worker has already sent batch 1, so batch 0 completes later.
 			close(secondFinished)
 		}
 		mutex.Lock()
@@ -624,7 +629,11 @@ console.log("TOTAL " + checked);
 `
 
 func runUnicodeBatch(input string) (int, []string, error) {
-	output, err := runNodeOutput(unicodeScanScript, input, 30*time.Minute)
+	// Preserve the original deadline for 80-line batches. Larger measurement batches
+	// need proportionally more time, bounded by the gate's thirty-minute deadline.
+	batches := max(1, (strings.Count(input, "\n")+79)/80)
+	timeout := min(30*time.Minute, time.Duration(batches)*4*time.Minute)
+	output, err := runNodeOutput(unicodeScanScript, input, timeout)
 	if err != nil {
 		return 0, nil, err
 	}
