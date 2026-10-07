@@ -188,3 +188,18 @@ final core -run '^TestCompilerAndStage1$'; Tailwind -run
 '^(TestSourceNodeParity|TestRulesAndSuggestions)$'; each uses -count=1 -v -timeout=10m.
 Evidence: b469-core.log, b469-core-final-corpus.log, b469-tailwind.log,
 b469-rule-vet.log. No required check is removed, relaxed or skipped to green.
+
+Current-main refresh onto area d3a37422c6c2c3dd4a90b8721a2067a4ba0d8898,
+including main b6b1538b0cebc4ba6741ac34f1aedb60293c1d06 (typeof null fix):
+Ledger unchanged; both rebases clean; no owned production source changes.
+The required-input core fixture/mutant/corpus/options gate passes in 103.566s,
+with 828 pairs and 26,599,098 identical bytes on Go, source Node, emitted
+JavaScript and ASan/UBSan native. Both compiling semantic mutants are caught
+on all targets. Owned rule vet passes. Actual Tailwind source parity passes
+52 rows and 27,103 bytes in 6.56s, then backend comparison refuses dynamic
+RegExp lowering at surface.a:41:132 (FAIL 10.096s overall). No new claims.
+Commands unchanged from the preceding refresh: core four filtered correctness
+tests and Tailwind two filtered correctness tests, -count=1 -v -timeout=10m,
+with ADAMIC_TYPESCRIPT_SOURCE and ADAMIC_TAILWIND_PACKAGE supplied. Evidence
+d3-core.log, d3-tailwind.log, d3-rule-vet.log. Full gate and seventeen
+repository-wide correctness checks not run; no check relaxed, removed or skipped.

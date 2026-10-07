@@ -1,0 +1,75 @@
+=== RUN   TestRulesAndSuggestions
+    validation_test.go:446: func-name-matching upstream unique configurations=135
+    validation_test.go:446: consistent-this upstream unique configurations=62
+    validation_test.go:453: independent parser comparison: 199 cases; 0 JSX cases explicitly blocked
+    validation_test.go:454: Go, Node, emitted JavaScript, ASan/UBSan native: 36681 identical bytes
+--- PASS: TestRulesAndSuggestions (21.29s)
+=== RUN   TestOwnedMutants
+=== RUN   TestOwnedMutants/func-name-matching
+    validation_test.go:488: reverse func-name-matching judgement caught by Go comparison on Node: line 2 port="fixed\tvar foo = function bar() {};\\u000a" Go="finding func-name-matching matchVariable 4 27\tFunction name `bar` should match variable name `foo`. A named function expression's name is what appears in stack traces and in the debugger, so when it disagrees with the variable holding it, every trace names something the reader cannot find by searching. Rename the function to match, or drop its name and let it be anonymous."
+        Go context:
+        case 0
+        finding func-name-matching matchVariable 4 27	Function name `bar` should match variable name `foo`. A named function expression's name is what appears in stack traces and in the debugger, so when it disagrees with the variable holding it, every trace names something the reader cannot find by searching. Rename the function to match, or drop its name and let it be anonymous.
+        fixes 0
+        suggestions 0
+        fixed	var foo = function bar() {};\u000a
+        case 1
+    validation_test.go:488: reverse func-name-matching judgement caught by Go comparison on emitted JavaScript: line 2 port="fixed\tvar foo = function bar() {};\\u000a" Go="finding func-name-matching matchVariable 4 27\tFunction name `bar` should match variable name `foo`. A named function expression's name is what appears in stack traces and in the debugger, so when it disagrees with the variable holding it, every trace names something the reader cannot find by searching. Rename the function to match, or drop its name and let it be anonymous."
+        Go context:
+        case 0
+        finding func-name-matching matchVariable 4 27	Function name `bar` should match variable name `foo`. A named function expression's name is what appears in stack traces and in the debugger, so when it disagrees with the variable holding it, every trace names something the reader cannot find by searching. Rename the function to match, or drop its name and let it be anonymous.
+        fixes 0
+        suggestions 0
+        fixed	var foo = function bar() {};\u000a
+        case 1
+    validation_test.go:488: reverse func-name-matching judgement caught by Go comparison on sanitized native: line 2 port="fixed\tvar foo = function bar() {};\\u000a" Go="finding func-name-matching matchVariable 4 27\tFunction name `bar` should match variable name `foo`. A named function expression's name is what appears in stack traces and in the debugger, so when it disagrees with the variable holding it, every trace names something the reader cannot find by searching. Rename the function to match, or drop its name and let it be anonymous."
+        Go context:
+        case 0
+        finding func-name-matching matchVariable 4 27	Function name `bar` should match variable name `foo`. A named function expression's name is what appears in stack traces and in the debugger, so when it disagrees with the variable holding it, every trace names something the reader cannot find by searching. Rename the function to match, or drop its name and let it be anonymous.
+        fixes 0
+        suggestions 0
+        fixed	var foo = function bar() {};\u000a
+        case 1
+=== RUN   TestOwnedMutants/consistent-this
+    validation_test.go:488: reverse consistent-this judgement caught by Go comparison on Node: line 13 port="finding consistent-this aliasNotAssignedToThis 35 46\tThis name is designated as the alias for `this`, and it is holding something else. A reader who knows the convention will read it as the captured context and be wrong, which is worse than an ordinary misleading name because the convention is what made it trustworthy." Go="fixed\tvar context = this; var that = 42; that = this;\\u000a"
+        Go context:
+        case 1
+        finding consistent-this unexpectedAlias 4 18	This captures `this` under a name that is not the designated alias. Every capture in the codebase should read the same way, so a reader recognises the pattern instead of working out what each new name means.
+        fixes 0
+        suggestions 0
+        finding consistent-this aliasNotAssignedToThis 24 33	This name is designated as the alias for `this`, and it is holding something else. A reader who knows the convention will read it as the captured context and be wrong, which is worse than an ordinary misleading name because the convention is what made it trustworthy.
+        fixes 0
+        suggestions 0
+        fixed	var context = this; var that = 42; that = this;\u000a
+    validation_test.go:488: reverse consistent-this judgement caught by Go comparison on emitted JavaScript: line 13 port="finding consistent-this aliasNotAssignedToThis 35 46\tThis name is designated as the alias for `this`, and it is holding something else. A reader who knows the convention will read it as the captured context and be wrong, which is worse than an ordinary misleading name because the convention is what made it trustworthy." Go="fixed\tvar context = this; var that = 42; that = this;\\u000a"
+        Go context:
+        case 1
+        finding consistent-this unexpectedAlias 4 18	This captures `this` under a name that is not the designated alias. Every capture in the codebase should read the same way, so a reader recognises the pattern instead of working out what each new name means.
+        fixes 0
+        suggestions 0
+        finding consistent-this aliasNotAssignedToThis 24 33	This name is designated as the alias for `this`, and it is holding something else. A reader who knows the convention will read it as the captured context and be wrong, which is worse than an ordinary misleading name because the convention is what made it trustworthy.
+        fixes 0
+        suggestions 0
+        fixed	var context = this; var that = 42; that = this;\u000a
+    validation_test.go:488: reverse consistent-this judgement caught by Go comparison on sanitized native: line 13 port="finding consistent-this aliasNotAssignedToThis 35 46\tThis name is designated as the alias for `this`, and it is holding something else. A reader who knows the convention will read it as the captured context and be wrong, which is worse than an ordinary misleading name because the convention is what made it trustworthy." Go="fixed\tvar context = this; var that = 42; that = this;\\u000a"
+        Go context:
+        case 1
+        finding consistent-this unexpectedAlias 4 18	This captures `this` under a name that is not the designated alias. Every capture in the codebase should read the same way, so a reader recognises the pattern instead of working out what each new name means.
+        fixes 0
+        suggestions 0
+        finding consistent-this aliasNotAssignedToThis 24 33	This name is designated as the alias for `this`, and it is holding something else. A reader who knows the convention will read it as the captured context and be wrong, which is worse than an ordinary misleading name because the convention is what made it trustworthy.
+        fixes 0
+        suggestions 0
+        fixed	var context = this; var that = 42; that = this;\u000a
+--- PASS: TestOwnedMutants (22.53s)
+    --- PASS: TestOwnedMutants/func-name-matching (10.40s)
+    --- PASS: TestOwnedMutants/consistent-this (9.90s)
+=== RUN   TestCompilerAndStage1
+    validation_test.go:534: whole compiler and stage1 corpus: 414 files, 828 rule/file pairs
+    validation_test.go:534: Go, Node, emitted JavaScript, ASan/UBSan native: 26599098 identical bytes
+--- PASS: TestCompilerAndStage1 (47.12s)
+=== RUN   TestDecodedOptionCorners
+    validation_test.go:630: Go, Node, emitted JavaScript, ASan/UBSan native: 477 identical bytes
+--- PASS: TestDecodedOptionCorners (12.62s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/rules/func-name-matching	103.566s
