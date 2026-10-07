@@ -196,3 +196,5 @@ Presence ranks and existing readiness bytes both start immediately after object 
 ### Item 10: imported-const-case
 
 Kept taste-land truthiness, fallthrough and complete export support; added imported literal labels. Counts regenerated on Linux.
+
+Item 10 interaction with import-cycles: retain the checked runtime read for imported literal labels instead of folding away readiness. The new cycle/main.a program raises ReferenceError on Node and both backends. Focused baseline passed 4.943s; removing Checked was caught by differing exit codes in TestImportCycleLoadTimeReads (4.186s). The first mutant filter selected no tests and was corrected; only the final run is evidence. Whole lower passed 40.419s, counts 41.621s, focused imported cases and vet passed.

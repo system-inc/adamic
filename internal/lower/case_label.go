@@ -7,8 +7,8 @@ import (
 )
 
 // caseLabel uses an imported const's declared type, rather than a narrowing at this read. Its
-// module has run before the importing module, and import cycles are refused, so folding the label
-// preserves initialization and its effects. Other reads retain their ordinary runtime checks.
+// literal representation is known even in a cycle. Retain the runtime read so an unfinished
+// provider still raises the ordinary module dead-zone error.
 func (l *lowering) caseLabel(node *ast.Node) (ir.Expression, error) {
 	name := ast.SkipParentheses(node)
 	if name.Kind != ast.KindIdentifier {
@@ -26,7 +26,10 @@ func (l *lowering) caseLabel(node *ast.Node) (ir.Expression, error) {
 		proven := l.checker.GetTypeOfSymbol(symbol)
 		if proven.Flags()&(checker.TypeFlagsNumberLiteral|checker.TypeFlagsStringLiteral) != 0 {
 			if constant, _, known := l.literalConstant(proven); known {
-				return constant, nil
+				if local, known := l.local(name); known {
+					return ir.Read{Local: local, Of: constant.Type(), Checked: l.checkedModuleRead(name, local), Readiness: sourceExpression(name)}, nil
+				}
+				return nil, l.notYet(name, "an imported case label without runtime storage")
 			}
 		}
 		return nil, l.notYet(name, "a case label using const "+declaration.Name().Text()+" with type "+l.checker.TypeToString(proven)+" (not a number or string literal type)")
