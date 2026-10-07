@@ -120,3 +120,5 @@ Named harness follow-up: `ab70f38d4` provides working JSX parsing, .a loading an
 ## Named-kind source follow-up
 
 The latest ast.Kind-name correction supersedes earlier numeric-driver blockers. All three fifth-continuation rules now have actual handed-source adapters and raw checker wiring, with 91 controls/68 findings matching Go byte for byte under native/sanitizers, plus both frozen corpora. The quoted-import mismatch is fixed by preserving imported node kinds. Named listeners are declared and validated. Shared production registration and parser integration still await ab70f38d4 landing; existing no-argument source entry points refuse until wired. No additional claims are taken. React HIR/SSA/capture claims remain parked. The branch is rebased and re-green on 39638d9e, including 73 fresh prior native rebuilds and 165 oracle replays. See wave_06_jsx/SOURCE_REPORT.md.
+
+Post-push all-heads selection finds no remaining eligible ranked rule: 606 origin references, 33 distinct Markdown claim blobs, 172 ranked names in claims and the other 25 already ported on main/base. No further claims. Evidence is in wave_06_jsx/source_evidence/selection.
