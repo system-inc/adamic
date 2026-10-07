@@ -1,32 +1,52 @@
-Built UTF-8 synchronous node:fs, catchable Node-coded errors, Stats and seven System wrappers; Buffer-dependent reads remain blocked by the absent Buffer type.
-Branch codex/host-fs-file starts at ef3d907ecdc4c771b016f7d9c52372def057a340; delivery commit is recorded in the final handoff.
-Node v24.19.0 differential gate passed all 12 new fixtures on both backends, existing input fixtures, sanitizers, leak checks and recorded counts.
-All 25 behavioral mutants were caught only by Node stdout; three additional guard mutants failed their designated checks.
-Not covered: readSync, Buffer-returning readFileSync, System.readFile BOM decoding, require wiring, complete native tsc proof, macOS execution or the full repository gate.
+Freshness fix pushed: 5320b144f9142ca76a9472a61308c5096aea70e2 on codex/host-fs-fresh; cherry-picked as 558defe on the fs branch.
+Shared loader landing pushed: 69c71d5171801bc355400452a0dff8a93533ac2e on codex/host-node-types-land, rebased onto origin/main e8ba3d5.
+Built synchronous fs, raw Buffer reads/writes, readSync, catchable coded errors, Stats/Date and all eight requested System wrappers; 15 unit fixtures pass on both backends.
+All 31 behavioral mutants are caught solely by Node stdout, plus three freshness mutants and named refusal/layout/loader guard mutants described below.
+Remaining: the ten unchanged real host fixtures are five Checker and five NotYet; full repository gate timed out in six packages; native tsc and macOS proof remain undone.
 
-The unit owns node_fs_file.d.ts, its embedded loader, library_node_fs_file.go on both backends, the NodeFSFile IR, node_fs_file.c/.h, System source and the directory-aware oracle. Small dispatch hooks connect these files to existing loading, lowering, exception flow, emission and runtime headers. No edits were made to internal/native/emit.go, internal/lower/lower.go, internal/native/native.go or internal/oracle/oracle_test.go.
+Landing follows the standing rule: rebase into <branch>-land, re-green its oracle, push only that branch, and give its SHA to the owner for area/library. No main push or force-push is authorized or used. The fs landing SHA is in the final handoff.
 
-Contracts were read from origin/codex/tsc-census stage3/census/REPORT.md, data/system_contract.json and data/node_derived_sites.json, and checked against TypeScript getNodeSystem. Selected declarations originate in @types/node 25.3.3; path and encoding aliases are restricted to implemented string/UTF-8 shapes and have unit-prefixed names to avoid alias collisions when node:fs declarations merge. Unsupported numeric flags, mode strings, other encodings, bigint Stats, timestamp strings, optional or dynamic options, byte views and URL paths are explicitly refused. Date support is numeric construction, getTime/valueOf and the timestamps returned by Stats, rather than a general Date host.
+The implementation recognizes declarations from the sole official @types/node 25.3.3 installation under stage3/api/node_modules. Its unchanged declarations provide node:* types. The loader validates the package version and canonicalizes the index path, avoiding duplicate globals through symlinks. Unknown declared members receive NotYet with their module, declaring class/interface and member. The copied node_fs_file.d.ts and its embed hook have been deleted. The fetched census branch did not contain the promised stage3/api copy; validation installed the exact package, untracked, at the specified location. Dependencies are not vendored.
 
-The implemented System functions are writeFile, fileExists, getFileSize, getModifiedTime, setModifiedTime, deleteFile and createDirectory in internal/load/node_fs_file_system.a. They preserve swallowed failures, write cleanup/BOM emission, file-only sizes and EEXIST handling. They are reusable source functions, not a replacement ts.sys object. Buffer has no type or native byte-view representation on this base. Returning a string from the raw-byte overload would silently miscompile sys.ts's UTF-16BE/LE and UTF-8 BOM handling, so that overload and System.readFile are absent. The runtime exposes adamic_fs_file_read_bytes for the Buffer unit to integrate, and does not fabricate a Buffer. readSync likewise awaits that byte-view integration. Module declarations merge; require('fs') resolution remains another unit's responsibility.
+Original shared commits are c622e9f156dae83e455c5eec5d8ba9df64006aeb, 9efe6d1f752e7f518955c8ef9217ed4b1b1f5765 and 89f595180d8c7f557ac1c17659cfe41f7c82adb9. The last removes an accidental shadow of official Console overloads; lowering safely formats optional strings and refuses other unimplemented console forms. StatsBase and Dirent have distinct member identities. Qualified NodeJS.ErrnoException assertions no longer panic.
 
-Observations from Node included positioned writes preserving descriptor offset, fractional/non-finite write positions using current offset, flags validated before mode, stat following symbolic links, missing-stat suppression for ENOENT and ENOTDIR only, Stats Date rounding distinct from mtimeMs, nanosecond utimes precision, negative Date timestamps distinct from negative numeric timestamps, and invalid Dates preserving timestamps. The Linux fixtures exercise these effects and ENOENT, ENOTDIR, EEXIST, EACCES, EISDIR, EBADF and invalid NUL paths. Error objects carry name, message and code; errno/syscall/path properties and full Node exception stacks are outside the requested surface.
+The Buffer dependency is origin/codex/host-buffer-crypto 7545a0101fda0572149031630fc30203b7a45cc8, merged here. Its Buffer uses counted numeric arrays. The fs unit returns those arrays for unencoded reads, borrows them for readSync and writeFileSync, and does not expose them as generic ArrayBufferView objects. The narrow borrow exception checks real fs declaration identity, Buffer type, argument position and implemented overload. Buffer/Hash members already implemented by the merged dependency are registered with the shared guard. Two refusal expectations were adjusted for owner-qualified names and official Console types.
 
-Each filesystem run gets real input directories, writable files, symlinks, a dangling link and inaccessible directories. Source runs on Node, emitted JavaScript on Node and native code under ASan/UBSan are compared byte for byte. Separate runs check leaks and filesystem bytes, names and permissions. Root test processes drop child execution to uid/gid 65534. Every new allocation-count row balances allocations and frees. The fs harness supplements the existing input harness without changing the generic oracle fixture list.
+System.readFile uses the Buffer worker's decoder for UTF-8 and UTF-16LE, and sys.ts's byte-pair swap for UTF-16BE. Its owned wrapper uses explicit ?? panic checks where Adamic forbids non-null assertions; real upstream acceptance fixtures remain unchanged. The eight System helpers are readFile, writeFile, fileExists, getFileSize, getModifiedTime, setModifiedTime, deleteFile and createDirectory. write cleanup, BOMs, missing-file suppression, file-only size and EEXIST race handling are covered.
 
-Shared plain const options are synchronously borrowed at verified node:fs call arguments only. Wider mutable assignments still fail Adamic's invariance rule. Literal options containing evaluated expressions are refused because flattening them could reorder or drop effects. Void return expressions are evaluated before returning, as sys.ts's deleteFile requires. Using an fs void call as a value is explicitly refused rather than exposing the C implementation's numeric sentinel. All runtime-created shapes participate in the native field-layout proof so Stats.size cannot alias the existing input host's size slot.
+readSync implements the five-argument Buffer overload, preserving Node's offset validation, ToInt32 length conversion, position validation before zero-length return, empty-buffer failure, bounds checks, fd validation, descriptor offsets and short reads. Other declared overloads are named NotYet. Buffer file writes preserve invalid UTF-8 bytes, append/truncate/mode/flush and caller fd ownership. Node's fd validation checks finite range before fractional values. Stats includes the requested fields and the atime Date used by the real setModifiedTime fixture's driver. Both timestamp Dates are accounted for in freshness and native layout proofs; a user object with an atime field in slot zero checks conflicting layouts.
 
-Validation commands (all test output redirected to logs, never piped):
+The freshness hook evaluates every argument in order, leaves synchronously borrowed objects confined, and models owned objects and timestamp Dates as fresh. Tests cover all current fs operations, writes inside arguments, borrowing, and returned allocations. No edits were made to internal/native/emit.go, internal/lower/lower.go, internal/native/native.go or internal/oracle/oracle_test.go.
 
-- `bash cloud/setup.sh > /tmp/fs_file_setup.log 2>&1`: Go 1.27.1, clang 20.1.8, Node v24.19.0; Go/clang/Node/submodule readiness 0s each, build-cache warm 100s, done 100s. `nproc`: 5. cgroup cpu.max: 400000 100000. Environment: `source /workspace/adamic-tools/env.sh`.
-- `go test ./internal/load ./internal/lower ./internal/native ./internal/flow ./internal/javascript -count=1 -timeout 15m > /tmp/fs_file_packages_final.log 2>&1`: PASS: load 2.038s, lower 19.428s, native 98.865s, flow 65.995s; JavaScript has no standalone package tests and is checked by the oracle.
-- `go test ./internal/oracle -run 'TestNodeFSFile|TestInputAgreesWithNode|TestCountsAreRecorded' -count=1 -v -timeout 30m -args -update-counts > /tmp/fs_file_gate_final.log 2>&1`: PASS, oracle 20.426s. Includes the final negative/invalid/mixed Date and invalid flag/path fixtures.
-- `go test ./internal/lower -run TestNodeFSFile -count=1 > /tmp/fs_file_lower_checks.log 2>&1`: PASS, 0.484s after restoring the option-effect guard mutant.
-- `go test ./internal/load ./internal/lower -count=1 > /tmp/fs_file_load_lower_final.log 2>&1`: PASS, load 0.693s, lower 8.701s after the final void-value guard and declaration alias changes.
-- `go test ./internal/oracle -run 'TestNodeFSFile|TestInputAgreesWithNode|TestCountsAreRecorded' -count=1 -timeout 30m > /tmp/fs_file_delivery_gate.log 2>&1`: PASS, 9.757s with the final source and recorded counts checked without rewriting.
-- `git diff --check`: clean.
+Validation (all command output redirected to logs):
 
-Behavioral mutants and their sole detector, Node stdout comparison in TestNodeFSFileMutants:
+- bash cloud/setup.sh: /tmp/fs_file_setup.log; Go/clang/Node/submodules ready 0s each, cache warm 100s, done 100s. nproc 5, CPU quota 4. Source /workspace/adamic-tools/env.sh; Go 1.27.1, clang 20.1.8, Node v24.19.0.
+- go test ./... on isolated 080789f plus freshness fix: /tmp/fs_fresh_full_gate.log. Freshness passed 86.975s; load, lower, flow, native and oracle passed. Overall FAIL: 600-second timeouts in internal/unicodeproperties and stage1/cohere/{css,json,lint,markdownblocks,typeaware}. This is not a full-gate pass.
+- go test ./internal/fresh -count=1 after restoring three mutants: /tmp/fs_fresh_package.log, PASS 67.588s. Focused final tests: /tmp/fs_fresh_final_focused.log, PASS 0.035s.
+- Shared landing: go test ./internal/load ./internal/lower -run 'TestNodeLibrary|TestConsole' -count=1 -timeout 30m: /tmp/node_types_land_gate.log, PASS 0.885s and 2.701s.
+- Full touched-package attempt before the final byte-write refactor: /tmp/fs_pinned_buffer_packages_final.log. load/lower/flow/fresh passed; native exposed the missing atime layout. That defect was fixed; TestRuntimeFieldLayoutsAreIncluded passes in /tmp/fs_atime_layout.log, 0.006s. This attempt is not described as a pass.
+- go test ./internal/oracle -run 'TestNodeFSFile|TestInputAgreesWithNode|TestCountsAreRecorded|TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_' -count=1 -timeout 30m -args -update-counts: /tmp/fs_buffer_complete_oracle.log, PASS 30.982s. Includes all 15 fs fixtures, 31 behavioral mutants, existing input fixtures, Buffer source oracles, sanitizers, leak checks and allocation counts.
+- Raw-read/System.readFile, readSync/atime and byte-write focused gates: /tmp/fs_system_read_buffer_delivery.log, /tmp/fs_sync_atime_delivery.log and /tmp/fs_write_buffer_gate.log, PASS 3.158s, 13.061s and 5.850s.
+- python3 internal/oracle/node_fs_file_host_check.py --compiler /tmp/adamic-host-fs --logs /tmp/fs-real-host --report internal/oracle/node_fs_file_host_status.json --mutants: /tmp/fs_real_host_gate.log, exit 1 because all ten real fixtures remain blocked. All ten match recorded Node stdout/stderr/exit, and all ten source mutants are caught. Native and JavaScript stages are recorded separately. A generic build/tool failure is never classified as Checker.
+
+Real acceptance outcomes on both backends:
+
+| Fixture | Native | JavaScript | Current first blocker |
+|---|---|---|---|
+| 01_readFile_utf8 | Checker | Checker | Buffer indexed reads can be undefined in the swap assignments |
+| 02_readFile_utf16le | Checker | Checker | Same indexed-read typing |
+| 03_readFile_utf16be | Checker | Checker | Same indexed-read typing |
+| 04_readFile_missing | Checker | Checker | Same indexed-read typing |
+| 05_writeFile | NotYet | NotYet | node:fs.mkdtempSync in driver |
+| 06_fileExists | NotYet | NotYet | node:fs.mkdtempSync in driver |
+| 10_getModifiedTime | NotYet | NotYet | node:fs.mkdtempSync in driver |
+| 11_setModifiedTime | NotYet | NotYet | node:fs.mkdtempSync in driver |
+| 12_deleteFile | NotYet | NotYet | node:fs.mkdtempSync in driver |
+| 13_createDirectory | Checker | Checker | catch variable e is unknown at e.code |
+
+One-line language reproducers: const b=Buffer.from([1,2]); b[0]=b[1]; and try { throw new Error('x'); } catch(e) { console.log(e.code); }. Typed/narrowed catches work and correctly observe filesystem error code/message. These diagnostics are not an inability to throw catchable fs errors. Scratch drivers also need rmSync, symlinkSync, path.join and os.tmpdir, outside this unit's census contract; a dependency branch was requested through the user. No real fixture is reported green.
+
+Behavioral mutants (each compiles, exits zero and has no sanitizer/leak failure; only source Node stdout catches it):
 
 | Member | Mutation |
 |---|---|
@@ -55,13 +75,25 @@ Behavioral mutants and their sole detector, Node stdout comparison in TestNodeFS
 | System.setModifiedTime | Write a Date one second too late |
 | System.deleteFile | Skip unlink entirely |
 | System.createDirectory | Swallow mkdir failure, including EACCES |
+| readFileSync Buffer path | Increment the first byte modulo 256 |
+| readFileSync Buffer fd | Increment the first byte modulo 256 |
+| readSync | Add one to the returned byte count |
+| Stats.atime | Add one millisecond to the Date |
+| writeFileSync Buffer path | Replace append with truncate |
+| writeFileSync Buffer fd | Skip the write |
 
+Guard and proof mutants, all restored:
 
-Additional mutants:
+- Remove the fs case: TestNodeFSFileOperationsAreKnown fails for all 20 then-current operations, /tmp/fs_fresh_unknown_mutant.log.
+- Omit argument evaluation: TestNodeFSFileOperandsStillJudgeWrites fails, /tmp/fs_fresh_operand_mutant.log.
+- Treat returned objects as outside: TestNodeFSFileResultsAreFresh fails, /tmp/fs_fresh_result_mutant.log.
+- Remove declaring owners: TestNodeLibraryDistinguishesReceiverOwners fails with node:fs.isFile, /tmp/node_owner_mutant.log; restored tests pass /tmp/node_owner_restored.log.
+- Restore the shadow Console signatures: TestNodeLibraryKeepsOfficialConsoleSignatures fails with real checker diagnostics, /tmp/node_console_shadow_mutant.log; restored test passes /tmp/node_console_restored.log.
+- Remove the pinned version check: TestNodeLibraryRejectsDifferentVersion fails, /tmp/node_types_pin_mutant.log.
+- Remove the named member guard: TestNodeLibraryNamesUnimplementedMembers fails, /tmp/node_types_guard_mutant.log.
+- Remove the qualified assertion identifier check: TestNodeFSFileQualifiedErrorType panics on QualifiedName, /tmp/fs_file_qualified_mutant.log.
+- Remove void-value, option-effect or runtime-shape guards: their designated tests fail, /tmp/fs_file_void_mutant.log, /tmp/fs_file_effect_mutant.log and /tmp/fs_file_layout_mutant.log.
+- Historical raw-Buffer refusal mutant before Buffer integration: /tmp/fs_file_buffer_guard_mutant.log. The refusal is now deliberately replaced by real Buffer support.
+- The first raw-byte mutant after adding a 0xff case produced byte 256 and UBSan caught it. That did not count as an oracle catch. It now increments modulo 256, and passes sanitizer/leak checks before Node stdout catches it.
 
-- Remove the void-value guard: TestNodeFSFileRefusesVoidValues fails with `want void value refusal, got <nil>`; exit 1, /tmp/fs_file_void_mutant.log. Restored and the fs lowering checks rerun.
-
-- Remove the option-literal effect guard: TestNodeFSFileRefusesOptionEffects fails with `want effects refusal, got <nil>`; exit 1, /tmp/fs_file_effect_mutant.log. Restored and tested.
-- Remove the fs runtime shapes from the field-layout proof: TestRuntimeFieldLayoutsAreIncluded fails because runtime field code at slot 2 is absent/conflicting; exit 1, /tmp/fs_file_layout_mutant.log. Restored before final package validation.
-
-Linux is the gate of record. macOS uses st_mtimespec rather than st_mtim, and libuv's fsync uses F_FULLFSYNC where this runtime currently uses fsync; flush behavior is therefore not claimed identical on macOS. Directory sizes, permissions, timestamp precision and errno availability depend on filesystem/platform. Resource exhaustion, interrupted close/fsync, concurrent deletion, multi-gigabyte reads and the complete libuv errno catalog were not exhaustively tested. The errno table covers the common filesystem failures exercised here; unknown platform-specific errno values currently fall back to UNKNOWN. Invalid-value inspection covers the exercised short quoting/control/truncation forms, but unusual Unicode inspection and lone-surrogate previews are not exhaustively matched. These are remaining fidelity limits, not evidence of complete Node emulation.
+Linux is the gate of record. macOS uses st_mtimespec/st_atimespec; its libuv flush uses F_FULLFSYNC where this runtime uses fsync, so macOS flush equivalence is not claimed. Resource exhaustion, interrupted close/fsync, multi-gigabyte reads, concurrent deletion and the complete platform errno catalog are not exhaustively tested. Unknown errno values fall back to UNKNOWN; unusual Unicode inspection previews remain a fidelity limit. Stats provides the requested observed fields, not complete Node reflection. Numeric flags, unsupported encodings, bigint Stats, timestamp strings, arbitrary byte views, dynamic options and URL paths remain explicit NotYet. No PR was opened.

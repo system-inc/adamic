@@ -2,10 +2,15 @@
 #ifndef ADAMIC_NODE_FS_FILE_H
 #define ADAMIC_NODE_FS_FILE_H
 adamic_string *adamic_fs_file_read_file(const adamic_string *, const adamic_string *);
+adamic_array *adamic_fs_file_read_buffer(const adamic_string *, const adamic_string *);
+adamic_array *adamic_fs_file_read_buffer_fd(double, const adamic_string *);
 adamic_string *adamic_fs_file_read_fd(double, const adamic_string *);
 double adamic_fs_file_open(const adamic_string *, const adamic_string *, double);
+double adamic_fs_file_read_sync(double, adamic_array *, double, double, double);
 double adamic_fs_file_write(double, const adamic_string *, double);
 double adamic_fs_file_close(double);
+double adamic_fs_file_write_buffer(const adamic_string *, const adamic_array *, const adamic_string *, double, bool);
+double adamic_fs_file_write_buffer_fd(double, const adamic_array *, const adamic_string *, double, bool);
 double adamic_fs_file_write_file(const adamic_string *, const adamic_string *, const adamic_string *, double, bool);
 double adamic_fs_file_write_fd(double, const adamic_string *, const adamic_string *, double, bool);
 bool adamic_fs_file_exists(const adamic_string *);
