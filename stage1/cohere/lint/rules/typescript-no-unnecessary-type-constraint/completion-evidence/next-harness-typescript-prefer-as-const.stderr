@@ -1,0 +1,7 @@
+panic: unexpected fix shape
+
+goroutine 1 [running]:
+main.run({0x3f8e656c4b00?, 0x7ffd60122353?}, 0x0, 0x3f8e657c8700)
+	/workspace/adamic/cohere/wave15_next_serializer.go:81 +0x127d
+main.main()
+	/workspace/adamic/cohere/wave15_next_entry.go:50 +0x2bd

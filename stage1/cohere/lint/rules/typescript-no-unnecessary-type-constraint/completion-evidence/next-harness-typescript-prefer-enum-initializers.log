@@ -1,0 +1,11 @@
+/workspace/adamic/stage1/cohere/lint/rules/typescript-prefer-enum-initializers/testdata/blocked.ts.txt:1:10
+  @typescript-eslint/prefer-enum-initializers  The value of the member 'Up' should be explicitly defined.
+
+range 9 11 defineInitializer suggestions			9 11
+suggestion	defineInitializerSuggestion	Can be fixed to Up = 0	1
+suggestion-edit	9 11	Up = 0
+suggestion	defineInitializerSuggestion	Can be fixed to Up = 1	1
+suggestion-edit	9 11	Up = 1
+suggestion	defineInitializerSuggestion	Can be fixed to Up = 'Up'	1
+suggestion-edit	9 11	Up = 'Up'
+fixed	enum D { Up }\u000a

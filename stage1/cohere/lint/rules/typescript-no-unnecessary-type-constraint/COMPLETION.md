@@ -79,3 +79,34 @@ Best of three interleaved end-to-end count-only runs over 77 compiler files and 
 | network-no-string-literal-query | 1000 | 846.00 | 1119.35 | 5186.13 |
 
 Evidence is under completion-evidence/. Fixture outputs and mutant outputs are retained; the large Go corpus output is gzip-compressed, with byte counts and SHA-256 hashes for all compared corpus outputs. validation.log and supplemental-fixtures.log record the completed checks and rates. Setup/default failures, bridge refusals, upstream test logs and the sentinel log are included. Test output was written directly to files, never piped.
+
+## Published harness update after the implementation push
+
+After pushing 03d9d672, origin exposed codex/lint-harness-dot-a at
+2650ad595b82220c368631ea13139fad4b306ed6. This supersedes the earlier observation
+that the branch was not yet published. Its unmodified source adds .a discovery,
+emitted JavaScript comparisons, profile compilation fixes, independent fix
+ranges and complete suggestion serialization. No shared source was adopted or
+edited on this worker branch. The default failure logs above are observations
+of this branch's existing foundation, not assertions about the new branch.
+
+The owned probe-next-harness.py builds the exact published serializer through
+a Go overlay, changing only its entry-point name, and runs unchanged Go rules.
+The constraint and enum witnesses now serialize successfully with exit 0 and
+empty stderr. The as-const annotation witness still exits 2 with
+`panic: unexpected fix shape`: the published serializer permits exactly one
+automatic fix, while Go supplies the two separate annotation edits. That is
+the concrete remaining repair-model gap on the published next harness. The
+probe logs and stderr are in completion-evidence/next-harness-*.
+
+Reproduce after fetching that commit:
+
+```
+python3 stage1/cohere/lint/rules/typescript-no-unnecessary-type-constraint/probe-next-harness.py --scratch /tmp/wave15-next-harness > /tmp/wave15-next-harness.log 2>&1
+```
+
+Integrating the new shared suggestion/range model requires adapting the owned
+publish bridge on that foundation. Complete owned proposals and their byte
+comparisons are already pushed; integrated all-rule parity is still not
+certified. No more rules were claimed while the current claimed-rule bar,
+including the independent Tailwind JSX parser gap, remains open.
