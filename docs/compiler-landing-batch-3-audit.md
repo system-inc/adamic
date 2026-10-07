@@ -371,3 +371,17 @@ Tests: C = Linux count regeneration; V = formatting/vet; O = whole Node oracle; 
 Skipped call-targets as directed. MayThrow commits 2dbee1148, 5af7bfbc6 and 3ab8f94c1 were already ancestors; c-1 merges introduce no duplicate commits. origin/cloud/integrate-c-1 was never merged. Reused adcff66, b058229 and cb2c256; 92f6c81 and 0bff67b did not fit current blockers/diagnostics, so generated current expectations under the record condition instead.
 
 Resolved source files pass whitespace checks. The entire incoming-main diff contains whitespace in recorded logs, patch evidence and deliberate CRLF lint witnesses; those incoming artifacts were preserved, rather than rewriting their observations.
+
+## Named mutation case inventory
+
+These complement the per-item explicit overlay, census, manifest, callback and width mutation results above. Full uncached oracle tests rerun the applicable compiler mutations.
+
+Readiness: pinned exit, panic text and output: `deinitialize_entries`, `deinitialize_static`, `deinitialize_shadowed`, `deinitialize_initialized`, `deinitialize_read`, `deinitialize_field`, `deinitialize_loop`, `deinitialize_capture`, `deinitialize_exception`, `deinitialize_alias`, `deinitialize_parameter`, `deinitialize_values`, `deinitialize_assign`, `deinitialize_assign_read`, `deinitialize_field_initialized`, `deinitialize_store`, `deinitialize_eager`.
+
+Node FS: Node stdout alone; mutants exit 0 and are sanitizer/leak clean: `writeFileSync Buffer bytes`, `writeFileSync Buffer fd`, `readSync byte count`, `readFileSync raw bytes`, `readFileSync raw fd`, `readFileSync UTF8`, `readFileSync fd`, `openSync truncation`, `writeSync byte count`, `closeSync swallowed failure`, `writeFileSync append flag`, `existsSync directories`, `statSync missing option`, `Stats size`, `Stats mtimeMs`, `Stats atime`, `Stats mtime`, `Stats isFile`, `Stats isDirectory`, `Stats isSymbolicLink follows`, `mkdirSync first directory`, `unlinkSync swallowed failure`, `utimesSync milliseconds`, `Date timestamp`, `System fileExists`, `System getFileSize`, `System getModifiedTime`, `System setModifiedTime`, `System deleteFile`, `System createDirectory`, `System writeFile BOM`.
+
+Integer: Node stdout alone; mutants exit 0 and are sanitizer clean: `remainder_zero_sign`, `remainder_divisor_sign`, `int32_boundary_accepted_as_itself`, `unsigned_shift_signed`, `remainder_fraction_accepted`.
+
+Enum semantics: Node output; cleanup is additionally held by leaks: `numeric member`, `string member`, `reverse alias`, `string reverse map`, `const member`, `key effects`, `cleanup`, `name enumeration`.
+
+The obsolete optional-widening pending-function rename survived legitimately; the replacement pending-only retired_landing mutant was caught by the unchanged guard. The scalar NULL-comparison emission mutant was caught by C compilation, which is compilation-validity evidence rather than a runtime soundness claim. GCC signed-byte/aggregate mutants check portability diagnostics, not runtime semantics.
