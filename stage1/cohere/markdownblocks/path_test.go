@@ -151,7 +151,7 @@ func TestMarkdownAstPath(t *testing.T) {
 				}
 				write(t, filepath.Join(scratch, file), data)
 			}
-			result := nativelyRun(t, lowered(t, filepath.Join(scratch, "testdata/path_probe.ts")), nativeCases)
+			result := onNode(t, filepath.Join(scratch, "testdata/path_probe.ts"), nativeCases)
 			clean(t, m.name, result)
 			if bytes.Equal(result.stdout, want.stdout) {
 				t.Fatal("survived")

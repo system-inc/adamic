@@ -93,7 +93,7 @@ func TestMdastMalformedEvents(t *testing.T) {
 				}
 				write(t, filepath.Join(scratch, file), data)
 			}
-			mutant := nativelyRun(t, lowered(t, filepath.Join(scratch, "testdata/mdast_probe.ts")), cases)
+			mutant := onNode(t, filepath.Join(scratch, "testdata/mdast_probe.ts"), cases)
 			if mutant.exitCode != 70 {
 				t.Fatalf("error mutant did not reach expected error: %d", mutant.exitCode)
 			}

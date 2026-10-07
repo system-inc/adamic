@@ -127,8 +127,7 @@ func TestMarkdownUnicodeWidths(t *testing.T) {
 				}
 				write(t, filepath.Join(scratch, f), b)
 			}
-			mutant := lowered(t, filepath.Join(scratch, "testdata/width_probe.ts"))
-			r := nativelyRun(t, mutant, cases)
+			r := onNode(t, filepath.Join(scratch, "testdata/width_probe.ts"), cases)
 			clean(t, m.name, r)
 			if bytes.Equal(r.stdout, want.stdout) {
 				t.Fatal("survived")

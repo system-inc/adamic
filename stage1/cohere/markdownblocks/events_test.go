@@ -157,7 +157,7 @@ func TestTokenizerEvents(t *testing.T) {
 				}
 				write(t, filepath.Join(scratch, file), data)
 			}
-			result := nativelyRun(t, lowered(t, filepath.Join(scratch, "testdata/events_probe.ts")), cases)
+			result := onNode(t, filepath.Join(scratch, "testdata/events_probe.ts"), cases)
 			clean(t, m.name, result)
 			if bytes.Equal(result.stdout, want.stdout) {
 				t.Fatal("survived")

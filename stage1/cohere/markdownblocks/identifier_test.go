@@ -66,7 +66,7 @@ func TestMdastIdentifierScalars(t *testing.T) {
 		}
 		write(t, filepath.Join(scratch, file), data)
 	}
-	mutant := nativelyRun(t, lowered(t, filepath.Join(scratch, "testdata/identifier_probe.ts")))
+	mutant := onNode(t, filepath.Join(scratch, "testdata/identifier_probe.ts"))
 	clean(t, "case table mutant", mutant)
 	if bytes.Equal(mutant.stdout, truth.stdout) {
 		t.Fatal("case table mutant survived")
