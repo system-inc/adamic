@@ -37,3 +37,19 @@ claims/wave-30.md. Released reservations are available for reassignment; no
 other active claims were found. All three have zero recorded corpus findings.
 These three rules are now reserved for codex/typeaware-wave-22. This continuation
 claim is pushed before writing any implementation for them.
+
+## Third batch claim
+
+After completing and pushing the six existing claims (590f4fa6), all origin
+heads were fetched and every origin claim document and base/main port inventory
+was inspected again. The first three unclaimed, unported entries of the
+combined by-volume ranking are:
+
+1. `no-global-assign`
+2. `no-implicit-globals`
+3. `no-implied-eval`
+
+All three have zero recorded compiler and repository findings. They are now
+reserved for this branch. This claim is pushed before any implementation code.
+The fetched ref SHAs and selection inventory are in
+validation-wave-22-third/selection.json.
