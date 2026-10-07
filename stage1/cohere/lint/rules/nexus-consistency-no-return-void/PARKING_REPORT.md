@@ -2,7 +2,7 @@ Built: rebased 29 owned commits containing 17 rule ports onto origin/main c01907
 Commits: rule rebase head 4346a622; helper rebase head 65508f3f; report commits follow on their respective owned branch names.
 Commands: six bounded corpus suites PASS, plus two corrected corpus runs; 6,707 supported source/rule rows and 224,561,469 matching Go bytes including extra repair probes; fresh six witness/mutant suites PASS on c01907a7; overlay vet PASS.
 Mutants: all 17 rule mutants and all 12 retained helper mutants compile, exit cleanly and are caught by Go comparison on source Node, emitted JavaScript and sanitized native.
-Not covered: full Go parity on eleven known parser/adapter exclusions, normal shared harness integration, numeric listener migration and full repository gate; these gaps extend beyond the parking exception's only-harness condition.
+Not covered: full Go parity on eleven known parser/adapter exclusions, normal shared harness integration, direct node handoff and full repository gate; these gaps extend beyond the parking exception's only-harness condition.
 
 ## Rebase and ownership
 
@@ -18,7 +18,7 @@ The scratch compatibility harness comes from previously pushed 89d25f6f. Current
 
 Beyond registration, the following Go-valid or Go-recovered input cases remain outside parity: one top-level-await delay case; one JSX return-void callback omitted by the capture adapter; one Tailwind JSX attribute case; five multiline-string JSX ancestry cases; three legacy-octal recovery cases (01.5, 0777.5 and 0755n). Existing owned reports retain the inputs. All executed refusal controls agree on the Adamic modes, but a refusal differs from Go and is not a passing finding comparison. Therefore this report does not claim the branch has only a harness obstacle or qualifies for unrestricted landing under the parking exception. No new helper is claimed.
 
-Existing descriptors retain their original listener declarations. This turn adds no new rule. Numeric SyntaxKind/node handoff migration remains tied to the upcoming shared driver/finding contract; no shared file is changed to invent that interface. The user has not named the landing SHA yet.
+The corrected listener contract uses typescript-go ast.Kind names in rule.json kinds, not numeric kinds. All existing owned descriptors already declare kind names. Existing visitors retain their index-based compatibility API; new rules must take the handed node and leave relevance dispatch to the shared driver. No new rule is added. The named shared harness is ab70f38d4 on origin/lint-rules/harness; it includes JSX parser work but is not an ancestor of current main c01907a7. Its effects on the eleven exclusions have not been measured. No shared file is edited to invent an interface. Future regex ports must use the shared translated JS RegExp row or a JS RegExp literal, and option patterns use new RegExp(pattern, u); this documentation change adds no matcher.
 
 ## Commands and evidence
 
