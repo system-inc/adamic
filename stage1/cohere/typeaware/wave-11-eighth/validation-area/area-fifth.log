@@ -1,0 +1,26 @@
+=== RUN   TestWave11FifthAgreementAndMutants
+    wave_11_fifth_test.go:168: controls: 376 sources, 374 parse-clean, 2 excluded parse diagnostics
+    wave_11_fifth_test.go:171: excluded parse diagnostics: control-150.ts
+    wave_11_fifth_test.go:171: excluded parse diagnostics: control-172.ts
+    wave_11_fifth_test.go:175: controls: 90572 identical finding bytes; findings 259
+    wave_11_fifth_test.go:183: controls-asan: 90572 identical finding bytes; findings 259
+    wave_11_fifth_test.go:197: throw mutant: exit 0, empty stderr, independent Go bytes catch byte 675
+    wave_11_fifth_test.go:197: backreference mutant: exit 0, empty stderr, independent Go bytes catch byte 88
+    wave_11_fifth_test.go:197: arrow-fix mutant: exit 0, empty stderr, independent Go bytes catch byte 10526
+    wave_11_fifth_test.go:197: provenance mutant: exit 0, empty stderr, independent Go bytes catch byte 84
+    wave_11_fifth_test.go:197: regex-path mutant: exit 0, empty stderr, independent Go bytes catch byte 4498
+    wave_11_fifth_test.go:197: self-resolution mutant: exit 0, empty stderr, independent Go bytes catch byte 10242
+    wave_11_fifth_test.go:209: symbol provenance question mutant: exit 0, empty stderr, independent Go bytes catch byte 84
+    wave_11_fifth_test.go:231: repository: 18485 identical finding bytes; findings 0
+    wave_11_fifth_test.go:232: repository-asan: 18485 identical finding bytes; findings 0
+    wave_11_fifth_test.go:237: repository go process=178.3462ms cohere: load_ns=90179051 rule_ns=12187243 run_ns=71199966
+    wave_11_fifth_test.go:237: repository native process=330.800698ms tsgo: load_ns=98321711 query_ns=4902416 queries=25 first_query_ns=723482 run_ns=225729471
+    wave_11_fifth_test.go:231: compiler: 5318 identical finding bytes; findings 0
+    wave_11_fifth_test.go:232: compiler-asan: 5318 identical finding bytes; findings 0
+    wave_11_fifth_test.go:237: compiler go process=486.517922ms cohere: load_ns=309470991 rule_ns=91610872 run_ns=136617363
+    wave_11_fifth_test.go:237: compiler native process=2.441757905s tsgo: load_ns=256062504 query_ns=289786458 queries=460 first_query_ns=18529801 run_ns=2144918816
+    wave_11_fifth_test.go:250: released query: panic 70, invalid or released checker handle
+    wave_11_fifth_test.go:255: released-registry mutant exits 0, caught by required panic 70
+--- PASS: TestWave11FifthAgreementAndMutants (140.79s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	140.828s
