@@ -1,0 +1,34 @@
+{
+  "code_commit": "7015f8e90e493dcf18d3ad8e1b1d84a5c027a6b7",
+  "main": "f8013f0baac41ddc340d76f83bddde38536a8f07",
+  "tests": [
+    [
+      "TestWave18ConstructorAgreementAndMutants",
+      "75.09"
+    ],
+    [
+      "TestWave18CoreAgreementAndMutants",
+      "82.97"
+    ],
+    [
+      "TestWave18PreferenceAgreementAndMutants",
+      "96.85"
+    ],
+    [
+      "TestWave18ReactCores",
+      "452.53"
+    ],
+    [
+      "TestWave18AgreementAndMutants",
+      "86.17"
+    ],
+    [
+      "TestWave18TitleWithJsxSlice",
+      "51.77"
+    ]
+  ],
+  "combined_attempt_seconds": 797.277,
+  "corrected_title_seconds": 51.778,
+  "source_adapter": false,
+  "origin_refs": 508
+}
