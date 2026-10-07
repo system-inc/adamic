@@ -1,5 +1,14 @@
 # Scanner blockers
 
+## October 7: adaptation 84 names the zero reset
+
+The lone raw tokenFlags = 0 becomes TokenFlags.None. Both are numeric zero.
+Census reason enum-flags, feature zero-assignment inference pending. Restoration
+mutant caught at scanner:1864:22. Combined 84-86 suite: 106,367 pass, zero
+failures/pending/differences, 252.427s; Node tokens match. The next syntax
+refusal observed with lexical locals is scanner:2034:75, numeric code point
+passed as CharacterCodes. Evidence native84-86-baseline-* and restoration ledger.
+
 ## October 7: adaptation 83 gives four zero branches flag provenance
 
 Four private EscapeSequenceScanningFlags ternaries use String & ReportErrors
