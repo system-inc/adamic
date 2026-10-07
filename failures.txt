@@ -140,6 +140,78 @@
 === RUN   TestRuntimeStaticsProtectionMutants
 --- FAIL: TestRuntimeStaticsProtectionMutants (175.42s)
 
+== github.com/system-inc/adamic/cloud TestRepositoryPassesCohereBaseline
+=== RUN   TestRepositoryPassesCohereBaseline
+=== PAUSE TestRepositoryPassesCohereBaseline
+=== CONT  TestRepositoryPassesCohereBaseline
+    cohere_gate_test.go:27: cohere baseline: exit status 1
+        fatal: Needed a single revision
+        cohere gate failed: Command '['git', 'rev-parse', '--verify', 'origin/main']' returned non-zero exit status 128.
+        cohere gate coverage: 10526 repository files mirrored
+          types: 1974 files in scope
+          lint: 1974 files in scope
+          format: 436 programs checked, 5571 files left out by the ignore patterns
+          config-format: tsconfig.json and CohereSettings.json checked at their real paths
+--- FAIL: TestRepositoryPassesCohereBaseline (44.81s)
+
+== github.com/system-inc/adamic/internal/fuzz TestLivenessAndFieldShapes
+=== RUN   TestLivenessAndFieldShapes
+=== PAUSE TestLivenessAndFieldShapes
+=== CONT  TestLivenessAndFieldShapes
+    liveness_fields_test.go:56: seed 2: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestLivenessAndFieldShapes282020665/001/program.a:9:3: Adamic 0.1 refuses cannot move items1[0]: element is not a fresh object literal with only scalar literal fields; return it through the results
+    liveness_fields_test.go:56: seed 5: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestLivenessAndFieldShapes282020665/001/program.a:7:3: Adamic 0.1 refuses cannot move items1[0][]: nested array ownership is not proven; return it through the results
+    liveness_fields_test.go:56: seed 10: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestLivenessAndFieldShapes282020665/001/program.a:7:3: Adamic 0.1 refuses cannot move items1[0][]: nested array ownership is not proven; return it through the results
+    liveness_fields_test.go:56: seed 12: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestLivenessAndFieldShapes282020665/001/program.a:8:3: Adamic 0.1 refuses cannot move items1[0]: element is not a fresh object literal with only scalar literal fields; return it through the results
+    liveness_fields_test.go:56: seed 15: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestLivenessAndFieldShapes282020665/001/program.a:8:3: Adamic 0.1 refuses cannot move items1[0]: element is not a fresh object literal with only scalar literal fields; return it through the results
+    liveness_fields_test.go:56: seed 16: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestLivenessAndFieldShapes282020665/001/program.a:698:31: Adamic 0.1 refuses parallelMap items are not shareable: Bag39.tags is a mutable string[]; make the whole reachable value readonly and bind captures with const; moving mutable values into tasks belongs to concurrency part 2 (#p286ycm)
+    liveness_fields_test.go:56: seed 17: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestLivenessAndFieldShapes282020665/001/program.a:8:3: Adamic 0.1 refuses cannot move items1[0]: element is not a fresh object literal with only scalar literal fields; return it through the results
+    liveness_fields_test.go:56: seed 19: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestLivenessAndFieldShapes282020665/001/program.a:9:3: Adamic 0.1 refuses cannot move items1[0]: element is not a fresh object literal with only scalar literal fields; return it through the results
+    liveness_fields_test.go:56: seed 22: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestLivenessAndFieldShapes282020665/001/program.a:7:3: Adamic 0.1 refuses cannot move items1[0].values[]: nested Map ownership is not proven; return it through the results
+    liveness_fields_test.go:56: seed 23: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestLivenessAndFieldShapes282020665/001/program.a:9:3: Adamic 0.1 refuses cannot move items1[0]: element is not a fresh object literal with only scalar literal fields; return it through the results
+    liveness_fields_test.go:56: seed 27: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestLivenessAndFieldShapes282020665/001/program.a:678:57: Adamic 0.1 refuses task capture 'step24' is not shareable: step24 is not an immutable binding; make the whole reachable value readonly and bind captures with const; moving mutable values into tasks belongs to concurrency part 2 (#p286ycm)
+    liveness_fields_test.go:56: seed 29: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestLivenessAndFieldShapes282020665/001/program.a:321:17: Adamic 0.1 refuses use after move: items1.length; items1 was moved into parallelMap; don't use it after the parallelMap
+    liveness_fields_test.go:56: seed 32: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestLivenessAndFieldShapes282020665/001/program.a:9:3: Adamic 0.1 refuses cannot move items1[0]: element is not a fresh object literal with only scalar literal fields; return it through the results
+    liveness_fields_test.go:56: seed 34: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestLivenessAndFieldShapes282020665/001/program.a:8:3: Adamic 0.1 refuses cannot move items1[0]: element is not a fresh object literal with only scalar literal fields; return it through the results
+    liveness_fields_test.go:56: seed 35: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestLivenessAndFieldShapes282020665/001/program.a:8:13: Adamic 0.1 refuses cannot move items1[0].child6: nested reachable ownership is not proven; return it through the results
+    liveness_fields_test.go:56: seed 36: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestLivenessAndFieldShapes282020665/001/program.a:9:3: Adamic 0.1 refuses cannot move items1[0]: element is not a fresh object literal with only scalar literal fields; return it through the results
+--- FAIL: TestLivenessAndFieldShapes (55.82s)
+
+== github.com/system-inc/adamic/internal/fuzz TestOperatorsShapes
+=== RUN   TestOperatorsShapes
+=== PAUSE TestOperatorsShapes
+=== CONT  TestOperatorsShapes
+    operators_test.go:71: seed 10: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestOperatorsShapes2311601471/001/program.a:942:31: Adamic 0.1 refuses parallelMap items are not shareable: Bag36.tags is a mutable string[]; make the whole reachable value readonly and bind captures with const; moving mutable values into tasks belongs to concurrency part 2 (#p286ycm)
+    operators_test.go:71: seed 11: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestOperatorsShapes2311601471/001/program.a:860:43: Adamic 0.1 refuses parallelMap work writes state another task can reach: record25 writes the global 'total24'; keep work and everything it calls pure; write only task locals and fresh objects
+    operators_test.go:71: seed 16: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestOperatorsShapes2311601471/001/program.a:826:31: Adamic 0.1 refuses parallelMap items are not shareable: Bag39.tags is a mutable string[]; make the whole reachable value readonly and bind captures with const; moving mutable values into tasks belongs to concurrency part 2 (#p286ycm)
+    operators_test.go:71: seed 25: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestOperatorsShapes2311601471/001/program.a:868:57: Adamic 0.1 refuses task capture 'step57' is not shareable: step57 is not an immutable binding; make the whole reachable value readonly and bind captures with const; moving mutable values into tasks belongs to concurrency part 2 (#p286ycm)
+    operators_test.go:71: seed 27: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestOperatorsShapes2311601471/001/program.a:802:57: Adamic 0.1 refuses task capture 'step24' is not shareable: step24 is not an immutable binding; make the whole reachable value readonly and bind captures with const; moving mutable values into tasks belongs to concurrency part 2 (#p286ycm)
+    operators_test.go:71: seed 32: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestOperatorsShapes2311601471/001/program.a:857:57: Adamic 0.1 refuses task capture 'step24' is not shareable: step24 is not an immutable binding; make the whole reachable value readonly and bind captures with const; moving mutable values into tasks belongs to concurrency part 2 (#p286ycm)
+    operators_test.go:71: seed 33: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestOperatorsShapes2311601471/001/program.a:955:43: Adamic 0.1 refuses parallelMap work writes state another task can reach: record42 writes the global 'total41'; keep work and everything it calls pure; write only task locals and fresh objects
+    operators_test.go:71: seed 36: stage 0 didn't lower it: /workspace/adamic-gate-tmp/TestOperatorsShapes2311601471/001/program.a:884:43: Adamic 0.1 refuses parallelMap work writes state another task can reach: record34 writes the global 'total33'; keep work and everything it calls pure; write only task locals and fresh objects
+--- FAIL: TestOperatorsShapes (55.83s)
+
+== github.com/system-inc/adamic/internal/native TestRuntimeStaticsSignalAndExit/handler_buffer_mutant
+        signal worker line
+        signal worker line
+        signal worker line
+        signal worker line
+        signal worker line
+        signal worker line
+        signal worker line
+        signal worker line
+        signal worker line
+        signal worker line
+        signal worker line
+        signal worker line
+        signal worker line
+        signal worker line
+        signal worker line
+        signal worker line
+        signal worker line
+        signal worker line
+        signal worker line
+--- FAIL: TestRuntimeStaticsSignalAndExit/handler_buffer_mutant (15.13s)
+
 == github.com/system-inc/adamic/stage1/cohere/lint (failed outside a test)
 FAIL	github.com/system-inc/adamic/stage1/cohere/lint	3600.136s
 
