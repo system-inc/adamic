@@ -2,7 +2,7 @@ package oracle
 
 // Register this unit's fixtures without changing the shared oracle driver.
 func init() {
-	for _, name := range []string{"encodings", "utf8", "utf16", "bom", "fs_decode", "writes", "crypto", "namespace", "random"} {
+	for _, name := range []string{"encodings", "utf8", "utf16", "bom", "fs_decode", "writes", "crypto", "fallback", "namespace", "random"} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
