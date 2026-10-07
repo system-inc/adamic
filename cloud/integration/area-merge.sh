@@ -84,7 +84,24 @@ if ! git push -q --force-with-lease="${remoteLock}:" origin "${lockCommit}:${rem
 	echo "refused: another machine is merging into area/$area (${remoteLock#refs/heads/} on origin); wait for it" >&2
 	exit 1
 fi
-trap 'git push -q --force-with-lease="${remoteLock}:${lockCommit}" origin ":${remoteLock}" 2>/dev/null; rmdir "$lock"' EXIT
+# errexit applies inside the trap, so a release push that fails (GitHub answers 500 at times) must not
+# abort it before the local lock goes: each attempt is guarded, and the local lock is released last
+# whatever origin said, with a line naming the remote lock if it stayed.
+releaseLocks() {
+	local attempt
+	for attempt in 1 2 3; do
+		if git push -q --force-with-lease="${remoteLock}:${lockCommit}" origin ":${remoteLock}" 2>/dev/null; then
+			break
+		fi
+		if [ "$attempt" = 3 ]; then
+			echo "area-merge: could not release ${remoteLock#refs/heads/} on origin (it holds ${lockCommit:0:8}); delete it by hand with that lease" >&2
+		else
+			sleep 5
+		fi
+	done
+	rmdir "$lock" 2>/dev/null || true
+}
+trap releaseLocks EXIT
 
 if [ -d "$worktree" ]; then
 	if [ -n "$(git -C "$worktree" status --porcelain --untracked-files=no)" ]; then
@@ -331,9 +348,20 @@ if [ "$push" = no ]; then
 	echo "green, not pushed (--no-push): $branch ${sha:0:8} on area/$area ${areaTip:0:8} is ${merged}; logs in $logs"
 	exit 0
 fi
-if git push -q origin "${merged}:refs/heads/area/$area"; then
-	echo "merged: area/$area ${areaTip:0:8}..${merged:0:8} takes $branch ${sha:0:8}; logs in $logs"
-else
-	echo "area/$area moved while this ran; run again"
-	exit 1
-fi
+# A refused push is either the area moving (another merge landed first) or origin failing (GitHub
+# answers 500 at times). Origin's tip tells them apart: still the tip this merged onto means origin
+# failed, so try again; anything else means the area moved, and the merge has to be redone on it.
+for attempt in 1 2 3; do
+	if git push -q origin "${merged}:refs/heads/area/$area"; then
+		echo "merged: area/$area ${areaTip:0:8}..${merged:0:8} takes $branch ${sha:0:8}; logs in $logs"
+		exit 0
+	fi
+	remoteTip=$(git ls-remote origin "refs/heads/area/$area" 2>/dev/null | cut -f1) || remoteTip=""
+	if [ -n "$remoteTip" ] && [ "$remoteTip" != "$areaTip" ]; then
+		echo "area/$area moved to ${remoteTip:0:8} while this ran; run again"
+		exit 1
+	fi
+	[ "$attempt" = 3 ] || sleep 10
+done
+echo "origin refused the push three times and never showed area/$area moved from ${areaTip:0:8} (origin last said: ${remoteTip:-nothing, unreadable}): an origin error, not a moved area. The tested merge is ${merged}; push it as a fast-forward of ${areaTip:0:8} once origin answers"
+exit 1
