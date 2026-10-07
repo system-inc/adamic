@@ -6,6 +6,9 @@ import (
 )
 
 func (e *emitter) libraryArraySearch(search ir.ArraySearch) string {
+	if search.ViewRead.View != "" {
+		return e.emitViewArraySearch(search)
+	}
 	array := e.value(search.Array)
 	value := e.value(search.Value)
 	from := "0.0"

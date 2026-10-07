@@ -89,7 +89,7 @@ func (l *lowering) libraryArrayMethod(node, receiver *ast.Node, name string) (ir
 	if value.Type() != element {
 		return nil, true, l.notYet(node, name+" with a value of another type than the elements")
 	}
-	search := ir.ArraySearch{Array: array, Value: value, Element: element, Includes: name == "includes", Last: name == "lastIndexOf"}
+	search := l.viewArraySearch(node, receiver, array, value, element, name == "includes", name == "lastIndexOf")
 	if len(written) == 2 {
 		from, err := l.expression(written[1])
 		if err != nil {

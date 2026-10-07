@@ -624,6 +624,36 @@ conditional working estimate, not an unconditional promise to erase phantom
 brands or admit incomplete dictionaries/callable signatures. Completion evidence
 and remaining pair/read totals are updated at every push.
 
+## Untagged object union unit, October 7
+
+Worker branch `codex/views-untagged-object-unions` starts at lane 4 583d19b7.
+The user authorizes this plan addition. Own only new files named
+`view_unions_untagged.go` and `view_unions_untagged_test.go` in lower/native/
+JavaScript, runtime `view_unions_untagged.c/.h`, oracle
+`checked_views_untagged_unions_test.go`, and the new
+`stage3/interface-downcasts/untagged/` subtree. Existing mixed-union files,
+shared contracts/dispatch/IR/readiness and counts remain with their owners.
+
+Frozen demand: 84 pairs and 186 explicit reads. Rank by reads descending,
+then checker receiver type id and field. Family labels overlap and include
+narrowed/intersection receivers and array/callable alternatives; keep these in
+the queue rather than silently reclassifying them. Component tests do not
+remove pairs. A pair completes only with actual source read lowering and both
+backend positive/negative pins plus semantic mutants.
+
+Required owner handoff: shared lazy read dispatch supplies the evaluated value,
+its union member contracts and non-panicking presence/readiness/logical-kind
+probes. Member-specific kind tags select candidates, never certify payloads.
+Structural alternatives must permit later candidates after a failed match;
+selected member contracts must survive nested reads and aliases. Reuse existing
+mixed-union selection and shared probes rather than duplicate readiness state.
+Any hook needed in an existing file will be recorded here before implementation.
+
+Working whole-family estimate: October 12, 2026 UTC, conditional on lazy read
+hooks and normalized probes arriving by October 9. Unsupported descendants and
+other-lane alternatives remain named read obligations; no cast-time eagerness
+or trusting Unknown is permitted. This supersedes the provisional October 10
+estimate made before reading the lane handoff documents.
 ### Lane 4 scope split, October 7, 2026
 
 This ruling supersedes lane 4's earlier all-213 assignment and delivery estimate.
@@ -784,3 +814,54 @@ lazy admission, normalized probes and member adapters arriving by October 9.
 The initial October 9 estimate was revised after inspection of pending hooks.
 No integrated pair is complete at this territory checkpoint: 73 pairs and
 267 reads remain. Lazy-admission branch was not yet present on origin.
+
+## Centralized checked-view integration
+
+The lead assigned Codex 01a11882-3830 on codex/views-integration to merge every
+lane tip and resolve conflicts once, hunk by hunk. This supersedes all direct
+cross-lane merge instructions above, including the Lane 1 cast-conflict handoff.
+Each worker pushes only its own branch and obtains another lane's code by merging
+the newest codex/views-integration SHA when needed. Workers blocked on lazy
+admission build against that integration branch where possible; otherwise they
+report the blocker and rest until the lead wakes them. Lane 2 remains native
+arrays only, and Lane 5 retains callable ownership and certification hooks.
+
+### Untagged unit selector handoff
+
+The new `lower.UntaggedViewMembers(contracts, unionID)` returns ordered member
+contract ids and each member's own required finite scalar tag fields. Members
+without tags retain structural matching. Optional tags never exclude a member.
+No descendant contract is replaced or certified by these tag descriptors.
+
+Concrete owner wiring needed before source admission:
+
+1. The lazy read dispatcher resolves this plan on an object-union read, leaving
+   other-family or deferred members as named read obligations. Existing
+   `viewUnionFields` must stop demanding a common finite discriminant for this
+   family. Do not call the new plan builder at the cast as an eager gate.
+2. Native emits `adamic_view_untagged_member` descriptors and calls
+   `adamic_view_untagged_union_select` with the common evaluated snapshot,
+   non-panicking slot probe and complete member matcher. Include
+   `view_unions_untagged.h`; runtime embedding already includes its new files.
+3. JavaScript appends `MixedUnionRuntime()` and `UntaggedUnionRuntime()` and
+   calls `adamicViewUntaggedUnionSelect` with the same contracts and adapters.
+4. Both selectors return the selected contract id. The shared dispatch must
+   keep that id through aliases, helpers, generics, callbacks and stored values,
+   and check each later read; selection is no permission to erase checks.
+5. The three ordinary absent controls have measured count rows in
+   `untagged/count-row-additions.md`, for the shared counts owner to register.
+
+Merging lazy admission 5002bfe0 into d15b4206 conflicts in the plan, cast.go,
+interface_cast.go, readiness.go, view_objects.go and native/view_fields.go.
+The attempt was aborted without editing those shared compiler files. Lane 4
+9ecdda53 merged with both plan additions retained. Source fixtures still
+compile-refuse at their casts for lack of a common finite discriminant. The
+component selector is therefore not a source admission checkpoint: all 84 pairs
+and 186 reads remain pending. The nested mutant exercises the supplied component
+matcher; compiler-wide transitive read propagation remains unproven by this unit.
+
+Coordination superseded by the user: stop direct lane merges. Dependency code
+now arrives through `codex/views-integration`, whose owner resolves shared hunks.
+The earlier merge observations above remain historical evidence. At this unit's
+check, `git ls-remote --heads origin codex/views-integration` returned no ref.
+Do not resolve another lane's compiler conflicts locally while waiting for it.

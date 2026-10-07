@@ -981,6 +981,9 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 		}
 		return e.value(expression.Array) + "[" + e.value(expression.Index) + "]"
 	case ir.ArraySearch:
+		if expression.ViewRead.View != "" {
+			return e.emitViewArraySearch(expression)
+		}
 		method := ".indexOf("
 		if expression.Includes {
 			method = ".includes("

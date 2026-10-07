@@ -101,7 +101,7 @@ func (l *lowering) viewArrayUnsupportedUses(node *ast.Node) error {
 			callee := ast.SkipParentheses(part.AsCallExpression().Expression)
 			if callee.Kind == ast.KindPropertyAccessExpression && l.checker.IsArrayType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression))) {
 				switch callee.Name().Text() {
-				case "map", "forEach", "filter", "some", "every", "find", "findIndex", "reduce", "slice", "at", "pop", "push":
+				case "map", "forEach", "filter", "some", "every", "find", "findIndex", "reduce", "slice", "at", "pop", "push", "indexOf", "includes", "lastIndexOf":
 				case "join":
 					element := l.checker.GetElementTypeOfArrayType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression)))
 					if l.checker.IsArrayType(l.checker.GetNonNullableType(element)) {
@@ -170,4 +170,8 @@ func (l *lowering) viewArrayHolesConsumer(node any) bool {
 		return true
 	}
 	return false
+}
+
+func (l *lowering) viewArraySearch(node, receiver *ast.Node, array, value ir.Expression, element ir.Type, includes, last bool) ir.ArraySearch {
+	return ir.ArraySearch{Array: array, Value: value, Element: element, Includes: includes, Last: last, ViewRead: l.viewArrayUse(node, receiver, element, false)}
 }

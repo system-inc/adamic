@@ -129,3 +129,28 @@ option-type-good/wrong, node-indicator-good/wrong and diagnostic-good/wrong
 are frontier evidence, not newly accepted source contracts. No mutant claim
 is made for this documentation/probe-only merge. The same focused package,
 full IR, filtered checked-view/Node oracle and vet gates are rerun.
+
+## Lane 2 search follow-up
+
+Tip 25ed1d3f (implementation 12482f1f) merges after lane 4b at the lead's request.
+The only remaining conflict is one plan hunk: retain all dated owner/lane
+checkpoints and append centralized integration coordination. The ArraySlice hunk
+recorded by lane 2 against f1c91970 was already resolved in 8165756d: sparse-aware
+slice dispatch plus graphArray/GraphTypes ownership. No emitter conflict recurs.
+Search read metadata merges with owner readiness, including the nested ForOf fix.
+Reference-source write refusals remain in both backends; search bad/literal, lazy,
+sparse, object identity and evaluation fixtures pin behavior. All nine new search
+mutants are rerun before publication; prior eleven array mutants remain carried
+evidence unless explicitly rerun. Gates use the same recorded baseline exclusion.
+
+## Lane 4c untagged reconciliation
+
+Tip 6b3fc480 adds selector components without production source admission.
+The sole docs/checked-views-plan.md hunk retains all integration/lane handoffs
+and the incoming selector handoff. Owner lazy admission replaces the old eager
+cast refusal with the named unsupported untagged-object-union field read. The
+source-frontier assertion is updated to that observed refusal for binding-name,
+option-element and structural view-read fixtures, preserving their rejection.
+The initial old-message failure is logged. All 84 pairs / 186 reads remain pending;
+component nested mutants prove the adapter seam, not compiler propagation.
+Six selector semantic mutants are rerun and restored before normal gates.
