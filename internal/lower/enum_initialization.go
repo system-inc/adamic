@@ -12,7 +12,12 @@ import (
 func (l *lowering) enumInitialization(modules []*ast.SourceFile) error {
 	pending := 0
 	for _, module := range modules {
-		for _, statement := range module.Statements.Nodes {
+		for _, statement := range namespaceDeclarations(module.Statements.Nodes) {
+			if statement.Kind == ast.KindEnumDeclaration {
+				if _, err := l.enumFields(statement); err != nil {
+					return err
+				}
+			}
 			if statement.Kind == ast.KindEnumDeclaration && !ast.HasSyntacticModifier(statement, ast.ModifierFlagsConst) {
 				pending++
 			}
@@ -104,7 +109,7 @@ func (l *lowering) enumInitialization(modules []*ast.SourceFile) error {
 		return found
 	}
 	for _, module := range modules {
-		for _, statement := range module.Statements.Nodes {
+		for _, statement := range namespaceDeclarations(module.Statements.Nodes) {
 			if statement.Kind == ast.KindEnumDeclaration {
 				initialized[statement] = true
 				if !ast.HasSyntacticModifier(statement, ast.ModifierFlagsConst) {

@@ -178,7 +178,7 @@ func (l *lowering) namespaceRefusal(node *ast.Node) error {
 				}
 			}
 			switch member.Kind {
-			case ast.KindInterfaceDeclaration, ast.KindTypeAliasDeclaration, ast.KindEmptyStatement, ast.KindModuleDeclaration, ast.KindClassDeclaration:
+			case ast.KindInterfaceDeclaration, ast.KindTypeAliasDeclaration, ast.KindEmptyStatement, ast.KindModuleDeclaration, ast.KindClassDeclaration, ast.KindEnumDeclaration:
 			case ast.KindFunctionDeclaration:
 				if namespaceOwnThis(member) {
 					return &Refused{Where: l.program.Where(member), What: "this in a namespace function; a qualified call and a detached call have different receivers", Fix: "pass the state as an explicit parameter instead of using this"}
@@ -233,6 +233,9 @@ func (l *lowering) namespaceRefusal(node *ast.Node) error {
 // model those partial objects, no call runs while a runtime namespace is still uninitialized.
 // Bodies of functions are deferred; private bindings keep their ordinary checked lexical storage.
 func (l *lowering) namespaceInitialization(modules []*ast.SourceFile) error {
+	if err := l.enumInitialization(modules); err != nil {
+		return err
+	}
 	pending := 0
 	for _, module := range modules {
 		var count ast.Visitor
