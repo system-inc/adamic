@@ -29,3 +29,13 @@ adamic_value *adamic_object_write_field(adamic_object *object, const char *name,
     }
     return slot;
 }
+
+adamic_string *adamic_object_typeof(const adamic_object *object) {
+    if (object == NULL) { return &adamic_typeof_undefined; }
+    return object->class != NULL && object->class->is_static ? &adamic_typeof_function : &adamic_typeof_object;
+}
+
+adamic_string *adamic_static_union_typeof(const adamic_heap *value) {
+    if (value != NULL && value != &adamic_null && value->kind == adamic_kind_object) { return adamic_object_typeof((const adamic_object *)value); }
+    return adamic_union_typeof(value);
+}

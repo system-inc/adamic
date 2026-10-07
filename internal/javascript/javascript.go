@@ -651,6 +651,10 @@ func (e *emitter) value(expression ir.Expression) string {
 			return e.value(expression.Array) + "?.[" + quote(expression.Name) + "]"
 		}
 		return e.value(expression.Array) + "[" + quote(expression.Name) + "]"
+	case ir.HasProperty:
+		return "(" + quote(expression.Name) + " in " + e.value(expression.Object) + ")"
+	case ir.DynamicProperty:
+		return "(" + e.value(expression.Object) + ")[" + quote(expression.Name) + "]"
 	case ir.Null:
 		return "null"
 	case ir.IsNull:
