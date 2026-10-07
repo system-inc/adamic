@@ -367,6 +367,9 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 	if value, known, err := l.namespaceExpression(node); known {
 		return value, err
 	}
+	if value, known, err := l.libraryMethodValue(node); known {
+		return value, err
+	}
 	if observed, known := l.libraryArrayObservation(node); known {
 		return observed, nil
 	}

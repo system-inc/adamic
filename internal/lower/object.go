@@ -517,12 +517,15 @@ func (l *lowering) readObjectField(node *ast.Node, property ir.Property) ir.Expr
 // holds only the object's own fields, and reading hasOwnProperty as one of them panics: the field
 // the checker proved is not there.
 func (l *lowering) hasOwnProperty(node *ast.Node, receiver *ast.Node) (ir.Expression, bool, error) {
+	return l.hasOwnPropertyArguments(node, receiver, node.AsCallExpression().Arguments.Nodes)
+}
+
+func (l *lowering) hasOwnPropertyArguments(node *ast.Node, receiver *ast.Node, arguments []*ast.Node) (ir.Expression, bool, error) {
 	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
 	symbol := l.checker.GetSymbolAtLocation(callee)
 	if symbol == nil || len(symbol.Declarations) == 0 || !load.IsLibrary(ast.GetSourceFileOfNode(symbol.Declarations[0])) {
 		return nil, false, nil
 	}
-	arguments := node.AsCallExpression().Arguments.Nodes
 	if len(arguments) != 1 {
 		return nil, true, l.notYet(node, "hasOwnProperty with other than one argument")
 	}
@@ -572,6 +575,12 @@ func refusedRandom(l *lowering, node *ast.Node) error {
 // builtin lowers a call to Math or a number's toFixed. isBuiltin is false for any other call.
 func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 	if value, handled, err := l.userMethodCall(node); handled {
+		return value, true, err
+	}
+	if value, known, err := l.libraryEmptyMap(node); known {
+		return value, true, err
+	}
+	if value, known, err := l.libraryMethodCall(node); known {
 		return value, true, err
 	}
 	if value, known, err := l.libraryMathNumberCall(node); known {
@@ -761,11 +770,14 @@ var numberFunctions = map[string][]ir.Type{
 
 // numberCall lowers Number.parseInt, parseFloat, isNaN, isFinite, isInteger and isSafeInteger.
 func (l *lowering) numberCall(node *ast.Node, name string) (ir.Expression, bool, error) {
+	return l.numberCallArguments(node, name, node.AsCallExpression().Arguments.Nodes)
+}
+
+func (l *lowering) numberCallArguments(node *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {
 	takes, isKnown := numberFunctions[name]
 	if !isKnown {
 		return nil, true, l.notYet(node, "Number."+name)
 	}
-	written := node.AsCallExpression().Arguments.Nodes
 	optional := 0
 	if name == "parseInt" {
 		optional = 1
@@ -1020,6 +1032,10 @@ func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
 
 // arrayMethod lowers array.push(value) and array.join(separator).
 func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) (ir.Expression, bool, error) {
+	return l.arrayMethodArguments(node, receiver, name, node.AsCallExpression().Arguments.Nodes)
+}
+
+func (l *lowering) arrayMethodArguments(node *ast.Node, receiver *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {
 	if created := ast.SkipParentheses(receiver); name == "fill" && created.Kind == ast.KindNewExpression && l.isLibraryGlobal(created.AsNewExpression().Expression, "Array") {
 		return l.newArrayFilled(node, created)
 	}
@@ -1035,11 +1051,14 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 		return l.arraySort(node, array, element)
 	}
 	if name == "map" {
-		arguments := node.AsCallExpression().Arguments.Nodes
+		arguments := written
 		if len(arguments) != 1 {
 			return nil, true, l.notYet(node, "map with other than one callback")
 		}
-		callback, err := l.expression(arguments[0])
+		callback, known, err := l.libraryMapCallback(arguments[0], receiver, element)
+		if !known {
+			callback, err = l.expression(arguments[0])
+		}
 		if err != nil {
 			return nil, true, err
 		}
@@ -1064,7 +1083,7 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 		return nil, true, l.notYet(node, "concat on an array of arrays")
 	}
 	arguments := []ir.Expression{}
-	for _, argument := range node.AsCallExpression().Arguments.Nodes {
+	for _, argument := range written {
 		lowered, err := l.expression(argument)
 		if err != nil {
 			return nil, true, err
@@ -1143,7 +1162,7 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 			if argument.Type() != ir.Array {
 				return nil, true, l.notYet(node, "concat with a value that isn't an array (JavaScript appends it)")
 			}
-			if other, err := l.elementType(node.AsCallExpression().Arguments.Nodes[index]); err != nil || other != element {
+			if other, err := l.elementType(written[index]); err != nil || other != element {
 				return nil, true, l.notYet(node, "concat of arrays of different elements")
 			}
 		}
@@ -1156,7 +1175,7 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 	}
 	separator := ir.Expression(ir.StringConstant{Index: l.constant(",")})
 	if len(arguments) == 1 {
-		arguments[0] = l.orDefault(node.AsCallExpression().Arguments.Nodes[0], arguments[0], ",")
+		arguments[0] = l.orDefault(written[0], arguments[0], ",")
 		if arguments[0].Type() != ir.String {
 			return nil, true, l.notYet(node, "join with a separator that isn't a string")
 		}
@@ -1671,6 +1690,10 @@ func (l *lowering) setIndex(target *ast.Node, valueNode *ast.Node) ([]ir.Stateme
 // stringFromCodes lowers String.fromCharCode(...) and String.fromCodePoint(...), each argument a
 // number, evaluated in order.
 func (l *lowering) stringFromCodes(node *ast.Node, codePoints bool) (ir.Expression, bool, error) {
+	return l.stringFromCodesArguments(node, codePoints, node.AsCallExpression().Arguments.Nodes)
+}
+
+func (l *lowering) stringFromCodesArguments(node *ast.Node, codePoints bool, written []*ast.Node) (ir.Expression, bool, error) {
 	lowered := ir.StringFromCodes{CodePoints: codePoints}
 	if hasSpread(node) {
 		spread, err := l.spreadNumbers(node)
@@ -1680,7 +1703,7 @@ func (l *lowering) stringFromCodes(node *ast.Node, codePoints bool) (ir.Expressi
 		lowered.Spread = spread
 		return lowered, true, nil
 	}
-	for _, argument := range node.AsCallExpression().Arguments.Nodes {
+	for _, argument := range written {
 		if argument.Kind == ast.KindSpreadElement {
 			return nil, true, l.notYet(argument, "a spread argument to String."+node.AsCallExpression().Expression.Name().Text())
 		}
