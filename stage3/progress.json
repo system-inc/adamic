@@ -1,0 +1,27 @@
+{
+  "milestones": {
+    "scanner_native": false,
+    "parser_native": false,
+    "no_emit_match": false,
+    "real_programs_match": false
+  },
+  "definitions": {
+    "scanner_native": "tsc's own createScanner, sliced verbatim from the adapted TypeScript 6.0.3 tree, compiled natively by Adamic, scans all of src/compiler, and its output is byte-identical to the same driver on Node.",
+    "parser_native": "tsc's own createSourceFile, sliced the same way, parses the reference corpus natively, and its dump is byte-identical to Node's.",
+    "no_emit_match": "tsc compiled natively by Adamic runs --noEmit on src/compiler and its diagnostics are byte-identical to tsc on Node.",
+    "real_programs_match": "tsc compiled natively by Adamic compiles real programs, and its output and diagnostics are byte-identical to tsc on Node."
+  },
+  "evidence_required": [
+    "adamic_sha: the compiler commit that built the native binary",
+    "source_sha: the commit holding the slice or tree, its adaptations and its driver",
+    "run_directory: the committed directory holding the logs, both outputs' SHA-256 and the comparison",
+    "node_sha256 and native_sha256: equal, over the full output",
+    "mutant: a one-byte change to the native output, and the comparison that caught it"
+  ],
+  "evidence": {
+    "scanner_native": null,
+    "parser_native": null,
+    "no_emit_match": null,
+    "real_programs_match": null
+  }
+}

@@ -34,9 +34,10 @@ func (l *lowering) nodeHostConsumesArgument(node *ast.Node, index int) bool {
 	}
 	argument := ast.SkipParentheses(call.Arguments.Nodes[index])
 	// exactObject follows only unannotated const bindings back to literals.
-	// Structural annotations, casts, spreads and parameters can hide a subtype's
+	// The directory stat lowerer also proves unannotated const literals with as const.
+	// Structural annotations, other casts, spreads and parameters can hide a subtype's
 	// fields, even when every declared field is read using its declared type.
-	if !l.exactObject(argument, 0) {
+	if !l.exactObject(argument, 0) && !(l.nodeLibraryMember(node) == "node:fs.statSync" && l.nodeFSDirectoryStatOptions(argument)) {
 		return false
 	}
 	// The consumed fs options are scalar. Do not let an exact outer literal hide

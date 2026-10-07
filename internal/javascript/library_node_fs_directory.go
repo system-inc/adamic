@@ -11,7 +11,7 @@ func (e *emitter) nodeHostCall(call ir.NodeHostCall) string {
 	switch call.Member {
 	case "native":
 		return "adamicNodeFS.realpathSync.native(" + e.values(call.Arguments) + ")"
-	case "readdirSync", "realpathSync":
+	case "symlinkSync", "readdirSync", "realpathSync":
 		return "adamicNodeFS." + call.Member + "(" + e.values(call.Arguments) + ")"
 	default:
 		return "(" + e.value(call.Arguments[0]) + ")." + call.Member + "()"

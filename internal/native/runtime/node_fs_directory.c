@@ -41,6 +41,10 @@ void adamic_node_fs_raise(const adamic_string *path, int error,
 		code = "ENOENT";
 		reason = "no such file or directory";
 		break;
+	case EEXIST:
+		code = "EEXIST";
+		reason = "file already exists";
+		break;
 	case ENOTDIR:
 		code = "ENOTDIR";
 		reason = "not a directory";
@@ -124,11 +128,14 @@ void adamic_node_fs_raise(const adamic_string *path, int error,
 }
 // NUL is rejected before any filesystem effect. The supported path contract is
 // a string.
-static bool valid(const adamic_string *path) {
+static bool valid(const adamic_string *path, bool target) {
 	if (memchr(path->bytes, 0, path->length) == NULL) {
 		return true;
 	}
 	static adamic_string code = ADAMIC_STRING("ERR_INVALID_ARG_VALUE");
+	static adamic_string target_before =
+		ADAMIC_STRING("The argument 'target' must be a string, Uint8Array, or "
+					  "URL without null bytes. Received ");
 	static adamic_string before =
 		ADAMIC_STRING("The argument 'path' must be a string, Uint8Array, or "
 					  "URL without null bytes. Received ");
@@ -199,7 +206,7 @@ static bool valid(const adamic_string *path) {
 	adamic_object *thrown = adamic_object_new(&error_shape);
 	thrown->slots[0].reference = &type_error_name;
 	thrown->slots[1].reference =
-		adamic_string_concat(2, (adamic_string *const[]){&before, shown});
+		adamic_string_concat(2, (adamic_string *const[]){target ? &target_before : &before, shown});
 	thrown->slots[2].reference = &code;
 	adamic_release(shown);
 	adamic_thrown = thrown;
@@ -230,7 +237,7 @@ bool adamic_node_fs_dirent_is(const adamic_object *entry_value,
 adamic_array *adamic_node_fs_readdir(const adamic_string *path,
 									 const adamic_object *options) {
 	adamic_output_flush();
-	if (!valid(path)) {
+	if (!valid(path, false)) {
 		return NULL;
 	}
 	bool typed = false;
@@ -343,7 +350,7 @@ adamic_array *adamic_node_fs_readdir(const adamic_string *path,
 }
 adamic_string *adamic_node_fs_realpath(const adamic_string *path, bool native) {
 	adamic_output_flush();
-	if (!valid(path)) {
+	if (!valid(path, false)) {
 		return NULL;
 	}
 	if (native) {
@@ -366,4 +373,26 @@ adamic_string *adamic_node_fs_realpath(const adamic_string *path, bool native) {
 	adamic_string *result = adamic_retain(value->slots[1].reference);
 	adamic_release(value);
 	return result;
+}
+
+// Node reports the target before the link path and validates both before effects.
+double adamic_node_fs_symlink(const adamic_string *target,
+                              const adamic_string *path) {
+    adamic_output_flush();
+    if (!valid(target, true) || !valid(path, false)) return 0;
+    char *destination = adamic_path_bytes(target);
+    char *name = adamic_path_bytes(path);
+    int result = symlink(destination, name);
+    int error = errno;
+    free(name);
+    free(destination);
+    if (result != 0) {
+        adamic_node_fs_raise(target, error, "symlink");
+        static adamic_string arrow = ADAMIC_STRING(" -> '"), quote = ADAMIC_STRING("'");
+        adamic_string *before = adamic_thrown->slots[1].reference;
+        adamic_thrown->slots[1].reference = adamic_string_concat(4,
+            (adamic_string *const[]){before, &arrow, (adamic_string *)path, &quote});
+        adamic_release(before);
+    }
+    return 0;
 }

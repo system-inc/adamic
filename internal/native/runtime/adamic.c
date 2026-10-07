@@ -118,11 +118,11 @@ static void stopped(int signal_number) {
 	raise(signal_number);
 }
 
-// stop_with installs stopped for a signal, unless whoever started the program ignored it (a
-// background job's SIGINT), which stays ignored, as it does for Node.
+// Node resets inherited ignored SIGINT, SIGHUP and SIGTERM at startup. Other ignored signals
+// stay ignored; they would not terminate the process with their inherited disposition.
 static void stop_with(int signal_number) {
 	struct sigaction current;
-	if (sigaction(signal_number, NULL, &current) != 0 || current.sa_handler == SIG_IGN) {
+	if (sigaction(signal_number, NULL, &current) != 0 || (current.sa_handler == SIG_IGN && signal_number != SIGINT && signal_number != SIGHUP && signal_number != SIGTERM)) {
 		return;
 	}
 	struct sigaction handler;
