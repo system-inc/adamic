@@ -80,6 +80,10 @@ type lowering struct {
 	checker *checker.Checker
 	result  *ir.Program
 
+	// foreignFunctions are the functions Apple calls lower to, by class, selector and call shape
+	// (foreign.go).
+	foreignFunctions map[string]int
+
 	// strings indexes result.Strings, so a constant used twice is stored once.
 	strings map[string]int
 

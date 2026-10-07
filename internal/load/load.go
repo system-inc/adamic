@@ -118,10 +118,12 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 		roots = append(roots, root)
 	}
 	roots = append(roots, preludePath)
+	// Apple's binding files, for the apple/ modules the program imports (apple.go).
+	roots = append(roots, appleRoots(fs, roots[:len(paths)], normalizedOverlay)...)
 
 	// bundled.WrapFS lays the embedded lib.*.d.ts files over the source view, and cachedvfs memoizes
 	// the stats module resolution repeats.
-	fileSystem := cachedvfs.From(&regexpLibraryFS{FS: bundled.WrapFS(fs)})
+	fileSystem := cachedvfs.From(&appleFS{FS: &regexpLibraryFS{FS: bundled.WrapFS(fs)}})
 	config := tsoptions.NewParsedCommandLine(compilerOptions(), roots, nil, tspath.ComparePathsOptions{
 		UseCaseSensitiveFileNames: fileSystem.UseCaseSensitiveFileNames(),
 		CurrentDirectory:          currentDirectory,
@@ -146,7 +148,7 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 	for _, sourceFile := range program.GetSourceFiles() {
 		byPath[sourceFile.Path()] = sourceFile
 	}
-	for _, root := range roots[:len(roots)-1] {
+	for _, root := range roots[:len(paths)] {
 		sourceFile, isLoaded := byPath[tspath.ToPath(root, currentDirectory, fileSystem.UseCaseSensitiveFileNames())]
 		if !isLoaded {
 			return nil, fmt.Errorf("load: %s was named but the compiler did not load it", fs.displayName(root))

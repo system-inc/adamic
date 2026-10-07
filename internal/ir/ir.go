@@ -83,6 +83,9 @@ type Function struct {
 	// MayThrow is a function a throw can leave (docs/memory.md, "Exceptions"): its callers test for
 	// one after each call. Lowering works it out over the call graph once every function is lowered.
 	MayThrow bool
+
+	// Foreign, when set, is the native call this function's body stands for (foreign.go).
+	Foreign *Foreign
 }
 
 // Type is a value's representation. The checker proved the TypeScript type; this is what's left of
