@@ -1,0 +1,17 @@
+=== RUN   TestSixthRecovery
+=== RUN   TestSixthRecovery/case0
+    wave08_sixth_test.go:71: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/cohere/lint/rules/typescript-no-unnecessary-type-constraint/main.a --manifest /tmp/adamic-gate/TestSixthRecoverycase0903168647/002/manifest.txt]: exit status 70
+        adamic: panic: parser slice expected semicolon at 10 in /tmp/adamic-gate/TestSixthRecoverycase0903168647/001/recovery.ts
+=== RUN   TestSixthRecovery/case1
+    wave08_sixth_test.go:71: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/cohere/lint/rules/typescript-no-unnecessary-type-constraint/main.a --manifest /tmp/adamic-gate/TestSixthRecoverycase13141117172/002/manifest.txt]: exit status 70
+        adamic: panic: parser slice expected semicolon at 12 in /tmp/adamic-gate/TestSixthRecoverycase13141117172/001/recovery.ts
+=== RUN   TestSixthRecovery/case2
+    wave08_sixth_test.go:71: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/cohere/lint/rules/typescript-no-unnecessary-type-constraint/main.a --manifest /tmp/adamic-gate/TestSixthRecoverycase22675146084/002/manifest.txt]: exit status 70
+        adamic: panic: parser slice expected semicolon at 12 in /tmp/adamic-gate/TestSixthRecoverycase22675146084/001/recovery.ts
+--- FAIL: TestSixthRecovery (27.78s)
+    --- FAIL: TestSixthRecovery/case0 (0.21s)
+    --- FAIL: TestSixthRecovery/case1 (0.32s)
+    --- FAIL: TestSixthRecovery/case2 (0.32s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	27.794s
+FAIL

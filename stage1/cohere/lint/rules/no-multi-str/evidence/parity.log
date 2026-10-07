@@ -1,0 +1,79 @@
+=== RUN   TestCompilerAndStage1Agree
+    lint_test.go:408: compiler and stage1: 246 files
+    lint_test.go:409: Go, Node, emitted JavaScript, native identical: 13091844 bytes
+--- PASS: TestCompilerAndStage1Agree (64.67s)
+=== RUN   TestOwnedWitnesses
+    registration_test.go:45: Go, Node, emitted JavaScript, native identical: 29360 bytes
+--- PASS: TestOwnedWitnesses (33.74s)
+=== RUN   TestSixthUpstream
+    lint_test.go:324: cohere cases: 1130 unique source/rule/options combinations
+    wave08_sixth_test.go:28: parser blocked: rule=no-multi-str source="var a = <div attr='Line 1 \\\n Line 2' />;"
+    wave08_sixth_test.go:28: parser blocked: rule=no-multi-str source="var a = <div attr={'Line 1 \\\n Line 2'} />;"
+    wave08_sixth_test.go:28: parser blocked: rule=no-multi-str source="var a = <div {...'Line 1 \\\n Line 2'} />;"
+    wave08_sixth_test.go:28: parser blocked: rule=no-multi-str source="var a = <div {...{a: 'Line 1 \\\n Line 2'}} />;"
+    wave08_sixth_test.go:28: parser blocked: rule=no-multi-str source="var a = <div>\n<h1>Wat</h1>\n</div>;"
+    wave08_sixth_test.go:28: parser blocked: rule=no-multi-str source="var a = <div>{'Line 1 \\\n Line 2'}</div>;"
+    wave08_sixth_test.go:28: parser blocked: rule=no-octal source="var a = 01.5;"
+    wave08_sixth_test.go:28: parser blocked: rule=no-octal source="var a = 0755n;"
+    wave08_sixth_test.go:28: parser blocked: rule=no-octal source="var a = 0777.5;"
+    wave08_sixth_test.go:34: assigned upstream selected=map[no-multi-str:15 no-nonoctal-decimal-escape:31 no-octal:28]; exclusions logged
+    wave08_sixth_test.go:45: Go, Node, emitted JavaScript, native identical: 31191 bytes
+--- PASS: TestSixthUpstream (41.43s)
+=== RUN   TestSixthThroughput
+    wave08_sixth_test.go:120: no-multi-str round=1 native seconds=1.918251 findings=1000
+    wave08_sixth_test.go:120: no-multi-str round=1 Node seconds=2.729083 findings=1000
+    wave08_sixth_test.go:120: no-multi-str round=1 Go seconds=0.295868 findings=1000
+    wave08_sixth_test.go:120: no-multi-str round=2 Node seconds=1.368080 findings=1000
+    wave08_sixth_test.go:120: no-multi-str round=2 Go seconds=0.289535 findings=1000
+    wave08_sixth_test.go:120: no-multi-str round=2 native seconds=1.600607 findings=1000
+    wave08_sixth_test.go:120: no-multi-str round=3 Go seconds=0.265897 findings=1000
+    wave08_sixth_test.go:120: no-multi-str round=3 native seconds=2.027108 findings=1000
+    wave08_sixth_test.go:120: no-multi-str round=3 Node seconds=1.529681 findings=1000
+    wave08_sixth_test.go:120: no-multi-str round=4 native seconds=1.602681 findings=1000
+    wave08_sixth_test.go:120: no-multi-str round=4 Node seconds=1.216641 findings=1000
+    wave08_sixth_test.go:120: no-multi-str round=4 Go seconds=0.274243 findings=1000
+    wave08_sixth_test.go:120: no-multi-str round=5 Node seconds=1.230232 findings=1000
+    wave08_sixth_test.go:120: no-multi-str round=5 Go seconds=0.271431 findings=1000
+    wave08_sixth_test.go:120: no-multi-str round=5 native seconds=2.283252 findings=1000
+    wave08_sixth_test.go:128: no-multi-str native: 624.76 findings/s seconds=1.600607 files=78 findings=1000
+    wave08_sixth_test.go:128: no-multi-str Node: 821.94 findings/s seconds=1.216641 files=78 findings=1000
+    wave08_sixth_test.go:128: no-multi-str Go: 3760.85 findings/s seconds=0.265897 files=78 findings=1000
+    wave08_sixth_test.go:120: no-nonoctal-decimal-escape round=1 native seconds=1.592919 findings=1000
+    wave08_sixth_test.go:120: no-nonoctal-decimal-escape round=1 Node seconds=1.215367 findings=1000
+    wave08_sixth_test.go:120: no-nonoctal-decimal-escape round=1 Go seconds=0.255956 findings=1000
+    wave08_sixth_test.go:120: no-nonoctal-decimal-escape round=2 Node seconds=1.200932 findings=1000
+    wave08_sixth_test.go:120: no-nonoctal-decimal-escape round=2 Go seconds=0.289434 findings=1000
+    wave08_sixth_test.go:120: no-nonoctal-decimal-escape round=2 native seconds=1.700328 findings=1000
+    wave08_sixth_test.go:120: no-nonoctal-decimal-escape round=3 Go seconds=0.286932 findings=1000
+    wave08_sixth_test.go:120: no-nonoctal-decimal-escape round=3 native seconds=1.609355 findings=1000
+    wave08_sixth_test.go:120: no-nonoctal-decimal-escape round=3 Node seconds=1.290142 findings=1000
+    wave08_sixth_test.go:120: no-nonoctal-decimal-escape round=4 native seconds=2.247324 findings=1000
+    wave08_sixth_test.go:120: no-nonoctal-decimal-escape round=4 Node seconds=1.210005 findings=1000
+    wave08_sixth_test.go:120: no-nonoctal-decimal-escape round=4 Go seconds=0.274888 findings=1000
+    wave08_sixth_test.go:120: no-nonoctal-decimal-escape round=5 Node seconds=1.329271 findings=1000
+    wave08_sixth_test.go:120: no-nonoctal-decimal-escape round=5 Go seconds=0.322054 findings=1000
+    wave08_sixth_test.go:120: no-nonoctal-decimal-escape round=5 native seconds=1.740428 findings=1000
+    wave08_sixth_test.go:128: no-nonoctal-decimal-escape native: 627.78 findings/s seconds=1.592919 files=78 findings=1000
+    wave08_sixth_test.go:128: no-nonoctal-decimal-escape Node: 832.69 findings/s seconds=1.200932 files=78 findings=1000
+    wave08_sixth_test.go:128: no-nonoctal-decimal-escape Go: 3906.92 findings/s seconds=0.255956 files=78 findings=1000
+    wave08_sixth_test.go:120: no-octal round=1 native seconds=1.753049 findings=1000
+    wave08_sixth_test.go:120: no-octal round=1 Node seconds=1.239927 findings=1000
+    wave08_sixth_test.go:120: no-octal round=1 Go seconds=0.324856 findings=1000
+    wave08_sixth_test.go:120: no-octal round=2 Node seconds=1.920589 findings=1000
+    wave08_sixth_test.go:120: no-octal round=2 Go seconds=0.255503 findings=1000
+    wave08_sixth_test.go:120: no-octal round=2 native seconds=1.525066 findings=1000
+    wave08_sixth_test.go:120: no-octal round=3 Go seconds=0.244898 findings=1000
+    wave08_sixth_test.go:120: no-octal round=3 native seconds=1.528583 findings=1000
+    wave08_sixth_test.go:120: no-octal round=3 Node seconds=1.180807 findings=1000
+    wave08_sixth_test.go:120: no-octal round=4 native seconds=1.471974 findings=1000
+    wave08_sixth_test.go:120: no-octal round=4 Node seconds=1.223241 findings=1000
+    wave08_sixth_test.go:120: no-octal round=4 Go seconds=0.250876 findings=1000
+    wave08_sixth_test.go:120: no-octal round=5 Node seconds=1.128272 findings=1000
+    wave08_sixth_test.go:120: no-octal round=5 Go seconds=0.238334 findings=1000
+    wave08_sixth_test.go:120: no-octal round=5 native seconds=1.625209 findings=1000
+    wave08_sixth_test.go:128: no-octal native: 679.36 findings/s seconds=1.471974 files=78 findings=1000
+    wave08_sixth_test.go:128: no-octal Node: 886.31 findings/s seconds=1.128272 files=78 findings=1000
+    wave08_sixth_test.go:128: no-octal Go: 4195.79 findings/s seconds=0.238334 files=78 findings=1000
+--- PASS: TestSixthThroughput (59.88s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	199.728s
