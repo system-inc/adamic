@@ -1,6 +1,7 @@
 // Partial port: front-end selection and flags. A native pattern compiler is required.
 import { panic } from 'adamic';
 import type { Rules } from '../../rules.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
 import { Diagnostic } from '../../diagnostic.ts';
 import { DeclarationFileFlags } from '../../declaration_file_flags.a';
 
@@ -73,14 +74,14 @@ export class NoInvalidRegExp {
         quote: (flag: string) => string, allowed: readonly string[]) {
         this.rules = rules; this.compile = compile; this.quote = quote; this.allowed = allowed;
     }
-    report(index: number, message: string): void {
+    report(node: ParseNode, message: string): void {
         if(message === '') { return; }
-        const r = this.rules; const node = r.parser.node(index);
+        const r = this.rules;
         r.findings.push(new Diagnostic('no-invalid-regexp', 'invalidRegexp', message, r.byte(r.start(node)), r.byte(node.end), ''));
     }
     pattern(pattern: string, flags: string): string { return patternMessage(pattern, this.compile(pattern, compileFlags(flags))); }
-    check(index: number): void {
-        const r = this.rules; const node = r.parser.node(index);
+    visit(node: ParseNode, _index: number): void {
+        const r = this.rules;
         const callee = r.skip(node.children[0] ?? -1); const target = r.parser.node(callee);
         if(target.kind !== 'Identifier' || target.text !== 'RegExp') { return; }
         const origin = new DeclarationFileFlags(r, callee);
@@ -91,21 +92,16 @@ export class NoInvalidRegExp {
         if(args.length >= 2) { const second = r.parser.node(args[1] ?? -1); known = second.kind === 'StringLiteral'; if(known) { flags = second.text; } }
         if(known) {
             const fault = invalidFlags(flags, this.allowed);
-            if(fault.kind !== 'none') { this.report(index, flagsMessage(flags, fault, this.quote(fault.flag))); return; }
+            if(fault.kind !== 'none') { this.report(node, flagsMessage(flags, fault, this.quote(fault.flag))); return; }
         }
         const first = r.parser.node(args[0] ?? -1);
         if(first.kind !== 'StringLiteral') { return; }
         if(known) {
-            if(!flags.includes('v')) { this.report(index, this.pattern(first.text, flags)); }
+            if(!flags.includes('v')) { this.report(node, this.pattern(first.text, flags)); }
         }
         else {
             const unicode = this.pattern(first.text, 'u'); const neither = this.pattern(first.text, '');
-            if(unicode !== '' && neither !== '') { this.report(index, neither); }
-        }
-    }
-    run(): void {
-        for(let at = 0; at < this.rules.parser.nodes.length; at++) {
-            if(['CallExpression', 'NewExpression'].includes(this.rules.parser.node(at).kind)) { this.check(at); }
+            if(unicode !== '' && neither !== '') { this.report(node, neither); }
         }
     }
 }

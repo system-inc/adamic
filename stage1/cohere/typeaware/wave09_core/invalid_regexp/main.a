@@ -36,7 +36,16 @@ for(const path of paths) {
         linter.parents.push(-1);
     }
     linter.links(root, -1);
-    new NoInvalidRegExp(linter, unavailablePatternCompiler, (flag) => quoteFlag(flag), []).run();
+    // Relevance selection belongs to the driver; the rule receives its node.
+    const rule = new NoInvalidRegExp(linter, unavailablePatternCompiler, (flag) => quoteFlag(flag), []);
+    for(let index = 0; index < parser.nodes.length; index++) {
+        const node = parser.node(index);
+        switch(node.kind) {
+            case 'CallExpression':
+            case 'NewExpression': rule.visit(node, index); break;
+            default: break;
+        }
+    }
     for(const finding of linter.findings) {
         finding.sortKey = finding.written();
     }

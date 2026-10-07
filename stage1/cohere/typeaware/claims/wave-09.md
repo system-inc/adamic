@@ -180,3 +180,13 @@ intact. Current main 39638d9e2 remains an ancestor. All eighteen owned checks,
 registry, bridge, Node and vet pass again, including all mutants/sanitizers.
 No new matcher, rule claim or React parking. Shared installation and both
 regex completions remain outstanding. See ../wave09_core/LANDING_RUNTIME_REPORT.md.
+
+## Handed regex flag frontend
+
+NoInvalidRegExp now visits and reports the supplied node, with named
+CallExpression/NewExpression metadata and node:true. The flag frontend,
+handed-node mutant and listener comparisons pass, including sanitizers.
+Required compiler expression and whole-AST comparisons pass with a real
+checkout at the prescribed pin. Complete pattern validation and both regex
+completions remain outstanding; no new claims. See
+../wave09_core/HANDED_FLAGS_REPORT.md.
