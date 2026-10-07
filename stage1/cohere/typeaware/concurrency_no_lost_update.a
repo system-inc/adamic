@@ -2,7 +2,6 @@ import { panic } from 'adamic';
 import type { Bindings } from './bindings.ts';
 import { BindingState, bindingState } from './binding_state.a';
 import { LostGraph } from './lost_update_graph.a';
-import { Reassign } from './reassign.ts';
 import { Diagnostic } from './diagnostic.ts';
 
 class LostPath {
@@ -67,10 +66,56 @@ class LostAnalysis {
     readonly nested = new Map<number, number>();
     readonly stable = new Map<number, boolean>();
     readonly accesses = new Map<number, LostAccess | undefined>();
-    readonly writes: Reassign;
     built = false;
     constructor(bindings: Bindings, root: number, graph: LostGraph, names: number[]) {
-        this.bindings = bindings; this.root = root; this.graph = graph; this.names = names; this.writes = new Reassign(bindings.rules);
+        this.bindings = bindings; this.root = root; this.graph = graph; this.names = names;
+    }
+    assignment(operator: string): boolean {
+        return ['EqualsToken', 'PlusEqualsToken', 'MinusEqualsToken', 'AsteriskEqualsToken',
+            'AsteriskAsteriskEqualsToken', 'SlashEqualsToken', 'PercentEqualsToken',
+            'LessThanLessThanEqualsToken', 'GreaterThanGreaterThanEqualsToken',
+            'GreaterThanGreaterThanGreaterThanEqualsToken', 'AmpersandEqualsToken',
+            'BarEqualsToken', 'CaretEqualsToken', 'AmpersandAmpersandEqualsToken',
+            'BarBarEqualsToken', 'QuestionQuestionEqualsToken'].includes(operator);
+    }
+    written(index: number): boolean {
+        let current = index;
+        while((this.bindings.rules.parents[current] ?? -1) >= 0) {
+            const parentIndex = this.bindings.rules.parents[current] ?? -1;
+            const parent = this.bindings.rules.parser.node(parentIndex);
+            if(parent.kind === 'PropertyAccessExpression' && parent.children[parent.children.length - 1] === current) {
+                return false;
+            }
+            if(['SpreadElement', 'SpreadAssignment', 'ArrayLiteralExpression',
+                'ObjectLiteralExpression', 'ParenthesizedExpression'].includes(parent.kind)) {
+                current = parentIndex;
+                continue;
+            }
+            if(parent.kind === 'PropertyAssignment') {
+                if(parent.children[parent.children.length - 1] !== current) {
+                    return false;
+                }
+                current = parentIndex;
+                continue;
+            }
+            if(parent.kind === 'ShorthandPropertyAssignment') {
+                if(parent.children[0] !== current) {
+                    return false;
+                }
+                current = parentIndex;
+                continue;
+            }
+            if(parent.kind === 'BinaryExpression') {
+                return parent.children[0] === current &&
+                    this.assignment(this.bindings.rules.parser.node(parent.children[1] ?? -1).kind);
+            }
+            if(parent.kind === 'PrefixUnaryExpression' || parent.kind === 'PostfixUnaryExpression') {
+                return parent.operator === 'PlusPlusToken' || parent.operator === 'MinusMinusToken';
+            }
+            return (parent.kind === 'ForInStatement' || parent.kind === 'ForOfStatement') &&
+                parent.children[0] === current;
+        }
+        return false;
     }
     kind(index: number): string { return index < 0 ? '' : this.bindings.rules.parser.node(index).kind; }
     identity(index: number): BindingState {
@@ -143,7 +188,7 @@ class LostAnalysis {
     nestedVisit(index: number, identity: number, nested: boolean, initial = false): number {
         if(!initial && this.graph.root(index)) { nested = true; }
         let value = 0; const node = this.bindings.rules.parser.node(index);
-        if(nested && node.kind === 'Identifier' && this.identity(index).identity === identity) { value = 1 | (this.writes.writes(index) ? 2 : 0); }
+        if(nested && node.kind === 'Identifier' && this.identity(index).identity === identity) { value = 1 | (this.written(index) ? 2 : 0); }
         for(const child of node.children) { value |= this.nestedVisit(child, identity, nested); }
         return value;
     }
@@ -172,7 +217,7 @@ class LostAnalysis {
     }
     writtenVisit(index: number, identity: number, start: number, end: number): boolean {
         const rules = this.bindings.rules; const node = rules.parser.node(index);
-        if(node.kind === 'Identifier' && this.identity(index).identity === identity && this.writes.writes(index)) { return true; }
+        if(node.kind === 'Identifier' && this.identity(index).identity === identity && this.written(index)) { return true; }
         return node.children.some((child) => this.writtenVisit(child, identity, start, end));
     }
     key(index: number): string | undefined {
@@ -368,8 +413,8 @@ class LostEvaluator {
             return this.modified(this.sequence([left, right], suspended));
         }
         if(node.kind === 'ConditionalExpression') {
-            const condition = this.evaluate(node.children[0] ?? -1, suspended); const outcomes = this.then(condition, node.children[1] ?? -1);
-            for(const result of this.then(condition, node.children[2] ?? -1)) { outcomes.push(result); } return unique(outcomes);
+            const condition = this.evaluate(node.children[0] ?? -1, suspended); const outcomes = this.then(condition, node.children[2] ?? -1);
+            for(const result of this.then(condition, node.children[4] ?? -1)) { outcomes.push(result); } return unique(outcomes);
         }
         if(node.kind === 'ObjectLiteralExpression') {
             const parts: number[] = [];
