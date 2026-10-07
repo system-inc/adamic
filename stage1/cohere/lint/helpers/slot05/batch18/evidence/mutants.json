@@ -1,0 +1,20 @@
+[
+  "helper_test.go:167: pattern_reads.a mutant \"if(isNil(current))\" -> \"if(false)\" caught at output line 1 byte 0: mutant \"kind:-1;expr:-1;\", Go \"\"",
+  "helper_test.go:167: pattern_reads.a mutant \"read(current);\" -> \"if(false) {read(current);}\" caught at output line 7 byte 7: mutant \"kind:1;throwable:1;\", Go \"kind:1;read:1;throwable:1;\"",
+  "helper_test.go:167: pattern_reads.a mutant \"fork();\" -> \"if(false) {fork();}\" caught at output line 20 byte 26: mutant \";read:1;throwable:1;\", Go \";read:1;throwable:1;fork;\"",
+  "helper_test.go:167: pattern_reads.a mutant \"if(isThrowable(current))\" -> \"if(!isThrowable(current))\" caught at output line 7 byte 26: mutant \";read:1;throwable:1;fork;\", Go \";read:1;throwable:1;\"",
+  "helper_test.go:167: pattern_reads.a mutant \"if(isThrowable(current))\" -> \"if(false)\" caught at output line 7 byte 14: mutant \"kind:1;read:1;\", Go \"kind:1;read:1;throwable:1;\"",
+  "helper_test.go:167: pattern_reads.a mutant \"read(current);\\n   if(isThrowable(current)) {fork();}\" -> \"if(isThrowable(current)) {fork();}\\n   read(current);\" caught at output line 7 byte 7: mutant \"kind:1;throwable:1;read:1;\", Go \"kind:1;read:1;throwable:1;\"",
+  "helper_test.go:167: pattern_reads.a mutant \"if(shape.wrapped) {current=shape.expression;continue;}\" -> \"if(shape.wrapped) {return;}\" caught at output line 1312 byte 7: mutant \"kind:1;\", Go \"kind:1;kind:2;expr:2;\"",
+  "helper_test.go:167: pattern_reads.a mutant \"expr(current);\" -> \"read(current);\" caught at output line 2 byte 7: mutant \"kind:1;read:1;\", Go \"kind:1;expr:1;\"",
+  "helper_test.go:167: pattern_writes.a mutant \"if(isNil(current))\" -> \"if(false)\" caught at output line 1 byte 0: mutant \"kind:-1;\", Go \"\"",
+  "helper_test.go:167: pattern_writes.a mutant \"write(current);\" -> \"if(false) {write(current);}\" caught at output line 7 byte 7: mutant \"kind:1;\", Go \"kind:1;write:1;\"",
+  "helper_test.go:167: pattern_writes.a mutant \"if(shape.wrapped) {current=shape.expression;continue;}\" -> \"if(shape.wrapped) {return;}\" caught at output line 1312 byte 7: mutant \"kind:1;\", Go \"kind:1;kind:2;\"",
+  "helper_test.go:167: pattern_writes.a mutant \"if(shape.identifier)\" -> \"if(true)\" caught at output line 2 byte 7: mutant \"kind:1;write:1;\", Go \"kind:1;\"",
+  "helper_test.go:167: react_es5_component_call_strict.a mutant \"if(!isEs5ComponentCall(node)) {return false;}\" -> \"if(!isEs5ComponentCall(node)) {return true;}\" caught at output line 1 byte 0: mutant \"true|es5:-1;\", Go \"false|es5:-1;\"",
+  "helper_test.go:167: react_es5_component_call_strict.a mutant \"const callee=skipParentheses(calleeOf(node));\" -> \"const callee=calleeOf(node);\" caught at output line 237 byte 12: mutant \"false|es5:1;text:3;\", Go \"false|es5:1;skip:2;text:3;\"",
+  "helper_test.go:167: react_es5_component_call_strict.a mutant \"if(isIdentifier(callee))\" -> \"if(false)\" caught at output line 265 byte 0: mutant \"false|es5:1;skip:2;\", Go \"true|es5:1;skip:2;text:2;\"",
+  "helper_test.go:167: react_es5_component_call_strict.a mutant \"if(isPropertyAccess(callee))\" -> \"if(false)\" caught at output line 237 byte 19: mutant \"false|es5:1;skip:2;\", Go \"false|es5:1;skip:2;text:3;\"",
+  "helper_test.go:167: react_es5_component_call_strict.a mutant \"textOf(callee) === 'createReactClass'\" -> \"textOf(callee) === 'createClass'\" caught at output line 265 byte 0: mutant \"false|es5:1;skip:2;text:2;\", Go \"true|es5:1;skip:2;text:2;\"",
+  "helper_test.go:167: react_es5_component_call_strict.a mutant \"textOf(name) === 'createReactClass'\" -> \"textOf(name) === 'createClass'\" caught at output line 237 byte 0: mutant \"true|es5:1;skip:2;text:3;\", Go \"false|es5:1;skip:2;text:3;\""
+]

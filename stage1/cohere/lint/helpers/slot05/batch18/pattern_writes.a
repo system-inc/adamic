@@ -1,0 +1,11 @@
+import type {PatternProjection} from './pattern_reads.a';
+export function patternWrites<N>(node: N,isNil: (node: N) => boolean,project: (node: N) => PatternProjection<N>,write: (node: N) => void): void {
+ let current=node;
+ while(true) {
+  if(isNil(current)) {return;}
+  const shape=project(current);
+  if(shape.identifier) {write(current);return;}
+  if(shape.wrapped) {current=shape.expression;continue;}
+  return;
+ }
+}

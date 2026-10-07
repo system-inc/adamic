@@ -1,0 +1,31 @@
+{
+  "helpers": {
+    "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].patternReads": [
+      "array-callback-return",
+      "consistent-return",
+      "no-unreachable-loop",
+      "react-hooks/rules-of-hooks"
+    ],
+    "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].patternWrites": [
+      "array-callback-return",
+      "consistent-return",
+      "no-unreachable-loop",
+      "react-hooks/rules-of-hooks"
+    ],
+    "github.com/system-inc/cohere/internal/lint/rules/react.isEs5ComponentCallStrict": [
+      "react/no-direct-mutation-state",
+      "react/no-this-in-sfc",
+      "react/prefer-es6-class",
+      "react/require-render-return"
+    ]
+  },
+  "dependency_occurrences_removed": 12,
+  "unique_consumers": 8,
+  "newly_helper_ready_from_batch_alone": [],
+  "cumulative_slot05": {
+    "helpers": 50,
+    "dependency_occurrences_removed": 295,
+    "unique_consumers": 70,
+    "helper_ready": 50
+  }
+}

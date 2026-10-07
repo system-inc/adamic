@@ -1,0 +1,11 @@
+export function isEs5ComponentCallStrict<N>(node: N,isEs5ComponentCall: (node: N) => boolean,calleeOf: (node: N) => N,skipParentheses: (node: N) => N,isNil: (node: N) => boolean,isIdentifier: (node: N) => boolean,isPropertyAccess: (node: N) => boolean,nameOf: (node: N) => N,textOf: (node: N) => string): boolean {
+ if(!isEs5ComponentCall(node)) {return false;}
+ const callee=skipParentheses(calleeOf(node));
+ if(isNil(callee)) {return false;}
+ if(isIdentifier(callee)) {return textOf(callee) === 'createReactClass';}
+ if(isPropertyAccess(callee)) {
+  const name=nameOf(callee);
+  return !isNil(name) && isIdentifier(name) && textOf(name) === 'createReactClass';
+ }
+ return false;
+}

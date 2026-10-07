@@ -1,0 +1,28 @@
+import {panic,readTextFile,programArguments} from 'adamic';
+import {OptionsJson} from '../../options_json.ts';
+import {patternReads} from './pattern_reads.a';
+import type {PatternProjection} from './pattern_reads.a';
+import {patternWrites} from './pattern_writes.a';
+import {isEs5ComponentCallStrict} from './react_es5_component_call_strict.a';
+interface Node {readonly id:number;readonly identifier:boolean;readonly wrapped:boolean;readonly property:boolean;readonly expression:number;readonly throwable:boolean;readonly text:string;}
+const input=readTextFile(programArguments()[0] ?? panic('missing corpus'));if(input.kind === 'Error'){panic(input.message);}
+const json=new OptionsJson(input.text);const root=json.parse();if(root<0){panic(json.error);}
+function field(index:number,name:string):number{return json.field(index,name);}
+function number(index:number):number{return Number(json.node(index).text);}
+function bool(index:number):boolean{return json.node(index).text === 'true';}
+const mode=json.node(field(root,'mode')).text;
+for(const row of json.node(field(root,'rows')).children){
+ let trace='';const arena:Node[]=[];
+ for(const n of json.node(field(row,'Nodes')).children){arena.push({id:number(field(n,'ID')),identifier:bool(field(n,'Identifier')),wrapped:mode === 'strict' ? false : bool(field(n,'Wrapped')),property:mode === 'strict' && bool(field(n,'Property')),expression:mode === 'strict' ? -1 : number(field(n,'Expression')),throwable:mode !== 'strict' && bool(field(n,'Throwable')),text:mode === 'strict' ? json.node(field(n,'Text')).text : ''});}
+ const node=(id:number):Node=>{for(const n of arena){if(n.id === id){return n;}}return panic('missing node');};
+ const original=node(number(field(row,'Root')));
+ if(mode === 'strict') {
+  const result=isEs5ComponentCallStrict(original,(n:Node):boolean=>{if(n !== original){panic('component node identity');}trace+=`es5:${n.id};`;return bool(field(row,'Es5'));},(n:Node):Node=>{if(n !== original){panic('call identity');}return node(number(field(row,'Callee')));},(n:Node):Node=>{if(n !== node(number(field(row,'Callee')))){panic('callee identity');}trace+=`skip:${n.id};`;return node(number(field(row,'Skipped')));},(n:Node):boolean=>n.id<0,(n:Node):boolean=>n.identifier,(n:Node):boolean=>n.property,(n:Node):Node=>{if(n !== node(number(field(row,'Skipped')))){panic('property identity');}return node(number(field(row,'Name')));},(n:Node):string=>{trace+=`text:${n.id};`;return n.text;});
+  console.log(`${result}|${trace}`);continue;
+ }
+ const project=(n:Node):PatternProjection<Node>=>{trace+=`kind:${n.id};`;return {identifier:n.identifier,wrapped:n.wrapped,expression:node(n.expression)};};
+ if(mode === 'reads'){
+  patternReads(original,(n:Node):boolean=>n.id<0,project,(n:Node):void=>{trace+=`read:${n.id};`;},(n:Node):boolean=>{trace+=`throwable:${n.id};`;return n.throwable;},():void=>{trace+='fork;';},(n:Node):void=>{trace+=`expr:${n.id};`;});
+ }else{patternWrites(original,(n:Node):boolean=>n.id<0,project,(n:Node):void=>{trace+=`write:${n.id};`;});}
+ console.log(trace);
+}

@@ -1,0 +1,16 @@
+export interface PatternProjection<N> {readonly identifier: boolean;readonly wrapped: boolean;readonly expression: N;}
+export function patternReads<N>(node: N,isNil: (node: N) => boolean,project: (node: N) => PatternProjection<N>,read: (node: N) => void,isThrowable: (node: N) => boolean,fork: () => void,expr: (node: N) => void): void {
+ let current=node;
+ while(true) {
+  if(isNil(current)) {return;}
+  const shape=project(current);
+  if(shape.identifier) {
+   read(current);
+   if(isThrowable(current)) {fork();}
+   return;
+  }
+  if(shape.wrapped) {current=shape.expression;continue;}
+  expr(current);
+  return;
+ }
+}
