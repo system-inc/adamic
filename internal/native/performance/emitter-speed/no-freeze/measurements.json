@@ -1,0 +1,50 @@
+{
+  "before": {
+    "function": "whole",
+    "Ir": 7886876167,
+    "Dr": 2207223419,
+    "Dw": 1214971683,
+    "I1mr": 64120092,
+    "D1mr": 15406199,
+    "D1mw": 5486965,
+    "ILmr": 6529,
+    "DLmr": 58535,
+    "DLmw": 1527569,
+    "Bc": 1277182420,
+    "Bcm": 45777649,
+    "Bi": 28742147,
+    "Bim": 3505506,
+    "L1_data": 20893164,
+    "L1_instruction": 64120092,
+    "branch_mispredicts": 49283155
+  },
+  "after": {
+    "function": "whole",
+    "Ir": 7734388376,
+    "Dr": 2154806867,
+    "Dw": 1205912035,
+    "I1mr": 64244257,
+    "D1mr": 15349454,
+    "D1mw": 5470403,
+    "ILmr": 6461,
+    "DLmr": 58535,
+    "DLmw": 1527568,
+    "Bc": 1226621793,
+    "Bcm": 44601876,
+    "Bi": 28742147,
+    "Bim": 3362307,
+    "L1_data": 20819857,
+    "L1_instruction": 64244257,
+    "branch_mispredicts": 47964183
+  },
+  "best_user_seconds": {
+    "before": {
+      "user_seconds": 0.871976,
+      "wall_seconds": 0.90843105
+    },
+    "after": {
+      "user_seconds": 0.879471,
+      "wall_seconds": 0.911890298
+    }
+  }
+}

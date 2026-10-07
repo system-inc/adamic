@@ -1,0 +1,17 @@
+[
+  {
+    "revision": "9e1fa18",
+    "sha": "9e1fa1821f2c602d70a9f789aa02d071c7ea7a9c",
+    "callers_and_writes": "9e1fa18:internal/native/library_object.go:20:\t\treturn e.own(ir.Object, fmt.Sprintf(\"adamic_object_freeze(%s)\", arguments[0]))\n9e1fa18:internal/native/runtime/adamic.h:246:adamic_object *adamic_object_freeze(adamic_object *object);\n9e1fa18:internal/native/runtime/library_object.c:26:adamic_object *adamic_object_freeze(adamic_object *object) {\n9e1fa18:internal/native/runtime/library_object.c:27: object->frozen = true;\n9e1fa18:internal/native/runtime/object.c:11:\tobject->frozen = false;\n9e1fa18:internal/native/runtime/region.c:65:\tobject->frozen = false;\n"
+  },
+  {
+    "revision": "origin/area/runtime",
+    "sha": "94a9c832bc773536cdf75904cbf811990c7e76aa",
+    "callers_and_writes": "origin/area/runtime:internal/native/library_object.go:20:\t\treturn e.own(ir.Object, fmt.Sprintf(\"adamic_object_freeze(%s)\", arguments[0]))\norigin/area/runtime:internal/native/runtime/adamic.h:270:adamic_object *adamic_object_freeze(adamic_object *object);\norigin/area/runtime:internal/native/runtime/library_object.c:26:adamic_object *adamic_object_freeze(adamic_object *object) {\norigin/area/runtime:internal/native/runtime/library_object.c:27: object->frozen = true;\norigin/area/runtime:internal/native/runtime/object.c:11:\tobject->frozen = false;\norigin/area/runtime:internal/native/runtime/region.c:65:\tobject->frozen = false;\n"
+  },
+  {
+    "revision": "origin/main",
+    "sha": "b6b1538b0cebc4ba6741ac34f1aedb60293c1d06",
+    "callers_and_writes": "origin/main:internal/native/library_object.go:20:\t\treturn e.own(ir.Object, fmt.Sprintf(\"adamic_object_freeze(%s)\", arguments[0]))\norigin/main:internal/native/runtime/adamic.h:237:adamic_object *adamic_object_freeze(adamic_object *object);\norigin/main:internal/native/runtime/library_object.c:26:adamic_object *adamic_object_freeze(adamic_object *object) {\norigin/main:internal/native/runtime/library_object.c:27: object->frozen = true;\norigin/main:internal/native/runtime/object.c:11:\tobject->frozen = false;\norigin/main:internal/native/runtime/region.c:65:\tobject->frozen = false;\n"
+  }
+]
