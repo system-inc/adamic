@@ -276,3 +276,36 @@ match it. Full atomic event/CFG construction, symbol resolution, escape filterin
 two-phase deferral integration and final finding rendering remain unfinished.
 Await and symbol integration remain incomplete too. No new claims were taken;
 existing completed-rule corpus gates were unchanged and were not repeated.
+
+## Requested harness integration rebase
+
+Fetched and rebased onto origin/area/stage1-lint at
+7481e0324e34a2537aafa9db7eeacda50405611b, which includes the announced
+harness and newer main changes. Rebase completed without conflicts. Tested
+rebased code at b40208758ef2b24820edb1387613d2628ffffe8f. No shared
+changes were reverted. Only codex/typeaware-wave-01 is pushed.
+
+Original TestWave01AgreementAndMutants passed in 146.783 seconds, with 691
+compiler findings / 276439 identical bytes and zero repository findings. All
+controls, sanitized corpora, three logic mutants, released handles and retained
+registry mutants passed. Continuation verify.py passed all three completed
+rules, all corpus/sanitizer comparisons, logic mutants, four released questions
+and retained-registry mutants, and checker/bridge package tests.
+
+Symbol captured-syntax checks passed all corpora, sanitizers, argument mutant
+and released question. Atomic/await kernels passed Go comparison and clean
+sanitation with refresh-deletion and await-mask mutants caught by bytes. Solver
+passed 16 graphs / 96 boundaries and one-sweep mutant; deferrals passed 32
+placements and lost-floor mutant; syntax passed 24 parsed controls / 74
+identifiers and member-object mutant. All nine named-kind manifests and their
+wrong-kind mutants passed. Exact commands, records and logs are under
+validation/landing-area-7481; commands use the same recorded corpus and
+verification scripts after sourcing /workspace/adamic-tools/env.sh.
+
+The executable shared lint harness is now present. Its RuleContext still lacks
+a checker program handle for these type-aware listeners. Full symbol shared
+driver integration remains unvalidated; captured Go syntax is not proof of
+native syntax delivery. Full atomic and await rules also have unfinished
+implementation, not merely a shared-harness gap. No new claims were taken.
+No new throughput measurements were made for this rebase; previous timings
+remain observations of their recorded versions.

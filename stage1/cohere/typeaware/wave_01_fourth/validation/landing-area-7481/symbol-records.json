@@ -1,0 +1,260 @@
+[
+  {
+    "name": "oracle-build",
+    "command": [
+      "go",
+      "build",
+      "-overlay",
+      "/workspace/wave-01-fourth-validation/overlay.json",
+      "-o",
+      "/workspace/wave-01-fourth-validation/oracle",
+      "/workspace/adamic/cohere/adamic_wave01fourth.go"
+    ],
+    "exit": 0,
+    "wall_ns": 149065725,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": ""
+  },
+  {
+    "name": "controls-nodes",
+    "command": [
+      "/workspace/wave-01-fourth-validation/oracle",
+      "/workspace/wave-01-fourth-validation/tsconfig.json",
+      "/workspace/wave-01-fourth-validation/controls.manifest",
+      "--nodes"
+    ],
+    "exit": 0,
+    "wall_ns": 85111580,
+    "sha256": "31a94d889ce40021f23f1bc2e7409d2f4761ea0069fd90957fe9f1eec98e2e30",
+    "stderr": ""
+  },
+  {
+    "name": "controls-go",
+    "command": [
+      "/workspace/wave-01-fourth-validation/oracle",
+      "/workspace/wave-01-fourth-validation/tsconfig.json",
+      "/workspace/wave-01-fourth-validation/controls.manifest"
+    ],
+    "exit": 0,
+    "wall_ns": 64114706,
+    "sha256": "10f6df3594ac1646d7eedaf89fb4ed11cfa827f29866c877d3a0f8e791c29313",
+    "stderr": "cohere: load_ns=48513267 rule_ns=34001 run_ns=3916861\n"
+  },
+  {
+    "name": "controls-native",
+    "command": [
+      "/workspace/wave-01-fourth-symbol",
+      "/workspace/wave-01-fourth-validation/tsconfig.json",
+      "/workspace/wave-01-fourth-validation/controls.manifest",
+      "/workspace/wave-01-fourth-validation/controls.nodes"
+    ],
+    "exit": 0,
+    "wall_ns": 75917577,
+    "sha256": "10f6df3594ac1646d7eedaf89fb4ed11cfa827f29866c877d3a0f8e791c29313",
+    "stderr": ""
+  },
+  {
+    "name": "compiler-nodes",
+    "command": [
+      "/workspace/wave-01-fourth-validation/oracle",
+      "/workspace/wave-01-typescript/src/compiler/tsconfig.json",
+      "/workspace/wave-01-fourth-validation/compiler.manifest",
+      "--nodes"
+    ],
+    "exit": 0,
+    "wall_ns": 488740962,
+    "sha256": "8a0d8925425804021fb9edfefd6afc1e30fd6e8a0d55b0b7a130f606da53f2eb",
+    "stderr": ""
+  },
+  {
+    "name": "compiler-go",
+    "command": [
+      "/workspace/wave-01-fourth-validation/oracle",
+      "/workspace/wave-01-typescript/src/compiler/tsconfig.json",
+      "/workspace/wave-01-fourth-validation/compiler.manifest"
+    ],
+    "exit": 0,
+    "wall_ns": 423965948,
+    "sha256": "5e50e29b42170a7ae47ac1ecf55f9574e6c3ec2a6945d0da1090ed4842d0109d",
+    "stderr": "cohere: load_ns=314603393 rule_ns=2577798 run_ns=87347733\n"
+  },
+  {
+    "name": "compiler-native",
+    "command": [
+      "/workspace/wave-01-fourth-symbol",
+      "/workspace/wave-01-typescript/src/compiler/tsconfig.json",
+      "/workspace/wave-01-fourth-validation/compiler.manifest",
+      "/workspace/wave-01-fourth-validation/compiler.nodes"
+    ],
+    "exit": 0,
+    "wall_ns": 1042627191,
+    "sha256": "5e50e29b42170a7ae47ac1ecf55f9574e6c3ec2a6945d0da1090ed4842d0109d",
+    "stderr": ""
+  },
+  {
+    "name": "repository-nodes",
+    "command": [
+      "/workspace/wave-01-fourth-validation/oracle",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave-01-fourth-validation/repository.manifest",
+      "--nodes"
+    ],
+    "exit": 0,
+    "wall_ns": 129010422,
+    "sha256": "669efc362ee1f12070b5b90f065655703c506f291ab3e5477cbcadb02128b225",
+    "stderr": ""
+  },
+  {
+    "name": "repository-go",
+    "command": [
+      "/workspace/wave-01-fourth-validation/oracle",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave-01-fourth-validation/repository.manifest"
+    ],
+    "exit": 0,
+    "wall_ns": 147666266,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "stderr": "cohere: load_ns=83373022 rule_ns=466476 run_ns=51150211\n"
+  },
+  {
+    "name": "repository-native",
+    "command": [
+      "/workspace/wave-01-fourth-symbol",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave-01-fourth-validation/repository.manifest",
+      "/workspace/wave-01-fourth-validation/repository.nodes"
+    ],
+    "exit": 0,
+    "wall_ns": 196603202,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "stderr": ""
+  },
+  {
+    "name": "asan-archive",
+    "command": [
+      "go",
+      "build",
+      "-buildmode=c-archive",
+      "-o",
+      "/workspace/wave-01-fourth-validation/checker-asan.a",
+      "./bridge/tsgo/archive"
+    ],
+    "exit": 0,
+    "wall_ns": 7008680855,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": ""
+  },
+  {
+    "name": "asan-build",
+    "command": [
+      "/workspace/wave-01-fourth-adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave_01_fourth/testdata/symbol_suite.a",
+      "-o",
+      "/workspace/wave-01-fourth-validation/symbol-asan",
+      "--tsgo",
+      "/workspace/wave-01-fourth-validation/checker-asan.a",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "wall_ns": 5859341680,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": ""
+  },
+  {
+    "name": "controls-asan",
+    "command": [
+      "/workspace/wave-01-fourth-validation/symbol-asan",
+      "/workspace/wave-01-fourth-validation/tsconfig.json",
+      "/workspace/wave-01-fourth-validation/controls.manifest",
+      "/workspace/wave-01-fourth-validation/controls.nodes"
+    ],
+    "exit": 0,
+    "wall_ns": 79567995,
+    "sha256": "10f6df3594ac1646d7eedaf89fb4ed11cfa827f29866c877d3a0f8e791c29313",
+    "stderr": ""
+  },
+  {
+    "name": "compiler-asan",
+    "command": [
+      "/workspace/wave-01-fourth-validation/symbol-asan",
+      "/workspace/wave-01-typescript/src/compiler/tsconfig.json",
+      "/workspace/wave-01-fourth-validation/compiler.manifest",
+      "/workspace/wave-01-fourth-validation/compiler.nodes"
+    ],
+    "exit": 0,
+    "wall_ns": 1434338788,
+    "sha256": "5e50e29b42170a7ae47ac1ecf55f9574e6c3ec2a6945d0da1090ed4842d0109d",
+    "stderr": ""
+  },
+  {
+    "name": "repository-asan",
+    "command": [
+      "/workspace/wave-01-fourth-validation/symbol-asan",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave-01-fourth-validation/repository.manifest",
+      "/workspace/wave-01-fourth-validation/repository.nodes"
+    ],
+    "exit": 0,
+    "wall_ns": 295795586,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "stderr": ""
+  },
+  {
+    "name": "mutant-build",
+    "command": [
+      "/workspace/wave-01-fourth-adamic",
+      "build",
+      "/workspace/wave-01-fourth-validation/mutant-suite.a",
+      "-o",
+      "/workspace/wave-01-fourth-validation/symbol-mutant",
+      "--tsgo",
+      "/workspace/wave-01-fourth-checker.a"
+    ],
+    "exit": 0,
+    "wall_ns": 2985815373,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": ""
+  },
+  {
+    "name": "mutant-run",
+    "command": [
+      "/workspace/wave-01-fourth-validation/symbol-mutant",
+      "/workspace/wave-01-fourth-validation/tsconfig.json",
+      "/workspace/wave-01-fourth-validation/controls.manifest",
+      "/workspace/wave-01-fourth-validation/controls.nodes"
+    ],
+    "exit": 0,
+    "wall_ns": 57420648,
+    "sha256": "626e61f976ba53d2d5bb880467e521ed6d4eaa25801ba1fbfc1c546b945cb456",
+    "stderr": ""
+  },
+  {
+    "name": "released-build",
+    "command": [
+      "/workspace/wave-01-fourth-adamic",
+      "build",
+      "/workspace/wave-01-fourth-validation/released.a",
+      "-o",
+      "/workspace/wave-01-fourth-validation/released",
+      "--tsgo",
+      "/workspace/wave-01-fourth-checker.a"
+    ],
+    "exit": 0,
+    "wall_ns": 3020193403,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": ""
+  },
+  {
+    "name": "released-run",
+    "command": [
+      "/workspace/wave-01-fourth-validation/released",
+      "/workspace/wave-01-fourth-validation/tsconfig.json",
+      "/workspace/wave-01-fourth-validation/control-00.a"
+    ],
+    "exit": 70,
+    "wall_ns": 62217309,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "adamic: panic: invalid or released checker handle\n"
+  }
+]
