@@ -20,9 +20,6 @@ func (l *lowering) libraryArrayMethod(node, receiver *ast.Node, name string) (ir
 	if err != nil {
 		return nil, true, err
 	}
-	if element == ir.Union && (name == "includes" || name == "indexOf" || name == "lastIndexOf") {
-		return nil, true, l.notYet(node, "searching boxed union array elements")
-	}
 	if name == "join" && element != ir.Array {
 		return l.arrayMethod(node, receiver, name)
 	}

@@ -466,6 +466,7 @@ enum adamic_equality {
 	adamic_equal_strings,
 	adamic_equal_identity,
 	adamic_equal_maybe_numbers,
+	adamic_equal_unions,
 };
 double adamic_array_index_of(const adamic_array *array, adamic_value value, enum adamic_equality equality, bool same_value_zero);
 double adamic_array_search_from(const adamic_array *array, adamic_value value, enum adamic_equality equality, bool same_value_zero, double from, bool has_from, bool last);

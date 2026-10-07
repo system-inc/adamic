@@ -4,6 +4,10 @@ func init() {
 	fixtures = append(fixtures, struct {
 		path            string
 		lowers, checked bool
+	}{"internal/oracle/testdata/host_empty_object_slots.a", true, false})
+	fixtures = append(fixtures, struct {
+		path            string
+		lowers, checked bool
 	}{"internal/oracle/testdata/host_map_union.a", true, false})
 	fixtures = append(fixtures, struct {
 		path            string
