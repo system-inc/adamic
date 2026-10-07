@@ -38,6 +38,10 @@ export async function loadSuite(filename) {
   }
   if (new Set(suite.variants.map(v => v.name)).size !== suite.variants.length) throw new Error('duplicate variant name');
   if (new Set(suite.workloads.map(w => w.name)).size !== suite.workloads.length) throw new Error('duplicate workload name');
+  for (const workload of suite.workloads) {
+    if (workload.requestCount !== undefined && (!Number.isSafeInteger(workload.requestCount) || workload.requestCount < 1)) throw new Error('requestCount must be a positive integer');
+    if (workload.warmupCount !== undefined && (!Number.isSafeInteger(workload.warmupCount) || workload.warmupCount < 0)) throw new Error('warmupCount must be a nonnegative integer');
+  }
   for (const request of [...suite.checks, ...suite.workloads.flatMap(w => w.requests ?? [w])]) {
     if (typeof request.url !== 'string' || !request.url.startsWith('/') || request.url.startsWith('//')) {
       throw new Error('request url must be a local absolute path');
@@ -220,7 +224,11 @@ export async function phase(server, workload, count, concurrency, options) {
   await Promise.all(Array.from({ length: Math.min(concurrency, count) }, async () => {
     while (next < count) {
       const index = next++;
-      const response = await request(server, choose(workload, index), options.timeoutMs);
+      const spec = choose(workload, index);
+      const response = await request(server, spec, options.timeoutMs);
+      if (spec.expectedStatus !== undefined && response.status !== spec.expectedStatus) {
+        throw new Error(`unexpected status for ${workload.name} request ${index}: ${response.status}, expected ${spec.expectedStatus}`);
+      }
       responses[index] = { index, latencyMs: response.latencyMs, status: response.status };
     }
   }));
@@ -290,6 +298,8 @@ export function markdown(report) {
     `Flags (effective): ${JSON.stringify(report.header.options)}`,
     `Machine: ${JSON.stringify(report.header.machine)}`,
     `Load before: ${report.header.loadBefore}; after: ${report.header.loadAfter ?? 'pending'}.`,
+    `Round loads: ${JSON.stringify(report.rounds ?? [])}`,
+    `Workload count overrides: ${JSON.stringify(report.suite.workloads.map(w => ({ name: w.name, requests: w.requestCount ?? report.header.options.requests, warmup: w.warmupCount ?? report.header.options.warmup })))}`,
     `Cold path: ${report.suite.coldPath}. Default HTTP Host: ${report.header.requestHost}. Weighted selection: deterministic index modulo total weight.`,
     '', '| variant | workload | c | statistic across rounds | p50 ms | p90 ms | p99 ms | mean ms | CPU ms/req | idle drift ms/req | idle RSS MiB | peak RSS MiB |',
     '|---|---|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|',
@@ -336,15 +346,21 @@ export async function run(options = {}, hooks = {}) {
     runnerDescription: options.runner === 'node' ? 'Node HTTP adapter, NOT workerd' : 'workerd directly, no wrangler or proxy in request path',
     requestHost: 'bench.invalid', instruments: meter.name, cpuResolutionMs: meter.cpuResolutionMs,
     machine: { platform: process.platform, arch: process.arch, node: process.version, release: os.release(), cpus: os.cpus().length, cpuModel: os.cpus()[0]?.model },
-    loadBefore: execFileSync('uptime', { encoding: 'utf8' }).trim() }, suite, checks: [], samples: [], cold: [] };
+    loadBefore: execFileSync('uptime', { encoding: 'utf8' }).trim() }, suite, checks: [], samples: [], cold: [], rounds: [] };
   try {
     await correctness(suite, options, report);
-    hooks.onCorrectness?.(report);
+    await hooks.onCorrectness?.(report);
     for (let round = 0; round < options.rounds; round++) {
+      const roundLoad = { round, loadBefore: execFileSync('uptime', { encoding: 'utf8' }).trim() };
+      report.rounds.push(roundLoad);
       const order = suite.variants.slice(round % suite.variants.length).concat(suite.variants.slice(0, round % suite.variants.length));
       for (const workload of suite.workloads) for (const c of options.concurrency) for (const variant of order) {
-        report.samples.push(await sample(variant, workload, c, round, suite, options, meter));
+        const cellOptions = { ...options, requests: workload.requestCount ?? options.requests, warmup: workload.warmupCount ?? options.warmup };
+        report.samples.push(await sample(variant, workload, c, round, suite, cellOptions, meter));
+        await hooks.onSample?.(report.samples.at(-1), report);
       }
+      roundLoad.loadAfter = execFileSync('uptime', { encoding: 'utf8' }).trim();
+      await hooks.onRound?.(roundLoad, report);
     }
     for (let round = 0; round < options.coldSpawns; round++) {
       const order = suite.variants.slice(round % suite.variants.length).concat(suite.variants.slice(0, round % suite.variants.length));

@@ -189,3 +189,74 @@ responses. The operation count is known; the time is measured, not assumed.
    relying on unpredictable JIT behavior. It does not estimate production JIT
    warmup duration. The proof's small CPU count is suited to Linux tick resolution;
    macOS needs a larger-count experiment.
+
+## Day-6 compute Worker table
+
+`day6.mjs` runs the TypeScript twin bundled by Wrangler deploy, the generated
+Adamic JS Worker, and the explicit primes/summarize split Worker under workerd.
+Use a separate local measurement checkout with `codex/workers-compute-a` and
+`codex/workers-two-backends` merged onto platforms; retain its exact merge SHA
+and any merge resolution. Build before timing, and run nothing else while timing.
+
+Place the three builds under a scratch directory as `variants/twin`,
+`variants/adamic-js`, and `variants/adamic-js-wasm`, each with `worker.mjs` as entry.
+Bundle the twin with `npx wrangler@4 deploy --dry-run --outdir <scratch>` and a
+minimal config naming the original twin, compatibility date 2026-10-01 and no
+nodejs_compat. Copy its emitted JS to the twin entry; do not time type stripping.
+Build the others with `adamic worker workers/compute/handler.a --out <dir>` and
+the same command adding `--wasm primes,summarize`. Save
+`adamic-split workers/compute/handler.a` output as scratch `split.txt`; save build
+commands, effective flags and versions in scratch `build-metadata.json`, an object
+with `commands`, `flags` and `versions` fields. These are included in the header.
+The runner preserves the full splitter output even when explicit selection
+differs from its suggestions.
+
+```sh
+node bench/workers/day6.mjs --repo /path/to/measurement-checkout \
+  --directory /tmp/workers-day6 --workerd /path/to/npm/workerd \
+  --rounds 5 --cold-spawns 10 --output /tmp/workers-day6/run.json \
+  > /tmp/workers-day6/run.log 2>&1
+```
+
+`--mode preflight` performs only correctness; `--mode pilot` also measures four
+requests on the three largest inputs with a two-request warmup. Default mode
+`run` requires at least five rounds and ten cold spawns. Other flags are exactly
+those in the example; mode, rounds and cold spawns have defaults. All results,
+logs, generated bodies, suite, gzip JSON and markdown stay in scratch and belong
+on the task, never in the repository.
+
+Before timing, the unchanged `workers/replay.mjs --url` compares all 600 recorded
+requests through each workerd process; anything other than 600 matched refuses
+the run. Additional byte comparisons cover every standalone size. Synthetic
+inputs use xorshift32 seed 0x6a09e667: stats are deterministic finite decimals;
+orders are valid deterministic items; text uses ten ASCII tokens, exactly 1,000,
+100,000 or 1,000,000 text bytes before JSON framing. These are decimal KB/MB,
+matching the handler's one-million-unit limit. The mix dispatches the entire
+600-request corpus in order, including invalid inputs, once per phase, with a
+complete-corpus warmup. Concurrency lanes claim indices in dispatch order.
+
+Standalone cells discard 32 warmup requests. Measured counts are 1,000 for health,
+primes 10,000, stats 100, both quotes and text 1 KB; 256 for stats 10,000 and text
+100 KB; 128 for the larger primes, stats 100,000 and text 1 MB. Counts are fixed
+across variants and rounds and named in the output. With 128 samples, nearest-rank
+p99 is the second-largest observation; it is a noisy tail estimate.
+
+The general suite accepts optional `requestCount` and `warmupCount` per workload;
+these override the command defaults and are validated. Optional `expectedStatus`
+on a request refuses an incorrect timed response, including mixed error statuses.
+Round load averages are captured before and after each round and printed with
+the existing whole-run loads. JS size sums served modules, each compressed with
+gzip level 9; Wasm is reported separately. Config, ABI JSON and source maps are
+excluded because workerd does not serve them as modules. Cold timing stays
+spawn-to-first-200 on /health and includes module parse and Wasm initialization.
+
+```sh
+node bench/workers/day6-proof.mjs /path/to/npm/workerd /tmp/day6-harness-proofs \
+  > /tmp/day6-harness-proofs.log 2>&1
+```
+
+This proves workload counts, awaited callbacks, round loads, deterministic input
+sizes and status refusal. Source mutants drop the request-count override,
+after-round load and expected-status check; each must fail its intended check.
+Run the original `prove.mjs` too to retain CPU, wrong-PID, correctness and warmup
+proofs. Nothing in the day-6 unit changes or optimizes the compiler.
