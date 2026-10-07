@@ -18,6 +18,7 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include "node_fs_wasi.h"
 
 static const char *const ok_listing_names[] = {"kind", "names"};
 static const char *const ok_status_names[] = {"kind", "type", "size", "symbolicLink"};
