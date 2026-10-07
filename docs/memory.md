@@ -587,6 +587,141 @@ figures above. Include deliberate overwritten links so the diagnostic's nonzero
 case is exercised. Scanner/parser slices will use the same report once they
 compile. No measurements are claimed by this design commit.
 
+### Runtime foundation checkpoint, October 7
+
+**Unit 1 is incomplete.** The runtime foundation is built and tested directly
+from C. Graph-type selection and allocation/store emission are not connected.
+The compiler still refuses the same unproven cycles. No previously refused
+fixture is claimed to compile, no existing counts row is changed by this unit,
+and no emission file has a unit change. The nested-functions prerequisite was
+merged at `b15216dabf65ffaa7152f6e64709b7b062ea01a9`; its changes are separate.
+
+The small shared-file changes are in `heap.c`: `adamic_retain` and `let_go`
+dispatch region ownership, `adamic_heap_free_children` separates the outside
+release pass, and `adamic_heap_free_storage` preserves allocator deallocation.
+`graph_regions.c` and `graph_regions.h` carry the union-find records, intrusive
+member list, hold/drop operations, per-object Weak invalidation, shared-merge
+rejection and counting-only mark report. `count.c`/`count.h` add region creations
+and merges, reported on a separate line only when any graph region exists.
+
+The foundation keeps ordinary heap headers and generated C layouts unchanged.
+A graph header uses references `SIZE_MAX` and a member-table index in `slab`;
+the member saves its original allocator slab. The member table hides its pointers
+as Weak's table does, so it cannot conceal a region leak from LeakSanitizer.
+The table is freed when the last region ends. Region metadata uses malloc,
+not an arena. Ordinary retains/releases gain a graph-ownership comparison;
+its performance has not been benchmarked on existing compiled programs.
+
+The adoption API is a compiler seam for a new allocation before any owned
+reference is stored into it. It is not a way to convert a populated counted
+container. Existing array/Map mutators and ownership transfers are not generally
+region-aware yet. The direct C tests use explicit graph hold/drop operations.
+Graph closure environments, their interior cells, graph arrays and Maps are
+exercised, but their language-level emission remains work to do.
+
+`TestGraphRegionsRuntime` keeps a node through an outside local after its root
+drops, reads its parent's dynamically built string, and then frees the region.
+Dropping the anchor also frees it. Both are ASan/UBSan/LeakSanitizer clean, and an
+overwritten node's Weak stays valid until region end, then expires.
+`TestGraphClosureEnvironment` forms a closure/environment cycle and keeps it
+through an interior cell's outside reference. `TestGraphContainerBoundary`
+keeps nodes only through a graph Map cache, then through a counted object's
+field. Its cache remains allocated but unreachable after that handoff: the region
+never splits. Its diagnostic reports 4 members/592 bytes, 3 reachable members/
+192 bytes and 1 unreachable member/400 bytes. All these runtime checks pass.
+
+The direct C counted observations, not rows for accepted Adamic fixtures:
+
+| Runtime case | Allocations | Frees | Retains | Releases | Peak | Graph regions | Merges |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Escaping node or dropped anchor | 5 | 5 | 0 | 4 | 5 | 3 | 2 |
+| Closure/environment | 2 | 2 | 1 | 3 | 2 | 2 | 1 |
+| Graph containers and counted boundary | 6 | 6 | 1 | 5 | 6 | 4 | 3 |
+| Million members | 1000000 | 1000000 | 0 | 1000000 | 1000000 | 1000000 | 999999 |
+
+Five independent source mutants were run and restored, each by
+`go test ./internal/native -run TestGraphRegionsRuntime -count=1 -v`:
+
+| Mutant | Observed check |
+| --- | --- |
+| Free with an outside count held, with the defensive guard also removed | ASan heap-use-after-free on the escaping node's later read |
+| Skip the outside-release pass | LeakSanitizer, the dynamically built label string |
+| Merge without summing counts | ASan heap-use-after-free |
+| Retain an internal slot store | LeakSanitizer |
+| Omit the diagnostic's outside roots | Reachability assertion: 3 unreachable members instead of 1 |
+
+Every mutant exited 1; none was killed by compilation. Logs are
+`/tmp/graph-regions-mutants.log` and `/tmp/graph-regions-mutant-<name>.log`.
+The runner is `/tmp/graph-regions-mutants.py`.
+
+Two further mutants were compiled from isolated runtime copies, leaving the
+checkout used by the gate unchanged. Omitting Weak invalidation made the expiry
+assertion return 4; allowing a shared-region merge reached the assertion return
+2 instead of the expected panic. Neither failed compilation. Leak detection was
+disabled for these two behavior assertions so an intentionally unreleased handle
+or shared test graph could not mask their exit codes; the five core mutants and
+the normal fixtures used LeakSanitizer. The first isolated expiry attempt had
+LeakSanitizer enabled and its intentionally unreleased handle changed exit 4 to
+1, so that attempt did not isolate the desired assertion. Logs are
+`/tmp/graph-regions-extra-mutants.log` and the corresponding per-mutant logs;
+runner `/tmp/graph-regions-extra-isolated.py`.
+
+**Million-member evidence.** `TestGraphRegionsMillion` generates 1,000,000
+members with forward, parent and cross links, deliberately overwriting one
+new member's incoming edge every twentieth allocation. It reports 950,001
+reachable members (60,800,064 bytes) and 49,999 unreachable members (3,199,936
+bytes), out of 64,000,000 live member bytes at the last boundary release.
+All allocations remain until that release, so 64,000,000 is also the peak live
+graph payload. Container buffers are included in diagnostic bytes when present;
+allocator rounding, slab blocks and metadata are excluded. This fixture has no
+container buffers. Counting metadata is separately 104,000,000 bytes, plus the
+member lookup table. A separate million-member sanitizer run is leak-clean.
+
+On this workspace, the final recorded run has peak RSS **165,028 KiB native
+release**, **180,616 KiB native counted**, and **95,104 KiB Node**. Node's reported
+heapUsed after construction is 50,927,736 bytes, a snapshot, not a measured peak
+live heap. Native retains arena garbage; Node may collect it during construction.
+RSS includes allocator and engine overhead and is not the logical payload count.
+These are runtime-foundation measurements, not a compiled Adamic fixture or tsc
+result. The metadata cost is large and the native prototype uses more memory than
+Node here. Scanner/parser measurements have not been run.
+
+**Setup and checks.** `bash cloud/setup.sh > /tmp/graph-regions-setup.log 2>&1`
+passed: Go ready 1s, clang ready 1s, Node ready 1s, submodules ready 1s, build cache
+warm 162s, done 162s; nproc 5, cgroup cpu.max `400000 100000`. The selected env
+file is `/workspace/adamic-tools/env.sh`, sourced for every toolchain command.
+
+The following completed successfully, with test output written to logs:
+
+```sh
+go test ./internal/lower ./internal/native ./internal/fresh -count=1 -timeout 30m > /tmp/graph-regions-packages.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/.*(cycle|weak|fresh|regions|nested)|TestFreshWriteProbesStayRefused|TestCountsAreRecorded' -count=1 -timeout 30m > /tmp/graph-regions-oracle.log 2>&1
+go test ./internal/native -run 'TestGraph' -count=1 -v > /tmp/graph-regions-runtime-final.log 2>&1
+gofmt -l cmd internal > /tmp/graph-regions-format.log 2>&1
+go vet ./... > /tmp/graph-regions-vet.log 2>&1
+```
+
+The package gate reported lowering 34.877s, native 217.111s and fresh 50.635s.
+The filtered oracle, including counts and every existing fresh refusal probe,
+reported `ok` in 40.004s. The final graph-only run, after adding the container
+case and separate release-memory measurement, reported `ok` in 9.512s.
+The closure/container counts were additionally asserted and logged by
+`go test ./internal/native -run 'TestGraphClosureEnvironment|TestGraphContainerBoundary' -count=1 -v > /tmp/graph-regions-boundaries-final.log 2>&1`,
+which passed in 0.589s. Formatting and vet logs were empty. The full uncached gate was started with
+`ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./... > /tmp/graph-regions-full-gate.log 2>&1`;
+it was stopped after more than twelve minutes under the worker-gate allowance,
+exit 143. All 26 remaining descendants of that specific gate process were stopped
+too. Its log had only the bench and bench/regex no-test-file entries, with no
+completed package results to claim. The full gate is partial, not passed.
+
+**Outstanding for unit 1:** compiler type/SCC mapping to actual allocations,
+closure/environment classification, all field/container store and ownership
+transfer emission, the six requested source/JS/native oracle fixtures, migration
+of every newly accepted fresh refusal probe to positive region-free evidence,
+the counts-table integration, and a million-node fixture compiled from Adamic.
+No inference or refusal relaxation may land until that evidence passes. Threads
+and long-lived services remain design-only/NotYet as specified above.
+
 ## Arenas
 
 Some work allocates a lot and frees it all at once: one request, one file checked by cohere. For that, an arena: allocations bump a pointer, and the arena frees everything in one go at the end. A value allocated in an arena must not outlive it, and proving that is escape analysis. The lowering IR's aliasing analysis (#5jck546) is where that comes from. Arenas are for stage 1 (cohere in Adamic), where cohere's own measurements already show that with the collector off, fresh allocation is the cost.

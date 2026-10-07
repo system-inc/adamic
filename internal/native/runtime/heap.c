@@ -2,6 +2,7 @@
 
 #include "adamic.h"
 #include "count.h"
+#include "graph_regions.h"
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -221,7 +222,9 @@ void *adamic_retain(void *value) {
 	if (heap != NULL && heap->kind == adamic_kind_cell && ((adamic_cell *)heap)->owner != NULL) {
 		heap = &((adamic_cell *)heap)->owner->heap;
 	}
-	if (heap != NULL && heap->references != 0) {
+	if (adamic_graph_is(heap)) {
+		adamic_graph_retain(heap);
+	} else if (heap != NULL && heap->references != 0) {
 		heap->references++;
 	}
 	return value;
@@ -255,12 +258,14 @@ static void let_go(void *value) {
 	if (heap != NULL && heap->kind == adamic_kind_cell && ((adamic_cell *)heap)->owner != NULL) {
 		heap = &((adamic_cell *)heap)->owner->heap;
 	}
-	if (heap != NULL && heap->references != 0 && --heap->references == 0) {
+	if (adamic_graph_is(heap)) {
+		if (adamic_graph_release_last(heap)) { list(heap); }
+	} else if (heap != NULL && heap->references != 0 && --heap->references == 0) {
 		list(heap);
 	}
 }
 
-static void free_one(void *value) {
+void adamic_heap_free_children(void *value, void (*let_go)(void *)) {
 	adamic_heap *heap = value;
 	switch (heap->kind) {
 	case adamic_kind_string:
@@ -323,10 +328,24 @@ static void free_one(void *value) {
 		break;
 	}
 	}
+}
+
+void adamic_heap_free_storage(void *value, uint32_t slab) {
+	adamic_heap *heap = value;
+	heap->slab = slab;
+	deallocate(heap);
+	ADAMIC_COUNT_FREE();
+}
+
+static void free_one(void *value) {
+	if (adamic_graph_is(value)) {
+		adamic_graph_free(value, let_go);
+		return;
+	}
+	adamic_heap_free_children(value, let_go);
 	// Anything weak that pointed here now points at nothing, before the memory can be anything else.
 	adamic_weak_forget(value);
-	deallocate(value);
-	ADAMIC_COUNT_FREE();
+	adamic_heap_free_storage(value, ((adamic_heap *)value)->slab);
 }
 
 void adamic_release(void *value) {
