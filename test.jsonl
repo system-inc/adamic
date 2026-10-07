@@ -37543,3 +37543,14 @@
 {"Time":"2026-10-07T20:39:05.596271824Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Output":"PASS\n","OutputType":"frame"}
 {"Time":"2026-10-07T20:39:05.604254272Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/graphql/printer\t310.210s\n"}
 {"Time":"2026-10-07T20:39:05.604300671Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Elapsed":310.21}
+{"Time":"2026-10-07T20:39:25.936473986Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers"}
+{"Time":"2026-10-07T20:39:25.990138596Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestHelpersMatchCohere"}
+{"Time":"2026-10-07T20:39:25.990232127Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestHelpersMatchCohere","Output":"=== RUN   TestHelpersMatchCohere\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:39:52.924725513Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestGeneratedAgreement","Output":"    estree_test.go:193: 78 generated files: 120355 identical bytes on Go, source Node, sanitized native, emitted JS\n"}
+{"Time":"2026-10-07T20:39:52.924786966Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestGeneratedAgreement","Output":"--- PASS: TestGeneratedAgreement (88.88s)\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:39:52.928183534Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestGeneratedAgreement","Elapsed":88.88}
+{"Time":"2026-10-07T20:39:52.928209173Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestThreePortMutants"}
+{"Time":"2026-10-07T20:39:52.928212428Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestThreePortMutants","Output":"=== RUN   TestThreePortMutants\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:39:55.188208823Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestThreePortMutants/member-computed"}
+{"Time":"2026-10-07T20:39:55.188242774Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestThreePortMutants/member-computed","Output":"=== RUN   TestThreePortMutants/member-computed\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:39:56.300605443Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestThreePortMutants/member-computed","Output":"    estree_test.go:237: source Node finished; byte comparison caught line 3810: Go \"3 .computed bool 0\", port \"3 .computed bool 1\"\n"}
